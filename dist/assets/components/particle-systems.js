@@ -98,9 +98,9 @@ function (X3DNode,
 
       this .addType (X3DConstants .X3DParticleEmitterNode);
 
-      this .speed_       .setUnit ("speed");
-      this .mass_        .setUnit ("mass");
-      this .surfaceArea_ .setUnit ("area");
+      this ._speed       .setUnit ("speed");
+      this ._mass        .setUnit ("mass");
+      this ._surfaceArea .setUnit ("area");
 
       this .rotations           = [ ];
       this .intersections       = [ ];
@@ -115,9 +115,9 @@ function (X3DNode,
       {
          X3DNode .prototype .initialize .call (this);
 
-         this .speed_     .addInterest ("set_speed__", this);
-         this .variation_ .addInterest ("set_variation__", this);
-         this .mass_      .addInterest ("set_mass__", this);
+         this ._speed     .addInterest ("set_speed__", this);
+         this ._variation .addInterest ("set_variation__", this);
+         this ._mass      .addInterest ("set_mass__", this);
 
          this .set_speed__ ();
          this .set_variation__ ();
@@ -125,15 +125,15 @@ function (X3DNode,
       },
       set_speed__: function ()
       {
-         this .speed = this .speed_ .getValue ();
+         this .speed = this ._speed .getValue ();
       },
       set_variation__: function ()
       {
-         this .variation = this .variation_ .getValue ();
+         this .variation = this ._variation .getValue ();
       },
       set_mass__: function ()
       {
-         this .mass = this .mass_ .getValue ();
+         this .mass = this ._mass .getValue ();
       },
       isExplosive: function ()
       {
@@ -488,10 +488,10 @@ function (Fields,
 
       this .addType (X3DConstants .PointEmitter);
 
-      this .position_    .setUnit ("length");
-      this .speed_       .setUnit ("speed");
-      this .mass_        .setUnit ("mass");
-      this .surfaceArea_ .setUnit ("area");
+      this ._position    .setUnit ("length");
+      this ._speed       .setUnit ("speed");
+      this ._mass        .setUnit ("mass");
+      this ._surfaceArea .setUnit ("area");
 
       this .direction = new Vector3 (0, 0, 0);
    }
@@ -524,19 +524,19 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this .position_  .addInterest ("set_position__", this);
-         this .direction_ .addInterest ("set_direction__", this);
+         this ._position  .addInterest ("set_position__", this);
+         this ._direction .addInterest ("set_direction__", this);
 
          this .set_position__ ();
          this .set_direction__ ();
       },
       set_position__: function ()
       {
-         this .position = this .position_ .getValue ()
+         this .position = this ._position .getValue ()
       },
       set_direction__: function ()
       {
-         this .direction .assign (this .direction_ .getValue ()) .normalize ();
+         this .direction .assign (this ._direction .getValue ()) .normalize ();
 
          if (this .direction .equals (Vector3 .Zero))
             this .getRandomVelocity = this .getSphericalRandomVelocity;
@@ -814,19 +814,19 @@ function (Fields,
       {
          X3DParticlePhysicsModelNode .prototype .initialize .call (this);
 
-         this .geometry_ .addInterest ("set_geometry__", this);
+         this ._geometry .addInterest ("set_geometry__", this);
 
          this .set_geometry__ ();
       },
       set_geometry__: function ()
       {
          if (this .geometryNode)
-            this .geometryNode .rebuild_ .removeInterest ("addNodeEvent", this);
+            this .geometryNode ._rebuild .removeInterest ("addNodeEvent", this);
 
-         this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this .geometry_);
+         this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this ._geometry);
 
          if (this .geometryNode)
-            this .geometryNode .rebuild_ .addInterest ("addNodeEvent", this);
+            this .geometryNode ._rebuild .addInterest ("addNodeEvent", this);
       },
       addGeometry: function (boundedNormals, boundedVertices)
       {
@@ -922,11 +922,11 @@ function (Fields,
 
       this .addType (X3DConstants .ConeEmitter);
 
-      this .position_    .setUnit ("length");
-      this .angle_       .setUnit ("angle");
-      this .speed_       .setUnit ("speed");
-      this .mass_        .setUnit ("mass");
-      this .surfaceArea_ .setUnit ("area");
+      this ._position    .setUnit ("length");
+      this ._angle       .setUnit ("angle");
+      this ._speed       .setUnit ("speed");
+      this ._mass        .setUnit ("mass");
+      this ._surfaceArea .setUnit ("area");
 
       this .rotation = new Rotation4 (0, 0, 1, 0);
    }
@@ -960,9 +960,9 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this .position_  .addInterest ("set_position__", this);
-         this .direction_ .addInterest ("set_direction__", this);
-         this .angle_     .addInterest ("set_angle__", this);
+         this ._position  .addInterest ("set_position__", this);
+         this ._direction .addInterest ("set_direction__", this);
+         this ._angle     .addInterest ("set_angle__", this);
 
          this .set_position__ ();
          this .set_direction__ ();
@@ -970,11 +970,11 @@ function (Fields,
       },
       set_position__: function ()
       {
-         this .position = this .position_ .getValue ()
+         this .position = this ._position .getValue ()
       },
       set_direction__: function ()
       {
-         var direction = this .direction_ .getValue ();
+         var direction = this ._direction .getValue ();
 
          this .rotation .setFromToVec (Vector3 .zAxis, direction);
 
@@ -985,7 +985,7 @@ function (Fields,
       },
       set_angle__: function ()
       {
-         this .angle = this .angle_ .getValue ()
+         this .angle = this ._angle .getValue ()
       },
       getRandomPosition: function (position)
       {
@@ -1070,10 +1070,10 @@ function (Fields,
 
       this .addType (X3DConstants .ExplosionEmitter);
 
-      this .position_    .setUnit ("length");
-      this .speed_       .setUnit ("speed");
-      this .mass_        .setUnit ("mass");
-      this .surfaceArea_ .setUnit ("area");
+      this ._position    .setUnit ("length");
+      this ._speed       .setUnit ("speed");
+      this ._mass        .setUnit ("mass");
+      this ._surfaceArea .setUnit ("area");
 
       this .getRandomVelocity = this .getSphericalRandomVelocity;
    }
@@ -1105,13 +1105,13 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this .position_ .addInterest ("set_position__", this);
+         this ._position .addInterest ("set_position__", this);
 
          this .set_position__ ();
       },
       set_position__: function ()
       {
-         this .position = this .position_ .getValue ()
+         this .position = this ._position .getValue ()
       },
       isExplosive: function ()
       {
@@ -1196,7 +1196,7 @@ function (Fields,
 
       this .addType (X3DConstants .ForcePhysicsModel);
 
-      this .force_ .setUnit ("force");
+      this ._force .setUnit ("force");
    }
 
    ForcePhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
@@ -1221,9 +1221,9 @@ function (Fields,
       },
       addForce: function (i, emitterNode, forces, turbulences)
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
-            forces      [i] .assign (this .force_ .getValue ());
+            forces      [i] .assign (this ._force .getValue ());
             turbulences [i] = 0;
          }
       },
@@ -1718,7 +1718,7 @@ function (Fields,
 
       this .addType (X3DConstants .ParticleSystem);
 
-      this .particleSize_ .setUnit ("length");
+      this ._particleSize .setUnit ("length");
 
       this .createParticles          = true;
       this .particles                = [ ];
@@ -1804,20 +1804,20 @@ function (Fields,
 
          this .isLive () .addInterest ("set_live__", this);
 
-         browser .getBrowserOptions () .Shading_ .addInterest ("set_shader__", this);
+         browser .getBrowserOptions () ._Shading .addInterest ("set_shader__", this);
 
-         this .enabled_           .addInterest ("set_enabled__",           this);
-         this .createParticles_   .addInterest ("set_createParticles__",   this);
-         this .geometryType_      .addInterest ("set_geometryType__",      this);
-         this .maxParticles_      .addInterest ("set_enabled__",           this);
-         this .particleLifetime_  .addInterest ("set_particleLifetime__",  this);
-         this .lifetimeVariation_ .addInterest ("set_lifetimeVariation__", this);
-         this .emitter_           .addInterest ("set_emitter__",           this);
-         this .physics_           .addInterest ("set_physics__",           this);
-         this .colorKey_          .addInterest ("set_color__",             this);
-         this .colorRamp_         .addInterest ("set_colorRamp__",         this);
-         this .texCoordKey_       .addInterest ("set_texCoord__",          this);
-         this .texCoordRamp_      .addInterest ("set_texCoordRamp__",      this);
+         this ._enabled           .addInterest ("set_enabled__",           this);
+         this ._createParticles   .addInterest ("set_createParticles__",   this);
+         this ._geometryType      .addInterest ("set_geometryType__",      this);
+         this ._maxParticles      .addInterest ("set_enabled__",           this);
+         this ._particleLifetime  .addInterest ("set_particleLifetime__",  this);
+         this ._lifetimeVariation .addInterest ("set_lifetimeVariation__", this);
+         this ._emitter           .addInterest ("set_emitter__",           this);
+         this ._physics           .addInterest ("set_physics__",           this);
+         this ._colorKey          .addInterest ("set_color__",             this);
+         this ._colorRamp         .addInterest ("set_colorRamp__",         this);
+         this ._texCoordKey       .addInterest ("set_texCoord__",          this);
+         this ._texCoordRamp      .addInterest ("set_texCoordRamp__",      this);
 
          this .idBuffer           = gl .createBuffer ();
          this .positionBuffer     = gl .createBuffer ();
@@ -1859,10 +1859,10 @@ function (Fields,
       },
       set_bbox__: function ()
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
             this .bbox .set ();
          else
-            this .bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+            this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
 
          this .bboxSize   .assign (this .bbox .size);
          this .bboxCenter .assign (this .bbox .center);
@@ -1896,7 +1896,7 @@ function (Fields,
       {
          if (this .isLive () .getValue ())
          {
-            if (this .isActive_ .getValue () && this .maxParticles_ .getValue ())
+            if (this ._isActive .getValue () && this ._maxParticles .getValue ())
             {
                this .getBrowser () .sensorEvents () .addInterest ("animateParticles", this);
 
@@ -1909,7 +1909,7 @@ function (Fields,
          }
          else
          {
-            if (this .isActive_ .getValue () && this .maxParticles_ .getValue ())
+            if (this ._isActive .getValue () && this ._maxParticles .getValue ())
             {
                this .getBrowser () .sensorEvents () .removeInterest ("animateParticles", this);
 
@@ -1920,9 +1920,9 @@ function (Fields,
       },
       set_enabled__: function ()
       {
-         if (this .enabled_ .getValue () && this .maxParticles_ .getValue ())
+         if (this ._enabled .getValue () && this ._maxParticles .getValue ())
          {
-            if (! this .isActive_ .getValue ())
+            if (! this ._isActive .getValue ())
             {
                if (this .isLive () .getValue ())
                {
@@ -1933,19 +1933,19 @@ function (Fields,
                else
                   this .pauseTime = performance .now () / 1000;
 
-               this .isActive_ = true;
+               this ._isActive = true;
             }
          }
          else
          {
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
                if (this .isLive () .getValue ())
                {
                   this .getBrowser () .sensorEvents () .removeInterest ("animateParticles", this);
                }
 
-               this .isActive_ = false;
+               this ._isActive = false;
 
                this .numParticles = 0;
             }
@@ -1955,7 +1955,7 @@ function (Fields,
       },
       set_createParticles__: function ()
       {
-         this .createParticles = this .createParticles_ .getValue ();
+         this .createParticles = this ._createParticles .getValue ();
       },
       set_geometryType__: function ()
       {
@@ -1965,7 +1965,7 @@ function (Fields,
 
          // geometryType
 
-         this .geometryType = GeometryTypes [this .geometryType_ .getValue ()];
+         this .geometryType = GeometryTypes [this ._geometryType .getValue ()];
 
          if (! this .geometryType)
             this .geometryType = POINT;
@@ -2146,7 +2146,7 @@ function (Fields,
       {
          var
             particles    = this .particles,
-            maxParticles = Math .max (0, this .maxParticles_ .getValue ());
+            maxParticles = Math .max (0, this ._maxParticles .getValue ());
 
          for (var i = this .numParticles, length = Math .min (particles .length, maxParticles); i < length; ++ i)
          {
@@ -2178,25 +2178,25 @@ function (Fields,
       },
       set_particleLifetime__: function ()
       {
-         this .particleLifetime = this .particleLifetime_ .getValue ();
+         this .particleLifetime = this ._particleLifetime .getValue ();
       },
       set_lifetimeVariation__: function ()
       {
-         this .lifetimeVariation = this .lifetimeVariation_ .getValue ();
+         this .lifetimeVariation = this ._lifetimeVariation .getValue ();
       },
       set_emitter__: function ()
       {
-         this .emitterNode = X3DCast (X3DConstants .X3DParticleEmitterNode, this .emitter_);
+         this .emitterNode = X3DCast (X3DConstants .X3DParticleEmitterNode, this ._emitter);
 
          if (! this .emitterNode)
             this .emitterNode = this .getBrowser () .getDefaultEmitter ();
 
-         this .createParticles = this .createParticles_ .getValue ();
+         this .createParticles = this ._createParticles .getValue ();
       },
       set_physics__: function ()
       {
          var
-            physics                  = this .physics_ .getValue (),
+            physics                  = this ._physics .getValue (),
             forcePhysicsModelNodes   = this .forcePhysicsModelNodes,
             boundedPhysicsModelNodes = this .boundedPhysicsModelNodes;
 
@@ -2265,7 +2265,7 @@ function (Fields,
          if (this .colorRampNode)
             this .colorRampNode .removeInterest ("set_color__", this);
 
-         this .colorRampNode = X3DCast (X3DConstants .X3DColorNode, this .colorRamp_);
+         this .colorRampNode = X3DCast (X3DConstants .X3DColorNode, this ._colorRamp);
 
          if (this .colorRampNode)
             this .colorRampNode .addInterest ("set_color__", this);
@@ -2276,7 +2276,7 @@ function (Fields,
       set_color__: function ()
       {
          var
-            colorKey  = this .colorKey_,
+            colorKey  = this ._colorKey,
             colorKeys = this .colorKeys,
             colorRamp = this .colorRamp;
 
@@ -2300,7 +2300,7 @@ function (Fields,
          if (this .texCoordRampNode)
             this .texCoordRampNode .removeInterest ("set_texCoord__", this);
 
-         this .texCoordRampNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoordRamp_);
+         this .texCoordRampNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoordRamp);
 
          if (this .texCoordRampNode)
             this .texCoordRampNode .addInterest ("set_texCoord__", this);
@@ -2310,7 +2310,7 @@ function (Fields,
       set_texCoord__: function ()
       {
          var
-            texCoordKey  = this .texCoordKey_,
+            texCoordKey  = this ._texCoordKey,
             texCoordKeys = this .texCoordKeys,
             texCoordRamp = this .texCoordRamp;
 
@@ -2358,7 +2358,7 @@ function (Fields,
             {
                this .creationTime    = now;
                this .numParticles    = this .maxParticles;
-               this .createParticles = this .createParticles_ .getValue ();
+               this .createParticles = this ._createParticles .getValue ();
 
                deltaTime = Number .POSITIVE_INFINITY;
             }
@@ -2517,7 +2517,7 @@ function (Fields,
             lifeArray        = this .lifeArray,
             colorArray       = this .colorArray,
             vertexArray      = this .vertexArray,
-            sy1_2            = this .particleSize_ .y / 2;
+            sy1_2            = this ._particleSize .y / 2;
 
          // Colors
 
@@ -2610,8 +2610,8 @@ function (Fields,
                texCoordArray    = this .texCoordArray,
                normalArray      = this .normalArray,
                vertexArray      = this .vertexArray,
-               sx1_2            = this .particleSize_ .x / 2,
-               sy1_2            = this .particleSize_ .y / 2;
+               sx1_2            = this ._particleSize .x / 2,
+               sy1_2            = this ._particleSize .y / 2;
 
             // Sort particles
 
@@ -2910,7 +2910,7 @@ function (Fields,
       },
       traverse: function (type, renderObject)
       {
-         if (! this .isActive_ .getValue ())
+         if (! this ._isActive .getValue ())
             return;
 
          switch (type)
@@ -2930,7 +2930,7 @@ function (Fields,
             }
             case TraverseType .SHADOW:
             {
-               if (this .castShadow_ .getValue ())
+               if (this ._castShadow .getValue ())
                   renderObject .addDepthShape (this);
 
                break;
@@ -3190,9 +3190,9 @@ function (Fields,
 
       this .addType (X3DConstants .PolylineEmitter);
 
-      this .speed_       .setUnit ("speed");
-      this .mass_        .setUnit ("mass");
-      this .surfaceArea_ .setUnit ("area");
+      this ._speed       .setUnit ("speed");
+      this ._mass        .setUnit ("mass");
+      this ._surfaceArea .setUnit ("area");
 
       this .direction        = new Vector3 (0, 0, 0);
       this .polylineNode     = new IndexedLineSet (executionContext);
@@ -3229,15 +3229,15 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this .direction_ .addInterest ("set_direction__", this);
+         this ._direction .addInterest ("set_direction__", this);
 
-         this .coordIndex_ .addFieldInterest (this .polylineNode .coordIndex_);
-         this .coord_      .addFieldInterest (this .polylineNode .coord_);
+         this ._coordIndex .addFieldInterest (this .polylineNode ._coordIndex);
+         this ._coord      .addFieldInterest (this .polylineNode ._coord);
 
-         this .polylineNode .coordIndex_ = this .coordIndex_;
-         this .polylineNode .coord_      = this .coord_;
+         this .polylineNode ._coordIndex = this ._coordIndex;
+         this .polylineNode ._coord      = this ._coord;
 
-         this .polylineNode .rebuild_ .addInterest ("set_polyline", this);
+         this .polylineNode ._rebuild .addInterest ("set_polyline", this);
          this .polylineNode .setPrivate (true);
          this .polylineNode .setup ();
 
@@ -3246,7 +3246,7 @@ function (Fields,
       },
       set_direction__: function ()
       {
-         this .direction .assign (this .direction_ .getValue ()) .normalize ();
+         this .direction .assign (this ._direction .getValue ()) .normalize ();
 
          if (this .direction .equals (Vector3 .Zero))
             this .getRandomVelocity = this .getSphericalRandomVelocity;
@@ -3452,9 +3452,9 @@ function (Fields,
 
       this .addType (X3DConstants .SurfaceEmitter);
 
-      this .speed_       .setUnit ("speed");
-      this .mass_        .setUnit ("mass");
-      this .surfaceArea_ .setUnit ("area");
+      this ._speed       .setUnit ("speed");
+      this ._mass        .setUnit ("mass");
+      this ._surfaceArea .setUnit ("area");
 
       this .surfaceNode    = null;
       this .areaSoFarArray = [ 0 ];
@@ -3488,19 +3488,19 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this .surface_ .addInterest ("set_surface__", this);
+         this ._surface .addInterest ("set_surface__", this);
 
          this .set_surface__ ();
       },
       set_surface__: function ()
       {
          if (this .surfaceNode)
-            this .surfaceNode .rebuild_ .removeInterest ("set_geometry__", this);
+            this .surfaceNode ._rebuild .removeInterest ("set_geometry__", this);
 
-         this .surfaceNode = X3DCast (X3DConstants .X3DGeometryNode, this .surface_);
+         this .surfaceNode = X3DCast (X3DConstants .X3DGeometryNode, this ._surface);
 
          if (this .surfaceNode)
-            this .surfaceNode .rebuild_ .addInterest ("set_geometry__", this);
+            this .surfaceNode ._rebuild .addInterest ("set_geometry__", this);
 
          this .set_geometry__ ();
       },
@@ -3722,9 +3722,9 @@ function (Fields,
 
       this .addType (X3DConstants .VolumeEmitter);
 
-      this .speed_       .setUnit ("speed");
-      this .mass_        .setUnit ("mass");
-      this .surfaceArea_ .setUnit ("area");
+      this ._speed       .setUnit ("speed");
+      this ._mass        .setUnit ("mass");
+      this ._surfaceArea .setUnit ("area");
 
       this .direction      = new Vector3 (0, 0, 0);
       this .volumeNode     = new IndexedFaceSet (executionContext);
@@ -3761,17 +3761,17 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this .direction_ .addInterest ("set_direction__", this);
+         this ._direction .addInterest ("set_direction__", this);
 
-         this .coordIndex_ .addFieldInterest (this .volumeNode .coordIndex_);
-         this .coord_      .addFieldInterest (this .volumeNode .coord_);
+         this ._coordIndex .addFieldInterest (this .volumeNode ._coordIndex);
+         this ._coord      .addFieldInterest (this .volumeNode ._coord);
 
-         this .volumeNode .creaseAngle_ = Math .PI;
-         this .volumeNode .convex_      = false;
-         this .volumeNode .coordIndex_  = this .coordIndex_;
-         this .volumeNode .coord_       = this .coord_;
+         this .volumeNode ._creaseAngle = Math .PI;
+         this .volumeNode ._convex      = false;
+         this .volumeNode ._coordIndex  = this ._coordIndex;
+         this .volumeNode ._coord       = this ._coord;
 
-         this .volumeNode .rebuild_ .addInterest ("set_geometry__", this);
+         this .volumeNode ._rebuild .addInterest ("set_geometry__", this);
          this .volumeNode .setPrivate (true);
          this .volumeNode .setup ();
 
@@ -3780,7 +3780,7 @@ function (Fields,
       },
       set_direction__: function ()
       {
-         this .direction .assign (this .direction_ .getValue ()) .normalize ();
+         this .direction .assign (this ._direction .getValue ()) .normalize ();
 
          if (this .direction .equals (Vector3 .Zero))
             this .getRandomVelocity = this .getSphericalRandomVelocity;
@@ -4035,7 +4035,7 @@ function (Fields,
 
       this .addType (X3DConstants .WindPhysicsModel);
 
-      this .speed_ .setUnit ("speed");
+      this ._speed .setUnit ("speed");
    }
 
    WindPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
@@ -4064,8 +4064,8 @@ function (Fields,
       getRandomSpeed: function (emitterNode)
       {
          var
-            speed     = Math .max (0, this .speed_ .getValue ()),
-            variation = speed * Math .max (0, this .gustiness_ .getValue ());
+            speed     = Math .max (0, this ._speed .getValue ()),
+            variation = speed * Math .max (0, this ._gustiness .getValue ());
 
          return emitterNode .getRandomValue (Math .max (0, speed - variation), speed + variation);
       },
@@ -4075,21 +4075,21 @@ function (Fields,
 
          return function (i, emitterNode, forces, turbulences)
          {
-            var surfaceArea = emitterNode .surfaceArea_ .getValue ()
+            var surfaceArea = emitterNode ._surfaceArea .getValue ()
 
-            if (this .enabled_ .getValue ())
+            if (this ._enabled .getValue ())
             {
                var
                   randomSpeed = this .getRandomSpeed (emitterNode),
                   pressure    = Math .pow (10, 2 * Math .log (randomSpeed)) * 0.64615;
 
-               if (this .direction_ .getValue () .equals (Vector3 .Zero))
+               if (this ._direction .getValue () .equals (Vector3 .Zero))
                   emitterNode .getRandomNormal (force);
                else
-                  force .assign (this .direction_ .getValue ()) .normalize ();
+                  force .assign (this ._direction .getValue ()) .normalize ();
 
                forces [i] .assign (force .multiply (surfaceArea * pressure));
-               turbulences [i] = Math .PI * Algorithm .clamp (this .turbulence_ .getValue (), 0, 1);
+               turbulences [i] = Math .PI * Algorithm .clamp (this ._turbulence .getValue (), 0, 1);
             }
          };
       })(),

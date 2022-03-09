@@ -88,9 +88,9 @@ function (X3DSingleTextureNode,
       {
          X3DSingleTextureNode .prototype .initialize .call (this);
 
-         this .repeatS_ .addInterest ("updateTextureProperties", this);
-         this .repeatT_ .addInterest ("updateTextureProperties", this);
-         this .repeatR_ .addInterest ("updateTextureProperties", this);
+         this ._repeatS .addInterest ("updateTextureProperties", this);
+         this ._repeatT .addInterest ("updateTextureProperties", this);
+         this ._repeatR .addInterest ("updateTextureProperties", this);
 
          const gl = this .getBrowser () .getContext ();
 
@@ -162,13 +162,13 @@ function (X3DSingleTextureNode,
       {
          X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
                                                                          this .target,
-                                                                         this .textureProperties_ .getValue (),
+                                                                         this ._textureProperties .getValue (),
                                                                          this .texturePropertiesNode,
                                                                          this .width,
                                                                          this .height,
-                                                                         this .repeatS_ .getValue (),
-                                                                         this .repeatT_ .getValue (),
-                                                                         this .repeatR_ .getValue ());
+                                                                         this ._repeatS .getValue (),
+                                                                         this ._repeatT .getValue (),
+                                                                         this ._repeatR .getValue ());
       },
       setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
       {
@@ -290,13 +290,13 @@ function (Fields,
       {
          X3DTexture3DNode .prototype .initialize .call (this);
 
-         this .texture_ .addInterest ("set_texture__", this);
+         this ._texture .addInterest ("set_texture__", this);
 
          this .set_texture__ ();
       },
       checkLoadState: function ()
       {
-         return this .loadState_ .getValue ();
+         return this ._loadState .getValue ();
       },
       set_texture__: function ()
       {
@@ -307,7 +307,7 @@ function (Fields,
 
          textureNodes .length = 0;
 
-         for (const node of this .texture_)
+         for (const node of this ._texture)
          {
             const textureNode = X3DCast (X3DConstants .X3DTexture2DNode, node);
 
@@ -333,7 +333,7 @@ function (Fields,
          {
             this .clearTexture ();
 
-            this .loadState_ = X3DConstants .FAILED_STATE;
+            this ._loadState = X3DConstants .FAILED_STATE;
          }
          else
          {
@@ -363,7 +363,7 @@ function (Fields,
             }
 
             this .setTexture (width, height, depth, !!transparent, gl .RGBA, data);
-            this .loadState_ = X3DConstants .COMPLETE_STATE;
+            this ._loadState = X3DConstants .COMPLETE_STATE;
          }
       },
    });
@@ -9129,7 +9129,7 @@ function (Fields,
       },
       loadNow: function ()
       {
-         new FileLoader (this) .loadBinaryDocument (this .urlBuffer_,
+         new FileLoader (this) .loadBinaryDocument (this ._urlBuffer,
          function (data)
          {
             if (data === null)
@@ -9273,13 +9273,13 @@ function (Fields,
       {
          X3DTexture3DNode .prototype .initialize .call (this);
 
-         this .image_ .addInterest ("set_image__", this);
+         this ._image .addInterest ("set_image__", this);
 
          this .set_image__ ();
       },
       checkLoadState: function ()
       {
-         return this .loadState_ .getValue ();
+         return this ._loadState .getValue ();
       },
       set_image__: (function ()
       {
@@ -9292,12 +9292,12 @@ function (Fields,
 
          return function ()
          {
-            const image = this .image_;
+            const image = this ._image;
 
             if (image .length < OFFSET)
             {
                this .clearTexture ();
-               this .loadState_ = X3DConstants .FAILED_STATE;
+               this ._loadState = X3DConstants .FAILED_STATE;
                return;
             }
 
@@ -9377,13 +9377,13 @@ function (Fields,
                default:
                {
                   this .clearTexture ();
-                  this .loadState_ = X3DConstants .FAILED_STATE;
+                  this ._loadState = X3DConstants .FAILED_STATE;
                   return;
                }
             }
 
             this .setTexture (width, height, depth, transparent, format, data);
-            this .loadState_ = X3DConstants .COMPLETE_STATE;
+            this ._loadState = X3DConstants .COMPLETE_STATE;
          };
       })(),
    });
@@ -9488,14 +9488,14 @@ function (Fields,
       {
          X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
-         this .point_ .addInterest ("set_point__", this);
+         this ._point .addInterest ("set_point__", this);
 
          this .set_point__ ();
       },
       set_point__: function ()
       {
-         this .point  = this .point_ .getValue ();
-         this .length = this .point_ .length;
+         this .point  = this ._point .getValue ();
+         this .length = this ._point .length;
       },
       isEmpty: function ()
       {
@@ -9666,14 +9666,14 @@ function (Fields,
       {
          X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
-         this .point_ .addInterest ("set_point__", this);
+         this ._point .addInterest ("set_point__", this);
 
          this .set_point__ ();
       },
       set_point__: function ()
       {
-         this .point  = this .point_ .getValue ();
-         this .length = this .point_ .length;
+         this .point  = this ._point .getValue ();
+         this .length = this ._point .length;
       },
       isEmpty: function ()
       {
@@ -9868,10 +9868,10 @@ function (Fields,
          return function ()
          {
             const
-               translation = this .translation_ .getValue (),
-               rotation    = this .rotation_ .getValue (),
-               scale       = this .scale_ .getValue (),
-               center      = this .center_ .getValue (),
+               translation = this ._translation .getValue (),
+               rotation    = this ._rotation .getValue (),
+               scale       = this ._scale .getValue (),
+               center      = this ._center .getValue (),
                matrix4     = this .matrix;
 
             matrix4 .identity ();
@@ -10000,11 +10000,11 @@ function (Fields,
       },
       getMatrix: function ()
       {
-         return this .matrix_ .getValue ();
+         return this ._matrix .getValue ();
       },
       eventsProcessed: function ()
       {
-         this .setMatrix (this .matrix_ .getValue ());
+         this .setMatrix (this ._matrix .getValue ());
       },
    });
 

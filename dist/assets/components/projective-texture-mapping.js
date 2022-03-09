@@ -78,9 +78,9 @@ function (X3DChildNode,
 
       this .addType (X3DConstants .X3DTextureProjectorNode);
 
-      this .location_    .setUnit ("length");
-      this .farDistance_ .setUnit ("length");
-      this .location_    .setUnit ("length");
+      this ._location    .setUnit ("length");
+      this ._farDistance .setUnit ("length");
+      this ._location    .setUnit ("length");
    }
 
    X3DTextureProjectorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -90,30 +90,30 @@ function (X3DChildNode,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .on_      .addInterest ("set_on__",      this);
-         this .texture_ .addInterest ("set_texture__", this);
+         this ._on      .addInterest ("set_on__",      this);
+         this ._texture .addInterest ("set_texture__", this);
 
          this .set_texture__ ();
       },
       getGlobal: function ()
       {
-         return this .global_ .getValue ();
+         return this ._global .getValue ();
       },
       getLocation: function ()
       {
-         return this .location_ .getValue ();
+         return this ._location .getValue ();
       },
       getDirection: function ()
       {
-         return this .direction_ .getValue ();
+         return this ._direction .getValue ();
       },
       getNearDistance: function ()
       {
-         return this .nearDistance_ .getValue ();
+         return this ._nearDistance .getValue ();
       },
       getFarDistance: function ()
       {
-         return this .farDistance_ .getValue ();
+         return this ._farDistance .getValue ();
       },
       getTexture: function ()
       {
@@ -144,7 +144,7 @@ function (X3DChildNode,
          {
             orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
             orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
-            upVector .assign (this .upVector_ .getValue ()) .normalize ();
+            upVector .assign (this ._upVector .getValue ()) .normalize ();
 
             var vector = localZAxis .cross (upVector);
 
@@ -162,7 +162,7 @@ function (X3DChildNode,
       })(),
       set_on__: function ()
       {
-         if (this .on_ .getValue () && this .textureNode && this .getBrowser () .getProjectiveTextureMapping ())
+         if (this ._on .getValue () && this .textureNode && this .getBrowser () .getProjectiveTextureMapping ())
          {
             delete this .push;
             delete this .pop;
@@ -178,7 +178,7 @@ function (X3DChildNode,
          if (this .textureNode)
             this .textureNode .removeInterest ("set_aspectRatio__", this);
 
-         this .textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this .texture_);
+         this .textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this ._texture);
 
          if (this .textureNode)
             this .textureNode .addInterest ("set_aspectRatio__", this);
@@ -189,9 +189,9 @@ function (X3DChildNode,
       set_aspectRatio__: function ()
       {
          if (this .textureNode)
-            this .aspectRatio_ = this .textureNode .getWidth () / this .textureNode .getHeight ();
+            this ._aspectRatio = this .textureNode .getWidth () / this .textureNode .getHeight ();
          else
-            this .aspectRatio_ = 0;
+            this ._aspectRatio = 0;
       },
       push: function (renderObject)
       {
@@ -201,7 +201,7 @@ function (X3DChildNode,
                                          this,
                                          renderObject .getModelViewMatrix () .get ());
 
-         if (this .global_ .getValue ())
+         if (this ._global .getValue ())
          {
             renderObject .getGlobalObjects ()     .push (textureProjectorContainer);
             renderObject .getTextureProjectors () .push (textureProjectorContainer);
@@ -214,7 +214,7 @@ function (X3DChildNode,
       },
       pop: function (renderObject)
       {
-         if (this .global_ .getValue ())
+         if (this ._global .getValue ())
             return;
 
          renderObject .getLocalObjects () .pop ();
@@ -363,7 +363,7 @@ function (Fields,
             this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
             this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
-            this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode .location_ .getValue ()));
+            this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode ._location .getValue ()));
             this .locationArray .set (this .location);
          }
          catch (error)
@@ -401,7 +401,7 @@ function (Fields,
 
       this .addType (X3DConstants .TextureProjectorPerspective);
 
-      this .fieldOfView_ .setUnit ("angle");
+      this ._fieldOfView .setUnit ("angle");
    }
 
    TextureProjectorPerspective .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
@@ -439,7 +439,7 @@ function (Fields,
       },
       getFieldOfView: function ()
       {
-         var fov = this .fieldOfView_ .getValue ();
+         var fov = this ._fieldOfView .getValue ();
 
          return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
       },
@@ -612,7 +612,7 @@ function (Fields,
             this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
             this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
-            this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode .location_ .getValue ()));
+            this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode ._location .getValue ()));
             this .locationArray .set (this .location);
          }
          catch (error)
@@ -650,7 +650,7 @@ function (Fields,
 
       this .addType (X3DConstants .TextureProjectorParallel);
 
-      this .fieldOfView_ .setUnit ("length");
+      this ._fieldOfView .setUnit ("length");
    }
 
    TextureProjectorParallel .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
@@ -686,7 +686,7 @@ function (Fields,
       {
          X3DTextureProjectorNode .prototype .initialize .call (this);
 
-         this .fieldOfView_ .addInterest ("set_fieldOfView___", this);
+         this ._fieldOfView .addInterest ("set_fieldOfView___", this);
 
          this .set_fieldOfView___ ();
       },
@@ -720,12 +720,12 @@ function (Fields,
       },
       set_fieldOfView___: function ()
       {
-         var length = this .fieldOfView_ .length;
+         var length = this ._fieldOfView .length;
 
-         this .minimumX = (length > 0 ? this .fieldOfView_ [0] : -1);
-         this .minimumY = (length > 1 ? this .fieldOfView_ [1] : -1);
-         this .maximumX = (length > 2 ? this .fieldOfView_ [2] :  1);
-         this .maximumY = (length > 3 ? this .fieldOfView_ [3] :  1);
+         this .minimumX = (length > 0 ? this ._fieldOfView [0] : -1);
+         this .minimumY = (length > 1 ? this ._fieldOfView [1] : -1);
+         this .maximumX = (length > 2 ? this ._fieldOfView [2] :  1);
+         this .maximumY = (length > 3 ? this ._fieldOfView [3] :  1);
 
          this .sizeX = this .maximumX - this .minimumX;
          this .sizeY = this .maximumY - this .minimumY;

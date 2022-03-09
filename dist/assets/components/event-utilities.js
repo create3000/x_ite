@@ -103,19 +103,19 @@ function (Fields,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .set_boolean_ .addInterest ("set_boolean__", this);
+         this ._set_boolean .addInterest ("set_boolean__", this);
       },
       set_boolean__: function ()
       {
-         var value = this .set_boolean_ .getValue ();
+         var value = this ._set_boolean .getValue ();
 
          if (value)
-            this .inputTrue_ = true;
+            this ._inputTrue = true;
 
          else
-            this .inputFalse_ = false;
+            this ._inputFalse = false;
 
-         this .inputNegate_ = ! value;
+         this ._inputNegate = ! value;
       },
    });
 
@@ -198,16 +198,16 @@ function (X3DChildNode,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .set_fraction_ .addInterest ("set_fraction__", this);
-         this .previous_     .addInterest ("set_previous__", this);
-         this .next_         .addInterest ("set_next__", this);
-         this .key_          .addInterest ("set_index__", this);
+         this ._set_fraction .addInterest ("set_fraction__", this);
+         this ._previous     .addInterest ("set_previous__", this);
+         this ._next         .addInterest ("set_next__", this);
+         this ._key          .addInterest ("set_index__", this);
       },
       set_fraction__: function ()
       {
          var
-            fraction = this .set_fraction_ .getValue (),
-            key      = this .key_,
+            fraction = this ._set_fraction .getValue (),
+            key      = this ._key,
             length   = key .length;
 
          if (length === 0)
@@ -238,7 +238,7 @@ function (X3DChildNode,
       },
       set_previous__: function ()
       {
-         if (this .previous_ .getValue ())
+         if (this ._previous .getValue ())
          {
             if (this .index <= 0)
                this .index = this .getSize () - 1;
@@ -252,7 +252,7 @@ function (X3DChildNode,
       },
       set_next__: function ()
       {
-         if (this .next_ .getValue ())
+         if (this ._next .getValue ())
          {
             if (this .index >= this .getSize () - 1)
                this .index = 0;
@@ -372,15 +372,15 @@ function (Fields,
       {
          X3DSequencerNode .prototype .initialize .call (this);
 
-         this .keyValue_ .addInterest ("set_index__", this);
+         this ._keyValue .addInterest ("set_index__", this);
       },
       getSize: function ()
       {
-         return this .keyValue_ .length;
+         return this ._keyValue .length;
       },
       sequence: function (index)
       {
-         this .value_changed_ = this .keyValue_ [index];
+         this ._value_changed = this ._keyValue [index];
       },
    });
 
@@ -482,12 +482,12 @@ function (Fields,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .set_boolean_ .addInterest ("set_boolean__", this);
+         this ._set_boolean .addInterest ("set_boolean__", this);
       },
       set_boolean__: function ()
       {
-         if (this .set_boolean_ .getValue ())
-            this .toggle_ = ! this .toggle_ .getValue ();
+         if (this ._set_boolean .getValue ())
+            this ._toggle = ! this ._toggle .getValue ();
       },
    });
 
@@ -662,11 +662,11 @@ function (Fields,
       {
          X3DTriggerNode .prototype .initialize .call (this);
 
-         this .set_triggerTime_ .addInterest ("set_triggerTime__", this);
+         this ._set_triggerTime .addInterest ("set_triggerTime__", this);
       },
       set_triggerTime__: function ()
       {
-         this .triggerTrue_ = true;
+         this ._triggerTrue = true;
       },
    });
 
@@ -772,15 +772,15 @@ function (Fields,
       {
          X3DSequencerNode .prototype .initialize .call (this);
 
-         this .keyValue_ .addInterest ("set_index__", this);
+         this ._keyValue .addInterest ("set_index__", this);
       },
       getSize: function ()
       {
-         return this .keyValue_ .length;
+         return this ._keyValue .length;
       },
       sequence: function (index)
       {
-         this .value_changed_ = this .keyValue_ [index];
+         this ._value_changed = this ._keyValue [index];
       },
    });
 
@@ -883,11 +883,11 @@ function (Fields,
       {
          X3DTriggerNode .prototype .initialize .call (this);
 
-         this .set_boolean_ .addInterest ("set_boolean__", this);
+         this ._set_boolean .addInterest ("set_boolean__", this);
       },
       set_boolean__: function ()
       {
-         this .triggerValue_ = this .integerKey_;
+         this ._triggerValue = this ._integerKey;
       },
    });
 
@@ -989,11 +989,11 @@ function (Fields,
       {
          X3DTriggerNode .prototype .initialize .call (this);
 
-         this .set_boolean_ .addInterest ("set_boolean__", this);
+         this ._set_boolean .addInterest ("set_boolean__", this);
       },
       set_boolean__: function ()
       {
-         this .triggerTime_ = this .getBrowser () .getCurrentTime ();
+         this ._triggerTime = this .getBrowser () .getCurrentTime ();
       },
    });
 

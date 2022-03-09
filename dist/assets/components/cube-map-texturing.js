@@ -97,25 +97,23 @@ function (X3DSingleTextureNode,
       },
       clearTexture: (function ()
       {
-         var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+         const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
          return function ()
          {
-            var
-               gl      = this .getBrowser () .getContext (),
-               targets = this .getTargets ();
+            const gl = this .getBrowser () .getContext ();
 
             gl .bindTexture (this .getTarget (), this .getTexture ());
 
-            for (var i = 0, length = targets .length; i < length; ++ i)
-               gl .texImage2D (targets [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+            for (const target of this .getTargets ())
+               gl .texImage2D (target, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          };
       })(),
       updateTextureProperties: function ()
       {
          X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
                                                                          this .target,
-                                                                         this .textureProperties_ .getValue (),
+                                                                         this ._textureProperties .getValue (),
                                                                          this .texturePropertiesNode,
                                                                          128,
                                                                          128,
@@ -206,14 +204,15 @@ function (Fields,
 
       this .addType (X3DConstants .ComposedCubeMapTexture);
 
-      this .addAlias ("front",  this .frontTexture_);
-      this .addAlias ("back",   this .backTexture_);
-      this .addAlias ("left",   this .leftTexture_);
-      this .addAlias ("right",  this .rightTexture_);
-      this .addAlias ("bottom", this .bottomTexture_);
-      this .addAlias ("top",    this .topTexture_);
+      this .addAlias ("front",  this ._frontTexture);
+      this .addAlias ("back",   this ._backTexture);
+      this .addAlias ("left",   this ._leftTexture);
+      this .addAlias ("right",  this ._rightTexture);
+      this .addAlias ("bottom", this ._bottomTexture);
+      this .addAlias ("top",    this ._topTexture);
 
       this .textures   = [null, null, null, null, null, null];
+      this .symbols    = [Symbol (), Symbol (), Symbol (), Symbol (), Symbol (), Symbol ()];
       this .loadStates = 0;
    }
 
@@ -253,45 +252,41 @@ function (Fields,
 
          // Initialize.
 
-         this .frontTexture_  .addInterest ("set_texture__", this, 0);
-         this .backTexture_   .addInterest ("set_texture__", this, 1);
-         this .leftTexture_   .addInterest ("set_texture__", this, 2);
-         this .rightTexture_  .addInterest ("set_texture__", this, 3);
-         this .topTexture_    .addInterest ("set_texture__", this, 5);
-         this .bottomTexture_ .addInterest ("set_texture__", this, 4);
+         this ._frontTexture  .addInterest ("set_texture__", this, 0);
+         this ._backTexture   .addInterest ("set_texture__", this, 1);
+         this ._leftTexture   .addInterest ("set_texture__", this, 2);
+         this ._rightTexture  .addInterest ("set_texture__", this, 3);
+         this ._topTexture    .addInterest ("set_texture__", this, 5);
+         this ._bottomTexture .addInterest ("set_texture__", this, 4);
 
-         this .set_texture__ (this .frontTexture_,  0);
-         this .set_texture__ (this .backTexture_,   1);
-         this .set_texture__ (this .leftTexture_,   2);
-         this .set_texture__ (this .rightTexture_,  3);
-         this .set_texture__ (this .topTexture_,    4);
-         this .set_texture__ (this .bottomTexture_, 5);
+         this .set_texture__ (this ._frontTexture,  0);
+         this .set_texture__ (this ._backTexture,   1);
+         this .set_texture__ (this ._leftTexture,   2);
+         this .set_texture__ (this ._rightTexture,  3);
+         this .set_texture__ (this ._topTexture,    4);
+         this .set_texture__ (this ._bottomTexture, 5);
       },
       set_texture__: function (node, index)
       {
-         var texture = this .textures [index];
+         let texture = this .textures [index];
 
          if (texture)
          {
-            var callbackName = "set_loadState__" + texture .getId () + "_" + index;
-
             texture .removeInterest ("set_loadState__", this);
-            texture .loadState_ .removeFieldCallback (callbackName);
+            texture ._loadState .removeFieldCallback (this .symbols [index]);
          }
 
-         var texture = this .textures [index] = X3DCast (X3DConstants .X3DTexture2DNode, node);
+         texture = this .textures [index] = X3DCast (X3DConstants .X3DTexture2DNode, node);
 
          if (texture)
          {
-            var callbackName = "set_loadState__" + texture .getId () + "_" + index;
-
             texture .addInterest ("set_loadState__", this, texture, index);
-            texture .loadState_ .addFieldCallback (callbackName, this .set_loadState__ .bind (this, null, texture, index));
+            texture ._loadState .addFieldCallback (this .symbols [index], this .set_loadState__ .bind (this, texture, index));
          }
 
-         this .set_loadState__ (null, texture, index);
+         this .set_loadState__ (texture, index);
       },
-      set_loadState__: function (output, texture, index)
+      set_loadState__: function (texture, index)
       {
          if (texture)
             this .setLoadStateBit (texture .checkLoadState (), texture .getData (), index);
@@ -309,17 +304,15 @@ function (Fields,
       },
       isComplete: function ()
       {
-         if (this .loadStates !== 0x3f) // 0b111111
+         if (this .loadStates !== 0b111111)
             return false;
 
-         var
+         const
             textures = this .textures,
             size     = textures [0] .getWidth ();
 
-         for (var i = 0; i < 6; ++ i)
+         for (const texture of textures)
          {
-            var texture = textures [i];
-
             if (texture .getWidth () !== size)
                return false;
 
@@ -331,18 +324,18 @@ function (Fields,
       },
       setTextures: function ()
       {
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
          gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
          if (this .isComplete ())
          {
-            var textures = this .textures;
+            const textures = this .textures;
 
-            for (var i = 0; i < 6; ++ i)
+            for (let i = 0; i < 6; ++ i)
             {
-               var
+               const
                   gl      = this .getBrowser () .getContext (),
                   texture = textures [i],
                   width   = texture .getWidth (),
@@ -373,15 +366,13 @@ function (Fields,
       },
       set_transparent__: function ()
       {
-         var
-            textures    = this .textures,
-            transparent = false;
+         const transparent = false;
 
          if (this .isComplete ())
          {
-            for (var i = 0; i < 6; ++ i)
+            for (const texture of this .textures)
             {
-               if (textures [i] .transparent_ .getValue ())
+               if (texture ._transparent .getValue ())
                {
                   transparent = true;
                   break;
@@ -628,30 +619,6 @@ function (Fields,
 {
 "use strict";
 
-   // Rotations to negated normals of the texture cube.
-
-   var rotations = [
-      new Rotation4 (Vector3 .zAxis, new Vector3 ( 0,  0, -1)), // front
-      new Rotation4 (Vector3 .zAxis, new Vector3 ( 0,  0,  1)), // back
-      new Rotation4 (Vector3 .zAxis, new Vector3 ( 1,  0,  0)), // left
-      new Rotation4 (Vector3 .zAxis, new Vector3 (-1,  0,  0)), // right
-      new Rotation4 (Vector3 .zAxis, new Vector3 ( 0, -1,  0)), // top
-      new Rotation4 (Vector3 .zAxis, new Vector3 ( 0,  1,  0)), // bottom
-   ];
-
-   // Negated scales of the texture cube.
-
-   var scales = [
-      new Vector3 (-1, -1,  1), // front
-      new Vector3 (-1, -1,  1), // back
-      new Vector3 (-1, -1,  1), // left
-      new Vector3 (-1, -1,  1), // right
-      new Vector3 ( 1,  1,  1), // top
-      new Vector3 ( 1,  1,  1), // bottom
-   ];
-
-   var invCameraSpaceMatrix = new Matrix4 ();
-
    function GeneratedCubeMapTexture (executionContext)
    {
       X3DEnvironmentTextureNode .call (this, executionContext);
@@ -694,7 +661,7 @@ function (Fields,
 
          // Transfer 6 textures of size x size pixels.
 
-         var size = Algorithm .nextPowerOfTwo (this .size_ .getValue ());
+         let size = Algorithm .nextPowerOfTwo (this ._size .getValue ());
 
          if (size > 0)
          {
@@ -702,14 +669,14 @@ function (Fields,
 
             // Upload default data.
 
-            var
+            const
                gl          = this .getBrowser () .getContext (),
                defaultData = new Uint8Array (size * size * 4);
 
             gl .bindTexture (this .getTarget (), this .getTexture ());
 
-            for (var i = 0; i < 6; ++ i)
-               gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+            for (const target of this .getTargets ())
+               gl .texImage2D (target, 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
             // Properties
 
@@ -722,7 +689,7 @@ function (Fields,
          if (type !== TraverseType .DISPLAY)
             return;
 
-         if (this .update_ .getValue () === "NONE")
+         if (this ._update .getValue () === "NONE")
             return;
 
          if (! this .frameBuffer)
@@ -738,98 +705,125 @@ function (Fields,
 
          this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (renderObject .getCameraSpaceMatrix () .get ());
       },
-      renderTexture: function (renderObject)
+      renderTexture: (function ()
       {
-         this .renderer .setRenderer (renderObject);
+         // Rotations to negated normals of the texture cube.
 
-         var
-            renderer           = this .renderer,
-            browser            = renderObject .getBrowser (),
-            layer              = renderObject .getLayer (),
-            gl                 = browser .getContext (),
-            background         = renderer .getBackground (),
-            navigationInfo     = renderer .getNavigationInfo (),
-            viewpoint          = renderer .getViewpoint (),
-            headlightContainer = browser .getHeadlight (),
-            headlight          = navigationInfo .headlight_ .getValue (),
-            nearValue          = navigationInfo .getNearValue (),
-            farValue           = navigationInfo .getFarValue (viewpoint),
-            projectionMatrix   = Camera .perspective (Algorithm .radians (90.0), nearValue, farValue, 1, 1, this .projectionMatrix);
+         const rotations = [
+            new Rotation4 (Vector3 .zAxis, new Vector3 ( 0,  0, -1)), // front
+            new Rotation4 (Vector3 .zAxis, new Vector3 ( 0,  0,  1)), // back
+            new Rotation4 (Vector3 .zAxis, new Vector3 ( 1,  0,  0)), // left
+            new Rotation4 (Vector3 .zAxis, new Vector3 (-1,  0,  0)), // right
+            new Rotation4 (Vector3 .zAxis, new Vector3 ( 0, -1,  0)), // top
+            new Rotation4 (Vector3 .zAxis, new Vector3 ( 0,  1,  0)), // bottom
+         ];
 
-         this .setTransparent (background .getTransparent ());
+         // Negated scales of the texture cube.
 
-         this .frameBuffer .bind ();
+         const scales = [
+            new Vector3 (-1, -1,  1), // front
+            new Vector3 (-1, -1,  1), // back
+            new Vector3 (-1, -1,  1), // left
+            new Vector3 (-1, -1,  1), // right
+            new Vector3 ( 1,  1,  1), // top
+            new Vector3 ( 1,  1,  1), // bottom
+         ];
 
-         renderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
-         renderer .getProjectionMatrix () .pushMatrix (projectionMatrix);
+         const invCameraSpaceMatrix = new Matrix4 ();
 
-         gl .bindTexture (this .getTarget (), this .getTexture ());
-         gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
-
-         for (var i = 0; i < 6; ++ i)
+         return function (renderObject)
          {
-            gl .clear (gl .COLOR_BUFFER_BIT); // Always clear, X3DBackground could be transparent!
+            this .renderer .setRenderer (renderObject);
 
-            // Setup inverse texture space matrix.
+            const
+               renderer           = this .renderer,
+               browser            = renderObject .getBrowser (),
+               layer              = renderObject .getLayer (),
+               gl                 = browser .getContext (),
+               background         = renderer .getBackground (),
+               navigationInfo     = renderer .getNavigationInfo (),
+               viewpoint          = renderer .getViewpoint (),
+               headlightContainer = browser .getHeadlight (),
+               headlight          = navigationInfo ._headlight .getValue (),
+               nearValue          = navigationInfo .getNearValue (),
+               farValue           = navigationInfo .getFarValue (viewpoint),
+               projectionMatrix   = Camera .perspective (Algorithm .radians (90.0), nearValue, farValue, 1, 1, this .projectionMatrix);
 
-            renderer .getCameraSpaceMatrix () .pushMatrix (this .modelMatrix);
-            renderer .getCameraSpaceMatrix () .rotate (rotations [i]);
-            renderer .getCameraSpaceMatrix () .scale (scales [i]);
+            this .setTransparent (background .getTransparent ());
 
-            try
+            this .frameBuffer .bind ();
+
+            renderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
+            renderer .getProjectionMatrix () .pushMatrix (projectionMatrix);
+
+            gl .bindTexture (this .getTarget (), this .getTexture ());
+            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
+
+            for (let i = 0; i < 6; ++ i)
             {
-               renderer .getViewMatrix () .pushMatrix (invCameraSpaceMatrix .assign (renderer .getCameraSpaceMatrix () .get ()) .inverse ());
+               gl .clear (gl .COLOR_BUFFER_BIT); // Always clear, X3DBackground could be transparent!
+
+               // Setup inverse texture space matrix.
+
+               renderer .getCameraSpaceMatrix () .pushMatrix (this .modelMatrix);
+               renderer .getCameraSpaceMatrix () .rotate (rotations [i]);
+               renderer .getCameraSpaceMatrix () .scale (scales [i]);
+
+               try
+               {
+                  renderer .getViewMatrix () .pushMatrix (invCameraSpaceMatrix .assign (renderer .getCameraSpaceMatrix () .get ()) .inverse ());
+               }
+               catch (error)
+               {
+                  console .log (error);
+
+                  renderer .getViewMatrix () .pushMatrix (Matrix4 .Identity);
+               }
+
+               renderer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
+
+               // Setup headlight if enabled.
+
+               if (headlight)
+               {
+                  headlightContainer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
+                  headlightContainer .getModelViewMatrix () .multLeft (viewpoint .getCameraSpaceMatrix ());
+               }
+
+               // Render layer's children.
+
+               layer .traverse (TraverseType .DISPLAY, renderer);
+
+               // Pop matrices.
+
+               if (headlight)
+                  headlightContainer .getModelViewMatrix () .pop ();
+
+               renderer .getModelViewMatrix ()   .pop ();
+               renderer .getCameraSpaceMatrix () .pop ();
+               renderer .getViewMatrix ()        .pop ();
+
+               // Transfer image.
+
+               const
+                  data   = this .frameBuffer .readPixels (),
+                  width  = this .frameBuffer .getWidth (),
+                  height = this .frameBuffer .getHeight ();
+
+               gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
             }
-            catch (error)
-            {
-               console .log (error);
 
-               renderer .getViewMatrix () .pushMatrix (Matrix4 .Identity);
-            }
+            this .updateTextureProperties ();
 
-            renderer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
+            renderer .getProjectionMatrix () .pop ();
+            renderer .getViewVolumes      () .pop ();
 
-            // Setup headlight if enabled.
+            this .frameBuffer .unbind ();
 
-            if (headlight)
-            {
-               headlightContainer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
-               headlightContainer .getModelViewMatrix () .multLeft (viewpoint .getCameraSpaceMatrix ());
-            }
-
-            // Render layer's children.
-
-            layer .traverse (TraverseType .DISPLAY, renderer);
-
-            // Pop matrices.
-
-            if (headlight)
-               headlightContainer .getModelViewMatrix () .pop ();
-
-            renderer .getModelViewMatrix ()   .pop ();
-            renderer .getCameraSpaceMatrix () .pop ();
-            renderer .getViewMatrix ()        .pop ();
-
-            // Transfer image.
-
-            var
-               data   = this .frameBuffer .readPixels (),
-               width  = this .frameBuffer .getWidth (),
-               height = this .frameBuffer .getHeight ();
-
-            gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
-         }
-
-         this .updateTextureProperties ();
-
-         renderer .getProjectionMatrix () .pop ();
-         renderer .getViewVolumes      () .pop ();
-
-         this .frameBuffer .unbind ();
-
-         if (this .update_ .getValue () === "NEXT_FRAME_ONLY")
-            this .update_ = "NONE";
-      },
+            if (this ._update .getValue () === "NEXT_FRAME_ONLY")
+               this ._update = "NONE";
+         };
+      })(),
       setShaderUniformsToChannel: (function ()
       {
          const Zero = new Float32Array (16); // Trick: zero model view matrix to hide object.
@@ -1000,7 +994,7 @@ function ($,
       },
       loadNow: function ()
       {
-         this .urlStack .setValue (this .urlBuffer_);
+         this .urlStack .setValue (this ._urlBuffer);
          this .loadNext ();
       },
       loadNext: function ()

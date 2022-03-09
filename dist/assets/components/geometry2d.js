@@ -277,7 +277,7 @@ function (X3DBaseNode,
       build: function ()
       {
          const
-            dimension = this .dimension_ .getValue (),
+            dimension = this ._dimension .getValue (),
             angle     = Math .PI * 2 / dimension,
             vertices  = this .vertices;
 
@@ -422,7 +422,7 @@ function (X3DBaseNode,
          return function ()
          {
             const
-               dimension      = this .dimension_ .getValue (),
+               dimension      = this ._dimension .getValue (),
                angle          = Math .PI * 2 / dimension,
                circleVertices = this .circleVertices,
                diskTexCoords  = this .diskTexCoords,
@@ -567,27 +567,27 @@ function (Fields,
             return this .geometry;
 
          this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
-         this .geometry .texCoord_ = new TextureCoordinate (this .getExecutionContext ());
-         this .geometry .coord_    = new Coordinate (this .getExecutionContext ());
+         this .geometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
+         this .geometry ._coord    = new Coordinate (this .getExecutionContext ());
 
          const
             geometry = this .geometry,
-            texCoord = this .geometry .texCoord_ .getValue (),
-            coord    = this .geometry .coord_ .getValue ();
+            texCoord = this .geometry ._texCoord .getValue (),
+            coord    = this .geometry ._coord .getValue ();
 
-         geometry .texCoordIndex_ = new Fields .MFInt32 (
+         geometry ._texCoordIndex = new Fields .MFInt32 (
             0, 1, 2, 3, -1
          );
 
-         geometry .coordIndex_ = new Fields .MFInt32 (
+         geometry ._coordIndex = new Fields .MFInt32 (
             0, 1, 2, 3, -1
          );
 
-         texCoord .point_ = new Fields .MFVec2f (
+         texCoord ._point = new Fields .MFVec2f (
             new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0)
          );
 
-         coord .point_ = new Fields .MFVec3f (
+         coord ._point = new Fields .MFVec3f (
             new Fields .SFVec3f (1, 1, 0), new Fields .SFVec3f (-1, 1, 0), new Fields .SFVec3f (-1, -1, 0), new Fields .SFVec3f (1, -1, 0)
          );
 
@@ -708,26 +708,26 @@ function (Arc2DOptions,
          {
             case PrimitiveQuality .LOW:
             {
-               arc      .dimension_ = 20;
-               arcClose .dimension_ = 20;
-               circle   .dimension_ = 20;
-               disk     .dimension_ = 20;
+               arc      ._dimension = 20;
+               arcClose ._dimension = 20;
+               circle   ._dimension = 20;
+               disk     ._dimension = 20;
                break;
             }
             case PrimitiveQuality .MEDIUM:
             {
-               arc      .dimension_ = 40;
-               arcClose .dimension_ = 40;
-               circle   .dimension_ = 40;
-               disk     .dimension_ = 40;
+               arc      ._dimension = 40;
+               arcClose ._dimension = 40;
+               circle   ._dimension = 40;
+               disk     ._dimension = 40;
                break;
             }
             case PrimitiveQuality .HIGH:
             {
-               arc      .dimension_ = 80;
-               arcClose .dimension_ = 80;
-               circle   .dimension_ = 80;
-               disk     .dimension_ = 80;
+               arc      ._dimension = 80;
+               arcClose ._dimension = 80;
+               circle   ._dimension = 80;
+               disk     ._dimension = 80;
                break;
             }
          }
@@ -826,9 +826,9 @@ function (Fields,
 
       this .setGeometryType (1);
 
-      this .startAngle_ .setUnit ("angle");
-      this .endAngle_   .setUnit ("angle");
-      this .radius_     .setUnit ("length");
+      this ._startAngle .setUnit ("angle");
+      this ._endAngle   .setUnit ("angle");
+      this ._radius     .setUnit ("length");
    }
 
    Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
@@ -864,8 +864,8 @@ function (Fields,
       getSweepAngle: function ()
       {
          var
-            start = Algorithm .interval (this .startAngle_ .getValue (), 0, Math .PI * 2),
-            end   = Algorithm .interval (this .endAngle_   .getValue (), 0, Math .PI * 2);
+            start = Algorithm .interval (this ._startAngle .getValue (), 0, Math .PI * 2),
+            end   = Algorithm .interval (this ._endAngle   .getValue (), 0, Math .PI * 2);
 
          if (start === end)
             return Math .PI * 2;
@@ -886,9 +886,9 @@ function (Fields,
          var
             gl          = this .getBrowser () .getContext (),
             options     = this .getBrowser () .getArc2DOptions (),
-            dimension   = options .dimension_ .getValue (),
-            startAngle  = this .startAngle_ .getValue  (),
-            radius      = Math .abs (this .radius_ .getValue ()),
+            dimension   = options ._dimension .getValue (),
+            startAngle  = this ._startAngle .getValue  (),
+            radius      = Math .abs (this ._radius .getValue ()),
             sweepAngle  = this .getSweepAngle (),
             circle      = sweepAngle == (Math .PI * 2),
             steps       = Math .floor (sweepAngle * dimension / (Math .PI * 2)),
@@ -1004,9 +1004,9 @@ function (Fields,
 
       this .setGeometryType (2);
 
-      this .startAngle_ .setUnit ("angle");
-      this .endAngle_   .setUnit ("angle");
-      this .radius_     .setUnit ("length");
+      this ._startAngle .setUnit ("angle");
+      this ._endAngle   .setUnit ("angle");
+      this ._radius     .setUnit ("length");
    }
 
    ArcClose2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -1044,8 +1044,8 @@ function (Fields,
       getSweepAngle: function ()
       {
          var
-            start = Algorithm .interval (this .startAngle_ .getValue (), 0, Math .PI * 2),
-            end   = Algorithm .interval (this .endAngle_   .getValue (), 0, Math .PI * 2);
+            start = Algorithm .interval (this ._startAngle .getValue (), 0, Math .PI * 2),
+            end   = Algorithm .interval (this ._endAngle   .getValue (), 0, Math .PI * 2);
 
          if (start === end)
             return Math .PI * 2;
@@ -1069,10 +1069,10 @@ function (Fields,
          {
             var
                options       = this .getBrowser () .getArcClose2DOptions (),
-               chord         = this .closureType_ .getValue () === "CHORD",
-               dimension     = options .dimension_ .getValue (),
-               startAngle    = this .startAngle_ .getValue  (),
-               radius        = Math .abs (this .radius_ .getValue ()),
+               chord         = this ._closureType .getValue () === "CHORD",
+               dimension     = options ._dimension .getValue (),
+               startAngle    = this ._startAngle .getValue  (),
+               radius        = Math .abs (this ._radius .getValue ()),
                sweepAngle    = this .getSweepAngle (),
                steps         = Math .max (4, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
                texCoordArray = this .getTexCoords (),
@@ -1147,7 +1147,7 @@ function (Fields,
             this .getMin () .set (-radius, -radius, 0);
             this .getMax () .set ( radius,  radius, 0);
 
-            this .setSolid (this .solid_ .getValue ());
+            this .setSolid (this ._solid .getValue ());
          };
       })(),
    });
@@ -1227,7 +1227,7 @@ function (Fields,
 
       this .setGeometryType (1);
 
-      this .radius_ .setUnit ("length");
+      this ._radius .setUnit ("length");
    }
 
    Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
@@ -1269,7 +1269,7 @@ function (Fields,
          var
             options     = this .getBrowser () .getCircle2DOptions (),
             vertexArray = this .getVertices (),
-            radius      = this .radius_ .getValue ();
+            radius      = this ._radius .getValue ();
 
          if (radius === 1)
          {
@@ -1363,8 +1363,8 @@ function (Fields,
 
       this .addType (X3DConstants .Disk2D);
 
-      this .innerRadius_ .setUnit ("length");
-      this .outerRadius_ .setUnit ("length");
+      this ._innerRadius .setUnit ("length");
+      this ._outerRadius .setUnit ("length");
    }
 
    Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -1409,8 +1409,8 @@ function (Fields,
       {
          const
             options     = this .getBrowser () .getDisk2DOptions (),
-            innerRadius = Math .min (Math .abs (this .innerRadius_ .getValue ()), Math .abs (this .outerRadius_ .getValue ())),
-            outerRadius = Math .max (Math .abs (this .innerRadius_ .getValue ()), Math .abs (this .outerRadius_ .getValue ()));
+            innerRadius = Math .min (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ())),
+            outerRadius = Math .max (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ()));
 
          if (innerRadius === outerRadius)
          {
@@ -1471,7 +1471,7 @@ function (Fields,
             this .getMax () .set ( outerRadius,  outerRadius, 0);
 
             this .setGeometryType (2);
-            this .setSolid (this .solid_ .getValue ());
+            this .setSolid (this ._solid .getValue ());
 
             return;
          }
@@ -1515,7 +1515,7 @@ function (Fields,
          this .getMax () .set ( outerRadius,  outerRadius, 0);
 
          this .setGeometryType (2);
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
       },
       intersectsLine: function (line, clipPlanes, modelViewMatrix, intersections)
       {
@@ -1638,7 +1638,7 @@ function (Fields,
 
       this .setGeometryType (1);
 
-      this .lineSegments_ .setUnit ("length");
+      this ._lineSegments .setUnit ("length");
    }
 
    Polyline2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
@@ -1669,10 +1669,10 @@ function (Fields,
       build: function ()
       {
          var
-            lineSegments = this .lineSegments_ .getValue (),
+            lineSegments = this ._lineSegments .getValue (),
             vertexArray  = this .getVertices ();
 
-         for (var i = 0, length = this .lineSegments_ .length * 2; i < length; i += 2)
+         for (var i = 0, length = this ._lineSegments .length * 2; i < length; i += 2)
          {
             vertexArray .push (lineSegments [i], lineSegments [i + 1], 0, 1);
          }
@@ -1756,7 +1756,7 @@ function (Fields,
 
       this .setGeometryType (0);
 
-      this .point_ .setUnit ("length");
+      this ._point .setUnit ("length");
 
       this .setTransparent (true);
    }
@@ -1796,10 +1796,10 @@ function (Fields,
       build: function ()
       {
          var
-            point       = this .point_ .getValue (),
+            point       = this ._point .getValue (),
             vertexArray = this .getVertices ();
 
-         for (var i = 0, length = this .point_ .length * 2; i < length; i += 2)
+         for (var i = 0, length = this ._point .length * 2; i < length; i += 2)
          {
             vertexArray .push (point [i], point [i + 1], 0, 1);
          }
@@ -1887,7 +1887,7 @@ function (Fields,
 
       this .setGeometryType (2);
 
-      this .size_ .setUnit ("length");
+      this ._size .setUnit ("length");
    }
 
    Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -1915,7 +1915,7 @@ function (Fields,
          var
             options  = this .getBrowser () .getRectangle2DOptions (),
             geometry = options .getGeometry (),
-            size     = this .size_ .getValue ();
+            size     = this ._size .getValue ();
 
          this .setMultiTexCoords (geometry .getMultiTexCoords ());
          this .setNormals        (geometry .getNormals ());
@@ -1948,7 +1948,7 @@ function (Fields,
             this .getMax () .set ( x,  y, 0);
          }
 
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
       },
    });
 
@@ -2029,7 +2029,7 @@ function (Fields,
 
       this .setGeometryType (2);
 
-      this .vertices_ .setUnit ("length");
+      this ._vertices .setUnit ("length");
    }
 
    TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -2055,17 +2055,17 @@ function (Fields,
       build: function ()
       {
          var
-            vertices    = this .vertices_ .getValue (),
+            vertices    = this ._vertices .getValue (),
             normalArray = this .getNormals (),
             vertexArray = this .getVertices ();
 
-         for (var i = 0, length = this .vertices_ .length * 2; i < length; i += 2)
+         for (var i = 0, length = this ._vertices .length * 2; i < length; i += 2)
          {
             normalArray .push (0, 0, 1);
             vertexArray .push (vertices [i], vertices [i + 1], 0, 1);
          }
 
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
       },
       buildTexCoords: function ()
       {

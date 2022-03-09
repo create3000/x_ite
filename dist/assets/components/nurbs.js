@@ -106,7 +106,7 @@ function (Fields,
       {
          X3DNode .prototype .initialize .call (this);
 
-         this .children_ .addInterest ("set_children__", this);
+         this ._children .addInterest ("set_children__", this);
 
          this .set_children__ ();
       },
@@ -116,9 +116,9 @@ function (Fields,
 
          childNodes .length = 0;
 
-         for (var i = 0, length = this .children_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._children .length; i < length; ++ i)
          {
-            var childNode = X3DCast (X3DConstants .NurbsCurve2D, this .children_ [i]);
+            var childNode = X3DCast (X3DConstants .NurbsCurve2D, this ._children [i]);
 
             if (childNode)
             {
@@ -126,7 +126,7 @@ function (Fields,
                continue;
             }
 
-            var childNode = X3DCast (X3DConstants .ContourPolyline2D, this .children_ [i]);
+            var childNode = X3DCast (X3DConstants .ContourPolyline2D, this ._children [i]);
 
             if (childNode)
             {
@@ -321,10 +321,10 @@ function (Fields,
             case 0:
             {
                var
-                  controlPointArray = this .controlPoint_ .getValue (),
+                  controlPointArray = this ._controlPoint .getValue (),
                   controlPoints     = this .controlPoints;
 
-               for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+               for (var i = 0, length = this ._controlPoint .length; i < length; ++ i)
                {
                   var i2 = i * 2;
 
@@ -339,10 +339,10 @@ function (Fields,
             case 1:
             {
                var
-                  controlPointArray = this .controlPoint_ .getValue (),
+                  controlPointArray = this ._controlPoint .getValue (),
                   controlPoints     = this .controlPoints;
 
-               for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+               for (var i = 0, length = this ._controlPoint .length; i < length; ++ i)
                {
                   var
                      i2 = i * 2,
@@ -360,10 +360,10 @@ function (Fields,
             case 3:
             {
                var
-                  controlPointArray = this .controlPoint_ .getValue (),
+                  controlPointArray = this ._controlPoint .getValue (),
                   controlPoints     = this .controlPoints;
 
-               for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+               for (var i = 0, length = this ._controlPoint .length; i < length; ++ i)
                {
                   var i2 = i * 2;
 
@@ -2827,7 +2827,7 @@ function (X3DCast,
       {
          X3DParametricGeometryNode .prototype .initialize .call (this);
 
-         this .controlPoint_ .addInterest ("set_controlPoint__", this);
+         this ._controlPoint .addInterest ("set_controlPoint__", this);
 
          this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
          this .setSolid (false);
@@ -2839,18 +2839,18 @@ function (X3DCast,
          if (this .controlPointNode)
             this .controlPointNode .removeInterest ("requestRebuild", this);
 
-         this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+         this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._controlPoint);
 
          if (this .controlPointNode)
             this .controlPointNode .addInterest ("requestRebuild", this);
       },
       getTessellation: function (numKnots)
       {
-         return NURBS .getTessellation (this .tessellation_ .getValue (), numKnots - this .order_ .getValue ());
+         return NURBS .getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
       },
       getClosed: function (order, knot, weight, controlPointNode)
       {
-         if (! this .closed_ .getValue ())
+         if (! this ._closed .getValue ())
             return false;
 
          return NURBS .getClosed (order, knot, weight, controlPointNode);
@@ -2865,13 +2865,13 @@ function (X3DCast,
       },
       tessellate: function ()
       {
-         if (this .order_ .getValue () < 2)
+         if (this ._order .getValue () < 2)
             return [ ];
 
          if (! this .controlPointNode)
             return [ ];
 
-         if (this .controlPointNode .getSize () < this .order_ .getValue ())
+         if (this .controlPointNode .getSize () < this ._order .getValue ())
             return [ ];
 
          var
@@ -2890,31 +2890,31 @@ function (X3DCast,
       },
       build: function ()
       {
-         if (this .order_ .getValue () < 2)
+         if (this ._order .getValue () < 2)
             return;
 
          if (! this .controlPointNode)
             return;
 
-         if (this .controlPointNode .getSize () < this .order_ .getValue ())
+         if (this .controlPointNode .getSize () < this ._order .getValue ())
             return;
 
          // Order and dimension are now positive numbers.
 
          var
-            closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
-            weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this .weight_),
-            controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPointNode);
+            closed        = this .getClosed (this ._order .getValue (), this ._knot, this ._weight, this .controlPointNode),
+            weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this ._weight),
+            controlPoints = this .getControlPoints (this .controlPoints, closed, this ._order .getValue (), weights, this .controlPointNode);
 
          // Knots
 
          var
-            knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+            knots = this .getKnots (this .knots, closed, this ._order .getValue (), this .controlPointNode .getSize (), this ._knot),
             scale = knots .at (-1) - knots [0];
 
          // Initialize NURBS tessellator
 
-         var degree = this .order_ .getValue () - 1;
+         var degree = this ._order .getValue () - 1;
 
          var surface = this .surface = (this .surface || nurbs) ({
             boundary: ["open"],
@@ -3055,11 +3055,11 @@ function (Fields,
       },
       getTessellation: function (numKnots)
       {
-         return NURBS .getTessellation (this .tessellation_ .getValue (), numKnots - this .order_ .getValue ());
+         return NURBS .getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
       },
       getClosed: function (order, knot, weight, controlPoint)
       {
-         if (! this .closed_ .getValue ())
+         if (! this ._closed .getValue ())
             return false;
 
          return NURBS .getClosed2D (order, knot, weight, controlPoint);
@@ -3082,28 +3082,28 @@ function (Fields,
 
          array .length = 0;
 
-         if (this .order_ .getValue () < 2)
+         if (this ._order .getValue () < 2)
             return array;
 
-         if (this .controlPoint_ .length < this .order_ .getValue ())
+         if (this ._controlPoint .length < this ._order .getValue ())
             return array;
 
          // Order and dimension are now positive numbers.
 
          var
-            closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPoint_),
-            weights       = this .getWeights (this .weights, this .controlPoint_ .length, this .weight_),
-            controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPoint_);
+            closed        = this .getClosed (this ._order .getValue (), this ._knot, this ._weight, this ._controlPoint),
+            weights       = this .getWeights (this .weights, this ._controlPoint .length, this ._weight),
+            controlPoints = this .getControlPoints (this .controlPoints, closed, this ._order .getValue (), weights, this ._controlPoint);
 
          // Knots
 
          var
-            knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPoint_ .length, this .knot_),
+            knots = this .getKnots (this .knots, closed, this ._order .getValue (), this ._controlPoint .length, this ._knot),
             scale = knots .at (-1) - knots [0];
 
          // Initialize NURBS tessellator
 
-         var degree = this .order_ .getValue () - 1;
+         var degree = this ._order .getValue () - 1;
 
          var surface = this .surface = (this .surface || nurbs) ({
             boundary: ["open"],
@@ -3278,15 +3278,15 @@ function (Fields,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .order_        .addInterest ("requestRebuild",     this);
-         this .knot_         .addInterest ("requestRebuild",     this);
-         this .weight_       .addInterest ("requestRebuild",     this);
-         this .controlPoint_ .addInterest ("set_controlPoint__", this);
+         this ._order        .addInterest ("requestRebuild",     this);
+         this ._knot         .addInterest ("requestRebuild",     this);
+         this ._weight       .addInterest ("requestRebuild",     this);
+         this ._controlPoint .addInterest ("set_controlPoint__", this);
 
-         this .rebuild_ .addInterest ("build", this);
+         this ._rebuild .addInterest ("build", this);
 
-         this .set_fraction_ .addFieldInterest (this .interpolator .set_fraction_);
-         this .interpolator .value_changed_ .addFieldInterest (this .value_changed_);
+         this ._set_fraction .addFieldInterest (this .interpolator ._set_fraction);
+         this .interpolator ._value_changed .addFieldInterest (this ._value_changed);
 
          this .interpolator .setup ();
 
@@ -3297,7 +3297,7 @@ function (Fields,
          if (this .controlPointNode)
             this .controlPointNode .removeInterest ("requestRebuild", this);
 
-         this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+         this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._controlPoint);
 
          if (this .controlPointNode)
             this .controlPointNode .addInterest ("requestRebuild", this);
@@ -3322,35 +3322,35 @@ function (Fields,
       },
       requestRebuild: function ()
       {
-         this .rebuild_ .addEvent ();
+         this ._rebuild .addEvent ();
       },
       build: function ()
       {
-         if (this .order_ .getValue () < 2)
+         if (this ._order .getValue () < 2)
             return;
 
          if (! this .controlPointNode)
             return;
 
-         if (this .controlPointNode .getSize () < this .order_ .getValue ())
+         if (this .controlPointNode .getSize () < this ._order .getValue ())
             return;
 
          // Order and dimension are now positive numbers.
 
          var
-            closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
-            weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this .weight_),
-            controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPointNode);
+            closed        = this .getClosed (this ._order .getValue (), this ._knot, this ._weight, this .controlPointNode),
+            weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this ._weight),
+            controlPoints = this .getControlPoints (this .controlPoints, closed, this ._order .getValue (), weights, this .controlPointNode);
 
          // Knots
 
          var
-            knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+            knots = this .getKnots (this .knots, closed, this ._order .getValue (), this .controlPointNode .getSize (), this ._knot),
             scale = knots .at (-1) - knots [0];
 
          // Initialize NURBS tessellator
 
-         var degree = this .order_ .getValue () - 1;
+         var degree = this ._order .getValue () - 1;
 
          var surface = this .surface = (this .surface || nurbs) ({
             boundary: ["open"],
@@ -3367,8 +3367,8 @@ function (Fields,
             points       = mesh .points,
             interpolator = this .interpolator;
 
-         interpolator .key_      .length = 0;
-         interpolator .keyValue_ .length = 0;
+         interpolator ._key      .length = 0;
+         interpolator ._keyValue .length = 0;
 
          for (var i = 0, length = points .length - 3; i < length; i += 3)
          {
@@ -3376,14 +3376,14 @@ function (Fields,
                                          points [i + 4] - points [i + 1],
                                          points [i + 5] - points [i + 2]);
 
-            interpolator .key_      .push (knots [0] + i / (length - 3 + (3 * closed)) * scale);
-            interpolator .keyValue_. push (new Rotation4 (Vector3 .zAxis, direction));
+            interpolator ._key      .push (knots [0] + i / (length - 3 + (3 * closed)) * scale);
+            interpolator ._keyValue. push (new Rotation4 (Vector3 .zAxis, direction));
          }
 
          if (closed)
          {
-            interpolator .key_      .push (knots [0] + scale);
-            interpolator .keyValue_. push (interpolator .keyValue_ [0]);
+            interpolator ._key      .push (knots [0] + scale);
+            interpolator ._keyValue. push (interpolator ._keyValue [0]);
          }
       },
    });
@@ -3488,8 +3488,8 @@ function (X3DParametricGeometryNode,
       {
          X3DParametricGeometryNode .prototype .initialize .call (this);
 
-         this .texCoord_     .addInterest ("set_texCoord__",     this);
-         this .controlPoint_ .addInterest ("set_controlPoint__", this);
+         this ._texCoord     .addInterest ("set_texCoord__",     this);
+         this ._controlPoint .addInterest ("set_controlPoint__", this);
 
          this .set_texCoord__ ();
          this .set_controlPoint__ ();
@@ -3502,8 +3502,8 @@ function (X3DParametricGeometryNode,
          if (this .nurbsTexCoordNode)
             this .nurbsTexCoordNode .removeInterest ("requestRebuild", this);
 
-         this .texCoordNode      = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
-         this .nurbsTexCoordNode = X3DCast (X3DConstants .NurbsTextureCoordinate,   this .texCoord_);
+         this .texCoordNode      = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
+         this .nurbsTexCoordNode = X3DCast (X3DConstants .NurbsTextureCoordinate,   this ._texCoord);
 
          if (this .texCoordNode)
             this .texCoordNode .addInterest ("requestRebuild", this);
@@ -3516,7 +3516,7 @@ function (X3DParametricGeometryNode,
          if (this .controlPointNode)
             this .controlPointNode .removeInterest ("requestRebuild", this);
 
-         this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+         this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._controlPoint);
 
          if (this .controlPointNode)
             this .controlPointNode .addInterest ("requestRebuild", this);
@@ -3529,22 +3529,22 @@ function (X3DParametricGeometryNode,
       },
       getUTessellation: function (numKnots)
       {
-         return Math .floor (NURBS .getTessellation (this .uTessellation_ .getValue (), numKnots - this .uOrder_ .getValue ()) * this .tessellationScale);
+         return Math .floor (NURBS .getTessellation (this ._uTessellation .getValue (), numKnots - this ._uOrder .getValue ()) * this .tessellationScale);
       },
       getVTessellation: function (numKnots)
       {
-         return Math .floor (NURBS .getTessellation (this .vTessellation_ .getValue (), numKnots - this .vOrder_ .getValue ()) * this .tessellationScale);
+         return Math .floor (NURBS .getTessellation (this ._vTessellation .getValue (), numKnots - this ._vOrder .getValue ()) * this .tessellationScale);
       },
       getUClosed: function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
       {
-         if (this .uClosed_ .getValue ())
+         if (this ._uClosed .getValue ())
             return NURBS .getUClosed (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode);
 
          return false;
       },
       getVClosed: function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
       {
-         if (this .vClosed_ .getValue ())
+         if (this ._vClosed .getValue ())
             return NURBS .getVClosed (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode);
 
          return false;
@@ -3567,22 +3567,22 @@ function (X3DParametricGeometryNode,
       },
       build: function ()
       {
-         if (this .uOrder_ .getValue () < 2)
+         if (this ._uOrder .getValue () < 2)
             return;
 
-         if (this .vOrder_ .getValue () < 2)
+         if (this ._vOrder .getValue () < 2)
             return;
 
-         if (this .uDimension_ .getValue () < this .uOrder_ .getValue ())
+         if (this ._uDimension .getValue () < this ._uOrder .getValue ())
             return;
 
-         if (this .vDimension_ .getValue () < this .vOrder_ .getValue ())
+         if (this ._vDimension .getValue () < this ._vOrder .getValue ())
             return;
 
          if (! this .controlPointNode)
             return;
 
-         if (this .controlPointNode .getSize () !== this .uDimension_ .getValue () * this .vDimension_ .getValue ())
+         if (this .controlPointNode .getSize () !== this ._uDimension .getValue () * this ._vDimension .getValue ())
             return;
 
          // Order and dimension are now positive numbers.
@@ -3590,24 +3590,24 @@ function (X3DParametricGeometryNode,
          // ControlPoints
 
          var
-            uClosed       = this .getUClosed (this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .uKnot_, this .weight_, this .controlPointNode),
-            vClosed       = this .getVClosed (this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .vKnot_, this .weight_, this .controlPointNode),
-            weights       = this .getUVWeights (this .weights, this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .weight_),
-            controlPoints = this .getUVControlPoints (this .controlPoints, uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), weights, this .controlPointNode);
+            uClosed       = this .getUClosed (this ._uOrder .getValue (), this ._uDimension .getValue (), this ._vDimension .getValue (), this ._uKnot, this ._weight, this .controlPointNode),
+            vClosed       = this .getVClosed (this ._vOrder .getValue (), this ._uDimension .getValue (), this ._vDimension .getValue (), this ._vKnot, this ._weight, this .controlPointNode),
+            weights       = this .getUVWeights (this .weights, this ._uDimension .getValue (), this ._vDimension .getValue (), this ._weight),
+            controlPoints = this .getUVControlPoints (this .controlPoints, uClosed, vClosed, this ._uOrder .getValue (), this ._vOrder .getValue (), this ._uDimension .getValue (), this ._vDimension .getValue (), weights, this .controlPointNode);
 
          // Knots
 
          var
-            uKnots = this .getKnots (this .uKnots, uClosed, this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .uKnot_),
-            vKnots = this .getKnots (this .vKnots, vClosed, this .vOrder_ .getValue (), this .vDimension_ .getValue (), this .vKnot_),
+            uKnots = this .getKnots (this .uKnots, uClosed, this ._uOrder .getValue (), this ._uDimension .getValue (), this ._uKnot),
+            vKnots = this .getKnots (this .vKnots, vClosed, this ._vOrder .getValue (), this ._vDimension .getValue (), this ._vKnot),
             uScale = uKnots .at (-1) - uKnots [0],
             vScale = vKnots .at (-1) - vKnots [0];
 
          // Initialize NURBS tessellator
 
          var
-            uDegree = this .uOrder_ .getValue () - 1,
-            vDegree = this .vOrder_ .getValue () - 1;
+            uDegree = this ._uOrder .getValue () - 1,
+            vDegree = this ._vOrder .getValue () - 1;
 
          var surface = this .surface = (this .surface || nurbs) ({
             boundary: ["open", "open"],
@@ -3640,9 +3640,9 @@ function (X3DParametricGeometryNode,
             vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
          }
 
-         this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), surface .domain);
+         this .buildNurbsTexCoords (uClosed, vClosed, this ._uOrder .getValue (), this ._vOrder .getValue (), uKnots, vKnots, this ._uDimension .getValue (), this ._vDimension .getValue (), surface .domain);
          this .buildNormals (faces, points);
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
          this .setCCW (true);
       },
       buildNurbsTexCoords: (function ()
@@ -3676,11 +3676,11 @@ function (X3DParametricGeometryNode,
             {
                var
                   node             = this .nurbsTexCoordNode,
-                  texUDegree       = node .uOrder_ .getValue () - 1,
-                  texVDegree       = node .vOrder_ .getValue () - 1,
-                  texUKnots        = this .getKnots (this .texUKnots, false, node .uOrder_ .getValue (), node .uDimension_ .getValue (), node .uKnot_),
-                  texVKnots        = this .getKnots (this .texVKnots, false, node .vOrder_ .getValue (), node .vDimension_ .getValue (), node .vKnot_),
-                  texWeights       = this .getUVWeights (this .texWeights, node .uDimension_ .getValue (), node .vDimension_ .getValue (), node .weight_);
+                  texUDegree       = node ._uOrder .getValue () - 1,
+                  texVDegree       = node ._vOrder .getValue () - 1,
+                  texUKnots        = this .getKnots (this .texUKnots, false, node ._uOrder .getValue (), node ._uDimension .getValue (), node ._uKnot),
+                  texVKnots        = this .getKnots (this .texVKnots, false, node ._vOrder .getValue (), node ._vDimension .getValue (), node ._vKnot),
+                  texWeights       = this .getUVWeights (this .texWeights, node ._uDimension .getValue (), node ._vDimension .getValue (), node ._weight);
                   texControlPoints = node .getControlPoints (texWeights);
             }
             else
@@ -4018,15 +4018,15 @@ function (Fields,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .order_        .addInterest ("requestRebuild",     this);
-         this .knot_         .addInterest ("requestRebuild",     this);
-         this .weight_       .addInterest ("requestRebuild",     this);
-         this .controlPoint_ .addInterest ("set_controlPoint__", this);
+         this ._order        .addInterest ("requestRebuild",     this);
+         this ._knot         .addInterest ("requestRebuild",     this);
+         this ._weight       .addInterest ("requestRebuild",     this);
+         this ._controlPoint .addInterest ("set_controlPoint__", this);
 
-         this .rebuild_ .addInterest ("build", this);
+         this ._rebuild .addInterest ("build", this);
 
-         this .set_fraction_ .addFieldInterest (this .interpolator .set_fraction_);
-         this .interpolator .value_changed_ .addFieldInterest (this .value_changed_);
+         this ._set_fraction .addFieldInterest (this .interpolator ._set_fraction);
+         this .interpolator ._value_changed .addFieldInterest (this ._value_changed);
 
          this .interpolator .setup ();
 
@@ -4037,7 +4037,7 @@ function (Fields,
          if (this .controlPointNode)
             this .controlPointNode .removeInterest ("requestRebuild", this);
 
-         this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+         this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._controlPoint);
 
          if (this .controlPointNode)
             this .controlPointNode .addInterest ("requestRebuild", this);
@@ -4062,35 +4062,35 @@ function (Fields,
       },
       requestRebuild: function ()
       {
-         this .rebuild_ .addEvent ();
+         this ._rebuild .addEvent ();
       },
       build: function ()
       {
-         if (this .order_ .getValue () < 2)
+         if (this ._order .getValue () < 2)
             return;
 
          if (! this .controlPointNode)
             return;
 
-         if (this .controlPointNode .getSize () < this .order_ .getValue ())
+         if (this .controlPointNode .getSize () < this ._order .getValue ())
             return;
 
          // Order and dimension are now positive numbers.
 
          var
-            closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
-            weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this .weight_),
-            controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPointNode);
+            closed        = this .getClosed (this ._order .getValue (), this ._knot, this ._weight, this .controlPointNode),
+            weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this ._weight),
+            controlPoints = this .getControlPoints (this .controlPoints, closed, this ._order .getValue (), weights, this .controlPointNode);
 
          // Knots
 
          var
-            knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+            knots = this .getKnots (this .knots, closed, this ._order .getValue (), this .controlPointNode .getSize (), this ._knot),
             scale = knots .at (-1) - knots [0];
 
          // Initialize NURBS tessellator
 
-         var degree = this .order_ .getValue () - 1;
+         var degree = this ._order .getValue () - 1;
 
          var surface = this .surface = (this .surface || nurbs) ({
             boundary: ["open"],
@@ -4107,13 +4107,13 @@ function (Fields,
             points       = mesh .points,
             interpolator = this .interpolator;
 
-         interpolator .key_      .length = 0;
-         interpolator .keyValue_ .length = 0;
+         interpolator ._key      .length = 0;
+         interpolator ._keyValue .length = 0;
 
          for (var i = 0, length = points .length; i < length; i += 3)
          {
-            interpolator .key_      .push (knots [0] + i / (length - 3) * scale);
-            interpolator .keyValue_. push (new Fields .SFVec3f (points [i], points [i + 1], points [i + 2]));
+            interpolator ._key      .push (knots [0] + i / (length - 3) * scale);
+            interpolator ._keyValue. push (new Fields .SFVec3f (points [i], points [i + 1], points [i + 2]));
          }
       },
    });
@@ -4243,10 +4243,10 @@ function (Fields,
          X3DChildNode     .prototype .initialize .call (this);
          X3DBoundedObject .prototype .initialize .call (this);
 
-         this .tessellationScale_ .addInterest ("set_tessellationScale__", this);
-         this .addGeometry_       .addInterest ("set_addGeometry__",       this);
-         this .removeGeometry_    .addInterest ("set_removeGeometry__",    this);
-         this .geometry_          .addInterest ("set_geometry__",          this);
+         this ._tessellationScale .addInterest ("set_tessellationScale__", this);
+         this ._addGeometry       .addInterest ("set_addGeometry__",       this);
+         this ._removeGeometry    .addInterest ("set_removeGeometry__",    this);
+         this ._geometry          .addInterest ("set_geometry__",          this);
 
          this .set_geometry__ ();
       },
@@ -4263,28 +4263,28 @@ function (Fields,
       },
       set_tessellationScale__: function ()
       {
-         var tessellationScale = Math .max (0, this .tessellationScale_ .getValue ());
+         var tessellationScale = Math .max (0, this ._tessellationScale .getValue ());
 
          for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
             this .geometryNodes [i] .setTessellationScale (tessellationScale);
       },
       set_addGeometry__: function ()
       {
-         this .addGeometry_ .setTainted (true);
+         this ._addGeometry .setTainted (true);
 
-         this .addGeometry_ .erase (remove (this .addGeometry_, 0, this .addGeometry_ .length,
-                                            this .geometry_, 0, this .geometry_ .length),
-                                    this .addGeometry_ .length);
+         this ._addGeometry .erase (remove (this ._addGeometry, 0, this ._addGeometry .length,
+                                            this ._geometry, 0, this ._geometry .length),
+                                    this ._addGeometry .length);
 
-         for (var i = 0, length = this .addGeometry_ .length; i < length; ++ i)
-            this .geometry_ .push (this .addGeometry_ [i]);
+         for (var i = 0, length = this ._addGeometry .length; i < length; ++ i)
+            this ._geometry .push (this ._addGeometry [i]);
 
-         this .addGeometry_ .setTainted (false);
+         this ._addGeometry .setTainted (false);
       },
       set_removeGeometry__: function ()
       {
-         this .geometry_ .erase (remove (this .geometry_,       0, this .geometry_ .length,
-                                         this .removeGeometry_, 0, this .removeGeometry_ .length),
+         this ._geometry .erase (remove (this ._geometry,       0, this ._geometry .length,
+                                         this ._removeGeometry, 0, this ._removeGeometry .length),
                                  this .geometry__ .length);
       },
       set_geometry__: function ()
@@ -4294,9 +4294,9 @@ function (Fields,
 
          this .geometryNodes .length = 0;
 
-         for (var i = 0, length = this .geometry_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._geometry .length; i < length; ++ i)
          {
-            var geometryNode = X3DCast (X3DConstants .X3DNurbsSurfaceGeometryNode, this .geometry_ [i]);
+            var geometryNode = X3DCast (X3DConstants .X3DNurbsSurfaceGeometryNode, this ._geometry [i]);
 
             if (geometryNode)
                this .geometryNodes .push (geometryNode);
@@ -4504,27 +4504,27 @@ function (Fields,
       },
       initialize: function ()
       {
-         this .set_fraction_ .addInterest ("set_fraction__", this);
+         this ._set_fraction .addInterest ("set_fraction__", this);
 
-         this .uOrder_       .addFieldInterest (this .geometry .uOrder_);
-         this .vOrder_       .addFieldInterest (this .geometry .vOrder_);
-         this .uDimension_   .addFieldInterest (this .geometry .uDimension_);
-         this .vDimension_   .addFieldInterest (this .geometry .vDimension_);
-         this .uKnot_        .addFieldInterest (this .geometry .uKnot_);
-         this .vKnot_        .addFieldInterest (this .geometry .vKnot_);
-         this .weight_       .addFieldInterest (this .geometry .weight_);
-         this .controlPoint_ .addFieldInterest (this .geometry .controlPoint_);
+         this ._uOrder       .addFieldInterest (this .geometry ._uOrder);
+         this ._vOrder       .addFieldInterest (this .geometry ._vOrder);
+         this ._uDimension   .addFieldInterest (this .geometry ._uDimension);
+         this ._vDimension   .addFieldInterest (this .geometry ._vDimension);
+         this ._uKnot        .addFieldInterest (this .geometry ._uKnot);
+         this ._vKnot        .addFieldInterest (this .geometry ._vKnot);
+         this ._weight       .addFieldInterest (this .geometry ._weight);
+         this ._controlPoint .addFieldInterest (this .geometry ._controlPoint);
 
-         this .geometry .uTessellation_ = 128;
-         this .geometry .vTessellation_ = 128;
-         this .geometry .uOrder_        = this .uOrder_;
-         this .geometry .vOrder_        = this .vOrder_;
-         this .geometry .uDimension_    = this .uDimension_;
-         this .geometry .vDimension_    = this .vDimension_;
-         this .geometry .uKnot_         = this .uKnot_;
-         this .geometry .vKnot_         = this .vKnot_;
-         this .geometry .weight_        = this .weight_;
-         this .geometry .controlPoint_  = this .controlPoint_;
+         this .geometry ._uTessellation = 128;
+         this .geometry ._vTessellation = 128;
+         this .geometry ._uOrder        = this ._uOrder;
+         this .geometry ._vOrder        = this ._vOrder;
+         this .geometry ._uDimension    = this ._uDimension;
+         this .geometry ._vDimension    = this ._vDimension;
+         this .geometry ._uKnot         = this ._uKnot;
+         this .geometry ._vKnot         = this ._vKnot;
+         this .geometry ._weight        = this ._weight;
+         this .geometry ._controlPoint  = this ._controlPoint;
 
          this .geometry .setup ();
       },
@@ -4541,7 +4541,7 @@ function (Fields,
          return function ()
          {
             var
-               fraction       = this .set_fraction_ .getValue (),
+               fraction       = this ._set_fraction .getValue (),
                texCoordsArray = this .geometry .getTexCoords (),
                normalArray    = this .geometry .getNormals (),
                verticesArray  = this .geometry .getVertices ();
@@ -4571,8 +4571,8 @@ function (Fields,
                                                  t * verticesArray [i4 + 1] + u * verticesArray [i4 + 5] + v * verticesArray [i4 +  9],
                                                  t * verticesArray [i4 + 2] + u * verticesArray [i4 + 6] + v * verticesArray [i4 + 10]);
 
-                     this .normal_changed_   = normal;
-                     this .position_changed_ = position;
+                     this ._normal_changed   = normal;
+                     this ._position_changed = position;
                   }
                }
             }
@@ -4686,22 +4686,22 @@ function (Fields,
       {
          X3DParametricGeometryNode .prototype .initialize .call (this);
 
-         this .crossSectionCurve_ .addInterest ("set_crossSectionCurve__", this);
-         this .trajectoryCurve_   .addInterest ("set_trajectoryCurve__",   this);
+         this ._crossSectionCurve .addInterest ("set_crossSectionCurve__", this);
+         this ._trajectoryCurve   .addInterest ("set_trajectoryCurve__",   this);
 
          var extrusion = this .extrusion;
 
-         extrusion .beginCap_     = false;
-         extrusion .endCap_       = false;
-         extrusion .solid_        = true;
-         extrusion .ccw_          = true;
-         extrusion .convex_       = true;
-         extrusion .creaseAngle_  = Math .PI;
+         extrusion ._beginCap     = false;
+         extrusion ._endCap       = false;
+         extrusion ._solid        = true;
+         extrusion ._ccw          = true;
+         extrusion ._convex       = true;
+         extrusion ._creaseAngle  = Math .PI;
 
          extrusion .setup ();
 
-         extrusion .crossSection_ .setTainted (true);
-         extrusion .spine_        .setTainted (true);
+         extrusion ._crossSection .setTainted (true);
+         extrusion ._spine        .setTainted (true);
 
          this .set_crossSectionCurve__ ();
          this .set_trajectoryCurve__ ();
@@ -4711,7 +4711,7 @@ function (Fields,
          if (this .crossSectionCurveNode)
             this .crossSectionCurveNode .removeInterest ("requestRebuild", this);
 
-         this .crossSectionCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .crossSectionCurve_);
+         this .crossSectionCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this ._crossSectionCurve);
 
          if (this .crossSectionCurveNode)
             this .crossSectionCurveNode .addInterest ("requestRebuild", this);
@@ -4719,12 +4719,12 @@ function (Fields,
       set_trajectoryCurve__: function ()
       {
          if (this .trajectoryCurveNode)
-            this .trajectoryCurveNode .rebuild_ .removeInterest ("requestRebuild", this);
+            this .trajectoryCurveNode ._rebuild .removeInterest ("requestRebuild", this);
 
-         this .trajectoryCurveNode = X3DCast (X3DConstants .NurbsCurve, this .trajectoryCurve_);
+         this .trajectoryCurveNode = X3DCast (X3DConstants .NurbsCurve, this ._trajectoryCurve);
 
          if (this .trajectoryCurveNode)
-            this .trajectoryCurveNode .rebuild_ .addInterest ("requestRebuild", this);
+            this .trajectoryCurveNode ._rebuild .addInterest ("requestRebuild", this);
       },
       build: function ()
       {
@@ -4736,8 +4736,8 @@ function (Fields,
 
          var extrusion = this .extrusion;
 
-         extrusion .crossSection_ = this .crossSectionCurveNode .tessellate (0);
-         extrusion .spine_        = this .trajectoryCurveNode   .tessellate (0);
+         extrusion ._crossSection = this .crossSectionCurveNode .tessellate (0);
+         extrusion ._spine        = this .trajectoryCurveNode   .tessellate (0);
 
          extrusion .rebuild ();
 
@@ -4748,7 +4748,7 @@ function (Fields,
 
          this .getMultiTexCoords () .push (this .getTexCoords ());
 
-         if (! this .ccw_ .getValue ())
+         if (! this ._ccw .getValue ())
          {
             var normals = this .getNormals ();
 
@@ -4756,8 +4756,8 @@ function (Fields,
                normals [i] = -normals [i];
          }
 
-         this .setSolid (this .solid_ .getValue ());
-         this .setCCW (this .ccw_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
+         this .setCCW (this ._ccw .getValue ());
       },
    });
 
@@ -4867,22 +4867,22 @@ function (Fields,
       {
          X3DParametricGeometryNode .prototype .initialize .call (this);
 
-         this .profileCurve_    .addInterest ("set_profileCurve__",    this);
-         this .trajectoryCurve_ .addInterest ("set_trajectoryCurve__", this);
+         this ._profileCurve    .addInterest ("set_profileCurve__",    this);
+         this ._trajectoryCurve .addInterest ("set_trajectoryCurve__", this);
 
          var extrusion = this .extrusion;
 
-         extrusion .beginCap_     = false;
-         extrusion .endCap_       = false;
-         extrusion .solid_        = true;
-         extrusion .ccw_          = true;
-         extrusion .convex_       = true;
-         extrusion .creaseAngle_  = Math .PI;
+         extrusion ._beginCap     = false;
+         extrusion ._endCap       = false;
+         extrusion ._solid        = true;
+         extrusion ._ccw          = true;
+         extrusion ._convex       = true;
+         extrusion ._creaseAngle  = Math .PI;
 
          extrusion .setup ();
 
-         extrusion .crossSection_ .setTainted (true);
-         extrusion .spine_        .setTainted (true);
+         extrusion ._crossSection .setTainted (true);
+         extrusion ._spine        .setTainted (true);
 
          this .set_profileCurve__ ();
          this .set_trajectoryCurve__ ();
@@ -4892,7 +4892,7 @@ function (Fields,
          if (this .profileCurveNode)
             this .profileCurveNode .removeInterest ("requestRebuild", this);
 
-         this .profileCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .profileCurve_);
+         this .profileCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this ._profileCurve);
 
          if (this .profileCurveNode)
             this .profileCurveNode .addInterest ("requestRebuild", this);
@@ -4902,7 +4902,7 @@ function (Fields,
          if (this .trajectoryCurveNode)
             this .trajectoryCurveNode .removeInterest ("requestRebuild", this);
 
-         this .trajectoryCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .trajectoryCurve_);
+         this .trajectoryCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this ._trajectoryCurve);
 
          if (this .trajectoryCurveNode)
             this .trajectoryCurveNode .addInterest ("requestRebuild", this);
@@ -4917,8 +4917,8 @@ function (Fields,
 
          var extrusion = this .extrusion;
 
-         extrusion .crossSection_ = this .profileCurveNode    .tessellate (0);
-         extrusion .spine_        = this .trajectoryCurveNode .tessellate (1);
+         extrusion ._crossSection = this .profileCurveNode    .tessellate (0);
+         extrusion ._spine        = this .trajectoryCurveNode .tessellate (1);
 
          extrusion .rebuild ();
 
@@ -4929,7 +4929,7 @@ function (Fields,
 
          this .getMultiTexCoords () .push (this .getTexCoords ());
 
-         if (! this .ccw_ .getValue ())
+         if (! this ._ccw .getValue ())
          {
             var normals = this .getNormals ();
 
@@ -4937,8 +4937,8 @@ function (Fields,
                normals [i] = -normals [i];
          }
 
-         this .setSolid (this .solid_ .getValue ());
-         this .setCCW (this .ccw_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
+         this .setCCW (this ._ccw .getValue ());
       },
    });
 
@@ -5053,17 +5053,17 @@ function (Fields,
       getControlPoints: function (texWeights)
       {
          var
-            controlPointArray = this .controlPoint_ .getValue (),
+            controlPointArray = this ._controlPoint .getValue (),
             controlPoints     = this .controlPoints;
 
-         for (var u = 0, uDimension = this .uDimension_ .getValue (); u < uDimension; ++ u)
+         for (var u = 0, uDimension = this ._uDimension .getValue (); u < uDimension; ++ u)
          {
             var cp = controlPoints [u];
 
             if (! cp)
                cp = controlPoints [u] = [ ];
 
-            for (var v = 0, vDimension = this .vDimension_ .getValue (); v < vDimension; ++ v)
+            for (var v = 0, vDimension = this ._vDimension .getValue (); v < vDimension; ++ v)
             {
                var
                   index = v * uDimension + u,
@@ -5078,19 +5078,19 @@ function (Fields,
       },
       isValid: function ()
       {
-         if (this .uOrder_ .getValue () < 2)
+         if (this ._uOrder .getValue () < 2)
             return false;
 
-         if (this .vOrder_ .getValue () < 2)
+         if (this ._vOrder .getValue () < 2)
             return false;
 
-         if (this .uDimension_ .getValue () < this .uOrder_ .getValue ())
+         if (this ._uDimension .getValue () < this ._uOrder .getValue ())
             return false;
 
-         if (this .vDimension_ .getValue () < this .vOrder_ .getValue ())
+         if (this ._vDimension .getValue () < this ._vOrder .getValue ())
             return false;
 
-         if (this .controlPoint_ .length !== this .uDimension_ .getValue () * this .vDimension_ .getValue ())
+         if (this ._controlPoint .length !== this ._uDimension .getValue () * this ._vDimension .getValue ())
             return false;
 
          return true;
@@ -5214,7 +5214,7 @@ function (Fields,
       {
          X3DNurbsSurfaceGeometryNode .prototype .initialize .call (this);
 
-         this .trimmingContour_ .addInterest ("set_trimmingContour__", this);
+         this ._trimmingContour .addInterest ("set_trimmingContour__", this);
 
          this .set_trimmingContour__ ();
       },
@@ -5224,9 +5224,9 @@ function (Fields,
 
          trimmingContourNodes .length = 0;
 
-         for (var i = 0, length = this .trimmingContour_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._trimmingContour .length; i < length; ++ i)
          {
-            var trimmingContourNode = X3DCast (X3DConstants .Contour2D, this .trimmingContour_ [i]);
+            var trimmingContourNode = X3DCast (X3DConstants .Contour2D, this ._trimmingContour [i]);
 
             if (trimmingContourNode)
                trimmingContourNodes .push (trimmingContourNode);

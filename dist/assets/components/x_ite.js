@@ -137,12 +137,12 @@ function (Fields,
          this .equationTypes .set ("MIN",                   gl .MIN || (ext && ext .MIN_EXT));
          this .equationTypes .set ("MAX",                   gl .MAX || (ext && ext .MAX_EXT));
 
-         this .sourceColorFactor_      .addInterest ("set_sourceColorFactor__",      this);
-         this .sourceAlphaFactor_      .addInterest ("set_sourceAlphaFactor__",      this);
-         this .destinationColorFactor_ .addInterest ("set_destinationColorFactor__", this);
-         this .destinationAlphaFactor_ .addInterest ("set_destinationAlphaFactor__", this);
-         this .colorEquation_          .addInterest ("set_colorEquation__",          this);
-         this .alphaEquation_          .addInterest ("set_alphaEquation__",          this);
+         this ._sourceColorFactor      .addInterest ("set_sourceColorFactor__",      this);
+         this ._sourceAlphaFactor      .addInterest ("set_sourceAlphaFactor__",      this);
+         this ._destinationColorFactor .addInterest ("set_destinationColorFactor__", this);
+         this ._destinationAlphaFactor .addInterest ("set_destinationAlphaFactor__", this);
+         this ._colorEquation          .addInterest ("set_colorEquation__",          this);
+         this ._alphaEquation          .addInterest ("set_alphaEquation__",          this);
 
          this .set_sourceColorFactor__ ();
          this .set_sourceAlphaFactor__ ();
@@ -153,49 +153,49 @@ function (Fields,
       },
       set_sourceColorFactor__: function ()
       {
-         this .sourceColorFactorType = this .factorTypes .get (this .sourceColorFactor_ .getValue ());
+         this .sourceColorFactorType = this .factorTypes .get (this ._sourceColorFactor .getValue ());
 
          if (this .sourceColorFactorType === undefined)
             this .sourceColorFactorType = this .factorTypes .get ("SRC_ALPHA");
       },
       set_sourceAlphaFactor__: function ()
       {
-         this .sourceAlphaFactorType = this .factorTypes .get (this .sourceAlphaFactor_ .getValue ());
+         this .sourceAlphaFactorType = this .factorTypes .get (this ._sourceAlphaFactor .getValue ());
 
          if (this .sourceAlphaFactorType === undefined)
             this .sourceAlphaFactorType = this .factorTypes .get ("ONE");
       },
       set_destinationColorFactor__: function ()
       {
-         this .destinationColorFactorType = this .factorTypes .get (this .destinationColorFactor_ .getValue ());
+         this .destinationColorFactorType = this .factorTypes .get (this ._destinationColorFactor .getValue ());
 
          if (this .destinationColorFactorType === undefined)
             this .destinationColorFactorType = this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
       },
       set_destinationAlphaFactor__: function ()
       {
-         this .destinationAlphaFactorType = this .factorTypes .get (this .destinationAlphaFactor_ .getValue ());
+         this .destinationAlphaFactorType = this .factorTypes .get (this ._destinationAlphaFactor .getValue ());
 
          if (this .destinationAlphaFactorType === undefined)
             this .destinationAlphaFactorType = this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
       },
       set_colorEquation__: function ()
       {
-         this .colorEquationType = this .equationTypes .get (this .colorEquation_ .getValue ());
+         this .colorEquationType = this .equationTypes .get (this ._colorEquation .getValue ());
 
          if (this .colorEquationType === undefined)
             this .colorEquationType = this .equationTypes .get ("FUNC_ADD");
       },
       set_alphaEquation__: function ()
       {
-         this .alphaEquationType = this .equationTypes .get (this .alphaEquation_ .getValue ());
+         this .alphaEquationType = this .equationTypes .get (this ._alphaEquation .getValue ());
 
          if (this .alphaEquationType === undefined)
             this .alphaEquationType = this .equationTypes .get ("FUNC_ADD");
       },
       enable: function (gl)
       {
-         const color = this .blendColor_ .getValue ();
+         const color = this ._blendColor .getValue ();
 
          gl .blendColor (color .r, color .g, color .b, color .a);
          gl .blendFuncSeparate (this .sourceColorFactorType, this .destinationColorFactorType, this .sourceAlphaFactorType, this .destinationAlphaFactorType);

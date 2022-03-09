@@ -297,7 +297,7 @@ function ($,
       },
       getSourceText: function ()
       {
-         return this .url_;
+         return this ._url;
       },
       unloadNow: function ()
       {
@@ -307,7 +307,7 @@ function ($,
       {
          this .initialized = false;
 
-         new FileLoader (this) .loadScript (this .urlBuffer_,
+         new FileLoader (this) .loadScript (this ._urlBuffer,
          function (data)
          {
             if (data === null)
@@ -511,7 +511,7 @@ function ($,
                   const callback = this .context [field .getName ()];
 
                   if ($.isFunction (callback))
-                     this .set_field__ (field, callback);
+                     this .set_field__ (callback, field);
 
                   break;
                }
@@ -520,7 +520,7 @@ function ($,
                   const callback = this .context ["set_" + field .getName ()];
 
                   if ($.isFunction (callback))
-                     this .set_field__ (field, callback);
+                     this .set_field__ (callback, field);
 
                   break;
                }
@@ -644,7 +644,7 @@ function ($,
 
          browser .getScriptStack () .pop ();
       },
-      set_field__: function (field, callback)
+      set_field__: function (callback, field)
       {
          const browser = this .getBrowser ();
 

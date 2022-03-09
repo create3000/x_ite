@@ -13856,9 +13856,10 @@ function (Generator,
 "use strict";
 
    const
-      _name          = Symbol (),
-      _interests     = Symbol (),
-      _interestsTemp = Symbol ();
+      _name      = Symbol (),
+      _interests = Symbol (),
+      _values    = Symbol (),
+      _timeoutId = Symbol ();
 
    function X3DObject () { }
 
@@ -13867,7 +13868,8 @@ function (Generator,
       constructor: X3DObject,
       [_name]: "",
       [_interests]: new Map (),
-      [_interestsTemp]: [ ],
+      [_values]: [ ],
+      [_timeoutId]: 0,
       getId: function ()
       {
          return X3DObject .getId (this);
@@ -13900,8 +13902,8 @@ function (Generator,
       {
          if (this [_interests] === X3DObject .prototype [_interests])
          {
-            this [_interests]     = new Map ();
-            this [_interestsTemp] = [ ];
+            this [_interests] = new Map ();
+            this [_values]    = [ ];
          }
 
          const
@@ -13910,10 +13912,10 @@ function (Generator,
 
          if (arguments .length > 2)
          {
-            const args = Array .from (arguments);
+            const args = Array .prototype .slice .call (arguments, 2);
 
-            args [0] = object;
-            args [1] = this;
+            args .unshift (object);
+            args .push (this);
 
             this [_interests] .set (interestId, Function .prototype .bind .apply (callback, args));
          }
@@ -13930,11 +13932,19 @@ function (Generator,
       {
          return this [_interests];
       },
+      requestProcessInterests: function ()
+      {
+         if (this [_interests] .size)
+         {
+            clearTimeout (this [_timeoutId]);
+            this [_timeoutId] = setTimeout (this .processInterests .bind (this), 1);
+         }
+      },
       processInterests: function ()
       {
          if (this [_interests] .size)
          {
-            for (const interest of MapUtilities .values (this [_interestsTemp], this [_interests])  )
+            for (const interest of MapUtilities .values (this [_values], this [_interests]))
                interest ();
          }
       },
@@ -14545,7 +14555,11 @@ function (X3DObject)
       },
       set: function (target, key, value)
       {
-         return false;
+         if (target [key] === undefined)
+            return false;
+
+         target [key] = value;
+         return true;
       },
       has: function (target, key)
       {
@@ -14579,6 +14593,8 @@ function (X3DObject)
 
    function X3DInfoArray ()
    {
+      X3DObject .call (this);
+
       this [_array]           = [ ];
       this [_index]           = new Map ();
       this [Symbol .iterator] = this [_array] [Symbol .iterator];
@@ -14601,12 +14617,12 @@ function (X3DObject)
       {
          this [_array] .push (value);
          this [_index] .set (key, value);
-         this .processInterests ();
+         this .requestProcessInterests ();
       },
       addAlias: function (alias, key)
       {
          this [_index] .set (alias, this [_index] .get (key));
-         this .processInterests ();
+         this .requestProcessInterests ();
       },
       update: function (oldKey, newKey, value)
       {
@@ -14630,7 +14646,7 @@ function (X3DObject)
             this [_array] .push (value);
          }
 
-         this .processInterests ();
+         this .requestProcessInterests ();
       },
       remove: function (key)
       {
@@ -14646,7 +14662,7 @@ function (X3DObject)
          if (index > -1)
             this [_array] .splice (index, 1);
 
-         this .processInterests ();
+         this .requestProcessInterests ();
       },
       toVRMLStream: function (stream)
       {
@@ -14957,6 +14973,10 @@ function ($,
       [_inputRoutes]: new Set (),
       [_outputRoutes]: new Set (),
       [_routeCallbacks]: new Map (),
+      create: function ()
+      {
+         return new (this .constructor) ();
+      },
       equals: function (field)
       {
          return this [_value] === field .valueOf ();
@@ -15726,19 +15746,24 @@ function (Algorithm)
 
    const clamp = Algorithm .clamp;
 
+   const
+      _r = Symbol (),
+      _g = Symbol (),
+      _b = Symbol ();
+
    function Color3 (r, g, b)
    {
       if (arguments .length)
       {
-         this .r_ = clamp (r, 0, 1);
-         this .g_ = clamp (g, 0, 1);
-         this .b_ = clamp (b, 0, 1);
+         this [_r] = clamp (r, 0, 1);
+         this [_g] = clamp (g, 0, 1);
+         this [_b] = clamp (b, 0, 1);
       }
       else
       {
-         this .r_ = 0;
-         this .g_ = 0;
-         this .b_ = 0;
+         this [_r] = 0;
+         this [_g] = 0;
+         this [_b] = 0;
       }
    }
 
@@ -15749,35 +15774,35 @@ function (Algorithm)
       copy: function ()
       {
          const copy = Object .create (Color3 .prototype);
-         copy .r_ = this .r_;
-         copy .g_ = this .g_;
-         copy .b_ = this .b_;
+         copy [_r] = this [_r];
+         copy [_g] = this [_g];
+         copy [_b] = this [_b];
          return copy;
       },
       assign: function (color)
       {
-         this .r_ = color .r_;
-         this .g_ = color .g_;
-         this .b_ = color .b_;
+         this [_r] = color [_r];
+         this [_g] = color [_g];
+         this [_b] = color [_b];
       },
       set: function (r, g, b)
       {
-         this .r_ = clamp (r, 0, 1);
-         this .g_ = clamp (g, 0, 1);
-         this .b_ = clamp (b, 0, 1);
+         this [_r] = clamp (r, 0, 1);
+         this [_g] = clamp (g, 0, 1);
+         this [_b] = clamp (b, 0, 1);
       },
       equals: function (color)
       {
-         return this .r_ === color .r_ &&
-                this .g_ === color .g_ &&
-                this .b_ === color .b_;
+         return this [_r] === color [_r] &&
+                this [_g] === color [_g] &&
+                this [_b] === color [_b];
       },
       getHSV: function (result)
       {
          let h, s, v;
 
-         const min = Math .min (this .r_, this .g_, this .b_);
-         const max = Math .max (this .r_, this .g_, this .b_);
+         const min = Math .min (this [_r], this [_g], this [_b]);
+         const max = Math .max (this [_r], this [_g], this [_b]);
          v = max; // value
 
          const delta = max - min;
@@ -15786,12 +15811,12 @@ function (Algorithm)
          {
             s = delta / max; // s
 
-            if (this .r_ === max)
-               h =     (this .g_ - this .b_) / delta;  // between yellow & magenta
-            else if (this .g_ === max)
-               h = 2 + (this .b_ - this .r_) / delta;  // between cyan & yellow
+            if (this [_r] === max)
+               h =     (this [_g] - this [_b]) / delta;  // between yellow & magenta
+            else if (this [_g] === max)
+               h = 2 + (this [_b] - this [_r]) / delta;  // between cyan & yellow
             else
-               h = 4 + (this .r_ - this .g_) / delta;  // between magenta & cyan
+               h = 4 + (this [_r] - this [_g]) / delta;  // between magenta & cyan
 
             h *= Math .PI / 3;  // radiants
             if (h < 0)
@@ -15817,7 +15842,7 @@ function (Algorithm)
          if (s === 0)
          {
             // achromatic (grey)
-            this .r_ = this .g_ = this .b_ = v;
+            this [_r] = this [_g] = this [_b] = v;
          }
          else
          {
@@ -15831,40 +15856,40 @@ function (Algorithm)
 
             switch (i % 6)
             {
-               case 0:  this .r_ = v; this .g_ = t; this .b_ = p; break;
-               case 1:  this .r_ = q; this .g_ = v; this .b_ = p; break;
-               case 2:  this .r_ = p; this .g_ = v; this .b_ = t; break;
-               case 3:  this .r_ = p; this .g_ = q; this .b_ = v; break;
-               case 4:  this .r_ = t; this .g_ = p; this .b_ = v; break;
-               default: this .r_ = v; this .g_ = p; this .b_ = q; break;
+               case 0:  this [_r] = v; this [_g] = t; this [_b] = p; break;
+               case 1:  this [_r] = q; this [_g] = v; this [_b] = p; break;
+               case 2:  this [_r] = p; this [_g] = v; this [_b] = t; break;
+               case 3:  this [_r] = p; this [_g] = q; this [_b] = v; break;
+               case 4:  this [_r] = t; this [_g] = p; this [_b] = v; break;
+               default: this [_r] = v; this [_g] = p; this [_b] = q; break;
             }
          }
       },
       toString: function ()
       {
-         return this .r_ + " " +
-                this .g_ + " " +
-                this .b_;
+         return this [_r] + " " +
+                this [_g] + " " +
+                this [_b];
       },
    };
 
    const r = {
-      get: function () { return this .r_; },
-      set: function (value) { this .r_ = clamp (value, 0, 1); },
+      get: function () { return this [_r]; },
+      set: function (value) { this [_r] = clamp (value, 0, 1); },
       enumerable: true,
       configurable: false
    };
 
    const g = {
-      get: function () { return this .g_; },
-      set: function (value) { this .g_ = clamp (value, 0, 1); },
+      get: function () { return this [_g]; },
+      set: function (value) { this [_g] = clamp (value, 0, 1); },
       enumerable: true,
       configurable: false
    };
 
    const b = {
-      get: function () { return this .b_; },
-      set: function (value) { this .b_ = clamp (value, 0, 1); },
+      get: function () { return this [_b]; },
+      set: function (value) { this [_b] = clamp (value, 0, 1); },
       enumerable: true,
       configurable: false
    };
@@ -16221,21 +16246,27 @@ function (Color3, Algorithm)
 
    const clamp = Algorithm .clamp;
 
+   const
+      _r = Symbol (),
+      _g = Symbol (),
+      _b = Symbol (),
+      _a = Symbol ();
+
    function Color4 (r, g, b, a)
    {
       if (arguments .length)
       {
-         this .r_ = clamp (r, 0, 1);
-         this .g_ = clamp (g, 0, 1);
-         this .b_ = clamp (b, 0, 1);
-         this .a_ = clamp (a, 0, 1);
+         this [_r] = clamp (r, 0, 1);
+         this [_g] = clamp (g, 0, 1);
+         this [_b] = clamp (b, 0, 1);
+         this [_a] = clamp (a, 0, 1);
       }
       else
       {
-         this .r_ = 0;
-         this .g_ = 0;
-         this .b_ = 0;
-         this .a_ = 0;
+         this [_r] = 0;
+         this [_g] = 0;
+         this [_b] = 0;
+         this [_a] = 0;
       }
    }
 
@@ -16246,38 +16277,38 @@ function (Color3, Algorithm)
       copy: function ()
       {
          const copy = Object .create (Color4 .prototype);
-         copy .r_ = this .r_;
-         copy .g_ = this .g_;
-         copy .b_ = this .b_;
-         copy .a_ = this .a_;
+         copy [_r] = this [_r];
+         copy [_g] = this [_g];
+         copy [_b] = this [_b];
+         copy [_a] = this [_a];
          return copy;
       },
       assign: function (color)
       {
-         this .r_ = color .r_;
-         this .g_ = color .g_;
-         this .b_ = color .b_;
-         this .a_ = color .a_;
+         this [_r] = color [_r];
+         this [_g] = color [_g];
+         this [_b] = color [_b];
+         this [_a] = color [_a];
       },
       set: function (r, g, b, a)
       {
-         this .r_ = clamp (r, 0, 1);
-         this .g_ = clamp (g, 0, 1);
-         this .b_ = clamp (b, 0, 1);
-         this .a_ = clamp (a, 0, 1);
+         this [_r] = clamp (r, 0, 1);
+         this [_g] = clamp (g, 0, 1);
+         this [_b] = clamp (b, 0, 1);
+         this [_a] = clamp (a, 0, 1);
       },
       equals: function (color)
       {
-         return this .r_ === color .r_ &&
-                this .g_ === color .g_ &&
-                this .b_ === color .b_ &&
-                this .a_ === color .a_;
+         return this [_r] === color [_r] &&
+                this [_g] === color [_g] &&
+                this [_b] === color [_b] &&
+                this [_a] === color [_a];
       },
       getHSVA: function (result)
       {
          Color3 .prototype .getHSV .call (this, result);
 
-         result [3] = this .a_;
+         result [3] = this [_a];
 
          return result;
       },
@@ -16285,41 +16316,41 @@ function (Color3, Algorithm)
       {
          Color3 .prototype .setHSV .call (this, h, s, v);
 
-         this .a_ = clamp (a, 0, 1);
+         this [_a] = clamp (a, 0, 1);
       },
       toString: function ()
       {
-         return this .r_ + " " +
-                this .g_ + " " +
-                this .b_ + " " +
-                this .a_;
+         return this [_r] + " " +
+                this [_g] + " " +
+                this [_b] + " " +
+                this [_a];
       },
    };
 
    const r = {
-      get: function () { return this .r_; },
-      set: function (value) { this .r_ = clamp (value, 0, 1); },
+      get: function () { return this [_r]; },
+      set: function (value) { this [_r] = clamp (value, 0, 1); },
       enumerable: true,
       configurable: false
    };
 
    const g = {
-      get: function () { return this .g_; },
-      set: function (value) { this .g_ = clamp (value, 0, 1); },
+      get: function () { return this [_g]; },
+      set: function (value) { this [_g] = clamp (value, 0, 1); },
       enumerable: true,
       configurable: false
    };
 
    const b = {
-      get: function () { return this .b_; },
-      set: function (value) { this .b_ = clamp (value, 0, 1); },
+      get: function () { return this [_b]; },
+      set: function (value) { this [_b] = clamp (value, 0, 1); },
       enumerable: true,
       configurable: false
    };
 
    const a = {
-      get: function () { return this .a_; },
-      set: function (value) { this .a_ = clamp (value, 0, 1); },
+      get: function () { return this [_a]; },
+      set: function (value) { this [_a] = clamp (value, 0, 1); },
       enumerable: true,
       configurable: false
    };
@@ -20785,12 +20816,18 @@ function (Quaternion,
 {
 "use strict";
 
+   const
+      _x     = Symbol (),
+      _y     = Symbol (),
+      _z     = Symbol (),
+      _angle = Symbol ();
+
    function Rotation4 (x, y, z, angle)
    {
-      this .x_     = 0;
-      this .y_     = 0;
-      this .z_     = 1;
-      this .angle_ = 0;
+      this [_x]     = 0;
+      this [_y]     = 0;
+      this [_z]     = 1;
+      this [_angle] = 0;
 
       switch (arguments .length)
       {
@@ -20840,10 +20877,10 @@ function (Quaternion,
       {
          const rotation = this .get ();
 
-         this .x_     = rotation .x;
-         this .y_     = rotation .y;
-         this .z_     = rotation .z;
-         this .angle_ = rotation .w;
+         this [_x]     = rotation .x;
+         this [_y]     = rotation .y;
+         this [_z]     = rotation .z;
+         this [_angle] = rotation .w;
 
          return this;
       },
@@ -20851,10 +20888,10 @@ function (Quaternion,
       {
          const copy = Object .create (Rotation4 .prototype);
 
-         copy .x_     = this .x_;
-         copy .y_     = this .y_;
-         copy .z_     = this .z_;
-         copy .angle_ = this .angle_;
+         copy [_x]     = this [_x];
+         copy [_y]     = this [_y];
+         copy [_z]     = this [_z];
+         copy [_angle] = this [_angle];
 
          copy .value  = this .value .copy ();
 
@@ -20862,10 +20899,10 @@ function (Quaternion,
       },
       assign: function (rotation)
       {
-         this .x_     = rotation .x_;
-         this .y_     = rotation .y_;
-         this .z_     = rotation .z_;
-         this .angle_ = rotation .angle_;
+         this [_x]     = rotation [_x];
+         this [_y]     = rotation [_y];
+         this [_z]     = rotation [_z];
+         this [_angle] = rotation [_angle];
 
          this .value .assign (rotation .value);
 
@@ -20873,10 +20910,10 @@ function (Quaternion,
       },
       set: function (x, y, z, angle)
       {
-         this .x_     = x;
-         this .y_     = y;
-         this .z_     = z;
-         this .angle_ = angle;
+         this [_x]     = x;
+         this [_y]     = y;
+         this [_z]     = z;
+         this [_angle] = angle;
 
          const scale = Math .hypot (x, y, z);
 
@@ -20999,7 +21036,7 @@ function (Quaternion,
       })(),
       setAxis: function (vector)
       {
-         this .set (vector .x, vector .y, vector .z, this .angle_);
+         this .set (vector .x, vector .y, vector .z, this [_angle]);
       },
       getAxis: (function ()
       {
@@ -21007,7 +21044,7 @@ function (Quaternion,
 
          return function ()
          {
-            return axis .set (this .x_, this .y_, this .z_);
+            return axis .set (this [_x], this [_y], this [_z]);
          };
       })(),
       setMatrix: function (matrix)
@@ -21076,22 +21113,22 @@ function (Quaternion,
       },
       toString: function ()
       {
-         return this .x_ + " " +
-                this .y_ + " " +
-                this .z_ + " " +
-                this .angle_;
+         return this [_x] + " " +
+                this [_y] + " " +
+                this [_z] + " " +
+                this [_angle];
       }
    };
 
    const x = {
       get: function ()
       {
-         return this .x_;
+         return this [_x];
       },
       set: function (value)
       {
-         this .x_ = value;
-         this .set (value, this .y_, this .z_, this .angle_);
+         this [_x] = value;
+         this .set (value, this [_y], this [_z], this [_angle]);
       },
       enumerable: true,
       configurable: false
@@ -21100,12 +21137,12 @@ function (Quaternion,
    const y = {
       get: function ()
       {
-         return this .y_;
+         return this [_y];
       },
       set: function (value)
       {
-         this .y_ = value;
-         this .set (this .x_, value, this .z_, this .angle_);
+         this [_y] = value;
+         this .set (this [_x], value, this [_z], this [_angle]);
       },
       enumerable: true,
       configurable: false
@@ -21114,12 +21151,12 @@ function (Quaternion,
    const z = {
       get: function ()
       {
-         return this .z_;
+         return this [_z];
       },
       set: function (value)
       {
-         this .z_ = value;
-         this .set (this .x_, this .y_, value, this .angle_);
+         this [_z] = value;
+         this .set (this [_x], this [_y], value, this [_angle]);
       },
       enumerable: true,
       configurable: false
@@ -21128,12 +21165,12 @@ function (Quaternion,
    const angle = {
       get: function ()
       {
-         return this .angle_;
+         return this [_angle];
       },
       set: function (value)
       {
-         this .angle_ = value;
-         this .set (this .x_, this .y_, this .z_, value);
+         this [_angle] = value;
+         this .set (this [_x], this [_y], this [_z], value);
       },
       enumerable: true,
       configurable: false
@@ -23720,7 +23757,7 @@ function ($,
       {
          const
             target = this [_target],
-            copy   = new (target .constructor) (),
+            copy   = target .create (),
             array  = target .getValue ();
 
          X3DObjectArrayField .prototype .push .apply (copy, array);
@@ -24361,7 +24398,7 @@ function (X3DArrayField,
          const
             target     = this [_target],
             array      = target .getValue (),
-            copy       = new (target .constructor) (),
+            copy       = target .create (),
             copyArray  = new (target .getArrayType ()) (array);
 
          copy [_length] = target [_length];
@@ -24690,7 +24727,7 @@ function (X3DArrayField,
             difference  = last - first,
             length      = target [_length],
             newLength   = length - difference,
-            values      = new (target .constructor) (),
+            values      = target .create (),
             valuesArray = values .grow (difference * components);
 
          first *= components;
@@ -25762,12 +25799,20 @@ function (X3DEventObject,
 
       for (const fieldDefinition of this [_fieldDefinitions])
          this .addField (fieldDefinition);
+
+      this .addChildObjects ("name_changed", new Fields .SFTime ())
    }
 
    X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototype),
    {
       constructor: X3DBaseNode,
       [_fieldDefinitions]: new FieldDefinitionArray ([ ]),
+      setName: function (value)
+      {
+         X3DEventObject .prototype .setName .call (this, value)
+
+         this ._name_changed = this .getBrowser () .getCurrentTime ();
+      },
       getMainScene: function ()
       {
          let scene = this [_executionContext] .getScene ();
@@ -25805,10 +25850,6 @@ function (X3DEventObject,
       {
          return this [_type];
       },
-      isType: function (types)
-      {
-         return this [_type] .some (function (type) { return types .has (type) });
-      },
       getInnerNode: function ()
       {
          return this;
@@ -25817,7 +25858,7 @@ function (X3DEventObject,
       {
          function isLive ()
          {
-            return this .isLive_;
+            return this ._isLive;
          }
 
          return function ()
@@ -25838,7 +25879,7 @@ function (X3DEventObject,
             this .addChildObjects ("isLive", new Fields .SFBool (this .getLiveState ()));
 
             // Event processing is done manually and immediately, so:
-            this .isLive_ .removeParent (this);
+            this ._isLive .removeParent (this);
 
             // Connect to execution context.
 
@@ -25897,14 +25938,6 @@ function (X3DEventObject,
             }
          }
       },
-      setInitialized: function (value)
-      {
-         this [_initialized] = value;
-      },
-      isInitialized: function ()
-      {
-         return this [_initialized];
-      },
       setup: function ()
       {
          if (this [_initialized])
@@ -25916,6 +25949,14 @@ function (X3DEventObject,
             field .setTainted (false);
 
          this .initialize ();
+      },
+      setInitialized: function (value)
+      {
+         this [_initialized] = value;
+      },
+      isInitialized: function ()
+      {
+         return this [_initialized];
       },
       initialize: function () { },
       create: function (executionContext)
@@ -25943,7 +25984,7 @@ function (X3DEventObject,
          field .addParent (this);
          field .setName (name);
 
-         Object .defineProperty (this, name + "_",
+         Object .defineProperty (this, "_" + name,
          {
             get: function () { return field; },
             set: function (value) { field .setValue (value); },
@@ -25974,7 +26015,7 @@ function (X3DEventObject,
          this [_fields]           .add (name, field);
          this [_predefinedFields] .add (name, field);
 
-         Object .defineProperty (this, name + "_",
+         Object .defineProperty (this, "_" + name,
          {
             get: function () { return field; },
             set: function (value) { field .setValue (value); },
@@ -26027,7 +26068,7 @@ function (X3DEventObject,
       {
          this [_aliases] .set (alias, field);
 
-         Object .defineProperty (this, alias + "_",
+         Object .defineProperty (this, "_" + alias,
          {
             get: function () { return field; },
             set: function (value) { field .setValue (value); },
@@ -26044,7 +26085,7 @@ function (X3DEventObject,
             this [_fields]           .remove (name);
             this [_predefinedFields] .remove (name);
 
-            delete this [field .getName () + "_"];
+            delete this ["_" + field .getName ()];
 
             if (!this .getPrivate ())
                field .removeCloneCount (1);
@@ -27384,7 +27425,7 @@ function (Fields,
    {
       X3DBaseNode .call (this, executionContext);
 
-      this .addAlias ("AntiAliased", this .Antialiased_);
+      this .addAlias ("AntiAliased", this ._Antialiased);
 
       const browser = executionContext .getBrowser ();
 
@@ -27432,21 +27473,21 @@ function (Fields,
          X3DBaseNode .prototype .initialize .call (this);
 
          this .localStorage .addDefaultValues ({
-            Rubberband:        this .Rubberband_        .getValue (),
-            PrimitiveQuality:  this .PrimitiveQuality_  .getValue (),
-            TextureQuality:    this .TextureQuality_    .getValue (),
-            StraightenHorizon: this .StraightenHorizon_ .getValue (),
-            Timings:           this .Timings_           .getValue (),
+            Rubberband:        this ._Rubberband        .getValue (),
+            PrimitiveQuality:  this ._PrimitiveQuality  .getValue (),
+            TextureQuality:    this ._TextureQuality    .getValue (),
+            StraightenHorizon: this ._StraightenHorizon .getValue (),
+            Timings:           this ._Timings           .getValue (),
          });
 
-         this .SplashScreen_           .addInterest ("set_splashScreen__",           this);
-         this .Rubberband_             .addInterest ("set_rubberband__",             this);
-         this .PrimitiveQuality_       .addInterest ("set_primitiveQuality__",       this);
-         this .TextureQuality_         .addInterest ("set_textureQuality__",         this);
-         this .Shading_                .addInterest ("set_shading__",                this);
-         this .StraightenHorizon_      .addInterest ("set_straightenHorizon__",      this);
-         this .LogarithmicDepthBuffer_ .addInterest ("set_logarithmicDepthBuffer__", this);
-         this .Timings_                .addInterest ("set_timings__",                this);
+         this ._SplashScreen           .addInterest ("set_splashScreen__",           this);
+         this ._Rubberband             .addInterest ("set_rubberband__",             this);
+         this ._PrimitiveQuality       .addInterest ("set_primitiveQuality__",       this);
+         this ._TextureQuality         .addInterest ("set_textureQuality__",         this);
+         this ._Shading                .addInterest ("set_shading__",                this);
+         this ._StraightenHorizon      .addInterest ("set_straightenHorizon__",      this);
+         this ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
+         this ._Timings                .addInterest ("set_timings__",                this);
 
          this .configure ();
       },
@@ -27479,24 +27520,24 @@ function (Fields,
 
          this .setAttributeSplashScreen ();
 
-         if (rubberband !== this .Rubberband_ .getValue ())
-            this .Rubberband_ = rubberband;
+         if (rubberband !== this ._Rubberband .getValue ())
+            this ._Rubberband = rubberband;
 
-         if (primitiveQuality !== this .PrimitiveQuality_ .getValue ())
-            this .PrimitiveQuality_ = primitiveQuality;
+         if (primitiveQuality !== this ._PrimitiveQuality .getValue ())
+            this ._PrimitiveQuality = primitiveQuality;
 
-         if (textureQuality !== this .TextureQuality_ .getValue ())
-            this .TextureQuality_ = textureQuality;
+         if (textureQuality !== this ._TextureQuality .getValue ())
+            this ._TextureQuality = textureQuality;
 
-         if (straightenHorizon !== this .StraightenHorizon_ .getValue ())
-            this .StraightenHorizon_ = straightenHorizon;
+         if (straightenHorizon !== this ._StraightenHorizon .getValue ())
+            this ._StraightenHorizon = straightenHorizon;
 
-         if (timings !== this .Timings_ .getValue ())
-            this .Timings_ = timings;
+         if (timings !== this ._Timings .getValue ())
+            this ._Timings = timings;
       },
       setAttributeSplashScreen: function ()
       {
-         this .SplashScreen_ .set (this .getSplashScreen ());
+         this ._SplashScreen .set (this .getSplashScreen ());
       },
       getCache: function ()
       {
@@ -27565,10 +27606,10 @@ function (Fields,
                if (browser .setGeometry2DPrimitiveQuality)
                   browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
 
-               cone     .xDimension_ = 16;
-               cylinder .xDimension_ = 16;
-               sphere   .xDimension_ = 20;
-               sphere   .yDimension_ = 9;
+               cone     ._xDimension = 16;
+               cylinder ._xDimension = 16;
+               sphere   ._xDimension = 20;
+               sphere   ._yDimension = 9;
                break;
             }
             case "HIGH":
@@ -27581,10 +27622,10 @@ function (Fields,
                if (browser .setGeometry2DPrimitiveQuality)
                   browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
 
-               cone     .xDimension_ = 32;
-               cylinder .xDimension_ = 32;
-               sphere   .xDimension_ = 64;
-               sphere   .yDimension_ = 31;
+               cone     ._xDimension = 32;
+               cylinder ._xDimension = 32;
+               sphere   ._xDimension = 64;
+               sphere   ._yDimension = 31;
                break;
             }
             default:
@@ -27597,10 +27638,10 @@ function (Fields,
                if (browser .setGeometry2DPrimitiveQuality)
                   browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
 
-               cone     .xDimension_ = 20;
-               cylinder .xDimension_ = 20;
-               sphere   .xDimension_ = 32;
-               sphere   .yDimension_ = 15;
+               cone     ._xDimension = 20;
+               cylinder ._xDimension = 20;
+               sphere   ._xDimension = 32;
+               sphere   ._yDimension = 15;
                break;
             }
          }
@@ -27624,10 +27665,10 @@ function (Fields,
 
                this .textureQuality = TextureQuality .LOW;
 
-               textureProperties .magnificationFilter_ = "AVG_PIXEL";
-               textureProperties .minificationFilter_  = "AVG_PIXEL";
-               textureProperties .textureCompression_  = "FASTEST";
-               textureProperties .generateMipMaps_     = true;
+               textureProperties ._magnificationFilter = "AVG_PIXEL";
+               textureProperties ._minificationFilter  = "AVG_PIXEL";
+               textureProperties ._textureCompression  = "FASTEST";
+               textureProperties ._generateMipMaps     = true;
 
                //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
                //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
@@ -27640,10 +27681,10 @@ function (Fields,
 
                this .textureQuality = TextureQuality .HIGH;
 
-               textureProperties .magnificationFilter_ = "NICEST";
-               textureProperties .minificationFilter_  = "NICEST";
-               textureProperties .textureCompression_  = "NICEST";
-               textureProperties .generateMipMaps_     = true;
+               textureProperties ._magnificationFilter = "NICEST";
+               textureProperties ._minificationFilter  = "NICEST";
+               textureProperties ._textureCompression  = "NICEST";
+               textureProperties ._generateMipMaps     = true;
 
                //glHint (GL_GENERATE_MIPMAP_HINT,        GL_NICEST);
                //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -27656,10 +27697,10 @@ function (Fields,
 
                this .textureQuality = TextureQuality .MEDIUM;
 
-               textureProperties .magnificationFilter_ = "NICEST";
-               textureProperties .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
-               textureProperties .textureCompression_  = "NICEST";
-               textureProperties .generateMipMaps_     = true;
+               textureProperties ._magnificationFilter = "NICEST";
+               textureProperties ._minificationFilter  = "AVG_PIXEL_AVG_MIPMAP";
+               textureProperties ._textureCompression  = "NICEST";
+               textureProperties ._generateMipMaps     = true;
 
                //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
                //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
@@ -27715,10 +27756,10 @@ function (Fields,
 
          logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && (gl .getVersion () >= 2 || Boolean (browser .getExtension ("EXT_frag_depth")));
 
-         if (logarithmicDepthBuffer === browser .getRenderingProperties () .LogarithmicDepthBuffer_ .getValue ())
+         if (logarithmicDepthBuffer === browser .getRenderingProperties () ._LogarithmicDepthBuffer .getValue ())
             return;
 
-         browser .getRenderingProperties () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer;
+         browser .getRenderingProperties () ._LogarithmicDepthBuffer = logarithmicDepthBuffer;
 
          // Recompile shaders.
 
@@ -27726,32 +27767,32 @@ function (Fields,
 
          if (browser .hasPointShader ())
          {
-            browser .getPointShader () .parts_ [0] .getValue () .url_ .addEvent ();
-            browser .getPointShader () .parts_ [1] .getValue () .url_ .addEvent ();
+            browser .getPointShader () ._parts [0] .getValue () ._url .addEvent ();
+            browser .getPointShader () ._parts [1] .getValue () ._url .addEvent ();
          }
 
          if (browser .hasLineShader ())
          {
-            browser .getLineShader () .parts_ [0] .getValue () .url_ .addEvent ();
-            browser .getLineShader () .parts_ [1] .getValue () .url_ .addEvent ();
+            browser .getLineShader () ._parts [0] .getValue () ._url .addEvent ();
+            browser .getLineShader () ._parts [1] .getValue () ._url .addEvent ();
          }
 
          if (browser .hasGouraudShader ())
          {
-            browser .getGouraudShader () .parts_ [0] .getValue () .url_ .addEvent ();
-            browser .getGouraudShader () .parts_ [1] .getValue () .url_ .addEvent ();
+            browser .getGouraudShader () ._parts [0] .getValue () ._url .addEvent ();
+            browser .getGouraudShader () ._parts [1] .getValue () ._url .addEvent ();
          }
 
          if (browser .hasPhongShader ())
          {
-            browser .getPhongShader () .parts_ [0] .getValue () .url_ .addEvent ();
-            browser .getPhongShader () .parts_ [1] .getValue () .url_ .addEvent ();
+            browser .getPhongShader () ._parts [0] .getValue () ._url .addEvent ();
+            browser .getPhongShader () ._parts [1] .getValue () ._url .addEvent ();
          }
 
          if (browser .hasShadowShader ())
          {
-            browser .getShadowShader () .parts_ [0] .getValue () .url_ .addEvent ();
-            browser .getShadowShader () .parts_ [1] .getValue () .url_ .addEvent ();
+            browser .getShadowShader () ._parts [0] .getValue () ._url .addEvent ();
+            browser .getShadowShader () ._parts [1] .getValue () ._url .addEvent ();
          }
       },
       set_timings__: function (timings)
@@ -27932,7 +27973,7 @@ function (Fields,
    {
       X3DBaseNode .call (this, executionContext);
 
-      this .addAlias ("AntiAliased", this .Antialiased_);
+      this .addAlias ("AntiAliased", this ._Antialiased);
    }
 
    RenderingProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -27966,19 +28007,19 @@ function (Fields,
 
          const browser = this .getBrowser ();
 
-         this .MaxTextureSize_ = browser .getMaxTextureSize ();
-         this .TextureUnits_   = browser .getCombinedTextureUnits ();
-         this .MaxLights_      = browser .getMaxLights ();
-         this .ColorDepth_     = browser .getColorDepth ();
-         this .TextureMemory_  = browser .getTextureMemory ();
+         this ._MaxTextureSize = browser .getMaxTextureSize ();
+         this ._TextureUnits   = browser .getCombinedTextureUnits ();
+         this ._MaxLights      = browser .getMaxLights ();
+         this ._ColorDepth     = browser .getColorDepth ();
+         this ._TextureMemory  = browser .getTextureMemory ();
 
-         browser .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
+         browser .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
 
-         this .set_shading__ (browser .getBrowserOptions () .Shading_);
+         this .set_shading__ (browser .getBrowserOptions () ._Shading);
       },
       set_shading__: function (shading)
       {
-         this .Shading_ = shading;
+         this ._Shading = shading;
       },
    });
 
@@ -28087,17 +28128,17 @@ function ($,
 
          $("<span></span>") .appendTo (this .element);
 
-         this .string_ .addInterest ("set_string__", this);
+         this ._string .addInterest ("set_string__", this);
       },
       set_string__: function ()
       {
          if (! this .getBrowser () .getBrowserOptions () .getNotifications ())
             return;
 
-         if (this .string_ .length === 0)
+         if (this ._string .length === 0)
             return;
 
-         this .element .children () .text (this .string_ .getValue ());
+         this .element .children () .text (this ._string .getValue ());
 
          this .element
             .stop (true, true)
@@ -30465,7 +30506,7 @@ function ($,
             browser          = this .getBrowser (),
             activeLayer      = browser .getActiveLayer (),
             currentViewpoint = activeLayer ? activeLayer .getViewpoint () : null,
-            currentViewer    = browser .viewer_ .getValue (),
+            currentViewer    = browser ._viewer .getValue (),
             fullscreen       = browser .getElement () .fullScreen (),
             leftSubMenus     = $(document) .width () - event .pageX < 370;
 
@@ -30493,8 +30534,8 @@ function ($,
                   className: "context-menu-icon x_ite-private-icon-" + currentViewer .toLowerCase () + "-viewer",
                   callback: function (viewer)
                   {
-                     browser .viewer_ = viewer;
-                     browser .getNotification () .string_ = _(this .getViewerName (viewer));
+                     browser ._viewer = viewer;
+                     browser .getNotification () ._string = _(this .getViewerName (viewer));
                      browser .getSurface () .focus ();
                   }
                   .bind (this, currentViewer),
@@ -30516,7 +30557,7 @@ function ($,
 
                         if (straightenHorizon)
                         {
-                           browser .getNotification () .string_ = _("Straighten Horizon") + ": " + _("on");
+                           browser .getNotification () ._string = _("Straighten Horizon") + ": " + _("on");
 
                            const activeViewpoint = browser .getActiveViewpoint ();
 
@@ -30525,7 +30566,7 @@ function ($,
                         }
                         else
                         {
-                           browser .getNotification () .string_ = _("Straighten Horizon") + ": " + _("off");
+                           browser .getNotification () ._string = _("Straighten Horizon") + ": " + _("off");
                         }
                      }
                      .bind (this),
@@ -30545,7 +30586,7 @@ function ($,
                            click: function ()
                            {
                               browser .setBrowserOption ("PrimitiveQuality", "HIGH");
-                              browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("high");
+                              browser .getNotification () ._string = _("Primitive Quality") + ": " + _("high");
                            }
                            .bind (this),
                         },
@@ -30559,7 +30600,7 @@ function ($,
                            click: function ()
                            {
                               browser .setBrowserOption ("PrimitiveQuality", "MEDIUM");
-                              browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("medium");
+                              browser .getNotification () ._string = _("Primitive Quality") + ": " + _("medium");
                            }
                            .bind (this),
                         },
@@ -30573,7 +30614,7 @@ function ($,
                            click: function ()
                            {
                               browser .setBrowserOption ("PrimitiveQuality", "LOW");
-                              browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("low");
+                              browser .getNotification () ._string = _("Primitive Quality") + ": " + _("low");
                            }
                            .bind (this),
                         },
@@ -30593,7 +30634,7 @@ function ($,
                            click: function ()
                            {
                               browser .setBrowserOption ("TextureQuality", "HIGH");
-                              browser .getNotification () .string_ = _("Texture Quality") + ": " + _("high");
+                              browser .getNotification () ._string = _("Texture Quality") + ": " + _("high");
                            }
                            .bind (this),
                         },
@@ -30607,7 +30648,7 @@ function ($,
                            click: function ()
                            {
                               browser .setBrowserOption ("TextureQuality", "MEDIUM");
-                              browser .getNotification () .string_ = _("Texture Quality") + ": " + _("medium");
+                              browser .getNotification () ._string = _("Texture Quality") + ": " + _("medium");
                            }
                            .bind (this),
                         },
@@ -30621,7 +30662,7 @@ function ($,
                            click: function ()
                            {
                               browser .setBrowserOption ("TextureQuality", "LOW");
-                              browser .getNotification () .string_ = _("Texture Quality") + ": " + _("low");
+                              browser .getNotification () ._string = _("Texture Quality") + ": " + _("low");
                            }
                            .bind (this),
                         },
@@ -30640,9 +30681,9 @@ function ($,
                         browser .setBrowserOption ("Rubberband", rubberband);
 
                         if (rubberband)
-                           browser .getNotification () .string_ = _("Rubberband") + ": " + _("on");
+                           browser .getNotification () ._string = _("Rubberband") + ": " + _("on");
                         else
-                           browser .getNotification () .string_ = _("Rubberband") + ": " + _("off");
+                           browser .getNotification () ._string = _("Rubberband") + ": " + _("off");
                      }
                      .bind (this),
                   },
@@ -30796,7 +30837,7 @@ function ($,
 
          for (const viewpoint of viewpoints)
          {
-            const description = viewpoint .description_ .getValue ();
+            const description = viewpoint ._description .getValue ();
 
             if (description === "")
                continue;
@@ -30826,8 +30867,8 @@ function ($,
       {
          const
             browser          = this .getBrowser (),
-            currentViewer    = browser .viewer_ .getValue (),
-            availableViewers = browser .availableViewers_,
+            currentViewer    = browser ._viewer .getValue (),
+            availableViewers = browser ._availableViewers,
             menu             = { };
 
          for (const viewer of availableViewers)
@@ -30837,8 +30878,8 @@ function ($,
                className: "context-menu-icon x_ite-private-icon-" + viewer .toLowerCase () + "-viewer",
                callback: function (viewer)
                {
-                  browser .viewer_ = viewer;
-                  browser .getNotification () .string_ = _(this .getViewerName (viewer));
+                  browser ._viewer = viewer;
+                  browser .getNotification () ._string = _(this .getViewerName (viewer));
                   browser .getSurface () .focus ();
                }
                .bind (this, viewer),
@@ -31109,13 +31150,829 @@ function (X3DConstants,
  ******************************************************************************/
 
 
-define ('x_ite/Execution/X3DImportedNode',[
+define ('x_ite/Components/Core/X3dNode',[
+   "x_ite/Fields",
    "x_ite/Base/X3DBaseNode",
+   "x_ite/Base/X3DConstants",
+   "x_ite/InputOutput/Generator",
+],
+function (Fields,
+          X3DBaseNode,
+          X3DConstants,
+          Generator)
+{
+"use strict";
+
+   function X3DNode (executionContext)
+   {
+      X3DBaseNode .call (this, executionContext);
+
+      this .addType (X3DConstants .X3DNode);
+   }
+
+   X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   {
+      constructor: X3DNode,
+      copy: function (instance)
+      {
+         const executionContext = instance .getBody ();
+
+         // First try to get a named node with the node's name.
+
+         const name = this .getName ();
+
+         if (name .length)
+         {
+            const namedNode = executionContext .getNamedNodes () .get (name);
+
+            if (namedNode)
+               return namedNode;
+         }
+
+         // Create copy.
+
+         const copy = this .create (executionContext);
+
+         if (name .length)
+            executionContext .updateNamedNode (name, copy);
+
+         // Default fields
+
+         for (const sourceField of this .getPredefinedFields ())
+         {
+            try
+            {
+               const destinationField = copy .getField (sourceField .getName ());
+
+               if (sourceField .hasReferences ())
+               {
+                  // IS relationship
+
+                  for (const originalReference of sourceField .getReferences ())
+                  {
+                     try
+                     {
+                        destinationField .addReference (instance .getField (originalReference .getName ()));
+                     }
+                     catch (error)
+                     {
+                        console .error (error .message);
+                     }
+                  }
+               }
+               else
+               {
+                  if (sourceField .getAccessType () & X3DConstants .initializeOnly)
+                  {
+                     switch (sourceField .getType ())
+                     {
+                        case X3DConstants .SFNode:
+                        case X3DConstants .MFNode:
+                           destinationField .set (sourceField .copy (instance) .getValue ());
+                           break;
+                        default:
+                           destinationField .set (sourceField .getValue (), sourceField .length);
+                           break;
+                     }
+                  }
+               }
+            }
+            catch (error)
+            {
+               console .log (error .message);
+            }
+         }
+
+         // User-defined fields
+
+         for (const sourceField of this .getUserDefinedFields ())
+         {
+            const destinationField = sourceField .copy (instance);
+
+            copy .addUserDefinedField (sourceField .getAccessType (),
+                                       sourceField .getName (),
+                                       destinationField);
+
+            if (sourceField .hasReferences ())
+            {
+               // IS relationship
+
+               for (const originalReference of sourceField .getReferences ())
+               {
+                  try
+                  {
+                     destinationField .addReference (instance .getField (originalReference .getName ()));
+                  }
+                  catch (error)
+                  {
+                     console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
+                  }
+               }
+            }
+         }
+
+         copy .setup ();
+
+         return copy;
+      },
+      getDisplayName: (function ()
+      {
+         const _TrailingNumber = /_\d+$/;
+
+         return function ()
+         {
+            return this .getName () .replace (_TrailingNumber, "");
+         };
+      })(),
+      getFieldsAreEnumerable: function ()
+      {
+         return true;
+      },
+      traverse: function () { },
+      toStream: function (stream)
+      {
+         stream .string += this .getTypeName () + " { }";
+      },
+      toVRMLStream: function (stream)
+      {
+         const generator = Generator .Get (stream);
+
+         generator .EnterScope ();
+
+         const name = generator .Name (this);
+
+         if (name .length)
+         {
+            if (generator .ExistsNode (this))
+            {
+               stream .string += "USE";
+               stream .string += " ";
+               stream .string += name;
+
+               generator .LeaveScope ();
+               return;
+            }
+         }
+
+         if (name .length)
+         {
+            generator .AddNode (this);
+
+            stream .string += "DEF";
+            stream .string += " ";
+            stream .string += name;
+            stream .string += " ";
+         }
+
+         stream .string += this .getTypeName ();
+         stream .string += " ";
+         stream .string += "{";
+
+         const
+            fields            = this .getChangedFields (),
+            userDefinedFields = this .getUserDefinedFields ();
+
+         let
+            fieldTypeLength  = 0,
+            accessTypeLength = 0;
+
+         if (this .canUserDefinedFields ())
+         {
+            for (const field of userDefinedFields)
+            {
+               fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
+               accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
+            }
+
+            if (userDefinedFields .length)
+            {
+               stream .string += "\n";
+               generator .IncIndent ();
+
+               for (const field of userDefinedFields)
+               {
+                  this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
+
+                  stream .string += "\n";
+               }
+
+               generator .DecIndent ();
+
+               if (fields .length !== 0)
+                  stream .string += "\n";
+            }
+         }
+
+         if (fields .length === 0)
+         {
+            if (userDefinedFields .length)
+               stream .string += generator .Indent ();
+            else
+               stream .string += " ";
+         }
+         else
+         {
+            if (userDefinedFields .length === 0)
+               stream .string += "\n";
+
+            generator .IncIndent ();
+
+            fields .forEach (function (field)
+            {
+               this .toVRMLStreamField (stream, field, fieldTypeLength, accessTypeLength);
+
+               stream .string += "\n";
+            },
+            this);
+
+            generator .DecIndent ();
+            stream .string += generator .Indent ();
+         }
+
+         stream .string += "}";
+
+         generator .LeaveScope ();
+      },
+      toVRMLStreamField: function (stream, field, fieldTypeLength, accessTypeLength)
+      {
+         const
+            generator  = Generator .Get (stream),
+            sharedNode = generator .IsSharedNode (this);
+
+         if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
+         {
+            if (field .isInitializable ())
+            {
+               stream .string += generator .Indent ();
+               stream .string += field .getName ();
+               stream .string += " ";
+
+               field .toVRMLStream (stream);
+            }
+         }
+         else
+         {
+            let
+               index                  = 0,
+               initializableReference = false;
+
+            field .getReferences () .forEach (function (reference)
+            {
+               initializableReference = initializableReference || reference .isInitializable ();
+
+               // Output build in reference field
+
+               stream .string += generator .Indent ();
+               stream .string += field .getName ();
+               stream .string += " ";
+               stream .string += "IS";
+               stream .string += " ";
+               stream .string += reference .getName ();
+
+               ++ index;
+
+               if (index !== field .getReferences () .size)
+                  stream .string += "\n";
+            });
+
+            if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !this .isDefaultValue (field))
+            {
+               // Output build in field
+
+               stream .string += "\n";
+               stream .string += generator .Indent ();
+               stream .string += field .getName ();
+               stream .string += " ";
+
+               field .toVRMLStream (stream);
+            }
+         }
+      },
+      toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
+      {
+         const
+            generator  = Generator .Get (stream),
+            sharedNode = generator .IsSharedNode (this);
+
+         if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
+         {
+            stream .string += generator .Indent ();
+            stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+            stream .string += " ";
+            stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+            stream .string += " ";
+            stream .string += field .getName ();
+
+            if (field .isInitializable ())
+            {
+               stream .string += " ";
+
+               field .toVRMLStream (stream);
+            }
+         }
+         else
+         {
+            let
+               index                  = 0,
+               initializableReference = false;
+
+            field .getReferences () .forEach (function (reference)
+            {
+               initializableReference = initializableReference || reference .isInitializable ();
+
+               // Output user defined reference field
+
+               stream .string += generator .Indent ();
+               stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+               stream .string += " ";
+               stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+               stream .string += " ";
+               stream .string += field .getName ();
+               stream .string += " ";
+               stream .string += "IS";
+               stream .string += " ";
+               stream .string += reference .getName ();
+
+               ++ index;
+
+               if (index !== field .getReferences () .size)
+                  stream .string += "\n";
+            });
+
+            if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !field .isDefaultValue ())
+            {
+               stream .string += "\n";
+               stream .string += generator .Indent ();
+               stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+               stream .string += " ";
+               stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+               stream .string += " ";
+               stream .string += field .getName ();
+
+               if (field .isInitializable ())
+               {
+                  stream .string += " ";
+
+                  field .toVRMLStream (stream);
+               }
+            }
+         }
+      },
+      toXMLStream: function (stream)
+      {
+         const
+            generator  = Generator .Get (stream),
+            sharedNode = generator .IsSharedNode (this);
+
+         generator .EnterScope ();
+
+         const name = generator .Name (this);
+
+         if (name .length)
+         {
+            if (generator .ExistsNode (this))
+            {
+               stream .string += generator .Indent ();
+               stream .string += "<";
+               stream .string += this .getTypeName ();
+               stream .string += " ";
+               stream .string += "USE='";
+               stream .string += generator .XMLEncode (name);
+               stream .string += "'";
+
+               const containerField = generator .ContainerField ();
+
+               if (containerField)
+               {
+                  if (containerField .getName () !== this .getContainerField ())
+                  {
+                     stream .string += " ";
+                     stream .string += "containerField='";
+                     stream .string += generator .XMLEncode (containerField .getName ());
+                     stream .string += "'";
+                  }
+               }
+
+               stream .string += "/>";
+
+               generator .LeaveScope ();
+               return;
+            }
+         }
+
+         stream .string += generator .Indent ();
+         stream .string += "<";
+         stream .string += this .getTypeName ();
+
+         if (name .length)
+         {
+            generator .AddNode (this);
+
+            stream .string += " ";
+            stream .string += "DEF='";
+            stream .string += generator .XMLEncode (name);
+            stream .string += "'";
+         }
+
+         const containerField = generator .ContainerField ();
+
+         if (containerField)
+         {
+            if (containerField .getName () !== this .getContainerField ())
+            {
+               stream .string += " ";
+               stream .string += "containerField='";
+               stream .string += generator .XMLEncode (containerField .getName ());
+               stream .string += "'";
+            }
+         }
+
+         const
+            fields            = this .getChangedFields (),
+            userDefinedFields = this .getUserDefinedFields ();
+
+         const
+            references = [ ],
+            childNodes = [ ];
+
+         let cdata = this .getSourceText ();
+
+         if (cdata && cdata .length === 0)
+            cdata = null;
+
+         generator .IncIndent ();
+         generator .IncIndent ();
+
+         for (const field of fields)
+         {
+            // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+            // for this field.
+
+            let mustOutputValue = false;
+
+            if (generator .ExecutionContext ())
+            {
+               if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
+               {
+                  let initializableReference = false;
+
+                  field .getReferences () .forEach (function (fieldReference)
+                  {
+                     initializableReference = initializableReference || fieldReference .isInitializable ();
+                  });
+
+                  if (!initializableReference)
+                     mustOutputValue = !this .isDefaultValue (field);
+               }
+            }
+
+            // If we have no execution context we are not in a proto and must not generate IS references the same is true
+            // if the node is a shared node as the node does not belong to the execution context.
+
+            if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode || mustOutputValue)
+            {
+               if (mustOutputValue)
+                  references .push (field);
+
+               if (field .isInitializable ())
+               {
+                  switch (field .getType ())
+                  {
+                     case X3DConstants .SFNode:
+                     case X3DConstants .MFNode:
+                     {
+                        childNodes .push (field);
+                        break;
+                     }
+                     default:
+                     {
+                        if (field === cdata)
+                           break;
+
+                        stream .string += "\n";
+                        stream .string += generator .Indent ();
+                        stream .string += field .getName ();
+                        stream .string += "='";
+
+                        field .toXMLStream (stream);
+
+                        stream .string += "'";
+                        break;
+                     }
+                  }
+               }
+            }
+            else
+            {
+               references .push (field);
+            }
+         }
+
+         generator .DecIndent ();
+         generator .DecIndent ();
+
+         if ((!this .canUserDefinedFields () || !userDefinedFields .length) && (!references .length || sharedNode) && !childNodes .length && !cdata)
+         {
+            stream .string += "/>";
+         }
+         else
+         {
+            stream .string += ">\n";
+
+            generator .IncIndent ();
+
+            if (this .canUserDefinedFields ())
+            {
+               for (const field of userDefinedFields)
+               {
+                  stream .string += generator .Indent ();
+                  stream .string += "<field";
+                  stream .string += " ";
+                  stream .string += "accessType='";
+                  stream .string += generator .AccessType (field .getAccessType ());
+                  stream .string += "'";
+                  stream .string += " ";
+                  stream .string += "type='";
+                  stream .string += field .getTypeName ();
+                  stream .string += "'";
+                  stream .string += " ";
+                  stream .string += "name='";
+                  stream .string += generator .XMLEncode (field .getName ());
+                  stream .string += "'";
+
+                  // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+                  // for this field.
+
+                  let mustOutputValue = false;
+
+                  if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
+                  {
+                     let initializableReference = false;
+
+                     field .getReferences () .forEach (function (fieldReference)
+                     {
+                        initializableReference = initializableReference || fieldReference .isInitializable ();
+                     });
+
+                     if (!initializableReference)
+                        mustOutputValue = true;
+                  }
+
+                  if ((field .getReferences () .size === 0 || !generator .ExecutionContext ()) || sharedNode || mustOutputValue)
+                  {
+                     if (mustOutputValue && generator .ExecutionContext ())
+                        references .push (field);
+
+                     if (!field .isInitializable () || field .isDefaultValue ())
+                     {
+                        stream .string += "/>\n";
+                     }
+                     else
+                     {
+                        // Output value
+
+                        switch (field .getType ())
+                        {
+                           case X3DConstants .SFNode:
+                           case X3DConstants .MFNode:
+                           {
+                              generator .PushContainerField (field);
+
+                              stream .string += ">\n";
+
+                              generator .IncIndent ();
+
+                              field .toXMLStream (stream);
+
+                              stream .string += "\n";
+
+                              generator .DecIndent ();
+
+                              stream .string += generator .Indent ();
+                              stream .string += "</field>\n";
+
+                              generator .PopContainerField ();
+                              break;
+                           }
+                           default:
+                           {
+                              stream .string += " ";
+                              stream .string += "value='";
+
+                              field .toXMLStream (stream);
+
+                              stream .string += "'";
+                              stream .string += "/>\n";
+                              break;
+                           }
+                        }
+                     }
+                  }
+                  else
+                  {
+                     if (generator .ExecutionContext ())
+                        references .push (field);
+
+                     stream .string += "/>\n";
+                  }
+               }
+            }
+
+            if (references .length && !sharedNode)
+            {
+               stream .string += generator .Indent ();
+               stream .string += "<IS>";
+               stream .string += "\n";
+
+               generator .IncIndent ();
+
+               for (const field of references)
+               {
+                  const protoFields = field .getReferences ();
+
+                  protoFields .forEach (function (protoField)
+                  {
+                     stream .string += generator .Indent ();
+                     stream .string += "<connect";
+                     stream .string += " ";
+                     stream .string += "nodeField='";
+                     stream .string += generator .XMLEncode (field .getName ());
+                     stream .string += "'";
+                     stream .string += " ";
+                     stream .string += "protoField='";
+                     stream .string += generator .XMLEncode (protoField .getName ());
+                     stream .string += "'";
+                     stream .string += "/>\n";
+                  });
+               }
+
+               generator .DecIndent ();
+
+               stream .string += generator .Indent ();
+               stream .string += "</IS>\n";
+            }
+
+            for (const field of childNodes)
+            {
+               generator .PushContainerField (field);
+
+               field .toXMLStream (stream);
+
+               stream .string += "\n";
+
+               generator .PopContainerField ();
+            }
+
+            if (cdata)
+            {
+               for (const value of cdata)
+               {
+                  stream .string += "<![CDATA[";
+                  stream .string += generator .escapeCDATA (value);
+                  stream .string += "]]>\n";
+               }
+            }
+
+            generator .DecIndent ();
+
+            stream .string += generator .Indent ();
+            stream .string += "</";
+            stream .string += this .getTypeName ();
+            stream .string += ">";
+         }
+
+         generator .LeaveScope ();
+      },
+      dispose: function ()
+      {
+         const executionContext = this .getExecutionContext ();
+
+         // Remove named node if any.
+
+         if (this .getName ())
+            executionContext .removeNamedNode (this .getName ())
+
+         // Remove imported node if any.
+
+         if (!executionContext .isMainScene ())
+         {
+            const parentContext = executionContext .getExecutionContext ();
+
+            for (const [importedName, importedNode] of new Map (parentContext .getImportedNodes ()))
+            {
+               try
+               {
+                  if (importedNode .getExportedNode () === this)
+                     parentContext .removeImportedNode (importedName);
+               }
+               catch (error)
+               {
+                  //console .log (error);
+               }
+            }
+         }
+
+         // Remove exported node if any.
+
+         if (executionContext .getType () .includes (X3DConstants .X3DScene))
+         {
+            for (const [exportedName, exportedNode] of new Map (executionContext .getExportedNodes ()))
+            {
+               if (exportedNode .getLocalNode () === this)
+                  executionContext .removeExportedNode (exportedName);
+            }
+         }
+
+         // Remove routes from and to node if any, and dispose values of fields.
+
+         for (const field of this .getFields ())
+            field .dispose ();
+
+         // Remove node from entire scene graph.
+
+         for (const firstParent of new Set (this .getParents ()))
+         {
+            if (firstParent instanceof Fields .SFNode)
+            {
+               for (const secondParent of new Set (firstParent .getParents ()))
+               {
+                  if (secondParent instanceof Fields .MFNode)
+                  {
+                     const length = secondParent .length;
+
+                     secondParent .erase (secondParent .remove (0, length, firstParent), length);
+                  }
+               }
+
+               firstParent .setValue (null);
+            }
+         }
+
+         // Call super .dispose.
+
+         X3DBaseNode .prototype .dispose .call (this);
+      },
+   });
+
+   return X3DNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Execution/X3DImportedNode',[
+   "x_ite/Components/Core/X3dNode",
    "x_ite/Base/X3DConstants",
    "x_ite/Fields/SFNodeCache",
    "x_ite/InputOutput/Generator",
 ],
-function (X3DBaseNode,
+function (X3dNode,
           X3DConstants,
           SFNodeCache,
           Generator)
@@ -31130,17 +31987,17 @@ function (X3DBaseNode,
 
    function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
    {
-      X3DBaseNode .call (this, executionContext);
+      X3dNode .call (this, executionContext);
 
       this [_inlineNode]   = inlineNode;
       this [_exportedName] = exportedName;
       this [_importedName] = importedName;
       this [_routes]       = new Set ();
 
-      this [_inlineNode] .loadState_ .addInterest ("set_loadState__", this);
+      this [_inlineNode] ._loadState .addInterest ("set_loadState__", this);
    }
 
-   X3DImportedNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   X3DImportedNode .prototype = Object .assign (Object .create (X3dNode .prototype),
    {
       constructor: X3DImportedNode,
       getInlineNode: function ()
@@ -31400,11 +32257,11 @@ function (X3DBaseNode,
       },
       dispose: function ()
       {
-         this [_inlineNode] .loadState_ .removeInterest ("set_loadState__", this);
+         this [_inlineNode] ._loadState .removeInterest ("set_loadState__", this);
 
          this .deleteRoutes ();
 
-         X3DBaseNode .prototype .dispose .call (this);
+         X3dNode .prototype .dispose .call (this);
       },
    });
 
@@ -31981,7 +32838,7 @@ function (Fields)
 {
 "use strict";
 
-   return function (type, node)
+   return function (type, node, innerNode = true)
    {
       try
       {
@@ -31992,7 +32849,8 @@ function (Fields)
 
             if (node)
             {
-               node = node .getInnerNode ();
+               if (innerNode)
+                  node = node .getInnerNode ();
 
                if (node .getType () .indexOf (type) !== -1)
                   return node;
@@ -32105,8 +32963,8 @@ function (SupportedNodes,
       this .addChildObjects ("rootNodes",  new Fields .MFNode (),
                              "worldInfos", new Fields .MFNode ());
 
-      this .rootNodes_ .setAccessType (X3DConstants .initializeOnly);
-      this .rootNodes_ .addCloneCount (1);
+      this ._rootNodes .setAccessType (X3DConstants .initializeOnly);
+      this ._rootNodes .addCloneCount (1);
 
       this [_namedNodes]     = new Map ();
       this [_importedNodes]  = new Map ();
@@ -32166,6 +33024,8 @@ function (SupportedNodes,
       },
       createNode: function (typeName, setup = true)
       {
+         typeName = String (typeName);
+
          if (setup === false)
          {
             const Type = this .getBrowser () .getSupportedNode (typeName);
@@ -32191,6 +33051,8 @@ function (SupportedNodes,
       },
       createProto: function (name, setup = true)
       {
+         name = String (name);
+
          const X3DScene = require ("x_ite/Execution/X3DScene");
 
          let executionContext = this;
@@ -32227,17 +33089,13 @@ function (SupportedNodes,
       },
       updateNamedNode: function (name, node)
       {
-         if (!(node instanceof Fields .SFNode || node instanceof X3DBaseNode))
-            throw new Error ("Couldn't update named node: node must be of type SFNode.");
-
          name = String (name);
+         node = X3DCast (X3DConstants .X3DNode, node, false);
 
-         const baseNode = node instanceof Fields .SFNode ? node .getValue () : node;
+         if (!node)
+            throw new Error ("Couldn't update named node: node must be of type X3DNode.");
 
-         if (!baseNode)
-            throw new Error ("Couldn't update named node: node IS NULL.");
-
-         if (baseNode .getExecutionContext () !== this)
+         if (node .getExecutionContext () !== this)
             throw new Error ("Couldn't update named node: node does not belong to this execution context.");
 
          if (name .length === 0)
@@ -32245,25 +33103,36 @@ function (SupportedNodes,
 
          // Remove named node.
 
-         this .removeNamedNode (baseNode .getName ());
+         this .removeNamedNode (node .getName ());
          this .removeNamedNode (name);
 
          // Update named node.
 
-         baseNode .setName (name);
+         node .setName (name);
 
-         this [_namedNodes] .set (name, baseNode);
+         this [_namedNodes] .set (name, node);
       },
       removeNamedNode: function (name)
       {
+         name = String (name);
+
+         const node = this [_namedNodes] .get (name);
+
+         if (!node)
+            return;
+
+            node .setName ("");
+
          this [_namedNodes] .delete (name);
       },
       getNamedNode: function (name)
       {
-         const baseNode = this [_namedNodes] .get (name);
+         name = String (name);
 
-         if (baseNode)
-            return SFNodeCache .get (baseNode);
+         const node = this [_namedNodes] .get (name);
+
+         if (node)
+            return SFNodeCache .get (node);
 
          throw new Error ("Named node '" + name + "' not found.");
       },
@@ -32277,7 +33146,7 @@ function (SupportedNodes,
 
          return function (name)
          {
-            name = name .replace (_TrailingNumbers, "");
+            name = String (name) .replace (_TrailingNumbers, "");
 
             let
                newName = name,
@@ -32305,6 +33174,9 @@ function (SupportedNodes,
          if (importedName === undefined)
             importedName = exportedName;
 
+         exportedName = String (exportedName);
+         importedName = String (importedName);
+
          if (this [_importedNodes] .has (importedName))
             throw new Error ("Couldn't add imported node: imported name '" + importedName + "' already in use.");
 
@@ -32312,12 +33184,12 @@ function (SupportedNodes,
       },
       updateImportedNode: function (inlineNode, exportedName, importedName)
       {
-         inlineNode   = X3DCast (X3DConstants .Inline, inlineNode);
+         inlineNode   = X3DCast (X3DConstants .Inline, inlineNode, false);
          exportedName = String (exportedName);
          importedName = importedName === undefined ? exportedName : String (importedName);
 
          if (!inlineNode)
-            throw new Error ("Node named is not an Inline node.");
+            throw new Error ("Node must be of type Inline node.");
 
          if (inlineNode .getExecutionContext () !== this)
             throw new Error ("Couldn't update imported node: Inline node does not belong to this execution context.");
@@ -32340,6 +33212,8 @@ function (SupportedNodes,
       },
       removeImportedNode: function (importedName)
       {
+         importedName = String (importedName);
+
          const importedNode = this [_importedNodes] .get (importedName);
 
          if (!importedNode)
@@ -32351,6 +33225,8 @@ function (SupportedNodes,
       },
       getImportedNode: function (importedName)
       {
+         importedName = String (importedName);
+
          const importedNode = this [_importedNodes] .get (importedName);
 
          if (importedNode)
@@ -32364,6 +33240,8 @@ function (SupportedNodes,
       },
       getLocalNode: function (name)
       {
+         name = String (name);
+
          try
          {
             return this .getNamedNode (name);
@@ -32380,17 +33258,19 @@ function (SupportedNodes,
       },
       getLocalName: function (node)
       {
-         if (!(node instanceof Fields .SFNode))
-            throw new Error ("Couldn't get local name: node is NULL.");
+         node = X3DCast (X3DConstants .X3DNode, node, false);
 
-         if (node .getValue () .getExecutionContext () === this)
-            return node .getValue () .getName ();
+         if (!node)
+            throw new Error ("Couldn't get local name: node must be of type X3DNode.");
+
+         if (node .getExecutionContext () === this)
+            return node .getName ();
 
          for (const importedNode of this [_importedNodes] .values ())
          {
             try
             {
-               if (importedNode .getExportedNode () === node .getValue ())
+               if (importedNode .getExportedNode () === node)
                   return importedNode .getImportedName ();
             }
             catch (error)
@@ -32404,10 +33284,12 @@ function (SupportedNodes,
       setRootNodes: function () { },
       getRootNodes: function ()
       {
-         return this .rootNodes_;
+         return this ._rootNodes;
       },
       getProtoDeclaration: function (name)
       {
+         name = String (name);
+
          const proto = this [_protos] .get (name);
 
          if (proto)
@@ -32417,6 +33299,8 @@ function (SupportedNodes,
       },
       addProtoDeclaration (name, proto)
       {
+         name = String (name);
+
          const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
          if (!(proto instanceof X3DProtoDeclaration))
@@ -32435,6 +33319,8 @@ function (SupportedNodes,
       },
       updateProtoDeclaration (name, proto)
       {
+         name = String (name);
+
          const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
          if (!(proto instanceof X3DProtoDeclaration))
@@ -32450,6 +33336,8 @@ function (SupportedNodes,
       },
       removeProtoDeclaration (name)
       {
+         name = String (name);
+
          this [_protos] .remove (name);
       },
       getProtoDeclarations: function ()
@@ -32462,7 +33350,7 @@ function (SupportedNodes,
 
          return function (name)
          {
-            name = name .replace (TrailingNumbers, "");
+            name = String (name) .replace (TrailingNumbers, "");
 
             let
                newName = name,
@@ -32486,6 +33374,8 @@ function (SupportedNodes,
       })(),
       getExternProtoDeclaration: function (name)
       {
+         name = String (name);
+
          const externproto = this [_externprotos] .get (name);
 
          if (externproto)
@@ -32495,6 +33385,8 @@ function (SupportedNodes,
       },
       addExternProtoDeclaration (name, externproto)
       {
+         name = String (name);
+
          const X3DExternProtoDeclaration = require ("x_ite/Prototype/X3DExternProtoDeclaration");
 
          if (!(externproto instanceof X3DExternProtoDeclaration))
@@ -32513,6 +33405,8 @@ function (SupportedNodes,
       },
       updateExternProtoDeclaration (name, externproto)
       {
+         name = String (name);
+
          const X3DExternProtoDeclaration = require ("x_ite/Prototype/X3DExternProtoDeclaration");
 
          if (!(externproto instanceof X3DExternProtoDeclaration))
@@ -32528,6 +33422,8 @@ function (SupportedNodes,
       },
       removeExternProtoDeclaration (name)
       {
+         name = String (name);
+
          this [_externprotos] .remove (name);
       },
       getExternProtoDeclarations: function ()
@@ -32540,7 +33436,7 @@ function (SupportedNodes,
 
          return function (name)
          {
-            name = name .replace (TrailingNumbers, "");
+            name = String (name) .replace (TrailingNumbers, "");
 
             let
                newName = name,
@@ -32564,35 +33460,27 @@ function (SupportedNodes,
       })(),
       addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
       {
+         sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false);
          sourceField      = String (sourceField);
+         destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false);
          destinationField = String (destinationField);
 
-         if (!(sourceNode instanceof Fields .SFNode))
-            throw new Error ("Bad ROUTE specification: source node must be of type SFNode.");
+         if (!sourceNode)
+            throw new Error ("Bad ROUTE specification: source node must be of type X3DNode.");
 
-         if (!(destinationNode instanceof Fields .SFNode))
-            throw new Error ("Bad ROUTE specification: destination node must be of type SFNode.");
-
-         const
-            sourceNodeValue      = sourceNode      .getValue (),
-            destinationNodeValue = destinationNode .getValue ();
-
-         if (!sourceNodeValue)
-            throw new Error ("Bad ROUTE specification: source node is NULL.");
-
-         if (!destinationNodeValue)
-            throw new Error ("Bad ROUTE specification: destination node is NULL.");
+         if (!destinationNode)
+            throw new Error ("Bad ROUTE specification: destination node must be of type X3DNode.");
 
          // Imported nodes handling.
 
          let
-            importedSourceNode      = sourceNodeValue      instanceof X3DImportedNode ? sourceNodeValue      : null,
-            importedDestinationNode = destinationNodeValue instanceof X3DImportedNode ? destinationNodeValue : null;
+            importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
+            importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
 
          try
          {
             // If sourceNode is shared node try to find the corresponding X3DImportedNode.
-            if (sourceNodeValue .getExecutionContext () !== this)
+            if (sourceNode .getExecutionContext () !== this)
                importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
          }
          catch (error)
@@ -32603,7 +33491,7 @@ function (SupportedNodes,
          try
          {
             // If destinationNode is shared node try to find the corresponding X3DImportedNode.
-            if (destinationNodeValue .getExecutionContext () !== this)
+            if (destinationNode .getExecutionContext () !== this)
                importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
          }
          catch (error)
@@ -32618,20 +33506,20 @@ function (SupportedNodes,
          }
          else if (importedSourceNode instanceof X3DImportedNode)
          {
-            importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNodeValue, destinationField);
+            importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNode, destinationField);
          }
          else if (importedDestinationNode instanceof X3DImportedNode)
          {
-            importedDestinationNode .addRoute (sourceNodeValue, sourceField, importedDestinationNode, destinationField);
+            importedDestinationNode .addRoute (sourceNode, sourceField, importedDestinationNode, destinationField);
          }
 
          // If either sourceNode or destinationNode is an X3DImportedNode return here without value.
-         if (importedSourceNode === sourceNodeValue || importedDestinationNode === destinationNodeValue)
+         if (importedSourceNode === sourceNode || importedDestinationNode === destinationNode)
             return;
 
          // Create route and return.
 
-         return this .addSimpleRoute (sourceNodeValue, sourceField, destinationNodeValue, destinationField);
+         return this .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
       },
       addSimpleRoute: function (sourceNode, sourceField, destinationNode, destinationField)
       {
@@ -32752,14 +33640,19 @@ function (SupportedNodes,
       },
       getRoute: function (sourceNode, sourceField, destinationNode, destinationField)
       {
-         if (!sourceNode .getValue ())
-            throw new Error ("Bad ROUTE specification: sourceNode is NULL.");
+         sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false);
+         sourceField      = String (sourceField)
+         destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false);
+         destinationField = String (destinationField)
 
-         if (!destinationNode .getValue ())
-            throw new Error ("Bad ROUTE specification: destinationNode is NULL.");
+         if (!sourceNode)
+            throw new Error ("Bad ROUTE specification: sourceNode must be of type X3DNode.");
 
-         sourceField      = sourceNode .getValue () .getField (sourceField);
-         destinationField = destinationNode .getValue () .getField (destinationField);
+         if (!destinationNode)
+            throw new Error ("Bad ROUTE specification: destinationNode must be of type X3DNode.");
+
+         sourceField      = sourceNode      .getField (sourceField);
+         destinationField = destinationNode .getField (destinationField);
 
          const id = sourceField .getId () + "." + destinationField .getId ();
 
@@ -32771,18 +33664,18 @@ function (SupportedNodes,
       },
       getWorldInfos: function ()
       {
-         return this .worldInfos_;
+         return this ._worldInfos;
       },
       addWorldInfo: function (worldInfoNode)
       {
-         this .worldInfos_ .push (worldInfoNode);
+         this ._worldInfos .push (worldInfoNode);
       },
       removeWorldInfo: function (worldInfoNode)
       {
-         const index = this .worldInfos_ .getValue () .indexOf (worldInfoNode);
+         const index = this ._worldInfos .getValue () .indexOf (worldInfoNode);
 
          if (index !== -1)
-            this .worldInfos_ .splice (index, 1);
+            this ._worldInfos .splice (index, 1);
       },
       toVRMLStream: function (stream)
       {
@@ -32908,7 +33801,7 @@ function (SupportedNodes,
       },
       dispose: function ()
       {
-         this .rootNodes_ .dispose ();
+         this ._rootNodes .dispose ();
 
          for (const route of this [_routes])
             this .deleteRoute (route);
@@ -33595,6 +34488,7 @@ define ('x_ite/Execution/X3DScene',[
    "x_ite/Configuration/UnitInfo",
    "x_ite/Configuration/UnitInfoArray",
    "x_ite/Execution/X3DExportedNode",
+   "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
    "x_ite/Fields/SFNodeCache",
@@ -33606,6 +34500,7 @@ function (SupportedNodes,
           UnitInfo,
           UnitInfoArray,
           X3DExportedNode,
+          X3DCast,
           X3DConstants,
           Generator,
           SFNodeCache)
@@ -33775,6 +34670,8 @@ function (SupportedNodes,
       },
       setMetaData: function (name, value)
       {
+         name = String (name)
+
          if (!name .length)
             return;
 
@@ -33782,10 +34679,14 @@ function (SupportedNodes,
       },
       removeMetaData: function (name)
       {
+         name = String (name);
+
          this [_metadata] .delete (name);
       },
       getMetaData: function (name)
       {
+         name = String (name);
+
          return this [_metadata] .get (name);
       },
       getMetaDatas: function ()
@@ -33794,6 +34695,8 @@ function (SupportedNodes,
       },
       addExportedNode: function (exportedName, node)
       {
+         exportedName = String (exportedName);
+
          if (this [_exportedNodes] .has (exportedName))
             throw new Error ("Couldn't add exported node: exported name '" + exportedName + "' already in use.");
 
@@ -33802,29 +34705,31 @@ function (SupportedNodes,
       updateExportedNode: function (exportedName, node)
       {
          exportedName = String (exportedName);
+         node         = X3DCast (X3DConstants .X3DNode, node, false);
 
          if (exportedName .length === 0)
             throw new Error ("Couldn't update exported node: node exported name is empty.");
 
-         if (!(node instanceof Fields .SFNode))
-            throw new Error ("Couldn't update exported node: node must be of type SFNode.");
+         if (!node)
+            throw new Error ("Couldn't update exported node: node must be of type X3DNode.");
 
-         if (!node .getValue ())
-            throw new Error ("Couldn't update exported node: node IS NULL.");
-
-         //if (node .getValue () .getExecutionContext () !== this)
+         //if (node .getExecutionContext () !== this)
          //	throw new Error ("Couldn't update exported node: node does not belong to this execution context.");
 
-         const exportedNode = new X3DExportedNode (exportedName, node .getValue ());
+         const exportedNode = new X3DExportedNode (exportedName, node);
 
          this [_exportedNodes] .set (exportedName, exportedNode);
       },
       removeExportedNode: function (exportedName)
       {
+         exportedName = String (exportedName);
+
          this [_exportedNodes] .delete (exportedName);
       },
       getExportedNode: function (exportedName)
       {
+         exportedName = String (exportedName);
+
          const exportedNode = this [_exportedNodes] .get (exportedName);
 
          if (exportedNode)
@@ -33838,11 +34743,7 @@ function (SupportedNodes,
       },
       addRootNode: function (node)
       {
-         if (node === null)
-            node = new Fields .SFNode ();
-
-         if (!(node instanceof Fields .SFNode))
-            throw new Error ("Couldn't add root node: node must be of type SFNode.");
+         node = SFNodeCache .get (X3DCast (X3DConstants .X3DNode, node, false));
 
          const rootNodes = this .getRootNodes ();
 
@@ -33856,11 +34757,7 @@ function (SupportedNodes,
       },
       removeRootNode: function (node)
       {
-         if (node === null)
-            node = new Fields .SFNode ();
-
-         if (!(node instanceof Fields .SFNode))
-            throw new Error ("Couldn't remove root node: node must be of type SFNode.");
+         node = SFNodeCache .get (X3DCast (X3DConstants .X3DNode, node, false));
 
          const
             rootNodes = this .getRootNodes (),
@@ -33870,7 +34767,10 @@ function (SupportedNodes,
       },
       setRootNodes: function (value)
       {
-         this .getRootNodes () .setValue (value);
+         if (!(value instanceof Fields .MFNode))
+            throw new Error ("Value must be of type MFNode.");
+
+         this .getRootNodes () .assign (value);
       },
       toVRMLStream: function (stream)
       {
@@ -34203,11 +35103,11 @@ function (Fields,
       },
       addInitLoadCount: function (node)
       {
-         this .initLoadCount_ = this .initLoadCount_ .getValue () + 1;
+         this ._initLoadCount = this ._initLoadCount .getValue () + 1;
       },
       removeInitLoadCount: function (node)
       {
-         this .initLoadCount_ = this .initLoadCount_ .getValue () - 1;
+         this ._initLoadCount = this ._initLoadCount .getValue () - 1;
       },
       addLoadCount: function (node)
       {
@@ -34216,7 +35116,7 @@ function (Fields,
 
          this [_loadingObjects] .add (node);
 
-         this .loadCount_ = this [_loadingObjects] .size;
+         this ._loadCount = this [_loadingObjects] .size;
 
          const
             browser = this .getBrowser (),
@@ -34235,7 +35135,7 @@ function (Fields,
 
          this [_loadingObjects] .delete (node);
 
-         this .loadCount_ = this [_loadingObjects] .size;
+         this ._loadCount = this [_loadingObjects] .size;
 
          const
             browser = this .getBrowser (),
@@ -34524,20 +35424,20 @@ function (Fields,
       {
          this .isLive () .addInterest ("set_live__", this);
 
-         this .load_                 .addInterest ("set_load__",        this);
-         this .url_                  .addInterest ("set_url__",         this);
-         this .urlBuffer_            .addInterest ("loadNow",           this);
-         this .autoRefresh_          .addInterest ("set_autoRefresh__", this);
-         this .autoRefreshTimeLimit_ .addInterest ("set_autoRefresh__", this);
+         this ._load                 .addInterest ("set_load__",        this);
+         this ._url                  .addInterest ("set_url__",         this);
+         this ._urlBuffer            .addInterest ("loadNow",           this);
+         this ._autoRefresh          .addInterest ("set_autoRefresh__", this);
+         this ._autoRefreshTimeLimit .addInterest ("set_autoRefresh__", this);
       },
       setLoadState: function (value, notify = true)
       {
-         this .loadState_ = value;
+         this ._loadState = value;
 
          if (value === X3DConstants .COMPLETE_STATE)
          {
             this [_autoRefreshCompleteTime] = performance .now ();
-            this .setAutoRefreshTimer (this .autoRefresh_ .getValue ());
+            this .setAutoRefreshTimer (this ._autoRefresh .getValue ());
          }
 
          if (!notify)
@@ -34562,11 +35462,11 @@ function (Fields,
       },
       checkLoadState: function ()
       {
-         return this .loadState_ .getValue ();
+         return this ._loadState .getValue ();
       },
       getLoadState: function ()
       {
-         return this .loadState_;
+         return this ._loadState;
       },
       setCache: function (value)
       {
@@ -34581,17 +35481,17 @@ function (Fields,
          if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
             return;
 
-         if (!this .load_ .getValue ())
+         if (!this ._load .getValue ())
             return;
 
-         if (this .url_ .length === 0)
+         if (this ._url .length === 0)
             return;
 
          this .setCache (cache);
          this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
          // Buffer prevents double load of the scene if load and url field are set at the same time.
-         this .urlBuffer_ = this .url_;
+         this ._urlBuffer = this ._url;
       },
       loadNow: function ()
       { },
@@ -34609,10 +35509,10 @@ function (Fields,
       {
          clearTimeout (this [_autoRefreshId]);
 
-         if (this .autoRefresh_ .getValue () <= 0)
+         if (this ._autoRefresh .getValue () <= 0)
             return;
 
-         const autoRefreshTimeLimit = this .autoRefreshTimeLimit_ .getValue ();
+         const autoRefreshTimeLimit = this ._autoRefreshTimeLimit .getValue ();
 
          if (autoRefreshTimeLimit !== 0)
          {
@@ -34636,7 +35536,7 @@ function (Fields,
       },
       set_load__: function ()
       {
-         if (this .load_ .getValue ())
+         if (this ._load .getValue ())
          {
             this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
@@ -34647,7 +35547,7 @@ function (Fields,
       },
       set_url__: function ()
       {
-         if (!this .load_ .getValue ())
+         if (!this ._load .getValue ())
             return;
 
          this .setLoadState (X3DConstants .NOT_STARTED_STATE);
@@ -34661,7 +35561,7 @@ function (Fields,
 
          const
             elapsedTime = (performance .now () - this [_autoRefreshCompleteTime]) / 1000,
-            autoRefresh = this .autoRefresh_ .getValue ();
+            autoRefresh = this ._autoRefresh .getValue ();
 
          let autoRefreshInterval = autoRefresh - elapsedTime;
 
@@ -35576,7 +36476,7 @@ function (X3DChildObject,
       if (!protoNode .isExternProto)
          return;
 
-      protoNode .updateInstances_ .addInterest ("construct", this)
+      protoNode ._updateInstances .addInterest ("construct", this)
       protoNode .requestImmediateLoad ();
    }
 
@@ -35697,8 +36597,8 @@ function (X3DChildObject,
          if (this .isInitialized ())
             X3DChildObject .prototype .addEvent .call (this);
 
-         this [_protoNode] .updateInstances_ .removeInterest ("construct", this);
-         this [_protoNode] .updateInstances_ .addInterest ("update", this);
+         this [_protoNode] ._updateInstances .removeInterest ("construct", this);
+         this [_protoNode] ._updateInstances .addInterest ("update", this);
       },
       update: function ()
       {
@@ -36072,8 +36972,8 @@ function (X3DChildObject,
       },
       dispose: function ()
       {
-         this [_protoNode] .updateInstances_ .removeInterest ("construct", this);
-         this [_protoNode] .updateInstances_ .removeInterest ("update",    this);
+         this [_protoNode] ._updateInstances .removeInterest ("construct", this);
+         this [_protoNode] ._updateInstances .removeInterest ("update",    this);
 
          if (this .body)
             this .body .dispose ();
@@ -36137,6 +37037,7 @@ function (X3DChildObject,
 define ('x_ite/Prototype/X3DProtoDeclarationNode',[
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields",
+   "x_ite/Base/Events",
    "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Core/X3DPrototypeInstance",
    "x_ite/Fields/SFNodeCache",
@@ -36144,6 +37045,7 @@ define ('x_ite/Prototype/X3DProtoDeclarationNode',[
 ],
 function (SupportedNodes,
           Fields,
+          Events,
           X3DBaseNode,
           X3DPrototypeInstance,
           SFNodeCache,
@@ -36190,7 +37092,11 @@ function (SupportedNodes,
       },
       requestUpdateInstances: function ()
       {
-         this .updateInstances_ = this .getBrowser () .getCurrentTime ();
+         this ._updateInstances = this .getBrowser () .getCurrentTime ();
+      },
+      updateInstances: function ()
+      {
+         this ._updateInstances .processEvent (Events .create (this ._updateInstances));
       },
    });
 
@@ -36335,7 +37241,7 @@ function ($,
                fieldDefinitions .add (fieldDefinition .name, fieldDefinition);
          }
 
-         this .requestUpdateInstances ();
+         this .updateInstances ();
       },
       getProtoDeclaration: function ()
       {
@@ -36349,7 +37255,7 @@ function ($,
 
          const FileLoader = require ("x_ite/InputOutput/FileLoader");
 
-         new FileLoader (this) .createX3DFromURL (this .urlBuffer_, null, this .setInternalSceneAsync .bind (this));
+         new FileLoader (this) .createX3DFromURL (this ._urlBuffer, null, this .setInternalSceneAsync .bind (this));
       },
       setInternalSceneAsync: function (value)
       {
@@ -36443,7 +37349,7 @@ function ($,
 
          stream .string += generator .Indent ();
 
-         this .url_ .toVRMLStream (stream);
+         this ._url .toVRMLStream (stream);
       },
       toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
       {
@@ -36469,7 +37375,7 @@ function ($,
          stream .string += " ";
          stream .string += "url='";
 
-         this .url_ .toXMLStream (stream);
+         this ._url .toXMLStream (stream);
 
          stream .string += "'";
          stream .string += ">\n";
@@ -36530,7 +37436,7 @@ function ($,
 
    Object .defineProperty (X3DExternProtoDeclaration .prototype, "urls",
    {
-      get: function () { return this .url_; },
+      get: function () { return this ._url; },
       enumerable: true,
       configurable: false
    });
@@ -36650,7 +37556,7 @@ function (SupportedNodes,
 
          this [_body] .setup ();
 
-         this .loadState_ = X3DConstants .COMPLETE_STATE;
+         this ._loadState = X3DConstants .COMPLETE_STATE;
       },
       getProtoDeclaration: function ()
       {
@@ -36662,7 +37568,7 @@ function (SupportedNodes,
       },
       checkLoadState: function ()
       {
-         return this .loadState_ .getValue ();
+         return this ._loadState .getValue ();
       },
       canUserDefinedFields: function ()
       {
@@ -37874,7 +38780,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   field .setAccessType (X3DConstants .inputOnly);
                   field .setName (fieldId);
@@ -37899,7 +38805,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   field .setAccessType (X3DConstants .outputOnly);
                   field .setName (fieldId);
@@ -37924,7 +38830,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   if (this .fieldValue (field))
                   {
@@ -37965,7 +38871,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field   = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   if (this .fieldValue (field))
                   {
@@ -38076,7 +38982,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   field .setAccessType (X3DConstants .inputOnly);
                   field .setName (fieldId);
@@ -38101,7 +39007,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   field .setAccessType (X3DConstants .outputOnly);
                   field .setName (fieldId);
@@ -38126,7 +39032,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   field .setAccessType (X3DConstants .initializeOnly);
                   field .setName (fieldId);
@@ -38151,7 +39057,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field   = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   field .setAccessType (X3DConstants .inputOutput);
                   field .setName (fieldId);
@@ -38431,7 +39337,7 @@ function (Fields,
       },
       createUserDefinedField: function (baseNode, accessType, fieldId, supportedField)
       {
-         var field = new (supportedField .constructor) ();
+         var field = supportedField .create ();
 
          baseNode .addUserDefinedField (accessType, fieldId, field);
 
@@ -40514,19 +41420,19 @@ function ($,
       },
       getShiftKey: function ()
       {
-         return this .shiftKey_ .getValue ();
+         return this ._shiftKey .getValue ();
       },
       getControlKey: function ()
       {
-         return this .controlKey_ .getValue ();
+         return this ._controlKey .getValue ();
       },
       getAltKey: function ()
       {
-         return this .altKey_ .getValue ();
+         return this ._altKey .getValue ();
       },
       getAltGrKey: function ()
       {
-         return this .altGrKey_ .getValue ();
+         return this ._altGrKey .getValue ();
       },
       [_keydown]: function (event)
       {
@@ -40536,17 +41442,17 @@ function ($,
          {
             case 16: // Shift
             {
-               this .shiftKey_ = true;
+               this ._shiftKey = true;
                break;
             }
             case 17: // Ctrl
             {
-               this .controlKey_ = true;
+               this ._controlKey = true;
                break;
             }
             case 18: // Alt
             {
-               this .altKey_ = true;
+               this ._altKey = true;
                break;
             }
             case 37: // Left
@@ -40566,7 +41472,7 @@ function ($,
                   {
                      event .preventDefault ();
                      this .setBrowserOption ("Shading", "POINT");
-                     this .getNotification () .string_ = "Shading: Pointset";
+                     this .getNotification () ._string = "Shading: Pointset";
                   }
                }
 
@@ -40580,7 +41486,7 @@ function ($,
                   {
                      event .preventDefault ();
                      this .setBrowserOption ("Shading", "WIREFRAME");
-                     this .getNotification () .string_ = "Shading: Wireframe";
+                     this .getNotification () ._string = "Shading: Wireframe";
                   }
                }
 
@@ -40594,7 +41500,7 @@ function ($,
                   {
                      event .preventDefault ();
                      this .setBrowserOption ("Shading", "FLAT");
-                     this .getNotification () .string_ = "Shading: Flat";
+                     this .getNotification () ._string = "Shading: Flat";
                   }
                }
 
@@ -40608,7 +41514,7 @@ function ($,
                   {
                      event .preventDefault ();
                      this .setBrowserOption ("Shading", "GOURAUD");
-                     this .getNotification () .string_ = "Shading: Gouraud";
+                     this .getNotification () ._string = "Shading: Gouraud";
                   }
                }
 
@@ -40622,7 +41528,7 @@ function ($,
                   {
                      event .preventDefault ();
                      this .setBrowserOption ("Shading", "PHONG");
-                     this .getNotification () .string_ = "Shading: Phong";
+                     this .getNotification () ._string = "Shading: Phong";
                   }
                }
 
@@ -40641,7 +41547,7 @@ function ($,
                      else
                         this .beginUpdate ();
 
-                     this .getNotification () .string_ = this .isLive () .getValue () ? "Begin Update" : "End Update";
+                     this .getNotification () ._string = this .isLive () .getValue () ? "Begin Update" : "End Update";
                   }
                }
 
@@ -40649,7 +41555,7 @@ function ($,
             }
             case 225: // Alt Gr
             {
-               this .altGrKey_ = true;
+               this ._altGrKey = true;
                break;
             }
             case 171: // Plus // Firefox
@@ -40721,7 +41627,7 @@ function ($,
                      case "GeoViewpoint":
                      {
                         const
-                           geoOrigin = viewpoint .geoOrigin_,
+                           geoOrigin = viewpoint ._geoOrigin,
                            geoCoord  = new Vector3 (0, 0, 0);
 
                         if (geoOrigin .getValue () && geoOrigin .getNodeTypeName () === "GeoOrigin")
@@ -40734,7 +41640,7 @@ function ($,
                            go .rotateYUp = geoOrigin .rotateYUp;
                         }
 
-                        vp .geoSystem        = viewpoint .geoSystem_;
+                        vp .geoSystem        = viewpoint ._geoSystem;
                         vp .position         = viewpoint .getGeoCoord (viewpoint .getUserPosition (), geoCoord);
                         vp .orientation      = viewpoint .getUserOrientation ();
                         vp .centerOfRotation = viewpoint .getGeoCoord (viewpoint .getUserCenterOfRotation (), geoCoord);
@@ -40757,7 +41663,7 @@ function ($,
 
                   console .log (text);
                   this .copyToClipboard (text);
-                  this .getNotification () .string_ = _ ("Viewpoint is copied to clipboard.");
+                  this .getNotification () ._string = _ ("Viewpoint is copied to clipboard.");
                }
 
                break;
@@ -40772,17 +41678,17 @@ function ($,
          {
             case 16: // Shift
             {
-               this .shiftKey_ = false;
+               this ._shiftKey = false;
                break;
             }
             case 17: // Ctrl
             {
-               this .controlKey_ = false;
+               this ._controlKey = false;
                break;
             }
             case 18: // Alt
             {
-               this .altKey_ = false;
+               this ._altKey = false;
                break;
             }
             case 37: // Left
@@ -40796,7 +41702,7 @@ function ($,
             }
             case 225: // Alt Gr
             {
-               this .altGrKey_ = false;
+               this ._altGrKey = false;
                break;
             }
          }
@@ -41290,7 +42196,7 @@ function (Fields,
       },
       setLoadCount: function (value)
       {
-         this .loadCount_ = value;
+         this ._loadCount = value;
 
          if (value)
          {
@@ -41303,14 +42209,14 @@ function (Fields,
          }
 
          if (! this [_loading])
-            this .getNotification () .string_ = string;
+            this .getNotification () ._string = string;
 
          this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
          this .getSplashScreen () .find (".x_ite-private-progressbar div") .css ("width", ((this [_loadingTotal] - value) * 100 / this [_loadingTotal]) + "%");
       },
       resetLoadCount: function ()
       {
-         this .loadCount_     = 0;
+         this ._loadCount     = 0;
          this [_loadingTotal] = 0;
 
          this [_loadingObjects] .clear ();
@@ -41544,11 +42450,11 @@ function (Fields,
       {
          X3DAppearanceChildNode .prototype .initialize .call (this);
 
-         this .activate_ .addInterest ("set_activate__", this);
+         this ._activate .addInterest ("set_activate__", this);
       },
       set_activate__: function ()
       {
-         this .activationTime_ = this .getBrowser () .getCurrentTime ();
+         this ._activationTime = this .getBrowser () .getCurrentTime ();
       },
       custom: true,
       setCustom: function (value)
@@ -41561,7 +42467,7 @@ function (Fields,
       },
       setValid: function (value)
       {
-         this .isValid_ = this .valid = value;
+         this ._isValid = this .valid = value;
       },
       getValid: function ()
       {
@@ -41601,8 +42507,8 @@ function (Fields,
       {
          ++ this .selected;
 
-         if (! this .isSelected_ .getValue ())
-            this .isSelected_ = true;
+         if (! this ._isSelected .getValue ())
+            this ._isSelected = true;
       },
       deselect: function ()
       {
@@ -41610,8 +42516,8 @@ function (Fields,
 
          if (this .selected === 0)
          {
-            if (this .isSelected_ .getValue ())
-               this .isSelected_ = false;
+            if (this ._isSelected .getValue ())
+               this ._isSelected = false;
          }
       },
       traverse: function (type, renderObject)
@@ -41698,8 +42604,8 @@ function (Fields,
       this .addChildObjects ("isCameraObject",   new Fields .SFBool ());
       this .addChildObjects ("isPickableObject", new Fields .SFBool ());
 
-      this .isCameraObject_   .setAccessType (X3DConstants .outputOnly);
-      this .isPickableObject_ .setAccessType (X3DConstants .outputOnly);
+      this ._isCameraObject   .setAccessType (X3DConstants .outputOnly);
+      this ._isPickableObject .setAccessType (X3DConstants .outputOnly);
    }
 
    X3DChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -41707,21 +42613,21 @@ function (Fields,
       constructor: X3DChildNode,
       setCameraObject: function (value)
       {
-         if (value !== this .isCameraObject_ .getValue ())
-            this .isCameraObject_ = value;
+         if (value !== this ._isCameraObject .getValue ())
+            this ._isCameraObject = value;
       },
       getCameraObject: function ()
       {
-         return this .isCameraObject_ .getValue ();
+         return this ._isCameraObject .getValue ();
       },
       setPickableObject: function (value)
       {
-         if (value !== this .isPickableObject_ .getValue ())
-            this .isPickableObject_ = value;
+         if (value !== this ._isPickableObject .getValue ())
+            this ._isPickableObject = value;
       },
       getPickableObject: function ()
       {
-         return this .isPickableObject_ .getValue ();
+         return this ._isPickableObject .getValue ();
       },
    });
 
@@ -41971,22 +42877,22 @@ function (Fields,
       initialize: function ()
       {
          this .isLive ()   .addInterest ("set_live__", this);
-         this .isEvenLive_ .addInterest ("set_live__", this);
+         this ._isEvenLive .addInterest ("set_live__", this);
 
-         this .initialized_ .addInterest ("set_loop__",       this);
-         this .enabled_     .addInterest ("set_enabled__",    this);
-         this .loop_        .addInterest ("set_loop__",       this);
-         this .startTime_   .addInterest ("set_startTime__",  this);
-         this .pauseTime_   .addInterest ("set_pauseTime__",  this);
-         this .resumeTime_  .addInterest ("set_resumeTime__", this);
-         this .stopTime_    .addInterest ("set_stopTime__",   this);
+         this ._initialized .addInterest ("set_loop__",       this);
+         this ._enabled     .addInterest ("set_enabled__",    this);
+         this ._loop        .addInterest ("set_loop__",       this);
+         this ._startTime   .addInterest ("set_startTime__",  this);
+         this ._pauseTime   .addInterest ("set_pauseTime__",  this);
+         this ._resumeTime  .addInterest ("set_resumeTime__", this);
+         this ._stopTime    .addInterest ("set_stopTime__",   this);
 
-         this .startTimeValue  = this .startTime_  .getValue ();
-         this .pauseTimeValue  = this .pauseTime_  .getValue ();
-         this .resumeTimeValue = this .resumeTime_ .getValue ();
-         this .stopTimeValue   = this .stopTime_   .getValue ();
+         this .startTimeValue  = this ._startTime  .getValue ();
+         this .pauseTimeValue  = this ._pauseTime  .getValue ();
+         this .resumeTimeValue = this ._resumeTime .getValue ();
+         this .stopTimeValue   = this ._stopTime   .getValue ();
 
-         this .initialized_ = this .getBrowser () .getCurrentTime ();
+         this ._initialized = this .getBrowser () .getCurrentTime ();
       },
       getDisabled: function ()
       {
@@ -41996,7 +42902,7 @@ function (Fields,
       {
          ///  Determines the live state of this node.
 
-         return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this .isEvenLive_ .getValue ());
+         return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this ._isEvenLive .getValue ());
       },
       getElapsedTime: function ()
       {
@@ -42010,19 +42916,19 @@ function (Fields,
       },
       set_live__: function ()
       {
-         if (this .isLive () .getValue () || this .isEvenLive_ .getValue ())
+         if (this .isLive () .getValue () || this ._isEvenLive .getValue ())
          {
             if (this .disabled)
             {
                this .disabled = false;
 
-               if (this .isActive_ .getValue () && !this .isPaused_ .getValue ())
+               if (this ._isActive .getValue () && !this ._isPaused .getValue ())
                   this .real_resume ();
             }
          }
          else
          {
-            if (!this .disabled && this .isActive_ .getValue () && !this .isPaused_ .getValue ())
+            if (!this .disabled && this ._isActive .getValue () && !this ._isPaused .getValue ())
             {
                // Only disable if needed, ie. if running!
                this .disabled = true;
@@ -42032,7 +42938,7 @@ function (Fields,
       },
       set_enabled__: function ()
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
             this .set_loop__ ();
 
          else
@@ -42040,9 +42946,9 @@ function (Fields,
       },
       set_loop__: function ()
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
-            if (this .loop_ .getValue ())
+            if (this ._loop .getValue ())
             {
                if (this .stopTimeValue <= this .startTimeValue)
                {
@@ -42054,9 +42960,9 @@ function (Fields,
       },
       set_startTime__: function ()
       {
-         this .startTimeValue = this .startTime_ .getValue ();
+         this .startTimeValue = this ._startTime .getValue ();
 
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
             this .removeTimeout ("startTimeout");
 
@@ -42069,9 +42975,9 @@ function (Fields,
       },
       set_pauseTime__: function ()
       {
-         this .pauseTimeValue = this .pauseTime_ .getValue ();
+         this .pauseTimeValue = this ._pauseTime .getValue ();
 
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
             this .removeTimeout ("pauseTimeout");
 
@@ -42087,9 +42993,9 @@ function (Fields,
       },
       set_resumeTime__: function ()
       {
-         this .resumeTimeValue = this .resumeTime_ .getValue ();
+         this .resumeTimeValue = this ._resumeTime .getValue ();
 
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
             this .removeTimeout ("resumeTimeout");
 
@@ -42105,9 +43011,9 @@ function (Fields,
       },
       set_stopTime__: function ()
       {
-         this .stopTimeValue = this .stopTime_ .getValue ();
+         this .stopTimeValue = this ._stopTime .getValue ();
 
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
             this .removeTimeout ("stopTimeout");
 
@@ -42123,13 +43029,13 @@ function (Fields,
       },
       do_start: function ()
       {
-         if (!this .isActive_ .getValue ())
+         if (!this ._isActive .getValue ())
          {
             this .resetElapsedTime ();
 
             // The event order below is very important.
 
-            this .isActive_ = true;
+            this ._isActive = true;
 
             this .set_start ();
 
@@ -42143,14 +43049,14 @@ function (Fields,
                this .real_pause ();
             }
 
-            this .elapsedTime_ = 0;
+            this ._elapsedTime = 0;
          }
       },
       do_pause: function ()
       {
-         if (this .isActive_ .getValue () && !this .isPaused_ .getValue ())
+         if (this ._isActive .getValue () && !this ._isPaused .getValue ())
          {
-            this .isPaused_ = true;
+            this ._isPaused = true;
 
             if (this .pauseTimeValue !== this .getBrowser () .getCurrentTime ())
                this .pauseTimeValue = this .getBrowser () .getCurrentTime ();
@@ -42169,9 +43075,9 @@ function (Fields,
       },
       do_resume: function ()
       {
-         if (this .isActive_ .getValue () && this .isPaused_ .getValue ())
+         if (this ._isActive .getValue () && this ._isPaused .getValue ())
          {
-            this .isPaused_ = false;
+            this ._isPaused = false;
 
             if (this .resumeTimeValue !== this .getBrowser () .getCurrentTime ())
                this .resumeTimeValue = this .getBrowser () .getCurrentTime ();
@@ -42197,25 +43103,25 @@ function (Fields,
       },
       stop: function ()
       {
-         if (this .isActive_ .getValue ())
+         if (this ._isActive .getValue ())
          {
             // The event order below is very important.
 
             this .set_stop ();
 
-            this .elapsedTime_ = this .getElapsedTime ();
+            this ._elapsedTime = this .getElapsedTime ();
 
-            if (this .isPaused_ .getValue ())
-               this .isPaused_ = false;
+            if (this ._isPaused .getValue ())
+               this ._isPaused = false;
 
-            this .isActive_ = false;
+            this ._isActive = false;
 
             this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
          }
       },
       timeout: function (callback)
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
             this .getBrowser () .advanceTime (performance .now ());
 
@@ -42364,15 +43270,15 @@ function (Fields,
          X3DSensorNode        .prototype .initialize .call (this);
          X3DTimeDependentNode .prototype .initialize .call (this);
 
-         this .cycleInterval_ .addInterest ("set_cycleInterval__", this);
-         this .range_         .addInterest ("set_range__",         this);
+         this ._cycleInterval .addInterest ("set_cycleInterval__", this);
+         this ._range         .addInterest ("set_range__",         this);
       },
       setRange: function (currentFraction, firstFraction, lastFraction)
       {
          const
             currentTime   = this .getBrowser () .getCurrentTime (),
-            startTime     = this .startTime_ .getValue (),
-            cycleInterval = this .cycleInterval_ .getValue ();
+            startTime     = this ._startTime .getValue (),
+            cycleInterval = this ._cycleInterval .getValue ();
 
          this .first    = firstFraction;
          this .last     = lastFraction;
@@ -42383,40 +43289,40 @@ function (Fields,
       },
       set_cycleInterval__: function ()
       {
-         if (this .isActive_ .getValue ())
-            this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
+         if (this ._isActive .getValue ())
+            this .setRange (this .fraction, this ._range [1], this ._range [2]);
       },
       set_range__: function ()
       {
-         if (this .isActive_ .getValue ())
+         if (this ._isActive .getValue ())
          {
-            this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
+            this .setRange (this ._range [0], this ._range [1], this ._range [2]);
 
-            if (!this .isPaused_ .getValue ())
+            if (!this ._isPaused .getValue ())
                this .set_fraction (this .getBrowser () .getCurrentTime ());
          }
       },
       set_start: function ()
       {
-         this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
+         this .setRange (this ._range [0], this ._range [1], this ._range [2]);
 
          if (this .isLive () .getValue ())
          {
-            this .fraction_changed_ = this .fraction;
-            this .time_             = this .getBrowser () .getCurrentTime ();
+            this ._fraction_changed = this .fraction;
+            this ._time             = this .getBrowser () .getCurrentTime ();
          }
       },
       set_resume: function (pauseInterval)
       {
          const
             currentTime   = this .getBrowser () .getCurrentTime (),
-            startTime     = this .startTime_ .getValue ();
+            startTime     = this ._startTime .getValue ();
 
-         this .setRange (this .interval ? Algorithm .fract (this .fraction - (currentTime - startTime) / this .interval) : 0, this .range_ [1], this .range_ [2]);
+         this .setRange (this .interval ? Algorithm .fract (this .fraction - (currentTime - startTime) / this .interval) : 0, this ._range [1], this ._range [2]);
       },
       set_fraction: function (time)
       {
-         this .fraction_changed_ = this .fraction = this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
+         this ._fraction_changed = this .fraction = this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
       },
       set_time: function ()
       {
@@ -42426,32 +43332,32 @@ function (Fields,
 
          if (time - this .cycle >= this .interval)
          {
-            if (this .loop_ .getValue ())
+            if (this ._loop .getValue ())
             {
                if (this .interval)
                {
                   this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
 
-                  this .elapsedTime_ = this .getElapsedTime ();
-                  this .cycleTime_   = time;
+                  this ._elapsedTime = this .getElapsedTime ();
+                  this ._cycleTime   = time;
 
                   this .set_fraction (time);
                }
             }
             else
             {
-               this .fraction_changed_ = this .fraction = this .last;
+               this ._fraction_changed = this .fraction = this .last;
                this .stop ();
             }
          }
          else
          {
-            this .elapsedTime_ = this .getElapsedTime ();
+            this ._elapsedTime = this .getElapsedTime ();
 
             this .set_fraction (time);
          }
 
-         this .time_ = time;
+         this ._time = time;
       },
    });
 
@@ -42536,7 +43442,7 @@ function (X3DChildNode,
 
          this .set_key__ ();
 
-         if (this .key_ .length)
+         if (this ._key .length)
             this .interpolate (0, 0, 0);
 
          X3DChildNode .prototype .setup .call (this);
@@ -42545,15 +43451,15 @@ function (X3DChildNode,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .set_fraction_ .addInterest ("set_fraction__", this);
-         this .key_          .addInterest ("set_key__", this);
+         this ._set_fraction .addInterest ("set_fraction__", this);
+         this ._key          .addInterest ("set_key__", this);
       },
       set_fraction__: function ()
       {
          var
-            key      = this .key_,
+            key      = this ._key,
             length   = key .length,
-            fraction = this .set_fraction_ .getValue ();
+            fraction = this ._set_fraction .getValue ();
 
          switch (length)
          {
@@ -42690,23 +43596,23 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .easeInEaseOut_ .addInterest ("set_keyValue__", this);
+         this ._easeInEaseOut .addInterest ("set_keyValue__", this);
       },
       set_keyValue__: function ()
       {
-         if (this .easeInEaseOut_ .length < this .key_ .length)
-            this .easeInEaseOut_ .resize (this .key_ .length, this .easeInEaseOut_ .length ? this .easeInEaseOut_ [this .easeInEaseOut_ .length - 1] : new Fields .SFVec2f ());
+         if (this ._easeInEaseOut .length < this ._key .length)
+            this ._easeInEaseOut .resize (this ._key .length, this ._easeInEaseOut .length ? this ._easeInEaseOut [this ._easeInEaseOut .length - 1] : new Fields .SFVec2f ());
       },
       interpolate: function (index0, index1, weight)
       {
          var
-            easeOut = this .easeInEaseOut_ [index0] .y,
-            easeIn  = this .easeInEaseOut_ [index1] .x,
+            easeOut = this ._easeInEaseOut [index0] .y,
+            easeIn  = this ._easeInEaseOut [index1] .x,
             sum     = easeOut + easeIn;
 
          if (sum < 0)
          {
-            this .modifiedFraction_changed_ = weight;
+            this ._modifiedFraction_changed = weight;
          }
          else
          {
@@ -42720,17 +43626,17 @@ function (Fields,
 
             if (weight < easeOut)
             {
-               this .modifiedFraction_changed_ = (t / easeOut) * weight * weight;
+               this ._modifiedFraction_changed = (t / easeOut) * weight * weight;
             }
             else if (weight <= 1 - easeIn) // Spec says (weight < 1 - easeIn), but then we get a NaN below if easeIn == 0.
             {
-               this .modifiedFraction_changed_ = t * (2 * weight - easeOut);
+               this ._modifiedFraction_changed = t * (2 * weight - easeOut);
             }
             else
             {
                var w = 1 - weight;
 
-               this .modifiedFraction_changed_ = 1 - ((t * w * w) / easeIn);
+               this ._modifiedFraction_changed = 1 - ((t * w * w) / easeIn);
             }
          }
       },
@@ -42838,13 +43744,13 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_ .addInterest ("set_keyValue__", this);
+         this ._keyValue .addInterest ("set_keyValue__", this);
       },
       set_keyValue__: function ()
       {
          var
-            key      = this .key_,
-            keyValue = this .keyValue_;
+            key      = this ._key,
+            keyValue = this ._keyValue;
 
          if (keyValue .length < key .length)
             keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
@@ -42855,7 +43761,7 @@ function (Fields,
 
          return function (index0, index1, weight)
          {
-            this .value_changed_ = keyValue .assign (this .keyValue_ [index0] .getValue ()) .lerp (this .keyValue_ [index1] .getValue (), weight);
+            this ._value_changed = keyValue .assign (this ._keyValue [index0] .getValue ()) .lerp (this ._keyValue [index1] .getValue (), weight);
          };
       })(),
    });
@@ -42935,8 +43841,8 @@ function (Fields,
 
       this .addType (X3DConstants .OrientationInterpolator);
 
-      this .keyValue_      .setUnit ("angle");
-      this .value_changed_ .setUnit ("angle");
+      this ._keyValue      .setUnit ("angle");
+      this ._value_changed .setUnit ("angle");
    }
 
    OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
@@ -42965,13 +43871,13 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_ .addInterest ("set_keyValue__", this);
+         this ._keyValue .addInterest ("set_keyValue__", this);
       },
       set_keyValue__: function ()
       {
          const
-            key      = this .key_,
-            keyValue = this .keyValue_;
+            key      = this ._key,
+            keyValue = this ._keyValue;
 
          if (keyValue .length < key .length)
             keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
@@ -42987,10 +43893,10 @@ function (Fields,
             try
             {
                // Both values can change in slerp.
-               keyValue0 .assign (this .keyValue_ [index0] .getValue ());
-               keyValue1 .assign (this .keyValue_ [index1] .getValue ());
+               keyValue0 .assign (this ._keyValue [index0] .getValue ());
+               keyValue1 .assign (this ._keyValue [index1] .getValue ());
 
-               this .value_changed_ = keyValue0 .slerp (keyValue1, weight);
+               this ._value_changed = keyValue0 .slerp (keyValue1, weight);
             }
             catch (error)
             {
@@ -43116,37 +44022,37 @@ function (Fields,
       {
          X3DBindableNode .prototype .initialize .call (this);
 
-         this .timeSensor .stopTime_ = 1;
+         this .timeSensor ._stopTime = 1;
          this .timeSensor .setup ();
 
-         this .easeInEaseOut .key_           = new Fields .MFFloat (0, 1);
-         this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+         this .easeInEaseOut ._key           = new Fields .MFFloat (0, 1);
+         this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
          this .easeInEaseOut .setup ();
 
-         this .positionInterpolator         .key_ = new Fields .MFFloat (0, 1);
-         this .orientationInterpolator      .key_ = new Fields .MFFloat (0, 1);
-         this .scaleInterpolator            .key_ = new Fields .MFFloat (0, 1);
-         this .scaleOrientationInterpolator .key_ = new Fields .MFFloat (0, 1);
+         this .positionInterpolator         ._key = new Fields .MFFloat (0, 1);
+         this .orientationInterpolator      ._key = new Fields .MFFloat (0, 1);
+         this .scaleInterpolator            ._key = new Fields .MFFloat (0, 1);
+         this .scaleOrientationInterpolator ._key = new Fields .MFFloat (0, 1);
 
          this .positionInterpolator         .setup ();
          this .orientationInterpolator      .setup ();
          this .scaleInterpolator            .setup ();
          this .scaleOrientationInterpolator .setup ();
 
-         this .timeSensor .isActive_         .addFieldInterest (this .transitionActive_);
-         this .timeSensor .fraction_changed_ .addFieldInterest (this .easeInEaseOut .set_fraction_);
+         this .timeSensor ._isActive         .addFieldInterest (this ._transitionActive);
+         this .timeSensor ._fraction_changed .addFieldInterest (this .easeInEaseOut ._set_fraction);
 
-         this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .positionInterpolator         .set_fraction_);
-         this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .orientationInterpolator      .set_fraction_);
-         this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .scaleInterpolator            .set_fraction_);
-         this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .scaleOrientationInterpolator .set_fraction_);
+         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .positionInterpolator         ._set_fraction);
+         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .orientationInterpolator      ._set_fraction);
+         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleInterpolator            ._set_fraction);
+         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleOrientationInterpolator ._set_fraction);
 
-         this .positionInterpolator         .value_changed_ .addFieldInterest (this .positionOffset_);
-         this .orientationInterpolator      .value_changed_ .addFieldInterest (this .orientationOffset_);
-         this .scaleInterpolator            .value_changed_ .addFieldInterest (this .scaleOffset_);
-         this .scaleOrientationInterpolator .value_changed_ .addFieldInterest (this .scaleOrientationOffset_);
+         this .positionInterpolator         ._value_changed .addFieldInterest (this ._positionOffset);
+         this .orientationInterpolator      ._value_changed .addFieldInterest (this ._orientationOffset);
+         this .scaleInterpolator            ._value_changed .addFieldInterest (this ._scaleOffset);
+         this .scaleOrientationInterpolator ._value_changed .addFieldInterest (this ._scaleOrientationOffset);
 
-         this .isBound_ .addInterest ("set_bound__", this);
+         this ._isBound .addInterest ("set_bound__", this);
       },
       getEaseInEaseOut: function ()
       {
@@ -43155,27 +44061,27 @@ function (Fields,
       setInterpolators: function () { },
       getPosition: function ()
       {
-         return this .position_ .getValue ();
+         return this ._position .getValue ();
       },
       getUserPosition: function ()
       {
-         return this .userPosition .assign (this .getPosition ()) .add (this .positionOffset_ .getValue ());
+         return this .userPosition .assign (this .getPosition ()) .add (this ._positionOffset .getValue ());
       },
       getOrientation: function ()
       {
-         return this .orientation_ .getValue ();
+         return this ._orientation .getValue ();
       },
       getUserOrientation: function ()
       {
-         return this .userOrientation .assign (this .getOrientation ()) .multRight (this .orientationOffset_ .getValue ());
+         return this .userOrientation .assign (this .getOrientation ()) .multRight (this ._orientationOffset .getValue ());
       },
       getCenterOfRotation: function ()
       {
-         return this .centerOfRotation_ .getValue ();
+         return this ._centerOfRotation .getValue ();
       },
       getUserCenterOfRotation: function ()
       {
-         return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this .centerOfRotationOffset_ .getValue ());
+         return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this ._centerOfRotationOffset .getValue ());
       },
       getProjectionMatrix: function (renderObject)
       {
@@ -43235,9 +44141,9 @@ function (Fields,
             {
                this .to = toViewpointNode;
 
-               if (toViewpointNode .jump_ .getValue ())
+               if (toViewpointNode ._jump .getValue ())
                {
-                  if (! toViewpointNode .retainUserOffsets_ .getValue ())
+                  if (! toViewpointNode ._retainUserOffsets .getValue ())
                      toViewpointNode .resetUserOffsets ();
 
                   // Copy from toViewpointNode all fields.
@@ -43252,7 +44158,7 @@ function (Fields,
 
                   const
                      navigationInfoNode = layerNode .getNavigationInfo (),
-                     transitionTime     = navigationInfoNode .transitionTime_ .getValue ();
+                     transitionTime     = navigationInfoNode ._transitionTime .getValue ();
 
                   let transitionType = navigationInfoNode .getTransitionType ();
 
@@ -43277,52 +44183,52 @@ function (Fields,
                   {
                      case "TELEPORT":
                      {
-                        navigationInfoNode .transitionComplete_ = true;
+                        navigationInfoNode ._transitionComplete = true;
                         return;
                      }
                      case "ANIMATE":
                      {
-                        this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+                        this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
                         break;
                      }
                      default:
                      {
                         // LINEAR
-                        this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+                        this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
                         break;
                      }
                   }
 
-                  this .timeSensor .cycleInterval_ = transitionTime;
-                  this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
-                  this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
+                  this .timeSensor ._cycleInterval = transitionTime;
+                  this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+                  this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
-                  this .timeSensor .isActive_ .addInterest ("set_active__", this, navigationInfoNode);
+                  this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
 
                   toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
 
-                  this .positionInterpolator         .keyValue_ = new Fields .MFVec3f    (relativePosition,         toViewpointNode .positionOffset_);
-                  this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (relativeOrientation,      toViewpointNode .orientationOffset_);
-                  this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f    (relativeScale,            toViewpointNode .scaleOffset_);
-                  this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (relativeScaleOrientation, toViewpointNode .scaleOrientationOffset_);
+                  this .positionInterpolator         ._keyValue = new Fields .MFVec3f    (relativePosition,         toViewpointNode ._positionOffset);
+                  this .orientationInterpolator      ._keyValue = new Fields .MFRotation (relativeOrientation,      toViewpointNode ._orientationOffset);
+                  this .scaleInterpolator            ._keyValue = new Fields .MFVec3f    (relativeScale,            toViewpointNode ._scaleOffset);
+                  this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (relativeScaleOrientation, toViewpointNode ._scaleOrientationOffset);
 
-                  this .positionOffset_         = relativePosition;
-                  this .orientationOffset_      = relativeOrientation;
-                  this .scaleOffset_            = relativeScale;
-                  this .scaleOrientationOffset_ = relativeScaleOrientation;
+                  this ._positionOffset         = relativePosition;
+                  this ._orientationOffset      = relativeOrientation;
+                  this ._scaleOffset            = relativeScale;
+                  this ._scaleOrientationOffset = relativeScaleOrientation;
 
                   this .setInterpolators (fromViewpointNode, toViewpointNode);
 
-                  this .transitionActive_ = true;
+                  this ._transitionActive = true;
                }
                else
                {
                   toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
 
-                  toViewpointNode .positionOffset_         = relativePosition;
-                  toViewpointNode .orientationOffset_      = relativeOrientation;
-                  toViewpointNode .scaleOffset_            = relativeScale;
-                  toViewpointNode .scaleOrientationOffset_ = relativeScaleOrientation;
+                  toViewpointNode ._positionOffset         = relativePosition;
+                  toViewpointNode ._orientationOffset      = relativeOrientation;
+                  toViewpointNode ._scaleOffset            = relativeScale;
+                  toViewpointNode ._scaleOrientationOffset = relativeScaleOrientation;
 
                   toViewpointNode .setInterpolators (fromViewpointNode, toViewpointNode);
                }
@@ -43335,17 +44241,17 @@ function (Fields,
       })(),
       transitionStop: function ()
       {
-         this .timeSensor .stopTime_ = this .getBrowser () .getCurrentTime ();
-         this .timeSensor .isActive_ .removeInterest ("set_active__", this);
+         this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._isActive .removeInterest ("set_active__", this);
       },
       resetUserOffsets: function ()
       {
-         this .positionOffset_         = Vector3   .Zero;
-         this .orientationOffset_      = Rotation4 .Identity;
-         this .scaleOffset_            = Vector3   .One;
-         this .scaleOrientationOffset_ = Rotation4 .Identity;
-         this .centerOfRotationOffset_ = Vector3   .Zero;
-         this .fieldOfViewScale_       = 1;
+         this ._positionOffset         = Vector3   .Zero;
+         this ._orientationOffset      = Rotation4 .Identity;
+         this ._scaleOffset            = Vector3   .One;
+         this ._scaleOrientationOffset = Rotation4 .Identity;
+         this ._centerOfRotationOffset = Vector3   .Zero;
+         this ._fieldOfViewScale       = 1;
       },
       getRelativeTransformation: function (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
       // throw
@@ -43394,59 +44300,59 @@ function (Fields,
          const
             offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
 
-         layerNode .getNavigationInfo () .transitionStart_ = true;
+         layerNode .getNavigationInfo () ._transitionStart = true;
 
-         this .timeSensor .cycleInterval_ = 0.2;
-         this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
-         this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._cycleInterval = 0.2;
+         this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
-         this .timeSensor .isActive_ .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
+         this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
-         this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+         this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
          const
-            translation = Vector3 .lerp (this .positionOffset_ .getValue (), offset, factor),
+            translation = Vector3 .lerp (this ._positionOffset .getValue (), offset, factor),
             direction   = Vector3 .add (this .getPosition (), translation) .subtract (point);
 
-         let rotation = Rotation4 .multRight (this .orientationOffset_ .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
+         let rotation = Rotation4 .multRight (this ._orientationOffset .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
 
          if (straighten)
          {
             rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
          }
 
-         this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, translation);
-         this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
-         this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
-         this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
+         this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, translation);
+         this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
+         this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
+         this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
 
          this .setInterpolators (this, this);
 
-         this .centerOfRotationOffset_ = Vector3 .subtract (point, this .getCenterOfRotation ());
-         this .set_bind_               = true;
+         this ._centerOfRotationOffset = Vector3 .subtract (point, this .getCenterOfRotation ());
+         this ._set_bind               = true;
       },
       straighten: function (layerNode, horizon)
       {
-         layerNode .getNavigationInfo () .transitionStart_ = true;
+         layerNode .getNavigationInfo () ._transitionStart = true;
 
-         this .timeSensor .cycleInterval_ = 0.4;
-         this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
-         this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._cycleInterval = 0.4;
+         this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
-         this .timeSensor .isActive_ .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
+         this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
-         this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+         this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
          const rotation = Rotation4 .multRight (Rotation4 .inverse (this .getOrientation ()), this .straightenHorizon (this .getUserOrientation ()));
 
-         this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, this .positionOffset_);
-         this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
-         this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
-         this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
+         this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, this ._positionOffset);
+         this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
+         this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
+         this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
 
          this .setInterpolators (this, this);
 
-         this .set_bind_ = true;
+         this ._set_bind = true;
       },
       straightenHorizon: (function ()
       {
@@ -43476,19 +44382,19 @@ function (Fields,
             return orientation .multRight (rotation);
          };
       })(),
-      set_active__: function (active, navigationInfoNode)
+      set_active__: function (navigationInfoNode, active)
       {
-         if (this .isBound_ .getValue () && ! active .getValue () && this .timeSensor .fraction_changed_ .getValue () === 1)
+         if (this ._isBound .getValue () && ! active .getValue () && this .timeSensor ._fraction_changed .getValue () === 1)
          {
-            navigationInfoNode .transitionComplete_ = true;
+            navigationInfoNode ._transitionComplete = true;
          }
       },
       set_bound__: function ()
       {
-         if (this .isBound_ .getValue ())
-            this .getBrowser () .getNotification () .string_ = this .description_;
+         if (this ._isBound .getValue ())
+            this .getBrowser () .getNotification () ._string = this ._description;
          else
-            this .timeSensor .stopTime_ = this .getBrowser () .getCurrentTime ();
+            this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
       },
       traverse: function (type, renderObject)
       {
@@ -43505,8 +44411,8 @@ function (Fields,
          {
             this .cameraSpaceMatrix .set (this .getUserPosition (),
                                           this .getUserOrientation (),
-                                          this .scaleOffset_ .getValue (),
-                                          this .scaleOrientationOffset_ .getValue ());
+                                          this ._scaleOffset .getValue (),
+                                          this ._scaleOrientationOffset .getValue ());
 
             this .cameraSpaceMatrix .multRight ((this .to || this) .modelMatrix);
 
@@ -43621,20 +44527,20 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_ .addInterest ("set_keyValue__", this);
+         this ._keyValue .addInterest ("set_keyValue__", this);
       },
       set_keyValue__: function ()
       {
          var
-            key      = this .key_,
-            keyValue = this .keyValue_;
+            key      = this ._key,
+            keyValue = this ._keyValue;
 
          if (keyValue .length < key .length)
             keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : 0);
       },
       interpolate: function (index0, index1, weight)
       {
-         this .value_changed_ = Algorithm .lerp (this .keyValue_ [index0], this .keyValue_ [index1], weight);
+         this ._value_changed = Algorithm .lerp (this ._keyValue [index0], this ._keyValue [index1], weight);
       },
    });
 
@@ -43856,9 +44762,9 @@ function (Fields,
 
       this .addChildObjects ("fieldOfViewOffset", new Fields .MFFloat (0, 0, 0, 0));
 
-      this .position_         .setUnit ("length");
-      this .centerOfRotation_ .setUnit ("length");
-      this .fieldOfView_      .setUnit ("length");
+      this ._position         .setUnit ("length");
+      this ._centerOfRotation .setUnit ("length");
+      this ._fieldOfView      .setUnit ("length");
 
       this .projectionMatrix               = new Matrix4 ();
       this .fieldOfViewOffsetInterpolator0 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
@@ -43900,15 +44806,15 @@ function (Fields,
       {
          X3DViewpointNode .prototype .initialize .call (this);
 
-         this .fieldOfView_       .addInterest ("set_fieldOfView__", this);
-         this .fieldOfViewOffset_ .addInterest ("set_fieldOfView__", this);
-         this .fieldOfViewScale_  .addInterest ("set_fieldOfView__", this);
+         this ._fieldOfView       .addInterest ("set_fieldOfView__", this);
+         this ._fieldOfViewOffset .addInterest ("set_fieldOfView__", this);
+         this ._fieldOfViewScale  .addInterest ("set_fieldOfView__", this);
 
-         this .fieldOfViewOffsetInterpolator0 .key_ = new Fields .MFFloat (0, 1);
-         this .fieldOfViewOffsetInterpolator1 .key_ = new Fields .MFFloat (0, 1);
-         this .fieldOfViewOffsetInterpolator2 .key_ = new Fields .MFFloat (0, 1);
-         this .fieldOfViewOffsetInterpolator3 .key_ = new Fields .MFFloat (0, 1);
-         this .fieldOfViewScaleInterpolator   .key_ = new Fields .MFFloat (0, 1);
+         this .fieldOfViewOffsetInterpolator0 ._key = new Fields .MFFloat (0, 1);
+         this .fieldOfViewOffsetInterpolator1 ._key = new Fields .MFFloat (0, 1);
+         this .fieldOfViewOffsetInterpolator2 ._key = new Fields .MFFloat (0, 1);
+         this .fieldOfViewOffsetInterpolator3 ._key = new Fields .MFFloat (0, 1);
+         this .fieldOfViewScaleInterpolator   ._key = new Fields .MFFloat (0, 1);
 
          this .fieldOfViewOffsetInterpolator0 .setup ();
          this .fieldOfViewOffsetInterpolator1 .setup ();
@@ -43916,81 +44822,81 @@ function (Fields,
          this .fieldOfViewOffsetInterpolator3 .setup ();
          this .fieldOfViewScaleInterpolator   .setup ();
 
-         this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewOffsetInterpolator0 .set_fraction_);
-         this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewOffsetInterpolator1 .set_fraction_);
-         this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewOffsetInterpolator2 .set_fraction_);
-         this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewOffsetInterpolator3 .set_fraction_);
-         this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewScaleInterpolator   .set_fraction_);
+         this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator0 ._set_fraction);
+         this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator1 ._set_fraction);
+         this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator2 ._set_fraction);
+         this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewOffsetInterpolator3 ._set_fraction);
+         this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewScaleInterpolator   ._set_fraction);
 
-         this .fieldOfViewOffsetInterpolator0 .value_changed_ .addInterest ("set_fieldOfViewOffset__", this);
-         this .fieldOfViewOffsetInterpolator1 .value_changed_ .addInterest ("set_fieldOfViewOffset__", this);
-         this .fieldOfViewOffsetInterpolator2 .value_changed_ .addInterest ("set_fieldOfViewOffset__", this);
-         this .fieldOfViewOffsetInterpolator3 .value_changed_ .addInterest ("set_fieldOfViewOffset__", this);
+         this .fieldOfViewOffsetInterpolator0 ._value_changed .addInterest ("set_fieldOfViewOffset__", this);
+         this .fieldOfViewOffsetInterpolator1 ._value_changed .addInterest ("set_fieldOfViewOffset__", this);
+         this .fieldOfViewOffsetInterpolator2 ._value_changed .addInterest ("set_fieldOfViewOffset__", this);
+         this .fieldOfViewOffsetInterpolator3 ._value_changed .addInterest ("set_fieldOfViewOffset__", this);
 
-         this .fieldOfViewScaleInterpolator .value_changed_ .addFieldInterest (this .fieldOfViewScale_);
+         this .fieldOfViewScaleInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
 
          this .set_fieldOfView__ ();
       },
       set_fieldOfView__: function ()
       {
          var
-            length           = this .fieldOfView_ .length,
-            fieldOfViewScale = this .fieldOfViewScale_ .getValue ();
+            length           = this ._fieldOfView .length,
+            fieldOfViewScale = this ._fieldOfViewScale .getValue ();
 
-         this .minimumX = ((length > 0 ? this .fieldOfView_ [0] : -1) + this .fieldOfViewOffset_ [0]) * fieldOfViewScale;
-         this .minimumY = ((length > 1 ? this .fieldOfView_ [1] : -1) + this .fieldOfViewOffset_ [1]) * fieldOfViewScale;
-         this .maximumX = ((length > 2 ? this .fieldOfView_ [2] :  1) + this .fieldOfViewOffset_ [2]) * fieldOfViewScale;
-         this .maximumY = ((length > 3 ? this .fieldOfView_ [3] :  1) + this .fieldOfViewOffset_ [3]) * fieldOfViewScale;
+         this .minimumX = ((length > 0 ? this ._fieldOfView [0] : -1) + this ._fieldOfViewOffset [0]) * fieldOfViewScale;
+         this .minimumY = ((length > 1 ? this ._fieldOfView [1] : -1) + this ._fieldOfViewOffset [1]) * fieldOfViewScale;
+         this .maximumX = ((length > 2 ? this ._fieldOfView [2] :  1) + this ._fieldOfViewOffset [2]) * fieldOfViewScale;
+         this .maximumY = ((length > 3 ? this ._fieldOfView [3] :  1) + this ._fieldOfViewOffset [3]) * fieldOfViewScale;
 
          this .sizeX = this .maximumX - this .minimumX;
          this .sizeY = this .maximumY - this .minimumY;
       },
       set_fieldOfViewOffset__: function ()
       {
-         this .fieldOfViewOffset_ [0] = this .fieldOfViewOffsetInterpolator0 .value_changed_ .getValue ();
-         this .fieldOfViewOffset_ [1] = this .fieldOfViewOffsetInterpolator1 .value_changed_ .getValue ();
-         this .fieldOfViewOffset_ [2] = this .fieldOfViewOffsetInterpolator2 .value_changed_ .getValue ();
-         this .fieldOfViewOffset_ [3] = this .fieldOfViewOffsetInterpolator3 .value_changed_ .getValue ();
+         this ._fieldOfViewOffset [0] = this .fieldOfViewOffsetInterpolator0 ._value_changed .getValue ();
+         this ._fieldOfViewOffset [1] = this .fieldOfViewOffsetInterpolator1 ._value_changed .getValue ();
+         this ._fieldOfViewOffset [2] = this .fieldOfViewOffsetInterpolator2 ._value_changed .getValue ();
+         this ._fieldOfViewOffset [3] = this .fieldOfViewOffsetInterpolator3 ._value_changed .getValue ();
       },
       setInterpolators: function (fromViewpointNode, toViewpointNode)
       {
          if (fromViewpointNode .getType () .indexOf (X3DConstants .OrthoViewpoint) >= 0)
          {
             const
-               toLength   = toViewpointNode   .fieldOfView_ .length,
-               fromLength = fromViewpointNode .fieldOfView_ .length;
+               toLength   = toViewpointNode   ._fieldOfView .length,
+               fromLength = fromViewpointNode ._fieldOfView .length;
 
             const
-               offset0 = (fromLength > 0 ? fromViewpointNode .fieldOfView_ [0] : -1) - (toLength > 0 ? toViewpointNode .fieldOfView_ [0] : -1),
-               offset1 = (fromLength > 1 ? fromViewpointNode .fieldOfView_ [1] : -1) - (toLength > 1 ? toViewpointNode .fieldOfView_ [1] : -1),
-               offset2 = (fromLength > 2 ? fromViewpointNode .fieldOfView_ [2] :  1) - (toLength > 2 ? toViewpointNode .fieldOfView_ [2] :  1),
-               offset3 = (fromLength > 3 ? fromViewpointNode .fieldOfView_ [3] :  1) - (toLength > 3 ? toViewpointNode .fieldOfView_ [3] :  1);
+               offset0 = (fromLength > 0 ? fromViewpointNode ._fieldOfView [0] : -1) - (toLength > 0 ? toViewpointNode ._fieldOfView [0] : -1),
+               offset1 = (fromLength > 1 ? fromViewpointNode ._fieldOfView [1] : -1) - (toLength > 1 ? toViewpointNode ._fieldOfView [1] : -1),
+               offset2 = (fromLength > 2 ? fromViewpointNode ._fieldOfView [2] :  1) - (toLength > 2 ? toViewpointNode ._fieldOfView [2] :  1),
+               offset3 = (fromLength > 3 ? fromViewpointNode ._fieldOfView [3] :  1) - (toLength > 3 ? toViewpointNode ._fieldOfView [3] :  1);
 
-            this .fieldOfViewOffsetInterpolator0 .keyValue_ = new Fields .MFFloat (offset0, toViewpointNode .fieldOfViewOffset_ [0]);
-            this .fieldOfViewOffsetInterpolator1 .keyValue_ = new Fields .MFFloat (offset1, toViewpointNode .fieldOfViewOffset_ [1]);
-            this .fieldOfViewOffsetInterpolator2 .keyValue_ = new Fields .MFFloat (offset2, toViewpointNode .fieldOfViewOffset_ [2]);
-            this .fieldOfViewOffsetInterpolator3 .keyValue_ = new Fields .MFFloat (offset3, toViewpointNode .fieldOfViewOffset_ [3]);
+            this .fieldOfViewOffsetInterpolator0 ._keyValue = new Fields .MFFloat (offset0, toViewpointNode ._fieldOfViewOffset [0]);
+            this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (offset1, toViewpointNode ._fieldOfViewOffset [1]);
+            this .fieldOfViewOffsetInterpolator2 ._keyValue = new Fields .MFFloat (offset2, toViewpointNode ._fieldOfViewOffset [2]);
+            this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (offset3, toViewpointNode ._fieldOfViewOffset [3]);
 
-            this .fieldOfViewScaleInterpolator .keyValue_ = new Fields .MFFloat (fromViewpointNode .fieldOfViewScale_ .getValue (), toViewpointNode .fieldOfViewScale_ .getValue ());
+            this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (fromViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
 
-            this .fieldOfViewOffset_ [0] = offset0;
-            this .fieldOfViewOffset_ [1] = offset1;
-            this .fieldOfViewOffset_ [2] = offset2;
-            this .fieldOfViewOffset_ [3] = offset3;
+            this ._fieldOfViewOffset [0] = offset0;
+            this ._fieldOfViewOffset [1] = offset1;
+            this ._fieldOfViewOffset [2] = offset2;
+            this ._fieldOfViewOffset [3] = offset3;
 
-            this .fieldOfViewScale_ = fromViewpointNode .fieldOfViewScale_ .getValue ();
+            this ._fieldOfViewScale = fromViewpointNode ._fieldOfViewScale .getValue ();
          }
          else
          {
-            this .fieldOfViewOffsetInterpolator0 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [0], toViewpointNode .fieldOfViewOffset_ [0]);
-            this .fieldOfViewOffsetInterpolator1 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [1], toViewpointNode .fieldOfViewOffset_ [1]);
-            this .fieldOfViewOffsetInterpolator2 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [2], toViewpointNode .fieldOfViewOffset_ [2]);
-            this .fieldOfViewOffsetInterpolator3 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [3], toViewpointNode .fieldOfViewOffset_ [3]);
+            this .fieldOfViewOffsetInterpolator0 ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewOffset [0], toViewpointNode ._fieldOfViewOffset [0]);
+            this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewOffset [1], toViewpointNode ._fieldOfViewOffset [1]);
+            this .fieldOfViewOffsetInterpolator2 ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewOffset [2], toViewpointNode ._fieldOfViewOffset [2]);
+            this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewOffset [3], toViewpointNode ._fieldOfViewOffset [3]);
 
-            this .fieldOfViewScaleInterpolator .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewScale_ .getValue (), toViewpointNode .fieldOfViewScale_ .getValue ());
+            this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
 
-            this .fieldOfViewOffset_ = toViewpointNode .fieldOfViewOffset_ .getValue ();
-            this .fieldOfViewScale_  = toViewpointNode .fieldOfViewScale_  .getValue ();
+            this ._fieldOfViewOffset = toViewpointNode ._fieldOfViewOffset .getValue ();
+            this ._fieldOfViewScale  = toViewpointNode ._fieldOfViewScale  .getValue ();
          }
       },
       getMinimumX: function ()
@@ -45623,15 +46529,15 @@ function (Fields,
       {
          X3DNetworkSensorNode .prototype .initialize .call (this);
 
-         this .enabled_   .addInterest ("set_enabled__", this);
-         this .timeOut_   .addInterest ("set_timeOut__", this);
-         this .watchList_ .addInterest ("set_watchList__", this);
+         this ._enabled   .addInterest ("set_enabled__", this);
+         this ._timeOut   .addInterest ("set_timeOut__", this);
+         this ._watchList .addInterest ("set_watchList__", this);
 
-         this .watchList_ .addEvent ();
+         this ._watchList .addEvent ();
       },
       set_enabled__: function ()
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
             this .reset ();
 
          else
@@ -45642,21 +46548,21 @@ function (Fields,
       },
       set_timeOut__: function ()
       {
-         if (this .isActive_ .getValue ())
+         if (this ._isActive .getValue ())
          {
             this .clearTimeout ();
 
             this .aborted = false;
 
-            if (this .timeOut_ .getValue () > 0)
-               this .timeOutId = setTimeout (this .abort .bind (this), this .timeOut_ .getValue () * 1000);
+            if (this ._timeOut .getValue () > 0)
+               this .timeOutId = setTimeout (this .abort .bind (this), this ._timeOut .getValue () * 1000);
          }
       },
       set_watchList__: function ()
       {
          this .reset ();
       },
-      set_loadState__: function (dummy, urlObject)
+      set_loadState__: function (urlObject)
       {
          switch (urlObject .checkLoadState ())
          {
@@ -45694,24 +46600,24 @@ function (Fields,
          {
             this .clearTimeout ();
 
-            this .isActive_ = false;
-            this .isLoaded_ = loaded;
-            this .progress_ = progress;
+            this ._isActive = false;
+            this ._isLoaded = loaded;
+            this ._progress = progress;
 
             if (loaded)
-               this .loadTime_ = this .getBrowser () .getCurrentTime ();
+               this ._loadTime = this .getBrowser () .getCurrentTime ();
          }
          else
          {
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
-               this .progress_ = progress;
+               this ._progress = progress;
             }
             else
             {
-               this .isActive_ = true;
+               this ._isActive = true;
 
-               this .progress_ = progress;
+               this ._progress = progress;
 
                this .set_timeOut__ ();
             }
@@ -45723,17 +46629,17 @@ function (Fields,
 
          this .aborted = true;
 
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
             this .count ();
       },
       reset: function ()
       {
          this .remove ();
 
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
             var
-               watchList  = this .watchList_ .getValue (),
+               watchList  = this ._watchList .getValue (),
                urlObjects = this .urlObjects;
 
             for (var i = 0, length = watchList .length; i < length; ++ i)
@@ -45744,7 +46650,7 @@ function (Fields,
                {
                   urlObjects .push (urlObject);
 
-                  urlObject .loadState_ .addInterest ("set_loadState__", this, urlObject);
+                  urlObject ._loadState .addInterest ("set_loadState__", this, urlObject);
                }
             }
 
@@ -45758,7 +46664,7 @@ function (Fields,
          var urlObjects = this .urlObjects;
 
          for (var i = 0, length = urlObjects .length; i < length; ++ i)
-            urlObjects [i] .loadState_ .removeInterest ("set_loadState__", this);
+            urlObjects [i] ._loadState .removeInterest ("set_loadState__", this);
 
          urlObjects .length = 0;
       },
@@ -45888,10 +46794,10 @@ function (Fields,
 
          this .isLive () .addInterest ("set_live__", this);
 
-         this .parts_ .addFieldInterest (this .loadSensor .watchList_);
+         this ._parts .addFieldInterest (this .loadSensor ._watchList);
 
-         this .loadSensor .isLoaded_ .addInterest ("set_loaded__", this);
-         this .loadSensor .watchList_ = this .parts_;
+         this .loadSensor ._isLoaded .addInterest ("set_loaded__", this);
+         this .loadSensor ._watchList = this ._parts;
          this .loadSensor .setPrivate (true);
          this .loadSensor .setup ();
 
@@ -45926,12 +46832,12 @@ function (Fields,
       },
       set_loaded__: function ()
       {
-         if (this .loadSensor .isLoaded_ .getValue ())
+         if (this .loadSensor ._isLoaded .getValue ())
          {
             var
                gl      = this .getBrowser () .getContext (),
                program = gl .createProgram (),
-               parts   = this .parts_ .getValue (),
+               parts   = this ._parts .getValue (),
                valid   = 0;
 
             if (this .getValid ())
@@ -55508,7 +56414,7 @@ function (TextureBuffer,
 
                // Translate camera to user position and to look in the direction of the direction.
 
-               localOrientation .assign (viewpoint .orientation_ .getValue ()) .inverse () .multRight (viewpoint .getOrientation ());
+               localOrientation .assign (viewpoint ._orientation .getValue ()) .inverse () .multRight (viewpoint .getOrientation ());
                rotation .setFromToVec (Vector3 .zAxis, vector .assign (direction) .negate ()) .multRight (localOrientation);
                viewpoint .straightenHorizon (rotation);
 
@@ -55895,7 +56801,7 @@ function (TextureBuffer,
 
                      const currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
 
-                     this .speed -= browser .getBrowserOptions () .Gravity_ .getValue () / currentFrameRate;
+                     this .speed -= browser .getBrowserOptions () ._Gravity .getValue () / currentFrameRate;
 
                      let y = this .speed / currentFrameRate;
 
@@ -55906,7 +56812,7 @@ function (TextureBuffer,
                         this .speed = 0;
                      }
 
-                     viewpoint .positionOffset_ = viewpoint .positionOffset_ .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
+                     viewpoint ._positionOffset = viewpoint ._positionOffset .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
                   }
                   else
                   {
@@ -55932,7 +56838,7 @@ function (TextureBuffer,
                         //	getViewpoint () -> positionOffset () += offset;
                         //}
                         //else
-                           viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
+                           viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
                      }
                   }
                }
@@ -56271,8 +57177,8 @@ function (Fields,
 
       this .addChildObjects ("transformSensors_changed", new Fields .SFTime ());
 
-      this .bboxSize_   .setUnit ("length");
-      this .bboxCenter_ .setUnit ("length");
+      this ._bboxSize   .setUnit ("length");
+      this ._bboxCenter .setUnit ("length");
 
       this .childBBox            = new Box3 (); // Must be unique for each X3DBoundedObject.
       this .transformSensorNodes = new Set ();
@@ -56336,13 +57242,13 @@ function (Fields,
       {
          this .transformSensorNodes .add (transformSensorNode);
 
-         this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
+         this ._transformSensors_changed = this .getBrowser () .getCurrentTime ();
       },
       removeTransformSensor: function (transformSensorNode)
       {
          this .transformSensorNodes .delete (transformSensorNode);
 
-         this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
+         this ._transformSensors_changed = this .getBrowser () .getCurrentTime ();
       },
       getTransformSensors: function ()
       {
@@ -56465,11 +57371,11 @@ function (X3DChildNode,
          X3DChildNode     .prototype .initialize .call (this);
          X3DBoundedObject .prototype .initialize .call (this);
 
-         this .transformSensors_changed_ .addInterest ("set_transformSensors__", this);
+         this ._transformSensors_changed .addInterest ("set_transformSensors__", this);
 
-         this .addChildren_    .addInterest ("set_addChildren__",    this);
-         this .removeChildren_ .addInterest ("set_removeChildren__", this);
-         this .children_       .addInterest ("set_children__",       this);
+         this ._addChildren    .addInterest ("set_addChildren__",    this);
+         this ._removeChildren .addInterest ("set_removeChildren__", this);
+         this ._children       .addInterest ("set_children__",       this);
 
          this .set_children__ ();
       },
@@ -56479,10 +57385,10 @@ function (X3DChildNode,
       },
       getSubBBox: function (bbox, shadow)
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
             return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadow);
 
-         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+         return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },
       setHidden: function (value)
       {
@@ -56504,72 +57410,72 @@ function (X3DChildNode,
       },
       set_addChildren__: function ()
       {
-         if (this .addChildren_ .length === 0)
+         if (this ._addChildren .length === 0)
             return;
 
-         this .addChildren_ .setTainted (true);
-         this .addChildren_ .erase (remove (this .addChildren_, 0, this .addChildren_ .length,
-                                            this .children_,    0, this .children_    .length),
-                                    this .addChildren_ .length);
+         this ._addChildren .setTainted (true);
+         this ._addChildren .erase (remove (this ._addChildren, 0, this ._addChildren .length,
+                                            this ._children,    0, this ._children    .length),
+                                    this ._addChildren .length);
 
-         if (!this .children_ .isTainted ())
+         if (!this ._children .isTainted ())
          {
-            this .children_ .removeInterest ("set_children__", this);
-            this .children_ .addInterest ("connectChildren", this);
+            this ._children .removeInterest ("set_children__", this);
+            this ._children .addInterest ("connectChildren", this);
          }
 
-         this .children_ .insert (this .children_ .length, this .addChildren_, 0, this .addChildren_ .length);
-         this .add (this .addChildren_);
+         this ._children .insert (this ._children .length, this ._addChildren, 0, this ._addChildren .length);
+         this .add (this ._addChildren);
 
-         this .addChildren_ .set ([ ]);
-         this .addChildren_ .setTainted (false);
+         this ._addChildren .set ([ ]);
+         this ._addChildren .setTainted (false);
       },
       set_removeChildren__: function ()
       {
-         if (this .removeChildren_ .length === 0)
+         if (this ._removeChildren .length === 0)
             return;
 
-         if (this .children_ .length > 0)
+         if (this ._children .length > 0)
          {
-            if (!this .children_ .isTainted ())
+            if (!this ._children .isTainted ())
             {
-               this .children_ .removeInterest ("set_children__", this);
-               this .children_ .addInterest ("connectChildren", this);
+               this ._children .removeInterest ("set_children__", this);
+               this ._children .addInterest ("connectChildren", this);
             }
 
-            this .children_ .erase (remove (this .children_,       0, this .children_ .length,
-                                            this .removeChildren_, 0, this .removeChildren_ .length),
-                                    this .children_ .length);
+            this ._children .erase (remove (this ._children,       0, this ._children .length,
+                                            this ._removeChildren, 0, this ._removeChildren .length),
+                                    this ._children .length);
 
-            this .remove (this .removeChildren_);
+            this .remove (this ._removeChildren);
          }
 
-         this .removeChildren_ .set ([ ]);
+         this ._removeChildren .set ([ ]);
       },
       set_children__: function ()
       {
          this .clear ();
-         this .add (this .children_);
+         this .add (this ._children);
       },
       connectChildren: function ()
       {
-         this .children_ .removeInterest ("connectChildren", this);
-         this .children_ .addInterest ("set_children__", this);
+         this ._children .removeInterest ("connectChildren", this);
+         this ._children .addInterest ("set_children__", this);
       },
       clear: function ()
       {
          for (const maybePickableSensorNode of this .maybePickableSensorNodes)
-            maybePickableSensorNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+            maybePickableSensorNode ._isPickableObject .removeInterest ("set_pickableObjects__", this);
 
          for (const childNode of this .childNodes)
          {
-            childNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
-            childNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+            childNode ._isCameraObject   .removeInterest ("set_cameraObjects__",   this);
+            childNode ._isPickableObject .removeInterest ("set_pickableObjects__", this);
 
             if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
             {
-               childNode .visible_     .removeInterest ("set_visibles__",      this);
-               childNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__",  this);
+               childNode ._visible     .removeInterest ("set_visibles__",      this);
+               childNode ._bboxDisplay .removeInterest ("set_bboxDisplays__",  this);
             }
          }
 
@@ -56601,7 +57507,7 @@ function (X3DChildNode,
                   {
 //							if (this .allowedTypes .size)
 //							{
-//								if (!innerNode .isType (this .allowedTypes))
+//								if (!innerNode .getType () .some (Set .prototype .has, this .allowedTypes))
 //									continue;
 //							}
 
@@ -56640,7 +57546,7 @@ function (X3DChildNode,
                         case X3DConstants .TransformSensor:
                         case X3DConstants .X3DPickSensorNode:
                         {
-                           innerNode .isPickableObject_ .addInterest ("set_pickableObjects__", this);
+                           innerNode ._isPickableObject .addInterest ("set_pickableObjects__", this);
 
                            this .maybePickableSensorNodes .push (innerNode);
                            break;
@@ -56648,13 +57554,13 @@ function (X3DChildNode,
                         case X3DConstants .X3DBackgroundNode:
                         case X3DConstants .X3DChildNode:
                         {
-                           innerNode .isCameraObject_   .addInterest ("set_cameraObjects__",   this);
-                           innerNode .isPickableObject_ .addInterest ("set_pickableObjects__", this);
+                           innerNode ._isCameraObject   .addInterest ("set_cameraObjects__",   this);
+                           innerNode ._isPickableObject .addInterest ("set_pickableObjects__", this);
 
                            if (X3DCast (X3DConstants .X3DBoundedObject, innerNode))
                            {
-                              innerNode .visible_     .addInterest ("set_visibles__",     this);
-                              innerNode .bboxDisplay_ .addInterest ("set_bboxDisplays__", this);
+                              innerNode ._visible     .addInterest ("set_visibles__",     this);
+                              innerNode ._bboxDisplay .addInterest ("set_bboxDisplays__", this);
                            }
 
                            this .maybeCameraObjects .push (innerNode);
@@ -56766,7 +57672,7 @@ function (X3DChildNode,
                         case X3DConstants .TransformSensor:
                         case X3DConstants .X3DPickSensorNode:
                         {
-                           innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+                           innerNode ._isPickableObject .removeInterest ("set_pickableObjects__", this);
 
                            const index = this .maybePickableSensorNodes .indexOf (innerNode);
 
@@ -56778,13 +57684,13 @@ function (X3DChildNode,
                         case X3DConstants .X3DBackgroundNode:
                         case X3DConstants .X3DChildNode:
                         {
-                           innerNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
-                           innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+                           innerNode ._isCameraObject   .removeInterest ("set_cameraObjects__",   this);
+                           innerNode ._isPickableObject .removeInterest ("set_pickableObjects__", this);
 
                            if (X3DCast (X3DConstants .X3DBoundedObject, innerNode))
                            {
-                              innerNode .visible_     .removeInterest ("set_visibles__",     this);
-                              innerNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__", this);
+                              innerNode ._visible     .removeInterest ("set_visibles__",     this);
+                              innerNode ._bboxDisplay .removeInterest ("set_bboxDisplays__", this);
                            }
 
                            var index = this .maybeCameraObjects .indexOf (innerNode);
@@ -56843,7 +57749,7 @@ function (X3DChildNode,
             {
                if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
                {
-                  if (childNode .visible_ .getValue ())
+                  if (childNode ._visible .getValue ())
                   {
                      cameraObjects .push (childNode);
                   }
@@ -56914,7 +57820,7 @@ function (X3DChildNode,
          {
             if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
             {
-               if (childNode .visible_ .getValue ())
+               if (childNode ._visible .getValue ())
                {
                   visibleNodes .push (childNode);
                }
@@ -56937,7 +57843,7 @@ function (X3DChildNode,
          {
             if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
             {
-               if (childNode .bboxDisplay_ .getValue ())
+               if (childNode ._bboxDisplay .getValue ())
                {
                   boundedObjects .push (childNode);
                }
@@ -57225,19 +58131,19 @@ function (X3DBaseNode)
       },
       top: function ()
       {
-         return this .transitionNode .transitionActive_ .getValue () ? this .transitionNode : this .array .at (-1);
+         return this .transitionNode ._transitionActive .getValue () ? this .transitionNode : this .array .at (-1);
       },
       pushOnTop: function (node)
       {
          if (node !== this .array [0])
          {
-            this .array .at (-1) .isBound_ = false;
+            this .array .at (-1) ._isBound = false;
             this .array .push (node);
          }
 
          // Don't do set_bind.
-         node .isBound_  = true;
-         node .bindTime_ = this .getBrowser () .getCurrentTime ();
+         node ._isBound  = true;
+         node ._bindTime = this .getBrowser () .getCurrentTime ();
 
          this .addNodeEvent ();
       },
@@ -57266,7 +58172,7 @@ function (X3DBaseNode)
 
          if (boundNode !== this .array [0])
          {
-            if (changedNodes .some (node => ! node .set_bind_ .getValue () && node === boundNode))
+            if (changedNodes .some (node => ! node ._set_bind .getValue () && node === boundNode))
             {
                this .array .pop ();
             }
@@ -57276,7 +58182,7 @@ function (X3DBaseNode)
 
          for (const bindNode of changedNodes)
          {
-            if (bindNode .set_bind_ .getValue ())
+            if (bindNode ._set_bind .getValue ())
             {
                const index = this .array .indexOf (bindNode);
 
@@ -57298,14 +58204,14 @@ function (X3DBaseNode)
 
          // First unbind last bound node.
 
-         boundNode .set_bind_ = false;
-         boundNode .isBound_  = false;
+         boundNode ._set_bind = false;
+         boundNode ._isBound  = false;
 
          // Now bind new top node.
 
-         top .set_bind_  = true;
-         top .isBound_   = true;
-         top .bindTime_  = this .getBrowser () .getCurrentTime ();
+         top ._set_bind  = true;
+         top ._isBound   = true;
+         top ._bindTime  = this .getBrowser () .getCurrentTime ();
 
          // Do transition.
 
@@ -57442,7 +58348,7 @@ function (X3DBaseNode,
                if (! enableInlineBindables && scene !== mainScene)
                   continue;
 
-               if (node .isBound_ .getValue ())
+               if (node ._isBound .getValue ())
                   return node;
             }
 
@@ -57473,7 +58379,7 @@ function (X3DBaseNode,
       update: function (layerNode, stack)
       {
          const
-            changedNodes = this .collected .filter (node => node .set_bind_ .getModificationTime () > this .updateTime),
+            changedNodes = this .collected .filter (node => node ._set_bind .getModificationTime () > this .updateTime),
             removedNodes = this .removedNodes;
 
          if (! equals (this .collected, this .array))
@@ -57617,9 +58523,9 @@ function (Fields,
                              "availableViewers", new Fields .MFString (),
                              "viewer",           new Fields .SFString ("EXAMINE"));
 
-      this .avatarSize_      .setUnit ("length");
-      this .speed_           .setUnit ("speed");
-      this .visibilityLimit_ .setUnit ("speed");
+      this ._avatarSize      .setUnit ("length");
+      this ._speed           .setUnit ("speed");
+      this ._visibilityLimit .setUnit ("speed");
    }
 
    NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
@@ -57655,40 +58561,40 @@ function (Fields,
       {
          X3DBindableNode .prototype .initialize .call (this);
 
-         this .type_               .addInterest ("set_type__",               this);
-         this .headlight_          .addInterest ("set_headlight__",          this);
-         this .transitionStart_    .addInterest ("set_transitionStart__",    this);
-         this .transitionComplete_ .addInterest ("set_transitionComplete__", this);
-         this .isBound_            .addInterest ("set_isBound__",            this);
+         this ._type               .addInterest ("set_type__",               this);
+         this ._headlight          .addInterest ("set_headlight__",          this);
+         this ._transitionStart    .addInterest ("set_transitionStart__",    this);
+         this ._transitionComplete .addInterest ("set_transitionComplete__", this);
+         this ._isBound            .addInterest ("set_isBound__",            this);
 
          this .set_type__ ();
          this .set_headlight__ ();
       },
       getViewer: function ()
       {
-         return this .viewer_ .getValue ();
+         return this ._viewer .getValue ();
       },
       getCollisionRadius: function ()
       {
-         if (this .avatarSize_ .length > 0)
+         if (this ._avatarSize .length > 0)
          {
-            if (this .avatarSize_ [0] > 0)
-               return this .avatarSize_ [0];
+            if (this ._avatarSize [0] > 0)
+               return this ._avatarSize [0];
          }
 
          return 0.25;
       },
       getAvatarHeight: function ()
       {
-         if (this .avatarSize_ .length > 1)
-            return this .avatarSize_ [1];
+         if (this ._avatarSize .length > 1)
+            return this ._avatarSize [1];
 
          return 1.6;
       },
       getStepHeight: function ()
       {
-         if (this .avatarSize_ .length > 2)
-            return this .avatarSize_ [2];
+         if (this ._avatarSize .length > 2)
+            return this ._avatarSize [2];
 
          return 0.75;
       },
@@ -57704,13 +58610,13 @@ function (Fields,
       },
       getFarValue: function (viewpoint)
       {
-         return this .visibilityLimit_ .getValue ()
-                ? this .visibilityLimit_ .getValue ()
+         return this ._visibilityLimit .getValue ()
+                ? this ._visibilityLimit .getValue ()
                 : viewpoint .getMaxFarValue ();
       },
       getTransitionType: function ()
       {
-         for (const value of this .transitionType_)
+         for (const value of this ._transitionType)
          {
             const transitionType = TransitionType [value];
 
@@ -57724,9 +58630,9 @@ function (Fields,
       {
          // Determine active viewer.
 
-         this .viewer_ = "EXAMINE";
+         this ._viewer = "EXAMINE";
 
-         for (const string of this .type_)
+         for (const string of this ._type)
          {
             switch (string)
             {
@@ -57736,10 +58642,10 @@ function (Fields,
                case "LOOKAT":
                case "PLANE":
                case "NONE":
-                  this .viewer_ = string;
+                  this ._viewer = string;
                   break;
                case "PLANE_create3000.de":
-                  this .viewer_ = "PLANE";
+                  this ._viewer = "PLANE";
                   break;
                default:
                   continue;
@@ -57759,7 +58665,7 @@ function (Fields,
             noneViewer    = false,
             lookAt        = false;
 
-         if (! this .type_ .length)
+         if (! this ._type .length)
          {
             examineViewer = true;
             walkViewer    = true;
@@ -57770,7 +58676,7 @@ function (Fields,
          }
          else
          {
-            for (const string of this .type_)
+            for (const string of this ._type)
             {
                switch (string)
                {
@@ -57810,57 +58716,57 @@ function (Fields,
             }
          }
 
-         this .availableViewers_ .length = 0;
+         this ._availableViewers .length = 0;
 
          if (examineViewer)
-            this .availableViewers_ .push ("EXAMINE");
+            this ._availableViewers .push ("EXAMINE");
 
          if (walkViewer)
-            this .availableViewers_ .push ("WALK");
+            this ._availableViewers .push ("WALK");
 
          if (flyViewer)
-            this .availableViewers_ .push ("FLY");
+            this ._availableViewers .push ("FLY");
 
          if (planeViewer)
-            this .availableViewers_ .push ("PLANE");
+            this ._availableViewers .push ("PLANE");
 
          if (lookAt)
-            this .availableViewers_ .push ("LOOKAT");
+            this ._availableViewers .push ("LOOKAT");
 
          if (noneViewer)
-            this .availableViewers_ .push ("NONE");
+            this ._availableViewers .push ("NONE");
       },
       set_headlight__: function ()
       {
-         if (this .headlight_ .getValue ())
+         if (this ._headlight .getValue ())
             delete this .enable;
          else
             this .enable = Function .prototype;
       },
       set_transitionStart__: function ()
       {
-         if (! this .transitionActive_ .getValue ())
-            this .transitionActive_ = true;
+         if (! this ._transitionActive .getValue ())
+            this ._transitionActive = true;
       },
       set_transitionComplete__: function ()
       {
-         if (this .transitionActive_ .getValue ())
-            this .transitionActive_ = false;
+         if (this ._transitionActive .getValue ())
+            this ._transitionActive = false;
       },
       set_isBound__: function ()
       {
-         if (this .isBound_ .getValue ())
+         if (this ._isBound .getValue ())
             return;
 
-         if (this .transitionActive_ .getValue ())
-            this .transitionActive_ = false;
+         if (this ._transitionActive .getValue ())
+            this ._transitionActive = false;
       },
       enable: function (type, renderObject)
       {
          if (type !== TraverseType .DISPLAY)
             return;
 
-         if (this .headlight_ .getValue ())
+         if (this ._headlight .getValue ())
             renderObject .getGlobalObjects () .push (renderObject .getBrowser () .getHeadlight ());
       },
       traverse: function (type, renderObject)
@@ -58050,7 +58956,7 @@ function (X3DConstants,
 
          var
             fogNode         = this .fogNode,
-            visibilityRange = Math .max (0, fogNode .visibilityRange_ .getValue ());
+            visibilityRange = Math .max (0, fogNode ._visibilityRange .getValue ());
 
          if (fogNode .getHidden () || visibilityRange === 0)
          {
@@ -58058,7 +58964,7 @@ function (X3DConstants,
          }
          else
          {
-            var color  = fogNode .color_ .getValue ();
+            var color  = fogNode ._color .getValue ();
 
             gl .uniform1i        (shaderObject .x3d_FogType,            fogNode .fogType);
             gl .uniform3f        (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
@@ -58076,7 +58982,7 @@ function (X3DConstants,
    {
       this .addType (X3DConstants .X3DFogObject);
 
-      this .visibilityRange_ .setUnit ("length");
+      this ._visibilityRange .setUnit ("length");
 
       this .hidden = false;
    }
@@ -58086,13 +58992,13 @@ function (X3DConstants,
       constructor: X3DFogObject,
       initialize: function ()
       {
-         this .fogType_ .addInterest ("set_fogType__", this);
+         this ._fogType .addInterest ("set_fogType__", this);
 
          this .set_fogType__ ();
       },
       set_fogType__: function ()
       {
-         switch (this .fogType_ .getValue ())
+         switch (this ._fogType .getValue ())
          {
             case "EXPONENTIAL":
                this .fogType = 2;
@@ -58611,8 +59517,8 @@ function (X3DBindableNode,
 
       this .addType (X3DConstants .X3DBackgroundNode);
 
-      this .skyAngle_    .setUnit ("angle");
-      this .groundAngle_ .setUnit ("angle");
+      this ._skyAngle    .setUnit ("angle");
+      this ._groundAngle .setUnit ("angle");
 
       this .hidden                = false;
       this .projectionMatrixArray = new Float32Array (16);
@@ -58645,11 +59551,11 @@ function (X3DBindableNode,
          this .topBuffer       = gl .createBuffer ();
          this .bottomBuffer    = gl .createBuffer ();
 
-         this .groundAngle_  .addInterest ("build", this);
-         this .groundColor_  .addInterest ("build", this);
-         this .skyAngle_     .addInterest ("build", this);
-         this .skyColor_     .addInterest ("build", this);
-         this .transparency_ .addInterest ("build", this);
+         this ._groundAngle  .addInterest ("build", this);
+         this ._groundColor  .addInterest ("build", this);
+         this ._skyAngle     .addInterest ("build", this);
+         this ._skyColor     .addInterest ("build", this);
+         this ._transparency .addInterest ("build", this);
 
          this .build ();
          this .transferRectangle ();
@@ -58681,19 +59587,19 @@ function (X3DBindableNode,
       setTexture: function (key, texture, bit)
       {
          if (this [key])
-            this [key] .loadState_ .removeInterest ("setTextureBit", this);
+            this [key] ._loadState .removeInterest ("setTextureBit", this);
 
          this [key] = texture;
 
          if (texture)
          {
-            texture .loadState_ .addInterest ("setTextureBit", this, texture, bit);
-            this .setTextureBit (texture .loadState_, texture, bit);
+            texture ._loadState .addInterest ("setTextureBit", this, texture, bit);
+            this .setTextureBit (texture, bit, texture ._loadState);
          }
          else
-            this .setTextureBit (X3DConstants .NOT_STARTED, null, bit);
+            this .textures &= ~(1 << bit);
       },
-      setTextureBit: function (loadState, texture, bit)
+      setTextureBit: function (texture, bit, loadState)
       {
          if (loadState .getValue () === X3DConstants .COMPLETE_STATE || (texture && texture .getData ()))
             this .textures |= 1 << bit;
@@ -58715,25 +59621,25 @@ function (X3DBindableNode,
          if (this .hidden)
             return true;
 
-         if (this .transparency_ .getValue () === 0)
+         if (this ._transparency .getValue () === 0)
             return false;
 
-         if (! this .frontTexture  || this .frontTexture  .transparent_ .getValue ())
+         if (! this .frontTexture  || this .frontTexture  ._transparent .getValue ())
                return true;
 
-         if (! this .backTexture   || this .backTexture   .transparent_ .getValue ())
+         if (! this .backTexture   || this .backTexture   ._transparent .getValue ())
                return true;
 
-         if (! this .leftTexture   || this .leftTexture   .transparent_ .getValue ())
+         if (! this .leftTexture   || this .leftTexture   ._transparent .getValue ())
                return true;
 
-         if (! this .rightTexture  || this .rightTexture  .transparent_ .getValue ())
+         if (! this .rightTexture  || this .rightTexture  ._transparent .getValue ())
                return true;
 
-         if (! this .topTexture    || this .topTexture    .transparent_ .getValue ())
+         if (! this .topTexture    || this .topTexture    ._transparent .getValue ())
                return true;
 
-         if (! this .bottomTexture || this .bottomTexture .transparent_ .getValue ())
+         if (! this .bottomTexture || this .bottomTexture ._transparent .getValue ())
                return true;
 
          return false;
@@ -58749,12 +59655,12 @@ function (X3DBindableNode,
          this .colors .length = 0;
          this .sphere .length = 0;
 
-         if (this .transparency_ .getValue () >= 1)
+         if (this ._transparency .getValue () >= 1)
             return;
 
-         var alpha = 1 - Algorithm .clamp (this .transparency_ .getValue (), 0, 1);
+         var alpha = 1 - Algorithm .clamp (this ._transparency .getValue (), 0, 1);
 
-         if (this .groundColor_ .length === 0 && this .skyColor_ .length == 1)
+         if (this ._groundColor .length === 0 && this ._skyColor .length == 1)
          {
             var s = SIZE;
 
@@ -58775,7 +59681,7 @@ function (X3DBindableNode,
                                 -s, -s,  s, 1,  s, -s,  s, 1, -s, -s, -s, 1, // Bottom
                                 -s, -s, -s, 1,  s, -s,  s, 1,  s, -s, -s, 1);
 
-            var c = this .skyColor_ [0];
+            var c = this ._skyColor [0];
 
             for (var i = 0, vertices = this .sphere .vertices; i < vertices; ++ i)
                this .colors .push (c .r, c .g, c .b, alpha);
@@ -58784,30 +59690,30 @@ function (X3DBindableNode,
          {
             // Build sphere
 
-            if (this .skyColor_ .length > this .skyAngle_ .length)
+            if (this ._skyColor .length > this ._skyAngle .length)
             {
                var vAngle = [ ];
 
-               for (var i = 0, length = this .skyAngle_ .length; i < length; ++ i)
-                  vAngle .push (this .skyAngle_ [i]);
+               for (var i = 0, length = this ._skyAngle .length; i < length; ++ i)
+                  vAngle .push (this ._skyAngle [i]);
 
                if (vAngle .length === 0 || vAngle [0] > 0)
                   vAngle .unshift (0);
 
-               var vAngleMax = this .groundColor_ .length > this .groundAngle_ .length ? Math .PI / 2 : Math .PI;
+               var vAngleMax = this ._groundColor .length > this ._groundAngle .length ? Math .PI / 2 : Math .PI;
 
                if (vAngle .at (-1) < vAngleMax)
                   vAngle .push (vAngleMax);
 
-               this .buildSphere (RADIUS, vAngle, this .skyAngle_, this .skyColor_, alpha, false);
+               this .buildSphere (RADIUS, vAngle, this ._skyAngle, this ._skyColor, alpha, false);
             }
 
-            if (this .groundColor_ .length > this .groundAngle_ .length)
+            if (this ._groundColor .length > this ._groundAngle .length)
             {
                var vAngle = [ ];
 
-               for (var i = 0, length = this .groundAngle_ .length; i < length; ++ i)
-                  vAngle .push (this .groundAngle_ [i]);
+               for (var i = 0, length = this ._groundAngle .length; i < length; ++ i)
+                  vAngle .push (this ._groundAngle [i]);
 
                vAngle .reverse ();
 
@@ -58817,7 +59723,7 @@ function (X3DBindableNode,
                if (vAngle .at (-1) > 0)
                   vAngle .push (0);
 
-               this .buildSphere (RADIUS, vAngle, this .groundAngle_, this .groundColor_, alpha, true);
+               this .buildSphere (RADIUS, vAngle, this ._groundAngle, this ._groundColor, alpha, true);
             }
          }
 
@@ -59015,7 +59921,7 @@ function (X3DBindableNode,
       })(),
       drawSphere: function (renderObject)
       {
-         var transparency = this .transparency_ .getValue ();
+         var transparency = this ._transparency .getValue ();
 
          if (transparency >= 1)
             return;
@@ -59124,7 +60030,7 @@ function (X3DBindableNode,
          {
             texture .setShaderUniforms (gl, shaderNode);
 
-            if (texture .transparent_ .getValue ())
+            if (texture ._transparent .getValue ())
                gl .enable (gl .BLEND);
             else
                gl .disable (gl .BLEND);
@@ -59209,7 +60115,7 @@ function (Fields,
 
       this .addChildObjects ("transparent", new Fields .SFBool ());
 
-      this .transparent_ .setAccessType (X3DConstants .outputOnly);
+      this ._transparent .setAccessType (X3DConstants .outputOnly);
    }
 
    X3DTextureNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -59217,12 +60123,12 @@ function (Fields,
       constructor: X3DTextureNode,
       setTransparent: function (value)
       {
-         if (value !== this .transparent_ .getValue ())
-            this .transparent_ = value;
+         if (value !== this ._transparent .getValue ())
+            this ._transparent = value;
       },
       getTransparent: function ()
       {
-         return this .transparent_ .getValue ();
+         return this ._transparent .getValue ();
       },
    });
 
@@ -59309,7 +60215,7 @@ function (X3DTextureNode,
       {
          X3DTextureNode .prototype .initialize .call (this);
 
-         this .textureProperties_ .addInterest ("set_textureProperties__", this);
+         this ._textureProperties .addInterest ("set_textureProperties__", this);
 
          const gl = this .getBrowser () .getContext ();
 
@@ -59322,7 +60228,7 @@ function (X3DTextureNode,
          if (this .texturePropertiesNode)
             this .texturePropertiesNode .removeInterest ("updateTextureProperties", this);
 
-         this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this .textureProperties_);
+         this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this ._textureProperties);
 
          if (! this .texturePropertiesNode)
             this .texturePropertiesNode = this .getBrowser () .getDefaultTextureProperties ();
@@ -59359,7 +60265,7 @@ function (X3DTextureNode,
             }
             else
             {
-               if (textureProperties .generateMipMaps_ .getValue ())
+               if (textureProperties ._generateMipMaps .getValue ())
                   gl .generateMipmap (target);
 
                gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl [textureProperties .getMinificationFilter ()]);
@@ -59383,8 +60289,8 @@ function (X3DTextureNode,
                   gl .texParameteri (target, gl .TEXTURE_WRAP_R, repeatR ? gl .REPEAT : gl .CLAMP_TO_EDGE);
             }
 
-            //gl .texParameterfv (target, gl .TEXTURE_BORDER_COLOR, textureProperties .borderColor_ .getValue ());
-            //gl .texParameterf  (target, gl .TEXTURE_PRIORITY,     textureProperties .texturePriority_ .getValue ());
+            //gl .texParameterfv (target, gl .TEXTURE_BORDER_COLOR, textureProperties ._borderColor .getValue ());
+            //gl .texParameterf  (target, gl .TEXTURE_PRIORITY,     textureProperties ._texturePriority .getValue ());
 
             for (const extension of ANISOTROPIC_EXT)
             {
@@ -59392,7 +60298,7 @@ function (X3DTextureNode,
 
                if (ext)
                {
-                  gl .texParameterf (target, ext .TEXTURE_MAX_ANISOTROPY_EXT, textureProperties .anisotropicDegree_ .getValue ());
+                  gl .texParameterf (target, ext .TEXTURE_MAX_ANISOTROPY_EXT, textureProperties ._anisotropicDegree .getValue ());
                   break;
                }
             }
@@ -59495,8 +60401,8 @@ function (X3DSingleTextureNode,
       {
          X3DSingleTextureNode .prototype .initialize .call (this);
 
-         this .repeatS_ .addInterest ("updateTextureProperties", this);
-         this .repeatT_ .addInterest ("updateTextureProperties", this);
+         this ._repeatS .addInterest ("updateTextureProperties", this);
+         this ._repeatT .addInterest ("updateTextureProperties", this);
 
          const gl = this .getBrowser () .getContext ();
 
@@ -59564,7 +60470,7 @@ function (X3DSingleTextureNode,
             gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
             gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
-            if (this .texturePropertiesNode .generateMipMaps_ .getValue ())
+            if (this .texturePropertiesNode ._generateMipMaps .getValue ())
                gl .generateMipmap (gl .TEXTURE_2D);
 
             this .addNodeEvent ();
@@ -59576,12 +60482,12 @@ function (X3DSingleTextureNode,
       {
          X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
                                                                          this .target,
-                                                                         this .textureProperties_ .getValue (),
+                                                                         this ._textureProperties .getValue (),
                                                                          this .texturePropertiesNode,
                                                                          this .width,
                                                                          this .height,
-                                                                         this .repeatS_ .getValue (),
-                                                                         this .repeatT_ .getValue (),
+                                                                         this ._repeatS .getValue (),
+                                                                         this ._repeatT .getValue (),
                                                                          false);
       },
       setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
@@ -59726,7 +60632,7 @@ function ($,
       },
       loadNow: function ()
       {
-         this .urlStack .setValue (this .urlBuffer_);
+         this .urlStack .setValue (this ._urlBuffer);
          this .loadNext ();
       },
       loadNext: function ()
@@ -59956,26 +60862,26 @@ function (Fields,
             bottomTexture     = new ImageTexture (this .getExecutionContext ()),
             textureProperties = this .getBrowser () .getBackgroundTextureProperties ();
 
-         this .frontUrl_  .addFieldInterest (frontTexture  .url_);
-         this .backUrl_   .addFieldInterest (backTexture   .url_);
-         this .leftUrl_   .addFieldInterest (leftTexture   .url_);
-         this .rightUrl_  .addFieldInterest (rightTexture  .url_);
-         this .topUrl_    .addFieldInterest (topTexture    .url_);
-         this .bottomUrl_ .addFieldInterest (bottomTexture .url_);
+         this ._frontUrl  .addFieldInterest (frontTexture  ._url);
+         this ._backUrl   .addFieldInterest (backTexture   ._url);
+         this ._leftUrl   .addFieldInterest (leftTexture   ._url);
+         this ._rightUrl  .addFieldInterest (rightTexture  ._url);
+         this ._topUrl    .addFieldInterest (topTexture    ._url);
+         this ._bottomUrl .addFieldInterest (bottomTexture ._url);
 
-         frontTexture  .url_ = this .frontUrl_;
-         backTexture   .url_ = this .backUrl_;
-         leftTexture   .url_ = this .leftUrl_;
-         rightTexture  .url_ = this .rightUrl_;
-         topTexture    .url_ = this .topUrl_;
-         bottomTexture .url_ = this .bottomUrl_;
+         frontTexture  ._url = this ._frontUrl;
+         backTexture   ._url = this ._backUrl;
+         leftTexture   ._url = this ._leftUrl;
+         rightTexture  ._url = this ._rightUrl;
+         topTexture    ._url = this ._topUrl;
+         bottomTexture ._url = this ._bottomUrl;
 
-         frontTexture  .textureProperties_ = textureProperties;
-         backTexture   .textureProperties_ = textureProperties;
-         leftTexture   .textureProperties_ = textureProperties;
-         rightTexture  .textureProperties_ = textureProperties;
-         topTexture    .textureProperties_ = textureProperties;
-         bottomTexture .textureProperties_ = textureProperties;
+         frontTexture  ._textureProperties = textureProperties;
+         backTexture   ._textureProperties = textureProperties;
+         leftTexture   ._textureProperties = textureProperties;
+         rightTexture  ._textureProperties = textureProperties;
+         topTexture    ._textureProperties = textureProperties;
+         bottomTexture ._textureProperties = textureProperties;
 
          frontTexture  .setup ();
          backTexture   .setup ();
@@ -60138,7 +61044,7 @@ function (X3DNode,
          this .backgrounds     .setup ();
          this .fogs            .setup ();
 
-         this .viewport_       .addInterest ("set_viewport__", this);
+         this ._viewport       .addInterest ("set_viewport__", this);
 
          this .set_viewport__ ();
       },
@@ -60199,7 +61105,7 @@ function (X3DNode,
          {
             var viewpoint = this .viewpoints .get () [i];
 
-            if (viewpoint .description_ .length)
+            if (viewpoint ._description .length)
                userViewpoints .push (viewpoint);
          }
 
@@ -60231,7 +61137,7 @@ function (X3DNode,
       },
       set_viewport__: function ()
       {
-         this .currentViewport = X3DCast (X3DConstants .X3DViewportNode, this .viewport_);
+         this .currentViewport = X3DCast (X3DConstants .X3DViewportNode, this ._viewport);
 
          if (! this .currentViewport)
             this .currentViewport = this .getBrowser () .getDefaultViewport ();
@@ -60291,7 +61197,7 @@ function (X3DNode,
       },
       pointer: function (type, renderObject)
       {
-         if (this .isPickable_ .getValue ())
+         if (this ._isPickable .getValue ())
          {
             var
                browser  = this .getBrowser (),
@@ -60349,7 +61255,7 @@ function (X3DNode,
       {
          var navigationInfo = this .getNavigationInfo ();
 
-         if (navigationInfo .transitionActive_ .getValue ())
+         if (navigationInfo ._transitionActive .getValue ())
             return;
 
          var
@@ -60469,9 +61375,9 @@ function (Fields,
 
       this .addType (X3DConstants .Viewpoint);
 
-      this .position_         .setUnit ("length");
-      this .centerOfRotation_ .setUnit ("length");
-      this .fieldOfView_      .setUnit ("angle");
+      this ._position         .setUnit ("length");
+      this ._centerOfRotation .setUnit ("length");
+      this ._fieldOfView      .setUnit ("angle");
 
       this .projectionMatrix        = new Matrix4 ();
       this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
@@ -60509,11 +61415,11 @@ function (Fields,
       {
          X3DViewpointNode .prototype .initialize .call (this);
 
-         this .fieldOfViewInterpolator .key_ = new Fields .MFFloat (0, 1);
+         this .fieldOfViewInterpolator ._key = new Fields .MFFloat (0, 1);
          this .fieldOfViewInterpolator .setup ();
 
-         this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewInterpolator .set_fraction_);
-         this .fieldOfViewInterpolator .value_changed_ .addFieldInterest (this .fieldOfViewScale_);
+         this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewInterpolator ._set_fraction);
+         this .fieldOfViewInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
       },
       setInterpolators: function (fromViewpointNode, toViewpointNode)
       {
@@ -60521,20 +61427,20 @@ function (Fields,
          {
             const scale = fromViewpointNode .getFieldOfView () / toViewpointNode .getFieldOfView ();
 
-            this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (scale, toViewpointNode .fieldOfViewScale_ .getValue ());
+            this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
 
-            this .fieldOfViewScale_ = scale;
+            this ._fieldOfViewScale = scale;
          }
          else
          {
-            this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewScale_ .getValue (), toViewpointNode .fieldOfViewScale_ .getValue ());
+            this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
 
-            this .fieldOfViewScale_ = toViewpointNode .fieldOfViewScale_ .getValue ();
+            this ._fieldOfViewScale = toViewpointNode ._fieldOfViewScale .getValue ();
          }
       },
       getFieldOfView: function ()
       {
-         var fov = this .fieldOfView_ .getValue () * this .fieldOfViewScale_ .getValue ();
+         var fov = this ._fieldOfView .getValue () * this ._fieldOfViewScale .getValue ();
 
          return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
       },
@@ -60798,11 +61704,11 @@ function (Fields,
       {
          X3DLayerNode .prototype .initialize .call (this);
 
-         this .addChildren_    .addFieldInterest (this .getGroup () .addChildren_);
-         this .removeChildren_ .addFieldInterest (this .getGroup () .removeChildren_);
-         this .children_       .addFieldInterest (this .getGroup () .children_);
+         this ._addChildren    .addFieldInterest (this .getGroup () ._addChildren);
+         this ._removeChildren .addFieldInterest (this .getGroup () ._removeChildren);
+         this ._children       .addFieldInterest (this .getGroup () ._children);
 
-         this .getGroup () .children_ = this .children_;
+         this .getGroup () ._children = this ._children;
          this .getGroup () .setPrivate (true);
          this .getGroup () .setup ();
       },
@@ -60921,9 +61827,9 @@ function (Fields,
          this .layerNode0 .setup ();
          this .layerNode0 .isLayer0 (true);
 
-         this .activeLayer_ .addInterest ("set_activeLayer", this);
-         this .order_       .addInterest ("set_layers", this);
-         this .layers_      .addInterest ("set_layers", this);
+         this ._activeLayer .addInterest ("set_activeLayer", this);
+         this ._order       .addInterest ("set_layers", this);
+         this ._layers      .addInterest ("set_layers", this);
 
          this .set_layers ();
       },
@@ -60947,19 +61853,19 @@ function (Fields,
       },
       set_activeLayer: function ()
       {
-         if (this .activeLayer_ .getValue () === 0)
+         if (this ._activeLayer .getValue () === 0)
          {
             if (this .activeLayerNode !== this .layerNode0)
                this .activeLayerNode = this .layerNode0;
          }
          else
          {
-            const index = this .activeLayer_ - 1;
+            const index = this ._activeLayer - 1;
 
-            if (index >= 0 && index < this .layers_ .length)
+            if (index >= 0 && index < this ._layers .length)
             {
-               if (this .activeLayerNode !== this .layers_ [index] .getValue ())
-                  this .activeLayerNode = X3DCast (X3DConstants .X3DLayerNode, this .layers_ [index]);
+               if (this .activeLayerNode !== this ._layers [index] .getValue ())
+                  this .activeLayerNode = X3DCast (X3DConstants .X3DLayerNode, this ._layers [index]);
             }
             else
             {
@@ -60970,11 +61876,11 @@ function (Fields,
       },
       set_layers: function ()
       {
-         const layers = this .layers_ .getValue ();
+         const layers = this ._layers .getValue ();
 
          this .layerNodes .length = 0;
 
-         for (let index of this .order_)
+         for (let index of this ._order)
          {
             if (index === 0)
             {
@@ -60998,7 +61904,7 @@ function (Fields,
       },
       bind: function (viewpointName)
       {
-         const layers = this .layers_ .getValue ();
+         const layers = this ._layers .getValue ();
 
          this .layerNode0 .bind (viewpointName);
 
@@ -61132,7 +62038,7 @@ function (SupportedNodes,
          this .layerSet .setPrivate (true);
          this .layerSet .setup ();
          this .layerSet .setLayer0 (this .layer0);
-         this .layerSet .activeLayer_ .addInterest ("set_rootNodes__", this);
+         this .layerSet ._activeLayer .addInterest ("set_rootNodes__", this);
 
          this .getExecutionContext () .getRootNodes () .addInterest ("set_rootNodes__", this);
 
@@ -61154,7 +62060,7 @@ function (SupportedNodes,
       },
       getActiveLayer: function ()
       {
-         return this .activeLayer_ .getValue ();
+         return this ._activeLayer .getValue ();
       },
       set_rootNodes__: function ()
       {
@@ -61163,7 +62069,7 @@ function (SupportedNodes,
             rootNodes   = this .getExecutionContext () .getRootNodes ();
 
          this .layerSet          = this .defaultLayerSet;
-         this .layer0 .children_ = rootNodes;
+         this .layer0 ._children = rootNodes;
 
          for (const rootNode of rootNodes)
          {
@@ -61178,14 +62084,14 @@ function (SupportedNodes,
 
          this .layerSet .setLayer0 (this .layer0);
 
-         oldLayerSet    .activeLayer_ .removeInterest ("set_activeLayer__", this);
-         this .layerSet .activeLayer_ .addInterest ("set_activeLayer__", this);
+         oldLayerSet    ._activeLayer .removeInterest ("set_activeLayer__", this);
+         this .layerSet ._activeLayer .addInterest ("set_activeLayer__", this);
 
          this .set_activeLayer__ ();
       },
       set_activeLayer__: function ()
       {
-         this .activeLayer_ = this .layerSet .getActiveLayer ();
+         this ._activeLayer = this .layerSet .getActiveLayer ();
       },
       bind: function ()
       {
@@ -64811,15 +65717,15 @@ function ($,
       },
       setScene: function (scene, success, error)
       {
-         scene .initLoadCount_ .addInterest ("set_initLoadCount__", this, scene, success, error);
-         scene .initLoadCount_ .addEvent ();
+         scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, success, error);
+         scene ._initLoadCount .addEvent ();
       },
-      set_initLoadCount__: function (field, scene, success, error)
+      set_initLoadCount__: function (scene, success, error, field)
       {
          if (field .getValue ())
             return;
 
-         scene .initLoadCount_ .removeInterest ("set_initLoadCount__", this);
+         scene ._initLoadCount .removeInterest ("set_initLoadCount__", this);
 
          delete scene .loader;
 
@@ -65288,7 +66194,7 @@ function (Fields,
 
          return function ()
          {
-            const type = shaderTypes [this .type_ .getValue ()];
+            const type = shaderTypes [this ._type .getValue ()];
 
             if (type)
                return type;
@@ -65298,7 +66204,7 @@ function (Fields,
       })(),
       getSourceText: function ()
       {
-         return this .url_;
+         return this ._url;
       },
       setShadow: function (value)
       {
@@ -65316,7 +66222,7 @@ function (Fields,
       {
          this .valid = false;
 
-         new FileLoader (this) .loadDocument (this .urlBuffer_,
+         new FileLoader (this) .loadDocument (this ._urlBuffer,
          function (data)
          {
             if (data === null)
@@ -65671,7 +66577,7 @@ function (Shading,
       {
          this [_unlitShader] = this .createShader ("UnlitShader", "Unlit");
 
-         this [_unlitShader] .isValid_ .addInterest ("set_unlit_shader_valid__", this);
+         this [_unlitShader] ._isValid .addInterest ("set_unlit_shader_valid__", this);
 
          this .getUnlitShader = function () { return this [_unlitShader]; };
 
@@ -65687,7 +66593,7 @@ function (Shading,
       {
          this [_gouraudShader] = this .createShader ("GouraudShader", "Gouraud", false);
 
-         this [_gouraudShader] .isValid_ .addInterest ("set_gouraud_shader_valid__", this);
+         this [_gouraudShader] ._isValid .addInterest ("set_gouraud_shader_valid__", this);
 
          this .getGouraudShader = function () { return this [_gouraudShader]; };
 
@@ -65703,7 +66609,7 @@ function (Shading,
       {
          this [_phongShader] = this .createShader ("PhongShader", "Phong", false);
 
-         this [_phongShader] .isValid_ .addInterest ("set_phong_shader_valid__", this);
+         this [_phongShader] ._isValid .addInterest ("set_phong_shader_valid__", this);
 
          this .getPhongShader = function () { return this [_phongShader]; };
 
@@ -65719,7 +66625,7 @@ function (Shading,
       {
          this [_shadowShader] = this .createShader ("ShadowShader", "Phong", true);
 
-         this [_shadowShader] .isValid_ .addInterest ("set_shadow_shader_valid__", this);
+         this [_shadowShader] ._isValid .addInterest ("set_shadow_shader_valid__", this);
 
          this .getShadowShader = function () { return this [_shadowShader]; };
 
@@ -65773,22 +66679,22 @@ function (Shading,
 
          const vertexShader = new ShaderPart (this .getPrivateScene ());
          vertexShader .setName (name + "Vertex");
-         vertexShader .url_ .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".vs"));
+         vertexShader ._url .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".vs"));
          vertexShader .setShadow (shadow);
          vertexShader .setup ();
 
          const fragmentShader = new ShaderPart (this .getPrivateScene ());
          fragmentShader .setName (name + "Fragment");
-         fragmentShader .type_  = "FRAGMENT";
-         fragmentShader .url_ .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".fs"));
+         fragmentShader ._type  = "FRAGMENT";
+         fragmentShader ._url .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".fs"));
          fragmentShader .setShadow (shadow);
          fragmentShader .setup ();
 
          const shader = new ComposedShader (this .getPrivateScene ());
          shader .setName (name);
-         shader .language_ = "GLSL";
-         shader .parts_ .push (vertexShader);
-         shader .parts_ .push (fragmentShader);
+         shader ._language = "GLSL";
+         shader ._parts .push (vertexShader);
+         shader ._parts .push (fragmentShader);
          shader .setCustom (false);
          shader .setShading (this .getBrowserOptions () .getShading ());
          shader .setup ();
@@ -65799,7 +66705,7 @@ function (Shading,
       },
       set_unlit_shader_valid__: function (valid)
       {
-         this [_unlitShader] .isValid_ .removeInterest ("set_unlit_shader_valid__", this);
+         this [_unlitShader] ._isValid .removeInterest ("set_unlit_shader_valid__", this);
 
          if (valid .getValue () && ShaderTest .verify (this, this [_unlitShader]))
             return;
@@ -65807,12 +66713,12 @@ function (Shading,
          console .error ("X_ITE: Unlit shading is not available, using fallback VRML shader.");
 
          // Recompile shader.
-         this [_unlitShader] .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.vs") ];
-         this [_unlitShader] .parts_ [1] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.fs") ];
+         this [_unlitShader] ._parts [0] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.vs") ];
+         this [_unlitShader] ._parts [1] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.fs") ];
       },
       set_gouraud_shader_valid__: function (valid)
       {
-         this [_gouraudShader] .isValid_ .removeInterest ("set_gouraud_shader_valid__", this);
+         this [_gouraudShader] ._isValid .removeInterest ("set_gouraud_shader_valid__", this);
 
          if (valid .getValue () && ShaderTest .verify (this, this [_gouraudShader]))
             return;
@@ -65820,12 +66726,12 @@ function (Shading,
          console .warn ("X_ITE: All else fails, using fallback VRML shader.");
 
          // Recompile shader.
-         this [_gouraudShader] .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/Fallback.vs") ];
-         this [_gouraudShader] .parts_ [1] .url = [ urls .getShaderUrl ("webgl1/Fallback.fs") ];
+         this [_gouraudShader] ._parts [0] .url = [ urls .getShaderUrl ("webgl1/Fallback.vs") ];
+         this [_gouraudShader] ._parts [1] .url = [ urls .getShaderUrl ("webgl1/Fallback.fs") ];
       },
       set_phong_shader_valid__: function (valid)
       {
-         this [_phongShader] .isValid_ .removeInterest ("set_phong_shader_valid__", this);
+         this [_phongShader] ._isValid .removeInterest ("set_phong_shader_valid__", this);
 
          if (valid .getValue () && ShaderTest .verify (this, this [_phongShader]))
             return;
@@ -65838,7 +66744,7 @@ function (Shading,
       },
       set_shadow_shader_valid__: function (valid)
       {
-         this [_shadowShader] .isValid_ .removeInterest ("set_shadow_shader_valid__", this);
+         this [_shadowShader] ._isValid .removeInterest ("set_shadow_shader_valid__", this);
 
          if (valid .getValue () && ShaderTest .verify (this, this [_shadowShader]))
             return;
@@ -66482,7 +67388,7 @@ function (Fields,
 
       this .addChildObjects ("transparent", new Fields .SFBool ());
 
-      this .transparent_ .setAccessType (X3DConstants .outputOnly);
+      this ._transparent .setAccessType (X3DConstants .outputOnly);
    }
 
    X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -66490,12 +67396,12 @@ function (Fields,
       constructor: X3DAppearanceNode,
       setTransparent: function (value)
       {
-         if (value !== this .transparent_ .getValue ())
-            this .transparent_ = value;
+         if (value !== this ._transparent .getValue ())
+            this ._transparent = value;
       },
       getTransparent: function ()
       {
-         return this .transparent_ .getValue ();
+         return this ._transparent .getValue ();
       },
    });
 
@@ -66687,23 +67593,23 @@ function (Fields,
 
          this .isLive () .addInterest ("set_live__", this);
 
-         this .alphaMode_  		.addInterest ("set_alphaMode__",        this);
-         this .alphaCutoff_  		.addInterest ("set_alphaCutoff__",      this);
-         this .pointProperties_  .addInterest ("set_pointProperties__",  this);
-         this .lineProperties_   .addInterest ("set_lineProperties__",   this);
-         this .fillProperties_   .addInterest ("set_fillProperties__",   this);
-         this .material_         .addInterest ("set_material__",         this);
-         this .backMaterial_     .addInterest ("set_backMaterial__",     this);
-         this .texture_          .addInterest ("set_texture__",          this);
-         this .textureTransform_ .addInterest ("set_textureTransform__", this);
-         this .shaders_          .addInterest ("set_shaders__",          this);
-         this .blendMode_        .addInterest ("set_blendMode__",        this);
+         this ._alphaMode  		.addInterest ("set_alphaMode__",        this);
+         this ._alphaCutoff  		.addInterest ("set_alphaCutoff__",      this);
+         this ._pointProperties  .addInterest ("set_pointProperties__",  this);
+         this ._lineProperties   .addInterest ("set_lineProperties__",   this);
+         this ._fillProperties   .addInterest ("set_fillProperties__",   this);
+         this ._material         .addInterest ("set_material__",         this);
+         this ._backMaterial     .addInterest ("set_backMaterial__",     this);
+         this ._texture          .addInterest ("set_texture__",          this);
+         this ._textureTransform .addInterest ("set_textureTransform__", this);
+         this ._shaders          .addInterest ("set_shaders__",          this);
+         this ._blendMode        .addInterest ("set_blendMode__",        this);
 
-         this .alphaMode_      .addInterest ("set_transparent__", this);
-         this .fillProperties_ .addInterest ("set_transparent__", this);
-         this .material_       .addInterest ("set_transparent__", this);
-         this .texture_        .addInterest ("set_transparent__", this);
-         this .blendMode_      .addInterest ("set_transparent__", this);
+         this ._alphaMode      .addInterest ("set_transparent__", this);
+         this ._fillProperties .addInterest ("set_transparent__", this);
+         this ._material       .addInterest ("set_transparent__", this);
+         this ._texture        .addInterest ("set_transparent__", this);
+         this ._blendMode      .addInterest ("set_transparent__", this);
 
          this .set_live__ ();
          this .set_alphaMode__ ();
@@ -66726,14 +67632,14 @@ function (Fields,
       {
          if (this .isLive () .getValue ())
          {
-            this .getBrowser () .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
+            this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
 
             if (this .shaderNode)
                this .getBrowser () .addShader (this .shaderNode);
          }
          else
          {
-            this .getBrowser () .getBrowserOptions () .Shading_ .removeInterest ("set_shading__", this);
+            this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
 
             if (this .shaderNode)
                this .getBrowser () .removeShader (this .shaderNode);
@@ -66741,24 +67647,24 @@ function (Fields,
       },
       set_alphaMode__: function ()
       {
-         this .alphaMode = AlphaMode [this .alphaMode_ .getValue ()] || AlphaMode .AUTO;
+         this .alphaMode = AlphaMode [this ._alphaMode .getValue ()] || AlphaMode .AUTO;
 
          this .set_alphaCutoff__ ();
       },
       set_alphaCutoff__: function ()
       {
-         this .alphaCutoff = this .alphaMode === AlphaMode .MASK ? this .alphaCutoff_ .getValue () : 0;
+         this .alphaCutoff = this .alphaMode === AlphaMode .MASK ? this ._alphaCutoff .getValue () : 0;
       },
       set_pointProperties__: function ()
       {
-         this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this .pointProperties_);
+         this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this ._pointProperties);
 
          if (! this .stylePropertiesNode [0])
             this .stylePropertiesNode [0] = this .getBrowser () .getDefaultPointProperties ();
       },
       set_lineProperties__: function ()
       {
-         this .stylePropertiesNode [1] = X3DCast (X3DConstants .LineProperties, this .lineProperties_);
+         this .stylePropertiesNode [1] = X3DCast (X3DConstants .LineProperties, this ._lineProperties);
 
          if (! this .stylePropertiesNode [1])
             this .stylePropertiesNode [1] = this .getBrowser () .getDefaultLineProperties ();
@@ -66766,30 +67672,30 @@ function (Fields,
       set_fillProperties__: function ()
       {
          if (this .stylePropertiesNode [2])
-            this .stylePropertiesNode [2] .transparent_ .removeInterest ("set_transparent__", this);
+            this .stylePropertiesNode [2] ._transparent .removeInterest ("set_transparent__", this);
 
-         this .stylePropertiesNode [2] = X3DCast (X3DConstants .FillProperties, this .fillProperties_);
+         this .stylePropertiesNode [2] = X3DCast (X3DConstants .FillProperties, this ._fillProperties);
 
          if (! this .stylePropertiesNode [2])
             this .stylePropertiesNode [2] = this .getBrowser () .getDefaultFillProperties ();
 
          if (this .stylePropertiesNode [2])
-            this .stylePropertiesNode [2] .transparent_ .addInterest ("set_transparent__", this);
+            this .stylePropertiesNode [2] ._transparent .addInterest ("set_transparent__", this);
 
          this .stylePropertiesNode [3] = this .stylePropertiesNode [2];
       },
       set_material__: function ()
       {
          if (this .materialNode)
-            this .materialNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .materialNode ._transparent .removeInterest ("set_transparent__", this);
 
-         this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this .material_);
+         this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this ._material);
 
          if (! this .materialNode)
             this .materialNode = this .getBrowser () .getDefaultMaterial ();
 
          if (this .materialNode)
-            this .materialNode .transparent_ .addInterest ("set_transparent__", this);
+            this .materialNode ._transparent .addInterest ("set_transparent__", this);
 
          // Depreciated TwoSidedMaterial handling.
 
@@ -66802,12 +67708,12 @@ function (Fields,
       set_backMaterial__: function ()
       {
          if (this .backMaterialNode)
-            this .backMaterialNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .backMaterialNode ._transparent .removeInterest ("set_transparent__", this);
 
-         this .backMaterialNode = X3DCast (X3DConstants .X3DOneSidedMaterialNode, this .backMaterial_);
+         this .backMaterialNode = X3DCast (X3DConstants .X3DOneSidedMaterialNode, this ._backMaterial);
 
          if (this .backMaterialNode)
-            this .backMaterialNode .transparent_ .addInterest ("set_transparent__", this);
+            this .backMaterialNode ._transparent .addInterest ("set_transparent__", this);
 
          // Depreciated TwoSidedMaterial handling.
 
@@ -66817,16 +67723,16 @@ function (Fields,
       set_texture__: function ()
       {
          if (this .textureNode)
-            this .textureNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .textureNode ._transparent .removeInterest ("set_transparent__", this);
 
-         this .textureNode = X3DCast (X3DConstants .X3DTextureNode, this .texture_);
+         this .textureNode = X3DCast (X3DConstants .X3DTextureNode, this ._texture);
 
          if (this .textureNode)
-            this .textureNode .transparent_ .addInterest ("set_transparent__", this);
+            this .textureNode ._transparent .addInterest ("set_transparent__", this);
       },
       set_textureTransform__: function ()
       {
-         this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this .textureTransform_);
+         this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this ._textureTransform);
 
          if (this .textureTransformNode)
             return;
@@ -66839,13 +67745,13 @@ function (Fields,
 
          for (const shaderNode of shaderNodes)
          {
-            shaderNode .isValid_        .removeInterest ("set_shader__", this);
-            shaderNode .activationTime_ .removeInterest ("set_shader__", this);
+            shaderNode ._isValid        .removeInterest ("set_shader__", this);
+            shaderNode ._activationTime .removeInterest ("set_shader__", this);
          }
 
          shaderNodes .length = 0;
 
-         for (const node of this .shaders_)
+         for (const node of this ._shaders)
          {
             const shaderNode = X3DCast (X3DConstants .X3DShaderNode, node);
 
@@ -66853,8 +67759,8 @@ function (Fields,
             {
                shaderNodes .push (shaderNode);
 
-               shaderNode .isValid_        .addInterest ("set_shader__", this);
-               shaderNode .activationTime_ .addInterest ("set_shader__", this);
+               shaderNode ._isValid        .addInterest ("set_shader__", this);
+               shaderNode ._activationTime .addInterest ("set_shader__", this);
             }
          }
 
@@ -66874,9 +67780,9 @@ function (Fields,
 
          for (const shaderNode of shaderNodes)
          {
-            if (shaderNode .isValid_ .getValue ())
+            if (shaderNode ._isValid .getValue ())
             {
-               if (shaderNode .activationTime_ .getValue () === this .getBrowser () .getCurrentTime ())
+               if (shaderNode ._activationTime .getValue () === this .getBrowser () .getCurrentTime ())
                {
                   this .shaderNode = shaderNode;
                   break;
@@ -66888,7 +67794,7 @@ function (Fields,
          {
             for (const shaderNode of shaderNodes)
             {
-               if (shaderNode .isValid_ .getValue ())
+               if (shaderNode ._isValid .getValue ())
                {
                   this .shaderNode = shaderNode;
                   break;
@@ -66911,7 +67817,7 @@ function (Fields,
       },
       set_blendMode__: function ()
       {
-         this .blendModeNode = X3DCast (X3DConstants .BlendMode, this .blendMode_);
+         this .blendModeNode = X3DCast (X3DConstants .BlendMode, this ._blendMode);
       },
       set_transparent__: function ()
       {
@@ -67048,11 +67954,11 @@ function (Fields,
       {
          X3DAppearanceChildNode .prototype .initialize .call (this);
 
-         this .pointSizeScaleFactor_ .addInterest ("set_pointSizeScaleFactor__", this);
-         this .pointSizeMinValue_    .addInterest ("set_pointSizeMinValue__",    this);
-         this .pointSizeMaxValue_    .addInterest ("set_pointSizeMaxValue__",    this);
-         this .pointSizeAttenuation_ .addInterest ("set_pointSizeAttenuation__", this);
-         this .colorMode_            .addInterest ("set_colorMode__",            this);
+         this ._pointSizeScaleFactor .addInterest ("set_pointSizeScaleFactor__", this);
+         this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
+         this ._pointSizeMaxValue    .addInterest ("set_pointSizeMaxValue__",    this);
+         this ._pointSizeAttenuation .addInterest ("set_pointSizeAttenuation__", this);
+         this ._colorMode            .addInterest ("set_colorMode__",            this);
 
          this .set_pointSizeScaleFactor__ ();
          this .set_pointSizeMinValue__ ();
@@ -67062,23 +67968,23 @@ function (Fields,
       },
       set_pointSizeScaleFactor__: function ()
       {
-         this .pointSizeScaleFactor = Math .max (1, this .pointSizeScaleFactor_ .getValue ());
+         this .pointSizeScaleFactor = Math .max (1, this ._pointSizeScaleFactor .getValue ());
       },
       set_pointSizeMinValue__: function ()
       {
-         this .pointSizeMinValue = Math .max (0, this .pointSizeMinValue_ .getValue ());
+         this .pointSizeMinValue = Math .max (0, this ._pointSizeMinValue .getValue ());
       },
       set_pointSizeMaxValue__: function ()
       {
-         this .pointSizeMaxValue = Math .max (0, this .pointSizeMaxValue_ .getValue ());
+         this .pointSizeMaxValue = Math .max (0, this ._pointSizeMaxValue .getValue ());
       },
       set_pointSizeAttenuation__: function ()
       {
-         const length = this .pointSizeAttenuation_ .length;
+         const length = this ._pointSizeAttenuation .length;
 
-         this .pointSizeAttenuation [0] = length > 0 ? Math .max (0, this .pointSizeAttenuation_ [0]) : 1;
-         this .pointSizeAttenuation [1] = length > 1 ? Math .max (0, this .pointSizeAttenuation_ [1]) : 0;
-         this .pointSizeAttenuation [2] = length > 2 ? Math .max (0, this .pointSizeAttenuation_ [2]) : 0;
+         this .pointSizeAttenuation [0] = length > 0 ? Math .max (0, this ._pointSizeAttenuation [0]) : 1;
+         this .pointSizeAttenuation [1] = length > 1 ? Math .max (0, this ._pointSizeAttenuation [1]) : 0;
+         this .pointSizeAttenuation [2] = length > 2 ? Math .max (0, this ._pointSizeAttenuation [2]) : 0;
       },
       set_colorMode__: (function ()
       {
@@ -67090,7 +67996,7 @@ function (Fields,
 
          return function ()
          {
-            const colorMode = colorModes .get (this .colorMode_ .getValue ());
+            const colorMode = colorModes .get (this ._colorMode .getValue ());
 
             if (colorMode !== undefined)
                this .colorMode = colorMode;
@@ -67207,19 +68113,19 @@ function (Fields,
       {
          X3DAppearanceChildNode .prototype .initialize .call (this);
 
-         this .applied_              .addInterest ("set_applied__",              this);
-         this .linewidthScaleFactor_ .addInterest ("set_linewidthScaleFactor__", this);
+         this ._applied              .addInterest ("set_applied__",              this);
+         this ._linewidthScaleFactor .addInterest ("set_linewidthScaleFactor__", this);
 
          this .set_applied__ ();
          this .set_linewidthScaleFactor__ ();
       },
       set_applied__: function ()
       {
-         this .applied = this .applied_ .getValue ();
+         this .applied = this ._applied .getValue ();
       },
       set_linewidthScaleFactor__: function ()
       {
-         this .linewidthScaleFactor = Math .max (1, this .linewidthScaleFactor_ .getValue ());
+         this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ());
       },
       setShaderUniforms: function (gl, shaderObject)
       {
@@ -67227,7 +68133,7 @@ function (Fields,
          {
             const
                browser = shaderObject .getBrowser (),
-               texture = browser .getLinetype (this .linetype_ .getValue ());
+               texture = browser .getLinetype (this ._linetype .getValue ());
 
             gl .lineWidth (this .linewidthScaleFactor);
             gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,              true);
@@ -67320,7 +68226,7 @@ function (Fields,
 
       this .addChildObjects ("transparent", new Fields .SFBool ());
 
-      this .transparent_ .setAccessType (X3DConstants .outputOnly);
+      this ._transparent .setAccessType (X3DConstants .outputOnly);
 
       this .hatchColor = new Float32Array (3);
    }
@@ -67351,9 +68257,9 @@ function (Fields,
       {
          X3DAppearanceChildNode .prototype .initialize .call (this);
 
-         this .filled_     .addInterest ("set_filled__",     this);
-         this .hatched_    .addInterest ("set_hatched__",    this);
-         this .hatchColor_ .addInterest ("set_hatchColor__", this);
+         this ._filled     .addInterest ("set_filled__",     this);
+         this ._hatched    .addInterest ("set_hatched__",    this);
+         this ._hatchColor .addInterest ("set_hatchColor__", this);
 
          this .set_filled__ ();
          this .set_hatched__ ();
@@ -67361,28 +68267,28 @@ function (Fields,
       },
       set_filled__: function ()
       {
-         this .filled = this .filled_ .getValue ();
+         this .filled = this ._filled .getValue ();
 
          this .setTransparent (! this .filled);
       },
       set_hatched__: function ()
       {
-         this .hatched = this .hatched_ .getValue ();
+         this .hatched = this ._hatched .getValue ();
       },
       set_hatchColor__: function ()
       {
-         this .hatchColor [0] = this .hatchColor_ [0];
-         this .hatchColor [1] = this .hatchColor_ [1];
-         this .hatchColor [2] = this .hatchColor_ [2];
+         this .hatchColor [0] = this ._hatchColor [0];
+         this .hatchColor [1] = this ._hatchColor [1];
+         this .hatchColor [2] = this ._hatchColor [2];
       },
       setTransparent: function (value)
       {
-         if (value !== this .transparent_ .getValue ())
-            this .transparent_ = value;
+         if (value !== this ._transparent .getValue ())
+            this ._transparent = value;
       },
       getTransparent: function ()
       {
-         return this .transparent_ .getValue ();
+         return this ._transparent .getValue ();
       },
       setShaderUniforms: function (gl, shaderObject)
       {
@@ -67395,7 +68301,7 @@ function (Fields,
          {
             const
                browser = shaderObject .getBrowser (),
-               texture = browser .getHatchStyle (this .hatchStyle_ .getValue ());
+               texture = browser .getHatchStyle (this ._hatchStyle .getValue ());
 
             gl .uniform3fv (shaderObject .x3d_FillPropertiesHatchColor, this .hatchColor);
             gl .activeTexture (gl .TEXTURE0 + browser .getHatchStyleUnit ());
@@ -67475,7 +68381,7 @@ function (Fields,
 
       this .addChildObjects ("transparent", new Fields .SFBool ());
 
-      this .transparent_ .setAccessType (X3DConstants .outputOnly);
+      this ._transparent .setAccessType (X3DConstants .outputOnly);
    }
 
    X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -67483,12 +68389,12 @@ function (Fields,
       constructor: X3DMaterialNode,
       setTransparent: function (value)
       {
-         if (value !== this .transparent_ .getValue ())
-            this .transparent_ = value;
+         if (value !== this ._transparent .getValue ())
+            this ._transparent = value;
       },
       getTransparent: function ()
       {
-         return this .transparent_ .getValue ();
+         return this ._transparent .getValue ();
       },
    });
 
@@ -67571,8 +68477,8 @@ function (X3DMaterialNode,
       {
          X3DMaterialNode .prototype .initialize .call (this);
 
-         this .emissiveColor_ .addInterest ("set_emissiveColor__", this);
-         this .transparency_  .addInterest ("set_transparency__",  this);
+         this ._emissiveColor .addInterest ("set_emissiveColor__", this);
+         this ._transparency  .addInterest ("set_transparency__",  this);
 
          this .set_emissiveColor__ ();
          this .set_transparency__ ();
@@ -67580,11 +68486,11 @@ function (X3DMaterialNode,
       set_emissiveColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .emissiveColor .set (this .emissiveColor_ .getValue ());
+         //this .emissiveColor .set (this ._emissiveColor .getValue ());
 
          const
             emissiveColor  = this .emissiveColor,
-            emissiveColor_ = this .emissiveColor_ .getValue ();
+            emissiveColor_ = this ._emissiveColor .getValue ();
 
          emissiveColor [0] = emissiveColor_ .r;
          emissiveColor [1] = emissiveColor_ .g;
@@ -67592,11 +68498,11 @@ function (X3DMaterialNode,
       },
       set_shininess__: function ()
       {
-         this .shininess = Algorithm .clamp (this .shininess_ .getValue (), 0, 1);
+         this .shininess = Algorithm .clamp (this ._shininess .getValue (), 0, 1);
       },
       set_transparency__: function ()
       {
-         const transparency = Algorithm .clamp (this .transparency_ .getValue (), 0, 1);
+         const transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
 
          this .transparency = transparency;
 
@@ -67822,7 +68728,7 @@ function (Fields,
       getBorderWidth: function ()
       {
          // https://stackoverflow.com/questions/27760277/webgl-border-color-shader?lq=1
-         return Algorithm .clamp (this .borderWidth_ .getValue (), 0, 1);
+         return Algorithm .clamp (this ._borderWidth .getValue (), 0, 1);
       },
       getBoundaryMode: (function ()
       {
@@ -67846,15 +68752,15 @@ function (Fields,
       })(),
       getBoundaryModeS: function ()
       {
-         return this .getBoundaryMode (this .boundaryModeS_ .getValue ());
+         return this .getBoundaryMode (this ._boundaryModeS .getValue ());
       },
       getBoundaryModeT: function ()
       {
-         return this .getBoundaryMode (this .boundaryModeT_ .getValue ());
+         return this .getBoundaryMode (this ._boundaryModeT .getValue ());
       },
       getBoundaryModeR: function ()
       {
-         return this .getBoundaryMode (this .boundaryModeR_ .getValue ());
+         return this .getBoundaryMode (this ._boundaryModeR .getValue ());
       },
       getMinificationFilter: (function ()
       {
@@ -67871,9 +68777,9 @@ function (Fields,
 
          return function ()
          {
-            if (this .generateMipMaps_ .getValue ())
+            if (this ._generateMipMaps .getValue ())
             {
-               const minificationFilter = minificationFilters .get (this .minificationFilter_ .getValue ());
+               const minificationFilter = minificationFilters .get (this ._minificationFilter .getValue ());
 
                if (minificationFilter !== undefined)
                   return minificationFilter;
@@ -67895,7 +68801,7 @@ function (Fields,
 
          return function ()
          {
-            const magnificationFilter = magnificationFilters .get (this .magnificationFilter_ .getValue ());
+            const magnificationFilter = magnificationFilters .get (this ._magnificationFilter .getValue ());
 
             if (magnificationFilter !== undefined)
                return magnificationFilter;
@@ -67921,7 +68827,7 @@ function (Fields,
                browser            = this .getBrowser (),
                gl                 = browser .getContext (),
                compressedTexture  = browser .getExtension ("WEBGL_compressed_texture_etc"), // TODO: find suitable compression.
-               textureCompression = compressedTexture ? compressedTexture [textureCompressions .get (this .textureCompression_ .getValue ())] : undefined;
+               textureCompression = compressedTexture ? compressedTexture [textureCompressions .get (this ._textureCompression .getValue ())] : undefined;
 
             if (textureCompression !== undefined)
                return textureCompression;
@@ -68051,7 +68957,7 @@ function (Appearance,
       {
          this [_defaultLineProperties] = new LineProperties (this .getPrivateScene ());
 
-         this [_defaultLineProperties] .applied_ = false;
+         this [_defaultLineProperties] ._applied = false;
          this [_defaultLineProperties] .setup ();
 
          this .getDefaultLineProperties = function () { return this [_defaultLineProperties]; };
@@ -68064,7 +68970,7 @@ function (Appearance,
       {
          this [_defaultFillProperties] = new FillProperties (this .getPrivateScene ());
 
-         this [_defaultFillProperties] .hatched_ = false;
+         this [_defaultFillProperties] ._hatched = false;
          this [_defaultFillProperties] .setup ();
 
          this .getDefaultFillProperties = function () { return this [_defaultFillProperties]; };
@@ -68097,8 +69003,8 @@ function (Appearance,
 
          linetypeTexture = this [_linetypeTextures] [index] = new ImageTexture (this .getPrivateScene ());
 
-         linetypeTexture .url_ [0]           = urls .getLinetypeUrl (index);
-         linetypeTexture .textureProperties_ = this .getLineFillTextureProperties ();
+         linetypeTexture ._url [0]           = urls .getLinetypeUrl (index);
+         linetypeTexture ._textureProperties = this .getLineFillTextureProperties ();
          linetypeTexture .setup ();
 
          return linetypeTexture;
@@ -68115,8 +69021,8 @@ function (Appearance,
 
          hatchStyleTexture = this [_hatchStyleTextures] [index] = new ImageTexture (this .getPrivateScene ());
 
-         hatchStyleTexture .url_ [0]           = urls .getHatchingUrl (index);
-         hatchStyleTexture .textureProperties_ = this .getLineFillTextureProperties ();
+         hatchStyleTexture ._url [0]           = urls .getHatchingUrl (index);
+         hatchStyleTexture ._textureProperties = this .getLineFillTextureProperties ();
          hatchStyleTexture .setup ();
 
          return hatchStyleTexture;
@@ -68226,13 +69132,13 @@ function (X3DChildNode,
          X3DChildNode     .prototype .initialize .call (this);
          X3DBoundedObject .prototype .initialize .call (this);
 
-         this .bboxSize_   .addInterest ("set_bbox__",      this);
-         this .bboxCenter_ .addInterest ("set_bbox__",      this);
-         this .appearance_ .addInterest ("set_apparance__", this);
-         this .geometry_   .addInterest ("set_geometry__",  this);
+         this ._bboxSize   .addInterest ("set_bbox__",      this);
+         this ._bboxCenter .addInterest ("set_bbox__",      this);
+         this ._appearance .addInterest ("set_apparance__", this);
+         this ._geometry   .addInterest ("set_geometry__",  this);
 
-         this .appearance_ .addInterest ("set_transparent__", this);
-         this .geometry_   .addInterest ("set_transparent__", this);
+         this ._appearance .addInterest ("set_transparent__", this);
+         this ._geometry   .addInterest ("set_transparent__", this);
 
          this .set_apparance__ ();
          this .set_geometry__ ();
@@ -68242,7 +69148,7 @@ function (X3DChildNode,
       {
          if (shadow)
          {
-            if (this .castShadow_ .getValue ())
+            if (this ._castShadow .getValue ())
             {
                return bbox .assign (this .bbox);
             }
@@ -68282,7 +69188,7 @@ function (X3DChildNode,
       },
       set_bbox__: function ()
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
             if (this .getGeometry ())
                this .bbox .assign (this .getGeometry () .getBBox ());
@@ -68291,7 +69197,7 @@ function (X3DChildNode,
                this .bbox .set ();
          }
          else
-            this .bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+            this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
 
          this .bboxSize   .assign (this .bbox .size);
          this .bboxCenter .assign (this .bbox .center);
@@ -68299,14 +69205,14 @@ function (X3DChildNode,
       set_apparance__: function ()
       {
          if (this .apparanceNode)
-            this .apparanceNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .apparanceNode ._transparent .removeInterest ("set_transparent__", this);
 
-         this .apparanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this .appearance_);
+         this .apparanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this ._appearance);
 
          if (this .apparanceNode)
          {
-            this .apparanceNode .alphaMode_   .addInterest ("set_transparent__", this);
-            this .apparanceNode .transparent_ .addInterest ("set_transparent__", this);
+            this .apparanceNode ._alphaMode   .addInterest ("set_transparent__", this);
+            this .apparanceNode ._transparent .addInterest ("set_transparent__", this);
          }
          else
             this .apparanceNode = this .getBrowser () .getDefaultAppearance ();
@@ -68315,16 +69221,16 @@ function (X3DChildNode,
       {
          if (this .geometryNode)
          {
-            this .geometryNode .transparent_  .addInterest ("set_transparent__", this);
-            this .geometryNode .bbox_changed_ .addInterest ("set_bbox__",        this);
+            this .geometryNode ._transparent  .addInterest ("set_transparent__", this);
+            this .geometryNode ._bbox_changed .addInterest ("set_bbox__",        this);
          }
 
-         this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this .geometry_);
+         this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this ._geometry);
 
          if (this .geometryNode)
          {
-            this .geometryNode .transparent_  .addInterest ("set_transparent__", this);
-            this .geometryNode .bbox_changed_ .addInterest ("set_bbox__",        this);
+            this .geometryNode ._transparent  .addInterest ("set_transparent__", this);
+            this .geometryNode ._bbox_changed .addInterest ("set_bbox__",        this);
          }
 
          this .set_bbox__ ();
@@ -68787,7 +69693,7 @@ function (Fields,
       {
          X3DShapeNode .prototype .initialize .call (this);
 
-         this .transformSensors_changed_ .addInterest ("set_transformSensors__", this);
+         this ._transformSensors_changed .addInterest ("set_transformSensors__", this);
 
          this .set_transformSensors__ ();
       },
@@ -68831,7 +69737,7 @@ function (Fields,
             }
             case TraverseType .SHADOW:
             {
-               if (this .castShadow_ .getValue ())
+               if (this ._castShadow .getValue ())
                   renderObject .addDepthShape (this);
 
                break;
@@ -69045,9 +69951,9 @@ function (Fields,
                              "bbox_changed", new Fields .SFTime (),
                              "rebuild",      new Fields .SFTime ());
 
-      this .transparent_  .setAccessType (X3DConstants .outputOnly);
-      this .bbox_changed_ .setAccessType (X3DConstants .outputOnly);
-      this .rebuild_      .setAccessType (X3DConstants .outputOnly);
+      this ._transparent  .setAccessType (X3DConstants .outputOnly);
+      this ._bbox_changed .setAccessType (X3DConstants .outputOnly);
+      this ._rebuild      .setAccessType (X3DConstants .outputOnly);
 
       // Members
 
@@ -69126,7 +70032,7 @@ function (Fields,
          this .isLive () .addInterest ("set_live__", this);
 
          this .addInterest ("requestRebuild", this);
-         this .rebuild_ .addInterest ("rebuild", this);
+         this ._rebuild .addInterest ("rebuild", this);
 
          const gl = this .getBrowser () .getContext ();
 
@@ -69158,12 +70064,12 @@ function (Fields,
       },
       setTransparent: function (value)
       {
-         if (value !== this .transparent_ .getValue ())
-            this .transparent_ = value;
+         if (value !== this ._transparent .getValue ())
+            this ._transparent = value;
       },
       getTransparent: function ()
       {
-         return this .transparent_ .getValue ();
+         return this ._transparent .getValue ();
       },
       getBBox: function ()
       {
@@ -69182,7 +70088,7 @@ function (Fields,
          for (let i = 0; i < 5; ++ i)
             this .planes [i] .set (i % 2 ? this .min : this .max, boxNormals [i]);
 
-         this .bbox_changed_ .addEvent ();
+         this ._bbox_changed .addEvent ();
       },
       getMin: function ()
       {
@@ -69597,9 +70503,9 @@ function (Fields,
       set_live__: function ()
       {
          if (this .isLive () .getValue ())
-            this .getBrowser () .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
+            this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
          else
-            this .getBrowser () .getBrowserOptions () .Shading_ .removeInterest ("set_shading__", this);
+            this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
       },
       set_shading__: (function ()
       {
@@ -69661,7 +70567,7 @@ function (Fields,
       })(),
       requestRebuild: function ()
       {
-         this .rebuild_ .addEvent ();
+         this ._rebuild .addEvent ();
       },
       rebuild: (function ()
       {
@@ -69712,7 +70618,7 @@ function (Fields,
                this .bbox .setExtents (min .set (0, 0, 0), max .set (0, 0, 0));
             }
 
-            this .bbox_changed_ .addEvent ();
+            this ._bbox_changed .addEvent ();
 
             // Generate texCoord if needed.
 
@@ -69734,7 +70640,7 @@ function (Fields,
 
             // Upload normals or flat normals.
 
-            this .set_shading__ (this .getBrowser () .getBrowserOptions () .Shading_);
+            this .set_shading__ (this .getBrowser () .getBrowserOptions () ._Shading);
 
             // Upload arrays.
 
@@ -70577,12 +71483,12 @@ function (Fields,
       {
          X3DLineGeometryNode .prototype .initialize .call (this);
 
-         this .set_colorIndex_ .addFieldInterest (this .colorIndex_);
-         this .set_coordIndex_ .addFieldInterest (this .coordIndex_);
-         this .attrib_         .addInterest ("set_attrib__",   this);
-         this .fogCoord_       .addInterest ("set_fogCoord__", this);
-         this .color_          .addInterest ("set_color__",    this);
-         this .coord_          .addInterest ("set_coord__",    this);
+         this ._set_colorIndex .addFieldInterest (this ._colorIndex);
+         this ._set_coordIndex .addFieldInterest (this ._coordIndex);
+         this ._attrib         .addInterest ("set_attrib__",   this);
+         this ._fogCoord       .addInterest ("set_fogCoord__", this);
+         this ._color          .addInterest ("set_color__",    this);
+         this ._coord          .addInterest ("set_coord__",    this);
 
          this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
          this .setSolid (false);
@@ -70601,9 +71507,9 @@ function (Fields,
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
          {
-            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
 
             if (attribNode)
                attribNodes .push (attribNode);
@@ -70617,7 +71523,7 @@ function (Fields,
          if (this .fogCoordNode)
             this .fogCoordNode .removeInterest ("requestRebuild", this);
 
-         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
+         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
 
          if (this .fogCoordNode)
             this .fogCoordNode .addInterest ("requestRebuild", this);
@@ -70627,15 +71533,15 @@ function (Fields,
          if (this .colorNode)
          {
             this .colorNode .removeInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .colorNode ._transparent .removeInterest ("set_transparent__", this);
          }
 
-         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
+         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
          if (this .colorNode)
          {
             this .colorNode .addInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .addInterest ("set_transparent__", this);
+            this .colorNode ._transparent .addInterest ("set_transparent__", this);
 
             this .set_transparent__ ();
          }
@@ -70651,29 +71557,29 @@ function (Fields,
          if (this .coordNode)
             this .coordNode .removeInterest ("requestRebuild", this);
 
-         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
+         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._coord);
 
          if (this .coordNode)
             this .coordNode .addInterest ("requestRebuild", this);
       },
       getColorPerVertexIndex: function (index)
       {
-         if (index < this .colorIndex_ .length)
-            return this .colorIndex_ [index];
+         if (index < this ._colorIndex .length)
+            return this ._colorIndex [index];
 
-         return this .coordIndex_ [index];
+         return this ._coordIndex [index];
       },
       getColorIndex: function (index)
       {
-         if (index < this .colorIndex_ .length)
-            return this .colorIndex_ [index];
+         if (index < this ._colorIndex .length)
+            return this ._colorIndex [index];
 
          return index;
       },
       getPolylineIndices: function ()
       {
          const
-            coordIndex = this .coordIndex_,
+            coordIndex = this ._coordIndex,
             polylines  = [ ];
 
          var polyline = [ ];
@@ -70712,9 +71618,9 @@ function (Fields,
             return;
 
          const
-            coordIndex     = this .coordIndex_,
+            coordIndex     = this ._coordIndex,
             polylines      = this .getPolylineIndices (),
-            colorPerVertex = this .colorPerVertex_ .getValue (),
+            colorPerVertex = this ._colorPerVertex .getValue (),
             attribNodes    = this .getAttrib (),
             numAttrib      = attribNodes .length,
             attribs        = this .getAttribs (),
@@ -70913,7 +71819,7 @@ function (Fields,
 
       this .addChildObjects ("transparent", new Fields .SFBool ());
 
-      this .transparent_ .setAccessType (X3DConstants .outputOnly);
+      this ._transparent .setAccessType (X3DConstants .outputOnly);
    }
 
    X3DColorNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
@@ -70921,12 +71827,12 @@ function (Fields,
       constructor: X3DColorNode,
       setTransparent: function (value)
       {
-         if (value !== this .transparent_ .getValue ())
-            this .transparent_ = value;
+         if (value !== this ._transparent .getValue ())
+            this ._transparent = value;
       },
       getTransparent: function ()
       {
-         return this .transparent_ .getValue ();
+         return this ._transparent .getValue ();
       },
    });
 
@@ -71029,14 +71935,14 @@ function (Fields,
       {
          X3DColorNode .prototype .initialize .call (this);
 
-         this .color_ .addInterest ("set_color__", this);
+         this ._color .addInterest ("set_color__", this);
 
          this .set_color__ ();
       },
       set_color__: function ()
       {
-         this .color  = this .color_ .getValue ();
-         this .length = this .color_ .length;
+         this .color  = this ._color .getValue ();
+         this .length = this ._color .length;
       },
       addColor: function (index, array)
       {
@@ -71088,7 +71994,7 @@ function (Fields,
       },
       getVectors: function (array)
       {
-         const color = this .color_;
+         const color = this ._color;
 
          for (var i = 0, length = color .length; i < length; ++ i)
          {
@@ -71182,14 +72088,14 @@ function (X3DGeometricPropertyNode,
       {
          X3DGeometricPropertyNode .prototype .initialize .call (this);
 
-         this .point_ .addInterest ("set_point__", this);
+         this ._point .addInterest ("set_point__", this);
 
          this .set_point__ ();
       },
       set_point__: function ()
       {
-         this .point  = this .point_ .getValue ();
-         this .length = this .point_ .length;
+         this .point  = this ._point .getValue ();
+         this .length = this ._point .length;
       },
       isEmpty: function ()
       {
@@ -71201,7 +72107,7 @@ function (X3DGeometricPropertyNode,
       },
       set1Point: function (index, point)
       {
-         this .point_ [index] = point;
+         this ._point [index] = point;
       },
       get1Point: function (index, result)
       {
@@ -71368,7 +72274,7 @@ function (Fields,
 
       this .addType (X3DConstants .Coordinate);
 
-      this .point_ .setUnit ("length");
+      this ._point .setUnit ("length");
    }
 
    Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
@@ -71474,12 +72380,12 @@ function (Fields,
             bboxColor      = new Color (this .getPrivateScene ()),
             bboxCoordinate = new Coordinate (this .getPrivateScene ());
 
-         bboxNode .geometry_       = bboxGeometry;
-         bboxGeometry .coordIndex_ = new Fields .MFFloat (0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 1, 5, -1, 2, 6, -1, 3, 7, -1);
-         bboxGeometry .color_      = bboxColor;
-         bboxGeometry .coord_      = bboxCoordinate;
-         bboxColor .color_         = new Fields .MFColor (new Fields .SFColor (1, 1, 1));
-         bboxCoordinate .point_    = new Fields .MFVec3f (new Fields .SFVec3f (0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, -0.5, -0.5), new Fields .SFVec3f (0.5, -0.5, -0.5));
+         bboxNode ._geometry       = bboxGeometry;
+         bboxGeometry ._coordIndex = new Fields .MFFloat (0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 1, 5, -1, 2, 6, -1, 3, 7, -1);
+         bboxGeometry ._color      = bboxColor;
+         bboxGeometry ._coord      = bboxCoordinate;
+         bboxColor ._color         = new Fields .MFColor (new Fields .SFColor (1, 1, 1));
+         bboxCoordinate ._point    = new Fields .MFVec3f (new Fields .SFVec3f (0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, -0.5, -0.5), new Fields .SFVec3f (0.5, -0.5, -0.5));
 
          bboxCoordinate .setup ();
          bboxColor      .setup ();
@@ -71581,12 +72487,12 @@ function (X3DGeometryNode,
       {
          X3DGeometryNode .prototype .initialize .call (this);
 
-         this .attrib_   .addInterest ("set_attrib__",   this);
-         this .fogCoord_ .addInterest ("set_fogCoord__", this);
-         this .color_    .addInterest ("set_color__",    this);
-         this .texCoord_ .addInterest ("set_texCoord__", this);
-         this .normal_   .addInterest ("set_normal__",   this);
-         this .coord_    .addInterest ("set_coord__",    this);
+         this ._attrib   .addInterest ("set_attrib__",   this);
+         this ._fogCoord .addInterest ("set_fogCoord__", this);
+         this ._color    .addInterest ("set_color__",    this);
+         this ._texCoord .addInterest ("set_texCoord__", this);
+         this ._normal   .addInterest ("set_normal__",   this);
+         this ._coord    .addInterest ("set_coord__",    this);
 
          this .set_attrib__ ();
          this .set_fogCoord__ ();
@@ -71624,9 +72530,9 @@ function (X3DGeometryNode,
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
          {
-            var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+            var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
 
             if (attribNode)
                attribNodes .push (attribNode);
@@ -71640,7 +72546,7 @@ function (X3DGeometryNode,
          if (this .fogCoordNode)
             this .fogCoordNode .removeInterest ("requestRebuild", this);
 
-         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
+         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
 
          if (this .fogCoordNode)
             this .fogCoordNode .addInterest ("requestRebuild", this);
@@ -71650,15 +72556,15 @@ function (X3DGeometryNode,
          if (this .colorNode)
          {
             this .colorNode .removeInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .colorNode ._transparent .removeInterest ("set_transparent__", this);
          }
 
-         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
+         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
          if (this .colorNode)
          {
             this .colorNode .addInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .addInterest ("set_transparent__", this);
+            this .colorNode ._transparent .addInterest ("set_transparent__", this);
 
             this .set_transparent__ ();
          }
@@ -71674,7 +72580,7 @@ function (X3DGeometryNode,
          if (this .texCoordNode)
             this .texCoordNode .removeInterest ("requestRebuild", this);
 
-         this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
+         this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
 
          if (this .texCoordNode)
             this .texCoordNode .addInterest ("requestRebuild", this);
@@ -71686,7 +72592,7 @@ function (X3DGeometryNode,
          if (this .normalNode)
             this .normalNode .removeInterest ("requestRebuild", this);
 
-         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this .normal_);
+         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
 
          if (this .normalNode)
             this .normalNode .addInterest ("requestRebuild", this);
@@ -71696,7 +72602,7 @@ function (X3DGeometryNode,
          if (this .coordNode)
             this .coordNode .removeInterest ("requestRebuild", this);
 
-         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
+         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._coord);
 
          if (this .coordNode)
             this .coordNode .addInterest ("requestRebuild", this);
@@ -71720,8 +72626,8 @@ function (X3DGeometryNode,
          trianglesSize -= trianglesSize % verticesPerFace;
 
          const
-            colorPerVertex     = this .colorPerVertex_ .getValue (),
-            normalPerVertex    = this .normalPerVertex_ .getValue (),
+            colorPerVertex     = this ._colorPerVertex .getValue (),
+            normalPerVertex    = this ._normalPerVertex .getValue (),
             attribNodes        = this .getAttrib (),
             numAttrib          = attribNodes .length,
             attribs            = this .getAttribs (),
@@ -71783,8 +72689,8 @@ function (X3DGeometryNode,
          if (! this .getNormal ())
             this .buildNormals (verticesPerPolygon, polygonsSize, trianglesSize);
 
-         this .setSolid (this .solid_ .getValue ());
-         this .setCCW (this .ccw_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
+         this .setCCW (this ._ccw .getValue ());
       },
       buildNormals: function (verticesPerPolygon, polygonsSize, trianglesSize)
       {
@@ -71803,7 +72709,7 @@ function (X3DGeometryNode,
       {
          const normals = this .createFaceNormals (verticesPerPolygon, polygonsSize);
 
-         if (this .normalPerVertex_ .getValue ())
+         if (this ._normalPerVertex .getValue ())
          {
             const normalIndex = [ ];
 
@@ -71827,7 +72733,7 @@ function (X3DGeometryNode,
       createFaceNormals: function (verticesPerPolygon, polygonsSize)
       {
          const
-            cw      = ! this .ccw_ .getValue (),
+            cw      = ! this ._ccw .getValue (),
             coord   = this .coordNode,
             normals = [ ];
 
@@ -71956,7 +72862,7 @@ function (Fields,
 
       this .addType (X3DConstants .IndexedFaceSet);
 
-      this .creaseAngle_ .setUnit ("angle");
+      this ._creaseAngle .setUnit ("angle");
    }
 
    IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
@@ -72001,43 +72907,43 @@ function (Fields,
       {
          X3DComposedGeometryNode .prototype .initialize .call (this);
 
-         this .set_colorIndex_    .addFieldInterest (this .colorIndex_);
-         this .set_texCoordIndex_ .addFieldInterest (this .texCoordIndex_);
-         this .set_normalIndex_   .addFieldInterest (this .normalIndex_);
-         this .set_coordIndex_    .addFieldInterest (this .coordIndex_);
+         this ._set_colorIndex    .addFieldInterest (this ._colorIndex);
+         this ._set_texCoordIndex .addFieldInterest (this ._texCoordIndex);
+         this ._set_normalIndex   .addFieldInterest (this ._normalIndex);
+         this ._set_coordIndex    .addFieldInterest (this ._coordIndex);
       },
       getTexCoordPerVertexIndex: function (index)
       {
-         if (index < this .texCoordIndex_ .length)
-            return this .texCoordIndex_ [index];
+         if (index < this ._texCoordIndex .length)
+            return this ._texCoordIndex [index];
 
-         return this .coordIndex_ [index];
+         return this ._coordIndex [index];
       },
       getColorPerVertexIndex: function (index)
       {
-         if (index < this .colorIndex_ .length)
-            return this .colorIndex_ [index];
+         if (index < this ._colorIndex .length)
+            return this ._colorIndex [index];
 
-         return this .coordIndex_ [index];
+         return this ._coordIndex [index];
       },
       getColorIndex: function (index)
       {
-         if (index < this .colorIndex_ .length)
-            return this .colorIndex_ [index];
+         if (index < this ._colorIndex .length)
+            return this ._colorIndex [index];
 
          return index;
       },
       getNormalPerVertexIndex: function (index)
       {
-         if (index < this .normalIndex_ .length)
-            return this .normalIndex_ [index];
+         if (index < this ._normalIndex .length)
+            return this ._normalIndex [index];
 
-         return this .coordIndex_ [index];
+         return this ._coordIndex [index];
       },
       getNormalIndex: function (index)
       {
-         if (index < this .normalIndex_ .length)
-            return this .normalIndex_ [index];
+         if (index < this ._normalIndex .length)
+            return this ._normalIndex [index];
 
          return index;
       },
@@ -72055,9 +72961,9 @@ function (Fields,
          // Fill GeometryNode
 
          var
-            colorPerVertex     = this .colorPerVertex_ .getValue (),
-            normalPerVertex    = this .normalPerVertex_ .getValue (),
-            coordIndex         = this .coordIndex_ .getValue (),
+            colorPerVertex     = this ._colorPerVertex .getValue (),
+            normalPerVertex    = this ._normalPerVertex .getValue (),
+            coordIndex         = this ._coordIndex .getValue (),
             attribNodes        = this .getAttrib (),
             numAttrib          = attribNodes .length,
             attribs            = this .getAttribs (),
@@ -72125,14 +73031,14 @@ function (Fields,
          if (! this .getNormal ())
             this .buildNormals (polygons);
 
-         this .setSolid (this .solid_ .getValue ());
-         this .setCCW (this .ccw_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
+         this .setCCW (this ._ccw .getValue ());
       },
       triangulate: function ()
       {
          var
-            convex      = this .convex_ .getValue (),
-            coordLength = this .coordIndex_ .length,
+            convex      = this ._convex .getValue (),
+            coordLength = this ._coordIndex .length,
             polygons    = [ ];
 
          if (! this .getCoord ())
@@ -72141,12 +73047,12 @@ function (Fields,
          if (coordLength)
          {
             // Add -1 (polygon end marker) to coordIndex if not present.
-            if (this .coordIndex_ [coordLength - 1] > -1)
-               this .coordIndex_ .push (-1);
+            if (this ._coordIndex [coordLength - 1] > -1)
+               this ._coordIndex .push (-1);
 
             var
-               coordIndex  = this .coordIndex_ .getValue (),
-               coordLength = this .coordIndex_ .length;
+               coordIndex  = this ._coordIndex .getValue (),
+               coordLength = this ._coordIndex .length;
 
             // Construct triangle array and determine the number of used points.
             var
@@ -72229,7 +73135,7 @@ function (Fields,
          return function (vertices, triangles)
          {
             var
-               coordIndex = this .coordIndex_ .getValue (),
+               coordIndex = this ._coordIndex .getValue (),
                coord      = this .getCoord ();
 
             for (var v = 0, length = vertices .length; v < length; ++ v)
@@ -72287,8 +73193,8 @@ function (Fields,
          return function (polygons)
          {
             var
-               cw          = ! this .ccw_ .getValue (),
-               coordIndex  = this .coordIndex_ .getValue (),
+               cw          = ! this ._ccw .getValue (),
+               coordIndex  = this ._coordIndex .getValue (),
                coord       = this .getCoord (),
                normal      = null;
 
@@ -72350,7 +73256,7 @@ function (Fields,
                   normals [vertices [i]] = normal;
             }
 
-            return this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
+            return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
          };
       })(),
       getPolygonNormal: (function ()
@@ -72655,14 +73561,14 @@ function (Fields,
       {
          X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
-         this .point_ .addInterest ("set_point__", this);
+         this ._point .addInterest ("set_point__", this);
 
          this .set_point__ ();
       },
       set_point__: function ()
       {
-         this .point  = this .point_ .getValue ();
-         this .length = this .point_ .length;
+         this .point  = this ._point .getValue ();
+         this .length = this ._point .length;
       },
       isEmpty: function ()
       {
@@ -72830,15 +73736,15 @@ function (Fields,
             return this .geometry;
 
          this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
-         this .geometry .texCoord_ = new TextureCoordinate (this .getExecutionContext ());
-         this .geometry .coord_    = new Coordinate (this .getExecutionContext ());
+         this .geometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
+         this .geometry ._coord    = new Coordinate (this .getExecutionContext ());
 
          const
             geometry = this .geometry,
-            texCoord = this .geometry .texCoord_ .getValue (),
-            coord    = this .geometry .coord_ .getValue ();
+            texCoord = this .geometry ._texCoord .getValue (),
+            coord    = this .geometry ._coord .getValue ();
 
-         geometry .texCoordIndex_ = new Fields .MFInt32 (
+         geometry ._texCoordIndex = new Fields .MFInt32 (
             0, 1, 2, 3, -1, // front
             0, 1, 2, 3, -1, // back
             0, 1, 2, 3, -1, // left
@@ -72847,7 +73753,7 @@ function (Fields,
             0, 1, 2, 3, -1  // bottom
          );
 
-         geometry .coordIndex_ = new Fields .MFInt32 (
+         geometry ._coordIndex = new Fields .MFInt32 (
             0, 1, 2, 3, -1, // front
             5, 4, 7, 6, -1, // back
             1, 5, 6, 2, -1, // left
@@ -72856,11 +73762,11 @@ function (Fields,
             3, 2, 6, 7, -1  // bottom
          );
 
-         texCoord .point_ = new Fields .MFVec2f (
+         texCoord ._point = new Fields .MFVec2f (
             new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0)
          );
 
-         coord .point_ = new Fields .MFVec3f (
+         coord ._point = new Fields .MFVec3f (
             new Fields .SFVec3f ( 1,  1,  1), new Fields .SFVec3f (-1,  1,  1), new Fields .SFVec3f (-1, -1,  1), new Fields .SFVec3f ( 1, -1,  1),
             new Fields .SFVec3f ( 1,  1, -1), new Fields .SFVec3f (-1,  1, -1), new Fields .SFVec3f (-1, -1, -1), new Fields .SFVec3f ( 1, -1, -1)
          );
@@ -73157,9 +74063,9 @@ function (Fields,
       createTexCoordIndex: function ()
       {
          const
-            xDimension    = this .xDimension_ .getValue () + 1,
-            yDimension    = this .yDimension_ .getValue (),
-            texCoordIndex = this .geometry .texCoordIndex_;
+            xDimension    = this ._xDimension .getValue () + 1,
+            yDimension    = this ._yDimension .getValue (),
+            texCoordIndex = this .geometry ._texCoordIndex;
 
          // North pole
 
@@ -73200,9 +74106,9 @@ function (Fields,
       createTexCoord: function ()
       {
          const
-            xDimension = this .xDimension_ .getValue () + 1,
-            yDimension = this .yDimension_ .getValue (),
-            point      = this .geometry .texCoord_ .getValue () .point_;
+            xDimension = this ._xDimension .getValue () + 1,
+            yDimension = this ._yDimension .getValue (),
+            point      = this .geometry ._texCoord .getValue () ._point;
 
          const poleOffset = -0.5 / (xDimension - 1);
 
@@ -73241,9 +74147,9 @@ function (Fields,
       createCoordIndex: function ()
       {
          const
-            xDimension = this .xDimension_ .getValue () + 1,
-            yDimension = this .yDimension_ .getValue (),
-            coordIndex = this .geometry .coordIndex_;
+            xDimension = this ._xDimension .getValue () + 1,
+            yDimension = this ._yDimension .getValue (),
+            coordIndex = this .geometry ._coordIndex;
 
          // North pole
 
@@ -73304,9 +74210,9 @@ function (Fields,
       createPoints: function ()
       {
          const
-            xDimension = this .xDimension_ .getValue () + 1,
-            yDimension = this .yDimension_ .getValue (),
-            point      = this .geometry .coord_ .getValue () .point_;
+            xDimension = this ._xDimension .getValue () + 1,
+            yDimension = this ._yDimension .getValue (),
+            point      = this .geometry ._coord .getValue () ._point;
 
          // North pole
          point .push (new Vector3 (0, 1, 0));
@@ -73330,8 +74236,8 @@ function (Fields,
       eventsProcessed: function ()
       {
          this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
-         this .geometry .texCoord_ = new TextureCoordinate (this .getExecutionContext ());
-         this .geometry .coord_    = new Coordinate (this .getExecutionContext ());
+         this .geometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
+         this .geometry ._coord    = new Coordinate (this .getExecutionContext ());
 
          this .createTexCoordIndex ();
          this .createTexCoord ();
@@ -73340,10 +74246,10 @@ function (Fields,
 
          const
             geometry = this .geometry,
-            texCoord = this .geometry .texCoord_ .getValue (),
-            coord    = this .geometry .coord_ .getValue ();
+            texCoord = this .geometry ._texCoord .getValue (),
+            coord    = this .geometry ._coord .getValue ();
 
-         geometry .creaseAngle_ = Math .PI;
+         geometry ._creaseAngle = Math .PI;
 
          texCoord .setup ();
          coord    .setup ();
@@ -73855,7 +74761,7 @@ function (PointingDevice,
                break;
             default:
             {
-               if (this .loadCount_ .getValue ())
+               if (this ._loadCount .getValue ())
                   div .css ("cursor", "wait");
                else if (this [_pointingDevice] && this [_pointingDevice] .isOver)
                   div .css ("cursor", "pointer");
@@ -73966,7 +74872,7 @@ function (PointingDevice,
       { },
       touch: function (x, y)
       {
-         if (this .getViewer () .isActive_ .getValue ())
+         if (this .getViewer () ._isActive .getValue ())
          {
             this [_pointerTime] = 0;
             return;
@@ -74000,12 +74906,10 @@ function (PointingDevice,
          }
          else
          {
-            const hitRay = this [_selectedLayer] ? this [_hitRay] : line;
-
             var nearestHit = {
                pointer:         this [_pointer],
                modelViewMatrix: new Matrix4 (),
-               hitRay:          hitRay,
+               hitRay:          this [_selectedLayer] ? this [_hitRay] : line,
                intersection:    null,
                sensors:         new Map (),
                shape:           null,
@@ -74211,7 +75115,7 @@ function (X3DBaseNode,
 
          return (distance
             .assign (viewpoint .getPosition ())
-            .add (positionOffset || viewpoint .positionOffset_ .getValue ())
+            .add (positionOffset || viewpoint ._positionOffset .getValue ())
             .subtract (viewpoint .getUserCenterOfRotation ()));
       },
       trackballProjectToSphere: function (x, y, vector)
@@ -74364,23 +75268,23 @@ function (X3DChildNode,
       },
       getValue: function ()
       {
-         return this .set_value_ .getValue ();
+         return this ._set_value .getValue ();
       },
       getDestination: function ()
       {
-         return this .set_destination_ .getValue ();
+         return this ._set_destination .getValue ();
       },
       getInitialValue: function ()
       {
-         return this .initialValue_ .getValue ();
+         return this ._initialValue .getValue ();
       },
       getInitialDestination: function ()
       {
-         return this .initialDestination_ .getValue ();
+         return this ._initialDestination .getValue ();
       },
       setValue: function (value)
       {
-         this .value_changed_ = value;
+         this ._value_changed = value;
       },
       setDestination: function (value)
       {
@@ -74404,7 +75308,7 @@ function (X3DChildNode,
       },
       set_live__: function ()
       {
-         if ((this .isLive () .getValue () || this .getPrivate ()) && this .isActive_ .getValue ())
+         if ((this .isLive () .getValue () || this .getPrivate ()) && this ._isActive .getValue ())
          {
             this .getBrowser () .prepareEvents () .addInterest ("prepareEvents", this);
             this .getBrowser () .addBrowserEvent ();
@@ -74414,9 +75318,9 @@ function (X3DChildNode,
       },
       set_active: function (value)
       {
-         if (value !== this .isActive_ .getValue ())
+         if (value !== this ._isActive .getValue ())
          {
-            this .isActive_ = value;
+            this ._isActive = value;
 
             this .set_live__ ();
          }
@@ -74506,9 +75410,9 @@ function (X3DFollowerNode,
       {
          X3DFollowerNode .prototype .initialize .call (this);
 
-         this .set_value_       .addInterest ("set_value__",       this);
-         this .set_destination_ .addInterest ("set_destination__", this);
-         this .duration_        .addInterest ("set_duration__",    this);
+         this ._set_value       .addInterest ("set_value__",       this);
+         this ._set_destination .addInterest ("set_destination__", this);
+         this ._duration        .addInterest ("set_duration__",    this);
 
          this .set_duration__ ();
 
@@ -74559,7 +75463,7 @@ function (X3DFollowerNode,
          if (t <= 0)
             return 0;
 
-         var duration = this .duration_ .getValue ();
+         var duration = this ._duration .getValue ();
 
          if (t >= duration)
             return 1;
@@ -74568,7 +75472,7 @@ function (X3DFollowerNode,
       },
       set_value__: function ()
       {
-         if (! this .isActive_ .getValue ())
+         if (! this ._isActive .getValue ())
             this .bufferEndTime = this .getBrowser () .getCurrentTime ();
 
          var
@@ -74587,14 +75491,14 @@ function (X3DFollowerNode,
       {
          this .setDestination (this .getDestination ());
 
-         if (! this .isActive_ .getValue ())
+         if (! this ._isActive .getValue ())
             this .bufferEndTime = this .getBrowser () .getCurrentTime ();
 
          this .set_active (true);
       },
       set_duration__: function ()
       {
-         this .stepTime = this .duration_ .getValue () / this .getNumBuffers ();
+         this .stepTime = this ._duration .getValue () / this .getNumBuffers ();
       },
       prepareEvents: function ()
       {
@@ -74861,11 +75765,11 @@ function (Fields,
 
       this .addType (X3DConstants .OrientationChaser);
 
-      this .set_value_          .setUnit ("angle");
-      this .set_destination_    .setUnit ("angle");
-      this .initialValue_       .setUnit ("angle");
-      this .initialDestination_ .setUnit ("angle");
-      this .value_changed_      .setUnit ("angle");
+      this ._set_value          .setUnit ("angle");
+      this ._set_destination    .setUnit ("angle");
+      this ._initialValue       .setUnit ("angle");
+      this ._initialDestination .setUnit ("angle");
+      this ._value_changed      .setUnit ("angle");
    }
 
    OrientationChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
@@ -75274,8 +76178,8 @@ function ($,
 
          // Disconnect from spin.
 
-         this .getNavigationInfo () .transitionStart_ .addInterest ("disconnect", this);
-         browser .activeViewpoint_ .addInterest ("set_activeViewpoint__", this);
+         this .getNavigationInfo () ._transitionStart .addInterest ("disconnect", this);
+         browser ._activeViewpoint .addInterest ("set_activeViewpoint__", this);
 
          // Bind pointing device events.
 
@@ -75289,15 +76193,15 @@ function ($,
 
          // Setup scroll chaser.
 
-         this .positionChaser .duration_ = MOVE_TIME;
+         this .positionChaser ._duration = MOVE_TIME;
          this .positionChaser .setPrivate (true);
          this .positionChaser .setup ();
 
-         this .centerOfRotationChaser .duration_ = MOVE_TIME;
+         this .centerOfRotationChaser ._duration = MOVE_TIME;
          this .centerOfRotationChaser .setPrivate (true);
          this .centerOfRotationChaser .setup ();
 
-         this .rotationChaser .duration_ = ROTATE_TIME;
+         this .rotationChaser ._duration = ROTATE_TIME;
          this .rotationChaser .setPrivate (true);
          this .rotationChaser .setup ();
 
@@ -75310,7 +76214,7 @@ function ($,
             var viewpoint = this .getActiveViewpoint ();
 
             if (viewpoint)
-               viewpoint .orientationOffset_ = this .getOrientationOffset (Rotation4 .Identity, viewpoint .orientationOffset_ .getValue (), false);
+               viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .Identity, viewpoint ._orientationOffset .getValue (), false);
          }
 
          this .disconnect ();
@@ -75356,7 +76260,7 @@ function ($,
 
                this .motionTime = 0;
 
-               this .isActive_ = true;
+               this ._isActive = true;
                break;
             }
             case 1:
@@ -75380,7 +76284,7 @@ function ($,
 
                this .getPointOnCenterPlane (x, y, this .fromPoint);
 
-               this .isActive_ = true;
+               this ._isActive = true;
                break;
             }
          }
@@ -75416,7 +76320,7 @@ function ($,
                   this .addSpinning (this .rotation);
                }
 
-               this .isActive_ = false;
+               this ._isActive = false;
                break;
             }
             case 1:
@@ -75429,7 +76333,7 @@ function ($,
 
                this .getBrowser () .setCursor ("DEFAULT");
 
-               this .isActive_ = false;
+               this ._isActive = false;
                break;
             }
          }
@@ -75706,29 +76610,29 @@ function ($,
       {
          var viewpoint = this .getActiveViewpoint ();
 
-         this .orientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
+         this .orientationOffset .assign (viewpoint ._orientationOffset .getValue ());
 
-         viewpoint .orientationOffset_ = this .getOrientationOffset (this .rotation, this .orientationOffset);
-         viewpoint .positionOffset_    = this .getPositionOffset (viewpoint .positionOffset_ .getValue (), this .orientationOffset, viewpoint .orientationOffset_ .getValue ());
+         viewpoint ._orientationOffset = this .getOrientationOffset (this .rotation, this .orientationOffset);
+         viewpoint ._positionOffset    = this .getPositionOffset (viewpoint ._positionOffset .getValue (), this .orientationOffset, viewpoint ._orientationOffset .getValue ());
       },
       set_positionOffset__: function (value)
       {
          var viewpoint = this .getActiveViewpoint ();
 
-         viewpoint .positionOffset_ = value;
+         viewpoint ._positionOffset = value;
       },
       set_centerOfRotationOffset__: function (value)
       {
          var viewpoint = this .getActiveViewpoint ();
 
-         viewpoint .centerOfRotationOffset_ = value;
+         viewpoint ._centerOfRotationOffset = value;
       },
       set_rotation__: function (value)
       {
          var viewpoint = this .getActiveViewpoint ();
 
-         viewpoint .orientationOffset_ = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset, false);
-         viewpoint .positionOffset_    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint .orientationOffset_ .getValue ());
+         viewpoint ._orientationOffset = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset, false);
+         viewpoint ._positionOffset    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint ._orientationOffset .getValue ());
       },
       addRotate: (function ()
       {
@@ -75738,17 +76642,17 @@ function ($,
          {
             var viewpoint = this .getActiveViewpoint ();
 
-            if (this .rotationChaser .isActive_ .getValue () && this .rotationChaser .value_changed_ .hasInterest ("set_rotation__", this))
+            if (this .rotationChaser ._isActive .getValue () && this .rotationChaser ._value_changed .hasInterest ("set_rotation__", this))
             {
                try
                {
-                  destination .assign (this .rotationChaser .set_destination_ .getValue ())
+                  destination .assign (this .rotationChaser ._set_destination .getValue ())
                      .multLeft (rotationChange);
 
                   // Check for critical angle.
                   this .getOrientationOffset (destination, this .initialOrientationOffset, true);
 
-                  this .rotationChaser .set_destination_ = destination;
+                  this .rotationChaser ._set_destination = destination;
                }
                catch (error)
                {
@@ -75756,36 +76660,36 @@ function ($,
 
                   rotationChange = this .getHorizonRotation (rotationChange);
 
-                  destination .assign (this .rotationChaser .set_destination_ .getValue ())
+                  destination .assign (this .rotationChaser ._set_destination .getValue ())
                      .multLeft (rotationChange);
 
-                  this .rotationChaser .set_destination_ = destination;
+                  this .rotationChaser ._set_destination = destination;
                }
             }
             else
             {
                try
                {
-                  this .initialOrientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
-                  this .initialPositionOffset    .assign (viewpoint .positionOffset_    .getValue ());
+                  this .initialOrientationOffset .assign (viewpoint ._orientationOffset .getValue ());
+                  this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
 
                   // Check for critical angle.
                   this .getOrientationOffset (rotationChange, this .initialOrientationOffset, true);
 
-                  this .rotationChaser .set_value_       = Rotation4 .Identity;
-                  this .rotationChaser .set_destination_ = rotationChange;
+                  this .rotationChaser ._set_value       = Rotation4 .Identity;
+                  this .rotationChaser ._set_destination = rotationChange;
                }
                catch (error)
                {
                   // Slide along critical angle.
 
-                  this .rotationChaser .set_value_       = Rotation4 .Identity;
-                  this .rotationChaser .set_destination_ = this .getHorizonRotation (rotationChange);
+                  this .rotationChaser ._set_value       = Rotation4 .Identity;
+                  this .rotationChaser ._set_destination = this .getHorizonRotation (rotationChange);
                }
             }
 
             this .disconnect ();
-            this .rotationChaser .value_changed_ .addInterest ("set_rotation__", this);
+            this .rotationChaser ._value_changed .addInterest ("set_rotation__", this);
          };
       })(),
       addSpinning: (function ()
@@ -75817,45 +76721,45 @@ function ($,
          {
             var viewpoint = this .getActiveViewpoint ();
 
-            if (this .positionChaser .isActive_ .getValue () && this .positionChaser .value_changed_ .hasInterest ("set_positionOffset__", this))
+            if (this .positionChaser ._isActive .getValue () && this .positionChaser ._value_changed .hasInterest ("set_positionOffset__", this))
             {
                positionOffset
-                  .assign (this .positionChaser .set_destination_ .getValue ())
+                  .assign (this .positionChaser ._set_destination .getValue ())
                   .add (positionOffsetChange);
 
-               this .positionChaser .set_destination_ = positionOffset;
+               this .positionChaser ._set_destination = positionOffset;
             }
             else
             {
                positionOffset
-                  .assign (viewpoint .positionOffset_ .getValue ())
+                  .assign (viewpoint ._positionOffset .getValue ())
                   .add (positionOffsetChange);
 
-               this .positionChaser .set_value_       = viewpoint .positionOffset_;
-               this .positionChaser .set_destination_ = positionOffset;
+               this .positionChaser ._set_value       = viewpoint ._positionOffset;
+               this .positionChaser ._set_destination = positionOffset;
             }
 
-            if (this .centerOfRotationChaser .isActive_ .getValue () && this .centerOfRotationChaser .value_changed_ .hasInterest ("set_centerOfRotationOffset__", this))
+            if (this .centerOfRotationChaser ._isActive .getValue () && this .centerOfRotationChaser ._value_changed .hasInterest ("set_centerOfRotationOffset__", this))
             {
                centerOfRotationOffset
-                  .assign (this .centerOfRotationChaser .set_destination_ .getValue ())
+                  .assign (this .centerOfRotationChaser ._set_destination .getValue ())
                   .add (centerOfRotationOffsetChange);
 
-               this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
+               this .centerOfRotationChaser ._set_destination = centerOfRotationOffset;
             }
             else
             {
                centerOfRotationOffset
-                  .assign (viewpoint .centerOfRotationOffset_ .getValue ())
+                  .assign (viewpoint ._centerOfRotationOffset .getValue ())
                   .add (centerOfRotationOffsetChange);
 
-               this .centerOfRotationChaser .set_value_       = viewpoint .centerOfRotationOffset_;
-               this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
+               this .centerOfRotationChaser ._set_value       = viewpoint ._centerOfRotationOffset;
+               this .centerOfRotationChaser ._set_destination = centerOfRotationOffset;
             }
 
             this .disconnect ();
-            this .positionChaser         .value_changed_ .addInterest ("set_positionOffset__",         this);
-            this .centerOfRotationChaser .value_changed_ .addInterest ("set_centerOfRotationOffset__", this);
+            this .positionChaser         ._value_changed .addInterest ("set_positionOffset__",         this);
+            this .centerOfRotationChaser ._value_changed .addInterest ("set_centerOfRotationOffset__", this);
          };
       })(),
       getPositionOffset: (function ()
@@ -75942,9 +76846,9 @@ function ($,
       {
          var browser = this .getBrowser ();
 
-         this .positionChaser         .value_changed_ .removeInterest ("set_positionOffset__",         this)
-         this .centerOfRotationChaser .value_changed_ .removeInterest ("set_centerOfRotationOffset__", this)
-         this .rotationChaser         .value_changed_ .removeInterest ("set_rotation__",               this);
+         this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this);
+         this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this);
+         this .rotationChaser         ._value_changed .removeInterest ("set_rotation__",               this);
 
          browser .prepareEvents () .removeInterest ("spin", this);
       },
@@ -75953,7 +76857,7 @@ function ($,
          var browser = this .getBrowser ();
 
          this .disconnect ();
-         browser .activeViewpoint_ .removeInterest ("set_activeViewpoint__", this);
+         browser ._activeViewpoint .removeInterest ("set_activeViewpoint__", this);
          browser .getSurface () .unbind (".ExamineViewer");
          $(document) .unbind (".ExamineViewer" + this .getId ());
       },
@@ -76087,11 +76991,11 @@ function ($,
          element .bind ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
          element .bind ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
 
-         browser .controlKey_ .addInterest ("set_controlKey__", this);
+         browser ._controlKey .addInterest ("set_controlKey__", this);
 
          // Setup look around chaser.
 
-         this .orientationChaser .duration_ = ROTATE_TIME;
+         this .orientationChaser ._duration = ROTATE_TIME;
          this .orientationChaser .setPrivate (true);
          this .orientationChaser .setup ();
 
@@ -76175,7 +77079,7 @@ function ($,
                      this .getBrowser () .finished () .addInterest ("display", this, MOVE);
                }
 
-               this .isActive_ = true;
+               this ._isActive = true;
                break;
             }
             case 1:
@@ -76205,7 +77109,7 @@ function ($,
                if (this .getBrowser () .getBrowserOption ("Rubberband"))
                   this .getBrowser () .finished () .addInterest ("display", this, PAN);
 
-               this .isActive_ = true;
+               this ._isActive = true;
                break;
             }
          }
@@ -76226,7 +77130,7 @@ function ($,
          this .getBrowser () .setCursor ("DEFAULT");
          this .removeCollision ();
 
-         this .isActive_ = false;
+         this ._isActive = false;
       },
       mousemove: function (event)
       {
@@ -76423,7 +77327,7 @@ function ($,
 
             var speedFactor = 1 - rubberBandRotation .angle / (Math .PI / 2);
 
-            speedFactor *= navigationInfo .speed_ .getValue ();
+            speedFactor *= navigationInfo ._speed .getValue ();
             speedFactor *= viewpoint .getSpeedFactor ();
             speedFactor *= this .getBrowser () .getShiftKey () ? SHIFT_SPEED_FACTOR : SPEED_FACTOR;
             speedFactor *= dt;
@@ -76432,7 +77336,7 @@ function ($,
 
             this .getActiveLayer () .constrainTranslation (translation, true);
 
-            viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
+            viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
 
             // Determine weight for rubberBandRotation.
 
@@ -76459,13 +77363,13 @@ function ($,
 
             // Set orientationOffset.
 
-            viewpoint .orientationOffset_ = orientationOffset;
+            viewpoint ._orientationOffset = orientationOffset;
 
             // GeoRotation
 
             geoRotation .setFromToVec (upVector, viewpoint .getUpVector ());
 
-            viewpoint .orientationOffset_ = geoRotation .multLeft (viewpoint .orientationOffset_ .getValue ());
+            viewpoint ._orientationOffset = geoRotation .multLeft (viewpoint ._orientationOffset .getValue ());
 
             this .startTime = now;
          };
@@ -76489,7 +77393,7 @@ function ($,
 
             var speedFactor = 1;
 
-            speedFactor *= navigationInfo .speed_ .getValue ();
+            speedFactor *= navigationInfo ._speed .getValue ();
             speedFactor *= viewpoint .getSpeedFactor ();
             speedFactor *= this .getBrowser () .getShiftKey () ? PAN_SHIFT_SPEED_FACTOR : PAN_SPEED_FACTOR;
             speedFactor *= dt;
@@ -76500,7 +77404,7 @@ function ($,
 
             this .getActiveLayer () .constrainTranslation (translation, true);
 
-            viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
+            viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
 
             this .startTime = now;
          };
@@ -76509,7 +77413,7 @@ function ($,
       {
          var viewpoint = this .getActiveViewpoint ();
 
-         viewpoint .orientationOffset_ = value;
+         viewpoint ._orientationOffset = value;
       },
       addFly: function ()
       {
@@ -76542,16 +77446,16 @@ function ($,
          {
             var viewpoint = this .getActiveViewpoint ();
 
-            if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
+            if (this .orientationChaser ._isActive .getValue () && this .orientationChaser ._value_changed .hasInterest ("set_orientationOffset__", this))
             {
                orientationOffset
                   .assign (viewpoint .getOrientation ())
                   .inverse ()
                   .multRight (roll .set (1, 0, 0, rollAngle))
                   .multRight (viewpoint .getOrientation ())
-                  .multRight (this .orientationChaser .set_destination_ .getValue ());
+                  .multRight (this .orientationChaser ._set_destination .getValue ());
 
-               this .orientationChaser .set_destination_ = orientationOffset;
+               this .orientationChaser ._set_destination = orientationOffset;
             }
             else
             {
@@ -76561,12 +77465,12 @@ function ($,
                   .multRight (roll .set (1, 0, 0, rollAngle))
                   .multRight (viewpoint .getUserOrientation ());
 
-               this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
-               this .orientationChaser .set_destination_ = orientationOffset;
+               this .orientationChaser ._set_value       = viewpoint ._orientationOffset;
+               this .orientationChaser ._set_destination = orientationOffset;
             }
 
             this .disconnect ();
-            this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
+            this .orientationChaser ._value_changed .addInterest ("set_orientationOffset__", this);
          };
       })(),
       addRotation: (function ()
@@ -76579,19 +77483,19 @@ function ($,
          {
             var viewpoint = this .getActiveViewpoint ();
 
-            if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
+            if (this .orientationChaser ._isActive .getValue () && this .orientationChaser ._value_changed .hasInterest ("set_orientationOffset__", this))
             {
                userOrientation
                   .setFromToVec (toVector, fromVector)
                   .multRight (viewpoint .getOrientation ())
-                  .multRight (this .orientationChaser .set_destination_ .getValue ());
+                  .multRight (this .orientationChaser ._set_destination .getValue ());
 
                if (viewpoint .getTypeName () !== "GeoViewpoint" && this .getStraightenHorizon ())
                   viewpoint .straightenHorizon (userOrientation);
 
                orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
 
-               this .orientationChaser .set_destination_ = orientationOffset;
+               this .orientationChaser ._set_destination = orientationOffset;
             }
             else
             {
@@ -76604,12 +77508,12 @@ function ($,
 
                orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
 
-               this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
-               this .orientationChaser .set_destination_ = orientationOffset;
+               this .orientationChaser ._set_value       = viewpoint ._orientationOffset;
+               this .orientationChaser ._set_destination = orientationOffset;
             }
 
             this .disconnect ();
-            this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
+            this .orientationChaser ._value_changed .addInterest ("set_orientationOffset__", this);
          };
       })(),
       display: (function ()
@@ -76721,14 +77625,14 @@ function ($,
          browser .prepareEvents () .removeInterest ("pan", this);
          browser .finished ()      .removeInterest ("display", this);
 
-         this .orientationChaser .value_changed_ .removeInterest ("set_orientationOffset__", this);
+         this .orientationChaser ._value_changed .removeInterest ("set_orientationOffset__", this);
 
          this .startTime = 0;
       },
       dispose: function ()
       {
          this .disconnect ();
-         this .getBrowser () .controlKey_ .removeInterest ("set_controlKey__", this);
+         this .getBrowser () ._controlKey .removeInterest ("set_controlKey__", this);
          this .getBrowser () .getSurface () .unbind (".X3DFlyViewer");
          $(document) .unbind (".X3DFlyViewer" + this .getId ());
       },
@@ -77115,7 +78019,7 @@ function ($,
 
                this .getPointOnCenterPlane (x, y, this .fromPoint);
 
-               this .isActive_ = true;
+               this ._isActive = true;
                break;
             }
          }
@@ -77137,7 +78041,7 @@ function ($,
 
          this .getBrowser () .setCursor ("DEFAULT");
 
-         this .isActive_ = false;
+         this ._isActive = false;
       },
       mousemove: function (event)
       {
@@ -77162,8 +78066,8 @@ function ($,
                   toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
                   translation = viewpoint .getUserOrientation () .multVecRot (this .fromPoint .subtract (toPoint));
 
-               viewpoint .positionOffset_         = positionOffset         .assign (viewpoint .positionOffset_         .getValue ()) .add (translation);
-               viewpoint .centerOfRotationOffset_ = centerOfRotationOffset .assign (viewpoint .centerOfRotationOffset_ .getValue ()) .add (translation);
+               viewpoint ._positionOffset         = positionOffset         .assign (viewpoint ._positionOffset         .getValue ()) .add (translation);
+               viewpoint ._centerOfRotationOffset = centerOfRotationOffset .assign (viewpoint ._centerOfRotationOffset .getValue ()) .add (translation);
 
                this .fromPoint .assign (toPoint);
                break;
@@ -77192,11 +78096,11 @@ function ($,
 
          if (event .deltaY > 0) // Move backwards.
          {
-            viewpoint .fieldOfViewScale_ = Math .max (0.00001, viewpoint .fieldOfViewScale_ .getValue () * (1 - SCROLL_FACTOR));
+            viewpoint ._fieldOfViewScale = Math .max (0.00001, viewpoint ._fieldOfViewScale .getValue () * (1 - SCROLL_FACTOR));
          }
          else if (event .deltaY < 0) // Move forwards.
          {
-            viewpoint .fieldOfViewScale_ = viewpoint .fieldOfViewScale_ .getValue () * (1 + SCROLL_FACTOR);
+            viewpoint ._fieldOfViewScale = viewpoint ._fieldOfViewScale .getValue () * (1 + SCROLL_FACTOR);
 
             this .constrainFieldOfViewScale ();
          }
@@ -77208,8 +78112,8 @@ function ($,
             toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
             translation = viewpoint .getUserOrientation () .multVecRot (vector .assign (fromPoint) .subtract (toPoint));
 
-         viewpoint .positionOffset_         = positionOffset         .assign (viewpoint .positionOffset_         .getValue ()) .add (translation);
-         viewpoint .centerOfRotationOffset_ = centerOfRotationOffset .assign (viewpoint .centerOfRotationOffset_ .getValue ()) .add (translation);
+         viewpoint ._positionOffset         = positionOffset         .assign (viewpoint ._positionOffset         .getValue ()) .add (translation);
+         viewpoint ._centerOfRotationOffset = centerOfRotationOffset .assign (viewpoint ._centerOfRotationOffset .getValue ()) .add (translation);
       },
       constrainFieldOfViewScale: function ()
       {
@@ -77217,8 +78121,8 @@ function ($,
 
          if (viewpoint instanceof Viewpoint || viewpoint .getTypeName () === "GeoViewpoint")
          {
-            if (viewpoint .fieldOfView_ .getValue () * viewpoint .fieldOfViewScale_ .getValue () >= Math .PI)
-               viewpoint .fieldOfViewScale_ = (Math .PI - 0.001) / viewpoint .fieldOfView_ .getValue ();
+            if (viewpoint ._fieldOfView .getValue () * viewpoint ._fieldOfViewScale .getValue () >= Math .PI)
+               viewpoint ._fieldOfViewScale = (Math .PI - 0.001) / viewpoint ._fieldOfView .getValue ();
          }
       },
       dispose: function ()
@@ -77438,15 +78342,15 @@ function ($,
 
          // Setup chaser.
 
-         this .positionChaser .duration_ = MOVE_TIME;
+         this .positionChaser ._duration = MOVE_TIME;
          this .positionChaser .setPrivate (true);
          this .positionChaser .setup ();
 
-         this .centerOfRotationChaser .duration_ = MOVE_TIME;
+         this .centerOfRotationChaser ._duration = MOVE_TIME;
          this .centerOfRotationChaser .setPrivate (true);
          this .centerOfRotationChaser .setup ();
 
-         this .orientationChaser .duration_ = ROTATE_TIME;
+         this .orientationChaser ._duration = ROTATE_TIME;
          this .orientationChaser .setPrivate (true);
          this .orientationChaser .setup ();
       },
@@ -77485,7 +78389,7 @@ function ($,
 
                this .trackballProjectToSphere (x, y, this .fromVector);
 
-               this .isActive_ = true;
+               this ._isActive = true;
                break;
             }
          }
@@ -77508,7 +78412,7 @@ function ($,
                event .preventDefault ();
                event .stopImmediatePropagation ();
 
-               this .isActive_ = false;
+               this ._isActive = false;
                break;
             }
          }
@@ -77718,19 +78622,19 @@ function ($,
       {
          var viewpoint = this .getActiveViewpoint ();
 
-         viewpoint .positionOffset_ = value;
+         viewpoint ._positionOffset = value;
       },
       set_centerOfRotationOffset__: function (value)
       {
          var viewpoint = this .getActiveViewpoint ();
 
-         viewpoint .centerOfRotationOffset_ = value;
+         viewpoint ._centerOfRotationOffset = value;
       },
       set_orientationOffset__: function (value)
       {
          var viewpoint = this .getActiveViewpoint ();
 
-         viewpoint .orientationOffset_ = value;
+         viewpoint ._orientationOffset = value;
       },
       addMove: (function ()
       {
@@ -77742,45 +78646,45 @@ function ($,
          {
             var viewpoint = this .getActiveViewpoint ();
 
-            if (this .positionChaser .isActive_ .getValue () && this .positionChaser .value_changed_ .hasInterest ("set_positionOffset__", this))
+            if (this .positionChaser ._isActive .getValue () && this .positionChaser ._value_changed .hasInterest ("set_positionOffset__", this))
             {
                positionOffset
-                  .assign (this .positionChaser .set_destination_ .getValue ())
+                  .assign (this .positionChaser ._set_destination .getValue ())
                   .add (positionOffsetChange);
 
-               this .positionChaser .set_destination_ = positionOffset;
+               this .positionChaser ._set_destination = positionOffset;
             }
             else
             {
                positionOffset
-                  .assign (viewpoint .positionOffset_ .getValue ())
+                  .assign (viewpoint ._positionOffset .getValue ())
                   .add (positionOffsetChange);
 
-               this .positionChaser .set_value_       = viewpoint .positionOffset_;
-               this .positionChaser .set_destination_ = positionOffset;
+               this .positionChaser ._set_value       = viewpoint ._positionOffset;
+               this .positionChaser ._set_destination = positionOffset;
             }
 
-            if (this .centerOfRotationChaser .isActive_ .getValue () && this .centerOfRotationChaser .value_changed_ .hasInterest ("set_centerOfRotationOffset__", this))
+            if (this .centerOfRotationChaser ._isActive .getValue () && this .centerOfRotationChaser ._value_changed .hasInterest ("set_centerOfRotationOffset__", this))
             {
                centerOfRotationOffset
-                  .assign (this .centerOfRotationChaser .set_destination_ .getValue ())
+                  .assign (this .centerOfRotationChaser ._set_destination .getValue ())
                   .add (centerOfRotationOffsetChange);
 
-               this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
+               this .centerOfRotationChaser ._set_destination = centerOfRotationOffset;
             }
             else
             {
                centerOfRotationOffset
-                  .assign (viewpoint .centerOfRotationOffset_ .getValue ())
+                  .assign (viewpoint ._centerOfRotationOffset .getValue ())
                   .add (centerOfRotationOffsetChange);
 
-               this .centerOfRotationChaser .set_value_       = viewpoint .centerOfRotationOffset_;
-               this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
+               this .centerOfRotationChaser ._set_value       = viewpoint ._centerOfRotationOffset;
+               this .centerOfRotationChaser ._set_destination = centerOfRotationOffset;
             }
 
             this .disconnect ();
-            this .positionChaser         .value_changed_ .addInterest ("set_positionOffset__",         this);
-            this .centerOfRotationChaser .value_changed_ .addInterest ("set_centerOfRotationOffset__", this);
+            this .positionChaser         ._value_changed .addInterest ("set_positionOffset__",         this);
+            this .centerOfRotationChaser ._value_changed .addInterest ("set_centerOfRotationOffset__", this);
          };
       })(),
       addRotation: (function ()
@@ -77793,18 +78697,18 @@ function ($,
          {
             var viewpoint = this .getActiveViewpoint ();
 
-            if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
+            if (this .orientationChaser ._isActive .getValue () && this .orientationChaser ._value_changed .hasInterest ("set_orientationOffset__", this))
             {
                userOrientation
                   .setFromToVec (toVector, fromVector)
                   .multRight (viewpoint .getOrientation ())
-                  .multRight (this .orientationChaser .set_destination_ .getValue ());
+                  .multRight (this .orientationChaser ._set_destination .getValue ());
 
                viewpoint .straightenHorizon (userOrientation);
 
                orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
 
-               this .orientationChaser .set_destination_ = orientationOffset;
+               this .orientationChaser ._set_destination = orientationOffset;
             }
             else
             {
@@ -77816,19 +78720,19 @@ function ($,
 
                orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
 
-               this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
-               this .orientationChaser .set_destination_ = orientationOffset;
+               this .orientationChaser ._set_value       = viewpoint ._orientationOffset;
+               this .orientationChaser ._set_destination = orientationOffset;
             }
 
             this .disconnect ();
-            this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
+            this .orientationChaser ._value_changed .addInterest ("set_orientationOffset__", this);
          };
       })(),
       disconnect: function ()
       {
-         this .orientationChaser      .value_changed_ .removeInterest ("set_orientationOffset__", this);
-         this .positionChaser         .value_changed_ .removeInterest ("set_positionOffset__",         this)
-         this .centerOfRotationChaser .value_changed_ .removeInterest ("set_centerOfRotationOffset__", this)
+         this .orientationChaser      ._value_changed .removeInterest ("set_orientationOffset__", this);
+         this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this)
+         this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this)
       },
       dispose: function ()
       {
@@ -77916,14 +78820,14 @@ function (X3DChildNode,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .on_        .addInterest ("set_on__", this);
-         this .intensity_ .addInterest ("set_on__", this);
+         this ._on        .addInterest ("set_on__", this);
+         this ._intensity .addInterest ("set_on__", this);
 
          this .set_on__ ();
       },
       set_on__: function ()
       {
-         if (this .on_ .getValue () && this .getIntensity () > 0)
+         if (this ._on .getValue () && this .getIntensity () > 0)
          {
             delete this .push;
             delete this .pop;
@@ -77936,43 +78840,43 @@ function (X3DChildNode,
       },
       getGlobal: function ()
       {
-         return this .global_ .getValue ();
+         return this ._global .getValue ();
       },
       getColor: function ()
       {
-         return this .color_ .getValue ();
+         return this ._color .getValue ();
       },
       getIntensity: function ()
       {
-         return Math .max (this .intensity_ .getValue (), 0);
+         return Math .max (this ._intensity .getValue (), 0);
       },
       getAmbientIntensity: function ()
       {
-         return Algorithm .clamp (this .ambientIntensity_ .getValue (), 0, 1);
+         return Algorithm .clamp (this ._ambientIntensity .getValue (), 0, 1);
       },
       getDirection: function ()
       {
-         return this .direction_ .getValue ();
+         return this ._direction .getValue ();
       },
       getShadows: function ()
       {
-         return this .shadows_ .getValue ();
+         return this ._shadows .getValue ();
       },
       getShadowColor: function ()
       {
-         return this .shadowColor_ .getValue ();
+         return this ._shadowColor .getValue ();
       },
       getShadowIntensity: function ()
       {
-         return this .getShadows () ? Algorithm .clamp (this .shadowIntensity_ .getValue (), 0, 1) : 0;
+         return this .getShadows () ? Algorithm .clamp (this ._shadowIntensity .getValue (), 0, 1) : 0;
       },
       getShadowBias: function ()
       {
-         return Algorithm .clamp (this .shadowBias_ .getValue (), 0, 1);
+         return Algorithm .clamp (this ._shadowBias .getValue (), 0, 1);
       },
       getShadowMapSize: function ()
       {
-         return Math .min (this .shadowMapSize_ .getValue (), this .getBrowser () .getMaxTextureSize ());
+         return Math .min (this ._shadowMapSize .getValue (), this .getBrowser () .getMaxTextureSize ());
       },
       getBiasMatrix: (function ()
       {
@@ -77993,7 +78897,7 @@ function (X3DChildNode,
          {
             const lightContainer = this .getLights () .pop ();
 
-            if (this .global_ .getValue ())
+            if (this ._global .getValue ())
             {
                lightContainer .set (renderObject .getBrowser (),
                                     this,
@@ -78018,7 +78922,7 @@ function (X3DChildNode,
          {
             const lightContainer = renderObject .getLightContainer ();
 
-            if (this .global_ .getValue ())
+            if (this ._global .getValue ())
             {
                lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
 
@@ -78038,7 +78942,7 @@ function (X3DChildNode,
       },
       pop: function (renderObject)
       {
-         if (this .global_ .getValue ())
+         if (this ._global .getValue ())
             return;
 
          if (renderObject .isIndependent ())
@@ -78329,7 +79233,7 @@ function (Fields,
       this .addType (X3DConstants .DirectionalLight);
 
       if (executionContext .getSpecificationVersion () === "2.0")
-         this .global_ = true;
+         this ._global = true;
    }
 
    DirectionalLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
@@ -78479,7 +79383,7 @@ function (Fields,
    {
       initialize: function ()
       {
-         this .viewer_ .addInterest ("set_viewer__", this);
+         this ._viewer .addInterest ("set_viewer__", this);
 
          this .initialized () .addInterest ("set_world__",    this);
          this .shutdown ()    .addInterest ("remove_world__", this);
@@ -78493,19 +79397,19 @@ function (Fields,
       },
       getActiveLayer: function ()
       {
-         return this .activeLayer_ .getValue ();
+         return this ._activeLayer .getValue ();
       },
       getActiveNavigationInfo: function ()
       {
-         return this .activeNavigationInfo_ .getValue ();
+         return this ._activeNavigationInfo .getValue ();
       },
       getActiveViewpoint: function ()
       {
-         return this .activeViewpoint_ .getValue ();
+         return this ._activeViewpoint .getValue ();
       },
       getCurrentViewer: function ()
       {
-         return this .viewer_ .getValue ();
+         return this ._viewer .getValue ();
       },
       getViewer: function ()
       {
@@ -78525,28 +79429,28 @@ function (Fields,
       },
       remove_world__: function ()
       {
-         this .getWorld () .activeLayer_ .removeInterest ("set_activeLayer__", this);
+         this .getWorld () ._activeLayer .removeInterest ("set_activeLayer__", this);
       },
       set_world__: function ()
       {
-         this .getWorld () .activeLayer_ .addInterest ("set_activeLayer__", this);
+         this .getWorld () ._activeLayer .addInterest ("set_activeLayer__", this);
 
          this .set_activeLayer__ ();
       },
       set_activeLayer__: function ()
       {
-         if (this .activeLayer_ .getValue ())
+         if (this ._activeLayer .getValue ())
          {
-            this .activeLayer_ .getValue () .getNavigationInfoStack () .removeInterest ("set_activeNavigationInfo__", this);
-            this .activeLayer_ .getValue () .getViewpointStack ()      .removeInterest ("set_activeViewpoint__",      this);
+            this ._activeLayer .getValue () .getNavigationInfoStack () .removeInterest ("set_activeNavigationInfo__", this);
+            this ._activeLayer .getValue () .getViewpointStack ()      .removeInterest ("set_activeViewpoint__",      this);
          }
 
-         this .activeLayer_ = this .getWorld () .getActiveLayer ();
+         this ._activeLayer = this .getWorld () .getActiveLayer ();
 
-         if (this .activeLayer_ .getValue ())
+         if (this ._activeLayer .getValue ())
          {
-            this .activeLayer_ .getValue () .getNavigationInfoStack () .addInterest ("set_activeNavigationInfo__", this);
-            this .activeLayer_ .getValue () .getViewpointStack ()      .addInterest ("set_activeViewpoint__",      this);
+            this ._activeLayer .getValue () .getNavigationInfoStack () .addInterest ("set_activeNavigationInfo__", this);
+            this ._activeLayer .getValue () .getViewpointStack ()      .addInterest ("set_activeViewpoint__",      this);
          }
 
          this .set_activeNavigationInfo__ ();
@@ -78554,36 +79458,36 @@ function (Fields,
       },
       set_activeNavigationInfo__: function ()
       {
-         if (this .activeNavigationInfo_ .getValue ())
-            this .activeNavigationInfo_ .getValue () .viewer_ .removeFieldInterest (this .viewer_);
+         if (this ._activeNavigationInfo .getValue ())
+            this ._activeNavigationInfo .getValue () ._viewer .removeFieldInterest (this ._viewer);
 
-         if (this .activeLayer_ .getValue ())
+         if (this ._activeLayer .getValue ())
          {
-            this .activeNavigationInfo_ = this .activeLayer_ .getValue () .getNavigationInfo ();
+            this ._activeNavigationInfo = this ._activeLayer .getValue () .getNavigationInfo ();
 
-            this .activeNavigationInfo_ .getValue () .viewer_ .addFieldInterest (this .viewer_);
+            this ._activeNavigationInfo .getValue () ._viewer .addFieldInterest (this ._viewer);
 
-            this .viewer_ = this .activeNavigationInfo_ .getValue () .viewer_;
+            this ._viewer = this ._activeNavigationInfo .getValue () ._viewer;
          }
          else
          {
-            this .activeNavigationInfo_ = null;
-            this .viewer_               = "NONE";
+            this ._activeNavigationInfo = null;
+            this ._viewer               = "NONE";
          }
       },
       set_activeViewpoint__: function ()
       {
-         if (this .activeLayer_ .getValue ())
-            this .activeViewpoint_ = this .activeLayer_ .getValue () .getViewpoint ();
+         if (this ._activeLayer .getValue ())
+            this ._activeViewpoint = this ._activeLayer .getValue () .getViewpoint ();
          else
-            this .activeViewpoint_ = null;
+            this ._activeViewpoint = null;
       },
       set_viewer__: function (viewer)
       {
-         if (this .activeNavigationInfo_ .getValue ())
-            this .availableViewers_ = this .activeNavigationInfo_ .getValue () .availableViewers_;
+         if (this ._activeNavigationInfo .getValue ())
+            this ._availableViewers = this ._activeNavigationInfo .getValue () ._availableViewers;
          else
-            this .availableViewers_ .length = 0;
+            this ._availableViewers .length = 0;
 
          // Create viewer node.
 
@@ -78751,19 +79655,19 @@ function (Fields,
       },
       getLeft: function ()
       {
-         return this .clipBoundary_ .length > 0 ? this .clipBoundary_ [0] : 0;
+         return this ._clipBoundary .length > 0 ? this ._clipBoundary [0] : 0;
       },
       getRight: function ()
       {
-         return this .clipBoundary_ .length > 1 ? this .clipBoundary_ [1] : 1;
+         return this ._clipBoundary .length > 1 ? this ._clipBoundary [1] : 1;
       },
       getBottom: function ()
       {
-         return this .clipBoundary_ .length > 2 ? this .clipBoundary_ [2] : 0;
+         return this ._clipBoundary .length > 2 ? this ._clipBoundary [2] : 0;
       },
       getTop: function ()
       {
-         return this .clipBoundary_ .length > 3 ? this .clipBoundary_ [3] : 1;
+         return this ._clipBoundary .length > 3 ? this ._clipBoundary [3] : 1;
       },
       traverse: function (type, renderObject)
       {
@@ -78963,11 +79867,11 @@ function (TextureProperties)
       {
          this [_backgroundTextureProperties] = new TextureProperties (this .getPrivateScene ());
 
-         this [_backgroundTextureProperties] .boundaryModeS_       = "CLAMP_TO_EDGE";
-         this [_backgroundTextureProperties] .boundaryModeT_       = "CLAMP_TO_EDGE";
-         this [_backgroundTextureProperties] .boundaryModeR_       = "CLAMP_TO_EDGE";
-         this [_backgroundTextureProperties] .minificationFilter_  = "NICEST";
-         this [_backgroundTextureProperties] .magnificationFilter_ = "NICEST";
+         this [_backgroundTextureProperties] ._boundaryModeS       = "CLAMP_TO_EDGE";
+         this [_backgroundTextureProperties] ._boundaryModeT       = "CLAMP_TO_EDGE";
+         this [_backgroundTextureProperties] ._boundaryModeR       = "CLAMP_TO_EDGE";
+         this [_backgroundTextureProperties] ._minificationFilter  = "NICEST";
+         this [_backgroundTextureProperties] ._magnificationFilter = "NICEST";
          this [_backgroundTextureProperties] .setup ();
 
          this .getBackgroundTextureProperties = function () { return this [_backgroundTextureProperties]; };
@@ -79210,9 +80114,9 @@ function (TraverseType)
       enablePicking: function ()
       {
          if (this [_transformSensorNodes] .size || this [_pickSensorNodes] [0] .size)
-            this .sensorEvents_ .addInterest ("picking", this);
+            this ._sensorEvents .addInterest ("picking", this);
          else
-            this .sensorEvents_ .removeInterest ("picking", this);
+            this ._sensorEvents .removeInterest ("picking", this);
       },
       picking: function ()
       {
@@ -79482,7 +80386,7 @@ function (Fields,
                              "autoRefresh",          new Fields .SFTime (),
                              "autoRefreshTimeLimit", new Fields .SFTime (3600));
 
-      this .addAlias ("url", this .family_);
+      this .addAlias ("url", this ._family);
 
       this .familyStack = [ ];
       this .alignments  = [ ];
@@ -79498,8 +80402,8 @@ function (Fields,
          X3DNode      .prototype .initialize .call (this);
          X3DUrlObject .prototype .initialize .call (this);
 
-         this .style_   .addInterest ("set_style__",   this);
-         this .justify_ .addInterest ("set_justify__", this);
+         this ._style   .addInterest ("set_style__",   this);
+         this ._justify .addInterest ("set_justify__", this);
 
          this .font        = null;
          this .familyIndex = 0;
@@ -79511,7 +80415,7 @@ function (Fields,
       },
       set_style__: function ()
       {
-         if (!this .load_ .getValue ())
+         if (!this ._load .getValue ())
             return;
 
          this .setLoadState (X3DConstants .NOT_STARTED_STATE);
@@ -79520,15 +80424,15 @@ function (Fields,
       },
       set_justify__: function ()
       {
-         const majorNormal = this .horizontal_ .getValue () ? this .leftToRight_ .getValue () : this .topToBottom_ .getValue ();
+         const majorNormal = this ._horizontal .getValue () ? this ._leftToRight .getValue () : this ._topToBottom .getValue ();
 
-         this .alignments [0] = this .justify_ .length > 0
+         this .alignments [0] = this ._justify .length > 0
                                 ? this .getAlignment (0, majorNormal)
                                 : majorNormal ? TextAlignment .BEGIN : TextAlignment .END;
 
-         const minorNormal = this .horizontal_ .getValue () ? this .topToBottom_ .getValue () : this .leftToRight_ .getValue ();
+         const minorNormal = this ._horizontal .getValue () ? this ._topToBottom .getValue () : this ._leftToRight .getValue ();
 
-         this .alignments [1] = this .justify_ .length > 1
+         this .alignments [1] = this ._justify .length > 1
                                 ? this .getAlignment (1, minorNormal)
                                 : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
       },
@@ -79546,7 +80450,7 @@ function (Fields,
          {
             // Return for west-european normal alignment.
 
-            switch (this .justify_ [index])
+            switch (this ._justify [index])
             {
                case "FIRST":  return TextAlignment .FIRST;
                case "BEGIN":  return TextAlignment .BEGIN;
@@ -79558,7 +80462,7 @@ function (Fields,
          {
             // Return appropriate alignment if topToBottom or leftToRight are FALSE.
 
-            switch (this .justify_ [index])
+            switch (this ._justify [index])
             {
                case "FIRST":  return TextAlignment .END;
                case "BEGIN":  return TextAlignment .END;
@@ -79574,7 +80478,7 @@ function (Fields,
          const family = Fonts [familyName];
 
          if (family)
-            return family [this .style_ .getValue ()] || family .PLAIN;
+            return family [this ._style .getValue ()] || family .PLAIN;
 
          return;
       },
@@ -79582,7 +80486,7 @@ function (Fields,
       {
          // Add default font to family array.
 
-         const family = this .urlBuffer_ .copy ();
+         const family = this ._urlBuffer .copy ();
 
          family .push ("SERIF");
 
@@ -80070,21 +80974,21 @@ function (TextAlignment,
          var
             text      = this .text,
             fontStyle = this .fontStyle,
-            numLines  = text .string_ .length;
+            numLines  = text ._string .length;
 
-         text .lineBounds_ .length = numLines;
+         text ._lineBounds .length = numLines;
          this .glyphs      .length = 0;
 
          if (numLines === 0 || ! fontStyle .getFont ())
          {
-            text .origin_     .setValue (zero3);
-            text .textBounds_ .setValue (zero2);
+            text ._origin     .setValue (zero3);
+            text ._textBounds .setValue (zero2);
 
             this .bbox .set ();
             return;
          }
 
-         if (fontStyle .horizontal_ .getValue ())
+         if (fontStyle ._horizontal .getValue ())
          {
             this .resizeArray (this .translations, numLines);
             this .resizeArray (this .charSpacings, numLines);
@@ -80094,7 +80998,7 @@ function (TextAlignment,
          else
          {
             var
-               string   = text .string_,
+               string   = text ._string,
                numChars = 0;
 
             for (var i = 0, length = string .length; i < length; ++ i)
@@ -80119,12 +81023,12 @@ function (TextAlignment,
       {
          var
             font        = fontStyle .getFont (),
-            string      = text .string_,
+            string      = text ._string,
             numLines    = string .length,
-            maxExtent   = Math .max (0, text .maxExtent_ .getValue ()),
-            topToBottom = fontStyle .topToBottom_ .getValue (),
+            maxExtent   = Math .max (0, text ._maxExtent .getValue ()),
+            topToBottom = fontStyle ._topToBottom .getValue (),
             scale       = fontStyle .getScale (),
-            spacing     = fontStyle .spacing_ .getValue ();
+            spacing     = fontStyle ._spacing .getValue ();
 
          bbox .set ();
 
@@ -80170,7 +81074,7 @@ function (TextAlignment,
             }
 
             this .charSpacings [ll] = charSpacing;
-            text .lineBounds_ [l]   = lineBound;
+            text ._lineBounds [l]   = lineBound;
 
             // Calculate line translation.
 
@@ -80209,7 +81113,7 @@ function (TextAlignment,
 
          // Calculate text position
 
-         text .textBounds_ = size;
+         text ._textBounds = size;
          this .bearing .set (0, -max .y);
 
          switch (fontStyle .getMinorAlignment ())
@@ -80235,7 +81139,7 @@ function (TextAlignment,
 
          // The value of the origin field represents the upper left corner of the textBounds.
 
-         text .origin_ .setValue (origin .set (min .x, max .y, 0));
+         text ._origin .setValue (origin .set (min .x, max .y, 0));
 
          this .bbox .setExtents (min3 .set (min .x, min .y, 0),
                                  max3 .set (max .x, max .y, 0));
@@ -80244,13 +81148,13 @@ function (TextAlignment,
       {
          var
             font             = fontStyle .getFont (),
-            string           = text .string_,
+            string           = text ._string,
             numLines         = string .length,
-            maxExtent        = Math .max (0, text .maxExtent_ .getValue ()),
-            leftToRight      = fontStyle .leftToRight_ .getValue (),
-            topToBottom      = fontStyle .topToBottom_ .getValue (),
+            maxExtent        = Math .max (0, text ._maxExtent .getValue ()),
+            leftToRight      = fontStyle ._leftToRight .getValue (),
+            topToBottom      = fontStyle ._topToBottom .getValue (),
             scale            = fontStyle .getScale (),
-            spacing          = fontStyle .spacing_ .getValue (),
+            spacing          = fontStyle ._spacing .getValue (),
             yPad             = this .yPad,
             primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality ();
 
@@ -80339,7 +81243,7 @@ function (TextAlignment,
                min .y       = max .y  - size .y;
             }
 
-            text .lineBounds_ [l] = lineBound;
+            text ._lineBounds [l] = lineBound;
 
             // Calculate line translation.
 
@@ -80416,7 +81320,7 @@ function (TextAlignment,
             case TextAlignment .BEGIN:
             case TextAlignment .FIRST:
             {
-               var lineBounds = text .lineBounds_;
+               var lineBounds = text ._lineBounds;
 
                for (var i = 0, length = lineBounds .length; i < length; ++ i)
                   lineBounds [i] .y += max .y - yPad [i] * scale;
@@ -80427,7 +81331,7 @@ function (TextAlignment,
                break;
             case TextAlignment .END:
             {
-               var lineBounds = text .lineBounds_;
+               var lineBounds = text ._lineBounds;
 
                for (var i = 0, length = lineBounds .length; i < length; ++ i)
                   lineBounds [i] .y += yPad [i] * scale - min .y;
@@ -80438,7 +81342,7 @@ function (TextAlignment,
 
          // Calculate text position
 
-         text .textBounds_ = size;
+         text ._textBounds = size;
 
          switch (fontStyle .getMajorAlignment ())
          {
@@ -80475,7 +81379,7 @@ function (TextAlignment,
 
          // The value of the origin field represents the upper left corner of the textBounds.
 
-         text .origin_ .setValue (origin .set (min .x, max .y, 0));
+         text ._origin .setValue (origin .set (min .x, max .y, 0));
 
          this .bbox .set (min3 .set (min .x, min .y, 0),
                           max3 .set (max .x, max .y, 0),
@@ -80504,7 +81408,7 @@ function (TextAlignment,
       {
          var
             font             = fontStyle .getFont (),
-            normal           = fontStyle .horizontal_ .getValue () ? fontStyle .leftToRight_ .getValue () : fontStyle .topToBottom_ .getValue (),
+            normal           = fontStyle ._horizontal .getValue () ? fontStyle ._leftToRight .getValue () : fontStyle ._topToBottom .getValue (),
             glyphs           = this .stringToGlyphs (font, line, normal, lineNumber),
             primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
             xMin             = 0,
@@ -80777,7 +81681,7 @@ function (PrimitiveQuality,
    {
       X3DTextGeometry .call (this, text, fontStyle);
 
-      text .transparent_ = false;
+      text ._transparent = false;
 
       this .texCoordArray = X3DGeometryNode .createArray ();
    }
@@ -80815,8 +81719,8 @@ function (PrimitiveQuality,
                translations     = this .getTranslations (),
                charSpacings     = this .getCharSpacings (),
                size             = fontStyle .getScale (),
-               spacing          = fontStyle .spacing_ .getValue (),
-               origin           = text .origin_ .getValue (),
+               spacing          = fontStyle ._spacing .getValue (),
+               origin           = text ._origin .getValue (),
                sizeUnitsPerEm   = size / font .unitsPerEm,
                primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
                texCoordArray    = this .texCoordArray,
@@ -80831,7 +81735,7 @@ function (PrimitiveQuality,
             text .getMin () .assign (min);
             text .getMax () .assign (max);
 
-            if (fontStyle .horizontal_ .getValue ())
+            if (fontStyle ._horizontal .getValue ())
             {
                for (var l = 0, length = glyphs .length; l < length; ++ l)
                {
@@ -80874,10 +81778,10 @@ function (PrimitiveQuality,
             else
             {
                var
-                  leftToRight = fontStyle .leftToRight_ .getValue (),
-                  topToBottom = fontStyle .topToBottom_ .getValue (),
-                  first       = leftToRight ? 0 : text .string_ .length - 1,
-                  last        = leftToRight ? text .string_ .length  : -1,
+                  leftToRight = fontStyle ._leftToRight .getValue (),
+                  topToBottom = fontStyle ._topToBottom .getValue (),
+                  first       = leftToRight ? 0 : text ._string .length - 1,
+                  last        = leftToRight ? text ._string .length  : -1,
                   step        = leftToRight ? 1 : -1;
 
                for (var l = first, t = 0; l !== last; l += step)
@@ -81159,7 +82063,7 @@ function (Fields,
 
       this .addType (X3DConstants .FontStyle);
 
-      this .size_ .setUnit ("length");
+      this ._size .setUnit ("length");
    }
 
    FontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
@@ -81195,7 +82099,7 @@ function (Fields,
       },
       getScale: function ()
       {
-         return this .size_ .getValue ();
+         return this ._size .getValue ();
       },
    });
 
@@ -96062,7 +96966,7 @@ function (Fields,
 
       this .addType (X3DConstants .TextureTransform);
 
-      this .rotation_ .setUnit ("angle");
+      this ._rotation .setUnit ("angle");
 
       this .matrix = new Matrix4 ();
    }
@@ -96111,10 +97015,10 @@ function (Fields,
          return function ()
          {
             const
-               translation = this .translation_ .getValue (),
-               rotation    = this .rotation_ .getValue (),
-               scale       = this .scale_ .getValue (),
-               center      = this .center_ .getValue (),
+               translation = this ._translation .getValue (),
+               rotation    = this ._rotation .getValue (),
+               scale       = this ._scale .getValue (),
+               center      = this ._center .getValue (),
                matrix4     = this .matrix;
 
             matrix3 .identity ();
@@ -96420,10 +97324,10 @@ function (TextureProperties,
       getDefaultTextureProperties: function ()
       {
          this [_defaultTextureProperties] = new TextureProperties (this .getPrivateScene ());
-         this [_defaultTextureProperties] .magnificationFilter_ = "NICEST";
-         this [_defaultTextureProperties] .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
-         this [_defaultTextureProperties] .textureCompression_  = "NICEST";
-         this [_defaultTextureProperties] .generateMipMaps_     = true;
+         this [_defaultTextureProperties] ._magnificationFilter = "NICEST";
+         this [_defaultTextureProperties] ._minificationFilter  = "AVG_PIXEL_AVG_MIPMAP";
+         this [_defaultTextureProperties] ._textureCompression  = "NICEST";
+         this [_defaultTextureProperties] ._generateMipMaps     = true;
 
          this [_defaultTextureProperties] .setup ();
 
@@ -96790,27 +97694,27 @@ function ($,
       },
       initialized: function ()
       {
-         return this .initialized_;
+         return this ._initialized;
       },
       shutdown: function ()
       {
-         return this .shutdown_;
+         return this ._shutdown;
       },
       prepareEvents: function ()
       {
-         return this .prepareEvents_;
+         return this ._prepareEvents;
       },
       timeEvents: function ()
       {
-         return this .timeEvents_;
+         return this ._timeEvents;
       },
       sensorEvents: function ()
       {
-         return this .sensorEvents_;
+         return this ._sensorEvents;
       },
       finished: function ()
       {
-         return this .finished_;
+         return this ._finished;
       },
       getBrowser: function ()
       {
@@ -96850,10 +97754,10 @@ function ($,
          this [_systemTime] = t0 - this [_systemStartTime];
          this .advanceTime (now);
 
-         this .prepareEvents_ .processInterests ();
+         this ._prepareEvents .processInterests ();
          this .processEvents ();
 
-         this .timeEvents_ .processInterests ();
+         this ._timeEvents .processInterests ();
          this .processEvents ();
 
          const t1 = performance .now ();
@@ -96865,7 +97769,7 @@ function ($,
             this [_world] .traverse (TraverseType .COLLISION, null);
          this [_collisionTime] = performance .now () - t2;
 
-         this .sensorEvents_ .processInterests ();
+         this ._sensorEvents .processInterests ();
          this .processEvents ();
 
          // XXX: The depth buffer must be cleared here, although it is cleared in each layer, otherwise there is a
@@ -96880,7 +97784,7 @@ function ($,
          this [_browserTime]     = performance .now () - t0;
          this [_systemStartTime] = performance .now ();
 
-         this .finished_ .processInterests ();
+         this ._finished .processInterests ();
       },
       getSystemTime: function ()
       {
@@ -97974,7 +98878,7 @@ function (Fields,
 
       this .addType (X3DConstants .FogCoordinate);
 
-      this .depth_ .setUnit ("length");
+      this ._depth .setUnit ("length");
    }
 
    FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
@@ -98000,14 +98904,14 @@ function (Fields,
       {
          X3DGeometricPropertyNode .prototype .initialize .call (this);
 
-         this .depth_ .addInterest ("set_depth__", this);
+         this ._depth .addInterest ("set_depth__", this);
 
          this .set_depth__ ();
       },
       set_depth__: function ()
       {
-         this .depth  = this .depth_ .getValue ();
-         this .length = this .depth_ .length;
+         this .depth  = this ._depth .getValue ();
+         this .length = this ._depth .length;
       },
       isEmpty: function ()
       {
@@ -98159,7 +99063,7 @@ function (Fields,
       },
       push: function (renderObject)
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
             var fogContainer = this .getFogs () .pop ();
 
@@ -98170,7 +99074,7 @@ function (Fields,
       },
       pop: function (renderObject)
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
             renderObject .getBrowser () .getLocalObjects () .push (renderObject .popLocalFog ());
       },
    });
@@ -98287,43 +99191,43 @@ function (Fields,
       {
          X3DBackgroundNode .prototype .initialize .call (this);
 
-         this .frontTexture_  .addInterest ("set_frontTexture__", this);
-         this .backTexture_   .addInterest ("set_backTexture__", this);
-         this .leftTexture_   .addInterest ("set_leftTexture__", this);
-         this .rightTexture_  .addInterest ("set_rightTexture__", this);
-         this .topTexture_    .addInterest ("set_topTexture__", this);
-         this .bottomTexture_ .addInterest ("set_bottomTexture__", this);
+         this ._frontTexture  .addInterest ("set_frontTexture__", this);
+         this ._backTexture   .addInterest ("set_backTexture__", this);
+         this ._leftTexture   .addInterest ("set_leftTexture__", this);
+         this ._rightTexture  .addInterest ("set_rightTexture__", this);
+         this ._topTexture    .addInterest ("set_topTexture__", this);
+         this ._bottomTexture .addInterest ("set_bottomTexture__", this);
 
-         this .set_frontTexture__  (this .frontTexture_);
-         this .set_backTexture__   (this .backTexture_);
-         this .set_leftTexture__   (this .leftTexture_);
-         this .set_rightTexture__  (this .rightTexture_);
-         this .set_topTexture__    (this .topTexture_);
-         this .set_bottomTexture__ (this .bottomTexture_);
+         this .set_frontTexture__  (this ._frontTexture);
+         this .set_backTexture__   (this ._backTexture);
+         this .set_leftTexture__   (this ._leftTexture);
+         this .set_rightTexture__  (this ._rightTexture);
+         this .set_topTexture__    (this ._topTexture);
+         this .set_bottomTexture__ (this ._bottomTexture);
       },
       set_frontTexture__: function ()
       {
-         X3DBackgroundNode .prototype .set_frontTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this .frontTexture_));
+         X3DBackgroundNode .prototype .set_frontTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._frontTexture));
       },
       set_backTexture__: function ()
       {
-         X3DBackgroundNode .prototype .set_backTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this .backTexture_));
+         X3DBackgroundNode .prototype .set_backTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._backTexture));
       },
       set_leftTexture__: function ()
       {
-         X3DBackgroundNode .prototype .set_leftTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this .leftTexture_));
+         X3DBackgroundNode .prototype .set_leftTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._leftTexture));
       },
       set_rightTexture__: function ()
       {
-         X3DBackgroundNode .prototype .set_rightTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this .rightTexture_));
+         X3DBackgroundNode .prototype .set_rightTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._rightTexture));
       },
       set_topTexture__: function ()
       {
-         X3DBackgroundNode .prototype .set_topTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this .topTexture_));
+         X3DBackgroundNode .prototype .set_topTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._topTexture));
       },
       set_bottomTexture__: function ()
       {
-         X3DBackgroundNode .prototype .set_bottomTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this .bottomTexture_));
+         X3DBackgroundNode .prototype .set_bottomTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._bottomTexture));
       },
    });
 
@@ -98491,8 +99395,8 @@ function (Fields,
 
       this .addChildObjects ("traversed", new Fields .SFBool (true));
 
-      this .size_   .setUnit ("length");
-      this .center_ .setUnit ("length");
+      this ._size   .setUnit ("length");
+      this ._center .setUnit ("length");
 
       this .zeroTest         = false;
       this .currentTraversed = true;
@@ -98507,15 +99411,15 @@ function (Fields,
 
          this .isLive () .addInterest ("set_live__", this);
 
-         this .enabled_   .addInterest ("set_live__", this);
-         this .size_      .addInterest ("set_live__", this);
-         this .traversed_ .addInterest ("set_live__", this);
+         this ._enabled   .addInterest ("set_live__", this);
+         this ._size      .addInterest ("set_live__", this);
+         this ._traversed .addInterest ("set_live__", this);
 
          this .set_live__ ();
       },
       set_live__: function ()
       {
-         if (this .traversed_ .getValue () && this .isLive () .getValue () && this .enabled_ .getValue () && ! (this .zeroTest && this .size_. getValue () .equals (Vector3 .Zero)))
+         if (this ._traversed .getValue () && this .isLive () .getValue () && this ._enabled .getValue () && ! (this .zeroTest && this ._size. getValue () .equals (Vector3 .Zero)))
          {
             this .getBrowser () .sensorEvents () .addInterest ("update", this);
          }
@@ -98523,10 +99427,10 @@ function (Fields,
          {
             this .getBrowser () .sensorEvents () .removeInterest ("update", this);
 
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
-               this .isActive_ = false;
-               this .exitTime_ = this .getBrowser () .getCurrentTime ();
+               this ._isActive = false;
+               this ._exitTime = this .getBrowser () .getCurrentTime ();
             }
          }
       },
@@ -98542,13 +99446,13 @@ function (Fields,
       {
          if (value)
          {
-            if (this .traversed_ .getValue () === false)
-               this .traversed_ = true;
+            if (this ._traversed .getValue () === false)
+               this ._traversed = true;
          }
          else
          {
-            if (this .currentTraversed !== this .traversed_ .getValue ())
-               this .traversed_ = this .currentTraversed;
+            if (this .currentTraversed !== this ._traversed .getValue ())
+               this ._traversed = this .currentTraversed;
          }
 
          this .currentTraversed = value;
@@ -98643,8 +99547,8 @@ function (Fields,
 
       this .setCameraObject (true);
 
-      this .centerOfRotation_changed_ .setUnit ("length");
-      this .position_changed_         .setUnit ("length");
+      this ._centerOfRotation_changed .setUnit ("length");
+      this ._position_changed         .setUnit ("length");
 
       this .setZeroTest (true);
 
@@ -98686,20 +99590,20 @@ function (Fields,
       {
          X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
-         this .enabled_ .addInterest ("set_enabled__", this);
-         this .size_    .addInterest ("set_extents__", this);
-         this .center_  .addInterest ("set_extents__", this);
+         this ._enabled .addInterest ("set_enabled__", this);
+         this ._size    .addInterest ("set_extents__", this);
+         this ._center  .addInterest ("set_extents__", this);
 
-         this .traversed_ .addFieldInterest (this .isCameraObject_);
+         this ._traversed .addFieldInterest (this ._isCameraObject);
 
          this .set_enabled__ ();
          this .set_extents__ ();
       },
       set_enabled__: function ()
       {
-         this .setCameraObject (this .enabled_ .getValue ());
+         this .setCameraObject (this ._enabled .getValue ());
 
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
             delete this .traverse;
          else
             this .traverse = Function .prototype;
@@ -98707,8 +99611,8 @@ function (Fields,
       set_extents__: function ()
       {
          const
-            s  = this .size_ .getValue (),
-            c  = this .center_ .getValue (),
+            s  = this ._size .getValue (),
+            c  = this ._center .getValue (),
             sx = s .x / 2,
             sy = s .y / 2,
             sz = s .z / 2,
@@ -98752,33 +99656,33 @@ function (Fields,
 
                      centerOfRotation .set (centerOfRotationMatrix [12], centerOfRotationMatrix [13], centerOfRotationMatrix [14]);
 
-                     if (this .isActive_ .getValue ())
+                     if (this ._isActive .getValue ())
                      {
-                        if (! this .position_changed_ .getValue () .equals (position))
-                           this .position_changed_ = position;
+                        if (! this ._position_changed .getValue () .equals (position))
+                           this ._position_changed = position;
 
-                        if (! this .orientation_changed_ .getValue () .equals (orientation))
-                           this .orientation_changed_ = orientation;
+                        if (! this ._orientation_changed .getValue () .equals (orientation))
+                           this ._orientation_changed = orientation;
 
-                        if (! this .centerOfRotation_changed_ .getValue () .equals (centerOfRotation))
-                           this .centerOfRotation_changed_ = centerOfRotation;
+                        if (! this ._centerOfRotation_changed .getValue () .equals (centerOfRotation))
+                           this ._centerOfRotation_changed = centerOfRotation;
                      }
                      else
                      {
-                        this .isActive_                 = true;
-                        this .enterTime_                = this .getBrowser () .getCurrentTime ();
-                        this .position_changed_         = position;
-                        this .orientation_changed_      = orientation;
-                        this .centerOfRotation_changed_ = centerOfRotation;
+                        this ._isActive                 = true;
+                        this ._enterTime                = this .getBrowser () .getCurrentTime ();
+                        this ._position_changed         = position;
+                        this ._orientation_changed      = orientation;
+                        this ._centerOfRotation_changed = centerOfRotation;
                      }
                   }
                }
                else
                {
-                  if (this .isActive_ .getValue ())
+                  if (this ._isActive .getValue ())
                   {
-                     this .isActive_ = false;
-                     this .exitTime_ = this .getBrowser () .getCurrentTime ();
+                     this ._isActive = false;
+                     this ._exitTime = this .getBrowser () .getCurrentTime ();
                   }
                }
             }
@@ -98818,7 +99722,7 @@ function (Fields,
                      if (this .inside)
                         return;
 
-                     if (this .size_ .getValue () .equals (infinity))
+                     if (this ._size .getValue () .equals (infinity))
                      {
                         this .inside = true;
                      }
@@ -98941,7 +99845,7 @@ function (Fields,
 
       this .addType (X3DConstants .TransformSensor);
 
-      this .position_changed_ .setUnit ("length");
+      this ._position_changed .setUnit ("length");
 
       this .setZeroTest (true);
 
@@ -98985,11 +99889,11 @@ function (Fields,
 
          this .isLive () .addInterest ("set_enabled__", this);
 
-         this .enabled_      .addInterest ("set_enabled__",      this);
-         this .size_         .addInterest ("set_enabled__",      this);
-         this .size_         .addInterest ("set_extents__",      this);
-         this .center_       .addInterest ("set_extents__",      this);
-         this .targetObject_ .addInterest ("set_targetObject__", this);
+         this ._enabled      .addInterest ("set_enabled__",      this);
+         this ._size         .addInterest ("set_enabled__",      this);
+         this ._size         .addInterest ("set_extents__",      this);
+         this ._center       .addInterest ("set_extents__",      this);
+         this ._targetObject .addInterest ("set_targetObject__", this);
 
          this .set_extents__ ();
          this .set_targetObject__ ();
@@ -98998,7 +99902,7 @@ function (Fields,
       { },
       set_enabled__: function ()
       {
-         if (this .isLive () .getValue () && this .targetObjectNode && this .enabled_ .getValue () && ! this .size_. getValue () .equals (Vector3 .Zero))
+         if (this .isLive () .getValue () && this .targetObjectNode && this ._enabled .getValue () && ! this ._size. getValue () .equals (Vector3 .Zero))
          {
             this .setPickableObject (true);
             this .getBrowser () .addTransformSensor (this);
@@ -99012,18 +99916,18 @@ function (Fields,
             if (this .targetObjectNode)
                this .targetObjectNode .removeTransformSensor (this);
 
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
-               this .isActive_ = false;
-               this .exitTime_ = this .getBrowser () .getCurrentTime ();
+               this ._isActive = false;
+               this ._exitTime = this .getBrowser () .getCurrentTime ();
             }
          }
       },
       set_extents__: function ()
       {
          const
-            s  = this .size_ .getValue (),
-            c  = this .center_ .getValue (),
+            s  = this ._size .getValue (),
+            c  = this ._center .getValue (),
             sx = s .x / 2,
             sy = s .y / 2,
             sz = s .z / 2,
@@ -99041,7 +99945,7 @@ function (Fields,
          try
          {
             const
-               node = this .targetObject_ .getValue () .getInnerNode (),
+               node = this ._targetObject .getValue () .getInnerNode (),
                type = node .getType ();
 
             for (let t = type .length - 1; t >= 0; -- t)
@@ -99097,28 +100001,28 @@ function (Fields,
             {
                matrix .get (position, orientation);
 
-               if (this .isActive_ .getValue ())
+               if (this ._isActive .getValue ())
                {
-                  if (! this .position_changed_ .getValue () .equals (position))
-                     this .position_changed_ = position;
+                  if (! this ._position_changed .getValue () .equals (position))
+                     this ._position_changed = position;
 
-                  if (! this .orientation_changed_ .getValue () .equals (orientation))
-                     this .orientation_changed_ = orientation;
+                  if (! this ._orientation_changed .getValue () .equals (orientation))
+                     this ._orientation_changed = orientation;
                }
                else
                {
-                  this .isActive_            = true;
-                  this .enterTime_           = this .getBrowser () .getCurrentTime ();
-                  this .position_changed_    = position;
-                  this .orientation_changed_ = orientation;
+                  this ._isActive            = true;
+                  this ._enterTime           = this .getBrowser () .getCurrentTime ();
+                  this ._position_changed    = position;
+                  this ._orientation_changed = orientation;
                }
             }
             else
             {
-               if (this .isActive_ .getValue ())
+               if (this ._isActive .getValue ())
                {
-                  this .isActive_ = false;
-                  this .exitTime_ = this .getBrowser () .getCurrentTime ();
+                  this ._isActive = false;
+                  this ._exitTime = this .getBrowser () .getCurrentTime ();
                }
             }
 
@@ -99141,7 +100045,7 @@ function (Fields,
             const
                modelMatrices  = this .modelMatrices,
                targetMatrices = this .targetMatrices,
-               always         = this .size_ .getValue () .equals (infinity);
+               always         = this ._size .getValue () .equals (infinity);
 
             for (const modelMatrix of modelMatrices)
             {
@@ -99288,13 +100192,13 @@ function (Fields,
       {
          X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
-         this .enabled_ .addInterest ("set_enabled__", this);
+         this ._enabled .addInterest ("set_enabled__", this);
 
          this .set_enabled__ ();
       },
       set_enabled__: function ()
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
             delete this .traverse;
          else
             this .traverse = Function .prototype;
@@ -99303,20 +100207,20 @@ function (Fields,
       {
          if (this .visible && this .getTraversed ())
          {
-            if (! this .isActive_ .getValue ())
+            if (! this ._isActive .getValue ())
             {
-               this .isActive_  = true;
-               this .enterTime_ = this .getBrowser () .getCurrentTime ();
+               this ._isActive  = true;
+               this ._enterTime = this .getBrowser () .getCurrentTime ();
             }
 
             this .visible = false;
          }
          else
          {
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
-               this .isActive_ = false;
-               this .exitTime_ = this .getBrowser () .getCurrentTime ();
+               this ._isActive = false;
+               this ._exitTime = this .getBrowser () .getCurrentTime ();
             }
          }
 
@@ -99338,14 +100242,14 @@ function (Fields,
             if (this .visible)
                return;
 
-            if (this .size_ .getValue () .equals (infinity))
+            if (this ._size .getValue () .equals (infinity))
             {
                this .visible = true;
             }
             else
             {
                bbox
-                  .set (this .size_ .getValue (), this .center_ .getValue ())
+                  .set (this ._size .getValue (), this ._center .getValue ())
                   .multRight (renderObject .getModelViewMatrix () .get ());
 
                this .visible = renderObject .getViewVolume () .intersectsBox (bbox);
@@ -99551,23 +100455,23 @@ function (Fields,
       },
       getValue: function ()
       {
-         return this .set_value_ .getValue () .getHSV (vector);
+         return this ._set_value .getValue () .getHSV (vector);
       },
       getDestination: function ()
       {
-         return this .set_destination_ .getValue () .getHSV (vector);
+         return this ._set_destination .getValue () .getHSV (vector);
       },
       getInitialValue: function ()
       {
-         return this .initialValue_ .getValue () .getHSV (initialValue);
+         return this ._initialValue .getValue () .getHSV (initialValue);
       },
       getInitialDestination: function ()
       {
-         return this .initialDestination_ .getValue () .getHSV (initialDestination);
+         return this ._initialDestination .getValue () .getHSV (initialDestination);
       },
       setValue: function (value)
       {
-         this .value_changed_ .setHSV (value .x, value .y, value .z);
+         this ._value_changed .setHSV (value .x, value .y, value .z);
       },
       interpolate: function (source, destination, weight)
       {
@@ -99660,9 +100564,9 @@ function (X3DFollowerNode,
       {
          X3DFollowerNode .prototype .initialize .call (this);
 
-         this .order_           .addInterest ("set_order__", this);
-         this .set_value_       .addInterest ("set_value__", this);
-         this .set_destination_ .addInterest ("set_destination__", this);
+         this ._order           .addInterest ("set_order__", this);
+         this ._set_value       .addInterest ("set_value__", this);
+         this ._set_destination .addInterest ("set_destination__", this);
 
          var
             buffer             = this .getBuffer (),
@@ -99682,14 +100586,14 @@ function (X3DFollowerNode,
       },
       getOrder: function ()
       {
-         return Algorithm .clamp (this .order_ .getValue (), 0, 5);
+         return Algorithm .clamp (this ._order .getValue (), 0, 5);
       },
       getTolerance: function ()
       {
-         if (this .tolerance_ .getValue () < 0)
+         if (this ._tolerance .getValue () < 0)
             return 1e-4;
 
-         return this .tolerance_ .getValue ();
+         return this ._tolerance .getValue ();
       },
       prepareEvents: function ()
       {
@@ -99697,11 +100601,11 @@ function (X3DFollowerNode,
             buffer = this .getBuffer (),
             order  = buffer .length - 1;
 
-         if (this .tau_ .getValue ())
+         if (this ._tau .getValue ())
          {
             var
                delta = 1 / this .getBrowser () .currentFrameRate,
-               alpha = Math .exp (-delta / this .tau_ .getValue ());
+               alpha = Math .exp (-delta / this ._tau .getValue ());
 
             for (var i = 0; i < order; ++ i)
             {
@@ -99879,23 +100783,23 @@ function (Fields,
       },
       getValue: function ()
       {
-         return this .set_value_ .getValue () .getHSV (vector);
+         return this ._set_value .getValue () .getHSV (vector);
       },
       getDestination: function ()
       {
-         return this .set_destination_ .getValue () .getHSV (vector);
+         return this ._set_destination .getValue () .getHSV (vector);
       },
       getInitialValue: function ()
       {
-         return this .initialValue_ .getValue () .getHSV (initialValue);
+         return this ._initialValue .getValue () .getHSV (initialValue);
       },
       getInitialDestination: function ()
       {
-         return this .initialDestination_ .getValue () .getHSV (initialDestination);
+         return this ._initialDestination .getValue () .getHSV (initialDestination);
       },
       setValue: function (value)
       {
-         this .value_changed_ .setHSV (value .x, value .y, value .z);
+         this ._value_changed .setHSV (value .x, value .y, value .z);
       },
       equals: function (lhs, rhs, tolerance)
       {
@@ -100005,25 +100909,25 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
          },
          getValue: function ()
          {
-            return this .set_value_;
+            return this ._set_value;
          },
          getDestination: function ()
          {
-            return this .set_destination_;
+            return this ._set_destination;
          },
          getInitialValue: function ()
          {
-            return this .initialValue_;
+            return this ._initialValue;
          },
          getInitialDestination: function ()
          {
-            return this .initialDestination_;
+            return this ._initialDestination;
          },
          setValue: function (value)
          {
             if (Array .isArray (value))
             {
-               const value_changed = this .value_changed_;
+               const value_changed = this ._value_changed;
 
                for (var i = 0, length = value .length; i < length; ++ i)
                   value_changed [i] = value [i];
@@ -100032,7 +100936,7 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
             }
             else
             {
-               this .value_changed_ = value;
+               this ._value_changed = value;
             }
          },
          duplicate: function (value)
@@ -100072,7 +100976,7 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
          {
             const
                buffers = this .getBuffer (),
-               l       = this .set_destination_ .length;
+               l       = this ._set_destination .length;
 
             for (let i = 0, length = buffers .length; i < length; ++ i)
             {
@@ -100481,11 +101385,11 @@ function (Fields,
 
       this .addType (X3DConstants .OrientationDamper);
 
-      this .set_value_          .setUnit ("angle");
-      this .set_destination_    .setUnit ("angle");
-      this .initialValue_       .setUnit ("angle");
-      this .initialDestination_ .setUnit ("angle");
-      this .value_changed_      .setUnit ("angle");
+      this ._set_value          .setUnit ("angle");
+      this ._set_destination    .setUnit ("angle");
+      this ._initialValue       .setUnit ("angle");
+      this ._initialDestination .setUnit ("angle");
+      this ._value_changed      .setUnit ("angle");
    }
 
    OrientationDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
@@ -101542,7 +102446,7 @@ function (Fields,
 
       this .addType (X3DConstants .Box);
 
-      this .size_ .setUnit ("length");
+      this ._size .setUnit ("length");
    }
 
    Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -101570,7 +102474,7 @@ function (Fields,
          var
             options  = this .getBrowser () .getBoxOptions (),
             geometry = options .getGeometry (),
-            size     = this .size_ .getValue ();
+            size     = this ._size .getValue ();
 
          this .setMultiTexCoords (geometry .getMultiTexCoords ());
          this .setNormals        (geometry .getNormals ());
@@ -101608,7 +102512,7 @@ function (Fields,
             this .getMax () .set ( x,  y,  z);
          }
 
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
       },
    });
 
@@ -101691,8 +102595,8 @@ function (Fields,
 
       this .addType (X3DConstants .Cone);
 
-      this .height_       .setUnit ("length");
-      this .bottomRadius_ .setUnit ("length");
+      this ._height       .setUnit ("length");
+      this ._bottomRadius .setUnit ("length");
    }
 
    Cone .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -101731,9 +102635,9 @@ function (Fields,
       {
          var
             options       = this .getBrowser () .getConeOptions (),
-            xDimension    = options .xDimension_ .getValue (),
-            height        = this .height_ .getValue (),
-            bottomRadius  = this .bottomRadius_ .getValue (),
+            xDimension    = options ._xDimension .getValue (),
+            height        = this ._height .getValue (),
+            bottomRadius  = this ._bottomRadius .getValue (),
             texCoordArray = this .getTexCoords (),
             normalArray   = this .getNormals (),
             vertexArray   = this .getVertices ();
@@ -101745,7 +102649,7 @@ function (Fields,
             y2 = -y1,
             nz = Complex .Polar (1, -Math .PI / 2 + Math .atan (bottomRadius / height));
 
-         if (this .side_ .getValue ())
+         if (this ._side .getValue ())
          {
             for (var i = 0; i < xDimension; ++ i)
             {
@@ -101789,7 +102693,7 @@ function (Fields,
             }
          }
 
-         if (this .bottom_ .getValue ())
+         if (this ._bottom .getValue ())
          {
             var
                texCoord = [ ],
@@ -101833,23 +102737,23 @@ function (Fields,
             }
          }
 
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
          this .setExtents ();
       },
       setExtents: function ()
       {
          var
-            bottomRadius = this .bottomRadius_ .getValue (),
-            y1           = this .height_ .getValue () / 2,
+            bottomRadius = this ._bottomRadius .getValue (),
+            y1           = this ._height .getValue () / 2,
             y2           = -y1;
 
-         if (! this .side_ .getValue () && ! this .bottom_ .getValue ())
+         if (! this ._side .getValue () && ! this ._bottom .getValue ())
          {
             this .getMin () .set (0, 0, 0);
             this .getMax () .set (0, 0, 0);
          }
 
-         else if (! this .side_ .getValue ())
+         else if (! this ._side .getValue ())
          {
             this .getMin () .set (-bottomRadius, y2, -bottomRadius);
             this .getMax () .set ( bottomRadius, y2,  bottomRadius);
@@ -101942,8 +102846,8 @@ function (Fields,
 
       this .addType (X3DConstants .Cylinder);
 
-      this .height_ .setUnit ("length");
-      this .radius_ .setUnit ("length");
+      this ._height .setUnit ("length");
+      this ._radius .setUnit ("length");
    }
 
    Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -101983,7 +102887,7 @@ function (Fields,
       {
          var
             options       = this .getBrowser () .getCylinderOptions (),
-            xDimension    = options .xDimension_ .getValue (),
+            xDimension    = options ._xDimension .getValue (),
             texCoordArray = this .getTexCoords (),
             normalArray   = this .getNormals (),
             vertexArray   = this .getVertices ();
@@ -101991,11 +102895,11 @@ function (Fields,
          this .getMultiTexCoords () .push (texCoordArray);
 
          var
-            radius = this .radius_ .getValue (),
-            y1     = this .height_ .getValue () / 2,
+            radius = this ._radius .getValue (),
+            y1     = this ._height .getValue () / 2,
             y2     = -y1;
 
-         if (this .side_ .getValue ())
+         if (this ._side .getValue ())
          {
             for (var i = 0; i < xDimension; ++ i)
             {
@@ -102051,7 +102955,7 @@ function (Fields,
             }
          }
 
-         if (this .top_ .getValue ())
+         if (this ._top .getValue ())
          {
             var
                texCoord = [ ],
@@ -102094,7 +102998,7 @@ function (Fields,
             }
          }
 
-         if (this .bottom_ .getValue ())
+         if (this ._bottom .getValue ())
          {
             var
                texCoord = [ ],
@@ -102137,29 +103041,29 @@ function (Fields,
             }
          }
 
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
          this .setExtents ();
       },
       setExtents: function ()
       {
          var
-            radius = this .radius_ .getValue (),
-            y1     = this .height_ .getValue () / 2,
+            radius = this ._radius .getValue (),
+            y1     = this ._height .getValue () / 2,
             y2     = -y1;
 
-         if (! this .top_ .getValue () && ! this .side_ .getValue () && ! this .bottom_ .getValue ())
+         if (! this ._top .getValue () && ! this ._side .getValue () && ! this ._bottom .getValue ())
          {
             this .getMin () .set (0, 0, 0);
             this .getMax () .set (0, 0, 0);
          }
 
-         else if (! this .top_ .getValue () && ! this .side_ .getValue ())
+         else if (! this ._top .getValue () && ! this ._side .getValue ())
          {
             this .getMin () .set (-radius, y2, -radius);
             this .getMax () .set ( radius, y2,  radius);
          }
 
-         else if (! this .bottom_ .getValue () && ! this .side_ .getValue ())
+         else if (! this ._bottom .getValue () && ! this ._side .getValue ())
          {
             this .getMin () .set (-radius, y1, -radius);
             this .getMax () .set ( radius, y1,  radius);
@@ -102254,10 +103158,10 @@ function (Fields,
 
       this .addType (X3DConstants .ElevationGrid);
 
-      this .xSpacing_    .setUnit ("length");
-      this .zSpacing_    .setUnit ("length");
-      this .creaseAngle_ .setUnit ("angle");
-      this .height_      .setUnit ("length");
+      this ._xSpacing    .setUnit ("length");
+      this ._zSpacing    .setUnit ("length");
+      this ._creaseAngle .setUnit ("angle");
+      this ._height      .setUnit ("length");
 
       this .fogCoordNode = null;
       this .colorNode    = null;
@@ -102304,12 +103208,12 @@ function (Fields,
       {
          X3DGeometryNode .prototype .initialize .call (this);
 
-         this .set_height_ .addFieldInterest (this .height_);
-         this .attrib_     .addInterest ("set_attrib__",   this);
-         this .fogCoord_   .addInterest ("set_fogCoord__", this);
-         this .color_      .addInterest ("set_color__",    this);
-         this .texCoord_   .addInterest ("set_texCoord__", this);
-         this .normal_     .addInterest ("set_normal__",   this);
+         this ._set_height .addFieldInterest (this ._height);
+         this ._attrib     .addInterest ("set_attrib__",   this);
+         this ._fogCoord   .addInterest ("set_fogCoord__", this);
+         this ._color      .addInterest ("set_color__",    this);
+         this ._texCoord   .addInterest ("set_texCoord__", this);
+         this ._normal     .addInterest ("set_normal__",   this);
 
          this .set_attrib__ ();
          this .set_fogCoord__ ();
@@ -102326,9 +103230,9 @@ function (Fields,
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
          {
-            var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+            var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
 
             if (attribNode)
                attribNodes .push (attribNode);
@@ -102342,7 +103246,7 @@ function (Fields,
          if (this .fogCoordNode)
             this .fogCoordNode .removeInterest ("requestRebuild", this);
 
-         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
+         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
 
          if (this .fogCoordNode)
             this .fogCoordNode .addInterest ("requestRebuild", this);
@@ -102352,15 +103256,15 @@ function (Fields,
          if (this .colorNode)
          {
             this .colorNode .removeInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .colorNode ._transparent .removeInterest ("set_transparent__", this);
          }
 
-         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
+         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
          if (this .colorNode)
          {
             this .colorNode .addInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .addInterest ("set_transparent__", this);
+            this .colorNode ._transparent .addInterest ("set_transparent__", this);
 
             this .set_transparent__ ();
          }
@@ -102376,7 +103280,7 @@ function (Fields,
          if (this .texCoordNode)
             this .texCoordNode .removeInterest ("requestRebuild", this);
 
-         this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
+         this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
 
          if (this .texCoordNode)
             this .texCoordNode .addInterest ("requestRebuild", this);
@@ -102388,7 +103292,7 @@ function (Fields,
          if (this .normalNode)
             this .normalNode .removeInterest ("requestRebuild", this);
 
-         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this .normal_);
+         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
 
          if (this .normalNode)
             this .normalNode .addInterest ("requestRebuild", this);
@@ -102407,8 +103311,8 @@ function (Fields,
       },
       getHeight: function (index)
       {
-         if (index < this .height_ .length)
-            return this .height_ [index];
+         if (index < this ._height .length)
+            return this ._height [index];
 
          return 0;
       },
@@ -102416,8 +103320,8 @@ function (Fields,
       {
          var
             texCoords  = [ ],
-            xDimension = this .xDimension_ .getValue (),
-            zDimension = this .zDimension_ .getValue (),
+            xDimension = this ._xDimension .getValue (),
+            zDimension = this ._zDimension .getValue (),
             xSize      = xDimension - 1,
             zSize      = zDimension - 1;
 
@@ -102432,7 +103336,7 @@ function (Fields,
       createNormals: function (points, coordIndex, creaseAngle)
       {
          var
-            cw          = ! this .ccw_ .getValue (),
+            cw          = ! this ._ccw .getValue (),
             normalIndex = [ ],
             normals     = [ ];
 
@@ -102460,7 +103364,7 @@ function (Fields,
             normals .push (normal);
          }
 
-         return this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
+         return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
       },
       createCoordIndex: function ()
       {
@@ -102470,8 +103374,8 @@ function (Fields,
 
          var
             coordIndex = [ ],
-            xDimension = this .xDimension_ .getValue (),
-            zDimension = this .zDimension_ .getValue (),
+            xDimension = this ._xDimension .getValue (),
+            zDimension = this ._zDimension .getValue (),
             xSize      = xDimension - 1,
             zSize      = zDimension - 1;
 
@@ -102501,10 +103405,10 @@ function (Fields,
       {
          var
             points     = [ ],
-            xDimension = this .xDimension_ .getValue (),
-            zDimension = this .zDimension_ .getValue (),
-            xSpacing   = this .xSpacing_ .getValue (),
-            zSpacing   = this .zSpacing_ .getValue ();
+            xDimension = this ._xDimension .getValue (),
+            zDimension = this ._zDimension .getValue (),
+            xSpacing   = this ._xSpacing .getValue (),
+            zSpacing   = this ._zSpacing .getValue ();
 
          for (var z = 0; z < zDimension; ++ z)
          {
@@ -102520,12 +103424,12 @@ function (Fields,
       },
       build: function ()
       {
-         if (this .xDimension_ .getValue () < 2 || this .zDimension_ .getValue () < 2)
+         if (this ._xDimension .getValue () < 2 || this ._zDimension .getValue () < 2)
             return;
 
          var
-            colorPerVertex     = this .colorPerVertex_ .getValue (),
-            normalPerVertex    = this .normalPerVertex_ .getValue (),
+            colorPerVertex     = this ._colorPerVertex .getValue (),
+            normalPerVertex    = this ._normalPerVertex .getValue (),
             coordIndex         = this .createCoordIndex (),
             attribNodes        = this .getAttrib (),
             numAttrib          = attribNodes .length,
@@ -102617,8 +103521,8 @@ function (Fields,
             }
          }
 
-         this .setSolid (this .solid_ .getValue ());
-         this .setCCW (this .ccw_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
+         this .setCCW (this ._ccw .getValue ());
       },
    });
 
@@ -102705,9 +103609,9 @@ function (Fields,
 
       this .addType (X3DConstants .Extrusion);
 
-      this .creaseAngle_  .setUnit ("angle");
-      this .crossSection_ .setUnit ("length");
-      this .spine_        .setUnit ("length");
+      this ._creaseAngle  .setUnit ("angle");
+      this ._crossSection .setUnit ("length");
+      this ._spine        .setUnit ("length");
    }
 
    Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -102746,14 +103650,14 @@ function (Fields,
       {
          X3DGeometryNode .prototype .initialize .call (this);
 
-         this .set_crossSection_ .addFieldInterest (this .crossSection_);
-         this .set_orientation_  .addFieldInterest (this .orientation_);
-         this .set_scale_        .addFieldInterest (this .scale_);
-         this .set_spine_        .addFieldInterest (this .spine_);
+         this ._set_crossSection .addFieldInterest (this ._crossSection);
+         this ._set_orientation  .addFieldInterest (this ._orientation);
+         this ._set_scale        .addFieldInterest (this ._scale);
+         this ._set_spine        .addFieldInterest (this ._spine);
       },
       getClosedOrientation: function ()
       {
-         var orientation = this .orientation_;
+         var orientation = this ._orientation;
 
          if (orientation .length)
          {
@@ -102773,10 +103677,10 @@ function (Fields,
          return function ()
          {
             var
-               crossSection = this .crossSection_,
-               orientation  = this .orientation_,
-               scale        = this .scale_,
-               spine        = this .spine_,
+               crossSection = this ._crossSection,
+               orientation  = this ._orientation,
+               scale        = this ._scale,
+               spine        = this ._spine,
                points       = [ ];
 
             // calculate SCP rotations
@@ -102830,7 +103734,7 @@ function (Fields,
             // calculate SCP rotations
 
             var
-               spine       = this .spine_,
+               spine       = this ._spine,
                numSpines   = spine .length,
                firstSpine  = spine [0] .getValue (),
                lastSpine   = spine [spine .length - 1] .getValue (),
@@ -103010,9 +103914,9 @@ function (Fields,
          return function ()
          {
             var
-               cw            = ! this .ccw_ .getValue (),
-               crossSection  = this .crossSection_,
-               spine         = this .spine_,
+               cw            = ! this ._ccw .getValue (),
+               crossSection  = this ._crossSection,
+               spine         = this ._spine,
                numSpines     = spine .length,
                texCoordArray = this .getTexCoords ();
 
@@ -103210,7 +104114,7 @@ function (Fields,
 
             // Refine body normals and add them.
 
-            normals = this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
+            normals = this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
 
             for (var i = 0; i < normals .length; ++ i)
             {
@@ -103223,7 +104127,7 @@ function (Fields,
 
             if (capMax && numCapPoints > 2)
             {
-               if (this .beginCap_ .getValue ())
+               if (this ._beginCap .getValue ())
                {
                   var
                      j         = 0, // spine
@@ -103241,7 +104145,7 @@ function (Fields,
                      polygon .push (point);
                   }
 
-                  if (this .convex_ .getValue ())
+                  if (this ._convex .getValue ())
                      Triangle3 .triangulateConvexPolygon (polygon, triangles);
 
                   else
@@ -103261,7 +104165,7 @@ function (Fields,
                   }
                }
 
-               if (this .endCap_ .getValue ())
+               if (this ._endCap .getValue ())
                {
                   var
                      j         = numSpines - 1, // spine
@@ -103279,7 +104183,7 @@ function (Fields,
                      polygon .push (point);
                   }
 
-                  if (this .convex_ .getValue ())
+                  if (this ._convex .getValue ())
                      Triangle3 .triangulateConvexPolygon (polygon, triangles);
 
                   else
@@ -103300,8 +104204,8 @@ function (Fields,
                }
             }
 
-            this .setSolid (this .solid_ .getValue ());
-            this .setCCW (this .ccw_ .getValue ());
+            this .setSolid (this ._solid .getValue ());
+            this .setCCW (this ._ccw .getValue ());
          };
       })(),
       addCap: function (texCoordArray, normal, vertices, triangles)
@@ -103408,7 +104312,7 @@ function (Fields,
 
       this .addType (X3DConstants .Sphere);
 
-      this .radius_ .setUnit ("length");
+      this ._radius .setUnit ("length");
    }
 
    Sphere .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -103445,7 +104349,7 @@ function (Fields,
          var
             options  = this .getBrowser () .getSphereOptions (),
             geometry = options .getGeometry (),
-            radius   = this .radius_ .getValue ();
+            radius   = this ._radius .getValue ();
 
          this .setMultiTexCoords (geometry .getMultiTexCoords ());
          this .setNormals        (geometry .getNormals ());
@@ -103477,7 +104381,7 @@ function (Fields,
             this .getMax () .set ( radius,  radius,  radius);
          }
 
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
       },
    });
 
@@ -103696,20 +104600,20 @@ function (Fields,
          X3DChildNode     .prototype .initialize .call (this);
          X3DBoundedObject .prototype .initialize .call (this);
 
-         this .bboxSize_   .addFieldInterest (this .group .bboxSize_);
-         this .bboxCenter_ .addFieldInterest (this .group .bboxCenter_);
-         this .children_   .addFieldInterest (this .group .children_);
+         this ._bboxSize   .addFieldInterest (this .group ._bboxSize);
+         this ._bboxCenter .addFieldInterest (this .group ._bboxCenter);
+         this ._children   .addFieldInterest (this .group ._children);
 
-         this .group .bboxSize_   = this .bboxSize_;
-         this .group .bboxCenter_ = this .bboxCenter_;
-         this .group .children_   = this .children_;
+         this .group ._bboxSize   = this ._bboxSize;
+         this .group ._bboxCenter = this ._bboxCenter;
+         this .group ._children   = this ._children;
          this .group .setPrivate (true);
          this .group .setup ();
 
          // Connect after Group setup.
-         this .group .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-         this .group .isPickableObject_ .addFieldInterest (this .isPickableObject_);
-         this .group .children_         .addInterest ("set_children__", this);
+         this .group ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+         this .group ._isPickableObject .addFieldInterest (this ._isPickableObject);
+         this .group ._children         .addInterest ("set_children__", this);
 
          this .setCameraObject   (this .group .getCameraObject ());
          this .setPickableObject (this .group .getPickableObject ());
@@ -103967,7 +104871,7 @@ function (Fields,
       this .addType (X3DConstants .Switch);
 
       if (executionContext .getSpecificationVersion () === "2.0")
-         this .addAlias ("choice", this .children_);
+         this .addAlias ("choice", this ._children);
 
       this .childNode     = null;
       this .visibleNode   = null;
@@ -104004,14 +104908,14 @@ function (Fields,
       {
          X3DGroupingNode .prototype .initialize .call (this);
 
-         this .whichChoice_ .addInterest ("set_child__", this);
-         this .children_    .addInterest ("set_child__", this);
+         this ._whichChoice .addInterest ("set_child__", this);
+         this ._children    .addInterest ("set_child__", this);
 
          this .set_child__ ();
       },
       getSubBBox: function (bbox, shadow)
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
             const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .visibleNode);
 
@@ -104021,7 +104925,7 @@ function (Fields,
             return bbox .set ();
          }
 
-         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+         return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },
       clear: function () { },
       add: function () { },
@@ -104030,31 +104934,31 @@ function (Fields,
       {
          if (this .childNode)
          {
-            this .childNode .isCameraObject_   .removeInterest ("set_cameraObject__",     this);
-            this .childNode .isPickableObject_ .removeInterest ("set_transformSensors__", this);
+            this .childNode ._isCameraObject   .removeInterest ("set_cameraObject__",     this);
+            this .childNode ._isPickableObject .removeInterest ("set_transformSensors__", this);
          }
 
          if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
          {
-            this .childNode .visible_     .removeInterest ("set_visible__",     this);
-            this .childNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+            this .childNode ._visible     .removeInterest ("set_visible__",     this);
+            this .childNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
          }
 
-         const whichChoice = this .whichChoice_ .getValue ();
+         const whichChoice = this ._whichChoice .getValue ();
 
-         if (whichChoice >= 0 && whichChoice < this .children_ .length)
+         if (whichChoice >= 0 && whichChoice < this ._children .length)
          {
-            this .childNode = X3DCast (X3DConstants .X3DChildNode, this .children_ [whichChoice]);
+            this .childNode = X3DCast (X3DConstants .X3DChildNode, this ._children [whichChoice]);
 
             if (this .childNode)
             {
-               this .childNode .isCameraObject_   .addInterest ("set_cameraObject__",     this);
-               this .childNode .isPickableObject_ .addInterest ("set_transformSensors__", this);
+               this .childNode ._isCameraObject   .addInterest ("set_cameraObject__",     this);
+               this .childNode ._isPickableObject .addInterest ("set_transformSensors__", this);
 
                if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
                {
-                  this .childNode .visible_     .addInterest ("set_visible__",     this);
-                  this .childNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+                  this .childNode ._visible     .addInterest ("set_visible__",     this);
+                  this .childNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
                }
 
                delete this .traverse;
@@ -104077,7 +104981,7 @@ function (Fields,
          {
             if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
             {
-               this .setCameraObject (this .childNode .visible_ .getValue ());
+               this .setCameraObject (this .childNode ._visible .getValue ());
             }
             else
             {
@@ -104097,7 +105001,7 @@ function (Fields,
       {
          if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
          {
-            this .visibleNode = this .childNode .visible_ .getValue () ? this .childNode : null;
+            this .visibleNode = this .childNode ._visible .getValue () ? this .childNode : null;
          }
          else
          {
@@ -104110,7 +105014,7 @@ function (Fields,
       {
          if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
          {
-            this .boundedObject = this .childNode .bboxDisplay_ .getValue () ? this .childNode : null;
+            this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
          }
          else
          {
@@ -104413,8 +105317,8 @@ function (X3DTransformMatrix3DNode,
 
       this .addType (X3DConstants .X3DTransformNode);
 
-      this .translation_ .setUnit ("length");
-      this .center_      .setUnit ("length");
+      this ._translation .setUnit ("length");
+      this ._center      .setUnit ("length");
    }
 
    X3DTransformNode .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
@@ -104430,15 +105334,15 @@ function (X3DTransformMatrix3DNode,
       },
       eventsProcessed: function ()
       {
-         this .setHidden (this .scale_ .x === 0 ||
-                          this .scale_ .y === 0 ||
-                          this .scale_ .z === 0);
+         this .setHidden (this ._scale .x === 0 ||
+                          this ._scale .y === 0 ||
+                          this ._scale .z === 0);
 
-         this .setTransform (this .translation_      .getValue (),
-                             this .rotation_         .getValue (),
-                             this .scale_            .getValue (),
-                             this .scaleOrientation_ .getValue (),
-                             this .center_           .getValue ());
+         this .setTransform (this ._translation      .getValue (),
+                             this ._rotation         .getValue (),
+                             this ._scale            .getValue (),
+                             this ._scaleOrientation .getValue (),
+                             this ._center           .getValue ());
       },
    });
 
@@ -104746,14 +105650,14 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_ .addInterest ("set_keyValue__", this);
+         this ._keyValue .addInterest ("set_keyValue__", this);
       },
       set_keyValue__: function ()
       {
-         var keyValue = this .keyValue_;
+         var keyValue = this ._keyValue;
 
-         if (keyValue .length < this .key_ .length)
-            this .keyValue_ .resize (this .key_ .length, keyValue .length ? keyValue [this .keyValue_ .length - 1] : new Fields .SFColor ());
+         if (keyValue .length < this ._key .length)
+            this ._keyValue .resize (this ._key .length, keyValue .length ? keyValue [this ._keyValue .length - 1] : new Fields .SFColor ());
 
          this .hsv .length = 0;
 
@@ -104768,7 +105672,7 @@ function (Fields,
          {
             Color3 .lerp (this .hsv [index0], this .hsv [index1], weight, value);
 
-            this .value_changed_ .setHSV (value [0], value [1], value [2]);
+            this ._value_changed .setHSV (value [0], value [1], value [2]);
          };
       })(),
    });
@@ -104875,15 +105779,15 @@ function (Fields,
       interpolate: function (index0, index1, weight)
       {
          var
-            keyValue = this .keyValue_ .getValue (),
-            size     = this .key_ .length ? Math .floor (this .keyValue_ .length / this .key_ .length) : 0;
+            keyValue = this ._keyValue .getValue (),
+            size     = this ._key .length ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
 
-         this .value_changed_ .length = size;
+         this ._value_changed .length = size;
 
-         var value_changed = this .value_changed_ .getValue ();
+         var value_changed = this ._value_changed .getValue ();
 
          index0 *= size;
-         index1  = index0 + (this .key_ .length > 1 ? size : 0);
+         index1  = index0 + (this ._key .length > 1 ? size : 0);
 
          index0 *= 3;
          index1 *= 3;
@@ -104900,7 +105804,7 @@ function (Fields,
             value_changed [i2] = Algorithm .lerp (keyValue [index0 + i2], keyValue [index1 + i2], weight);
          }
 
-         this .value_changed_ .addEvent ();
+         this ._value_changed .addEvent ();
       },
    });
 
@@ -105006,15 +105910,15 @@ function (Fields,
       interpolate: function (index0, index1, weight)
       {
          var
-            keyValue = this .keyValue_ .getValue (),
-            size     = this .key_ .length ? Math .floor (this .keyValue_ .length / this .key_ .length) : 0;
+            keyValue = this ._keyValue .getValue (),
+            size     = this ._key .length ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
 
-         this .value_changed_ .length = size;
+         this ._value_changed .length = size;
 
-         var value_changed = this .value_changed_ .getValue ();
+         var value_changed = this ._value_changed .getValue ();
 
          index0 *= size;
-         index1  = index0 + (this .key_ .length > 1 ? size : 0);
+         index1  = index0 + (this ._key .length > 1 ? size : 0);
 
          index0 *= 2;
          index1 *= 2;
@@ -105028,7 +105932,7 @@ function (Fields,
             value_changed [i1] = Algorithm .lerp (keyValue [index0 + i1], keyValue [index1 + i1], weight);
          }
 
-         this .value_changed_ .addEvent ();
+         this ._value_changed .addEvent ();
       },
    });
 
@@ -105140,18 +106044,18 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_ .addInterest ("set_keyValue__", this);
+         this ._keyValue .addInterest ("set_keyValue__", this);
       },
       set_keyValue__: function () { },
       interpolate: function (index0, index1, weight)
       {
          var
-            keyValue = this .keyValue_ .getValue (),
-            size     = this .key_ .length > 1 ? Math .floor (this .keyValue_ .length / this .key_ .length) : 0;
+            keyValue = this ._keyValue .getValue (),
+            size     = this ._key .length > 1 ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
 
-         this .value_changed_ .length = size;
+         this ._value_changed .length = size;
 
-         var value_changed = this .value_changed_ .getValue ();
+         var value_changed = this ._value_changed .getValue ();
 
          index0 *= size;
          index1  = index0 + size;
@@ -105181,7 +106085,7 @@ function (Fields,
             { }
          }
 
-         this .value_changed_ .addEvent ();
+         this ._value_changed .addEvent ();
       },
    });
 
@@ -105287,13 +106191,13 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_ .addInterest ("set_keyValue__", this);
+         this ._keyValue .addInterest ("set_keyValue__", this);
       },
       set_keyValue__: function ()
       {
          var
-            key      = this .key_,
-            keyValue = this .keyValue_;
+            key      = this ._key,
+            keyValue = this ._keyValue;
 
          if (keyValue .length < key .length)
             keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec2f ());
@@ -105304,7 +106208,7 @@ function (Fields,
 
          return function (index0, index1, weight)
          {
-            this .value_changed_ = keyValue .assign (this .keyValue_ [index0] .getValue ()) .lerp (this .keyValue_ [index1] .getValue (), weight);
+            this ._value_changed = keyValue .assign (this ._keyValue [index0] .getValue ()) .lerp (this ._keyValue [index1] .getValue (), weight);
          };
       })(),
    });
@@ -105780,15 +106684,15 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_          .addInterest ("set_keyValue__",          this);
-         this .keyVelocity_       .addInterest ("set_keyVelocity__",       this);
-         this .normalizeVelocity_ .addInterest ("set_normalizeVelocity__", this);
+         this ._keyValue          .addInterest ("set_keyValue__",          this);
+         this ._keyVelocity       .addInterest ("set_keyVelocity__",       this);
+         this ._normalizeVelocity .addInterest ("set_normalizeVelocity__", this);
       },
       set_keyValue__: function ()
       {
          var
-            key      = this .key_,
-            keyValue = this .keyValue_;
+            key      = this ._key,
+            keyValue = this ._keyValue;
 
          if (keyValue .length < key .length)
             keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
@@ -105797,25 +106701,25 @@ function (Fields,
       },
       set_keyVelocity__: function ()
       {
-         if (this .keyVelocity_ .length)
+         if (this ._keyVelocity .length)
          {
-            if (this .keyVelocity_ .length < this .key_ .length)
-               this .keyVelocity_ .resize (this .key_ .length, new Fields .SFVec3f ());
+            if (this ._keyVelocity .length < this ._key .length)
+               this ._keyVelocity .resize (this ._key .length, new Fields .SFVec3f ());
          }
 
          this .set_normalizeVelocity__ ();
       },
       set_normalizeVelocity__: function ()
       {
-         this .spline .generate (this .closed_ .getValue (),
-                                 this .key_,
-                                 this .keyValue_,
-                                 this .keyVelocity_,
-                                 this .normalizeVelocity_ .getValue ());
+         this .spline .generate (this ._closed .getValue (),
+                                 this ._key,
+                                 this ._keyValue,
+                                 this ._keyVelocity,
+                                 this ._normalizeVelocity .getValue ());
       },
       interpolate: function (index0, index1, weight)
       {
-         this .value_changed_ = this .spline .interpolate (index0, index1, weight, this .keyValue_);
+         this ._value_changed = this .spline .interpolate (index0, index1, weight, this ._keyValue);
       },
    });
 
@@ -105987,15 +106891,15 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_          .addInterest ("set_keyValue__",          this);
-         this .keyVelocity_       .addInterest ("set_keyVelocity__",       this);
-         this .normalizeVelocity_ .addInterest ("set_normalizeVelocity__", this);
+         this ._keyValue          .addInterest ("set_keyValue__",          this);
+         this ._keyVelocity       .addInterest ("set_keyVelocity__",       this);
+         this ._normalizeVelocity .addInterest ("set_normalizeVelocity__", this);
       },
       set_keyValue__: function ()
       {
          var
-            key      = this .key_,
-            keyValue = this .keyValue_;
+            key      = this ._key,
+            keyValue = this ._keyValue;
 
          if (keyValue .length < key .length)
             keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec2f ());
@@ -106004,25 +106908,25 @@ function (Fields,
       },
       set_keyVelocity__: function ()
       {
-         if (this .keyVelocity_ .length)
+         if (this ._keyVelocity .length)
          {
-            if (this .keyVelocity_ .length < this .key_ .length)
-               this .keyVelocity_ .resize (this .key_ .length, new Fields .SFVec2f ());
+            if (this ._keyVelocity .length < this ._key .length)
+               this ._keyVelocity .resize (this ._key .length, new Fields .SFVec2f ());
          }
 
          this .set_normalizeVelocity__ ();
       },
       set_normalizeVelocity__: function ()
       {
-         this .spline .generate (this .closed_ .getValue (),
-                                 this .key_,
-                                 this .keyValue_,
-                                 this .keyVelocity_,
-                                 this .normalizeVelocity_ .getValue ());
+         this .spline .generate (this ._closed .getValue (),
+                                 this ._key,
+                                 this ._keyValue,
+                                 this ._keyVelocity,
+                                 this ._normalizeVelocity .getValue ());
       },
       interpolate: function (index0, index1, weight)
       {
-         this .value_changed_ = this .spline .interpolate (index0, index1, weight, this .keyValue_);
+         this ._value_changed = this .spline .interpolate (index0, index1, weight, this ._keyValue);
       },
    });
 
@@ -106231,15 +107135,15 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_          .addInterest ("set_keyValue__",          this);
-         this .keyVelocity_       .addInterest ("set_keyVelocity__",       this);
-         this .normalizeVelocity_ .addInterest ("set_normalizeVelocity__", this);
+         this ._keyValue          .addInterest ("set_keyValue__",          this);
+         this ._keyVelocity       .addInterest ("set_keyVelocity__",       this);
+         this ._normalizeVelocity .addInterest ("set_normalizeVelocity__", this);
       },
       set_keyValue__: function ()
       {
          var
-            key      = this .key_,
-            keyValue = this .keyValue_;
+            key      = this ._key,
+            keyValue = this ._keyValue;
 
          if (keyValue .length < key .length)
             keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFFloat ());
@@ -106248,25 +107152,25 @@ function (Fields,
       },
       set_keyVelocity__: function ()
       {
-         if (this .keyVelocity_ .length)
+         if (this ._keyVelocity .length)
          {
-            if (this .keyVelocity_ .length < this .key_ .length)
-               this .keyVelocity_ .resize (this .key_ .length, new Fields .SFFloat ());
+            if (this ._keyVelocity .length < this ._key .length)
+               this ._keyVelocity .resize (this ._key .length, new Fields .SFFloat ());
          }
 
          this .set_normalizeVelocity__ ();
       },
       set_normalizeVelocity__: function ()
       {
-         this .spline .generate (this .closed_ .getValue (),
-                                 this .key_,
-                                 this .keyValue_,
-                                 this .keyVelocity_,
-                                 this .normalizeVelocity_ .getValue ());
+         this .spline .generate (this ._closed .getValue (),
+                                 this ._key,
+                                 this ._keyValue,
+                                 this ._keyVelocity,
+                                 this ._normalizeVelocity .getValue ());
       },
       interpolate: function (index0, index1, weight)
       {
-         this .value_changed_ = this .spline .interpolate (index0, index1, weight, this .keyValue_);
+         this ._value_changed = this .spline .interpolate (index0, index1, weight, this ._keyValue);
       },
    });
 
@@ -106462,8 +107366,8 @@ function (Fields,
 
       this .addType (X3DConstants .SquadOrientationInterpolator);
 
-      this .keyValue_      .setUnit ("angle");
-      this .value_changed_ .setUnit ("angle");
+      this ._keyValue      .setUnit ("angle");
+      this ._value_changed .setUnit ("angle");
 
       this .squad = new SquatInterpolator ();
    }
@@ -106495,26 +107399,26 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_    .addInterest ("set_keyValue__", this);
+         this ._keyValue    .addInterest ("set_keyValue__", this);
       },
       set_keyValue__: function ()
       {
          var
-            key      = this .key_,
-            keyValue = this .keyValue_;
+            key      = this ._key,
+            keyValue = this ._keyValue;
 
          if (keyValue .length < key .length)
             keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
 
-         this .squad .generate (this .closed_ .getValue (),
-                                this .key_,
-                                this .keyValue_);
+         this .squad .generate (this ._closed .getValue (),
+                                this ._key,
+                                this ._keyValue);
       },
       interpolate: function (index0, index1, weight)
       {
          try
          {
-            this .value_changed_ = this .squad .interpolate (index0, index1, weight, this .keyValue_);
+            this ._value_changed = this .squad .interpolate (index0, index1, weight, this ._keyValue);
          }
          catch (error)
          {
@@ -106970,7 +107874,7 @@ function (Fields,
       },
       setGlobalVariables: function (renderObject)
       {
-         this .modelViewMatrix .get () .multVecMatrix (this .location .assign (this .lightNode .location_ .getValue ()));
+         this .modelViewMatrix .get () .multVecMatrix (this .location .assign (this .lightNode ._location .getValue ()));
 
          this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
          this .shadowMatrixArray .set (this .shadowMatrix);
@@ -107042,8 +107946,8 @@ function (Fields,
 
       this .addType (X3DConstants .PointLight);
 
-      this .location_ .setUnit ("length");
-      this .radius_   .setUnit ("length");
+      this ._location .setUnit ("length");
+      this ._radius   .setUnit ("length");
    }
 
    PointLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
@@ -107080,15 +107984,15 @@ function (Fields,
       },
       getAttenuation: function ()
       {
-         return this .attenuation_ .getValue ();
+         return this ._attenuation .getValue ();
       },
       getLocation: function ()
       {
-         return this .location_ .getValue ();
+         return this ._location .getValue ();
       },
       getRadius: function ()
       {
-         return Math .max (0, this .radius_ .getValue ());
+         return Math .max (0, this ._radius .getValue ());
       },
       getLights: function ()
       {
@@ -107333,8 +108237,8 @@ function (Fields,
             lightNode       = this .lightNode,
             modelViewMatrix = this .modelViewMatrix .get ();
 
-         modelViewMatrix .multVecMatrix (this .location  .assign (lightNode .location_  .getValue ()));
-         modelViewMatrix .multDirMatrix (this .direction .assign (lightNode .direction_ .getValue ())) .normalize ();
+         modelViewMatrix .multVecMatrix (this .location  .assign (lightNode ._location  .getValue ()));
+         modelViewMatrix .multDirMatrix (this .direction .assign (lightNode ._direction .getValue ())) .normalize ();
 
          this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
          this .shadowMatrixArray .set (this .shadowMatrix);
@@ -107417,15 +108321,15 @@ function (Fields,
          case "3.1":
          case "3.2":
          {
-            this .beamWidth_   = 1.5708;
-            this .cutOffAngle_ = 0.785398;
+            this ._beamWidth   = 1.5708;
+            this ._cutOffAngle = 0.785398;
          }
       }
 
-      this .location_    .setUnit ("length");
-      this .radius_      .setUnit ("length");
-      this .beamWidth_   .setUnit ("angle");
-      this .cutOffAngle_ .setUnit ("angle");
+      this ._location    .setUnit ("length");
+      this ._radius      .setUnit ("length");
+      this ._beamWidth   .setUnit ("angle");
+      this ._cutOffAngle .setUnit ("angle");
    }
 
    SpotLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
@@ -107465,22 +108369,22 @@ function (Fields,
       },
       getAttenuation: function ()
       {
-         return this .attenuation_ .getValue ();
+         return this ._attenuation .getValue ();
       },
       getLocation: function ()
       {
-         return this .location_ .getValue ();
+         return this ._location .getValue ();
       },
       getRadius: function ()
       {
-         return Math .max (0, this .radius_ .getValue ());
+         return Math .max (0, this ._radius .getValue ());
       },
       getBeamWidth: function ()
       {
          // If the beamWidth is greater than the cutOffAngle, beamWidth is defined to be equal to the cutOffAngle.
 
          var
-            beamWidth   = this .beamWidth_ .getValue (),
+            beamWidth   = this ._beamWidth .getValue (),
             cutOffAngle = this .getCutOffAngle ();
 
          if (beamWidth > cutOffAngle)
@@ -107490,7 +108394,7 @@ function (Fields,
       },
       getCutOffAngle: function ()
       {
-         return Algorithm .clamp (this .cutOffAngle_ .getValue (), 0, Math .PI / 2);
+         return Algorithm .clamp (this ._cutOffAngle .getValue (), 0, Math .PI / 2);
       },
       getLights: function ()
       {
@@ -107717,7 +108621,7 @@ function (Fields,
 
          const billboardToViewer = inverseModelViewMatrix .origin .normalize (); // Normalized to get work with Geo
 
-         if (this .axisOfRotation_ .getValue () .equals (Vector3 .Zero))
+         if (this ._axisOfRotation .getValue () .equals (Vector3 .Zero))
          {
             inverseModelViewMatrix .multDirMatrix (viewerYAxis .assign (yAxis)) .normalize (); // Normalized to get work with Geo
 
@@ -107737,8 +108641,8 @@ function (Fields,
          }
          else
          {
-            N1 .assign (this .axisOfRotation_ .getValue ()) .cross (billboardToViewer); // Normal vector of plane as in specification
-            N2 .assign (this .axisOfRotation_ .getValue ()) .cross (zAxis);             // Normal vector of plane between axisOfRotation and zAxis
+            N1 .assign (this ._axisOfRotation .getValue ()) .cross (billboardToViewer); // Normal vector of plane as in specification
+            N2 .assign (this ._axisOfRotation .getValue ()) .cross (zAxis);             // Normal vector of plane between axisOfRotation and zAxis
 
             this .matrix .setRotation (rotation .setFromToVec (N2, N1));                // Rotate zAxis in plane
          }
@@ -107858,7 +108762,7 @@ function (Fields,
       this .addType (X3DConstants .Collision);
 
       if (executionContext .getSpecificationVersion () === "2.0")
-         this .addAlias ("collide", this .enabled_); // VRML2
+         this .addAlias ("collide", this ._enabled); // VRML2
    }
 
    Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -107897,15 +108801,15 @@ function (Fields,
          //X3DSensorNode   .prototype .initialize .call (this); // We can only call the base of a *Objects.
 
          this .isLive () .addInterest ("set_live__", this);
-         this .enabled_  .addInterest ("set_live__", this);
-         this .proxy_    .addInterest ("set_proxy__", this);
+         this ._enabled  .addInterest ("set_live__", this);
+         this ._proxy    .addInterest ("set_proxy__", this);
 
          this .set_live__ ();
          this .set_proxy__ ();
       },
       set_live__: function ()
       {
-         if (this .isLive () .getValue () && this .enabled_ .getValue ())
+         if (this .isLive () .getValue () && this ._enabled .getValue ())
             this .getBrowser () .addCollision (this);
 
          else
@@ -107913,17 +108817,17 @@ function (Fields,
       },
       set_active: function (value)
       {
-         if (this .isActive_ .getValue () !== value)
+         if (this ._isActive .getValue () !== value)
          {
-            this .isActive_ = value;
+            this ._isActive = value;
 
             if (value)
-               this .collideTime_ = this .getBrowser () .getCurrentTime ();
+               this ._collideTime = this .getBrowser () .getCurrentTime ();
          }
       },
       set_proxy__: function ()
       {
-         this .proxyNode = X3DCast (X3DConstants .X3DChildNode, this .proxy_);
+         this .proxyNode = X3DCast (X3DConstants .X3DChildNode, this ._proxy);
       },
       traverse: function (type, renderObject)
       {
@@ -107931,7 +108835,7 @@ function (Fields,
          {
             case TraverseType .COLLISION:
             {
-               if (this .enabled_ .getValue ())
+               if (this ._enabled .getValue ())
                {
                   const collisions = renderObject .getCollisions ();
 
@@ -108039,10 +108943,10 @@ function (Fields,
       this .addType (X3DConstants .LOD);
 
       if (executionContext .getSpecificationVersion () === "2.0")
-         this .addAlias ("level", this .children_); // VRML2
+         this .addAlias ("level", this ._children); // VRML2
 
-      this .center_ .setUnit ("length");
-      this .range_  .setUnit ("length");
+      this ._center .setUnit ("length");
+      this ._range  .setUnit ("length");
 
       this .frameRate        = 60;
       this .keepCurrentLevel = false;
@@ -108084,11 +108988,11 @@ function (Fields,
       {
          X3DGroupingNode .prototype .initialize .call (this);
 
-         this .children_ .addInterest ("set_child__", this);
+         this ._children .addInterest ("set_child__", this);
       },
       getSubBBox: function (bbox, shadow)
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
             const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .visibleNode);
 
@@ -108098,42 +109002,42 @@ function (Fields,
             return bbox .set ();
          }
 
-         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+         return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },
       clear: function () { },
       add: function () { },
       remove: function () { },
       set_child__: function ()
       {
-         this .set_level__ (Math .min (this .level_changed_ .getValue (), this .children_ .length - 1));
+         this .set_level__ (Math .min (this ._level_changed .getValue (), this ._children .length - 1));
       },
       set_level__: function (level)
       {
          if (this .childNode)
          {
-            this .childNode .isCameraObject_   .removeInterest ("set_cameraObject__",     this);
-            this .childNode .isPickableObject_ .removeInterest ("set_transformSensors__", this);
+            this .childNode ._isCameraObject   .removeInterest ("set_cameraObject__",     this);
+            this .childNode ._isPickableObject .removeInterest ("set_transformSensors__", this);
          }
 
          if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
          {
-            this .childNode .visible_     .removeInterest ("set_visible__",     this);
-            this .childNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+            this .childNode ._visible     .removeInterest ("set_visible__",     this);
+            this .childNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
          }
 
-         if (level >= 0 && level < this .children_ .length)
+         if (level >= 0 && level < this ._children .length)
          {
-            this .childNode = X3DCast (X3DConstants .X3DChildNode, this .children_ [level]);
+            this .childNode = X3DCast (X3DConstants .X3DChildNode, this ._children [level]);
 
             if (this .childNode)
             {
-               this .childNode .isCameraObject_   .addInterest ("set_cameraObject__",     this);
-               this .childNode .isPickableObject_ .addInterest ("set_transformSensors__", this);
+               this .childNode ._isCameraObject   .addInterest ("set_cameraObject__",     this);
+               this .childNode ._isPickableObject .addInterest ("set_transformSensors__", this);
 
                if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
                {
-                  this .childNode .visible_     .addInterest ("set_visible__",     this);
-                  this .childNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+                  this .childNode ._visible     .addInterest ("set_visible__",     this);
+                  this .childNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
                }
 
                //delete this .traverse;
@@ -108156,7 +109060,7 @@ function (Fields,
          {
             if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
             {
-               this .setCameraObject (this .childNode .visible_ .getValue ());
+               this .setCameraObject (this .childNode ._visible .getValue ());
             }
             else
             {
@@ -108176,7 +109080,7 @@ function (Fields,
       {
          if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
          {
-            this .visibleNode = this .childNode .visible_ .getValue () ? this .childNode : null;
+            this .visibleNode = this .childNode ._visible .getValue () ? this .childNode : null;
          }
          else
          {
@@ -108189,7 +109093,7 @@ function (Fields,
       {
          if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
          {
-            this .boundedObject = this .childNode .bboxDisplay_ .getValue () ? this .childNode : null;
+            this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
          }
          else
          {
@@ -108205,11 +109109,11 @@ function (Fields,
 
          return function (browser, modelViewMatrix)
          {
-            if (this .range_ .length === 0)
+            if (this ._range .length === 0)
             {
                this .frameRate = ((FRAMES - 1) * this .frameRate + browser .currentFrameRate) / FRAMES;
 
-               const size = this .children_ .length;
+               const size = this ._children .length;
 
                switch (size)
                {
@@ -108228,9 +109132,9 @@ function (Fields,
                }
             }
 
-            const distance = modelViewMatrix .translate (this .center_ .getValue ()) .origin .abs ();
+            const distance = modelViewMatrix .translate (this ._center .getValue ()) .origin .abs ();
 
-            return Algorithm .upperBound (this .range_, 0, this .range_ .length, distance, Algorithm .less);
+            return Algorithm .upperBound (this ._range, 0, this ._range .length, distance, Algorithm .less);
          };
       })(),
       traverse: (function ()
@@ -108294,9 +109198,9 @@ function (Fields,
                   {
                      let
                         level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
-                        currentLevel = this .level_changed_ .getValue ();
+                        currentLevel = this ._level_changed .getValue ();
 
-                     if (this .forceTransitions_ .getValue ())
+                     if (this ._forceTransitions .getValue ())
                      {
                         if (level > currentLevel)
                            level = currentLevel + 1;
@@ -108307,9 +109211,9 @@ function (Fields,
 
                      if (level !== currentLevel)
                      {
-                        this .level_changed_ = level;
+                        this ._level_changed = level;
 
-                        this .set_level__ (Math .min (level, this .children_ .length - 1));
+                        this .set_level__ (Math .min (level, this ._children .length - 1));
                      }
                   }
 
@@ -108409,8 +109313,8 @@ function (Fields,
 
       this .addType (X3DConstants .ViewpointGroup);
 
-      this .size_   .setUnit ("length");
-      this .center_ .setUnit ("length");
+      this ._size   .setUnit ("length");
+      this ._center .setUnit ("length");
 
       this .proximitySensor  = new ProximitySensor (executionContext);
       this .cameraObjects    = [ ];
@@ -108447,35 +109351,35 @@ function (Fields,
 
          this .proximitySensor .setup ();
 
-         this .size_   .addFieldInterest (this .proximitySensor .size_);
-         this .center_ .addFieldInterest (this .proximitySensor .center_);
+         this ._size   .addFieldInterest (this .proximitySensor ._size);
+         this ._center .addFieldInterest (this .proximitySensor ._center);
 
-         this .proximitySensor .size_   = this .size_;
-         this .proximitySensor .center_ = this .center_;
+         this .proximitySensor ._size   = this ._size;
+         this .proximitySensor ._center = this ._center;
 
-         this .displayed_ .addInterest ("set_displayed__", this);
-         this .size_      .addInterest ("set_displayed__", this);
-         this .children_  .addInterest ("set_children__", this);
+         this ._displayed .addInterest ("set_displayed__", this);
+         this ._size      .addInterest ("set_displayed__", this);
+         this ._children  .addInterest ("set_children__", this);
 
          this .set_displayed__ ();
          this .set_children__ ();
       },
       isActive: function ()
       {
-         return this .proximitySensor .isActive_ .getValue ();
+         return this .proximitySensor ._isActive .getValue ();
       },
       set_displayed__: function ()
       {
          var
-            proxy     = ! this .size_ .getValue () .equals (Vector3 .Zero),
-            displayed = this .displayed_ .getValue ();
+            proxy     = ! this ._size .getValue () .equals (Vector3 .Zero),
+            displayed = this ._displayed .getValue ();
 
-         this .proximitySensor .enabled_ = displayed && proxy;
+         this .proximitySensor ._enabled = displayed && proxy;
 
          if (displayed && proxy)
          {
-            this .proximitySensor .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-            this .proximitySensor .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+            this .proximitySensor ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+            this .proximitySensor ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
             this .setCameraObject   (this .proximitySensor .getCameraObject ());
             this .setPickableObject (this .proximitySensor .getPickableObject ());
@@ -108484,8 +109388,8 @@ function (Fields,
          }
          else
          {
-            this .proximitySensor .isCameraObject_    .removeFieldInterest (this .isCameraObject_);
-            this .proximitySensor .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+            this .proximitySensor ._isCameraObject    .removeFieldInterest (this ._isCameraObject);
+            this .proximitySensor ._isPickableObject .removeFieldInterest (this ._isPickableObject);
 
             this .setCameraObject   (displayed);
             this .setPickableObject (false);
@@ -108501,7 +109405,7 @@ function (Fields,
          this .cameraObjects   .length = 0;
          this .viewpointGroups .length = 0;
 
-         var children = this .children_;
+         var children = this ._children;
 
          for (var i = 0, length = children .length; i < length; ++ i)
          {
@@ -108544,7 +109448,7 @@ function (Fields,
          {
             this .proximitySensor .traverse (type, renderObject);
 
-            if (this .proximitySensor .isActive_ .getValue ())
+            if (this .proximitySensor ._isActive .getValue ())
             {
                for (var i = 0, length = this .cameraObjects .length; i < length; ++ i)
                   this .cameraObjects [i] .traverse (type, renderObject);
@@ -108556,7 +109460,7 @@ function (Fields,
          {
             this .proximitySensor .traverse (type, renderObject);
 
-            if (this .proximitySensor .isActive_ .getValue ())
+            if (this .proximitySensor ._isActive .getValue ())
             {
                for (var i = 0, length = this .viewpointGroups .length; i < length; ++ i)
                   this .viewpointGroups [i] .traverse (type, renderObject);
@@ -108854,7 +109758,7 @@ function (X3DSensorNode,
       {
          X3DSensorNode .prototype .initialize .call (this);
 
-         this .enabled_ .addInterest ("set_enabled__", this);
+         this ._enabled .addInterest ("set_enabled__", this);
       },
       getMatrices: function ()
       {
@@ -108862,35 +109766,35 @@ function (X3DSensorNode,
       },
       set_enabled__: function ()
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
             return;
 
-         if (this .isActive_ .getValue ())
-            this .isActive_ = false;
+         if (this ._isActive .getValue ())
+            this ._isActive = false;
 
-         if (this .isOver_ .getValue ())
-            this .isOver_ = false;
+         if (this ._isOver .getValue ())
+            this ._isOver = false;
       },
       set_over__: function (over, hit)
       {
-         if (over !== this .isOver_ .getValue ())
+         if (over !== this ._isOver .getValue ())
          {
-            this .isOver_ = over;
+            this ._isOver = over;
 
             if (over)
-               this .getBrowser () .getNotification () .string_ = this .description_;
+               this .getBrowser () .getNotification () ._string = this ._description;
          }
       },
       set_active__: function (active, hit)
       {
-         if (active !== this .isActive_ .getValue ())
-            this .isActive_ = active
+         if (active !== this ._isActive .getValue ())
+            this ._isActive = active
       },
       set_motion__: function (hit)
       { },
       push: function (renderObject, sensors)
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
             sensors .set (this, new PointingDeviceSensorContainer (this,
                                                                    renderObject .getModelViewMatrix  () .get (),
@@ -108975,8 +109879,8 @@ function (X3DPointingDeviceSensorNode,
       {
          X3DPointingDeviceSensorNode .prototype .set_active__ .call (this, active, hit);
 
-         if (this .enabled_ .getValue () && this .isOver_ .getValue () && ! active)
-            this .touchTime_ = this .getBrowser () .getCurrentTime ();
+         if (this ._enabled .getValue () && this ._isOver .getValue () && ! active)
+            this ._touchTime = this .getBrowser () .getCurrentTime ();
       },
    });
 
@@ -109057,7 +109961,7 @@ function (Fields,
 
       this .addType (X3DConstants .TouchSensor);
 
-      this .hitPoint_changed_ .setUnit ("length");
+      this ._hitPoint_changed .setUnit ("length");
    }
 
    TouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
@@ -109092,15 +109996,15 @@ function (Fields,
          {
             X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
 
-            if (this .isOver_ .getValue ())
+            if (this ._isOver .getValue ())
             {
                var intersection = hit .intersection;
 
                invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-               this .hitTexCoord_changed_ = intersection .texCoord;
-               this .hitNormal_changed_   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
-               this .hitPoint_changed_    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
+               this ._hitTexCoord_changed = intersection .texCoord;
+               this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
+               this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
             }
          }
          catch (error)
@@ -109232,11 +110136,11 @@ function (Fields,
          X3DGroupingNode .prototype .initialize .call (this);
          X3DUrlObject    .prototype .initialize .call (this);
 
-         this .description_ .addFieldInterest (this .touchSensorNode .description_);
-         this .load_        .addFieldInterest (this .touchSensorNode .enabled_);
+         this ._description .addFieldInterest (this .touchSensorNode ._description);
+         this ._load        .addFieldInterest (this .touchSensorNode ._enabled);
 
-         this .touchSensorNode .description_ = this .description_;
-         this .touchSensorNode .enabled_     = this .load_;
+         this .touchSensorNode ._description = this ._description;
+         this .touchSensorNode ._enabled     = this ._load;
          this .touchSensorNode .setup ();
 
          // Modify set_active__ to get immediate response to user action (click event), otherwise links are not opened in this window.
@@ -109249,7 +110153,7 @@ function (Fields,
          {
             set_active__ .call (this, active, hit);
 
-            if (this .isOver_ .getValue () && ! active)
+            if (this ._isOver .getValue () && ! active)
                anchor .requestImmediateLoad ();
          };
       },
@@ -109262,7 +110166,7 @@ function (Fields,
          this .setCache (cache);
          this .setLoadState (X3DConstants .IN_PROGRESS_STATE, false);
 
-         new FileLoader (this) .createX3DFromURL (this .url_, this .parameter_,
+         new FileLoader (this) .createX3DFromURL (this ._url, this ._parameter,
          function (scene)
          {
             if (scene)
@@ -109440,17 +110344,17 @@ function (Fields,
          this .group .setPrivate (true);
          this .group .setup ();
 
-         this .group .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-         this .group .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+         this .group ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+         this .group ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
          this .requestImmediateLoad ();
       },
       getBBox: function (bbox, shadow)
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
             return this .group .getBBox (bbox, shadow);
 
-         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+         return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },
       set_live__: function ()
       {
@@ -109467,7 +110371,7 @@ function (Fields,
       },
       loadNow: function ()
       {
-         new FileLoader (this) .createX3DFromURL (this .urlBuffer_, null, this .setInternalSceneAsync .bind (this));
+         new FileLoader (this) .createX3DFromURL (this ._urlBuffer, null, this .setInternalSceneAsync .bind (this));
       },
       setInternalSceneAsync: function (scene)
       {
@@ -109485,7 +110389,7 @@ function (Fields,
       setInternalScene: function (scene)
       {
          this .scene .setLive (false);
-         this .scene .rootNodes .removeFieldInterest (this .group .children_);
+         this .scene .rootNodes .removeFieldInterest (this .group ._children);
 
          // Set new scene.
 
@@ -109493,8 +110397,8 @@ function (Fields,
          this .scene .setExecutionContext (this .getExecutionContext ());
          this .scene .setPrivate (this .getExecutionContext () .getPrivate ());
 
-         this .scene .rootNodes .addFieldInterest (this .group .children_);
-         this .group .children_ = this .scene .rootNodes;
+         this .scene .rootNodes .addFieldInterest (this .group ._children);
+         this .group ._children = this .scene .rootNodes;
 
          this .set_live__ ();
 
@@ -109686,7 +110590,7 @@ function (X3DPointingDeviceSensorNode,
 
       this .addType (X3DConstants .X3DDragSensorNode);
 
-      this .trackPoint_changed_ .setUnit ("length");
+      this ._trackPoint_changed .setUnit ("length");
    }
 
    X3DDragSensorNode .prototype = Object .assign (Object .create (X3DPointingDeviceSensorNode .prototype),
@@ -109953,10 +110857,10 @@ function (Fields,
 
       this .addType (X3DConstants .CylinderSensor);
 
-      this .diskAngle_ .setUnit ("angle");
-      this .minAngle_  .setUnit ("angle");
-      this .maxAngle_  .setUnit ("angle");
-      this .offset_    .setUnit ("angle");
+      this ._diskAngle .setUnit ("angle");
+      this ._minAngle  .setUnit ("angle");
+      this ._maxAngle  .setUnit ("angle");
+      this ._offset    .setUnit ("angle");
    }
 
    CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
@@ -110052,7 +110956,7 @@ function (Fields,
 
          try
          {
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
                this .modelViewMatrix .assign (modelViewMatrix);
                this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
@@ -110062,7 +110966,7 @@ function (Fields,
                   hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
 
                var
-                  yAxis      = this .axisRotation_ .getValue () .multVecRot (new Vector3 (0, 1, 0)),
+                  yAxis      = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
                   cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
 
                var
@@ -110071,7 +110975,7 @@ function (Fields,
 
                this .cylinder = new Cylinder3 (axis, radius);
 
-               this .disk   = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this .diskAngle_ .getValue ());
+               this .disk   = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this ._diskAngle .getValue ());
                this .behind = this .isBehind (hitRay, hitPoint);
 
                this .yPlane = new Plane3 (hitPoint, yAxis);             // Sensor aligned y-plane
@@ -110093,20 +110997,20 @@ function (Fields,
                   this .getTrackPoint (hitRay, trackPoint);
 
                this .fromVector  = this .cylinder .axis .getPerpendicularVector (trackPoint) .negate ();
-               this .startOffset = new Rotation4 (yAxis, this .offset_ .getValue ());
+               this .startOffset = new Rotation4 (yAxis, this ._offset .getValue ());
 
-               this .trackPoint_changed_ = trackPoint;
-               this .rotation_changed_   = this .startOffset;
+               this ._trackPoint_changed = trackPoint;
+               this ._rotation_changed   = this .startOffset;
 
                // For min/max angle.
 
-               this .angle       = this .offset_ .getValue ();
-               this .startVector = this .rotation_changed_ .getValue () .multVecRot (this .axisRotation_ .getValue () .multVecRot (new Vector3 (0, 0, 1)));
+               this .angle       = this ._offset .getValue ();
+               this .startVector = this ._rotation_changed .getValue () .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1)));
             }
             else
             {
-               if (this .autoOffset_ .getValue ())
-                  this .offset_ = this .getAngle (this .rotation_changed_ .getValue ());
+               if (this ._autoOffset .getValue ())
+                  this ._offset = this .getAngle (this ._rotation_changed .getValue ());
             }
          }
          catch (error)
@@ -110127,7 +111031,7 @@ function (Fields,
             else
                this .getTrackPoint (hitRay, trackPoint);
 
-            this .trackPoint_changed_ = trackPoint;
+            this ._trackPoint_changed = trackPoint;
 
             var
                toVector = this .cylinder .axis .getPerpendicularVector (trackPoint) .negate (),
@@ -110152,19 +111056,19 @@ function (Fields,
 
             rotation .multLeft (this .startOffset);
 
-            if (this .minAngle_ .getValue () > this .maxAngle_ .getValue ())
+            if (this ._minAngle .getValue () > this ._maxAngle .getValue ())
             {
-               this .rotation_changed_ = rotation;
+               this ._rotation_changed = rotation;
             }
             else
             {
                var
-                  endVector     = rotation .multVecRot (this .axisRotation_ .getValue () .multVecRot (new Vector3 (0, 0, 1))),
+                  endVector     = rotation .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1))),
                   deltaRotation = new Rotation4 (this .startVector, endVector),
-                  axis          = this .axisRotation_ .getValue () .multVecRot (new Vector3 (0, 1, 0)),
+                  axis          = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
                   sign          = axis .dot (deltaRotation .getAxis ()) > 0 ? 1 : -1,
-                  min           = this .minAngle_ .getValue (),
-                  max           = this .maxAngle_ .getValue ();
+                  min           = this ._minAngle .getValue (),
+                  max           = this ._maxAngle .getValue ();
 
                this .angle += sign * deltaRotation .angle;
 
@@ -110179,16 +111083,16 @@ function (Fields,
                else
                   rotation .setAxisAngle (this .cylinder .axis .direction, this .angle);
 
-               if (! this .rotation_changed_ .getValue () .equals (rotation))
-                  this .rotation_changed_ = rotation;
+               if (! this ._rotation_changed .getValue () .equals (rotation))
+                  this ._rotation_changed = rotation;
             }
          }
          catch (error)
          {
             //console .log (error);
 
-            this .trackPoint_changed_ .addEvent ();
-            this .rotation_changed_   .addEvent ();
+            this ._trackPoint_changed .addEvent ();
+            this ._rotation_changed   .addEvent ();
          }
       },
    });
@@ -110287,10 +111191,10 @@ function (Fields,
 
       this .addType (X3DConstants .PlaneSensor);
 
-      this .offset_              .setUnit ("length");
-      this .minPosition_         .setUnit ("length");
-      this .maxPosition_         .setUnit ("length");
-      this .translation_changed_ .setUnit ("length");
+      this ._offset              .setUnit ("length");
+      this ._minPosition         .setUnit ("length");
+      this ._maxPosition         .setUnit ("length");
+      this ._translation_changed .setUnit ("length");
    }
 
    PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
@@ -110351,7 +111255,7 @@ function (Fields,
 
          try
          {
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
                this .modelViewMatrix    .assign (modelViewMatrix);
                this .projectionMatrix   .assign (projectionMatrix);
@@ -110362,21 +111266,21 @@ function (Fields,
                   hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
                   hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
 
-               var axisRotation = this .axisRotation_ .getValue ();
+               var axisRotation = this ._axisRotation .getValue ();
 
-               if (this .minPosition_ .x === this .maxPosition_ .x)
+               if (this ._minPosition .x === this ._maxPosition .x)
                {
                   this .planeSensor = false;
 
-                  var direction = axisRotation .multVecRot (new Vector3 (0, Math .abs (this .maxPosition_ .y - this .minPosition_ .y), 0));
+                  var direction = axisRotation .multVecRot (new Vector3 (0, Math .abs (this ._maxPosition .y - this ._minPosition .y), 0));
 
                   this .line = new Line3 (hitPoint, direction .normalize ());
                }
-               else if (this .minPosition_ .y === this .maxPosition_ .y)
+               else if (this ._minPosition .y === this ._maxPosition .y)
                {
                   this .planeSensor = false;
 
-                  var direction = axisRotation .multVecRot (new Vector3 (Math .abs (this .maxPosition_ .x - this .minPosition_ .x), 0, 0));
+                  var direction = axisRotation .multVecRot (new Vector3 (Math .abs (this ._maxPosition .x - this ._minPosition .x), 0, 0));
 
                   this .line = new Line3 (hitPoint, direction .normalize ());
                }
@@ -110418,8 +111322,8 @@ function (Fields,
             }
             else
             {
-               if (this .autoOffset_ .getValue ())
-                  this .offset_ = this .translation_changed_;
+               if (this ._autoOffset .getValue ())
+                  this ._offset = this ._translation_changed;
             }
          }
          catch (error)
@@ -110429,10 +111333,10 @@ function (Fields,
       },
       trackStart: function (trackPoint)
       {
-         this .startOffset .assign (this .offset_ .getValue ());
+         this .startOffset .assign (this ._offset .getValue ());
 
-         this .trackPoint_changed_  = trackPoint;
-         this .translation_changed_ = this .offset_ .getValue ();
+         this ._trackPoint_changed  = trackPoint;
+         this ._translation_changed = this ._offset .getValue ();
       },
       set_motion__: function (hit)
       {
@@ -110478,33 +111382,33 @@ function (Fields,
          {
             //console .log (error);
 
-            this .trackPoint_changed_  .addEvent ();
-            this .translation_changed_ .addEvent ();
+            this ._trackPoint_changed  .addEvent ();
+            this ._translation_changed .addEvent ();
          }
       },
       track: function (endPoint, trackPoint)
       {
          var
-            axisRotation = this .axisRotation_ .getValue (),
+            axisRotation = this ._axisRotation .getValue (),
             translation  = Rotation4 .inverse (axisRotation) .multVecRot (endPoint .add (this .startOffset) .subtract (this .startPoint));
 
          // X component
 
-         if (! (this .minPosition_ .x > this .maxPosition_ .x))
-            translation .x = Algorithm .clamp (translation .x, this .minPosition_ .x, this .maxPosition_ .x);
+         if (! (this ._minPosition .x > this ._maxPosition .x))
+            translation .x = Algorithm .clamp (translation .x, this ._minPosition .x, this ._maxPosition .x);
 
          // Y component
 
-         if (! (this .minPosition_ .y > this .maxPosition_ .y))
-            translation .y = Algorithm .clamp (translation .y, this .minPosition_ .y, this .maxPosition_ .y);
+         if (! (this ._minPosition .y > this ._maxPosition .y))
+            translation .y = Algorithm .clamp (translation .y, this ._minPosition .y, this ._maxPosition .y);
 
          axisRotation .multVecRot (translation);
 
-         if (! this .trackPoint_changed_ .getValue () .equals (trackPoint))
-            this .trackPoint_changed_ = trackPoint;
+         if (! this ._trackPoint_changed .getValue () .equals (trackPoint))
+            this ._trackPoint_changed = trackPoint;
 
-         if (! this .translation_changed_ .getValue () .equals (translation))
-            this .translation_changed_ = translation;
+         if (! this ._translation_changed .getValue () .equals (translation))
+            this ._translation_changed = translation;
       },
    });
 
@@ -110861,7 +111765,7 @@ function (Fields,
 
          try
          {
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
                this .modelViewMatrix    .assign (modelViewMatrix);
                this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
@@ -110876,15 +111780,15 @@ function (Fields,
 
                this .fromVector  .assign (hitPoint);
                this .startPoint  .assign (hitPoint);
-               this .startOffset .assign (this .offset_ .getValue ());
+               this .startOffset .assign (this ._offset .getValue ());
 
-               this .trackPoint_changed_ = hitPoint;
-               this .rotation_changed_   = this .offset_ .getValue ();
+               this ._trackPoint_changed = hitPoint;
+               this ._rotation_changed   = this ._offset .getValue ();
             }
             else
             {
-               if (this .autoOffset_ .getValue ())
-                  this .offset_ = this .rotation_changed_;
+               if (this ._autoOffset .getValue ())
+                  this ._offset = this ._rotation_changed;
             }
          }
          catch (error)
@@ -110932,7 +111836,7 @@ function (Fields,
                this .getTrackPoint (hitRay, trackPoint, false);
             }
 
-            this .trackPoint_changed_ = trackPoint;
+            this ._trackPoint_changed = trackPoint;
 
             var
                toVector = Vector3 .subtract (trackPoint, this .sphere .center),
@@ -110941,14 +111845,14 @@ function (Fields,
             if (this .behind)
                rotation .inverse ();
 
-            this .rotation_changed_ = Rotation4 .multRight (this .startOffset, rotation);
+            this ._rotation_changed = Rotation4 .multRight (this .startOffset, rotation);
          }
          catch (error)
          {
             //console .log (error);
 
-            this .trackPoint_changed_ .addEvent ();
-            this .rotation_changed_   .addEvent ();
+            this ._trackPoint_changed .addEvent ();
+            this ._rotation_changed   .addEvent ();
          }
       },
    });
@@ -111200,16 +112104,16 @@ function (Fields,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .enabled_ .addInterest ("set_enabled__", this);
-         this .plane_   .addInterest ("set_enabled__", this);
+         this ._enabled .addInterest ("set_enabled__", this);
+         this ._plane   .addInterest ("set_enabled__", this);
 
          this .set_enabled__ ();
       },
       set_enabled__: function ()
       {
-         this .plane .assign (this .plane_ .getValue ());
+         this .plane .assign (this ._plane .getValue ());
 
-         this .enabled = this .enabled_ .getValue () && ! this .plane .equals (Vector4 .Zero);
+         this .enabled = this ._enabled .getValue () && ! this .plane .equals (Vector4 .Zero);
       },
       push: function (renderObject)
       {
@@ -111330,14 +112234,14 @@ function (Fields,
       {
          X3DColorNode .prototype .initialize .call (this);
 
-         this .color_ .addInterest ("set_color__", this);
+         this ._color .addInterest ("set_color__", this);
 
          this .set_color__ ();
       },
       set_color__: function ()
       {
-         this .color  = this .color_ .getValue ();
-         this .length = this .color_ .length;
+         this .color  = this ._color .getValue ();
+         this .length = this ._color .length;
       },
       addColor: function (index, array)
       {
@@ -111390,7 +112294,7 @@ function (Fields,
       },
       getVectors: function (array)
       {
-         const color = this .color_;
+         const color = this ._color;
 
          for (var i = 0, length = color .length; i < length; ++ i)
          {
@@ -111515,8 +112419,8 @@ function (Fields,
       {
          X3DComposedGeometryNode .prototype .initialize .call (this);
 
-         this .set_index_ .addFieldInterest (this .index_);
-         this .index_     .addInterest ("set_index__", this);
+         this ._set_index .addFieldInterest (this ._index);
+         this ._index     .addInterest ("set_index__", this);
 
          this .set_index__ ();
       },
@@ -111525,7 +112429,7 @@ function (Fields,
          // Build coordIndex
 
          const
-            index         = this .index_,
+            index         = this ._index,
             triangleIndex = this .triangleIndex;
 
          triangleIndex .length = 0;
@@ -111674,17 +112578,17 @@ function (Fields,
       },
       getPolygonIndex: function (i)
       {
-         return this .index_ [i];
+         return this ._index [i];
       },
       initialize: function ()
       {
          X3DComposedGeometryNode .prototype .initialize .call (this);
 
-         this .set_index_ .addFieldInterest (this .index_);
+         this ._set_index .addFieldInterest (this ._index);
       },
       build: function ()
       {
-         X3DComposedGeometryNode .prototype .build .call (this, 3, this .index_ .length, 3, this .index_ .length);
+         X3DComposedGeometryNode .prototype .build .call (this, 3, this ._index .length, 3, this ._index .length);
       },
    });
 
@@ -111798,8 +112702,8 @@ function (Fields,
       {
          X3DComposedGeometryNode .prototype .initialize .call (this);
 
-         this .set_index_ .addFieldInterest (this .index_);
-         this .index_     .addInterest ("set_index__", this);
+         this ._set_index .addFieldInterest (this ._index);
+         this ._index     .addInterest ("set_index__", this);
 
          this .set_index__ ();
       },
@@ -111808,7 +112712,7 @@ function (Fields,
          // Build coordIndex
 
          const
-            index         = this .index_,
+            index         = this ._index,
             triangleIndex = this .triangleIndex;
 
          triangleIndex .length = 0;
@@ -111968,10 +112872,10 @@ function (Fields,
       {
          X3DLineGeometryNode .prototype .initialize .call (this);
 
-         this .attrib_   .addInterest ("set_attrib__",   this);
-         this .fogCoord_ .addInterest ("set_fogCoord__", this);
-         this .color_    .addInterest ("set_color__",    this);
-         this .coord_    .addInterest ("set_coord__",    this);
+         this ._attrib   .addInterest ("set_attrib__",   this);
+         this ._fogCoord .addInterest ("set_fogCoord__", this);
+         this ._color    .addInterest ("set_color__",    this);
+         this ._coord    .addInterest ("set_coord__",    this);
 
          this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
          this .setSolid (false);
@@ -111990,9 +112894,9 @@ function (Fields,
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
          {
-            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
 
             if (attribNode)
                attribNodes .push (attribNode);
@@ -112006,7 +112910,7 @@ function (Fields,
          if (this .fogCoordNode)
             this .fogCoordNode .removeInterest ("requestRebuild", this);
 
-         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
+         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
 
          if (this .fogCoordNode)
             this .fogCoordNode .addInterest ("requestRebuild", this);
@@ -112016,15 +112920,15 @@ function (Fields,
          if (this .colorNode)
          {
             this .colorNode .removeInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .colorNode ._transparent .removeInterest ("set_transparent__", this);
          }
 
-         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
+         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
          if (this .colorNode)
          {
             this .colorNode .addInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .addInterest ("set_transparent__", this);
+            this .colorNode ._transparent .addInterest ("set_transparent__", this);
 
             this .set_transparent__ ();
          }
@@ -112040,7 +112944,7 @@ function (Fields,
          if (this .coordNode)
             this .coordNode .removeInterest ("requestRebuild", this);
 
-         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
+         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._coord);
 
          if (this .coordNode)
             this .coordNode .addInterest ("requestRebuild", this);
@@ -112053,7 +112957,7 @@ function (Fields,
          // Fill GeometryNode
 
          const
-            vertexCount   = this .vertexCount_,
+            vertexCount   = this ._vertexCount,
             attribNodes   = this .getAttrib (),
             numAttrib     = attribNodes .length,
             attribs       = this .getAttribs (),
@@ -112272,18 +113176,18 @@ function (Fields,
       {
          X3DNormalNode .prototype .initialize .call (this);
 
-         this .vector_ .addInterest ("set_vector__", this);
+         this ._vector .addInterest ("set_vector__", this);
 
          this .set_vector__ ();
       },
       set_vector__: function ()
       {
-         this .vector = this .vector_ .getValue ();
-         this .length = this .vector_ .length;
+         this .vector = this ._vector .getValue ();
+         this .length = this ._vector .length;
       },
       set1Vector: function (index, vector)
       {
-         this .vector_ [index] = vector;
+         this ._vector [index] = vector;
       },
       get1Vector: function (index, result)
       {
@@ -112444,10 +113348,10 @@ function (Fields,
       {
          X3DLineGeometryNode .prototype .initialize .call (this);
 
-         this .attrib_   .addInterest ("set_attrib__",   this);
-         this .fogCoord_ .addInterest ("set_fogCoord__", this);
-         this .color_    .addInterest ("set_color__",    this);
-         this .coord_    .addInterest ("set_coord__",    this);
+         this ._attrib   .addInterest ("set_attrib__",   this);
+         this ._fogCoord .addInterest ("set_fogCoord__", this);
+         this ._color    .addInterest ("set_color__",    this);
+         this ._coord    .addInterest ("set_coord__",    this);
 
          const browser = this .getBrowser ();
 
@@ -112476,9 +113380,9 @@ function (Fields,
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
          {
-            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
 
             if (attribNode)
                attribNodes .push (attribNode);
@@ -112492,7 +113396,7 @@ function (Fields,
          if (this .fogCoordNode)
             this .fogCoordNode .removeInterest ("requestRebuild", this);
 
-         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
+         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
 
          if (this .fogCoordNode)
             this .fogCoordNode .addInterest ("requestRebuild", this);
@@ -112502,7 +113406,7 @@ function (Fields,
          if (this .colorNode)
             this .colorNode .removeInterest ("requestRebuild", this);
 
-         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
+         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
          if (this .colorNode)
             this .colorNode .addInterest ("requestRebuild", this);
@@ -112512,7 +113416,7 @@ function (Fields,
          if (this .coordNode)
             this .coordNode .removeInterest ("requestRebuild", this);
 
-         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
+         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._coord);
 
          if (this .coordNode)
             this .coordNode .addInterest ("requestRebuild", this);
@@ -112532,7 +113436,7 @@ function (Fields,
             colorArray    = this .getColors (),
             coordNode     = this .coordNode,
             vertexArray   = this .getVertices (),
-            numPoints     = coordNode .point_ .length;
+            numPoints     = coordNode ._point .length;
 
          for (var a = 0; a < numAttrib; ++ a)
          {
@@ -112659,7 +113563,7 @@ function (Fields,
       {
          X3DComposedGeometryNode .prototype .initialize .call (this);
 
-         this .fanCount_ .addInterest ("set_fanCount__", this);
+         this ._fanCount .addInterest ("set_fanCount__", this);
 
          this .set_fanCount__ ();
       },
@@ -112668,7 +113572,7 @@ function (Fields,
          // Build coordIndex
 
          const
-            fanCount      = this .fanCount_,
+            fanCount      = this ._fanCount,
             triangleIndex = this .triangleIndex;
 
          triangleIndex .length = 0;
@@ -112919,7 +113823,7 @@ function (Fields,
       {
          X3DComposedGeometryNode .prototype .initialize .call (this);
 
-         this .stripCount_ .addInterest ("set_stripCount__", this);
+         this ._stripCount .addInterest ("set_stripCount__", this);
 
          this .set_stripCount__ ();
       },
@@ -112928,7 +113832,7 @@ function (Fields,
          // Build coordIndex
 
          const
-            stripCount    = this .stripCount_,
+            stripCount    = this ._stripCount,
             triangleIndex = this .triangleIndex;
 
          triangleIndex .length = 0;
@@ -113266,20 +114170,20 @@ function (Fields,
       {
          X3DVertexAttributeNode .prototype .initialize .call (this);
 
-         this .numComponents_ .addInterest ("set_numComponents", this);
-         this .value_         .addInterest ("set_value",         this);
+         this ._numComponents .addInterest ("set_numComponents", this);
+         this ._value         .addInterest ("set_value",         this);
 
          this .set_numComponents ();
          this .set_value ();
       },
       set_numComponents: function ()
       {
-         this .numComponents = Algorithm .clamp (this .numComponents_ .getValue (), 1, 4);
+         this .numComponents = Algorithm .clamp (this ._numComponents .getValue (), 1, 4);
       },
       set_value: function ()
       {
-         this .value  = this .value_ .getValue ();
-         this .length = this .value_ .length;
+         this .value  = this ._value .getValue ();
+         this .length = this ._value .length;
       },
       addValue: function (index, array)
       {
@@ -113309,11 +114213,11 @@ function (Fields,
       },
       enable: function (gl, shaderNode, buffer)
       {
-         shaderNode .enableFloatAttrib (gl, this .name_ .getValue (), buffer, this .numComponents);
+         shaderNode .enableFloatAttrib (gl, this ._name .getValue (), buffer, this .numComponents);
       },
       disable: function (gl, shaderNode)
       {
-         shaderNode .disableFloatAttrib (gl, this .name_ .getValue ());
+         shaderNode .disableFloatAttrib (gl, this ._name .getValue ());
       },
    });
 
@@ -113417,14 +114321,14 @@ function (Fields,
       {
          X3DVertexAttributeNode .prototype .initialize .call (this);
 
-         this .value_ .addInterest ("set_value", this);
+         this ._value .addInterest ("set_value", this);
 
          this .set_value ();
       },
       set_value: function ()
       {
-         this .value  = this .value_ .getValue ();
-         this .length = this .value_ .length;
+         this .value  = this ._value .getValue ();
+         this .length = this ._value .length;
       },
       addValue: function (index, array)
       {
@@ -113454,11 +114358,11 @@ function (Fields,
       },
       enable: function (gl, shaderNode, buffer)
       {
-         shaderNode .enableMatrix3Attrib (gl, this .name_ .getValue (), buffer);
+         shaderNode .enableMatrix3Attrib (gl, this ._name .getValue (), buffer);
       },
       disable: function (gl, shaderNode)
       {
-         shaderNode .disableMatrix3Attrib (gl, this .name_ .getValue ());
+         shaderNode .disableMatrix3Attrib (gl, this ._name .getValue ());
       },
    });
 
@@ -113560,14 +114464,14 @@ function (Fields,
       {
          X3DVertexAttributeNode .prototype .initialize .call (this);
 
-         this .value_ .addInterest ("set_value", this);
+         this ._value .addInterest ("set_value", this);
 
          this .set_value ();
       },
       set_value: function ()
       {
-         this .value  = this .value_ .getValue ();
-         this .length = this .value_ .length;
+         this .value  = this ._value .getValue ();
+         this .length = this ._value .length;
       },
       addValue: function (index, array)
       {
@@ -113597,11 +114501,11 @@ function (Fields,
       },
       enable: function (gl, shaderNode, buffer)
       {
-         shaderNode .enableMatrix4Attrib (gl, this .name_ .getValue (), buffer);
+         shaderNode .enableMatrix4Attrib (gl, this ._name .getValue (), buffer);
       },
       disable: function (gl, shaderNode)
       {
-         shaderNode .disableMatrix4Attrib (gl, this .name_ .getValue ());
+         shaderNode .disableMatrix4Attrib (gl, this ._name .getValue ());
       },
    });
 
@@ -113715,7 +114619,7 @@ function (Fields,
       },
       getSourceText: function ()
       {
-         return this .url_;
+         return this ._url;
       },
       requestImmediateLoad: function (cache = true)
       { },
@@ -113929,7 +114833,7 @@ function (Fields,
       },
       getSourceText: function ()
       {
-         return this .url_;
+         return this ._url;
       },
       requestImmediateLoad: function (cache = true)
       { },
@@ -114163,10 +115067,10 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
-         this .ambientIntensity_ .addInterest ("set_ambientIntensity__", this);
-         this .diffuseColor_     .addInterest ("set_diffuseColor__",     this);
-         this .specularColor_    .addInterest ("set_specularColor__",    this);
-         this .shininess_        .addInterest ("set_shininess__",        this);
+         this ._ambientIntensity .addInterest ("set_ambientIntensity__", this);
+         this ._diffuseColor     .addInterest ("set_diffuseColor__",     this);
+         this ._specularColor    .addInterest ("set_specularColor__",    this);
+         this ._shininess        .addInterest ("set_shininess__",        this);
 
          this .set_ambientIntensity__ ();
          this .set_diffuseColor__ ();
@@ -114175,16 +115079,16 @@ function (Fields,
       },
       set_ambientIntensity__: function ()
       {
-         this .ambientIntensity = Math .max (this .ambientIntensity_ .getValue (), 0);
+         this .ambientIntensity = Math .max (this ._ambientIntensity .getValue (), 0);
       },
       set_diffuseColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .diffuseColor .set (this .diffuseColor_ .getValue ());
+         //this .diffuseColor .set (this ._diffuseColor .getValue ());
 
          const
             diffuseColor  = this .diffuseColor,
-            diffuseColor_ = this .diffuseColor_ .getValue ();
+            diffuseColor_ = this ._diffuseColor .getValue ();
 
          diffuseColor [0] = diffuseColor_ .r;
          diffuseColor [1] = diffuseColor_ .g;
@@ -114193,11 +115097,11 @@ function (Fields,
       set_specularColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .specularColor .set (this .specularColor_ .getValue ());
+         //this .specularColor .set (this ._specularColor .getValue ());
 
          const
             specularColor  = this .specularColor,
-            specularColor_ = this .specularColor_ .getValue ();
+            specularColor_ = this ._specularColor .getValue ();
 
          specularColor [0] = specularColor_ .r;
          specularColor [1] = specularColor_ .g;
@@ -114205,7 +115109,7 @@ function (Fields,
       },
       set_shininess__: function ()
       {
-         this .shininess = Algorithm .clamp (this .shininess_ .getValue (), 0, 1);
+         this .shininess = Algorithm .clamp (this ._shininess .getValue (), 0, 1);
       },
       getShader: function (browser, shadow)
       {
@@ -114341,21 +115245,21 @@ function (Fields,
       {
          X3DMaterialNode . prototype .initialize .call (this);
 
-         this .separateBackColor_ .addInterest ("set_transparent__", this);
+         this ._separateBackColor .addInterest ("set_transparent__", this);
 
-         this .ambientIntensity_ .addInterest ("set_ambientIntensity__", this);
-         this .diffuseColor_     .addInterest ("set_diffuseColor__",     this);
-         this .specularColor_    .addInterest ("set_specularColor__",    this);
-         this .emissiveColor_    .addInterest ("set_emissiveColor__",    this);
-         this .shininess_        .addInterest ("set_shininess__",        this);
-         this .transparency_     .addInterest ("set_transparency__",     this);
+         this ._ambientIntensity .addInterest ("set_ambientIntensity__", this);
+         this ._diffuseColor     .addInterest ("set_diffuseColor__",     this);
+         this ._specularColor    .addInterest ("set_specularColor__",    this);
+         this ._emissiveColor    .addInterest ("set_emissiveColor__",    this);
+         this ._shininess        .addInterest ("set_shininess__",        this);
+         this ._transparency     .addInterest ("set_transparency__",     this);
 
-         this .backAmbientIntensity_ .addInterest ("set_backAmbientIntensity__", this);
-         this .backDiffuseColor_     .addInterest ("set_backDiffuseColor__",     this);
-         this .backSpecularColor_    .addInterest ("set_backSpecularColor__",    this);
-         this .backEmissiveColor_    .addInterest ("set_backEmissiveColor__",    this);
-         this .backShininess_        .addInterest ("set_backShininess__",        this);
-         this .backTransparency_     .addInterest ("set_backTransparency__",     this);
+         this ._backAmbientIntensity .addInterest ("set_backAmbientIntensity__", this);
+         this ._backDiffuseColor     .addInterest ("set_backDiffuseColor__",     this);
+         this ._backSpecularColor    .addInterest ("set_backSpecularColor__",    this);
+         this ._backEmissiveColor    .addInterest ("set_backEmissiveColor__",    this);
+         this ._backShininess        .addInterest ("set_backShininess__",        this);
+         this ._backTransparency     .addInterest ("set_backTransparency__",     this);
 
          this .set_ambientIntensity__ ();
          this .set_diffuseColor__ ();
@@ -114373,16 +115277,16 @@ function (Fields,
       },
       set_ambientIntensity__: function ()
       {
-         this .ambientIntensity = Math .max (this .ambientIntensity_ .getValue (), 0);
+         this .ambientIntensity = Math .max (this ._ambientIntensity .getValue (), 0);
       },
       set_diffuseColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .diffuseColor .set (this .diffuseColor_ .getValue ());
+         //this .diffuseColor .set (this ._diffuseColor .getValue ());
 
          const
             diffuseColor  = this .diffuseColor,
-            diffuseColor_ = this .diffuseColor_ .getValue ();
+            diffuseColor_ = this ._diffuseColor .getValue ();
 
          diffuseColor [0] = diffuseColor_ .r;
          diffuseColor [1] = diffuseColor_ .g;
@@ -114391,11 +115295,11 @@ function (Fields,
       set_specularColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .specularColor .set (this .specularColor_ .getValue ());
+         //this .specularColor .set (this ._specularColor .getValue ());
 
          const
             specularColor  = this .specularColor,
-            specularColor_ = this .specularColor_ .getValue ();
+            specularColor_ = this ._specularColor .getValue ();
 
          specularColor [0] = specularColor_ .r;
          specularColor [1] = specularColor_ .g;
@@ -114404,11 +115308,11 @@ function (Fields,
       set_emissiveColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .emissiveColor .set (this .emissiveColor_ .getValue ());
+         //this .emissiveColor .set (this ._emissiveColor .getValue ());
 
          const
             emissiveColor  = this .emissiveColor,
-            emissiveColor_ = this .emissiveColor_ .getValue ();
+            emissiveColor_ = this ._emissiveColor .getValue ();
 
          emissiveColor [0] = emissiveColor_ .r;
          emissiveColor [1] = emissiveColor_ .g;
@@ -114416,11 +115320,11 @@ function (Fields,
       },
       set_shininess__: function ()
       {
-         this .shininess = Algorithm .clamp (this .shininess_ .getValue (), 0, 1);
+         this .shininess = Algorithm .clamp (this ._shininess .getValue (), 0, 1);
       },
       set_transparency__: function ()
       {
-         this .transparency = Algorithm .clamp (this .transparency_ .getValue (), 0, 1);
+         this .transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
 
          this .set_transparent__ ();
       },
@@ -114429,16 +115333,16 @@ function (Fields,
        */
       set_backAmbientIntensity__: function ()
       {
-         this .backAmbientIntensity = Math .max (this .backAmbientIntensity_ .getValue (), 0);
+         this .backAmbientIntensity = Math .max (this ._backAmbientIntensity .getValue (), 0);
       },
       set_backDiffuseColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .backDiffuseColor .set (this .backDiffuseColor_ .getValue ());
+         //this .backDiffuseColor .set (this ._backDiffuseColor .getValue ());
 
          const
             backDiffuseColor  = this .backDiffuseColor,
-            backDiffuseColor_ = this .backDiffuseColor_ .getValue ();
+            backDiffuseColor_ = this ._backDiffuseColor .getValue ();
 
          backDiffuseColor [0] = backDiffuseColor_ .r;
          backDiffuseColor [1] = backDiffuseColor_ .g;
@@ -114447,11 +115351,11 @@ function (Fields,
       set_backSpecularColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .backSpecularColor .set (this .backSpecularColor_ .getValue ());
+         //this .backSpecularColor .set (this ._backSpecularColor .getValue ());
 
          const
             backSpecularColor  = this .backSpecularColor,
-            backSpecularColor_ = this .backSpecularColor_ .getValue ();
+            backSpecularColor_ = this ._backSpecularColor .getValue ();
 
          backSpecularColor [0] = backSpecularColor_ .r;
          backSpecularColor [1] = backSpecularColor_ .g;
@@ -114460,11 +115364,11 @@ function (Fields,
       set_backEmissiveColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .backEmissiveColor .set (this .backEmissiveColor_ .getValue ());
+         //this .backEmissiveColor .set (this ._backEmissiveColor .getValue ());
 
          const
             backEmissiveColor  = this .backEmissiveColor,
-            backEmissiveColor_ = this .backEmissiveColor_ .getValue ();
+            backEmissiveColor_ = this ._backEmissiveColor .getValue ();
 
          backEmissiveColor [0] = backEmissiveColor_ .r;
          backEmissiveColor [1] = backEmissiveColor_ .g;
@@ -114472,17 +115376,17 @@ function (Fields,
       },
       set_backShininess__: function ()
       {
-         this .backShininess = Algorithm .clamp (this .backShininess_ .getValue (), 0, 1);
+         this .backShininess = Algorithm .clamp (this ._backShininess .getValue (), 0, 1);
       },
       set_backTransparency__: function ()
       {
-         this .backTransparency = Algorithm .clamp (this .backTransparency_ .getValue (), 0, 1);
+         this .backTransparency = Algorithm .clamp (this ._backTransparency .getValue (), 0, 1);
 
          this .set_transparent__ ();
       },
       set_transparent__: function ()
       {
-         this .setTransparent (Boolean (this .transparency_ .getValue () || (this .separateBackColor_ .getValue () && this .backTransparency_ .getValue ())));
+         this .setTransparent (Boolean (this ._transparency .getValue () || (this ._separateBackColor .getValue () && this ._backTransparency .getValue ())));
       },
       getShader: function (browser, shadow)
       {
@@ -114490,7 +115394,7 @@ function (Fields,
       },
       setShaderUniforms: function (gl, shaderObject, front)
       {
-         if (!front && this .separateBackColor_ .getValue ())
+         if (!front && this ._separateBackColor .getValue ())
          {
             gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .backAmbientIntensity);
             gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .backDiffuseColor);
@@ -114713,13 +115617,13 @@ function (Fields,
 
          if (this .getDisabled ())
          {
-            this .getBrowser () .volume_ .removeInterest ("set_volume__", this);
-            this .getBrowser () .mute_   .removeInterest ("set_volume__", this);
+            this .getBrowser () ._volume .removeInterest ("set_volume__", this);
+            this .getBrowser () ._mute   .removeInterest ("set_volume__", this);
          }
          else
          {
-            this .getBrowser () .volume_ .addInterest ("set_volume__", this);
-            this .getBrowser () .mute_   .addInterest ("set_volume__", this);
+            this .getBrowser () ._volume .addInterest ("set_volume__", this);
+            this .getBrowser () ._mute   .addInterest ("set_volume__", this);
             this .set_volume__ ();
          }
       },
@@ -114737,16 +115641,16 @@ function (Fields,
          {
             const media = value [0];
 
-            media .loop = this .loop_ .getValue ();
+            media .loop = this ._loop .getValue ();
 
             this .setVolume (0);
-            this .duration_changed_ = media .duration;
+            this ._duration_changed = media .duration;
 
             this .resetElapsedTime ();
 
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
-               if (this .isPaused_ .getValue ())
+               if (this ._isPaused .getValue ())
                {
                   this .set_pause ();
                }
@@ -114777,7 +115681,7 @@ function (Fields,
       set_loop: function ()
       {
          if (this .media)
-            this .media [0] .loop = this .loop_ .getValue ();
+            this .media [0] .loop = this ._loop .getValue ();
       },
       set_volume__: function ()
       {
@@ -114785,8 +115689,8 @@ function (Fields,
             return;
 
          const
-            mute      = this .getBrowser () .mute_ .getValue (),
-            intensity = Algorithm .clamp (this .getBrowser () .volume_ .getValue (), 0, 1),
+            mute      = this .getBrowser () ._mute .getValue (),
+            intensity = Algorithm .clamp (this .getBrowser () ._volume .getValue (), 0, 1),
             volume    = (! mute) * intensity * this .volume;
 
          this .media [0] .volume = volume;
@@ -114799,7 +115703,7 @@ function (Fields,
       {
          if (this .media)
          {
-            if (this .speed_ .getValue ())
+            if (this ._speed .getValue ())
             {
                this .media [0] .currentTime = 0;
                this .media [0] .play ();
@@ -114815,7 +115719,7 @@ function (Fields,
       {
          if (this .media)
          {
-            if (this .speed_ .getValue ())
+            if (this ._speed .getValue ())
                this .media [0] .play ();
          }
       },
@@ -114833,14 +115737,14 @@ function (Fields,
             if (media .currentTime < media .duration)
                return;
 
-            if (!this .loop_ .getValue ())
+            if (!this ._loop .getValue ())
                this .stop ();
          }
       },
       set_time: function ()
       {
          if (this .media)
-            this .elapsedTime_ = this .getElapsedTime ();
+            this ._elapsedTime = this .getElapsedTime ();
 
          this .set_ended ();
       },
@@ -114997,7 +115901,7 @@ function ($,
       loadNow: function ()
       {
          this .setMedia (null);
-         this .urlStack .setValue (this .urlBuffer_);
+         this .urlStack .setValue (this ._urlBuffer);
          this .audio .bind ("canplaythrough", this .setAudio .bind (this));
          this .loadNext ();
       },
@@ -115006,7 +115910,7 @@ function ($,
          if (this .urlStack .length === 0)
          {
             this .audio .unbind ("canplaythrough");
-            this .duration_changed_ = -1;
+            this ._duration_changed = -1;
             this .setLoadState (X3DConstants .FAILED_STATE);
             return;
          }
@@ -115206,11 +116110,11 @@ function (Fields,
 
       this .addChildObjects ("traversed", new Fields .SFBool (true));
 
-      this .location_ .setUnit ("length");
-      this .minBack_  .setUnit ("length");
-      this .minFront_ .setUnit ("length");
-      this .maxBack_  .setUnit ("length");
-      this .maxFront_ .setUnit ("length");
+      this ._location .setUnit ("length");
+      this ._minBack  .setUnit ("length");
+      this ._minFront .setUnit ("length");
+      this ._maxBack  .setUnit ("length");
+      this ._maxFront .setUnit ("length");
 
       this .currentTraversed = true;
    }
@@ -115248,9 +116152,9 @@ function (Fields,
          X3DSoundNode .prototype .initialize .call (this);
 
          this .isLive ()  .addInterest ("set_live__", this);
-         this .traversed_ .addInterest ("set_live__", this);
+         this ._traversed .addInterest ("set_live__", this);
 
-         this .source_ .addInterest ("set_source__", this);
+         this ._source .addInterest ("set_source__", this);
 
          this .set_live__ ();
          this .set_source__ ();
@@ -115259,13 +116163,13 @@ function (Fields,
       {
          if (value)
          {
-            if (this .traversed_ .getValue () === false)
-               this .traversed_ = true;
+            if (this ._traversed .getValue () === false)
+               this ._traversed = true;
          }
          else
          {
-            if (this .currentTraversed !== this .traversed_ .getValue ())
-               this .traversed_ = this .currentTraversed;
+            if (this .currentTraversed !== this ._traversed .getValue ())
+               this ._traversed = this .currentTraversed;
          }
 
          this .currentTraversed = value;
@@ -115276,7 +116180,7 @@ function (Fields,
       },
       set_live__: function ()
       {
-         if (this .isLive () .getValue () && this .traversed_ .getValue ())
+         if (this .isLive () .getValue () && this ._traversed .getValue ())
          {
             this .getBrowser () .sensorEvents () .addInterest ("update", this);
          }
@@ -115290,7 +116194,7 @@ function (Fields,
          if (this .sourceNode)
             this .sourceNode .setVolume (0);
 
-         this .sourceNode = X3DCast (X3DConstants .X3DSoundSourceNode, this .source_);
+         this .sourceNode = X3DCast (X3DConstants .X3DSoundSourceNode, this ._source);
       },
       update: function ()
       {
@@ -115318,7 +116222,7 @@ function (Fields,
                if (! this .sourceNode)
                   return;
 
-               if (! this .sourceNode .isActive_ .getValue () || this .sourceNode .isPaused_ .getValue ())
+               if (! this .sourceNode ._isActive .getValue () || this .sourceNode ._isPaused .getValue ())
                   return;
 
                this .setTraversed (true);
@@ -115326,20 +116230,20 @@ function (Fields,
                const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
 
                this .getEllipsoidParameter (modelViewMatrix,
-                                            Math .max (this .maxBack_  .getValue (), 0),
-                                            Math .max (this .maxFront_ .getValue (), 0),
+                                            Math .max (this ._maxBack  .getValue (), 0),
+                                            Math .max (this ._maxFront .getValue (), 0),
                                             max);
 
                if (max .distance < 1) // Sphere radius is 1
                {
                   this .getEllipsoidParameter (modelViewMatrix,
-                                               Math .max (this .minBack_  .getValue (), 0),
-                                               Math .max (this .minFront_ .getValue (), 0),
+                                               Math .max (this ._minBack  .getValue (), 0),
+                                               Math .max (this ._minFront .getValue (), 0),
                                                min);
 
                   if (min .distance < 1) // Sphere radius is 1
                   {
-                     this .sourceNode .setVolume (this .intensity_ .getValue ());
+                     this .sourceNode .setVolume (this ._intensity .getValue ());
                   }
                   else
                   {
@@ -115347,7 +116251,7 @@ function (Fields,
                         d1        = max .intersection .abs (), // Viewer is here at (0, 0, 0)
                         d2        = max .intersection .distance (min .intersection),
                         d         = Math .min (d1 / d2, 1),
-                        intensity = Algorithm .clamp (this .intensity_ .getValue (), 0, 1),
+                        intensity = Algorithm .clamp (this ._intensity .getValue (), 0, 1),
                         volume    = intensity * d;
 
                      this .sourceNode .setVolume (volume);
@@ -115394,7 +116298,7 @@ function (Fields,
 
             if (back == 0 || front == 0)
             {
-               sphereMatrix .multVecMatrix (value .intersection .assign (this .location_ .getValue ()));
+               sphereMatrix .multVecMatrix (value .intersection .assign (this ._location .getValue ()));
                value .distance = 1;
                return;
             }
@@ -115406,11 +116310,11 @@ function (Fields,
 
             location .set (0, 0, e);
             scale    .set (b, b, a);
-            rotation .setFromToVec (Vector3 .zAxis, this .direction_ .getValue ());
+            rotation .setFromToVec (Vector3 .zAxis, this ._direction .getValue ());
 
             sphereMatrix
                .assign (modelViewMatrix)
-               .translate (this .location_ .getValue ())
+               .translate (this ._location .getValue ())
                .rotate (rotation)
                .translate (location)
                .scale (scale);
@@ -115587,11 +116491,11 @@ function (Fields,
 
       this .addType (X3DConstants .Text);
 
-      this .length_     .setUnit ("length");
-      this .maxExtent_  .setUnit ("length");
-      this .origin_     .setUnit ("length");
-      this .textBounds_ .setUnit ("length");
-      this .lineBounds_ .setUnit ("length");
+      this ._length     .setUnit ("length");
+      this ._maxExtent  .setUnit ("length");
+      this ._origin     .setUnit ("length");
+      this ._textBounds .setUnit ("length");
+      this ._lineBounds .setUnit ("length");
    }
 
    Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -115624,7 +116528,7 @@ function (Fields,
       {
          X3DGeometryNode .prototype .initialize .call (this);
 
-         this .fontStyle_ .addInterest ("set_fontStyle__", this);
+         this ._fontStyle .addInterest ("set_fontStyle__", this);
 
          this .set_fontStyle__ ();
       },
@@ -115634,8 +116538,8 @@ function (Fields,
       },
       getLength: function (index)
       {
-         if (index < this .length_ .length)
-            return Math .max (0, this .length_ [index]);
+         if (index < this ._length .length)
+            return Math .max (0, this ._length [index]);
 
          return 0;
       },
@@ -115644,16 +116548,16 @@ function (Fields,
           X3DGeometryNode .prototype .set_live__ .call (this);
 
          if (this .isLive () .getValue ())
-            this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .addInterest ("requestRebuild", this);
+            this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
          else
-            this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .removeInterest ("requestRebuild", this);
+            this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .removeInterest ("requestRebuild", this);
       },
       set_fontStyle__: function ()
       {
          if (this .fontStyleNode)
             this .fontStyleNode .removeInterest ("requestRebuild", this);
 
-         this .fontStyleNode = X3DCast (X3DConstants .X3DFontStyleNode, this .fontStyle_);
+         this .fontStyleNode = X3DCast (X3DConstants .X3DFontStyleNode, this ._fontStyle);
 
          if (! this .fontStyleNode)
             this .fontStyleNode = this .getBrowser () .getDefaultFontStyle ();
@@ -115669,7 +116573,7 @@ function (Fields,
          this .textGeometry .update ();
          this .textGeometry .build ();
 
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
       },
       traverse: function (type, renderObject)
       {
@@ -115949,7 +116853,7 @@ function ($,
       loadNow: function ()
       {
          this .setMedia (null);
-         this .urlStack .setValue (this .urlBuffer_);
+         this .urlStack .setValue (this ._urlBuffer);
          this .video .bind ("canplaythrough", this .setVideo .bind (this));
          this .loadNext ();
       },
@@ -115958,7 +116862,7 @@ function ($,
          if (this .urlStack .length === 0)
          {
             this .video .unbind ("canplaythrough");
-            this .duration_changed_ = -1;
+            this ._duration_changed = -1;
             this .clearTexture ();
             this .setLoadState (X3DConstants .FAILED_STATE);
             return;
@@ -116155,12 +117059,12 @@ function (Fields,
       {
          X3DTextureNode .prototype .initialize .call (this);
 
-         this .color_    .addInterest ("set_color__",    this);
-         this .alpha_    .addInterest ("set_alpha__",    this);
-         this .mode_     .addInterest ("set_mode__",     this);
-         this .source_   .addInterest ("set_source__",   this);
-         this .function_ .addInterest ("set_function__", this);
-         this .texture_  .addInterest ("set_texture__",  this);
+         this ._color    .addInterest ("set_color__",    this);
+         this ._alpha    .addInterest ("set_alpha__",    this);
+         this ._mode     .addInterest ("set_mode__",     this);
+         this ._source   .addInterest ("set_source__",   this);
+         this ._function .addInterest ("set_function__", this);
+         this ._texture  .addInterest ("set_texture__",  this);
 
          this .set_color__ ();
          this .set_alpha__ ();
@@ -116169,7 +117073,7 @@ function (Fields,
          this .set_function__ ();
          this .set_texture__ ();
 
-         this .loadState_ = X3DConstants .COMPLETE_STATE;
+         this ._loadState = X3DConstants .COMPLETE_STATE;
       },
       getMode: function (index)
       {
@@ -116201,13 +117105,13 @@ function (Fields,
       },
       set_color__: function ()
       {
-         this .color [0] = this .color_ .r;
-         this .color [1] = this .color_ .g;
-         this .color [2] = this .color_ .b;
+         this .color [0] = this ._color .r;
+         this .color [1] = this ._color .g;
+         this .color [2] = this ._color .b;
       },
       set_alpha__: function ()
       {
-         this .color [3] = this .alpha_;
+         this .color [3] = this ._alpha;
       },
       set_mode__: (function ()
       {
@@ -116239,7 +117143,7 @@ function (Fields,
             this .modes      .length = 0;
             this .alphaModes .length = 0;
 
-            for (const modes of this .mode_)
+            for (const modes of this ._mode)
             {
                const mode = modes .split (",");
 
@@ -116284,7 +117188,7 @@ function (Fields,
          {
             this .sources .length = 0;
 
-            for (const source of this .source_)
+            for (const source of this ._source)
             {
                const sourceType = sourceTypes .get (source);
 
@@ -116306,7 +117210,7 @@ function (Fields,
          {
             this .functions .length = 0;
 
-            for (const func of this .function_)
+            for (const func of this ._function)
             {
                const functionsType = functionsTypes .get (func);
 
@@ -116321,7 +117225,7 @@ function (Fields,
       {
          this .textureNodes .length = 0;
 
-         for (const node of this .texture_)
+         for (const node of this ._texture)
          {
             const textureNode = X3DCast (X3DConstants .X3DSingleTextureNode, node);
 
@@ -116456,7 +117360,7 @@ function (Fields,
       {
          X3DTextureCoordinateNode .prototype .initialize .call (this);
 
-         this .texCoord_ .addInterest ("set_texCoord__", this);
+         this ._texCoord .addInterest ("set_texCoord__", this);
 
          this .set_texCoord__ ();
       },
@@ -116469,7 +117373,7 @@ function (Fields,
 
          textureCoordinateNodes .length = 0;
 
-         for (const node of this .texCoord_)
+         for (const node of this ._texCoord)
          {
             const textureCoordinateNode = X3DCast (X3DConstants .X3DSingleTextureCoordinateNode, node);
 
@@ -116633,7 +117537,7 @@ function (Fields,
       {
          X3DTextureTransformNode .prototype .initialize .call (this);
 
-         this .textureTransform_ .addInterest ("set_textureTransform__", this);
+         this ._textureTransform .addInterest ("set_textureTransform__", this);
 
          this .set_textureTransform__ ();
       },
@@ -116643,7 +117547,7 @@ function (Fields,
 
          textureTransformNodes .length = 0;
 
-         for (const node of this .textureTransform_)
+         for (const node of this ._textureTransform)
          {
             const textureTransformNode = X3DCast (X3DConstants .X3DSingleTextureTransformNode, node);
 
@@ -116776,7 +117680,7 @@ function ($,
       {
          X3DTexture2DNode .prototype .initialize .call (this);
 
-         this .image_ .addInterest ("set_image__", this);
+         this ._image .addInterest ("set_image__", this);
 
          this .canvas1 = $("<canvas></canvas>");
          this .canvas2 = $("<canvas></canvas>");
@@ -116785,7 +117689,7 @@ function ($,
       },
       checkLoadState: function ()
       {
-         return this .loadState_ .getValue ();
+         return this ._loadState .getValue ();
       },
       convert: function (data, comp, array, length)
       {
@@ -116883,13 +117787,13 @@ function ($,
       {
          const
             gl          = this .getBrowser () .getContext (),
-            comp        = this .image_ .comp,
-            array       = this .image_ .array,
+            comp        = this ._image .comp,
+            array       = this ._image .array,
             transparent = !(comp % 2);
 
          let
-            width  = this .image_ .width,
-            height = this .image_ .height,
+            width  = this ._image .width,
+            height = this ._image .height,
             data   = null;
 
          if (width > 0 && height > 0 && comp > 0 && comp < 5)
@@ -116900,7 +117804,7 @@ function ($,
 
                this .convert (data, comp, array .getValue (), array .length);
             }
-            else if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! this .textureProperties_ .getValue ())
+            else if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! this ._textureProperties .getValue ())
             {
                data = new Uint8Array (width * height * 4);
 
@@ -116942,12 +117846,12 @@ function ($,
             }
 
             this .setTexture (width, height, transparent, new Uint8Array (data), false);
-            this .loadState_ = X3DConstants .COMPLETE_STATE;
+            this ._loadState = X3DConstants .COMPLETE_STATE;
          }
          else
          {
             this .clearTexture ();
-            this .loadState_ = X3DConstants .FAILED_STATE;
+            this ._loadState = X3DConstants .FAILED_STATE;
          }
       },
    });
@@ -117056,8 +117960,8 @@ function (Fields,
       {
          X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
-         this .mode_      .addInterest ("set_mode__",      this);
-         this .parameter_ .addInterest ("set_parameter__", this);
+         this ._mode      .addInterest ("set_mode__",      this);
+         this ._parameter .addInterest ("set_parameter__", this);
 
          this .set_mode__ ();
          this .set_parameter__ ();
@@ -117080,7 +117984,7 @@ function (Fields,
 
          return function ()
          {
-            this .mode = modes .get (this .mode_ .getValue ());
+            this .mode = modes .get (this ._mode .getValue ());
 
             if (this .mode === undefined)
                this .mode = ModeType .SPHERE;
@@ -117088,10 +117992,10 @@ function (Fields,
       })(),
       set_parameter__: function ()
       {
-         const length = Math .min (this .parameter .length, this .parameter_ .length)
+         const length = Math .min (this .parameter .length, this ._parameter .length)
 
          for (let i = 0; i < length; ++ i)
-            this .parameter [i] = this .parameter_ [i];
+            this .parameter [i] = this ._parameter [i];
 
          this .parameter .fill (0, length);
       },
@@ -118286,6 +119190,7 @@ define ('x_ite/Browser/X3DBrowser',[
    "x_ite/Components",
    "x_ite/Components/Layering/X3DLayerNode",
    "x_ite/Browser/X3DBrowserContext",
+   "x_ite/Configuration/ProfileInfo",
    "x_ite/Configuration/ComponentInfo",
    "x_ite/Configuration/SupportedProfiles",
    "x_ite/Configuration/SupportedComponents",
@@ -118295,6 +119200,7 @@ define ('x_ite/Browser/X3DBrowser',[
    "x_ite/InputOutput/FileLoader",
    "x_ite/Parser/XMLParser",
    "x_ite/Parser/JSONParser",
+   "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
    "standard/Utility/MapUtilities",
    "locale/gettext",
@@ -118305,6 +119211,7 @@ function ($,
           Components,
           X3DLayerNode,
           X3DBrowserContext,
+          ProfileInfo,
           ComponentInfo,
           SupportedProfiles,
           SupportedComponents,
@@ -118314,6 +119221,7 @@ function ($,
           FileLoader,
           XMLParser,
           JSONParser,
+          X3DCast,
           X3DConstants,
           MapUtilities,
           _)
@@ -118405,11 +119313,11 @@ function ($,
       },
       getDescription: function ()
       {
-         return this .getNotification () .string_ .getValue ()
+         return this .getNotification () ._string .getValue ()
       },
       setDescription: function (value)
       {
-         this .getNotification () .string_ = value;
+         this .getNotification () ._string = value;
       },
       getWorldURL: function ()
       {
@@ -118417,6 +119325,8 @@ function ($,
       },
       getProfile: function (name)
       {
+         name = String (name);
+
          const profile = SupportedProfiles .get (name);
 
          if (profile)
@@ -118426,6 +119336,9 @@ function ($,
       },
       getComponent: function (name, level)
       {
+         name  = String (name);
+         level = ~~level;
+
          const component = SupportedComponents .get (name);
 
          if (component)
@@ -118438,7 +119351,7 @@ function ($,
       },
       getSupportedNode: function (typeName)
       {
-         return SupportedNodes .getType (typeName);
+         return SupportedNodes .getType (String (typeName));
       },
       createScene: function (profile, component1 /*, ...*/)
       {
@@ -118446,10 +119359,20 @@ function ($,
 
          if (arguments .length)
          {
+            if (!(profile instanceof ProfileInfo))
+               throw new Error ("Couldn't create scene: profile must be of type ProfileInfo.");
+
             scene .setProfile (profile);
 
             for (let i = 1, length = arguments .length; i < length; ++ i)
-               scene .addComponent (arguments [i]);
+            {
+               const component = arguments [i];
+
+               if (!(component instanceof ComponentInfo))
+                  throw new Error ("Couldn't create scene: component must be of type ComponentInfo.");
+
+               scene .addComponent (component);
+            }
          }
 
          scene .setup ();
@@ -118460,7 +119383,7 @@ function ($,
       {
          // Cancel any loading.
 
-         this .loadCount_       .removeInterest ("set_loadCount__", this);
+         this ._loadCount       .removeInterest ("set_loadCount__", this);
          this .prepareEvents () .removeInterest ("bind", this);
 
          if (this [_loader])
@@ -118492,7 +119415,7 @@ function ($,
             scene .setRootNodes (rootNodes);
          }
 
-         if (! (scene instanceof X3DScene))
+         if (!(scene instanceof X3DScene))
             scene = this .createScene ();
 
          // Detach scene from parent.
@@ -118506,7 +119429,7 @@ function ($,
 
          this .getBrowserOptions () .configure ();
          this .setBrowserLoading (true);
-         this .loadCount_ .addInterest ("set_loadCount__", this);
+         this ._loadCount .addInterest ("set_loadCount__", this);
          this .prepareEvents () .removeInterest ("bind", this);
 
          for (const object of scene .getLoadingObjects ())
@@ -118522,7 +119445,7 @@ function ($,
          if (loadCount .getValue ())
             return;
 
-         this .loadCount_ .removeInterest ("set_loadCount__", this);
+         this ._loadCount .removeInterest ("set_loadCount__", this);
 
          this .prepareEvents () .addInterest ("bind", this);
          this .addBrowserEvent ();
@@ -118546,6 +119469,8 @@ function ($,
       },
       createX3DFromString: function (x3dSyntax)
       {
+         x3dSyntax = String (x3dSyntax);
+
          const
             currentScene = this .currentScene,
             external     = this .isExternal (),
@@ -118563,15 +119488,18 @@ function ($,
       },
       createVrmlFromURL: function (url, node, event)
       {
-         if (! (node instanceof Fields .SFNode))
-            throw new Error ("Browser.createVrmlFromURL: node must be of type SFNode.");
+         node  = X3DCast (X3DConstants .X3DNode, node, false);
+         event = String (event);
 
-         if (! node .getValue ())
-            throw new Error ("Browser.createVrmlFromURL: node IS NULL.");
+         if (!(url instanceof Fields .MFString))
+            throw new Error ("Browser.createVrmlFromURL: url must be of type MFString.");
 
-         const field = node .getValue () .getField (event);
+         if (!node)
+            throw new Error ("Browser.createVrmlFromURL: node must be of type X3DNode.");
 
-         if (! field .isInput ())
+         const field = node .getField (event);
+
+         if (!field .isInput ())
             throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be a input field.");
 
          if (field .getType () !== X3DConstants .MFNode)
@@ -118600,7 +119528,7 @@ function ($,
                   scene .setLive (currentScene .getLive ());
                }
 
-               // Wait until scene is completely loaded, scene .loadCount_ must be 0.
+               // Wait until scene is completely loaded, scene ._loadCount must be 0.
                field .setValue (scene .rootNodes);
             }
          }
@@ -118610,6 +119538,11 @@ function ($,
       {
          if (arguments .length === 3)
             return this .createVrmlFromURL (url, node, event);
+
+         // arguments .length === 1
+
+         if (!(url instanceof Fields .MFString))
+            throw new Error ("Browser.createX3DFromURL: url must be of type MFString.");
 
          const
             currentScene = this .currentScene,
@@ -118626,13 +119559,19 @@ function ($,
 
          return scene;
       },
-      loadURL: function (url, parameter)
+      loadURL: function (url, parameter = new Fields .MFString ())
       {
          const promise = new Promise (function (resolve, reject)
          {
+            if (!(url instanceof Fields .MFString))
+               throw new Error ("Browser.loadURL: url must be of type MFString.");
+
+            if (!(parameter instanceof Fields .MFString))
+               throw new Error ("Browser.loadURL: parameter must be of type MFString.");
+
             // Cancel any loading.
 
-            this .loadCount_       .removeInterest ("set_loadCount__", this);
+            this ._loadCount       .removeInterest ("set_loadCount__", this);
             this .prepareEvents () .removeInterest ("bind", this);
 
             if (this [_loader])
@@ -118805,112 +119744,98 @@ function ($,
       },
       firstViewpoint: function (layerNode)
       {
-         if (layerNode instanceof Fields .SFNode)
-            layerNode = layerNode .getValue ()
+         layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
 
-         if (! layerNode)
+         if (!layerNode)
             layerNode = this .getActiveLayer ();
 
-         if (layerNode instanceof X3DLayerNode)
-         {
-            const viewpoints = layerNode .getUserViewpoints ();
+         const viewpoints = layerNode .getUserViewpoints ();
 
-            if (viewpoints .length)
-               this .bindViewpoint (layerNode, viewpoints [0]);
-         }
+         if (viewpoints .length)
+            this .bindViewpoint (layerNode, viewpoints [0]);
       },
       previousViewpoint: function (layerNode)
       {
-         if (layerNode instanceof Fields .SFNode)
-            layerNode = layerNode .getValue ()
+         layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
 
-         if (! layerNode)
+         if (!layerNode)
             layerNode = this .getActiveLayer ();
 
-         if (layerNode instanceof X3DLayerNode)
+         const viewpoints = layerNode .getUserViewpoints ();
+
+         if (viewpoints .length === 0)
+            return;
+
+         for (var i = 0, length = viewpoints .length; i < length; ++ i)
          {
-            const viewpoints = layerNode .getUserViewpoints ();
-
-            if (viewpoints .length === 0)
-               return;
-
-            for (var i = 0, length = viewpoints .length; i < length; ++ i)
-            {
-               if (viewpoints [i] .isBound_ .getValue ())
-                  break;
-            }
-
-            if (i < viewpoints .length)
-            {
-               if (i === 0)
-                  this .bindViewpoint (layerNode, viewpoints .at (-1));
-
-               else
-                  this .bindViewpoint (layerNode, viewpoints [i - 1]);
-            }
-            else
-               this .bindViewpoint (layerNode, viewpoints .at (-1));
+            if (viewpoints [i] ._isBound .getValue ())
+               break;
          }
+
+         if (i < viewpoints .length)
+         {
+            if (i === 0)
+               this .bindViewpoint (layerNode, viewpoints .at (-1));
+
+            else
+               this .bindViewpoint (layerNode, viewpoints [i - 1]);
+         }
+         else
+            this .bindViewpoint (layerNode, viewpoints .at (-1));
       },
       nextViewpoint: function (layerNode)
       {
-         if (layerNode instanceof Fields .SFNode)
-            layerNode = layerNode .getValue ()
+         layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
 
-         if (! layerNode)
+         if (!layerNode)
             layerNode = this .getActiveLayer ();
 
-         if (layerNode instanceof X3DLayerNode)
+         const viewpoints = layerNode .getUserViewpoints ();
+
+         if (viewpoints .length === 0)
+            return;
+
+         for (var i = 0, length = viewpoints .length; i < length; ++ i)
          {
-            const viewpoints = layerNode .getUserViewpoints ();
-
-            if (viewpoints .length === 0)
-               return;
-
-            for (var i = 0, length = viewpoints .length; i < length; ++ i)
-            {
-               if (viewpoints [i] .isBound_ .getValue ())
-                  break;
-            }
-
-            if (i < viewpoints .length)
-            {
-               if (i === viewpoints .length - 1)
-                  this .bindViewpoint (layerNode, viewpoints [0]);
-
-               else
-                  this .bindViewpoint (layerNode, viewpoints [i + 1]);
-            }
-            else
-               this .bindViewpoint (layerNode, viewpoints [0]);
+            if (viewpoints [i] ._isBound .getValue ())
+               break;
          }
+
+         if (i < viewpoints .length)
+         {
+            if (i === viewpoints .length - 1)
+               this .bindViewpoint (layerNode, viewpoints [0]);
+
+            else
+               this .bindViewpoint (layerNode, viewpoints [i + 1]);
+         }
+         else
+            this .bindViewpoint (layerNode, viewpoints [0]);
       },
       lastViewpoint: function (layerNode)
       {
-         if (layerNode instanceof Fields .SFNode)
-            layerNode = layerNode .getValue ()
+         layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
 
-         if (! layerNode)
+         if (!layerNode)
             layerNode = this .getActiveLayer ();
 
-         if (layerNode instanceof X3DLayerNode)
-         {
-            const viewpoints = layerNode .getUserViewpoints ();
+         const viewpoints = layerNode .getUserViewpoints ();
 
-            if (viewpoints .length)
-               this .bindViewpoint (layerNode, viewpoints .at (-1));
-         }
+         if (viewpoints .length)
+            this .bindViewpoint (layerNode, viewpoints .at (-1));
       },
       changeViewpoint: function (layerNode, name)
       {
-         if (layerNode instanceof Fields .SFNode)
-            layerNode = layerNode .getValue ()
-
          if (arguments .length === 1)
          {
-            name      = layerNode;
+            name      = String (layerNode);
             layerNode = this .getActiveLayer ();
          }
+
+         layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
+
+         if (!layerNode)
+            layerNode = this .getActiveLayer ();
 
          if (layerNode instanceof X3DLayerNode)
          {
@@ -118926,13 +119851,22 @@ function ($,
       },
       bindViewpoint: function (layerNode, viewpointNode)
       {
+         layerNode     = X3DCast (X3DConstants .X3DLayerNode,     layerNode,     false);
+         viewpointNode = X3DCast (X3DConstants .X3DViewpointNode, viewpointNode, false);
+
+         if (!layerNode)
+            throw new Error ("Browser.bindViewpoint: layerNode must be of type X3DLayerNode.")
+
+         if (!viewpointNode)
+            throw new Error ("Browser.bindViewpoint: viewpointNode must be of type X3DViewpointNode.")
+
          viewpointNode .setVRMLTransition (true);
 
-         if (viewpointNode .isBound_ .getValue ())
+         if (viewpointNode ._isBound .getValue ())
             viewpointNode .transitionStart (layerNode, viewpointNode, viewpointNode);
 
          else
-            viewpointNode .set_bind_ = true;
+            viewpointNode ._set_bind = true;
       },
       addRoute: function (fromNode, fromEventOut, toNode, toEventIn)
       {
@@ -119382,7 +120316,7 @@ function ($,
       UnitInfoArray:               UnitInfoArray,
       ExternProtoDeclarationArray: ExternProtoDeclarationArray,
       ProtoDeclarationArray:       ProtoDeclarationArray,
-      X3DExterProtonDeclaration:   X3DExternProtoDeclaration,
+      X3DExternProtoDeclaration:   X3DExternProtoDeclaration,
       X3DProtoDeclaration:         X3DProtoDeclaration,
       RouteArray:                  RouteArray,
       X3DRoute:                    X3DRoute,
@@ -119436,7 +120370,7 @@ function ($,
       MFVec4d:                     Fields .MFVec4d,
       MFVec4f:                     Fields .MFVec4f,
    });
-
+   
    return X3D;
 });
 

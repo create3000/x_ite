@@ -192,21 +192,21 @@ function (X3DSensorNode,
       {
          if (this .isLive () .getValue ())
          {
-            this .enabled_ .addInterest ("set_enabled__", this);
+            this ._enabled .addInterest ("set_enabled__", this);
 
-            if (this .enabled_ .getValue ())
+            if (this ._enabled .getValue ())
                this .enable ();
          }
          else
          {
-            this .enabled_ .removeInterest ("set_enabled__", this);
+            this ._enabled .removeInterest ("set_enabled__", this);
 
             this .disable ();
          }
       },
       set_enabled__: function ()
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
             this .enable ();
          else
             this .disable ();
@@ -354,81 +354,81 @@ function (Fields,
       {
          event .preventDefault ();
 
-         if (! this .isActive_ .getValue ())
-            this .isActive_ = true;
+         if (! this ._isActive .getValue ())
+            this ._isActive = true;
 
          switch (event .which)
          {
             case 16: // Shift
-               this .shiftKey_ = true;
+               this ._shiftKey = true;
                break;
             case 17: // Ctrl
-               this .controlKey_ = true;
+               this ._controlKey = true;
                break;
             case 18: // Alt
-               this .altKey_ = true;
+               this ._altKey = true;
                break;
             //////////////////////////////////
             case 112:
-               this .actionKeyPress_ = KEY_F1;
+               this ._actionKeyPress = KEY_F1;
                break;
             case 113:
-               this .actionKeyPress_ = KEY_F2;
+               this ._actionKeyPress = KEY_F2;
                break;
             case 114:
-               this .actionKeyPress_ = KEY_F3;
+               this ._actionKeyPress = KEY_F3;
                break;
             case 115:
-               this .actionKeyPress_ = KEY_F4;
+               this ._actionKeyPress = KEY_F4;
                break;
             case 116:
-               this .actionKeyPress_ = KEY_F5;
+               this ._actionKeyPress = KEY_F5;
                break;
             case 117:
-               this .actionKeyPress_ = KEY_F6;
+               this ._actionKeyPress = KEY_F6;
                break;
             case 118:
-               this .actionKeyPress_ = KEY_F7;
+               this ._actionKeyPress = KEY_F7;
                break;
             case 119:
-               this .actionKeyPress_ = KEY_F8;
+               this ._actionKeyPress = KEY_F8;
                break;
             case 120:
-               this .actionKeyPress_ = KEY_F9;
+               this ._actionKeyPress = KEY_F9;
                break;
             case 121:
-               this .actionKeyPress_ = KEY_F10;
+               this ._actionKeyPress = KEY_F10;
                break;
             case 122:
-               this .actionKeyPress_ = KEY_F11;
+               this ._actionKeyPress = KEY_F11;
                break;
             case 123:
-               this .actionKeyPress_ = KEY_F12;
+               this ._actionKeyPress = KEY_F12;
                break;
             ////////////////////////////////////
             case 36:
-               this .actionKeyPress_ = KEY_HOME;
+               this ._actionKeyPress = KEY_HOME;
                break;
             case 35:
-               this .actionKeyPress_ = KEY_END;
+               this ._actionKeyPress = KEY_END;
                break;
             case 33:
-               this .actionKeyPress_ = KEY_PGUP;
+               this ._actionKeyPress = KEY_PGUP;
                break;
             case 34:
-               this .actionKeyPress_ = KEY_PGDN;
+               this ._actionKeyPress = KEY_PGDN;
                break;
             case 38:
-               this .actionKeyPress_ = KEY_UP;
+               this ._actionKeyPress = KEY_UP;
                break;
             case 40:
-               this .actionKeyPress_ = KEY_DOWN;
+               this ._actionKeyPress = KEY_DOWN;
                break;
             case 37:
-               this .actionKeyPress_ = KEY_LEFT;
+               this ._actionKeyPress = KEY_LEFT;
                break;
             case 39:
-               this .actionKeyPress_ = KEY_RIGHT;
+               this ._actionKeyPress = KEY_RIGHT;
                break;
             ////////////////////////////////////
             default:
@@ -442,23 +442,23 @@ function (Fields,
                      case "Insert":
                         break;
                      case "Backspace":
-                        this .keyPress_ = String .fromCharCode (8);
+                        this ._keyPress = String .fromCharCode (8);
                         break;
                      case "Delete":
-                        this .keyPress_ = String .fromCharCode (127);
+                        this ._keyPress = String .fromCharCode (127);
                         break;
                      case "Enter":
-                        this .keyPress_ = "\n";
+                        this ._keyPress = "\n";
                         break;
                      case "Escape":
-                        this .keyPress_ = String .fromCharCode (27);
+                        this ._keyPress = String .fromCharCode (27);
                         break;
                      case "Tab":
-                        this .keyPress_ = "\t";
+                        this ._keyPress = "\t";
                         break;
                      default:
                         if (event .key .length === 1)
-                           this .keyPress_ = event .key;
+                           this ._keyPress = event .key;
                         break;
                   }
                }
@@ -475,80 +475,80 @@ function (Fields,
          {
             case 16: // Shift
             {
-               this .shiftKey_ = false;
+               this ._shiftKey = false;
                break;
             }
             case 17: // Ctrl
             {
-               this .controlKey_ = false;
+               this ._controlKey = false;
                break;
             }
             case 18: // Alt
             {
-               this .altKey_ = false;
+               this ._altKey = false;
                break;
             }
             //////////////////////////////////
             case 112:
-               this .actionKeyRelease_ = KEY_F1;
+               this ._actionKeyRelease = KEY_F1;
                break;
             case 113:
-               this .actionKeyRelease_ = KEY_F2;
+               this ._actionKeyRelease = KEY_F2;
                break;
             case 114:
-               this .actionKeyRelease_ = KEY_F3;
+               this ._actionKeyRelease = KEY_F3;
                break;
             case 115:
-               this .actionKeyRelease_ = KEY_F4;
+               this ._actionKeyRelease = KEY_F4;
                break;
             case 116:
-               this .actionKeyRelease_ = KEY_F5;
+               this ._actionKeyRelease = KEY_F5;
                break;
             case 117:
-               this .actionKeyRelease_ = KEY_F6;
+               this ._actionKeyRelease = KEY_F6;
                break;
             case 118:
-               this .actionKeyRelease_ = KEY_F7;
+               this ._actionKeyRelease = KEY_F7;
                break;
             case 119:
-               this .actionKeyRelease_ = KEY_F8;
+               this ._actionKeyRelease = KEY_F8;
                break;
             case 120:
-               this .actionKeyRelease_ = KEY_F9;
+               this ._actionKeyRelease = KEY_F9;
                break;
             case 121:
-               this .actionKeyRelease_ = KEY_F10;
+               this ._actionKeyRelease = KEY_F10;
                break;
             case 122:
-               this .actionKeyRelease_ = KEY_F11;
+               this ._actionKeyRelease = KEY_F11;
                break;
             case 123:
-               this .actionKeyRelease_ = KEY_F12;
+               this ._actionKeyRelease = KEY_F12;
                break;
             ////////////////////////////////////
             case 36:
-               this .actionKeyRelease_ = KEY_HOME;
+               this ._actionKeyRelease = KEY_HOME;
                break;
             case 35:
-               this .actionKeyRelease_ = KEY_END;
+               this ._actionKeyRelease = KEY_END;
                break;
             case 33:
-               this .actionKeyRelease_ = KEY_PGUP;
+               this ._actionKeyRelease = KEY_PGUP;
                break;
             case 34:
-               this .actionKeyRelease_ = KEY_PGDN;
+               this ._actionKeyRelease = KEY_PGDN;
                break;
             case 38:
-               this .actionKeyRelease_ = KEY_UP;
+               this ._actionKeyRelease = KEY_UP;
                break;
             case 40:
-               this .actionKeyRelease_ = KEY_DOWN;
+               this ._actionKeyRelease = KEY_DOWN;
                break;
             case 37:
-               this .actionKeyRelease_ = KEY_LEFT;
+               this ._actionKeyRelease = KEY_LEFT;
                break;
             case 39:
-               this .actionKeyRelease_ = KEY_RIGHT;
+               this ._actionKeyRelease = KEY_RIGHT;
                break;
             ////////////////////////////////////
             default:
@@ -562,23 +562,23 @@ function (Fields,
                      case "Insert":
                         break;
                      case "Backspace":
-                        this .keyRelease_ = String .fromCharCode (8);
+                        this ._keyRelease = String .fromCharCode (8);
                         break;
                      case "Delete":
-                        this .keyRelease_ = String .fromCharCode (127);
+                        this ._keyRelease = String .fromCharCode (127);
                         break;
                      case "Enter":
-                        this .keyRelease_ = "\n";
+                        this ._keyRelease = "\n";
                         break;
                      case "Escape":
-                        this .keyRelease_ = String .fromCharCode (27);
+                        this ._keyRelease = String .fromCharCode (27);
                         break;
                      case "Tab":
-                        this .keyRelease_ = "\t";
+                        this ._keyRelease = "\t";
                         break;
                      default:
                         if (event .key .length === 1)
-                           this .keyRelease_ = event .key;
+                           this ._keyRelease = event .key;
                         break;
                   }
                }
@@ -587,19 +587,19 @@ function (Fields,
             }
          }
 
-         if (this .isActive_ .getValue ())
-            this .isActive_ = false;
+         if (this ._isActive .getValue ())
+            this ._isActive = false;
       },
       release: function ()
       {
-         if (this .shiftKey_ .getValue ())
-            this .shiftKey_ = false;
+         if (this ._shiftKey .getValue ())
+            this ._shiftKey = false;
 
-         if (this .controlKey_ .getValue ())
-            this .controlKey_ = false;
+         if (this ._controlKey .getValue ())
+            this ._controlKey = false;
 
-         if (this .altKey_ .getValue ())
-            this .altKey_ = false;
+         if (this ._altKey .getValue ())
+            this ._altKey = false;
       },
    });
 
@@ -708,12 +708,12 @@ function (Fields,
          {
             case "Backspace":
             {
-               if (this .isActive_ .getValue ())
+               if (this ._isActive .getValue ())
                {
-                  if (this .deletionAllowed_ .getValue ())
+                  if (this ._deletionAllowed .getValue ())
                   {
-                     if (this .enteredText_ .length)
-                        this .enteredText_  = this .enteredText_ .getValue () .substr (0, this .enteredText_ .length - 1);
+                     if (this ._enteredText .length)
+                        this ._enteredText  = this ._enteredText .getValue () .substr (0, this ._enteredText .length - 1);
                   }
                }
 
@@ -721,21 +721,21 @@ function (Fields,
             }
             case "Enter":
             {
-               this .finalText_ = this .enteredText_;
+               this ._finalText = this ._enteredText;
 
-               this .enteredText_ .set ("");
+               this ._enteredText .set ("");
 
-               if (this .isActive_ .getValue ())
-                  this .isActive_ = false;
+               if (this ._isActive .getValue ())
+                  this ._isActive = false;
 
                break;
             }
             case "Escape":
             {
-               this .enteredText_ .set ("");
+               this ._enteredText .set ("");
 
-               if (this .isActive_ .getValue ())
-                  this .isActive_ = false;
+               if (this ._isActive .getValue ())
+                  this ._isActive = false;
 
                break;
             }
@@ -749,13 +749,13 @@ function (Fields,
                {
                   if (event .key .length === 1)
                   {
-                     if (! this .isActive_ .getValue ())
+                     if (! this ._isActive .getValue ())
                      {
-                        this .isActive_    = true;
-                        this .enteredText_ = "";
+                        this ._isActive    = true;
+                        this ._enteredText = "";
                      }
 
-                     this .enteredText_ = this .enteredText_ .getValue () + event .key;
+                     this ._enteredText = this ._enteredText .getValue () + event .key;
                   }
                }
 

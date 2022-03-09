@@ -316,30 +316,30 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .transferFunction_ .addInterest ("set_transferFunction__", this);
+         this ._transferFunction .addInterest ("set_transferFunction__", this);
 
          this .set_transferFunction__ ();
       },
       set_transferFunction__: function ()
       {
-         this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture2DNode, this .transferFunction_);
+         this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture2DNode, this ._transferFunction);
 
          if (! this .transferFunctionNode)
-            this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture3DNode, this .transferFunction_);
+            this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._transferFunction);
 
          if (! this .transferFunctionNode)
             this .transferFunctionNode = this .getBrowser () .getDefaultTransferFunction ();
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transferFunction_" + this .getId (), new Fields .SFNode (this .transferFunctionNode));
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -375,7 +375,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -489,17 +489,17 @@ function (PixelTexture,
 
          const textureProperties = new TextureProperties (this .getPrivateScene ());
 
-         textureProperties .generateMipMaps_ = true;
-         textureProperties .boundaryModeS_   = "CLAMP_TO_EDGE";
-         textureProperties .boundaryModeT_   = "REPEAT";
+         textureProperties ._generateMipMaps = true;
+         textureProperties ._boundaryModeS   = "CLAMP_TO_EDGE";
+         textureProperties ._boundaryModeT   = "REPEAT";
 
-         this [_defaultTransferFunction] .textureProperties_ = textureProperties;
+         this [_defaultTransferFunction] ._textureProperties = textureProperties;
 
-         this [_defaultTransferFunction] .image_ .width  = 256;
-         this [_defaultTransferFunction] .image_ .height = 1;
-         this [_defaultTransferFunction] .image_ .comp   = 2;
+         this [_defaultTransferFunction] ._image .width  = 256;
+         this [_defaultTransferFunction] ._image .height = 1;
+         this [_defaultTransferFunction] ._image .comp   = 2;
 
-         const array = this [_defaultTransferFunction] .image_ .array;
+         const array = this [_defaultTransferFunction] ._image .array;
 
          for (let i = 0; i < 256; ++ i)
             array [i] = (i << 8) | i;
@@ -631,8 +631,8 @@ function (Fields,
 
          this .weightTransferFunction1_ .addInterest ("set_weightTransferFunction1__", this);
          this .weightTransferFunction2_ .addInterest ("set_weightTransferFunction2__", this);
-         this .renderStyle_             .addInterest ("set_renderStyle__",             this);
-         this .voxels_                  .addInterest ("set_voxels__",                  this);
+         this ._renderStyle             .addInterest ("set_renderStyle__",             this);
+         this ._voxels                  .addInterest ("set_voxels__",                  this);
 
          this .set_weightTransferFunction1__ ();
          this .set_weightTransferFunction2__ ();
@@ -674,7 +674,7 @@ function (Fields,
             .bind (this));
          }
 
-         this .renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this .renderStyle_);
+         this .renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this ._renderStyle);
 
          if (this .renderStyleNode)
          {
@@ -692,7 +692,7 @@ function (Fields,
          if (this .voxelsNode)
             this .voxelsNode .removeInterest ("set_textureSize__", this);
 
-         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .voxels_);
+         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
          if (this .voxelsNode)
          {
@@ -723,7 +723,7 @@ function (Fields,
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant1_" + this .getId (), this .weightConstant1_ .copy ());
@@ -754,7 +754,7 @@ function (Fields,
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          if (! this .voxelsNode)
@@ -899,7 +899,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          if (! this .voxelsNode)
@@ -1014,16 +1014,16 @@ function (Fields,
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "retainedOpacity_" + this .getId (), this .retainedOpacity_ .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "boundaryOpacity_" + this .getId (), this .boundaryOpacity_ .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "opacityFactor_"   + this .getId (), this .opacityFactor_   .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "retainedOpacity_" + this .getId (), this ._retainedOpacity .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "boundaryOpacity_" + this .getId (), this ._boundaryOpacity .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "opacityFactor_"   + this .getId (), this ._opacityFactor   .copy ());
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -1054,7 +1054,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -1176,29 +1176,29 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .surfaceNormals_ .addInterest ("set_surfaceNormals__", this);
+         this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
          this .set_surfaceNormals__ ();
       },
       set_surfaceNormals__: function ()
       {
-         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .surfaceNormals_);
+         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._surfaceNormals);
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "colorSteps_"      + this .getId (), this .colorSteps_      .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "orthogonalColor_" + this .getId (), this .orthogonalColor_ .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "parallelColor_"   + this .getId (), this .parallelColor_   .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "colorSteps_"      + this .getId (), this ._colorSteps      .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "orthogonalColor_" + this .getId (), this ._orthogonalColor .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "parallelColor_"   + this .getId (), this ._parallelColor   .copy ());
 
          if (this .surfaceNormalsNode)
             shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -1364,7 +1364,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -1485,7 +1485,7 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .renderStyle_ .addInterest ("set_renderStyle__", this);
+         this ._renderStyle .addInterest ("set_renderStyle__", this);
 
          this .set_renderStyle__ ();
       },
@@ -1531,9 +1531,9 @@ function (Fields,
 
          renderStyleNodes .length = 0;
 
-         for (var i = 0, length = this .renderStyle_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._renderStyle .length; i < length; ++ i)
          {
-            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this .renderStyle_ [i]);
+            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this ._renderStyle [i]);
 
             if (renderStyleNode)
                renderStyleNodes .push (renderStyleNode);
@@ -1553,7 +1553,7 @@ function (Fields,
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
          var renderStyleNodes = this .renderStyleNodes;
@@ -1563,7 +1563,7 @@ function (Fields,
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var
@@ -1589,7 +1589,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -1710,28 +1710,28 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .surfaceNormals_ .addInterest ("set_surfaceNormals__", this);
+         this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
          this .set_surfaceNormals__ ();
       },
       set_surfaceNormals__: function ()
       {
-         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .surfaceNormals_);
+         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._surfaceNormals);
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "edgeColor_"         + this .getId (), this .edgeColor_         .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "gradientThreshold_" + this .getId (), this .gradientThreshold_ .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "edgeColor_"         + this .getId (), this ._edgeColor         .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "gradientThreshold_" + this .getId (), this ._gradientThreshold .copy ());
 
          if (this .surfaceNormalsNode)
             shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -1768,7 +1768,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -1883,27 +1883,27 @@ function (Fields,
             browser = this .getBrowser (),
             gl      = browser .getContext ();
 
-         browser .getBrowserOptions () .TextureQuality_ .addInterest ("set_dimensions__", this);
+         browser .getBrowserOptions () ._TextureQuality .addInterest ("set_dimensions__", this);
 
          if (gl .getVersion () >= 2)
          {
-            this .dimensions_ .addInterest ("set_dimensions__", this);
+            this ._dimensions .addInterest ("set_dimensions__", this);
 
             this .set_dimensions__ ();
          }
 
          this .appearanceNode .setPrivate (true);
 
-         this .proximitySensorNode .size_         = new Fields .SFVec3f (-1, -1, -1);
-         this .transformNode .children_           = new Fields .MFNode (this .shapeNode);
-         this .shapeNode .appearance_             = this .appearanceNode;
-         this .shapeNode .geometry_               = this .geometryNode;
-         this .appearanceNode .alphaMode_         = "BLEND";
-         this .appearanceNode .textureTransform_  = this .textureTransformNode;
-         this .textureTransformNode .translation_ = new Fields .SFVec3f (0.5, 0.5, 0.5);
-         this .textureTransformNode .center_      = new Fields .SFVec3f (-0.5, -0.5, -0.5);
-         this .geometryNode .texCoord_            = this .textureCoordinateNode;
-         this .geometryNode .coord_               = this .coordinateNode;
+         this .proximitySensorNode ._size         = new Fields .SFVec3f (-1, -1, -1);
+         this .transformNode ._children           = new Fields .MFNode (this .shapeNode);
+         this .shapeNode ._appearance             = this .appearanceNode;
+         this .shapeNode ._geometry               = this .geometryNode;
+         this .appearanceNode ._alphaMode         = "BLEND";
+         this .appearanceNode ._textureTransform  = this .textureTransformNode;
+         this .textureTransformNode ._translation = new Fields .SFVec3f (0.5, 0.5, 0.5);
+         this .textureTransformNode ._center      = new Fields .SFVec3f (-0.5, -0.5, -0.5);
+         this .geometryNode ._texCoord            = this .textureCoordinateNode;
+         this .geometryNode ._coord               = this .coordinateNode;
 
          this .coordinateNode        .setup ();
          this .textureCoordinateNode .setup ();
@@ -1914,17 +1914,17 @@ function (Fields,
          this .transformNode         .setup ();
          this .proximitySensorNode   .setup ();
 
-         this .proximitySensorNode .orientation_changed_ .addFieldInterest (this .transformNode .rotation_);
-         this .proximitySensorNode .orientation_changed_ .addFieldInterest (this .textureTransformNode .rotation_);
+         this .proximitySensorNode ._orientation_changed .addFieldInterest (this .transformNode ._rotation);
+         this .proximitySensorNode ._orientation_changed .addFieldInterest (this .textureTransformNode ._rotation);
 
          this .textureTransformNode .addInterest ("set_textureTransform__", this);
       },
       getBBox: function (bbox, shadow)
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
-            return bbox .set (this .dimensions_ .getValue (), Vector3 .Zero);
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+            return bbox .set (this ._dimensions .getValue (), Vector3 .Zero);
 
-         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+         return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },
       getAppearance: function ()
       {
@@ -1932,7 +1932,7 @@ function (Fields,
       },
       setShader: function (shaderNode)
       {
-         this .getAppearance () .shaders_ [0] = shaderNode;
+         this .getAppearance () ._shaders [0] = shaderNode;
 
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureNormalMatrix" , new Fields .SFMatrix3f ());
          shaderNode .setup ();
@@ -1941,7 +1941,7 @@ function (Fields,
       },
       getShader: function ()
       {
-         var node = this .appearanceNode .shaders_ [0];
+         var node = this .appearanceNode ._shaders [0];
 
          if (node)
             return node .getValue ();
@@ -1972,11 +1972,11 @@ function (Fields,
       {
          var
             NUM_PLANES = this .getNumPlanes (),
-            size       = this .dimensions_ .getValue () .abs (),
+            size       = this ._dimensions .getValue () .abs (),
             size1_2    = size / 2,
             points     = [ ];
 
-         this .coordinateNode .point_ .length = 0;
+         this .coordinateNode ._point .length = 0;
 
          for (var i = 0; i < NUM_PLANES; ++ i)
          {
@@ -1988,10 +1988,10 @@ function (Fields,
                            size1_2, -size1_2, size * z);
          }
 
-         this .coordinateNode .point_        = points;
-         this .textureCoordinateNode .point_ = points;
+         this .coordinateNode ._point        = points;
+         this .textureCoordinateNode ._point = points;
 
-         this .textureTransformNode .scale_ = new Fields .SFVec3f (1 / this .dimensions_ .x, 1 / this .dimensions_ .y, 1 / this .dimensions_ .z);
+         this .textureTransformNode ._scale = new Fields .SFVec3f (1 / this ._dimensions .x, 1 / this ._dimensions .y, 1 / this ._dimensions .z);
       },
       set_textureTransform__: function ()
       {
@@ -2143,16 +2143,16 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .gradients_          .addInterest ("set_gradients__",   this);
-         this .renderStyle_        .addInterest ("set_renderStyle__", this);
-         this .voxels_             .addFieldInterest (this .getAppearance () .texture_);
+         this ._gradients          .addInterest ("set_gradients__",   this);
+         this ._renderStyle        .addInterest ("set_renderStyle__", this);
+         this ._voxels             .addFieldInterest (this .getAppearance () ._texture);
 
-         this .contourStepSize_    .addInterest ("update", this);
-         this .surfaceValues_      .addInterest ("update", this);
-         this .surfaceTolerance_   .addInterest ("update", this);
-         this .renderStyle_        .addInterest ("update", this);
+         this ._contourStepSize    .addInterest ("update", this);
+         this ._surfaceValues      .addInterest ("update", this);
+         this ._surfaceTolerance   .addInterest ("update", this);
+         this ._renderStyle        .addInterest ("update", this);
 
-         this .getAppearance () .texture_ = this .voxels_;
+         this .getAppearance () ._texture = this ._voxels;
 
          this .set_gradients__ ();
          this .set_renderStyle__ ();
@@ -2162,7 +2162,7 @@ function (Fields,
       },
       set_gradients__: function ()
       {
-         this .gradientsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .gradients_);
+         this .gradientsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._gradients);
       },
       set_renderStyle__: function ()
       {
@@ -2178,9 +2178,9 @@ function (Fields,
 
          renderStyleNodes .length = 0;
 
-         for (var i = 0, length = this .renderStyle_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._renderStyle .length; i < length; ++ i)
          {
-            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this .renderStyle_ [i]);
+            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this ._renderStyle [i]);
 
             if (renderStyleNode)
                renderStyleNodes .push (renderStyleNode);
@@ -2199,7 +2199,7 @@ function (Fields,
          if (this .voxelsNode)
             this .voxelsNode .removeInterest ("set_textureSize__", this);
 
-         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .voxels_);
+         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
          if (this .voxelsNode)
          {
@@ -2239,7 +2239,7 @@ function (Fields,
             styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
 
          styleUniforms  += "\n";
-         styleUniforms  += "uniform float surfaceValues [" + this .surfaceValues_ .length + "];\n";
+         styleUniforms  += "uniform float surfaceValues [" + this ._surfaceValues .length + "];\n";
          styleUniforms  += "uniform float surfaceTolerance;\n";
 
          for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
@@ -2283,9 +2283,9 @@ function (Fields,
          styleFunctions += "	float intensity = textureColor .r;\n";
          styleFunctions += "\n";
 
-         if (this .surfaceValues_ .length === 1)
+         if (this ._surfaceValues .length === 1)
          {
-            var contourStepSize = Math .abs (this .contourStepSize_ .getValue ());
+            var contourStepSize = Math .abs (this ._contourStepSize .getValue ());
 
             if (contourStepSize === 0)
             {
@@ -2309,12 +2309,12 @@ function (Fields,
             {
                var surfaceValues = [ ];
 
-               for (var v = this .surfaceValues_ [0] - contourStepSize; v > 0; v -= contourStepSize)
+               for (var v = this ._surfaceValues [0] - contourStepSize; v > 0; v -= contourStepSize)
                   surfaceValues .unshift (v);
 
-               surfaceValues .push (this .surfaceValues_ [0]);
+               surfaceValues .push (this ._surfaceValues [0]);
 
-               for (var v = this .surfaceValues_ [0] + contourStepSize; v < 1; v += contourStepSize)
+               for (var v = this ._surfaceValues [0] + contourStepSize; v < 1; v += contourStepSize)
                   surfaceValues .push (v);
 
                styleFunctions += "	if (false)\n";
@@ -2346,7 +2346,7 @@ function (Fields,
             styleFunctions += "	if (false)\n";
             styleFunctions += "	{ }\n";
 
-            for (var i = this .surfaceValues_ .length - 1; i >= 0; -- i)
+            for (var i = this ._surfaceValues .length - 1; i >= 0; -- i)
             {
                styleFunctions += "	else if (intensity > surfaceValues [" + i + "])\n";
                styleFunctions += "	{\n";
@@ -2377,23 +2377,23 @@ function (Fields,
 
          var vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader .setName ("VolumeDataVertexShader");
-         vertexShader .url_ .push ("data:x-shader/x-vertex," + vs);
+         vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
          vertexShader .setup ();
 
          var fragmentShader = new ShaderPart (this .getExecutionContext ());
          fragmentShader .setName ("VolumeDataFragmentShader");
-         fragmentShader .type_ = "FRAGMENT";
-         fragmentShader .url_ .push ("data:x-shader/x-fragment," + fs);
+         fragmentShader ._type = "FRAGMENT";
+         fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
          fragmentShader .setup ();
 
          var shaderNode = new ComposedShader (this .getExecutionContext ());
          shaderNode .setName ("VolumeDataShader");
-         shaderNode .language_ = "GLSL";
-         shaderNode .parts_ .push (vertexShader);
-         shaderNode .parts_ .push (fragmentShader);
+         shaderNode ._language = "GLSL";
+         shaderNode ._parts .push (vertexShader);
+         shaderNode ._parts .push (fragmentShader);
 
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceValues",    this .surfaceValues_    .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", this .surfaceTolerance_ .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceValues",    this ._surfaceValues    .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", this ._surfaceTolerance .copy ());
 
          if (this .gradientsNode)
             shaderNode .addUserDefinedField (X3DConstants .inputOutput, "grandients", new Fields .SFNode (this .gradientsNode));
@@ -2515,14 +2515,14 @@ function (Fields,
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "intensityThreshold_" + this .getId (), this .intensityThreshold_ .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "intensityThreshold_" + this .getId (), this ._intensityThreshold .copy ());
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -2536,7 +2536,7 @@ function (Fields,
          string += "vec4\n";
          string += "getProjectionStyle_" + this .getId () + "(in vec4 originalColor, in vec3 texCoord)\n";
          string += "{\n";
-         switch (this .type_ .getValue ())
+         switch (this ._type .getValue ())
          {
             default:
             case "MAX":
@@ -2575,7 +2575,7 @@ function (Fields,
          string += "		float intensity = texture (x3d_Texture3D [0], ray) .r;\n";
          string += "\n";
 
-         switch (this .type_ .getValue ())
+         switch (this ._type .getValue ())
          {
             default:
             case "MAX":
@@ -2622,7 +2622,7 @@ function (Fields,
          string += "	}\n";
          string += "\n";
 
-         if (this .type_ .getValue () === "AVERAGE")
+         if (this ._type .getValue () === "AVERAGE")
             string += "	projectionColor /= float (samples);\n";
 
          string += "	return vec4 (vec3 (projectionColor), originalColor .a);\n";
@@ -2632,7 +2632,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -2771,15 +2771,15 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .segmentIdentifiers_ .addInterest ("set_segmentIdentifiers__", this);
-         this .renderStyle_        .addInterest ("set_renderStyle__",        this);
-         this .voxels_             .addFieldInterest (this .getAppearance () .texture_);
+         this ._segmentIdentifiers .addInterest ("set_segmentIdentifiers__", this);
+         this ._renderStyle        .addInterest ("set_renderStyle__",        this);
+         this ._voxels             .addFieldInterest (this .getAppearance () ._texture);
 
-         this .segmentEnabled_     .addInterest ("update", this);
-         this .segmentIdentifiers_ .addInterest ("update", this);
-         this .renderStyle_        .addInterest ("update", this);
+         this ._segmentEnabled     .addInterest ("update", this);
+         this ._segmentIdentifiers .addInterest ("update", this);
+         this ._renderStyle        .addInterest ("update", this);
 
-         this .getAppearance () .texture_ = this .voxels_;
+         this .getAppearance () ._texture = this ._voxels;
 
          this .set_segmentIdentifiers__ ();
          this .set_renderStyle__ ();
@@ -2789,11 +2789,11 @@ function (Fields,
       },
       getSegmentEnabled: function (index)
       {
-         return index < this .segmentEnabled_ .length ? this .segmentEnabled_ [index] : true;
+         return index < this ._segmentEnabled .length ? this ._segmentEnabled [index] : true;
       },
       set_segmentIdentifiers__: function ()
       {
-         this .segmentIdentifiersNode = X3DCast (X3DConstants .X3DTexture3DNode, this .segmentIdentifiers_);
+         this .segmentIdentifiersNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._segmentIdentifiers);
       },
       set_renderStyle__: function ()
       {
@@ -2809,9 +2809,9 @@ function (Fields,
 
          renderStyleNodes .length = 0;
 
-         for (var i = 0, length = this .renderStyle_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._renderStyle .length; i < length; ++ i)
          {
-            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this .renderStyle_ [i]);
+            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this ._renderStyle [i]);
 
             if (renderStyleNode)
                renderStyleNodes .push (renderStyleNode);
@@ -2830,7 +2830,7 @@ function (Fields,
          if (this .voxelsNode)
             this .voxelsNode .removeInterest ("set_textureSize__", this);
 
-         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .voxels_);
+         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
          if (this .voxelsNode)
          {
@@ -2919,20 +2919,20 @@ function (Fields,
 
          var vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader .setName ("SegmentedVolumeDataVertexShader");
-         vertexShader .url_ .push ("data:x-shader/x-vertex," + vs);
+         vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
          vertexShader .setup ();
 
          var fragmentShader = new ShaderPart (this .getExecutionContext ());
          fragmentShader .setName ("SegmentedVolumeDataFragmentShader");
-         fragmentShader .type_ = "FRAGMENT";
-         fragmentShader .url_ .push ("data:x-shader/x-fragment," + fs);
+         fragmentShader ._type = "FRAGMENT";
+         fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
          fragmentShader .setup ();
 
          var shaderNode = new ComposedShader (this .getExecutionContext ());
          shaderNode .setName ("SegmentedVolumeDataShader");
-         shaderNode .language_ = "GLSL";
-         shaderNode .parts_ .push (vertexShader);
-         shaderNode .parts_ .push (fragmentShader);
+         shaderNode ._language = "GLSL";
+         shaderNode ._parts .push (vertexShader);
+         shaderNode ._parts .push (fragmentShader);
 
          if (this .voxelsNode)
          {
@@ -3069,8 +3069,8 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .material_       .addInterest ("set_material__",       this);
-         this .surfaceNormals_ .addInterest ("set_surfaceNormals__", this);
+         this ._material       .addInterest ("set_material__",       this);
+         this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
          this .set_material__ ();
          this .set_surfaceNormals__ ();
@@ -3080,28 +3080,28 @@ function (Fields,
          if (this .materialNode)
             this .materialNode .removeInterest ("addNodeEvent", this);
 
-         this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this .material_);
+         this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this ._material);
 
          if (this .materialNode)
             this .materialNode .addInterest ("addNodeEvent", this);
       },
       set_surfaceNormals__: function ()
       {
-         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .surfaceNormals_);
+         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._surfaceNormals);
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
          if (this .materialNode)
          {
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "ambientIntensity_" + this .getId (), this .materialNode .ambientIntensity_ .copy ());
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "diffuseColor_"     + this .getId (), this .materialNode .diffuseColor_     .copy ());
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "specularColor_"    + this .getId (), this .materialNode .specularColor_    .copy ());
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "emissiveColor_"    + this .getId (), this .materialNode .emissiveColor_    .copy ());
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "shininess_"        + this .getId (), this .materialNode .shininess_        .copy ());
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transparency_"     + this .getId (), this .materialNode .transparency_     .copy ());
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "ambientIntensity_" + this .getId (), this .materialNode ._ambientIntensity .copy ());
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "diffuseColor_"     + this .getId (), this .materialNode ._diffuseColor     .copy ());
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "specularColor_"    + this .getId (), this .materialNode ._specularColor    .copy ());
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "emissiveColor_"    + this .getId (), this .materialNode ._emissiveColor    .copy ());
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "shininess_"        + this .getId (), this .materialNode ._shininess        .copy ());
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transparency_"     + this .getId (), this .materialNode ._transparency     .copy ());
          }
 
          if (this .surfaceNormalsNode)
@@ -3109,7 +3109,7 @@ function (Fields,
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -3151,7 +3151,7 @@ function (Fields,
          string += "\n";
          string += "	vec4 shadedColor   = vec4 (0.0);\n";
 
-         if (this .lighting_ .getValue ())
+         if (this ._lighting .getValue ())
          {
             if (this .materialNode)
             {
@@ -3229,7 +3229,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -3351,29 +3351,29 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .surfaceNormals_ .addInterest ("set_surfaceNormals__", this);
+         this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
          this .set_surfaceNormals__ ();
       },
       set_surfaceNormals__: function ()
       {
-         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .surfaceNormals_);
+         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._surfaceNormals);
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "silhouetteRetainedOpacity_" + this .getId (), this .silhouetteRetainedOpacity_ .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "silhouetteBoundaryOpacity_" + this .getId (), this .silhouetteBoundaryOpacity_ .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "silhouetteSharpness_"       + this .getId (), this .silhouetteSharpness_       .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "silhouetteRetainedOpacity_" + this .getId (), this ._silhouetteRetainedOpacity .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "silhouetteBoundaryOpacity_" + this .getId (), this ._silhouetteBoundaryOpacity .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "silhouetteSharpness_"       + this .getId (), this ._silhouetteSharpness       .copy ());
 
          if (this .surfaceNormalsNode)
             shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -3407,7 +3407,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -3528,28 +3528,28 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .surfaceNormals_ .addInterest ("set_surfaceNormals__", this);
+         this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
          this .set_surfaceNormals__ ();
       },
       set_surfaceNormals__: function ()
       {
-         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .surfaceNormals_);
+         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._surfaceNormals);
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "coolColor_" + this .getId (), this .coolColor_ .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "warmColor_" + this .getId (), this .warmColor_ .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "coolColor_" + this .getId (), this ._coolColor .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "warmColor_" + this .getId (), this ._warmColor .copy ());
 
          if (this .surfaceNormalsNode)
             shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -3595,7 +3595,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -3731,13 +3731,13 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .renderStyle_ .addInterest ("set_renderStyle__", this);
-         this .voxels_      .addInterest ("set_voxels__",      this);
-         this .voxels_      .addFieldInterest (this .getAppearance () .texture_);
+         this ._renderStyle .addInterest ("set_renderStyle__", this);
+         this ._voxels      .addInterest ("set_voxels__",      this);
+         this ._voxels      .addFieldInterest (this .getAppearance () ._texture);
 
-         this .renderStyle_ .addInterest ("update", this);
+         this ._renderStyle .addInterest ("update", this);
 
-         this .getAppearance () .texture_   = this .voxels_;
+         this .getAppearance () ._texture   = this ._voxels;
 
          this .set_renderStyle__ ();
          this .set_voxels__ ();
@@ -3752,7 +3752,7 @@ function (Fields,
             this .renderStyleNode .removeVolumeData (this);
          }
 
-         this .renderStyleNode = X3DCast (X3DConstants .X3DVolumeRenderStyleNode, this .renderStyle_);
+         this .renderStyleNode = X3DCast (X3DConstants .X3DVolumeRenderStyleNode, this ._renderStyle);
 
          if (this .renderStyleNode)
          {
@@ -3765,7 +3765,7 @@ function (Fields,
          if (this .voxelsNode)
             this .voxelsNode .removeInterest ("set_textureSize__", this);
 
-         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .voxels_);
+         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
          if (this .voxelsNode)
          {
@@ -3818,20 +3818,20 @@ function (Fields,
 
          var vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader .setName ("VolumeDataVertexShader");
-         vertexShader .url_ .push ("data:x-shader/x-vertex," + vs);
+         vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
          vertexShader .setup ();
 
          var fragmentShader = new ShaderPart (this .getExecutionContext ());
          fragmentShader .setName ("VolumeDataFragmentShader");
-         fragmentShader .type_ = "FRAGMENT";
-         fragmentShader .url_ .push ("data:x-shader/x-fragment," + fs);
+         fragmentShader ._type = "FRAGMENT";
+         fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
          fragmentShader .setup ();
 
          var shaderNode = new ComposedShader (this .getExecutionContext ());
          shaderNode .setName ("VolumeDataShader");
-         shaderNode .language_ = "GLSL";
-         shaderNode .parts_ .push (vertexShader);
-         shaderNode .parts_ .push (fragmentShader);
+         shaderNode ._language = "GLSL";
+         shaderNode ._parts .push (vertexShader);
+         shaderNode ._parts .push (fragmentShader);
 
          if (this .voxelsNode)
          {

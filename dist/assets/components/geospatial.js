@@ -1079,18 +1079,18 @@ function (X3DConstants,
       constructor: X3DGeospatialObject,
       initialize: function ()
       {
-         this .geoSystem_ .addInterest ("set_geoSystem__", this);
-         this .geoOrigin_ .addInterest ("set_geoOrigin__", this);
+         this ._geoSystem .addInterest ("set_geoSystem__", this);
+         this ._geoOrigin .addInterest ("set_geoOrigin__", this);
 
          this .set_geoSystem__ ();
          this .set_geoOrigin__ ();
       },
       set_geoSystem__: function ()
       {
-         this .coordinateSystem = Geospatial .getCoordinateSystem (this .geoSystem_);
-         this .referenceFrame   = Geospatial .getReferenceFrame   (this .geoSystem_, this .radians);
-         this .elevationFrame   = Geospatial .getElevationFrame   (this .geoSystem_, this .radians);
-         this .standardOrder    = Geospatial .isStandardOrder     (this .geoSystem_);
+         this .coordinateSystem = Geospatial .getCoordinateSystem (this ._geoSystem);
+         this .referenceFrame   = Geospatial .getReferenceFrame   (this ._geoSystem, this .radians);
+         this .elevationFrame   = Geospatial .getElevationFrame   (this ._geoSystem, this .radians);
+         this .standardOrder    = Geospatial .isStandardOrder     (this ._geoSystem);
       },
       set_geoOrigin__: function ()
       {
@@ -1101,7 +1101,7 @@ function (X3DConstants,
             this .geoOriginNode .removeInterest ("addNodeEvent",    this);
          }
 
-         this .geoOriginNode = X3DCast (X3DConstants .GeoOrigin, this .geoOrigin_);
+         this .geoOriginNode = X3DCast (X3DConstants .GeoOrigin, this ._geoOrigin);
 
          if (this .geoOriginNode)
          {
@@ -1164,7 +1164,7 @@ function (X3DConstants,
       },
       set_rotateYUp__: function ()
       {
-         if (this .geoOriginNode && this .geoOriginNode .rotateYUp_ .getValue ())
+         if (this .geoOriginNode && this .geoOriginNode ._rotateYUp .getValue ())
          {
             this .getCoord          = getCoordRotateYUp;
             this .getGeoCoord       = getGeoCoordRotateYUp;
@@ -1375,14 +1375,14 @@ function (Fields,
          X3DCoordinateNode   .prototype .initialize .call (this);
          X3DGeospatialObject .prototype .initialize .call (this);
 
-         this .point_ .addInterest ("set_point__", this);
+         this ._point .addInterest ("set_point__", this);
 
          this .set_point__ ();
       },
       set_point__: function ()
       {
-         this .point  = this .point_ .getValue ();
-         this .length = this .point_ .length;
+         this .point  = this ._point .getValue ();
+         this .length = this ._point .length;
       },
       isEmpty: function ()
       {
@@ -1398,7 +1398,7 @@ function (Fields,
 
          return function (index, point)
          {
-            this .point_ [index] = this .getGeoCoord (point, result);
+            this ._point [index] = this .getGeoCoord (point, result);
          };
       })(),
       get1Point: (function ()
@@ -1602,8 +1602,8 @@ function (Fields,
 
       this .addType (X3DConstants .GeoElevationGrid);
 
-      this .creaseAngle_ .setUnit ("angle");
-      this .height_      .setUnit ("length");
+      this ._creaseAngle .setUnit ("angle");
+      this ._height      .setUnit ("length");
 
       this .colorNode    = null;
       this .texCoordNode = null;
@@ -1651,9 +1651,9 @@ function (Fields,
          X3DGeometryNode     .prototype .initialize .call (this);
          X3DGeospatialObject .prototype .initialize .call (this);
 
-         this .color_    .addInterest ("set_color__", this);
-         this .texCoord_ .addInterest ("set_texCoord__", this);
-         this .normal_   .addInterest ("set_normal__", this);
+         this ._color    .addInterest ("set_color__", this);
+         this ._texCoord .addInterest ("set_texCoord__", this);
+         this ._normal   .addInterest ("set_normal__", this);
 
          this .set_color__ ();
          this .set_texCoord__ ();
@@ -1664,15 +1664,15 @@ function (Fields,
          if (this .colorNode)
          {
             this .colorNode .removeInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .colorNode ._transparent .removeInterest ("set_transparent__", this);
          }
 
-         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
+         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
          if (this .colorNode)
          {
             this .colorNode .addInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .addInterest ("set_transparent__", this);
+            this .colorNode ._transparent .addInterest ("set_transparent__", this);
 
             this .set_transparent__ ();
          }
@@ -1688,7 +1688,7 @@ function (Fields,
          if (this .texCoordNode)
             this .texCoordNode .removeInterest ("requestRebuild", this);
 
-         this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
+         this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
 
          if (this .texCoordNode)
             this .texCoordNode .addInterest ("requestRebuild", this);
@@ -1700,7 +1700,7 @@ function (Fields,
          if (this .normalNode)
             this .normalNode .removeInterest ("requestRebuild", this);
 
-         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this .normal_);
+         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
 
          if (this .normalNode)
             this .normalNode .addInterest ("requestRebuild", this);
@@ -1719,8 +1719,8 @@ function (Fields,
       },
       getHeight: function (index)
       {
-         if (index < this .height_ .length)
-            return this .height_ [index] * this .yScale_ .getValue ();
+         if (index < this ._height .length)
+            return this ._height [index] * this ._yScale .getValue ();
 
          return 0;
       },
@@ -1728,8 +1728,8 @@ function (Fields,
       {
          var
             texCoords  = [ ],
-            xDimension = this .xDimension_ .getValue (),
-            zDimension = this .zDimension_ .getValue (),
+            xDimension = this ._xDimension .getValue (),
+            zDimension = this ._zDimension .getValue (),
             xSize      = xDimension - 1,
             zSize      = zDimension - 1;
 
@@ -1744,7 +1744,7 @@ function (Fields,
       createNormals: function (points, coordIndex, creaseAngle)
       {
          var
-            cw          = ! this .ccw_ .getValue (),
+            cw          = ! this ._ccw .getValue (),
             normalIndex = [ ],
             normals     = [ ];
 
@@ -1772,7 +1772,7 @@ function (Fields,
             normals .push (normal);
          }
 
-         return this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
+         return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
       },
       createCoordIndex: function ()
       {
@@ -1782,8 +1782,8 @@ function (Fields,
 
          var
             coordIndex = [ ],
-            xDimension = this .xDimension_ .getValue (),
-            zDimension = this .zDimension_ .getValue (),
+            xDimension = this ._xDimension .getValue (),
+            zDimension = this ._zDimension .getValue (),
             xSize      = xDimension - 1,
             zSize      = zDimension - 1;
 
@@ -1813,10 +1813,10 @@ function (Fields,
       {
          var
             points     = [ ],
-            xDimension = this .xDimension_ .getValue (),
-            zDimension = this .zDimension_ .getValue (),
-            xSpacing   = this .xSpacing_ .getValue (),
-            zSpacing   = this .zSpacing_ .getValue ();
+            xDimension = this ._xDimension .getValue (),
+            zDimension = this ._zDimension .getValue (),
+            xSpacing   = this ._xSpacing .getValue (),
+            zSpacing   = this ._zSpacing .getValue ();
 
          // When the geoSystem is "GD", xSpacing refers to the number of units of longitude in angle base units between
          // adjacent height values and zSpacing refers to the number of units of latitude in angle base units between
@@ -1835,7 +1835,7 @@ function (Fields,
                                            xSpacing * x, // longitude, easting
                                            this .getHeight (x + z * xDimension));
 
-                  point .add (this .geoGridOrigin_ .getValue ());
+                  point .add (this ._geoGridOrigin .getValue ());
 
                   points .push (this .getCoord (point, point));
                }
@@ -1851,7 +1851,7 @@ function (Fields,
                                            zSpacing * z, // latitude, northing
                                            this .getHeight (x + z * xDimension));
 
-                  point .add (this .geoGridOrigin_ .getValue ());
+                  point .add (this ._geoGridOrigin .getValue ());
 
                   points .push (this .getCoord (point, point));
                }
@@ -1862,12 +1862,12 @@ function (Fields,
       },
       build: function ()
       {
-         if (this .xDimension_ .getValue () < 2 || this .zDimension_ .getValue () < 2)
+         if (this ._xDimension .getValue () < 2 || this ._zDimension .getValue () < 2)
             return;
 
          var
-            colorPerVertex     = this .colorPerVertex_ .getValue (),
-            normalPerVertex    = this .normalPerVertex_ .getValue (),
+            colorPerVertex     = this ._colorPerVertex .getValue (),
+            normalPerVertex    = this ._normalPerVertex .getValue (),
             coordIndex         = this .createCoordIndex (),
             colorNode          = this .getColor (),
             texCoordNode       = this .getTexCoord (),
@@ -1958,8 +1958,8 @@ function (Fields,
             }
          }
 
-         this .setSolid (this .solid_ .getValue ());
-         this .setCCW (this .ccw_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
+         this .setCCW (this ._ccw .getValue ());
       },
    });
 
@@ -2056,7 +2056,7 @@ function (Fields,
 
       this .addType (X3DConstants .GeoLOD);
 
-      this .range_ .setUnit ("length");
+      this ._range .setUnit ("length");
 
       this .unload           = false;
       this .rootGroup        = new Group (this .getBrowser () .getPrivateScene ());
@@ -2113,35 +2113,35 @@ function (Fields,
          X3DBoundedObject    .prototype .initialize .call (this);
          X3DGeospatialObject .prototype .initialize .call (this);
 
-         this .rootNode_ .addFieldInterest (this .rootGroup .children_);
+         this ._rootNode .addFieldInterest (this .rootGroup ._children);
 
-         this .rootGroup .children_ = this .rootNode_;
+         this .rootGroup ._children = this ._rootNode;
          this .rootGroup .setPrivate (true);
          this .rootGroup .setup ();
 
-         this .rootInline   .loadState_ .addInterest ("set_rootLoadState__", this);
-         this .child1Inline .loadState_ .addInterest ("set_childLoadState__", this);
-         this .child2Inline .loadState_ .addInterest ("set_childLoadState__", this);
-         this .child3Inline .loadState_ .addInterest ("set_childLoadState__", this);
-         this .child4Inline .loadState_ .addInterest ("set_childLoadState__", this);
+         this .rootInline   ._loadState .addInterest ("set_rootLoadState__", this);
+         this .child1Inline ._loadState .addInterest ("set_childLoadState__", this);
+         this .child2Inline ._loadState .addInterest ("set_childLoadState__", this);
+         this .child3Inline ._loadState .addInterest ("set_childLoadState__", this);
+         this .child4Inline ._loadState .addInterest ("set_childLoadState__", this);
 
-         this .rootUrl_   .addFieldInterest (this .rootInline   .url_);
-         this .child1Url_ .addFieldInterest (this .child1Inline .url_);
-         this .child2Url_ .addFieldInterest (this .child2Inline .url_);
-         this .child3Url_ .addFieldInterest (this .child3Inline .url_);
-         this .child4Url_ .addFieldInterest (this .child4Inline .url_);
+         this ._rootUrl   .addFieldInterest (this .rootInline   ._url);
+         this ._child1Url .addFieldInterest (this .child1Inline ._url);
+         this ._child2Url .addFieldInterest (this .child2Inline ._url);
+         this ._child3Url .addFieldInterest (this .child3Inline ._url);
+         this ._child4Url .addFieldInterest (this .child4Inline ._url);
 
-         this .rootInline   .load_ = true;
-         this .child1Inline .load_ = false;
-         this .child2Inline .load_ = false;
-         this .child3Inline .load_ = false;
-         this .child4Inline .load_ = false;
+         this .rootInline   ._load = true;
+         this .child1Inline ._load = false;
+         this .child2Inline ._load = false;
+         this .child3Inline ._load = false;
+         this .child4Inline ._load = false;
 
-         this .rootInline   .url_ = this .rootUrl_;
-         this .child1Inline .url_ = this .child1Url_;
-         this .child2Inline .url_ = this .child2Url_;
-         this .child3Inline .url_ = this .child3Url_;
-         this .child4Inline .url_ = this .child4Url_;
+         this .rootInline   ._url = this ._rootUrl;
+         this .child1Inline ._url = this ._child1Url;
+         this .child2Inline ._url = this ._child2Url;
+         this .child3Inline ._url = this ._child3Url;
+         this .child4Inline ._url = this ._child4Url;
 
          this .rootInline   .setup ();
          this .child1Inline .setup ();
@@ -2151,13 +2151,13 @@ function (Fields,
       },
       getBBox: function (bbox, shadow)
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
-            switch (this .childrenLoaded ? this .level_changed_ .getValue () : 0)
+            switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
             {
                case 0:
                {
-                  if (this .rootNode_ .length)
+                  if (this ._rootNode .length)
                      return this .rootGroup .getBBox (bbox, shadow);
 
                   return this .rootInline .getBBox (bbox, shadow);
@@ -2181,25 +2181,25 @@ function (Fields,
             return bbox .set ();
          }
 
-         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+         return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },
       set_rootLoadState__: function ()
       {
-         if (this .level_changed_ .getValue () !== 0)
+         if (this ._level_changed .getValue () !== 0)
             return;
 
-         if (this .rootNode_ .length)
+         if (this ._rootNode .length)
             return;
 
          if (this .rootInline .checkLoadState () === X3DConstants .COMPLETE_STATE)
          {
-            this .children_      = this .rootInline .getInternalScene () .getRootNodes ();
+            this ._children      = this .rootInline .getInternalScene () .getRootNodes ();
             this .childrenLoaded = false;
          }
       },
       set_childLoadState__: function ()
       {
-         if (this .level_changed_ .getValue () !== 1)
+         if (this ._level_changed .getValue () !== 1)
             return;
 
          var loaded = 0;
@@ -2224,7 +2224,7 @@ function (Fields,
          {
             this .childrenLoaded = true;
 
-            var children = this .children_;
+            var children = this ._children;
 
             children .length = 0;
 
@@ -2267,14 +2267,14 @@ function (Fields,
       {
          var distance = this .getDistance (modelViewMatrix);
 
-         if (distance < this .range_ .getValue ())
+         if (distance < this ._range .getValue ())
             return 1;
 
          return 0;
       },
       getDistance: function (modelViewMatrix)
       {
-         modelViewMatrix .translate (this .getCoord (this .center_ .getValue (), center));
+         modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
 
          return modelViewMatrix .origin .abs ();
       },
@@ -2299,94 +2299,94 @@ function (Fields,
             {
                var level = this .getLevel (this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
 
-               if (level !== this .level_changed_ .getValue ())
+               if (level !== this ._level_changed .getValue ())
                {
-                  this .level_changed_ = level;
+                  this ._level_changed = level;
 
                   switch (level)
                   {
                      case 0:
                      {
-                        this .child1Inline .isCameraObject_   .removeInterest ("set_childCameraObject__",   this);
-                        this .child2Inline .isCameraObject_   .removeInterest ("set_childCameraObject__",   this);
-                        this .child3Inline .isCameraObject_   .removeInterest ("set_childCameraObject__",   this);
-                        this .child4Inline .isCameraObject_   .removeInterest ("set_childCameraObject__",   this);
-                        this .child1Inline .isPickableObject_ .removeInterest ("set_childPickableObject__", this);
-                        this .child2Inline .isPickableObject_ .removeInterest ("set_childPickableObject__", this);
-                        this .child3Inline .isPickableObject_ .removeInterest ("set_childPickableObject__", this);
-                        this .child4Inline .isPickableObject_ .removeInterest ("set_childPickableObject__", this);
+                        this .child1Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
+                        this .child2Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
+                        this .child3Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
+                        this .child4Inline ._isCameraObject   .removeInterest ("set_childCameraObject__",   this);
+                        this .child1Inline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
+                        this .child2Inline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
+                        this .child3Inline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
+                        this .child4Inline ._isPickableObject .removeInterest ("set_childPickableObject__", this);
 
-                        if (this .rootNode_ .length)
+                        if (this ._rootNode .length)
                         {
-                           this .rootGroup .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-                           this .rootGroup .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+                           this .rootGroup ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+                           this .rootGroup ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
                            this .setCameraObject   (this .rootGroup .getCameraObject ());
                            this .setPickableObject (this .rootGroup .getPickableObject ());
 
-                           this .children_      = this .rootNode_;
+                           this ._children      = this ._rootNode;
                            this .childrenLoaded = false;
                         }
                         else
                         {
                            if (this .rootInline .checkLoadState () == X3DConstants .COMPLETE_STATE)
                            {
-                              this .rootInline .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-                              this .rootInline .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+                              this .rootInline ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+                              this .rootInline ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
                               this .setCameraObject   (this .rootInline .getCameraObject ());
                               this .setPickableObject (this .rootInline .getPickableObject ());
 
-                              this .children_      = this .rootInline .getInternalScene () .getRootNodes ();
+                              this ._children      = this .rootInline .getInternalScene () .getRootNodes ();
                               this .childrenLoaded = false;
                            }
                         }
 
                         if (this .unload)
                         {
-                           this .child1Inline .load_ = false;
-                           this .child2Inline .load_ = false;
-                           this .child3Inline .load_ = false;
-                           this .child4Inline .load_ = false;
+                           this .child1Inline ._load = false;
+                           this .child2Inline ._load = false;
+                           this .child3Inline ._load = false;
+                           this .child4Inline ._load = false;
                         }
 
                         break;
                      }
                      case 1:
                      {
-                        if (this .rootNode_ .length)
+                        if (this ._rootNode .length)
                         {
-                           this .rootGroup .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
-                           this .rootGroup .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+                           this .rootGroup ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
+                           this .rootGroup ._isPickableObject .removeFieldInterest (this ._isPickableObject);
                         }
                         else
                         {
-                           this .rootInline .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
-                           this .rootInline .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+                           this .rootInline ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
+                           this .rootInline ._isPickableObject .removeFieldInterest (this ._isPickableObject);
                         }
 
-                        this .child1Inline .isCameraObject_   .addInterest ("set_childCameraObject__",   this);
-                        this .child2Inline .isCameraObject_   .addInterest ("set_childCameraObject__",   this);
-                        this .child3Inline .isCameraObject_   .addInterest ("set_childCameraObject__",   this);
-                        this .child4Inline .isCameraObject_   .addInterest ("set_childCameraObject__",   this);
-                        this .child1Inline .isPickableObject_ .addInterest ("set_childPickableObject__", this);
-                        this .child2Inline .isPickableObject_ .addInterest ("set_childPickableObject__", this);
-                        this .child3Inline .isPickableObject_ .addInterest ("set_childPickableObject__", this);
-                        this .child4Inline .isPickableObject_ .addInterest ("set_childPickableObject__", this);
+                        this .child1Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
+                        this .child2Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
+                        this .child3Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
+                        this .child4Inline ._isCameraObject   .addInterest ("set_childCameraObject__",   this);
+                        this .child1Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
+                        this .child2Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
+                        this .child3Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
+                        this .child4Inline ._isPickableObject .addInterest ("set_childPickableObject__", this);
 
                         this .set_childCameraObject__ ();
                         this .set_childPickableObject__ ();
 
-                        if (this .child1Inline .load_ .getValue ())
+                        if (this .child1Inline ._load .getValue ())
                         {
                            this .set_childLoadState__ ();
                         }
                         else
                         {
-                           this .child1Inline .load_ = true;
-                           this .child2Inline .load_ = true;
-                           this .child3Inline .load_ = true;
-                           this .child4Inline .load_ = true;
+                           this .child1Inline ._load = true;
+                           this .child2Inline ._load = true;
+                           this .child3Inline ._load = true;
+                           this .child4Inline ._load = true;
                         }
 
                         break;
@@ -2406,11 +2406,11 @@ function (Fields,
       },
       traverseChildren: function (type, renderObject)
       {
-         switch (this .childrenLoaded ? this .level_changed_ .getValue () : 0)
+         switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
          {
             case 0:
             {
-               if (this .rootNode_ .length)
+               if (this ._rootNode .length)
                   this .rootGroup .traverse (type, renderObject);
                else
                   this .rootInline .traverse (type, renderObject);
@@ -2550,7 +2550,7 @@ function (Fields,
       },
       eventsProcessed: function ()
       {
-         this .setMatrix (this .getLocationMatrix (this .geoCoords_ .getValue (), locationMatrix));
+         this .setMatrix (this .getLocationMatrix (this ._geoCoords .getValue (), locationMatrix));
       },
    });
 
@@ -2774,17 +2774,17 @@ function (Fields,
       {
          X3DNode .prototype .initialize .call (this);
 
-         this .geoSystem_ .addInterest ("set_geoSystem__", this);
+         this ._geoSystem .addInterest ("set_geoSystem__", this);
 
          this .set_geoSystem__ ();
       },
       set_geoSystem__: function ()
       {
-         this .referenceFrame = Geospatial .getReferenceFrame (this .geoSystem_, this .radians);
+         this .referenceFrame = Geospatial .getReferenceFrame (this ._geoSystem, this .radians);
       },
       getOrigin: function (result)
       {
-         return this .referenceFrame .convert (this .geoCoords_ .getValue (), result);
+         return this .referenceFrame .convert (this ._geoCoords .getValue (), result);
       },
    });
 
@@ -2868,7 +2868,7 @@ function (Fields,
 
       this .addType (X3DConstants .GeoPositionInterpolator);
 
-      this .value_changed_ .setUnit ("length");
+      this ._value_changed .setUnit ("length");
 
       this .geocentric = new Geocentric ();
    }
@@ -2913,13 +2913,13 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_ .addInterest ("set_keyValue__", this);
+         this ._keyValue .addInterest ("set_keyValue__", this);
       },
       set_keyValue__: function ()
       {
          var
-            key      = this .key_,
-            keyValue = this .keyValue_;
+            key      = this ._key,
+            keyValue = this ._keyValue;
 
          if (keyValue .length < key .length)
             keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
@@ -2928,13 +2928,13 @@ function (Fields,
       {
          try
          {
-            this .getCoord (this .keyValue_ [index0] .getValue (), this .keyValue0);
-            this .getCoord (this .keyValue_ [index1] .getValue (), this .keyValue1);
+            this .getCoord (this ._keyValue [index0] .getValue (), this .keyValue0);
+            this .getCoord (this ._keyValue [index1] .getValue (), this .keyValue1);
 
             var coord = this .geocentric .slerp (this .keyValue0, this .keyValue1, weight);
 
-            this .geovalue_changed_ = this .getGeoCoord (coord, this .geovalue);
-            this .value_changed_    = coord;
+            this ._geovalue_changed = this .getGeoCoord (coord, this .geovalue);
+            this ._value_changed    = coord;
          }
          catch (error)
          { }
@@ -3023,8 +3023,8 @@ function (Fields,
 
       this .addType (X3DConstants .GeoProximitySensor);
 
-      this .position_changed_         .setUnit ("length");
-      this .centerOfRotation_changed_ .setUnit ("length");
+      this ._position_changed         .setUnit ("length");
+      this ._centerOfRotation_changed .setUnit ("length");
 
       this .proximitySensor = new ProximitySensor (executionContext);
 
@@ -3068,31 +3068,31 @@ function (Fields,
          X3DEnvironmentalSensorNode .prototype .initialize .call (this);
          X3DGeospatialObject        .prototype .initialize .call (this);
 
-         this .enabled_ .addFieldInterest (this .proximitySensor .enabled_);
-         this .size_    .addFieldInterest (this .proximitySensor .size_);
-         this .center_  .addFieldInterest (this .proximitySensor .center_);
+         this ._enabled .addFieldInterest (this .proximitySensor ._enabled);
+         this ._size    .addFieldInterest (this .proximitySensor ._size);
+         this ._center  .addFieldInterest (this .proximitySensor ._center);
 
-         this .proximitySensor .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-         this .proximitySensor .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+         this .proximitySensor ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+         this .proximitySensor ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
-         this .proximitySensor .isActive_                 .addFieldInterest (this .isActive_);
-         this .proximitySensor .enterTime_                .addFieldInterest (this .enterTime_);
-         this .proximitySensor .exitTime_                 .addFieldInterest (this .exitTime_);
-         this .proximitySensor .position_changed_         .addFieldInterest (this .position_changed_);
-         this .proximitySensor .orientation_changed_      .addFieldInterest (this .orientation_changed_);
-         this .proximitySensor .centerOfRotation_changed_ .addFieldInterest (this .centerOfRotation_changed_);
+         this .proximitySensor ._isActive                 .addFieldInterest (this ._isActive);
+         this .proximitySensor ._enterTime                .addFieldInterest (this ._enterTime);
+         this .proximitySensor ._exitTime                 .addFieldInterest (this ._exitTime);
+         this .proximitySensor ._position_changed         .addFieldInterest (this ._position_changed);
+         this .proximitySensor ._orientation_changed      .addFieldInterest (this ._orientation_changed);
+         this .proximitySensor ._centerOfRotation_changed .addFieldInterest (this ._centerOfRotation_changed);
 
-         this .proximitySensor .position_changed_ .addInterest ("set_position__", this);
+         this .proximitySensor ._position_changed .addInterest ("set_position__", this);
 
-         this .proximitySensor .enabled_ = this .enabled_;
-         this .proximitySensor .size_    = this .size_;
-         this .proximitySensor .center_  = this .center_;
+         this .proximitySensor ._enabled = this ._enabled;
+         this .proximitySensor ._size    = this ._size;
+         this .proximitySensor ._center  = this ._center;
 
          this .proximitySensor .setup ();
       },
       set_position__: function (position)
       {
-         this .geoCoord_changed_ = this .getGeoCoord (this .proximitySensor .position_changed_ .getValue (), geoCoord);
+         this ._geoCoord_changed = this .getGeoCoord (this .proximitySensor ._position_changed .getValue (), geoCoord);
       },
       traverse: function (type, renderObject)
       {
@@ -3184,7 +3184,7 @@ function (Fields,
 
       this .addType (X3DConstants .GeoTouchSensor);
 
-      this .hitPoint_changed_ .setUnit ("length");
+      this ._hitPoint_changed .setUnit ("length");
    }
 
    GeoTouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
@@ -3228,16 +3228,16 @@ function (Fields,
          {
             X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
 
-            if (this .isOver_ .getValue ())
+            if (this ._isOver .getValue ())
             {
                var intersection = hit .intersection;
 
                invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-               this .hitTexCoord_changed_ = intersection .texCoord;
-               this .hitNormal_changed_   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
-               this .hitPoint_changed_    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
-               this .hitGeoCoord_changed_ = this .getGeoCoord (this .hitPoint_changed_ .getValue (), geoCoords);
+               this ._hitTexCoord_changed = intersection .texCoord;
+               this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
+               this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
+               this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
             }
          }
          catch (error)
@@ -3329,7 +3329,7 @@ function (Fields,
 
       this .addType (X3DConstants .GeoTransform);
 
-      this .translation_ .setUnit ("length");
+      this ._translation .setUnit ("length");
    }
 
    GeoTransform .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
@@ -3378,16 +3378,16 @@ function (Fields,
       {
          try
          {
-            this .setHidden (this .scale_ .x === 0 ||
-                             this .scale_ .y === 0 ||
-                             this .scale_ .z === 0);
+            this .setHidden (this ._scale .x === 0 ||
+                             this ._scale .y === 0 ||
+                             this ._scale .z === 0);
 
-            this .getLocationMatrix (this .geoCenter_ .getValue (), locationMatrix);
+            this .getLocationMatrix (this ._geoCenter .getValue (), locationMatrix);
 
-            matrix .set (this .translation_      .getValue (),
-                         this .rotation_         .getValue (),
-                         this .scale_            .getValue (),
-                         this .scaleOrientation_ .getValue ());
+            matrix .set (this ._translation      .getValue (),
+                         this ._rotation         .getValue (),
+                         this ._scale            .getValue (),
+                         this ._scaleOrientation .getValue ());
 
             this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
          }
@@ -3498,8 +3498,8 @@ function (Fields,
 
       this .addType (X3DConstants .GeoViewpoint);
 
-      this .centerOfRotation_ .setUnit ("length");
-      this .fieldOfView_      .setUnit ("angle");
+      this ._centerOfRotation .setUnit ("length");
+      this ._fieldOfView      .setUnit ("angle");
 
       this .navigationInfoNode      = new NavigationInfo (executionContext);
       this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
@@ -3556,10 +3556,10 @@ function (Fields,
          X3DViewpointNode    .prototype .initialize .call (this);
          X3DGeospatialObject .prototype .initialize .call (this);
 
-         this .position_       .addInterest ("set_position__", this);
-         this .positionOffset_ .addInterest ("set_position__", this);
-         this .navType_        .addFieldInterest (this .navigationInfoNode .type_);
-         this .headlight_      .addFieldInterest (this .navigationInfoNode .headlight_);
+         this ._position       .addInterest ("set_position__", this);
+         this ._positionOffset .addInterest ("set_position__", this);
+         this ._navType        .addFieldInterest (this .navigationInfoNode ._type);
+         this ._headlight      .addFieldInterest (this .navigationInfoNode ._headlight);
 
          this .navigationInfoNode .setup ();
 
@@ -3567,11 +3567,11 @@ function (Fields,
 
          // Setup interpolators
 
-         this .fieldOfViewInterpolator .key_ = [ 0, 1 ];
+         this .fieldOfViewInterpolator ._key = [ 0, 1 ];
          this .fieldOfViewInterpolator .setup ();
 
-         this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewInterpolator .set_fraction_);
-         this .fieldOfViewInterpolator .value_changed_ .addFieldInterest (this .fieldOfViewScale_);
+         this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewInterpolator ._set_fraction);
+         this .fieldOfViewInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
       },
       setInterpolators: function (fromViewpointNode, toViewpointNode)
       {
@@ -3579,15 +3579,15 @@ function (Fields,
          {
             const scale = fromViewpointNode .getFieldOfView () / toViewpointNode .getFieldOfView ();
 
-            this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (scale, toViewpointNode .fieldOfViewScale_ .getValue ());
+            this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
 
-            this .fieldOfViewScale_ = scale;
+            this ._fieldOfViewScale = scale;
          }
          else
          {
-            this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewScale_ .getValue (), toViewpointNode .fieldOfViewScale_ .getValue ());
+            this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
 
-            this .fieldOfViewScale_ = toViewpointNode .fieldOfViewScale_ .getValue ();
+            this ._fieldOfViewScale = toViewpointNode ._fieldOfViewScale .getValue ();
          }
       },
       setPosition: (function ()
@@ -3596,7 +3596,7 @@ function (Fields,
 
          return function (value)
          {
-            this .position_ .setValue (this .getGeoCoord (value, geoPosition));
+            this ._position .setValue (this .getGeoCoord (value, geoPosition));
          };
       })(),
       getPosition: (function ()
@@ -3605,7 +3605,7 @@ function (Fields,
 
          return function ()
          {
-            return this .getCoord (this .position_ .getValue (), position);
+            return this .getCoord (this ._position .getValue (), position);
          };
       })(),
       set_position__: (function ()
@@ -3614,9 +3614,9 @@ function (Fields,
 
          return function ()
          {
-            this .getCoord (this .position_ .getValue (), position);
+            this .getCoord (this ._position .getValue (), position);
 
-            this .elevation = this .getGeoElevation (position .add (this .positionOffset_ .getValue ()));
+            this .elevation = this .getGeoElevation (position .add (this ._positionOffset .getValue ()));
          };
       })(),
       setOrientation: (function ()
@@ -3629,11 +3629,11 @@ function (Fields,
          {
             ///  Returns the resulting orientation for this viewpoint.
 
-            var rotationMatrix = this .getLocationMatrix (this .position_ .getValue (), locationMatrix) .submatrix;
+            var rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
 
             geoOrientation .setMatrix (rotationMatrix);
 
-            this .orientation_ .setValue (geoOrientation .inverse () .multLeft (value));
+            this ._orientation .setValue (geoOrientation .inverse () .multLeft (value));
          };
       })(),
       getOrientation: (function ()
@@ -3646,11 +3646,11 @@ function (Fields,
          {
             ///  Returns the resulting orientation for this viewpoint.
 
-            var rotationMatrix = this .getLocationMatrix (this .position_ .getValue (), locationMatrix) .submatrix;
+            var rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
 
             orientation .setMatrix (rotationMatrix);
 
-            return orientation .multLeft (this .orientation_ .getValue ());
+            return orientation .multLeft (this ._orientation .getValue ());
          };
       })(),
       getCenterOfRotation: (function ()
@@ -3659,12 +3659,12 @@ function (Fields,
 
          return function ()
          {
-            return this .getCoord (this .centerOfRotation_ .getValue (), centerOfRotation);
+            return this .getCoord (this ._centerOfRotation .getValue (), centerOfRotation);
          };
       })(),
       getFieldOfView: function ()
       {
-         var fov = this .fieldOfView_ * this .fieldOfViewScale_;
+         var fov = this ._fieldOfView * this ._fieldOfViewScale;
 
          return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
       },
@@ -3680,14 +3680,14 @@ function (Fields,
 
          return function ()
          {
-            this .getCoord (this .position_ .getValue (), position);
+            this .getCoord (this ._position .getValue (), position);
 
-            return this .getGeoUpVector .call (this, position .add (this .positionOffset_ .getValue ()), upVector);
+            return this .getGeoUpVector .call (this, position .add (this ._positionOffset .getValue ()), upVector);
          };
       })(),
       getSpeedFactor: function ()
       {
-         return (Math .max (this .elevation, 0.0) + 10) / 10 * this .speedFactor_ .getValue ();
+         return (Math .max (this .elevation, 0.0) + 10) / 10 * this ._speedFactor .getValue ();
       },
       getScreenScale: (function ()
       {
