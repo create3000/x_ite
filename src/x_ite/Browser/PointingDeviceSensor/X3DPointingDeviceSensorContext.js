@@ -276,12 +276,10 @@ function (PointingDevice,
          }
          else
          {
-            const hitRay = this [_selectedLayer] ? this [_hitRay] : line;
-
             var nearestHit = {
                pointer:         this [_pointer],
                modelViewMatrix: new Matrix4 (),
-               hitRay:          hitRay,
+               hitRay:          this [_selectedLayer] ? this [_hitRay] : line,
                intersection:    null,
                sensors:         new Map (),
                shape:           null,

@@ -471,7 +471,7 @@ function (Fields,
             return orientation .multRight (rotation);
          };
       })(),
-      set_active__: function (active, navigationInfoNode)
+      set_active__: function (navigationInfoNode, active)
       {
          if (this ._isBound .getValue () && ! active .getValue () && this .timeSensor ._fraction_changed .getValue () === 1)
          {

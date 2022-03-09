@@ -798,8 +798,8 @@ function ($,
       {
          var browser = this .getBrowser ();
 
-         this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this)
-         this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this)
+         this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this);
+         this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this);
          this .rotationChaser         ._value_changed .removeInterest ("set_rotation__",               this);
 
          browser .prepareEvents () .removeInterest ("spin", this);

@@ -79,7 +79,11 @@ function (X3DObject)
       },
       set: function (target, key, value)
       {
-         return false;
+         if (target [key] === undefined)
+            return false;
+
+         target [key] = value;
+         return true;
       },
       has: function (target, key)
       {
@@ -113,6 +117,8 @@ function (X3DObject)
 
    function X3DInfoArray ()
    {
+      X3DObject .call (this);
+
       this [_array]           = [ ];
       this [_index]           = new Map ();
       this [Symbol .iterator] = this [_array] [Symbol .iterator];
@@ -135,12 +141,12 @@ function (X3DObject)
       {
          this [_array] .push (value);
          this [_index] .set (key, value);
-         this .processInterests ();
+         this .requestProcessInterests ();
       },
       addAlias: function (alias, key)
       {
          this [_index] .set (alias, this [_index] .get (key));
-         this .processInterests ();
+         this .requestProcessInterests ();
       },
       update: function (oldKey, newKey, value)
       {
@@ -164,7 +170,7 @@ function (X3DObject)
             this [_array] .push (value);
          }
 
-         this .processInterests ();
+         this .requestProcessInterests ();
       },
       remove: function (key)
       {
@@ -180,7 +186,7 @@ function (X3DObject)
          if (index > -1)
             this [_array] .splice (index, 1);
 
-         this .processInterests ();
+         this .requestProcessInterests ();
       },
       toVRMLStream: function (stream)
       {

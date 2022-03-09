@@ -262,7 +262,7 @@ function ($,
          scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, success, error);
          scene ._initLoadCount .addEvent ();
       },
-      set_initLoadCount__: function (field, scene, success, error)
+      set_initLoadCount__: function (scene, success, error, field)
       {
          if (field .getValue ())
             return;

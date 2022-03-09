@@ -230,12 +230,12 @@ function (X3DBindableNode,
          if (texture)
          {
             texture ._loadState .addInterest ("setTextureBit", this, texture, bit);
-            this .setTextureBit (texture ._loadState, texture, bit);
+            this .setTextureBit (texture, bit, texture ._loadState);
          }
          else
-            this .setTextureBit (X3DConstants .NOT_STARTED, null, bit);
+            this .textures &= ~(1 << bit);
       },
-      setTextureBit: function (loadState, texture, bit)
+      setTextureBit: function (texture, bit, loadState)
       {
          if (loadState .getValue () === X3DConstants .COMPLETE_STATE || (texture && texture .getData ()))
             this .textures |= 1 << bit;

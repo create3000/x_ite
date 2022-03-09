@@ -366,7 +366,7 @@ function ($,
                   const callback = this .context [field .getName ()];
 
                   if ($.isFunction (callback))
-                     this .set_field__ (field, callback);
+                     this .set_field__ (callback, field);
 
                   break;
                }
@@ -375,7 +375,7 @@ function ($,
                   const callback = this .context ["set_" + field .getName ()];
 
                   if ($.isFunction (callback))
-                     this .set_field__ (field, callback);
+                     this .set_field__ (callback, field);
 
                   break;
                }
@@ -499,7 +499,7 @@ function ($,
 
          browser .getScriptStack () .pop ();
       },
-      set_field__: function (field, callback)
+      set_field__: function (callback, field)
       {
          const browser = this .getBrowser ();
 

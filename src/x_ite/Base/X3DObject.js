@@ -57,9 +57,10 @@ function (Generator,
 "use strict";
 
    const
-      _name          = Symbol (),
-      _interests     = Symbol (),
-      _interestsTemp = Symbol ();
+      _name      = Symbol (),
+      _interests = Symbol (),
+      _values    = Symbol (),
+      _timeoutId = Symbol ();
 
    function X3DObject () { }
 
@@ -68,7 +69,8 @@ function (Generator,
       constructor: X3DObject,
       [_name]: "",
       [_interests]: new Map (),
-      [_interestsTemp]: [ ],
+      [_values]: [ ],
+      [_timeoutId]: 0,
       getId: function ()
       {
          return X3DObject .getId (this);
@@ -101,8 +103,8 @@ function (Generator,
       {
          if (this [_interests] === X3DObject .prototype [_interests])
          {
-            this [_interests]     = new Map ();
-            this [_interestsTemp] = [ ];
+            this [_interests] = new Map ();
+            this [_values]    = [ ];
          }
 
          const
@@ -111,10 +113,10 @@ function (Generator,
 
          if (arguments .length > 2)
          {
-            const args = Array .from (arguments);
+            const args = Array .prototype .slice .call (arguments, 2);
 
-            args [0] = object;
-            args [1] = this;
+            args .unshift (object);
+            args .push (this);
 
             this [_interests] .set (interestId, Function .prototype .bind .apply (callback, args));
          }
@@ -131,11 +133,19 @@ function (Generator,
       {
          return this [_interests];
       },
+      requestProcessInterests: function ()
+      {
+         if (this [_interests] .size)
+         {
+            clearTimeout (this [_timeoutId]);
+            this [_timeoutId] = setTimeout (this .processInterests .bind (this), 1);
+         }
+      },
       processInterests: function ()
       {
          if (this [_interests] .size)
          {
-            for (const interest of MapUtilities .values (this [_interestsTemp], this [_interests])  )
+            for (const interest of MapUtilities .values (this [_values], this [_interests]))
                interest ();
          }
       },

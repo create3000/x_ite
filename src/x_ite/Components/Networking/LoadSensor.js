@@ -137,7 +137,7 @@ function (Fields,
       {
          this .reset ();
       },
-      set_loadState__: function (dummy, urlObject)
+      set_loadState__: function (urlObject)
       {
          switch (urlObject .checkLoadState ())
          {

@@ -133,7 +133,7 @@ function ($,
                fieldDefinitions .add (fieldDefinition .name, fieldDefinition);
          }
 
-         this .requestUpdateInstances ();
+         this .updateInstances ();
       },
       getProtoDeclaration: function ()
       {

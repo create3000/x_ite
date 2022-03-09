@@ -147,12 +147,12 @@ function (Fields,
          if (texture)
          {
             texture .addInterest ("set_loadState__", this, texture, index);
-            texture ._loadState .addFieldCallback (this .symbols [index], this .set_loadState__ .bind (this, null, texture, index));
+            texture ._loadState .addFieldCallback (this .symbols [index], this .set_loadState__ .bind (this, texture, index));
          }
 
-         this .set_loadState__ (null, texture, index);
+         this .set_loadState__ (texture, index);
       },
-      set_loadState__: function (output, texture, index)
+      set_loadState__: function (texture, index)
       {
          if (texture)
             this .setLoadStateBit (texture .checkLoadState (), texture .getData (), index);
