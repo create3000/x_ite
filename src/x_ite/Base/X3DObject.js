@@ -137,8 +137,8 @@ function (Generator,
       {
          if (this [_interests] .size)
          {
-            clearTimeout (this [_timeoutId]);
-            this [_timeoutId] = setTimeout (this .processInterests .bind (this));
+            cancelAnimationFrame (this [_timeoutId]);
+            this [_timeoutId] = requestAnimationFrame (this .processInterests .bind (this));
          }
       },
       processInterests: function ()

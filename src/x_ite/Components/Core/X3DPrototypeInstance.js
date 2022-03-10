@@ -49,12 +49,14 @@
 
 define ([
    "x_ite/Base/X3DChildObject",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Execution/X3DExecutionContext",
    "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DChildObject,
+          FieldDefinitionArray,
           X3DNode,
           X3DExecutionContext,
           X3DConstants,
@@ -69,7 +71,7 @@ function (X3DChildObject,
    function X3DPrototypeInstance (executionContext, protoNode)
    {
       this [_protoNode]        = protoNode;
-      this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
+      this [_fieldDefinitions] = new FieldDefinitionArray (protoNode .getFieldDefinitions ());
 
       X3DNode .call (this, executionContext);
 
@@ -216,6 +218,8 @@ function (X3DChildObject,
          for (const field of oldFields)
             this .removeField (field .getName ());
 
+         this [_fieldDefinitions] = new FieldDefinitionArray (this [_protoNode] .getFieldDefinitions ());
+
          for (const fieldDefinition of this .getFieldDefinitions ())
             this .addField (fieldDefinition);
 
@@ -234,9 +238,6 @@ function (X3DChildObject,
 
             newField .assign (oldField);
          }
-
-         for (const field of this .getFields ())
-            field .setTainted (false);
 
          this .construct ();
       },

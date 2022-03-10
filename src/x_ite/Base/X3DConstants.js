@@ -75,10 +75,10 @@ define (function ()
 
       // Access type
 
-      initializeOnly: parseInt ('001', 2),
-      inputOnly:      parseInt ('010', 2),
-      outputOnly:     parseInt ('100', 2),
-      inputOutput:    parseInt ('111', 2),
+      initializeOnly: 0b001,
+      inputOnly:      0b010,
+      outputOnly:     0b100,
+      inputOutput:    0b111,
 
       // X3DField
 

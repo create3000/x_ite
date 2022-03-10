@@ -314,7 +314,7 @@ function (X3DEventObject,
             name       = fieldDefinition .name,
             field      = fieldDefinition .value .copy ();
 
-         field .setTainted (true);
+         field .setTainted (!this [_initialized]);
          field .addParent (this);
          field .setName (name);
          field .setAccessType (accessType);
@@ -391,6 +391,7 @@ function (X3DEventObject,
          {
             this [_fields]           .remove (name);
             this [_predefinedFields] .remove (name);
+            this [_fieldDefinitions] .remove (name);
 
             delete this ["_" + field .getName ()];
 
@@ -407,7 +408,7 @@ function (X3DEventObject,
          if (this [_userDefinedFields] .has (name))
             this .removeUserDefinedField (name);
 
-         field .setTainted (true);
+         field .setTainted (!this [_initialized]);
          field .addParent (this);
          field .setName (name);
          field .setAccessType (accessType);
