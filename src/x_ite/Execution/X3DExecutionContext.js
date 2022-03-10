@@ -484,11 +484,11 @@ function (SupportedNodes,
 
          return function (name)
          {
-            name = String (name) .replace (TrailingNumbers, "");
-
             let
                newName = name,
                i       = 64;
+
+            name = String (name) .replace (TrailingNumbers, "");
 
             for (; i;)
             {
@@ -570,11 +570,11 @@ function (SupportedNodes,
 
          return function (name)
          {
-            name = String (name) .replace (TrailingNumbers, "");
-
             let
                newName = name,
                i       = 64;
+
+            name = String (name) .replace (TrailingNumbers, "");
 
             for (; i;)
             {

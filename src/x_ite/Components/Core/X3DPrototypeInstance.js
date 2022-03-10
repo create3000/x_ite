@@ -75,6 +75,8 @@ function (X3DChildObject,
 
       this .addType (X3DConstants .X3DPrototypeInstance);
 
+      protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
+
       const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
       if (executionContext .getNode () instanceof X3DProtoDeclaration)
