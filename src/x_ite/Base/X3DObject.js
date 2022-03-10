@@ -138,7 +138,7 @@ function (Generator,
          if (this [_interests] .size)
          {
             clearTimeout (this [_timeoutId]);
-            this [_timeoutId] = setTimeout (this .processInterests .bind (this), 1);
+            this [_timeoutId] = setTimeout (this .processInterests .bind (this));
          }
       },
       processInterests: function ()
