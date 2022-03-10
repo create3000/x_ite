@@ -54,14 +54,9 @@ function (X3DInfoArray)
 {
 "use strict";
 
-   function FieldDefinitionArray (fieldDefinitions)
+   function FieldDefinitionArray (values)
    {
-      const proxy = X3DInfoArray .call (this);
-
-      for (const fieldDefinition of fieldDefinitions)
-         this .add (fieldDefinition .name, fieldDefinition);
-
-      return proxy;
+      return X3DInfoArray .call (this, values);
    }
 
    FieldDefinitionArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

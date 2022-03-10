@@ -54,9 +54,9 @@ function (X3DInfoArray)
 {
 "use strict";
 
-   function ExternProtoDeclarationArray (array)
+   function ExternProtoDeclarationArray (values)
    {
-      return X3DInfoArray .call (this);
+      return X3DInfoArray .call (this, values);
    }
 
    ExternProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

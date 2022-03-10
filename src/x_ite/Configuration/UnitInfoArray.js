@@ -54,9 +54,9 @@ function (X3DInfoArray)
 {
 "use strict";
 
-   function UnitInfoArray ()
+   function UnitInfoArray (values)
    {
-      return X3DInfoArray .call (this);
+      return X3DInfoArray .call (this, values);
    }
 
    UnitInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

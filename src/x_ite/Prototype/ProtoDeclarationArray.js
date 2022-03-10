@@ -56,7 +56,7 @@ function (X3DInfoArray)
 
    function ProtoDeclarationArray (array)
    {
-      return X3DInfoArray .call (this);
+      return X3DInfoArray .call (this, array);
    }
 
    ProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

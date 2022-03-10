@@ -58,9 +58,9 @@ function (ComponentInfoArray,
 {
 "use strict";
 
-   function ProfileInfoArray ()
+   function ProfileInfoArray (values)
    {
-      return X3DInfoArray .call (this);
+      return X3DInfoArray .call (this, values);
    }
 
    ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

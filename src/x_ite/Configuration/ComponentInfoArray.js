@@ -56,14 +56,9 @@ function (ComponentInfo,
 {
 "use strict";
 
-   function ComponentInfoArray (componentInfos)
+   function ComponentInfoArray (values)
    {
-      const proxy = X3DInfoArray .call (this);
-
-      for (const componentInfo of componentInfos)
-         this .add (componentInfo .name, componentInfo);
-
-      return proxy;
+      return X3DInfoArray .call (this, values);
    }
 
    ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),

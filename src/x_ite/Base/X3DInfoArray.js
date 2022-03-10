@@ -115,7 +115,7 @@ function (X3DObject)
       },
    };
 
-   function X3DInfoArray ()
+   function X3DInfoArray (values)
    {
       X3DObject .call (this);
 
@@ -123,12 +123,39 @@ function (X3DObject)
       this [_index]           = new Map ();
       this [Symbol .iterator] = this [_array] [Symbol .iterator];
 
+      if (values)
+      {
+         for (const value of values)
+            this .add (value .name, value);
+      }
+
       return new Proxy (this, handler);
    }
 
    X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
       constructor: X3DInfoArray,
+      equals: function (array)
+      {
+         const
+            a      = this [_array],
+            b      = array [_array] || array,
+            length = a .length;
+
+         if (a === b)
+            return true;
+
+         if (length !== b .length)
+            return false;
+
+         for (let i = 0; i < length; ++ i)
+         {
+            if (a [i] !== b [i])
+               return false;
+         }
+
+         return true;
+      },
       has: function (key)
       {
          return this [_index] .has (key);
