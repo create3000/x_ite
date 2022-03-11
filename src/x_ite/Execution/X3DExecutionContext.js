@@ -274,35 +274,10 @@ function (SupportedNodes,
       {
          return this [_namedNodes];
       },
-      getUniqueName: (function ()
+      getUniqueName: function (name = "")
       {
-         const _TrailingNumbers = /_\d+$/;
-
-         return function (name = "")
-         {
-            name = String (name) .replace (_TrailingNumbers, "");
-
-            let
-               newName = name,
-               i       = 64;
-
-            for (; i;)
-            {
-               if (!(this [_namedNodes] .has (newName) || newName .length === 0))
-                  break;
-
-               const
-                  min = i,
-                  max = i <<= 1;
-
-               newName  = name;
-               newName += '_';
-               newName += Math .round (Algorithm .random (min, max));
-            }
-
-            return newName;
-         };
-      })(),
+         return getUniqueName .call (this, _namedNodes, name);
+      },
       addImportedNode: function (inlineNode, exportedName, importedName)
       {
          if (importedName === undefined)
@@ -478,35 +453,10 @@ function (SupportedNodes,
       {
          return this [_protos];
       },
-      getUniqueProtoName: (function ()
+      getUniqueProtoName: function (name = "")
       {
-         const _TrailingNumbers = /_\d+$/;
-
-         return function (name = "")
-         {
-            name = String (name) .replace (_TrailingNumbers, "");
-
-            let
-               newName = name,
-               i       = 64;
-
-            for (; i;)
-            {
-               if (!(this [_protos] .has (newName) || newName .length === 0))
-                  break;
-
-               const
-                  min = i,
-                  max = i <<= 1;
-
-               newName  = name;
-               newName += '_';
-               newName += Math .round (Algorithm .random (min, max));
-            }
-
-            return newName;
-         };
-      })(),
+         return getUniqueName .call (this, _protos, name);
+      },
       getExternProtoDeclaration: function (name)
       {
          name = String (name);
@@ -565,35 +515,10 @@ function (SupportedNodes,
       {
          return this [_externprotos];
       },
-      getUniqueExternProtoName: (function ()
+      getUniqueExternProtoName: function (name = "")
       {
-         const _TrailingNumbers = /_\d+$/;
-
-         return function (name = "")
-         {
-            name = String (name) .replace (_TrailingNumbers, "");
-
-            let
-               newName = name,
-               i       = 64;
-
-            for (; i;)
-            {
-               if (!(this [_externprotos] .has (newName) || newName .length === 0))
-                  break;
-
-               const
-                  min = i,
-                  max = i <<= 1;
-
-               newName  = name;
-               newName += '_';
-               newName += Math .round (Algorithm .random (min, max));
-            }
-
-            return newName;
-         };
-      })(),
+         return getUniqueName .call (this, _externprotos, name);
+      },
       addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
       {
          sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false);
@@ -1019,6 +944,36 @@ function (SupportedNodes,
       enumerable: true,
       configurable: false
    });
+
+   const getUniqueName = (function ()
+   {
+      const _TrailingNumbers = /_\d+$/;
+
+      return function (array, name = "")
+      {
+         name = String (name) .replace (_TrailingNumbers, "");
+
+         let
+            newName = name,
+            i       = 64;
+
+         for (; i;)
+         {
+            if (!(this [array] .has (newName) || newName .length === 0))
+               break;
+
+            const
+               min = i,
+               max = i <<= 1;
+
+            newName  = name;
+            newName += '_';
+            newName += Math .round (Algorithm .random (min, max));
+         }
+
+         return newName;
+      };
+   })();
 
    return X3DExecutionContext;
 });
