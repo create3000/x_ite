@@ -278,7 +278,7 @@ function (SupportedNodes,
       {
          const _TrailingNumbers = /_\d+$/;
 
-         return function (name)
+         return function (name = "")
          {
             name = String (name) .replace (_TrailingNumbers, "");
 
@@ -482,13 +482,13 @@ function (SupportedNodes,
       {
          const TrailingNumbers = /\d+$/;
 
-         return function (name)
+         return function (name = "")
          {
             let
                newName = name,
                i       = 64;
 
-            name = String (name) .replace (TrailingNumbers, "");
+            name = String (name) .replace (TrailingNumbers, "") || "Proto";
 
             for (; i;)
             {
@@ -568,13 +568,13 @@ function (SupportedNodes,
       {
          const TrailingNumbers = /\d+$/;
 
-         return function (name)
+         return function (name = "")
          {
             let
                newName = name,
                i       = 64;
 
-            name = String (name) .replace (TrailingNumbers, "");
+            name = String (name) .replace (TrailingNumbers, "") || "ExternProto";
 
             for (; i;)
             {

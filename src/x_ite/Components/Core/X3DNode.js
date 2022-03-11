@@ -76,11 +76,9 @@ function (Fields,
 
          // First try to get a named node with the node's name.
 
-         const name = this .getName ();
-
-         if (name .length)
+         if (this .getName () .length)
          {
-            const namedNode = executionContext .getNamedNodes () .get (name);
+            const namedNode = executionContext .getNamedNodes () .get (this .getName ());
 
             if (namedNode)
                return namedNode;
@@ -90,8 +88,11 @@ function (Fields,
 
          const copy = this .create (executionContext);
 
-         if (name .length)
-            executionContext .updateNamedNode (name, copy);
+         if (this .getNeedsName ())
+            this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (), this);
+
+         if (this .getName () .length)
+            executionContext .updateNamedNode (this .getName (), copy);
 
          // Default fields
 
@@ -181,6 +182,36 @@ function (Fields,
             return this .getName () .replace (_TrailingNumber, "");
          };
       })(),
+      getNeedsName: function ()
+      {
+         if (this .getName () .length)
+            return false;
+
+         if (this .getCloneCount () > 1)
+            return true;
+
+         if (this .hasRoutes ())
+            return true;
+
+         const executionContext = this .getExecutionContext ()
+
+         for (const importedNode of executionContext .getImportedNodes () .values ())
+         {
+            if (importedNode .getInlineNode () === this)
+               return true;
+         }
+
+         if (executionContext .getType () .includes (X3DConstants .X3DScene))
+         {
+            for (const exportedNode of executionContext .getExportedNodes () .values ())
+            {
+               if (exportedNode .getLocalNode () === this)
+                  return true;
+            }
+         }
+
+         return false;
+      },
       getFieldsAreEnumerable: function ()
       {
          return true;
