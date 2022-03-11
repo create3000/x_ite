@@ -247,11 +247,11 @@ function (X3DEventObject,
       },
       create: function (executionContext)
       {
-         return new (this .constructor) (executionContext || this .getExecutionContext ());
+         return new (this .constructor) (executionContext || this [_executionContext]);
       },
       copy: function (executionContext)
       {
-         const copy = this .create (executionContext || this .getExecutionContext ());
+         const copy = this .create (executionContext || this [_executionContext]);
 
          for (const field of this [_fields])
             copy .getField (field .getName ()) .assign (field);
