@@ -480,19 +480,19 @@ function (SupportedNodes,
       },
       getUniqueProtoName: (function ()
       {
-         const TrailingNumbers = /\d+$/;
+         const _TrailingNumbers = /_\d+$/;
 
          return function (name = "")
          {
+            name = String (name) .replace (_TrailingNumbers, "");
+
             let
                newName = name,
                i       = 64;
 
-            name = String (name) .replace (TrailingNumbers, "") || "Proto";
-
             for (; i;)
             {
-               if (!this [_protos] .has (newName))
+               if (!(this [_protos] .has (newName) || newName .length === 0))
                   break;
 
                const
@@ -500,6 +500,7 @@ function (SupportedNodes,
                   max = i <<= 1;
 
                newName  = name;
+               newName += '_';
                newName += Math .round (Algorithm .random (min, max));
             }
 
@@ -566,19 +567,19 @@ function (SupportedNodes,
       },
       getUniqueExternProtoName: (function ()
       {
-         const TrailingNumbers = /\d+$/;
+         const _TrailingNumbers = /_\d+$/;
 
          return function (name = "")
          {
+            name = String (name) .replace (_TrailingNumbers, "");
+
             let
                newName = name,
                i       = 64;
 
-            name = String (name) .replace (TrailingNumbers, "") || "ExternProto";
-
             for (; i;)
             {
-               if (!this [_externprotos] .has (newName))
+               if (!(this [_externprotos] .has (newName) || newName .length === 0))
                   break;
 
                const
@@ -586,6 +587,7 @@ function (SupportedNodes,
                   max = i <<= 1;
 
                newName  = name;
+               newName += '_';
                newName += Math .round (Algorithm .random (min, max));
             }
 
