@@ -871,6 +871,36 @@ function (SupportedNodes,
       },
    });
 
+   const getUniqueName = (function ()
+   {
+      const _TrailingNumbers = /_\d+$/;
+
+      return function (array, name = "")
+      {
+         name = String (name) .replace (_TrailingNumbers, "");
+
+         let
+            newName = name,
+            i       = 64;
+
+         for (; i;)
+         {
+            if (!(this [array] .has (newName) || newName .length === 0))
+               break;
+
+            const
+               min = i,
+               max = i <<= 1;
+
+            newName  = name;
+            newName += '_';
+            newName += Math .round (Algorithm .random (min, max));
+         }
+
+         return newName;
+      };
+   })();
+
    for (const key of Reflect .ownKeys (X3DExecutionContext .prototype))
       Object .defineProperty (X3DExecutionContext .prototype, key, { enumerable: false });
 
@@ -944,36 +974,6 @@ function (SupportedNodes,
       enumerable: true,
       configurable: false
    });
-
-   const getUniqueName = (function ()
-   {
-      const _TrailingNumbers = /_\d+$/;
-
-      return function (array, name = "")
-      {
-         name = String (name) .replace (_TrailingNumbers, "");
-
-         let
-            newName = name,
-            i       = 64;
-
-         for (; i;)
-         {
-            if (!(this [array] .has (newName) || newName .length === 0))
-               break;
-
-            const
-               min = i,
-               max = i <<= 1;
-
-            newName  = name;
-            newName += '_';
-            newName += Math .round (Algorithm .random (min, max));
-         }
-
-         return newName;
-      };
-   })();
 
    return X3DExecutionContext;
 });
