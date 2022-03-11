@@ -215,6 +215,8 @@ function (X3DChildObject,
       },
       update: function ()
       {
+         // Remove old fields.
+
          const
             oldProtoFields = this [_protoFields],
             oldFields      = new Map (Array .from (this .getFields ()) .map (f => [f .getName (), f]));
@@ -222,16 +224,18 @@ function (X3DChildObject,
          for (const field of oldFields .values ())
             this .removeField (field .getName ());
 
+         // Add new fields.
+
          this [_protoFields]      = new Map (Array .from (this [_protoNode] .getFields ()) .map (f => [f, f .getName ()]));
          this [_fieldDefinitions] = new FieldDefinitionArray (this [_protoNode] .getFieldDefinitions ());
 
          for (const fieldDefinition of this .getFieldDefinitions ())
             this .addField (fieldDefinition);
 
+         // Reuse old fields, and therefor routes.
+
          for (const protoField of this [_protoFields] .keys ())
          {
-            console .log (protoField .getName ());
-
             const oldFieldName = oldProtoFields .get (protoField);
 
             if (!oldFieldName)
@@ -247,6 +251,8 @@ function (X3DChildObject,
             this .getPredefinedFields () .update (oldFieldName, newField .getName (), oldField);
             this .getFields ()           .update (oldFieldName, newField .getName (), oldField);
          }
+
+         // Construct now.
 
          this .construct ();
       },
