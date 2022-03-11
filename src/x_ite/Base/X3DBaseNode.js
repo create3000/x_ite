@@ -253,8 +253,19 @@ function (X3DEventObject,
       {
          const copy = this .create (executionContext || this [_executionContext]);
 
+         if (this .canUserDefinedFields ())
+         {
+            for (const fieldDefinition of this [_fieldDefinitions])
+            {
+               if (node .getFields () .has (fieldDefinition .name))
+                  continue;
+
+               node .addUserDefinedField (fieldDefinition .accessType, fieldDefinition .name, fieldDefinition .value .copy ());
+            }
+         }
+
          for (const field of this [_fields])
-            copy .getField (field .getName ()) .assign (field);
+            copy .getFields () .get (field .getName ()) .assign (field);
 
          copy .setup ();
 
