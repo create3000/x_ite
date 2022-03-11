@@ -247,7 +247,7 @@ function (X3DEventObject,
       },
       create: function (executionContext)
       {
-         return new (this .constructor) (executionContext);
+         return new (this .constructor) (executionContext || this .getExecutionContext ());
       },
       copy: function (executionContext)
       {
