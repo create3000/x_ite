@@ -84,7 +84,7 @@ function (SupportedNodes,
       _protos         = Symbol (),
       _externprotos   = Symbol (),
       _routes         = Symbol (),
-      _node           = Symbol ();
+      _outerNode      = Symbol ();
 
    SupportedNodes .addAbstractType ("X3DExecutionContext");
 
@@ -114,15 +114,15 @@ function (SupportedNodes,
       {
          return "X3DExecutionContext";
       },
-      [_node]: null,
-      getNode: function ()
+      [_outerNode]: null,
+      getOuterNode: function ()
       {
          // Can be either of type X3DProtoDeclaration or X3DPrototypeInstance, or null.
-         return this [_node];
+         return this [_outerNode];
       },
-      setNode: function (value)
+      setOuterNode: function (value)
       {
-         this [_node] = value;
+         this [_outerNode] = value;
       },
       getSpecificationVersion: function ()
       {
@@ -713,8 +713,8 @@ function (SupportedNodes,
          try
          {
             const
-               sourceField      = route .getSourceNode () .getField (route .getSourceField ()),
-               destinationField = route .getDestinationNode () .getField (route .getDestinationField ()),
+               sourceField      = route .getSourceField (),
+               destinationField = route .getDestinationField (),
                id               = sourceField .getId () + "." + destinationField .getId ();
 
             this [_routes] .remove (id);

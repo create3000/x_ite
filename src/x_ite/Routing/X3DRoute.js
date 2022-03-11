@@ -103,7 +103,7 @@ function (X3DObject,
       getSourceField: function ()
       {
          ///  SAI
-         return this [_sourceField] .getName ();
+         return this [_sourceField];
       },
       getDestinationNode: function ()
       {
@@ -113,7 +113,7 @@ function (X3DObject,
       getDestinationField: function ()
       {
          ///  SAI
-         return this [_destinationField] .getName ();
+         return this [_destinationField];
       },
       disconnect: function ()
       {

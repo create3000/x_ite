@@ -66,11 +66,13 @@ function (X3DChildObject,
 
    const
       _protoNode        = Symbol (),
+      _protoFields      = Symbol (),
       _fieldDefinitions = Symbol .for ("X3DBaseNode.fieldDefinitions");
 
    function X3DPrototypeInstance (executionContext, protoNode)
    {
       this [_protoNode]        = protoNode;
+      this [_protoFields]      = new Map (Array .from (protoNode .getFields ()) .map (f => [f, f .getName ()]))
       this [_fieldDefinitions] = new FieldDefinitionArray (protoNode .getFieldDefinitions ());
 
       X3DNode .call (this, executionContext);
@@ -81,7 +83,7 @@ function (X3DChildObject,
 
       const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
-      if (executionContext .getNode () instanceof X3DProtoDeclaration)
+      if (executionContext .getOuterNode () instanceof X3DProtoDeclaration)
          return;
 
       if (!protoNode .isExternProto)
@@ -135,7 +137,7 @@ function (X3DChildObject,
          if (!proto)
          {
             this .body = new X3DExecutionContext (this .getExecutionContext ());
-            this .body .setNode (this);
+            this .body .setOuterNode (this);
             this .body .setup ();
 
             if (this .isInitialized ())
@@ -193,7 +195,7 @@ function (X3DChildObject,
          // Create execution context.
 
          this .body = new X3DExecutionContext (proto .getExecutionContext ());
-         this .body .setNode (this);
+         this .body .setOuterNode (this);
 
          // Copy proto.
 
@@ -213,30 +215,37 @@ function (X3DChildObject,
       },
       update: function ()
       {
-         const oldFields = Array .from (this .getFields ())
+         const
+            oldProtoFields = this [_protoFields],
+            oldFields      = new Map (Array .from (this .getFields ()) .map (f => [f .getName (), f]));
 
-         for (const field of oldFields)
+         for (const field of oldFields .values ())
             this .removeField (field .getName ());
 
+         this [_protoFields]      = new Map (Array .from (this [_protoNode] .getFields ()) .map (f => [f, f .getName ()]));
          this [_fieldDefinitions] = new FieldDefinitionArray (this [_protoNode] .getFieldDefinitions ());
 
          for (const fieldDefinition of this .getFieldDefinitions ())
             this .addField (fieldDefinition);
 
-         for (const oldField of oldFields)
+         for (const protoField of this [_protoFields] .keys ())
          {
-            const newField = this .getFields () .get (oldField .getName ());
+            console .log (protoField .getName ());
 
-            if (!newField)
+            const oldFieldName = oldProtoFields .get (protoField);
+
+            if (!oldFieldName)
                continue;
 
-            if (newField .getType () !== oldField .getType ())
-               continue;
+            const
+               newField = this .getFields () .get (protoField .getName ()),
+               oldField = oldFields .get (oldFieldName);
 
-            if (!newField .isInitializable ())
-               continue;
+            oldField .setAccessType (newField .getAccessType ());
+            oldField .setName (newField .getName ());
 
-            newField .assign (oldField);
+            this .getPredefinedFields () .update (oldFieldName, newField .getName (), oldField);
+            this .getFields ()           .update (oldFieldName, newField .getName (), oldField);
          }
 
          this .construct ();

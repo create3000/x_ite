@@ -82,7 +82,7 @@ function (SupportedNodes,
       this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 
       this [_body] = new X3DExecutionContext (executionContext);
-      this [_body] .setNode (this);
+      this [_body] .setOuterNode (this);
       this [_body] .setLive (false);
       this .setLive (false);
    }

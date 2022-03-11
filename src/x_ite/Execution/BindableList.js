@@ -92,11 +92,11 @@ function (X3DBaseNode,
                for (let i = 1, length = this .array .length; i < length; ++ i)
                {
                   const
-                     node   = this .array [i],
-                     parent = node .getExecutionContext () .getNode (),
-                     scene  = parent instanceof X3DPrototypeInstance ?  parent .getScene () : node .getScene ();
+                     node      = this .array [i],
+                     outerNode = node .getExecutionContext () .getOuterNode (),
+                     scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
 
-                  if (! enableInlineBindables && scene !== mainScene)
+                  if (!enableInlineBindables && scene !== mainScene)
                      continue;
 
                   if (node .getName () == name)
@@ -109,11 +109,11 @@ function (X3DBaseNode,
             for (let i = 1, length = this .array .length; i < length; ++ i)
             {
                const
-                  node   = this .array [i],
-                  parent = node .getExecutionContext () .getNode (),
-                  scene  = parent instanceof X3DPrototypeInstance ?  parent .getScene () : node .getScene ();
+                  node      = this .array [i],
+                  outerNode = node .getExecutionContext () .getOuterNode (),
+                  scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
 
-               if (! enableInlineBindables && scene !== mainScene)
+               if (!enableInlineBindables && scene !== mainScene)
                   continue;
 
                if (node ._isBound .getValue ())
@@ -125,11 +125,11 @@ function (X3DBaseNode,
             for (let i = 1, length = this .array .length; i < length; ++ i)
             {
                const
-                  node   = this .array [i],
-                  parent = node .getExecutionContext () .getNode (),
-                  scene  = parent instanceof X3DPrototypeInstance ?  parent .getScene () : node .getScene ();
+                  node      = this .array [i],
+                  outerNode = node .getExecutionContext () .getOuterNode (),
+                  scene     = parent instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
 
-               if (! enableInlineBindables && scene !== mainScene)
+               if (!enableInlineBindables && scene !== mainScene)
                   continue;
 
                return node;

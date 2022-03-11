@@ -389,6 +389,8 @@ function (X3DEventObject,
 
          if (field)
          {
+            field .removeParent (this);
+            
             this [_fields]           .remove (name);
             this [_predefinedFields] .remove (name);
             this [_fieldDefinitions] .remove (name);
@@ -426,6 +428,8 @@ function (X3DEventObject,
 
          if (field)
          {
+            field .removeParent (this);
+
             this [_fields]            .remove (name);
             this [_userDefinedFields] .remove (name);
             this [_fieldDefinitions]  .remove (name);
