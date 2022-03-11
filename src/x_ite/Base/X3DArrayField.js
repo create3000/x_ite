@@ -62,6 +62,10 @@ function (X3DField)
    X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       constructor: X3DArrayField,
+      slice: function (start, end)
+      {
+         return Array .prototype .slice .call (this, start, end) .map (function (value) { return value .valueOf () });
+      },
    });
 
    for (const key of Reflect .ownKeys (X3DArrayField .prototype))
