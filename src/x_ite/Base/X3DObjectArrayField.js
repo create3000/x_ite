@@ -421,7 +421,7 @@ function ($,
 
          target .addEvent ();
 
-         return values;
+         return values .map (function (value) { return value .valueOf () });
       },
       resize: function (size, value, silent)
       {
