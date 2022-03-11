@@ -257,10 +257,10 @@ function (X3DEventObject,
          {
             for (const fieldDefinition of this [_fieldDefinitions])
             {
-               if (node .getFields () .has (fieldDefinition .name))
+               if (copy .getFields () .has (fieldDefinition .name))
                   continue;
 
-               node .addUserDefinedField (fieldDefinition .accessType, fieldDefinition .name, fieldDefinition .value .copy ());
+               copy .addUserDefinedField (fieldDefinition .accessType, fieldDefinition .name, fieldDefinition .value .copy ());
             }
          }
 
