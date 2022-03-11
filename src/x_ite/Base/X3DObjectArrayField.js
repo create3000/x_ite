@@ -309,7 +309,7 @@ function ($,
          if (arguments .length > 2)
             target .insert (index, arguments, 2, arguments .length);
 
-         return Array .prototype .map .call (result, function (value) { return value .valueOf () });
+         return result .slice ();
       },
       insert: function (index, array, first, last)
       {

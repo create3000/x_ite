@@ -505,7 +505,7 @@ function (X3DArrayField,
 
          target .addEvent ();
 
-         return Array .prototype .map .call (result, function (value) { return value .valueOf () });
+         return result .slice ();
       },
       spliceInsert: function (index, other)
       {
