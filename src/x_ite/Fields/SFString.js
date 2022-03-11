@@ -105,7 +105,7 @@ function (X3DField,
       valueOf: X3DField .prototype .getValue,
       toStream: function (stream)
       {
-         stream .string += '"'+ SFString .escape (this .getValue ()) + '"';
+         stream .string += '"' + SFString .escape (this .getValue ()) + '"';
       },
       toVRMLStream: function (stream)
       {
