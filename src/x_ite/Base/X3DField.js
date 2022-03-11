@@ -186,7 +186,7 @@ function ($,
          {
             case X3DConstants .initializeOnly:
                reference .addFieldInterest (this);
-               this .set (reference .getValue (), reference .length);
+               this .assign (reference);
                break;
             case X3DConstants .inputOnly:
                reference .addFieldInterest (this);
@@ -197,7 +197,7 @@ function ($,
             case X3DConstants .inputOutput:
                reference .addFieldInterest (this);
                this .addFieldInterest (reference);
-               this .set (reference .getValue (), reference .length);
+               this .assign (reference);
                break;
          }
 

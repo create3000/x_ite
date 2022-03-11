@@ -126,10 +126,10 @@ function (Fields,
                      {
                         case X3DConstants .SFNode:
                         case X3DConstants .MFNode:
-                           destinationField .set (sourceField .copy (instance) .getValue ());
+                           destinationField .assign (sourceField .copy (instance));
                            break;
                         default:
-                           destinationField .set (sourceField .getValue (), sourceField .length);
+                           destinationField .assign (sourceField);
                            break;
                      }
                   }

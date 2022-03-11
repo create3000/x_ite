@@ -179,8 +179,8 @@ function (X3DChildObject,
                   if (field .equals (protoField))
                      continue;
 
-                  // If default value of protoField is different from field update default value for field.
-                  field .setValue (protoField);
+                  // If default value of protoField is different from field, thus update default value for field.
+                  field .assign (protoField);
                }
                catch (error)
                {
