@@ -251,7 +251,7 @@ function (X3DEventObject,
       },
       copy: function (executionContext)
       {
-         const copy = this .create (executionContext || this [_executionContext]);
+         const copy = this .create (executionContext);
 
          if (this .canUserDefinedFields ())
          {
