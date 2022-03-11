@@ -836,7 +836,7 @@ function (Fields,
             }
          }
 
-         // Call super .dispose.
+         // Call super.dispose, where fields get disposed.
 
          X3DBaseNode .prototype .dispose .call (this);
       },

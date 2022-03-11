@@ -390,7 +390,7 @@ function (X3DEventObject,
          if (field)
          {
             field .removeParent (this);
-            
+
             this [_fields]           .remove (name);
             this [_predefinedFields] .remove (name);
             this [_fieldDefinitions] .remove (name);
@@ -551,6 +551,13 @@ function (X3DEventObject,
             return;
 
          this [_cloneCount] -= count;
+      },
+      dispose: function ()
+      {
+         for (const field of this .getFields ())
+            field .dispose ();
+
+         X3DEventObject .prototype .dispose .call (this);
       },
    });
 
