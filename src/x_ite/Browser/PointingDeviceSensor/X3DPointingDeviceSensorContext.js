@@ -215,7 +215,7 @@ function (PointingDevice,
          for (const sensor of this [_activeSensors] .values ())
             sensor .set_active__ (true, nearestHit);
 
-         return nearestHit .sensors .size;
+         return !! nearestHit .sensors .size;
       },
       buttonReleaseEvent: function ()
       {
@@ -233,10 +233,9 @@ function (PointingDevice,
       motionNotifyEvent: function (x, y)
       {
          this .touch (x, y);
-
          this .motion ();
 
-         return this [_hits] .length && this [_hits] .at (-1) .sensors .size;
+         return !! (this [_hits] .length && this [_hits] .at (-1) .sensors .size);
       },
       leaveNotifyEvent: function ()
       { },

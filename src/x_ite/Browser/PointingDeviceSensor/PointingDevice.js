@@ -140,7 +140,7 @@ function ($,
                x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
                y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
-            $(document) .unbind (".PointingDevice"   + this .getId ());
+            $(document) .unbind (".PointingDevice" + this .getId ());
             element .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
             browser .buttonReleaseEvent ();
@@ -229,7 +229,7 @@ function ($,
 
          if (browser .motionNotifyEvent (x, y))
          {
-            if (! this .isOver)
+            if (!this .isOver)
             {
                this .isOver = true;
                this .cursor = browser .getCursor ();
@@ -249,9 +249,9 @@ function ($,
       {
          this .getBrowser () .leaveNotifyEvent ();
       },
-      onverifymotion: function (value, x, y)
+      onverifymotion: function (x, y)
       {
-         // Veryfy isOver state. This is neccessay if an Switch changes on buttonReleaseEvent
+         // Verify isOver state. This is necessary if an Switch changes on buttonReleaseEvent
          // and the new child has a sensor node inside. This sensor node must be update to
          // reflect the correct isOver state.
 
