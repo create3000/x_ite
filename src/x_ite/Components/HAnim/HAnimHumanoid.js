@@ -228,7 +228,7 @@ function (Fields,
          this .skinNormalNode = X3DCast (X3DConstants .X3DNormalNode, this ._skinNormal);
 
          if (this .skinNormalNode)
-            this .restNormalNode = this .skinNormalNode .flatCopy ();
+            this .restNormalNode = this .skinNormalNode .copy ();
       },
       set_skinCoord__: function ()
       {
@@ -237,7 +237,7 @@ function (Fields,
          this .skinCoordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._skinCoord);
 
          if (this .skinCoordNode)
-            this .restCoordNode = this .skinCoordNode .flatCopy ();
+            this .restCoordNode = this .skinCoordNode .copy ();
       },
       traverse: function (type, renderObject)
       {

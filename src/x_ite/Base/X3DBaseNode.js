@@ -245,6 +245,21 @@ function (X3DEventObject,
             }
          }
       },
+      create: function (executionContext)
+      {
+         return new (this .constructor) (executionContext);
+      },
+      copy: function (executionContext)
+      {
+         const copy = this .create (executionContext || this .getExecutionContext ());
+
+         for (const field of this [_fields])
+            copy .getField (field .getName ()) .assign (field);
+
+         copy .setup ();
+
+         return copy;
+      },
       setup: function ()
       {
          if (this [_initialized])
@@ -257,30 +272,11 @@ function (X3DEventObject,
 
          this .initialize ();
       },
-      setInitialized: function (value)
-      {
-         this [_initialized] = value;
-      },
       isInitialized: function ()
       {
          return this [_initialized];
       },
       initialize: function () { },
-      create: function (executionContext)
-      {
-         return new (this .constructor) (executionContext);
-      },
-      flatCopy: function (executionContext)
-      {
-         const copy = this .create (executionContext || this .getExecutionContext ());
-
-         for (const field of this [_fields])
-            copy .getField (field .getName ()) .assign (field);
-
-         copy .setup ();
-
-         return copy;
-      },
       addChildObjects: function (name, field)
       {
          for (let i = 0, length = arguments .length; i < length; i += 2)

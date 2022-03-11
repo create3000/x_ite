@@ -72,35 +72,90 @@ function (Fields,
       constructor: X3DNode,
       copy: function (instance)
       {
-         const executionContext = instance .getBody ();
-
-         // First try to get a named node with the node's name.
-
-         if (this .getName () .length)
+         if (!instance || instance .getType () .includes (X3DConstants .X3DExecutionContext))
          {
-            const namedNode = executionContext .getNamedNodes () .get (this .getName ());
-
-            if (namedNode)
-               return namedNode;
+            return X3DBaseNode .prototype .copy .call (this, instance);
          }
-
-         // Create copy.
-
-         const copy = this .create (executionContext);
-
-         if (this .getNeedsName ())
-            this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (), this);
-
-         if (this .getName () .length)
-            executionContext .updateNamedNode (this .getName (), copy);
-
-         // Default fields
-
-         for (const sourceField of this .getPredefinedFields ())
+         else
          {
-            try
+            const executionContext = instance .getBody ();
+
+            // First try to get a named node with the node's name.
+
+            if (this .getName () .length)
             {
-               const destinationField = copy .getField (sourceField .getName ());
+               const namedNode = executionContext .getNamedNodes () .get (this .getName ());
+
+               if (namedNode)
+                  return namedNode;
+            }
+
+            // Create copy.
+
+            const copy = this .create (executionContext);
+
+            if (this .getNeedsName ())
+               this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (), this);
+
+            if (this .getName () .length)
+               executionContext .updateNamedNode (this .getName (), copy);
+
+            // Default fields
+
+            for (const sourceField of this .getPredefinedFields ())
+            {
+               try
+               {
+                  const destinationField = copy .getField (sourceField .getName ());
+
+                  if (sourceField .hasReferences ())
+                  {
+                     // IS relationship
+
+                     for (const originalReference of sourceField .getReferences ())
+                     {
+                        try
+                        {
+                           destinationField .addReference (instance .getField (originalReference .getName ()));
+                        }
+                        catch (error)
+                        {
+                           console .error (error .message);
+                        }
+                     }
+                  }
+                  else
+                  {
+                     if (sourceField .getAccessType () & X3DConstants .initializeOnly)
+                     {
+                        switch (sourceField .getType ())
+                        {
+                           case X3DConstants .SFNode:
+                           case X3DConstants .MFNode:
+                              destinationField .assign (sourceField .copy (instance));
+                              break;
+                           default:
+                              destinationField .assign (sourceField);
+                              break;
+                        }
+                     }
+                  }
+               }
+               catch (error)
+               {
+                  console .log (error .message);
+               }
+            }
+
+            // User-defined fields
+
+            for (const sourceField of this .getUserDefinedFields ())
+            {
+               const destinationField = sourceField .copy (instance);
+
+               copy .addUserDefinedField (sourceField .getAccessType (),
+                                          sourceField .getName (),
+                                          destinationField);
 
                if (sourceField .hasReferences ())
                {
@@ -114,64 +169,16 @@ function (Fields,
                      }
                      catch (error)
                      {
-                        console .error (error .message);
-                     }
-                  }
-               }
-               else
-               {
-                  if (sourceField .getAccessType () & X3DConstants .initializeOnly)
-                  {
-                     switch (sourceField .getType ())
-                     {
-                        case X3DConstants .SFNode:
-                        case X3DConstants .MFNode:
-                           destinationField .assign (sourceField .copy (instance));
-                           break;
-                        default:
-                           destinationField .assign (sourceField);
-                           break;
+                        console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
                      }
                   }
                }
             }
-            catch (error)
-            {
-               console .log (error .message);
-            }
+
+            copy .setup ();
+
+            return copy;
          }
-
-         // User-defined fields
-
-         for (const sourceField of this .getUserDefinedFields ())
-         {
-            const destinationField = sourceField .copy (instance);
-
-            copy .addUserDefinedField (sourceField .getAccessType (),
-                                       sourceField .getName (),
-                                       destinationField);
-
-            if (sourceField .hasReferences ())
-            {
-               // IS relationship
-
-               for (const originalReference of sourceField .getReferences ())
-               {
-                  try
-                  {
-                     destinationField .addReference (instance .getField (originalReference .getName ()));
-                  }
-                  catch (error)
-                  {
-                     console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
-                  }
-               }
-            }
-         }
-
-         copy .setup ();
-
-         return copy;
       },
       getDisplayName: (function ()
       {
