@@ -309,7 +309,7 @@ function ($,
          if (arguments .length > 2)
             target .insert (index, arguments, 2, arguments .length);
 
-         return result .slice ();
+         return result;
       },
       insert: function (index, array, first, last)
       {
@@ -421,7 +421,7 @@ function ($,
 
          target .addEvent ();
 
-         return new (target .constructor) (values);
+         return values;
       },
       resize: function (size, value, silent)
       {

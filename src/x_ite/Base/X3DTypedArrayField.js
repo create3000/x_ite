@@ -505,7 +505,7 @@ function (X3DArrayField,
 
          target .addEvent ();
 
-         return result .slice ();
+         return result;
       },
       spliceInsert: function (index, other)
       {
@@ -586,7 +586,7 @@ function (X3DArrayField,
 
          target .addEvent ();
 
-         return values;
+         return values .slice ();
       },
       resize: function (newLength, value, silent)
       {
