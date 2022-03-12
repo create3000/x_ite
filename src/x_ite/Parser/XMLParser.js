@@ -914,7 +914,10 @@ function ($,
          try
          {
             if (this .getScene () !== this .getExecutionContext ())
+            {
+               console .warn ("XML Parser Error: Export statement not allowed here.");
                return;
+            }
 
             var
                localNodeName    = xmlElement .getAttribute ("localDEF"),

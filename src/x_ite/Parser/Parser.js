@@ -452,8 +452,6 @@ function (Fields,
       },
       x3dScene: function ()
       {
-         this .pushExecutionContext (this .getScene ());
-
          this .headerStatement ();
          this .profileStatement ();
          this .componentStatements ();
@@ -475,7 +473,6 @@ function (Fields,
                try
                {
                   this .statements ();
-                  this .popExecutionContext ();
 
                   if (this .lastIndex < this .input .length)
                      throw new Error ("Unknown statement.");
@@ -498,7 +495,6 @@ function (Fields,
          else
          {
             this .statements ();
-            this .popExecutionContext ();
 
             if (this .lastIndex < this .input .length)
                throw new Error ("Unknown statement.");
@@ -698,8 +694,13 @@ function (Fields,
                else
                   exportedNodeNameId = localNodeNameId;
 
-               this .getScene () .updateExportedNode (exportedNodeNameId, node);
-               return true;
+               if (this .getScene () === this .getExecutionContext ())
+               {
+                  this .getScene () .updateExportedNode (exportedNodeNameId, node);
+                  return true;
+               }
+
+               throw new Error ("Export statement not allowed here.");
             }
 
             throw new Error ("No name given after EXPORT.");
