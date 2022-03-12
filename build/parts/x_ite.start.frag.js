@@ -1,11 +1,8 @@
-(function (globalModule, globalRequire)
+(function (global, factory)
 {
-
-if (typeof __filename === "undefined")
-{
-	globalModule  = undefined;
-	globalRequire = undefined;
+	typeof module === "object" && typeof require === "function" ? factory (module, require) : factory ();
 }
-
+(this, (function (globalModule, globalRequire)
+{
 // Undefine global variables.
 var module, exports, process;

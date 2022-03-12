@@ -164,7 +164,6 @@ const getScriptURL = (function ()
          X3D (callbacks [i], fallbacks [i]);
    },
    fallback);
-
 })();
 
 (function ()
