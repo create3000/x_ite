@@ -109,8 +109,8 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .weightTransferFunction1_ .addInterest ("set_weightTransferFunction1__", this);
-         this .weightTransferFunction2_ .addInterest ("set_weightTransferFunction2__", this);
+         this ._weightTransferFunction1 .addInterest ("set_weightTransferFunction1__", this);
+         this ._weightTransferFunction2 .addInterest ("set_weightTransferFunction2__", this);
          this ._renderStyle             .addInterest ("set_renderStyle__",             this);
          this ._voxels                  .addInterest ("set_voxels__",                  this);
 
@@ -135,11 +135,11 @@ function (Fields,
       },
       set_weightTransferFunction1__: function ()
       {
-         this .weightTransferFunction1Node = X3DCast (X3DConstants .X3DTexture2DNode, this .weightTransferFunction1_);
+         this .weightTransferFunction1Node = X3DCast (X3DConstants .X3DTexture2DNode, this ._weightTransferFunction1);
       },
       set_weightTransferFunction2__: function ()
       {
-         this .weightTransferFunction2Node = X3DCast (X3DConstants .X3DTexture2DNode, this .weightTransferFunction2_);
+         this .weightTransferFunction2Node = X3DCast (X3DConstants .X3DTexture2DNode, this ._weightTransferFunction2);
       },
       set_renderStyle__: function ()
       {
@@ -206,8 +206,8 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return;
 
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant1_" + this .getId (), this .weightConstant1_ .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant2_" + this .getId (), this .weightConstant2_ .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant1_" + this .getId (), this ._weightConstant1 .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant2_" + this .getId (), this ._weightConstant2 .copy ());
 
          if (this .weightTransferFunction1Node)
             shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightTransferFunction1_" + this .getId (), new Fields .SFNode (this .weightTransferFunction1Node));
@@ -285,7 +285,7 @@ function (Fields,
          string += "\n";
          string += functionsText;
 
-         switch (this .weightFunction1_ .getValue ())
+         switch (this ._weightFunction1 .getValue ())
          {
             default: // CONSTANT
             {
@@ -328,7 +328,7 @@ function (Fields,
             }
          }
 
-         switch (this .weightFunction2_ .getValue ())
+         switch (this ._weightFunction2 .getValue ())
          {
             default: // CONSTANT
             {

@@ -85,8 +85,8 @@ function (Fields,
          X3DNode .prototype .initialize .call (this);
 
          this ._forceOutput .addInterest ("set_forceOutput__", this);
-         this .body1_       .addInterest ("set_body1__",       this);
-         this .body2_       .addInterest ("set_body2__",       this);
+         this ._body1       .addInterest ("set_body1__",       this);
+         this ._body2       .addInterest ("set_body2__",       this);
 
          this .set_forceOutput__ ();
          this .set_body1__ ();
@@ -162,7 +162,7 @@ function (Fields,
             this .bodyNode1 ._collection .removeInterest ("set_joint__", this);
          }
 
-         this .bodyNode1 = X3DCast (X3DConstants .RigidBody, this .body1_);
+         this .bodyNode1 = X3DCast (X3DConstants .RigidBody, this ._body1);
 
          if (this .bodyNode1)
          {
@@ -183,7 +183,7 @@ function (Fields,
             this .bodyNode2 ._collection .removeInterest ("set_joint__", this);
          }
 
-         this .bodyNode2 = X3DCast (X3DConstants .RigidBody, this .body2_);
+         this .bodyNode2 = X3DCast (X3DConstants .RigidBody, this ._body2);
 
          if (this .bodyNode2)
          {

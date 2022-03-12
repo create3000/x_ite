@@ -167,7 +167,7 @@ function (X3DChildObject,
                      continue;
 
                   // Continue if field is eventIn or eventOut.
-                  if ((field .getAccessType () & X3DConstants .initializeOnly))
+                  if (!field .isInitializable ())
                      continue;
 
                   // Is set during parse.

@@ -93,8 +93,8 @@ function (Fields,
          X3DNode .prototype .initialize .call (this);
 
          this ._forceOutput .addInterest ("set_forceOutput__", this);
-         this .body1_       .addInterest ("set_body1__",       this);
-         this .body2_       .addInterest ("set_body2__",       this);
+         this ._body1       .addInterest ("set_body1__",       this);
+         this ._body2       .addInterest ("set_body2__",       this);
 
          this .set_forceOutput__ ();
          this .set_body1__ ();
@@ -170,7 +170,7 @@ function (Fields,
             this .bodyNode1 ._collection .removeInterest ("set_joint__", this);
          }
 
-         this .bodyNode1 = X3DCast (X3DConstants .RigidBody, this .body1_);
+         this .bodyNode1 = X3DCast (X3DConstants .RigidBody, this ._body1);
 
          if (this .bodyNode1)
          {
@@ -191,7 +191,7 @@ function (Fields,
             this .bodyNode2 ._collection .removeInterest ("set_joint__", this);
          }
 
-         this .bodyNode2 = X3DCast (X3DConstants .RigidBody, this .body2_);
+         this .bodyNode2 = X3DCast (X3DConstants .RigidBody, this ._body2);
 
          if (this .bodyNode2)
          {
@@ -442,13 +442,13 @@ function ($,
       },
       addJoint: function ()
       {
-         if (! this .getCollection ())
+         if (!this .getCollection ())
             return;
 
-         if (! this .getBody1 ())
+         if (!this .getBody1 ())
             return;
 
-         if (! this .getBody2 ())
+         if (!this .getBody2 ())
             return;
 
          if (this .getBody1 () .getCollection () !== this .getCollection ())
@@ -468,7 +468,7 @@ function ($,
       },
       removeJoint: function ()
       {
-         if (! this .joint)
+         if (!this .joint)
             return;
 
          if (this .getCollection ())
@@ -497,7 +497,7 @@ function ($,
             }
          }
 
-         this .setOutput (! $.isEmptyObject (this .outputs));
+         this .setOutput (!$.isEmptyObject (this .outputs));
       },
       set_anchorPoint__: function ()
       {
@@ -2550,11 +2550,11 @@ function ($,
       this .addType (X3DConstants .DoubleAxisHingeJoint);
 
       this ._anchorPoint             .setUnit ("length");
-      this .minAngle1_               .setUnit ("angle");
-      this .maxAngle1_               .setUnit ("angle");
-      this .desiredAngularVelocity1_ .setUnit ("angularRate");
-      this .desiredAngularVelocity2_ .setUnit ("angularRate");
-      this .stopConstantForceMix1_   .setUnit ("force");
+      this ._minAngle1               .setUnit ("angle");
+      this ._maxAngle1               .setUnit ("angle");
+      this ._desiredAngularVelocity1 .setUnit ("angularRate");
+      this ._desiredAngularVelocity2 .setUnit ("angularRate");
+      this ._stopConstantForceMix1   .setUnit ("force");
       this ._suspensionForce         .setUnit ("force");
 
       this .joint             = null;
@@ -2613,8 +2613,8 @@ function ($,
          X3DRigidJointNode .prototype .initialize .call (this);
 
          this ._anchorPoint .addInterest ("set_joint__", this);
-         this .axis1_       .addInterest ("set_joint__", this);
-         this .axis2_       .addInterest ("set_joint__", this);
+         this ._axis1       .addInterest ("set_joint__", this);
+         this ._axis2       .addInterest ("set_joint__", this);
       },
       addJoint: (function ()
       {
@@ -2643,8 +2643,8 @@ function ($,
 
             localAnchorPoint1 .assign (this ._anchorPoint .getValue ());
             localAnchorPoint2 .assign (this ._anchorPoint .getValue ());
-            localAxis1        .assign (this .axis1_ .getValue ());
-            localAxis2        .assign (this .axis2_ .getValue ());
+            localAxis1        .assign (this ._axis1 .getValue ());
+            localAxis2        .assign (this ._axis2 .getValue ());
 
             this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1);
             this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2);

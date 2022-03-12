@@ -57,9 +57,9 @@ function (Algorithm)
    const clamp = Algorithm .clamp;
 
    const
-      _r = Symbol (),
-      _g = Symbol (),
-      _b = Symbol ();
+      _r = Symbol .for ("X_ITE.Color3.r"),
+      _g = Symbol .for ("X_ITE.Color3.g"),
+      _b = Symbol .for ("X_ITE.Color3.b");
 
    function Color3 (r, g, b)
    {

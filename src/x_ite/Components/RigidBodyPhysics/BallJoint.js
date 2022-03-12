@@ -114,13 +114,13 @@ function ($,
       },
       addJoint: function ()
       {
-         if (! this .getCollection ())
+         if (!this .getCollection ())
             return;
 
-         if (! this .getBody1 ())
+         if (!this .getBody1 ())
             return;
 
-         if (! this .getBody2 ())
+         if (!this .getBody2 ())
             return;
 
          if (this .getBody1 () .getCollection () !== this .getCollection ())
@@ -140,7 +140,7 @@ function ($,
       },
       removeJoint: function ()
       {
-         if (! this .joint)
+         if (!this .joint)
             return;
 
          if (this .getCollection ())
@@ -169,7 +169,7 @@ function ($,
             }
          }
 
-         this .setOutput (! $.isEmptyObject (this .outputs));
+         this .setOutput (!$.isEmptyObject (this .outputs));
       },
       set_anchorPoint__: function ()
       {

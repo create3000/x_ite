@@ -79,11 +79,11 @@ function ($,
       this .addType (X3DConstants .DoubleAxisHingeJoint);
 
       this ._anchorPoint             .setUnit ("length");
-      this .minAngle1_               .setUnit ("angle");
-      this .maxAngle1_               .setUnit ("angle");
-      this .desiredAngularVelocity1_ .setUnit ("angularRate");
-      this .desiredAngularVelocity2_ .setUnit ("angularRate");
-      this .stopConstantForceMix1_   .setUnit ("force");
+      this ._minAngle1               .setUnit ("angle");
+      this ._maxAngle1               .setUnit ("angle");
+      this ._desiredAngularVelocity1 .setUnit ("angularRate");
+      this ._desiredAngularVelocity2 .setUnit ("angularRate");
+      this ._stopConstantForceMix1   .setUnit ("force");
       this ._suspensionForce         .setUnit ("force");
 
       this .joint             = null;
@@ -142,8 +142,8 @@ function ($,
          X3DRigidJointNode .prototype .initialize .call (this);
 
          this ._anchorPoint .addInterest ("set_joint__", this);
-         this .axis1_       .addInterest ("set_joint__", this);
-         this .axis2_       .addInterest ("set_joint__", this);
+         this ._axis1       .addInterest ("set_joint__", this);
+         this ._axis2       .addInterest ("set_joint__", this);
       },
       addJoint: (function ()
       {
@@ -172,8 +172,8 @@ function ($,
 
             localAnchorPoint1 .assign (this ._anchorPoint .getValue ());
             localAnchorPoint2 .assign (this ._anchorPoint .getValue ());
-            localAxis1        .assign (this .axis1_ .getValue ());
-            localAxis2        .assign (this .axis2_ .getValue ());
+            localAxis1        .assign (this ._axis1 .getValue ());
+            localAxis2        .assign (this ._axis2 .getValue ());
 
             this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1);
             this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2);

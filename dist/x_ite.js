@@ -13215,10 +13215,10 @@ define ('x_ite/Base/X3DConstants',[],function ()
 
       // Access type
 
-      initializeOnly: parseInt ('001', 2),
-      inputOnly:      parseInt ('010', 2),
-      outputOnly:     parseInt ('100', 2),
-      inputOutput:    parseInt ('111', 2),
+      initializeOnly: 0b001,
+      inputOnly:      0b010,
+      outputOnly:     0b100,
+      inputOutput:    0b111,
 
       // X3DField
 
@@ -13936,8 +13936,8 @@ function (Generator,
       {
          if (this [_interests] .size)
          {
-            clearTimeout (this [_timeoutId]);
-            this [_timeoutId] = setTimeout (this .processInterests .bind (this), 1);
+            cancelAnimationFrame (this [_timeoutId]);
+            this [_timeoutId] = requestAnimationFrame (this .processInterests .bind (this));
          }
       },
       processInterests: function ()
@@ -14591,7 +14591,7 @@ function (X3DObject)
       },
    };
 
-   function X3DInfoArray ()
+   function X3DInfoArray (values)
    {
       X3DObject .call (this);
 
@@ -14599,12 +14599,39 @@ function (X3DObject)
       this [_index]           = new Map ();
       this [Symbol .iterator] = this [_array] [Symbol .iterator];
 
+      if (values)
+      {
+         for (const value of values)
+            this .add (value .name, value);
+      }
+
       return new Proxy (this, handler);
    }
 
    X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
       constructor: X3DInfoArray,
+      equals: function (array)
+      {
+         const
+            a      = this [_array],
+            b      = array [_array] || array,
+            length = a .length;
+
+         if (a === b)
+            return true;
+
+         if (length !== b .length)
+            return false;
+
+         for (let i = 0; i < length; ++ i)
+         {
+            if (a [i] !== b [i])
+               return false;
+         }
+
+         return true;
+      },
       has: function (key)
       {
          return this [_index] .has (key);
@@ -14772,14 +14799,9 @@ function (X3DInfoArray)
 {
 "use strict";
 
-   function FieldDefinitionArray (fieldDefinitions)
+   function FieldDefinitionArray (values)
    {
-      const proxy = X3DInfoArray .call (this);
-
-      for (const fieldDefinition of fieldDefinitions)
-         this .add (fieldDefinition .name, fieldDefinition);
-
-      return proxy;
+      return X3DInfoArray .call (this, values);
    }
 
    FieldDefinitionArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
@@ -15061,7 +15083,7 @@ function ($,
          {
             case X3DConstants .initializeOnly:
                reference .addFieldInterest (this);
-               this .set (reference .getValue (), reference .length);
+               this .assign (reference);
                break;
             case X3DConstants .inputOnly:
                reference .addFieldInterest (this);
@@ -15072,7 +15094,7 @@ function ($,
             case X3DConstants .inputOutput:
                reference .addFieldInterest (this);
                this .addFieldInterest (reference);
-               this .set (reference .getValue (), reference .length);
+               this .assign (reference);
                break;
          }
 
@@ -15747,9 +15769,9 @@ function (Algorithm)
    const clamp = Algorithm .clamp;
 
    const
-      _r = Symbol (),
-      _g = Symbol (),
-      _b = Symbol ();
+      _r = Symbol .for ("X_ITE.Color3.r"),
+      _g = Symbol .for ("X_ITE.Color3.g"),
+      _b = Symbol .for ("X_ITE.Color3.b");
 
    function Color3 (r, g, b)
    {
@@ -16247,9 +16269,9 @@ function (Color3, Algorithm)
    const clamp = Algorithm .clamp;
 
    const
-      _r = Symbol (),
-      _g = Symbol (),
-      _b = Symbol (),
+      _r = Symbol .for ("X_ITE.Color3.r"),
+      _g = Symbol .for ("X_ITE.Color3.g"),
+      _b = Symbol .for ("X_ITE.Color3.b"),
       _a = Symbol ();
 
    function Color4 (r, g, b, a)
@@ -23197,7 +23219,7 @@ function (X3DField,
       valueOf: X3DField .prototype .getValue,
       toStream: function (stream)
       {
-         stream .string += '"'+ SFString .escape (this .getValue ()) + '"';
+         stream .string += '"' + SFString .escape (this .getValue ()) + '"';
       },
       toVRMLStream: function (stream)
       {
@@ -23574,6 +23596,7 @@ function (X3DField)
    X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       constructor: X3DArrayField,
+      slice: Array .prototype .slice,
    });
 
    for (const key of Reflect .ownKeys (X3DArrayField .prototype))
@@ -24005,7 +24028,7 @@ function ($,
 
          target .addEvent ();
 
-         return new (target .constructor) (values);
+         return values .map (function (value) { return value .valueOf () });
       },
       resize: function (size, value, silent)
       {
@@ -24744,7 +24767,7 @@ function (X3DArrayField,
 
          target .addEvent ();
 
-         return values;
+         return values .slice ();
       },
       resize: function (newLength, value, silent)
       {
@@ -25800,7 +25823,8 @@ function (X3DEventObject,
       for (const fieldDefinition of this [_fieldDefinitions])
          this .addField (fieldDefinition);
 
-      this .addChildObjects ("name_changed", new Fields .SFTime ())
+      this .addChildObjects ("name_changed",     new Fields .SFTime (),
+                             "typeName_changed", new Fields .SFTime ())
    }
 
    X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototype),
@@ -25938,6 +25962,32 @@ function (X3DEventObject,
             }
          }
       },
+      create: function (executionContext)
+      {
+         return new (this .constructor) (executionContext || this [_executionContext]);
+      },
+      copy: function (executionContext)
+      {
+         const copy = this .create (executionContext);
+
+         if (this .canUserDefinedFields ())
+         {
+            for (const fieldDefinition of this [_fieldDefinitions])
+            {
+               if (copy .getFields () .has (fieldDefinition .name))
+                  continue;
+
+               copy .addUserDefinedField (fieldDefinition .accessType, fieldDefinition .name, fieldDefinition .value .copy ());
+            }
+         }
+
+         for (const field of this [_fields])
+            copy .getFields () .get (field .getName ()) .assign (field);
+
+         copy .setup ();
+
+         return copy;
+      },
       setup: function ()
       {
          if (this [_initialized])
@@ -25950,30 +26000,11 @@ function (X3DEventObject,
 
          this .initialize ();
       },
-      setInitialized: function (value)
-      {
-         this [_initialized] = value;
-      },
       isInitialized: function ()
       {
          return this [_initialized];
       },
       initialize: function () { },
-      create: function (executionContext)
-      {
-         return new (this .constructor) (executionContext);
-      },
-      flatCopy: function (executionContext)
-      {
-         const copy = this .create (executionContext || this .getExecutionContext ());
-
-         for (const field of this [_fields])
-            copy .getField (field .getName ()) .assign (field);
-
-         copy .setup ();
-
-         return copy;
-      },
       addChildObjects: function (name, field)
       {
          for (let i = 0, length = arguments .length; i < length; i += 2)
@@ -26007,7 +26038,7 @@ function (X3DEventObject,
             name       = fieldDefinition .name,
             field      = fieldDefinition .value .copy ();
 
-         field .setTainted (true);
+         field .setTainted (!this [_initialized]);
          field .addParent (this);
          field .setName (name);
          field .setAccessType (accessType);
@@ -26082,8 +26113,11 @@ function (X3DEventObject,
 
          if (field)
          {
+            field .removeParent (this);
+
             this [_fields]           .remove (name);
             this [_predefinedFields] .remove (name);
+            this [_fieldDefinitions] .remove (name);
 
             delete this ["_" + field .getName ()];
 
@@ -26100,7 +26134,7 @@ function (X3DEventObject,
          if (this [_userDefinedFields] .has (name))
             this .removeUserDefinedField (name);
 
-         field .setTainted (true);
+         field .setTainted (!this [_initialized]);
          field .addParent (this);
          field .setName (name);
          field .setAccessType (accessType);
@@ -26118,6 +26152,8 @@ function (X3DEventObject,
 
          if (field)
          {
+            field .removeParent (this);
+
             this [_fields]            .remove (name);
             this [_userDefinedFields] .remove (name);
             this [_fieldDefinitions]  .remove (name);
@@ -26239,6 +26275,13 @@ function (X3DEventObject,
             return;
 
          this [_cloneCount] -= count;
+      },
+      dispose: function ()
+      {
+         for (const field of this .getFields ())
+            field .dispose ();
+
+         X3DEventObject .prototype .dispose .call (this);
       },
    });
 
@@ -31175,34 +31218,90 @@ function (Fields,
       constructor: X3DNode,
       copy: function (instance)
       {
-         const executionContext = instance .getBody ();
-
-         // First try to get a named node with the node's name.
-
-         const name = this .getName ();
-
-         if (name .length)
+         if (!instance || instance .getType () .includes (X3DConstants .X3DExecutionContext))
          {
-            const namedNode = executionContext .getNamedNodes () .get (name);
-
-            if (namedNode)
-               return namedNode;
+            return X3DBaseNode .prototype .copy .call (this, instance);
          }
-
-         // Create copy.
-
-         const copy = this .create (executionContext);
-
-         if (name .length)
-            executionContext .updateNamedNode (name, copy);
-
-         // Default fields
-
-         for (const sourceField of this .getPredefinedFields ())
+         else
          {
-            try
+            const executionContext = instance .getBody ();
+
+            // First try to get a named node with the node's name.
+
+            if (this .getName () .length)
             {
-               const destinationField = copy .getField (sourceField .getName ());
+               const namedNode = executionContext .getNamedNodes () .get (this .getName ());
+
+               if (namedNode)
+                  return namedNode;
+            }
+
+            // Create copy.
+
+            const copy = this .create (executionContext);
+
+            if (this .getNeedsName ())
+               this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (), this);
+
+            if (this .getName () .length)
+               executionContext .updateNamedNode (this .getName (), copy);
+
+            // Default fields
+
+            for (const sourceField of this .getPredefinedFields ())
+            {
+               try
+               {
+                  const destinationField = copy .getField (sourceField .getName ());
+
+                  if (sourceField .hasReferences ())
+                  {
+                     // IS relationship
+
+                     for (const originalReference of sourceField .getReferences ())
+                     {
+                        try
+                        {
+                           destinationField .addReference (instance .getField (originalReference .getName ()));
+                        }
+                        catch (error)
+                        {
+                           console .error (error .message);
+                        }
+                     }
+                  }
+                  else
+                  {
+                     if (sourceField .getAccessType () & X3DConstants .initializeOnly)
+                     {
+                        switch (sourceField .getType ())
+                        {
+                           case X3DConstants .SFNode:
+                           case X3DConstants .MFNode:
+                              destinationField .assign (sourceField .copy (instance));
+                              break;
+                           default:
+                              destinationField .assign (sourceField);
+                              break;
+                        }
+                     }
+                  }
+               }
+               catch (error)
+               {
+                  console .log (error .message);
+               }
+            }
+
+            // User-defined fields
+
+            for (const sourceField of this .getUserDefinedFields ())
+            {
+               const destinationField = sourceField .copy (instance);
+
+               copy .addUserDefinedField (sourceField .getAccessType (),
+                                          sourceField .getName (),
+                                          destinationField);
 
                if (sourceField .hasReferences ())
                {
@@ -31216,64 +31315,16 @@ function (Fields,
                      }
                      catch (error)
                      {
-                        console .error (error .message);
-                     }
-                  }
-               }
-               else
-               {
-                  if (sourceField .getAccessType () & X3DConstants .initializeOnly)
-                  {
-                     switch (sourceField .getType ())
-                     {
-                        case X3DConstants .SFNode:
-                        case X3DConstants .MFNode:
-                           destinationField .set (sourceField .copy (instance) .getValue ());
-                           break;
-                        default:
-                           destinationField .set (sourceField .getValue (), sourceField .length);
-                           break;
+                        console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
                      }
                   }
                }
             }
-            catch (error)
-            {
-               console .log (error .message);
-            }
+
+            copy .setup ();
+
+            return copy;
          }
-
-         // User-defined fields
-
-         for (const sourceField of this .getUserDefinedFields ())
-         {
-            const destinationField = sourceField .copy (instance);
-
-            copy .addUserDefinedField (sourceField .getAccessType (),
-                                       sourceField .getName (),
-                                       destinationField);
-
-            if (sourceField .hasReferences ())
-            {
-               // IS relationship
-
-               for (const originalReference of sourceField .getReferences ())
-               {
-                  try
-                  {
-                     destinationField .addReference (instance .getField (originalReference .getName ()));
-                  }
-                  catch (error)
-                  {
-                     console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
-                  }
-               }
-            }
-         }
-
-         copy .setup ();
-
-         return copy;
       },
       getDisplayName: (function ()
       {
@@ -31284,6 +31335,36 @@ function (Fields,
             return this .getName () .replace (_TrailingNumber, "");
          };
       })(),
+      getNeedsName: function ()
+      {
+         if (this .getName () .length)
+            return false;
+
+         if (this .getCloneCount () > 1)
+            return true;
+
+         if (this .hasRoutes ())
+            return true;
+
+         const executionContext = this .getExecutionContext ()
+
+         for (const importedNode of executionContext .getImportedNodes () .values ())
+         {
+            if (importedNode .getInlineNode () === this)
+               return true;
+         }
+
+         if (executionContext .getType () .includes (X3DConstants .X3DScene))
+         {
+            for (const exportedNode of executionContext .getExportedNodes () .values ())
+            {
+               if (exportedNode .getLocalNode () === this)
+                  return true;
+            }
+         }
+
+         return false;
+      },
       getFieldsAreEnumerable: function ()
       {
          return true;
@@ -31908,7 +31989,7 @@ function (Fields,
             }
          }
 
-         // Call super .dispose.
+         // Call super.dispose, where fields get disposed.
 
          X3DBaseNode .prototype .dispose .call (this);
       },
@@ -32367,9 +32448,9 @@ function (X3DInfoArray)
 {
 "use strict";
 
-   function ExternProtoDeclarationArray (array)
+   function ExternProtoDeclarationArray (values)
    {
-      return X3DInfoArray .call (this);
+      return X3DInfoArray .call (this, values);
    }
 
    ExternProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
@@ -32445,7 +32526,7 @@ function (X3DInfoArray)
 
    function ProtoDeclarationArray (array)
    {
-      return X3DInfoArray .call (this);
+      return X3DInfoArray .call (this, array);
    }
 
    ProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
@@ -32644,7 +32725,7 @@ function (X3DObject,
       getSourceField: function ()
       {
          ///  SAI
-         return this [_sourceField] .getName ();
+         return this [_sourceField];
       },
       getDestinationNode: function ()
       {
@@ -32654,7 +32735,7 @@ function (X3DObject,
       getDestinationField: function ()
       {
          ///  SAI
-         return this [_destinationField] .getName ();
+         return this [_destinationField];
       },
       disconnect: function ()
       {
@@ -32950,7 +33031,7 @@ function (SupportedNodes,
       _protos         = Symbol (),
       _externprotos   = Symbol (),
       _routes         = Symbol (),
-      _node           = Symbol ();
+      _outerNode      = Symbol ();
 
    SupportedNodes .addAbstractType ("X3DExecutionContext");
 
@@ -32980,15 +33061,15 @@ function (SupportedNodes,
       {
          return "X3DExecutionContext";
       },
-      [_node]: null,
-      getNode: function ()
+      [_outerNode]: null,
+      getOuterNode: function ()
       {
          // Can be either of type X3DProtoDeclaration or X3DPrototypeInstance, or null.
-         return this [_node];
+         return this [_outerNode];
       },
-      setNode: function (value)
+      setOuterNode: function (value)
       {
-         this [_node] = value;
+         this [_outerNode] = value;
       },
       getSpecificationVersion: function ()
       {
@@ -33140,35 +33221,10 @@ function (SupportedNodes,
       {
          return this [_namedNodes];
       },
-      getUniqueName: (function ()
+      getUniqueName: function (name = "")
       {
-         const _TrailingNumbers = /_\d+$/;
-
-         return function (name)
-         {
-            name = String (name) .replace (_TrailingNumbers, "");
-
-            let
-               newName = name,
-               i       = 64;
-
-            for (; i;)
-            {
-               if (!(this [_namedNodes] .has (newName) || newName .length === 0))
-                  break;
-
-               const
-                  min = i,
-                  max = i <<= 1;
-
-               newName  = name;
-               newName += '_';
-               newName += Math .round (Algorithm .random (min, max));
-            }
-
-            return newName;
-         };
-      })(),
+         return getUniqueName .call (this, _namedNodes, name);
+      },
       addImportedNode: function (inlineNode, exportedName, importedName)
       {
          if (importedName === undefined)
@@ -33344,34 +33400,10 @@ function (SupportedNodes,
       {
          return this [_protos];
       },
-      getUniqueProtoName: (function ()
+      getUniqueProtoName: function (name = "")
       {
-         const TrailingNumbers = /\d+$/;
-
-         return function (name)
-         {
-            name = String (name) .replace (TrailingNumbers, "");
-
-            let
-               newName = name,
-               i       = 64;
-
-            for (; i;)
-            {
-               if (!this [_protos] .has (newName))
-                  break;
-
-               const
-                  min = i,
-                  max = i <<= 1;
-
-               newName  = name;
-               newName += Math .round (Algorithm .random (min, max));
-            }
-
-            return newName;
-         };
-      })(),
+         return getUniqueName .call (this, _protos, name);
+      },
       getExternProtoDeclaration: function (name)
       {
          name = String (name);
@@ -33430,34 +33462,10 @@ function (SupportedNodes,
       {
          return this [_externprotos];
       },
-      getUniqueExternProtoName: (function ()
+      getUniqueExternProtoName: function (name = "")
       {
-         const TrailingNumbers = /\d+$/;
-
-         return function (name)
-         {
-            name = String (name) .replace (TrailingNumbers, "");
-
-            let
-               newName = name,
-               i       = 64;
-
-            for (; i;)
-            {
-               if (!this [_externprotos] .has (newName))
-                  break;
-
-               const
-                  min = i,
-                  max = i <<= 1;
-
-               newName  = name;
-               newName += Math .round (Algorithm .random (min, max));
-            }
-
-            return newName;
-         };
-      })(),
+         return getUniqueName .call (this, _externprotos, name);
+      },
       addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
       {
          sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false);
@@ -33579,8 +33587,8 @@ function (SupportedNodes,
          try
          {
             const
-               sourceField      = route .getSourceNode () .getField (route .getSourceField ()),
-               destinationField = route .getDestinationNode () .getField (route .getDestinationField ()),
+               sourceField      = route .getSourceField (),
+               destinationField = route .getDestinationField (),
                id               = sourceField .getId () + "." + destinationField .getId ();
 
             this [_routes] .remove (id);
@@ -33809,6 +33817,36 @@ function (SupportedNodes,
          X3DBaseNode .prototype .dispose .call (this);
       },
    });
+
+   const getUniqueName = (function ()
+   {
+      const _TrailingNumbers = /_\d+$/;
+
+      return function (array, name = "")
+      {
+         name = String (name) .replace (_TrailingNumbers, "");
+
+         let
+            newName = name,
+            i       = 64;
+
+         for (; i;)
+         {
+            if (!(this [array] .has (newName) || newName .length === 0))
+               break;
+
+            const
+               min = i,
+               max = i <<= 1;
+
+            newName  = name;
+            newName += '_';
+            newName += Math .round (Algorithm .random (min, max));
+         }
+
+         return newName;
+      };
+   })();
 
    for (const key of Reflect .ownKeys (X3DExecutionContext .prototype))
       Object .defineProperty (X3DExecutionContext .prototype, key, { enumerable: false });
@@ -34052,14 +34090,9 @@ function (ComponentInfo,
 {
 "use strict";
 
-   function ComponentInfoArray (componentInfos)
+   function ComponentInfoArray (values)
    {
-      const proxy = X3DInfoArray .call (this);
-
-      for (const componentInfo of componentInfos)
-         this .add (componentInfo .name, componentInfo);
-
-      return proxy;
+      return X3DInfoArray .call (this, values);
    }
 
    ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
@@ -34258,9 +34291,9 @@ function (X3DInfoArray)
 {
 "use strict";
 
-   function UnitInfoArray ()
+   function UnitInfoArray (values)
    {
-      return X3DInfoArray .call (this);
+      return X3DInfoArray .call (this, values);
    }
 
    UnitInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
@@ -35649,34 +35682,90 @@ function (Fields,
       constructor: X3DNode,
       copy: function (instance)
       {
-         const executionContext = instance .getBody ();
-
-         // First try to get a named node with the node's name.
-
-         const name = this .getName ();
-
-         if (name .length)
+         if (!instance || instance .getType () .includes (X3DConstants .X3DExecutionContext))
          {
-            const namedNode = executionContext .getNamedNodes () .get (name);
-
-            if (namedNode)
-               return namedNode;
+            return X3DBaseNode .prototype .copy .call (this, instance);
          }
-
-         // Create copy.
-
-         const copy = this .create (executionContext);
-
-         if (name .length)
-            executionContext .updateNamedNode (name, copy);
-
-         // Default fields
-
-         for (const sourceField of this .getPredefinedFields ())
+         else
          {
-            try
+            const executionContext = instance .getBody ();
+
+            // First try to get a named node with the node's name.
+
+            if (this .getName () .length)
             {
-               const destinationField = copy .getField (sourceField .getName ());
+               const namedNode = executionContext .getNamedNodes () .get (this .getName ());
+
+               if (namedNode)
+                  return namedNode;
+            }
+
+            // Create copy.
+
+            const copy = this .create (executionContext);
+
+            if (this .getNeedsName ())
+               this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (), this);
+
+            if (this .getName () .length)
+               executionContext .updateNamedNode (this .getName (), copy);
+
+            // Default fields
+
+            for (const sourceField of this .getPredefinedFields ())
+            {
+               try
+               {
+                  const destinationField = copy .getField (sourceField .getName ());
+
+                  if (sourceField .hasReferences ())
+                  {
+                     // IS relationship
+
+                     for (const originalReference of sourceField .getReferences ())
+                     {
+                        try
+                        {
+                           destinationField .addReference (instance .getField (originalReference .getName ()));
+                        }
+                        catch (error)
+                        {
+                           console .error (error .message);
+                        }
+                     }
+                  }
+                  else
+                  {
+                     if (sourceField .getAccessType () & X3DConstants .initializeOnly)
+                     {
+                        switch (sourceField .getType ())
+                        {
+                           case X3DConstants .SFNode:
+                           case X3DConstants .MFNode:
+                              destinationField .assign (sourceField .copy (instance));
+                              break;
+                           default:
+                              destinationField .assign (sourceField);
+                              break;
+                        }
+                     }
+                  }
+               }
+               catch (error)
+               {
+                  console .log (error .message);
+               }
+            }
+
+            // User-defined fields
+
+            for (const sourceField of this .getUserDefinedFields ())
+            {
+               const destinationField = sourceField .copy (instance);
+
+               copy .addUserDefinedField (sourceField .getAccessType (),
+                                          sourceField .getName (),
+                                          destinationField);
 
                if (sourceField .hasReferences ())
                {
@@ -35690,64 +35779,16 @@ function (Fields,
                      }
                      catch (error)
                      {
-                        console .error (error .message);
-                     }
-                  }
-               }
-               else
-               {
-                  if (sourceField .getAccessType () & X3DConstants .initializeOnly)
-                  {
-                     switch (sourceField .getType ())
-                     {
-                        case X3DConstants .SFNode:
-                        case X3DConstants .MFNode:
-                           destinationField .set (sourceField .copy (instance) .getValue ());
-                           break;
-                        default:
-                           destinationField .set (sourceField .getValue (), sourceField .length);
-                           break;
+                        console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
                      }
                   }
                }
             }
-            catch (error)
-            {
-               console .log (error .message);
-            }
+
+            copy .setup ();
+
+            return copy;
          }
-
-         // User-defined fields
-
-         for (const sourceField of this .getUserDefinedFields ())
-         {
-            const destinationField = sourceField .copy (instance);
-
-            copy .addUserDefinedField (sourceField .getAccessType (),
-                                       sourceField .getName (),
-                                       destinationField);
-
-            if (sourceField .hasReferences ())
-            {
-               // IS relationship
-
-               for (const originalReference of sourceField .getReferences ())
-               {
-                  try
-                  {
-                     destinationField .addReference (instance .getField (originalReference .getName ()));
-                  }
-                  catch (error)
-                  {
-                     console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
-                  }
-               }
-            }
-         }
-
-         copy .setup ();
-
-         return copy;
       },
       getDisplayName: (function ()
       {
@@ -35758,6 +35799,36 @@ function (Fields,
             return this .getName () .replace (_TrailingNumber, "");
          };
       })(),
+      getNeedsName: function ()
+      {
+         if (this .getName () .length)
+            return false;
+
+         if (this .getCloneCount () > 1)
+            return true;
+
+         if (this .hasRoutes ())
+            return true;
+
+         const executionContext = this .getExecutionContext ()
+
+         for (const importedNode of executionContext .getImportedNodes () .values ())
+         {
+            if (importedNode .getInlineNode () === this)
+               return true;
+         }
+
+         if (executionContext .getType () .includes (X3DConstants .X3DScene))
+         {
+            for (const exportedNode of executionContext .getExportedNodes () .values ())
+            {
+               if (exportedNode .getLocalNode () === this)
+                  return true;
+            }
+         }
+
+         return false;
+      },
       getFieldsAreEnumerable: function ()
       {
          return true;
@@ -36382,7 +36453,7 @@ function (Fields,
             }
          }
 
-         // Call super .dispose.
+         // Call super.dispose, where fields get disposed.
 
          X3DBaseNode .prototype .dispose .call (this);
       },
@@ -36442,12 +36513,14 @@ function (Fields,
 
 define ('x_ite/Components/Core/X3DPrototypeInstance',[
    "x_ite/Base/X3DChildObject",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Execution/X3DExecutionContext",
    "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DChildObject,
+          FieldDefinitionArray,
           X3DNode,
           X3DExecutionContext,
           X3DConstants,
@@ -36457,20 +36530,24 @@ function (X3DChildObject,
 
    const
       _protoNode        = Symbol (),
+      _protoFields      = Symbol (),
       _fieldDefinitions = Symbol .for ("X3DBaseNode.fieldDefinitions");
 
    function X3DPrototypeInstance (executionContext, protoNode)
    {
       this [_protoNode]        = protoNode;
-      this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
+      this [_protoFields]      = new Map (Array .from (protoNode .getFields ()) .map (f => [f, f .getName ()]))
+      this [_fieldDefinitions] = new FieldDefinitionArray (protoNode .getFieldDefinitions ());
 
       X3DNode .call (this, executionContext);
 
       this .addType (X3DConstants .X3DPrototypeInstance);
 
+      protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
+
       const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
-      if (executionContext .getNode () instanceof X3DProtoDeclaration)
+      if (executionContext .getOuterNode () instanceof X3DProtoDeclaration)
          return;
 
       if (!protoNode .isExternProto)
@@ -36505,7 +36582,7 @@ function (X3DChildObject,
          {
             X3DNode .prototype .initialize .call (this);
 
-            if (! this [_protoNode] .isExternProto)
+            if (!this [_protoNode] .isExternProto)
                this .construct ();
          }
          catch (error)
@@ -36524,7 +36601,7 @@ function (X3DChildObject,
          if (!proto)
          {
             this .body = new X3DExecutionContext (this .getExecutionContext ());
-            this .body .setNode (this);
+            this .body .setOuterNode (this);
             this .body .setup ();
 
             if (this .isInitialized ())
@@ -36554,7 +36631,7 @@ function (X3DChildObject,
                      continue;
 
                   // Continue if field is eventIn or eventOut.
-                  if (! (field .getAccessType () & X3DConstants .initializeOnly))
+                  if (!field .isInitializable ())
                      continue;
 
                   // Is set during parse.
@@ -36568,8 +36645,8 @@ function (X3DChildObject,
                   if (field .equals (protoField))
                      continue;
 
-                  // If default value of protoField is different from field update default value for field.
-                  field .setValue (protoField);
+                  // If default value of protoField is different from field, thus update default value for field.
+                  field .assign (protoField);
                }
                catch (error)
                {
@@ -36582,7 +36659,7 @@ function (X3DChildObject,
          // Create execution context.
 
          this .body = new X3DExecutionContext (proto .getExecutionContext ());
-         this .body .setNode (this);
+         this .body .setOuterNode (this);
 
          // Copy proto.
 
@@ -36602,32 +36679,48 @@ function (X3DChildObject,
       },
       update: function ()
       {
-         const oldFields = Array .from (this .getFields ())
+         // Remove old fields.
 
-         for (const field of oldFields)
+         const
+            oldProtoFields = this [_protoFields],
+            oldFields      = new Map (Array .from (this .getFields ()) .map (f => [f .getName (), f]));
+
+         for (const field of oldFields .values ())
             this .removeField (field .getName ());
+
+         // Add new fields.
+
+         this [_protoFields]      = new Map (Array .from (this [_protoNode] .getFields ()) .map (f => [f, f .getName ()]));
+         this [_fieldDefinitions] = new FieldDefinitionArray (this [_protoNode] .getFieldDefinitions ());
 
          for (const fieldDefinition of this .getFieldDefinitions ())
             this .addField (fieldDefinition);
 
-         for (const oldField of oldFields)
+         // Reuse old fields, and therefor routes.
+
+         for (const protoField of this [_protoFields] .keys ())
          {
-            const newField = this .getFields () .get (oldField .getName ());
+            const oldFieldName = oldProtoFields .get (protoField);
 
-            if (!newField)
+            if (!oldFieldName)
                continue;
 
-            if (newField .getType () !== oldField .getType ())
-               continue;
+            const
+               newField = this .getFields () .get (protoField .getName ()),
+               oldField = oldFields .get (oldFieldName);
 
-            if (!newField .isInitializable ())
-               continue;
+            oldField .addParent (this)
+            oldField .setAccessType (newField .getAccessType ());
+            oldField .setName (newField .getName ());
 
-            newField .assign (oldField);
+            this .getPredefinedFields () .update (oldFieldName, newField .getName (), oldField);
+            this .getFields ()           .update (oldFieldName, newField .getName (), oldField);
+
+            if (!this .getPrivate ())
+               oldField .addCloneCount (1);
          }
 
-         for (const field of this .getFields ())
-            field .setTainted (false);
+         // Construct now.
 
          this .construct ();
       },
@@ -36822,15 +36915,15 @@ function (X3DChildObject,
                         initializableReference = initializableReference || fieldReference .isInitializable ();
                      });
 
-                     if (! initializableReference)
-                        mustOutputValue = ! this .isDefaultValue (field);
+                     if (!initializableReference)
+                        mustOutputValue = !this .isDefaultValue (field);
                   }
                }
 
                // If we have no execution context we are not in a proto and must not generate IS references the same is true
                // if the node is a shared node as the node does not belong to the execution context.
 
-               if (field .getReferences () .size === 0 || ! generator .ExecutionContext () || sharedNode || mustOutputValue)
+               if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode || mustOutputValue)
                {
                   if (mustOutputValue)
                      references .push (field);
@@ -36928,7 +37021,7 @@ function (X3DChildObject,
                }
             }
 
-            if (references .length && ! sharedNode)
+            if (references .length && !sharedNode)
             {
                stream .string += generator .Indent ();
                stream .string += "<IS>";
@@ -37535,7 +37628,7 @@ function (SupportedNodes,
       this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 
       this [_body] = new X3DExecutionContext (executionContext);
-      this [_body] .setNode (this);
+      this [_body] .setOuterNode (this);
       this [_body] .setLive (false);
       this .setLive (false);
    }
@@ -58324,11 +58417,11 @@ function (X3DBaseNode,
                for (let i = 1, length = this .array .length; i < length; ++ i)
                {
                   const
-                     node   = this .array [i],
-                     parent = node .getExecutionContext () .getNode (),
-                     scene  = parent instanceof X3DPrototypeInstance ?  parent .getScene () : node .getScene ();
+                     node      = this .array [i],
+                     outerNode = node .getExecutionContext () .getOuterNode (),
+                     scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
 
-                  if (! enableInlineBindables && scene !== mainScene)
+                  if (!enableInlineBindables && scene !== mainScene)
                      continue;
 
                   if (node .getName () == name)
@@ -58341,11 +58434,11 @@ function (X3DBaseNode,
             for (let i = 1, length = this .array .length; i < length; ++ i)
             {
                const
-                  node   = this .array [i],
-                  parent = node .getExecutionContext () .getNode (),
-                  scene  = parent instanceof X3DPrototypeInstance ?  parent .getScene () : node .getScene ();
+                  node      = this .array [i],
+                  outerNode = node .getExecutionContext () .getOuterNode (),
+                  scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
 
-               if (! enableInlineBindables && scene !== mainScene)
+               if (!enableInlineBindables && scene !== mainScene)
                   continue;
 
                if (node ._isBound .getValue ())
@@ -58357,11 +58450,11 @@ function (X3DBaseNode,
             for (let i = 1, length = this .array .length; i < length; ++ i)
             {
                const
-                  node   = this .array [i],
-                  parent = node .getExecutionContext () .getNode (),
-                  scene  = parent instanceof X3DPrototypeInstance ?  parent .getScene () : node .getScene ();
+                  node      = this .array [i],
+                  outerNode = node .getExecutionContext () .getOuterNode (),
+                  scene     = parent instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
 
-               if (! enableInlineBindables && scene !== mainScene)
+               if (!enableInlineBindables && scene !== mainScene)
                   continue;
 
                return node;
@@ -74504,7 +74597,7 @@ function ($,
                x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
                y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
-            $(document) .unbind (".PointingDevice"   + this .getId ());
+            $(document) .unbind (".PointingDevice" + this .getId ());
             element .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
             browser .buttonReleaseEvent ();
@@ -74593,7 +74686,7 @@ function ($,
 
          if (browser .motionNotifyEvent (x, y))
          {
-            if (! this .isOver)
+            if (!this .isOver)
             {
                this .isOver = true;
                this .cursor = browser .getCursor ();
@@ -74613,9 +74706,9 @@ function ($,
       {
          this .getBrowser () .leaveNotifyEvent ();
       },
-      onverifymotion: function (value, x, y)
+      onverifymotion: function (x, y)
       {
-         // Veryfy isOver state. This is neccessay if an Switch changes on buttonReleaseEvent
+         // Verify isOver state. This is necessary if an Switch changes on buttonReleaseEvent
          // and the new child has a sensor node inside. This sensor node must be update to
          // reflect the correct isOver state.
 
@@ -74845,7 +74938,7 @@ function (PointingDevice,
          for (const sensor of this [_activeSensors] .values ())
             sensor .set_active__ (true, nearestHit);
 
-         return nearestHit .sensors .size;
+         return !! nearestHit .sensors .size;
       },
       buttonReleaseEvent: function ()
       {
@@ -74863,10 +74956,9 @@ function (PointingDevice,
       motionNotifyEvent: function (x, y)
       {
          this .touch (x, y);
-
          this .motion ();
 
-         return this [_hits] .length && this [_hits] .at (-1) .sensors .size;
+         return !! (this [_hits] .length && this [_hits] .at (-1) .sensors .size);
       },
       leaveNotifyEvent: function ()
       { },
@@ -118478,9 +118570,9 @@ function (ComponentInfoArray,
 {
 "use strict";
 
-   function ProfileInfoArray ()
+   function ProfileInfoArray (values)
    {
-      return X3DInfoArray .call (this);
+      return X3DInfoArray .call (this, values);
    }
 
    ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
