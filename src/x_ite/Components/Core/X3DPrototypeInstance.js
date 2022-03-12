@@ -118,7 +118,7 @@ function (X3DChildObject,
          {
             X3DNode .prototype .initialize .call (this);
 
-            if (! this [_protoNode] .isExternProto)
+            if (!this [_protoNode] .isExternProto)
                this .construct ();
          }
          catch (error)
@@ -167,7 +167,7 @@ function (X3DChildObject,
                      continue;
 
                   // Continue if field is eventIn or eventOut.
-                  if (! (field .getAccessType () & X3DConstants .initializeOnly))
+                  if ((field .getAccessType () & X3DConstants .initializeOnly))
                      continue;
 
                   // Is set during parse.
@@ -245,11 +245,15 @@ function (X3DChildObject,
                newField = this .getFields () .get (protoField .getName ()),
                oldField = oldFields .get (oldFieldName);
 
+            oldField .addParent (this)
             oldField .setAccessType (newField .getAccessType ());
             oldField .setName (newField .getName ());
 
             this .getPredefinedFields () .update (oldFieldName, newField .getName (), oldField);
             this .getFields ()           .update (oldFieldName, newField .getName (), oldField);
+
+            if (!this .getPrivate ())
+               oldField .addCloneCount (1);
          }
 
          // Construct now.
@@ -447,15 +451,15 @@ function (X3DChildObject,
                         initializableReference = initializableReference || fieldReference .isInitializable ();
                      });
 
-                     if (! initializableReference)
-                        mustOutputValue = ! this .isDefaultValue (field);
+                     if (!initializableReference)
+                        mustOutputValue = !this .isDefaultValue (field);
                   }
                }
 
                // If we have no execution context we are not in a proto and must not generate IS references the same is true
                // if the node is a shared node as the node does not belong to the execution context.
 
-               if (field .getReferences () .size === 0 || ! generator .ExecutionContext () || sharedNode || mustOutputValue)
+               if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode || mustOutputValue)
                {
                   if (mustOutputValue)
                      references .push (field);
@@ -553,7 +557,7 @@ function (X3DChildObject,
                }
             }
 
-            if (references .length && ! sharedNode)
+            if (references .length && !sharedNode)
             {
                stream .string += generator .Indent ();
                stream .string += "<IS>";
