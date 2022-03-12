@@ -602,12 +602,14 @@ function (X3DChildNode,
 
                if (pointingDeviceSensorNodes .length)
                {
-                  this .sensors .clear ();
+                  const sensors = this .sensors;
 
-                  renderObject .getBrowser () .getSensors () .push (this .sensors);
+                  sensors .clear ();
+
+                  renderObject .getBrowser () .getSensors () .push (sensors);
 
                   for (const pointingDeviceSensorNode of pointingDeviceSensorNodes)
-                     pointingDeviceSensorNode .push (renderObject, this .sensors);
+                     pointingDeviceSensorNode .push (renderObject, sensors);
                }
 
                for (const clipPlaneNode of clipPlaneNodes)
