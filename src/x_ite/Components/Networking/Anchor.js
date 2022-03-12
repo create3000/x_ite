@@ -78,6 +78,7 @@ function (Fields,
       this .addType (X3DConstants .Anchor);
 
       this .touchSensorNode = new TouchSensor (executionContext);
+      this .sensors         = new Map ();
    }
 
    Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -182,7 +183,9 @@ function (Fields,
       {
          if (type === TraverseType .POINTER)
          {
-            const sensors = new Map ();
+            const sensors = this .sensors;
+
+            sensors .clear ();
 
             renderObject .getBrowser () .getSensors () .push (sensors);
 
