@@ -80,8 +80,6 @@ function (X3DChildObject,
       X3DNode .call (this, executionContext);
 
       this .addType (X3DConstants .X3DPrototypeInstance);
-
-      this .setProtoNode (protoNode);
    }
 
    X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -102,6 +100,12 @@ function (X3DChildObject,
       getContainerField: function ()
       {
          return "children";
+      },
+      initialize: function ()
+      {
+         X3DNode .prototype .initialize .call (this);
+
+         this .setProtoNode (this [_protoNode]);
       },
       construct: function ()
       {
@@ -246,17 +250,21 @@ function (X3DChildObject,
       },
       setProtoNode: function (protoNode)
       {
-         if (this [_protoNode])
+         if (protoNode !== this [_protoNode])
          {
-            const protoNode = this [_protoNode];
+            // Disconnect old proto node.
 
-            protoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
-            protoNode ._updateInstances .removeInterest ("construct", this)
-            protoNode ._updateInstances .removeInterest ("update",    this)
-         }
+            if (this [_protoNode])
+            {
+               const protoNode = this [_protoNode];
 
-         if (this [_protoNode])
-         {
+               protoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
+               protoNode ._updateInstances .removeInterest ("construct", this)
+               protoNode ._updateInstances .removeInterest ("update",    this)
+            }
+
+            // Get field from new proto node.
+
             this [_protoFields]      = new Map (protoNode .getFields () .map (f => [f, f .getName ()]))
             this [_fieldDefinitions] = new FieldDefinitionArray (protoNode .getFieldDefinitions ());
          }

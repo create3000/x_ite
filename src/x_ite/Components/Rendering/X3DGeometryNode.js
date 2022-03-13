@@ -447,11 +447,11 @@ function (Fields,
             return clipPlane .isClipped (point);
          });
       },
-      transformLine: function (line)
+      transformLine: function (hitRay)
       {
          // Apply sceen nodes transformation in place here.
       },
-      transformMatrix: function (line)
+      transformMatrix: function (hitRay)
       {
          // Apply sceen nodes transformation in place here.
       },
@@ -523,7 +523,7 @@ function (Fields,
             }
             catch (error)
             {
-               console .error (error);
+               console .log (error);
                return false;
             }
          };
@@ -640,7 +640,7 @@ function (Fields,
             }
             catch (error)
             {
-               console .error (error);
+               console .log (error);
                return false;
             }
          };
@@ -927,7 +927,7 @@ function (Fields,
          catch (error)
          {
             // Catch error from setLocalUniforms.
-            console .error (error);
+            console .log (error);
          }
       },
       displayGeometry: function (gl, context, appearanceNode, shaderNode, back, front)
@@ -1093,7 +1093,7 @@ function (Fields,
          catch (error)
          {
             // Catch error from setLocalUniforms.
-            console .error (error);
+            console .log (error);
          }
       },
       displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particles, numParticles)

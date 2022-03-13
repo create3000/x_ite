@@ -199,12 +199,10 @@ function (Fields,
                   radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .abs ();
 
                this .cylinder = new Cylinder3 (axis, radius);
-
-               this .disk   = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this ._diskAngle .getValue ());
-               this .behind = this .isBehind (hitRay, hitPoint);
-
-               this .yPlane = new Plane3 (hitPoint, yAxis);             // Sensor aligned y-plane
-               this .zPlane = new Plane3 (hitPoint, cameraBack);        // Screen aligned z-plane
+               this .disk     = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this ._diskAngle .getValue ());
+               this .behind   = this .isBehind (hitRay, hitPoint);
+               this .yPlane   = new Plane3 (hitPoint, yAxis);             // Sensor aligned y-plane
+               this .zPlane   = new Plane3 (hitPoint, cameraBack);        // Screen aligned z-plane
 
                // Compute normal like in Billboard with yAxis as axis of rotation.
                const
