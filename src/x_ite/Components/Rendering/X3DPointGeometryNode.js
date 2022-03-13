@@ -82,9 +82,6 @@ function (X3DGeometryNode,
          const PICK_DISTANCE_FACTOR = 1 / 300;
 
          const
-            point1    = new Vector3 (0, 0, 0),
-            point2    = new Vector3 (0, 0, 0),
-            line      = new Line3 (Vector3 .Zero, Vector3 .zAxis),
             point     = new Vector3 (0, 0, 0),
             vector    = new Vector3 (0, 0, 0),
             clipPoint = new Vector3 (0, 0, 0);
@@ -95,18 +92,15 @@ function (X3DGeometryNode,
 
             for (let i = 0, length = vertices .length; i < length; i += 4)
             {
-               point1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+               point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
 
-               if (line .getClosestPointToPoint (point1, point))
+               if (hitRay .getPerpendicularVectorToPoint (point, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
                {
-                  if (line .getPerpendicularVectorToPoint (hitRay, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
-                  {
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                        continue;
+                  if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                     continue;
 
-                     intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
-                     return true;
-                  }
+                  intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
+                  return true;
                }
             }
 

@@ -188,12 +188,9 @@ function (Fields,
          {
             try
             {
-               const geometryNode = this .getGeometry ();
-
-               if (geometryNode .getGeometryType () < 1)
-                  return;
-
-               const browser = renderObject .getBrowser ();
+               const
+                  browser      = renderObject .getBrowser (),
+                  geometryNode = this .getGeometry ();
 
                modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
                invModelViewMatrix .assign (modelViewMatrix) .inverse ();
