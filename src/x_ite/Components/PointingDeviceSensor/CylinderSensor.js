@@ -137,7 +137,7 @@ function (Fields,
       },
       isBehind: function (hitRay, hitPoint)
       {
-         var
+         const
             enter = new Vector3 (0, 0 ,0),
             exit  = new Vector3 (0, 0, 0);
 
@@ -147,22 +147,22 @@ function (Fields,
       },
       getTrackPoint: function (hitRay, trackPoint)
       {
-         var zPoint = new Vector3 (0, 0, 0);
+         const zPoint = new Vector3 (0, 0, 0);
 
          this .zPlane .intersectsLine (hitRay, zPoint);
 
-         var
+         const
             axisPoint = Vector3 .add (zPoint, this .cylinder .axis .getPerpendicularVectorToPoint (zPoint, new Vector3 (0, 0, 0))),
             distance  = this .sxPlane .getDistanceToPoint (zPoint) / this .cylinder .radius,
             section   = Math .floor ((distance + 1) / 2);
 
          // Use asin on the cylinder and outside linear angle.
-         var
+         const
             sinp  = Algorithm .interval (distance, -1, 1),
             phi   = section === 0 ? Math .asin (sinp) : sinp * Math .PI / 2,
             angle = phi + section * Math .PI;
 
-         var rotation = new Rotation4 (this .cylinder .axis .direction, angle);
+         const rotation = new Rotation4 (this .cylinder .axis .direction, angle);
 
          rotation .multVecRot (trackPoint .assign (this .szNormal) .multiply (this .cylinder .radius));
          trackPoint .add (axisPoint);
@@ -183,18 +183,18 @@ function (Fields,
          {
             if (this ._isActive .getValue ())
             {
-               this .modelViewMatrix .assign (modelViewMatrix);
+               this .modelViewMatrix    .assign (modelViewMatrix);
                this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-               var
+               const
                   hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
                   hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
 
-               var
+               const
                   yAxis      = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
                   cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
 
-               var
+               const
                   axis   = new Line3 (new Vector3 (0, 0, 0), yAxis),
                   radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .abs ();
 
@@ -207,14 +207,14 @@ function (Fields,
                this .zPlane = new Plane3 (hitPoint, cameraBack);        // Screen aligned z-plane
 
                // Compute normal like in Billboard with yAxis as axis of rotation.
-               var
+               const
                   billboardToViewer = this .invModelViewMatrix .origin,
                   sxNormal          = Vector3 .cross (yAxis, billboardToViewer) .normalize ();
 
                this .sxPlane  = new Plane3 (new Vector3 (0, 0, 0), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
                this .szNormal = Vector3 .cross (sxNormal, yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
 
-               var trackPoint = new Vector3 (0, 0, 0);
+               const trackPoint = new Vector3 (0, 0, 0);
 
                if (this .disk)
                   this .yPlane .intersectsLine (hitRay, trackPoint);
@@ -240,14 +240,14 @@ function (Fields,
          }
          catch (error)
          {
-            //console .error (error);
+            console .error (error);
          }
       },
       set_motion__: function (hit)
       {
          try
          {
-            var
+            const
                hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
                trackPoint = new Vector3 (0, 0, 0);
 
@@ -258,7 +258,7 @@ function (Fields,
 
             this ._trackPoint_changed = trackPoint;
 
-            var
+            const
                toVector = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate (),
                rotation = new Rotation4 (this .fromVector, toVector);
 
@@ -268,7 +268,7 @@ function (Fields,
                // as the viewing volume is not a cube where the picking ray goes straight up.
                // This phenomenon is very clear on the viewport corners.
 
-               var trackPoint_ = this .modelViewMatrix .multVecMatrix (trackPoint .copy ());
+               const trackPoint_ = this .modelViewMatrix .multVecMatrix (trackPoint .copy ());
 
                if (trackPoint_ .z > 0)
                   rotation .multRight (new Rotation4 (this .yPlane .normal, Math .PI));
@@ -287,7 +287,7 @@ function (Fields,
             }
             else
             {
-               var
+               const
                   endVector     = rotation .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1))),
                   deltaRotation = new Rotation4 (this .startVector, endVector),
                   axis          = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
@@ -314,7 +314,7 @@ function (Fields,
          }
          catch (error)
          {
-            //console .error (error);
+            console .error (error);
 
             this ._trackPoint_changed .addEvent ();
             this ._rotation_changed   .addEvent ();
