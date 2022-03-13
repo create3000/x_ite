@@ -465,13 +465,13 @@ function (Fields,
             v2              = new Vector3 (0, 0, 0),
             clipPoint       = new Vector3 (0, 0, 0);
 
-         return function (line, clipPlanes, modelViewMatrix_, intersections)
+         return function (hitRay, clipPlanes, modelViewMatrix_, intersections)
          {
             try
             {
-               if (this .intersectsBBox (line))
+               if (this .intersectsBBox (hitRay))
                {
-                  this .transformLine   (line);                                       // Apply screen transformations from screen nodes.
+                  this .transformLine   (hitRay);                                       // Apply screen transformations from screen nodes.
                   this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
 
                   const
@@ -487,7 +487,7 @@ function (Fields,
                      v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
                      v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
-                     if (line .intersectsTriangle (v0, v1, v2, uvt))
+                     if (hitRay .intersectsTriangle (v0, v1, v2, uvt))
                      {
                         // Get barycentric coordinates.
 
@@ -532,7 +532,7 @@ function (Fields,
       {
          const intersection = new Vector3 (0, 0, 0);
 
-         return function (line)
+         return function (hitRay)
          {
             const
                planes = this .planes,
@@ -546,7 +546,7 @@ function (Fields,
                maxZ   = max .z;
 
             // front
-            if (planes [0] .intersectsLine (line, intersection))
+            if (planes [0] .intersectsLine (hitRay, intersection))
             {
                if (intersection .x >= minX && intersection .x <= maxX &&
                    intersection .y >= minY && intersection .y <= maxY)
@@ -554,7 +554,7 @@ function (Fields,
             }
 
             // back
-            if (planes [1] .intersectsLine (line, intersection))
+            if (planes [1] .intersectsLine (hitRay, intersection))
             {
                if (intersection .x >= minX && intersection .x <= maxX &&
                    intersection .y >= minY && intersection .y <= maxY)
@@ -562,7 +562,7 @@ function (Fields,
             }
 
             // top
-            if (planes [2] .intersectsLine (line, intersection))
+            if (planes [2] .intersectsLine (hitRay, intersection))
             {
                if (intersection .x >= minX && intersection .x <= maxX &&
                    intersection .z >= minZ && intersection .z <= maxZ)
@@ -570,7 +570,7 @@ function (Fields,
             }
 
             // bottom
-            if (planes [3] .intersectsLine (line, intersection))
+            if (planes [3] .intersectsLine (hitRay, intersection))
             {
                if (intersection .x >= minX && intersection .x <= maxX &&
                    intersection .z >= minZ && intersection .z <= maxZ)
@@ -578,7 +578,7 @@ function (Fields,
             }
 
             // right
-            if (planes [4] .intersectsLine (line, intersection))
+            if (planes [4] .intersectsLine (hitRay, intersection))
             {
                if (intersection .y >= minY && intersection .y <= maxY &&
                    intersection .z >= minZ && intersection .z <= maxZ)

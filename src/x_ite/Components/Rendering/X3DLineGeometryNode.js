@@ -79,13 +79,14 @@ function (X3DGeometryNode,
          const PICK_DISTANCE_FACTOR = 1 / 300;
 
          const
-            vector = new Vector3 (0, 0, 0),
-            point  = new Vector3 (0, 0, 0),
-            point1 = new Vector3 (0, 0, 0),
-            point2 = new Vector3 (0, 0, 0),
-            l      = new Line3 (Vector3 .Zero, Vector3 .zAxis);
+            vector    = new Vector3 (0, 0, 0),
+            point1    = new Vector3 (0, 0, 0),
+            point2    = new Vector3 (0, 0, 0),
+            line      = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+            point     = new Vector3 (0, 0, 0),
+            clipPoint = new Vector3 (0, 0, 0);
 
-         return function (line, clipPlanes, modelViewMatrix_, intersections)
+         return function (hitRay, clipPlanes, modelViewMatrix, intersections)
          {
             const vertices = this .getVertices ();
 
@@ -94,12 +95,15 @@ function (X3DGeometryNode,
                point1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
                point2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-               l .setPoints (point1, point2);
+               line .setPoints (point1, point2);
 
-               if (l .getClosestPointToLine (line, point))
+               if (line .getClosestPointToLine (hitRay, point))
                {
-                  if (l .getPerpendicularVectorToLine (line, vector) .abs () < line .point .distance (point) * PICK_DISTANCE_FACTOR)
+                  if (line .getPerpendicularVectorToLine (hitRay, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
                   {
+                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                        continue;
+
                      intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 1), point: point .copy () });
                      return true;
                   }
