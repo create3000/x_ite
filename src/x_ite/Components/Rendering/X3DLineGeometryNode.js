@@ -91,28 +91,31 @@ function (X3DGeometryNode,
 
          return function (hitRay, clipPlanes, modelViewMatrix, intersections)
          {
-            const vertices = this .getVertices ();
-
-            for (let i = 0, length = vertices .length; i < length; i += 8)
+            if (this .intersectsBBox (hitRay, 1))
             {
-               point1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
-               point2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+               const vertices = this .getVertices ();
 
-               line .setPoints (point1, point2);
-
-               if (line .getClosestPointToLine (hitRay, point))
+               for (let i = 0, length = vertices .length; i < length; i += 8)
                {
-                  if (line .getPerpendicularVectorToLine (hitRay, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
+                  point1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+                  point2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+
+                  line .setPoints (point1, point2);
+
+                  if (line .getClosestPointToLine (hitRay, point))
                   {
-                     const distance = point1 .distance (point2);
-
-                     if (point1 .distance (point) <= distance && point2 .distance (point) <= distance)
+                     if (line .getPerpendicularVectorToLine (hitRay, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
                      {
-                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                           continue;
+                        const distance = point1 .distance (point2);
 
-                        intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
-                        return true;
+                        if (point1 .distance (point) <= distance && point2 .distance (point) <= distance)
+                        {
+                           if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                              continue;
+
+                           intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
+                           return true;
+                        }
                      }
                   }
                }

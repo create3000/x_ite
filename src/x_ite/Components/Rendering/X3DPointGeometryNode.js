@@ -49,13 +49,11 @@
 
 define ([
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "standard/Math/Geometry/Line3",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
-          Line3,
           Vector2,
           Vector3,
           Matrix4)
@@ -88,19 +86,22 @@ function (X3DGeometryNode,
 
          return function (hitRay, clipPlanes, modelViewMatrix, intersections)
          {
-            const vertices = this .getVertices ();
-
-            for (let i = 0, length = vertices .length; i < length; i += 4)
+            if (this .intersectsBBox (hitRay, 1))
             {
-               point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+               const vertices = this .getVertices ();
 
-               if (hitRay .getPerpendicularVectorToPoint (point, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
+               for (let i = 0, length = vertices .length; i < length; i += 4)
                {
-                  if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                     continue;
+                  point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
 
-                  intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
-                  return true;
+                  if (hitRay .getPerpendicularVectorToPoint (point, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
+                  {
+                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                        continue;
+
+                     intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
+                     return true;
+                  }
                }
             }
 
