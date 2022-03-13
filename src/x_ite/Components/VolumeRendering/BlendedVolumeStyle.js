@@ -196,7 +196,7 @@ function (Fields,
             catch (error)
             {
                if (DEBUG)
-                  console .log (error);
+                  console .error (error);
             }
          }
          .bind (this));

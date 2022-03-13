@@ -348,13 +348,13 @@ function (Fields,
          }
          catch (error)
          {
-            //console .log (error);
+            //console .error (error);
             throw new Error (this .getError (error));
          }
       },
       getError: function (error)
       {
-         //console .log (error);
+         //console .error (error);
 
          var string = error .message;
 
@@ -481,7 +481,7 @@ function (Fields,
                }
                catch (error)
                {
-                  //console .log (error);
+                  //console .error (error);
                   this .error (new Error (this .getError (error)));
                }
             }

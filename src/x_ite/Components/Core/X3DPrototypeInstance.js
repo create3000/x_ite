@@ -81,18 +81,7 @@ function (X3DChildObject,
 
       this .addType (X3DConstants .X3DPrototypeInstance);
 
-      protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
-
-      const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
-
-      if (executionContext .getOuterNode () instanceof X3DProtoDeclaration)
-         return;
-
-      if (!protoNode .isExternProto)
-         return;
-
-      protoNode ._updateInstances .addInterest ("construct", this)
-      protoNode .requestImmediateLoad ();
+      this .setProtoNode (protoNode);
    }
 
    X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -113,21 +102,6 @@ function (X3DChildObject,
       getContainerField: function ()
       {
          return "children";
-      },
-      initialize: function ()
-      {
-         try
-         {
-            X3DNode .prototype .initialize .call (this);
-
-            if (!this [_protoNode] .isExternProto)
-               this .construct ();
-         }
-         catch (error)
-         {
-            console .log (error);
-            console .error (error .message);
-         }
       },
       construct: function ()
       {
@@ -270,6 +244,49 @@ function (X3DChildObject,
       {
          return this [_protoNode];
       },
+      setProtoNode: function (protoNode)
+      {
+         if (this [_protoNode])
+         {
+            const protoNode = this [_protoNode];
+
+            protoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
+            protoNode ._updateInstances .removeInterest ("construct", this)
+            protoNode ._updateInstances .removeInterest ("update",    this)
+         }
+
+         if (this [_protoNode])
+         {
+            this [_protoFields]      = new Map (protoNode .getFields () .map (f => [f, f .getName ()]))
+            this [_fieldDefinitions] = new FieldDefinitionArray (protoNode .getFieldDefinitions ());
+         }
+
+         this [_protoNode] = protoNode;
+
+         protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
+
+         const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
+
+         if (this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration)
+            return;
+
+         if (protoNode .isExternProto)
+         {
+            if (this [_protoNode] .checkLoadState () === X3DConstants .COMPLETE_STATE)
+            {
+               this .construct ();
+            }
+            else
+            {
+               protoNode ._updateInstances .addInterest ("construct", this)
+               protoNode .requestImmediateLoad ();
+            }
+         }
+         else
+         {
+            this .construct ();
+         }
+      },
       getBody: function ()
       {
          return this [_body];
@@ -342,7 +359,7 @@ function (X3DChildObject,
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          }
       },

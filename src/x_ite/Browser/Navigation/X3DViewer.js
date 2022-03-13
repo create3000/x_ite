@@ -142,7 +142,7 @@ function (X3DBaseNode,
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
                return result .set (0, 0, 0);
             }
          };

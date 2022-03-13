@@ -283,7 +283,7 @@ function (Fields,
                            catch (error)
                            {
                               // Catch inverse.
-                              console .log (error);
+                              console .error (error);
                            }
                         }
                      }

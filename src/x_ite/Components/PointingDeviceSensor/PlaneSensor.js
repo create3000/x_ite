@@ -209,7 +209,7 @@ function (Fields,
                      }
                      catch (error)
                      {
-                        //console .log (error);
+                        //console .error (error);
 
                         trackPoint = this .startPoint;
                      }
@@ -226,7 +226,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       },
       trackStart: function (trackPoint)
@@ -278,7 +278,7 @@ function (Fields,
          }
          catch (error)
          {
-            //console .log (error);
+            //console .error (error);
 
             this ._trackPoint_changed  .addEvent ();
             this ._translation_changed .addEvent ();

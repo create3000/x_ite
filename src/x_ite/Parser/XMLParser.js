@@ -267,7 +267,7 @@ function ($,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
 
          // Specification version
@@ -659,7 +659,7 @@ function ($,
          }
          catch (error)
          {
-            //console .log (error);
+            //console .error (error);
          }
       },
       protoBodyElement: function (xmlElement)
@@ -878,7 +878,7 @@ function ($,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
             console .warn ("XML Parser Error: " + error .message);
          }
       },

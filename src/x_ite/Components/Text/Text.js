@@ -164,7 +164,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       },
       display: function (gl, context)
@@ -177,7 +177,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       },
       transformLine: function (line)

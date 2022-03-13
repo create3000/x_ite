@@ -1309,7 +1309,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       },
       traverse: function (type, renderObject)
@@ -1489,7 +1489,7 @@ function (Fields,
          catch (error)
          {
             // Catch error from setLocalUniforms.
-            console .log (error);
+            console .error (error);
          }
       },
       getScreenAlignedRotation: function (modelViewMatrix)

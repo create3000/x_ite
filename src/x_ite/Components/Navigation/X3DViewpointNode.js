@@ -324,7 +324,7 @@ function (Fields,
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          };
       })(),
@@ -381,7 +381,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       },
       lookAt: function (layerNode, point, distance, factor, straighten)
@@ -509,7 +509,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       }
    });

@@ -523,7 +523,7 @@ function (Fields,
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
                return false;
             }
          };
@@ -640,7 +640,7 @@ function (Fields,
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
                return false;
             }
          };
@@ -927,7 +927,7 @@ function (Fields,
          catch (error)
          {
             // Catch error from setLocalUniforms.
-            console .log (error);
+            console .error (error);
          }
       },
       displayGeometry: function (gl, context, appearanceNode, shaderNode, back, front)
@@ -1093,7 +1093,7 @@ function (Fields,
          catch (error)
          {
             // Catch error from setLocalUniforms.
-            console .log (error);
+            console .error (error);
          }
       },
       displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particles, numParticles)

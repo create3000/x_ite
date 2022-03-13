@@ -747,7 +747,7 @@ function ($,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       },
       beginUpdate: function ()

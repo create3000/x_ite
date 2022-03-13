@@ -252,7 +252,7 @@ function (X3DObject)
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          }
       },
@@ -268,7 +268,7 @@ function (X3DObject)
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          }
       },

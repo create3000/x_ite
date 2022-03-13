@@ -101,7 +101,7 @@ function (TextureBuffer)
          catch (error)
          {
             // Couldn't create texture buffer.
-            console .log (error);
+            console .error (error);
 
             return null;
          }

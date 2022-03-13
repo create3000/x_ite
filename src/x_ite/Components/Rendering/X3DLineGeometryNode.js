@@ -174,7 +174,7 @@ function (X3DGeometryNode,
          catch (error)
          {
             // Catch error from setLocalUniforms.
-            console .log (error);
+            console .error (error);
          }
       },
       displayParticles: function (gl, context, particles, numParticles)
@@ -260,7 +260,7 @@ function (X3DGeometryNode,
          catch (error)
          {
             // Catch error from setLocalUniforms.
-            console .log (error);
+            console .error (error);
          }
       },
    });

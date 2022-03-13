@@ -195,7 +195,7 @@ function (X3DFollowerNode,
          {
             // Catch error from Rotation4.slerp.
 
-            //console .log (error);
+            //console .error (error);
          }
       },
       updateBuffer: function ()

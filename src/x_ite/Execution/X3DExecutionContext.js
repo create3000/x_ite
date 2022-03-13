@@ -384,7 +384,7 @@ function (SupportedNodes,
             }
             catch (error)
             {
-               //console .log (error);
+               //console .error (error);
             }
          }
 
@@ -651,7 +651,7 @@ function (SupportedNodes,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
             return false;
          }
       },

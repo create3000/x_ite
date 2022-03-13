@@ -551,7 +551,7 @@ function (X3DBindableNode,
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          };
       })(),

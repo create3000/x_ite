@@ -240,7 +240,7 @@ function (Fields,
          }
          catch (error)
          {
-            //console .log (error);
+            //console .error (error);
          }
       },
       set_motion__: function (hit)
@@ -314,7 +314,7 @@ function (Fields,
          }
          catch (error)
          {
-            //console .log (error);
+            //console .error (error);
 
             this ._trackPoint_changed .addEvent ();
             this ._rotation_changed   .addEvent ();

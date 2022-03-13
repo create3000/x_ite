@@ -93,7 +93,7 @@ function (dicomParser,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
             this .dicom .dicom = false;
             return this .dicom;
          }

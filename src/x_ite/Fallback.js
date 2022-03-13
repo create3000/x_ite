@@ -76,7 +76,7 @@ function ($)
       },
       show: function (elements, error)
       {
-         console .log (error);
+         console .error (error);
 
          const consoleElement = $(".x_ite-console");
 

@@ -200,7 +200,7 @@ function (Fields,
          catch (error)
          {
             // Catch error from matrix inverse.
-            console .log (error);
+            console .error (error);
          }
       },
       setGlobalVariables: function (renderObject)
