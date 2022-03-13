@@ -67,13 +67,15 @@ function (X3DChildObject,
    const
       _protoNode        = Symbol (),
       _protoFields      = Symbol (),
-      _fieldDefinitions = Symbol .for ("X3DBaseNode.fieldDefinitions");
+      _fieldDefinitions = Symbol .for ("X3DBaseNode.fieldDefinitions"),
+      _body             = Symbol ();
 
    function X3DPrototypeInstance (executionContext, protoNode)
    {
       this [_protoNode]        = protoNode;
       this [_protoFields]      = new Map (Array .from (protoNode .getFields ()) .map (f => [f, f .getName ()]))
       this [_fieldDefinitions] = new FieldDefinitionArray (protoNode .getFieldDefinitions ());
+      this [_body]             = null
 
       X3DNode .call (this, executionContext);
 
@@ -129,16 +131,16 @@ function (X3DChildObject,
       },
       construct: function ()
       {
-         if (this .body)
-            this .body .dispose ();
+         if (this [_body])
+            this [_body] .dispose ();
 
          const proto = this [_protoNode] .getProtoDeclaration ();
 
          if (!proto)
          {
-            this .body = new X3DExecutionContext (this .getExecutionContext ());
-            this .body .setOuterNode (this);
-            this .body .setup ();
+            this [_body] = new X3DExecutionContext (this .getExecutionContext ());
+            this [_body] .setOuterNode (this);
+            this [_body] .setup ();
 
             if (this .isInitialized ())
                X3DChildObject .prototype .addEvent .call (this);
@@ -194,8 +196,8 @@ function (X3DChildObject,
 
          // Create execution context.
 
-         this .body = new X3DExecutionContext (proto .getExecutionContext ());
-         this .body .setOuterNode (this);
+         this [_body] = new X3DExecutionContext (proto .getExecutionContext ());
+         this [_body] .setOuterNode (this);
 
          // Copy proto.
 
@@ -205,7 +207,7 @@ function (X3DChildObject,
          this .copyImportedNodes  (proto .getBody (), proto .getBody () .getImportedNodes ());
          this .copyRoutes         (proto .getBody (), proto .getBody () .routes);
 
-         this .body .setup ();
+         this [_body] .setup ();
 
          if (this .isInitialized ())
             X3DChildObject .prototype .addEvent .call (this);
@@ -270,11 +272,11 @@ function (X3DChildObject,
       },
       getBody: function ()
       {
-         return this .body;
+         return this [_body];
       },
       getInnerNode: function ()
       {
-         const rootNodes = this .body .getRootNodes () .getValue ();
+         const rootNodes = this [_body] .getRootNodes () .getValue ();
 
          if (rootNodes .length)
          {
@@ -288,21 +290,21 @@ function (X3DChildObject,
       },
       importExternProtos: function (externprotos1)
       {
-         const externprotos2 = this .body .externprotos;
+         const externprotos2 = this [_body] .externprotos;
 
          for (const externproto of externprotos1)
             externprotos2 .add (externproto .getName (), externproto);
       },
       importProtos: function (protos1)
       {
-         const protos2 = this .body .protos;
+         const protos2 = this [_body] .protos;
 
          for (const proto of protos1)
             protos2 .add (proto .getName (), proto);
       },
       copyRootNodes: function (rootNodes1)
       {
-         const rootNodes2 = this .body .getRootNodes ();
+         const rootNodes2 = this [_body] .getRootNodes ();
 
          for (const node of rootNodes1)
             rootNodes2 .push (node .copy (this));
@@ -314,10 +316,10 @@ function (X3DChildObject,
             try
             {
                const
-                  inlineNode   = this .body .getNamedNode (importedNode .getInlineNode () .getName ()),
+                  inlineNode   = this [_body] .getNamedNode (importedNode .getInlineNode () .getName ()),
                   exportedName = importedNode .getExportedName ();
 
-               this .body .addImportedNode (inlineNode, exportedName, importedName);
+               this [_body] .addImportedNode (inlineNode, exportedName, importedName);
             }
             catch (error)
             {
@@ -333,10 +335,10 @@ function (X3DChildObject,
             try
             {
                const
-                  sourceNode      = this .body .getLocalNode (executionContext .getLocalName (route .sourceNode)),
-                  destinationNode = this .body .getLocalNode (executionContext .getLocalName (route .destinationNode));
+                  sourceNode      = this [_body] .getLocalNode (executionContext .getLocalName (route .sourceNode)),
+                  destinationNode = this [_body] .getLocalNode (executionContext .getLocalName (route .destinationNode));
 
-               this .body .addRoute (sourceNode, route .sourceField, destinationNode, route .destinationField);
+               this [_body] .addRoute (sourceNode, route .sourceField, destinationNode, route .destinationField);
             }
             catch (error)
             {
@@ -604,8 +606,8 @@ function (X3DChildObject,
          this [_protoNode] ._updateInstances .removeInterest ("construct", this);
          this [_protoNode] ._updateInstances .removeInterest ("update",    this);
 
-         if (this .body)
-            this .body .dispose ();
+         if (this [_body])
+            this [_body] .dispose ();
 
          X3DNode .prototype .dispose .call (this);
       },
