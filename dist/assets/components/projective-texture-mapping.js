@@ -368,7 +368,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       },
       setShaderUniforms: function (gl, shaderObject)
@@ -617,7 +617,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       },
       setShaderUniforms: function (gl, shaderObject)

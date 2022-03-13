@@ -775,7 +775,7 @@ function (Fields,
                }
                catch (error)
                {
-                  console .log (error);
+                  console .error (error);
 
                   renderer .getViewMatrix () .pushMatrix (Matrix4 .Identity);
                }

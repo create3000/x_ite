@@ -1,14 +1,11 @@
 /* X_ITE v5.0.0a-1141 */
 
-(function (globalModule, globalRequire)
+(function (global, factory)
 {
-
-if (typeof __filename === "undefined")
-{
-	globalModule  = undefined;
-	globalRequire = undefined;
+	typeof module === "object" && typeof require === "function" ? factory (module, require) : factory ();
 }
-
+(this, (function (globalModule, globalRequire)
+{
 // Undefine global variables.
 var module, exports, process;
 /** vim: et:ts=4:sw=4:sts=4
@@ -13121,7 +13118,7 @@ function ($)
       },
       show: function (elements, error)
       {
-         console .log (error);
+         console .error (error);
 
          const consoleElement = $(".x_ite-console");
 
@@ -14691,6 +14688,26 @@ function (X3DObject)
 
          this .requestProcessInterests ();
       },
+      at: Array .prototype .at,
+      concat: Array .prototype .concat,
+      //entries: function () { return iterator -> [index, value]; },
+      every: Array .prototype .every,
+      fill: Array .prototype .fill,
+      filter: Array .prototype .filter,
+      find: Array .prototype .find,
+      findIndex: Array .prototype .findIndex,
+      forEach: Array .prototype .forEach,
+      includes: Array .prototype .includes,
+      indexOf: Array .prototype .indexOf,
+      join: Array .prototype .join,
+      keys: function () { return Array (this .length) .keys (); },
+      lastIndexOf: Array .prototype .lastIndexOf,
+      map: Array .prototype .map,
+      reduce: Array .prototype .reduce,
+      reduceRight: Array .prototype .reduceRight,
+      slice: Array .prototype .slice,
+      some: Array .prototype .some,
+      values: function () { return this [Symbol .iterator]; },
       toVRMLStream: function (stream)
       {
          const X3DBaseNode = require ("x_ite/Base/X3DBaseNode");
@@ -14708,7 +14725,7 @@ function (X3DObject)
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          }
       },
@@ -14724,7 +14741,7 @@ function (X3DObject)
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          }
       },
@@ -23596,7 +23613,26 @@ function (X3DField)
    X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       constructor: X3DArrayField,
+      at: Array .prototype .at,
+      concat: Array .prototype .concat,
+      //entries: function () { return iterator -> [index, value]; },
+      every: Array .prototype .every,
+      fill: Array .prototype .fill,
+      filter: Array .prototype .filter,
+      find: Array .prototype .find,
+      findIndex: Array .prototype .findIndex,
+      forEach: Array .prototype .forEach,
+      includes: Array .prototype .includes,
+      indexOf: Array .prototype .indexOf,
+      join: Array .prototype .join,
+      keys: function () { return Array (this .length) .keys (); },
+      lastIndexOf: Array .prototype .lastIndexOf,
+      map: Array .prototype .map,
+      reduce: Array .prototype .reduce,
+      reduceRight: Array .prototype .reduceRight,
       slice: Array .prototype .slice,
+      some: Array .prototype .some,
+      values: function () { return this [Symbol .iterator]; },
    });
 
    for (const key of Reflect .ownKeys (X3DArrayField .prototype))
@@ -31948,7 +31984,7 @@ function (Fields,
                }
                catch (error)
                {
-                  //console .log (error);
+                  //console .error (error);
                }
             }
          }
@@ -33331,7 +33367,7 @@ function (SupportedNodes,
             }
             catch (error)
             {
-               //console .log (error);
+               //console .error (error);
             }
          }
 
@@ -33598,7 +33634,7 @@ function (SupportedNodes,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
             return false;
          }
       },
@@ -34904,7 +34940,7 @@ function (SupportedNodes,
                }
                catch (error)
                {
-                  console .log (error);
+                  console .error (error);
                }
             });
          }
@@ -35011,7 +35047,7 @@ function (SupportedNodes,
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          });
 
@@ -36412,7 +36448,7 @@ function (Fields,
                }
                catch (error)
                {
-                  //console .log (error);
+                  //console .error (error);
                }
             }
          }
@@ -36531,30 +36567,19 @@ function (X3DChildObject,
    const
       _protoNode        = Symbol (),
       _protoFields      = Symbol (),
-      _fieldDefinitions = Symbol .for ("X3DBaseNode.fieldDefinitions");
+      _fieldDefinitions = Symbol .for ("X3DBaseNode.fieldDefinitions"),
+      _body             = Symbol ();
 
    function X3DPrototypeInstance (executionContext, protoNode)
    {
       this [_protoNode]        = protoNode;
-      this [_protoFields]      = new Map (Array .from (protoNode .getFields ()) .map (f => [f, f .getName ()]))
+      this [_protoFields]      = new Map (protoNode .getFields () .map (f => [f, f .getName ()]))
       this [_fieldDefinitions] = new FieldDefinitionArray (protoNode .getFieldDefinitions ());
+      this [_body]             = null;
 
       X3DNode .call (this, executionContext);
 
       this .addType (X3DConstants .X3DPrototypeInstance);
-
-      protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
-
-      const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
-
-      if (executionContext .getOuterNode () instanceof X3DProtoDeclaration)
-         return;
-
-      if (!protoNode .isExternProto)
-         return;
-
-      protoNode ._updateInstances .addInterest ("construct", this)
-      protoNode .requestImmediateLoad ();
    }
 
    X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -36578,31 +36603,22 @@ function (X3DChildObject,
       },
       initialize: function ()
       {
-         try
-         {
-            X3DNode .prototype .initialize .call (this);
+         X3DNode .prototype .initialize .call (this);
 
-            if (!this [_protoNode] .isExternProto)
-               this .construct ();
-         }
-         catch (error)
-         {
-            console .log (error);
-            console .error (error .message);
-         }
+         this .setProtoNode (this [_protoNode]);
       },
       construct: function ()
       {
-         if (this .body)
-            this .body .dispose ();
+         if (this [_body])
+            this [_body] .dispose ();
 
          const proto = this [_protoNode] .getProtoDeclaration ();
 
          if (!proto)
          {
-            this .body = new X3DExecutionContext (this .getExecutionContext ());
-            this .body .setOuterNode (this);
-            this .body .setup ();
+            this [_body] = new X3DExecutionContext (this .getExecutionContext ());
+            this [_body] .setOuterNode (this);
+            this [_body] .setup ();
 
             if (this .isInitialized ())
                X3DChildObject .prototype .addEvent .call (this);
@@ -36658,8 +36674,8 @@ function (X3DChildObject,
 
          // Create execution context.
 
-         this .body = new X3DExecutionContext (proto .getExecutionContext ());
-         this .body .setOuterNode (this);
+         this [_body] = new X3DExecutionContext (proto .getExecutionContext ());
+         this [_body] .setOuterNode (this);
 
          // Copy proto.
 
@@ -36669,7 +36685,7 @@ function (X3DChildObject,
          this .copyImportedNodes  (proto .getBody (), proto .getBody () .getImportedNodes ());
          this .copyRoutes         (proto .getBody (), proto .getBody () .routes);
 
-         this .body .setup ();
+         this [_body] .setup ();
 
          if (this .isInitialized ())
             X3DChildObject .prototype .addEvent .call (this);
@@ -36683,14 +36699,14 @@ function (X3DChildObject,
 
          const
             oldProtoFields = this [_protoFields],
-            oldFields      = new Map (Array .from (this .getFields ()) .map (f => [f .getName (), f]));
+            oldFields      = new Map (this .getFields () .map (f => [f .getName (), f]));
 
          for (const field of oldFields .values ())
             this .removeField (field .getName ());
 
          // Add new fields.
 
-         this [_protoFields]      = new Map (Array .from (this [_protoNode] .getFields ()) .map (f => [f, f .getName ()]));
+         this [_protoFields]      = new Map (this [_protoNode] .getFields () .map (f => [f, f .getName ()]));
          this [_fieldDefinitions] = new FieldDefinitionArray (this [_protoNode] .getFieldDefinitions ());
 
          for (const fieldDefinition of this .getFieldDefinitions ())
@@ -36732,13 +36748,60 @@ function (X3DChildObject,
       {
          return this [_protoNode];
       },
+      setProtoNode: function (protoNode)
+      {
+         if (protoNode !== this [_protoNode])
+         {
+            // Disconnect old proto node.
+
+            if (this [_protoNode])
+            {
+               const protoNode = this [_protoNode];
+
+               protoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
+               protoNode ._updateInstances .removeInterest ("construct", this)
+               protoNode ._updateInstances .removeInterest ("update",    this)
+            }
+
+            // Get field from new proto node.
+
+            this [_protoFields]      = new Map (protoNode .getFields () .map (f => [f, f .getName ()]))
+            this [_fieldDefinitions] = new FieldDefinitionArray (protoNode .getFieldDefinitions ());
+         }
+
+         this [_protoNode] = protoNode;
+
+         protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
+
+         const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
+
+         if (this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration)
+            return;
+
+         if (protoNode .isExternProto)
+         {
+            if (this [_protoNode] .checkLoadState () === X3DConstants .COMPLETE_STATE)
+            {
+               this .construct ();
+            }
+            else
+            {
+               protoNode ._updateInstances .addInterest ("construct", this)
+               protoNode .requestImmediateLoad ();
+            }
+         }
+         else
+         {
+            this .construct ();
+         }
+      },
       getBody: function ()
       {
-         return this .body;
+         return this [_body];
       },
       getInnerNode: function ()
       {
-         const rootNodes = this .body .getRootNodes () .getValue ();
+         const rootNodes = this [_body] .getRootNodes () .getValue ();
 
          if (rootNodes .length)
          {
@@ -36752,21 +36815,21 @@ function (X3DChildObject,
       },
       importExternProtos: function (externprotos1)
       {
-         const externprotos2 = this .body .externprotos;
+         const externprotos2 = this [_body] .externprotos;
 
          for (const externproto of externprotos1)
             externprotos2 .add (externproto .getName (), externproto);
       },
       importProtos: function (protos1)
       {
-         const protos2 = this .body .protos;
+         const protos2 = this [_body] .protos;
 
          for (const proto of protos1)
             protos2 .add (proto .getName (), proto);
       },
       copyRootNodes: function (rootNodes1)
       {
-         const rootNodes2 = this .body .getRootNodes ();
+         const rootNodes2 = this [_body] .getRootNodes ();
 
          for (const node of rootNodes1)
             rootNodes2 .push (node .copy (this));
@@ -36778,10 +36841,10 @@ function (X3DChildObject,
             try
             {
                const
-                  inlineNode   = this .body .getNamedNode (importedNode .getInlineNode () .getName ()),
+                  inlineNode   = this [_body] .getNamedNode (importedNode .getInlineNode () .getName ()),
                   exportedName = importedNode .getExportedName ();
 
-               this .body .addImportedNode (inlineNode, exportedName, importedName);
+               this [_body] .addImportedNode (inlineNode, exportedName, importedName);
             }
             catch (error)
             {
@@ -36797,14 +36860,14 @@ function (X3DChildObject,
             try
             {
                const
-                  sourceNode      = this .body .getLocalNode (executionContext .getLocalName (route .sourceNode)),
-                  destinationNode = this .body .getLocalNode (executionContext .getLocalName (route .destinationNode));
+                  sourceNode      = this [_body] .getLocalNode (executionContext .getLocalName (route .sourceNode)),
+                  destinationNode = this [_body] .getLocalNode (executionContext .getLocalName (route .destinationNode));
 
-               this .body .addRoute (sourceNode, route .sourceField, destinationNode, route .destinationField);
+               this [_body] .addRoute (sourceNode, route .sourceField, destinationNode, route .destinationField);
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          }
       },
@@ -37068,8 +37131,8 @@ function (X3DChildObject,
          this [_protoNode] ._updateInstances .removeInterest ("construct", this);
          this [_protoNode] ._updateInstances .removeInterest ("update",    this);
 
-         if (this .body)
-            this .body .dispose ();
+         if (this [_body])
+            this [_body] .dispose ();
 
          X3DNode .prototype .dispose .call (this);
       },
@@ -38252,13 +38315,13 @@ function (Fields,
          }
          catch (error)
          {
-            //console .log (error);
+            //console .error (error);
             throw new Error (this .getError (error));
          }
       },
       getError: function (error)
       {
-         //console .log (error);
+         //console .error (error);
 
          var string = error .message;
 
@@ -38356,8 +38419,6 @@ function (Fields,
       },
       x3dScene: function ()
       {
-         this .pushExecutionContext (this .getScene ());
-
          this .headerStatement ();
          this .profileStatement ();
          this .componentStatements ();
@@ -38379,7 +38440,6 @@ function (Fields,
                try
                {
                   this .statements ();
-                  this .popExecutionContext ();
 
                   if (this .lastIndex < this .input .length)
                      throw new Error ("Unknown statement.");
@@ -38388,7 +38448,7 @@ function (Fields,
                }
                catch (error)
                {
-                  //console .log (error);
+                  //console .error (error);
                   this .error (new Error (this .getError (error)));
                }
             }
@@ -38402,7 +38462,6 @@ function (Fields,
          else
          {
             this .statements ();
-            this .popExecutionContext ();
 
             if (this .lastIndex < this .input .length)
                throw new Error ("Unknown statement.");
@@ -38602,8 +38661,13 @@ function (Fields,
                else
                   exportedNodeNameId = localNodeNameId;
 
-               this .getScene () .updateExportedNode (exportedNodeNameId, node);
-               return true;
+               if (this .getScene () === this .getExecutionContext ())
+               {
+                  this .getScene () .updateExportedNode (exportedNodeNameId, node);
+                  return true;
+               }
+
+               throw new Error ("Export statement not allowed here.");
             }
 
             throw new Error ("No name given after EXPORT.");
@@ -43993,7 +44057,7 @@ function (Fields,
             }
             catch (error)
             {
-               //console .log (error);
+               //console .error (error);
             }
          };
       }) (),
@@ -44328,7 +44392,7 @@ function (Fields,
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          };
       })(),
@@ -44385,7 +44449,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       },
       lookAt: function (layerNode, point, distance, factor, straighten)
@@ -44513,7 +44577,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       }
    });
@@ -47821,7 +47885,7 @@ function ($,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
 
          // Specification version
@@ -48213,7 +48277,7 @@ function ($,
          }
          catch (error)
          {
-            //console .log (error);
+            //console .error (error);
          }
       },
       protoBodyElement: function (xmlElement)
@@ -48432,7 +48496,7 @@ function ($,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
             console .warn ("XML Parser Error: " + error .message);
          }
       },
@@ -48468,7 +48532,10 @@ function ($,
          try
          {
             if (this .getScene () !== this .getExecutionContext ())
+            {
+               console .warn ("XML Parser Error: Export statement not allowed here.");
                return;
+            }
 
             var
                localNodeName    = xmlElement .getAttribute ("localDEF"),
@@ -56530,7 +56597,7 @@ function (TextureBuffer,
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          };
       })(),
@@ -56790,7 +56857,7 @@ function (TextureBuffer,
                }
                catch (error)
                {
-                  console .log (error);
+                  console .error (error);
                }
             }
 
@@ -56938,7 +57005,7 @@ function (TextureBuffer,
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          };
       })(),
@@ -57453,6 +57520,7 @@ function (X3DChildNode,
       this .displayNodes              = [ ];
       this .visibleNodes              = [ ];
       this .boundedObjects            = [ ];
+      this .sensors                   = new Map ();
    }
 
    X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -57955,7 +58023,9 @@ function (X3DChildNode,
 
                if (pointingDeviceSensorNodes .length)
                {
-                  const sensors = new Map ();
+                  const sensors = this .sensors;
+
+                  sensors .clear ();
 
                   renderObject .getBrowser () .getSensors () .push (sensors);
 
@@ -60008,7 +60078,7 @@ function (X3DBindableNode,
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          };
       })(),
@@ -69480,12 +69550,47 @@ function (Vector3)
             return true;
          };
       })(),
-      getPerpendicularVector: function (point)
+      getPerpendicularVectorToPoint: (function ()
       {
-         const d = Vector3 .subtract (this .point, point);
+         const t = new Vector3 (0, 0, 0);
 
-         return d .subtract (this .direction .copy () .multiply (Vector3 .dot (d, this .direction)));
-      },
+         return function (point, result)
+         {
+            const d = result;
+
+            d .assign (this .point) .subtract (point);
+
+            return d .subtract (t .assign (this .direction) .multiply (d .dot (this .direction)));
+         };
+      })(),
+      getPerpendicularVectorToLine: (function ()
+      {
+         const
+            d  = new Vector3 (0, 0, 0),
+            ad = new Vector3 (0, 0, 0);
+
+         return function (line, result)
+         {
+            const bd = result;
+
+            d .assign (this .point) .subtract (line .point);
+
+            const
+               re1 = d .dot (this .direction),
+               re2 = d .dot (line .direction),
+               e12 = this .direction .dot (line .direction),
+               E12 = e12 * e12;
+
+            const
+               a =  (re1 - re2 * e12) / (1 - E12),
+               b = -(re2 - re1 * e12) / (1 - E12);
+
+            ad .assign (this .direction) .multiply (a);
+            bd .assign (line .direction) .multiply (b);
+
+            return bd .subtract (ad) .add (d);
+         };
+      })(),
       intersectsTriangle: (function ()
       {
          const
@@ -69864,7 +69969,7 @@ function (Fields,
             {
                const geometryNode = this .getGeometry ();
 
-               if (geometryNode .getGeometryType () < 2)
+               if (geometryNode .getGeometryType () < 1)
                   return;
 
                const browser = renderObject .getBrowser ();
@@ -69905,7 +70010,7 @@ function (Fields,
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          };
       })(),
@@ -70395,11 +70500,11 @@ function (Fields,
             return clipPlane .isClipped (point);
          });
       },
-      transformLine: function (line)
+      transformLine: function (hitRay)
       {
          // Apply sceen nodes transformation in place here.
       },
-      transformMatrix: function (line)
+      transformMatrix: function (hitRay)
       {
          // Apply sceen nodes transformation in place here.
       },
@@ -70413,13 +70518,13 @@ function (Fields,
             v2              = new Vector3 (0, 0, 0),
             clipPoint       = new Vector3 (0, 0, 0);
 
-         return function (line, clipPlanes, modelViewMatrix_, intersections)
+         return function (hitRay, clipPlanes, modelViewMatrix_, intersections)
          {
             try
             {
-               if (this .intersectsBBox (line))
+               if (this .intersectsBBox (hitRay))
                {
-                  this .transformLine   (line);                                       // Apply screen transformations from screen nodes.
+                  this .transformLine   (hitRay);                                       // Apply screen transformations from screen nodes.
                   this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
 
                   const
@@ -70435,7 +70540,7 @@ function (Fields,
                      v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
                      v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
-                     if (line .intersectsTriangle (v0, v1, v2, uvt))
+                     if (hitRay .intersectsTriangle (v0, v1, v2, uvt))
                      {
                         // Get barycentric coordinates.
 
@@ -70480,7 +70585,7 @@ function (Fields,
       {
          const intersection = new Vector3 (0, 0, 0);
 
-         return function (line)
+         return function (hitRay)
          {
             const
                planes = this .planes,
@@ -70494,7 +70599,7 @@ function (Fields,
                maxZ   = max .z;
 
             // front
-            if (planes [0] .intersectsLine (line, intersection))
+            if (planes [0] .intersectsLine (hitRay, intersection))
             {
                if (intersection .x >= minX && intersection .x <= maxX &&
                    intersection .y >= minY && intersection .y <= maxY)
@@ -70502,7 +70607,7 @@ function (Fields,
             }
 
             // back
-            if (planes [1] .intersectsLine (line, intersection))
+            if (planes [1] .intersectsLine (hitRay, intersection))
             {
                if (intersection .x >= minX && intersection .x <= maxX &&
                    intersection .y >= minY && intersection .y <= maxY)
@@ -70510,7 +70615,7 @@ function (Fields,
             }
 
             // top
-            if (planes [2] .intersectsLine (line, intersection))
+            if (planes [2] .intersectsLine (hitRay, intersection))
             {
                if (intersection .x >= minX && intersection .x <= maxX &&
                    intersection .z >= minZ && intersection .z <= maxZ)
@@ -70518,7 +70623,7 @@ function (Fields,
             }
 
             // bottom
-            if (planes [3] .intersectsLine (line, intersection))
+            if (planes [3] .intersectsLine (hitRay, intersection))
             {
                if (intersection .x >= minX && intersection .x <= maxX &&
                    intersection .z >= minZ && intersection .z <= maxZ)
@@ -70526,7 +70631,7 @@ function (Fields,
             }
 
             // right
-            if (planes [4] .intersectsLine (line, intersection))
+            if (planes [4] .intersectsLine (hitRay, intersection))
             {
                if (intersection .y >= minY && intersection .y <= maxY &&
                    intersection .z >= minZ && intersection .z <= maxZ)
@@ -71247,11 +71352,15 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/X3DLineGeometryNode',[
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Base/X3DConstants",
+   "standard/Math/Geometry/Line3",
+   "standard/Math/Numbers/Vector2",
+   "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
-          X3DConstants,
+          Line3,
+          Vector2,
+          Vector3,
           Matrix4)
 {
 "use strict";
@@ -71259,8 +71368,6 @@ function (X3DGeometryNode,
    function X3DLineGeometryNode (executionContext)
    {
       X3DGeometryNode .call (this, executionContext);
-
-      //this .addType (X3DConstants .X3DLineGeometryNode);
    }
 
    X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -71270,10 +71377,45 @@ function (X3DGeometryNode,
       {
          return browser .getLineShader ();
       },
-      intersectsLine: function (line, clipPlanes, modelViewMatrix, intersections)
+      intersectsLine: (function ()
       {
-         return false;
-      },
+         const PICK_DISTANCE_FACTOR = 1 / 300;
+
+         const
+            point1    = new Vector3 (0, 0, 0),
+            point2    = new Vector3 (0, 0, 0),
+            line      = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+            point     = new Vector3 (0, 0, 0),
+            vector    = new Vector3 (0, 0, 0),
+            clipPoint = new Vector3 (0, 0, 0);
+
+         return function (hitRay, clipPlanes, modelViewMatrix, intersections)
+         {
+            const vertices = this .getVertices ();
+
+            for (let i = 0, length = vertices .length; i < length; i += 8)
+            {
+               point1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+               point2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+
+               line .setPoints (point1, point2);
+
+               if (line .getClosestPointToLine (hitRay, point))
+               {
+                  if (line .getPerpendicularVectorToLine (hitRay, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
+                  {
+                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                        continue;
+
+                     intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
+                     return true;
+                  }
+               }
+            }
+
+            return false;
+         };
+      })(),
       intersectsBox: function (box, clipPlanes, modelViewMatrix)
       {
          return false;
@@ -71372,7 +71514,7 @@ function (X3DGeometryNode,
          catch (error)
          {
             // Catch error from setLocalUniforms.
-            console .log (error);
+            console .error (error);
          }
       },
       displayParticles: function (gl, context, particles, numParticles)
@@ -71458,7 +71600,7 @@ function (X3DGeometryNode,
          catch (error)
          {
             // Catch error from setLocalUniforms.
-            console .log (error);
+            console .error (error);
          }
       },
    });
@@ -71595,21 +71737,21 @@ function (Fields,
       {
          const attribNodes = this .getAttrib ();
 
-         for (var i = 0, length = attribNodes .length; i < length; ++ i)
-            attribNodes [i] .removeInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .removeInterest ("requestRebuild", this);
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
+         for (const node of this ._attrib)
          {
-            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
+            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
 
             if (attribNode)
                attribNodes .push (attribNode);
          }
 
-         for (var i = 0; i < this .attribNodes .length; ++ i)
-            attribNodes [i] .addInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .addInterest ("requestRebuild", this);
       },
       set_fogCoord__: function ()
       {
@@ -71675,11 +71817,11 @@ function (Fields,
             coordIndex = this ._coordIndex,
             polylines  = [ ];
 
-         var polyline = [ ];
+         let polyline = [ ];
 
          if (coordIndex .length)
          {
-            for (var i = 0, length = coordIndex .length; i < length; ++ i)
+            for (let i = 0, length = coordIndex .length; i < length; ++ i)
             {
                const index = coordIndex [i];
 
@@ -71726,25 +71868,23 @@ function (Fields,
 
          // Fill GeometryNode
 
-         var face = 0;
+         let face = 0;
 
-         for (var p = 0, pl = polylines .length; p < pl; ++ p)
+         for (const polyline of polylines)
          {
-            const polyline = polylines [p];
-
             // Create two vertices for each line.
 
             if (polyline .length > 1)
             {
-               for (var line = 0, l_end = polyline .length - 1; line < l_end; ++ line)
+               for (let line = 0, l_end = polyline .length - 1; line < l_end; ++ line)
                {
-                  for (var l = line, i_end = line + 2; l < i_end; ++ l)
+                  for (let l = line, i_end = line + 2; l < i_end; ++ l)
                   {
                      const
                         i     = polyline [l],
                         index = coordIndex [i];
 
-                     for (var a = 0; a < numAttrib; ++ a)
+                     for (let a = 0; a < numAttrib; ++ a)
                         attribNodes [a] .addValue (index, attribs [a]);
 
                      if (fogCoordNode)
@@ -74904,11 +75044,13 @@ function (PointingDevice,
       },
       addHit: function (intersection, layer, shape, modelViewMatrix)
       {
+         const sensors = this [_enabledSensors] .at (-1);
+
          this [_hits] .push ({
             pointer:         this [_pointer],
             hitRay:          this [_hitRay] .copy (),
             intersection:    intersection,
-            sensors:         this [_enabledSensors] .at (-1),
+            sensors:         sensors .size ? new Map (sensors) : sensors,
             layer:           layer,
             layerNumber:     this [_layerNumber],
             shape:           shape,
@@ -75196,7 +75338,7 @@ function (X3DBaseNode,
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
                return result .set (0, 0, 0);
             }
          };
@@ -75619,7 +75761,7 @@ function (X3DFollowerNode,
          {
             // Catch error from Rotation4.slerp.
 
-            //console .log (error);
+            //console .error (error);
          }
       },
       updateBuffer: function ()
@@ -76799,7 +76941,7 @@ function ($,
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          };
       })(),
@@ -79251,7 +79393,7 @@ function (Fields,
          catch (error)
          {
             // Catch error from matrix inverse.
-            console .log (error);
+            console .error (error);
          }
       },
       setGlobalVariables: function (renderObject)
@@ -80080,7 +80222,7 @@ function (TextureBuffer)
          catch (error)
          {
             // Couldn't create texture buffer.
-            console .log (error);
+            console .error (error);
 
             return null;
          }
@@ -99831,7 +99973,7 @@ function (Fields,
             }
             catch (error)
             {
-               console .log (error);
+               console .error (error);
             }
          };
       })(),
@@ -107514,7 +107656,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       },
    });
@@ -107961,7 +108103,7 @@ function (Fields,
          catch (error)
          {
             // Catch error from matrix inverse.
-            console .log (error);
+            console .error (error);
          }
       },
       setGlobalVariables: function (renderObject)
@@ -108320,7 +108462,7 @@ function (Fields,
          catch (error)
          {
             // Catch error from matrix inverse.
-            console .log (error);
+            console .error (error);
          }
       },
       setGlobalVariables: function (renderObject)
@@ -108766,7 +108908,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
 
          modelViewMatrix .pop ();
@@ -110101,7 +110243,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       },
    });
@@ -110189,6 +110331,7 @@ function (Fields,
       this .addType (X3DConstants .Anchor);
 
       this .touchSensorNode = new TouchSensor (executionContext);
+      this .sensors         = new Map ();
    }
 
    Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -110293,7 +110436,9 @@ function (Fields,
       {
          if (type === TraverseType .POINTER)
          {
-            const sensors = new Map ();
+            const sensors = this .sensors;
+
+            sensors .clear ();
 
             renderObject .getBrowser () .getSensors () .push (sensors);
 
@@ -111004,7 +111149,7 @@ function (Fields,
       },
       isBehind: function (hitRay, hitPoint)
       {
-         var
+         const
             enter = new Vector3 (0, 0 ,0),
             exit  = new Vector3 (0, 0, 0);
 
@@ -111014,22 +111159,22 @@ function (Fields,
       },
       getTrackPoint: function (hitRay, trackPoint)
       {
-         var zPoint = new Vector3 (0, 0, 0);
+         const zPoint = new Vector3 (0, 0, 0);
 
          this .zPlane .intersectsLine (hitRay, zPoint);
 
-         var
-            axisPoint = Vector3 .add (zPoint, this .cylinder .axis .getPerpendicularVector (zPoint)),
+         const
+            axisPoint = Vector3 .add (zPoint, this .cylinder .axis .getPerpendicularVectorToPoint (zPoint, new Vector3 (0, 0, 0))),
             distance  = this .sxPlane .getDistanceToPoint (zPoint) / this .cylinder .radius,
             section   = Math .floor ((distance + 1) / 2);
 
          // Use asin on the cylinder and outside linear angle.
-         var
+         const
             sinp  = Algorithm .interval (distance, -1, 1),
             phi   = section === 0 ? Math .asin (sinp) : sinp * Math .PI / 2,
             angle = phi + section * Math .PI;
 
-         var rotation = new Rotation4 (this .cylinder .axis .direction, angle);
+         const rotation = new Rotation4 (this .cylinder .axis .direction, angle);
 
          rotation .multVecRot (trackPoint .assign (this .szNormal) .multiply (this .cylinder .radius));
          trackPoint .add (axisPoint);
@@ -111050,45 +111195,43 @@ function (Fields,
          {
             if (this ._isActive .getValue ())
             {
-               this .modelViewMatrix .assign (modelViewMatrix);
+               this .modelViewMatrix    .assign (modelViewMatrix);
                this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-               var
+               const
                   hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
                   hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
 
-               var
+               const
                   yAxis      = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
                   cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
 
-               var
+               const
                   axis   = new Line3 (new Vector3 (0, 0, 0), yAxis),
-                  radius = axis .getPerpendicularVector (hitPoint) .abs ();
+                  radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .abs ();
 
                this .cylinder = new Cylinder3 (axis, radius);
-
-               this .disk   = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this ._diskAngle .getValue ());
-               this .behind = this .isBehind (hitRay, hitPoint);
-
-               this .yPlane = new Plane3 (hitPoint, yAxis);             // Sensor aligned y-plane
-               this .zPlane = new Plane3 (hitPoint, cameraBack);        // Screen aligned z-plane
+               this .disk     = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this ._diskAngle .getValue ());
+               this .behind   = this .isBehind (hitRay, hitPoint);
+               this .yPlane   = new Plane3 (hitPoint, yAxis);             // Sensor aligned y-plane
+               this .zPlane   = new Plane3 (hitPoint, cameraBack);        // Screen aligned z-plane
 
                // Compute normal like in Billboard with yAxis as axis of rotation.
-               var
+               const
                   billboardToViewer = this .invModelViewMatrix .origin,
                   sxNormal          = Vector3 .cross (yAxis, billboardToViewer) .normalize ();
 
                this .sxPlane  = new Plane3 (new Vector3 (0, 0, 0), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
                this .szNormal = Vector3 .cross (sxNormal, yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
 
-               var trackPoint = new Vector3 (0, 0, 0);
+               const trackPoint = new Vector3 (0, 0, 0);
 
                if (this .disk)
                   this .yPlane .intersectsLine (hitRay, trackPoint);
                else
                   this .getTrackPoint (hitRay, trackPoint);
 
-               this .fromVector  = this .cylinder .axis .getPerpendicularVector (trackPoint) .negate ();
+               this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate ();
                this .startOffset = new Rotation4 (yAxis, this ._offset .getValue ());
 
                this ._trackPoint_changed = trackPoint;
@@ -111107,14 +111250,14 @@ function (Fields,
          }
          catch (error)
          {
-            //console .log (error);
+            console .error (error);
          }
       },
       set_motion__: function (hit)
       {
          try
          {
-            var
+            const
                hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
                trackPoint = new Vector3 (0, 0, 0);
 
@@ -111125,8 +111268,8 @@ function (Fields,
 
             this ._trackPoint_changed = trackPoint;
 
-            var
-               toVector = this .cylinder .axis .getPerpendicularVector (trackPoint) .negate (),
+            const
+               toVector = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate (),
                rotation = new Rotation4 (this .fromVector, toVector);
 
             if (this .disk)
@@ -111135,7 +111278,7 @@ function (Fields,
                // as the viewing volume is not a cube where the picking ray goes straight up.
                // This phenomenon is very clear on the viewport corners.
 
-               var trackPoint_ = this .modelViewMatrix .multVecMatrix (trackPoint .copy ());
+               const trackPoint_ = this .modelViewMatrix .multVecMatrix (trackPoint .copy ());
 
                if (trackPoint_ .z > 0)
                   rotation .multRight (new Rotation4 (this .yPlane .normal, Math .PI));
@@ -111154,7 +111297,7 @@ function (Fields,
             }
             else
             {
-               var
+               const
                   endVector     = rotation .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1))),
                   deltaRotation = new Rotation4 (this .startVector, endVector),
                   axis          = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
@@ -111181,7 +111324,7 @@ function (Fields,
          }
          catch (error)
          {
-            //console .log (error);
+            console .error (error);
 
             this ._trackPoint_changed .addEvent ();
             this ._rotation_changed   .addEvent ();
@@ -111403,7 +111546,7 @@ function (Fields,
                      }
                      catch (error)
                      {
-                        //console .log (error);
+                        //console .error (error);
 
                         trackPoint = this .startPoint;
                      }
@@ -111420,7 +111563,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       },
       trackStart: function (trackPoint)
@@ -111472,7 +111615,7 @@ function (Fields,
          }
          catch (error)
          {
-            //console .log (error);
+            //console .error (error);
 
             this ._trackPoint_changed  .addEvent ();
             this ._translation_changed .addEvent ();
@@ -111885,7 +112028,7 @@ function (Fields,
          }
          catch (error)
          {
-            //console .log (error);
+            //console .error (error);
          }
       },
       set_motion__: function (hit)
@@ -111941,7 +112084,7 @@ function (Fields,
          }
          catch (error)
          {
-            //console .log (error);
+            //console .error (error);
 
             this ._trackPoint_changed .addEvent ();
             this ._rotation_changed   .addEvent ();
@@ -112981,21 +113124,21 @@ function (Fields,
       {
          const attribNodes = this .getAttrib ();
 
-         for (var i = 0, length = attribNodes .length; i < length; ++ i)
-            attribNodes [i] .removeInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .removeInterest ("requestRebuild", this);
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
+         for (const node of this ._attrib)
          {
-            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
+            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
 
             if (attribNode)
                attribNodes .push (attribNode);
          }
 
-         for (var i = 0; i < this .attribNodes .length; ++ i)
-            attribNodes [i] .addInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .addInterest ("requestRebuild", this);
       },
       set_fogCoord__: function ()
       {
@@ -113061,12 +113204,10 @@ function (Fields,
             vertexArray   = this .getVertices (),
             size          = coordNode .getSize ();
 
-         var index = 0;
+         let index = 0;
 
-         for (var c = 0, length = vertexCount .length; c < length; ++ c)
+         for (let count of vertexCount)
          {
-            var count = vertexCount [c];
-
             if (index + count > size)
                break;
 
@@ -113074,9 +113215,9 @@ function (Fields,
             {
                count = 2 * count - 2; // numVertices for line lines trip
 
-               for (var i = 0; i < count; ++ i, index += i & 1)
+               for (let i = 0; i < count; ++ i, index += i & 1)
                {
-                  for (var a = 0; a < numAttrib; ++ a)
+                  for (let a = 0; a < numAttrib; ++ a)
                      attribNodes [a] .addValue (index, attribs [a]);
 
                   if (fogCoordNode)
@@ -116356,7 +116497,7 @@ function (Fields,
             }
             catch (error)
             {
-               //console .log (error);
+               //console .error (error);
 
                if (this .sourceNode)
                   this .sourceNode .setVolume (0);
@@ -116677,7 +116818,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       },
       display: function (gl, context)
@@ -116690,7 +116831,7 @@ function (Fields,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       },
       transformLine: function (line)
@@ -119975,7 +120116,7 @@ function ($,
          }
          catch (error)
          {
-            console .log (error);
+            console .error (error);
          }
       },
       beginUpdate: function ()
@@ -120632,7 +120773,6 @@ const getScriptURL = (function ()
          X3D (callbacks [i], fallbacks [i]);
    },
    fallback);
-
 })();
 
 (function ()
@@ -120684,5 +120824,4 @@ function ()
 	};
 });
 
-})
-(typeof module === "object" ? module : undefined, typeof require === "function" ? require : undefined);
+})));
