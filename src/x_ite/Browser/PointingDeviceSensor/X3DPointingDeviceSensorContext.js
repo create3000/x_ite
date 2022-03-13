@@ -181,11 +181,13 @@ function (PointingDevice,
       },
       addHit: function (intersection, layer, shape, modelViewMatrix)
       {
+         const sensors = this [_enabledSensors] .at (-1);
+
          this [_hits] .push ({
             pointer:         this [_pointer],
             hitRay:          this [_hitRay] .copy (),
             intersection:    intersection,
-            sensors:         this [_enabledSensors] .at (-1),
+            sensors:         sensors .size ? new Map (sensors) : sensors,
             layer:           layer,
             layerNumber:     this [_layerNumber],
             shape:           shape,
