@@ -75,7 +75,7 @@ function (X3DChildObject,
       this [_protoNode]        = protoNode;
       this [_protoFields]      = new Map (Array .from (protoNode .getFields ()) .map (f => [f, f .getName ()]))
       this [_fieldDefinitions] = new FieldDefinitionArray (protoNode .getFieldDefinitions ());
-      this [_body]             = null
+      this [_body]             = null;
 
       X3DNode .call (this, executionContext);
 
