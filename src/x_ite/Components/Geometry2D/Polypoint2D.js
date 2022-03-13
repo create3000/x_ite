@@ -51,31 +51,27 @@ define ([
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DLineGeometryNode",
+   "x_ite/Components/Rendering/X3DPointGeometryNode",
    "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLineGeometryNode,
+          X3DPointGeometryNode,
           X3DConstants)
 {
 "use strict";
 
    function Polypoint2D (executionContext)
    {
-      X3DLineGeometryNode .call (this, executionContext);
+      X3DPointGeometryNode .call (this, executionContext);
 
       this .addType (X3DConstants .Polypoint2D);
 
-      this .setGeometryType (0);
-
       this ._point .setUnit ("length");
-
-      this .setTransparent (true);
    }
 
-   Polypoint2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+   Polypoint2D .prototype = Object .assign (Object .create (X3DPointGeometryNode .prototype),
    {
       constructor: Polypoint2D,
       [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
@@ -94,26 +90,13 @@ function (Fields,
       {
          return "geometry";
       },
-      initialize: function ()
-      {
-         X3DLineGeometryNode .prototype .initialize .call (this);
-
-         var browser = this .getBrowser ();
-
-         this .setPrimitiveMode (browser .getContext () .POINTS);
-         this .setSolid (false);
-      },
-      getShader: function (browser)
-      {
-         return browser .getPointShader ();
-      },
       build: function ()
       {
-         var
+         const
             point       = this ._point .getValue (),
             vertexArray = this .getVertices ();
 
-         for (var i = 0, length = this ._point .length * 2; i < length; i += 2)
+         for (let i = 0, length = this ._point .length * 2; i < length; i += 2)
          {
             vertexArray .push (point [i], point [i + 1], 0, 1);
          }

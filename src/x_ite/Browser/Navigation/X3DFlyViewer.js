@@ -650,18 +650,18 @@ function ($,
       })(),
       display: (function ()
       {
-         var
+         const
             fromPoint             = new Vector3 (0, 0, 0),
             toPoint               = new Vector3 (0, 0, 0),
             projectionMatrix      = new Matrix4 (),
             projectionMatrixArray = new Float32Array (Matrix4 .Identity),
             modelViewMatrixArray  = new Float32Array (Matrix4 .Identity);
 
-         return function (interest, type)
+         return function (type)
          {
             // Configure HUD
 
-            var
+            const
                browser  = this .getBrowser (),
                viewport = browser .getViewport (),
                width    = viewport [2],
@@ -686,7 +686,7 @@ function ($,
 
             this .transfer (fromPoint, toPoint);
 
-            var
+            const
                gl         = browser .getContext (),
                shaderNode = browser .getLineShader (),
                lineWidth  = gl .getParameter (gl .LINE_WIDTH);
@@ -726,7 +726,7 @@ function ($,
       })(),
       transfer: function (fromPoint, toPoint)
       {
-         var
+         const
             gl           = this .getBrowser () .getContext (),
             lineVertices = this .lineVertices;
 

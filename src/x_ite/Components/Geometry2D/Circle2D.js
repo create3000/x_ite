@@ -68,8 +68,6 @@ function (Fields,
 
       this .addType (X3DConstants .Circle2D);
 
-      this .setGeometryType (1);
-
       this ._radius .setUnit ("length");
    }
 
@@ -92,12 +90,6 @@ function (Fields,
       {
          return "geometry";
       },
-      initialize: function ()
-      {
-         X3DLineGeometryNode .prototype .initialize .call (this);
-
-         this .setPrimitiveMode (this .getBrowser () .getContext () .LINE_LOOP);
-      },
       set_live__: function ()
       {
          X3DLineGeometryNode .prototype .set_live__ .call (this);
@@ -109,7 +101,7 @@ function (Fields,
       },
       build: function ()
       {
-         var
+         const
             options     = this .getBrowser () .getCircle2DOptions (),
             vertexArray = this .getVertices (),
             radius      = this ._radius .getValue ();
@@ -120,9 +112,9 @@ function (Fields,
          }
          else
          {
-            var defaultVertices = options .getVertices () .getValue ();
+            const defaultVertices = options .getVertices () .getValue ();
 
-            for (var i = 0, length = defaultVertices .length; i < length; i += 4)
+            for (let i = 0, length = defaultVertices .length; i < length; i += 4)
                vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
          }
 

@@ -51,14 +51,14 @@ define ([
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DLineGeometryNode",
+   "x_ite/Components/Rendering/X3DPointGeometryNode",
    "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLineGeometryNode,
+          X3DPointGeometryNode,
           X3DCast,
           X3DConstants)
 {
@@ -66,19 +66,16 @@ function (Fields,
 
    function PointSet (executionContext)
    {
-      X3DLineGeometryNode .call (this, executionContext);
+      X3DPointGeometryNode .call (this, executionContext);
 
       this .addType (X3DConstants .PointSet);
-
-      this .setGeometryType (0);
-      this .setTransparent (true);
 
       this .fogCoordNode = null;
       this .colorNode    = null;
       this .coordNode    = null;
    }
 
-   PointSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+   PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prototype),
    {
       constructor: PointSet,
       [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
@@ -102,26 +99,17 @@ function (Fields,
       },
       initialize: function ()
       {
-         X3DLineGeometryNode .prototype .initialize .call (this);
+         X3DPointGeometryNode .prototype .initialize .call (this);
 
          this ._attrib   .addInterest ("set_attrib__",   this);
          this ._fogCoord .addInterest ("set_fogCoord__", this);
          this ._color    .addInterest ("set_color__",    this);
          this ._coord    .addInterest ("set_coord__",    this);
 
-         const browser = this .getBrowser ();
-
-         this .setPrimitiveMode (browser .getContext () .POINTS);
-         this .setSolid (false);
-
          this .set_attrib__ ();
          this .set_fogCoord__ ();
          this .set_color__ ();
          this .set_coord__ ();
-      },
-      getShader: function (browser)
-      {
-         return browser .getPointShader ();
       },
       getCoord: function ()
       {
@@ -131,21 +119,21 @@ function (Fields,
       {
          const attribNodes = this .getAttrib ();
 
-         for (var i = 0, length = attribNodes .length; i < length; ++ i)
-            attribNodes [i] .removeInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .removeInterest ("requestRebuild", this);
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
+         for (const node of this ._attrib)
          {
-            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
+            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
 
             if (attribNode)
                attribNodes .push (attribNode);
          }
 
-         for (var i = 0; i < this .attribNodes .length; ++ i)
-            attribNodes [i] .addInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .addInterest ("requestRebuild", this);
       },
       set_fogCoord__: function ()
       {
@@ -194,9 +182,9 @@ function (Fields,
             vertexArray   = this .getVertices (),
             numPoints     = coordNode ._point .length;
 
-         for (var a = 0; a < numAttrib; ++ a)
+         for (let a = 0; a < numAttrib; ++ a)
          {
-            for (var i = 0; i < numPoints; ++ i)
+            for (let i = 0; i < numPoints; ++ i)
                attribNodes [a] .addValue (i, attribs [a]);
          }
 

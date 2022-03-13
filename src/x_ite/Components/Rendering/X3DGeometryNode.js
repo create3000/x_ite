@@ -102,16 +102,19 @@ function (Fields,
 
       // Members
 
+      const browser = this .getBrowser ();
+
       this .min                   = new Vector3 (0, 0, 0);
       this .max                   = new Vector3 (0, 0, 0);
       this .bbox                  = new Box3 (this .min, this .max, true);
       this .solid                 = true;
       this .geometryType          = 3;
+      this .primitiveMode         = browser .getContext () .TRIANGLES;
       this .flatShading           = undefined;
       this .colorMaterial         = false;
       this .attribNodes           = [ ];
       this .attribs               = [ ];
-      this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();
+      this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
       this .multiTexCoords        = [ ];
       this .texCoords             = X3DGeometryNode .createArray ();
       this .fogDepths             = X3DGeometryNode .createArray ();
@@ -139,7 +142,9 @@ function (Fields,
 
       array .assign = function (value)
       {
-         for (var i = 0, length = value .length; i < length; ++ i)
+         const length = value .length;
+
+         for (let i = 0; i < length; ++ i)
             this [i] = value [i];
 
          this .length = length;
@@ -181,7 +186,6 @@ function (Fields,
 
          const gl = this .getBrowser () .getContext ();
 
-         this .primitiveMode   = gl .TRIANGLES;
          this .frontFace       = gl .CCW;
          this .attribBuffers   = [ ];
          this .texCoordBuffers = [ ];
@@ -191,11 +195,8 @@ function (Fields,
          this .vertexBuffer    = gl .createBuffer ();
          this .planes          = [ ];
 
-         if (this .geometryType > 1)
-         {
-            for (let i = 0; i < 5; ++ i)
-               this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
-         }
+         for (let i = 0; i < 5; ++ i)
+            this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
 
          this .set_live__ ();
       },
@@ -291,9 +292,11 @@ function (Fields,
       },
       setMultiTexCoords: function (value)
       {
-         const multiTexCoords = this .multiTexCoords;
+         const
+            multiTexCoords = this .multiTexCoords,
+            length         = value .length;
 
-         for (var i = 0, length = value .length; i < length; ++ i)
+         for (let i = 0; i < length; ++ i)
             multiTexCoords [i] = value [i];
 
          multiTexCoords .length = length;
@@ -765,19 +768,21 @@ function (Fields,
 
             this ._bbox_changed .addEvent ();
 
+            for (let i = 0; i < 5; ++ i)
+               this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+
             // Generate texCoord if needed.
 
             if (this .geometryType > 1)
             {
-               for (let i = 0; i < 5; ++ i)
-                  this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
-
                if (this .multiTexCoords .length === 0)
                   this .multiTexCoords .push (this .buildTexCoords ());
 
-               const last = this .multiTexCoords .length - 1;
+               const
+                  last   = this .multiTexCoords .length - 1,
+                  length = this .getBrowser () .getMaxTextures ();
 
-               for (var i = this .multiTexCoords .length, length = this .getBrowser () .getMaxTextures (); i < length; ++ i)
+               for (let i = this .multiTexCoords .length; i < length; ++ i)
                   this .multiTexCoords [i] = this .multiTexCoords [last];
 
                this .multiTexCoords .length = length;
@@ -800,16 +805,19 @@ function (Fields,
          this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
 
          // Create attrib arrays.
+         {
+            const attribs = this .attribs;
 
-         const attribs = this .attribs;
+            for (const attrib of attribs)
+               attrib .length = 0;
 
-         for (var a = 0, length = attribs .length; a < length; ++ a)
-            attribs [a] .length = 0;
+            const length = this .attribNodes .length;
 
-         for (var a = attribs .length, length = this .attribNodes .length; a < length; ++ a)
-            attribs [a] = X3DGeometryNode .createArray ();
+            for (let a = attribs .length; a < length; ++ a)
+               attribs [a] = X3DGeometryNode .createArray ();
 
-         attribs .length = length;
+            attribs .length = length;
+         }
 
          // Buffer
 
@@ -892,12 +900,12 @@ function (Fields,
          // Setup vertex attributes.
 
          // Attribs in depth rendering are not supported.
-         //for (var i = 0, length = attribNodes .length; i < length; ++ i)
+         //for (let i = 0, length = attribNodes .length; i < length; ++ i)
          //	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
-         //for (var i = 0, length = attribNodes .length; i < length; ++ i)
+         //for (let i = 0, length = attribNodes .length; i < length; ++ i)
          //	attribNodes [i] .disable (gl, shaderNode);
 
          gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
@@ -1037,7 +1045,7 @@ function (Fields,
       displayParticlesDepth: function (gl, context, shaderNode, particles, numParticles)
       {
          // Attribs in depth rendering are not supported:
-         //for (var i = 0, length = attribNodes .length; i < length; ++ i)
+         //for (let i = 0, length = attribNodes .length; i < length; ++ i)
          //	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer);

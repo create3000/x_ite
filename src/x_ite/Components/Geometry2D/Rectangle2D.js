@@ -66,8 +66,6 @@ function (Fields,
 {
 "use strict";
 
-   var defaultSize = new Vector2 (2, 2);
-
    function Rectangle2D (executionContext)
    {
       X3DGeometryNode .call (this, executionContext);
@@ -99,46 +97,51 @@ function (Fields,
       {
          return "geometry";
       },
-      build: function ()
+      build: (function ()
       {
-         var
-            options  = this .getBrowser () .getRectangle2DOptions (),
-            geometry = options .getGeometry (),
-            size     = this ._size .getValue ();
+         const defaultSize = new Vector2 (2, 2);
 
-         this .setMultiTexCoords (geometry .getMultiTexCoords ());
-         this .setNormals        (geometry .getNormals ());
-
-         if (size .equals (defaultSize))
+         return function ()
          {
-            this .setVertices (geometry .getVertices ());
+            const
+               options  = this .getBrowser () .getRectangle2DOptions (),
+               geometry = options .getGeometry (),
+               size     = this ._size .getValue ();
 
-            this .getMin () .assign (geometry .getMin ());
-            this .getMax () .assign (geometry .getMax ());
-         }
-         else
-         {
-            var
-               scale           = Vector3 .divide (size, 2),
-               x               = scale .x,
-               y               = scale .y,
-               defaultVertices = geometry .getVertices () .getValue (),
-               vertexArray     = this .getVertices ();
+            this .setMultiTexCoords (geometry .getMultiTexCoords ());
+            this .setNormals        (geometry .getNormals ());
 
-            for (var i = 0; i < defaultVertices .length; i += 4)
+            if (size .equals (defaultSize))
             {
-               vertexArray .push (x * defaultVertices [i],
-                                  y * defaultVertices [i + 1],
-                                  defaultVertices [i + 2],
-                                  1);
+               this .setVertices (geometry .getVertices ());
+
+               this .getMin () .assign (geometry .getMin ());
+               this .getMax () .assign (geometry .getMax ());
+            }
+            else
+            {
+               const
+                  scale           = Vector3 .divide (size, 2),
+                  x               = scale .x,
+                  y               = scale .y,
+                  defaultVertices = geometry .getVertices () .getValue (),
+                  vertexArray     = this .getVertices ();
+
+               for (let i = 0; i < defaultVertices .length; i += 4)
+               {
+                  vertexArray .push (x * defaultVertices [i],
+                                     y * defaultVertices [i + 1],
+                                     0,
+                                     1);
+               }
+
+               this .getMin () .set (-x, -y, 0);
+               this .getMax () .set ( x,  y, 0);
             }
 
-            this .getMin () .set (-x, -y, 0);
-            this .getMax () .set ( x,  y, 0);
-         }
-
-         this .setSolid (this ._solid .getValue ());
-      },
+            this .setSolid (this ._solid .getValue ());
+         };
+      })(),
    });
 
    return Rectangle2D;

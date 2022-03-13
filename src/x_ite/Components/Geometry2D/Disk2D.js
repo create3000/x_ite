@@ -99,8 +99,6 @@ function (Fields,
       initialize: function ()
       {
          X3DGeometryNode .prototype .initialize .call (this);
-
-         this .setPrimitiveMode (this .getBrowser () .getContext () .LINE_LOOP);
       },
       set_live__: function ()
       {
@@ -111,7 +109,6 @@ function (Fields,
          else
             this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);
       },
-      getShader: X3DLineGeometryNode .prototype .getShader,
       build: function ()
       {
          const
@@ -179,7 +176,6 @@ function (Fields,
 
             this .setGeometryType (2);
             this .setSolid (this ._solid .getValue ());
-
             return;
          }
 

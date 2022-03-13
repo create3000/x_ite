@@ -116,23 +116,23 @@ function (X3DGeometryNode,
       },
       set_attrib__: function ()
       {
-         var attribNodes = this .getAttrib ();
+         const attribNodes = this .getAttrib ();
 
-         for (var i = 0, length = attribNodes .length; i < length; ++ i)
-            attribNodes [i] .removeInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .removeInterest ("requestRebuild", this);
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
+         for (const node of  this ._attrib)
          {
-            var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
+            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
 
             if (attribNode)
                attribNodes .push (attribNode);
          }
 
-         for (var i = 0; i < this .attribNodes .length; ++ i)
-            attribNodes [i] .addInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .addInterest ("requestRebuild", this);
       },
       set_fogCoord__: function ()
       {
@@ -210,7 +210,7 @@ function (X3DGeometryNode,
       },
       build: function (verticesPerPolygon, polygonsSize, verticesPerFace, trianglesSize)
       {
-         if (! this .coordNode || this .coordNode .isEmpty ())
+         if (!this .coordNode || this .coordNode .isEmpty ())
             return;
 
          // Set size to a multiple of verticesPerPolygon.
@@ -235,20 +235,18 @@ function (X3DGeometryNode,
             normalArray        = this .getNormals (),
             vertexArray        = this .getVertices ();
 
-         var face = 0;
-
          if (texCoordNode)
             texCoordNode .init (multiTexCoordArray);
 
          // Fill GeometryNode
 
-         for (var i = 0; i < trianglesSize; ++ i)
+         for (let i = 0; i < trianglesSize; ++ i)
          {
-            face = Math .floor (i / verticesPerFace);
+            const
+               face  = Math .floor (i / verticesPerFace),
+               index = this .getPolygonIndex (this .getTriangleIndex (i));
 
-            const index = this .getPolygonIndex (this .getTriangleIndex (i));
-
-            for (var a = 0; a < numAttrib; ++ a)
+            for (let a = 0; a < numAttrib; ++ a)
                attribNodes [a] .addValue (index, attribs [a]);
 
             if (fogCoordNode)
@@ -269,7 +267,6 @@ function (X3DGeometryNode,
             {
                if (normalPerVertex)
                   normalNode .addVector (index, normalArray);
-
                else
                   normalNode .addVector (face, normalArray);
             }
@@ -279,7 +276,7 @@ function (X3DGeometryNode,
 
          // Autogenerate normal if not specified.
 
-         if (! this .getNormal ())
+         if (!this .getNormal ())
             this .buildNormals (verticesPerPolygon, polygonsSize, trianglesSize);
 
          this .setSolid (this ._solid .getValue ());
@@ -291,7 +288,7 @@ function (X3DGeometryNode,
             normals     = this .createNormals (verticesPerPolygon, polygonsSize),
             normalArray = this .getNormals ();
 
-         for (var i = 0; i < trianglesSize; ++ i)
+         for (let i = 0; i < trianglesSize; ++ i)
          {
             const normal = normals [this .getTriangleIndex (i)];
 
@@ -306,13 +303,13 @@ function (X3DGeometryNode,
          {
             const normalIndex = [ ];
 
-            for (var i = 0; i < polygonsSize; ++ i)
+            for (let i = 0; i < polygonsSize; ++ i)
             {
                const index = this .getPolygonIndex (i);
 
-               var pointIndex = normalIndex [index];
+               let pointIndex = normalIndex [index];
 
-               if (! pointIndex)
+               if (!pointIndex)
                   pointIndex = normalIndex [index] = [ ];
 
                pointIndex .push (i);
@@ -326,18 +323,18 @@ function (X3DGeometryNode,
       createFaceNormals: function (verticesPerPolygon, polygonsSize)
       {
          const
-            cw      = ! this ._ccw .getValue (),
+            cw      = !this ._ccw .getValue (),
             coord   = this .coordNode,
             normals = [ ];
 
-         for (var i = 0; i < polygonsSize; i += verticesPerPolygon)
+         for (let i = 0; i < polygonsSize; i += verticesPerPolygon)
          {
             const normal = this .getPolygonNormal (i, verticesPerPolygon, coord);
 
             if (cw)
                normal .negate ();
 
-            for (var n = 0; n < verticesPerPolygon; ++ n)
+            for (let n = 0; n < verticesPerPolygon; ++ n)
                normals .push (normal);
          }
 
@@ -345,7 +342,7 @@ function (X3DGeometryNode,
       },
       getPolygonNormal: (function ()
       {
-         var
+         let
             current = new Vector3 (0, 0, 0),
             next    = new Vector3 (0, 0, 0);
 
@@ -358,7 +355,7 @@ function (X3DGeometryNode,
 
             coord .get1Point (this .getPolygonIndex (index), next);
 
-            for (var i = 0; i < verticesPerPolygon; ++ i)
+            for (let i = 0; i < verticesPerPolygon; ++ i)
             {
                const tmp = current;
                current = next;

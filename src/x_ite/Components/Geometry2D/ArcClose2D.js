@@ -54,7 +54,6 @@ define ([
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Complex",
-   "standard/Math/Numbers/Vector3",
    "standard/Math/Algorithm",
 ],
 function (Fields,
@@ -63,7 +62,6 @@ function (Fields,
           X3DGeometryNode,
           X3DConstants,
           Complex,
-          Vector3,
           Algorithm)
 {
 "use strict";
@@ -115,14 +113,14 @@ function (Fields,
       },
       getSweepAngle: function ()
       {
-         var
+         const
             start = Algorithm .interval (this ._startAngle .getValue (), 0, Math .PI * 2),
             end   = Algorithm .interval (this ._endAngle   .getValue (), 0, Math .PI * 2);
 
          if (start === end)
             return Math .PI * 2;
 
-         var sweepAngle = Math .abs (end - start);
+         const sweepAngle = Math .abs (end - start);
 
          if (start > end)
             return (Math .PI * 2) - sweepAngle;
@@ -135,11 +133,11 @@ function (Fields,
       },
       build: (function ()
       {
-         var half = new Complex (0.5, 0.5);
+         const half = new Complex (0.5, 0.5);
 
          return function ()
          {
-            var
+            const
                options       = this .getBrowser () .getArcClose2DOptions (),
                chord         = this ._closureType .getValue () === "CHORD",
                dimension     = options ._dimension .getValue (),
@@ -155,11 +153,11 @@ function (Fields,
 
             this .getMultiTexCoords () .push (texCoordArray);
 
-            var steps_1 = steps - 1;
+            const steps_1 = steps - 1;
 
-            for (var n = 0; n < steps; ++ n)
+            for (let n = 0; n < steps; ++ n)
             {
-               var
+               const
                   t     = n / steps_1,
                   theta = startAngle + (sweepAngle * t);
 
@@ -169,13 +167,13 @@ function (Fields,
 
             if (chord)
             {
-               var
+               const
                   t0 = texCoords [0],
                   p0 = points [0];
 
-               for (var i = 1; i < steps_1; ++ i)
+               for (let i = 1; i < steps_1; ++ i)
                {
-                  var
+                  const
                      t1 = texCoords [i],
                      t2 = texCoords [i + 1],
                      p1 = points [i],
@@ -196,9 +194,9 @@ function (Fields,
             }
             else
             {
-               for (var i = 0; i < steps_1; ++ i)
+               for (let i = 0; i < steps_1; ++ i)
                {
-                  var
+                  const
                      t1 = texCoords [i],
                      t2 = texCoords [i + 1],
                      p1 = points [i],

@@ -113,8 +113,9 @@ function (Fields,
       },
       addValue: function (index, array)
       {
-         var
-            value = this .value,
+         const value = this .value;
+
+         let
             first = index * this .numComponents,
             last  = first + this .numComponents;
 

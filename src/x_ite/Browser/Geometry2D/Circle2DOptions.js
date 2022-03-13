@@ -52,13 +52,11 @@ define ([
    "x_ite/Fields",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "standard/Math/Numbers/Complex",
-   "standard/Math/Numbers/Vector3",
 ],
 function (X3DBaseNode,
           Fields,
           X3DGeometryNode,
-          Complex,
-          Vector3)
+          Complex)
 {
 "use strict";
 
@@ -107,9 +105,12 @@ function (X3DBaseNode,
 
          for (let n = 0; n < dimension; ++ n)
          {
-            const point = Complex .Polar (1, angle * n);
+            const
+               point1 = Complex .Polar (1, angle * n),
+               point2 = Complex .Polar (1, angle * (n + 1));
 
-            vertices .push (point .real, point .imag, 0, 1);
+            vertices .push (point1 .real, point1 .imag, 0, 1);
+            vertices .push (point2 .real, point2 .imag, 0, 1);
          }
 
          vertices .shrinkToFit ();

@@ -64,14 +64,14 @@ function (X3DGeometryNode,
 
    function X3DLineGeometryNode (executionContext)
    {
-      if (!this .getExecutionContext ())
-         X3DGeometryNode .call (this, executionContext);
+      X3DGeometryNode .call (this, executionContext);
 
       const browser = this .getBrowser ();
 
-      this .setGeometryType (1);
-      this .setPrimitiveMode (browser .getContext () .LINES);
+      this .setGeometryType (0);
+      this .setPrimitiveMode (browser .getContext () .POINTS);
       this .setSolid (false);
+      this .setTransparent (true);
    }
 
    X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -93,27 +93,19 @@ function (X3DGeometryNode,
          {
             const vertices = this .getVertices ();
 
-            for (let i = 0, length = vertices .length; i < length; i += 8)
+            for (let i = 0, length = vertices .length; i < length; i += 4)
             {
                point1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
-               point2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-               line .setPoints (point1, point2);
-
-               if (line .getClosestPointToLine (hitRay, point))
+               if (line .getClosestPointToPoint (point1, point))
                {
-                  if (line .getPerpendicularVectorToLine (hitRay, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
+                  if (line .getPerpendicularVectorToPoint (hitRay, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
                   {
-                     const distance = point1 .distance (point2);
+                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                        continue;
 
-                     if (point1 .distance (point) <= distance && point2 .distance (point) <= distance)
-                     {
-                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                           continue;
-
-                        intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
-                        return true;
-                     }
+                     intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
+                     return true;
                   }
                }
             }
@@ -125,32 +117,6 @@ function (X3DGeometryNode,
       {
          return false;
       },
-      transfer: function ()
-      {
-         // Line stipple support.
-
-         const
-            texCoords = this .getTexCoords (),
-            vertices  = this .getVertices ();
-
-         this .getMultiTexCoords () .push (texCoords);
-
-         for (let i = 0, length = vertices .length; i < length; i += 8)
-         {
-            texCoords .push (vertices [i],
-                             vertices [i + 1],
-                             vertices [i + 2],
-                             vertices [i + 3],
-                             vertices [i],
-                             vertices [i + 1],
-                             vertices [i + 2],
-                             vertices [i + 3]);
-         }
-
-         texCoords .shrinkToFit ();
-
-         X3DGeometryNode .prototype .transfer .call (this);
-      },
       display: function (gl, context)
       {
          try
@@ -158,7 +124,7 @@ function (X3DGeometryNode,
             const
                browser        = context .browser,
                appearanceNode = context .shapeNode .getAppearance (),
-               shaderNode     = appearanceNode .shaderNode || browser .getLineShader ();
+               shaderNode     = appearanceNode .shaderNode || browser .getPointShader ();;
 
             if (shaderNode .getValid ())
             {
@@ -191,9 +157,7 @@ function (X3DGeometryNode,
 
                shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
-               // WireFrames are always solid so only one drawing call is needed.
-
-               gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
+               gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
 
                for (const attribNode of attribNodes)
                   attribNode .disable (gl, shaderNode);
@@ -266,7 +230,7 @@ function (X3DGeometryNode,
                   x               = modelViewMatrix [12],
                   y               = modelViewMatrix [13],
                   z               = modelViewMatrix [14],
-                  primitiveMode   = shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode;
+                  primitiveMode   = this .primitiveMode;
 
                for (let p = 0; p < numParticles; ++ p)
                {

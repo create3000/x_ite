@@ -53,14 +53,12 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode,
-          X3DConstants,
-          Vector3)
+          X3DConstants)
 {
 "use strict";
 
@@ -97,12 +95,12 @@ function (Fields,
       },
       build: function ()
       {
-         var
+         const
             vertices    = this ._vertices .getValue (),
             normalArray = this .getNormals (),
             vertexArray = this .getVertices ();
 
-         for (var i = 0, length = this ._vertices .length * 2; i < length; i += 2)
+         for (let i = 0, length = this ._vertices .length * 2; i < length; i += 2)
          {
             normalArray .push (0, 0, 1);
             vertexArray .push (vertices [i], vertices [i + 1], 0, 1);
@@ -112,17 +110,17 @@ function (Fields,
       },
       buildTexCoords: function ()
       {
-         var texCoordArray = this .getTexCoords ();
+         const texCoordArray = this .getTexCoords ();
 
          if (texCoordArray .length === 0)
          {
-            var
+            const
                p             = this .getTexCoordParams (),
                min           = p .min,
                Ssize         = p .Ssize,
                vertexArray   = this .getVertices () .getValue ();
 
-            for (var i = 0, length = vertexArray .length; i < length; i += 4)
+            for (let i = 0, length = vertexArray .length; i < length; i += 4)
             {
                texCoordArray .push ((vertexArray [i]     - min [0]) / Ssize,
                                     (vertexArray [i + 1] - min [1]) / Ssize,

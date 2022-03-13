@@ -68,8 +68,6 @@ function (Fields,
 
       this .addType (X3DConstants .Polyline2D);
 
-      this .setGeometryType (1);
-
       this ._lineSegments .setUnit ("length");
    }
 
@@ -92,24 +90,17 @@ function (Fields,
       {
          return "geometry";
       },
-      initialize: function ()
-      {
-         X3DLineGeometryNode .prototype .initialize .call (this);
-
-         this .setPrimitiveMode (this .getBrowser () .getContext () .LINE_STRIP);
-      },
       build: function ()
       {
-         var
+         const
             lineSegments = this ._lineSegments .getValue (),
             vertexArray  = this .getVertices ();
 
-         for (var i = 0, length = this ._lineSegments .length * 2; i < length; i += 2)
+         for (let i = 0, length = (this ._lineSegments .length - 1) * 2; i < length; i += 2)
          {
-            vertexArray .push (lineSegments [i], lineSegments [i + 1], 0, 1);
+            vertexArray .push (lineSegments [i + 0], lineSegments [i + 1], 0, 1);
+            vertexArray .push (lineSegments [i + 2], lineSegments [i + 3], 0, 1);
          }
-
-         this .setSolid (false);
       },
    });
 

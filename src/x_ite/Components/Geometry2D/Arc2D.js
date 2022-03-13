@@ -72,8 +72,6 @@ function (Fields,
 
       this .addType (X3DConstants .Arc2D);
 
-      this .setGeometryType (1);
-
       this ._startAngle .setUnit ("angle");
       this ._endAngle   .setUnit ("angle");
       this ._radius     .setUnit ("length");
@@ -111,14 +109,14 @@ function (Fields,
       },
       getSweepAngle: function ()
       {
-         var
+         const
             start = Algorithm .interval (this ._startAngle .getValue (), 0, Math .PI * 2),
             end   = Algorithm .interval (this ._endAngle   .getValue (), 0, Math .PI * 2);
 
          if (start === end)
             return Math .PI * 2;
 
-         var sweepAngle = Math .abs (end - start);
+         const sweepAngle = Math .abs (end - start);
 
          if (start > end)
             return (Math .PI * 2) - sweepAngle;
@@ -131,43 +129,31 @@ function (Fields,
       },
       build: function ()
       {
-         var
-            gl          = this .getBrowser () .getContext (),
+         const
             options     = this .getBrowser () .getArc2DOptions (),
             dimension   = options ._dimension .getValue (),
             startAngle  = this ._startAngle .getValue  (),
             radius      = Math .abs (this ._radius .getValue ()),
             sweepAngle  = this .getSweepAngle (),
-            circle      = sweepAngle == (Math .PI * 2),
-            steps       = Math .floor (sweepAngle * dimension / (Math .PI * 2)),
+            steps       = Math .max (3, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
             vertexArray = this .getVertices ();
 
-         steps = Math .max (3, steps);
-
-         if (! circle)
+         for (let n = 0; n < steps; ++ n)
          {
-            ++ steps;
-            this .setPrimitiveMode (gl .LINE_STRIP);
-         }
-         else
-            this .setPrimitiveMode (gl .LINE_LOOP);
+            const
+               t1     = n / steps,
+               theta1 = startAngle + (sweepAngle * t1),
+               point1 = Complex .Polar (radius, theta1),
+               t2     = (n + 1) / steps,
+               theta2 = startAngle + (sweepAngle * t2),
+               point2 = Complex .Polar (radius, theta2);
 
-         var steps_1 = circle ? steps : steps - 1;
-
-         for (var n = 0; n < steps; ++ n)
-         {
-            var
-               t     = n / steps_1,
-               theta = startAngle + (sweepAngle * t),
-               point = Complex .Polar (radius, theta);
-
-            vertexArray .push (point .real, point .imag, 0, 1);
+            vertexArray .push (point1 .real, point1 .imag, 0, 1);
+            vertexArray .push (point2 .real, point2 .imag, 0, 1);
          }
 
          this .getMin () .set (-radius, -radius, 0);
          this .getMax () .set ( radius,  radius, 0);
-
-         this .setSolid (false);
       },
    });
 

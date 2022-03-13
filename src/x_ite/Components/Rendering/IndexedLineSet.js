@@ -70,8 +70,6 @@ function (Fields,
 
       this .addType (X3DConstants .IndexedLineSet);
 
-      this .setGeometryType (1);
-
       this .fogCoordNode = null;
       this .colorNode    = null;
       this .coordNode    = null;
@@ -114,9 +112,6 @@ function (Fields,
          this ._fogCoord       .addInterest ("set_fogCoord__", this);
          this ._color          .addInterest ("set_color__",    this);
          this ._coord          .addInterest ("set_coord__",    this);
-
-         this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
-         this .setSolid (false);
 
          this .set_attrib__ ();
          this .set_fogCoord__ ();
