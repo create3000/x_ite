@@ -127,21 +127,21 @@ function (Fields,
       {
          const attribNodes = this .getAttrib ();
 
-         for (var i = 0, length = attribNodes .length; i < length; ++ i)
-            attribNodes [i] .removeInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .removeInterest ("requestRebuild", this);
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
+         for (const node of this ._attrib)
          {
-            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
+            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
 
             if (attribNode)
                attribNodes .push (attribNode);
          }
 
-         for (var i = 0; i < this .attribNodes .length; ++ i)
-            attribNodes [i] .addInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .addInterest ("requestRebuild", this);
       },
       set_fogCoord__: function ()
       {
@@ -207,11 +207,11 @@ function (Fields,
             coordIndex = this ._coordIndex,
             polylines  = [ ];
 
-         var polyline = [ ];
+         let polyline = [ ];
 
          if (coordIndex .length)
          {
-            for (var i = 0, length = coordIndex .length; i < length; ++ i)
+            for (let i = 0, length = coordIndex .length; i < length; ++ i)
             {
                const index = coordIndex [i];
 
@@ -258,25 +258,23 @@ function (Fields,
 
          // Fill GeometryNode
 
-         var face = 0;
+         let face = 0;
 
-         for (var p = 0, pl = polylines .length; p < pl; ++ p)
+         for (const polyline of polylines)
          {
-            const polyline = polylines [p];
-
             // Create two vertices for each line.
 
             if (polyline .length > 1)
             {
-               for (var line = 0, l_end = polyline .length - 1; line < l_end; ++ line)
+               for (let line = 0, l_end = polyline .length - 1; line < l_end; ++ line)
                {
-                  for (var l = line, i_end = line + 2; l < i_end; ++ l)
+                  for (let l = line, i_end = line + 2; l < i_end; ++ l)
                   {
                      const
                         i     = polyline [l],
                         index = coordIndex [i];
 
-                     for (var a = 0; a < numAttrib; ++ a)
+                     for (let a = 0; a < numAttrib; ++ a)
                         attribNodes [a] .addValue (index, attribs [a]);
 
                      if (fogCoordNode)

@@ -152,7 +152,7 @@ function (Fields,
          this .zPlane .intersectsLine (hitRay, zPoint);
 
          var
-            axisPoint = Vector3 .add (zPoint, this .cylinder .axis .getPerpendicularVector (zPoint)),
+            axisPoint = Vector3 .add (zPoint, this .cylinder .axis .getPerpendicularVectorToPoint (zPoint, new Vector3 (0, 0, 0))),
             distance  = this .sxPlane .getDistanceToPoint (zPoint) / this .cylinder .radius,
             section   = Math .floor ((distance + 1) / 2);
 
@@ -196,7 +196,7 @@ function (Fields,
 
                var
                   axis   = new Line3 (new Vector3 (0, 0, 0), yAxis),
-                  radius = axis .getPerpendicularVector (hitPoint) .abs ();
+                  radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .abs ();
 
                this .cylinder = new Cylinder3 (axis, radius);
 
@@ -221,7 +221,7 @@ function (Fields,
                else
                   this .getTrackPoint (hitRay, trackPoint);
 
-               this .fromVector  = this .cylinder .axis .getPerpendicularVector (trackPoint) .negate ();
+               this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate ();
                this .startOffset = new Rotation4 (yAxis, this ._offset .getValue ());
 
                this ._trackPoint_changed = trackPoint;
@@ -259,7 +259,7 @@ function (Fields,
             this ._trackPoint_changed = trackPoint;
 
             var
-               toVector = this .cylinder .axis .getPerpendicularVector (trackPoint) .negate (),
+               toVector = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate (),
                rotation = new Rotation4 (this .fromVector, toVector);
 
             if (this .disk)

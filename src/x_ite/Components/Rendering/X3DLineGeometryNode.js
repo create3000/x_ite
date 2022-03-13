@@ -49,11 +49,15 @@
 
 define ([
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Base/X3DConstants",
+   "standard/Math/Geometry/Line3",
+   "standard/Math/Numbers/Vector2",
+   "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
-          X3DConstants,
+          Line3,
+          Vector2,
+          Vector3,
           Matrix4)
 {
 "use strict";
@@ -61,8 +65,6 @@ function (X3DGeometryNode,
    function X3DLineGeometryNode (executionContext)
    {
       X3DGeometryNode .call (this, executionContext);
-
-      //this .addType (X3DConstants .X3DLineGeometryNode);
    }
 
    X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -72,10 +74,41 @@ function (X3DGeometryNode,
       {
          return browser .getLineShader ();
       },
-      intersectsLine: function (line, clipPlanes, modelViewMatrix, intersections)
+      intersectsLine: (function ()
       {
-         return false;
-      },
+         const PICK_DISTANCE_FACTOR = 1 / 300;
+
+         const
+            vector = new Vector3 (0, 0, 0),
+            point  = new Vector3 (0, 0, 0),
+            point1 = new Vector3 (0, 0, 0),
+            point2 = new Vector3 (0, 0, 0),
+            l      = new Line3 (Vector3 .Zero, Vector3 .zAxis);
+
+         return function (line, clipPlanes, modelViewMatrix_, intersections)
+         {
+            const vertices = this .getVertices ();
+
+            for (let i = 0, length = vertices .length; i < length; i += 8)
+            {
+               point1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+               point2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+
+               l .setPoints (point1, point2);
+
+               if (l .getClosestPointToLine (line, point))
+               {
+                  if (l .getPerpendicularVectorToLine (line, vector) .abs () < line .point .distance (point) * PICK_DISTANCE_FACTOR)
+                  {
+                     intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 1), point: point .copy () });
+                     return true;
+                  }
+               }
+            }
+
+            return false;
+         };
+      })(),
       intersectsBox: function (box, clipPlanes, modelViewMatrix)
       {
          return false;

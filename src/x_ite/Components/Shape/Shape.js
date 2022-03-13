@@ -190,7 +190,7 @@ function (Fields,
             {
                const geometryNode = this .getGeometry ();
 
-               if (geometryNode .getGeometryType () < 2)
+               if (geometryNode .getGeometryType () < 1)
                   return;
 
                const browser = renderObject .getBrowser ();

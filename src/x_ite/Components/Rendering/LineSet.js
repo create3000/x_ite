@@ -121,21 +121,21 @@ function (Fields,
       {
          const attribNodes = this .getAttrib ();
 
-         for (var i = 0, length = attribNodes .length; i < length; ++ i)
-            attribNodes [i] .removeInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .removeInterest ("requestRebuild", this);
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
+         for (const node of this ._attrib)
          {
-            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
+            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
 
             if (attribNode)
                attribNodes .push (attribNode);
          }
 
-         for (var i = 0; i < this .attribNodes .length; ++ i)
-            attribNodes [i] .addInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .addInterest ("requestRebuild", this);
       },
       set_fogCoord__: function ()
       {
@@ -201,12 +201,10 @@ function (Fields,
             vertexArray   = this .getVertices (),
             size          = coordNode .getSize ();
 
-         var index = 0;
+         let index = 0;
 
-         for (var c = 0, length = vertexCount .length; c < length; ++ c)
+         for (let count of vertexCount)
          {
-            var count = vertexCount [c];
-
             if (index + count > size)
                break;
 
@@ -214,9 +212,9 @@ function (Fields,
             {
                count = 2 * count - 2; // numVertices for line lines trip
 
-               for (var i = 0; i < count; ++ i, index += i & 1)
+               for (let i = 0; i < count; ++ i, index += i & 1)
                {
-                  for (var a = 0; a < numAttrib; ++ a)
+                  for (let a = 0; a < numAttrib; ++ a)
                      attribNodes [a] .addValue (index, attribs [a]);
 
                   if (fogCoordNode)

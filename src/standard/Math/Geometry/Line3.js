@@ -133,12 +133,47 @@ function (Vector3)
             return true;
          };
       })(),
-      getPerpendicularVector: function (point)
+      getPerpendicularVectorToPoint: (function ()
       {
-         const d = Vector3 .subtract (this .point, point);
+         const t = new Vector3 (0, 0, 0);
 
-         return d .subtract (this .direction .copy () .multiply (Vector3 .dot (d, this .direction)));
-      },
+         return function (point, result)
+         {
+            const d = result;
+
+            d .assign (this .point) .subtract (point);
+
+            return d .subtract (t .assign (this .direction) .multiply (d .dot (this .direction)));
+         };
+      })(),
+      getPerpendicularVectorToLine: (function ()
+      {
+         const
+            d  = new Vector3 (0, 0, 0),
+            ad = new Vector3 (0, 0, 0);
+
+         return function (line, result)
+         {
+            const bd = result;
+
+            d .assign (this .point) .subtract (line .point);
+
+            const
+               re1 = d .dot (this .direction),
+               re2 = d .dot (line .direction),
+               e12 = this .direction .dot (line .direction),
+               E12 = e12 * e12;
+
+            const
+               a =  (re1 - re2 * e12) / (1 - E12),
+               b = -(re2 - re1 * e12) / (1 - E12);
+
+            ad .assign (this .direction) .multiply (a);
+            bd .assign (line .direction) .multiply (b);
+
+            return bd .subtract (ad) .add (d);
+         };
+      })(),
       intersectsTriangle: (function ()
       {
          const
