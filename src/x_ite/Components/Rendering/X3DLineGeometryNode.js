@@ -101,11 +101,16 @@ function (X3DGeometryNode,
                {
                   if (line .getPerpendicularVectorToLine (hitRay, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
                   {
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                        continue;
+                     const distance = point1 .distance (point2);
 
-                     intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
-                     return true;
+                     if (point1 .distance (point) <= distance && point2 .distance (point) <= distance)
+                     {
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                           continue;
+
+                        intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
+                        return true;
+                     }
                   }
                }
             }
