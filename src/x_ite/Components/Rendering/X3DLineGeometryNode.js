@@ -79,11 +79,11 @@ function (X3DGeometryNode,
          const PICK_DISTANCE_FACTOR = 1 / 300;
 
          const
-            vector    = new Vector3 (0, 0, 0),
             point1    = new Vector3 (0, 0, 0),
             point2    = new Vector3 (0, 0, 0),
             line      = new Line3 (Vector3 .Zero, Vector3 .zAxis),
             point     = new Vector3 (0, 0, 0),
+            vector    = new Vector3 (0, 0, 0),
             clipPoint = new Vector3 (0, 0, 0);
 
          return function (hitRay, clipPlanes, modelViewMatrix, intersections)
@@ -104,7 +104,7 @@ function (X3DGeometryNode,
                      if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
                         continue;
 
-                     intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 1), point: point .copy () });
+                     intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
                      return true;
                   }
                }
