@@ -62,7 +62,17 @@ function (X3DField)
    X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       constructor: X3DArrayField,
+      every: Array .prototype .every,
+      filter: Array .prototype .filter,
+      forEach: Array .prototype .forEach,
+      includes: Array .prototype .includes,
+      indexOf: Array .prototype .indexOf,
+      join: Array .prototype .join,
+      lastIndexOf: Array .prototype .lastIndexOf,
+      map: Array .prototype .map,
+      reduce: Array .prototype .reduce,
       slice: Array .prototype .slice,
+      some: Array .prototype .some,
    });
 
    for (const key of Reflect .ownKeys (X3DArrayField .prototype))

@@ -73,7 +73,7 @@ function (X3DChildObject,
    function X3DPrototypeInstance (executionContext, protoNode)
    {
       this [_protoNode]        = protoNode;
-      this [_protoFields]      = new Map (Array .from (protoNode .getFields ()) .map (f => [f, f .getName ()]))
+      this [_protoFields]      = new Map (protoNode .getFields () .map (f => [f, f .getName ()]))
       this [_fieldDefinitions] = new FieldDefinitionArray (protoNode .getFieldDefinitions ());
       this [_body]             = null;
 
@@ -221,14 +221,14 @@ function (X3DChildObject,
 
          const
             oldProtoFields = this [_protoFields],
-            oldFields      = new Map (Array .from (this .getFields ()) .map (f => [f .getName (), f]));
+            oldFields      = new Map (this .getFields () .map (f => [f .getName (), f]));
 
          for (const field of oldFields .values ())
             this .removeField (field .getName ());
 
          // Add new fields.
 
-         this [_protoFields]      = new Map (Array .from (this [_protoNode] .getFields ()) .map (f => [f, f .getName ()]));
+         this [_protoFields]      = new Map (this [_protoNode] .getFields () .map (f => [f, f .getName ()]));
          this [_fieldDefinitions] = new FieldDefinitionArray (this [_protoNode] .getFieldDefinitions ());
 
          for (const fieldDefinition of this .getFieldDefinitions ())

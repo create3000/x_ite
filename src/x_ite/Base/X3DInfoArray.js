@@ -215,6 +215,17 @@ function (X3DObject)
 
          this .requestProcessInterests ();
       },
+      every: Array .prototype .every,
+      filter: Array .prototype .filter,
+      forEach: Array .prototype .forEach,
+      includes: Array .prototype .includes,
+      indexOf: Array .prototype .indexOf,
+      join: Array .prototype .join,
+      lastIndexOf: Array .prototype .lastIndexOf,
+      map: Array .prototype .map,
+      reduce: Array .prototype .reduce,
+      slice: Array .prototype .slice,
+      some: Array .prototype .some,
       toVRMLStream: function (stream)
       {
          const X3DBaseNode = require ("x_ite/Base/X3DBaseNode");
