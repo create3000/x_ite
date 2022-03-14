@@ -112,7 +112,7 @@ function (Fields,
       },
       build: function ()
       {
-         var
+         const
             options       = this .getBrowser () .getConeOptions (),
             xDimension    = options ._xDimension .getValue (),
             height        = this ._height .getValue (),
@@ -123,27 +123,27 @@ function (Fields,
 
          this .getMultiTexCoords () .push (texCoordArray);
 
-         var
+         const
             y1 = height / 2,
             y2 = -y1,
             nz = Complex .Polar (1, -Math .PI / 2 + Math .atan (bottomRadius / height));
 
          if (this ._side .getValue ())
          {
-            for (var i = 0; i < xDimension; ++ i)
+            for (let i = 0; i < xDimension; ++ i)
             {
-               var
+               const
                   u1     = (i + 0.5) / xDimension,
                   theta1 = 2 * Math .PI * u1,
                   n1     = Complex .Polar (nz .imag, theta1);
 
-               var
+               const
                   u2     = i / xDimension,
                   theta2 = 2 * Math .PI * u2,
                   p2     = Complex .Polar (-bottomRadius, theta2),
                   n2     = Complex .Polar (nz .imag, theta2);
 
-               var
+               const
                   u3     = (i + 1) / xDimension,
                   theta3 = 2 * Math .PI * u3,
                   p3     = Complex .Polar (-bottomRadius, theta3),
@@ -157,62 +157,62 @@ function (Fields,
 
                // p1
                texCoordArray .push (u1, 1, 0, 1);
-               normalArray .push (n1 .imag, nz .real, n1 .real);
-               vertexArray .push (0, y1, 0, 1);
+               normalArray   .push (n1 .imag, nz .real, n1 .real);
+               vertexArray   .push (0, y1, 0, 1);
 
                // p2
                texCoordArray .push (u2, 0, 0, 1);
-               normalArray .push (n2 .imag, nz .real, n2 .real);
-               vertexArray .push (p2 .imag, y2, p2 .real, 1);
+               normalArray   .push (n2 .imag, nz .real, n2 .real);
+               vertexArray   .push (p2 .imag, y2, p2 .real, 1);
 
                // p3
                texCoordArray .push (u3, 0, 0, 1);
-               normalArray .push (n3 .imag , nz .real, n3 .real);
-               vertexArray .push (p3 .imag, y2, p3 .real, 1);
+               normalArray   .push (n3 .imag , nz .real, n3 .real);
+               vertexArray   .push (p3 .imag, y2, p3 .real, 1);
             }
          }
 
          if (this ._bottom .getValue ())
          {
-            var
+            const
                texCoord = [ ],
                points   = [ ];
 
-            for (var i = xDimension - 1; i > -1; -- i)
+            for (let i = xDimension - 1; i > -1; -- i)
             {
-               var
+               const
                   u     = i / xDimension,
                   theta = 2 * Math .PI * u,
                   t     = Complex .Polar (-1, theta),
                   p     = Complex .multiply (t, bottomRadius);
 
                texCoord .push (new Vector2 ((t .imag + 1) / 2, (t .real + 1) / 2));
-               points .push (new Vector3 (p .imag, y2, p .real));
+               points   .push (new Vector3 (p .imag, y2, p .real));
             }
 
-            var
+            const
                t0 = texCoord [0],
                p0 = points [0];
 
-            for (var i = 1, length = points .length - 1; i < length; ++ i)
+            for (let i = 1, length = points .length - 1; i < length; ++ i)
             {
-               var
+               const
                   t1 = texCoord [i],
                   t2 = texCoord [i + 1],
                   p1 = points [i],
                   p2 = points [i + 1];
 
                texCoordArray .push (t0 .x, t0 .y, 0, 1);
-               normalArray .push (0, -1, 0);
-               vertexArray .push (p0 .x, p0 .y, p0 .z, 1);
+               normalArray   .push (0, -1, 0);
+               vertexArray   .push (p0 .x, p0 .y, p0 .z, 1);
 
                texCoordArray .push (t1 .x, t1 .y, 0, 1);
-               normalArray .push (0, -1, 0);
-               vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
+               normalArray   .push (0, -1, 0);
+               vertexArray   .push (p1 .x, p1 .y, p1 .z, 1);
 
                texCoordArray .push (t2 .x, t2 .y, 0, 1);
-               normalArray .push (0, -1, 0);
-               vertexArray .push (p2 .x, p2 .y, p2 .z, 1);
+               normalArray   .push (0, -1, 0);
+               vertexArray   .push (p2 .x, p2 .y, p2 .z, 1);
             }
          }
 
@@ -221,23 +221,21 @@ function (Fields,
       },
       setExtents: function ()
       {
-         var
+         const
             bottomRadius = this ._bottomRadius .getValue (),
             y1           = this ._height .getValue () / 2,
             y2           = -y1;
 
-         if (! this ._side .getValue () && ! this ._bottom .getValue ())
+         if (!this ._side .getValue () && !this ._bottom .getValue ())
          {
             this .getMin () .set (0, 0, 0);
             this .getMax () .set (0, 0, 0);
          }
-
          else if (! this ._side .getValue ())
          {
             this .getMin () .set (-bottomRadius, y2, -bottomRadius);
             this .getMax () .set ( bottomRadius, y2,  bottomRadius);
          }
-
          else
          {
             this .getMin () .set (-bottomRadius, y2, -bottomRadius);

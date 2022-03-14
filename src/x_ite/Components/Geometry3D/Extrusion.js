@@ -126,11 +126,11 @@ function (Fields,
       },
       getClosedOrientation: function ()
       {
-         var orientation = this ._orientation;
+         const orientation = this ._orientation;
 
          if (orientation .length)
          {
-            var
+            const
                firstOrientation = orientation [0] .getValue (),
                lastOrientation  = orientation [orientation .length - 1] .getValue ();
 
@@ -141,11 +141,11 @@ function (Fields,
       },
       createPoints: (function ()
       {
-         var scale3 = new Vector3 (1, 1, 1);
+         const scale3 = new Vector3 (1, 1, 1);
 
          return function ()
          {
-            var
+            const
                crossSection = this ._crossSection,
                orientation  = this ._orientation,
                scale        = this ._scale,
@@ -154,26 +154,26 @@ function (Fields,
 
             // calculate SCP rotations
 
-            var rotations = this .createRotations ();
+            const rotations = this .createRotations ();
 
             // calculate vertices.
 
-            for (var i = 0, length = spine .length; i < length; ++ i)
+            for (let i = 0, length = spine .length; i < length; ++ i)
             {
-               var matrix = rotations [i];
+               const matrix = rotations [i];
 
                if (orientation .length)
                   matrix .rotate (orientation [Math .min (i, orientation .length - 1)] .getValue ());
 
                if (scale .length)
                {
-                  var s = scale [Math .min (i, scale .length - 1)] .getValue ();
+                  const s = scale [Math .min (i, scale .length - 1)] .getValue ();
                   matrix .scale (scale3 .set (s .x, 1, s .y));
                }
 
-               for (var cs = 0, csLength = crossSection .length; cs < csLength; ++ cs)
+               for (let cs = 0, csLength = crossSection .length; cs < csLength; ++ cs)
                {
-                  var vector = crossSection [cs] .getValue ();
+                  const vector = crossSection [cs] .getValue ();
                   points .push (matrix .multVecMatrix (new Vector3 (vector .x, 0, vector .y)));
                }
             }
@@ -183,18 +183,18 @@ function (Fields,
       })(),
       createRotations: (function ()
       {
-         var rotations = [ ];
+         const rotations = [ ];
 
-         var
+         const
             SCPxAxis = new Vector3 (0, 0, 0),
             SCPyAxis = new Vector3 (0, 0, 0),
             SCPzAxis = new Vector3 (0, 0, 0);
 
-         var
+            const
             SCPyAxisPrevious = new Vector3 (0, 0, 0),
             SCPzAxisPrevious = new Vector3 (0, 0, 0);
 
-         var
+            const
             vector3  = new Vector3 (0, 0, 0),
             rotation = new Rotation4 (0, 0, 1, 0);
 
@@ -202,7 +202,7 @@ function (Fields,
          {
             // calculate SCP rotations
 
-            var
+            const
                spine       = this ._spine,
                numSpines   = spine .length,
                firstSpine  = spine [0] .getValue (),
@@ -210,7 +210,7 @@ function (Fields,
                closedSpine = firstSpine .equals (lastSpine) && this .getClosedOrientation ();
 
             // Extend or shrink static rotations array:
-            for (var i = rotations .length; i < numSpines; ++ i)
+            for (let i = rotations .length; i < numSpines; ++ i)
                rotations [i] = new Matrix4 ();
 
             rotations .length = numSpines;
@@ -223,10 +223,10 @@ function (Fields,
             // SCP for the first point:
             if (closedSpine)
             {
-               var s = firstSpine;
+               const s = firstSpine;
 
                // Find first defined Y-axis.
-               for (var i = 1, length = numSpines - 2; i < length; ++ i)
+               for (let i = 1, length = numSpines - 2; i < length; ++ i)
                {
                   SCPyAxis .assign (spine [i] .getValue ()) .subtract (s) .normalize ()
                      .subtract (vector3 .assign (spine [length] .getValue ()) .subtract (s) .normalize ())
@@ -237,7 +237,7 @@ function (Fields,
                }
 
                // Find first defined Z-axis.
-               for (var i = 0, length = numSpines - 2; i < length; ++ i)
+               for (let i = 0, length = numSpines - 2; i < length; ++ i)
                {
                   SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ())
                              .cross (vector3 .assign (spine [length] .getValue ()) .subtract (spine [i] .getValue ()))
@@ -250,7 +250,7 @@ function (Fields,
             else
             {
                // Find first defined Y-axis.
-               for (var i = 0, length = numSpines - 1; i < length; ++ i)
+               for (let i = 0, length = numSpines - 1; i < length; ++ i)
                {
                   SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ()) .normalize ();
 
@@ -259,7 +259,7 @@ function (Fields,
                }
 
                // Find first defined Z-axis.
-               for (var i = 1, length = numSpines - 1; i < length; ++ i)
+               for (let i = 1, length = numSpines - 1; i < length; ++ i)
                {
                   SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ())
                            .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (spine [i] .getValue ()))
@@ -282,7 +282,7 @@ function (Fields,
             SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
 
             // Get first spine
-            var s = firstSpine;
+            const s = firstSpine;
 
             rotations [0] .set (SCPxAxis .x, SCPxAxis .y, SCPxAxis .z, 0,
                                 SCPyAxis .x, SCPyAxis .y, SCPyAxis .z, 0,
@@ -294,9 +294,9 @@ function (Fields,
             SCPyAxisPrevious .assign (SCPyAxis);
             SCPzAxisPrevious .assign (SCPzAxis);
 
-            for (var i = 1, length = numSpines - 1; i < length; ++ i)
+            for (let i = 1, length = numSpines - 1; i < length; ++ i)
             {
-               var s = spine [i] .getValue ();
+               const s = spine [i] .getValue ();
 
                SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (s) .normalize ()
                         .subtract (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s) .normalize ())
@@ -338,7 +338,7 @@ function (Fields,
             }
             else
             {
-               var s = lastSpine;
+               const s = lastSpine;
 
                SCPyAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ()) .normalize ();
 
@@ -375,14 +375,14 @@ function (Fields,
       })(),
       build: (function ()
       {
-         var
+         const
             min     = new Vector2 (0, 0, 0),
             max     = new Vector2 (0, 0, 0),
             vector2 = new Vector2 (0, 0, 0);
 
          return function ()
          {
-            var
+            const
                cw            = ! this ._ccw .getValue (),
                crossSection  = this ._crossSection,
                spine         = this ._spine,
@@ -394,16 +394,16 @@ function (Fields,
 
             this .getMultiTexCoords () .push (texCoordArray);
 
-            var crossSectionSize = crossSection .length; // This one is used only in the INDEX macro.
+            const crossSectionSize = crossSection .length; // This one is used only in the INDEX macro.
 
             function INDEX (n, k) { return n * crossSectionSize + k; }
 
-            var
+            const
                firstSpine  = spine [0] .getValue (),
                lastSpine   = spine [numSpines - 1] .getValue (),
                closedSpine = firstSpine .equals (lastSpine) && this .getClosedOrientation ();
 
-            var
+            const
                firstCrossSection  = crossSection [0] .getValue (),
                lastCrossSection   = crossSection [crossSection .length - 1] .getValue (),
                closedCrossSection = firstCrossSection .equals (lastCrossSection);
@@ -413,46 +413,46 @@ function (Fields,
             min .assign (crossSection [0] .getValue ());
             max .assign (crossSection [0] .getValue ());
 
-            for (var k = 1, length = crossSection .length; k < length; ++ k)
+            for (let k = 1, length = crossSection .length; k < length; ++ k)
             {
                min .min (crossSection [k] .getValue ());
                max .max (crossSection [k] .getValue ());
             }
 
-            var
+            const
                capSize      = vector2 .assign (max) .subtract (min),
                capMax       = Math .max (capSize .x, capSize .y),
                numCapPoints = closedCrossSection ? crossSection .length - 1 : crossSection .length;
 
             // Create
 
-            var
+            const
                normalIndex = [ ],
                normals     = [ ],
                points      = this .createPoints ();
 
-            for (var p = 0, length = points .length; p < length; ++ p)
+            for (let p = 0, length = points .length; p < length; ++ p)
                normalIndex [p] = [ ];
 
             // Build body.
 
-            var
+            const
                normalArray = this .getNormals (),
                vertexArray = this .getVertices ();
 
-            var
+            const
                numCrossSection_1 = crossSection .length - 1,
                numSpine_1        = numSpines - 1;
 
-            var
+            let
                indexLeft  = INDEX (0, 0),
                indexRight = INDEX (0, closedCrossSection ? 0 : numCrossSection_1);
 
-            for (var n = 0; n < numSpine_1; ++ n)
+            for (let n = 0; n < numSpine_1; ++ n)
             {
-               for (var k = 0; k < numCrossSection_1; ++ k)
+               for (let k = 0; k < numCrossSection_1; ++ k)
                {
-                  var
+                  const
                      n1 = closedSpine && n === numSpines - 2 ? 0 : n + 1,
                      k1 = closedCrossSection && k === crossSection .length - 2 ? 0 : k + 1;
 
@@ -464,7 +464,7 @@ function (Fields,
                   //  | /     |
                   // p1 ----- p2   n
 
-                  var
+                  let
                      i1 = INDEX (n,  k),
                      i2 = INDEX (n,  k1),
                      i3 = INDEX (n1, k1),
@@ -494,7 +494,9 @@ function (Fields,
                   if (k == 0)
                   {
                      if (l2)
+                     {
                         indexLeft = i1;
+                     }
                      else
                      {
                         i1 = indexLeft;
@@ -505,7 +507,9 @@ function (Fields,
                   if (k == crossSection .length - 2)
                   {
                      if (l1)
+                     {
                         indexRight = i2;
+                     }
                      else
                      {
                         i3 = indexRight;
@@ -521,11 +525,13 @@ function (Fields,
                   {
                      // p1
                      if (l2)
+                     {
                         texCoordArray .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
+                     }
                      else
                      {
                         // Cone case: ((texCoord1 + texCoord4) / 2)
-                        var y = (n / numSpine_1 + (n + 1) / numSpine_1) / 2;
+                        const y = (n / numSpine_1 + (n + 1) / numSpine_1) / 2;
 
                         texCoordArray .push (k / numCrossSection_1, y, 0, 1);
                      }
@@ -559,11 +565,13 @@ function (Fields,
 
                      // p3
                      if (l1)
+                     {
                         texCoordArray .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
+                     }
                      else
                      {
                         // Cone case: ((texCoord3 + texCoord2) / 2)
-                        var y = ((n + 1) / numSpine_1 + n / numSpine_1) / 2;
+                        const y = ((n + 1) / numSpine_1 + n / numSpine_1) / 2;
 
                         texCoordArray .push ((k + 1) / numCrossSection_1, y, 0, 1);
                      }
@@ -583,12 +591,10 @@ function (Fields,
 
             // Refine body normals and add them.
 
-            normals = this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
+            const refineNormals = this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
 
-            for (var i = 0; i < normals .length; ++ i)
+            for (const normal of refineNormals)
             {
-               var normal = normals [i];
-
                normalArray .push (normal .x, normal .y, normal .z);
             }
 
@@ -598,14 +604,14 @@ function (Fields,
             {
                if (this ._beginCap .getValue ())
                {
-                  var
+                  const
                      j         = 0, // spine
                      polygon   = [ ],
                      triangles = [ ];
 
-                  for (var k = 0; k < numCapPoints; ++ k)
+                  for (let k = 0; k < numCapPoints; ++ k)
                   {
-                     var
+                     const
                         index = INDEX (j, numCapPoints - 1 - k),
                         point = points [index] .copy ();
 
@@ -622,10 +628,10 @@ function (Fields,
 
                   if (triangles .length >= 3)
                   {
-                     var normal = Triangle3 .normal (points [triangles [0] .index],
-                                                     points [triangles [1] .index],
-                                                     points [triangles [2] .index],
-                                                     new Vector3 (0, 0, 0));
+                     const normal = Triangle3 .normal (points [triangles [0] .index],
+                                                       points [triangles [1] .index],
+                                                       points [triangles [2] .index],
+                                                       new Vector3 (0, 0, 0));
 
                      if (cw)
                         normal .negate ();
@@ -636,14 +642,14 @@ function (Fields,
 
                if (this ._endCap .getValue ())
                {
-                  var
+                  const
                      j         = numSpines - 1, // spine
                      polygon   = [ ],
                      triangles = [ ];
 
-                  for (var k = 0; k < numCapPoints; ++ k)
+                  for (let k = 0; k < numCapPoints; ++ k)
                   {
-                     var
+                     const
                         index = INDEX (j, k),
                         point = points [index] .copy ();
 
@@ -660,10 +666,10 @@ function (Fields,
 
                   if (triangles .length >= 3)
                   {
-                     var normal = Triangle3 .normal (points [triangles [0] .index],
-                                                     points [triangles [1] .index],
-                                                     points [triangles [2] .index],
-                                                     new Vector3 (0, 0, 0));
+                     const normal = Triangle3 .normal (points [triangles [0] .index],
+                                                       points [triangles [1] .index],
+                                                       points [triangles [2] .index],
+                                                       new Vector3 (0, 0, 0));
 
                      if (cw)
                         normal .negate ();
@@ -679,13 +685,13 @@ function (Fields,
       })(),
       addCap: function (texCoordArray, normal, vertices, triangles)
       {
-         var
+         const
             normalArray = this .getNormals (),
             vertexArray = this .getVertices ();
 
-         for (var i = 0; i < triangles .length; i += 3)
+         for (let i = 0, length = triangles .length; i < length; i += 3)
          {
-            var
+            const
                p0 = vertices [triangles [i]     .index],
                p1 = vertices [triangles [i + 1] .index],
                p2 = vertices [triangles [i + 2] .index],

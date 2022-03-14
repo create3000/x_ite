@@ -163,7 +163,7 @@ function (Fields,
       {
          // Triangulate
 
-         var polygons = this .triangulate ();
+         const polygons = this .triangulate ();
 
          // Build arrays
 
@@ -172,7 +172,7 @@ function (Fields,
 
          // Fill GeometryNode
 
-         var
+         const
             colorPerVertex     = this ._colorPerVertex .getValue (),
             normalPerVertex    = this ._normalPerVertex .getValue (),
             coordIndex         = this ._coordIndex .getValue (),
@@ -193,20 +193,17 @@ function (Fields,
          if (texCoordNode)
             texCoordNode .init (multiTexCoordArray);
 
-         for (var p = 0, numPolygons = polygons .length; p < numPolygons; ++ p)
+         for (const polygon of polygons)
          {
-            var
-               polygon   = polygons [p],
+            const
                triangles = polygon .triangles,
                face      = polygon .face;
 
-            for (var v = 0, numVertices = triangles .length; v < numVertices; ++ v)
+            for (const i of triangles)
             {
-               var
-                  i     = triangles [v],
-                  index = coordIndex [i];
+               const index = coordIndex [i];
 
-               for (var a = 0; a < numAttrib; ++ a)
+               for (let a = 0; a < numAttrib; ++ a)
                   attribNodes [a] .addValue (index, attribs [a]);
 
                if (fogCoordNode)
@@ -234,13 +231,11 @@ function (Fields,
 
                coordNode .addPoint (index, vertexArray);
             }
-
-            ++ face;
          }
 
          // Autogenerate normal if not specified.
 
-         if (! this .getNormal ())
+         if (!this .getNormal ())
             this .buildNormals (polygons);
 
          this .setSolid (this ._solid .getValue ());
@@ -248,32 +243,31 @@ function (Fields,
       },
       triangulate: function ()
       {
-         var
+         const
             convex      = this ._convex .getValue (),
             coordLength = this ._coordIndex .length,
             polygons    = [ ];
 
-         if (! this .getCoord ())
+         if (!this .getCoord ())
             return polygons;
+
+         // Add -1 (polygon end marker) to coordIndex if not present.
+         if (coordLength && this ._coordIndex [coordLength - 1] > -1)
+            this ._coordIndex .push (-1);
 
          if (coordLength)
          {
-            // Add -1 (polygon end marker) to coordIndex if not present.
-            if (this ._coordIndex [coordLength - 1] > -1)
-               this ._coordIndex .push (-1);
-
-            var
+            const
                coordIndex  = this ._coordIndex .getValue (),
                coordLength = this ._coordIndex .length;
 
             // Construct triangle array and determine the number of used points.
-            var
-               vertices = [ ],
-               face     = 0;
 
-            for (var i = 0; i < coordLength; ++ i)
+            let vertices = [ ];
+
+            for (let i = 0, face = 0; i < coordLength; ++ i)
             {
-               var index = coordIndex [i];
+               const index = coordIndex [i];
 
                if (index > -1)
                {
@@ -309,7 +303,7 @@ function (Fields,
                         default:
                         {
                            // Triangulate polygons.
-                           var
+                           const
                               triangles = [ ],
                               polygon   = { vertices: vertices, triangles: triangles, face: face };
 
@@ -342,21 +336,21 @@ function (Fields,
       },
       triangulatePolygon: (function ()
       {
-         var polygon = [ ];
+         const polygon = [ ];
 
          return function (vertices, triangles)
          {
-            var
+            const
                coordIndex = this ._coordIndex .getValue (),
                coord      = this .getCoord ();
 
-            for (var v = 0, length = vertices .length; v < length; ++ v)
+            for (let v = 0, length = vertices .length; v < length; ++ v)
             {
-               var
-                  vertex = polygon [v],
-                  i      = vertices [v];
+               const i = vertices [v];
 
-               if (! vertex)
+               let vertex = polygon [v];
+
+               if (!vertex)
                   vertex = polygon [v] = new Vector3 (0, 0, 0);
 
                vertex .index = i;
@@ -368,29 +362,27 @@ function (Fields,
 
             Triangle3 .triangulatePolygon (polygon, triangles);
 
-            for (var i = 0, length = triangles .length; i < length; ++ i)
+            for (let i = 0, length = triangles .length; i < length; ++ i)
                triangles [i] = triangles [i] .index;
          };
       })(),
       triangulateConvexPolygon: function (vertices, triangles)
       {
          // Fallback: Very simple triangulation for convex polygons.
-         for (var i = 1, length = vertices .length - 1; i < length; ++ i)
+         for (let i = 1, length = vertices .length - 1; i < length; ++ i)
             triangles .push (vertices [0], vertices [i], vertices [i + 1]);
       },
       buildNormals: function (polygons)
       {
-         var
+         const
             normals     = this .createNormals (polygons),
             normalArray = this .getNormals ();
 
-         for (var p = 0, pl = polygons .length; p < pl; ++ p)
+         for (const polygon of polygons)
          {
-            var triangles = polygons [p] .triangles;
-
-            for (var v = 0, tl = triangles .length; v < tl; ++ v)
+            for (const triangle of polygon .triangles)
             {
-               var normal = normals [triangles [v]];
+               const normal = normals [triangle];
 
                normalArray .push (normal .x, normal .y, normal .z);
             }
@@ -398,25 +390,23 @@ function (Fields,
       },
       createNormals: (function ()
       {
-         var
+         const
             normals     = [ ],
             normalIndex = [ ];
 
          return function (polygons)
          {
-            var
+            const
                cw          = ! this ._ccw .getValue (),
                coordIndex  = this ._coordIndex .getValue (),
-               coord       = this .getCoord (),
-               normal      = null;
+               coord       = this .getCoord ();
 
             normals     .length = 0;
             normalIndex .length = 0;
 
-            for (var p = 0, pl = polygons .length; p < pl; ++ p)
+            for (const polygon of polygons)
             {
-               var
-                  polygon  = polygons [p],
+               const
                   vertices = polygon .vertices,
                   length   = vertices .length;
 
@@ -424,36 +414,37 @@ function (Fields,
                {
                   case 3:
                   {
-                     normal = coord .getNormal (coordIndex [vertices [0]],
-                                                coordIndex [vertices [1]],
-                                                coordIndex [vertices [2]]);
+                     var normal = coord .getNormal (coordIndex [vertices [0]],
+                                                    coordIndex [vertices [1]],
+                                                    coordIndex [vertices [2]]);
                      break;
                   }
                   case 4:
                   {
-                     normal = coord .getQuadNormal (coordIndex [vertices [0]],
-                                                    coordIndex [vertices [1]],
-                                                    coordIndex [vertices [2]],
-                                                    coordIndex [vertices [3]]);
+                     var normal = coord .getQuadNormal (coordIndex [vertices [0]],
+                                                        coordIndex [vertices [1]],
+                                                        coordIndex [vertices [2]],
+                                                        coordIndex [vertices [3]]);
                      break;
                   }
                   default:
                   {
-                     normal = this .getPolygonNormal (vertices, coordIndex, coord);
+                     var normal = this .getPolygonNormal (vertices, coordIndex, coord);
                      break;
                   }
                }
 
                // Add a normal index for each point.
 
-               for (var i = 0; i < length; ++ i)
+               for (let i = 0; i < length; ++ i)
                {
-                  var
-                     index        = vertices [i],
-                     point        = coordIndex [index],
-                     pointNormals = normalIndex [point];
+                  const
+                     index = vertices [i],
+                     point = coordIndex [index];
 
-                  if (! pointNormals)
+                  let pointNormals = normalIndex [point];
+
+                  if (!pointNormals)
                      pointNormals = normalIndex [point] = [ ];
 
                   pointNormals .push (index);
@@ -464,7 +455,7 @@ function (Fields,
 
                // Add this normal for each vertex.
 
-               for (var i = 0; i < length; ++ i)
+               for (let i = 0; i < length; ++ i)
                   normals [vertices [i]] = normal;
             }
 
@@ -473,7 +464,7 @@ function (Fields,
       })(),
       getPolygonNormal: (function ()
       {
-         var
+         let
             current = new Vector3 (0, 0, 0),
             next    = new Vector3 (0, 0, 0);
 
@@ -482,13 +473,13 @@ function (Fields,
             // Determine polygon normal.
             // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-            var normal = new Vector3 (0, 0, 0);
+            const normal = new Vector3 (0, 0, 0);
 
             coord .get1Point (coordIndex [vertices [0]], next);
 
-            for (var i = 0, length = vertices .length; i < length; ++ i)
+            for (let i = 0, length = vertices .length; i < length; ++ i)
             {
-               var tmp = current;
+               const tmp = current;
                current = next;
                next    = tmp;
 

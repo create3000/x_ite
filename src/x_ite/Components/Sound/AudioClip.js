@@ -164,8 +164,11 @@ function ($,
 
          this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
-         if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
+         if (this .URL .protocol !== "data:")
+         {
+            if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
+               this .URL .searchParams .set ("_", Date .now ());
+         }
 
          this .audio .attr ("src", this .URL .href);
          this .audio .get (0) .load ();

@@ -245,6 +245,9 @@ function (Fields,
             browser          = this .getBrowser (),
             primitiveQuality = value .getValue () .toUpperCase ();
 
+         if (this .localStorage .PrimitiveQuality === primitiveQuality)
+            return;
+
          this .localStorage .PrimitiveQuality = primitiveQuality;
 
          const
@@ -309,6 +312,9 @@ function (Fields,
          const
             browser        = this .getBrowser (),
             textureQuality = value .getValue () .toUpperCase ();
+
+         if (this .localStorage .TextureQuality === textureQuality)
+            return;
 
          this .localStorage .TextureQuality = textureQuality;
 

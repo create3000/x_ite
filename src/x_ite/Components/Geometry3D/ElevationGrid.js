@@ -141,23 +141,23 @@ function (Fields,
       },
       set_attrib__: function ()
       {
-         var attribNodes = this .getAttrib ();
+         const attribNodes = this .getAttrib ();
 
-         for (var i = 0, length = attribNodes .length; i < length; ++ i)
-            attribNodes [i] .removeInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .removeInterest ("requestRebuild", this);
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
+         for (const node of this ._attrib)
          {
-            var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
+            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
 
             if (attribNode)
                attribNodes .push (attribNode);
          }
 
-         for (var i = 0; i < this .attribNodes .length; ++ i)
-            attribNodes [i] .addInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .addInterest ("requestRebuild", this);
       },
       set_fogCoord__: function ()
       {
@@ -236,16 +236,16 @@ function (Fields,
       },
       createTexCoords: function ()
       {
-         var
+         const
             texCoords  = [ ],
             xDimension = this ._xDimension .getValue (),
             zDimension = this ._zDimension .getValue (),
             xSize      = xDimension - 1,
             zSize      = zDimension - 1;
 
-         for (var z = 0; z < zDimension; ++ z)
+         for (let z = 0; z < zDimension; ++ z)
          {
-            for (var x = 0; x < xDimension; ++ x)
+            for (let x = 0; x < xDimension; ++ x)
                texCoords .push (new Vector2 (x / xSize, z / zSize));
          }
 
@@ -253,17 +253,17 @@ function (Fields,
       },
       createNormals: function (points, coordIndex, creaseAngle)
       {
-         var
+         const
             cw          = ! this ._ccw .getValue (),
             normalIndex = [ ],
             normals     = [ ];
 
-         for (var p = 0; p < points .length; ++ p)
+         for (let p = 0, length = points .length; p < length; ++ p)
             normalIndex [p] = [ ];
 
-         for (var c = 0; c < coordIndex .length; c += 3)
+         for (let c = 0, length = coordIndex .length; c < length; c += 3)
          {
-            var
+            const
                c0 = coordIndex [c],
                c1 = coordIndex [c + 1],
                c2 = coordIndex [c + 2];
@@ -272,7 +272,7 @@ function (Fields,
             normalIndex [c1] .push (normals .length + 1);
             normalIndex [c2] .push (normals .length + 2);
 
-            var normal = Triangle3 .normal (points [c0], points [c1], points [c2], new Vector3 (0, 0, 0));
+            const normal = Triangle3 .normal (points [c0], points [c1], points [c2], new Vector3 (0, 0, 0));
 
             if (cw)
                normal .negate ();
@@ -290,18 +290,18 @@ function (Fields,
          //  | \ |
          // p2 - p3
 
-         var
+         const
             coordIndex = [ ],
             xDimension = this ._xDimension .getValue (),
             zDimension = this ._zDimension .getValue (),
             xSize      = xDimension - 1,
             zSize      = zDimension - 1;
 
-         for (var z = 0; z < zSize; ++ z)
+         for (let z = 0; z < zSize; ++ z)
          {
-            for (var x = 0; x < xSize; ++ x)
+            for (let x = 0; x < xSize; ++ x)
             {
-               var
+               const
                   i1 =       z * xDimension + x,
                   i2 = (z + 1) * xDimension + x,
                   i3 = (z + 1) * xDimension + (x + 1),
@@ -321,16 +321,16 @@ function (Fields,
       },
       createPoints: function ()
       {
-         var
+         const
             points     = [ ],
             xDimension = this ._xDimension .getValue (),
             zDimension = this ._zDimension .getValue (),
             xSpacing   = this ._xSpacing .getValue (),
             zSpacing   = this ._zSpacing .getValue ();
 
-         for (var z = 0; z < zDimension; ++ z)
+         for (let z = 0; z < zDimension; ++ z)
          {
-            for (var x = 0; x < xDimension; ++ x)
+            for (let x = 0; x < xDimension; ++ x)
             {
                points .push (new Vector3 (xSpacing * x,
                                           this .getHeight (x + z * xDimension),
@@ -345,7 +345,7 @@ function (Fields,
          if (this ._xDimension .getValue () < 2 || this ._zDimension .getValue () < 2)
             return;
 
-         var
+         const
             colorPerVertex     = this ._colorPerVertex .getValue (),
             normalPerVertex    = this ._normalPerVertex .getValue (),
             coordIndex         = this .createCoordIndex (),
@@ -361,8 +361,9 @@ function (Fields,
             colorArray         = this .getColors (),
             multiTexCoordArray = this .getMultiTexCoords (),
             normalArray        = this .getNormals (),
-            vertexArray        = this .getVertices (),
-            face               = 0;
+            vertexArray        = this .getVertices ();
+
+         let face = 0;
 
          if (texCoordNode)
          {
@@ -379,15 +380,15 @@ function (Fields,
 
          // Build geometry
 
-         for (var c = 0, numCoordIndices = coordIndex .length; c < numCoordIndices; ++ face)
+         for (let c = 0, numCoordIndices = coordIndex .length; c < numCoordIndices; ++ face)
          {
-            for (var p = 0; p < 6; ++ p, ++ c)
+            for (let p = 0; p < 6; ++ p, ++ c)
             {
-               var
+               const
                   index = coordIndex [c],
                   point = points [index];
 
-               for (var a = 0; a < numAttrib; ++ a)
+               for (let a = 0; a < numAttrib; ++ a)
                   attribNodes [a] .addValue (index, attribs [a]);
 
                if (fogCoordNode)
@@ -407,7 +408,7 @@ function (Fields,
                }
                else
                {
-                  var t = texCoords [index];
+                  const t = texCoords [index];
 
                   texCoordArray .push (t .x, t .y, 0, 1);
                }
@@ -427,14 +428,12 @@ function (Fields,
 
          // Add auto-generated normals if needed.
 
-         if (! normalNode)
+         if (!normalNode)
          {
-            var normals = this .createNormals (points, coordIndex);
+            const normals = this .createNormals (points, coordIndex);
 
-            for (var i = 0; i < normals .length; ++ i)
+            for (const normal of normals)
             {
-               var normal = normals [i];
-
                normalArray .push (normal .x, normal .y, normal .z);
             }
          }

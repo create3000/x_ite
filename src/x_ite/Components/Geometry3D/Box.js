@@ -64,8 +64,6 @@ function (Fields,
 {
 "use strict";
 
-   var defaultSize = new Vector3 (2, 2, 2);
-
    function Box (executionContext)
    {
       X3DGeometryNode .call (this, executionContext);
@@ -95,51 +93,58 @@ function (Fields,
       {
          return "geometry";
       },
-      build: function ()
+      build: (function ()
       {
-         var
-            options  = this .getBrowser () .getBoxOptions (),
-            geometry = options .getGeometry (),
-            size     = this ._size .getValue ();
+         const defaultSize = new Vector3 (2, 2, 2);
 
-         this .setMultiTexCoords (geometry .getMultiTexCoords ());
-         this .setNormals        (geometry .getNormals ());
-
-         if (size .equals (defaultSize))
+         return function ()
          {
-            this .setVertices (geometry .getVertices ());
+            const
+               options  = this .getBrowser () .getBoxOptions (),
+               geometry = options .getGeometry (),
+               size     = this ._size .getValue ();
 
-            this .getMin () .assign (geometry .getMin ());
-            this .getMax () .assign (geometry .getMax ());
-         }
-         else
-         {
-            var
-               scale           = Vector3 .divide (size, 2),
-               x               = scale .x,
-               y               = scale .y,
-               z               = scale .z,
-               defaultVertices = geometry .getVertices () .getValue (),
-               vertexArray     = this .getVertices ();
+            this .setMultiTexCoords (geometry .getMultiTexCoords ());
+            this .setNormals        (geometry .getNormals ());
 
-            for (var i = 0; i < defaultVertices .length; i += 4)
+            if (size .equals (defaultSize))
             {
-               vertexArray .push (x * defaultVertices [i],
-                                  y * defaultVertices [i + 1],
-                                  z * defaultVertices [i + 2],
-                                  1);
+               this .setVertices (geometry .getVertices ());
+
+               this .getMin () .assign (geometry .getMin ());
+               this .getMax () .assign (geometry .getMax ());
+            }
+            else
+            {
+               const
+                  scale           = Vector3 .divide (size, 2),
+                  defaultVertices = geometry .getVertices () .getValue (),
+                  vertexArray     = this .getVertices ();
+
+               let
+                  x = scale .x,
+                  y = scale .y,
+                  z = scale .z;
+
+               for (let i = 0, length = defaultVertices .length; i < length; i += 4)
+               {
+                  vertexArray .push (x * defaultVertices [i],
+                                     y * defaultVertices [i + 1],
+                                     z * defaultVertices [i + 2],
+                                     1);
+               }
+
+               x = Math .abs (x);
+               y = Math .abs (y);
+               z = Math .abs (z);
+
+               this .getMin () .set (-x, -y, -z);
+               this .getMax () .set ( x,  y,  z);
             }
 
-            x = Math .abs (x);
-            y = Math .abs (y);
-            z = Math .abs (z);
-
-            this .getMin () .set (-x, -y, -z);
-            this .getMax () .set ( x,  y,  z);
-         }
-
-         this .setSolid (this ._solid .getValue ());
-      },
+            this .setSolid (this ._solid .getValue ());
+         };
+      })(),
    });
 
    return Box;

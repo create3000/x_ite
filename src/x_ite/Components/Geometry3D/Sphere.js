@@ -102,10 +102,10 @@ function (Fields,
       },
       build: function ()
       {
-         var
+         const
             options  = this .getBrowser () .getSphereOptions (),
             geometry = options .getGeometry (),
-            radius   = this ._radius .getValue ();
+            radius   = Math .abs (this ._radius .getValue ());
 
          this .setMultiTexCoords (geometry .getMultiTexCoords ());
          this .setNormals        (geometry .getNormals ());
@@ -119,19 +119,17 @@ function (Fields,
          }
          else
          {
-            var
+            const
                defaultVertices = geometry .getVertices () .getValue (),
                vertexArray     = this .getVertices ();
 
-            for (var i = 0; i < defaultVertices .length; i += 4)
+            for (let i = 0, length = defaultVertices .length; i < length; i += 4)
             {
                vertexArray .push (radius * defaultVertices [i],
                                   radius * defaultVertices [i + 1],
                                   radius * defaultVertices [i + 2],
                                   1);
             }
-
-            radius = Math .abs (radius);
 
             this .getMin () .set (-radius, -radius, -radius);
             this .getMax () .set ( radius,  radius,  radius);

@@ -230,8 +230,11 @@ function (Fields,
             this .family = this .familyStack .shift ();
             this .URL    = new URL (this .family, this .loader .getReferer ());
 
-            if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
-               this .URL .searchParams .set ("_", Date .now ());
+            if (this .URL .protocol !== "data:")
+            {
+               if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
+                  this .URL .searchParams .set ("_", Date .now ());
+            }
 
             this .getBrowser () .getFont (this .URL)
                .done (this .setFont .bind (this))
