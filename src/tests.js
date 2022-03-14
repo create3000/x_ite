@@ -215,6 +215,8 @@ const X_ITE_TESTS = [
    { path: "PointingDeviceSensor/LineSensor.x3d" },
    { path: "PointingDeviceSensor/PlaneSensor.x3d" },
    { path: "PointingDeviceSensor/SphereSensor.x3d" },
+   { path: "PointingDeviceSensor/TouchLines.x3dv" },
+   { path: "PointingDeviceSensor/TouchPoints.x3dv" },
    { path: "PointingDeviceSensor/lamp.x3d" },
    { path: "PointingDeviceSensor/test.x3d" },
    { component: "ProjectiveTextureMapping" },
