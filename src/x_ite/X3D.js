@@ -70,6 +70,7 @@ define ([
    "x_ite/Prototype/ProtoDeclarationArray",
    "x_ite/Prototype/X3DExternProtoDeclaration",
    "x_ite/Prototype/X3DProtoDeclaration",
+   "x_ite/Prototype/X3DProtoDeclarationNode",
    "x_ite/Routing/RouteArray",
    "x_ite/Routing/X3DRoute",
    "x_ite/Base/X3DConstants",
@@ -99,6 +100,7 @@ function ($,
           ProtoDeclarationArray,
           X3DExternProtoDeclaration,
           X3DProtoDeclaration,
+          X3DProtoDeclarationNode,
           RouteArray,
           X3DRoute,
           X3DConstants,
@@ -218,9 +220,11 @@ function ($,
       RouteArray:                  RouteArray,
       X3DRoute:                    X3DRoute,
 
+      // Additional classes
       X3DBaseNode:                 X3DBaseNode,
       X3DExportedNode:             X3DExportedNode,
       X3DImportedNode:             X3DImportedNode,
+      X3DProtoDeclarationNode:     X3DProtoDeclarationNode,
 
       X3DFieldDefinition:          X3DFieldDefinition,
       FieldDefinitionArray:        FieldDefinitionArray,
@@ -267,6 +271,6 @@ function ($,
       MFVec4d:                     Fields .MFVec4d,
       MFVec4f:                     Fields .MFVec4f,
    });
-   
+
    return X3D;
 });
