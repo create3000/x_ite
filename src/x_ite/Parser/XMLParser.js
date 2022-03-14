@@ -762,7 +762,7 @@ function ($,
          catch (error)
          {
             console .warn ("XML Parser Error: ", error .message);
-            //console .warn (error);
+            //console .error (error);
          }
       },
       fieldValueElement: function (xmlElement)
@@ -1021,7 +1021,7 @@ function ($,
          }
          catch (error)
          {
-            //console .warn (error);
+            //console .error (error);
          }
       },
       fieldValue: function (field, value)
