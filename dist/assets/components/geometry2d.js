@@ -230,13 +230,11 @@ define ('x_ite/Browser/Geometry2D/Circle2DOptions',[
    "x_ite/Fields",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "standard/Math/Numbers/Complex",
-   "standard/Math/Numbers/Vector3",
 ],
 function (X3DBaseNode,
           Fields,
           X3DGeometryNode,
-          Complex,
-          Vector3)
+          Complex)
 {
 "use strict";
 
@@ -285,9 +283,12 @@ function (X3DBaseNode,
 
          for (let n = 0; n < dimension; ++ n)
          {
-            const point = Complex .Polar (1, angle * n);
+            const
+               point1 = Complex .Polar (1, angle * n),
+               point2 = Complex .Polar (1, angle * (n + 1));
 
-            vertices .push (point .real, point .imag, 0, 1);
+            vertices .push (point1 .real, point1 .imag, 0, 1);
+            vertices .push (point2 .real, point2 .imag, 0, 1);
          }
 
          vertices .shrinkToFit ();
@@ -824,8 +825,6 @@ function (Fields,
 
       this .addType (X3DConstants .Arc2D);
 
-      this .setGeometryType (1);
-
       this ._startAngle .setUnit ("angle");
       this ._endAngle   .setUnit ("angle");
       this ._radius     .setUnit ("length");
@@ -863,14 +862,14 @@ function (Fields,
       },
       getSweepAngle: function ()
       {
-         var
+         const
             start = Algorithm .interval (this ._startAngle .getValue (), 0, Math .PI * 2),
             end   = Algorithm .interval (this ._endAngle   .getValue (), 0, Math .PI * 2);
 
          if (start === end)
             return Math .PI * 2;
 
-         var sweepAngle = Math .abs (end - start);
+         const sweepAngle = Math .abs (end - start);
 
          if (start > end)
             return (Math .PI * 2) - sweepAngle;
@@ -883,43 +882,31 @@ function (Fields,
       },
       build: function ()
       {
-         var
-            gl          = this .getBrowser () .getContext (),
+         const
             options     = this .getBrowser () .getArc2DOptions (),
             dimension   = options ._dimension .getValue (),
             startAngle  = this ._startAngle .getValue  (),
             radius      = Math .abs (this ._radius .getValue ()),
             sweepAngle  = this .getSweepAngle (),
-            circle      = sweepAngle == (Math .PI * 2),
-            steps       = Math .floor (sweepAngle * dimension / (Math .PI * 2)),
+            steps       = Math .max (3, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
             vertexArray = this .getVertices ();
 
-         steps = Math .max (3, steps);
-
-         if (! circle)
+         for (let n = 0; n < steps; ++ n)
          {
-            ++ steps;
-            this .setPrimitiveMode (gl .LINE_STRIP);
-         }
-         else
-            this .setPrimitiveMode (gl .LINE_LOOP);
+            const
+               t1     = n / steps,
+               theta1 = startAngle + (sweepAngle * t1),
+               point1 = Complex .Polar (radius, theta1),
+               t2     = (n + 1) / steps,
+               theta2 = startAngle + (sweepAngle * t2),
+               point2 = Complex .Polar (radius, theta2);
 
-         var steps_1 = circle ? steps : steps - 1;
-
-         for (var n = 0; n < steps; ++ n)
-         {
-            var
-               t     = n / steps_1,
-               theta = startAngle + (sweepAngle * t),
-               point = Complex .Polar (radius, theta);
-
-            vertexArray .push (point .real, point .imag, 0, 1);
+            vertexArray .push (point1 .real, point1 .imag, 0, 1);
+            vertexArray .push (point2 .real, point2 .imag, 0, 1);
          }
 
          this .getMin () .set (-radius, -radius, 0);
          this .getMax () .set ( radius,  radius, 0);
-
-         this .setSolid (false);
       },
    });
 
@@ -982,7 +969,6 @@ define ('x_ite/Components/Geometry2D/ArcClose2D',[
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Complex",
-   "standard/Math/Numbers/Vector3",
    "standard/Math/Algorithm",
 ],
 function (Fields,
@@ -991,7 +977,6 @@ function (Fields,
           X3DGeometryNode,
           X3DConstants,
           Complex,
-          Vector3,
           Algorithm)
 {
 "use strict";
@@ -1043,14 +1028,14 @@ function (Fields,
       },
       getSweepAngle: function ()
       {
-         var
+         const
             start = Algorithm .interval (this ._startAngle .getValue (), 0, Math .PI * 2),
             end   = Algorithm .interval (this ._endAngle   .getValue (), 0, Math .PI * 2);
 
          if (start === end)
             return Math .PI * 2;
 
-         var sweepAngle = Math .abs (end - start);
+         const sweepAngle = Math .abs (end - start);
 
          if (start > end)
             return (Math .PI * 2) - sweepAngle;
@@ -1063,11 +1048,11 @@ function (Fields,
       },
       build: (function ()
       {
-         var half = new Complex (0.5, 0.5);
+         const half = new Complex (0.5, 0.5);
 
          return function ()
          {
-            var
+            const
                options       = this .getBrowser () .getArcClose2DOptions (),
                chord         = this ._closureType .getValue () === "CHORD",
                dimension     = options ._dimension .getValue (),
@@ -1083,11 +1068,11 @@ function (Fields,
 
             this .getMultiTexCoords () .push (texCoordArray);
 
-            var steps_1 = steps - 1;
+            const steps_1 = steps - 1;
 
-            for (var n = 0; n < steps; ++ n)
+            for (let n = 0; n < steps; ++ n)
             {
-               var
+               const
                   t     = n / steps_1,
                   theta = startAngle + (sweepAngle * t);
 
@@ -1097,13 +1082,13 @@ function (Fields,
 
             if (chord)
             {
-               var
+               const
                   t0 = texCoords [0],
                   p0 = points [0];
 
-               for (var i = 1; i < steps_1; ++ i)
+               for (let i = 1; i < steps_1; ++ i)
                {
-                  var
+                  const
                      t1 = texCoords [i],
                      t2 = texCoords [i + 1],
                      p1 = points [i],
@@ -1124,9 +1109,9 @@ function (Fields,
             }
             else
             {
-               for (var i = 0; i < steps_1; ++ i)
+               for (let i = 0; i < steps_1; ++ i)
                {
-                  var
+                  const
                      t1 = texCoords [i],
                      t2 = texCoords [i + 1],
                      p1 = points [i],
@@ -1225,8 +1210,6 @@ function (Fields,
 
       this .addType (X3DConstants .Circle2D);
 
-      this .setGeometryType (1);
-
       this ._radius .setUnit ("length");
    }
 
@@ -1249,12 +1232,6 @@ function (Fields,
       {
          return "geometry";
       },
-      initialize: function ()
-      {
-         X3DLineGeometryNode .prototype .initialize .call (this);
-
-         this .setPrimitiveMode (this .getBrowser () .getContext () .LINE_LOOP);
-      },
       set_live__: function ()
       {
          X3DLineGeometryNode .prototype .set_live__ .call (this);
@@ -1266,7 +1243,7 @@ function (Fields,
       },
       build: function ()
       {
-         var
+         const
             options     = this .getBrowser () .getCircle2DOptions (),
             vertexArray = this .getVertices (),
             radius      = this ._radius .getValue ();
@@ -1277,9 +1254,9 @@ function (Fields,
          }
          else
          {
-            var defaultVertices = options .getVertices () .getValue ();
+            const defaultVertices = options .getVertices () .getValue ();
 
-            for (var i = 0, length = defaultVertices .length; i < length; i += 4)
+            for (let i = 0, length = defaultVertices .length; i < length; i += 4)
                vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
          }
 
@@ -1392,8 +1369,6 @@ function (Fields,
       initialize: function ()
       {
          X3DGeometryNode .prototype .initialize .call (this);
-
-         this .setPrimitiveMode (this .getBrowser () .getContext () .LINE_LOOP);
       },
       set_live__: function ()
       {
@@ -1404,7 +1379,6 @@ function (Fields,
          else
             this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);
       },
-      getShader: X3DLineGeometryNode .prototype .getShader,
       build: function ()
       {
          const
@@ -1472,7 +1446,6 @@ function (Fields,
 
             this .setGeometryType (2);
             this .setSolid (this ._solid .getValue ());
-
             return;
          }
 
@@ -1636,8 +1609,6 @@ function (Fields,
 
       this .addType (X3DConstants .Polyline2D);
 
-      this .setGeometryType (1);
-
       this ._lineSegments .setUnit ("length");
    }
 
@@ -1660,24 +1631,17 @@ function (Fields,
       {
          return "geometry";
       },
-      initialize: function ()
-      {
-         X3DLineGeometryNode .prototype .initialize .call (this);
-
-         this .setPrimitiveMode (this .getBrowser () .getContext () .LINE_STRIP);
-      },
       build: function ()
       {
-         var
+         const
             lineSegments = this ._lineSegments .getValue (),
             vertexArray  = this .getVertices ();
 
-         for (var i = 0, length = this ._lineSegments .length * 2; i < length; i += 2)
+         for (let i = 0, length = (this ._lineSegments .length - 1) * 2; i < length; i += 2)
          {
-            vertexArray .push (lineSegments [i], lineSegments [i + 1], 0, 1);
+            vertexArray .push (lineSegments [i + 0], lineSegments [i + 1], 0, 1);
+            vertexArray .push (lineSegments [i + 2], lineSegments [i + 3], 0, 1);
          }
-
-         this .setSolid (false);
       },
    });
 
@@ -1737,31 +1701,27 @@ define ('x_ite/Components/Geometry2D/Polypoint2D',[
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DLineGeometryNode",
+   "x_ite/Components/Rendering/X3DPointGeometryNode",
    "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLineGeometryNode,
+          X3DPointGeometryNode,
           X3DConstants)
 {
 "use strict";
 
    function Polypoint2D (executionContext)
    {
-      X3DLineGeometryNode .call (this, executionContext);
+      X3DPointGeometryNode .call (this, executionContext);
 
       this .addType (X3DConstants .Polypoint2D);
 
-      this .setGeometryType (0);
-
       this ._point .setUnit ("length");
-
-      this .setTransparent (true);
    }
 
-   Polypoint2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+   Polypoint2D .prototype = Object .assign (Object .create (X3DPointGeometryNode .prototype),
    {
       constructor: Polypoint2D,
       [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
@@ -1780,26 +1740,13 @@ function (Fields,
       {
          return "geometry";
       },
-      initialize: function ()
-      {
-         X3DLineGeometryNode .prototype .initialize .call (this);
-
-         var browser = this .getBrowser ();
-
-         this .setPrimitiveMode (browser .getContext () .POINTS);
-         this .setSolid (false);
-      },
-      getShader: function (browser)
-      {
-         return browser .getPointShader ();
-      },
       build: function ()
       {
-         var
+         const
             point       = this ._point .getValue (),
             vertexArray = this .getVertices ();
 
-         for (var i = 0, length = this ._point .length * 2; i < length; i += 2)
+         for (let i = 0, length = this ._point .length * 2; i < length; i += 2)
          {
             vertexArray .push (point [i], point [i + 1], 0, 1);
          }
@@ -1877,8 +1824,6 @@ function (Fields,
 {
 "use strict";
 
-   var defaultSize = new Vector2 (2, 2);
-
    function Rectangle2D (executionContext)
    {
       X3DGeometryNode .call (this, executionContext);
@@ -1910,46 +1855,51 @@ function (Fields,
       {
          return "geometry";
       },
-      build: function ()
+      build: (function ()
       {
-         var
-            options  = this .getBrowser () .getRectangle2DOptions (),
-            geometry = options .getGeometry (),
-            size     = this ._size .getValue ();
+         const defaultSize = new Vector2 (2, 2);
 
-         this .setMultiTexCoords (geometry .getMultiTexCoords ());
-         this .setNormals        (geometry .getNormals ());
-
-         if (size .equals (defaultSize))
+         return function ()
          {
-            this .setVertices (geometry .getVertices ());
+            const
+               options  = this .getBrowser () .getRectangle2DOptions (),
+               geometry = options .getGeometry (),
+               size     = this ._size .getValue ();
 
-            this .getMin () .assign (geometry .getMin ());
-            this .getMax () .assign (geometry .getMax ());
-         }
-         else
-         {
-            var
-               scale           = Vector3 .divide (size, 2),
-               x               = scale .x,
-               y               = scale .y,
-               defaultVertices = geometry .getVertices () .getValue (),
-               vertexArray     = this .getVertices ();
+            this .setMultiTexCoords (geometry .getMultiTexCoords ());
+            this .setNormals        (geometry .getNormals ());
 
-            for (var i = 0; i < defaultVertices .length; i += 4)
+            if (size .equals (defaultSize))
             {
-               vertexArray .push (x * defaultVertices [i],
-                                  y * defaultVertices [i + 1],
-                                  defaultVertices [i + 2],
-                                  1);
+               this .setVertices (geometry .getVertices ());
+
+               this .getMin () .assign (geometry .getMin ());
+               this .getMax () .assign (geometry .getMax ());
+            }
+            else
+            {
+               const
+                  scale           = Vector3 .divide (size, 2),
+                  x               = scale .x,
+                  y               = scale .y,
+                  defaultVertices = geometry .getVertices () .getValue (),
+                  vertexArray     = this .getVertices ();
+
+               for (let i = 0; i < defaultVertices .length; i += 4)
+               {
+                  vertexArray .push (x * defaultVertices [i],
+                                     y * defaultVertices [i + 1],
+                                     0,
+                                     1);
+               }
+
+               this .getMin () .set (-x, -y, 0);
+               this .getMax () .set ( x,  y, 0);
             }
 
-            this .getMin () .set (-x, -y, 0);
-            this .getMax () .set ( x,  y, 0);
-         }
-
-         this .setSolid (this ._solid .getValue ());
-      },
+            this .setSolid (this ._solid .getValue ());
+         };
+      })(),
    });
 
    return Rectangle2D;
@@ -2010,14 +1960,12 @@ define ('x_ite/Components/Geometry2D/TriangleSet2D',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode,
-          X3DConstants,
-          Vector3)
+          X3DConstants)
 {
 "use strict";
 
@@ -2054,12 +2002,12 @@ function (Fields,
       },
       build: function ()
       {
-         var
+         const
             vertices    = this ._vertices .getValue (),
             normalArray = this .getNormals (),
             vertexArray = this .getVertices ();
 
-         for (var i = 0, length = this ._vertices .length * 2; i < length; i += 2)
+         for (let i = 0, length = this ._vertices .length * 2; i < length; i += 2)
          {
             normalArray .push (0, 0, 1);
             vertexArray .push (vertices [i], vertices [i + 1], 0, 1);
@@ -2069,17 +2017,17 @@ function (Fields,
       },
       buildTexCoords: function ()
       {
-         var texCoordArray = this .getTexCoords ();
+         const texCoordArray = this .getTexCoords ();
 
          if (texCoordArray .length === 0)
          {
-            var
+            const
                p             = this .getTexCoordParams (),
                min           = p .min,
                Ssize         = p .Ssize,
                vertexArray   = this .getVertices () .getValue ();
 
-            for (var i = 0, length = vertexArray .length; i < length; i += 4)
+            for (let i = 0, length = vertexArray .length; i < length; i += 4)
             {
                texCoordArray .push ((vertexArray [i]     - min [0]) / Ssize,
                                     (vertexArray [i + 1] - min [1]) / Ssize,

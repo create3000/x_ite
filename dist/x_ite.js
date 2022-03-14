@@ -1,4 +1,4 @@
-/* X_ITE v5.0.0a-1141 */
+/* X_ITE v5.0.0a-1142 */
 
 (function (global, factory)
 {
@@ -48380,7 +48380,7 @@ function ($,
          catch (error)
          {
             console .warn ("XML Parser Error: ", error .message);
-            //console .warn (error);
+            //console .error (error);
          }
       },
       fieldValueElement: function (xmlElement)
@@ -48639,7 +48639,7 @@ function ($,
          }
          catch (error)
          {
-            //console .warn (error);
+            //console .error (error);
          }
       },
       fieldValue: function (field, value)
@@ -69967,12 +69967,9 @@ function (Fields,
          {
             try
             {
-               const geometryNode = this .getGeometry ();
-
-               if (geometryNode .getGeometryType () < 1)
-                  return;
-
-               const browser = renderObject .getBrowser ();
+               const
+                  browser      = renderObject .getBrowser (),
+                  geometryNode = this .getGeometry ();
 
                modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
                invModelViewMatrix .assign (modelViewMatrix) .inverse ();
@@ -70155,16 +70152,19 @@ function (Fields,
 
       // Members
 
+      const browser = this .getBrowser ();
+
       this .min                   = new Vector3 (0, 0, 0);
       this .max                   = new Vector3 (0, 0, 0);
       this .bbox                  = new Box3 (this .min, this .max, true);
       this .solid                 = true;
       this .geometryType          = 3;
+      this .primitiveMode         = browser .getContext () .TRIANGLES;
       this .flatShading           = undefined;
       this .colorMaterial         = false;
       this .attribNodes           = [ ];
       this .attribs               = [ ];
-      this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();
+      this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
       this .multiTexCoords        = [ ];
       this .texCoords             = X3DGeometryNode .createArray ();
       this .fogDepths             = X3DGeometryNode .createArray ();
@@ -70192,7 +70192,9 @@ function (Fields,
 
       array .assign = function (value)
       {
-         for (var i = 0, length = value .length; i < length; ++ i)
+         const length = value .length;
+
+         for (let i = 0; i < length; ++ i)
             this [i] = value [i];
 
          this .length = length;
@@ -70234,7 +70236,6 @@ function (Fields,
 
          const gl = this .getBrowser () .getContext ();
 
-         this .primitiveMode   = gl .TRIANGLES;
          this .frontFace       = gl .CCW;
          this .attribBuffers   = [ ];
          this .texCoordBuffers = [ ];
@@ -70244,11 +70245,8 @@ function (Fields,
          this .vertexBuffer    = gl .createBuffer ();
          this .planes          = [ ];
 
-         if (this .geometryType > 1)
-         {
-            for (let i = 0; i < 5; ++ i)
-               this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
-         }
+         for (let i = 0; i < 5; ++ i)
+            this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
 
          this .set_live__ ();
       },
@@ -70344,9 +70342,11 @@ function (Fields,
       },
       setMultiTexCoords: function (value)
       {
-         const multiTexCoords = this .multiTexCoords;
+         const
+            multiTexCoords = this .multiTexCoords,
+            length         = value .length;
 
-         for (var i = 0, length = value .length; i < length; ++ i)
+         for (let i = 0; i < length; ++ i)
             multiTexCoords [i] = value [i];
 
          multiTexCoords .length = length;
@@ -70585,18 +70585,18 @@ function (Fields,
       {
          const intersection = new Vector3 (0, 0, 0);
 
-         return function (hitRay)
+         return function (hitRay, offset = 0)
          {
             const
                planes = this .planes,
                min    = this .min,
                max    = this .max,
-               minX   = min .x,
-               maxX   = max .x,
-               minY   = min .y,
-               maxY   = max .y,
-               minZ   = min .z,
-               maxZ   = max .z;
+               minX   = min .x - offset,
+               maxX   = max .x + offset,
+               minY   = min .y - offset,
+               maxY   = max .y + offset,
+               minZ   = min .z - offset,
+               maxZ   = max .z + offset;
 
             // front
             if (planes [0] .intersectsLine (hitRay, intersection))
@@ -70818,19 +70818,21 @@ function (Fields,
 
             this ._bbox_changed .addEvent ();
 
+            for (let i = 0; i < 5; ++ i)
+               this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+
             // Generate texCoord if needed.
 
             if (this .geometryType > 1)
             {
-               for (let i = 0; i < 5; ++ i)
-                  this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
-
                if (this .multiTexCoords .length === 0)
                   this .multiTexCoords .push (this .buildTexCoords ());
 
-               const last = this .multiTexCoords .length - 1;
+               const
+                  last   = this .multiTexCoords .length - 1,
+                  length = this .getBrowser () .getMaxTextures ();
 
-               for (var i = this .multiTexCoords .length, length = this .getBrowser () .getMaxTextures (); i < length; ++ i)
+               for (let i = this .multiTexCoords .length; i < length; ++ i)
                   this .multiTexCoords [i] = this .multiTexCoords [last];
 
                this .multiTexCoords .length = length;
@@ -70853,16 +70855,19 @@ function (Fields,
          this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
 
          // Create attrib arrays.
+         {
+            const attribs = this .attribs;
 
-         const attribs = this .attribs;
+            for (const attrib of attribs)
+               attrib .length = 0;
 
-         for (var a = 0, length = attribs .length; a < length; ++ a)
-            attribs [a] .length = 0;
+            const length = this .attribNodes .length;
 
-         for (var a = attribs .length, length = this .attribNodes .length; a < length; ++ a)
-            attribs [a] = X3DGeometryNode .createArray ();
+            for (let a = attribs .length; a < length; ++ a)
+               attribs [a] = X3DGeometryNode .createArray ();
 
-         attribs .length = length;
+            attribs .length = length;
+         }
 
          // Buffer
 
@@ -70945,12 +70950,12 @@ function (Fields,
          // Setup vertex attributes.
 
          // Attribs in depth rendering are not supported.
-         //for (var i = 0, length = attribNodes .length; i < length; ++ i)
+         //for (let i = 0, length = attribNodes .length; i < length; ++ i)
          //	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
-         //for (var i = 0, length = attribNodes .length; i < length; ++ i)
+         //for (let i = 0, length = attribNodes .length; i < length; ++ i)
          //	attribNodes [i] .disable (gl, shaderNode);
 
          gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
@@ -71090,7 +71095,7 @@ function (Fields,
       displayParticlesDepth: function (gl, context, shaderNode, particles, numParticles)
       {
          // Attribs in depth rendering are not supported:
-         //for (var i = 0, length = attribNodes .length; i < length; ++ i)
+         //for (let i = 0, length = attribNodes .length; i < length; ++ i)
          //	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
@@ -71367,16 +71372,19 @@ function (X3DGeometryNode,
 
    function X3DLineGeometryNode (executionContext)
    {
-      X3DGeometryNode .call (this, executionContext);
+      if (!this .getExecutionContext ())
+         X3DGeometryNode .call (this, executionContext);
+
+      const browser = this .getBrowser ();
+
+      this .setGeometryType (1);
+      this .setPrimitiveMode (browser .getContext () .LINES);
+      this .setSolid (false);
    }
 
    X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
       constructor: X3DLineGeometryNode,
-      getShader: function (browser)
-      {
-         return browser .getLineShader ();
-      },
       intersectsLine: (function ()
       {
          const PICK_DISTANCE_FACTOR = 1 / 300;
@@ -71391,24 +71399,32 @@ function (X3DGeometryNode,
 
          return function (hitRay, clipPlanes, modelViewMatrix, intersections)
          {
-            const vertices = this .getVertices ();
-
-            for (let i = 0, length = vertices .length; i < length; i += 8)
+            if (this .intersectsBBox (hitRay, 1))
             {
-               point1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
-               point2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+               const vertices = this .getVertices ();
 
-               line .setPoints (point1, point2);
-
-               if (line .getClosestPointToLine (hitRay, point))
+               for (let i = 0, length = vertices .length; i < length; i += 8)
                {
-                  if (line .getPerpendicularVectorToLine (hitRay, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
-                  {
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                        continue;
+                  point1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+                  point2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-                     intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
-                     return true;
+                  line .setPoints (point1, point2);
+
+                  if (line .getClosestPointToLine (hitRay, point))
+                  {
+                     if (line .getPerpendicularVectorToLine (hitRay, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
+                     {
+                        const distance = point1 .distance (point2);
+
+                        if (point1 .distance (point) <= distance && point2 .distance (point) <= distance)
+                        {
+                           if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                              continue;
+
+                           intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
+                           return true;
+                        }
+                     }
                   }
                }
             }
@@ -71424,28 +71440,25 @@ function (X3DGeometryNode,
       {
          // Line stipple support.
 
-         if (this .getGeometryType () === 1)
+         const
+            texCoords = this .getTexCoords (),
+            vertices  = this .getVertices ();
+
+         this .getMultiTexCoords () .push (texCoords);
+
+         for (let i = 0, length = vertices .length; i < length; i += 8)
          {
-            const
-               texCoords = this .getTexCoords (),
-               vertices  = this .getVertices ();
-
-            this .getMultiTexCoords () .push (texCoords);
-
-            for (let i = 0, length = vertices .length; i < length; i += 8)
-            {
-               texCoords .push (vertices [i],
-                                vertices [i + 1],
-                                vertices [i + 2],
-                                vertices [i + 3],
-                                vertices [i],
-                                vertices [i + 1],
-                                vertices [i + 2],
-                                vertices [i + 3]);
-            }
-
-            texCoords .shrinkToFit ();
+            texCoords .push (vertices [i],
+                             vertices [i + 1],
+                             vertices [i + 2],
+                             vertices [i + 3],
+                             vertices [i],
+                             vertices [i + 1],
+                             vertices [i + 2],
+                             vertices [i + 3]);
          }
+
+         texCoords .shrinkToFit ();
 
          X3DGeometryNode .prototype .transfer .call (this);
       },
@@ -71456,7 +71469,7 @@ function (X3DGeometryNode,
             const
                browser        = context .browser,
                appearanceNode = context .shapeNode .getAppearance (),
-               shaderNode     = appearanceNode .shaderNode || this .getShader (browser);
+               shaderNode     = appearanceNode .shaderNode || browser .getLineShader ();
 
             if (shaderNode .getValid ())
             {
@@ -71489,7 +71502,7 @@ function (X3DGeometryNode,
 
                shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
-               // Wireframes are always solid so only one drawing call is needed.
+               // WireFrames are always solid so only one drawing call is needed.
 
                gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
 
@@ -71680,8 +71693,6 @@ function (Fields,
 
       this .addType (X3DConstants .IndexedLineSet);
 
-      this .setGeometryType (1);
-
       this .fogCoordNode = null;
       this .colorNode    = null;
       this .coordNode    = null;
@@ -71724,9 +71735,6 @@ function (Fields,
          this ._fogCoord       .addInterest ("set_fogCoord__", this);
          this ._color          .addInterest ("set_color__",    this);
          this ._coord          .addInterest ("set_coord__",    this);
-
-         this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
-         this .setSolid (false);
 
          this .set_attrib__ ();
          this .set_fogCoord__ ();
@@ -72756,23 +72764,23 @@ function (X3DGeometryNode,
       },
       set_attrib__: function ()
       {
-         var attribNodes = this .getAttrib ();
+         const attribNodes = this .getAttrib ();
 
-         for (var i = 0, length = attribNodes .length; i < length; ++ i)
-            attribNodes [i] .removeInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .removeInterest ("requestRebuild", this);
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
+         for (const node of  this ._attrib)
          {
-            var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
+            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
 
             if (attribNode)
                attribNodes .push (attribNode);
          }
 
-         for (var i = 0; i < this .attribNodes .length; ++ i)
-            attribNodes [i] .addInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .addInterest ("requestRebuild", this);
       },
       set_fogCoord__: function ()
       {
@@ -72850,7 +72858,7 @@ function (X3DGeometryNode,
       },
       build: function (verticesPerPolygon, polygonsSize, verticesPerFace, trianglesSize)
       {
-         if (! this .coordNode || this .coordNode .isEmpty ())
+         if (!this .coordNode || this .coordNode .isEmpty ())
             return;
 
          // Set size to a multiple of verticesPerPolygon.
@@ -72875,20 +72883,18 @@ function (X3DGeometryNode,
             normalArray        = this .getNormals (),
             vertexArray        = this .getVertices ();
 
-         var face = 0;
-
          if (texCoordNode)
             texCoordNode .init (multiTexCoordArray);
 
          // Fill GeometryNode
 
-         for (var i = 0; i < trianglesSize; ++ i)
+         for (let i = 0; i < trianglesSize; ++ i)
          {
-            face = Math .floor (i / verticesPerFace);
+            const
+               face  = Math .floor (i / verticesPerFace),
+               index = this .getPolygonIndex (this .getTriangleIndex (i));
 
-            const index = this .getPolygonIndex (this .getTriangleIndex (i));
-
-            for (var a = 0; a < numAttrib; ++ a)
+            for (let a = 0; a < numAttrib; ++ a)
                attribNodes [a] .addValue (index, attribs [a]);
 
             if (fogCoordNode)
@@ -72909,7 +72915,6 @@ function (X3DGeometryNode,
             {
                if (normalPerVertex)
                   normalNode .addVector (index, normalArray);
-
                else
                   normalNode .addVector (face, normalArray);
             }
@@ -72919,7 +72924,7 @@ function (X3DGeometryNode,
 
          // Autogenerate normal if not specified.
 
-         if (! this .getNormal ())
+         if (!this .getNormal ())
             this .buildNormals (verticesPerPolygon, polygonsSize, trianglesSize);
 
          this .setSolid (this ._solid .getValue ());
@@ -72931,7 +72936,7 @@ function (X3DGeometryNode,
             normals     = this .createNormals (verticesPerPolygon, polygonsSize),
             normalArray = this .getNormals ();
 
-         for (var i = 0; i < trianglesSize; ++ i)
+         for (let i = 0; i < trianglesSize; ++ i)
          {
             const normal = normals [this .getTriangleIndex (i)];
 
@@ -72946,13 +72951,13 @@ function (X3DGeometryNode,
          {
             const normalIndex = [ ];
 
-            for (var i = 0; i < polygonsSize; ++ i)
+            for (let i = 0; i < polygonsSize; ++ i)
             {
                const index = this .getPolygonIndex (i);
 
-               var pointIndex = normalIndex [index];
+               let pointIndex = normalIndex [index];
 
-               if (! pointIndex)
+               if (!pointIndex)
                   pointIndex = normalIndex [index] = [ ];
 
                pointIndex .push (i);
@@ -72966,18 +72971,18 @@ function (X3DGeometryNode,
       createFaceNormals: function (verticesPerPolygon, polygonsSize)
       {
          const
-            cw      = ! this ._ccw .getValue (),
+            cw      = !this ._ccw .getValue (),
             coord   = this .coordNode,
             normals = [ ];
 
-         for (var i = 0; i < polygonsSize; i += verticesPerPolygon)
+         for (let i = 0; i < polygonsSize; i += verticesPerPolygon)
          {
             const normal = this .getPolygonNormal (i, verticesPerPolygon, coord);
 
             if (cw)
                normal .negate ();
 
-            for (var n = 0; n < verticesPerPolygon; ++ n)
+            for (let n = 0; n < verticesPerPolygon; ++ n)
                normals .push (normal);
          }
 
@@ -72985,7 +72990,7 @@ function (X3DGeometryNode,
       },
       getPolygonNormal: (function ()
       {
-         var
+         let
             current = new Vector3 (0, 0, 0),
             next    = new Vector3 (0, 0, 0);
 
@@ -72998,7 +73003,7 @@ function (X3DGeometryNode,
 
             coord .get1Point (this .getPolygonIndex (index), next);
 
-            for (var i = 0; i < verticesPerPolygon; ++ i)
+            for (let i = 0; i < verticesPerPolygon; ++ i)
             {
                const tmp = current;
                current = next;
@@ -77752,18 +77757,18 @@ function ($,
       })(),
       display: (function ()
       {
-         var
+         const
             fromPoint             = new Vector3 (0, 0, 0),
             toPoint               = new Vector3 (0, 0, 0),
             projectionMatrix      = new Matrix4 (),
             projectionMatrixArray = new Float32Array (Matrix4 .Identity),
             modelViewMatrixArray  = new Float32Array (Matrix4 .Identity);
 
-         return function (interest, type)
+         return function (type)
          {
             // Configure HUD
 
-            var
+            const
                browser  = this .getBrowser (),
                viewport = browser .getViewport (),
                width    = viewport [2],
@@ -77788,7 +77793,7 @@ function ($,
 
             this .transfer (fromPoint, toPoint);
 
-            var
+            const
                gl         = browser .getContext (),
                shaderNode = browser .getLineShader (),
                lineWidth  = gl .getParameter (gl .LINE_WIDTH);
@@ -77828,7 +77833,7 @@ function ($,
       })(),
       transfer: function (fromPoint, toPoint)
       {
-         var
+         const
             gl           = this .getBrowser () .getContext (),
             lineVertices = this .lineVertices;
 
@@ -113073,8 +113078,6 @@ function (Fields,
 
       this .addType (X3DConstants .LineSet);
 
-      this .setGeometryType (1);
-
       this .fogCoordNode = null;
       this .colorNode    = null;
       this .coordNode    = null;
@@ -113111,9 +113114,6 @@ function (Fields,
          this ._fogCoord .addInterest ("set_fogCoord__", this);
          this ._color    .addInterest ("set_color__",    this);
          this ._coord    .addInterest ("set_coord__",    this);
-
-         this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
-         this .setSolid (false);
 
          this .set_attrib__ ();
          this .set_fogCoord__ ();
@@ -113524,18 +113524,289 @@ function (Fields,
  ******************************************************************************/
 
 
+define ('x_ite/Components/Rendering/X3DPointGeometryNode',[
+   "x_ite/Components/Rendering/X3DGeometryNode",
+   "standard/Math/Numbers/Vector2",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Matrix4",
+],
+function (X3DGeometryNode,
+          Vector2,
+          Vector3,
+          Matrix4)
+{
+"use strict";
+
+   function X3DLineGeometryNode (executionContext)
+   {
+      X3DGeometryNode .call (this, executionContext);
+
+      const browser = this .getBrowser ();
+
+      this .setGeometryType (0);
+      this .setPrimitiveMode (browser .getContext () .POINTS);
+      this .setSolid (false);
+      this .setTransparent (true);
+   }
+
+   X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+   {
+      constructor: X3DLineGeometryNode,
+      intersectsLine: (function ()
+      {
+         const PICK_DISTANCE_FACTOR = 1 / 300;
+
+         const
+            point     = new Vector3 (0, 0, 0),
+            vector    = new Vector3 (0, 0, 0),
+            clipPoint = new Vector3 (0, 0, 0);
+
+         return function (hitRay, clipPlanes, modelViewMatrix, intersections)
+         {
+            if (this .intersectsBBox (hitRay, 1))
+            {
+               const vertices = this .getVertices ();
+
+               for (let i = 0, length = vertices .length; i < length; i += 4)
+               {
+                  point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
+
+                  if (hitRay .getPerpendicularVectorToPoint (point, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
+                  {
+                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                        continue;
+
+                     intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
+                     return true;
+                  }
+               }
+            }
+
+            return false;
+         };
+      })(),
+      intersectsBox: function (box, clipPlanes, modelViewMatrix)
+      {
+         return false;
+      },
+      display: function (gl, context)
+      {
+         try
+         {
+            const
+               browser        = context .browser,
+               appearanceNode = context .shapeNode .getAppearance (),
+               shaderNode     = appearanceNode .shaderNode || browser .getPointShader ();;
+
+            if (shaderNode .getValid ())
+            {
+               const
+                  blendModeNode = appearanceNode .blendModeNode,
+                  attribNodes   = this .attribNodes,
+                  attribBuffers = this .attribBuffers;
+
+               if (blendModeNode)
+                  blendModeNode .enable (gl);
+
+               // Setup shader.
+
+               shaderNode .enable (gl);
+               shaderNode .setLocalUniforms (gl, context);
+
+               // Setup vertex attributes.
+
+               for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+               if (this .fogCoords)
+                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+
+               if (this .colorMaterial)
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer);
+
+               if (this .getMultiTexCoords () .length)
+                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, true);
+
+               shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+
+               gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+
+               for (const attribNode of attribNodes)
+                  attribNode .disable (gl, shaderNode);
+
+               if (this .fogCoords)
+                  shaderNode .disableFogDepthAttribute (gl);
+
+               if (this .colorMaterial)
+                  shaderNode .disableColorAttribute (gl);
+
+               if (this .getMultiTexCoords () .length)
+                  shaderNode .disableTexCoordAttribute (gl);
+
+               shaderNode .disable (gl);
+
+               if (blendModeNode)
+                  blendModeNode .disable (gl);
+            }
+         }
+         catch (error)
+         {
+            // Catch error from setLocalUniforms.
+            console .error (error);
+         }
+      },
+      displayParticles: function (gl, context, particles, numParticles)
+      {
+         try
+         {
+            const
+               browser        = context .browser,
+               appearanceNode = context .shapeNode .getAppearance (),
+               shaderNode     = appearanceNode .shaderNode || this .getShader (browser);
+
+            if (shaderNode .getValid ())
+            {
+               const
+                  blendModeNode = appearanceNode .blendModeNode,
+                  attribNodes   = this .attribNodes,
+                  attribBuffers = this .attribBuffers;
+
+               if (blendModeNode)
+                  blendModeNode .enable (gl);
+
+               // Setup shader.
+
+               shaderNode .enable (gl);
+               shaderNode .setLocalUniforms (gl, context);
+
+               // Setup vertex attributes.
+
+               for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+               if (this .fogCoords)
+                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+
+               if (this .colorMaterial)
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer);
+
+               if (this .getMultiTexCoords () .length)
+                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+
+               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+
+               // Wireframes are always solid so only one drawing call is needed.
+
+               const
+                  modelViewMatrix = context .modelViewMatrix,
+                  x               = modelViewMatrix [12],
+                  y               = modelViewMatrix [13],
+                  z               = modelViewMatrix [14],
+                  primitiveMode   = this .primitiveMode;
+
+               for (let p = 0; p < numParticles; ++ p)
+               {
+                  const particle = particles [p];
+
+                  modelViewMatrix [12] = x;
+                  modelViewMatrix [13] = y;
+                  modelViewMatrix [14] = z;
+
+                  Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+
+                  shaderNode .setParticle (gl, particle, modelViewMatrix);
+
+                  gl .drawArrays (primitiveMode, 0, this .vertexCount);
+               }
+
+               for (const attribNode of attribNodes)
+                  attribNode .disable (gl, shaderNode);
+
+               if (this .fogCoords)
+                  shaderNode .disableFogDepthAttribute (gl);
+
+               if (this .colorMaterial)
+                  shaderNode .disableColorAttribute (gl);
+
+               shaderNode .disableTexCoordAttribute (gl);
+               shaderNode .disable (gl);
+
+               if (blendModeNode)
+                  blendModeNode .disable (gl);
+            }
+         }
+         catch (error)
+         {
+            // Catch error from setLocalUniforms.
+            console .error (error);
+         }
+      },
+   });
+
+   return X3DLineGeometryNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Rendering/PointSet',[
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DLineGeometryNode",
+   "x_ite/Components/Rendering/X3DPointGeometryNode",
    "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLineGeometryNode,
+          X3DPointGeometryNode,
           X3DCast,
           X3DConstants)
 {
@@ -113543,19 +113814,16 @@ function (Fields,
 
    function PointSet (executionContext)
    {
-      X3DLineGeometryNode .call (this, executionContext);
+      X3DPointGeometryNode .call (this, executionContext);
 
       this .addType (X3DConstants .PointSet);
-
-      this .setGeometryType (0);
-      this .setTransparent (true);
 
       this .fogCoordNode = null;
       this .colorNode    = null;
       this .coordNode    = null;
    }
 
-   PointSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+   PointSet .prototype = Object .assign (Object .create (X3DPointGeometryNode .prototype),
    {
       constructor: PointSet,
       [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
@@ -113579,26 +113847,17 @@ function (Fields,
       },
       initialize: function ()
       {
-         X3DLineGeometryNode .prototype .initialize .call (this);
+         X3DPointGeometryNode .prototype .initialize .call (this);
 
          this ._attrib   .addInterest ("set_attrib__",   this);
          this ._fogCoord .addInterest ("set_fogCoord__", this);
          this ._color    .addInterest ("set_color__",    this);
          this ._coord    .addInterest ("set_coord__",    this);
 
-         const browser = this .getBrowser ();
-
-         this .setPrimitiveMode (browser .getContext () .POINTS);
-         this .setSolid (false);
-
          this .set_attrib__ ();
          this .set_fogCoord__ ();
          this .set_color__ ();
          this .set_coord__ ();
-      },
-      getShader: function (browser)
-      {
-         return browser .getPointShader ();
       },
       getCoord: function ()
       {
@@ -113608,21 +113867,21 @@ function (Fields,
       {
          const attribNodes = this .getAttrib ();
 
-         for (var i = 0, length = attribNodes .length; i < length; ++ i)
-            attribNodes [i] .removeInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .removeInterest ("requestRebuild", this);
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
+         for (const node of this ._attrib)
          {
-            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
+            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
 
             if (attribNode)
                attribNodes .push (attribNode);
          }
 
-         for (var i = 0; i < this .attribNodes .length; ++ i)
-            attribNodes [i] .addInterest ("requestRebuild", this);
+         for (const attribNode of attribNodes)
+            attribNode .addInterest ("requestRebuild", this);
       },
       set_fogCoord__: function ()
       {
@@ -113671,9 +113930,9 @@ function (Fields,
             vertexArray   = this .getVertices (),
             numPoints     = coordNode ._point .length;
 
-         for (var a = 0; a < numAttrib; ++ a)
+         for (let a = 0; a < numAttrib; ++ a)
          {
-            for (var i = 0; i < numPoints; ++ i)
+            for (let i = 0; i < numPoints; ++ i)
                attribNodes [a] .addValue (i, attribs [a]);
          }
 
@@ -114420,8 +114679,9 @@ function (Fields,
       },
       addValue: function (index, array)
       {
-         var
-            value = this .value,
+         const value = this .value;
+
+         let
             first = index * this .numComponents,
             last  = first + this .numComponents;
 
@@ -120406,6 +120666,7 @@ define ('x_ite/X3D',[
    "x_ite/Prototype/ProtoDeclarationArray",
    "x_ite/Prototype/X3DExternProtoDeclaration",
    "x_ite/Prototype/X3DProtoDeclaration",
+   "x_ite/Prototype/X3DProtoDeclarationNode",
    "x_ite/Routing/RouteArray",
    "x_ite/Routing/X3DRoute",
    "x_ite/Base/X3DConstants",
@@ -120435,6 +120696,7 @@ function ($,
           ProtoDeclarationArray,
           X3DExternProtoDeclaration,
           X3DProtoDeclaration,
+          X3DProtoDeclarationNode,
           RouteArray,
           X3DRoute,
           X3DConstants,
@@ -120554,9 +120816,11 @@ function ($,
       RouteArray:                  RouteArray,
       X3DRoute:                    X3DRoute,
 
+      // Additional classes
       X3DBaseNode:                 X3DBaseNode,
       X3DExportedNode:             X3DExportedNode,
       X3DImportedNode:             X3DImportedNode,
+      X3DProtoDeclarationNode:     X3DProtoDeclarationNode,
 
       X3DFieldDefinition:          X3DFieldDefinition,
       FieldDefinitionArray:        FieldDefinitionArray,
@@ -120603,7 +120867,7 @@ function ($,
       MFVec4d:                     Fields .MFVec4d,
       MFVec4f:                     Fields .MFVec4f,
    });
-   
+
    return X3D;
 });
 

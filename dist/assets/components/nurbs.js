@@ -2786,10 +2786,9 @@ function (X3DCast,
    function NurbsCurve (executionContext)
    {
       X3DParametricGeometryNode .call (this, executionContext);
+      X3DLineGeometryNode       .call (this, executionContext);
 
       this .addType (X3DConstants .NurbsCurve);
-
-      this .setGeometryType (1);
 
       this .knots         = [ ];
       this .weights       = [ ];
@@ -2828,9 +2827,6 @@ function (X3DCast,
          X3DParametricGeometryNode .prototype .initialize .call (this);
 
          this ._controlPoint .addInterest ("set_controlPoint__", this);
-
-         this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
-         this .setSolid (false);
 
          this .set_controlPoint__ ();
       },
@@ -2874,13 +2870,15 @@ function (X3DCast,
          if (this .controlPointNode .getSize () < this ._order .getValue ())
             return [ ];
 
-         var
+         const
             vertexArray = this .getVertices (),
             array       = [ ];
 
          if (vertexArray .length)
          {
-            for (var i = 0, length = vertexArray .length; i < length; i += 8)
+            const length = vertexArray .length;
+
+            for (let i = 0; i < length; i += 8)
                array .push (vertexArray [i], vertexArray [i + 1], vertexArray [i + 2]);
 
             array .push (vertexArray [length - 4], vertexArray [length - 3], vertexArray [length - 2]);
@@ -2901,22 +2899,22 @@ function (X3DCast,
 
          // Order and dimension are now positive numbers.
 
-         var
+         const
             closed        = this .getClosed (this ._order .getValue (), this ._knot, this ._weight, this .controlPointNode),
             weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this ._weight),
             controlPoints = this .getControlPoints (this .controlPoints, closed, this ._order .getValue (), weights, this .controlPointNode);
 
          // Knots
 
-         var
+         const
             knots = this .getKnots (this .knots, closed, this ._order .getValue (), this .controlPointNode .getSize (), this ._knot),
             scale = knots .at (-1) - knots [0];
 
          // Initialize NURBS tessellator
 
-         var degree = this ._order .getValue () - 1;
+         const degree = this ._order .getValue () - 1;
 
-         var surface = this .surface = (this .surface || nurbs) ({
+         const surface = this .surface = (this .surface || nurbs) ({
             boundary: ["open"],
             degree: [degree],
             knots: [knots],
@@ -2927,14 +2925,14 @@ function (X3DCast,
          this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
          this .sampleOptions .haveWeights    = Boolean (weights);
 
-         var
+         const
             mesh        = nurbs .sample (this .mesh, surface, this .sampleOptions),
             points      = mesh .points,
             vertexArray = this .getVertices ();
 
-         for (var i2 = 3, length = points .length; i2 < length; i2 += 3)
+         for (let i2 = 3, length = points .length; i2 < length; i2 += 3)
          {
-            var i1 = i2 - 3;
+            const i1 = i2 - 3;
 
             vertexArray .push (points [i1], points [i1 + 1], points [i1 + 2], 1);
             vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
