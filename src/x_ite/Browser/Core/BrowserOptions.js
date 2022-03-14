@@ -182,7 +182,7 @@ function (Fields,
       },
       setAttributeSplashScreen: function ()
       {
-         this ._SplashScreen = this .getSplashScreen ();
+         this ._SplashScreen .set (this .getSplashScreen ());
       },
       getCache: function ()
       {
