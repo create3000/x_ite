@@ -68,17 +68,6 @@ function (Fields,
 {
 "use strict";
 
-   function toBoolean (value, defaultValue)
-   {
-      if (value === "true" || value === "TRUE")
-         return true;
-
-      if (value === "false" || value === "FALSE")
-         return false;
-
-      return defaultValue;
-   }
-
    function BrowserOptions (executionContext)
    {
       X3DBaseNode .call (this, executionContext);
@@ -154,11 +143,9 @@ function (Fields,
          if (!this .isInitialized ())
             return;
 
-         const
-            localStorage     = this .localStorage,
-            fieldDefinitions = this .getFieldDefinitions ();
+         const localStorage = this .localStorage;
 
-         for (const fieldDefinition of fieldDefinitions)
+         for (const fieldDefinition of this .getFieldDefinitions ())
          {
             const field = this .getField (fieldDefinition .name);
 
@@ -166,7 +153,7 @@ function (Fields,
                continue;
 
             if (!field .equals (fieldDefinition .value))
-               field .setValue (fieldDefinition .value);
+               field .assign (fieldDefinition .value);
          }
 
          const
@@ -195,7 +182,7 @@ function (Fields,
       },
       setAttributeSplashScreen: function ()
       {
-         this ._SplashScreen .set (this .getSplashScreen ());
+         this ._SplashScreen = this .getSplashScreen ();
       },
       getCache: function ()
       {
@@ -244,9 +231,6 @@ function (Fields,
          const
             browser          = this .getBrowser (),
             primitiveQuality = value .getValue () .toUpperCase ();
-
-         if (this .localStorage .PrimitiveQuality === primitiveQuality)
-            return;
 
          this .localStorage .PrimitiveQuality = primitiveQuality;
 
@@ -312,9 +296,6 @@ function (Fields,
          const
             browser        = this .getBrowser (),
             textureQuality = value .getValue () .toUpperCase ();
-
-         if (this .localStorage .TextureQuality === textureQuality)
-            return;
 
          this .localStorage .TextureQuality = textureQuality;
 
@@ -466,6 +447,17 @@ function (Fields,
          this .getBrowser () .getBrowserTimings () .setEnabled (timings .getValue ());
       },
    });
+
+   function toBoolean (value, defaultValue)
+   {
+      if (value === "true" || value === "TRUE")
+         return true;
+
+      if (value === "false" || value === "FALSE")
+         return false;
+
+      return defaultValue;
+   }
 
    return BrowserOptions;
 });
