@@ -342,9 +342,10 @@ function (Fields,
          {
             const
                coordIndex = this ._coordIndex .getValue (),
-               coord      = this .getCoord ();
+               coord      = this .getCoord (),
+               length     = vertices .length;
 
-            for (let v = 0, length = vertices .length; v < length; ++ v)
+            for (let v = 0; v < length; ++ v)
             {
                const i = vertices [v];
 

@@ -118,11 +118,11 @@ function (Fields,
 
          triangleIndex .length = 0;
 
-         for (var f = 0, fans = fanCount .length, index = 0; f < fans; ++ f)
-         {
-            const vertexCount = fanCount [f];
+         let index = 0;
 
-            for (var i = 1, count = vertexCount - 1; i < count; ++ i)
+         for (const vertexCount of fanCount)
+         {
+            for (let i = 1, length = vertexCount - 1; i < length; ++ i)
             {
                triangleIndex .push (index, index + i, index + i + 1);
             }

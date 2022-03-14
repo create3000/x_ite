@@ -122,23 +122,23 @@ function (Fields,
 
          // Build coordIndex
 
-         for (var i = 0, length = index .length; i < length; ++ i)
+         for (let i = 0, length = index .length; i < length; ++ i)
          {
-            var first = index [i];
+            let first = index [i];
 
             if (first < 0)
                continue;
 
             if (++ i < length)
             {
-               var second = index [i];
+               let second = index [i];
 
                if (second < 0)
                   continue;
 
                ++ i;
 
-               for (var face = 0; i < length; ++ i, ++ face)
+               for (let face = 0; i < length; ++ i, ++ face)
                {
                   const third = index [i];
 

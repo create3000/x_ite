@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 
-define ([
+ define ([
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
@@ -147,7 +147,7 @@ function (Fields,
          }
          else
          {
-            for (var index = 0; index < min; ++ index)
+            for (let index = 0; index < min; ++ index)
                array .push (1, 1, 1, 1);
          }
       },
@@ -157,7 +157,7 @@ function (Fields,
 
          for (var i = 0, length = color .length; i < length; ++ i)
          {
-            var c = color [i];
+            const c = color [i];
 
             array [i] = new Vector4 (c .r, c .g, c .b, 1);
          }

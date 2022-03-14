@@ -118,11 +118,11 @@ function (Fields,
 
          triangleIndex .length = 0;
 
-         for (var s = 0, strips = stripCount .length, index = 0; s < strips; ++ s)
-         {
-            const vertexCount = stripCount [s];
+         let index = 0;
 
-            for (var i = 0, count = vertexCount - 2; i < count; ++ i)
+         for (const vertexCount of stripCount)
+         {
+            for (let i = 0, count = vertexCount - 2; i < count; ++ i)
             {
                const is_odd = i & 1;
 

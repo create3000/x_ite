@@ -120,7 +120,7 @@ function (Fields,
 
          triangleIndex .length = 0;
 
-         for (var i = 0, length = index .length; i < length; ++ i)
+         for (let i = 0, length = index .length; i < length; ++ i)
          {
             const first = index [i];
 
@@ -129,7 +129,7 @@ function (Fields,
 
             if (++ i < length)
             {
-               var second = index [i];
+               let second = index [i];
 
                if (second < 0)
                   continue;

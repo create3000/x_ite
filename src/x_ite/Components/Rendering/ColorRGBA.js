@@ -150,7 +150,7 @@ function (Fields,
          }
          else
          {
-            for (var index = 0; index < min; ++ index)
+            for (let index = 0; index < min; ++ index)
                array .push (1, 1, 1, 1);
          }
       },
