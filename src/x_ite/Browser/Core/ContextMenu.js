@@ -468,7 +468,7 @@ function ($,
             },
          };
 
-         if ($.isFunction (this .userMenu))
+         if (typeof this .userMenu === "function")
          {
             const userMenu = this .userMenu ();
 

@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 require .config ({
-   "waitSeconds": 0,
+   "waitSeconds": 0, //The number of seconds to wait before giving up on loading a script. Setting it to 0 disables the timeout. The default is 7 seconds.
 });
 
 define .show = function ()
