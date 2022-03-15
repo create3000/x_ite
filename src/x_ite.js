@@ -83,9 +83,15 @@ const getScriptURL = (function ()
 {
 "use strict";
 
+   /**
+    *
+    * @param {function?} callback
+    * @param {function?} fallback
+    * @returns {Promise<void>} Promise
+    */
    function X_ITE (callback, fallback)
    {
-      const promise = new Promise (function (resolve, reject)
+      return new Promise (function (resolve, reject)
       {
          require (["x_ite/X3D"], function (X3D)
          {
@@ -94,8 +100,6 @@ const getScriptURL = (function ()
          },
          fallback);
       });
-
-      return promise;
    }
 
    function noConflict ()
@@ -127,12 +131,9 @@ const getScriptURL = (function ()
    // IE fix.
    document .createElement ("X3DCanvas");
 
-   require (["jquery", "x_ite/X3D"], function ($, X3D)
+   require (["x_ite/X3D"], function (X3D)
    {
-      $ .noConflict (true);
-
       Object .assign (X_ITE, X3D);
-
       X3D ();
    });
 })();

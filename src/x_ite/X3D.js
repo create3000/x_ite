@@ -110,6 +110,8 @@ function ($,
 {
 "use strict";
 
+   $ .noConflict (true);
+
    // X3D
 
    function getComponentUrl (name)
