@@ -125,7 +125,7 @@ function (SupportedNodes,
       },
       setSpecificationVersion: function (specificationVersion)
       {
-         this [_specificationVersion] = specificationVersion;
+         this [_specificationVersion] = String (specificationVersion);
       },
       getSpecificationVersion: function ()
       {
@@ -133,7 +133,7 @@ function (SupportedNodes,
       },
       setEncoding: function (encoding)
       {
-         this [_encoding] = encoding;
+         this [_encoding] = String (encoding);
       },
       getEncoding: function ()
       {
@@ -141,7 +141,7 @@ function (SupportedNodes,
       },
       setWorldURL: function (url)
       {
-         this [_worldURL] = url;
+         this [_worldURL] = String (url);
       },
       getWorldURL: function ()
       {
@@ -172,8 +172,8 @@ function (SupportedNodes,
          if (!unit)
             return;
 
-         unit .name             = name;
-         unit .conversionFactor = conversionFactor;
+         unit .name             = String (name);
+         unit .conversionFactor = Number (conversionFactor);
       },
       getUnits: function ()
       {
