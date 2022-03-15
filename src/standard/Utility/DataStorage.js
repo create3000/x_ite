@@ -60,17 +60,19 @@ define (function ()
    {
       get: function (target, key)
       {
-         var value = target [key];
+         const property = target [key];
 
-         if (value !== undefined)
-            return value;
+         if (property !== undefined)
+            return property;
 
-         var value = target .getStorage () [target .getNameSpace () + key];
+         const string = target .getStorage () [target .getNameSpace () + key];
 
-         if (value === undefined || value === "undefined" || value === null)
+         if (string === undefined || string === "undefined" || string === null)
             return target .getDefaultValue (key);
 
-         return JSON .parse (value);
+         const value = JSON .parse (string);
+
+         return value;
       },
       set: function (target, key, value)
       {
