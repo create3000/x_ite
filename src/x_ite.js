@@ -87,28 +87,15 @@ const getScriptURL = (function ()
    {
       const promise = new Promise (function (resolve, reject)
       {
-         if (PrivateX3D)
+         require (["x_ite/X3D"], function (X3D)
          {
-            PrivateX3D (resolve, reject);
-            PrivateX3D (callback, fallback);
-         }
-         else
-         {
-            callbacks .push (resolve, callback);
-            fallbacks .push (reject,  fallback);
-         }
+            X3D (callback, fallback);
+            X3D (resolve, reject);
+         },
+         fallback);
       });
 
       return promise;
-   }
-
-   function fallback (error)
-   {
-      require (["x_ite/Fallback"],
-      function (Fallback)
-      {
-         Fallback .error (error, fallbacks);
-      });
    }
 
    function noConflict ()
@@ -124,15 +111,14 @@ const getScriptURL = (function ()
       return X_ITE;
    }
 
-   const X3D_ = window .X3D;
-
-   let PrivateX3D = null;
-
    X_ITE .noConflict = noConflict;
    X_ITE .require    = require;
    X_ITE .define     = define;
 
-   // Now assign temporary X3D.
+   // Save existing X3D object.
+   const X3D_ = window .X3D;
+
+   // Now assign our X3D.
    window .X3D = X_ITE;
 
    if (typeof globalModule === "object" && typeof globalModule .exports === "object")
@@ -141,33 +127,19 @@ const getScriptURL = (function ()
    // IE fix.
    document .createElement ("X3DCanvas");
 
-   if (window .Proxy === undefined)
-      return fallback ("Proxy is not defined");
-
-   const
-      callbacks = [ ],
-      fallbacks = [ ];
-
    require (["jquery", "x_ite/X3D"], function ($, X3D)
    {
       $ .noConflict (true);
 
-      // Now assign real X3D.
-      PrivateX3D = X3D;
-
       Object .assign (X_ITE, X3D);
 
-      // Initialize all X3DCanvas tags.
       X3D ();
-
-      for (let i = 0; i < callbacks .length; ++ i)
-         X3D (callbacks [i], fallbacks [i]);
-   },
-   fallback);
+   });
 })();
 
 (function ()
 {
+   // Added at February 2022
    // https://github.com/tc39/proposal-relative-indexing-method#polyfill
 
    function at (n)
