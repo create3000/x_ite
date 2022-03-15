@@ -163,6 +163,16 @@ function (X3DBaseNode)
 
          this .transitionNode .setup ();
          this .transitionNode .transitionStart (layerNode, fromNode, top);
+         this .transitionNode ._transitionActive .addInterest ("set_transitionActive__", this);
+
+         this .addNodeEvent ();
+      },
+      set_transitionActive__: function (transitionActive)
+      {
+         if (transitionActive .getValue ())
+            return;
+
+         this .transitionNode ._transitionActive .removeInterest ("set_transitionActive__", this);
 
          this .addNodeEvent ();
       },

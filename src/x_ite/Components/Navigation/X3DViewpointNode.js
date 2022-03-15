@@ -320,6 +320,8 @@ function (Fields,
                   toViewpointNode ._scaleOrientationOffset = relativeScaleOrientation;
 
                   toViewpointNode .setInterpolators (fromViewpointNode, toViewpointNode);
+
+                  this ._transitionActive = false;
                }
             }
             catch (error)

@@ -11,7 +11,7 @@ all:
 	perl -pi -e 's/return (?:true|false);/return false;/sg' src/x_ite/DEBUG.js
 
 	node_modules/requirejs/bin/r.js -o build/x_ite.build.js
-	perl -pi -e "s|define\\('text/text!assets/shaders/webgl.*?\\n||sg;" dist/x_ite.js
+	perl -pi -e "s|define\\s*\\('text/text!assets/shaders/webgl.*?\\n||sg;" dist/x_ite.js
 	node_modules/terser/bin/terser --mangle --compress -- dist/x_ite.js > dist/x_ite.min.js
 	node_modules/requirejs/bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css
 
@@ -76,6 +76,6 @@ define generate_component
 	node_modules/requirejs/bin/r.js -o build/components/$(1).build.js
 	perl -pi -e "s|'assets/components/$(1)',||" dist/assets/components/$(1).js
 	perl -pi -e "s|text/text!|text!|" dist/assets/components/$(1).js
-	perl -pi -e "s|define\\s+\\(\\[|define (require .getComponentUrl (\"$(1)\"), [|" dist/assets/components/$(1).js
+	perl -pi -e "s|define\\s*\\(\\[|define (require .getComponentUrl (\"$(1)\"), [|" dist/assets/components/$(1).js
 	node_modules/terser/bin/terser --mangle $(2) -- dist/assets/components/$(1).js > dist/assets/components/$(1).min.js
 endef
