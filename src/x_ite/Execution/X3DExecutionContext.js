@@ -51,6 +51,7 @@ define ([
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields",
    "x_ite/Base/X3DBaseNode",
+   "x_ite/Execution/NamedNodesArray",
    "x_ite/Execution/X3DImportedNode",
    "x_ite/Execution/ImportedNodesArray",
    "x_ite/Prototype/ExternProtoDeclarationArray",
@@ -66,6 +67,7 @@ define ([
 function (SupportedNodes,
           Fields,
           X3DBaseNode,
+          NamedNodesArray,
           X3DImportedNode,
           ImportedNodesArray,
           ExternProtoDeclarationArray,
@@ -102,7 +104,7 @@ function (SupportedNodes,
       this ._rootNodes .setAccessType (X3DConstants .initializeOnly);
       this ._rootNodes .addCloneCount (1);
 
-      this [_namedNodes]     = new Map ();
+      this [_namedNodes]     = new NamedNodesArray ();
       this [_importedNodes]  = new ImportedNodesArray ();
       this [_protos]         = new ProtoDeclarationArray ();
       this [_externprotos]   = new ExternProtoDeclarationArray ();
@@ -246,7 +248,7 @@ function (SupportedNodes,
 
          node .setName (name);
 
-         this [_namedNodes] .set (name, node);
+         this [_namedNodes] .add (name, node);
       },
       removeNamedNode: function (name)
       {
@@ -257,9 +259,9 @@ function (SupportedNodes,
          if (!node)
             return;
 
-            node .setName ("");
+         node .setName ("");
 
-         this [_namedNodes] .delete (name);
+         this [_namedNodes] .remove (name);
       },
       getNamedNode: function (name)
       {
