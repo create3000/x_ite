@@ -52,6 +52,7 @@ define ([
    "x_ite/Fields",
    "x_ite/Base/X3DBaseNode",
    "x_ite/Execution/X3DImportedNode",
+   "x_ite/Execution/ImportedNodesArray",
    "x_ite/Prototype/ExternProtoDeclarationArray",
    "x_ite/Prototype/ProtoDeclarationArray",
    "x_ite/Routing/RouteArray",
@@ -66,6 +67,7 @@ function (SupportedNodes,
           Fields,
           X3DBaseNode,
           X3DImportedNode,
+          ImportedNodesArray,
           ExternProtoDeclarationArray,
           ProtoDeclarationArray,
           RouteArray,
@@ -101,7 +103,7 @@ function (SupportedNodes,
       this ._rootNodes .addCloneCount (1);
 
       this [_namedNodes]     = new Map ();
-      this [_importedNodes]  = new Map ();
+      this [_importedNodes]  = new ImportedNodesArray ();
       this [_protos]         = new ProtoDeclarationArray ();
       this [_externprotos]   = new ExternProtoDeclarationArray ();
       this [_routes]         = new RouteArray ();
@@ -315,7 +317,7 @@ function (SupportedNodes,
 
          const importedNode = new X3DImportedNode (this, inlineNode, exportedName, importedName);
 
-         this [_importedNodes] .set (importedName, importedNode);
+         this [_importedNodes] .add (importedName, importedNode);
 
          importedNode .setup ();
       },
@@ -330,7 +332,7 @@ function (SupportedNodes,
 
          importedNode .dispose ();
 
-         this [_importedNodes] .delete (importedName);
+         this [_importedNodes] .remove (importedName);
       },
       getImportedNode: function (importedName)
       {
@@ -375,7 +377,7 @@ function (SupportedNodes,
          if (node .getExecutionContext () === this)
             return node .getName ();
 
-         for (const importedNode of this [_importedNodes] .values ())
+         for (const importedNode of this [_importedNodes])
          {
             try
             {

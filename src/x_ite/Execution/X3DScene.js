@@ -55,6 +55,7 @@ define ([
    "x_ite/Configuration/UnitInfo",
    "x_ite/Configuration/UnitInfoArray",
    "x_ite/Execution/X3DExportedNode",
+   "x_ite/Execution/ExportedNodesArray",
    "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
@@ -67,6 +68,7 @@ function (SupportedNodes,
           UnitInfo,
           UnitInfoArray,
           X3DExportedNode,
+          ExportedNodesArray,
           X3DCast,
           X3DConstants,
           Generator,
@@ -105,7 +107,7 @@ function (SupportedNodes,
       this [_units] .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
 
       this [_metadata]      = new Map ();
-      this [_exportedNodes] = new Map ();
+      this [_exportedNodes] = new ExportedNodesArray ();
 
       this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 
@@ -283,15 +285,17 @@ function (SupportedNodes,
          //if (node .getExecutionContext () !== this)
          //	throw new Error ("Couldn't update exported node: node does not belong to this execution context.");
 
+         this .removeExportedNode (exportedName);
+
          const exportedNode = new X3DExportedNode (exportedName, node);
 
-         this [_exportedNodes] .set (exportedName, exportedNode);
+         this [_exportedNodes] .add (exportedName, exportedNode);
       },
       removeExportedNode: function (exportedName)
       {
          exportedName = String (exportedName);
 
-         this [_exportedNodes] .delete (exportedName);
+         this [_exportedNodes] .remove (exportedName);
       },
       getExportedNode: function (exportedName)
       {
@@ -535,7 +539,7 @@ function (SupportedNodes,
 
          X3DExecutionContext .prototype .toXMLStream .call (this, stream);
 
-         exportedNodes .forEach (function (exportedNode)
+         for (const exportedNode of exportedNodes)
          {
             try
             {
@@ -547,7 +551,7 @@ function (SupportedNodes,
             {
                console .error (error);
             }
-         });
+         }
 
          generator .LeaveScope ();
          generator .PopExecutionContext ();

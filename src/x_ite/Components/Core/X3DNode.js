@@ -202,7 +202,7 @@ function (Fields,
 
          const executionContext = this .getExecutionContext ()
 
-         for (const importedNode of executionContext .getImportedNodes () .values ())
+         for (const importedNode of executionContext .getImportedNodes ())
          {
             if (importedNode .getInlineNode () === this)
                return true;
@@ -210,7 +210,7 @@ function (Fields,
 
          if (executionContext .getType () .includes (X3DConstants .X3DScene))
          {
-            for (const exportedNode of executionContext .getExportedNodes () .values ())
+            for (const exportedNode of executionContext .getExportedNodes ())
             {
                if (exportedNode .getLocalNode () === this)
                   return true;
