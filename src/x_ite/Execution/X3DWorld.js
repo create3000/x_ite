@@ -156,7 +156,7 @@ function (SupportedNodes,
 
          const worldURL = this .getExecutionContext () .getWorldURL ();
 
-         this .layerSet .bind (new URL (worldURL, worldURL) .hash .substr (1));
+         this .layerSet .bind (decodeURIComponent (new URL (worldURL, worldURL) .hash .substr (1)));
       },
       traverse: function (type, renderObject)
       {

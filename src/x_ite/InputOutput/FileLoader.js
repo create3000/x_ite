@@ -321,7 +321,7 @@ function ($,
             this .URL = new URL (url, this .getReferer ());
 
             $.ajax ({
-               url: this .URL .href,
+               url: decodeURI (this .URL .href),
                dataType: "text",
                async: false,
                cache: this .browser .getBrowserOptions () .getCache () && this .node .getCache (),
@@ -446,7 +446,7 @@ function ($,
             {
                if (this .URL .href .substr (0, this .getReferer () .length) === this .getReferer ())
                {
-                  this .bindViewpoint (this .URL .hash .substr (1));
+                  this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
                   return;
                }
             }
@@ -467,7 +467,7 @@ function ($,
             // Load URL async
 
             $.ajax ({
-               url: this .URL .href,
+               url: decodeURI (this .URL .href),
                dataType: "binary",
                async: true,
                cache: this .browser .getBrowserOptions () .getCache () && this .node .getCache (),

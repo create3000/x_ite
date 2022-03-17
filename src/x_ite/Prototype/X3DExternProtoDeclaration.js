@@ -164,7 +164,7 @@ function ($,
          this [_scene] = value;
 
          const
-            protoName = new URL (this [_scene] .getWorldURL ()) .hash .substr (1),
+            protoName = decodeURIComponent (new URL (this [_scene] .getWorldURL ()) .hash .substr (1)),
             proto     = protoName ? this [_scene] .protos .get (protoName) : this [_scene] .protos [0];
 
          if (!proto)
