@@ -203,7 +203,7 @@ function (Fields,
       {
          // Add default font to family array.
 
-         const family = this ._urlBuffer .copy ();
+         const family = this ._url .copy ();
 
          family .push ("SERIF");
 

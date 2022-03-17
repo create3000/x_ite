@@ -146,7 +146,7 @@ function ($,
       loadNow: function ()
       {
          this .setMedia (null);
-         this .urlStack .setValue (this ._urlBuffer);
+         this .urlStack .setValue (this ._url);
          this .audio .bind ("canplaythrough", this .setAudio .bind (this));
          this .loadNext ();
       },

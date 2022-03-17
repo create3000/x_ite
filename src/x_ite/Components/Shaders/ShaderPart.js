@@ -165,7 +165,7 @@ function (Fields,
       {
          this .valid = false;
 
-         new FileLoader (this) .loadDocument (this ._urlBuffer,
+         new FileLoader (this) .loadDocument (this ._url,
          function (data)
          {
             if (data === null)

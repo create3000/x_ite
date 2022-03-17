@@ -135,7 +135,7 @@ function (Fields,
       },
       loadNow: function ()
       {
-         new FileLoader (this) .loadBinaryDocument (this ._urlBuffer,
+         new FileLoader (this) .loadBinaryDocument (this ._url,
          function (data)
          {
             if (data === null)

@@ -150,7 +150,7 @@ function (Fields,
       },
       loadNow: function ()
       {
-         new FileLoader (this) .createX3DFromURL (this ._urlBuffer, null, this .setInternalSceneAsync .bind (this));
+         new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalSceneAsync .bind (this));
       },
       setInternalSceneAsync: function (scene)
       {

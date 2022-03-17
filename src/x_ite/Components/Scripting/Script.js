@@ -162,7 +162,7 @@ function ($,
       {
          this .initialized = false;
 
-         new FileLoader (this) .loadScript (this ._urlBuffer,
+         new FileLoader (this) .loadScript (this ._url,
          function (data)
          {
             if (data === null)
