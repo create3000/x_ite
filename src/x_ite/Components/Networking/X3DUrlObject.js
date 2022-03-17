@@ -67,7 +67,7 @@ function (Fields,
       this .addType (X3DConstants .X3DUrlObject);
 
       this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE),
-                             "urlBuffer", new Fields .MFString ());
+                             "loadNow", new Fields .SFTime ());
 
       this [_cache]                = true;
       this [_autoRefreshStartTime] = performance .now ();
@@ -82,7 +82,7 @@ function (Fields,
 
          this ._load                 .addInterest ("set_load__",        this);
          this ._url                  .addInterest ("set_url__",         this);
-         this ._urlBuffer            .addInterest ("loadNow",           this);
+         this ._loadNow              .addInterest ("loadNow",           this);
          this ._autoRefresh          .addInterest ("set_autoRefresh__", this);
          this ._autoRefreshTimeLimit .addInterest ("set_autoRefresh__", this);
       },
@@ -147,7 +147,7 @@ function (Fields,
          this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
          // Buffer prevents double load of the scene if load and url field are set at the same time.
-         this ._urlBuffer = this ._url;
+         this ._loadNow = this .getBrowser () .getCurrentTime ();
       },
       loadNow: function ()
       { },
