@@ -793,12 +793,12 @@ function (Fields,
          {
             const parentContext = executionContext .getExecutionContext ();
 
-            for (const [importedName, importedNode] of new Map (parentContext .getImportedNodes ()))
+            for (const importedNode of parentContext .getImportedNodes ())
             {
                try
                {
                   if (importedNode .getExportedNode () === this)
-                     parentContext .removeImportedNode (importedName);
+                     parentContext .removeImportedNode (importedNode .getImportedName ());
                }
                catch (error)
                {
@@ -811,10 +811,10 @@ function (Fields,
 
          if (executionContext .getType () .includes (X3DConstants .X3DScene))
          {
-            for (const [exportedName, exportedNode] of new Map (executionContext .getExportedNodes ()))
+            for (const exportedNode of executionContext .getExportedNodes ())
             {
                if (exportedNode .getLocalNode () === this)
-                  executionContext .removeExportedNode (exportedName);
+                  executionContext .removeExportedNode (exportedNode .getExportedName ());
             }
          }
 

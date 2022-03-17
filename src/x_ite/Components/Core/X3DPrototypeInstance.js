@@ -336,12 +336,13 @@ function (X3DChildObject,
       },
       copyImportedNodes: function (executionContext, importedNodes)
       {
-         importedNodes .forEach (function (importedNode, importedName)
+         for (const importedNode of importedNodes)
          {
             try
             {
                const
                   inlineNode   = this [_body] .getNamedNode (importedNode .getInlineNode () .getName ()),
+                  importedName = importedNode .getImportedName (),
                   exportedName = importedNode .getExportedName ();
 
                this [_body] .addImportedNode (inlineNode, exportedName, importedName);
@@ -350,8 +351,7 @@ function (X3DChildObject,
             {
                console .error ("Bad IMPORT specification in copy: ", error);
             }
-         },
-         this);
+         }
       },
       copyRoutes: function (executionContext, routes)
       {
