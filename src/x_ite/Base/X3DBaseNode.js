@@ -231,14 +231,14 @@ function (X3DEventObject,
             if (isLive .getValue ())
                return;
 
-            isLive .setValue (true);
+            isLive .set (true);
             isLive .processEvent ();
          }
          else
          {
             if (isLive .getValue ())
             {
-               isLive .setValue (false);
+               isLive .set (false);
                isLive .processEvent ();
             }
          }
