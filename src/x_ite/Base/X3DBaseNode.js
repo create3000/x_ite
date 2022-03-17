@@ -49,7 +49,6 @@
 
 define ([
    "x_ite/Base/X3DEventObject",
-   "x_ite/Base/Events",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Base/FieldArray",
@@ -57,7 +56,6 @@ define ([
    "x_ite/Base/X3DConstants",
 ],
 function (X3DEventObject,
-          Events,
           X3DFieldDefinition,
           FieldDefinitionArray,
           FieldArray,
@@ -234,14 +232,14 @@ function (X3DEventObject,
                return;
 
             isLive .setValue (true);
-            isLive .processEvent (Events .create (isLive));
+            isLive .processEvent ();
          }
          else
          {
             if (isLive .getValue ())
             {
                isLive .setValue (false);
-               isLive .processEvent (Events .create (isLive));
+               isLive .processEvent ();
             }
          }
       },

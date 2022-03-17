@@ -107,10 +107,6 @@ function (SupportedNodes,
       {
          this ._updateInstances = this .getBrowser () .getCurrentTime ();
       },
-      updateInstances: function ()
-      {
-         this ._updateInstances .processEvent (Events .create (this ._updateInstances));
-      },
    });
 
    for (const key of Reflect .ownKeys (X3DProtoDeclarationNode .prototype))

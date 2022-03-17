@@ -363,7 +363,7 @@ function ($,
       {
          const fieldCallbacksTemp = [ ];
 
-         return function (event)
+         return function (event = Events .create (this))
          {
             if (event .has (this))
                return;
