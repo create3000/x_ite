@@ -50,7 +50,6 @@
 define ([
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields",
-   "x_ite/Base/Events",
    "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Core/X3DPrototypeInstance",
    "x_ite/Fields/SFNodeCache",
@@ -58,7 +57,6 @@ define ([
 ],
 function (SupportedNodes,
           Fields,
-          Events,
           X3DBaseNode,
           X3DPrototypeInstance,
           SFNodeCache,
@@ -106,6 +104,10 @@ function (SupportedNodes,
       requestUpdateInstances: function ()
       {
          this ._updateInstances = this .getBrowser () .getCurrentTime ();
+      },
+      updateInstances: function ()
+      {
+         this ._updateInstances .processEvent ();
       },
    });
 
