@@ -72,7 +72,7 @@ function (Fields,
    RenderingProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       constructor: RenderingProperties,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .outputOnly, "Shading",                new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .outputOnly, "MaxTextureSize",         new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .outputOnly, "TextureUnits",           new Fields .SFInt32 ()),

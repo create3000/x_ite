@@ -72,7 +72,7 @@ function (Fields,
    BooleanTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
    {
       constructor: BooleanTrigger,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_triggerTime", new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTrue",     new Fields .SFBool ()),

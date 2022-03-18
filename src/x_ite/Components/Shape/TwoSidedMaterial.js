@@ -82,7 +82,7 @@ function (Fields,
    TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
    {
       constructor: TwoSidedMaterial,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "separateBackColor",    new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ambientIntensity",     new Fields .SFFloat (0.2)),

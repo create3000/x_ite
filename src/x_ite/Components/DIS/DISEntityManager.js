@@ -72,7 +72,7 @@ function (Fields,
    DISEntityManager .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    {
       constructor: DISEntityManager,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "address",         new Fields .SFString ("localhost")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "applicationID",   new Fields .SFInt32 (1)),

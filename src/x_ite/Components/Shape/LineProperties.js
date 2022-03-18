@@ -72,7 +72,7 @@ function (Fields,
    LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
    {
       constructor: LineProperties,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "applied",              new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "linetype",             new Fields .SFInt32 (1)),

@@ -76,7 +76,7 @@ function (X3DConstants,
 
          // HTMLSupport
 
-         for (const fieldDefinition of Type .prototype [Symbol .for ("X3DBaseNode.fieldDefinitions")])
+         for (const fieldDefinition of Type .prototype [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")])
          {
             const
                name       = fieldDefinition .name,

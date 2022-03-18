@@ -67,7 +67,7 @@ function (X3DEventObject,
    const
       _executionContext  = Symbol (),
       _type              = Symbol (),
-      _fieldDefinitions  = Symbol .for ("X3DBaseNode.fieldDefinitions"),
+      _fieldDefinitions  = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
       _fields            = Symbol (),
       _predefinedFields  = Symbol (),
       _aliases           = Symbol (),
@@ -398,7 +398,6 @@ function (X3DEventObject,
 
             this [_fields]           .remove (name);
             this [_predefinedFields] .remove (name);
-            this [_fieldDefinitions] .remove (name);
 
             delete this ["_" + field .getName ()];
 

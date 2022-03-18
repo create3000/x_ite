@@ -67,14 +67,14 @@ function (X3DChildObject,
    const
       _protoNode        = Symbol (),
       _protoFields      = Symbol (),
-      _fieldDefinitions = Symbol .for ("X3DBaseNode.fieldDefinitions"),
+      _fieldDefinitions = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
       _body             = Symbol ();
 
    function X3DPrototypeInstance (executionContext, protoNode)
    {
       this [_protoNode]        = protoNode;
       this [_protoFields]      = new Map (protoNode .getFields () .map (f => [f, f .getName ()]))
-      this [_fieldDefinitions] = new FieldDefinitionArray (protoNode .getFieldDefinitions ());
+      this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
       this [_body]             = null;
 
       X3DNode .call (this, executionContext);
@@ -130,13 +130,11 @@ function (X3DChildObject,
 
          if (this [_protoNode] .isExternProto)
          {
-            for (const fieldDefinition of proto .getFieldDefinitions ())
+            for (const protoField of proto .getUserDefinedFields ())
             {
                try
                {
-                  const
-                     field      = this .getField (fieldDefinition .name),
-                     protoField = proto .getField (fieldDefinition .name);
+                  const field = this .getField (protoField .getName ());
 
                   // Continue if something is wrong.
                   if (field .getAccessType () !== protoField .getAccessType ())
@@ -206,8 +204,7 @@ function (X3DChildObject,
 
          // Add new fields.
 
-         this [_protoFields]      = new Map (this [_protoNode] .getFields () .map (f => [f, f .getName ()]));
-         this [_fieldDefinitions] = new FieldDefinitionArray (this [_protoNode] .getFieldDefinitions ());
+         this [_protoFields] = new Map (this [_protoNode] .getFields () .map (f => [f, f .getName ()]));
 
          for (const fieldDefinition of this .getFieldDefinitions ())
             this .addField (fieldDefinition);
@@ -266,7 +263,7 @@ function (X3DChildObject,
             // Get field from new proto node.
 
             this [_protoFields]      = new Map (protoNode .getFields () .map (f => [f, f .getName ()]))
-            this [_fieldDefinitions] = new FieldDefinitionArray (protoNode .getFieldDefinitions ());
+            this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
          }
 
          this [_protoNode] = protoNode;

@@ -95,7 +95,7 @@ function ($,
    SingleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
    {
       constructor: SingleAxisHingeJoint,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",         new Fields .MFString ("NONE")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",         new Fields .SFVec3f ()),

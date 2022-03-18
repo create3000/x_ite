@@ -76,7 +76,7 @@ function (Fields,
    ColorRGBA .prototype = Object .assign (Object .create (X3DColorNode .prototype),
    {
       constructor: ColorRGBA,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .MFColorRGBA ()),
       ]),

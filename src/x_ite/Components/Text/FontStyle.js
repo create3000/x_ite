@@ -76,7 +76,7 @@ function (Fields,
    FontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
    {
       constructor: FontStyle,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "language",    new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "family",      new Fields .MFString ("SERIF")),

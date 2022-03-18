@@ -79,7 +79,7 @@ function (Fields,
    SquadOrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
    {
       constructor: SquadOrientationInterpolator,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "closed",        new Fields .SFBool ()),

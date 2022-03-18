@@ -76,7 +76,7 @@ function (Fields,
    TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
       constructor: TriangleSet2D,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "vertices", new Fields .MFVec2f ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),

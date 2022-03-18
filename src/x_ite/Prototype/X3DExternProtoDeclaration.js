@@ -93,7 +93,7 @@ function ($,
       X3DUrlObject .prototype,
    {
       constructor: X3DExternProtoDeclaration,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
       ]),
       getTypeName: function ()
@@ -124,13 +124,11 @@ function ($,
 
          if (proto)
          {
-            const fieldDefinitions = this .getFieldDefinitions ();
+            for (const field of this .getUserDefinedFields ())
+               this .removeUserDefinedField (field .getName ())
 
-            for (const fieldDefinition of Array .from (fieldDefinitions))
-               fieldDefinitions .remove (fieldDefinition .name);
-
-            for (const fieldDefinition of proto .getFieldDefinitions ())
-               fieldDefinitions .add (fieldDefinition .name, fieldDefinition);
+            for (const field of proto .getUserDefinedFields ())
+               this .addUserDefinedField (field .getAccessType (), field .getName (), field);
          }
 
          this .updateInstances ();

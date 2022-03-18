@@ -79,7 +79,7 @@ function (Fields,
    LayoutLayer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
    {
       constructor: LayoutLayer,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "isPickable",     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "layout",         new Fields .SFNode ()),

@@ -74,7 +74,7 @@ function (Fields,
    Polyline2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
    {
       constructor: Polyline2D,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "lineSegments", new Fields .MFVec2f ()),
       ]),

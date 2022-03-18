@@ -72,7 +72,7 @@ function (Fields,
    CoordinateDouble .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
    {
       constructor: CoordinateDouble,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3d ()),
       ]),

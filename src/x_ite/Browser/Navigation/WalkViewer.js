@@ -74,7 +74,7 @@ function (Fields,
    WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
    {
       constructor: WalkViewer,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
       ]),
       initialize: function ()

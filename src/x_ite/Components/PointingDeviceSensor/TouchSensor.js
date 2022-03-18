@@ -78,7 +78,7 @@ function (Fields,
    TouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
    {
       constructor: TouchSensor,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",         new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),

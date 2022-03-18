@@ -78,7 +78,7 @@ function (Fields,
    LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
    {
       constructor: LineSet,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "vertexCount", new Fields .MFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "attrib",      new Fields .MFNode ()),
