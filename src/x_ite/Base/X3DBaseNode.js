@@ -104,8 +104,9 @@ function (X3DEventObject,
       for (const fieldDefinition of this [_fieldDefinitions])
          this .addField (fieldDefinition);
 
-      this .addChildObjects ("name_changed",     new Fields .SFTime (),
-                             "typeName_changed", new Fields .SFTime ())
+      this .addChildObjects ("name_changed",       new Fields .SFTime (),
+                             "typeName_changed",   new Fields .SFTime (),
+                             "cloneCount_changed", new Fields .SFTime ())
    }
 
    X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototype),
@@ -548,6 +549,8 @@ function (X3DEventObject,
             return;
 
          this [_cloneCount] += count;
+
+         this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
       },
       removeCloneCount: function (count)
       {
@@ -555,6 +558,8 @@ function (X3DEventObject,
             return;
 
          this [_cloneCount] -= count;
+
+         this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
       },
       dispose: function ()
       {
