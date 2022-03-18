@@ -226,12 +226,18 @@ function (X3DChildObject,
             oldField .setAccessType (newField .getAccessType ());
             oldField .setName (newField .getName ());
 
-            this .getPredefinedFields () .update (oldFieldName, newField .getName (), oldField);
-            this .getFields ()           .update (oldFieldName, newField .getName (), oldField);
+            this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
+            this .getFields ()           .update (newField .getName (), newField .getName (), oldField);
 
             if (!this .getPrivate ())
                oldField .addCloneCount (1);
+
+            oldFields .delete (oldFieldName);
+            newField .dispose ();
          }
+
+         for (const oldField of oldFields .values ())
+            oldField .dispose ();
 
          // Construct now.
 
