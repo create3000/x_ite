@@ -187,7 +187,7 @@ function ($,
       setError: function ()
       {
          if (this .URL .protocol !== "data:")
-            console .warn ("Error loading movie:", this .URL .href);
+            console .warn ("Error loading movie:", decodeURI (this .URL .href));
 
          this .loadNext ();
       },
@@ -196,7 +196,7 @@ function ($,
          if (DEBUG)
          {
             if (this .URL .protocol !== "data:")
-               console .info ("Done loading movie:", this .URL .href);
+               console .info ("Done loading movie:", decodeURI (this .URL .href));
          }
 
          try

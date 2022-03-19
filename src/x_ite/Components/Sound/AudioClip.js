@@ -176,7 +176,7 @@ function ($,
       setError: function ()
       {
          if (this .URL .protocol !== "data:")
-            console .warn ("Error loading audio:", this .URL .href);
+            console .warn ("Error loading audio:", decodeURI (this .URL .href));
 
          this .loadNext ();
       },
@@ -185,7 +185,7 @@ function ($,
          if (DEBUG)
          {
             if (this .URL .protocol !== "data:")
-               console .info ("Done loading audio:", this .URL .href);
+               console .info ("Done loading audio:", decodeURI (this .URL .href));
          }
 
          this .audio .unbind ("canplaythrough");

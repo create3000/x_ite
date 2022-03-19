@@ -286,7 +286,7 @@ function ($,
          if (DEBUG)
          {
             if (this .URL .protocol !== "data:")
-               console .info ("Done loading scene " + this .URL .href);
+               console .info ("Done loading scene " + decodeURI (this .URL .href));
          }
       },
       createX3DFromURL: function (url, parameter, callback, bindViewpoint, foreign)
@@ -563,7 +563,7 @@ function ($,
          if (this .URL .protocol === "data:")
             console .warn ("Couldn't load URL 'data':", exception .message);
          else
-            console .warn ("Couldn't load URL '" + this .URL .href + "':", exception .message);
+            console .warn ("Couldn't load URL '" + decodeURI (this .URL .href) + "':", exception .message);
 
          if (DEBUG)
             console .log (exception);

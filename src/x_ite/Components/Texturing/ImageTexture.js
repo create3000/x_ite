@@ -156,7 +156,7 @@ function ($,
       setError: function ()
       {
          if (this .URL .protocol !== "data:")
-            console .warn ("Error loading image:", this .URL .href);
+            console .warn ("Error loading image:", decodeURI (this .URL .href));
 
          this .loadNext ();
       },
@@ -165,7 +165,7 @@ function ($,
          if (DEBUG)
          {
              if (this .URL .protocol !== "data:")
-               console .info ("Done loading image:", this .URL .href);
+               console .info ("Done loading image:", decodeURI (this .URL .href));
          }
 
          try

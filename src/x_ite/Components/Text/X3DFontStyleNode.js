@@ -248,7 +248,7 @@ function (Fields,
       setError: function (error)
       {
          if (this .URL .protocol !== "data:")
-            console .warn ("Error loading font '" + this .URL .toString () + "':", error);
+            console .warn ("Error loading font '" + decodeURI (this .URL .href) + "':", error);
 
          this .loadNext ();
       },
