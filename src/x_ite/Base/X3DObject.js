@@ -186,7 +186,7 @@ function (Generator,
       },
       toStream: function (stream)
       {
-         stream .string = "[_object " + this .getTypeName () + "]";
+         stream .string = "[object " + this .getTypeName () + "]";
       },
       dispose: function () { },
    };
