@@ -172,7 +172,7 @@ define (function ()
       fromUnit: function (category, value)
       {
          if (this .units)
-            return this .getExecutionContext () .fromUnit (category, value);
+            return this .scene .fromUnit (category, value);
 
          return value;
       },
