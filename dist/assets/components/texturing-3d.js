@@ -265,7 +265,7 @@ function (Fields,
    ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
    {
       constructor: ComposedTexture3D,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
@@ -9076,7 +9076,7 @@ function (Fields,
       X3DUrlObject .prototype,
    {
       constructor: ImageTexture3D,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
@@ -9129,7 +9129,7 @@ function (Fields,
       },
       loadNow: function ()
       {
-         new FileLoader (this) .loadBinaryDocument (this ._urlBuffer,
+         new FileLoader (this) .loadBinaryDocument (this ._url,
          function (data)
          {
             if (data === null)
@@ -9248,7 +9248,7 @@ function (Fields,
    PixelTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
    {
       constructor: PixelTexture3D,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .MFInt32 (0, 0, 0, 0)),
@@ -9467,7 +9467,7 @@ function (Fields,
    TextureCoordinate3D .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
    {
       constructor: TextureCoordinate3D,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
@@ -9645,7 +9645,7 @@ function (Fields,
    TextureCoordinate4D .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
    {
       constructor: TextureCoordinate4D,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec4f ()),
@@ -9829,7 +9829,7 @@ function (Fields,
    TextureTransform3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
    {
       constructor: TextureTransform3D,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",     new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "translation", new Fields .SFVec3f ()),
@@ -9973,7 +9973,7 @@ function (Fields,
    TextureTransformMatrix3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
    {
       constructor: TextureTransformMatrix3D,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "matrix",   new Fields .SFMatrix4f ()),

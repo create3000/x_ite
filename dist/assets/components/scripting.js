@@ -257,7 +257,7 @@ function ($,
    Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
    {
       constructor: Script,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
@@ -307,7 +307,7 @@ function ($,
       {
          this .initialized = false;
 
-         new FileLoader (this) .loadScript (this ._urlBuffer,
+         new FileLoader (this) .loadScript (this ._url,
          function (data)
          {
             if (data === null)

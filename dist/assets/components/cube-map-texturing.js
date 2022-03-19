@@ -219,7 +219,7 @@ function (Fields,
    ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
    {
       constructor: ComposedCubeMapTexture,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "frontTexture",      new Fields .SFNode ()),
@@ -634,7 +634,7 @@ function (Fields,
    GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
    {
       constructor: GeneratedCubeMapTexture,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "update",            new Fields .SFString ("NONE")),
@@ -940,7 +940,7 @@ function ($,
       X3DUrlObject .prototype,
    {
       constructor: ImageCubeMapTexture,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
@@ -994,7 +994,7 @@ function ($,
       },
       loadNow: function ()
       {
-         this .urlStack .setValue (this ._urlBuffer);
+         this .urlStack .setValue (this ._url);
          this .loadNext ();
       },
       loadNext: function ()
@@ -1010,8 +1010,11 @@ function ($,
 
          this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
-         if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
+         if (this .URL .protocol !== "data:")
+         {
+            if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
+               this .URL .searchParams .set ("_", Date .now ());
+         }
 
          this .image .attr ("src", this .URL .href);
       },

@@ -303,7 +303,7 @@ function (Fields,
       currentRotation: new Rotation4 (0, 0, 1, 0),
       currentScale: new Vector3 (0, 0, 0),
       modelViewMatrix: new Matrix4 (),
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "align",       new Fields .MFString ("CENTER", "CENTER")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "offsetUnits", new Fields .MFString ("WORLD", "WORLD")),
@@ -906,7 +906,7 @@ function (Fields,
    LayoutGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
    {
       constructor: LayoutGroup,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "layout",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "viewport",       new Fields .SFNode ()),
@@ -1092,7 +1092,7 @@ function (Fields,
    LayoutLayer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
    {
       constructor: LayoutLayer,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "isPickable",     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "layout",         new Fields .SFNode ()),
@@ -1681,7 +1681,7 @@ function (Fields,
    ScreenFontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
    {
       constructor: ScreenFontStyle,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "language",    new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "family",      new Fields .MFString ("SERIF")),
@@ -1804,7 +1804,7 @@ function (Fields,
    ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
    {
       constructor: ScreenGroup,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
