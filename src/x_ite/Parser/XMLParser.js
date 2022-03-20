@@ -105,6 +105,10 @@ function ($,
    XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       constructor: XMLParser,
+      isValid: function ()
+      {
+         return this .scene [_dom] instanceof XMLDocument;
+      },
       parseIntoScene: function (xmlElement, success, error)
       {
          if (typeof xmlElement === "string")

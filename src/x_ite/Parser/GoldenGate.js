@@ -70,27 +70,28 @@ function (X3DParser,
       constructor: GoldenGate,
       parseIntoScene: function (x3dSyntax, success, error)
       {
-         let lastError;
-
          for (const Parser of GoldenGate .Parser)
          {
+            const parser = new Parser (this .getScene ());
+
             try
             {
-               const parser = new Parser (this .getScene ());
-
                parser .pushExecutionContext (this .getExecutionContext ());
                parser .parseIntoScene (x3dSyntax, success, error);
                parser .popExecutionContext ();
+
+               console .log (Parser .name, parser .isValid (), this .getScene () .worldURL)
+               if (!parser .isValid ())
+                  console .log (x3dSyntax)
+
                return
             }
             catch (error)
             {
-               lastError = error;
-               continue
+               if (parser .isValid ())
+                  throw error;
             }
          }
-
-         throw lastError;
       },
    });
 

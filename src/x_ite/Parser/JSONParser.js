@@ -68,10 +68,16 @@ function (XMLParser,
    JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       constructor: JSONParser,
+      isValid: function ()
+      {
+         return this .jsobj instanceof Object;
+      },
       parseIntoScene: function (jsobj, success, error)
       {
          if (typeof jsobj === "string")
             jsobj = JSON .parse (jsobj)
+
+         this .jsobj = jsobj;
 
          /**
           * Load X3D JSON into an element.

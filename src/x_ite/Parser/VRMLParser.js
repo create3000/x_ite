@@ -255,13 +255,14 @@ function (Fields,
     *  Parser
     */
 
-   function Parser (scene)
+   function VRMLParser (scene)
    {
       X3DParser .call (this, scene);
    }
 
-   Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
+   VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
+      constructor: VRMLParser,
       accessTypes:
       {
          field:          X3DConstants .initializeOnly,
@@ -315,22 +316,9 @@ function (Fields,
       MFVec3f: new Fields .MFVec3f (),
       MFVec4d: new Fields .MFVec4d (),
       MFVec4f: new Fields .MFVec4f (),
-      setInput: function (value)
+      isValid: function ()
       {
-         this .input      = value;
-         this .lineNumber = 1;
-         this .lastIndex  = 0;
-      },
-      getInput: function ()
-      {
-         return this .input;
-      },
-      exception: function (string)
-      {
-         if (this .getBrowser () .isStrict ())
-            throw new Error (string);
-
-         console .warn (string);
+         return !! this .input .match (/^(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{)/);
       },
       parseIntoScene: function (input, success, error)
       {
@@ -351,6 +339,23 @@ function (Fields,
             //console .error (error);
             throw new Error (this .getError (error));
          }
+      },
+      setInput: function (value)
+      {
+         this .input      = value;
+         this .lineNumber = 1;
+         this .lastIndex  = 0;
+      },
+      getInput: function ()
+      {
+         return this .input;
+      },
+      exception: function (string)
+      {
+         if (this .getBrowser () .isStrict ())
+            throw new Error (string);
+
+         console .warn (string);
       },
       getError: function (error)
       {
@@ -2913,50 +2918,50 @@ function (Fields,
       },
    });
 
-   Parser .prototype .fieldTypes = [ ];
-   Parser .prototype .fieldTypes [X3DConstants .SFBool]      = Parser .prototype .sfboolValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFColor]     = Parser .prototype .sfcolorValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFColorRGBA] = Parser .prototype .sfcolorrgbaValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFDouble]    = Parser .prototype .sfdoubleValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFFloat]     = Parser .prototype .sffloatValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFImage]     = Parser .prototype .sfimageValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFInt32]     = Parser .prototype .sfint32Value;
-   Parser .prototype .fieldTypes [X3DConstants .SFMatrix3f]  = Parser .prototype .sfmatrix3dValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFMatrix3d]  = Parser .prototype .sfmatrix3fValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFMatrix4f]  = Parser .prototype .sfmatrix4dValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFMatrix4d]  = Parser .prototype .sfmatrix4fValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFNode]      = Parser .prototype .sfnodeValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFRotation]  = Parser .prototype .sfrotationValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFString]    = Parser .prototype .sfstringValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFTime]      = Parser .prototype .sftimeValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFVec2d]     = Parser .prototype .sfvec2dValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFVec2f]     = Parser .prototype .sfvec2fValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFVec3d]     = Parser .prototype .sfvec3dValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFVec3f]     = Parser .prototype .sfvec3fValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFVec4d]     = Parser .prototype .sfvec4dValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFVec4f]     = Parser .prototype .sfvec4fValue;
+   VRMLParser .prototype .fieldTypes = [ ];
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFBool]      = VRMLParser .prototype .sfboolValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFColor]     = VRMLParser .prototype .sfcolorValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFColorRGBA] = VRMLParser .prototype .sfcolorrgbaValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFDouble]    = VRMLParser .prototype .sfdoubleValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFFloat]     = VRMLParser .prototype .sffloatValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFImage]     = VRMLParser .prototype .sfimageValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFInt32]     = VRMLParser .prototype .sfint32Value;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFMatrix3f]  = VRMLParser .prototype .sfmatrix3dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFMatrix3d]  = VRMLParser .prototype .sfmatrix3fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4f]  = VRMLParser .prototype .sfmatrix4dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4d]  = VRMLParser .prototype .sfmatrix4fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFNode]      = VRMLParser .prototype .sfnodeValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFRotation]  = VRMLParser .prototype .sfrotationValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFString]    = VRMLParser .prototype .sfstringValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFTime]      = VRMLParser .prototype .sftimeValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFVec2d]     = VRMLParser .prototype .sfvec2dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFVec2f]     = VRMLParser .prototype .sfvec2fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFVec3d]     = VRMLParser .prototype .sfvec3dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFVec3f]     = VRMLParser .prototype .sfvec3fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFVec4d]     = VRMLParser .prototype .sfvec4dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFVec4f]     = VRMLParser .prototype .sfvec4fValue;
 
-   Parser .prototype .fieldTypes [X3DConstants .MFBool]      = Parser .prototype .mfboolValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFColor]     = Parser .prototype .mfcolorValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFColorRGBA] = Parser .prototype .mfcolorrgbaValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFDouble]    = Parser .prototype .mfdoubleValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFFloat]     = Parser .prototype .mffloatValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFImage]     = Parser .prototype .mfimageValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFInt32]     = Parser .prototype .mfint32Value;
-   Parser .prototype .fieldTypes [X3DConstants .MFMatrix3d]  = Parser .prototype .mfmatrix3dValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFMatrix3f]  = Parser .prototype .mfmatrix3fValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFMatrix4d]  = Parser .prototype .mfmatrix4dValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFMatrix4f]  = Parser .prototype .mfmatrix4fValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFNode]      = Parser .prototype .mfnodeValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFRotation]  = Parser .prototype .mfrotationValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFString]    = Parser .prototype .mfstringValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFTime]      = Parser .prototype .mftimeValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFVec2d]     = Parser .prototype .mfvec2dValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFVec2f]     = Parser .prototype .mfvec2fValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFVec3d]     = Parser .prototype .mfvec3dValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFVec3f]     = Parser .prototype .mfvec3fValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFVec4d]     = Parser .prototype .mfvec4dValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFVec4f]     = Parser .prototype .mfvec4fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFBool]      = VRMLParser .prototype .mfboolValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFColor]     = VRMLParser .prototype .mfcolorValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFColorRGBA] = VRMLParser .prototype .mfcolorrgbaValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFDouble]    = VRMLParser .prototype .mfdoubleValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFFloat]     = VRMLParser .prototype .mffloatValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFImage]     = VRMLParser .prototype .mfimageValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFInt32]     = VRMLParser .prototype .mfint32Value;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3d]  = VRMLParser .prototype .mfmatrix3dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3f]  = VRMLParser .prototype .mfmatrix3fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4d]  = VRMLParser .prototype .mfmatrix4dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4f]  = VRMLParser .prototype .mfmatrix4fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFNode]      = VRMLParser .prototype .mfnodeValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFRotation]  = VRMLParser .prototype .mfrotationValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFString]    = VRMLParser .prototype .mfstringValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFTime]      = VRMLParser .prototype .mftimeValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFVec2d]     = VRMLParser .prototype .mfvec2dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFVec2f]     = VRMLParser .prototype .mfvec2fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFVec3d]     = VRMLParser .prototype .mfvec3dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFVec3f]     = VRMLParser .prototype .mfvec3fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFVec4d]     = VRMLParser .prototype .mfvec4dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFVec4f]     = VRMLParser .prototype .mfvec4fValue;
 
-   return Parser;
+   return VRMLParser;
 });

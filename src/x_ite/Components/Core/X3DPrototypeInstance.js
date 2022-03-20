@@ -165,7 +165,7 @@ function (X3DChildObject,
                catch (error)
                {
                   // Definition exists in proto but does not exist in extern proto.
-                  this .addField (fieldDefinition);
+                  this .addField (proto .getFieldDefinitions () .get (protoField .getName ()));
                }
             }
          }
