@@ -318,7 +318,7 @@ function (Fields,
       MFVec4f: new Fields .MFVec4f (),
       isValid: function ()
       {
-         return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{))/);
+         return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{|$))/);
       },
       parseIntoScene: function (input, success, error)
       {
@@ -327,15 +327,14 @@ function (Fields,
             this .success = success;
             this .error   = error;
 
-            this .getScene () .setEncoding ("VRML");
-            this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
-
             this .setInput (input);
 
-            if (this .isValid ())
-               return this .x3dScene ();
+            if (!this .isValid ())
+               throw new Error ("Invalid X3D.");
 
-            throw new Error ("Invalid X3D.");
+            this .getScene () .setEncoding ("VRML");
+            this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
+            this .x3dScene ();
          }
          catch (error)
          {
