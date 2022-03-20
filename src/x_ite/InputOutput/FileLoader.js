@@ -51,7 +51,7 @@ define ([
    "jquery",
    "x_ite/Base/X3DObject",
    "x_ite/Fields",
-   "x_ite/Parser/Parser",
+   "x_ite/Parser/VRMLParser",
    "x_ite/Parser/XMLParser",
    "x_ite/Parser/JSONParser",
    "x_ite/Execution/X3DWorld",
@@ -62,7 +62,7 @@ define ([
 function ($,
           X3DObject,
           Fields,
-          Parser,
+          VRMLParser,
           XMLParser,
           JSONParser,
           X3DWorld,
@@ -151,7 +151,7 @@ function ($,
                      success = this .setScene .bind (this, scene, success, error);
 
                   // Try parse X3D Classic Encoding.
-                  new Parser (scene) .parseIntoScene (string, success, error);
+                  new VRMLParser (scene) .parseIntoScene (string, success, error);
                },
             ];
 
@@ -193,7 +193,7 @@ function ($,
                function (scene, string)
                {
                   // Try parse X3D Classic Encoding.
-                  new Parser (scene) .parseIntoScene (string);
+                  new VRMLParser (scene) .parseIntoScene (string);
                },
             ];
 

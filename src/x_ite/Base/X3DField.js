@@ -420,8 +420,8 @@ function ($,
       fromString: function (string, scene)
       {
          const
-            Parser = require ("x_ite/Parser/Parser"),
-            parser = new Parser (scene);
+            VRMLParser = require ("x_ite/Parser/VRMLParser"),
+            parser     = new VRMLParser (scene);
 
          parser .setUnits (!!scene);
          parser .setInput (string);

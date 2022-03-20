@@ -70,6 +70,9 @@ function (XMLParser,
       constructor: JSONParser,
       parseIntoScene: function (jsobj, success, error)
       {
+         if (typeof jsobj === "string")
+            jsobj = JSON .parse (jsobj)
+
          /**
           * Load X3D JSON into an element.
           * jsobj - the JavaScript object to convert to DOM.

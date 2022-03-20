@@ -57,7 +57,7 @@ define ([
    "x_ite/Browser/Core/Notification",
    "x_ite/Browser/Core/ContextMenu",
    "x_ite/Execution/Scene",
-   "x_ite/Parser/Parser",
+   "x_ite/Parser/VRMLParser",
    "standard/Utility/DataStorage",
    "standard/Math/Numbers/Vector3",
    "locale/gettext",
@@ -71,7 +71,7 @@ function ($,
           Notification,
           ContextMenu,
           Scene,
-          Parser,
+          VRMLParser,
           DataStorage,
           Vector3,
           _)
@@ -468,7 +468,7 @@ function ($,
          if (urlCharacters)
          {
             const
-               parser    = new Parser (this .getExecutionContext ()),
+               parser    = new VRMLParser (this .getExecutionContext ()),
                url       = new Fields .MFString (),
                parameter = new Fields .MFString ();
 
