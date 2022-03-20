@@ -180,7 +180,7 @@ function (Generator,
       {
          const stream = { string: "" };
 
-         this .toJSONStream (stream);
+         this .toVRMLStream (stream); // TODO.
 
          return stream .string;
       },

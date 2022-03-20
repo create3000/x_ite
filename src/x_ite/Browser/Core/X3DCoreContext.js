@@ -744,15 +744,17 @@ function ($,
                   {
                      case "ASCII":
                      case "VRML": text = vp .toVRMLString (); break;
-                     case "JSON": text = vp .toVRMLString (); break;
+                     case "JSON": text = vp .toJSONString (); break;
                      default:     text = vp .toXMLString ();  break;
                   }
 
                   text += "\n";
 
-                  console .log (text);
                   this .copyToClipboard (text);
                   this .getNotification () ._string = _ ("Viewpoint is copied to clipboard.");
+
+                  console .log ("Copied Viewpoint to Clipboard.");
+                  console .debug (text);
                }
 
                break;
