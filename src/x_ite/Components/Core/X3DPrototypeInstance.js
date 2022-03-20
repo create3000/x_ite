@@ -73,7 +73,7 @@ function (X3DChildObject,
    function X3DPrototypeInstance (executionContext, protoNode)
    {
       this [_protoNode]        = protoNode;
-      this [_protoFields]      = new Map (protoNode .getFields () .map (f => [f, f .getName ()]))
+      this [_protoFields]      = new Map (protoNode .getFields () .map (f => [f, f .getName ()]));
       this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
       this [_body]             = null;
 
@@ -222,7 +222,7 @@ function (X3DChildObject,
                newField = this .getFields () .get (protoField .getName ()),
                oldField = oldFields .get (oldFieldName);
 
-            oldField .addParent (this)
+            oldField .addParent (this);
             oldField .setAccessType (newField .getAccessType ());
             oldField .setName (newField .getName ());
 
@@ -262,13 +262,13 @@ function (X3DChildObject,
                const protoNode = this [_protoNode];
 
                protoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
-               protoNode ._updateInstances .removeInterest ("construct", this)
-               protoNode ._updateInstances .removeInterest ("update",    this)
+               protoNode ._updateInstances .removeInterest ("construct", this);
+               protoNode ._updateInstances .removeInterest ("update",    this);
             }
 
             // Get field from new proto node.
 
-            this [_protoFields]      = new Map (protoNode .getFields () .map (f => [f, f .getName ()]))
+            this [_protoFields]      = new Map (protoNode .getFields () .map (f => [f, f .getName ()]));
             this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
          }
 
@@ -289,7 +289,7 @@ function (X3DChildObject,
             }
             else
             {
-               protoNode ._updateInstances .addInterest ("construct", this)
+               protoNode ._updateInstances .addInterest ("construct", this);
                protoNode .requestImmediateLoad ();
             }
          }
