@@ -999,6 +999,56 @@ A MFString value with urls that should be loaded on page load. If no url attribu
 
 More options can be adjusted using the [Browser Object](/x_ite/reference/Browser-Services.html#browser-object) and [Browser Options](/x_ite/reference/Browser-Services.html#browser-options) for scene specific adjustments.
 
+## Keyboard Shortcuts
+
+### Home (Pos 1)
+
+Go to first viewpoint.
+
+### End
+
+Go to last viewpoint.
+
+### Page Up
+
+Go to previous viewpoint.
+
+### Page Down
+
+Go to next viewpoint.
+
+### Ctrl++
+
+Display browser timings.
+
+### Ctrl+S
+
+If X3DCanvas attribute debug is true, toggle begin/end update of browser.
+
+### Ctrl+1
+
+If X3DCanvas attribute debug is true, set shading to POINT.
+
+### Ctrl+2
+
+If X3DCanvas attribute debug is true, set shading to WIREFRAME.
+
+### Ctrl+3
+
+If X3DCanvas attribute debug is true, set shading to FLAT.
+
+### Ctrl+4
+
+If X3DCanvas attribute debug is true, set shading to GOURAUD.
+
+### Ctrl+5
+
+If X3DCanvas attribute debug is true, set shading to PHONG.
+
+### Shift+F8
+
+Copy the the current viewpoint of the active layer to clipboard.
+
 ## Extending the Context Menu
 
 The context menu is the jQuery Context Menu plugin, and it can be extended using the `items` syntax. The full documentation [can be found here](https://swisnl.github.io/jQuery-contextMenu/docs/items.html).
