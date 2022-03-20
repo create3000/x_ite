@@ -331,8 +331,11 @@ function (Fields,
             this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
             this .setInput (input);
-            this .x3dScene ();
-            return;
+
+            if (this .isValid ())
+               return this .x3dScene ();
+
+            throw new Error ("Invalid X3D.");
          }
          catch (error)
          {

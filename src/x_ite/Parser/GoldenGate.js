@@ -93,10 +93,10 @@ function (X3DParser,
             }
          }
 
-         if (worldURL .startsWith ("data:"))
+         if (this .getScene () .worldURL .startsWith ("data:"))
             throw new Error ("Couldn't parse X3D. No suitable file handler found for 'data:' URL.");
          else
-            throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + worldURL + "'.");
+            throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + this .getScene () .worldURL + "'.");
       },
    });
 
