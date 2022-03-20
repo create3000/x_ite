@@ -137,11 +137,12 @@ function ($,
 
             new GoldenGate (scene) .parseIntoScene (string, success, error);
          }
-         catch (error)
+         catch (exception)
          {
-            console .error (error);
-
-            throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + worldURL + "'.");
+            if (error)
+               error (exception)
+            else
+               throw error;
          }
       },
       importDocument: function (scene, dom, success, error)
@@ -491,7 +492,7 @@ function ($,
             console .warn ("Couldn't load URL '" + decodeURI (this .URL .href) + "':", exception .message);
 
          if (DEBUG)
-            console .log (exception);
+            console .error (exception);
       },
       getReferer: function ()
       {

@@ -92,6 +92,11 @@ function (X3DParser,
                   throw error;
             }
          }
+
+         if (worldURL .startsWith ("data:"))
+            throw new Error ("Couldn't parse X3D. No suitable file handler found for 'data:' URL.");
+         else
+            throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + worldURL + "'.");
       },
    });
 
