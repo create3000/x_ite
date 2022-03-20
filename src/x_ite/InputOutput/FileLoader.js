@@ -121,21 +121,21 @@ function ($,
       },
       createX3DFromString: function (worldURL, string, success, error)
       {
-         const scene = this .browser .createScene ();
-
-         if (this .node instanceof X3DWorld)
-            scene .loader = this;
-         else
-            scene .setExecutionContext (this .executionContext);
-
-         scene .setWorldURL (decodeURI (new URL (worldURL, this .getReferer ()) .href));
-
-         // Async branch.
-
          try
          {
+            const scene = this .browser .createScene ();
+
+            if (this .node instanceof X3DWorld)
+               scene .loader = this;
+            else
+               scene .setExecutionContext (this .executionContext);
+
+            scene .setWorldURL (decodeURI (new URL (worldURL, this .getReferer ()) .href));
+
+            if (success)
+               success = this .setScene .bind (this, scene, success, error);
+
             new GoldenGate (scene) .parseIntoScene (string, success, error);
-            return;
          }
          catch (error)
          {

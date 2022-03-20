@@ -127,7 +127,7 @@ function (X3DBaseNode,
                const
                   node      = this .array [i],
                   outerNode = node .getExecutionContext () .getOuterNode (),
-                  scene     = parent instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
+                  scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
 
                if (!enableInlineBindables && scene !== mainScene)
                   continue;

@@ -80,9 +80,9 @@ function (X3DParser,
                parser .parseIntoScene (x3dSyntax, success, error);
                parser .popExecutionContext ();
 
-               console .log (Parser .name, parser .isValid (), this .getScene () .worldURL)
-               if (!parser .isValid ())
-                  console .log (x3dSyntax)
+               // console .log (Parser .name, parser .isValid (), this .getScene () .worldURL)
+               // if (!parser .isValid ())
+               //    console .log (x3dSyntax)
 
                return
             }
