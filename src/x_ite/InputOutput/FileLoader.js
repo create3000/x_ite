@@ -51,9 +51,9 @@ define ([
    "jquery",
    "x_ite/Base/X3DObject",
    "x_ite/Fields",
-   "x_ite/Parser/VRMLParser",
-   "x_ite/Parser/XMLParser",
+   "x_ite/Parser/GoldenGate",
    "x_ite/Parser/JSONParser",
+   "x_ite/Parser/XMLParser",
    "x_ite/Execution/X3DWorld",
    "standard/Networking/BinaryTransport",
    "pako_inflate",
@@ -62,9 +62,9 @@ define ([
 function ($,
           X3DObject,
           Fields,
-          VRMLParser,
-          XMLParser,
+          GoldenGate,
           JSONParser,
+          XMLParser,
           X3DWorld,
           BinaryTransport,
           pako,
@@ -128,95 +128,20 @@ function ($,
          else
             scene .setExecutionContext (this .executionContext);
 
-         scene .setWorldURL (new URL (worldURL, this .getReferer ()) .href);
+         scene .setWorldURL (decodeURI (new URL (worldURL, this .getReferer ()) .href));
 
-         if (success)
+         // Async branch.
+
+         try
          {
-            // Async branch.
-
-            const handlers = [
-               function (scene, string, success, error)
-               {
-                  // Try parse X3D XML Encoding.
-                  this .importDocument (scene, $.parseXML (string), success, error);
-               },
-               function (scene, string, success, error)
-               {
-                  // Try parse X3D JSON Encoding.
-                  this .importJS (scene, JSON .parse (string), success, error);
-               },
-               function (scene, string, success, error)
-               {
-                  if (success)
-                     success = this .setScene .bind (this, scene, success, error);
-
-                  // Try parse X3D Classic Encoding.
-                  new VRMLParser (scene) .parseIntoScene (string, success, error);
-               },
-            ];
-
-            const errors = [ ];
-
-            for (const handler of handlers)
-            {
-               try
-               {
-                  handler .call (this, scene, string, success, error);
-                  return;
-               }
-               catch (error)
-               {
-                  // Try next handler.
-                  errors .push (error);
-               }
-            }
-
-            console .error (errors);
+            new GoldenGate (scene) .parseIntoScene (string, success, error);
+            return;
+         }
+         catch (error)
+         {
+            console .error (error);
 
             throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + worldURL + "'.");
-         }
-         else
-         {
-            // Sync branch.
-
-            const handlers = [
-               function (scene, string)
-               {
-                  // Try parse X3D XML Encoding.
-                  this .importDocument (scene, $.parseXML (string));
-               },
-               function (scene, string)
-               {
-                  // Try parse X3D JSON Encoding.
-                  this .importJS (scene, JSON.parse (string));
-               },
-               function (scene, string)
-               {
-                  // Try parse X3D Classic Encoding.
-                  new VRMLParser (scene) .parseIntoScene (string);
-               },
-            ];
-
-            const errors = [ ];
-
-            for (const handler of handlers)
-            {
-               try
-               {
-                  handler .call (this, scene, string);
-
-                  return scene;
-               }
-               catch (error)
-               {
-                  // Try next handler.
-                  errors .push (error);
-               }
-            }
-
-            console .error (errors);
-
-            throw new Error ("Couldn't parse x3d syntax.");
          }
       },
       importDocument: function (scene, dom, success, error)
