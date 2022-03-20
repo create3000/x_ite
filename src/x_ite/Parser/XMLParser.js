@@ -107,7 +107,7 @@ function ($,
       constructor: XMLParser,
       isValid: function ()
       {
-         return this .scene [_dom] instanceof XMLDocument;
+         return (this .scene [_dom] instanceof XMLDocument) || (this .scene [_dom] instanceof HTMLElement);
       },
       parseIntoScene: function (xmlElement, success, error)
       {
