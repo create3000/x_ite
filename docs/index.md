@@ -1001,6 +1001,8 @@ More options can be adjusted using the [Browser Object](/x_ite/reference/Browser
 
 ## Keyboard Shortcuts
 
+If the X3DCanvas is focused, the following keyboard shortcuts are available.
+
 ### Home (Pos 1)
 
 Go to first viewpoint.
@@ -1023,27 +1025,27 @@ Display browser timings.
 
 ### Ctrl+S
 
-If X3DCanvas attribute debug is true, toggle begin/end update of browser.
+If X3DCanvas attribute *debug* is `true`, toggle begin/end update of browser.
 
 ### Ctrl+1
 
-If X3DCanvas attribute debug is true, set shading to POINT.
+If X3DCanvas attribute *debug* is `true`, set shading to POINT.
 
 ### Ctrl+2
 
-If X3DCanvas attribute debug is true, set shading to WIREFRAME.
+If X3DCanvas attribute *debug* is `true`, set shading to WIREFRAME.
 
 ### Ctrl+3
 
-If X3DCanvas attribute debug is true, set shading to FLAT.
+If X3DCanvas attribute *debug* is `true`, set shading to FLAT.
 
 ### Ctrl+4
 
-If X3DCanvas attribute debug is true, set shading to GOURAUD.
+If X3DCanvas attribute *debug* is `true`, set shading to GOURAUD.
 
 ### Ctrl+5
 
-If X3DCanvas attribute debug is true, set shading to PHONG.
+If X3DCanvas attribute *debug* is `true`, set shading to PHONG.
 
 ### Shift+F8
 
