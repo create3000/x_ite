@@ -13881,13 +13881,13 @@ function (Generator,
       {
          const stream = { string: "" };
 
-         this .toJSONStream (stream);
+         this .toVRMLStream (stream); // TODO.
 
          return stream .string;
       },
       toStream: function (stream)
       {
-         stream .string = "[_object " + this .getTypeName () + "]";
+         stream .string = "[object " + this .getTypeName () + "]";
       },
       dispose: function () { },
    };
@@ -15239,8 +15239,8 @@ function ($,
       fromString: function (string, scene)
       {
          const
-            Parser = require ("x_ite/Parser/Parser"),
-            parser = new Parser (scene);
+            VRMLParser = require ("x_ite/Parser/VRMLParser"),
+            parser     = new VRMLParser (scene);
 
          parser .setUnits (!!scene);
          parser .setInput (string);
@@ -36714,7 +36714,7 @@ function (X3DChildObject,
    function X3DPrototypeInstance (executionContext, protoNode)
    {
       this [_protoNode]        = protoNode;
-      this [_protoFields]      = new Map (protoNode .getFields () .map (f => [f, f .getName ()]))
+      this [_protoFields]      = new Map (protoNode .getFields () .map (f => [f, f .getName ()]));
       this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
       this [_body]             = null;
 
@@ -36806,7 +36806,7 @@ function (X3DChildObject,
                catch (error)
                {
                   // Definition exists in proto but does not exist in extern proto.
-                  this .addField (fieldDefinition);
+                  this .addField (proto .getFieldDefinitions () .get (protoField .getName ()));
                }
             }
          }
@@ -36863,7 +36863,7 @@ function (X3DChildObject,
                newField = this .getFields () .get (protoField .getName ()),
                oldField = oldFields .get (oldFieldName);
 
-            oldField .addParent (this)
+            oldField .addParent (this);
             oldField .setAccessType (newField .getAccessType ());
             oldField .setName (newField .getName ());
 
@@ -36903,13 +36903,13 @@ function (X3DChildObject,
                const protoNode = this [_protoNode];
 
                protoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
-               protoNode ._updateInstances .removeInterest ("construct", this)
-               protoNode ._updateInstances .removeInterest ("update",    this)
+               protoNode ._updateInstances .removeInterest ("construct", this);
+               protoNode ._updateInstances .removeInterest ("update",    this);
             }
 
             // Get field from new proto node.
 
-            this [_protoFields]      = new Map (protoNode .getFields () .map (f => [f, f .getName ()]))
+            this [_protoFields]      = new Map (protoNode .getFields () .map (f => [f, f .getName ()]));
             this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
          }
 
@@ -36930,7 +36930,7 @@ function (X3DChildObject,
             }
             else
             {
-               protoNode ._updateInstances .addInterest ("construct", this)
+               protoNode ._updateInstances .addInterest ("construct", this);
                protoNode .requestImmediateLoad ();
             }
          }
@@ -38154,7 +38154,7 @@ function (SupportedNodes,
  ******************************************************************************/
 
 
-define ('x_ite/Parser/Parser',[
+define ('x_ite/Parser/VRMLParser',[
    "x_ite/Fields",
    "x_ite/Parser/X3DParser",
    "x_ite/Prototype/X3DExternProtoDeclaration",
@@ -38362,13 +38362,14 @@ function (Fields,
     *  Parser
     */
 
-   function Parser (scene)
+   function VRMLParser (scene)
    {
       X3DParser .call (this, scene);
    }
 
-   Parser .prototype = Object .assign (Object .create (X3DParser .prototype),
+   VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
+      constructor: VRMLParser,
       accessTypes:
       {
          field:          X3DConstants .initializeOnly,
@@ -38422,22 +38423,9 @@ function (Fields,
       MFVec3f: new Fields .MFVec3f (),
       MFVec4d: new Fields .MFVec4d (),
       MFVec4f: new Fields .MFVec4f (),
-      setInput: function (value)
+      isValid: function ()
       {
-         this .input      = value;
-         this .lineNumber = 1;
-         this .lastIndex  = 0;
-      },
-      getInput: function ()
-      {
-         return this .input;
-      },
-      exception: function (string)
-      {
-         if (this .getBrowser () .isStrict ())
-            throw new Error (string);
-
-         console .warn (string);
+         return !! this .input .match (/^(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{)/);
       },
       parseIntoScene: function (input, success, error)
       {
@@ -38458,6 +38446,23 @@ function (Fields,
             //console .error (error);
             throw new Error (this .getError (error));
          }
+      },
+      setInput: function (value)
+      {
+         this .input      = value;
+         this .lineNumber = 1;
+         this .lastIndex  = 0;
+      },
+      getInput: function ()
+      {
+         return this .input;
+      },
+      exception: function (string)
+      {
+         if (this .getBrowser () .isStrict ())
+            throw new Error (string);
+
+         console .warn (string);
       },
       getError: function (error)
       {
@@ -41020,52 +41025,52 @@ function (Fields,
       },
    });
 
-   Parser .prototype .fieldTypes = [ ];
-   Parser .prototype .fieldTypes [X3DConstants .SFBool]      = Parser .prototype .sfboolValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFColor]     = Parser .prototype .sfcolorValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFColorRGBA] = Parser .prototype .sfcolorrgbaValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFDouble]    = Parser .prototype .sfdoubleValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFFloat]     = Parser .prototype .sffloatValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFImage]     = Parser .prototype .sfimageValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFInt32]     = Parser .prototype .sfint32Value;
-   Parser .prototype .fieldTypes [X3DConstants .SFMatrix3f]  = Parser .prototype .sfmatrix3dValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFMatrix3d]  = Parser .prototype .sfmatrix3fValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFMatrix4f]  = Parser .prototype .sfmatrix4dValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFMatrix4d]  = Parser .prototype .sfmatrix4fValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFNode]      = Parser .prototype .sfnodeValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFRotation]  = Parser .prototype .sfrotationValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFString]    = Parser .prototype .sfstringValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFTime]      = Parser .prototype .sftimeValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFVec2d]     = Parser .prototype .sfvec2dValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFVec2f]     = Parser .prototype .sfvec2fValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFVec3d]     = Parser .prototype .sfvec3dValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFVec3f]     = Parser .prototype .sfvec3fValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFVec4d]     = Parser .prototype .sfvec4dValue;
-   Parser .prototype .fieldTypes [X3DConstants .SFVec4f]     = Parser .prototype .sfvec4fValue;
+   VRMLParser .prototype .fieldTypes = [ ];
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFBool]      = VRMLParser .prototype .sfboolValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFColor]     = VRMLParser .prototype .sfcolorValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFColorRGBA] = VRMLParser .prototype .sfcolorrgbaValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFDouble]    = VRMLParser .prototype .sfdoubleValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFFloat]     = VRMLParser .prototype .sffloatValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFImage]     = VRMLParser .prototype .sfimageValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFInt32]     = VRMLParser .prototype .sfint32Value;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFMatrix3f]  = VRMLParser .prototype .sfmatrix3dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFMatrix3d]  = VRMLParser .prototype .sfmatrix3fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4f]  = VRMLParser .prototype .sfmatrix4dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4d]  = VRMLParser .prototype .sfmatrix4fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFNode]      = VRMLParser .prototype .sfnodeValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFRotation]  = VRMLParser .prototype .sfrotationValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFString]    = VRMLParser .prototype .sfstringValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFTime]      = VRMLParser .prototype .sftimeValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFVec2d]     = VRMLParser .prototype .sfvec2dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFVec2f]     = VRMLParser .prototype .sfvec2fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFVec3d]     = VRMLParser .prototype .sfvec3dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFVec3f]     = VRMLParser .prototype .sfvec3fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFVec4d]     = VRMLParser .prototype .sfvec4dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .SFVec4f]     = VRMLParser .prototype .sfvec4fValue;
 
-   Parser .prototype .fieldTypes [X3DConstants .MFBool]      = Parser .prototype .mfboolValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFColor]     = Parser .prototype .mfcolorValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFColorRGBA] = Parser .prototype .mfcolorrgbaValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFDouble]    = Parser .prototype .mfdoubleValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFFloat]     = Parser .prototype .mffloatValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFImage]     = Parser .prototype .mfimageValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFInt32]     = Parser .prototype .mfint32Value;
-   Parser .prototype .fieldTypes [X3DConstants .MFMatrix3d]  = Parser .prototype .mfmatrix3dValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFMatrix3f]  = Parser .prototype .mfmatrix3fValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFMatrix4d]  = Parser .prototype .mfmatrix4dValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFMatrix4f]  = Parser .prototype .mfmatrix4fValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFNode]      = Parser .prototype .mfnodeValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFRotation]  = Parser .prototype .mfrotationValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFString]    = Parser .prototype .mfstringValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFTime]      = Parser .prototype .mftimeValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFVec2d]     = Parser .prototype .mfvec2dValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFVec2f]     = Parser .prototype .mfvec2fValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFVec3d]     = Parser .prototype .mfvec3dValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFVec3f]     = Parser .prototype .mfvec3fValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFVec4d]     = Parser .prototype .mfvec4dValue;
-   Parser .prototype .fieldTypes [X3DConstants .MFVec4f]     = Parser .prototype .mfvec4fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFBool]      = VRMLParser .prototype .mfboolValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFColor]     = VRMLParser .prototype .mfcolorValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFColorRGBA] = VRMLParser .prototype .mfcolorrgbaValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFDouble]    = VRMLParser .prototype .mfdoubleValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFFloat]     = VRMLParser .prototype .mffloatValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFImage]     = VRMLParser .prototype .mfimageValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFInt32]     = VRMLParser .prototype .mfint32Value;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3d]  = VRMLParser .prototype .mfmatrix3dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3f]  = VRMLParser .prototype .mfmatrix3fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4d]  = VRMLParser .prototype .mfmatrix4dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4f]  = VRMLParser .prototype .mfmatrix4fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFNode]      = VRMLParser .prototype .mfnodeValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFRotation]  = VRMLParser .prototype .mfrotationValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFString]    = VRMLParser .prototype .mfstringValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFTime]      = VRMLParser .prototype .mftimeValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFVec2d]     = VRMLParser .prototype .mfvec2dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFVec2f]     = VRMLParser .prototype .mfvec2fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFVec3d]     = VRMLParser .prototype .mfvec3dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFVec3f]     = VRMLParser .prototype .mfvec3fValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFVec4d]     = VRMLParser .prototype .mfvec4dValue;
+   VRMLParser .prototype .fieldTypes [X3DConstants .MFVec4f]     = VRMLParser .prototype .mfvec4fValue;
 
-   return Parser;
+   return VRMLParser;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -41267,7 +41272,7 @@ define ('x_ite/Browser/Core/X3DCoreContext',[
    "x_ite/Browser/Core/Notification",
    "x_ite/Browser/Core/ContextMenu",
    "x_ite/Execution/Scene",
-   "x_ite/Parser/Parser",
+   "x_ite/Parser/VRMLParser",
    "standard/Utility/DataStorage",
    "standard/Math/Numbers/Vector3",
    "locale/gettext",
@@ -41281,7 +41286,7 @@ function ($,
           Notification,
           ContextMenu,
           Scene,
-          Parser,
+          VRMLParser,
           DataStorage,
           Vector3,
           _)
@@ -41678,7 +41683,7 @@ function ($,
          if (urlCharacters)
          {
             const
-               parser    = new Parser (this .getExecutionContext ()),
+               parser    = new VRMLParser (this .getExecutionContext ()),
                url       = new Fields .MFString (),
                parameter = new Fields .MFString ();
 
@@ -41954,15 +41959,17 @@ function ($,
                   {
                      case "ASCII":
                      case "VRML": text = vp .toVRMLString (); break;
-                     case "JSON": text = vp .toVRMLString (); break;
+                     case "JSON": text = vp .toJSONString (); break;
                      default:     text = vp .toXMLString ();  break;
                   }
 
                   text += "\n";
 
-                  console .log (text);
                   this .copyToClipboard (text);
                   this .getNotification () ._string = _ ("Viewpoint is copied to clipboard.");
+
+                  console .log ("Copied Viewpoint to Clipboard.");
+                  console .debug (text);
                }
 
                break;
@@ -47813,8 +47820,8 @@ define ('x_ite/Parser/XMLParser',[
    "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Core/X3DPrototypeInstance",
    "x_ite/Fields",
-   "x_ite/Parser/Parser",
    "x_ite/Parser/X3DParser",
+   "x_ite/Parser/VRMLParser",
    "x_ite/Parser/HTMLSupport",
    "x_ite/Prototype/X3DExternProtoDeclaration",
    "x_ite/Prototype/X3DProtoDeclaration",
@@ -47825,8 +47832,8 @@ function ($,
           X3DBaseNode,
           X3DPrototypeInstance,
           Fields,
-          Parser,
           X3DParser,
+          VRMLParser,
           HTMLSupport,
           X3DExternProtoDeclaration,
           X3DProtoDeclaration,
@@ -47850,7 +47857,7 @@ function ($,
 
       this .protoDeclarations = [ ];
       this .parents           = [ ];
-      this .parser            = new Parser (scene);
+      this .parser            = new VRMLParser (scene);
       this .url               = new Fields .MFString ();
 
       try
@@ -47865,8 +47872,15 @@ function ($,
    XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       constructor: XMLParser,
+      isValid: function ()
+      {
+         return this .scene [_dom] instanceof XMLDocument;
+      },
       parseIntoScene: function (xmlElement, success, error)
       {
+         if (typeof xmlElement === "string")
+            xmlElement = $.parseXML (xmlElement)
+
          this .scene [_dom] = xmlElement;
          this .success      = success;
          this .error        = error;
@@ -48265,7 +48279,7 @@ function ($,
                return console .warn ("XML Parser Error: Bad ExternProtoDeclare statement: Expected url attribute.");
 
             this .parser .setInput (url);
-            Parser .prototype .sfstringValues .call (this .parser, this .url);
+            VRMLParser .prototype .sfstringValues .call (this .parser, this .url);
 
             var externproto = new X3DExternProtoDeclaration (this .getExecutionContext (), this .url);
 
@@ -48893,49 +48907,49 @@ function ($,
    });
 
    XMLParser .prototype .fieldTypes = [ ];
-   XMLParser .prototype .fieldTypes [X3DConstants .SFBool]      = Parser .prototype .sfboolValue;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFColor]     = Parser .prototype .sfcolorValue;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFColorRGBA] = Parser .prototype .sfcolorrgbaValue;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFDouble]    = Parser .prototype .sfdoubleValue;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFFloat]     = Parser .prototype .sffloatValue;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFImage]     = Parser .prototype .sfimageValue;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFInt32]     = Parser .prototype .sfint32Value;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix3f]  = Parser .prototype .sfmatrix3dValue;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix3d]  = Parser .prototype .sfmatrix3fValue;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4f]  = Parser .prototype .sfmatrix4dValue;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4d]  = Parser .prototype .sfmatrix4fValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFBool]      = VRMLParser .prototype .sfboolValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFColor]     = VRMLParser .prototype .sfcolorValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFColorRGBA] = VRMLParser .prototype .sfcolorrgbaValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFDouble]    = VRMLParser .prototype .sfdoubleValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFFloat]     = VRMLParser .prototype .sffloatValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFImage]     = VRMLParser .prototype .sfimageValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFInt32]     = VRMLParser .prototype .sfint32Value;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix3f]  = VRMLParser .prototype .sfmatrix3dValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix3d]  = VRMLParser .prototype .sfmatrix3fValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4f]  = VRMLParser .prototype .sfmatrix4dValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4d]  = VRMLParser .prototype .sfmatrix4fValue;
    XMLParser .prototype .fieldTypes [X3DConstants .SFNode]      = function (field) { field .setValue (null); };
-   XMLParser .prototype .fieldTypes [X3DConstants .SFRotation]  = Parser .prototype .sfrotationValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFRotation]  = VRMLParser .prototype .sfrotationValue;
    XMLParser .prototype .fieldTypes [X3DConstants .SFString]    = function (field) { field .setValue (Fields .SFString .unescape (this .input)); };
-   XMLParser .prototype .fieldTypes [X3DConstants .SFTime]      = Parser .prototype .sftimeValue;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFVec2d]     = Parser .prototype .sfvec2dValue;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFVec2f]     = Parser .prototype .sfvec2fValue;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFVec3d]     = Parser .prototype .sfvec3dValue;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFVec3f]     = Parser .prototype .sfvec3fValue;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFVec4d]     = Parser .prototype .sfvec4dValue;
-   XMLParser .prototype .fieldTypes [X3DConstants .SFVec4f]     = Parser .prototype .sfvec4fValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFTime]      = VRMLParser .prototype .sftimeValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFVec2d]     = VRMLParser .prototype .sfvec2dValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFVec2f]     = VRMLParser .prototype .sfvec2fValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFVec3d]     = VRMLParser .prototype .sfvec3dValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFVec3f]     = VRMLParser .prototype .sfvec3fValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFVec4d]     = VRMLParser .prototype .sfvec4dValue;
+   XMLParser .prototype .fieldTypes [X3DConstants .SFVec4f]     = VRMLParser .prototype .sfvec4fValue;
 
-   XMLParser .prototype .fieldTypes [X3DConstants .MFBool]      = Parser .prototype .sfboolValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFColor]     = Parser .prototype .sfcolorValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFColorRGBA] = Parser .prototype .sfcolorrgbaValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFDouble]    = Parser .prototype .sfdoubleValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFFloat]     = Parser .prototype .sffloatValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFImage]     = Parser .prototype .sfimageValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFInt32]     = Parser .prototype .sfint32Values;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3d]  = Parser .prototype .sfmatrix3dValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3f]  = Parser .prototype .sfmatrix3fValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4d]  = Parser .prototype .sfmatrix4dValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4f]  = Parser .prototype .sfmatrix4fValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFBool]      = VRMLParser .prototype .sfboolValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFColor]     = VRMLParser .prototype .sfcolorValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFColorRGBA] = VRMLParser .prototype .sfcolorrgbaValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFDouble]    = VRMLParser .prototype .sfdoubleValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFFloat]     = VRMLParser .prototype .sffloatValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFImage]     = VRMLParser .prototype .sfimageValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFInt32]     = VRMLParser .prototype .sfint32Values;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3d]  = VRMLParser .prototype .sfmatrix3dValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3f]  = VRMLParser .prototype .sfmatrix3fValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4d]  = VRMLParser .prototype .sfmatrix4dValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4f]  = VRMLParser .prototype .sfmatrix4fValues;
    XMLParser .prototype .fieldTypes [X3DConstants .MFNode]      = function (field) { field .length = 0; };
-   XMLParser .prototype .fieldTypes [X3DConstants .MFRotation]  = Parser .prototype .sfrotationValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFString]    = Parser .prototype .sfstringValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFTime]      = Parser .prototype .sftimeValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFVec2d]     = Parser .prototype .sfvec2dValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFVec2f]     = Parser .prototype .sfvec2fValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFVec3d]     = Parser .prototype .sfvec3dValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFVec3f]     = Parser .prototype .sfvec3fValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d]     = Parser .prototype .sfvec4dValues;
-   XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f]     = Parser .prototype .sfvec4fValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFRotation]  = VRMLParser .prototype .sfrotationValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFString]    = VRMLParser .prototype .sfstringValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFTime]      = VRMLParser .prototype .sftimeValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFVec2d]     = VRMLParser .prototype .sfvec2dValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFVec2f]     = VRMLParser .prototype .sfvec2fValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFVec3d]     = VRMLParser .prototype .sfvec3dValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFVec3f]     = VRMLParser .prototype .sfvec3fValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFVec4d]     = VRMLParser .prototype .sfvec4dValues;
+   XMLParser .prototype .fieldTypes [X3DConstants .MFVec4f]     = VRMLParser .prototype .sfvec4fValues;
 
    /*
     * Lazy parse functions.
@@ -49111,8 +49125,17 @@ function (XMLParser,
    JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    {
       constructor: JSONParser,
+      isValid: function ()
+      {
+         return this .jsobj instanceof Object;
+      },
       parseIntoScene: function (jsobj, success, error)
       {
+         if (typeof jsobj === "string")
+            jsobj = JSON .parse (jsobj)
+
+         this .jsobj = jsobj;
+
          /**
           * Load X3D JSON into an element.
           * jsobj - the JavaScript object to convert to DOM.
@@ -49486,6 +49509,112 @@ function (XMLParser,
    });
 
    return JSONParser;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+ define ('x_ite/Parser/GoldenGate',[
+   "x_ite/Parser/X3DParser",
+   "x_ite/Parser/JSONParser",
+   "x_ite/Parser/VRMLParser",
+   "x_ite/Parser/XMLParser",
+],
+function (X3DParser,
+          JSONParser,
+          VRMLParser,
+          XMLParser)
+{
+"use strict";
+
+   function GoldenGate (scene)
+   {
+      X3DParser .call (this, scene);
+   }
+
+   GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
+   {
+      constructor: GoldenGate,
+      parseIntoScene: function (x3dSyntax, success, error)
+      {
+         for (const Parser of GoldenGate .Parser)
+         {
+            const parser = new Parser (this .getScene ());
+
+            try
+            {
+               parser .pushExecutionContext (this .getExecutionContext ());
+               parser .parseIntoScene (x3dSyntax, success, error);
+               parser .popExecutionContext ();
+
+               // console .log (Parser .name, parser .isValid (), this .getScene () .worldURL)
+               // if (!parser .isValid ())
+               //    console .log (x3dSyntax)
+
+               return
+            }
+            catch (error)
+            {
+               if (parser .isValid ())
+                  throw error;
+            }
+         }
+      },
+   });
+
+   GoldenGate .Parser = [
+      XMLParser,
+      JSONParser,
+      VRMLParser,
+   ];
+
+   return GoldenGate;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -58676,7 +58805,7 @@ function (X3DBaseNode,
                const
                   node      = this .array [i],
                   outerNode = node .getExecutionContext () .getOuterNode (),
-                  scene     = parent instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
+                  scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
 
                if (!enableInlineBindables && scene !== mainScene)
                   continue;
@@ -60976,7 +61105,7 @@ function ($,
       setError: function ()
       {
          if (this .URL .protocol !== "data:")
-            console .warn ("Error loading image:", this .URL .href);
+            console .warn ("Error loading image:", decodeURI (this .URL .href));
 
          this .loadNext ();
       },
@@ -60985,7 +61114,7 @@ function ($,
          if (DEBUG)
          {
              if (this .URL .protocol !== "data:")
-               console .info ("Done loading image:", this .URL .href);
+               console .info ("Done loading image:", decodeURI (this .URL .href));
          }
 
          try
@@ -65829,9 +65958,9 @@ define ('x_ite/InputOutput/FileLoader',[
    "jquery",
    "x_ite/Base/X3DObject",
    "x_ite/Fields",
-   "x_ite/Parser/Parser",
-   "x_ite/Parser/XMLParser",
+   "x_ite/Parser/GoldenGate",
    "x_ite/Parser/JSONParser",
+   "x_ite/Parser/XMLParser",
    "x_ite/Execution/X3DWorld",
    "standard/Networking/BinaryTransport",
    "pako_inflate",
@@ -65840,9 +65969,9 @@ define ('x_ite/InputOutput/FileLoader',[
 function ($,
           X3DObject,
           Fields,
-          Parser,
-          XMLParser,
+          GoldenGate,
           JSONParser,
+          XMLParser,
           X3DWorld,
           BinaryTransport,
           pako,
@@ -65899,102 +66028,27 @@ function ($,
       },
       createX3DFromString: function (worldURL, string, success, error)
       {
-         const scene = this .browser .createScene ();
-
-         if (this .node instanceof X3DWorld)
-            scene .loader = this;
-         else
-            scene .setExecutionContext (this .executionContext);
-
-         scene .setWorldURL (new URL (worldURL, this .getReferer ()) .href);
-
-         if (success)
+         try
          {
-            // Async branch.
+            const scene = this .browser .createScene ();
 
-            const handlers = [
-               function (scene, string, success, error)
-               {
-                  // Try parse X3D XML Encoding.
-                  this .importDocument (scene, $.parseXML (string), success, error);
-               },
-               function (scene, string, success, error)
-               {
-                  // Try parse X3D JSON Encoding.
-                  this .importJS (scene, JSON .parse (string), success, error);
-               },
-               function (scene, string, success, error)
-               {
-                  if (success)
-                     success = this .setScene .bind (this, scene, success, error);
+            if (this .node instanceof X3DWorld)
+               scene .loader = this;
+            else
+               scene .setExecutionContext (this .executionContext);
 
-                  // Try parse X3D Classic Encoding.
-                  new Parser (scene) .parseIntoScene (string, success, error);
-               },
-            ];
+            scene .setWorldURL (decodeURI (new URL (worldURL, this .getReferer ()) .href));
 
-            const errors = [ ];
+            if (success)
+               success = this .setScene .bind (this, scene, success, error);
 
-            for (const handler of handlers)
-            {
-               try
-               {
-                  handler .call (this, scene, string, success, error);
-                  return;
-               }
-               catch (error)
-               {
-                  // Try next handler.
-                  errors .push (error);
-               }
-            }
-
-            console .error (errors);
+            new GoldenGate (scene) .parseIntoScene (string, success, error);
+         }
+         catch (error)
+         {
+            console .error (error);
 
             throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + worldURL + "'.");
-         }
-         else
-         {
-            // Sync branch.
-
-            const handlers = [
-               function (scene, string)
-               {
-                  // Try parse X3D XML Encoding.
-                  this .importDocument (scene, $.parseXML (string));
-               },
-               function (scene, string)
-               {
-                  // Try parse X3D JSON Encoding.
-                  this .importJS (scene, JSON.parse (string));
-               },
-               function (scene, string)
-               {
-                  // Try parse X3D Classic Encoding.
-                  new Parser (scene) .parseIntoScene (string);
-               },
-            ];
-
-            const errors = [ ];
-
-            for (const handler of handlers)
-            {
-               try
-               {
-                  handler .call (this, scene, string);
-
-                  return scene;
-               }
-               catch (error)
-               {
-                  // Try next handler.
-                  errors .push (error);
-               }
-            }
-
-            console .error (errors);
-
-            throw new Error ("Couldn't parse x3d syntax.");
          }
       },
       importDocument: function (scene, dom, success, error)
@@ -66064,7 +66118,7 @@ function ($,
          if (DEBUG)
          {
             if (this .URL .protocol !== "data:")
-               console .info ("Done loading scene " + this .URL .href);
+               console .info ("Done loading scene " + decodeURI (this .URL .href));
          }
       },
       createX3DFromURL: function (url, parameter, callback, bindViewpoint, foreign)
@@ -66341,7 +66395,7 @@ function ($,
          if (this .URL .protocol === "data:")
             console .warn ("Couldn't load URL 'data':", exception .message);
          else
-            console .warn ("Couldn't load URL '" + this .URL .href + "':", exception .message);
+            console .warn ("Couldn't load URL '" + decodeURI (this .URL .href) + "':", exception .message);
 
          if (DEBUG)
             console .log (exception);
@@ -80919,7 +80973,7 @@ function (Fields,
       setError: function (error)
       {
          if (this .URL .protocol !== "data:")
-            console .warn ("Error loading font '" + this .URL .toString () + "':", error);
+            console .warn ("Error loading font '" + decodeURI (this .URL .href) + "':", error);
 
          this .loadNext ();
       },
@@ -116582,7 +116636,7 @@ function ($,
       setError: function ()
       {
          if (this .URL .protocol !== "data:")
-            console .warn ("Error loading audio:", this .URL .href);
+            console .warn ("Error loading audio:", decodeURI (this .URL .href));
 
          this .loadNext ();
       },
@@ -116591,7 +116645,7 @@ function ($,
          if (DEBUG)
          {
             if (this .URL .protocol !== "data:")
-               console .info ("Done loading audio:", this .URL .href);
+               console .info ("Done loading audio:", decodeURI (this .URL .href));
          }
 
          this .audio .unbind ("canplaythrough");
@@ -117538,7 +117592,7 @@ function ($,
       setError: function ()
       {
          if (this .URL .protocol !== "data:")
-            console .warn ("Error loading movie:", this .URL .href);
+            console .warn ("Error loading movie:", decodeURI (this .URL .href));
 
          this .loadNext ();
       },
@@ -117547,7 +117601,7 @@ function ($,
          if (DEBUG)
          {
             if (this .URL .protocol !== "data:")
-               console .info ("Done loading movie:", this .URL .href);
+               console .info ("Done loading movie:", decodeURI (this .URL .href));
          }
 
          try
