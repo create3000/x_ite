@@ -1001,7 +1001,7 @@ More options can be adjusted using the [Browser Object](/x_ite/reference/Browser
 
 ## Keyboard Shortcuts
 
-If the X3DCanvas is focused, the following keyboard shortcuts are available.
+If the X3DCanvas element is focused, the following keyboard shortcuts are available.
 
 ### Home (Pos 1)
 
