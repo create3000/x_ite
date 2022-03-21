@@ -130,10 +130,10 @@ define (function ()
                   providerUrls .add (providerUrl);
             }
 
-            if (typeof globalRequire === "function" && typeof __filename === "string")
+            if (typeof __global_require__ === "function" && typeof __filename === "string")
             {
                for (const url of providerUrls)
-                  globalRequire (globalRequire ("url") .fileURLToPath (url));
+                  __global_require__ (__global_require__ ("url") .fileURLToPath (url));
             }
 
             return Array .from (providerUrls);

@@ -118,8 +118,8 @@ function ($,
    {
       const url = urls .getProviderUrl (name);
 
-      if (typeof globalRequire === "function" && typeof __filename === "string")
-         globalRequire (globalRequire ("url") .fileURLToPath (url));
+      if (typeof __global_require__ === "function" && typeof __filename === "string")
+         __global_require__ (__global_require__ ("url") .fileURLToPath (url));
 
       return url;
    }

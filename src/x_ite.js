@@ -70,8 +70,8 @@ const getScriptURL = (function ()
 {
    if (document .currentScript)
       var src = document .currentScript .src;
-   else if (typeof globalRequire === "function" && typeof __filename === "string")
-      var src = globalRequire ("url") .pathToFileURL (__filename) .href;
+   else if (typeof __global_require__ === "function" && typeof __filename === "string")
+      var src = __global_require__ ("url") .pathToFileURL (__filename) .href;
 
    return function ()
    {
@@ -125,8 +125,8 @@ const getScriptURL = (function ()
    // Now assign our X3D.
    window .X3D = X_ITE;
 
-   if (typeof globalModule === "object" && typeof globalModule .exports === "object")
-      globalModule .exports = X_ITE;
+   if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
+      __global_module__ .exports = X_ITE;
 
    // IE fix.
    document .createElement ("X3DCanvas");
