@@ -274,7 +274,7 @@ function ($,
             NULL:  { value: null },
             FALSE: { value: false },
             TRUE:  { value: true },
-            print: { value: browser .print .bind (browser) },
+            print: { value: browser .println .bind (browser) },
             trace: { value: browser .println .bind (browser) },
 
             Browser: { value: browser },
