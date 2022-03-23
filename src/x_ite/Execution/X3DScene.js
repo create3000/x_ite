@@ -86,7 +86,7 @@ function (SupportedNodes,
       _metadata             = Symbol (),
       _exportedNodes        = Symbol ();
 
-   SupportedNodes .addAbstractType ("X3DScene");
+   SupportedNodes .addAbstractType ("X3DScene", X3DScene);
 
    function X3DScene (executionContext)
    {

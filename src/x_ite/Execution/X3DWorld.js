@@ -66,7 +66,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-   SupportedNodes .addAbstractType ("X3DWorld");
+   SupportedNodes .addAbstractType ("X3DWorld", X3DWorld);
 
    function X3DWorld (executionContext)
    {

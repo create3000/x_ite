@@ -68,7 +68,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-   SupportedNodes .addAbstractType ("X3DProtoDeclaration");
+   SupportedNodes .addAbstractType ("X3DProtoDeclaration", X3DProtoDeclaration);
 
    const
       _body = Symbol ();

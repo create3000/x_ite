@@ -64,7 +64,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-   SupportedNodes .addAbstractType ("X3DProtoDeclarationNode");
+   SupportedNodes .addAbstractType ("X3DProtoDeclarationNode", X3DProtoDeclarationNode);
 
    function X3DProtoDeclarationNode (executionContext)
    {

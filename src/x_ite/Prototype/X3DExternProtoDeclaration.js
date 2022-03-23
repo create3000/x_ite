@@ -70,7 +70,7 @@ function ($,
 {
 "use strict";
 
-   SupportedNodes .addAbstractType ("X3DExternProtoDeclaration");
+   SupportedNodes .addAbstractType ("X3DExternProtoDeclaration", X3DExternProtoDeclaration);
 
    const
       _proto = Symbol (),

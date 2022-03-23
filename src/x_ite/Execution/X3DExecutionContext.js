@@ -90,7 +90,7 @@ function (SupportedNodes,
       _routes         = Symbol (),
       _outerNode      = Symbol ();
 
-   SupportedNodes .addAbstractType ("X3DExecutionContext");
+   SupportedNodes .addAbstractType ("X3DExecutionContext", X3DExecutionContext);
 
    function X3DExecutionContext (executionContext)
    {
