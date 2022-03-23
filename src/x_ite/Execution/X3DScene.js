@@ -125,6 +125,10 @@ function (SupportedNodes,
       {
          return this === this .getExecutionContext ();
       },
+      isScene: function ()
+      {
+         return true;
+      },
       setSpecificationVersion: function (specificationVersion)
       {
          this [_specificationVersion] = String (specificationVersion);

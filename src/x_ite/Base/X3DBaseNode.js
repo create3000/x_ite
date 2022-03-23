@@ -130,11 +130,9 @@ function (X3DEventObject,
       },
       getScene: function ()
       {
-         const X3DScene = require ("x_ite/Execution/X3DScene");
-
          let executionContext = this [_executionContext];
 
-         while (!(executionContext instanceof X3DScene))
+         while (!executionContext .isScene ())
             executionContext = executionContext .getExecutionContext ();
 
          return executionContext;
@@ -551,6 +549,8 @@ function (X3DEventObject,
          this [_cloneCount] += count;
 
          this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
+
+         this [_executionContext] ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
       },
       removeCloneCount: function (count)
       {
@@ -560,6 +560,8 @@ function (X3DEventObject,
          this [_cloneCount] -= count;
 
          this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
+
+         this [_executionContext] ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
       },
       dispose: function ()
       {

@@ -98,8 +98,9 @@ function (SupportedNodes,
 
       this .addType (X3DConstants .X3DExecutionContext)
 
-      this .addChildObjects ("rootNodes",  new Fields .MFNode (),
-                             "worldInfos", new Fields .MFNode ());
+      this .addChildObjects ("rootNodes",          new Fields .MFNode (),
+                             "worldInfos",         new Fields .MFNode (),
+                             "sceneGraph_changed", new Fields .SFTime ());
 
       this ._rootNodes .setAccessType (X3DConstants .initializeOnly);
       this ._rootNodes .addCloneCount (1);
@@ -114,6 +115,21 @@ function (SupportedNodes,
    X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       constructor: X3DExecutionContext,
+      initialize: function ()
+      {
+         X3DBaseNode .prototype .initialize .call (this);
+
+         if (!this .isScene ())
+            this ._sceneGraph_changed .addInterest ("set_sceneGraph", this)
+      },
+      set_sceneGraph: function ()
+      {
+         this .getExecutionContext () ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      },
+      isScene: function ()
+      {
+         return false;
+      },
       getTypeName: function ()
       {
          return "X3DExecutionContext";
@@ -191,8 +207,6 @@ function (SupportedNodes,
       {
          name = String (name);
 
-         const X3DScene = require ("x_ite/Execution/X3DScene");
-
          let executionContext = this;
 
          for (;;)
@@ -207,7 +221,7 @@ function (SupportedNodes,
             if (externproto)
                return externproto .createInstance (this, setup);
 
-            if (executionContext instanceof X3DScene)
+            if (executionContext .isScene ())
                break;
 
             executionContext = executionContext .getExecutionContext ();

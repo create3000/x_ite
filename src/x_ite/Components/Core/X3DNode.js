@@ -208,7 +208,7 @@ function (Fields,
                return true;
          }
 
-         if (executionContext .getType () .includes (X3DConstants .X3DScene))
+         if (executionContext .isScene ())
          {
             for (const exportedNode of executionContext .getExportedNodes ())
             {
@@ -809,7 +809,7 @@ function (Fields,
 
          // Remove exported node if any.
 
-         if (executionContext .getType () .includes (X3DConstants .X3DScene))
+         if (executionContext .isScene ())
          {
             for (const exportedNode of executionContext .getExportedNodes ())
             {
