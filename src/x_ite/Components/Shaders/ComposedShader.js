@@ -108,7 +108,7 @@ function (Fields,
          X3DShaderNode               .prototype .initialize .call (this);
          X3DProgrammableShaderObject .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          this .primitiveMode = gl .TRIANGLES;
 
@@ -123,13 +123,43 @@ function (Fields,
 
          //Must not call set_live__.
       },
+      addUserDefinedField: function (accessType, name, field)
+      {
+         X3DProgrammableShaderObject .prototype .addUserDefinedField .call (this, accessType, name, field);
+
+         if (!this .isInitialized ())
+            return;
+
+         const gl = this .getBrowser () .getContext ();
+
+         this .enable (gl);
+         this .removeShaderFields ();
+         this .disable (gl);
+
+         this .set_live__ ();
+      },
+      removeUserDefinedField: function (name)
+      {
+         X3DProgrammableShaderObject .prototype .removeUserDefinedField .call (this, name);
+
+         if (!this .isInitialized ())
+            return;
+
+         const gl = this .getBrowser () .getContext ();
+
+         this .enable (gl);
+         this .removeShaderFields ();
+         this .disable (gl);
+
+         this .set_live__ ();
+      },
       getProgram: function ()
       {
          return this .program;
       },
       set_live__: function ()
       {
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (this .isLive () .getValue ())
          {
@@ -154,20 +184,20 @@ function (Fields,
       {
          if (this .loadSensor ._isLoaded .getValue ())
          {
-            var
+            const
                gl      = this .getBrowser () .getContext (),
-               program = gl .createProgram (),
-               parts   = this ._parts .getValue (),
-               valid   = 0;
+               program = gl .createProgram ();
+
+            let valid = 0;
 
             if (this .getValid ())
                this .removeShaderFields ();
 
             this .program = program;
 
-            for (var i = 0, length = parts .length; i < length; ++ i)
+            for (const node of this ._parts)
             {
-               var partNode = X3DCast (X3DConstants .ShaderPart, parts [i]);
+               const partNode = X3DCast (X3DConstants .ShaderPart, node);
 
                if (partNode)
                {
@@ -208,7 +238,7 @@ function (Fields,
                console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
             }
 
-            this .setValid (Boolean (valid));
+            this .setValid (!! valid);
          }
          else
          {
@@ -217,7 +247,7 @@ function (Fields,
       },
       set_field__: function (field)
       {
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          gl .useProgram (this .program);
 

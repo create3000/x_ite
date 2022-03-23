@@ -150,6 +150,24 @@ function ($,
       {
          return true;
       },
+      addUserDefinedField: function (accessType, name, field)
+      {
+         X3DScriptNode .prototype .addUserDefinedField .call (this, accessType, name, field);
+
+         if (!this .isInitialized ())
+            return;
+
+         this .loadNow ();
+      },
+      removeUserDefinedField: function (name)
+      {
+         X3DScriptNode .prototype .removeUserDefinedField .call (this, name);
+
+         if (!this .isInitialized ())
+            return;
+
+         this .loadNow ();
+      },
       getSourceText: function ()
       {
          return this ._url;
