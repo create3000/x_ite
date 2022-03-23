@@ -12,7 +12,7 @@ sub check_version {
 	$VERSION =~ /"version":\s*"(.*?)"/;
 	$VERSION = $1;
 
-	say "VERSION »$VERSION«";
+	say $VERSION;
 
 	my $BROWSER = `cat src/x_ite/Browser/VERSION.js`;
 	$BROWSER =~ s/"(.*?a?)"/"$VERSION"/;
