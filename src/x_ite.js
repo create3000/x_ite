@@ -123,7 +123,8 @@ const getScriptURL = (function ()
    const X3D_ = window .X3D;
 
    // Now assign our X3D.
-   window .X3D = X_ITE;
+   window .X3D                        = X_ITE;
+   window [Symbol .for ("X_ITE.X3D")] = X_ITE;
 
    if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
       __global_module__ .exports = X_ITE;
