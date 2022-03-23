@@ -763,10 +763,7 @@ function ($,
       },
       print: function ()
       {
-         let string = "";
-
-         for (const argument of arguments)
-            string += argument;
+         const string = Array .prototype .join .call (arguments, "");
 
          console .log (string);
 
@@ -777,19 +774,14 @@ function ($,
       },
       println: function ()
       {
-         let string = "";
-
-         for (const argument of arguments)
-            string += argument;
+         const string = Array .prototype .join .call (arguments, "");
 
          console .log (string);
-
-         string += "\n";
 
          const element = $(".x_ite-console");
 
          if (element .length)
-            element .append (document .createTextNode (string));
+            element .append (document .createTextNode (string + "\n"));
       },
       toVRMLStream: function (stream)
       {
