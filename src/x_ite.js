@@ -98,7 +98,7 @@ const getScriptURL = (function ()
             X3D (callback, fallback);
             X3D (resolve, reject);
          },
-         function () { fallback (); reject (); });
+         function () { if (typeof fallback === "function") fallback (); reject (); });
       });
    }
 
