@@ -4,6 +4,5 @@
 var module = { }, exports, process;
 
 const
-	X3D     = window [Symbol .for ("X_ITE.X3D")],
-	define  = X3D .define,
-	require = X3D .require;
+	define  = window [Symbol .for ("X_ITE.X3D")] .define,
+	require = window [Symbol .for ("X_ITE.X3D")] .require;
