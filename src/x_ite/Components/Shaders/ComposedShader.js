@@ -125,33 +125,43 @@ function (Fields,
       },
       addUserDefinedField: function (accessType, name, field)
       {
-         X3DProgrammableShaderObject .prototype .addUserDefinedField .call (this, accessType, name, field);
-
-         if (!this .isInitialized ())
-            return;
-
          const gl = this .getBrowser () .getContext ();
 
-         this .enable (gl);
-         this .removeShaderFields ();
-         this .disable (gl);
+         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
+         {
+            this .enable (gl);
+            this .removeShaderFields ();
+            this .disable (gl);
+         }
 
-         this .set_live__ ();
+         X3DProgrammableShaderObject .prototype .addUserDefinedField .call (this, accessType, name, field);
+
+         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
+         {
+            this .enable (gl);
+            this .addShaderFields ();
+            this .disable (gl);
+         }
       },
       removeUserDefinedField: function (name)
       {
-         X3DProgrammableShaderObject .prototype .removeUserDefinedField .call (this, name);
-
-         if (!this .isInitialized ())
-            return;
-
          const gl = this .getBrowser () .getContext ();
 
-         this .enable (gl);
-         this .removeShaderFields ();
-         this .disable (gl);
+         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
+         {
+            this .enable (gl);
+            this .removeShaderFields ();
+            this .disable (gl);
+         }
 
-         this .set_live__ ();
+         X3DProgrammableShaderObject .prototype .removeUserDefinedField .call (this, name);
+
+         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
+         {
+            this .enable (gl);
+            this .addShaderFields ();
+            this .disable (gl);
+         }
       },
       getProgram: function ()
       {

@@ -157,7 +157,8 @@ function ($,
          if (!this .isInitialized ())
             return;
 
-         this .loadNow ();
+         this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+         this .requestImmediateLoad ();
       },
       removeUserDefinedField: function (name)
       {
@@ -166,7 +167,8 @@ function ($,
          if (!this .isInitialized ())
             return;
 
-         this .loadNow ();
+         this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+         this .requestImmediateLoad ();
       },
       getSourceText: function ()
       {

@@ -193,11 +193,7 @@ function (Fields,
       set_load__: function ()
       {
          if (this ._load .getValue ())
-         {
-            this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
             this .requestImmediateLoad ();
-         }
          else
             this .requestUnload ();
       },
@@ -207,7 +203,6 @@ function (Fields,
             return;
 
          this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
          this .requestImmediateLoad ();
       },
       set_autoRefresh__: function ()
