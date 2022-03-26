@@ -140,7 +140,7 @@ function ($,
          catch (exception)
          {
             if (error)
-               error (exception)
+               error (exception);
             else
                throw error;
          }
