@@ -109,6 +109,10 @@ function (SupportedNodes,
       this [_metadata]      = new Map ();
       this [_exportedNodes] = new ExportedNodesArray ();
 
+      this .addChildObjects ("profile_changed",    new Fields .SFTime (),
+                             "components_changed", new Fields .SFTime (),
+                             "metadata_changed",   new Fields .SFTime (),)
+
       this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 
       this .setLive (false);
@@ -156,6 +160,8 @@ function (SupportedNodes,
       setProfile: function (profile)
       {
          this [_profile] = profile;
+
+         this ._profile_changed = this .getBrowser () .getCurrentTime ();
       },
       getProfile: function ()
       {
@@ -164,6 +170,14 @@ function (SupportedNodes,
       addComponent: function (component)
       {
          this [_components] .add (component .name, component);
+
+         this ._components_changed = this .getBrowser () .getCurrentTime ();
+      },
+      removeComponent: function (component)
+      {
+         this [_components] .remove (component .name);
+
+         this ._components_changed = this .getBrowser () .getCurrentTime ();
       },
       getComponents: function ()
       {
@@ -249,12 +263,16 @@ function (SupportedNodes,
             return;
 
          this [_metadata] .set (name, String (value));
+
+         this ._metadata_changed = this .getBrowser () .getCurrentTime ();
       },
       removeMetaData: function (name)
       {
          name = String (name);
 
          this [_metadata] .delete (name);
+
+         this ._metadata_changed = this .getBrowser () .getCurrentTime ();
       },
       getMetaData: function (name)
       {
