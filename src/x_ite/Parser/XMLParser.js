@@ -107,21 +107,36 @@ function ($,
       constructor: XMLParser,
       isValid: function ()
       {
-         return (this .scene [_dom] instanceof XMLDocument) || (this .scene [_dom] instanceof HTMLElement);
+         return (this .input instanceof XMLDocument) || (this .input instanceof HTMLElement) || (this .input === null);
       },
-      parseIntoScene: function (xmlElement, success, error)
+      getInput: function ()
       {
-         if (typeof xmlElement === "string")
-            xmlElement = $.parseXML (xmlElement)
+         return this .input;
+      },
+      setInput (xmlElement)
+      {
+         try
+         {
+            if (typeof xmlElement === "string")
+               xmlElement = $.parseXML (xmlElement);
 
-         this .scene [_dom] = xmlElement;
+            this .input = xmlElement;
+         }
+         catch (error)
+         {
+            this .input = undefined;
+         }
+      },
+      parseIntoScene: function (success, error)
+      {
+         this .scene [_dom] = this .input;
          this .success      = success;
          this .error        = error;
 
          this .getScene () .setEncoding ("XML");
          this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
-         this .xmlElement (xmlElement);
+         this .xmlElement (this .input);
       },
       parseIntoNode: function (node, xmlElement)
       {

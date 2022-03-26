@@ -566,7 +566,10 @@ function ($,
             scene .setLive (currentScene .getLive ());
          }
 
-         new XMLParser (scene) .parseIntoScene (dom, success, error);
+         const parser = new XMLParser (scene);
+
+         parser .setInput (dom)
+         parser .parseIntoScene (success, error);
 
          if (arguments .length === 1)
             return scene;
@@ -585,7 +588,10 @@ function ($,
             scene .setLive (currentScene .getLive ());
          }
 
-         new JSONParser (scene) .parseIntoScene (json, success, error);
+         const parser = new JSONParser (scene);
+
+         parser .setInput (json);
+         parser .parseIntoScene (success, error);
 
          if (arguments .length === 1)
             return scene;

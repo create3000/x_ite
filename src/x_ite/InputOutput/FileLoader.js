@@ -152,7 +152,10 @@ function ($,
             if (success)
                success = this .setScene .bind (this, scene, success, error);
 
-            new XMLParser (scene) .parseIntoScene (dom, success, error);
+            const parser = new XMLParser (scene);
+
+            parser .setInput (dom);
+            parser .parseIntoScene (success, error);
 
             //AP: add reference to dom for later access.
             this .node [_dom] = dom;
@@ -165,7 +168,7 @@ function ($,
                throw exception;
          }
       },
-      importJS: function (scene, jsobj, success, error)
+      importJS: function (scene, json, success, error)
       {
          try
          {
@@ -173,7 +176,11 @@ function ($,
                success = this .setScene .bind (this, scene, success, error);
 
             //AP: add reference to dom for later access.
-            this .node [_dom] = new JSONParser (scene) .parseIntoScene (jsobj, success, error);
+            const parser = new JSONParser (scene);
+
+            parser .setInput (json)
+
+            this .node [_dom] = parser .parseIntoScene (success, error);
          }
          catch (exception)
          {

@@ -70,26 +70,43 @@ function (XMLParser,
       constructor: JSONParser,
       isValid: function ()
       {
-         return this .jsobj instanceof Object;
+         return this .json instanceof Object;
       },
-      parseIntoScene: function (jsobj, success, error)
+      getInput: function ()
       {
-         if (typeof jsobj === "string")
-            jsobj = JSON .parse (jsobj)
+         return this .input;
+      },
+      setInput: function (json)
+      {
+         try
+         {
+            if (typeof json === "string")
+               json = JSON .parse (json)
 
-         this .jsobj = jsobj;
-
+            this .input = json;
+         }
+         catch (error)
+         {
+            this .input = undefined;
+         }
+      },
+      parseIntoScene: function (success, error)
+      {
          /**
           * Load X3D JSON into an element.
-          * jsobj - the JavaScript object to convert to DOM.
+          * json - the JavaScript object to convert to DOM.
           */
 
          const child = this .createElement ("X3D");
 
-         this .convertToDOM (jsobj, "", child);
+         this .convertToDOM (this .input, "", child);
 
-         // call the DOM parser
-         new XMLParser (this .scene) .parseIntoScene (child, success, error);
+         // Call the DOM parser.
+
+         const parser = new XMLParser (this .getScene ());
+
+         parser .setInput (child);
+         parser .parseIntoScene (success, error);
 
          return child;
       },

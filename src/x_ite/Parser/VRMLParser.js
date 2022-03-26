@@ -320,17 +320,22 @@ function (Fields,
       {
          return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{|$))/);
       },
-      parseIntoScene: function (input, success, error)
+      getInput: function ()
+      {
+         return this .input;
+      },
+      setInput: function (vrmlSyntax)
+      {
+         this .input      = vrmlSyntax;
+         this .lineNumber = 1;
+         this .lastIndex  = 0;
+      },
+      parseIntoScene: function (success, error)
       {
          try
          {
             this .success = success;
             this .error   = error;
-
-            this .setInput (input);
-
-            if (!this .isValid ())
-               throw new Error ("Invalid X3D.");
 
             this .getScene () .setEncoding ("VRML");
             this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
@@ -341,16 +346,6 @@ function (Fields,
             //console .error (error);
             throw new Error (this .getError (error));
          }
-      },
-      setInput: function (value)
-      {
-         this .input      = value;
-         this .lineNumber = 1;
-         this .lastIndex  = 0;
-      },
-      getInput: function ()
-      {
-         return this .input;
       },
       exception: function (string)
       {

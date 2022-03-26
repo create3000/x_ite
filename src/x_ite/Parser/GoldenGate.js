@@ -72,24 +72,28 @@ function (X3DParser,
       {
          for (const Parser of GoldenGate .Parser)
          {
-            const parser = new Parser (this .getScene ());
-
             try
             {
-               parser .pushExecutionContext (this .getExecutionContext ());
-               parser .parseIntoScene (x3dSyntax, success, error);
-               parser .popExecutionContext ();
+               const parser = new Parser (this .getScene ());
 
-               // console .log (Parser .name, parser .isValid (), this .getScene () .worldURL)
-               // if (!parser .isValid ())
-               //    console .log (x3dSyntax)
+               parser .setInput (x3dSyntax);
 
-               return
-            }
-            catch (error)
-            {
                if (parser .isValid ())
-                  throw error;
+               {
+                  parser .pushExecutionContext (this .getExecutionContext ());
+                  parser .parseIntoScene (success, error);
+                  parser .popExecutionContext ();
+                  return
+               }
+            }
+            catch (exception)
+            {
+               if (error)
+                  error (exception);
+               else
+                  throw exception;
+
+               return;
             }
          }
 
