@@ -70,7 +70,7 @@ function (XMLParser,
       constructor: JSONParser,
       isValid: function ()
       {
-         return this .json instanceof Object;
+         return this .input instanceof Object;
       },
       getInput: function ()
       {
