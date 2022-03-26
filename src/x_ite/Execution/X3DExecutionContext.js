@@ -110,6 +110,13 @@ function (SupportedNodes,
       this [_protos]         = new ProtoDeclarationArray ();
       this [_externprotos]   = new ExternProtoDeclarationArray ();
       this [_routes]         = new RouteArray ();
+
+      this .addChildObjects ("namedNodes_changed",    new Fields .SFTime (),
+                             "importedNodes_changed", new Fields .SFTime (),
+                             "protos_changed",        new Fields .SFTime (),
+                             "externprotos_changed",  new Fields .SFTime (),
+                             "routes_changed",        new Fields .SFTime ())
+
    }
 
    X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -263,6 +270,8 @@ function (SupportedNodes,
          node .setName (name);
 
          this [_namedNodes] .add (name, node);
+
+         this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
       },
       removeNamedNode: function (name)
       {
@@ -276,6 +285,8 @@ function (SupportedNodes,
          node .setName ("");
 
          this [_namedNodes] .remove (name);
+
+         this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
       },
       getNamedNode: function (name)
       {
@@ -336,6 +347,8 @@ function (SupportedNodes,
          this [_importedNodes] .add (importedName, importedNode);
 
          importedNode .setup ();
+
+         this ._importedNodes_changed = this .getBrowser () .getCurrentTime ();
       },
       removeImportedNode: function (importedName)
       {
@@ -349,6 +362,8 @@ function (SupportedNodes,
          importedNode .dispose ();
 
          this [_importedNodes] .remove (importedName);
+
+         this ._importedNodes_changed = this .getBrowser () .getCurrentTime ();
       },
       getImportedNode: function (importedName)
       {
@@ -443,6 +458,8 @@ function (SupportedNodes,
 
          this [_protos] .add (name, proto);
          proto .setName (name);
+
+         this ._protos_changed = this .getBrowser () .getCurrentTime ();
       },
       updateProtoDeclaration (name, proto)
       {
@@ -460,12 +477,16 @@ function (SupportedNodes,
 
          this [_protos] .update (proto .getName (), name, proto);
          proto .setName (name);
+
+         this ._protos_changed = this .getBrowser () .getCurrentTime ();
       },
       removeProtoDeclaration (name)
       {
          name = String (name);
 
          this [_protos] .remove (name);
+
+         this ._protos_changed = this .getBrowser () .getCurrentTime ();
       },
       getProtoDeclarations: function ()
       {
@@ -505,6 +526,8 @@ function (SupportedNodes,
 
          this [_externprotos] .add (name, externproto);
          externproto .setName (name);
+
+         this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
       },
       updateExternProtoDeclaration (name, externproto)
       {
@@ -522,12 +545,16 @@ function (SupportedNodes,
 
          this [_externprotos] .update (externproto .getName (), name, externproto);
          externproto .setName (name);
+
+         this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
       },
       removeExternProtoDeclaration (name)
       {
          name = String (name);
 
          this [_externprotos] .remove (name);
+
+         this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
       },
       getExternProtoDeclarations: function ()
       {
@@ -632,6 +659,8 @@ function (SupportedNodes,
 
             this [_routes] .add (id, route);
 
+            this ._routes_changed = this .getBrowser () .getCurrentTime ();
+
             return route;
          }
          catch (error)
@@ -664,6 +693,8 @@ function (SupportedNodes,
 
             this [_routes] .remove (id);
             route .disconnect ();
+
+            this ._routes_changed = this .getBrowser () .getCurrentTime ();
 
             return true;
          }

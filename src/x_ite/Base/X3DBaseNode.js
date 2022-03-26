@@ -106,6 +106,7 @@ function (X3DEventObject,
 
       this .addChildObjects ("name_changed",       new Fields .SFTime (),
                              "typeName_changed",   new Fields .SFTime (),
+                             "fields_changed",     new Fields .SFTime (),
                              "cloneCount_changed", new Fields .SFTime ())
    }
 
@@ -336,6 +337,8 @@ function (X3DEventObject,
 
          if (!this .getPrivate ())
             field .addCloneCount (1);
+
+         this ._fields_changed = this .getBrowser () .getCurrentTime ();
       },
       getField: (function ()
       {
@@ -402,6 +405,8 @@ function (X3DEventObject,
 
             if (!this .getPrivate ())
                field .removeCloneCount (1);
+
+            this ._fields_changed = this .getBrowser () .getCurrentTime ();
          }
       },
       canUserDefinedFields: function ()
@@ -424,6 +429,8 @@ function (X3DEventObject,
 
          if (!this .getPrivate ())
             field .addCloneCount (1);
+
+         this ._fields_changed = this .getBrowser () .getCurrentTime ();
       },
       removeUserDefinedField: function (name)
       {
@@ -439,6 +446,8 @@ function (X3DEventObject,
 
             if (!this .getPrivate ())
                field .removeCloneCount (1);
+
+            this ._fields_changed = this .getBrowser () .getCurrentTime ();
          }
       },
       getUserDefinedFields: function ()

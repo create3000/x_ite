@@ -133,14 +133,6 @@ function (Generator,
       {
          return this [_interests];
       },
-      requestProcessInterests: function ()
-      {
-         if (this [_interests] .size)
-         {
-            cancelAnimationFrame (this [_timeoutId]);
-            this [_timeoutId] = requestAnimationFrame (this .processInterests .bind (this));
-         }
-      },
       processInterests: function ()
       {
          if (this [_interests] .size)

@@ -47,10 +47,7 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DObject",
-],
-function (X3DObject)
+define (function ()
 {
 "use strict";
 
@@ -117,8 +114,6 @@ function (X3DObject)
 
    function X3DInfoArray (values)
    {
-      X3DObject .call (this);
-
       this [_array]           = [ ];
       this [_index]           = new Map ();
       this [Symbol .iterator] = this [_array] [Symbol .iterator];
@@ -132,8 +127,7 @@ function (X3DObject)
       return new Proxy (this, handler);
    }
 
-   X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
-   {
+   X3DInfoArray .prototype = {
       constructor: X3DInfoArray,
       equals: function (array)
       {
@@ -168,12 +162,10 @@ function (X3DObject)
       {
          this [_array] .push (value);
          this [_index] .set (key, value);
-         this .requestProcessInterests ();
       },
       addAlias: function (alias, key)
       {
          this [_index] .set (alias, this [_index] .get (key));
-         this .requestProcessInterests ();
       },
       update: function (oldKey, newKey, value)
       {
@@ -196,8 +188,6 @@ function (X3DObject)
          {
             this [_array] .push (value);
          }
-
-         this .requestProcessInterests ();
       },
       remove: function (key)
       {
@@ -212,8 +202,6 @@ function (X3DObject)
 
          if (index > -1)
             this [_array] .splice (index, 1);
-
-         this .requestProcessInterests ();
       },
       at: Array .prototype .at,
       concat: Array .prototype .concat,
@@ -272,7 +260,7 @@ function (X3DObject)
             }
          }
       },
-   });
+   };
 
    for (const key of Reflect .ownKeys (X3DInfoArray .prototype))
       Object .defineProperty (X3DInfoArray .prototype, key, { enumerable: false });

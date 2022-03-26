@@ -109,9 +109,11 @@ function (SupportedNodes,
       this [_metadata]      = new Map ();
       this [_exportedNodes] = new ExportedNodesArray ();
 
-      this .addChildObjects ("profile_changed",    new Fields .SFTime (),
-                             "components_changed", new Fields .SFTime (),
-                             "metadata_changed",   new Fields .SFTime (),)
+      this .addChildObjects ("profile_changed",       new Fields .SFTime (),
+                             "components_changed",    new Fields .SFTime (),
+                             "units_changed",         new Fields .SFTime (),
+                             "metadata_changed",      new Fields .SFTime (),
+                             "exportedNodes_changed", new Fields .SFTime ())
 
       this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 
@@ -194,6 +196,8 @@ function (SupportedNodes,
 
          unit .name             = String (name);
          unit .conversionFactor = Number (conversionFactor);
+
+         this ._units_changed = this .getBrowser () .getCurrentTime ();
       },
       getUnits: function ()
       {
@@ -292,6 +296,8 @@ function (SupportedNodes,
             throw new Error ("Couldn't add exported node: exported name '" + exportedName + "' already in use.");
 
          this .updateExportedNode (exportedName, node);
+
+         this ._exportedNodes_changed = this .getBrowser () .getCurrentTime ();
       },
       updateExportedNode: function (exportedName, node)
       {
@@ -312,12 +318,16 @@ function (SupportedNodes,
          const exportedNode = new X3DExportedNode (exportedName, node);
 
          this [_exportedNodes] .add (exportedName, exportedNode);
+
+         this ._exportedNodes_changed = this .getBrowser () .getCurrentTime ();
       },
       removeExportedNode: function (exportedName)
       {
          exportedName = String (exportedName);
 
          this [_exportedNodes] .remove (exportedName);
+
+         this ._exportedNodes_changed = this .getBrowser () .getCurrentTime ();
       },
       getExportedNode: function (exportedName)
       {
