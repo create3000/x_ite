@@ -145,51 +145,6 @@ function ($,
                throw error;
          }
       },
-      importDocument: function (scene, dom, success, error)
-      {
-         try
-         {
-            if (success)
-               success = this .setScene .bind (this, scene, success, error);
-
-            const parser = new XMLParser (scene);
-
-            parser .setInput (dom);
-            parser .parseIntoScene (success, error);
-
-            //AP: add reference to dom for later access.
-            this .node [_dom] = dom;
-         }
-         catch (exception)
-         {
-            if (error)
-               error (exception);
-            else
-               throw exception;
-         }
-      },
-      importJS: function (scene, json, success, error)
-      {
-         try
-         {
-            if (success)
-               success = this .setScene .bind (this, scene, success, error);
-
-            //AP: add reference to dom for later access.
-            const parser = new JSONParser (scene);
-
-            parser .setInput (json)
-
-            this .node [_dom] = parser .parseIntoScene (success, error);
-         }
-         catch (exception)
-         {
-            if (error)
-               error (exception);
-            else
-               throw exception;
-         }
-      },
       setScene: function (scene, success, error)
       {
          scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, success, error);
