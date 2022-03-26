@@ -223,6 +223,17 @@ define (function ()
       slice: Array .prototype .slice,
       some: Array .prototype .some,
       values: function () { return this [Symbol .iterator]; },
+      toString: function (scene)
+      {
+         const stream = { string: "" };
+
+         if (scene)
+            Generator .Get (stream) .PushExecutionContext (scene);
+
+         this .toStream (stream);
+
+         return stream .string;
+      },
       toVRMLStream: function (stream)
       {
          const X3DBaseNode = require ("x_ite/Base/X3DBaseNode");
@@ -259,6 +270,10 @@ define (function ()
                console .error (error);
             }
          }
+      },
+      toStream: function (stream)
+      {
+         stream .string = "[object " + this .getTypeName () + "]";
       },
    };
 
