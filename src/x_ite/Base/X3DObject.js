@@ -59,8 +59,7 @@ function (Generator,
    const
       _name      = Symbol (),
       _interests = Symbol (),
-      _values    = Symbol (),
-      _timeoutId = Symbol ();
+      _values    = Symbol ();
 
    function X3DObject () { }
 
@@ -70,7 +69,6 @@ function (Generator,
       [_name]: "",
       [_interests]: new Map (),
       [_values]: [ ],
-      [_timeoutId]: 0,
       getId: function ()
       {
          return X3DObject .getId (this);
