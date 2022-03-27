@@ -199,6 +199,10 @@ function (SupportedNodes,
 
          this ._units_changed = this .getBrowser () .getCurrentTime ();
       },
+      getUnit: function (category)
+      {
+         return this [_units] .get (category);
+      },
       getUnits: function ()
       {
          return this [_units];
