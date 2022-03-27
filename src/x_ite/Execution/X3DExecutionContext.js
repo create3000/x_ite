@@ -782,10 +782,11 @@ function (SupportedNodes,
       },
       removeWorldInfo: function (worldInfoNode)
       {
-         const index = this ._worldInfos .getValue () .indexOf (worldInfoNode);
-
-         if (index !== -1)
-            this ._worldInfos .splice (index, 1);
+         for (let i = this ._worldInfos .length - 1; i >= 0; -- i)
+         {
+            if (this ._worldInfos [i] .getValue () === worldInfoNode)
+               this ._worldInfos .splice (i, 1);
+         }
       },
       toVRMLStream: function (stream)
       {
