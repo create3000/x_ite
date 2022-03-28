@@ -328,36 +328,39 @@ function (X3DBindableNode,
 
             if (this ._skyColor .length > this ._skyAngle .length)
             {
-               var vAngle = [ ];
-
-               for (var i = 0, length = this ._skyAngle .length; i < length; ++ i)
-                  vAngle .push (this ._skyAngle [i]);
+               const vAngle = this ._skyAngle .slice ();
 
                if (vAngle .length === 0 || vAngle [0] > 0)
                   vAngle .unshift (0);
 
-               var vAngleMax = this ._groundColor .length > this ._groundAngle .length ? Math .PI / 2 : Math .PI;
+               const vAngleMax = this ._groundColor .length > this ._groundAngle .length ? Math .PI / 2 : Math .PI;
 
                if (vAngle .at (-1) < vAngleMax)
                   vAngle .push (vAngleMax);
+
+               for (let i = 0, length = vAngle .length; i < length; ++ i)
+                  vAngle [i] = Algorithm .clamp (vAngle [i], 0, vAngleMax);
+
+               if (vAngle .length === 2)
+						vAngle .splice (1, 0, (vAngle [0] + vAngle [1]) / 2)
 
                this .buildSphere (RADIUS, vAngle, this ._skyAngle, this ._skyColor, alpha, false);
             }
 
             if (this ._groundColor .length > this ._groundAngle .length)
             {
-               var vAngle = [ ];
+               const
+                  vAngle    = this ._groundAngle .slice () .reverse (),
+                  vAngleMax = Math .PI / 2;
 
-               for (var i = 0, length = this ._groundAngle .length; i < length; ++ i)
-                  vAngle .push (this ._groundAngle [i]);
-
-               vAngle .reverse ();
-
-               if (vAngle .length === 0 || vAngle [0] < Math .PI / 2)
-                  vAngle .unshift (Math .PI / 2);
+               if (vAngle .length === 0 || vAngle [0] < vAngleMax)
+                  vAngle .unshift (vAngleMax);
 
                if (vAngle .at (-1) > 0)
                   vAngle .push (0);
+
+               for (let i = 0, length = vAngle .length; i < length; ++ i)
+                  vAngle [i] = Algorithm .clamp (vAngle [i], 0, vAngleMax);
 
                this .buildSphere (RADIUS, vAngle, this ._groundAngle, this ._groundColor, alpha, true);
             }
@@ -369,14 +372,13 @@ function (X3DBindableNode,
       {
          var
             phi         = 0,
-            vAngleMax   = bottom ? Math .PI / 2 : Math .PI,
             V_DIMENSION = vAngle .length - 1;
 
          for (var v = 0; v < V_DIMENSION; ++ v)
          {
             var
-               theta1 = Algorithm .clamp (vAngle [v],     0, vAngleMax),
-               theta2 = Algorithm .clamp (vAngle [v + 1], 0, vAngleMax);
+               theta1 = vAngle [v],
+               theta2 = vAngle [v + 1];
 
             if (bottom)
             {
@@ -388,8 +390,8 @@ function (X3DBindableNode,
             z2 .setPolar (radius, theta2);
 
             var
-               c1 = this .getColor (vAngle [v],     color, angle),
-               c2 = this .getColor (vAngle [v + 1], color, angle);
+               c1 = this .getColor (theta1, color, angle),
+               c2 = this .getColor (theta2, color, angle);
 
             for (var u = 0; u < U_DIMENSION; ++ u)
             {
