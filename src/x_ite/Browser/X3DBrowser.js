@@ -198,6 +198,10 @@ function ($,
 
          throw Error ("Profile '" + name + "' is not supported.");
       },
+      getSupportedProfiles: function ()
+      {
+         return SupportedProfiles;
+      },
       getComponent: function (name, level)
       {
          name  = String (name);
@@ -213,9 +217,17 @@ function ($,
 
          throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
       },
+      getSupportedComponents: function ()
+      {
+         return SupportedComponents;
+      },
       getSupportedNode: function (typeName)
       {
          return SupportedNodes .getType (String (typeName));
+      },
+      getSupportedNodes: function ()
+      {
+         return SupportedNodes .getTypes ();
       },
       createScene: function (profile, component1 /*, ...*/)
       {
