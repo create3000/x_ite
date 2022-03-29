@@ -245,7 +245,10 @@ function (Fields,
             }
             else
             {
-               console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
+               if (this ._parts .length)
+               {
+                  console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
+               }
             }
 
             this .setValid (!! valid);
