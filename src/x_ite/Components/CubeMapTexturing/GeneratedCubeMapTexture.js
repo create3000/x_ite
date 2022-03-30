@@ -291,9 +291,9 @@ function (Fields,
       {
          const Zero = new Float32Array (16); // Trick: zero model view matrix to hide object.
 
-         return function (gl, shaderObject, renderObject, i)
+         return function (gl, shaderObject, renderObject, channel)
          {
-            X3DEnvironmentTextureNode .prototype .setShaderUniformsToChannel .call (this, gl, shaderObject, renderObject, i);
+            X3DEnvironmentTextureNode .prototype .setShaderUniformsToChannel .call (this, gl, shaderObject, renderObject, channel);
 
             if (! renderObject .isIndependent ())
                gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, Zero);

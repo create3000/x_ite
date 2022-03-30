@@ -85,10 +85,7 @@ function (X3DCast,
       this .x3d_ShadowMatrix                        = [ ];
       this .x3d_ShadowMapSize                       = [ ];
       this .x3d_ShadowMap                           = [ ];
-      this .x3d_TextureType                         = [ ];
-      this .x3d_Texture2D                           = [ ];
-      this .x3d_Texture3D                           = [ ];
-      this .x3d_CubeMapTexture                      = [ ];
+      this .x3d_Textures                            = [ ];
       this .x3d_MultiTextureMode                    = [ ];
       this .x3d_MultiTextureAlphaMode               = [ ];
       this .x3d_MultiTextureSource                  = [ ];
@@ -205,16 +202,26 @@ function (X3DCast,
          this .x3d_Shininess        = this .getUniformLocation (gl, program, "x3d_Material.shininess",        "x3d_FrontMaterial.shininess");
          this .x3d_Transparency     = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
 
+         this .x3d_EmissiveTexture = {
+            textureType:    gl .getUniformLocation (program, "x3d_EmissiveTextureType"),
+            textureMapping: gl .getUniformLocation (program, "x3d_EmissiveTextureMapping"),
+            texture2D:      gl .getUniformLocation (program, "x3d_EmissiveTexture2D"),
+            texture3D:      gl .getUniformLocation (program, "x3d_EmissiveTexture3D"),
+            textureCube:    gl .getUniformLocation (program, "x3d_EmissiveTextureCube"),
+         };
+
          this .x3d_NumTextures           = gl .getUniformLocation (program, "x3d_NumTextures");
          this .x3d_NumProjectiveTextures = gl .getUniformLocation (program, "x3d_NumProjectiveTextures");
          this .x3d_MultiTextureColor     = gl .getUniformLocation (program, "x3d_MultiTextureColor");
 
          for (let i = 0; i < this .x3d_MaxTextures; ++ i)
          {
-            this .x3d_TextureType [i]    = gl .getUniformLocation (program, "x3d_TextureType[" + i + "]");
-            this .x3d_Texture2D [i]      = gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]");
-            this .x3d_Texture3D [i]      = gl .getUniformLocation (program, "x3d_Texture3D[" + i + "]");
-            this .x3d_CubeMapTexture [i] = gl .getUniformLocation (program, "x3d_CubeMapTexture[" + i + "]");
+            this .x3d_Textures [i] = {
+               textureType: gl .getUniformLocation (program, "x3d_TextureType[" + i + "]"),
+               texture2D: gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]"),
+               texture3D: gl .getUniformLocation (program, "x3d_Texture3D[" + i + "]"),
+               textureCube: gl .getUniformLocation (program, "x3d_TextureCube[" + i + "]"),
+            }
 
             this .x3d_MultiTextureMode [i]      = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].mode");
             this .x3d_MultiTextureAlphaMode [i] = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].alphaMode");
@@ -251,16 +258,27 @@ function (X3DCast,
 
          gl .uniform1i  (this .x3d_LinePropertiesLinetype,   browser .getLinetypeUnit ());
          gl .uniform1i  (this .x3d_FillPropertiesHatchStyle, browser .getHatchStyleUnit ());
-         gl .uniform1i  (this .x3d_NumTextures,              0);
-         gl .uniform1iv (this .x3d_Texture2D [0],            browser .getTexture2DUnits ());
-         gl .uniform1iv (this .x3d_CubeMapTexture [0],       browser .getCubeMapTextureUnits ());
-         gl .uniform1iv (this .x3d_ShadowMap [0],            new Int32Array (this .x3d_MaxLights) .fill (browser .getShadowTextureUnit ()));
+
+         gl .uniform1i (this .x3d_EmissiveTexture .texture2D,   browser .getDefaultTexture2DUnit ());
+         gl .uniform1i (this .x3d_EmissiveTexture .texture3D,   browser .getDefaultTexture3DUnit ());
+         gl .uniform1i (this .x3d_EmissiveTexture .textureCube, browser .getDefaultTextureCubeUnit ());
+
+         gl .uniform1i (this .x3d_NumTextures, 0);
+
+         for (const uniforms of this .x3d_Textures)
+         {
+            gl .uniform1i (uniforms .texture2D, browser .getDefaultTexture2DUnit ());
+
+            if (gl .getVersion () >= 2)
+               gl .uniform1i (uniforms .texture3D, browser .getDefaultTexture3DUnit ());
+
+            gl .uniform1i (uniforms .textureCube, browser .getDefaultTextureCubeUnit ());
+         }
+
+         gl .uniform1iv (this .x3d_ShadowMap [0], new Int32Array (this .x3d_MaxLights) .fill (browser .getShadowTextureUnit ()));
 
          if (browser .getProjectiveTextureMapping ())
             gl .uniform1iv (this .x3d_ProjectiveTexture [0], browser .getProjectiveTextureUnits ());
-
-         if (gl .getVersion () >= 2)
-            gl .uniform1iv (this .x3d_Texture3D [0], browser .getTexture3DUnits ());
 
          // Return true if valid, otherwise false.
 
@@ -962,6 +980,7 @@ function (X3DCast,
       setLocalUniforms: function (gl, context, front = true)
       {
          const
+            renderObject          = context .renderer,
             shapeNode             = context .shapeNode,
             geometryNode          = context .geometryContext || shapeNode .getGeometry (),
             geometryType          = geometryNode .geometryType,
@@ -1011,7 +1030,7 @@ function (X3DCast,
          // Material
 
          gl .uniform1i (this .x3d_ColorMaterial, geometryNode .colorMaterial);
-         materialNode .setShaderUniforms (gl, this, front);
+         materialNode .setShaderUniforms (gl, this, renderObject, front);
 
          // Normal matrix
 
@@ -1020,21 +1039,12 @@ function (X3DCast,
          // Texture
 
          if (textureNode)
-         {
-            textureNode           .setShaderUniforms (gl, this, context .renderer);
-            textureTransformNode  .setShaderUniforms (gl, this);
-            textureCoordinateNode .setShaderUniforms (gl, this);
-         }
+            textureNode .setShaderUniforms (gl, this, renderObject);
          else
-         {
             gl .uniform1i (this .x3d_NumTextures, 0);
 
-            if (this .getCustom ())
-            {
-               textureTransformNode  .setShaderUniforms (gl, this);
-               textureCoordinateNode .setShaderUniforms (gl, this);
-            }
-         }
+         textureTransformNode  .setShaderUniforms (gl, this);
+         textureCoordinateNode .setShaderUniforms (gl, this);
       },
       getNormalMatrix: (function ()
       {
@@ -1064,46 +1074,25 @@ function (X3DCast,
       {
          const browser = this .getBrowser ();
 
-         //console .log (this .getName ());
-         //console .log (browser .getCombinedTextureUnits () .length);
-
-         this .textures .forEach (function (object, location)
+         for (const [location, object] of this .textures)
          {
             const
-               name    = object .name,
-               texture = object .texture;
+               texture     = object .texture,
+               textureUnit = browser .getTextureUnit ();
 
-            if (! browser .getCombinedTextureUnits () .length)
+            if (textureUnit === undefined)
             {
-               console .warn ("Not enough combined texture units for uniform variable '" + name + "' available.");
+               console .warn ("Not enough combined texture units for uniform variable '" + object .name + "' available.");
                return;
             }
 
-            const textureUnit = object .textureUnit = browser .getCombinedTextureUnits () .pop ();
-
-            gl .uniform1i (location, textureUnit);
             gl .activeTexture (gl .TEXTURE0 + textureUnit);
             gl .bindTexture (texture .getTarget (), texture .getTexture ());
-         });
-
-         gl .activeTexture (gl .TEXTURE0);
+            gl .uniform1i (location, textureUnit);
+         }
       },
       disable: function (gl)
-      {
-         const browser = this .getBrowser ();
-
-         this .textures .forEach (function (object)
-         {
-            const textureUnit = object .textureUnit;
-
-            if (textureUnit !== undefined)
-               browser .getCombinedTextureUnits () .push (textureUnit);
-
-            object .textureUnit = undefined;
-         });
-
-         //console .log (browser .getCombinedTextureUnits () .length);
-      },
+      { },
       enableFloatAttrib: function (gl, name, buffer, components)
       {
          const location = gl. getAttribLocation (this .getProgram (), name);

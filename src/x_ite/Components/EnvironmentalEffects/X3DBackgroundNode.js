@@ -606,7 +606,7 @@ function (X3DBindableNode,
 
          return function (renderObject)
          {
-            var
+            const
                browser    = renderObject .getBrowser (),
                gl         = browser .getContext (),
                shaderNode = browser .getUnlitShader ();
@@ -631,8 +631,7 @@ function (X3DBindableNode,
                gl .uniform1i  (shaderNode .x3d_ColorMaterial,                      false);
                gl .uniform3fv (shaderNode .x3d_EmissiveColor,                      white)
                gl .uniform1f  (shaderNode .x3d_Transparency,                       0)
-               gl .uniform1i  (shaderNode .x3d_NumTextures,                        1);
-               gl .uniform1i  (shaderNode .x3d_TextureType [0],                    2);
+               gl .uniform1i  (shaderNode .x3d_NumTextures,                        0);
                gl .uniform1i  (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
                gl .uniform1i  (shaderNode .x3d_NumProjectiveTextures,              0);
 
@@ -642,12 +641,12 @@ function (X3DBindableNode,
 
                // Draw.
 
-               this .drawRectangle (gl, shaderNode, this .frontTexture,  this .frontBuffer);
-               this .drawRectangle (gl, shaderNode, this .backTexture,   this .backBuffer);
-               this .drawRectangle (gl, shaderNode, this .leftTexture,   this .leftBuffer);
-               this .drawRectangle (gl, shaderNode, this .rightTexture,  this .rightBuffer);
-               this .drawRectangle (gl, shaderNode, this .topTexture,    this .topBuffer);
-               this .drawRectangle (gl, shaderNode, this .bottomTexture, this .bottomBuffer);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .leftTexture,   this .leftBuffer);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .rightTexture,  this .rightBuffer);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .topTexture,    this .topBuffer);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer);
 
                // Disable vertex attribute arrays.
 
@@ -656,11 +655,11 @@ function (X3DBindableNode,
             }
          };
       })(),
-      drawRectangle: function (gl, shaderNode, texture, buffer)
+      drawRectangle: function (gl, browser, shaderNode, renderObject, texture, buffer)
       {
          if (texture && (texture .checkLoadState () === X3DConstants .COMPLETE_STATE || texture .getData ()))
          {
-            texture .setShaderUniforms (gl, shaderNode);
+            texture .setShaderUniformsToChannel (gl, shaderNode, renderObject, shaderNode .x3d_EmissiveTexture);
 
             if (texture ._transparent .getValue ())
                gl .enable (gl .BLEND);
@@ -672,6 +671,8 @@ function (X3DBindableNode,
             // Draw.
 
             gl .drawArrays (gl .TRIANGLES, 0, 6);
+
+            browser .clearUsedTextureUnits ();
          }
       },
    });

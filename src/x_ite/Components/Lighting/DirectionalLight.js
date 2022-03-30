@@ -141,8 +141,6 @@ function (Fields,
                      gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
                   else
                      gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
-
-                  gl .activeTexture (gl .TEXTURE0);
                }
                else
                {

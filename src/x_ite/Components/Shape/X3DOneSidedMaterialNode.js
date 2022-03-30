@@ -49,10 +49,12 @@
 
  define ([
    "x_ite/Components/Shape/X3DMaterialNode",
+   "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (X3DMaterialNode,
+          X3DCast,
           X3DConstants,
           Algorithm)
 {
@@ -74,11 +76,16 @@ function (X3DMaterialNode,
       {
          X3DMaterialNode .prototype .initialize .call (this);
 
-         this ._emissiveColor .addInterest ("set_emissiveColor__", this);
-         this ._transparency  .addInterest ("set_transparency__",  this);
+         this ._emissiveColor   .addInterest ("set_emissiveColor__",   this);
+         this ._emissiveTexture .addInterest ("set_emissiveTexture__", this);
+         this ._transparency    .addInterest ("set_transparency__",    this);
+
+         this ._transparency .addInterest ("set_transparent__", this);
 
          this .set_emissiveColor__ ();
+         this .set_emissiveTexture__ ();
          this .set_transparency__ ();
+         this .set_transparent__ ();
       },
       set_emissiveColor__: function ()
       {
@@ -93,17 +100,27 @@ function (X3DMaterialNode,
          emissiveColor [1] = emissiveColor_ .g;
          emissiveColor [2] = emissiveColor_ .b;
       },
+      set_emissiveTexture__: function ()
+      {
+         if (this .emissiveTextureNode)
+            this .emissiveTextureNode ._transparent .removeInterest ("set_transparent__", this);
+
+         this .emissiveTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._emissiveTexture);
+
+         if (this .emissiveTextureNode)
+            this .emissiveTextureNode ._transparent .addInterest ("set_transparent__", this);
+      },
       set_shininess__: function ()
       {
          this .shininess = Algorithm .clamp (this ._shininess .getValue (), 0, 1);
       },
       set_transparency__: function ()
       {
-         const transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
-
-         this .transparency = transparency;
-
-         this .setTransparent (Boolean (transparency));
+         this .transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
+      },
+      set_transparent__: function ()
+      {
+         this .setTransparent (Boolean (this .transparency));
       },
    });
 

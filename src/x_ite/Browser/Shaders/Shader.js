@@ -129,7 +129,7 @@ function (ShaderSource,
          definitions += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
          definitions += "#define x3d_TextureType2D              2\n";
          definitions += "#define x3d_TextureType3D              3\n";
-         definitions += "#define x3d_TextureTypeCubeMapTexture  4\n";
+         definitions += "#define x3d_TextureTypeCube  4\n";
 
          definitions += "#define x3d_PointColor           0\n";
          definitions += "#define x3d_TextureColor         1\n";

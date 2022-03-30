@@ -305,7 +305,7 @@ function (Fields,
 
          for (let i = 0; i < channels; ++ i)
          {
-            textureNodes [i] .setShaderUniformsToChannel (gl, shaderObject, renderObject, i);
+            textureNodes [i] .setShaderUniformsToChannel (gl, shaderObject, renderObject, shaderObject .x3d_Textures [i]);
 
             gl .uniform1i  (shaderObject .x3d_MultiTextureMode [i],      this .getMode (i));
             gl .uniform1i  (shaderObject .x3d_MultiTextureAlphaMode [i], this .getAlphaMode (i));

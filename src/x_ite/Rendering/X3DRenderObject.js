@@ -937,11 +937,8 @@ function (TextureBuffer,
             if (browser .hasShadowShader ()) shaders .add (browser .getShadowShader ());
             shaders .add (browser .getDefaultShader ());
 
-            shaders .forEach (function (shader)
-            {
+            for (const shader of shaders)
                shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-            },
-            this);
 
             // Sorted blend
 
@@ -965,6 +962,7 @@ function (TextureBuffer,
                             scissor .w);
 
                context .shapeNode .display (gl, context);
+               browser .clearUsedTextureUnits ();
             }
 
             // Render transparent objects
@@ -988,16 +986,14 @@ function (TextureBuffer,
                             scissor .w);
 
                context .shapeNode .display (gl, context);
+               browser .clearUsedTextureUnits ();
             }
 
             gl .depthMask (true);
             gl .disable (gl .BLEND);
 
-
+            
             // POST DRAW
-
-
-            gl .activeTexture (gl .TEXTURE0);
 
             const globalObjects = this .globalObjects;
 

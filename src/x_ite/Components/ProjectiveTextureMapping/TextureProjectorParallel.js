@@ -179,7 +179,6 @@ function (Fields,
 
          gl .activeTexture (gl .TEXTURE0 + this .browser .getProjectiveTextureUnits () [i]);
          gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
-         gl .activeTexture (gl .TEXTURE0);
 
          gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
          gl .uniform3fv (shaderObject .x3d_ProjectiveTextureLocation [i], this .locationArray);

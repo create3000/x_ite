@@ -94,14 +94,33 @@ function (Fields,
       {
          return "material";
       },
+      initialize: function ()
+      {
+         X3DOneSidedMaterialNode .prototype .initialize .call (this);
+
+         this ._emissiveTexture .addInterest ("set_transparent__", this);
+      },
+      set_transparent__: function ()
+      {
+         this .setTransparent (Boolean (this .transparency ||
+                               (this .emissiveTextureNode && this .emissiveTextureNode .getTransparent ())));
+      },
       getShader: function (browser, shadow)
       {
          return browser .getUnlitShader ();
       },
-      setShaderUniforms: function (gl, shaderObject)
+      setShaderUniforms: function (gl, shaderObject, renderObject)
       {
          gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
-         gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
+
+         if (this .emissiveTextureNode)
+            this .emissiveTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, shaderObject .x3d_EmissiveTexture)
+         else
+            gl .uniform1i (shaderObject .x3d_EmissiveTexture .textureType, 0);
+
+         /* TODO */ gl .uniform1i (shaderObject .x3d_EmissiveTexture .textureMapping, 0);
+
+         gl .uniform1f  (shaderObject .x3d_Transparency, this .transparency);
       },
    });
 

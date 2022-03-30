@@ -2,10 +2,10 @@
 precision highp sampler3D;
 
 uniform int         x3d_NumTextures;
-uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture
+uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D, x3d_TextureType3D, x3d_TextureTypeCube
 uniform sampler2D   x3d_Texture2D [x3d_MaxTextures];
 uniform sampler3D   x3d_Texture3D [x3d_MaxTextures];
-uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
+uniform samplerCube x3d_TextureCube [x3d_MaxTextures];
 
 #ifdef X3D_MULTI_TEXTURING
 
@@ -186,13 +186,13 @@ getTextureCube (const in int i, const in vec3 texCoord)
       #if x3d_MaxTextures > 0
       case 0:
       {
-         return texture (x3d_CubeMapTexture [0], texCoord);
+         return texture (x3d_TextureCube [0], texCoord);
       }
       #endif
       #if x3d_MaxTextures > 1
       case 1:
       {
-         return texture (x3d_CubeMapTexture [1], texCoord);
+         return texture (x3d_TextureCube [1], texCoord);
       }
       #endif
       default:
@@ -234,7 +234,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
             textureColor = getTexture3D (i, texCoord .stp);
             break;
          }
-         case x3d_TextureTypeCubeMapTexture:
+         case x3d_TextureTypeCube:
          {
             textureColor = getTextureCube (i, texCoord .stp);
             break;
@@ -605,9 +605,9 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
          textureColor = texture (x3d_Texture3D [0], texCoord .stp);
          break;
       }
-      case x3d_TextureTypeCubeMapTexture:
+      case x3d_TextureTypeCube:
       {
-         textureColor = texture (x3d_CubeMapTexture [0], texCoord .stp);
+         textureColor = texture (x3d_TextureCube [0], texCoord .stp);
          break;
       }
    }

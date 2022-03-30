@@ -2,6 +2,7 @@
 
 precision highp float;
 precision highp int;
+precision highp sampler3D;
 
 uniform int   x3d_GeometryType;
 uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
@@ -36,12 +37,51 @@ out vec4 x3d_FragColor;
 #pragma X3D include "include/Fog.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
 
+uniform int         x3d_EmissiveTextureType;
+uniform int         x3d_EmissiveTextureMapping;
+uniform sampler2D   x3d_EmissiveTexture2D;
+uniform sampler3D   x3d_EmissiveTexture3D;
+uniform samplerCube x3d_EmissiveTextureCube;
+
+vec4
+getEmissiveTextureColor ()
+{
+   // Get texture coordinate.
+
+   vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [x3d_EmissiveTextureMapping], x3d_EmissiveTextureMapping);
+
+   texCoord .stp /= texCoord .q;
+
+   if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
+      texCoord .s = 1.0 - texCoord .s;
+
+   // Get texture color.
+
+   switch (x3d_EmissiveTextureType)
+   {
+      case x3d_TextureType2D:
+         return texture (x3d_EmissiveTexture2D, texCoord .st);
+
+      case x3d_TextureType3D:
+         return texture (x3d_EmissiveTexture3D, texCoord .stp);
+
+      case x3d_TextureTypeCube:
+         return texture (x3d_EmissiveTextureCube, texCoord .stp);
+
+      default:
+         return vec4 (1.0);
+   }
+}
+
 vec4
 getMaterialColor ()
 {
    float alpha = 1.0 - x3d_Material .transparency;
+   vec4  color = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .emissiveColor, alpha);
 
-   return getTextureColor (x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .emissiveColor, alpha), vec4 (1.0));
+   color *= getEmissiveTextureColor ();
+
+   return getTextureColor (color, vec4 (1.0));
 }
 
 // DEBUG

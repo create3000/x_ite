@@ -134,7 +134,7 @@ function (Fields,
             this .disable (gl);
          }
 
-         X3DProgrammableShaderObject .prototype .addUserDefinedField .call (this, accessType, name, field);
+         X3DShaderNode .prototype .addUserDefinedField .call (this, accessType, name, field);
 
          if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
          {
@@ -154,7 +154,7 @@ function (Fields,
             this .disable (gl);
          }
 
-         X3DProgrammableShaderObject .prototype .removeUserDefinedField .call (this, name);
+         X3DShaderNode .prototype .removeUserDefinedField .call (this, name);
 
          if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
          {

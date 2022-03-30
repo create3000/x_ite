@@ -92,6 +92,10 @@ function (X3DSingleTextureNode,
       {
          return this .target;
       },
+      getTextureType: function ()
+      {
+         return 2;
+      },
       getWidth: function ()
       {
          return this .width;
@@ -169,11 +173,19 @@ function (X3DSingleTextureNode,
                                                                          this ._repeatT .getValue (),
                                                                          false);
       },
-      setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
+      setShaderUniformsToChannel: function (gl, shaderObject, renderObject, channel)
       {
-         gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getTexture2DUnits () [i]);
+         const
+            browser     = shaderObject .getBrowser (),
+            textureUnit = browser .getTextureUnit ();
+
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-         gl .uniform1i (shaderObject .x3d_TextureType [i], 2);
+         gl .uniform1i (channel .textureType, 2);
+         gl .uniform1i (channel .texture2D, textureUnit);
+
+         //gl .uniform1i (channel .texture3D, browser .getDefaultTexture3DUnit ());
+         //gl .uniform1i (channel .textureCube, browser .getDefaultTextureCubeUnit ());
       },
    });
 

@@ -120,6 +120,7 @@ A ComposedShader node provides the capability to define custom fields like the S
 | X3D texture type          | GLSL variable type |
 |---------------------------|--------------------|
 | X3DTexture2DNode          | sampler2D          |
+| X3DTexture3DNode          | sampler3D          |
 | X3DEnvironmentTextureNode | samplerCube        |
 
 ### X3D field types to GLSL data types
@@ -454,7 +455,7 @@ A ComposedShader defines a number of special variables for the various shader st
       <tr>
          <td>uniform int</td>
          <td>x3d_TextureType [x3d_MaxTextures]</td>
-         <td>x3d_TextureType2D, x3d_TextureType3D, x3d_TextureTypeCubeMapTexture</td>
+         <td>x3d_TextureType2D, x3d_TextureType3D, x3d_TextureTypeCube</td>
       </tr>
       <tr>
          <td>uniform sampler2D</td>
@@ -463,7 +464,7 @@ A ComposedShader defines a number of special variables for the various shader st
       </tr>
       <tr>
          <td>uniform samplerCube</td>
-         <td>x3d_CubeMapTexture [x3d_MaxTextures]</td>
+         <td>x3d_TextureCube [x3d_MaxTextures]</td>
          <td>texture from Appearance texture field</td>
       </tr>
       <tr>
@@ -797,7 +798,7 @@ Some built-in variables are enumerated and have special values and meanings. The
       <tr>
          <td></td>
          <td>int</td>
-         <td>x3d_TextureTypeCubeMapTexture</td>
+         <td>x3d_TextureTypeCube</td>
          <td>4</td>
          <td></td>
       </tr>

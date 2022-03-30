@@ -169,7 +169,7 @@ function (X3DTextureNode,
       })(),
       setShaderUniforms: function (gl, shaderObject, renderObject)
       {
-         this .setShaderUniformsToChannel (gl, shaderObject, renderObject, 0);
+         this .setShaderUniformsToChannel (gl, shaderObject, renderObject, shaderObject .x3d_Textures [0]);
 
          gl .uniform1i (shaderObject .x3d_NumTextures, 1);
          gl .uniform1i (shaderObject .x3d_MultiTextureMode [0],      ModeType .MODULATE);
