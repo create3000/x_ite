@@ -110,7 +110,7 @@ function (Fields,
       this .rotation                      = new Rotation4 ();
       this .lightBBoxMin                  = new Vector3 (0, 0, 0);
       this .lightBBoxMax                  = new Vector3 (0, 0, 0);
-      this .textureUnit                   = undefined;
+      this .textureUnit                   = -1;
    }
 
    SpotLightContainer .prototype =
@@ -151,7 +151,7 @@ function (Fields,
             {
                this .textureUnit = browser .getTextureUnit ();
 
-               if (this .textureUnit !== undefined)
+               if (this .textureUnit >= 0)
                {
                   gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
 
@@ -262,7 +262,7 @@ function (Fields,
          gl .uniform1f        (shaderObject .x3d_LightCutOffAngle [i],      lightNode .getCutOffAngle ());
          gl .uniformMatrix3fv (shaderObject .x3d_LightMatrix [i], false,    this .matrixArray);
 
-         if (this .renderShadow && this .textureUnit !== undefined)
+         if (this .renderShadow && this .textureUnit >= 0)
          {
             var shadowColor = lightNode .getShadowColor ();
 
@@ -290,7 +290,7 @@ function (Fields,
          this .lightNode    = null;
          this .groupNode    = null;
          this .shadowBuffer = null;
-         this .textureUnit  = undefined;
+         this .textureUnit  = -1;
 
          // Return container
 

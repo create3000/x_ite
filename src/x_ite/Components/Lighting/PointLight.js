@@ -128,7 +128,7 @@ function (Fields,
       this .shadowMatrixArray             = new Float32Array (16);
       this .rotation                      = new Rotation4 ();
       this .rotationMatrix                = new Matrix4 ();
-      this .textureUnit                   = undefined;
+      this .textureUnit                   = -1;
    }
 
    PointLightContainer .prototype =
@@ -169,7 +169,7 @@ function (Fields,
             {
                this .textureUnit = browser .getTextureUnit ();
 
-               if (this .textureUnit !== undefined)
+               if (this .textureUnit >= 0)
                {
                   gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
 
@@ -270,7 +270,7 @@ function (Fields,
          gl .uniform1f        (shaderObject .x3d_LightRadius [i],           lightNode .getRadius ());
          gl .uniformMatrix3fv (shaderObject .x3d_LightMatrix [i], false,    this .matrixArray);
 
-         if (this .textureUnit !== undefined)
+         if (this .textureUnit >= 0)
          {
             var shadowColor = lightNode .getShadowColor ();
 
@@ -298,7 +298,7 @@ function (Fields,
          this .lightNode    = null;
          this .groupNode    = null;
          this .shadowBuffer = null;
-         this .textureUnit  = undefined;
+         this .textureUnit  = -1;
 
          // Return container
 
