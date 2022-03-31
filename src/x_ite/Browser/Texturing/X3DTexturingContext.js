@@ -70,13 +70,9 @@ function (TextureProperties,
       _maxTextureSize           = Symbol (),
       _maxCombinedTextureUnits  = Symbol (),
       _textureMemory            = Symbol (),
-      _shadowTextureUnit        = Symbol (),
-      _linetypeUnit             = Symbol (),
-      _hatchStyleUnit           = Symbol (),
-      _projectiveTextureUnits   = Symbol (),
       _defaultTexture2D         = Symbol (),
       _defaultTexture3D         = Symbol (),
-      _defaultCubeMapTexture    = Symbol (),
+      _defaultTextureCube       = Symbol (),
       _defaultTextureProperties = Symbol (),
       _defaultTextureTransform  = Symbol (),
       _defaultTextureCoordinate = Symbol ();
@@ -142,9 +138,9 @@ function (TextureProperties,
 
          // Default Texture Cube Unit
 
-         this [_defaultCubeMapTexture] = gl .createTexture ();
+         this [_defaultTextureCube] = gl .createTexture ();
 
-         gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultCubeMapTexture]);
+         gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
@@ -153,44 +149,7 @@ function (TextureProperties,
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
          gl .activeTexture (gl .TEXTURE0 + this [_textureCubeUnit]);
-         gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultCubeMapTexture]);
-
-
-
-         // TODO start
-
-         // There must always be a texture bound to the used texture units.
-
-         this [_shadowTextureUnit] = this .getCombinedTextureUnits () .pop ();
-         this [_linetypeUnit]      = this .getCombinedTextureUnits () .pop ();
-         this [_hatchStyleUnit]    = this .getCombinedTextureUnits () .pop ();
-
-         this [_projectiveTextureUnits] = new Int32Array (this .getMaxTextures ());
-
-         if (this .getProjectiveTextureMapping ())
-         {
-            for (let i = 0, length = this .getMaxTextures (); i < length; ++ i)
-               this [_projectiveTextureUnits] [i] = this .getCombinedTextureUnits () .pop ();
-         }
-
-         // Texture 2D Units
-
-         gl .activeTexture (gl .TEXTURE0 + this [_shadowTextureUnit]);
-         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
-
-         gl .activeTexture (gl .TEXTURE0 + this [_linetypeUnit]);
-         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
-
-         gl .activeTexture (gl .TEXTURE0 + this [_hatchStyleUnit]);
-         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
-
-         for (const unit of this [_projectiveTextureUnits])
-         {
-            gl .activeTexture (gl .TEXTURE0 + unit);
-            gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
-         }
-
-         // TODO end
+         gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
       },
       getMaxTextures: function ()
       {
@@ -240,24 +199,6 @@ function (TextureProperties,
       {
          return this [_textureCubeUnit];
       },
-      // TODO start
-      getProjectiveTextureUnits: function ()
-      {
-         return this [_projectiveTextureUnits];
-      },
-      getShadowTextureUnit: function ()
-      {
-         return this [_shadowTextureUnit];
-      },
-      getLinetypeUnit: function ()
-      {
-         return this [_linetypeUnit];
-      },
-      getHatchStyleUnit: function ()
-      {
-         return this [_hatchStyleUnit];
-      },
-      // TODO end
       getTextureMemory: function ()
       {
          return this [_textureMemory];

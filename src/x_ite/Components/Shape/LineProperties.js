@@ -113,15 +113,17 @@ function (Fields,
          if (this .applied)
          {
             const
-               browser = shaderObject .getBrowser (),
-               texture = browser .getLinetype (this ._linetype .getValue ());
+               browser     = shaderObject .getBrowser (),
+               texture     = browser .getLinetype (this ._linetype .getValue ()),
+               textureUnit = browser .getTextureUnit ();
 
             gl .lineWidth (this .linewidthScaleFactor);
             gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,              true);
             gl .uniform1f (shaderObject .x3d_LinePropertiesLinewidthScaleFactor, this .linewidthScaleFactor);
 
-            gl .activeTexture (gl .TEXTURE0 + browser .getLinetypeUnit ());
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
             gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
+            gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, textureUnit);
          }
          else
          {

@@ -168,17 +168,19 @@ function (Fields,
       },
       setShaderUniforms: function (gl, shaderObject)
       {
-         var i = shaderObject .numProjectiveTextures ++;
+         const i = shaderObject .numProjectiveTextures ++;
 
          if (shaderObject .hasTextureProjector (i, this))
             return;
 
-         var
-            textureProjectorNode = this .textureProjectorNode,
-            texture              = textureProjectorNode .getTexture ();
+         const
+            browser     = shaderObject .getBrowser (),
+            texture     = this .textureProjectorNode .getTexture (),
+            textureUnit = browser .getTextureUnit ();
 
-         gl .activeTexture (gl .TEXTURE0 + this .browser .getProjectiveTextureUnits () [i]);
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
+         gl .uniform1i (shaderObject .x3d_ProjectiveTexture [i], textureUnit);
 
          gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
          gl .uniform3fv (shaderObject .x3d_ProjectiveTextureLocation [i], this .locationArray);

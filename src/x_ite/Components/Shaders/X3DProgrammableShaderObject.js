@@ -256,8 +256,8 @@ function (X3DCast,
 
          // Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
-         gl .uniform1i  (this .x3d_LinePropertiesLinetype,   browser .getLinetypeUnit ());
-         gl .uniform1i  (this .x3d_FillPropertiesHatchStyle, browser .getHatchStyleUnit ());
+         gl .uniform1i  (this .x3d_LinePropertiesLinetype,   browser .getDefaultTexture2DUnit ());
+         gl .uniform1i  (this .x3d_FillPropertiesHatchStyle, browser .getDefaultTexture2DUnit ());
 
          gl .uniform1i (this .x3d_EmissiveTexture .texture2D,   browser .getDefaultTexture2DUnit ());
          gl .uniform1i (this .x3d_EmissiveTexture .texture3D,   browser .getDefaultTexture3DUnit ());
@@ -275,10 +275,14 @@ function (X3DCast,
             gl .uniform1i (uniforms .textureCube, browser .getDefaultTextureCubeUnit ());
          }
 
-         gl .uniform1iv (this .x3d_ShadowMap [0], new Int32Array (this .x3d_MaxLights) .fill (browser .getShadowTextureUnit ()));
+         for (const uniform of this .x3d_ShadowMap)
+            gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
 
          if (browser .getProjectiveTextureMapping ())
-            gl .uniform1iv (this .x3d_ProjectiveTexture [0], browser .getProjectiveTextureUnits ());
+         {
+            for (const uniform of this .x3d_ProjectiveTexture)
+               gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
+         }
 
          // Return true if valid, otherwise false.
 

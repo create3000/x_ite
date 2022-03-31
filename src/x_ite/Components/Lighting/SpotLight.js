@@ -110,7 +110,7 @@ function (Fields,
       this .rotation                      = new Rotation4 ();
       this .lightBBoxMin                  = new Vector3 (0, 0, 0);
       this .lightBBoxMax                  = new Vector3 (0, 0, 0);
-      this .textureUnit                   = 0;
+      this .textureUnit                   = undefined;
    }
 
    SpotLightContainer .prototype =
@@ -149,10 +149,10 @@ function (Fields,
 
             if (this .shadowBuffer)
             {
-               if (browser .getCombinedTextureUnits () .length)
-               {
-                  this .textureUnit = browser .getCombinedTextureUnits () .pop ();
+               this .textureUnit = browser .getTextureUnit ();
 
+               if (this .textureUnit !== undefined)
+               {
                   gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
 
                   if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
@@ -262,7 +262,7 @@ function (Fields,
          gl .uniform1f        (shaderObject .x3d_LightCutOffAngle [i],      lightNode .getCutOffAngle ());
          gl .uniformMatrix3fv (shaderObject .x3d_LightMatrix [i], false,    this .matrixArray);
 
-         if (this .renderShadow && this .textureUnit)
+         if (this .renderShadow && this .textureUnit !== undefined)
          {
             var shadowColor = lightNode .getShadowColor ();
 
@@ -283,9 +283,6 @@ function (Fields,
       {
          // Return shadowBuffer and textureUnit.
 
-         if (this .textureUnit)
-            this .browser .getCombinedTextureUnits () .push (this .textureUnit);
-
          this .browser .pushShadowBuffer (this .shadowBuffer);
          this .modelViewMatrix .clear ();
 
@@ -293,7 +290,7 @@ function (Fields,
          this .lightNode    = null;
          this .groupNode    = null;
          this .shadowBuffer = null;
-         this .textureUnit  = 0;
+         this .textureUnit  = undefined;
 
          // Return container
 

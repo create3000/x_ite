@@ -144,12 +144,15 @@ function (Fields,
          if (hatched)
          {
             const
-               browser = shaderObject .getBrowser (),
-               texture = browser .getHatchStyle (this ._hatchStyle .getValue ());
+               browser     = shaderObject .getBrowser (),
+               texture     = browser .getHatchStyle (this ._hatchStyle .getValue ()),
+               textureUnit = browser .getTextureUnit ();
 
             gl .uniform3fv (shaderObject .x3d_FillPropertiesHatchColor, this .hatchColor);
-            gl .activeTexture (gl .TEXTURE0 + browser .getHatchStyleUnit ());
+
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
             gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
+            gl .uniform1i (shaderObject .x3d_FillPropertiesHatchStyle, textureUnit);
          }
       },
    });

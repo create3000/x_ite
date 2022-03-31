@@ -101,7 +101,7 @@ function (Fields,
       this .shadowMatrix                  = new Matrix4 ();
       this .shadowMatrixArray             = new Float32Array (16);
       this .rotation                      = new Rotation4 ();
-      this .textureUnit                   = 0;
+      this .textureUnit                   = undefined;
    }
 
    DirectionalLightContainer .prototype =
@@ -131,10 +131,10 @@ function (Fields,
 
             if (this .shadowBuffer)
             {
-               if (browser .getCombinedTextureUnits () .length)
-               {
-                  this .textureUnit = browser .getCombinedTextureUnits () .pop ();
+               this .textureUnit = browser .getTextureUnit ();
 
+               if (this .textureUnit !== undefined)
+               {
                   gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
 
                   if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
@@ -226,7 +226,7 @@ function (Fields,
          gl .uniform1f (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
          gl .uniform3f (shaderObject .x3d_LightDirection [i],        direction .x, direction .y, direction .z);
 
-         if (this .textureUnit)
+         if (this .textureUnit !== undefined)
          {
             var shadowColor = lightNode .getShadowColor ();
 
@@ -247,9 +247,6 @@ function (Fields,
       {
          // Return shadowBuffer and textureUnit.
 
-         if (this .textureUnit)
-            this .browser .getCombinedTextureUnits () .push (this .textureUnit);
-
          this .browser .pushShadowBuffer (this .shadowBuffer);
          this .modelViewMatrix .clear ();
 
@@ -257,7 +254,7 @@ function (Fields,
          this .lightNode    = null;
          this .groupNode    = null;
          this .shadowBuffer = null;
-         this .textureUnit  = 0;
+         this .textureUnit  = undefined;
 
          // Return container
 
