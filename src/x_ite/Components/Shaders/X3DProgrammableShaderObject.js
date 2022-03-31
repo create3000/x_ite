@@ -597,7 +597,7 @@ function (X3DCast,
 
                      if (texture)
                      {
-                        this .textures .set (location, { name: field .getName (), texture: texture, textureUnit: undefined } );
+                        this .textures .set (location, { name: field .getName (), texture: texture } );
                         return;
                      }
 
@@ -773,7 +773,7 @@ function (X3DCast,
 
                         if (texture)
                         {
-                           this .textures .set (locations [i], { name: field [i] .getName (), texture: texture, textureUnit: undefined } );
+                           this .textures .set (locations [i], { name: field [i] .getName (), texture: texture } );
                            continue;
                         }
                      }
@@ -1084,7 +1084,7 @@ function (X3DCast,
                texture     = object .texture,
                textureUnit = browser .getTextureUnit ();
 
-            if (textureUnit === undefined)
+            if (textureUnit < 0)
             {
                console .warn ("Not enough combined texture units for uniform variable '" + object .name + "' available.");
                return;
