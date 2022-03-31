@@ -9,6 +9,7 @@ uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwis
 uniform float x3d_AlphaCutoff;
 
 uniform x3d_MaterialParameters x3d_Material;
+uniform x3d_MaterialTextureParameters x3d_EmissiveTexture;
 
 in float fogDepth;    // fog depth
 in vec4  color;       // color
@@ -37,18 +38,12 @@ out vec4 x3d_FragColor;
 #pragma X3D include "include/Fog.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
 
-uniform int         x3d_EmissiveTextureType;
-uniform int         x3d_EmissiveTextureMapping;
-uniform sampler2D   x3d_EmissiveTexture2D;
-uniform sampler3D   x3d_EmissiveTexture3D;
-uniform samplerCube x3d_EmissiveTextureCube;
-
 vec4
 getEmissiveTextureColor ()
 {
    // Get texture coordinate.
 
-   vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [x3d_EmissiveTextureMapping], x3d_EmissiveTextureMapping);
+   vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [x3d_EmissiveTexture .textureMapping], x3d_EmissiveTexture .textureMapping);
 
    texCoord .stp /= texCoord .q;
 
@@ -57,16 +52,16 @@ getEmissiveTextureColor ()
 
    // Get texture color.
 
-   switch (x3d_EmissiveTextureType)
+   switch (x3d_EmissiveTexture .textureType)
    {
       case x3d_TextureType2D:
-         return texture (x3d_EmissiveTexture2D, texCoord .st);
+         return texture (x3d_EmissiveTexture .texture2D, texCoord .st);
 
       case x3d_TextureType3D:
-         return texture (x3d_EmissiveTexture3D, texCoord .stp);
+         return texture (x3d_EmissiveTexture .texture3D, texCoord .stp);
 
       case x3d_TextureTypeCube:
-         return texture (x3d_EmissiveTextureCube, texCoord .stp);
+         return texture (x3d_EmissiveTexture .textureCube, texCoord .stp);
 
       default:
          return vec4 (1.0);

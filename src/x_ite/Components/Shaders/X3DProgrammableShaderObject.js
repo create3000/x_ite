@@ -203,11 +203,11 @@ function (X3DCast,
          this .x3d_Transparency     = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
 
          this .x3d_EmissiveTexture = {
-            textureType:    gl .getUniformLocation (program, "x3d_EmissiveTextureType"),
-            textureMapping: gl .getUniformLocation (program, "x3d_EmissiveTextureMapping"),
-            texture2D:      gl .getUniformLocation (program, "x3d_EmissiveTexture2D"),
-            texture3D:      gl .getUniformLocation (program, "x3d_EmissiveTexture3D"),
-            textureCube:    gl .getUniformLocation (program, "x3d_EmissiveTextureCube"),
+            textureType:    gl .getUniformLocation (program, "x3d_EmissiveTexture.textureType"),
+            textureMapping: gl .getUniformLocation (program, "x3d_EmissiveTexture.textureMapping"),
+            texture2D:      gl .getUniformLocation (program, "x3d_EmissiveTexture.texture2D"),
+            texture3D:      gl .getUniformLocation (program, "x3d_EmissiveTexture.texture3D"),
+            textureCube:    gl .getUniformLocation (program, "x3d_EmissiveTexture.textureCube"),
          };
 
          this .x3d_NumTextures           = gl .getUniformLocation (program, "x3d_NumTextures");

@@ -74,6 +74,17 @@ struct x3d_MaterialParameters
 
 //uniform x3d_MaterialParameters x3d_Material;
 
+struct x3d_MaterialTextureParameters
+{
+   mediump int         textureType;
+   mediump int         textureMapping;
+   mediump sampler2D   texture2D;
+   mediump sampler3D   texture3D;
+   mediump samplerCube textureCube;
+};
+
+//uniform x3d_MaterialTextureParameters x3d_EmissiveTexture;
+
 struct x3d_MultiTextureParameters
 {
    mediump int mode;
