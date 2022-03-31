@@ -767,13 +767,13 @@ function (X3DCast,
                   {
                      const locations = location .locations;
 
-                     for (let i = 0, length = field .length; i < length; ++ i)
+                     for (const node of field)
                      {
-                        const texture = X3DCast (X3DConstants .X3DTextureNode, field [i]);
+                        const texture = X3DCast (X3DConstants .X3DTextureNode, node);
 
                         if (texture)
                         {
-                           this .textures .set (locations [i], { name: field [i] .getName (), texture: texture } );
+                           this .textures .set (locations [i], { name: field .getName (), texture: texture } );
                            continue;
                         }
                      }
