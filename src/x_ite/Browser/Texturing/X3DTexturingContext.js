@@ -66,7 +66,7 @@ function (TextureProperties,
       _texture2DUnit            = Symbol (),
       _texture3DUnit            = Symbol (),
       _textureCubeUnit          = Symbol (),
-      _usedTextureUnits         = Symbol (),
+      _textureUnitIndex         = Symbol (),
       _maxTextureSize           = Symbol (),
       _maxCombinedTextureUnits  = Symbol (),
       _textureMemory            = Symbol (),
@@ -87,7 +87,6 @@ function (TextureProperties,
       this [_multiTexturing]           = maxVertexTextureUnits > 8;
       this [_projectiveTextureMapping] = maxVertexTextureUnits > 8;
       this [_combinedTextureUnits]     = [ ];
-      this [_usedTextureUnits]         = [ ];
    }
 
    X3DTexturingContext .prototype =
@@ -102,14 +101,10 @@ function (TextureProperties,
 
          // Get texture Units
 
-         const combinedTextureUnits = this [_combinedTextureUnits];
-
-         for (let i = 0, length = this [_maxCombinedTextureUnits]; i < length; ++ i)
-            combinedTextureUnits .push (i);
-
-         this [_texture2DUnit]   = this .getCombinedTextureUnits () .pop ();
-         this [_texture3DUnit]   = this .getCombinedTextureUnits () .pop ();
-         this [_textureCubeUnit] = this .getCombinedTextureUnits () .pop ();
+         this [_combinedTextureUnits] = [...Array (this [_maxCombinedTextureUnits]) .keys ()];
+         this [_texture2DUnit]        = this .getCombinedTextureUnits () .pop ();
+         this [_texture3DUnit]        = this .getCombinedTextureUnits () .pop ();
+         this [_textureCubeUnit]      = this .getCombinedTextureUnits () .pop ();
 
          // Default Texture 2D Unit
 
@@ -150,6 +145,10 @@ function (TextureProperties,
 
          gl .activeTexture (gl .TEXTURE0 + this [_textureCubeUnit]);
          gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
+
+         // Init texture units.
+
+         this .clearUsedTextureUnits ();
       },
       getMaxTextures: function ()
       {
@@ -173,21 +172,11 @@ function (TextureProperties,
       },
       getTextureUnit: function ()
       {
-         // Use pop/push, otherwise Chrome slows down.
-
-         const textureUnit = this [_combinedTextureUnits] .pop ();
-
-         if (textureUnit !== undefined)
-            this [_usedTextureUnits] .push (textureUnit);
-
-         return textureUnit;
+         return this [_combinedTextureUnits] [-- this [_textureUnitIndex]];
       },
       clearUsedTextureUnits: function ()
       {
-         for (const textureUnit of this [_usedTextureUnits])
-            this [_combinedTextureUnits] .push (textureUnit);
-
-         this [_usedTextureUnits] .length = 0;
+         this [_textureUnitIndex] = this [_combinedTextureUnits] .length;
       },
       getDefaultTexture2DUnit: function ()
       {
