@@ -173,7 +173,9 @@ function (TextureProperties,
       },
       getTextureUnit: function ()
       {
-         const textureUnit = this [_combinedTextureUnits] .shift ();
+         // Use pop/push, otherwise Chrome slows down.
+
+         const textureUnit = this [_combinedTextureUnits] .pop ();
 
          if (textureUnit !== undefined)
             this [_usedTextureUnits] .push (textureUnit);
