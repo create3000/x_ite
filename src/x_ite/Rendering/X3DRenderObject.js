@@ -962,7 +962,7 @@ function (TextureBuffer,
                             scissor .w);
 
                context .shapeNode .display (gl, context);
-               browser .clearUsedTextureUnits ();
+               browser .resetTextureUnits ();
             }
 
             // Render transparent objects
@@ -986,13 +986,13 @@ function (TextureBuffer,
                             scissor .w);
 
                context .shapeNode .display (gl, context);
-               browser .clearUsedTextureUnits ();
+               browser .resetTextureUnits ();
             }
 
             gl .depthMask (true);
             gl .disable (gl .BLEND);
 
-            
+
             // POST DRAW
 
             const globalObjects = this .globalObjects;

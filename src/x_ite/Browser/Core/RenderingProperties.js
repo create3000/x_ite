@@ -101,7 +101,7 @@ function (Fields,
          const browser = this .getBrowser ();
 
          this ._MaxTextureSize = browser .getMaxTextureSize ();
-         this ._TextureUnits   = browser .getCombinedTextureUnits ();
+         this ._TextureUnits   = browser .getMaxCombinedTextureUnits ();
          this ._MaxLights      = browser .getMaxLights ();
          this ._ColorDepth     = browser .getColorDepth ();
          this ._TextureMemory  = browser .getTextureMemory ();

@@ -66,7 +66,7 @@ function (TextureProperties,
       _texture2DUnit            = Symbol (),
       _texture3DUnit            = Symbol (),
       _textureCubeUnit          = Symbol (),
-      _textureUnitIndex         = Symbol (),
+      _textureUnits             = Symbol (),
       _maxTextureSize           = Symbol (),
       _maxCombinedTextureUnits  = Symbol (),
       _textureMemory            = Symbol (),
@@ -86,7 +86,6 @@ function (TextureProperties,
       this [_maxTextures]              = maxVertexTextureUnits > 8 ? 2 : 1;
       this [_multiTexturing]           = maxVertexTextureUnits > 8;
       this [_projectiveTextureMapping] = maxVertexTextureUnits > 8;
-      this [_combinedTextureUnits]     = [ ];
    }
 
    X3DTexturingContext .prototype =
@@ -101,10 +100,10 @@ function (TextureProperties,
 
          // Get texture Units
 
-         this [_combinedTextureUnits] = [...Array (this [_maxCombinedTextureUnits]) .keys ()];
-         this [_texture2DUnit]        = this .getCombinedTextureUnits () .pop ();
-         this [_texture3DUnit]        = this .getCombinedTextureUnits () .pop ();
-         this [_textureCubeUnit]      = this .getCombinedTextureUnits () .pop ();
+         this [_combinedTextureUnits] = this [_maxCombinedTextureUnits];
+         this [_texture2DUnit]        = -- this [_combinedTextureUnits];
+         this [_texture3DUnit]        = -- this [_combinedTextureUnits];
+         this [_textureCubeUnit]      = -- this [_combinedTextureUnits];
 
          // Default Texture 2D Unit
 
@@ -148,7 +147,7 @@ function (TextureProperties,
 
          // Init texture units.
 
-         this .clearUsedTextureUnits ();
+         this .resetTextureUnits ();
       },
       getMaxTextures: function ()
       {
@@ -166,17 +165,13 @@ function (TextureProperties,
       {
          return this [_maxCombinedTextureUnits];
       },
-      getCombinedTextureUnits: function ()
-      {
-         return this [_combinedTextureUnits];
-      },
       getTextureUnit: function ()
       {
-         return this [_combinedTextureUnits] [-- this [_textureUnitIndex]];
+         return -- this [_textureUnits];
       },
-      clearUsedTextureUnits: function ()
+      resetTextureUnits: function ()
       {
-         this [_textureUnitIndex] = this [_combinedTextureUnits] .length;
+         this [_textureUnits] = this [_combinedTextureUnits];
       },
       getDefaultTexture2DUnit: function ()
       {

@@ -672,7 +672,7 @@ function (X3DBindableNode,
 
             gl .drawArrays (gl .TRIANGLES, 0, 6);
 
-            browser .clearUsedTextureUnits ();
+            browser .resetTextureUnits ();
          }
       },
    });
