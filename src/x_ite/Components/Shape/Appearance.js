@@ -257,11 +257,20 @@ function (Fields,
       },
       set_textureTransform__: function ()
       {
+         if (this .textureTransformNode)
+            this .textureTransformNode .removeInterest ("updateTextureTransformMapping", this);
+
          this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this ._textureTransform);
 
          if (!this .textureTransformNode)
             this .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
 
+         this .textureTransformNode .addInterest ("updateTextureTransformMapping", this);
+
+         this .updateTextureTransformMapping ();
+      },
+      updateTextureTransformMapping: function ()
+      {
          this .textureTransformMapping .clear ();
 
          this .textureTransformNode .getTextureMapping (this .textureTransformMapping);

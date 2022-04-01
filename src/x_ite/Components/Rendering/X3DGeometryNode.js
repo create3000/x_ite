@@ -312,12 +312,20 @@ function (Fields,
       },
       setTextureCoordinate: function (value)
       {
+         this .textureCoordinateNode .removeInterest ("updateTextureCoordinateMapping", this);
+
          if (value)
             this .textureCoordinateNode = value;
          else
             this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();
 
-         this .textureCoordinateMapping .clear ()
+         this .textureCoordinateNode .addInterest ("updateTextureCoordinateMapping", this);
+
+         this .updateTextureCoordinateMapping ();
+      },
+      updateTextureCoordinateMapping: function ()
+      {
+         this .textureCoordinateMapping .clear ();
 
          this .textureCoordinateNode .getTextureMapping (this .textureCoordinateMapping);
       },

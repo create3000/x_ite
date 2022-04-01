@@ -43,7 +43,7 @@ getEmissiveTextureColor ()
 {
    // Get texture coordinate.
 
-   vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [x3d_EmissiveTexture .textureCoordinateMapping], x3d_EmissiveTexture .textureCoordinateMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+   vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [x3d_EmissiveTexture .textureCoordinateMapping], x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
    texCoord .stp /= texCoord .q;
 

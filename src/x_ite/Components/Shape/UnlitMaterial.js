@@ -122,7 +122,7 @@ function (Fields,
          else
             gl .uniform1i (emissiveTexture .textureType, 0);
 
-         gl .uniform1i (emissiveTexture .textureTransformMapping, textureTransformMapping .get (this ._emissiveTextureMapping .getValue ()) || 0);
+         gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (this ._emissiveTextureMapping .getValue ()) || 0);
          gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._emissiveTextureMapping .getValue ()) || 0);
 
          // Transparency
