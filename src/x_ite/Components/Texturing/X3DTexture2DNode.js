@@ -175,9 +175,7 @@ function (X3DSingleTextureNode,
       },
       setShaderUniformsToChannel: function (gl, shaderObject, renderObject, channel)
       {
-         const
-            browser     = renderObject .getBrowser (),
-            textureUnit = browser .getTexture2DUnit ();
+         const textureUnit = renderObject .getBrowser () .getTexture2DUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());

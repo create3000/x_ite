@@ -153,9 +153,8 @@ function (Fields,
             return;
 
          const
-            browser     = shaderObject .getBrowser (),
             texture     = this .textureProjectorNode .getTexture (),
-            textureUnit = browser .getTexture2DUnit ();
+            textureUnit = renderObject .getBrowser () .getTexture2DUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());

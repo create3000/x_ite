@@ -985,7 +985,6 @@ function (X3DCast,
       {
          const
             renderObject          = context .renderer,
-            browser               = renderObject .getBrowser (),
             shapeNode             = context .shapeNode,
             geometryNode          = context .geometryContext || shapeNode .getGeometry (),
             geometryType          = geometryNode .geometryType,
