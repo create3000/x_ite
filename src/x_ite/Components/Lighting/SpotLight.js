@@ -253,8 +253,8 @@ function (Fields,
             gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
 
             this .textureUnit = lightNode .getGlobal ()
-               ? this .textureUnit ?? browser .popTextureUnit ()
-               : browser .getTextureUnit ();
+               ? this .textureUnit === undefined ? browser .popTexture2DUnit () : this .textureUnit
+               : browser .getTexture2DUnit ();
 
             if (this .textureUnit !== undefined)
             {
@@ -280,7 +280,7 @@ function (Fields,
          this .browser .pushShadowBuffer (this .shadowBuffer);
 
          if (this .lightNode .getGlobal ())
-            this .browser .pushTextureUnit (this .textureUnit);
+            this .browser .pushTexture2DUnit (this .textureUnit);
 
          this .modelViewMatrix .clear ();
 

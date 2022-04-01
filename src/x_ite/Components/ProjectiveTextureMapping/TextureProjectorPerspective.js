@@ -155,7 +155,7 @@ function (Fields,
          const
             browser     = shaderObject .getBrowser (),
             texture     = this .textureProjectorNode .getTexture (),
-            textureUnit = browser .getTextureUnit ();
+            textureUnit = browser .getTexture2DUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());

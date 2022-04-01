@@ -111,16 +111,20 @@ function (Fields,
       },
       setShaderUniforms: function (gl, shaderObject, renderObject)
       {
+         const
+            browser         = renderObject .getBrowser (),
+            emissiveTexture = shaderObject .x3d_EmissiveTexture;
+
          gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
 
          if (this .emissiveTextureNode)
-            this .emissiveTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, shaderObject .x3d_EmissiveTexture)
+            this .emissiveTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, emissiveTexture)
          else
-            gl .uniform1i (shaderObject .x3d_EmissiveTexture .textureType, 0);
+            gl .uniform1i (emissiveTexture .textureType, 0);
 
-         /* TODO */ gl .uniform1i (shaderObject .x3d_EmissiveTexture .textureMapping, 0);
+         /* TODO */ gl .uniform1i (emissiveTexture .textureMapping, 0);
 
-         gl .uniform1f  (shaderObject .x3d_Transparency, this .transparency);
+         gl .uniform1f (shaderObject .x3d_Transparency, this .transparency);
       },
    });
 

@@ -171,16 +171,13 @@ function (X3DSingleTextureNode,
          if (gl .getVersion () >= 2)
          {
             const
-               browser     = shaderObject .getBrowser (),
-               textureUnit = browser .getTextureUnit ();
+               browser     = renderObject .getBrowser (),
+               textureUnit = browser .getTexture3DUnit ();
 
             gl .activeTexture (gl .TEXTURE0 + textureUnit);
             gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
             gl .uniform1i (channel .textureType, 3);
             gl .uniform1i (channel .texture3D, textureUnit);
-
-            //gl .uniform1i (channel .texture2D, browser .getDefaultTexture2DUnit ());
-            //gl .uniform1i (channel .textureCube, browser .getDefaultTextureCubeUnit ());
          }
          else
          {

@@ -220,7 +220,7 @@ function (X3DCast,
                textureType: gl .getUniformLocation (program, "x3d_TextureType[" + i + "]"),
                texture2D: gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]"),
                texture3D: gl .getUniformLocation (program, "x3d_Texture3D[" + i + "]"),
-               textureCube: gl .getUniformLocation (program, "x3d_TextureCube[" + i + "]"),
+               textureCube: this .getUniformLocation (gl, program, "x3d_TextureCube[" + i + "]", "x3d_CubeMapTexture[" + i + "]"),
             }
 
             this .x3d_MultiTextureMode [i]      = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].mode");
@@ -985,6 +985,7 @@ function (X3DCast,
       {
          const
             renderObject          = context .renderer,
+            browser               = renderObject .getBrowser (),
             shapeNode             = context .shapeNode,
             geometryNode          = context .geometryContext || shapeNode .getGeometry (),
             geometryType          = geometryNode .geometryType,
@@ -1082,9 +1083,9 @@ function (X3DCast,
          {
             const
                texture     = object .texture,
-               textureUnit = browser .getTextureUnit ();
+               textureUnit = browser .getTextureUnit (texture .getTextureType ());
 
-            if (textureUnit < 0)
+            if (textureUnit === undefined)
             {
                console .warn ("Not enough combined texture units for uniform variable '" + object .name + "' available.");
                return;

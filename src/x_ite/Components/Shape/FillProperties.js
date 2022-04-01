@@ -146,7 +146,7 @@ function (Fields,
             const
                browser     = shaderObject .getBrowser (),
                texture     = browser .getHatchStyle (this ._hatchStyle .getValue ()),
-               textureUnit = browser .getTextureUnit ();
+               textureUnit = browser .getTexture2DUnit ();
 
             gl .uniform3fv (shaderObject .x3d_FillPropertiesHatchColor, this .hatchColor);
 

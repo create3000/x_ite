@@ -115,7 +115,7 @@ function (Fields,
             const
                browser     = shaderObject .getBrowser (),
                texture     = browser .getLinetype (this ._linetype .getValue ()),
-               textureUnit = browser .getTextureUnit ();
+               textureUnit = browser .getTexture2DUnit ();
 
             gl .lineWidth (this .linewidthScaleFactor);
             gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,              true);

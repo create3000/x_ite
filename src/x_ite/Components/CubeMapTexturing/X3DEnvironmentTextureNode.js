@@ -120,17 +120,14 @@ function (X3DSingleTextureNode,
       setShaderUniformsToChannel: function (gl, shaderObject, renderObject, channel)
       {
          const
-            browser     = shaderObject .getBrowser (),
-            textureUnit = browser .getTextureUnit ();
+            browser     = renderObject .getBrowser (),
+            textureUnit = browser .getTextureCubeUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
          gl .uniform1i (channel .textureType, 4);
          gl .uniform1i (channel .textureCube, textureUnit);
-
-         //gl .uniform1i (channel .texture2D, browser .getDefaultTexture2DUnit ());
-         //gl .uniform1i (channel .texture3D, browser .getDefaultTexture3DUnit ());
-   },
+      },
    });
 
    return X3DEnvironmentTextureNode;
