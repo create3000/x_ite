@@ -118,12 +118,16 @@ function (Fields,
          gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
 
          if (this .emissiveTextureNode)
+         {
             this .emissiveTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, emissiveTexture)
-         else
-            gl .uniform1i (emissiveTexture .textureType, 0);
 
-         gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (this ._emissiveTextureMapping .getValue ()) || 0);
-         gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._emissiveTextureMapping .getValue ()) || 0);
+            gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (this ._emissiveTextureMapping .getValue ()) || 0);
+            gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._emissiveTextureMapping .getValue ()) || 0);
+         }
+         else
+         {
+            gl .uniform1i (emissiveTexture .textureType, 0);
+         }
 
          // Transparency
 
