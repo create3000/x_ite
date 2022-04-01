@@ -216,7 +216,9 @@ function (Fields,
             gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
             gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
 
-            this .textureUnit = lightNode .getGlobal () ? browser .popTextureUnit () : browser .getTextureUnit ();
+            this .textureUnit = lightNode .getGlobal ()
+               ? this .textureUnit ?? browser .popTextureUnit ()
+               : browser .getTextureUnit ();
 
             if (this .textureUnit !== undefined)
             {
