@@ -166,7 +166,7 @@ function (Fields,
       {
          return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
       },
-      setShaderUniforms: function (gl, shaderObject, renderObject)
+      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
          gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
          gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColor);

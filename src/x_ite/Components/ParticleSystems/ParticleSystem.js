@@ -248,8 +248,9 @@ function (Fields,
 
          // Geometry context
 
-         this .geometryContext .fogCoords             = false;
-         this .geometryContext .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
+         this .geometryContext .fogCoords                 = false;
+         this .geometryContext .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
+         this .geometryContext .textureCoordinateMapping = new Map ();
 
          // Call order is higly important at startup.
          this .set_emitter__ ();

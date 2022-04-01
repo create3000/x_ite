@@ -66,6 +66,10 @@ function (X3DTextureTransformNode,
    X3DSingleTextureTransformNode .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
    {
       constructor: X3DSingleTextureTransformNode,
+      getTextureMapping: function (textureTransformMapping, channel = 0)
+      {
+         textureTransformMapping .set (this ._mapping .getValue (), channel);
+      },
       setShaderUniforms: function (gl, shaderObject)
       {
          for (let i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)

@@ -104,25 +104,26 @@ function (Fields,
 
       const browser = this .getBrowser ();
 
-      this .min                   = new Vector3 (0, 0, 0);
-      this .max                   = new Vector3 (0, 0, 0);
-      this .bbox                  = new Box3 (this .min, this .max, true);
-      this .solid                 = true;
-      this .geometryType          = 3;
-      this .primitiveMode         = browser .getContext () .TRIANGLES;
-      this .flatShading           = undefined;
-      this .colorMaterial         = false;
-      this .attribNodes           = [ ];
-      this .attribs               = [ ];
-      this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
-      this .multiTexCoords        = [ ];
-      this .texCoords             = X3DGeometryNode .createArray ();
-      this .fogDepths             = X3DGeometryNode .createArray ();
-      this .colors                = X3DGeometryNode .createArray ();
-      this .normals               = X3DGeometryNode .createArray ();
-      this .flatNormals           = X3DGeometryNode .createArray ();
-      this .vertices              = X3DGeometryNode .createArray ();
-      this .vertexCount           = 0;
+      this .min                      = new Vector3 (0, 0, 0);
+      this .max                      = new Vector3 (0, 0, 0);
+      this .bbox                     = new Box3 (this .min, this .max, true);
+      this .solid                    = true;
+      this .geometryType             = 3;
+      this .primitiveMode            = browser .getContext () .TRIANGLES;
+      this .flatShading              = undefined;
+      this .colorMaterial            = false;
+      this .attribNodes              = [ ];
+      this .attribs                  = [ ];
+      this .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
+      this .textureCoordinateMapping = new Map ();
+      this .multiTexCoords           = [ ];
+      this .texCoords                = X3DGeometryNode .createArray ();
+      this .fogDepths                = X3DGeometryNode .createArray ();
+      this .colors                   = X3DGeometryNode .createArray ();
+      this .normals                  = X3DGeometryNode .createArray ();
+      this .flatNormals              = X3DGeometryNode .createArray ();
+      this .vertices                 = X3DGeometryNode .createArray ();
+      this .vertexCount              = 0;
 
       // This methods are configured in transfer.
       this .depth            = Function .prototype;
@@ -315,6 +316,10 @@ function (Fields,
             this .textureCoordinateNode = value;
          else
             this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();
+
+         this .textureCoordinateMapping .clear ()
+
+         this .textureCoordinateNode .getTextureMapping (this .textureCoordinateMapping);
       },
       setNormals: function (value)
       {

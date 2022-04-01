@@ -156,6 +156,15 @@ function (Fields,
 
          return array;
       },
+      getTextureMapping: function (textureCoordinateMapping)
+      {
+         const
+            textureCoordinateNodes = this .textureCoordinateNodes,
+            length                 = Math .min (this .getBrowser () .getMaxTextures (), textureCoordinateNodes .length);
+
+         for (let i = 0; i < length; ++ i)
+            textureCoordinateNodes [i] .getTextureMapping (textureCoordinateMapping, i);
+      },
       setShaderUniforms: function (gl, shaderObject)
       {
          const

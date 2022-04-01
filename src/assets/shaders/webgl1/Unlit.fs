@@ -11,6 +11,7 @@ uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwis
 uniform float x3d_AlphaCutoff;
 
 uniform x3d_MaterialParameters x3d_Material;
+uniform x3d_MaterialTextureParameters x3d_EmissiveTexture;
 
 varying float fogDepth;    // fog depth
 varying vec4  color;       // color
@@ -41,8 +42,9 @@ vec4
 getMaterialColor ()
 {
    float alpha = 1.0 - x3d_Material .transparency;
+   vec4  color = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .emissiveColor, alpha);
 
-   return getTextureColor (x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .emissiveColor, alpha), vec4 (1.0));
+   return getTextureColor (color, vec4 (1.0));
 }
 
 // DEBUG

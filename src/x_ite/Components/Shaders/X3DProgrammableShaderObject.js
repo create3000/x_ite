@@ -203,11 +203,12 @@ function (X3DCast,
          this .x3d_Transparency     = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
 
          this .x3d_EmissiveTexture = {
-            textureType:    gl .getUniformLocation (program, "x3d_EmissiveTexture.textureType"),
-            textureMapping: gl .getUniformLocation (program, "x3d_EmissiveTexture.textureMapping"),
-            texture2D:      gl .getUniformLocation (program, "x3d_EmissiveTexture.texture2D"),
-            texture3D:      gl .getUniformLocation (program, "x3d_EmissiveTexture.texture3D"),
-            textureCube:    gl .getUniformLocation (program, "x3d_EmissiveTexture.textureCube"),
+            textureType:              gl .getUniformLocation (program, "x3d_EmissiveTexture.textureType"),
+            textureTransformMapping:  gl .getUniformLocation (program, "x3d_EmissiveTexture.textureTransformMapping"),
+            textureCoordinateMapping: gl .getUniformLocation (program, "x3d_EmissiveTexture.textureCoordinateMapping"),
+            texture2D:                gl .getUniformLocation (program, "x3d_EmissiveTexture.texture2D"),
+            texture3D:                gl .getUniformLocation (program, "x3d_EmissiveTexture.texture3D"),
+            textureCube:              gl .getUniformLocation (program, "x3d_EmissiveTexture.textureCube"),
          };
 
          this .x3d_NumTextures           = gl .getUniformLocation (program, "x3d_NumTextures");
@@ -1034,7 +1035,7 @@ function (X3DCast,
          // Material
 
          gl .uniform1i (this .x3d_ColorMaterial, geometryNode .colorMaterial);
-         materialNode .setShaderUniforms (gl, this, renderObject, front);
+         materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .textureTransformMapping, geometryNode .textureCoordinateMapping, front);
 
          // Normal matrix
 

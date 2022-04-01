@@ -114,6 +114,15 @@ function (Fields,
                textureTransformNodes .push (textureTransformNode);
          }
       },
+      getTextureMapping: function (textureTransformMapping)
+      {
+         const
+            textureTransformNodes = this .textureTransformNodes,
+            length                = Math .min (this .getBrowser () .getMaxTextures (), textureTransformNodes .length);
+
+         for (let i = 0; i < length; ++ i)
+            textureTransformNodes [i] .getTextureMapping (textureTransformMapping, i);
+      },
       setShaderUniforms: function (gl, shaderObject)
       {
          const

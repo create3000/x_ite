@@ -77,7 +77,8 @@ struct x3d_MaterialParameters
 struct x3d_MaterialTextureParameters
 {
    mediump int         textureType;
-   mediump int         textureMapping;
+   mediump int         textureTransformMapping;
+   mediump int         textureCoordinateMapping;
    mediump sampler2D   texture2D;
    #if __VERSION__ == 300
    mediump sampler3D   texture3D;

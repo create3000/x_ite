@@ -80,6 +80,10 @@ function (X3DTextureCoordinateNode,
       {
          this .addTexCoordToChannel (index, multiArray [0]);
       },
+      getTextureMapping: function (textureCoordinateMapping, channel = 0)
+      {
+         textureCoordinateMapping .set (this ._mapping .getValue (), channel);
+      },
       setShaderUniforms: function (gl, shaderObject)
       {
          for (let i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)

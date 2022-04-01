@@ -72,14 +72,15 @@ function (Fields,
 
       this .addType (X3DConstants .Appearance);
 
-      this .stylePropertiesNode  = [ ];
-      this .materialNode         = null;
-      this .backMaterialNode     = null;
-      this .textureNode          = null;
-      this .textureTransformNode = null;
-      this .shaderNodes          = [ ];
-      this .shaderNode           = null;
-      this .blendModeNode        = null;
+      this .stylePropertiesNode     = [ ];
+      this .materialNode            = null;
+      this .backMaterialNode        = null;
+      this .textureNode             = null;
+      this .textureTransformNode    = null;
+      this .textureTransformMapping = new Map ();
+      this .shaderNodes             = [ ];
+      this .shaderNode              = null;
+      this .blendModeNode           = null;
    }
 
    Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .prototype),
@@ -258,10 +259,12 @@ function (Fields,
       {
          this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this ._textureTransform);
 
-         if (this .textureTransformNode)
-            return;
+         if (!this .textureTransformNode)
+            this .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
 
-         this .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
+         this .textureTransformMapping .clear ();
+
+         this .textureTransformNode .getTextureMapping (this .textureTransformMapping);
       },
       set_shaders__: function ()
       {

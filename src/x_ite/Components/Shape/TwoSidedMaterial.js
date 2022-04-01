@@ -261,7 +261,7 @@ function (Fields,
       {
          return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
       },
-      setShaderUniforms: function (gl, shaderObject, renderObject, front)
+      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, front)
       {
          if (!front && this ._separateBackColor .getValue ())
          {
