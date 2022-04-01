@@ -69,7 +69,7 @@ function (TextureProperties,
       _texture2DUnit            = Symbol (),
       _texture3DUnit            = Symbol (),
       _textureCubeUnit          = Symbol (),
-      _textureUnits             = Symbol (),
+      _textureUnitIndex         = Symbol (),
       _defaultTexture2D         = Symbol (),
       _defaultTexture3D         = Symbol (),
       _defaultTextureCube       = Symbol (),
@@ -104,7 +104,6 @@ function (TextureProperties,
          this [_texture2DUnit]        = this [_combinedTextureUnits] .pop ();
          this [_texture3DUnit]        = this [_combinedTextureUnits] .pop ();
          this [_textureCubeUnit]      = this [_combinedTextureUnits] .pop ();
-         this [_textureUnits]         = [ ];
 
          // Default Texture 2D Unit
 
@@ -166,25 +165,28 @@ function (TextureProperties,
       {
          return this [_maxCombinedTextureUnits];
       },
-      getCombinedTextureUnits: function ()
+      popTextureUnit: function ()
       {
-         return this [_combinedTextureUnits];
+         -- this [_textureUnitIndex];
+
+         return this [_combinedTextureUnits] .shift ();
+      },
+      pushTextureUnit: function (textureUnit)
+      {
+         if (textureUnit === undefined)
+            return;
+
+         this [_textureUnitIndex] = Math .max (this [_textureUnitIndex] + 1, 1);
+
+         this [_combinedTextureUnits] .unshift (textureUnit);
       },
       getTextureUnit: function ()
       {
-         const textureUnit = this [_combinedTextureUnits] .pop ();
-
-         if (textureUnit !== undefined)
-            this [_textureUnits] .push (textureUnit);
-
-         return textureUnit;
+         return this [_combinedTextureUnits] [-- this [_textureUnitIndex]];
       },
       resetTextureUnits: function ()
       {
-         for (const textureUnit of this [_textureUnits])
-            this [_combinedTextureUnits] .push (textureUnit);
-
-         this [_textureUnits] .length = 0;
+         this [_textureUnitIndex] = this [_combinedTextureUnits] .length;
       },
       getDefaultTexture2DUnit: function ()
       {
