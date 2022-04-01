@@ -68,7 +68,8 @@ function (X3DTextureTransformNode,
       constructor: X3DSingleTextureTransformNode,
       getTextureMapping: function (textureTransformMapping, channel = 0)
       {
-         textureTransformMapping .set (this ._mapping .getValue (), channel);
+         if (this ._mapping .getValue ())
+            textureTransformMapping .set (this ._mapping .getValue (), channel);
       },
       setShaderUniforms: function (gl, shaderObject)
       {

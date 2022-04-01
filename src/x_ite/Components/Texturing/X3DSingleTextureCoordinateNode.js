@@ -82,7 +82,8 @@ function (X3DTextureCoordinateNode,
       },
       getTextureMapping: function (textureCoordinateMapping, channel = 0)
       {
-         textureCoordinateMapping .set (this ._mapping .getValue (), channel);
+         if (this ._mapping .getValue ())
+            textureCoordinateMapping .set (this ._mapping .getValue (), channel);
       },
       setShaderUniforms: function (gl, shaderObject)
       {
