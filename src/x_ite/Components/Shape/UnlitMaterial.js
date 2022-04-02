@@ -109,13 +109,13 @@ function (Fields,
       {
          return browser .getUnlitShader ();
       },
-      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, material)
       {
          // Emissive texture
 
-         const emissiveTexture = shaderObject .x3d_EmissiveTexture;
+         const emissiveTexture = material .emissiveTexture;
 
-         gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
+         gl .uniform3fv (material .emissiveColor, this .emissiveColor);
 
          if (this .emissiveTextureNode)
          {
@@ -131,7 +131,7 @@ function (Fields,
 
          // Transparency
 
-         gl .uniform1f (shaderObject .x3d_Transparency, this .transparency);
+         gl .uniform1f (material .transparency, this .transparency);
       },
    });
 

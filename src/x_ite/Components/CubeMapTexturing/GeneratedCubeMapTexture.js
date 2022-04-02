@@ -155,13 +155,13 @@ function (Fields,
          if (this ._update .getValue () === "NONE")
             return;
 
-         if (! this .frameBuffer)
+         if (!this .frameBuffer)
             return;
 
          //if (renderObject .getBrowser () !== this .getBrowser ())
          //	return; // Could be interesting for four-side-view
 
-         if (! renderObject .isIndependent ())
+         if (!renderObject .isIndependent ())
             return;
 
          renderObject .getGeneratedCubeMapTextures () .push (this);
@@ -273,6 +273,7 @@ function (Fields,
                   width  = this .frameBuffer .getWidth (),
                   height = this .frameBuffer .getHeight ();
 
+               gl .bindTexture (this .getTarget (), this .getTexture ());
                gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
             }
 
@@ -295,7 +296,7 @@ function (Fields,
          {
             X3DEnvironmentTextureNode .prototype .setShaderUniformsToChannel .call (this, gl, shaderObject, renderObject, channel);
 
-            if (! renderObject .isIndependent ())
+            if (renderObject === this .renderer)
                gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, Zero);
          };
       })(),

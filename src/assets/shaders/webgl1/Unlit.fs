@@ -41,10 +41,10 @@ varying float depth;
 vec4
 getMaterialColor ()
 {
-   float alpha = 1.0 - x3d_Material .transparency;
-   vec4  color = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .emissiveColor, alpha);
+   float alpha         = 1.0 - x3d_Material .transparency;
+   vec4  emissiveColor = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .emissiveColor, alpha);
 
-   return getTextureColor (color, vec4 (1.0));
+   return getTextureColor (emissiveColor, vec4 (1.0));
 }
 
 // DEBUG

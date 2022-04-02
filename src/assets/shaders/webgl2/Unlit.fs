@@ -8,8 +8,7 @@ uniform int   x3d_GeometryType;
 uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 uniform float x3d_AlphaCutoff;
 
-uniform x3d_MaterialParameters x3d_Material;
-uniform x3d_MaterialTextureParameters x3d_EmissiveTexture;
+uniform x3d_UnlitMaterialParameters x3d_Material;
 
 in float fogDepth;    // fog depth
 in vec4  color;       // color
@@ -39,11 +38,14 @@ out vec4 x3d_FragColor;
 #pragma X3D include "include/ClipPlanes.glsl"
 
 vec4
-getEmissiveTextureColor ()
+getEmissiveColor ()
 {
+   float alpha             = 1.0 - x3d_Material .transparency;
+   vec4  emissiveParameter = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .emissiveColor, alpha);
+
    // Get texture coordinate.
 
-   vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [x3d_EmissiveTexture .textureCoordinateMapping], x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+   vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [x3d_Material .emissiveTexture .textureCoordinateMapping], x3d_Material .emissiveTexture .textureTransformMapping, x3d_Material .emissiveTexture .textureCoordinateMapping);
 
    texCoord .stp /= texCoord .q;
 
@@ -52,31 +54,56 @@ getEmissiveTextureColor ()
 
    // Get texture color.
 
-   switch (x3d_EmissiveTexture .textureType)
+   switch (x3d_Material .emissiveTexture .textureType)
    {
       case x3d_TextureType2D:
-         return texture (x3d_EmissiveTexture .texture2D, texCoord .st);
+         return emissiveParameter * texture (x3d_Material .emissiveTexture .texture2D, texCoord .st);
 
       case x3d_TextureType3D:
-         return texture (x3d_EmissiveTexture .texture3D, texCoord .stp);
+         return emissiveParameter * texture (x3d_Material .emissiveTexture .texture3D, texCoord .stp);
 
       case x3d_TextureTypeCube:
-         return texture (x3d_EmissiveTexture .textureCube, texCoord .stp);
+         return emissiveParameter * texture (x3d_Material .emissiveTexture .textureCube, texCoord .stp);
 
       default:
-         return vec4 (1.0);
+         return getTextureColor (emissiveParameter, vec4 (1.0));
+   }
+}
+
+vec3
+getNormalVector ()
+{
+   // Get texture coordinate.
+
+   vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [x3d_Material .normalTexture .textureCoordinateMapping], x3d_Material .normalTexture .textureTransformMapping, x3d_Material .normalTexture .textureCoordinateMapping);
+
+   texCoord .stp /= texCoord .q;
+
+   if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
+      texCoord .s = 1.0 - texCoord .s;
+
+   // Get texture color.
+
+   switch (x3d_Material .normalTexture .textureType)
+   {
+      case x3d_TextureType2D:
+         return texture (x3d_Material .normalTexture .texture2D, texCoord .st) .rgb * 2.0 - 1.0;
+
+      case x3d_TextureType3D:
+         return texture (x3d_Material .normalTexture .texture3D, texCoord .stp) .rgb * 2.0 - 1.0;
+
+      case x3d_TextureTypeCube:
+         return texture (x3d_Material .normalTexture .textureCube, texCoord .stp) .rgb * 2.0 - 1.0;
+
+      default:
+         return normal;
    }
 }
 
 vec4
 getMaterialColor ()
 {
-   float alpha = 1.0 - x3d_Material .transparency;
-   vec4  color = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .emissiveColor, alpha);
-
-   color *= getEmissiveTextureColor ();
-
-   return getTextureColor (color, vec4 (1.0));
+   return getEmissiveColor ();
 }
 
 // DEBUG

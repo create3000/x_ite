@@ -195,21 +195,30 @@ function (X3DCast,
             this .x3d_ShadowMap [i]       = gl .getUniformLocation (program, "x3d_ShadowMap[" + i + "]");
          }
 
-         this .x3d_AmbientIntensity = this .getUniformLocation (gl, program, "x3d_Material.ambientIntensity", "x3d_FrontMaterial.ambientIntensity");
-         this .x3d_DiffuseColor     = this .getUniformLocation (gl, program, "x3d_Material.diffuseColor",     "x3d_FrontMaterial.diffuseColor");
-         this .x3d_SpecularColor    = this .getUniformLocation (gl, program, "x3d_Material.specularColor",    "x3d_FrontMaterial.specularColor");
-         this .x3d_EmissiveColor    = this .getUniformLocation (gl, program, "x3d_Material.emissiveColor",    "x3d_FrontMaterial.emissiveColor");
-         this .x3d_Shininess        = this .getUniformLocation (gl, program, "x3d_Material.shininess",        "x3d_FrontMaterial.shininess");
-         this .x3d_Transparency     = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
+         this .x3d_Material = { };
 
-         this .x3d_EmissiveTexture = {
-            textureType:              gl .getUniformLocation (program, "x3d_EmissiveTexture.textureType"),
-            textureTransformMapping:  gl .getUniformLocation (program, "x3d_EmissiveTexture.textureTransformMapping"),
-            textureCoordinateMapping: gl .getUniformLocation (program, "x3d_EmissiveTexture.textureCoordinateMapping"),
-            texture2D:                gl .getUniformLocation (program, "x3d_EmissiveTexture.texture2D"),
-            texture3D:                gl .getUniformLocation (program, "x3d_EmissiveTexture.texture3D"),
-            textureCube:              gl .getUniformLocation (program, "x3d_EmissiveTexture.textureCube"),
-         };
+         this .x3d_Material .ambientIntensity = this .getUniformLocation (gl, program, "x3d_Material.ambientIntensity", "x3d_FrontMaterial.ambientIntensity");
+         this .x3d_Material .diffuseColor     = this .getUniformLocation (gl, program, "x3d_Material.diffuseColor",     "x3d_FrontMaterial.diffuseColor");
+         this .x3d_Material .specularColor    = this .getUniformLocation (gl, program, "x3d_Material.specularColor",    "x3d_FrontMaterial.specularColor");
+         this .x3d_Material .emissiveColor    = this .getUniformLocation (gl, program, "x3d_Material.emissiveColor",    "x3d_FrontMaterial.emissiveColor");
+         this .x3d_Material .shininess        = this .getUniformLocation (gl, program, "x3d_Material.shininess",        "x3d_FrontMaterial.shininess");
+         this .x3d_Material .transparency     = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
+
+         for (const materialTexture of ["emissiveTexture", "normalTexture"])
+         {
+            this .x3d_Material [materialTexture] = {
+               textureType:              gl .getUniformLocation (program, "x3d_Material." + materialTexture + ".textureType"),
+               textureTransformMapping:  gl .getUniformLocation (program, "x3d_Material." + materialTexture + ".textureTransformMapping"),
+               textureCoordinateMapping: gl .getUniformLocation (program, "x3d_Material." + materialTexture + ".textureCoordinateMapping"),
+               texture2D:                gl .getUniformLocation (program, "x3d_Material." + materialTexture + ".texture2D"),
+               texture3D:                gl .getUniformLocation (program, "x3d_Material." + materialTexture + ".texture3D"),
+               textureCube:              gl .getUniformLocation (program, "x3d_Material." + materialTexture + ".textureCube"),
+            };
+
+            gl .uniform1i (this .x3d_Material [materialTexture] .texture2D,   browser .getDefaultTexture2DUnit ());
+            gl .uniform1i (this .x3d_Material [materialTexture] .texture3D,   browser .getDefaultTexture3DUnit ());
+            gl .uniform1i (this .x3d_Material [materialTexture] .textureCube, browser .getDefaultTextureCubeUnit ());
+         }
 
          this .x3d_NumTextures           = gl .getUniformLocation (program, "x3d_NumTextures");
          this .x3d_NumProjectiveTextures = gl .getUniformLocation (program, "x3d_NumProjectiveTextures");
@@ -259,10 +268,6 @@ function (X3DCast,
 
          gl .uniform1i  (this .x3d_LinePropertiesLinetype,   browser .getDefaultTexture2DUnit ());
          gl .uniform1i  (this .x3d_FillPropertiesHatchStyle, browser .getDefaultTexture2DUnit ());
-
-         gl .uniform1i (this .x3d_EmissiveTexture .texture2D,   browser .getDefaultTexture2DUnit ());
-         gl .uniform1i (this .x3d_EmissiveTexture .texture3D,   browser .getDefaultTexture3DUnit ());
-         gl .uniform1i (this .x3d_EmissiveTexture .textureCube, browser .getDefaultTextureCubeUnit ());
 
          gl .uniform1i (this .x3d_NumTextures, 0);
 
@@ -1035,7 +1040,7 @@ function (X3DCast,
          // Material
 
          gl .uniform1i (this .x3d_ColorMaterial, geometryNode .colorMaterial);
-         materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .textureTransformMapping, geometryNode .textureCoordinateMapping, front);
+         materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .textureTransformMapping, geometryNode .textureCoordinateMapping, this .x3d_Material, front);
 
          // Normal matrix
 

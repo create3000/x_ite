@@ -62,18 +62,6 @@ struct x3d_FillPropertiesParameters
 
 //uniform x3d_FillPropertiesParameters x3d_FillProperties;
 
-struct x3d_MaterialParameters
-{
-   mediump float ambientIntensity;
-   mediump vec3  diffuseColor;
-   mediump vec3  specularColor;
-   mediump vec3  emissiveColor;
-   mediump float shininess;
-   mediump float transparency;
-};
-
-//uniform x3d_MaterialParameters x3d_Material;
-
 struct x3d_MaterialTextureParameters
 {
    mediump int         textureType;
@@ -86,7 +74,28 @@ struct x3d_MaterialTextureParameters
    mediump samplerCube textureCube;
 };
 
-//uniform x3d_MaterialTextureParameters x3d_EmissiveTexture;
+struct x3d_MaterialParameters
+{
+   mediump float ambientIntensity;
+   mediump vec3  diffuseColor;
+   mediump vec3  specularColor;
+   mediump vec3  emissiveColor;
+   mediump float shininess;
+   mediump float transparency;
+};
+
+//uniform x3d_MaterialParameters x3d_Material;
+
+struct x3d_UnlitMaterialParameters
+{
+   mediump vec3 emissiveColor;
+   x3d_MaterialTextureParameters emissiveTexture;
+   mediump float normalScale;
+   x3d_MaterialTextureParameters normalTexture;
+   mediump float transparency;
+};
+
+//uniform x3d_UnlitMaterialParameters x3d_Material;
 
 struct x3d_MultiTextureParameters
 {
