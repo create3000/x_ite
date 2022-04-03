@@ -107,7 +107,7 @@ function (Fields,
       {
          X3DBackgroundNode .prototype .initialize .call (this);
 
-         var
+         const
             frontTexture      = new ImageTexture (this .getExecutionContext ()),
             backTexture       = new ImageTexture (this .getExecutionContext ()),
             leftTexture       = new ImageTexture (this .getExecutionContext ()),

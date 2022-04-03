@@ -124,23 +124,23 @@ function (Fields,
       },
       addDepths: function (array, min)
       {
-         var length = this .length;
+         const length = this .length;
 
          if (length)
          {
             const depth = this .depth;
 
-            for (var index = 0; index < length; ++ index)
+            for (let index = 0; index < length; ++ index)
                array .push (depth [index]);
 
-            var last = depth [length - 1];
+            const last = depth [length - 1];
 
-            for (var index = length; index < min; ++ index)
+            for (let index = length; index < min; ++ index)
                array .push (last);
          }
          else
          {
-            for (var index = 0; index < min; ++ index)
+            for (let index = 0; index < min; ++ index)
                array .push (0);
          }
       },

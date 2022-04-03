@@ -104,7 +104,7 @@ function (Fields,
       {
          if (this ._enabled .getValue ())
          {
-            var fogContainer = this .getFogs () .pop ();
+            const fogContainer = this .getFogs () .pop ();
 
             fogContainer .set (this, renderObject .getModelViewMatrix () .get ());
 

@@ -58,7 +58,7 @@ function (X3DConstants,
 {
 "use strict";
 
-   var Fogs = ObjectCache (FogContainer);
+   const Fogs = ObjectCache (FogContainer);
 
    function FogContainer ()
    {
@@ -86,7 +86,7 @@ function (X3DConstants,
          if (shaderObject .hasFog (this))
             return;
 
-         var
+         const
             fogNode         = this .fogNode,
             visibilityRange = Math .max (0, fogNode ._visibilityRange .getValue ());
 
@@ -96,7 +96,7 @@ function (X3DConstants,
          }
          else
          {
-            var color  = fogNode ._color .getValue ();
+            const color = fogNode ._color .getValue ();
 
             gl .uniform1i        (shaderObject .x3d_FogType,            fogNode .fogType);
             gl .uniform3f        (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
