@@ -69,14 +69,15 @@ function (X3DBindableNode,
           Algorithm)
 {
 "use strict";
-   var
+
+   const
       RADIUS      = 1,
       SIZE        = Math .sqrt (RADIUS * RADIUS / 2),
       U_DIMENSION = 20;
 
-   var s = SIZE;
+   const s = SIZE;
 
-   var texCoords = [
+   const texCoords = [
       1, 1, 0, 1,
       0, 1, 0, 1,
       0, 0, 0, 1,
@@ -85,7 +86,7 @@ function (X3DBindableNode,
       1, 0, 0, 1,
    ];
 
-   var frontVertices = [
+   const frontVertices = [
        s,  s, -s, 1,
       -s,  s, -s, 1,
       -s, -s, -s, 1,
@@ -94,7 +95,7 @@ function (X3DBindableNode,
        s, -s, -s, 1,
    ];
 
-   var backVertices = [
+   const backVertices = [
       -s,  s,  s, 1,
        s,  s,  s, 1,
        s, -s,  s, 1,
@@ -103,7 +104,7 @@ function (X3DBindableNode,
       -s, -s,  s, 1,
    ];
 
-   var leftVertices = [
+   const leftVertices = [
       -s,  s, -s, 1,
       -s,  s,  s, 1,
       -s, -s,  s, 1,
@@ -112,7 +113,7 @@ function (X3DBindableNode,
       -s, -s, -s, 1,
    ];
 
-   var rightVertices = [
+   const rightVertices = [
       s,  s,  s, 1,
       s,  s, -s, 1,
       s, -s, -s, 1,
@@ -121,7 +122,7 @@ function (X3DBindableNode,
       s, -s,  s, 1,
    ];
 
-   var topVertices = [
+   const topVertices = [
        s, s,  s, 1,
       -s, s,  s, 1,
       -s, s, -s, 1,
@@ -130,7 +131,7 @@ function (X3DBindableNode,
        s, s, -s, 1,
    ];
 
-   var bottomVertices = [
+   const bottomVertices = [
        s, -s, -s, 1,
       -s, -s, -s, 1,
       -s, -s,  s, 1,
@@ -139,7 +140,7 @@ function (X3DBindableNode,
        s, -s,  s, 1,
    ];
 
-   var
+   const
       z1 = new Complex (0, 0),
       z2 = new Complex (0, 0),
       y1 = new Complex (0, 0),
@@ -173,7 +174,7 @@ function (X3DBindableNode,
       {
          X3DBindableNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          this .colorBuffer     = gl .createBuffer ();
          this .sphereBuffer    = gl .createBuffer ();
@@ -282,7 +283,7 @@ function (X3DBindableNode,
       },
       getColor: function (theta, color, angle)
       {
-         var index = Algorithm .upperBound (angle, 0, angle .length, theta, Algorithm .less);
+         const index = Algorithm .upperBound (angle, 0, angle .length, theta, Algorithm .less);
 
          return color [index];
       },
@@ -294,11 +295,11 @@ function (X3DBindableNode,
          if (this ._transparency .getValue () >= 1)
             return;
 
-         var alpha = 1 - Algorithm .clamp (this ._transparency .getValue (), 0, 1);
+         const alpha = 1 - Algorithm .clamp (this ._transparency .getValue (), 0, 1);
 
          if (this ._groundColor .length === 0 && this ._skyColor .length == 1)
          {
-            var s = SIZE;
+            const s = SIZE;
 
             // Build cube
 
@@ -317,9 +318,9 @@ function (X3DBindableNode,
                                 -s, -s,  s, 1,  s, -s,  s, 1, -s, -s, -s, 1, // Bottom
                                 -s, -s, -s, 1,  s, -s,  s, 1,  s, -s, -s, 1);
 
-            var c = this ._skyColor [0];
+            const c = this ._skyColor [0];
 
-            for (var i = 0, vertices = this .sphere .vertices; i < vertices; ++ i)
+            for (let i = 0, vertices = this .sphere .vertices; i < vertices; ++ i)
                this .colors .push (c .r, c .g, c .b, alpha);
          }
          else
@@ -328,15 +329,13 @@ function (X3DBindableNode,
 
             if (this ._skyColor .length > this ._skyAngle .length)
             {
-               const
-                  vAngleMax = this ._groundColor .length > this ._groundAngle .length ? Math .PI / 2 : Math .PI,
-                  vAngle    = this ._skyAngle .map (a => Algorithm .clamp (a, 0, vAngleMax));
+               const vAngle = this ._skyAngle .slice ();
 
                if (vAngle .length === 0 || vAngle [0] > 0)
                   vAngle .unshift (0);
 
-               if (vAngle .at (-1) < vAngleMax)
-                  vAngle .push (vAngleMax);
+               if (vAngle .at (-1) < Math .PI)
+                  vAngle .push (Math .PI);
 
                if (vAngle .length === 2)
 						vAngle .splice (1, 0, (vAngle [0] + vAngle [1]) / 2)
@@ -346,12 +345,10 @@ function (X3DBindableNode,
 
             if (this ._groundColor .length > this ._groundAngle .length)
             {
-               const
-                  vAngleMax = Math .PI / 2,
-                  vAngle    = this ._groundAngle .map (a => Algorithm .clamp (a, 0, vAngleMax)) .reverse ();
+               const vAngle = this ._groundAngle .slice () .reverse ();
 
-               if (vAngle .length === 0 || vAngle [0] < vAngleMax)
-                  vAngle .unshift (vAngleMax);
+               if (vAngle .length === 0 || vAngle [0] < Math .PI / 2)
+                  vAngle .unshift (Math .PI / 2);
 
                if (vAngle .at (-1) > 0)
                   vAngle .push (0);
@@ -364,15 +361,15 @@ function (X3DBindableNode,
       },
       buildSphere: function (radius, vAngle, angle, color, alpha, bottom)
       {
-         var
-            phi         = 0,
+         const
+            vAngleMax   = bottom ? Math .PI / 2 : Math .PI,
             V_DIMENSION = vAngle .length - 1;
 
-         for (var v = 0; v < V_DIMENSION; ++ v)
+         for (let v = 0; v < V_DIMENSION; ++ v)
          {
-            var
-               theta1 = vAngle [v],
-               theta2 = vAngle [v + 1];
+            let
+               theta1 = Algorithm .clamp (vAngle [v],     0, vAngleMax),
+               theta2 = Algorithm .clamp (vAngle [v + 1], 0, vAngleMax);
 
             if (bottom)
             {
@@ -383,11 +380,11 @@ function (X3DBindableNode,
             z1 .setPolar (radius, theta1);
             z2 .setPolar (radius, theta2);
 
-            var
-               c1 = this .getColor (theta1, color, angle),
-               c2 = this .getColor (theta2, color, angle);
+            const
+               c1 = this .getColor (vAngle [v],     color, angle),
+               c2 = this .getColor (vAngle [v + 1], color, angle);
 
-            for (var u = 0; u < U_DIMENSION; ++ u)
+            for (let u = 0; u < U_DIMENSION; ++ u)
             {
                // p4 --- p1
                //  |   / |
@@ -395,17 +392,17 @@ function (X3DBindableNode,
                // p3 --- p2
 
                // The last point is the first one.
-               var u1 = u < U_DIMENSION - 1 ? u + 1 : 0;
+               const u1 = u < U_DIMENSION - 1 ? u + 1 : 0;
 
                // p1, p2
-               phi = 2 * Math .PI * (u / U_DIMENSION);
-               y1  .setPolar (-z1 .imag, phi);
-               y2  .setPolar (-z2 .imag, phi);
+               let phi = 2 * Math .PI * (u / U_DIMENSION);
+               y1 .setPolar (-z1 .imag, phi);
+               y2 .setPolar (-z2 .imag, phi);
 
                // p3, p4
                phi = 2 * Math .PI * (u1 / U_DIMENSION);
-               y3  .setPolar (-z2 .imag, phi);
-               y4  .setPolar (-z1 .imag, phi);
+               y3 .setPolar (-z2 .imag, phi);
+               y4 .setPolar (-z1 .imag, phi);
 
                // Triangle 1 and 2
 
@@ -429,7 +426,7 @@ function (X3DBindableNode,
       },
       transferSphere: function ()
       {
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          // Transfer colors.
 
@@ -444,7 +441,7 @@ function (X3DBindableNode,
       },
       transferRectangle: function ()
       {
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          // Transfer texCoords.
 
@@ -484,11 +481,11 @@ function (X3DBindableNode,
             }
             case TraverseType .DISPLAY:
             {
-               var
+               const
                   sourceObjects = renderObject .getLocalObjects (),
                   destObjects   = this .localObjects;
 
-               for (var i = 0, length = sourceObjects .length; i < length; ++ i)
+               for (let i = 0, length = sourceObjects .length; i < length; ++ i)
                   destObjects [i] = sourceObjects [i];
 
                destObjects .length = sourceObjects .length;
@@ -498,7 +495,7 @@ function (X3DBindableNode,
       },
       display: (function ()
       {
-         var
+         const
             invProjectionMatrix = new Matrix4 (),
             modelViewMatrix     = new Matrix4 (),
             rotation            = new Rotation4 (),
@@ -521,7 +518,7 @@ function (X3DBindableNode,
 
                // Get background scale.
 
-               var farValue = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
+               const farValue = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
 
                // Get projection matrix.
 
@@ -553,12 +550,12 @@ function (X3DBindableNode,
       })(),
       drawSphere: function (renderObject)
       {
-         var transparency = this ._transparency .getValue ();
+         const transparency = this ._transparency .getValue ();
 
          if (transparency >= 1)
             return;
 
-         var
+         const
             browser    = renderObject .getBrowser (),
             gl         = browser .getContext (),
             shaderNode = browser .getBackgroundSphereShader ();
