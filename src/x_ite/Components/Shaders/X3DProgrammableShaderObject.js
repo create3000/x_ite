@@ -1040,7 +1040,7 @@ function (X3DCast,
          // Material
 
          gl .uniform1i (this .x3d_ColorMaterial, geometryNode .colorMaterial);
-         materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .textureTransformMapping, geometryNode .textureCoordinateMapping, this .x3d_Material, front);
+         materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .textureTransformMapping, geometryNode .textureCoordinateMapping, front);
 
          // Normal matrix
 
