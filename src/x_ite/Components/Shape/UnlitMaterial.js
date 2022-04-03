@@ -98,7 +98,7 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
-         this ._emissiveTexture .addInterest ("set_transparent__", this);
+         this .set_transparent__ ();
       },
       set_transparent__: function ()
       {
@@ -108,30 +108,6 @@ function (Fields,
       getShader: function (browser, shadow)
       {
          return browser .getUnlitShader ();
-      },
-      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, material)
-      {
-         // Emissive texture
-
-         const emissiveTexture = material .emissiveTexture;
-
-         gl .uniform3fv (material .emissiveColor, this .emissiveColor);
-
-         if (this .emissiveTextureNode)
-         {
-            this .emissiveTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, emissiveTexture)
-
-            gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (this ._emissiveTextureMapping .getValue ()) || 0);
-            gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._emissiveTextureMapping .getValue ()) || 0);
-         }
-         else
-         {
-            gl .uniform1i (emissiveTexture .textureType, 0);
-         }
-
-         // Transparency
-
-         gl .uniform1f (material .transparency, this .transparency);
       },
    });
 

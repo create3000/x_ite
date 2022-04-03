@@ -81,6 +81,8 @@ struct x3d_MaterialParameters
    mediump vec3  specularColor;
    mediump vec3  emissiveColor;
    mediump float shininess;
+   mediump float occlusionStrength;
+   mediump float normalScale;
    mediump float transparency;
 };
 
@@ -88,10 +90,8 @@ struct x3d_MaterialParameters
 
 struct x3d_UnlitMaterialParameters
 {
-   mediump vec3 emissiveColor;
-   x3d_MaterialTextureParameters emissiveTexture;
+   mediump vec3  emissiveColor;
    mediump float normalScale;
-   x3d_MaterialTextureParameters normalTexture;
    mediump float transparency;
 };
 

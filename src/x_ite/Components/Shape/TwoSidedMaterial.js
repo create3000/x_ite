@@ -114,8 +114,6 @@ function (Fields,
       {
          X3DMaterialNode . prototype .initialize .call (this);
 
-         this ._separateBackColor .addInterest ("set_transparent__", this);
-
          this ._ambientIntensity .addInterest ("set_ambientIntensity__", this);
          this ._diffuseColor     .addInterest ("set_diffuseColor__",     this);
          this ._specularColor    .addInterest ("set_specularColor__",    this);
@@ -130,6 +128,10 @@ function (Fields,
          this ._backShininess        .addInterest ("set_backShininess__",        this);
          this ._backTransparency     .addInterest ("set_backTransparency__",     this);
 
+         this ._separateBackColor .addInterest ("set_transparent__", this);
+         this ._transparency      .addInterest ("set_transparent__", this);
+         this ._backTransparency  .addInterest ("set_transparent__", this);
+
          this .set_ambientIntensity__ ();
          this .set_diffuseColor__ ();
          this .set_specularColor__ ();
@@ -143,6 +145,8 @@ function (Fields,
          this .set_backEmissiveColor__ ();
          this .set_backShininess__ ();
          this .set_backTransparency__ ();
+
+         this .set_transparent__ ();
       },
       set_ambientIntensity__: function ()
       {
@@ -194,8 +198,6 @@ function (Fields,
       set_transparency__: function ()
       {
          this .transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
-
-         this .set_transparent__ ();
       },
       /*
        * Back Material
@@ -250,8 +252,6 @@ function (Fields,
       set_backTransparency__: function ()
       {
          this .backTransparency = Algorithm .clamp (this ._backTransparency .getValue (), 0, 1);
-
-         this .set_transparent__ ();
       },
       set_transparent__: function ()
       {
@@ -261,25 +261,25 @@ function (Fields,
       {
          return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
       },
-      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, material, front)
+      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, front)
       {
          if (!front && this ._separateBackColor .getValue ())
          {
-            gl .uniform1f  (material .ambientIntensity, this .backAmbientIntensity);
-            gl .uniform3fv (material .diffuseColor,     this .backDiffuseColor);
-            gl .uniform3fv (material .specularColor,    this .backSpecularColor);
-            gl .uniform3fv (material .emissiveColor,    this .backEmissiveColor);
-            gl .uniform1f  (material .shininess,        this .backShininess);
-            gl .uniform1f  (material .transparency,     this .backTransparency);
+            gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .backAmbientIntensity);
+            gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .backDiffuseColor);
+            gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .backSpecularColor);
+            gl .uniform3fv (shaderObject .x3d_EmissiveColor,    this .backEmissiveColor);
+            gl .uniform1f  (shaderObject .x3d_Shininess,        this .backShininess);
+            gl .uniform1f  (shaderObject .x3d_Transparency,     this .backTransparency);
          }
          else
          {
-            gl .uniform1f  (material .ambientIntensity, this .ambientIntensity);
-            gl .uniform3fv (material .diffuseColor,     this .diffuseColor);
-            gl .uniform3fv (material .specularColor,    this .specularColor);
-            gl .uniform3fv (material .emissiveColor,    this .emissiveColor);
-            gl .uniform1f  (material .shininess,        this .shininess);
-            gl .uniform1f  (material .transparency,     this .transparency);
+            gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
+            gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColor);
+            gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColor);
+            gl .uniform3fv (shaderObject .x3d_EmissiveColor,    this .emissiveColor);
+            gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
+            gl .uniform1f  (shaderObject .x3d_Transparency,     this .transparency);
          }
       },
    });

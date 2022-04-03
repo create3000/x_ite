@@ -818,7 +818,7 @@ const X3D = require ("x_ite")
 
 ### Using X\_ITE with a CDN
 
-CDNs can offer a performance benefit by hosting X\_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X\_ITE from the same CDN, it won't have to be re-downloaded. To use the X\_ITE CDN, just reference the CSS and JavaScript file in the script tag directly from the GitHub CDN or jsDelivr CDN domain.
+CDNs can offer a performance benefit by hosting X\_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X\_ITE from the same CDN, it won't have to be re-downloaded. To use the X\_ITE CDN, just reference the CSS and JavaScript file in the script element directly from the GitHub CDN or jsDelivr CDN domain.
 
 ### GitHub CDN
 
@@ -870,9 +870,10 @@ WordPress users can use our plug-in to embed X\_ITE into their web page.
 
 To display your X3D scene in a HTML5 page first save your scene as X3D XML Encoded file, X3D JSON Encoded file, or as X3D Classic Encoded file, i.e. create a file with the extension .x3d, .x3dj, .x3dv, or .wrl.
 
-The HTML5 page is quite easy to create, the HTML5 code below shows you the minimum requirements. The path to the X3D scene is specified in the src attribute of the &lt;X3DCanvas&gt; tag.
+The HTML5 page is quite easy to create, the HTML5 code below shows you the minimum requirements. The path to the X3D scene is specified in the src attribute of the &lt;X3DCanvas&gt; element.
 
 ```html
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8"/>
@@ -895,9 +896,9 @@ X3DCanvas {
 </html>
 ```
 
-To get X\_ITE working you must include the CSS file »x\_ite.css« and the JavaScript file »x\_ite.min.js«. After x\_ite is successfully loaded a new HTML tag &lt;X3DCanvas&gt; is available on your page.
+To get X\_ITE working you must include the CSS file »x\_ite.css« and the JavaScript file »x\_ite.min.js«. After x\_ite is successfully loaded a new HTML element &lt;X3DCanvas&gt; is available on your page.
 
-**Note:** You can style the &lt;X3DCanvas&gt; tag as every HTML tag with CSS as well as you can place it everywhere within the DOM tree.
+**Note:** You can style the &lt;X3DCanvas&gt; element as every HTML element with CSS as well as you can place it everywhere within the DOM tree.
 {: .notice--info}
 
 ### Supported File Formats
@@ -937,7 +938,7 @@ For example, we could provide a text description of the X3D element or provide a
 
 ## Attributes of the X3DCanvas Tag
 
-The HTML **&lt;X3DCanvas&gt;** tag defines the main content of the X3D document. The &lt;X3DCanvas&gt; tag has three attributes that define different behaviours. All of these attributes are optional.
+The HTML **&lt;X3DCanvas&gt;** element defines the main content of the X3D document. The &lt;X3DCanvas&gt; element has three attributes that define different behaviours. All of these attributes are optional.
 
 ### cache
 

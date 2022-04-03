@@ -118,15 +118,18 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
-         this ._ambientIntensity .addInterest ("set_ambientIntensity__", this);
-         this ._diffuseColor     .addInterest ("set_diffuseColor__",     this);
-         this ._specularColor    .addInterest ("set_specularColor__",    this);
-         this ._shininess        .addInterest ("set_shininess__",        this);
+         this ._ambientIntensity  .addInterest ("set_ambientIntensity__",  this);
+         this ._diffuseColor      .addInterest ("set_diffuseColor__",      this);
+         this ._specularColor     .addInterest ("set_specularColor__",     this);
+         this ._shininess         .addInterest ("set_shininess__",         this);
+         this ._occlusionStrength .addInterest ("set_occlusionStrength__", this);
 
          this .set_ambientIntensity__ ();
          this .set_diffuseColor__ ();
          this .set_specularColor__ ();
          this .set_shininess__ ();
+         this .set_occlusionStrength__ ();
+         this .set_transparent__ ();
       },
       set_ambientIntensity__: function ()
       {
@@ -162,18 +165,46 @@ function (Fields,
       {
          this .shininess = Algorithm .clamp (this ._shininess .getValue (), 0, 1);
       },
+      set_occlusionStrength__: function ()
+      {
+         this .occlusionStrength = Algorithm .clamp (this ._occlusionStrength .getValue (), 0, 1);
+      },
+      set_transparent__: function ()
+      {
+         this .setTransparent (Boolean (this .transparency ||
+                               (this .diffuseTextureNode && this .diffuseTextureNode .getTransparent ())));
+      },
       getShader: function (browser, shadow)
       {
          return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
       },
-      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, material)
+      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
-         gl .uniform1f  (material .ambientIntensity, this .ambientIntensity);
-         gl .uniform3fv (material .diffuseColor,     this .diffuseColor);
-         gl .uniform3fv (material .specularColor,    this .specularColor);
-         gl .uniform3fv (material .emissiveColor,    this .emissiveColor);
-         gl .uniform1f  (material .shininess,        this .shininess);
-         gl .uniform1f  (material .transparency,     this .transparency);
+         X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
+
+         // Ambient parameters
+
+         gl .uniform1f (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
+
+         // Diffuse parameters
+
+         gl .uniform3fv (shaderObject .x3d_DiffuseColor, this .diffuseColor);
+
+         // Specular parameters
+
+         gl .uniform3fv (shaderObject .x3d_SpecularColor, this .specularColor);
+
+         // Shininess parameters
+
+         gl .uniform1f (shaderObject .x3d_Shininess, this .shininess);
+
+         // Occlusion parameters
+
+         gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+
+         // Transparency
+
+         gl .uniform1f (shaderObject .x3d_Transparency, this .transparency);
       },
    });
 

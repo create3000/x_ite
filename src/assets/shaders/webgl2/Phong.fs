@@ -8,8 +8,15 @@ uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwis
 uniform float x3d_AlphaCutoff;
 
 uniform int x3d_NumLights;
-uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
-uniform x3d_MaterialParameters x3d_Material;
+uniform x3d_LightSourceParameters     x3d_LightSource [x3d_MaxLights];
+uniform x3d_MaterialParameters        x3d_Material;
+uniform x3d_MaterialTextureParameters x3d_AmbientTexture;
+uniform x3d_MaterialTextureParameters x3d_DiffuseTexture;
+uniform x3d_MaterialTextureParameters x3d_SpecularTexture;
+uniform x3d_MaterialTextureParameters x3d_EmissiveTexture;
+uniform x3d_MaterialTextureParameters x3d_ShininessTexture;
+uniform x3d_MaterialTextureParameters x3d_OcclusionTexture;
+uniform x3d_MaterialTextureParameters x3d_NormalTexture;
 
 in float fogDepth;    // fog depth
 in vec4  color;       // color
@@ -38,6 +45,33 @@ out vec4 x3d_FragColor;
 #pragma X3D include "include/Hatch.glsl"
 #pragma X3D include "include/Fog.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
+
+vec3
+getEmissiveColor ()
+{
+   vec3  emissiveColor = x3d_Material .emissiveColor;
+
+   // Get texture coordinate.
+
+   vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+
+   // Get texture color.
+
+   switch (x3d_EmissiveTexture .textureType)
+   {
+      case x3d_TextureType2D:
+         return emissiveColor * texture (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
+
+      case x3d_TextureType3D:
+         return emissiveColor * texture (x3d_EmissiveTexture .texture3D, texCoord .stp) .rgb;
+
+      case x3d_TextureTypeCube:
+         return emissiveColor * texture (x3d_EmissiveTexture .textureCube, texCoord .stp) .rgb;
+
+      default:
+         return emissiveColor;
+   }
+}
 
 float
 getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)
@@ -124,7 +158,7 @@ getMaterialColor ()
       }
    }
 
-   finalColor += x3d_Material .emissiveColor;
+   finalColor += getEmissiveColor ();
 
    return vec4 (finalColor, alpha);
 }

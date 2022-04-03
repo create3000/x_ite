@@ -49,7 +49,7 @@ getTexCoord (const in int i)
 }
 
 vec4
-getTextureCoordinate (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int textureTransformMapping, const in int textureCoordinateMapping)
+getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int textureTransformMapping, const in int textureCoordinateMapping)
 {
    int mode = textureCoordinateGenerator .mode;
 
@@ -129,6 +129,19 @@ getTextureCoordinate (const in x3d_TextureCoordinateGeneratorParameters textureC
          return x3d_TextureMatrix [textureTransformMapping] * getTexCoord (textureCoordinateMapping);
       }
    }
+}
+
+vec4
+getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
+{
+   vec4 texCoord = getTexCoord (x3d_TextureCoordinateGenerator [textureCoordinateMapping], textureTransformMapping, textureCoordinateMapping);
+
+   texCoord .stp /= texCoord .q;
+
+   if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
+      texCoord .s = 1.0 - texCoord .s;
+
+   return texCoord;
 }
 
 vec4
@@ -215,13 +228,8 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 
       // Get texture color.
 
-      vec4 texCoord     = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i, i);
+      vec4 texCoord     = getTexCoord (i, i);
       vec4 textureColor = vec4 (1.0);
-
-      texCoord .stp /= texCoord .q;
-
-      if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
-         texCoord .s = 1.0 - texCoord .s;
 
       switch (x3d_TextureType [i])
       {

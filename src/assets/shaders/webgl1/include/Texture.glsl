@@ -57,7 +57,7 @@ getTexCoord (const in int i)
 }
 
 vec4
-getTextureCoordinate (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int textureTransformMapping, const in int textureCoordinateMapping)
+getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int textureTransformMapping, const in int textureCoordinateMapping)
 {
    int mode = textureCoordinateGenerator .mode;
 
@@ -182,7 +182,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 
       // Get texture color.
 
-      vec4 texCoord     = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i, i);
+      vec4 texCoord     = getTexCoord (x3d_TextureCoordinateGenerator [i], i, i);
       vec4 textureColor = vec4 (1.0);
 
       texCoord .stp /= texCoord .q;
