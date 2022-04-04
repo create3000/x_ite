@@ -9,8 +9,6 @@ getNormalVector ()
 
 #else
 
-uniform mat3 x3d_NormalMatrix;
-
 vec4
 getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping);
 
