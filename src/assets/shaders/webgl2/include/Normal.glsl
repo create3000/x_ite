@@ -20,11 +20,11 @@ getTBNMatrix (const in vec2 texCoord)
    vec3 pos_dy = dFdy (vertex);
    vec3 tex_dx = dFdx (vec3 (texCoord, 0.0));
    vec3 tex_dy = dFdy (vec3 (texCoord, 0.0));
-   vec3 tt     = (tex_dy .t * pos_dx - tex_dx .t * pos_dy) / (tex_dx .s * tex_dy.t - tex_dy .s * tex_dx .t);
-   vec3 n      = normalize (cross (pos_dx, pos_dy));
-   vec3 t      = normalize (tt - n * dot (n, tt));
-   vec3 b      = normalize (cross (n, t));
-   mat3 tbn    = mat3 (t, b, n);
+   vec3 t      = (tex_dy .t * pos_dx - tex_dx .t * pos_dy) / (tex_dx .s * tex_dy.t - tex_dy .s * tex_dx .t);
+   vec3 N      = normalize (cross (pos_dx, pos_dy));
+   vec3 T      = normalize (t - N * dot (N, t));
+   vec3 B      = normalize (cross (N, T));
+   mat3 tbn    = mat3 (T, B, N);
 
    return tbn;
 }
@@ -41,31 +41,31 @@ getNormalVector ()
       case x3d_TextureType2D:
       {
          vec4 texCoord    = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
-         vec3 N           = texture (x3d_NormalTexture .texture2D, texCoord .st) .rgb;
+         vec3 n           = texture (x3d_NormalTexture .texture2D, texCoord .st) .rgb;
          vec3 normalScale = vec3 (vec2 (x3d_Material .normalScale), 1.0);
          mat3 tbn         = getTBNMatrix (texCoord .st);
 
-         return normalize (tbn * ((N * 2.0 - 1.0) * normalScale)) * facing;
+         return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
       }
 
       // case x3d_TextureType3D:
       // {
       //    vec4 texCoord    = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
-      //    vec3 N           = texture (x3d_NormalTexture .texture3D, texCoord .stp) .rgb;
+      //    vec3 n           = texture (x3d_NormalTexture .texture3D, texCoord .stp) .rgb;
       //    vec3 normalScale = vec3 (vec2 (x3d_Material .normalScale), 1.0);
       //    mat3 tbn         = getTBNMatrix (texCoord .st);
 
-      //    return normalize (tbn * ((N * 2.0 - 1.0) * normalScale)) * facing;
+      //    return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
       // }
 
       // case x3d_TextureTypeCube:
       // {
       //    vec4 texCoord    = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
-      //    vec3 N           = texture (x3d_NormalTexture .textureCube, texCoord .stp) .rgb;
+      //    vec3 n           = texture (x3d_NormalTexture .textureCube, texCoord .stp) .rgb;
       //    vec3 normalScale = vec3 (vec2 (x3d_Material .normalScale), 1.0);
       //    mat3 tbn         = getTBNMatrix (texCoord .st);
 
-      //    return normalize (tbn * ((N * 2.0 - 1.0) * normalScale)) * facing;
+      //    return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
       // }
 
       default:
