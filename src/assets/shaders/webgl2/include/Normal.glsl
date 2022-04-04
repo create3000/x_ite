@@ -2,12 +2,6 @@
 #ifdef X3D_SHADOWS
 
 vec3
-getLocalNormalVector ()
-{
-   return normalize (gl_FrontFacing ? localNormal : -localNormal);
-}
-
-vec3
 getNormalVector ()
 {
    return normalize (gl_FrontFacing ? normal : -normal);
