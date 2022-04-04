@@ -38,7 +38,7 @@ out vec4 x3d_FragColor;
 void
 main ()
 {
-    clip ();
+   clip ();
 
    vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
 

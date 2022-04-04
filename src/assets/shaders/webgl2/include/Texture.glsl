@@ -3,7 +3,7 @@ precision highp sampler3D;
 
 uniform mat4        x3d_TextureMatrix [x3d_MaxTextures];
 uniform int         x3d_NumTextures;
-uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D, x3d_TextureType3D, x3d_TextureTypeCube
+uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_TextureType2D, x3d_TextureType3D, x3d_TextureTypeCube
 uniform sampler2D   x3d_Texture2D [x3d_MaxTextures];
 uniform sampler3D   x3d_Texture3D [x3d_MaxTextures];
 uniform samplerCube x3d_TextureCube [x3d_MaxTextures];
@@ -588,6 +588,12 @@ getProjectiveTextureColor (in vec4 currentColor)
 #endif
 
 #else
+
+vec4
+getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
+{
+   return texCoord0;
+}
 
 vec4
 getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)

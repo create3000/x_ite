@@ -145,7 +145,7 @@ function (Fields,
             console .error (error);
          }
       },
-      setShaderUniforms: function (gl, shaderObject)
+      setShaderUniforms: function (gl, shaderObject, renderObject)
       {
          const i = shaderObject .numProjectiveTextures ++;
 

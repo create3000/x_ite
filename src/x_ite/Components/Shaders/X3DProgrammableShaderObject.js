@@ -971,7 +971,7 @@ function (X3DCast,
          this .projectiveTextureNodes .length = 0;
 
          for (const globalObject of globalObjects)
-            globalObject .setShaderUniforms (gl, this);
+            globalObject .setShaderUniforms (gl, this, renderObject);
 
          this .numGlobalLights             = this .numLights;
          this .numGlobalProjectiveTextures = this .numProjectiveTextures;
@@ -1018,7 +1018,7 @@ function (X3DCast,
          this .numProjectiveTextures = this .numGlobalProjectiveTextures;
 
          for (const localObject of localObjects)
-            localObject .setShaderUniforms (gl, this);
+            localObject .setShaderUniforms (gl, this, renderObject);
 
          gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
          gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));

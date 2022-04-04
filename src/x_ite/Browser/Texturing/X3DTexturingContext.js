@@ -85,12 +85,15 @@ function (TextureProperties,
    function X3DTexturingContext ()
    {
       const
-         gl                    = this .getContext (),
-         maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS);
+         gl                   = this .getContext (),
+         maxTextureImageUnits = gl .getParameter (gl .MAX_TEXTURE_IMAGE_UNITS);
 
-      this [_maxTextures]              = maxVertexTextureUnits > 8 ? 2 : 1;
-      this [_multiTexturing]           = maxVertexTextureUnits > 8;
-      this [_projectiveTextureMapping] = maxVertexTextureUnits > 8;
+      // console .log (gl .getParameter (gl .MAX_TEXTURE_IMAGE_UNITS))
+      // console .log (gl .getParameter (gl .MAX_ARRAY_TEXTURE_LAYERS))
+
+      this [_maxTextures]              = maxTextureImageUnits > 8 ? 2 : 1;
+      this [_multiTexturing]           = maxTextureImageUnits > 8;
+      this [_projectiveTextureMapping] = maxTextureImageUnits > 8;
    }
 
    X3DTexturingContext .prototype =

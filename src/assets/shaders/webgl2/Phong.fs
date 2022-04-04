@@ -40,6 +40,7 @@ in float depth;
 
 out vec4 x3d_FragColor;
 
+#pragma X3D include "include/Normal.glsl"
 #pragma X3D include "include/Shadow.glsl"
 #pragma X3D include "include/Texture.glsl"
 #pragma X3D include "include/Hatch.glsl"
@@ -62,11 +63,11 @@ getEmissiveColor ()
       case x3d_TextureType2D:
          return emissiveColor * texture (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
 
-      case x3d_TextureType3D:
-         return emissiveColor * texture (x3d_EmissiveTexture .texture3D, texCoord .stp) .rgb;
+      // case x3d_TextureType3D:
+      //    return emissiveColor * texture (x3d_EmissiveTexture .texture3D, texCoord .stp) .rgb;
 
-      case x3d_TextureTypeCube:
-         return emissiveColor * texture (x3d_EmissiveTexture .textureCube, texCoord .stp) .rgb;
+      // case x3d_TextureTypeCube:
+      //    return emissiveColor * texture (x3d_EmissiveTexture .textureCube, texCoord .stp) .rgb;
 
       default:
          return emissiveColor;
@@ -89,7 +90,7 @@ getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in ve
 vec4
 getMaterialColor ()
 {
-   vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+   vec3 N = getNormalVector ();
    vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
 
    // Calculate diffuseFactor & alpha
