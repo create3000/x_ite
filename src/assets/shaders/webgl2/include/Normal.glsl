@@ -21,7 +21,7 @@ getTBNMatrix (const in vec2 texCoord)
    vec3 tex_dx = dFdx (vec3 (texCoord, 0.0));
    vec3 tex_dy = dFdy (vec3 (texCoord, 0.0));
    vec3 t      = (tex_dy .t * pos_dx - tex_dx .t * pos_dy) / (tex_dx .s * tex_dy.t - tex_dy .s * tex_dx .t);
-   vec3 N      = normalize (normal); // OR generated face normal n = normalize (cross (pos_dx, pos_dy));
+   vec3 N      = normalize (normal); // OR generated face normal: n = normalize (cross (pos_dx, pos_dy));
    vec3 T      = normalize (t - N * dot (N, t));
    vec3 B      = normalize (cross (N, T));
    mat3 tbn    = mat3 (T, B, N);
