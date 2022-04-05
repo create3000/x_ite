@@ -78,14 +78,12 @@ function (X3DMaterialNode,
 
          this ._emissiveColor   .addInterest ("set_emissiveColor__",   this);
          this ._emissiveTexture .addInterest ("set_emissiveTexture__", this);
-         this ._normalScale     .addInterest ("set_normalScale__",     this);
          this ._normalTexture   .addInterest ("set_normalTexture__",   this);
          this ._transparency    .addInterest ("set_transparency__",    this);
          this ._transparency    .addInterest ("set_transparent__",     this);
 
          this .set_emissiveColor__ ();
          this .set_emissiveTexture__ ();
-         this .set_normalScale__ ();
          this .set_normalTexture__ ();
          this .set_transparency__ ();
       },
@@ -111,10 +109,6 @@ function (X3DMaterialNode,
 
          if (this .emissiveTextureNode)
             this .emissiveTextureNode ._transparent .addInterest ("set_transparent__", this);
-      },
-      set_normalScale__: function ()
-      {
-         this .normalScale = Math .max (this ._normalScale .getValue (), 0);
       },
       set_normalTexture__: function ()
       {
@@ -150,7 +144,7 @@ function (X3DMaterialNode,
 
          // Normal parameters
 
-         gl .uniform1f (shaderObject .x3d_NormalScale, this .normalScale);
+         gl .uniform1f (shaderObject .x3d_NormalScale, this ._normalScale .getValue ());
 
          const normalTexture = shaderObject .x3d_NormalTexture;
 

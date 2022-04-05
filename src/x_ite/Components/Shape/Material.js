@@ -133,7 +133,7 @@ function (Fields,
       },
       set_ambientIntensity__: function ()
       {
-         this .ambientIntensity = Math .max (this ._ambientIntensity .getValue (), 0);
+         this .ambientIntensity = Algorithm .clamp (this ._ambientIntensity .getValue (), 0, 1);
       },
       set_diffuseColor__: function ()
       {
