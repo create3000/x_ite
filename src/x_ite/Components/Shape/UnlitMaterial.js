@@ -100,10 +100,20 @@ function (Fields,
 
          this .set_transparent__ ();
       },
+      set_emissiveTexture__: function ()
+      {
+         if (this .getEmissiveTexture ())
+            this .getEmissiveTexture () ._transparent .removeInterest ("set_transparent__", this);
+
+         X3DOneSidedMaterialNode .prototype .set_emissiveTexture__ .call (this);
+
+         if (this .getEmissiveTexture ())
+            this .getEmissiveTexture () ._transparent .addInterest ("set_transparent__", this);
+      },
       set_transparent__: function ()
       {
-         this .setTransparent (Boolean (this .transparency ||
-                               (this .emissiveTextureNode && this .emissiveTextureNode .getTransparent ())));
+         this .setTransparent (Boolean (this .getTransparency () ||
+                               (this .getEmissiveTexture () && this .getEmissiveTexture () .getTransparent ())));
       },
       getShader: function (browser, shadow)
       {

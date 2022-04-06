@@ -67,6 +67,7 @@ function (X3DMaterialNode,
       this .addType (X3DConstants .X3DOneSidedMaterialNode);
 
       this .emissiveColor = new Float32Array (3);
+      this .textures      = 0;
    }
 
    X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
@@ -102,17 +103,15 @@ function (X3DMaterialNode,
       },
       set_emissiveTexture__: function ()
       {
-         if (this .emissiveTextureNode)
-            this .emissiveTextureNode ._transparent .removeInterest ("set_transparent__", this);
-
          this .emissiveTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._emissiveTexture);
 
-         if (this .emissiveTextureNode)
-            this .emissiveTextureNode ._transparent .addInterest ("set_transparent__", this);
+         this .setTexture (this .getTextureIndices () .EMISSIVE_TEXTURE, this .emissiveTextureNode);
       },
       set_normalTexture__: function ()
       {
          this .normalTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._normalTexture);
+
+         this .setTexture (this .getTextureIndices () .NORMAL_TEXTURE, this .normalTextureNode);
       },
       set_transparency__: function ()
       {
@@ -121,6 +120,41 @@ function (X3DMaterialNode,
       set_transparent__: function ()
       {
          this .setTransparent (Boolean (this .transparency));
+      },
+      getEmissiveTexture: function ()
+      {
+         return this .emissiveTextureNode;
+      },
+      getNormalTexture: function ()
+      {
+         return this .normalTextureNode;
+      },
+      getTransparency: function ()
+      {
+         return this .transparency;
+      },
+      getTextures: function ()
+      {
+         return this .textures;
+      },
+      getTextureIndices: (function ()
+      {
+         const textureIndices = {
+            EMISSIVE_TEXTURE: 0,
+            NORMAL_TEXTURE: 1,
+         };
+
+         return function ()
+         {
+            return textureIndices;
+         };
+      })(),
+      setTexture: function (index, value)
+      {
+         if (value)
+            this .textures |= 1 << index;
+         else
+            this .textures &= ~(1 << index);
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {

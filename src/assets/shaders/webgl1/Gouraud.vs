@@ -65,14 +65,11 @@ getMaterialColor (const in vec3 N,
 {
    vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
 
-   // Calculate diffuseFactor & alpha
+   // Calculate diffuseColor & alpha
 
-   vec3  diffuseFactor = x3d_ColorMaterial ? x3d_Color .rgb : material .diffuseColor;
-   float alpha         = (1.0 - material .transparency) * (x3d_ColorMaterial ? x3d_Color .a : 1.0);
-
-   // Ambient intensity
-
-   vec3 ambientColor = diffuseFactor * material .ambientIntensity;
+   float alpha        = (1.0 - material .transparency) * (x3d_ColorMaterial ? x3d_Color .a : 1.0);
+   vec3  diffuseColor = x3d_ColorMaterial ? x3d_Color .rgb : material .diffuseColor;
+   vec3  ambientColor = diffuseColor * material .ambientIntensity;
 
    // Apply light sources
 
@@ -97,7 +94,7 @@ getMaterialColor (const in vec3 N,
          vec3 H = normalize (L + V);             // Specular term
 
          float lightAngle     = max (dot (N, L), 0.0);      // Angle between normal and light ray.
-         vec3  diffuseTerm    = diffuseFactor * lightAngle;
+         vec3  diffuseTerm    = diffuseColor * lightAngle;
          float specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;
          vec3  specularTerm   = material .specularColor * specularFactor;
 

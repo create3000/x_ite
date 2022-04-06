@@ -60,29 +60,29 @@ getMaterialColor ()
    vec3  V  = normalize (-vertex); // normalized vector from point on geometry to viewer's position
    float dV = length (vertex);
 
-   // Calculate diffuseFactor & alpha
+   // Calculate diffuseColor & alpha
 
-   vec3  diffuseFactor = vec3 (1.0);
-   float alpha         = 1.0 - x3d_Material .transparency;
+   vec3  diffuseColor = vec3 (1.0);
+   float alpha        = 1.0 - x3d_Material .transparency;
 
    // Texture
 
    vec4 D = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .diffuseColor, alpha);
    vec4 T = getTextureColor (D, vec4 (x3d_Material .specularColor, alpha));
 
-   diffuseFactor = T .rgb;
-   alpha         = T .a;
+   diffuseColor = T .rgb;
+   alpha        = T .a;
+
+   // Ambient color
+
+   vec3 ambientColor = diffuseColor * x3d_Material .ambientIntensity;
 
    // Projective texture
 
    vec4 P = getProjectiveTextureColor (vec4 (1.0));
 
-   diffuseFactor *= P .rgb;
-   alpha         *= P .a;
-
-   // Ambient intensity
-
-   vec3 ambientColor = diffuseFactor * x3d_Material .ambientIntensity;
+   diffuseColor *= P .rgb;
+   alpha        *= P .a;
 
    // Apply light sources
 
@@ -107,7 +107,7 @@ getMaterialColor ()
          vec3 H = normalize (L + V);             // Specular term
 
          float lightAngle     = max (dot (N, L), 0.0);      // Angle between normal and light ray.
-         vec3  diffuseTerm    = diffuseFactor * lightAngle;
+         vec3  diffuseTerm    = diffuseColor * lightAngle;
          float specularFactor = x3d_Material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), x3d_Material .shininess * 128.0) : 1.0;
          vec3  specularTerm   = x3d_Material .specularColor * specularFactor;
 

@@ -150,6 +150,8 @@ function (Fields,
       set_ambientTexture__: function ()
       {
          this .ambientTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._ambientTexture);
+
+         this .setTexture (this .getTextureIndices () .AMBIENT_TEXTURE, this .ambientTextureNode);
       },
       set_diffuseColor__: function ()
       {
@@ -173,6 +175,8 @@ function (Fields,
 
          if (this .diffuseTextureNode)
             this .diffuseTextureNode ._transparent .addInterest ("set_transparent__", this);
+
+         this .setTexture (this .getTextureIndices () .DIFFUSE_TEXTURE, this .diffuseTextureNode);
       },
       set_specularColor__: function ()
       {
@@ -190,6 +194,8 @@ function (Fields,
       set_specularTexture__: function ()
       {
          this .specularTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularTexture);
+
+         this .setTexture (this .getTextureIndices () .SPECULAR_TEXTURE, this .specularTextureNode);
       },
       set_shininess__: function ()
       {
@@ -198,6 +204,8 @@ function (Fields,
       set_shininessTexture__: function ()
       {
          this .shininessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._shininessTexture);
+
+         this .setTexture (this .getTextureIndices () .SHININESS_TEXTURE, this .shininessTextureNode);
       },
       set_occlusionStrength__: function ()
       {
@@ -206,15 +214,34 @@ function (Fields,
       set_occlusionTexture__: function ()
       {
          this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
+
+         this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
       },
       set_transparent__: function ()
       {
-         this .setTransparent (Boolean (this .transparency ||
+         this .setTransparent (Boolean (this .getTransparency () ||
                                (this .diffuseTextureNode && this .diffuseTextureNode .getTransparent ())));
       },
+      getTextureIndices: (function ()
+      {
+         const textureIndices = {
+            AMBIENT_TEXTURE: 0,
+            DIFFUSE_TEXTURE: 1,
+            SPECULAR_TEXTURE: 2,
+            EMISSIVE_TEXTURE: 3,
+            SHININESS_TEXTURE: 4,
+            OCCLUSION_TEXTURE: 5,
+            NORMAL_TEXTURE: 6,
+         };
+
+         return function ()
+         {
+            return textureIndices;
+         };
+      })(),
       getShader: function (browser, shadow)
       {
-         return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
+         return shadow ? browser .getShadowShader () : (this .getTextures () ? browser .getPhongShader () : browser .getDefaultShader ());
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
