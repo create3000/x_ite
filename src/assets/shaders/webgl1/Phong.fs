@@ -82,7 +82,7 @@ getMaterialColor ()
 
    // Ambient intensity
 
-   vec3 ambientTerm = diffuseFactor * x3d_Material .ambientIntensity;
+   vec3 ambientColor = diffuseFactor * x3d_Material .ambientIntensity;
 
    // Apply light sources
 
@@ -114,15 +114,15 @@ getMaterialColor ()
          float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
          float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
          float attenuationSpotFactor = attenuationFactor * spotFactor;
-         vec3  ambientColor          = light .ambientIntensity * ambientTerm;
-         vec3  diffuseSpecularColor  = light .intensity * (diffuseTerm + specularTerm);
+         vec3  ambientTerm           = light .ambientIntensity * ambientColor;
+         vec3  diffuseSpecularTerm   = light .intensity * (diffuseTerm + specularTerm);
 
          #ifdef X3D_SHADOWS
             if (lightAngle > 0.0)
-               diffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, light));
+               diffuseSpecularTerm = mix (diffuseSpecularTerm, light .shadowColor, getShadowIntensity (i, light));
          #endif
 
-         finalColor += attenuationSpotFactor * light .color * (ambientColor + diffuseSpecularColor);
+         finalColor += attenuationSpotFactor * light .color * (ambientTerm + diffuseSpecularTerm);
       }
    }
 

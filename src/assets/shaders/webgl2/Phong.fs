@@ -90,11 +90,52 @@ getDiffuseColor ()
 }
 
 vec3
+getSpecularColor ()
+{
+   // Get specular parameter.
+
+   vec3 specularParameter = x3d_Material .specularColor;
+
+   // Get texture color.
+
+   switch (x3d_SpecularTexture .textureType)
+   {
+      case x3d_TextureType2D:
+      {
+         vec4 texCoord = getTexCoord (x3d_SpecularTexture .textureTransformMapping, x3d_SpecularTexture .textureCoordinateMapping);
+
+         return specularParameter * texture (x3d_SpecularTexture .texture2D, texCoord .st) .rgb;
+      }
+
+      #ifdef X3D_MATERIAL_TEXTURE_3D
+      case x3d_TextureType3D:
+      {
+         vec4 texCoord = getTexCoord (x3d_SpecularTexture .textureTransformMapping, x3d_SpecularTexture .textureCoordinateMapping);
+
+         return specularParameter * texture (x3d_SpecularTexture .texture3D, texCoord .stp) .rgb;
+      }
+      #endif
+
+      #ifdef X3D_MATERIAL_TEXTURE_CUBE
+      case x3d_TextureTypeCube:
+      {
+         vec4 texCoord = getTexCoord (x3d_SpecularTexture .textureTransformMapping, x3d_SpecularTexture .textureCoordinateMapping);
+
+         return specularParameter * texture (x3d_SpecularTexture .textureCube, texCoord .stp) .rgb;
+      }
+      #endif
+
+      default:
+         return specularParameter .rgb;
+   }
+}
+
+vec3
 getEmissiveColor ()
 {
    // Get emissive parameter.
 
-   vec3  emissiveParameter = x3d_Material .emissiveColor;
+   vec3 emissiveParameter = x3d_Material .emissiveColor;
 
    // Get texture color.
 
@@ -164,7 +205,8 @@ getMaterialColor ()
 
    // Ambient intensity
 
-   vec3 ambientTerm = diffuseFactor * x3d_Material .ambientIntensity;
+   vec3 ambientColor  = diffuseFactor * x3d_Material .ambientIntensity;
+   vec3 specularColor = getSpecularColor ();
 
    // Apply light sources
 
@@ -191,20 +233,20 @@ getMaterialColor ()
          float lightAngle     = max (dot (N, L), 0.0);      // Angle between normal and light ray.
          vec3  diffuseTerm    = diffuseFactor * lightAngle;
          float specularFactor = x3d_Material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), x3d_Material .shininess * 128.0) : 1.0;
-         vec3  specularTerm   = x3d_Material .specularColor * specularFactor;
+         vec3  specularTerm   = specularColor * specularFactor;
 
          float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
          float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
          float attenuationSpotFactor = attenuationFactor * spotFactor;
-         vec3  ambientColor          = light .ambientIntensity * ambientTerm;
-         vec3  diffuseSpecularColor  = light .intensity * (diffuseTerm + specularTerm);
+         vec3  ambientTerm           = light .ambientIntensity * ambientColor;
+         vec3  diffuseSpecularTerm   = light .intensity * (diffuseTerm + specularTerm);
 
          #ifdef X3D_SHADOWS
             if (lightAngle > 0.0)
-               diffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, light));
+               diffuseSpecularTerm = mix (diffuseSpecularTerm, light .shadowColor, getShadowIntensity (i, light));
          #endif
 
-         finalColor += attenuationSpotFactor * light .color * (ambientColor + diffuseSpecularColor);
+         finalColor += attenuationSpotFactor * light .color * (ambientTerm + diffuseSpecularTerm);
       }
    }
 
