@@ -66,7 +66,7 @@ function (ShaderSource,
 
    const Shader =
    {
-      getShaderSource: function (browser, name, source, shadow)
+      getShaderSource: function (browser, name, source, options)
       {
          const gl = browser .getContext ();
 
@@ -100,11 +100,14 @@ function (ShaderSource,
          if (browser .getProjectiveTextureMapping ())
             constants += "#define X3D_PROJECTIVE_TEXTURE_MAPPING\n";
 
-         if (shadow)
+         if (options .SHADOWS)
          {
             constants += "#define X3D_SHADOWS\n";
             constants += "#define X3D_PCF_FILTERING\n";
          }
+
+         if (options .MATERIAL_TEXTURES)
+            constants += "#define X3D_MATERIAL_TEXTURES\n";
 
          let definitions = "";
 

@@ -241,105 +241,97 @@ function (Fields,
       })(),
       getShader: function (browser, shadow)
       {
-         return shadow ? browser .getShadowShader () : (this .getTextures () ? browser .getPhongShader () : browser .getDefaultShader ());
+         return this .getTextures () ? browser .getMaterialTexturesShader () : (shadow ? browser .getShadowShader () : browser .getDefaultShader ());
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
          X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 
-         // Ambient parameters
+         gl .uniform1f  (shaderObject .x3d_AmbientIntensity,  this .ambientIntensity);
+         gl .uniform3fv (shaderObject .x3d_DiffuseColor,      this .diffuseColor);
+         gl .uniform3fv (shaderObject .x3d_SpecularColor,     this .specularColor);
+         gl .uniform1f  (shaderObject .x3d_Shininess,         this .shininess);
+         gl .uniform1f  (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
-         gl .uniform1f (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
-
-         const ambientTexture = shaderObject .x3d_AmbientTexture;
-
-         if (this .ambientTextureNode)
+         if (this .getTextures ())
          {
-            this .ambientTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, ambientTexture);
+            const
+               ambientTexture  = shaderObject .x3d_AmbientTexture,
+               diffuseTexture  = shaderObject .x3d_DiffuseTexture,
+               specularTexture  = shaderObject .x3d_SpecularTexture,
+               shininessTexture = shaderObject .x3d_ShininessTexture,
+               occlusionTexture = shaderObject .x3d_OcclusionTexture;
 
-            gl .uniform1i (ambientTexture .textureTransformMapping,  textureTransformMapping  .get (this ._ambientTextureMapping .getValue ()) || 0);
-            gl .uniform1i (ambientTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._ambientTextureMapping .getValue ()) || 0);
+            // Ambient parameters
+
+            if (this .ambientTextureNode)
+            {
+               this .ambientTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, ambientTexture);
+
+               gl .uniform1i (ambientTexture .textureTransformMapping,  textureTransformMapping  .get (this ._ambientTextureMapping .getValue ()) || 0);
+               gl .uniform1i (ambientTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._ambientTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (ambientTexture .textureType, 0);
+            }
+
+            // Diffuse parameters
+
+            if (this .diffuseTextureNode)
+            {
+               this .diffuseTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, diffuseTexture);
+
+               gl .uniform1i (diffuseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._diffuseTextureMapping .getValue ()) || 0);
+               gl .uniform1i (diffuseTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._diffuseTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (diffuseTexture .textureType, 0);
+            }
+
+            // Specular parameters
+
+            if (this .specularTextureNode)
+            {
+               this .specularTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, specularTexture);
+
+               gl .uniform1i (specularTexture .textureTransformMapping,  textureTransformMapping  .get (this ._specularTextureMapping .getValue ()) || 0);
+               gl .uniform1i (specularTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._specularTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (specularTexture .textureType, 0);
+            }
+
+            // Shininess parameters
+
+            if (this .shininessTextureNode)
+            {
+               this .shininessTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, shininessTexture);
+
+               gl .uniform1i (shininessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._shininessTextureMapping .getValue ()) || 0);
+               gl .uniform1i (shininessTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._shininessTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (shininessTexture .textureType, 0);
+            }
+
+            // Occlusion parameters
+
+            if (this .occlusionTextureNode)
+            {
+               this .occlusionTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, occlusionTexture);
+
+               gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
+               gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._occlusionTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (occlusionTexture .textureType, 0);
+            }
          }
-         else
-         {
-            gl .uniform1i (ambientTexture .textureType, 0);
-         }
-
-         // Diffuse parameters
-
-         gl .uniform3fv (shaderObject .x3d_DiffuseColor, this .diffuseColor);
-
-         const diffuseTexture = shaderObject .x3d_DiffuseTexture;
-
-         if (this .diffuseTextureNode)
-         {
-            this .diffuseTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, diffuseTexture);
-
-            gl .uniform1i (diffuseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._diffuseTextureMapping .getValue ()) || 0);
-            gl .uniform1i (diffuseTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._diffuseTextureMapping .getValue ()) || 0);
-         }
-         else
-         {
-            gl .uniform1i (diffuseTexture .textureType, 0);
-         }
-
-         // Specular parameters
-
-         gl .uniform3fv (shaderObject .x3d_SpecularColor, this .specularColor);
-
-         const specularTexture = shaderObject .x3d_SpecularTexture;
-
-         if (this .specularTextureNode)
-         {
-            this .specularTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, specularTexture);
-
-            gl .uniform1i (specularTexture .textureTransformMapping,  textureTransformMapping  .get (this ._specularTextureMapping .getValue ()) || 0);
-            gl .uniform1i (specularTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._specularTextureMapping .getValue ()) || 0);
-         }
-         else
-         {
-            gl .uniform1i (specularTexture .textureType, 0);
-         }
-
-         // Shininess parameters
-
-         gl .uniform1f (shaderObject .x3d_Shininess, this .shininess);
-
-         const shininessTexture = shaderObject .x3d_ShininessTexture;
-
-         if (this .shininessTextureNode)
-         {
-            this .shininessTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, shininessTexture);
-
-            gl .uniform1i (shininessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._shininessTextureMapping .getValue ()) || 0);
-            gl .uniform1i (shininessTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._shininessTextureMapping .getValue ()) || 0);
-         }
-         else
-         {
-            gl .uniform1i (shininessTexture .textureType, 0);
-         }
-
-         // Occlusion parameters
-
-         gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
-
-         const occlusionTexture = shaderObject .x3d_OcclusionTexture;
-
-         if (this .occlusionTextureNode)
-         {
-            this .occlusionTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, occlusionTexture);
-
-            gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
-            gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._occlusionTextureMapping .getValue ()) || 0);
-         }
-         else
-         {
-            gl .uniform1i (occlusionTexture .textureType, 0);
-         }
-
-         // Transparency
-
-         gl .uniform1f (shaderObject .x3d_Transparency, this .transparency);
       },
    });
 

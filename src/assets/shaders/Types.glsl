@@ -62,20 +62,6 @@ struct x3d_FillPropertiesParameters
 
 //uniform x3d_FillPropertiesParameters x3d_FillProperties;
 
-struct x3d_MaterialTextureParameters
-{
-   mediump int         textureType;
-   mediump int         textureTransformMapping;
-   mediump int         textureCoordinateMapping;
-   mediump sampler2D   texture2D;
-   #ifdef X3D_MATERIAL_TEXTURE_3D
-   mediump sampler3D   texture3D;
-   #endif
-   #ifdef X3D_MATERIAL_TEXTURE_CUBE
-   mediump samplerCube textureCube;
-   #endif
-};
-
 struct x3d_MaterialParameters
 {
    mediump float ambientIntensity;
@@ -89,6 +75,22 @@ struct x3d_MaterialParameters
 };
 
 //uniform x3d_MaterialParameters x3d_Material;
+
+#ifdef X3D_MATERIAL_TEXTURES
+struct x3d_MaterialTextureParameters
+{
+   mediump int         textureType;
+   mediump int         textureTransformMapping;
+   mediump int         textureCoordinateMapping;
+   mediump sampler2D   texture2D;
+   #ifdef X3D_MATERIAL_TEXTURE_3D
+   mediump sampler3D   texture3D;
+   #endif
+   #ifdef X3D_MATERIAL_TEXTURE_CUBE
+   mediump samplerCube textureCube;
+   #endif
+};
+#endif
 
 struct x3d_UnlitMaterialParameters
 {

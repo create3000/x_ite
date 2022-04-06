@@ -40,44 +40,7 @@ out vec4 x3d_FragColor;
 #pragma X3D include "include/Fog.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
 
-#ifdef X3D_SHADOWS
-
-vec4
-getDiffuseColor ()
-{
-   // Get diffuse parameter.
-
-   float alpha            = 1.0 - x3d_Material .transparency;
-   vec4  diffuseParameter = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .diffuseColor, alpha);
-
-   return getTextureColor (diffuseParameter, vec4 (x3d_Material .specularColor, alpha));
-}
-
-vec3
-getSpecularColor ()
-{
-   return x3d_Material .specularColor;
-}
-
-vec3
-getEmissiveColor ()
-{
-   return x3d_Material .emissiveColor;
-}
-
-float
-getShininessFactor ()
-{
-   return x3d_Material .shininess * 128.0;
-}
-
-float
-getOcclusionFactor ()
-{
-   return 1.0;
-}
-
-#else
+#ifdef X3D_MATERIAL_TEXTURES
 
 uniform x3d_MaterialTextureParameters x3d_AmbientTexture;
 uniform x3d_MaterialTextureParameters x3d_DiffuseTexture;
@@ -286,6 +249,43 @@ getOcclusionFactor ()
       default:
          return 1.0;
    }
+}
+
+#else
+
+vec4
+getDiffuseColor ()
+{
+   // Get diffuse parameter.
+
+   float alpha            = 1.0 - x3d_Material .transparency;
+   vec4  diffuseParameter = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .diffuseColor, alpha);
+
+   return getTextureColor (diffuseParameter, vec4 (x3d_Material .specularColor, alpha));
+}
+
+vec3
+getSpecularColor ()
+{
+   return x3d_Material .specularColor;
+}
+
+vec3
+getEmissiveColor ()
+{
+   return x3d_Material .emissiveColor;
+}
+
+float
+getShininessFactor ()
+{
+   return x3d_Material .shininess * 128.0;
+}
+
+float
+getOcclusionFactor ()
+{
+   return 1.0;
 }
 
 #endif

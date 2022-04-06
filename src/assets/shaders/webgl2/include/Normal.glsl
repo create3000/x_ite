@@ -1,13 +1,5 @@
 
-#ifdef X3D_SHADOWS
-
-vec3
-getNormalVector ()
-{
-   return normalize (gl_FrontFacing ? normal : -normal);
-}
-
-#else
+#ifdef X3D_MATERIAL_TEXTURES
 
 uniform x3d_MaterialTextureParameters x3d_NormalTexture;
 
@@ -73,6 +65,14 @@ getNormalVector ()
       default:
          return normalize (normal) * facing;
    }
+}
+
+#else
+
+vec3
+getNormalVector ()
+{
+   return normalize (gl_FrontFacing ? normal : -normal);
 }
 
 #endif

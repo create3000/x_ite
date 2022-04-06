@@ -77,7 +77,8 @@ function (Fields,
 
       this .addType (X3DConstants .ShaderPart);
 
-      this .valid = false;
+      this .valid   = false;
+      this .options = { };
    }
 
    ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -149,13 +150,13 @@ function (Fields,
       {
          return this ._url;
       },
-      setShadow: function (value)
+      setOptions: function (value)
       {
-         this .shadow = value;
+         this .options = value;
       },
-      getShadow: function ()
+      getOptions: function ()
       {
-         return this .shadow;
+         return this .options;
       },
       unloadNow: function ()
       {
@@ -177,7 +178,7 @@ function (Fields,
             {
                const
                   gl     = this .getBrowser () .getContext (),
-                  source = Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .shadow);
+                  source = Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .options);
 
                gl .shaderSource (this .shader, source);
                gl .compileShader (this .shader);

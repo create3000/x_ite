@@ -8,9 +8,7 @@ uniform int   x3d_GeometryType;
 uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 uniform float x3d_AlphaCutoff;
 
-uniform x3d_UnlitMaterialParameters   x3d_Material;
-uniform x3d_MaterialTextureParameters x3d_EmissiveTexture;
-uniform x3d_MaterialTextureParameters x3d_NormalTexture;
+uniform x3d_UnlitMaterialParameters x3d_Material;
 
 in float fogDepth;    // fog depth
 in vec4  color;       // color
@@ -38,6 +36,10 @@ out vec4 x3d_FragColor;
 #pragma X3D include "include/Hatch.glsl"
 #pragma X3D include "include/Fog.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
+
+#ifdef X3D_MATERIAL_TEXTURES
+
+uniform x3d_MaterialTextureParameters x3d_EmissiveTexture;
 
 vec4
 getEmissiveColor ()
@@ -80,6 +82,23 @@ getEmissiveColor ()
          return getTextureColor (emissiveParameter, vec4 (1.0));
    }
 }
+
+#else
+
+vec4
+getEmissiveColor ()
+{
+   // Get emissive parameter.
+
+   float alpha             = 1.0 - x3d_Material .transparency;
+   vec4  emissiveParameter = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .emissiveColor, alpha);
+
+   // Get texture color.
+
+   return getTextureColor (emissiveParameter, vec4 (1.0));
+}
+
+#endif
 
 vec4
 getMaterialColor ()

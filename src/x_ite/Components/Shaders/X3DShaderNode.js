@@ -87,15 +87,6 @@ function (Fields,
       {
          this ._activationTime = this .getBrowser () .getCurrentTime ();
       },
-      custom: true,
-      setCustom: function (value)
-      {
-         this .custom = value;
-      },
-      getCustom: function ()
-      {
-         return this .custom;
-      },
       setValid: function (value)
       {
          this ._isValid = this .valid = value;

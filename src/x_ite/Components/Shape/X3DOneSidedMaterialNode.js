@@ -158,45 +158,44 @@ function (X3DMaterialNode,
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
-         // Emissive parameters
-
          gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
+         gl .uniform1f  (shaderObject .x3d_NormalScale,   this ._normalScale .getValue ());
+         gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
 
-         const emissiveTexture = shaderObject .x3d_EmissiveTexture;
-
-         if (this .emissiveTextureNode)
+         if (this .textures)
          {
-            this .emissiveTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, emissiveTexture);
+            const
+               emissiveTexture = shaderObject .x3d_EmissiveTexture,
+               normalTexture   = shaderObject .x3d_NormalTexture;
 
-            gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (this ._emissiveTextureMapping .getValue ()) || 0);
-            gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._emissiveTextureMapping .getValue ()) || 0);
+            // Emissive parameters
+
+            if (this .emissiveTextureNode)
+            {
+               this .emissiveTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, emissiveTexture);
+
+               gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (this ._emissiveTextureMapping .getValue ()) || 0);
+               gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._emissiveTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (emissiveTexture .textureType, 0);
+            }
+
+            // Normal parameters
+
+            if (this .normalTextureNode)
+            {
+               this .normalTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, normalTexture);
+
+               gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (this ._normalTextureMapping .getValue ()) || 0);
+               gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._normalTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (normalTexture .textureType, 0);
+            }
          }
-         else
-         {
-            gl .uniform1i (emissiveTexture .textureType, 0);
-         }
-
-         // Normal parameters
-
-         gl .uniform1f (shaderObject .x3d_NormalScale, this ._normalScale .getValue ());
-
-         const normalTexture = shaderObject .x3d_NormalTexture;
-
-         if (this .normalTextureNode)
-         {
-            this .normalTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, normalTexture);
-
-            gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (this ._normalTextureMapping .getValue ()) || 0);
-            gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._normalTextureMapping .getValue ()) || 0);
-         }
-         else
-         {
-            gl .uniform1i (normalTexture .textureType, 0);
-         }
-
-         // Transparency
-
-         gl .uniform1f (shaderObject .x3_Transparency, this .transparency);
       },
    });
 

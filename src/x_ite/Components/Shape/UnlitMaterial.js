@@ -117,7 +117,7 @@ function (Fields,
       },
       getShader: function (browser, shadow)
       {
-         return browser .getUnlitShader ();
+         return this .getTextures () ? browser .getUnlitTexturesShader () : browser .getUnlitShader ();
       },
    });
 

@@ -931,12 +931,8 @@ function (TextureBuffer,
             cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
             projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 
-            if (browser .hasPointShader ())   shaders .add (browser .getPointShader ());
-            if (browser .hasLineShader ())    shaders .add (browser .getLineShader ());
-            if (browser .hasUnlitShader ())   shaders .add (browser .getUnlitShader ());
-            if (browser .hasGouraudShader ()) shaders .add (browser .getGouraudShader ());
-            if (browser .hasPhongShader ())   shaders .add (browser .getPhongShader ());
-            if (browser .hasShadowShader ())  shaders .add (browser .getShadowShader ());
+            for (const shader of browser .getStandardShaders ())
+               shaders .add (shader);
 
             for (const shader of shaders)
                shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
