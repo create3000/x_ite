@@ -68,10 +68,12 @@ struct x3d_MaterialTextureParameters
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    mediump sampler2D   texture2D;
-   // #if __VERSION__ == 300
-   // mediump sampler3D   texture3D;
-   // #endif
-   // mediump samplerCube textureCube;
+   #ifdef X3D_MATERIAL_TEXTURE_3D
+   mediump sampler3D   texture3D;
+   #endif
+   #ifdef X3D_MATERIAL_TEXTURE_CUBE
+   mediump samplerCube textureCube;
+   #endif
 };
 
 struct x3d_MaterialParameters

@@ -204,7 +204,17 @@ function (X3DCast,
          this .x3d_NormalScale       = gl .getUniformLocation (program, "x3d_Material.normalScale");
          this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency",      "x3d_FrontMaterial.transparency");
 
-         for (const materialTexture of ["x3d_EmissiveTexture", "x3d_NormalTexture"])
+         const materialTextures = [
+            "x3d_AmbientTexture",
+            "x3d_DiffuseTexture",
+            "x3d_SpecularTexture",
+            "x3d_EmissiveTexture",
+            "x3d_ShininessTexture",
+            "x3d_OcclusionTexture",
+            "x3d_NormalTexture",
+         ];
+
+         for (const materialTexture of materialTextures)
          {
             this [materialTexture] = {
                textureType:              gl .getUniformLocation (program, materialTexture + ".textureType"),
@@ -214,10 +224,6 @@ function (X3DCast,
                texture3D:                gl .getUniformLocation (program, materialTexture + ".texture3D"),
                textureCube:              gl .getUniformLocation (program, materialTexture + ".textureCube"),
             };
-
-            gl .uniform1i (this [materialTexture] .texture2D,   browser .getDefaultTexture2DUnit ());
-            gl .uniform1i (this [materialTexture] .texture3D,   browser .getDefaultTexture3DUnit ());
-            gl .uniform1i (this [materialTexture] .textureCube, browser .getDefaultTextureCubeUnit ());
          }
 
          this .x3d_NumTextures           = gl .getUniformLocation (program, "x3d_NumTextures");
@@ -268,6 +274,13 @@ function (X3DCast,
 
          gl .uniform1i  (this .x3d_LinePropertiesLinetype,   browser .getDefaultTexture2DUnit ());
          gl .uniform1i  (this .x3d_FillPropertiesHatchStyle, browser .getDefaultTexture2DUnit ());
+
+         for (const materialTexture of materialTextures)
+         {
+            gl .uniform1i (this [materialTexture] .texture2D,   browser .getDefaultTexture2DUnit ());
+            gl .uniform1i (this [materialTexture] .texture3D,   browser .getDefaultTexture3DUnit ());
+            gl .uniform1i (this [materialTexture] .textureCube, browser .getDefaultTextureCubeUnit ());
+         }
 
          gl .uniform1i (this .x3d_NumTextures, 0);
 

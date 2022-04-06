@@ -52,6 +52,7 @@ define ([
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DOneSidedMaterialNode",
+   "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
@@ -59,6 +60,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DOneSidedMaterialNode,
+          X3DCast,
           X3DConstants,
           Algorithm)
 {
@@ -119,21 +121,35 @@ function (Fields,
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
          this ._ambientIntensity  .addInterest ("set_ambientIntensity__",  this);
+         this ._ambientTexture    .addInterest ("set_ambientTexture__",    this);
          this ._diffuseColor      .addInterest ("set_diffuseColor__",      this);
+         this ._diffuseTexture    .addInterest ("set_diffuseTexture__",    this);
          this ._specularColor     .addInterest ("set_specularColor__",     this);
+         this ._specularTexture   .addInterest ("set_specularTexture__",   this);
          this ._shininess         .addInterest ("set_shininess__",         this);
+         this ._shininessTexture  .addInterest ("set_shininessTexture__",  this);
          this ._occlusionStrength .addInterest ("set_occlusionStrength__", this);
+         this ._occlusionTexture  .addInterest ("set_occlusionTexture__",  this);
 
          this .set_ambientIntensity__ ();
+         this .set_ambientTexture__ ();
          this .set_diffuseColor__ ();
+         this .set_diffuseTexture__ ();
          this .set_specularColor__ ();
+         this .set_specularTexture__ ();
          this .set_shininess__ ();
+         this .set_shininessTexture__ ();
          this .set_occlusionStrength__ ();
+         this .set_occlusionTexture__ ();
          this .set_transparent__ ();
       },
       set_ambientIntensity__: function ()
       {
          this .ambientIntensity = Algorithm .clamp (this ._ambientIntensity .getValue (), 0, 1);
+      },
+      set_ambientTexture__: function ()
+      {
+         this .ambientTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._ambientTexture);
       },
       set_diffuseColor__: function ()
       {
@@ -148,6 +164,16 @@ function (Fields,
          diffuseColor [1] = diffuseColor_ .g;
          diffuseColor [2] = diffuseColor_ .b;
       },
+      set_diffuseTexture__: function ()
+      {
+         if (this .diffuseTextureNode)
+            this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__", this);
+
+         this .diffuseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._diffuseTexture);
+
+         if (this .diffuseTextureNode)
+            this .diffuseTextureNode ._transparent .addInterest ("set_transparent__", this);
+      },
       set_specularColor__: function ()
       {
          //We cannot use this in Windows Edge:
@@ -161,13 +187,25 @@ function (Fields,
          specularColor [1] = specularColor_ .g;
          specularColor [2] = specularColor_ .b;
       },
+      set_specularTexture__: function ()
+      {
+         this .specularTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularTexture);
+      },
       set_shininess__: function ()
       {
          this .shininess = Algorithm .clamp (this ._shininess .getValue (), 0, 1);
       },
+      set_shininessTexture__: function ()
+      {
+         this .shininessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._shininessTexture);
+      },
       set_occlusionStrength__: function ()
       {
          this .occlusionStrength = Algorithm .clamp (this ._occlusionStrength .getValue (), 0, 1);
+      },
+      set_occlusionTexture__: function ()
+      {
+         this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
       },
       set_transparent__: function ()
       {
@@ -186,21 +224,91 @@ function (Fields,
 
          gl .uniform1f (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
 
+         const ambientTexture = shaderObject .x3d_AmbientTexture;
+
+         if (this .ambientTextureNode)
+         {
+            this .ambientTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, ambientTexture);
+
+            gl .uniform1i (ambientTexture .textureTransformMapping,  textureTransformMapping  .get (this ._ambientTextureMapping .getValue ()) || 0);
+            gl .uniform1i (ambientTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._ambientTextureMapping .getValue ()) || 0);
+         }
+         else
+         {
+            gl .uniform1i (ambientTexture .textureType, 0);
+         }
+
          // Diffuse parameters
 
          gl .uniform3fv (shaderObject .x3d_DiffuseColor, this .diffuseColor);
+
+         const diffuseTexture = shaderObject .x3d_DiffuseTexture;
+
+         if (this .diffuseTextureNode)
+         {
+            this .diffuseTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, diffuseTexture);
+
+            gl .uniform1i (diffuseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._diffuseTextureMapping .getValue ()) || 0);
+            gl .uniform1i (diffuseTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._diffuseTextureMapping .getValue ()) || 0);
+         }
+         else
+         {
+            gl .uniform1i (diffuseTexture .textureType, 0);
+         }
 
          // Specular parameters
 
          gl .uniform3fv (shaderObject .x3d_SpecularColor, this .specularColor);
 
+         const specularTexture = shaderObject .x3d_SpecularTexture;
+
+         if (this .specularTextureNode)
+         {
+            this .specularTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, specularTexture);
+
+            gl .uniform1i (specularTexture .textureTransformMapping,  textureTransformMapping  .get (this ._specularTextureMapping .getValue ()) || 0);
+            gl .uniform1i (specularTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._specularTextureMapping .getValue ()) || 0);
+         }
+         else
+         {
+            gl .uniform1i (specularTexture .textureType, 0);
+         }
+
          // Shininess parameters
 
          gl .uniform1f (shaderObject .x3d_Shininess, this .shininess);
 
+         const shininessTexture = shaderObject .x3d_ShininessTexture;
+
+         if (this .shininessTextureNode)
+         {
+            this .shininessTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, shininessTexture);
+
+            gl .uniform1i (shininessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._shininessTextureMapping .getValue ()) || 0);
+            gl .uniform1i (shininessTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._shininessTextureMapping .getValue ()) || 0);
+         }
+         else
+         {
+            gl .uniform1i (shininessTexture .textureType, 0);
+         }
+
          // Occlusion parameters
 
          gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+
+         const occlusionTexture = shaderObject .x3d_OcclusionTexture;
+
+         if (this .occlusionTextureNode)
+         {
+            this .occlusionTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, occlusionTexture);
+
+            gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
+            gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._occlusionTextureMapping .getValue ()) || 0);
+         }
+         else
+         {
+            gl .uniform1i (occlusionTexture .textureType, 0);
+         }
 
          // Transparency
 

@@ -47,30 +47,86 @@ out vec4 x3d_FragColor;
 #pragma X3D include "include/Fog.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
 
+vec4
+getDiffuseColor ()
+{
+   // Get diffuse parameter.
+
+   float alpha            = 1.0 - x3d_Material .transparency;
+   vec4  diffuseParameter = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .diffuseColor, alpha);
+
+   // Get texture color.
+
+   switch (x3d_DiffuseTexture .textureType)
+   {
+      case x3d_TextureType2D:
+      {
+         vec4 texCoord = getTexCoord (x3d_DiffuseTexture .textureTransformMapping, x3d_DiffuseTexture .textureCoordinateMapping);
+
+         return diffuseParameter * texture (x3d_DiffuseTexture .texture2D, texCoord .st);
+      }
+
+      #ifdef X3D_MATERIAL_TEXTURE_3D
+      case x3d_TextureType3D:
+      {
+         vec4 texCoord = getTexCoord (x3d_DiffuseTexture .textureTransformMapping, x3d_DiffuseTexture .textureCoordinateMapping);
+
+         return diffuseParameter * texture (x3d_DiffuseTexture .texture3D, texCoord .stp);
+      }
+      #endif
+
+      #ifdef X3D_MATERIAL_TEXTURE_CUBE
+      case x3d_TextureTypeCube:
+      {
+         vec4 texCoord = getTexCoord (x3d_DiffuseTexture .textureTransformMapping, x3d_DiffuseTexture .textureCoordinateMapping);
+
+         return diffuseParameter * texture (x3d_DiffuseTexture .textureCube, texCoord .stp);
+      }
+      #endif
+
+      default:
+         return getTextureColor (diffuseParameter, vec4 (x3d_Material .specularColor, alpha));
+   }
+}
+
 vec3
 getEmissiveColor ()
 {
-   vec3  emissiveColor = x3d_Material .emissiveColor;
+   // Get emissive parameter.
 
-   // Get texture coordinate.
-
-   vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+   vec3  emissiveParameter = x3d_Material .emissiveColor;
 
    // Get texture color.
 
    switch (x3d_EmissiveTexture .textureType)
    {
       case x3d_TextureType2D:
-         return emissiveColor * texture (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
+      {
+         vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
-      // case x3d_TextureType3D:
-      //    return emissiveColor * texture (x3d_EmissiveTexture .texture3D, texCoord .stp) .rgb;
+         return emissiveParameter * texture (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
+      }
 
-      // case x3d_TextureTypeCube:
-      //    return emissiveColor * texture (x3d_EmissiveTexture .textureCube, texCoord .stp) .rgb;
+      #ifdef X3D_MATERIAL_TEXTURE_3D
+      case x3d_TextureType3D:
+      {
+         vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+
+         return emissiveParameter * texture (x3d_EmissiveTexture .texture3D, texCoord .stp) .rgb;
+      }
+      #endif
+
+      #ifdef X3D_MATERIAL_TEXTURE_CUBE
+      case x3d_TextureTypeCube:
+      {
+         vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+
+         return emissiveParameter * texture (x3d_EmissiveTexture .textureCube, texCoord .stp) .rgb;
+      }
+      #endif
 
       default:
-         return emissiveColor;
+         return emissiveParameter .rgb;
    }
 }
 
@@ -93,18 +149,11 @@ getMaterialColor ()
    vec3 N = getNormalVector ();
    vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
 
-   // Calculate diffuseFactor & alpha
-
-   vec3  diffuseFactor = vec3 (1.0);
-   float alpha         = 1.0 - x3d_Material .transparency;
-
    // Texture
 
-   vec4 D = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .diffuseColor, alpha);
-   vec4 T = getTextureColor (D, vec4 (x3d_Material .specularColor, alpha));
-
-   diffuseFactor = T .rgb;
-   alpha         = T .a;
+   vec4  D             = getDiffuseColor ();
+   vec3  diffuseFactor = D .rgb;
+   float alpha         = D .a;
 
    // Projective texture
 

@@ -132,7 +132,7 @@ function (X3DMaterialNode,
 
          if (this .emissiveTextureNode)
          {
-            this .emissiveTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, emissiveTexture)
+            this .emissiveTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, emissiveTexture);
 
             gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (this ._emissiveTextureMapping .getValue ()) || 0);
             gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._emissiveTextureMapping .getValue ()) || 0);
@@ -150,7 +150,7 @@ function (X3DMaterialNode,
 
          if (this .normalTextureNode)
          {
-            this .normalTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, normalTexture)
+            this .normalTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, normalTexture);
 
             gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (this ._normalTextureMapping .getValue ()) || 0);
             gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._normalTextureMapping .getValue ()) || 0);

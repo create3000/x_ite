@@ -43,7 +43,7 @@ vec4
 getEmissiveColor ()
 {
    // Get emissive parameter.
-   
+
    float alpha             = 1.0 - x3d_Material .transparency;
    vec4  emissiveParameter = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .emissiveColor, alpha);
 
@@ -58,19 +58,23 @@ getEmissiveColor ()
          return emissiveParameter * texture (x3d_EmissiveTexture .texture2D, texCoord .st);
       }
 
-      // case x3d_TextureType3D:
-      // {
-      //    vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+      #ifdef X3D_MATERIAL_TEXTURE_3D
+      case x3d_TextureType3D:
+      {
+         vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
-      //    return emissiveParameter * texture (x3d_EmissiveTexture .texture3D, texCoord .stp);
-      // }
+         return emissiveParameter * texture (x3d_EmissiveTexture .texture3D, texCoord .stp);
+      }
+      #endif
 
-      // case x3d_TextureTypeCube:
-      // {
-      //    vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+      #ifdef X3D_MATERIAL_TEXTURE_CUBE
+      case x3d_TextureTypeCube:
+      {
+         vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
-      //    return emissiveParameter * texture (x3d_EmissiveTexture .textureCube, texCoord .stp);
-      // }
+         return emissiveParameter * texture (x3d_EmissiveTexture .textureCube, texCoord .stp);
+      }
+      #endif
 
       default:
          return getTextureColor (emissiveParameter, vec4 (1.0));
