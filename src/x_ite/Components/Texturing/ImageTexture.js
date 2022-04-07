@@ -220,7 +220,7 @@ function ($,
 
             let transparent = false;
 
-            for (let i = 3; i < data .length; i += 4)
+            for (let i = 3, length = data .length; i < length; i += 4)
             {
                if (data [i] !== 255)
                {
@@ -229,7 +229,7 @@ function ($,
                }
             }
 
-            this .setTexture (width, height, transparent, new Uint8Array (data), false);
+            this .setTexture (width, height, transparent, new Uint8Array (data .buffer), false);
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
          catch (error)

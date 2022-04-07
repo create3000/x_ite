@@ -220,13 +220,9 @@ function ($,
 
             const data = cx .getImageData (0, 0, width, height) .data;
 
-            setTimeout (function ()
-            {
-               this .setMedia (this .video);
-               this .setTexture (width, height, false, new Uint8Array (data), true);
-               this .setLoadState (X3DConstants .COMPLETE_STATE);
-            }
-            .bind (this), 16);
+            this .setMedia (this .video);
+            this .setTexture (width, height, false, new Uint8Array (data .buffer), true);
+            this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
          catch (error)
          {

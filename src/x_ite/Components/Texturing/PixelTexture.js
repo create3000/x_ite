@@ -269,7 +269,7 @@ function ($,
                data = cx2 .getImageData (0, 0, width, height) .data;
             }
 
-            this .setTexture (width, height, transparent, new Uint8Array (data), false);
+            this .setTexture (width, height, transparent, new Uint8Array (data .buffer), false);
             this ._loadState = X3DConstants .COMPLETE_STATE;
          }
          else
