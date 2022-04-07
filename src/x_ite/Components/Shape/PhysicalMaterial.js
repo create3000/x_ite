@@ -151,6 +151,8 @@ function (Fields,
 
          this .baseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._baseTexture);
 
+         this .setTexture (this .getTextureIndices () .BASE_TEXTURE, this .baseTextureNode);
+
          if (this .baseTextureNode)
             this .baseTextureNode ._transparent .addInterest ("set_transparent__", this);
       },
@@ -165,6 +167,8 @@ function (Fields,
       set_metallicRoughnessTexture__: function ()
       {
          this .metallicRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._metallicRoughnessTexture);
+
+         this .setTexture (this .getTextureIndices () .METALLIC_ROUGHNESS_TEXTURE, this .metallicRoughnessTextureNode);
       },
       set_occlusionStrength__: function ()
       {
@@ -173,12 +177,29 @@ function (Fields,
       set_occlusionTexture__: function ()
       {
          this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
+
+         this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
       },
       set_transparent__: function ()
       {
          this .setTransparent (Boolean (this .getTransparency () ||
                                (this .baseTextureNode && this .baseTextureNode .getTransparent ())));
       },
+      getTextureIndices: (function ()
+      {
+         const textureIndices = {
+            BASE_TEXTURE: 0,
+            EMISSIVE_TEXTURE: 1,
+            METALLIC_ROUGHNESS_TEXTURE: 2,
+            OCCLUSION_TEXTURE: 3,
+            NORMAL_TEXTURE: 4,
+         };
+
+         return function ()
+         {
+            return textureIndices;
+         };
+      })(),
       getShader: function (browser, shadow)
       {
          return this .getTextures () ? browser .getUnlitTexturesShader () : browser .getUnlitShader ();
