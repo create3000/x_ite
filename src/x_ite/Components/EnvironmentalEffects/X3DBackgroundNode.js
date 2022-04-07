@@ -592,7 +592,6 @@ function (X3DBindableNode,
             // Disable vertex attribute arrays.
 
             shaderNode .disableColorAttribute (gl);
-            shaderNode .disable (gl);
          }
       },
       drawCube: (function ()
@@ -649,7 +648,6 @@ function (X3DBindableNode,
                // Disable vertex attribute arrays.
 
                shaderNode .disableTexCoordAttribute (gl);
-               shaderNode .disable (gl);
             }
          };
       })(),

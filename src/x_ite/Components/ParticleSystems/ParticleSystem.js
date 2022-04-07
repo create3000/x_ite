@@ -1478,7 +1478,6 @@ function (Fields,
                   shaderNode .disableColorAttribute    (gl);
                   shaderNode .disableTexCoordAttribute (gl);
                   shaderNode .disableNormalAttribute   (gl);
-                  shaderNode .disable                  (gl);
 
                   if (blendModeNode)
                      blendModeNode .disable (gl);

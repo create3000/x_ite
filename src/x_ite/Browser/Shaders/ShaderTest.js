@@ -143,7 +143,6 @@ function (TextureBuffer,
             gl .drawArrays (gl .TRIANGLES, 0, 6);
 
             shaderNode .disableNormalAttribute (gl, normalBuffer);
-            shaderNode .disable                (gl);
 
             const data = frameBuffer .readPixels ();
 

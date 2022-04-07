@@ -720,7 +720,6 @@ function ($,
                gl .enable (gl .DEPTH_TEST);
 
                gl .lineWidth (lineWidth);
-               shaderNode .disable (gl);
             }
          };
       })(),

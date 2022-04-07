@@ -853,8 +853,6 @@ function (TextureBuffer,
 
                   context .shapeNode .depth (gl, context, shaderNode);
                }
-
-               shaderNode .disable (gl);
             }
          };
       })(),

@@ -210,8 +210,6 @@ function (X3DGeometryNode,
                if (this .getMultiTexCoords () .length)
                   shaderNode .disableTexCoordAttribute (gl);
 
-               shaderNode .disable (gl);
-
                if (blendModeNode)
                   blendModeNode .disable (gl);
             }
@@ -296,7 +294,6 @@ function (X3DGeometryNode,
                   shaderNode .disableColorAttribute (gl);
 
                shaderNode .disableTexCoordAttribute (gl);
-               shaderNode .disable (gl);
 
                if (blendModeNode)
                   blendModeNode .disable (gl);

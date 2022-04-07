@@ -1049,7 +1049,6 @@ function (Fields,
 
             shaderNode .disableTexCoordAttribute (gl);
             shaderNode .disableNormalAttribute   (gl);
-            shaderNode .disable                  (gl);
 
             if (blendModeNode)
                blendModeNode .disable (gl);
@@ -1258,7 +1257,6 @@ function (Fields,
 
             shaderNode .disableTexCoordAttribute (gl);
             shaderNode .disableNormalAttribute   (gl);
-            shaderNode .disable                  (gl);
 
             if (blendModeNode)
                blendModeNode .disable (gl);

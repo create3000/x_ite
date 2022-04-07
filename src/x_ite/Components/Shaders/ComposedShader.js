@@ -131,7 +131,6 @@ function (Fields,
          {
             this .enable (gl);
             this .removeShaderFields ();
-            this .disable (gl);
          }
 
          X3DShaderNode .prototype .addUserDefinedField .call (this, accessType, name, field);
@@ -140,7 +139,6 @@ function (Fields,
          {
             this .enable (gl);
             this .addShaderFields ();
-            this .disable (gl);
          }
       },
       removeUserDefinedField: function (name)
@@ -151,7 +149,6 @@ function (Fields,
          {
             this .enable (gl);
             this .removeShaderFields ();
-            this .disable (gl);
          }
 
          X3DShaderNode .prototype .removeUserDefinedField .call (this, name);
@@ -160,7 +157,6 @@ function (Fields,
          {
             this .enable (gl);
             this .addShaderFields ();
-            this .disable (gl);
          }
       },
       getProgram: function ()
@@ -177,7 +173,6 @@ function (Fields,
             {
                this .enable (gl);
                this .addShaderFields ();
-               this .disable (gl);
             }
          }
          else
@@ -186,7 +181,6 @@ function (Fields,
             {
                this .enable (gl);
                this .removeShaderFields ();
-               this .disable (gl);
             }
          }
       },
