@@ -200,9 +200,12 @@ function (X3DCast,
          this .x3d_SpecularColor     = this .getUniformLocation (gl, program, "x3d_Material.specularColor",    "x3d_FrontMaterial.specularColor");
          this .x3d_EmissiveColor     = this .getUniformLocation (gl, program, "x3d_Material.emissiveColor",    "x3d_FrontMaterial.emissiveColor");
          this .x3d_Shininess         = this .getUniformLocation (gl, program, "x3d_Material.shininess",        "x3d_FrontMaterial.shininess");
+         this .x3d_BaseColor         = gl .getUniformLocation (program, "x3d_Material.baseColor");
+         this .x3d_Metallic          = gl .getUniformLocation (program, "x3d_Material.metallic");
+         this .x3d_Roughness         = gl .getUniformLocation (program, "x3d_Material.roughness");
          this .x3d_OcclusionStrength = gl .getUniformLocation (program, "x3d_Material.occlusionStrength");
          this .x3d_NormalScale       = gl .getUniformLocation (program, "x3d_Material.normalScale");
-         this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency",      "x3d_FrontMaterial.transparency");
+         this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
 
          const materialTextures = [
             "x3d_AmbientTexture",
@@ -210,6 +213,8 @@ function (X3DCast,
             "x3d_SpecularTexture",
             "x3d_EmissiveTexture",
             "x3d_ShininessTexture",
+            "x3d_BaseTexture",
+            "x3d_MetallicRoughnessTexture",
             "x3d_OcclusionTexture",
             "x3d_NormalTexture",
          ];

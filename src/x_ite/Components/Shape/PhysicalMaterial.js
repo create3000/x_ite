@@ -202,14 +202,65 @@ function (Fields,
       })(),
       getShader: function (browser, shadow)
       {
-         return this .getTextures () ? browser .getUnlitTexturesShader () : browser .getUnlitShader ();
+         return this .getTextures () ? browser .getPhysicalMaterialShader () : browser .getPhysicalMaterialShader ();
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
          X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 
+         gl .uniform3fv (shaderObject .x3d_BaseColor,         this .baseColor);
+         gl .uniform1f  (shaderObject .x3d_Metallic,          this .metallic);
+         gl .uniform1f  (shaderObject .x3d_Roughness,         this .roughness);
+         gl .uniform1f  (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+
          if (this .getTextures ())
          {
+            const
+               baseTexture              = shaderObject .x3d_BaseTexture,
+               metallicRoughnessTexture = shaderObject .x3d_MetallicRoughnessTexture,
+               occlusionTexture         = shaderObject .x3d_OcclusionTexture;
+
+            // Base parameters
+
+            if (this .baseTextureNode)
+            {
+               this .baseTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, baseTexture);
+
+               gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._baseTextureMapping .getValue ()) || 0);
+               gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._baseTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (baseTexture .textureType, 0);
+            }
+
+            // Metallic roughness parameters
+
+            if (this .metallicRoughnessTextureNode)
+            {
+               this .metallicRoughnessTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, metallicRoughnessTexture);
+
+               gl .uniform1i (metallicRoughnessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
+               gl .uniform1i (metallicRoughnessTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (metallicRoughnessTexture .textureType, 0);
+            }
+
+            // Occlusion parameters
+
+            if (this .occlusionTextureNode)
+            {
+               this .occlusionTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, occlusionTexture);
+
+               gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
+               gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._occlusionTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (occlusionTexture .textureType, 0);
+            }
          }
       },
    });

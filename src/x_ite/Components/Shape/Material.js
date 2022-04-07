@@ -256,8 +256,8 @@ function (Fields,
          if (this .getTextures ())
          {
             const
-               ambientTexture  = shaderObject .x3d_AmbientTexture,
-               diffuseTexture  = shaderObject .x3d_DiffuseTexture,
+               ambientTexture   = shaderObject .x3d_AmbientTexture,
+               diffuseTexture   = shaderObject .x3d_DiffuseTexture,
                specularTexture  = shaderObject .x3d_SpecularTexture,
                shininessTexture = shaderObject .x3d_ShininessTexture,
                occlusionTexture = shaderObject .x3d_OcclusionTexture;
