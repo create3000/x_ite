@@ -52,13 +52,17 @@
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DOneSidedMaterialNode",
+   "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
+   "standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DOneSidedMaterialNode,
-          X3DConstants)
+          X3DCast,
+          X3DConstants,
+          Algorithm)
 {
 "use strict";
 
@@ -67,6 +71,8 @@ function (Fields,
       X3DOneSidedMaterialNode .call (this, executionContext);
 
       this .addType (X3DConstants .PhysicalMaterial);
+
+      this .baseColor = new Float32Array (3);
    }
 
    PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
@@ -108,26 +114,82 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
+         this ._baseColor                .addInterest ("set_baseColor__",                this);
+         this ._baseTexture              .addInterest ("set_baseTexture__",              this);
+         this ._metallic                 .addInterest ("set_metallic__",                 this);
+         this ._roughness                .addInterest ("set_roughness__",                this);
+         this ._metallicRoughnessTexture .addInterest ("set_metallicRoughnessTexture__", this);
+         this ._occlusionStrength        .addInterest ("set_occlusionStrength__",        this);
+         this ._occlusionTexture         .addInterest ("set_occlusionTexture__",         this);
+
+         this .set_baseColor__ ();
+         this .set_baseTexture__ ();
+         this .set_metallic__ ();
+         this .set_roughness__ ();
+         this .set_metallicRoughnessTexture__ ();
+         this .set_occlusionStrength__ ();
+         this .set_occlusionTexture__ ();
          this .set_transparent__ ();
       },
-      set_emissiveTexture__: function ()
+      set_baseColor__: function ()
       {
-         if (this .getEmissiveTexture ())
-            this .getEmissiveTexture () ._transparent .removeInterest ("set_transparent__", this);
+         //We cannot use this in Windows Edge:
+         //this .baseColor .set (this ._baseColor .getValue ());
 
-         X3DOneSidedMaterialNode .prototype .set_emissiveTexture__ .call (this);
+         const
+            baseColor  = this .baseColor,
+            baseColor_ = this ._baseColor .getValue ();
 
-         if (this .getEmissiveTexture ())
-            this .getEmissiveTexture () ._transparent .addInterest ("set_transparent__", this);
+         baseColor [0] = baseColor_ .r;
+         baseColor [1] = baseColor_ .g;
+         baseColor [2] = baseColor_ .b;
+      },
+      set_baseTexture__: function ()
+      {
+         if (this .baseTextureNode)
+            this .baseTextureNode ._transparent .removeInterest ("set_transparent__", this);
+
+         this .baseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._baseTexture);
+
+         if (this .baseTextureNode)
+            this .baseTextureNode ._transparent .addInterest ("set_transparent__", this);
+      },
+      set_metallic__: function ()
+      {
+         this .metallic = Algorithm .clamp (this ._metallic .getValue (), 0, 1);
+      },
+      set_roughness__: function ()
+      {
+         this .roughness = Algorithm .clamp (this ._roughness .getValue (), 0, 1);
+      },
+      set_metallicRoughnessTexture__: function ()
+      {
+         this .metallicRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._metallicRoughnessTexture);
+      },
+      set_occlusionStrength__: function ()
+      {
+         this .occlusionStrength = Algorithm .clamp (this ._occlusionStrength .getValue (), 0, 1);
+      },
+      set_occlusionTexture__: function ()
+      {
+         this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
       },
       set_transparent__: function ()
       {
          this .setTransparent (Boolean (this .getTransparency () ||
-                               (this .getEmissiveTexture () && this .getEmissiveTexture () .getTransparent ())));
+                               (this .baseTextureNode && this .baseTextureNode .getTransparent ())));
       },
       getShader: function (browser, shadow)
       {
          return this .getTextures () ? browser .getUnlitTexturesShader () : browser .getUnlitShader ();
+      },
+      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+      {
+         X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
+
+         if (this .getTextures ())
+         {
+         }
       },
    });
 
