@@ -598,7 +598,7 @@ function (X3DBindableNode,
       drawCube: (function ()
       {
          const
-            textureMatrixArray = new Float32Array (new Matrix4 ()),
+            textureMatrixArray = new Float32Array (Matrix4 .Identity),
             white              = new Float32Array ([1, 1, 1]);
 
          return function (renderObject)
