@@ -174,7 +174,7 @@ function (Shading,
       },
       getPhysicalMaterialTexturesShader: function ()
       {
-         return this .getStandardShader ("getPhysicalMaterialTexturesShader", _physicalMaterialTexturesShader, "PhysicalMaterialTexturesShader", "PBR", [ ], "set_physical_material_textures_shader_valid__");
+         return this .getStandardShader ("getPhysicalMaterialTexturesShader", _physicalMaterialTexturesShader, "PhysicalMaterialTexturesShader", "PBR", ["X3D_MATERIAL_TEXTURES"], "set_physical_material_textures_shader_valid__");
       },
       getDepthShader: function ()
       {

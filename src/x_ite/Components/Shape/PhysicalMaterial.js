@@ -202,7 +202,7 @@ function (Fields,
       })(),
       getShader: function (browser, shadow)
       {
-         return this .getTextures () ? browser .getPhysicalMaterialShader () : browser .getPhysicalMaterialShader ();
+         return this .getTextures () ? browser .getPhysicalMaterialTexturesShader () : browser .getPhysicalMaterialShader ();
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {

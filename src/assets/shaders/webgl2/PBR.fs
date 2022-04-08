@@ -48,70 +48,6 @@ uniform x3d_MaterialTextureParameters x3d_EmissiveTexture;
 uniform x3d_MaterialTextureParameters x3d_MetallicRoughnessTexture;
 uniform x3d_MaterialTextureParameters x3d_OcclusionTexture;
 
-vec2
-getMetallicRoughness ()
-{
-	// Metallic and Roughness material properties are packed together
-	// In glTF, these factors can be specified by fixed scalar values
-	// or from a metallic-roughness map
-	float metallic            = x3d_Material .metallic;
-	float perceptualRoughness = x3d_Material .roughness;
-
-   // Get texture color.
-
-   switch (x3d_SpecularTexture .textureType)
-   {
-      case x3d_TextureType2D:
-      {
-         vec4 texCoord = getTexCoord (x3d_SpecularTexture .textureTransformMapping, x3d_SpecularTexture .textureCoordinateMapping);
-
-			// Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
-			// This layout intentionally reserves the 'r' channel for (optional) occlusion map data
-         vec4 mrSample = texture (x3d_SpecularTexture .texture2D, texCoord .st) .rgb;
-
-			metallic            *= mrSample .b;
-			perceptualRoughness *= mrSample .g;
-
-			return vec2 (metallic, perceptualRoughness);
-	   }
-
-      #ifdef X3D_MATERIAL_TEXTURE_3D
-      case x3d_TextureType3D:
-      {
-         vec4 texCoord = getTexCoord (x3d_SpecularTexture .textureTransformMapping, x3d_SpecularTexture .textureCoordinateMapping);
-
-			// Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
-			// This layout intentionally reserves the 'r' channel for (optional) occlusion map data
-         vec4 mrSample = texture (x3d_SpecularTexture .texture3D, texCoord .stp) .rgb;
-
-			metallic            *= mrSample .b;
-			perceptualRoughness *= mrSample .g;
-
-			return vec2 (metallic, perceptualRoughness);
-      }
-      #endif
-
-      #ifdef X3D_MATERIAL_TEXTURE_CUBE
-      case x3d_TextureTypeCube:
-      {
-         vec4 texCoord = getTexCoord (x3d_SpecularTexture .textureTransformMapping, x3d_SpecularTexture .textureCoordinateMapping);
-
-			// Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
-			// This layout intentionally reserves the 'r' channel for (optional) occlusion map data
-         vec4 mrSample = texture (x3d_SpecularTexture .textureCube, texCoord .stp) .rgb;
-
-			metallic            *= mrSample .b;
-			perceptualRoughness *= mrSample .g;
-
-			return vec2 (metallic, perceptualRoughness);
-      }
-      #endif
-
-      default:
-         return vec2 (metallic, perceptualRoughness);
-   }
-}
-
 vec4
 getBaseColor ()
 {
@@ -150,7 +86,7 @@ getBaseColor ()
       #endif
 
       default:
-         return getTextureColor (baseParameter, vec4 (x3d_Material .specularColor, alpha));
+         return getTextureColor (baseParameter, vec4 (vec3 (1.0), alpha));
    }
 }
 
@@ -192,6 +128,70 @@ getEmissiveColor ()
 
       default:
          return emissiveParameter .rgb;
+   }
+}
+
+vec2
+getMetallicRoughness ()
+{
+	// Metallic and Roughness material properties are packed together
+	// In glTF, these factors can be specified by fixed scalar values
+	// or from a metallic-roughness map
+	float metallic            = x3d_Material .metallic;
+	float perceptualRoughness = x3d_Material .roughness;
+
+   // Get texture color.
+
+   switch (x3d_MetallicRoughnessTexture .textureType)
+   {
+      case x3d_TextureType2D:
+      {
+         vec4 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
+
+			// Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
+			// This layout intentionally reserves the 'r' channel for (optional) occlusion map data
+         vec4 mrSample = texture (x3d_MetallicRoughnessTexture .texture2D, texCoord .st);
+
+			metallic            *= mrSample .b;
+			perceptualRoughness *= mrSample .g;
+
+			return vec2 (metallic, perceptualRoughness);
+	   }
+
+      #ifdef X3D_MATERIAL_TEXTURE_3D
+      case x3d_TextureType3D:
+      {
+         vec4 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
+
+			// Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
+			// This layout intentionally reserves the 'r' channel for (optional) occlusion map data
+         vec4 mrSample = texture (x3d_MetallicRoughnessTexture .texture3D, texCoord .stp);
+
+			metallic            *= mrSample .b;
+			perceptualRoughness *= mrSample .g;
+
+			return vec2 (metallic, perceptualRoughness);
+      }
+      #endif
+
+      #ifdef X3D_MATERIAL_TEXTURE_CUBE
+      case x3d_TextureTypeCube:
+      {
+         vec4 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
+
+			// Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
+			// This layout intentionally reserves the 'r' channel for (optional) occlusion map data
+         vec4 mrSample = texture (x3d_MetallicRoughnessTexture .textureCube, texCoord .stp);
+
+			metallic            *= mrSample .b;
+			perceptualRoughness *= mrSample .g;
+
+			return vec2 (metallic, perceptualRoughness);
+      }
+      #endif
+
+      default:
+         return vec2 (metallic, perceptualRoughness);
    }
 }
 
@@ -387,11 +387,11 @@ main ()
 {
 	// Metallic and Roughness material properties are packed together
 	// In glTF, these factors can be specified by fixed scalar values
-	// or from a metallic-roughness map
+	// or from a metallic-roughness map.
 
 	vec2  metallicRoughness   = getMetallicRoughness ();
-	float perceptualRoughness = metallicRoughness [0];
-	float metallic            = metallicRoughness [1];
+	float perceptualRoughness = metallicRoughness [1];
+	float metallic            = metallicRoughness [0];
 
 	perceptualRoughness = clamp (perceptualRoughness, c_MinRoughness, 1.0);
 	metallic            = clamp (metallic, 0.0, 1.0);
@@ -400,7 +400,7 @@ main ()
 	// convert to material roughness by squaring the perceptual roughness [2].
 	float alphaRoughness = perceptualRoughness * perceptualRoughness;
 
-	// The albedo may be defined from a base texture or a flat color
+	// The albedo may be defined from a base texture or a flat color.
 	vec4 baseColor    = getBaseColor ();
 	vec3 f0           = vec3 (0.04);
 	vec3 diffuseColor = baseColor .rgb * (vec3 (1.0) - f0);
@@ -443,7 +443,7 @@ main ()
 		specularColor
 	);
 
-	// Calculate the shading terms for the microfacet specular shading model
+	// Calculate the shading terms for the microfacet specular shading model.
 	vec3  F = specularReflection (pbrInputs);
 	float G = geometricOcclusion (pbrInputs);
 	float D = microfacetDistribution (pbrInputs);
@@ -453,16 +453,14 @@ main ()
 	vec3 specContrib    = F * G * D / (4.0 * NdotL * NdotV);
 	vec3 finalColor     = NdotL * lightColor * (diffuseContrib + specContrib);
 
-	// Calculate lighting contribution from image based lighting source (IBL)
+	// Calculate lighting contribution from image based lighting source (IBL).
 	#ifdef USE_IBL
 	vec3 reflection = -normalize (reflect (v, n));
 	finalColor += getIBLContribution (pbrInputs, n, reflection);
 	#endif
 
-	// Apply optional PBR terms for additional (optional) shading
-	float occlusionFactor = getOcclusionFactor ();
-
-	finalColor  = mix (finalColor, finalColor * occlusionFactor, x3d_Material .occlusionStrength);
+	// Apply optional PBR terms for additional (optional) shading.
+	finalColor  = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
 	finalColor += getEmissiveColor ();
 
    if (baseColor .a < x3d_AlphaCutoff)
