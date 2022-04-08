@@ -49,6 +49,47 @@ uniform x3d_MaterialTextureParameters x3d_EmissiveTexture;
 uniform x3d_MaterialTextureParameters x3d_ShininessTexture;
 uniform x3d_MaterialTextureParameters x3d_OcclusionTexture;
 
+vec3
+getAmbientColor ()
+{
+   // Get ambient parameter.
+
+   vec3 ambientParameter = x3d_Material .ambientIntensity * x3d_Material .diffuseColor;
+
+   // Get texture color.
+
+   switch (x3d_AmbientTexture .textureType)
+   {
+      case x3d_TextureType2D:
+      {
+         vec4 texCoord = getTexCoord (x3d_AmbientTexture .textureTransformMapping, x3d_AmbientTexture .textureCoordinateMapping);
+
+         return ambientParameter * texture (x3d_AmbientTexture .texture2D, texCoord .st) .rgb;
+      }
+
+      #ifdef X3D_MATERIAL_TEXTURE_3D
+      case x3d_TextureType3D:
+      {
+         vec4 texCoord = getTexCoord (x3d_AmbientTexture .textureTransformMapping, x3d_AmbientTexture .textureCoordinateMapping);
+
+         return ambientParameter * texture (x3d_AmbientTexture .texture3D, texCoord .stp) .rgb;
+      }
+      #endif
+
+      #ifdef X3D_MATERIAL_TEXTURE_CUBE
+      case x3d_TextureTypeCube:
+      {
+         vec4 texCoord = getTexCoord (x3d_AmbientTexture .textureTransformMapping, x3d_AmbientTexture .textureCoordinateMapping);
+
+         return ambientParameter * texture (x3d_AmbientTexture .textureCube, texCoord .stp) .rgb;
+      }
+      #endif
+
+      default:
+         return ambientParameter;
+   }
+}
+
 vec4
 getDiffuseColor ()
 {
@@ -128,7 +169,7 @@ getSpecularColor ()
       #endif
 
       default:
-         return specularParameter .rgb;
+         return specularParameter;
    }
 }
 
@@ -169,7 +210,7 @@ getEmissiveColor ()
       #endif
 
       default:
-         return emissiveParameter .rgb;
+         return emissiveParameter;
    }
 }
 
@@ -253,6 +294,12 @@ getOcclusionFactor ()
 
 #else
 
+vec3
+getAmbientColor ()
+{
+   return x3d_Material .ambientIntensity * x3d_Material .diffuseColor;
+}
+
 vec4
 getDiffuseColor ()
 {
@@ -314,7 +361,7 @@ getMaterialColor ()
    vec4  diffuseColorAlpha = getDiffuseColor ();
    float alpha             = diffuseColorAlpha .a;
    vec3  diffuseColor      = diffuseColorAlpha .rgb;
-   vec3  ambientColor      = diffuseColor * x3d_Material .ambientIntensity;
+   vec3  ambientColor      = getAmbientColor ();
    vec3  specularColor     = getSpecularColor ();
    float shininessFactor   = getShininessFactor ();
 
