@@ -78,7 +78,7 @@ function (Fields,
       this .addType (X3DConstants .ShaderPart);
 
       this .valid   = false;
-      this .options = { };
+      this .options = [ ];
    }
 
    ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),

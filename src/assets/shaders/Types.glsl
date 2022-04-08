@@ -62,6 +62,15 @@ struct x3d_FillPropertiesParameters
 
 //uniform x3d_FillPropertiesParameters x3d_FillProperties;
 
+struct x3d_UnlitMaterialParameters
+{
+   mediump vec3  emissiveColor;
+   mediump float normalScale;
+   mediump float transparency;
+};
+
+//uniform x3d_UnlitMaterialParameters x3d_Material;
+
 struct x3d_MaterialParameters
 {
    mediump float ambientIntensity;
@@ -92,14 +101,18 @@ struct x3d_MaterialTextureParameters
 };
 #endif
 
-struct x3d_UnlitMaterialParameters
+struct x3d_PhysicalMaterialParameters
 {
+   mediump vec3  baseColor;
    mediump vec3  emissiveColor;
+   mediump float metallic;
+   mediump float roughness;
+   mediump float occlusionStrength;
    mediump float normalScale;
    mediump float transparency;
 };
 
-//uniform x3d_UnlitMaterialParameters x3d_Material;
+//uniform x3d_PhysicalMaterialParameters x3d_Material;
 
 struct x3d_MultiTextureParameters
 {

@@ -1,10 +1,5 @@
 #version 300 es
 
-// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
-
-// BEGIN DEFINES
-// END DEFINES
-
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 #extension GL_EXT_frag_depth : enable
 #endif
@@ -14,10 +9,15 @@ precision highp int;
 
 out vec4 x3d_FragColor;
 
-uniform x3d_LightSourceParameters x3d_LightSource [1];
-uniform mat4 x3d_CameraSpaceMatrix;
-#define lightDirection (-x3d_LightSource [0] .direction)
-#define lightColor (x3d_LightSource [0] .color)
+#define lightDirection vec3 (0.0, 0.0, -1.0)
+#define lightColor vec3 (1.0)
+#define camera vec3 (0.0)
+
+uniform int   x3d_GeometryType;
+uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
+uniform float x3d_AlphaCutoff;
+
+uniform x3d_PhysicalMaterialParameters x3d_Material;
 
 #ifdef USE_IBL
 	uniform samplerCube diffuseEnvironmentTexture;
@@ -25,52 +25,250 @@ uniform mat4 x3d_CameraSpaceMatrix;
 	uniform sampler2D brdfLUT;
 #endif
 
-#ifdef HAS_NORMAL_MAP
-	uniform sampler2D normalTexture;
-	uniform float normalScale;
-#endif
-
-#ifdef HAS_EMISSIVE_MAP
-	uniform sampler2D emissiveTexture;
-	uniform vec3 emissiveFactor;
-#endif
-
-#ifdef HAS_OCCLUSION_MAP
-	uniform sampler2D occlusionTexture;
-	uniform float occlusionStrength;
-#endif
-
-uniform vec4 baseColorFactor;
-uniform vec2 metallicRoughnessValues;
-
-#ifdef HAS_BASE_COLOR_MAP
-	uniform sampler2D baseColorTexture;
-#endif
-
-#ifdef HAS_METAL_ROUGHNESS_MAP
-	uniform sampler2D metallicRoughnessTexture;
-#endif
-
-#define camera (vec3 (0.0))
-
-in vec3 position;
-in vec2 texCoord;
-
-#ifdef HAS_COLORS
-	in vec4 color;
-#endif
-
-#ifdef HAS_NORMALS
-	#ifdef HAS_TANGENTS
-		in mat3 TBN;
-	#else
-		in vec3 normal;
-	#endif
-#endif
+in vec3 vertex;
+in vec4 texCoord0;
+in vec4 texCoord1;
+in vec4 color;
+in vec3 normal;
+in vec3 localNormal;
+in vec3 localVertex;
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 uniform float x3d_LogarithmicFarFactor1_2;
 in float depth;
+#endif
+
+#pragma X3D include "include/Normal.glsl"
+#pragma X3D include "include/Texture.glsl"
+
+#ifdef X3D_MATERIAL_TEXTURES
+
+uniform x3d_MaterialTextureParameters x3d_BaseTexture;
+uniform x3d_MaterialTextureParameters x3d_EmissiveTexture;
+uniform x3d_MaterialTextureParameters x3d_MetallicRoughnessTexture;
+uniform x3d_MaterialTextureParameters x3d_OcclusionTexture;
+
+vec2
+getMetallicRoughness ()
+{
+	// Metallic and Roughness material properties are packed together
+	// In glTF, these factors can be specified by fixed scalar values
+	// or from a metallic-roughness map
+	float metallic            = x3d_Material .metallic;
+	float perceptualRoughness = x3d_Material .roughness;
+
+   // Get texture color.
+
+   switch (x3d_SpecularTexture .textureType)
+   {
+      case x3d_TextureType2D:
+      {
+         vec4 texCoord = getTexCoord (x3d_SpecularTexture .textureTransformMapping, x3d_SpecularTexture .textureCoordinateMapping);
+
+			// Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
+			// This layout intentionally reserves the 'r' channel for (optional) occlusion map data
+         vec4 mrSample = texture (x3d_SpecularTexture .texture2D, texCoord .st) .rgb;
+
+			metallic            *= mrSample .b;
+			perceptualRoughness *= mrSample .g;
+
+			return vec2 (metallic, perceptualRoughness);
+	   }
+
+      #ifdef X3D_MATERIAL_TEXTURE_3D
+      case x3d_TextureType3D:
+      {
+         vec4 texCoord = getTexCoord (x3d_SpecularTexture .textureTransformMapping, x3d_SpecularTexture .textureCoordinateMapping);
+
+			// Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
+			// This layout intentionally reserves the 'r' channel for (optional) occlusion map data
+         vec4 mrSample = texture (x3d_SpecularTexture .texture3D, texCoord .stp) .rgb;
+
+			metallic            *= mrSample .b;
+			perceptualRoughness *= mrSample .g;
+
+			return vec2 (metallic, perceptualRoughness);
+      }
+      #endif
+
+      #ifdef X3D_MATERIAL_TEXTURE_CUBE
+      case x3d_TextureTypeCube:
+      {
+         vec4 texCoord = getTexCoord (x3d_SpecularTexture .textureTransformMapping, x3d_SpecularTexture .textureCoordinateMapping);
+
+			// Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
+			// This layout intentionally reserves the 'r' channel for (optional) occlusion map data
+         vec4 mrSample = texture (x3d_SpecularTexture .textureCube, texCoord .stp) .rgb;
+
+			metallic            *= mrSample .b;
+			perceptualRoughness *= mrSample .g;
+
+			return vec2 (metallic, perceptualRoughness);
+      }
+      #endif
+
+      default:
+         return vec2 (metallic, perceptualRoughness);
+   }
+}
+
+vec4
+getBaseColor ()
+{
+   // Get base parameter.
+
+   float alpha         = 1.0 - x3d_Material .transparency;
+   vec4  baseParameter = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .baseColor, alpha);
+
+   // Get texture color.
+
+   switch (x3d_BaseTexture .textureType)
+   {
+      case x3d_TextureType2D:
+      {
+         vec4 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
+
+         return baseParameter * texture (x3d_BaseTexture .texture2D, texCoord .st);
+      }
+
+      #ifdef X3D_MATERIAL_TEXTURE_3D
+      case x3d_TextureType3D:
+      {
+         vec4 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
+
+         return baseParameter * texture (x3d_BaseTexture .texture3D, texCoord .stp);
+      }
+      #endif
+
+      #ifdef X3D_MATERIAL_TEXTURE_CUBE
+      case x3d_TextureTypeCube:
+      {
+         vec4 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
+
+         return baseParameter * texture (x3d_BaseTexture .textureCube, texCoord .stp);
+      }
+      #endif
+
+      default:
+         return getTextureColor (baseParameter, vec4 (x3d_Material .specularColor, alpha));
+   }
+}
+
+vec3
+getEmissiveColor ()
+{
+   // Get emissive parameter.
+
+   vec3 emissiveParameter = x3d_Material .emissiveColor;
+
+   // Get texture color.
+
+   switch (x3d_EmissiveTexture .textureType)
+   {
+      case x3d_TextureType2D:
+      {
+         vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+
+         return emissiveParameter * texture (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
+      }
+
+      #ifdef X3D_MATERIAL_TEXTURE_3D
+      case x3d_TextureType3D:
+      {
+         vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+
+         return emissiveParameter * texture (x3d_EmissiveTexture .texture3D, texCoord .stp) .rgb;
+      }
+      #endif
+
+      #ifdef X3D_MATERIAL_TEXTURE_CUBE
+      case x3d_TextureTypeCube:
+      {
+         vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+
+         return emissiveParameter * texture (x3d_EmissiveTexture .textureCube, texCoord .stp) .rgb;
+      }
+      #endif
+
+      default:
+         return emissiveParameter .rgb;
+   }
+}
+
+float
+getOcclusionFactor ()
+{
+   // Get texture color.
+
+   switch (x3d_OcclusionTexture .textureType)
+   {
+      case x3d_TextureType2D:
+      {
+         vec4 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
+
+         return texture (x3d_OcclusionTexture .texture2D, texCoord .st) .r;
+      }
+
+      #ifdef X3D_MATERIAL_TEXTURE_3D
+      case x3d_TextureType3D:
+      {
+         vec4 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
+
+         return texture (x3d_OcclusionTexture .texture3D, texCoord .stp) .r;
+      }
+      #endif
+
+      #ifdef X3D_MATERIAL_TEXTURE_CUBE
+      case x3d_TextureTypeCube:
+      {
+         vec4 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
+
+         return texture (x3d_OcclusionTexture .textureCube, texCoord .stp) .r;
+      }
+      #endif
+
+      default:
+         return 1.0;
+   }
+}
+
+#else
+
+vec2
+getMetallicRoughness ()
+{
+	// Metallic and Roughness material properties are packed together
+	// In glTF, these factors can be specified by fixed scalar values
+	// or from a metallic-roughness map
+	float metallic            = x3d_Material .metallic;
+	float perceptualRoughness = x3d_Material .roughness;
+
+	return vec2 (metallic, perceptualRoughness);
+}
+
+vec4
+getBaseColor ()
+{
+   // Get base parameter.
+
+   float alpha         = 1.0 - x3d_Material .transparency;
+   vec4  baseParameter = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .baseColor, alpha);
+
+   return getTextureColor (baseParameter, vec4 (vec3 (1.0), alpha));
+}
+
+vec3
+getEmissiveColor ()
+{
+   return x3d_Material .emissiveColor;
+}
+
+float
+getOcclusionFactor ()
+{
+   return 1.0;
+}
+
 #endif
 
 // Encapsulate the various inputs used by the various functions in the shading equation
@@ -102,51 +300,13 @@ SRGBtoLINEAR (vec4 srgbIn)
 		#ifdef SRGB_FAST_APPROXIMATION
 			vec3 linOut = pow (srgbIn .xyz, vec3 (2.2));
 		#else //SRGB_FAST_APPROXIMATION
-			vec3 bLess  = step (vec3 (0.04045) ,srgbIn .xyz);
+			vec3 bLess  = step (vec3 (0.04045), srgbIn .xyz);
 			vec3 linOut = mix (srgbIn .xyz / vec3 (12.92), pow ((srgbIn .xyz + vec3 (0.055)) / vec3 (1.055), vec3 (2.4)), bLess);
 		#endif //SRGB_FAST_APPROXIMATION
 		return vec4 (linOut, srgbIn .w);
 	#else //MANUAL_SRGB
 		return srgbIn;
 	#endif //MANUAL_SRGB
-}
-
-// Find the normal for this fragment, pulling either from a predefined normal map
-// or from the interpolated mesh normal and tangent attributes.
-vec3
-getNormal ()
-{
-	// Retrieve the tangent space matrix
-	#ifndef HAS_TANGENTS
-		vec3 pos_dx = dFdx (position);
-		vec3 pos_dy = dFdy (position);
-		vec3 tex_dx = dFdx (vec3 (texCoord, 0.0));
-		vec3 tex_dy = dFdy (vec3 (texCoord, 0.0));
-		vec3 t      = (tex_dy .t * pos_dx - tex_dx .t * pos_dy) / (tex_dx .s * tex_dy.t - tex_dy .s * tex_dx .t);
-
-		#ifdef HAS_NORMALS
-			vec3 ng = normalize (normal);
-		#else
-			vec3 ng = normalize (cross (pos_dx, pos_dy));
-		#endif
-
-		t = normalize (t - ng * dot (ng, t));
-
-		vec3 b   = normalize (cross (ng, t));
-		mat3 tbn = mat3 (t, b, ng);
-	#else // HAS_TANGENTS
-		mat3 tbn = TBN;
-	#endif
-
-	#ifdef HAS_NORMAL_MAP
-		vec3 n = texture (normalTexture, texCoord) .rgb;
-
-		n = normalize (tbn * ((n * 2.0 - 1.0) * vec3 (normalScale, normalScale, 1.0)));
-	#else
-		vec3 n = tbn [2] .xyz;
-	#endif
-
-	return n;
 }
 
 #ifdef USE_IBL
@@ -228,17 +388,10 @@ main ()
 	// Metallic and Roughness material properties are packed together
 	// In glTF, these factors can be specified by fixed scalar values
 	// or from a metallic-roughness map
-	float perceptualRoughness = metallicRoughnessValues .y;
-	float metallic            = metallicRoughnessValues .x;
 
-	#ifdef HAS_METAL_ROUGHNESS_MAP
-		// Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
-		// This layout intentionally reserves the 'r' channel for (optional) occlusion map data
-		vec4 mrSample = texture (metallicRoughnessTexture, texCoord);
-
-		perceptualRoughness = mrSample .g * perceptualRoughness;
-		metallic            = mrSample .b * metallic;
-	#endif
+	vec2  metallicRoughness   = getMetallicRoughness ();
+	float perceptualRoughness = metallicRoughness [0];
+	float metallic            = metallicRoughness [1];
 
 	perceptualRoughness = clamp (perceptualRoughness, c_MinRoughness, 1.0);
 	metallic            = clamp (metallic, 0.0, 1.0);
@@ -248,20 +401,8 @@ main ()
 	float alphaRoughness = perceptualRoughness * perceptualRoughness;
 
 	// The albedo may be defined from a base texture or a flat color
-	#ifdef HAS_BASE_COLOR_MAP
-		vec4 baseColor = SRGBtoLINEAR (texture (baseColorTexture, texCoord)) * baseColorFactor;
-	#else
-		vec4 baseColor = baseColorFactor;
-	#endif
-
-	// If a primitive specifies a vertex color using the attribute semantic property COLOR_0,
-	// then this value acts as an additional linear multiplier to baseColor.
-	#ifdef HAS_COLORS
-		baseColor *= color;
-	#endif
-
-	vec3 f0 = vec3 (0.04);
-
+	vec4 baseColor    = getBaseColor ();
+	vec3 f0           = vec3 (0.04);
 	vec3 diffuseColor = baseColor .rgb * (vec3 (1.0) - f0);
 	diffuseColor *= 1.0 - metallic;
 
@@ -276,9 +417,9 @@ main ()
 	vec3  specularEnvironmentR0  = specularColor .rgb;
 	vec3  specularEnvironmentR90 = vec3 (1.0, 1.0, 1.0) * reflectance90;
 
-	vec3 n = getNormal ();                         // normal at surface point
-	vec3 v = normalize (camera - position);        // Vector from surface point to camera
-	vec3 l = normalize (lightDirection);           // Vector from surface point to light
+	vec3 n = getNormalVector ();                   // normal at surface point
+	vec3 v = normalize (camera - vertex);          // Vector from surface point to camera
+	vec3 l = normalize (-lightDirection);          // Vector from surface point to light
 	vec3 h = normalize (l + v);                    // Half vector between both l and v
 
 	float NdotL = clamp (dot (n, l), 0.001, 1.0);
@@ -319,15 +460,15 @@ main ()
 	#endif
 
 	// Apply optional PBR terms for additional (optional) shading
-	#ifdef HAS_OCCLUSION_MAP
-		float ao = texture (occlusionTexture, texCoord) .r;
-		finalColor = mix (finalColor, finalColor * ao, occlusionStrength);
-	#endif
+	float occlusionFactor = getOcclusionFactor ();
 
-	#ifdef HAS_EMISSIVE_MAP
-		vec3 emissive = SRGBtoLINEAR (texture (emissiveTexture, texCoord)) .rgb * emissiveFactor;
-		finalColor += emissive;
-	#endif
+	finalColor  = mix (finalColor, finalColor * occlusionFactor, x3d_Material .occlusionStrength);
+	finalColor += getEmissiveColor ();
+
+   if (baseColor .a < x3d_AlphaCutoff)
+   {
+      discard;
+   }
 
 	x3d_FragColor = vec4 (pow (finalColor, vec3 (1.0 / 2.2)), baseColor .a);
 

@@ -100,14 +100,8 @@ function (ShaderSource,
          if (browser .getProjectiveTextureMapping ())
             constants += "#define X3D_PROJECTIVE_TEXTURE_MAPPING\n";
 
-         if (options .SHADOWS)
-         {
-            constants += "#define X3D_SHADOWS\n";
-            constants += "#define X3D_PCF_FILTERING\n";
-         }
-
-         if (options .MATERIAL_TEXTURES)
-            constants += "#define X3D_MATERIAL_TEXTURES\n";
+         for (const option of options)
+            constants += "#define " + option + "\n";
 
          let definitions = "";
 

@@ -138,139 +138,43 @@ function (Shading,
       },
       getPointShader: function ()
       {
-         this [_pointShader] = this .createShader ("PointShader", "PointSet");
-
-         this [_standardShaders] .push (this [_pointShader]);
-
-         this .getPointShader = function () { return this [_pointShader]; };
-
-         Object .defineProperty (this, "getPointShader", { enumerable: false });
-
-         return this [_pointShader];
+         return this .getStandardShader ("getPointShader", _pointShader, "PointShader", "PointSet", [ ], "set_point_shader_valid__");
       },
       getLineShader: function ()
       {
-         this [_lineShader] = this .createShader ("WireframeShader", "Wireframe");
-
-         this [_standardShaders] .push (this [_lineShader]);
-
-         this .getLineShader = function () { return this [_lineShader]; };
-
-         Object .defineProperty (this, "getLineShader", { enumerable: false });
-
-         return this [_lineShader];
+         return this .getStandardShader ("getLineShader", _lineShader, "WireframeShader", "Wireframe", [ ], "set_line_shader_valid__");
       },
       getUnlitShader: function ()
       {
-         this [_unlitShader] = this .createShader ("UnlitShader", "Unlit");
-
-         this [_unlitShader] ._isValid .addInterest ("set_unlit_shader_valid__", this);
-
-         this [_standardShaders] .push (this [_unlitShader]);
-
-         this .getUnlitShader = function () { return this [_unlitShader]; };
-
-         Object .defineProperty (this, "getUnlitShader", { enumerable: false });
-
-         return this [_unlitShader];
+         return this .getStandardShader ("getUnlitShader", _unlitShader, "UnlitShader", "Unlit", [ ], "set_unlit_shader_valid__");
       },
       getUnlitTexturesShader: function ()
       {
-         this [_unlitTexturesShader] = this .createShader ("UnlitTexturesShader", "Unlit", { MATERIAL_TEXTURES: true });
-
-         this [_unlitTexturesShader] ._isValid .addInterest ("set_unlit_textures_shader_valid__", this);
-
-         this [_standardShaders] .push (this [_unlitTexturesShader]);
-
-         this .getUnlitTexturesShader = function () { return this [_unlitTexturesShader]; };
-
-         Object .defineProperty (this, "getUnlitTexturesShader", { enumerable: false });
-
-         return this [_unlitTexturesShader];
+         return this .getStandardShader ("getUnlitTexturesShader", _unlitTexturesShader, "UnlitTexturesShader", "Unlit", ["X3D_MATERIAL_TEXTURES"], "set_unlit_textures_shader_valid__");
       },
       getGouraudShader: function ()
       {
-         this [_gouraudShader] = this .createShader ("GouraudShader", "Gouraud");
-
-         this [_gouraudShader] ._isValid .addInterest ("set_gouraud_shader_valid__", this);
-
-         this [_standardShaders] .push (this [_gouraudShader]);
-
-         this .getGouraudShader = function () { return this [_gouraudShader]; };
-
-         Object .defineProperty (this, "getGouraudShader", { enumerable: false });
-
-         return this [_gouraudShader];
+         return this .getStandardShader ("getGouraudShader", _gouraudShader, "GouraudShader", "Gouraud", [ ], "set_gouraud_shader_valid__");
       },
       getPhongShader: function ()
       {
-         this [_phongShader] = this .createShader ("PhongShader", "Phong");
-
-         this [_phongShader] ._isValid .addInterest ("set_phong_shader_valid__", this);
-
-         this [_standardShaders] .push (this [_phongShader]);
-
-         this .getPhongShader = function () { return this [_phongShader]; };
-
-         Object .defineProperty (this, "getPhongShader", { enumerable: false });
-
-         return this [_phongShader];
+         return this .getStandardShader ("getPhongShader", _phongShader, "PhongShader", "Phong", [ ], "set_phong_shader_valid__");
       },
       getMaterialTexturesShader: function ()
       {
-         this [_materialTexturesShader] = this .createShader ("MaterialTexturesShader", "Phong", { MATERIAL_TEXTURES: true });
-
-         this [_materialTexturesShader] ._isValid .addInterest ("set_material_textures_shader_valid__", this);
-
-         this [_standardShaders] .push (this [_materialTexturesShader]);
-
-         this .getMaterialTexturesShader = function () { return this [_materialTexturesShader]; };
-
-         Object .defineProperty (this, "getMaterialTexturesShader", { enumerable: false });
-
-         return this [_materialTexturesShader];
+         return this .getStandardShader ("getMaterialTexturesShader", _materialTexturesShader, "MaterialTexturesShader", "Phong", ["X3D_MATERIAL_TEXTURES"], "set_material_textures_shader_valid__");
       },
       getShadowShader: function ()
       {
-         this [_shadowShader] = this .createShader ("ShadowShader", "Phong", { SHADOWS: true });
-
-         this [_shadowShader] ._isValid .addInterest ("set_shadow_shader_valid__", this);
-
-         this [_standardShaders] .push (this [_shadowShader]);
-
-         this .getShadowShader = function () { return this [_shadowShader]; };
-
-         Object .defineProperty (this, "getShadowShader", { enumerable: false });
-
-         return this [_shadowShader];
+         return this .getStandardShader ("getShadowShader", _shadowShader, "ShadowShader", "Phong",["X3D_SHADOWS", "X3D_PCF_FILTERING"], "set_shadow_shader_valid__");
       },
       getPhysicalMaterialShader: function ()
       {
-         this [_physicalMaterialShader] = this .createShader ("PhysicalMaterialShader", "PBR");
-
-         this [_physicalMaterialShader] ._isValid .addInterest ("set_physical_material_shader_valid__", this);
-
-         this [_standardShaders] .push (this [_physicalMaterialShader]);
-
-         this .getPhysicalMaterialShader = function () { return this [_physicalMaterialShader]; };
-
-         Object .defineProperty (this, "getPhysicalMaterialShader", { enumerable: false });
-
-         return this [_physicalMaterialShader];
+         return this .getStandardShader ("getPhysicalMaterialShader", _physicalMaterialShader, "PhysicalMaterialShader", "PBR", [ ], "set_physical_material_shader_valid__");
       },
       getPhysicalMaterialTexturesShader: function ()
       {
-         this [_physicalMaterialTexturesShader] = this .createShader ("PhysicalMaterialTexturesShader", "PBR", { MATERIAL_TEXTURES: true });
-
-         this [_physicalMaterialTexturesShader] ._isValid .addInterest ("set_physical_material_textures_shader_valid__", this);
-
-         this [_standardShaders] .push (this [_physicalMaterialTexturesShader]);
-
-         this .getPhysicalMaterialTexturesShader = function () { return this [_physicalMaterialTexturesShader]; };
-
-         Object .defineProperty (this, "getPhysicalMaterialTexturesShader", { enumerable: false });
-
-         return this [_physicalMaterialTexturesShader];
+         return this .getStandardShader ("getPhysicalMaterialTexturesShader", _physicalMaterialTexturesShader, "PhysicalMaterialTexturesShader", "PBR", [ ], "set_physical_material_textures_shader_valid__");
       },
       getDepthShader: function ()
       {
@@ -303,7 +207,21 @@ function (Shading,
          for (const shader of this .getShaders ())
             shader .setShading (type);
       },
-      createShader: function (name, file, options = { })
+      getStandardShader: function (func, property, name, shader, options, valid)
+      {
+         this [property] = this .createShader (name, shader, options);
+
+         this [property] ._isValid .addInterest (valid, this);
+
+         this [_standardShaders] .push (this [property]);
+
+         this [func] = function () { return this [property]; };
+
+         Object .defineProperty (this, func, { enumerable: false });
+
+         return this [property];
+      },
+      createShader: function (name, file, options = [ ])
       {
          if (this .getDebug ())
             console .log ("Initializing " + name);
@@ -337,6 +255,10 @@ function (Shading,
 
          return shader;
       },
+      set_point_shader_valid: function ()
+      { },
+      set_line_shader_valid: function ()
+      { },
       set_unlit_shader_valid__: function (valid)
       {
          this [_unlitShader] ._isValid .removeInterest ("set_unlit_shader_valid__", this);
