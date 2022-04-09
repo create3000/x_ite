@@ -248,11 +248,31 @@ main.color-management .browser {
    <script type="text/javascript">
 X3D (function ()
 {
-   const Browser = X3D .getBrowser ();
+   const
+      Browser      = X3D .getBrowser (),
+      localStorage = Browser .getLocalStorage ();
+
+   localStorage .addDefaultValues ({
+      "Bookmarks.history": ["http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"],
+   });
+
+   let index = localStorage ["Bookmarks.history"] .length - 1;
 
    function loadURL ()
    {
-      bookmarks .loadURL ($(".location-entry") .val ());
+      const
+         url     = $(".location-entry") .val (),
+         history = localStorage ["Bookmarks.history"];
+
+      if (url !== history .at (-1))
+      {
+         history .push (url);
+         history .splice (0, history .length - 1000);
+         localStorage ["Bookmarks.history"] = history;
+         index = history .length - 1;
+      }
+
+      bookmarks .loadURL (url);
    }
 
    function toVRMLString ()
@@ -277,21 +297,27 @@ X3D (function ()
 
    $(".version") .text (Browser .name + " v" + Browser .version);
    $(".file") .append ($("<a/>") .attr ('href', "tests/d3/ParticlePlot.html") .text ("d3"));
-   $(".location-entry") .keydown (function (event) { if (event .key == "Enter") loadURL (); });
+   $(".location-entry") .val (localStorage ["Bookmarks.history"] [index])
    $(".location-go") .click (loadURL);
    $(".print-vrml") .click (toVRMLString);
    $(".print-xml") .click (toXMLString);
    $(".print-json") .click (toJSONString);
 
-   // Restore location entry.
-
-   const defaultLocation = "http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d";
-
-   $(".location-entry") .val (Browser .getLocalStorage () ["Bookmarks.location"] || defaultLocation)
-
-   $(window) .on ("unload", function ()
+   $(".location-entry") .keydown (function (event)
    {
-      Browser .getLocalStorage () ["Bookmarks.location"] = $(".location-entry") .val ();
+      switch (event .key)
+      {
+         case "Enter":
+            return loadURL ()
+         case "ArrowUp":
+            if (index > 0)
+               $(".location-entry") .val (localStorage ["Bookmarks.history"] [--index])
+            return
+         case "ArrowDown":
+            if (index < localStorage ["Bookmarks.history"] .length - 1)
+               $(".location-entry") .val (localStorage ["Bookmarks.history"] [++index])
+            return
+      }
    });
 },
 function (error)

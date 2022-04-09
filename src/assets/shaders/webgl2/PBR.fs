@@ -1,5 +1,7 @@
 #version 300 es
 
+#define MANUAL_SRGB
+
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 #extension GL_EXT_frag_depth : enable
 #endif
@@ -13,9 +15,12 @@ uniform int   x3d_GeometryType;
 uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 uniform float x3d_AlphaCutoff;
 
+uniform int x3d_NumLights;
+uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform x3d_PhysicalMaterialParameters x3d_Material;
 
-#define lightColor vec3 (1.0)
+#define lightColor (step (1.0, float (x3d_NumLights)) * x3d_LightSource [0] .intensity * x3d_LightSource [0] .color)
+#define lightVector (x3d_LightSource [0] .type == x3d_DirectionalLight ? -x3d_LightSource [0] .direction : x3d_LightSource [0] .location - vertex)
 #define camera vec3 (0.0)
 
 #ifdef USE_IBL
@@ -48,6 +53,9 @@ uniform x3d_MaterialTextureParameters x3d_MetallicRoughnessTexture;
 uniform x3d_MaterialTextureParameters x3d_OcclusionTexture;
 
 vec4
+SRGBtoLINEAR (const in vec4);
+
+vec4
 getBaseColor ()
 {
    // Get base parameter.
@@ -63,7 +71,7 @@ getBaseColor ()
       {
          vec4 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
 
-         return baseParameter * texture (x3d_BaseTexture .texture2D, texCoord .st);
+         return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .texture2D, texCoord .st));
       }
 
       #ifdef X3D_MATERIAL_TEXTURE_3D
@@ -71,7 +79,7 @@ getBaseColor ()
       {
          vec4 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
 
-         return baseParameter * texture (x3d_BaseTexture .texture3D, texCoord .stp);
+         return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .texture3D, texCoord .stp));
       }
       #endif
 
@@ -80,7 +88,7 @@ getBaseColor ()
       {
          vec4 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
 
-         return baseParameter * texture (x3d_BaseTexture .textureCube, texCoord .stp);
+         return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .textureCube, texCoord .stp));
       }
       #endif
 
@@ -104,7 +112,7 @@ getEmissiveColor ()
       {
          vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
-         return emissiveParameter * texture (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
+         return emissiveParameter * SRGBtoLINEAR (texture (x3d_EmissiveTexture .texture2D, texCoord .st)) .rgb;
       }
 
       #ifdef X3D_MATERIAL_TEXTURE_3D
@@ -112,7 +120,7 @@ getEmissiveColor ()
       {
          vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
-         return emissiveParameter * texture (x3d_EmissiveTexture .texture3D, texCoord .stp) .rgb;
+         return emissiveParameter * SRGBtoLINEAR (texture (x3d_EmissiveTexture .texture3D, texCoord .stp)) .rgb;
       }
       #endif
 
@@ -121,7 +129,7 @@ getEmissiveColor ()
       {
          vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
-         return emissiveParameter * texture (x3d_EmissiveTexture .textureCube, texCoord .stp) .rgb;
+         return emissiveParameter * SRGBtoLINEAR (texture (x3d_EmissiveTexture .textureCube, texCoord .stp)) .rgb;
       }
       #endif
 
@@ -293,7 +301,7 @@ const float M_PI           = 3.141592653589793;
 const float c_MinRoughness = 0.04;
 
 vec4
-SRGBtoLINEAR (vec4 srgbIn)
+SRGBtoLINEAR (const in vec4 srgbIn)
 {
    #ifdef MANUAL_SRGB
       #ifdef SRGB_FAST_APPROXIMATION
@@ -313,7 +321,7 @@ SRGBtoLINEAR (vec4 srgbIn)
 // Precomputed Environment Maps are required uniform inputs and are computed as outlined in [1].
 // See our README.md on Environment Maps [3] for additional discussion.
 vec3
-getIBLContribution (PBRInfo pbrInputs, vec3 n, vec3 reflection)
+getIBLContribution (const in PBRInfo pbrInputs, vec3 n, const in vec3 reflection)
 {
    float mipCount = 9.0; // resolution of 512x512
    float lod      = pbrInputs .perceptualRoughness * mipCount;
@@ -339,7 +347,7 @@ getIBLContribution (PBRInfo pbrInputs, vec3 n, vec3 reflection)
 // Implementation from Lambert's Photometria https://archive.org/details/lambertsphotome00lambgoog
 // See also [1], Equation 1
 vec3
-diffuse (PBRInfo pbrInputs)
+diffuse (const in PBRInfo pbrInputs)
 {
    return pbrInputs .diffuseColor / M_PI;
 }
@@ -347,7 +355,7 @@ diffuse (PBRInfo pbrInputs)
 // The following equation models the Fresnel reflectance term of the spec equation (aka F())
 // Implementation of fresnel from [4], Equation 15
 vec3
-specularReflection (PBRInfo pbrInputs)
+specularReflection (const in PBRInfo pbrInputs)
 {
    return pbrInputs .reflectance0 + (pbrInputs .reflectance90 - pbrInputs .reflectance0) * pow (clamp (1.0 - pbrInputs .VdotH, 0.0, 1.0), 5.0);
 }
@@ -357,7 +365,7 @@ specularReflection (PBRInfo pbrInputs)
 // This implementation is based on [1] Equation 4, and we adopt their modifications to
 // alphaRoughness as input as originally proposed in [2].
 float
-geometricOcclusion (PBRInfo pbrInputs)
+geometricOcclusion (const in PBRInfo pbrInputs)
 {
    float NdotL = pbrInputs .NdotL;
    float NdotV = pbrInputs .NdotV;
@@ -373,7 +381,7 @@ geometricOcclusion (PBRInfo pbrInputs)
 // Implementation from \"Average Irregularity Representation of a Roughened Surface for Ray Reflection\" by T. S. Trowbridge, and K. P. Reitz
 // Follows the distribution function recommended in the SIGGRAPH 2013 course notes from EPIC Games [1], Equation 3.
 float
-microfacetDistribution (PBRInfo pbrInputs)
+microfacetDistribution (const in PBRInfo pbrInputs)
 {
    float roughnessSq = pbrInputs .alphaRoughness * pbrInputs .alphaRoughness;
    float f           = (pbrInputs .NdotH * roughnessSq - pbrInputs .NdotH) * pbrInputs .NdotH + 1.0;
@@ -389,11 +397,8 @@ main ()
    // or from a metallic-roughness map.
 
    vec2  metallicRoughness   = getMetallicRoughness ();
-   float perceptualRoughness = metallicRoughness [1];
-   float metallic            = metallicRoughness [0];
-
-   perceptualRoughness = clamp (perceptualRoughness, c_MinRoughness, 1.0);
-   metallic            = clamp (metallic, 0.0, 1.0);
+   float perceptualRoughness = clamp (metallicRoughness [1], c_MinRoughness, 1.0);
+   float metallic            = clamp (metallicRoughness [0], 0.0, 1.0);
 
    // Roughness is authored as perceptual roughness; as is convention,
    // convert to material roughness by squaring the perceptual roughness [2].
@@ -418,7 +423,7 @@ main ()
 
    vec3 n = getNormalVector ();                   // normal at surface point
    vec3 v = normalize (camera - vertex);          // Vector from surface point to camera
-   vec3 l = normalize (camera - vertex);          // Vector from surface point to light
+   vec3 l = normalize (lightVector);          // Vector from surface point to light
    vec3 h = normalize (l + v);                    // Half vector between both l and v
 
    float NdotL = clamp (dot (n, l), 0.001, 1.0);
@@ -467,6 +472,7 @@ main ()
       discard;
    }
 
+   // Combine with alpha and do gamma correction.
    x3d_FragColor = vec4 (pow (finalColor, vec3 (1.0 / 2.2)), baseColor .a);
 
    #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER

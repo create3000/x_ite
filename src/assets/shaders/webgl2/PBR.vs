@@ -16,8 +16,8 @@ in vec4 x3d_Color;
 out vec3 vertex;
 out vec3 normal;
 out vec4 texCoord0;
-out vec4 texCoord1;
-out vec4 color;
+out vec4 texCoord1; 
+out vec4 color;       // color from Color node
 out vec3 localNormal; // normal vector at this point on geometry in local coordinates
 out vec3 localVertex; // point on geometry in local coordinates
 
@@ -32,8 +32,8 @@ main ()
 
    vertex      = position .xyz;
    normal      = normalize (x3d_NormalMatrix * x3d_Normal);
-   texCoord0   = vec4 (x3d_TexCoord0 .s, 1.0 - x3d_TexCoord0 .t, x3d_TexCoord0 .pq);
-   texCoord1   = vec4 (x3d_TexCoord1 .s, 1.0 - x3d_TexCoord1 .t, x3d_TexCoord1 .pq);
+   texCoord0   = x3d_TexCoord0;
+   texCoord1   = x3d_TexCoord1;
    color       = x3d_Color;
    localNormal = x3d_Normal;
    localVertex = x3d_Vertex .xyz;
