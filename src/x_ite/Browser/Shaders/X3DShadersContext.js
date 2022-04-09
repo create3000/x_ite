@@ -255,9 +255,9 @@ function (Shading,
 
          return shader;
       },
-      set_point_shader_valid: function ()
+      set_point_shader_valid__: function ()
       { },
-      set_line_shader_valid: function ()
+      set_line_shader_valid__: function ()
       { },
       set_unlit_shader_valid__: function (valid)
       {
