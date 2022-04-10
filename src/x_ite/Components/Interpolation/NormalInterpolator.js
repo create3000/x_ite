@@ -66,10 +66,6 @@ function (Fields,
 {
 "use strict";
 
-   var
-      keyValue0 = new Vector3 (0, 0, 0),
-      keyValue1 = new Vector3 (0, 0, 0);
-
    function NormalInterpolator (executionContext)
    {
       X3DInterpolatorNode .call (this, executionContext);
@@ -106,46 +102,55 @@ function (Fields,
          this ._keyValue .addInterest ("set_keyValue__", this);
       },
       set_keyValue__: function () { },
-      interpolate: function (index0, index1, weight)
+      interpolate: (function ()
       {
-         var
-            keyValue = this ._keyValue .getValue (),
-            size     = this ._key .length > 1 ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
+         const
+            keyValue0 = new Vector3 (0, 0, 0),
+            keyValue1 = new Vector3 (0, 0, 0);
 
-         this ._value_changed .length = size;
-
-         var value_changed = this ._value_changed .getValue ();
-
-         index0 *= size;
-         index1  = index0 + size;
-
-         index0 *= 3;
-         index1 *= 3;
-         size   *= 3;
-
-         for (var i0 = 0; i0 < size; i0 += 3)
+         return function (index0, index1, weight)
          {
-            try
+            const keyValue = this ._keyValue .getValue ();
+
+            let size = this ._key .length > 1 ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
+
+            this ._value_changed .length = size;
+
+            const value_changed = this ._value_changed .getValue ();
+
+            index0 *= size;
+            index1  = index0 + size;
+
+            index0 *= 3;
+            index1 *= 3;
+            size   *= 3;
+
+            for (let i0 = 0; i0 < size; i0 += 3)
             {
-               var
-                  i1 = i0 + 1,
-                  i2 = i0 + 2;
+               try
+               {
+                  const
+                     i1 = i0 + 1,
+                     i2 = i0 + 2;
 
-               keyValue0 .set (keyValue [index0 + i0], keyValue [index0 + i1], keyValue [index0 + i2]);
-               keyValue1 .set (keyValue [index1 + i0], keyValue [index1 + i1], keyValue [index1 + i2]);
+                  keyValue0 .set (keyValue [index0 + i0], keyValue [index0 + i1], keyValue [index0 + i2]);
+                  keyValue1 .set (keyValue [index1 + i0], keyValue [index1 + i1], keyValue [index1 + i2]);
 
-               var value = Algorithm .simpleSlerp (keyValue0, keyValue1, weight);
+                  const value = Algorithm .simpleSlerp (keyValue0, keyValue1, weight);
 
-               value_changed [i0] = value [0];
-               value_changed [i1] = value [1];
-               value_changed [i2] = value [2];
+                  value_changed [i0] = value [0];
+                  value_changed [i1] = value [1];
+                  value_changed [i2] = value [2];
+               }
+               catch (error)
+               {
+                  //console .log (error);
+               }
             }
-            catch (error)
-            { }
-         }
 
-         this ._value_changed .addEvent ();
-      },
+            this ._value_changed .addEvent ();
+         };
+      })(),
    });
 
    return NormalInterpolator;

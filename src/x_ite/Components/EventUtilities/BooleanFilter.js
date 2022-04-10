@@ -99,7 +99,7 @@ function (Fields,
       },
       set_boolean__: function ()
       {
-         var value = this ._set_boolean .getValue ();
+         const value = this ._set_boolean .getValue ();
 
          if (value)
             this ._inputTrue = true;

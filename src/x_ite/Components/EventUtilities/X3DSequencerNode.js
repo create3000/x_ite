@@ -81,7 +81,7 @@ function (X3DChildNode,
       },
       set_fraction__: function ()
       {
-         var
+         const
             fraction = this ._set_fraction .getValue (),
             key      = this ._key,
             length   = key .length;
@@ -89,7 +89,7 @@ function (X3DChildNode,
          if (length === 0)
             return;
 
-         var i = 0;
+         let i = 0;
 
          if (length === 1 || fraction <= key [0])
             i = 0;
@@ -99,7 +99,7 @@ function (X3DChildNode,
 
          else
          {
-            var index = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
+            const index = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
 
             i = index - 1;
          }

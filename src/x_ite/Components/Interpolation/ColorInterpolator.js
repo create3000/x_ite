@@ -103,19 +103,19 @@ function (Fields,
       },
       set_keyValue__: function ()
       {
-         var keyValue = this ._keyValue;
+         const keyValue = this ._keyValue;
 
          if (keyValue .length < this ._key .length)
             this ._keyValue .resize (this ._key .length, keyValue .length ? keyValue [this ._keyValue .length - 1] : new Fields .SFColor ());
 
          this .hsv .length = 0;
 
-         for (var i = 0, length = keyValue .length; i < length; ++ i)
-            this .hsv .push (keyValue [i] .getHSV ([ ]));
+         for (const value of keyValue)
+            this .hsv .push (value .getHSV ([ ]));
       },
       interpolate: (function ()
       {
-         var value = [ ];
+         const value = [ ];
 
          return function (index0, index1, weight)
          {

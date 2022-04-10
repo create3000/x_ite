@@ -96,13 +96,13 @@ function (Fields,
       set_keyValue__: function () { },
       interpolate: function (index0, index1, weight)
       {
-         var
+         const
             keyValue = this ._keyValue .getValue (),
             size     = this ._key .length ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
 
          this ._value_changed .length = size;
 
-         var value_changed = this ._value_changed .getValue ();
+         const value_changed = this ._value_changed .getValue ();
 
          index0 *= size;
          index1  = index0 + (this ._key .length > 1 ? size : 0);
@@ -111,9 +111,9 @@ function (Fields,
          index1 *= 3;
          size   *= 3;
 
-         for (var i0 = 0; i0 < size; i0 += 3)
+         for (let i0 = 0; i0 < size; i0 += 3)
          {
-            var
+            const
                i1 = i0 + 1,
                i2 = i0 + 2;
 

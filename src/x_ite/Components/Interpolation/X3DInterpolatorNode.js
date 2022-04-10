@@ -90,7 +90,7 @@ function (X3DChildNode,
       },
       set_fraction__: function ()
       {
-         var
+         const
             key      = this ._key,
             length   = key .length,
             fraction = this ._set_fraction .getValue ();
@@ -107,11 +107,11 @@ function (X3DChildNode,
                if (fraction <= key [0])
                   return this .interpolate (0, 1, 0);
 
-               var index1 = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
+               const index1 = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
 
                if (index1 !== length)
                {
-                  var
+                  const
                      index0 = index1 - 1,
                      weight = (fraction - key [index0]) / (key [index1] - key [index0]);
 

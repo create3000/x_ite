@@ -107,7 +107,7 @@ function (Fields,
       },
       set_keyValue__: function ()
       {
-         var
+         const
             key      = this ._key,
             keyValue = this ._keyValue;
 

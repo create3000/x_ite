@@ -101,7 +101,7 @@ function (Fields,
       },
       set_keyValue__: function ()
       {
-         var
+         const
             key      = this ._key,
             keyValue = this ._keyValue;
 
@@ -110,7 +110,7 @@ function (Fields,
       },
       interpolate: (function ()
       {
-         var keyValue = new Vector3 (0, 0, 0);
+         const keyValue = new Vector3 (0, 0, 0);
 
          return function (index0, index1, weight)
          {

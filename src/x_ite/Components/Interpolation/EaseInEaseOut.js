@@ -104,7 +104,7 @@ function (Fields,
       },
       interpolate: function (index0, index1, weight)
       {
-         var
+         const
             easeOut = this ._easeInEaseOut [index0] .y,
             easeIn  = this ._easeInEaseOut [index1] .x,
             sum     = easeOut + easeIn;
@@ -121,7 +121,7 @@ function (Fields,
                easeOut /= sum;
             }
 
-            var t = 1 / (2 - easeOut - easeIn);
+            const t = 1 / (2 - easeOut - easeIn);
 
             if (weight < easeOut)
             {
@@ -133,7 +133,7 @@ function (Fields,
             }
             else
             {
-               var w = 1 - weight;
+               const w = 1 - weight;
 
                this ._modifiedFraction_changed = 1 - ((t * w * w) / easeIn);
             }
