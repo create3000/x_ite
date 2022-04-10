@@ -19,10 +19,6 @@ uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform x3d_PhysicalMaterialParameters x3d_Material;
 
-#define lightColor (step (1.0, float (x3d_NumLights)) * x3d_LightSource [0] .intensity * x3d_LightSource [0] .color)
-#define lightVector (x3d_LightSource [0] .type == x3d_DirectionalLight ? -x3d_LightSource [0] .direction : x3d_LightSource [0] .location - vertex)
-#define camera vec3 (0.0)
-
 #ifdef USE_IBL
    uniform samplerCube diffuseEnvironmentTexture;
    uniform samplerCube specularEnvironmentTexture;
@@ -239,7 +235,7 @@ getOcclusionFactor ()
    }
 }
 
-#else
+#else // X3D_MATERIAL_TEXTURES
 
 vec2
 getMetallicRoughness ()
@@ -276,7 +272,20 @@ getOcclusionFactor ()
    return 1.0;
 }
 
-#endif
+#endif // X3D_MATERIAL_TEXTURES
+
+float
+getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)
+{
+   float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));
+
+   if (spotAngle >= cutOffAngle)
+      return 0.0;
+   else if (spotAngle <= beamWidth)
+      return 1.0;
+
+   return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
+}
 
 // Encapsulate the various inputs used by the various functions in the shading equation
 // We store values in this struct to simplify the integration of alternative implementations
@@ -421,41 +430,71 @@ main ()
    vec3  specularEnvironmentR0  = specularColor .rgb;
    vec3  specularEnvironmentR90 = vec3 (1.0, 1.0, 1.0) * reflectance90;
 
-   vec3 n = getNormalVector ();                   // normal at surface point
-   vec3 v = normalize (camera - vertex);          // Vector from surface point to camera
-   vec3 l = normalize (lightVector);          // Vector from surface point to light
-   vec3 h = normalize (l + v);                    // Half vector between both l and v
+   // Apply light sources
 
-   float NdotL = clamp (dot (n, l), 0.001, 1.0);
-   float NdotV = abs (dot (n, v)) + 0.001;
-   float NdotH = clamp (dot (n, h), 0.0, 1.0);
-   float LdotH = clamp (dot (l, h), 0.0, 1.0);
-   float VdotH = clamp (dot (v, h), 0.0, 1.0);
+   vec3 n = getNormalVector ();  // normal at surface point
+   vec3 v = normalize (-vertex); // Vector from surface point to camera
 
-   PBRInfo pbrInputs = PBRInfo (
-      NdotL,
-      NdotV,
-      NdotH,
-      LdotH,
-      VdotH,
-      perceptualRoughness,
-      metallic,
-      specularEnvironmentR0,
-      specularEnvironmentR90,
-      alphaRoughness,
-      diffuseColor,
-      specularColor
-   );
+   vec3 finalColor = vec3 (0.0);
 
-   // Calculate the shading terms for the microfacet specular shading model.
-   vec3  F = specularReflection (pbrInputs);
-   float G = geometricOcclusion (pbrInputs);
-   float D = microfacetDistribution (pbrInputs);
+   for (int i = 0; i < x3d_MaxLights; i ++)
+   {
+      if (i == x3d_NumLights)
+         break;
 
-   // Calculation of analytical lighting contribution
-   vec3 diffuseContrib = (1.0 - F) * diffuse (pbrInputs);
-   vec3 specContrib    = F * G * D / (4.0 * NdotL * NdotV);
-   vec3 finalColor     = NdotL * lightColor * (diffuseContrib + specContrib);
+      x3d_LightSourceParameters light = x3d_LightSource [i];
+
+      vec3  vL = light .location - vertex; // Light to fragment
+      float dL = length (light .matrix * vL);
+      bool  di = light .type == x3d_DirectionalLight;
+
+      if (di || dL <= light .radius)
+      {
+         vec3 d = light .direction;
+         vec3 c = light .attenuation;
+         vec3 L = di ? -d : normalize (vL); // Normalized vector from point on geometry to light source i position.
+
+         vec3 l = normalize (L);       // Vector from surface point to light
+         vec3 h = normalize (l + v);   // Half vector between both l and v
+
+         float NdotL = clamp (dot (n, l), 0.001, 1.0);
+         float NdotV = abs (dot (n, v)) + 0.001;
+         float NdotH = clamp (dot (n, h), 0.0, 1.0);
+         float LdotH = clamp (dot (l, h), 0.0, 1.0);
+         float VdotH = clamp (dot (v, h), 0.0, 1.0);
+
+         PBRInfo pbrInputs = PBRInfo (
+            NdotL,
+            NdotV,
+            NdotH,
+            LdotH,
+            VdotH,
+            perceptualRoughness,
+            metallic,
+            specularEnvironmentR0,
+            specularEnvironmentR90,
+            alphaRoughness,
+            diffuseColor,
+            specularColor
+         );
+
+         // Calculate the shading terms for the microfacet specular shading model.
+         vec3  F = specularReflection (pbrInputs);
+         float G = geometricOcclusion (pbrInputs);
+         float D = microfacetDistribution (pbrInputs);
+
+         float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
+         float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
+         float attenuationSpotFactor = attenuationFactor * spotFactor;
+
+         // Calculation of analytical lighting contribution
+         vec3 diffuseContrib = (1.0 - F) * diffuse (pbrInputs);
+         vec3 specContrib    = F * G * D / (4.0 * NdotL * NdotV);
+         vec3 color          = NdotL * attenuationSpotFactor * light .color * light .intensity * (diffuseContrib + specContrib);
+
+         finalColor += color;
+      }
+   }
 
    // Calculate lighting contribution from image based lighting source (IBL).
    #ifdef USE_IBL
