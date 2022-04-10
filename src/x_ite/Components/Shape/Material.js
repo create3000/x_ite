@@ -120,6 +120,8 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
+         this .shaderNode = this .getBrowser () .getDefaultShader ();
+
          this .isLive () .addInterest ("set_live__", this);
 
          this ._ambientIntensity  .addInterest ("set_ambientIntensity__",  this);
@@ -262,7 +264,9 @@ function (Fields,
          if (this .getNormalTexture ())
             options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
 
-         this .shaderNode = browser .createShader ("MaterialTexturesShader", "Phong", options);
+         const shaderNode = browser .createShader ("MaterialTexturesShader", "Phong", options);
+
+         shaderNode ._isValid .addInterest ("setShader", this, shaderNode);
       },
       set_shading__: function ()
       {
@@ -293,6 +297,12 @@ function (Fields,
       getShader: function (browser, shadow)
       {
          return shadow && !this .getTextures () ? browser .getShadowShader () : this .shaderNode;
+      },
+      setShader: function (shaderNode)
+      {
+         shaderNode ._isValid .removeInterest ("setShader", this);
+
+         this .shaderNode = shaderNode;
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {

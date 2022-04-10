@@ -98,6 +98,8 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
+         this .shaderNode = this .getBrowser () .getUnlitShader ();
+
          this .set_transparent__ ();
       },
       set_emissiveTexture__: function ()
@@ -130,11 +132,19 @@ function (Fields,
          if (this .getNormalTexture ())
             options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
 
-         this .shaderNode = browser .createShader ("UnlitTexturesShader", "Unlit", options);
+         const shaderNode = browser .createShader ("UnlitTexturesShader", "Unlit", options);
+
+         shaderNode ._isValid .addInterest ("setShader", this, shaderNode);
       },
       getShader: function (browser, shadow)
       {
          return this .shaderNode;
+      },
+      setShader: function (shaderNode)
+      {
+         shaderNode ._isValid .removeInterest ("setShader", this);
+
+         this .shaderNode = shaderNode;
       },
    });
 

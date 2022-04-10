@@ -81,8 +81,6 @@ function (Fields,
       {
          X3DMaterialNode .prototype .initialize .call (this);
 
-         this .shaderNode = this .getBrowser () .getUnlitShader ();
-
          this ._emissiveColor   .addInterest ("set_emissiveColor__",   this);
          this ._emissiveTexture .addInterest ("set_emissiveTexture__", this);
          this ._emissiveTexture .addInterest ("set_textures__",        this);
