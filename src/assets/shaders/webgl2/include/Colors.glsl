@@ -1,5 +1,4 @@
-//#define MANUAL_SRGB
-//#define MANUAL_GAMMA
+#define MANUAL_SRGB
 
 vec4
 SRGBtoLINEAR (const in vec4 srgbIn)
@@ -20,7 +19,7 @@ SRGBtoLINEAR (const in vec4 srgbIn)
 vec4
 Gamma (const in vec4 color)
 {
-   #ifdef MANUAL_GAMMA
+   #ifdef MANUAL_SRGB
    return vec4 (pow (color .rgb, vec3 (1.0 / 2.2)), color .a);
    #else
    return color;
