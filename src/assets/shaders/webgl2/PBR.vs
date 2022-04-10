@@ -1,5 +1,7 @@
 #version 300 es
 
+// https://github.com/cx20/gltf-test/blob/master/examples/khronos-gltf-loader/shaders/pbr-vert.glsl
+
 precision highp float;
 precision highp int;
 
@@ -16,7 +18,7 @@ in vec4 x3d_Color;
 out vec3 vertex;
 out vec3 normal;
 out vec4 texCoord0;
-out vec4 texCoord1; 
+out vec4 texCoord1;
 out vec4 color;       // color from Color node
 out vec3 localNormal; // normal vector at this point on geometry in local coordinates
 out vec3 localVertex; // point on geometry in local coordinates

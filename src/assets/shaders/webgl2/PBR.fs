@@ -1,6 +1,6 @@
 #version 300 es
 
-#define MANUAL_SRGB
+// https://github.com/cx20/gltf-test/blob/master/examples/khronos-gltf-loader/shaders/pbr-frag.glsl
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 #extension GL_EXT_frag_depth : enable
@@ -38,6 +38,7 @@ uniform float x3d_LogarithmicFarFactor1_2;
 in float depth;
 #endif
 
+#pragma X3D include "include/Colors.glsl"
 #pragma X3D include "include/Texture.glsl"
 #pragma X3D include "include/Normal.glsl"
 #pragma X3D include "include/SpotFactor.glsl"
@@ -48,9 +49,6 @@ uniform x3d_EmissiveTextureParameters          x3d_EmissiveTexture;
 uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
 uniform x3d_OcclusionTextureParameters         x3d_OcclusionTexture;
 #endif
-
-vec4
-SRGBtoLINEAR (const in vec4);
 
 vec4
 getBaseColor ()
@@ -172,22 +170,6 @@ struct PBRInfo
 
 const float M_PI           = 3.141592653589793;
 const float c_MinRoughness = 0.04;
-
-vec4
-SRGBtoLINEAR (const in vec4 srgbIn)
-{
-   #ifdef MANUAL_SRGB
-      #ifdef SRGB_FAST_APPROXIMATION
-         vec3 linOut = pow (srgbIn .xyz, vec3 (2.2));
-      #else //SRGB_FAST_APPROXIMATION
-         vec3 bLess  = step (vec3 (0.04045), srgbIn .xyz);
-         vec3 linOut = mix (srgbIn .xyz / vec3 (12.92), pow ((srgbIn .xyz + vec3 (0.055)) / vec3 (1.055), vec3 (2.4)), bLess);
-      #endif //SRGB_FAST_APPROXIMATION
-      return vec4 (linOut, srgbIn .w);
-   #else //MANUAL_SRGB
-      return srgbIn;
-   #endif //MANUAL_SRGB
-}
 
 #ifdef USE_IBL
 // Calculation of the lighting contribution from an optional Image Based Light source.
@@ -376,7 +358,7 @@ main ()
    }
 
    // Combine with alpha and do gamma correction.
-   x3d_FragColor = vec4 (pow (finalColor, vec3 (1.0 / 2.2)), baseColor .a);
+   x3d_FragColor = Gamma (vec4 (finalColor, baseColor .a));
 
    #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
    //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
