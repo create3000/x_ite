@@ -104,10 +104,11 @@ function (Fields,
       },
       interpolate: function (index0, index1, weight)
       {
-         const
+         let
             easeOut = this ._easeInEaseOut [index0] .y,
-            easeIn  = this ._easeInEaseOut [index1] .x,
-            sum     = easeOut + easeIn;
+            easeIn  = this ._easeInEaseOut [index1] .x;
+         
+         const sum = easeOut + easeIn;
 
          if (sum < 0)
          {

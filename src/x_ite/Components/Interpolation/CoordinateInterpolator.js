@@ -96,9 +96,9 @@ function (Fields,
       set_keyValue__: function () { },
       interpolate: function (index0, index1, weight)
       {
-         const
-            keyValue = this ._keyValue .getValue (),
-            size     = this ._key .length ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
+         const keyValue = this ._keyValue .getValue ();
+
+         let size = this ._key .length ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
 
          this ._value_changed .length = size;
 
