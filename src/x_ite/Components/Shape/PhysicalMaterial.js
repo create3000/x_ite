@@ -185,6 +185,32 @@ function (Fields,
          this .setTransparent (Boolean (this .getTransparency () ||
                                (this .baseTextureNode && this .baseTextureNode .getTransparent ())));
       },
+      set_textures__: function ()
+      {
+         const browser = this .getBrowser ();
+
+         if (!this .getTextures ())
+            return this .shaderNode = browser .getPhysicalMaterialShader ();
+
+         const options = ["X3D_MATERIAL_TEXTURES"];
+
+         if (this .baseTextureNode)
+            options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
+
+         if (this .getEmissiveTexture ())
+            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+
+         if (this .metallicRoughnessTextureNode)
+            options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", "X3D_METALLIC_ROUGHNESS_TEXTURE_" + this .metallicRoughnessTextureNode .getTextureTypeString ());
+
+         if (this .occlusionTextureNode)
+            options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
+
+         if (this .getNormalTexture ())
+            options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+
+         this .shaderNode = browser .createShader ("PhysicalMaterialTexturesShader", "PBR", options);
+      },
       getTextureIndices: (function ()
       {
          const textureIndices = {
@@ -202,7 +228,7 @@ function (Fields,
       })(),
       getShader: function (browser, shadow)
       {
-         return this .getTextures () ? browser .getPhysicalMaterialTexturesShader () : browser .getPhysicalMaterialShader ();
+         return this .shaderNode;
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {

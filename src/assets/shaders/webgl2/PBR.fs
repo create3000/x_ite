@@ -43,11 +43,11 @@ in float depth;
 #pragma X3D include "include/SpotFactor.glsl"
 
 #ifdef X3D_MATERIAL_TEXTURES
-
-uniform x3d_MaterialTextureParameters x3d_BaseTexture;
-uniform x3d_MaterialTextureParameters x3d_EmissiveTexture;
-uniform x3d_MaterialTextureParameters x3d_MetallicRoughnessTexture;
-uniform x3d_MaterialTextureParameters x3d_OcclusionTexture;
+uniform x3d_BaseTextureParameters              x3d_BaseTexture;
+uniform x3d_EmissiveTextureParameters          x3d_EmissiveTexture;
+uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
+uniform x3d_OcclusionTextureParameters         x3d_OcclusionTexture;
+#endif
 
 vec4
 SRGBtoLINEAR (const in vec4);
@@ -62,36 +62,18 @@ getBaseColor ()
 
    // Get texture color.
 
-   switch (x3d_BaseTexture .textureType)
-   {
-      case x3d_TextureType2D:
-      {
-         vec4 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
-
+   #if defined(X3D_BASE_TEXTURE)
+      vec4 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
+      #if defined(X3D_BASE_TEXTURE_2D)
          return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .texture2D, texCoord .st));
-      }
-
-      #ifdef X3D_MATERIAL_TEXTURE_3D
-      case x3d_TextureType3D:
-      {
-         vec4 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
-
+      #elif defined(X3D_BASE_TEXTURE_3D)
          return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .texture3D, texCoord .stp));
-      }
-      #endif
-
-      #ifdef X3D_MATERIAL_TEXTURE_CUBE
-      case x3d_TextureTypeCube:
-      {
-         vec4 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
-
+      #elif defined(X3D_BASE_TEXTURE_CUBE)
          return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .textureCube, texCoord .stp));
-      }
       #endif
-
-      default:
-         return getTextureColor (baseParameter, vec4 (vec3 (1.0), alpha));
-   }
+   #else
+      return getTextureColor (baseParameter, vec4 (vec3 (1.0), alpha));
+   #endif
 }
 
 vec3
@@ -103,36 +85,19 @@ getEmissiveColor ()
 
    // Get texture color.
 
-   switch (x3d_EmissiveTexture .textureType)
-   {
-      case x3d_TextureType2D:
-      {
-         vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+   #if defined(X3D_EMISSIVE_TEXTURE)
+      vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
+      #if defined(X3D_EMISSIVE_TEXTURE_2D)
          return emissiveParameter * SRGBtoLINEAR (texture (x3d_EmissiveTexture .texture2D, texCoord .st)) .rgb;
-      }
-
-      #ifdef X3D_MATERIAL_TEXTURE_3D
-      case x3d_TextureType3D:
-      {
-         vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
-
+      #elif defined(X3D_EMISSIVE_TEXTURE_3D)
          return emissiveParameter * SRGBtoLINEAR (texture (x3d_EmissiveTexture .texture3D, texCoord .stp)) .rgb;
-      }
-      #endif
-
-      #ifdef X3D_MATERIAL_TEXTURE_CUBE
-      case x3d_TextureTypeCube:
-      {
-         vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
-
+      #elif defined(X3D_EMISSIVE_TEXTURE_CUBE)
          return emissiveParameter * SRGBtoLINEAR (texture (x3d_EmissiveTexture .textureCube, texCoord .stp)) .rgb;
-      }
       #endif
-
-      default:
-         return emissiveParameter .rgb;
-   }
+   #else
+      return emissiveParameter .rgb;
+   #endif
 }
 
 vec2
@@ -146,57 +111,24 @@ getMetallicRoughness ()
 
    // Get texture color.
 
-   switch (x3d_MetallicRoughnessTexture .textureType)
-   {
-      case x3d_TextureType2D:
-      {
-         vec4 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
-
-         // Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
-         // This layout intentionally reserves the 'r' channel for (optional) occlusion map data
+   #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE)
+      vec4 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
+      // Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
+      // This layout intentionally reserves the 'r' channel for (optional) occlusion map data
+      #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
          vec4 mrSample = texture (x3d_MetallicRoughnessTexture .texture2D, texCoord .st);
-
-         metallic            *= mrSample .b;
-         perceptualRoughness *= mrSample .g;
-
-         return vec2 (metallic, perceptualRoughness);
-      }
-
-      #ifdef X3D_MATERIAL_TEXTURE_3D
-      case x3d_TextureType3D:
-      {
-         vec4 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
-
-         // Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
-         // This layout intentionally reserves the 'r' channel for (optional) occlusion map data
+      #elif defined(X3D_METALLIC_ROUGHNESS_TEXTURE_3D)
          vec4 mrSample = texture (x3d_MetallicRoughnessTexture .texture3D, texCoord .stp);
-
-         metallic            *= mrSample .b;
-         perceptualRoughness *= mrSample .g;
-
-         return vec2 (metallic, perceptualRoughness);
-      }
-      #endif
-
-      #ifdef X3D_MATERIAL_TEXTURE_CUBE
-      case x3d_TextureTypeCube:
-      {
-         vec4 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
-
-         // Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
-         // This layout intentionally reserves the 'r' channel for (optional) occlusion map data
+      #elif defined(X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)
          vec4 mrSample = texture (x3d_MetallicRoughnessTexture .textureCube, texCoord .stp);
-
-         metallic            *= mrSample .b;
-         perceptualRoughness *= mrSample .g;
-
-         return vec2 (metallic, perceptualRoughness);
-      }
       #endif
+      metallic            *= mrSample .b;
+      perceptualRoughness *= mrSample .g;
 
-      default:
-         return vec2 (metallic, perceptualRoughness);
-   }
+      return vec2 (metallic, perceptualRoughness);
+   #else
+      return vec2 (metallic, perceptualRoughness);
+   #endif
 }
 
 float
@@ -204,76 +136,20 @@ getOcclusionFactor ()
 {
    // Get texture color.
 
-   switch (x3d_OcclusionTexture .textureType)
-   {
-      case x3d_TextureType2D:
-      {
-         vec4 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
+   #if defined(X3D_OCCLUSION_TEXTURE)
+      vec4 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
 
+      #if defined(X3D_OCCLUSION_TEXTURE_2D)
          return texture (x3d_OcclusionTexture .texture2D, texCoord .st) .r;
-      }
-
-      #ifdef X3D_MATERIAL_TEXTURE_3D
-      case x3d_TextureType3D:
-      {
-         vec4 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
-
+      #elif defined(X3D_OCCLUSION_TEXTURE_3D)
          return texture (x3d_OcclusionTexture .texture3D, texCoord .stp) .r;
-      }
-      #endif
-
-      #ifdef X3D_MATERIAL_TEXTURE_CUBE
-      case x3d_TextureTypeCube:
-      {
-         vec4 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
-
+      #elif defined(X3D_OCCLUSION_TEXTURE_CUBE)
          return texture (x3d_OcclusionTexture .textureCube, texCoord .stp) .r;
-      }
       #endif
-
-      default:
-         return 1.0;
-   }
+   #else
+      return 1.0;
+   #endif
 }
-
-#else // X3D_MATERIAL_TEXTURES
-
-vec2
-getMetallicRoughness ()
-{
-   // Metallic and Roughness material properties are packed together
-   // In glTF, these factors can be specified by fixed scalar values
-   // or from a metallic-roughness map
-   float metallic            = x3d_Material .metallic;
-   float perceptualRoughness = x3d_Material .roughness;
-
-   return vec2 (metallic, perceptualRoughness);
-}
-
-vec4
-getBaseColor ()
-{
-   // Get base parameter.
-
-   float alpha         = 1.0 - x3d_Material .transparency;
-   vec4  baseParameter = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .baseColor, alpha);
-
-   return getTextureColor (baseParameter, vec4 (vec3 (1.0), alpha));
-}
-
-vec3
-getEmissiveColor ()
-{
-   return x3d_Material .emissiveColor;
-}
-
-float
-getOcclusionFactor ()
-{
-   return 1.0;
-}
-
-#endif // X3D_MATERIAL_TEXTURES
 
 // Encapsulate the various inputs used by the various functions in the shading equation
 // We store values in this struct to simplify the integration of alternative implementations

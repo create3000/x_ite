@@ -115,9 +115,26 @@ function (Fields,
          this .setTransparent (Boolean (this .getTransparency () ||
                                (this .getEmissiveTexture () && this .getEmissiveTexture () .getTransparent ())));
       },
+      set_textures__: function ()
+      {
+         const browser = this .getBrowser ();
+
+         if (!this .getTextures ())
+            return this .shaderNode = browser .getUnlitShader ();
+
+         const options = ["X3D_MATERIAL_TEXTURES"];
+
+         if (this .getEmissiveTexture ())
+            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+
+         if (this .getNormalTexture ())
+            options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+
+         this .shaderNode = browser .createShader ("UnlitTexturesShader", "Unlit", options);
+      },
       getShader: function (browser, shadow)
       {
-         return this .getTextures () ? browser .getUnlitTexturesShader () : browser .getUnlitShader ();
+         return this .shaderNode;
       },
    });
 

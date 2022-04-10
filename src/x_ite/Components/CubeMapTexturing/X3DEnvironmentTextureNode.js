@@ -87,6 +87,10 @@ function (X3DSingleTextureNode,
       {
          return 4;
       },
+      getTextureTypeString: function ()
+      {
+         return "CUBE";
+      },
       getTargets: function ()
       {
          return this .targets;

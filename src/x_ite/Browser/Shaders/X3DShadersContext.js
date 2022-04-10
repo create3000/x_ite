@@ -148,10 +148,6 @@ function (Shading,
       {
          return this .getStandardShader ("getUnlitShader", _unlitShader, "UnlitShader", "Unlit", [ ], "set_unlit_shader_valid__");
       },
-      getUnlitTexturesShader: function ()
-      {
-         return this .getStandardShader ("getUnlitTexturesShader", _unlitTexturesShader, "UnlitTexturesShader", "Unlit", ["X3D_MATERIAL_TEXTURES"], "set_unlit_textures_shader_valid__");
-      },
       getGouraudShader: function ()
       {
          return this .getStandardShader ("getGouraudShader", _gouraudShader, "GouraudShader", "Gouraud", [ ], "set_gouraud_shader_valid__");
@@ -160,10 +156,6 @@ function (Shading,
       {
          return this .getStandardShader ("getPhongShader", _phongShader, "PhongShader", "Phong", [ ], "set_phong_shader_valid__");
       },
-      getMaterialTexturesShader: function ()
-      {
-         return this .getStandardShader ("getMaterialTexturesShader", _materialTexturesShader, "MaterialTexturesShader", "Phong", ["X3D_MATERIAL_TEXTURES"], "set_material_textures_shader_valid__");
-      },
       getShadowShader: function ()
       {
          return this .getStandardShader ("getShadowShader", _shadowShader, "ShadowShader", "Phong",["X3D_SHADOWS", "X3D_PCF_FILTERING"], "set_shadow_shader_valid__");
@@ -171,10 +163,6 @@ function (Shading,
       getPhysicalMaterialShader: function ()
       {
          return this .getStandardShader ("getPhysicalMaterialShader", _physicalMaterialShader, "PhysicalMaterialShader", "PBR", [ ], "set_physical_material_shader_valid__");
-      },
-      getPhysicalMaterialTexturesShader: function ()
-      {
-         return this .getStandardShader ("getPhysicalMaterialTexturesShader", _physicalMaterialTexturesShader, "PhysicalMaterialTexturesShader", "PBR", ["X3D_MATERIAL_TEXTURES"], "set_physical_material_textures_shader_valid__");
       },
       getDepthShader: function ()
       {
@@ -213,8 +201,6 @@ function (Shading,
 
          this [property] ._isValid .addInterest (valid, this);
 
-         this [_standardShaders] .push (this [property]);
-
          this [func] = function () { return this [property]; };
 
          Object .defineProperty (this, func, { enumerable: false });
@@ -251,6 +237,8 @@ function (Shading,
          shader .setShading (this .getBrowserOptions () .getShading ());
          shader .setup ();
 
+         this [_standardShaders] .push (shader);
+
          this .addShader (shader);
 
          return shader;
@@ -271,19 +259,6 @@ function (Shading,
          // Recompile shader.
          this [_unlitShader] ._parts [0] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.vs") ];
          this [_unlitShader] ._parts [1] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.fs") ];
-      },
-      set_unlit_textures_shader_valid__: function (valid)
-      {
-         this [_unlitTexturesShader] ._isValid .removeInterest ("set_unlit_textures_shader_valid__", this);
-
-         if (valid .getValue () && ShaderTest .verify (this, this [_unlitTexturesShader]))
-            return;
-
-         console .error ("X_ITE: Unlit shading is not available, using fallback VRML shader.");
-
-         // Recompile shader.
-         this [_unlitTexturesShader] ._parts [0] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.vs") ];
-         this [_unlitTexturesShader] ._parts [1] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.fs") ];
       },
       set_gouraud_shader_valid__: function (valid)
       {
@@ -311,19 +286,6 @@ function (Shading,
 
          this .setShading (this .getBrowserOptions () .getShading ());
       },
-      set_material_textures_shader_valid__: function (valid)
-      {
-         this [_materialTexturesShader] ._isValid .removeInterest ("set_material_textures_shader_valid__", this);
-
-         if (valid .getValue () && ShaderTest .verify (this, this [_materialTexturesShader]))
-            return;
-
-         console .warn ("X_ITE: Texture material shading is not available, using Gouraud shading.");
-
-         this [_materialTexturesShader] = this .getGouraudShader ();
-
-         this .setShading (this .getBrowserOptions () .getShading ());
-      },
       set_physical_material_shader_valid__: function (valid)
       {
          this [_physicalMaterialShader] ._isValid .removeInterest ("set_physical_material_shader_valid__", this);
@@ -334,19 +296,6 @@ function (Shading,
          console .warn ("X_ITE: Physical material shading is not available, using Gouraud shading.");
 
          this [_physicalMaterialShader] = this .getGouraudShader ();
-
-         this .setShading (this .getBrowserOptions () .getShading ());
-      },
-      set_physical_material_textures_shader_valid__: function (valid)
-      {
-         this [_physicalMaterialTexturesShader] ._isValid .removeInterest ("set_physical_material_textures_shader_valid__", this);
-
-         if (valid .getValue () && ShaderTest .verify (this, this [_physicalMaterialTexturesShader]))
-            return;
-
-         console .warn ("X_ITE: Physical material shading is not available, using Gouraud shading.");
-
-         this [_physicalMaterialTexturesShader] = this .getGouraudShader ();
 
          this .setShading (this .getBrowserOptions () .getShading ());
       },

@@ -85,22 +85,6 @@ struct x3d_MaterialParameters
 
 //uniform x3d_MaterialParameters x3d_Material;
 
-#ifdef X3D_MATERIAL_TEXTURES
-struct x3d_MaterialTextureParameters
-{
-   mediump int         textureType;
-   mediump int         textureTransformMapping;
-   mediump int         textureCoordinateMapping;
-   mediump sampler2D   texture2D;
-   #ifdef X3D_MATERIAL_TEXTURE_3D
-   mediump sampler3D   texture3D;
-   #endif
-   #ifdef X3D_MATERIAL_TEXTURE_CUBE
-   mediump samplerCube textureCube;
-   #endif
-};
-#endif
-
 struct x3d_PhysicalMaterialParameters
 {
    mediump vec3  baseColor;
@@ -113,6 +97,152 @@ struct x3d_PhysicalMaterialParameters
 };
 
 //uniform x3d_PhysicalMaterialParameters x3d_Material;
+
+#ifdef X3D_MATERIAL_TEXTURES
+struct x3d_AmbientTextureParameters
+{
+   mediump int         textureType;
+   mediump int         textureTransformMapping;
+   mediump int         textureCoordinateMapping;
+   #ifdef X3D_AMBIENT_TEXTURE_2D
+   mediump sampler2D   texture2D;
+   #endif
+   #ifdef X3D_AMBIENT_TEXTURE_3D
+   mediump sampler3D   texture3D;
+   #endif
+   #ifdef X3D_AMBIENT_TEXTURE_CUBE
+   mediump samplerCube textureCube;
+   #endif
+};
+
+struct x3d_DiffuseTextureParameters
+{
+   mediump int         textureType;
+   mediump int         textureTransformMapping;
+   mediump int         textureCoordinateMapping;
+   #ifdef X3D_DIFFUSE_TEXTURE_2D
+   mediump sampler2D   texture2D;
+   #endif
+   #ifdef X3D_DIFFUSE_TEXTURE_3D
+   mediump sampler3D   texture3D;
+   #endif
+   #ifdef X3D_DIFFUSE_TEXTURE_CUBE
+   mediump samplerCube textureCube;
+   #endif
+};
+
+struct x3d_SpecularTextureParameters
+{
+   mediump int         textureType;
+   mediump int         textureTransformMapping;
+   mediump int         textureCoordinateMapping;
+   #ifdef X3D_SPECULAR_TEXTURE_2D
+   mediump sampler2D   texture2D;
+   #endif
+   #ifdef X3D_SPECULAR_TEXTURE_3D
+   mediump sampler3D   texture3D;
+   #endif
+   #ifdef X3D_SPECULAR_TEXTURE_CUBE
+   mediump samplerCube textureCube;
+   #endif
+};
+
+struct x3d_EmissiveTextureParameters
+{
+   mediump int         textureType;
+   mediump int         textureTransformMapping;
+   mediump int         textureCoordinateMapping;
+   #ifdef X3D_EMISSIVE_TEXTURE_2D
+   mediump sampler2D   texture2D;
+   #endif
+   #ifdef X3D_EMISSIVE_TEXTURE_3D
+   mediump sampler3D   texture3D;
+   #endif
+   #ifdef X3D_EMISSIVE_TEXTURE_CUBE
+   mediump samplerCube textureCube;
+   #endif
+};
+
+struct x3d_ShininessTextureParameters
+{
+   mediump int         textureType;
+   mediump int         textureTransformMapping;
+   mediump int         textureCoordinateMapping;
+   #ifdef X3D_SHININESS_TEXTURE_2D
+   mediump sampler2D   texture2D;
+   #endif
+   #ifdef X3D_SHININESS_TEXTURE_3D
+   mediump sampler3D   texture3D;
+   #endif
+   #ifdef X3D_SHININESS_TEXTURE_CUBE
+   mediump samplerCube textureCube;
+   #endif
+};
+
+struct x3d_BaseTextureParameters
+{
+   mediump int         textureType;
+   mediump int         textureTransformMapping;
+   mediump int         textureCoordinateMapping;
+   #ifdef X3D_BASE_TEXTURE_2D
+   mediump sampler2D   texture2D;
+   #endif
+   #ifdef X3D_BASE_TEXTURE_3D
+   mediump sampler3D   texture3D;
+   #endif
+   #ifdef X3D_BASE_TEXTURE_CUBE
+   mediump samplerCube textureCube;
+   #endif
+};
+
+struct x3d_MetallicRoughnessTextureParameters
+{
+   mediump int         textureType;
+   mediump int         textureTransformMapping;
+   mediump int         textureCoordinateMapping;
+   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_2D
+   mediump sampler2D   texture2D;
+   #endif
+   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_3D
+   mediump sampler3D   texture3D;
+   #endif
+   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE
+   mediump samplerCube textureCube;
+   #endif
+};
+
+struct x3d_OcclusionTextureParameters
+{
+   mediump int         textureType;
+   mediump int         textureTransformMapping;
+   mediump int         textureCoordinateMapping;
+   #ifdef X3D_OCCLUSION_TEXTURE_2D
+   mediump sampler2D   texture2D;
+   #endif
+   #ifdef X3D_OCCLUSION_TEXTURE_3D
+   mediump sampler3D   texture3D;
+   #endif
+   #ifdef X3D_OCCLUSION_TEXTURE_CUBE
+   mediump samplerCube textureCube;
+   #endif
+};
+
+struct x3d_NormalTextureParameters
+{
+   mediump int         textureType;
+   mediump int         textureTransformMapping;
+   mediump int         textureCoordinateMapping;
+   #ifdef X3D_NORMAL_TEXTURE_2D
+   mediump sampler2D   texture2D;
+   #endif
+   #ifdef X3D_NORMAL_TEXTURE_3D
+   mediump sampler3D   texture3D;
+   #endif
+   #ifdef X3D_NORMAL_TEXTURE_CUBE
+   mediump samplerCube textureCube;
+   #endif
+};
+#endif
 
 struct x3d_MultiTextureParameters
 {

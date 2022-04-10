@@ -48,12 +48,14 @@
 
 
  define ([
+   "x_ite/Fields",
    "x_ite/Components/Shape/X3DMaterialNode",
    "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
-function (X3DMaterialNode,
+function (Fields,
+          X3DMaterialNode,
           X3DCast,
           X3DConstants,
           Algorithm)
@@ -66,6 +68,8 @@ function (X3DMaterialNode,
 
       this .addType (X3DConstants .X3DOneSidedMaterialNode);
 
+      this .addChildObjects ("textures", new Fields .SFTime ());
+
       this .emissiveColor = new Float32Array (3);
       this .textures      = 0;
    }
@@ -77,11 +81,16 @@ function (X3DMaterialNode,
       {
          X3DMaterialNode .prototype .initialize .call (this);
 
+         this .shaderNode = this .getBrowser () .getUnlitShader ();
+
          this ._emissiveColor   .addInterest ("set_emissiveColor__",   this);
          this ._emissiveTexture .addInterest ("set_emissiveTexture__", this);
+         this ._emissiveTexture .addInterest ("set_textures__",        this);
          this ._normalTexture   .addInterest ("set_normalTexture__",   this);
+         this ._normalTexture   .addInterest ("set_textures__",        this);
          this ._transparency    .addInterest ("set_transparency__",    this);
          this ._transparency    .addInterest ("set_transparent__",     this);
+         this ._textures        .addInterest ("set_textures__",        this);
 
          this .set_emissiveColor__ ();
          this .set_emissiveTexture__ ();
@@ -117,6 +126,8 @@ function (X3DMaterialNode,
       {
          this .transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
       },
+      set_textures__: function ()
+      { },
       set_transparent__: function ()
       {
          this .setTransparent (Boolean (this .transparency));
@@ -155,6 +166,8 @@ function (X3DMaterialNode,
             this .textures |= 1 << index;
          else
             this .textures &= ~(1 << index);
+
+         this ._textures = this .getBrowser () .getCurrentTime ();
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {

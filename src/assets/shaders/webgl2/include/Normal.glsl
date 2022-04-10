@@ -1,7 +1,5 @@
-
 #ifdef X3D_MATERIAL_TEXTURES
-
-uniform x3d_MaterialTextureParameters x3d_NormalTexture;
+uniform x3d_NormalTextureParameters x3d_NormalTexture;
 
 // Tangent-Bitangent-Normal-Matrix
 mat3
@@ -19,6 +17,7 @@ getTBNMatrix (const in vec2 texCoord)
 
    return tbn;
 }
+#endif
 
 vec3
 getNormalVector ()
@@ -27,49 +26,27 @@ getNormalVector ()
 
    // Get normal vector.
 
-   switch (x3d_NormalTexture .textureType)
-   {
-      case x3d_TextureType2D:
-      {
-         vec4 texCoord    = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
-         vec3 n           = texture (x3d_NormalTexture .texture2D, texCoord .st) .rgb;
-         vec3 normalScale = vec3 (vec2 (x3d_Material .normalScale), 1.0);
-         mat3 tbn         = getTBNMatrix (texCoord .st);
+   #if defined(X3D_NORMAL_TEXTURE)
+      vec4 texCoord    = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
+      vec3 normalScale = vec3 (vec2 (x3d_Material .normalScale), 1.0);
+      mat3 tbn         = getTBNMatrix (texCoord .st);
 
-         return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
-      }
+      #if defined(X3D_NORMAL_TEXTURE_2D)
+      vec3 n = texture (x3d_NormalTexture .texture2D, texCoord .st) .rgb;
 
-      // case x3d_TextureType3D:
-      // {
-      //    vec4 texCoord    = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
-      //    vec3 n           = texture (x3d_NormalTexture .texture3D, texCoord .stp) .rgb;
-      //    vec3 normalScale = vec3 (vec2 (x3d_Material .normalScale), 1.0);
-      //    mat3 tbn         = getTBNMatrix (texCoord .st);
+      return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
 
-      //    return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
-      // }
+      #elif defined(X3D_NORMAL_TEXTURE_3D)
+      vec3 n = texture (x3d_NormalTexture .texture3D, texCoord .stp) .rgb;
 
-      // case x3d_TextureTypeCube:
-      // {
-      //    vec4 texCoord    = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
-      //    vec3 n           = texture (x3d_NormalTexture .textureCube, texCoord .stp) .rgb;
-      //    vec3 normalScale = vec3 (vec2 (x3d_Material .normalScale), 1.0);
-      //    mat3 tbn         = getTBNMatrix (texCoord .st);
+      return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
 
-      //    return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
-      // }
+      #elif defined(X3D_NORMAL_TEXTURE_CUBE)
+      vec3 n = texture (x3d_NormalTexture .textureCube, texCoord .stp) .rgb;
 
-      default:
-         return normalize (normal) * facing;
-   }
+      return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
+      #endif
+   #else
+   return normalize (normal) * facing;
+   #endif
 }
-
-#else // X3D_MATERIAL_TEXTURES
-
-vec3
-getNormalVector ()
-{
-   return normalize (gl_FrontFacing ? normal : -normal);
-}
-
-#endif // X3D_MATERIAL_TEXTURES

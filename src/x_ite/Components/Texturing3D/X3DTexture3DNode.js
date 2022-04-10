@@ -100,6 +100,10 @@ function (X3DSingleTextureNode,
       {
          return 3;
       },
+      getTextureTypeString: function ()
+      {
+         return "3D";
+      },
       getWidth: function ()
       {
          return this .width;
