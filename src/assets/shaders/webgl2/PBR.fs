@@ -38,8 +38,9 @@ uniform float x3d_LogarithmicFarFactor1_2;
 in float depth;
 #endif
 
-#pragma X3D include "include/Normal.glsl"
 #pragma X3D include "include/Texture.glsl"
+#pragma X3D include "include/Normal.glsl"
+#pragma X3D include "include/SpotFactor.glsl"
 
 #ifdef X3D_MATERIAL_TEXTURES
 
@@ -273,19 +274,6 @@ getOcclusionFactor ()
 }
 
 #endif // X3D_MATERIAL_TEXTURES
-
-float
-getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)
-{
-   float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));
-
-   if (spotAngle >= cutOffAngle)
-      return 0.0;
-   else if (spotAngle <= beamWidth)
-      return 1.0;
-
-   return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
-}
 
 // Encapsulate the various inputs used by the various functions in the shading equation
 // We store values in this struct to simplify the integration of alternative implementations

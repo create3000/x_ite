@@ -3,9 +3,6 @@
 
 uniform x3d_MaterialTextureParameters x3d_NormalTexture;
 
-vec4
-getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping);
-
 // Tangent-Bitangent-Normal-Matrix
 mat3
 getTBNMatrix (const in vec2 texCoord)
@@ -67,7 +64,7 @@ getNormalVector ()
    }
 }
 
-#else
+#else // X3D_MATERIAL_TEXTURES
 
 vec3
 getNormalVector ()
@@ -75,4 +72,4 @@ getNormalVector ()
    return normalize (gl_FrontFacing ? normal : -normal);
 }
 
-#endif
+#endif // X3D_MATERIAL_TEXTURES

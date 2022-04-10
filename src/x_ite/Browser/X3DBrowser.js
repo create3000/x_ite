@@ -437,7 +437,7 @@ function ($,
       },
       loadURL: function (url, parameter = new Fields .MFString ())
       {
-         const promise = new Promise (function (resolve, reject)
+         return new Promise (function (resolve, reject)
          {
             if (!(url instanceof Fields .MFString))
                throw new Error ("Browser.loadURL: url must be of type MFString.");
@@ -526,8 +526,6 @@ function ($,
             .bind (this));
          }
          .bind (this));
-
-         return promise;
       },
       addBrowserListener: function (callback, object)
       {

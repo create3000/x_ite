@@ -54,6 +54,7 @@ define ([
    "text!assets/shaders/webgl1/include/Pack.glsl",
    "text!assets/shaders/webgl1/include/Perlin.glsl",
    "text!assets/shaders/webgl1/include/Shadow.glsl",
+   "text!assets/shaders/webgl1/include/SpotFactor.glsl",
    "text!assets/shaders/webgl1/include/Texture.glsl",
    "text!assets/shaders/webgl2/include/ClipPlanes.glsl",
    "text!assets/shaders/webgl2/include/Fog.glsl",
@@ -62,6 +63,7 @@ define ([
    "text!assets/shaders/webgl2/include/Pack.glsl",
    "text!assets/shaders/webgl2/include/Perlin.glsl",
    "text!assets/shaders/webgl2/include/Shadow.glsl",
+   "text!assets/shaders/webgl2/include/SpotFactor.glsl",
    "text!assets/shaders/webgl2/include/Texture.glsl",
 ],
 function (ClipPlanes1,
@@ -70,6 +72,7 @@ function (ClipPlanes1,
           Pack1,
           Perlin1,
           Shadow1,
+          SpotFactor1,
           Texture1,
           ClipPlanes2,
           Fog2,
@@ -78,6 +81,7 @@ function (ClipPlanes1,
           Pack2,
           Perlin2,
           Shadow2,
+          SpotFactor2,
           Texture2)
 {
 "use strict";
@@ -91,6 +95,7 @@ function (ClipPlanes1,
       Pack: Pack1,
       Perlin: Perlin1,
       Shadow: Shadow1,
+      SpotFactor: SpotFactor1,
       Texture: Texture1,
    };
 
@@ -102,6 +107,7 @@ function (ClipPlanes1,
       Pack: Pack2,
       Perlin: Perlin2,
       Shadow: Shadow2,
+      SpotFactor: SpotFactor2,
       Texture: Texture2,
    };
 
