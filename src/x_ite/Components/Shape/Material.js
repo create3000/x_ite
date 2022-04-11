@@ -312,7 +312,6 @@ function (Fields,
          gl .uniform3fv (shaderObject .x3d_DiffuseColor,      this .diffuseColor);
          gl .uniform3fv (shaderObject .x3d_SpecularColor,     this .specularColor);
          gl .uniform1f  (shaderObject .x3d_Shininess,         this .shininess);
-         gl .uniform1f  (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
          if (this .getTextures ())
          {
@@ -383,6 +382,8 @@ function (Fields,
 
             if (this .occlusionTextureNode)
             {
+               gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+
                this .occlusionTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, occlusionTexture);
 
                gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);

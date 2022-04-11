@@ -170,7 +170,6 @@ function (Fields,
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
          gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
-         gl .uniform1f  (shaderObject .x3d_NormalScale,   this ._normalScale .getValue ());
          gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
 
          if (this .textures)
@@ -197,6 +196,8 @@ function (Fields,
 
             if (this .normalTextureNode)
             {
+               gl .uniform1f (shaderObject .x3d_NormalScale, this ._normalScale .getValue ());
+
                this .normalTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, normalTexture);
 
                gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (this ._normalTextureMapping .getValue ()) || 0);

@@ -32,20 +32,14 @@ getNormalVector ()
       mat3 tbn         = getTBNMatrix (texCoord .st);
 
       #if defined(X3D_NORMAL_TEXTURE_2D)
-      vec3 n = texture (x3d_NormalTexture .texture2D, texCoord .st) .rgb;
-
-      return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
-
+         vec3 n = texture (x3d_NormalTexture .texture2D, texCoord .st) .rgb;
       #elif defined(X3D_NORMAL_TEXTURE_3D)
-      vec3 n = texture (x3d_NormalTexture .texture3D, texCoord .stp) .rgb;
-
-      return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
-
+         vec3 n = texture (x3d_NormalTexture .texture3D, texCoord .stp) .rgb;
       #elif defined(X3D_NORMAL_TEXTURE_CUBE)
-      vec3 n = texture (x3d_NormalTexture .textureCube, texCoord .stp) .rgb;
+         vec3 n = texture (x3d_NormalTexture .textureCube, texCoord .stp) .rgb;
+      #endif
 
       return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
-      #endif
    #else
    return normalize (normal) * facing;
    #endif

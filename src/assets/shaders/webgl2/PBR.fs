@@ -349,7 +349,10 @@ main ()
    #endif
 
    // Apply optional PBR terms for additional (optional) shading.
-   finalColor  = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
+   #ifdef X3D_OCCLUSION_TEXTURE
+   finalColor = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
+   #endif
+
    finalColor += getEmissiveColor ();
 
    if (baseColor .a < x3d_AlphaCutoff)

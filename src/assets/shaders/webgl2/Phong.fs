@@ -255,7 +255,10 @@ getMaterialColor ()
       }
    }
 
-	finalColor  = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
+   #ifdef X3D_OCCLUSION_TEXTURE
+	finalColor = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
+   #endif
+
    finalColor += getEmissiveColor ();
 
    return vec4 (finalColor, alpha);

@@ -244,10 +244,9 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 
-         gl .uniform3fv (shaderObject .x3d_BaseColor,         this .baseColor);
-         gl .uniform1f  (shaderObject .x3d_Metallic,          this .metallic);
-         gl .uniform1f  (shaderObject .x3d_Roughness,         this .roughness);
-         gl .uniform1f  (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+         gl .uniform3fv (shaderObject .x3d_BaseColor, this .baseColor);
+         gl .uniform1f  (shaderObject .x3d_Metallic,  this .metallic);
+         gl .uniform1f  (shaderObject .x3d_Roughness, this .roughness);
 
          if (this .getTextures ())
          {
@@ -288,6 +287,8 @@ function (Fields,
 
             if (this .occlusionTextureNode)
             {
+               gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+
                this .occlusionTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, occlusionTexture);
 
                gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
