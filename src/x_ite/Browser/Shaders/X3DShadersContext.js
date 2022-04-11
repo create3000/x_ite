@@ -138,11 +138,11 @@ function (Shading,
       },
       getPointShader: function ()
       {
-         return this .getStandardShader ("getPointShader", _pointShader, "PointShader", "PointSet", [ ], "set_point_shader_valid__");
+         return this .getStandardShader ("getPointShader", _pointShader, "PointShader", "Point", [ ], "set_point_shader_valid__");
       },
       getLineShader: function ()
       {
-         return this .getStandardShader ("getLineShader", _lineShader, "WireframeShader", "Wireframe", [ ], "set_line_shader_valid__");
+         return this .getStandardShader ("getLineShader", _lineShader, "LineShader", "Line", [ ], "set_line_shader_valid__");
       },
       getUnlitShader: function ()
       {
