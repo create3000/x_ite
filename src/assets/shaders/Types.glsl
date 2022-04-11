@@ -241,7 +241,7 @@ struct x3d_NormalTextureParameters
    mediump samplerCube textureCube;
    #endif
 };
-#endif
+#endif // X3D_MATERIAL_TEXTURES
 
 struct x3d_MultiTextureParameters
 {
