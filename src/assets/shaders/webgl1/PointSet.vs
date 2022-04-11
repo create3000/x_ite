@@ -51,7 +51,7 @@ main ()
    pointSize *= 1.0 / (pointSizeAttenuation [0] + pointSizeAttenuation [1] * dL + pointSizeAttenuation [2] * (dL * dL));
    pointSize  = clamp (pointSize, pointSizeMinValue, pointSizeMaxValue);
 
-   gl_PointSize = pointSize + (x3d_NumTextures > 0 ? 0.0 : 1.0);
+   gl_PointSize = pointSize > 1.0 ? pointSize + 1.0 : pointSize;
 
    // Determine color.
 
