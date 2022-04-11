@@ -2,7 +2,7 @@
 precision highp float;
 precision highp int;
 uniform bool x3d_ColorMaterial; 
-uniform x3d_MaterialParameters x3d_Material;
+uniform x3d_UnlitMaterialParameters x3d_Material;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 in float x3d_FogDepth;

@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = X3D .define,
-	require = X3D .require;
+	define  = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -107,7 +107,7 @@ function (Fields,
       },
       set_boolean__: function ()
       {
-         var value = this ._set_boolean .getValue ();
+         const value = this ._set_boolean .getValue ();
 
          if (value)
             this ._inputTrue = true;
@@ -205,7 +205,7 @@ function (X3DChildNode,
       },
       set_fraction__: function ()
       {
-         var
+         const
             fraction = this ._set_fraction .getValue (),
             key      = this ._key,
             length   = key .length;
@@ -213,7 +213,7 @@ function (X3DChildNode,
          if (length === 0)
             return;
 
-         var i = 0;
+         let i = 0;
 
          if (length === 1 || fraction <= key [0])
             i = 0;
@@ -223,7 +223,7 @@ function (X3DChildNode,
 
          else
          {
-            var index = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
+            const index = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
 
             i = index - 1;
          }

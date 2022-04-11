@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = X3D .define,
-	require = X3D .require;
+	define  = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -91,6 +91,14 @@ function (X3DSingleTextureNode,
       {
          return this .target;
       },
+      getTextureType: function ()
+      {
+         return 4;
+      },
+      getTextureTypeString: function ()
+      {
+         return "CUBE";
+      },
       getTargets: function ()
       {
          return this .targets;
@@ -121,11 +129,14 @@ function (X3DSingleTextureNode,
                                                                          false,
                                                                          false);
       },
-      setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
+      setShaderUniformsToChannel: function (gl, shaderObject, renderObject, channel)
       {
-         gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getCubeMapTextureUnits () [i]);
+         const textureUnit = renderObject .getBrowser () .getTextureCubeUnit ();
+
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
-         gl .uniform1i (shaderObject .x3d_TextureType [i], 4);
+         gl .uniform1i (channel .textureType, 4);
+         gl .uniform1i (channel .textureCube, textureUnit);
       },
    });
 
@@ -692,13 +703,13 @@ function (Fields,
          if (this ._update .getValue () === "NONE")
             return;
 
-         if (! this .frameBuffer)
+         if (!this .frameBuffer)
             return;
 
          //if (renderObject .getBrowser () !== this .getBrowser ())
          //	return; // Could be interesting for four-side-view
 
-         if (! renderObject .isIndependent ())
+         if (!renderObject .isIndependent ())
             return;
 
          renderObject .getGeneratedCubeMapTextures () .push (this);
@@ -810,6 +821,7 @@ function (Fields,
                   width  = this .frameBuffer .getWidth (),
                   height = this .frameBuffer .getHeight ();
 
+               gl .bindTexture (this .getTarget (), this .getTexture ());
                gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
             }
 
@@ -828,11 +840,11 @@ function (Fields,
       {
          const Zero = new Float32Array (16); // Trick: zero model view matrix to hide object.
 
-         return function (gl, shaderObject, renderObject, i)
+         return function (gl, shaderObject, renderObject, channel)
          {
-            X3DEnvironmentTextureNode .prototype .setShaderUniformsToChannel .call (this, gl, shaderObject, renderObject, i);
+            X3DEnvironmentTextureNode .prototype .setShaderUniformsToChannel .call (this, gl, shaderObject, renderObject, channel);
 
-            if (! renderObject .isIndependent ())
+            if (renderObject === this .renderer)
                gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, Zero);
          };
       })(),
@@ -1097,7 +1109,7 @@ function ($,
 
                // Transfer image.
 
-               gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, false, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (data));
+               gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, false, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (data .buffer));
             }
 
             this .updateTextureProperties ();

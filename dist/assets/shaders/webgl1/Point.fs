@@ -57,10 +57,11 @@ if (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)
 discard;
 }
 }
+uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
 uniform int x3d_NumTextures;
 uniform int x3d_TextureType [x3d_MaxTextures]; 
 uniform sampler2D x3d_Texture2D [x3d_MaxTextures];
-uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
+uniform samplerCube x3d_TextureCube [x3d_MaxTextures];
 #ifdef X3D_MULTI_TEXTURING
 #define M_PI 3.14159265358979323846
 float rand (vec2 co) { return fract (sin (dot (co.xy, vec2 (12.9898,78.233))) * 43758.5453); }
@@ -100,6 +101,20 @@ uniform vec3 x3d_ProjectiveTextureLocation [x3d_MaxTextures];
 uniform vec4 x3d_MultiTextureColor;
 uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
 uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];
+mat4
+getTextureMatrix (const in int i)
+{
+mat4 textureMatrix = mat4 (0.0);
+#if x3d_MaxTextures > 0
+if (i == 0)
+textureMatrix = x3d_TextureMatrix [0];
+#endif
+#if x3d_MaxTextures > 1
+else if (i == 1)
+textureMatrix = x3d_TextureMatrix [1];
+#endif
+return textureMatrix;
+}
 vec4
 getTexCoord (const in int i)
 {
@@ -115,12 +130,12 @@ texCoord = texCoord1;
 return texCoord;
 }
 vec4
-getTextureCoordinate (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int i)
+getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int textureTransformMapping, const in int textureCoordinateMapping)
 {
 int mode = textureCoordinateGenerator .mode;
 if (mode == x3d_None)
 {
-return getTexCoord (i);
+return getTextureMatrix (textureTransformMapping) * getTexCoord (textureCoordinateMapping);
 }
 else if (mode == x3d_Sphere)
 {
@@ -179,7 +194,7 @@ float eta = textureCoordinateGenerator .parameter [0];
 vec3 eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);
 return vec4 (refract (normalize (localVertex - eye), -N, eta), 1.0);
 }
-return getTexCoord (i);
+return getTextureMatrix (textureTransformMapping) * getTexCoord (textureCoordinateMapping);
 }
 vec4
 getTexture2D (const in int i, const in vec2 texCoord)
@@ -201,11 +216,11 @@ getTextureCube (const in int i, const in vec3 texCoord)
 vec4 color = vec4 (0.0);
 #if x3d_MaxTextures > 0
 if (i == 0)
-color = textureCube (x3d_CubeMapTexture [0], texCoord);
+color = textureCube (x3d_TextureCube [0], texCoord);
 #endif
 #if x3d_MaxTextures > 1
 else if (i == 1)
-color = textureCube (x3d_CubeMapTexture [1], texCoord);
+color = textureCube (x3d_TextureCube [1], texCoord);
 #endif
 return color;
 }
@@ -217,7 +232,7 @@ for (int i = 0; i < x3d_MaxTextures; ++ i)
 {
 if (i == x3d_NumTextures)
 break;
-vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
+vec4 texCoord = getTexCoord (x3d_TextureCoordinateGenerator [i], i, i);
 vec4 textureColor = vec4 (1.0);
 texCoord .stp /= texCoord .q;
 if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
@@ -226,7 +241,7 @@ if (x3d_TextureType [i] == x3d_TextureType2D)
 {
 textureColor = getTexture2D (i, texCoord .st);
 }
-else if (x3d_TextureType [i] == x3d_TextureTypeCubeMapTexture)
+else if (x3d_TextureType [i] == x3d_TextureTypeCube)
 {
 textureColor = getTextureCube (i, texCoord .stp);
 }
@@ -477,9 +492,9 @@ if (x3d_TextureType [0] == x3d_TextureType2D)
 {
 textureColor = texture2D (x3d_Texture2D [0], texCoord .st);
 }
-else if (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)
+else if (x3d_TextureType [0] == x3d_TextureTypeCube)
 {
-textureColor = textureCube (x3d_CubeMapTexture [0], texCoord .stp);
+textureColor = textureCube (x3d_TextureCube [0], texCoord .stp);
 }
 return diffuseColor * textureColor;
 }
@@ -492,32 +507,21 @@ return currentColor;
 vec4
 getPointColor ()
 {
-vec4 finalColor = color;
-if (x3d_NumTextures > 0)
-{
 vec4 texCoord = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
 texCoord0 = texCoord;
 texCoord1 = texCoord;
-vec4 textureColor = getTextureColor (vec4 (1.0), vec4 (1.0));
-if (x3d_PointProperties .colorMode == x3d_PointColor)
+vec4 finalColor = getTextureColor (color, vec4 (1.0));
+if (x3d_NumTextures == 0)
 {
-finalColor .a *= textureColor .a;
-}
-else if (x3d_PointProperties .colorMode == x3d_TextureColor)
+if (pointSize > 1.0)
 {
-finalColor = textureColor;
-}
-else 
-{
-finalColor .rgb += textureColor .rgb;
-finalColor .a *= textureColor .a;
-}
+float t = max (distance (vec2 (0.5), gl_PointCoord) * pointSize - max (pointSize / 2.0 - 1.0, 0.0), 0.0);
+finalColor .a = mix (finalColor .a, 0.0, t);
 }
 else
 {
-float ps = (pointSize + 1.0) / 2.0;
-float t = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * ps - ps + 1.0;
-finalColor .a = mix (finalColor .a, 0.0, clamp (t, 0.0, 1.0));
+finalColor .a *= pointSize;
+}
 }
 return finalColor;
 }

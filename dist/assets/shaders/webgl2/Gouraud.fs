@@ -23,19 +23,20 @@ in float depth;
 #endif
 out vec4 x3d_FragColor;
 precision highp sampler3D;
+uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
 uniform int x3d_NumTextures;
 uniform int x3d_TextureType [x3d_MaxTextures]; 
 uniform sampler2D x3d_Texture2D [x3d_MaxTextures];
 uniform sampler3D x3d_Texture3D [x3d_MaxTextures];
-uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
+uniform samplerCube x3d_TextureCube [x3d_MaxTextures];
 #ifdef X3D_MULTI_TEXTURING
-#define M_PI 3.14159265358979323846
 float rand (vec2 co) { return fract (sin (dot (co.xy, vec2 (12.9898,78.233))) * 43758.5453); }
 float rand (vec2 co, float l) { return rand (vec2 (rand (co), l)); }
 float rand (vec2 co, float l, float t) { return rand (vec2 (rand (co, l), t)); }
 float
 perlin (vec2 p, float dim, float time)
 {
+const float M_PI = 3.14159265358979323846;
 vec2 pos = floor (p * dim);
 vec2 posx = pos + vec2 (1.0, 0.0);
 vec2 posy = pos + vec2 (0.0, 1.0);
@@ -63,7 +64,7 @@ uniform int x3d_NumProjectiveTextures;
 uniform sampler2D x3d_ProjectiveTexture [x3d_MaxTextures];
 uniform mat4 x3d_ProjectiveTextureMatrix [x3d_MaxTextures];
 uniform vec3 x3d_ProjectiveTextureLocation [x3d_MaxTextures];
-#endif
+#endif 
 uniform vec4 x3d_MultiTextureColor;
 uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
 uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];
@@ -91,14 +92,14 @@ return vec4 (0.0);
 }
 }
 vec4
-getTextureCoordinate (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int i)
+getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int textureTransformMapping, const in int textureCoordinateMapping)
 {
 int mode = textureCoordinateGenerator .mode;
 switch (mode)
 {
 case x3d_None:
 {
-return getTexCoord (i);
+return x3d_TextureMatrix [textureTransformMapping] * getTexCoord (textureCoordinateMapping);
 }
 case x3d_Sphere:
 {
@@ -159,9 +160,18 @@ return vec4 (refract (normalize (localVertex - eye), -N, eta), 1.0);
 }
 default:
 {
-return getTexCoord (i);
+return x3d_TextureMatrix [textureTransformMapping] * getTexCoord (textureCoordinateMapping);
 }
 }
+}
+vec4
+getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
+{
+vec4 texCoord = getTexCoord (x3d_TextureCoordinateGenerator [textureCoordinateMapping], textureTransformMapping, textureCoordinateMapping);
+texCoord .stp /= texCoord .q;
+if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
+texCoord .s = 1.0 - texCoord .s;
+return texCoord;
 }
 vec4
 getTexture2D (const in int i, const in vec2 texCoord)
@@ -217,13 +227,13 @@ switch (i)
 #if x3d_MaxTextures > 0
 case 0:
 {
-return texture (x3d_CubeMapTexture [0], texCoord);
+return texture (x3d_TextureCube [0], texCoord);
 }
 #endif
 #if x3d_MaxTextures > 1
 case 1:
 {
-return texture (x3d_CubeMapTexture [1], texCoord);
+return texture (x3d_TextureCube [1], texCoord);
 }
 #endif
 default:
@@ -240,11 +250,8 @@ for (int i = 0; i < x3d_MaxTextures; ++ i)
 {
 if (i == x3d_NumTextures)
 break;
-vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
+vec4 texCoord = getTexCoord (i, i);
 vec4 textureColor = vec4 (1.0);
-texCoord .stp /= texCoord .q;
-if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
-texCoord .s = 1.0 - texCoord .s;
 switch (x3d_TextureType [i])
 {
 case x3d_TextureType2D:
@@ -257,7 +264,7 @@ case x3d_TextureType3D:
 textureColor = getTexture3D (i, texCoord .stp);
 break;
 }
-case x3d_TextureTypeCubeMapTexture:
+case x3d_TextureTypeCube:
 {
 textureColor = getTextureCube (i, texCoord .stp);
 break;
@@ -558,14 +565,19 @@ currentColor *= getProjectiveTexture (i, texCoord .st);
 }
 return currentColor;
 }
-#else
+#else 
 vec4
 getProjectiveTextureColor (in vec4 currentColor)
 {
 return currentColor;
 }
-#endif
-#else
+#endif 
+#else 
+vec4
+getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
+{
+return texCoord0;
+}
 vec4
 getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 {
@@ -586,9 +598,9 @@ case x3d_TextureType3D:
 textureColor = texture (x3d_Texture3D [0], texCoord .stp);
 break;
 }
-case x3d_TextureTypeCubeMapTexture:
+case x3d_TextureTypeCube:
 {
-textureColor = texture (x3d_CubeMapTexture [0], texCoord .stp);
+textureColor = texture (x3d_TextureCube [0], texCoord .stp);
 break;
 }
 }
@@ -599,7 +611,7 @@ getProjectiveTextureColor (in vec4 currentColor)
 {
 return currentColor;
 }
-#endif
+#endif 
 uniform x3d_FillPropertiesParameters x3d_FillProperties;
 vec4
 getHatchColor (vec4 color)

@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = X3D .define,
-	require = X3D .require;
+	define  = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -371,20 +371,20 @@ function (Fields,
             console .error (error);
          }
       },
-      setShaderUniforms: function (gl, shaderObject)
+      setShaderUniforms: function (gl, shaderObject, renderObject)
       {
-         var i = shaderObject .numProjectiveTextures ++;
+         const i = shaderObject .numProjectiveTextures ++;
 
          if (shaderObject .hasTextureProjector (i, this))
             return;
 
-         var
-            textureProjectorNode = this .textureProjectorNode,
-            texture              = textureProjectorNode .getTexture ();
+         const
+            texture     = this .textureProjectorNode .getTexture (),
+            textureUnit = renderObject .getBrowser () .getTexture2DUnit ();
 
-         gl .activeTexture (gl .TEXTURE0 + this .browser .getProjectiveTextureUnits () [i]);
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
-         gl .activeTexture (gl .TEXTURE0);
+         gl .uniform1i (shaderObject .x3d_ProjectiveTexture [i], textureUnit);
 
          gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
          gl .uniform3fv (shaderObject .x3d_ProjectiveTextureLocation [i], this .locationArray);
@@ -620,20 +620,20 @@ function (Fields,
             console .error (error);
          }
       },
-      setShaderUniforms: function (gl, shaderObject)
+      setShaderUniforms: function (gl, shaderObject, renderObject)
       {
-         var i = shaderObject .numProjectiveTextures ++;
+         const i = shaderObject .numProjectiveTextures ++;
 
          if (shaderObject .hasTextureProjector (i, this))
             return;
 
-         var
-            textureProjectorNode = this .textureProjectorNode,
-            texture              = textureProjectorNode .getTexture ();
+         const
+            texture     = this .textureProjectorNode .getTexture (),
+            textureUnit = renderObject .getBrowser () .getTexture2DUnit ();
 
-         gl .activeTexture (gl .TEXTURE0 + this .browser .getProjectiveTextureUnits () [i]);
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
-         gl .activeTexture (gl .TEXTURE0);
+         gl .uniform1i (shaderObject .x3d_ProjectiveTexture [i], textureUnit);
 
          gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
          gl .uniform3fv (shaderObject .x3d_ProjectiveTextureLocation [i], this .locationArray);

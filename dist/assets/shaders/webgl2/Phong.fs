@@ -290,19 +290,20 @@ return 0.0;
 }
 #endif
 precision highp sampler3D;
+uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
 uniform int x3d_NumTextures;
 uniform int x3d_TextureType [x3d_MaxTextures]; 
 uniform sampler2D x3d_Texture2D [x3d_MaxTextures];
 uniform sampler3D x3d_Texture3D [x3d_MaxTextures];
-uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
+uniform samplerCube x3d_TextureCube [x3d_MaxTextures];
 #ifdef X3D_MULTI_TEXTURING
-#define M_PI 3.14159265358979323846
 float rand (vec2 co) { return fract (sin (dot (co.xy, vec2 (12.9898,78.233))) * 43758.5453); }
 float rand (vec2 co, float l) { return rand (vec2 (rand (co), l)); }
 float rand (vec2 co, float l, float t) { return rand (vec2 (rand (co, l), t)); }
 float
 perlin (vec2 p, float dim, float time)
 {
+const float M_PI = 3.14159265358979323846;
 vec2 pos = floor (p * dim);
 vec2 posx = pos + vec2 (1.0, 0.0);
 vec2 posy = pos + vec2 (0.0, 1.0);
@@ -330,7 +331,7 @@ uniform int x3d_NumProjectiveTextures;
 uniform sampler2D x3d_ProjectiveTexture [x3d_MaxTextures];
 uniform mat4 x3d_ProjectiveTextureMatrix [x3d_MaxTextures];
 uniform vec3 x3d_ProjectiveTextureLocation [x3d_MaxTextures];
-#endif
+#endif 
 uniform vec4 x3d_MultiTextureColor;
 uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
 uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];
@@ -358,14 +359,14 @@ return vec4 (0.0);
 }
 }
 vec4
-getTextureCoordinate (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int i)
+getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int textureTransformMapping, const in int textureCoordinateMapping)
 {
 int mode = textureCoordinateGenerator .mode;
 switch (mode)
 {
 case x3d_None:
 {
-return getTexCoord (i);
+return x3d_TextureMatrix [textureTransformMapping] * getTexCoord (textureCoordinateMapping);
 }
 case x3d_Sphere:
 {
@@ -426,9 +427,18 @@ return vec4 (refract (normalize (localVertex - eye), -N, eta), 1.0);
 }
 default:
 {
-return getTexCoord (i);
+return x3d_TextureMatrix [textureTransformMapping] * getTexCoord (textureCoordinateMapping);
 }
 }
+}
+vec4
+getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
+{
+vec4 texCoord = getTexCoord (x3d_TextureCoordinateGenerator [textureCoordinateMapping], textureTransformMapping, textureCoordinateMapping);
+texCoord .stp /= texCoord .q;
+if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
+texCoord .s = 1.0 - texCoord .s;
+return texCoord;
 }
 vec4
 getTexture2D (const in int i, const in vec2 texCoord)
@@ -484,13 +494,13 @@ switch (i)
 #if x3d_MaxTextures > 0
 case 0:
 {
-return texture (x3d_CubeMapTexture [0], texCoord);
+return texture (x3d_TextureCube [0], texCoord);
 }
 #endif
 #if x3d_MaxTextures > 1
 case 1:
 {
-return texture (x3d_CubeMapTexture [1], texCoord);
+return texture (x3d_TextureCube [1], texCoord);
 }
 #endif
 default:
@@ -507,11 +517,8 @@ for (int i = 0; i < x3d_MaxTextures; ++ i)
 {
 if (i == x3d_NumTextures)
 break;
-vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
+vec4 texCoord = getTexCoord (i, i);
 vec4 textureColor = vec4 (1.0);
-texCoord .stp /= texCoord .q;
-if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
-texCoord .s = 1.0 - texCoord .s;
 switch (x3d_TextureType [i])
 {
 case x3d_TextureType2D:
@@ -524,7 +531,7 @@ case x3d_TextureType3D:
 textureColor = getTexture3D (i, texCoord .stp);
 break;
 }
-case x3d_TextureTypeCubeMapTexture:
+case x3d_TextureTypeCube:
 {
 textureColor = getTextureCube (i, texCoord .stp);
 break;
@@ -825,14 +832,19 @@ currentColor *= getProjectiveTexture (i, texCoord .st);
 }
 return currentColor;
 }
-#else
+#else 
 vec4
 getProjectiveTextureColor (in vec4 currentColor)
 {
 return currentColor;
 }
-#endif
-#else
+#endif 
+#else 
+vec4
+getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
+{
+return texCoord0;
+}
 vec4
 getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 {
@@ -853,9 +865,9 @@ case x3d_TextureType3D:
 textureColor = texture (x3d_Texture3D [0], texCoord .stp);
 break;
 }
-case x3d_TextureTypeCubeMapTexture:
+case x3d_TextureTypeCube:
 {
-textureColor = texture (x3d_CubeMapTexture [0], texCoord .stp);
+textureColor = texture (x3d_TextureCube [0], texCoord .stp);
 break;
 }
 }
@@ -866,7 +878,46 @@ getProjectiveTextureColor (in vec4 currentColor)
 {
 return currentColor;
 }
+#endif 
+#ifdef X3D_MATERIAL_TEXTURES
+uniform x3d_NormalTextureParameters x3d_NormalTexture;
+mat3
+getTBNMatrix (const in vec2 texCoord)
+{
+vec3 pos_dx = dFdx (vertex);
+vec3 pos_dy = dFdy (vertex);
+vec3 tex_dx = dFdx (vec3 (texCoord, 0.0));
+vec3 tex_dy = dFdy (vec3 (texCoord, 0.0));
+vec3 t = (tex_dy .t * pos_dx - tex_dx .t * pos_dy) / (tex_dx .s * tex_dy.t - tex_dy .s * tex_dx .t);
+vec3 N = normalize (normal); 
+vec3 T = normalize (t - N * dot (N, t));
+vec3 B = normalize (cross (N, T));
+mat3 tbn = mat3 (T, B, N);
+return tbn;
+}
 #endif
+vec3
+getNormalVector ()
+{
+float facing = gl_FrontFacing ? 1.0 : -1.0;
+#if defined(X3D_NORMAL_TEXTURE)
+vec4 texCoord = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
+vec3 normalScale = vec3 (vec2 (x3d_Material .normalScale), 1.0);
+mat3 tbn = getTBNMatrix (texCoord .st);
+#if defined(X3D_NORMAL_TEXTURE_2D)
+vec3 n = texture (x3d_NormalTexture .texture2D, texCoord .st) .rgb;
+return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
+#elif defined(X3D_NORMAL_TEXTURE_3D)
+vec3 n = texture (x3d_NormalTexture .texture3D, texCoord .stp) .rgb;
+return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
+#elif defined(X3D_NORMAL_TEXTURE_CUBE)
+vec3 n = texture (x3d_NormalTexture .textureCube, texCoord .stp) .rgb;
+return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
+#endif
+#else
+return normalize (normal) * facing;
+#endif
+}
 uniform x3d_FillPropertiesParameters x3d_FillProperties;
 vec4
 getHatchColor (vec4 color)
@@ -938,21 +989,130 @@ else if (spotAngle <= beamWidth)
 return 1.0;
 return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
 }
+#ifdef X3D_MATERIAL_TEXTURES
+uniform x3d_AmbientTextureParameters x3d_AmbientTexture;
+uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
+uniform x3d_SpecularTextureParameters x3d_SpecularTexture;
+uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
+uniform x3d_ShininessTextureParameters x3d_ShininessTexture;
+uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
+#endif
+vec3
+getAmbientColor ()
+{
+vec3 ambientParameter = x3d_Material .ambientIntensity * x3d_Material .diffuseColor;
+#if defined(X3D_AMBIENT_TEXTURE)
+vec4 texCoord = getTexCoord (x3d_AmbientTexture .textureTransformMapping, x3d_AmbientTexture .textureCoordinateMapping);
+#if defined(X3D_AMBIENT_TEXTURE_2D)
+return ambientParameter * texture (x3d_AmbientTexture .texture2D, texCoord .st) .rgb;
+#elif defined(X3D_AMBIENT_TEXTURE_3D)
+return ambientParameter * texture (x3d_AmbientTexture .texture3D, texCoord .stp) .rgb;
+#elif defined(X3D_AMBIENT_TEXTURE_CUBE)
+return ambientParameter * texture (x3d_AmbientTexture .textureCube, texCoord .stp) .rgb;
+#endif
+#else
+return ambientParameter;
+#endif
+}
+vec4
+getDiffuseColor ()
+{
+float alpha = 1.0 - x3d_Material .transparency;
+vec4 diffuseParameter = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .diffuseColor, alpha);
+#if defined(X3D_DIFFUSE_TEXTURE)
+vec4 texCoord = getTexCoord (x3d_DiffuseTexture .textureTransformMapping, x3d_DiffuseTexture .textureCoordinateMapping);
+#if defined(X3D_DIFFUSE_TEXTURE_2D)
+return diffuseParameter * texture (x3d_DiffuseTexture .texture2D, texCoord .st) .rgba;
+#elif defined(X3D_DIFFUSE_TEXTURE_3D)
+return diffuseParameter * texture (x3d_DiffuseTexture .texture3D, texCoord .stp) .rgba;
+#elif defined(X3D_DIFFUSE_TEXTURE_CUBE)
+return diffuseParameter * texture (x3d_DiffuseTexture .textureCube, texCoord .stp) .rgba;
+#endif
+#else
+return getTextureColor (diffuseParameter, vec4 (x3d_Material .specularColor, alpha));
+#endif
+}
+vec3
+getSpecularColor ()
+{
+vec3 specularParameter = x3d_Material .specularColor;
+#if defined(X3D_SPECULAR_TEXTURE)
+vec4 texCoord = getTexCoord (x3d_SpecularTexture .textureTransformMapping, x3d_SpecularTexture .textureCoordinateMapping);
+#if defined(X3D_SPECULAR_TEXTURE_2D)
+return specularParameter * texture (x3d_SpecularTexture .texture2D, texCoord .st) .rgb;
+#elif defined(X3D_SPECULAR_TEXTURE_3D)
+return specularParameter * texture (x3d_SpecularTexture .texture3D, texCoord .stp) .rgb;
+#elif defined(X3D_SPECULAR_TEXTURE_CUBE)
+return specularParameter * texture (x3d_SpecularTexture .textureCube, texCoord .stp) .rgb;
+#endif
+#else
+return specularParameter;
+#endif
+}
+vec3
+getEmissiveColor ()
+{
+vec3 emissiveParameter = x3d_Material .emissiveColor;
+#if defined(X3D_EMISSIVE_TEXTURE)
+vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+#if defined(X3D_EMISSIVE_TEXTURE_2D)
+return emissiveParameter * texture (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
+#elif defined(X3D_EMISSIVE_TEXTURE_3D)
+return emissiveParameter * texture (x3d_EmissiveTexture .texture3D, texCoord .stp) .rgb;
+#elif defined(X3D_EMISSIVE_TEXTURE_CUBE)
+return emissiveParameter * texture (x3d_EmissiveTexture .textureCube, texCoord .stp) .rgb;
+#endif
+#else
+return emissiveParameter;
+#endif
+}
+float
+getShininessFactor ()
+{
+float shininess = x3d_Material .shininess;
+#if defined(X3D_SHININESS_TEXTURE)
+vec4 texCoord = getTexCoord (x3d_ShininessTexture .textureTransformMapping, x3d_ShininessTexture .textureCoordinateMapping);
+#if defined(X3D_SHININESS_TEXTURE_2D)
+return shininess * texture (x3d_ShininessTexture .texture2D, texCoord .st) .a * 128.0;
+#eöif defined(X3D_SHININESS_TEXTURE_3D)
+return shininess * texture (x3d_ShininessTexture .texture3D, texCoord .stp) .a * 128.0;
+#elif defined(X3D_SHININESS_TEXTURE_CUBE)
+return shininess * texture (x3d_ShininessTexture .textureCube, texCoord .stp) .a * 128.0;
+#endif
+#else
+return shininess * 128.0;
+#endif
+}
+float
+getOcclusionFactor ()
+{
+#if defined(X3D_OCCLUSION_TEXTURE)
+vec4 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
+#if defined(X3D_OCCLUSION_TEXTURE_2D)
+return texture (x3d_OcclusionTexture .texture2D, texCoord .st) .r;
+#elif defined(X3D_OCCLUSION_TEXTURE_3D)
+return texture (x3d_OcclusionTexture .texture3D, texCoord .stp) .r;
+#elif defined(X3D_OCCLUSION_TEXTURE_CUBE)
+return texture (x3d_OcclusionTexture .textureCube, texCoord .stp) .r;
+#endif
+#else
+return 1.0;
+#endif
+}
 vec4
 getMaterialColor ()
 {
-vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+vec3 N = getNormalVector ();
 vec3 V = normalize (-vertex); 
-vec3 diffuseFactor = vec3 (1.0);
-float alpha = 1.0 - x3d_Material .transparency;
-vec4 D = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .diffuseColor, alpha);
-vec4 T = getTextureColor (D, vec4 (x3d_Material .specularColor, alpha));
-diffuseFactor = T .rgb;
-alpha = T .a;
+vec4 diffuseColorAlpha = getDiffuseColor ();
+float alpha = diffuseColorAlpha .a;
+vec3 diffuseColor = diffuseColorAlpha .rgb;
+vec3 ambientColor = getAmbientColor ();
+vec3 specularColor = getSpecularColor ();
+float shininessFactor = getShininessFactor ();
 vec4 P = getProjectiveTextureColor (vec4 (1.0));
-diffuseFactor *= P .rgb;
+diffuseColor *= P .rgb;
 alpha *= P .a;
-vec3 ambientTerm = diffuseFactor * x3d_Material .ambientIntensity;
 vec3 finalColor = vec3 (0.0);
 for (int i = 0; i < x3d_MaxLights; i ++)
 {
@@ -969,22 +1129,23 @@ vec3 c = light .attenuation;
 vec3 L = di ? -d : normalize (vL); 
 vec3 H = normalize (L + V); 
 float lightAngle = max (dot (N, L), 0.0); 
-vec3 diffuseTerm = diffuseFactor * lightAngle;
-float specularFactor = x3d_Material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), x3d_Material .shininess * 128.0) : 1.0;
-vec3 specularTerm = x3d_Material .specularColor * specularFactor;
+vec3 diffuseTerm = diffuseColor * lightAngle;
+float specularFactor = shininessFactor > 0.0 ? pow (max (dot (N, H), 0.0), shininessFactor) : 1.0;
+vec3 specularTerm = specularColor * specularFactor;
 float attenuationFactor = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
 float spotFactor = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
 float attenuationSpotFactor = attenuationFactor * spotFactor;
-vec3 ambientColor = light .ambientIntensity * ambientTerm;
-vec3 diffuseSpecularColor = light .intensity * (diffuseTerm + specularTerm);
+vec3 ambientTerm = light .ambientIntensity * ambientColor;
+vec3 diffuseSpecularTerm = light .intensity * (diffuseTerm + specularTerm);
 #ifdef X3D_SHADOWS
 if (lightAngle > 0.0)
-diffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, light));
+diffuseSpecularTerm = mix (diffuseSpecularTerm, light .shadowColor, getShadowIntensity (i, light));
 #endif
-finalColor += attenuationSpotFactor * light .color * (ambientColor + diffuseSpecularColor);
+finalColor += attenuationSpotFactor * light .color * (ambientTerm + diffuseSpecularTerm);
 }
 }
-finalColor += x3d_Material .emissiveColor;
+finalColor = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
+finalColor += getEmissiveColor ();
 return vec4 (finalColor, alpha);
 }
 void

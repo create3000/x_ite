@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = X3D .define,
-	require = X3D .require;
+	define  = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *

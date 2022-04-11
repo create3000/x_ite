@@ -1,7 +1,6 @@
 #version 300 es
 precision highp float;
 precision highp int;
-uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
 uniform mat3 x3d_NormalMatrix;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
@@ -51,9 +50,9 @@ const in vec3 vertex,
 const in x3d_MaterialParameters material)
 {
 vec3 V = normalize (-vertex); 
-vec3 diffuseFactor = x3d_ColorMaterial ? x3d_Color .rgb : material .diffuseColor;
 float alpha = (1.0 - material .transparency) * (x3d_ColorMaterial ? x3d_Color .a : 1.0);
-vec3 ambientTerm = diffuseFactor * material .ambientIntensity;
+vec3 diffuseColor = x3d_ColorMaterial ? x3d_Color .rgb : material .diffuseColor;
+vec3 ambientColor = diffuseColor * material .ambientIntensity;
 vec3 finalColor = vec3 (0.0);
 for (int i = 0; i < x3d_MaxLights; ++ i)
 {
@@ -70,15 +69,15 @@ vec3 c = light .attenuation;
 vec3 L = di ? -d : normalize (vL); 
 vec3 H = normalize (L + V); 
 float lightAngle = max (dot (N, L), 0.0); 
-vec3 diffuseTerm = diffuseFactor * lightAngle;
+vec3 diffuseTerm = diffuseColor * lightAngle;
 float specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;
 vec3 specularTerm = material .specularColor * specularFactor;
 float attenuationFactor = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
 float spotFactor = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
 float attenuationSpotFactor = attenuationFactor * spotFactor;
-vec3 ambientColor = light .ambientIntensity * ambientTerm;
-vec3 diffuseSpecularColor = light .intensity * (diffuseTerm + specularTerm);
-finalColor += attenuationSpotFactor * light .color * (ambientColor + diffuseSpecularColor);
+vec3 ambientTerm = light .ambientIntensity * ambientColor;
+vec3 diffuseSpecularTerm = light .intensity * (diffuseTerm + specularTerm);
+finalColor += attenuationSpotFactor * light .color * (ambientTerm + diffuseSpecularTerm);
 }
 }
 finalColor += material .emissiveColor;
@@ -94,10 +93,10 @@ normal = normalize (x3d_NormalMatrix * x3d_Normal);
 localNormal = x3d_Normal;
 localVertex = x3d_Vertex .xyz;
 #if x3d_MaxTextures > 0
-texCoord0 = x3d_TextureMatrix [0] * x3d_TexCoord0;
+texCoord0 = x3d_TexCoord0;
 #endif
 #if x3d_MaxTextures > 1
-texCoord1 = x3d_TextureMatrix [1] * x3d_TexCoord1;
+texCoord1 = x3d_TexCoord1;
 #endif
 gl_Position = x3d_ProjectionMatrix * position;
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER

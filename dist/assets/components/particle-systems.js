@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = X3D .define,
-	require = X3D .require;
+	define  = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -1844,8 +1844,9 @@ function (Fields,
 
          // Geometry context
 
-         this .geometryContext .fogCoords             = false;
-         this .geometryContext .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
+         this .geometryContext .fogCoords                 = false;
+         this .geometryContext .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
+         this .geometryContext .textureCoordinateMapping = new Map ();
 
          // Call order is higly important at startup.
          this .set_emitter__ ();
@@ -3073,7 +3074,6 @@ function (Fields,
                   shaderNode .disableColorAttribute    (gl);
                   shaderNode .disableTexCoordAttribute (gl);
                   shaderNode .disableNormalAttribute   (gl);
-                  shaderNode .disable                  (gl);
 
                   if (blendModeNode)
                      blendModeNode .disable (gl);

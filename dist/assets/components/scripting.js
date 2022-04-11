@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = X3D .define,
-	require = X3D .require;
+	define  = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -295,6 +295,26 @@ function ($,
       {
          return true;
       },
+      addUserDefinedField: function (accessType, name, field)
+      {
+         X3DScriptNode .prototype .addUserDefinedField .call (this, accessType, name, field);
+
+         if (!this .isInitialized ())
+            return;
+
+         this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+         this .requestImmediateLoad ();
+      },
+      removeUserDefinedField: function (name)
+      {
+         X3DScriptNode .prototype .removeUserDefinedField .call (this, name);
+
+         if (!this .isInitialized ())
+            return;
+
+         this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+         this .requestImmediateLoad ();
+      },
       getSourceText: function ()
       {
          return this ._url;
@@ -401,8 +421,8 @@ function ($,
             NULL:  { value: null },
             FALSE: { value: false },
             TRUE:  { value: true },
-            print: { value: function () { browser .println .apply (browser, arguments); }},
-            trace: { value: function () { browser .println .apply (browser, arguments); }},
+            print: { value: browser .println .bind (browser) },
+            trace: { value: browser .println .bind (browser) },
 
             Browser: { value: browser },
 

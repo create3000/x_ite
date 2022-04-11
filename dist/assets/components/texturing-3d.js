@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = X3D .define,
-	require = X3D .require;
+	define  = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -104,6 +104,14 @@ function (X3DSingleTextureNode,
       {
          return this .target;
       },
+      getTextureType: function ()
+      {
+         return 3;
+      },
+      getTextureTypeString: function ()
+      {
+         return "3D";
+      },
       getWidth: function ()
       {
          return this .width;
@@ -170,15 +178,21 @@ function (X3DSingleTextureNode,
                                                                          this ._repeatT .getValue (),
                                                                          this ._repeatR .getValue ());
       },
-      setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
+      setShaderUniformsToChannel: function (gl, shaderObject, renderObject, channel)
       {
          if (gl .getVersion () >= 2)
          {
-            gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getTexture3DUnits () [i]);
-            gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-         }
+            const textureUnit = renderObject .getBrowser () .getTexture3DUnit ();
 
-         gl .uniform1i (shaderObject .x3d_TextureType [i], 3);
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+            gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+            gl .uniform1i (channel .textureType, 3);
+            gl .uniform1i (channel .texture3D, textureUnit);
+         }
+         else
+         {
+            gl .uniform1i (channel .textureType, 3);
+         }
       },
    });
 
@@ -322,14 +336,11 @@ function (Fields,
       },
       update: function ()
       {
-         const textureNodes = this .textureNodes;
+         const
+            textureNodes = this .textureNodes,
+            complete     = textureNodes .every (function (textureNode) { return textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE; });
 
-         let complete = 0;
-
-         for (const textureNode of textureNodes)
-            complete += textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE;
-
-         if (textureNodes .length === 0 || complete !== textureNodes .length)
+         if (textureNodes .length === 0 || !complete)
          {
             this .clearTexture ();
 
@@ -348,17 +359,21 @@ function (Fields,
 
             let transparent = 0;
 
-            for (let i = 0, d = 0; i < depth; ++ i)
+            for (let i = 0, d = 0; i < depth; ++ i, d += size)
             {
                const
                   textureNode = this .textureNodes [i],
                   tData       = textureNode .getData ();
 
-               transparent += textureNode .getTransparent ();
-
-               for (let t = 0; t < size; ++ t, ++ d)
+               if (textureNode .getWidth () === width && textureNode .getHeight () === height)
                {
-                  data [d] = tData [t];
+                  transparent += textureNode .getTransparent ();
+
+                  data .set (tData, d);
+               }
+               else
+               {
+                  console .log ("ComposedTexture3D: all textures must have same size.");
                }
             }
 

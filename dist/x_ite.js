@@ -1,10 +1,10 @@
-/* X_ITE v5.0.0a-1143 */
+/* X_ITE v5.0.0a-1144 */
 
 (function (global, factory)
 {
 	typeof module === "object" && typeof require === "function" ? factory (module, require) : factory ();
 }
-(this, (function (globalModule, globalRequire)
+(this, (function (__global_module__, __global_require__)
 {
 // Undefine global variables.
 var module, exports, process;
@@ -13760,8 +13760,7 @@ function (Generator,
    const
       _name      = Symbol (),
       _interests = Symbol (),
-      _values    = Symbol (),
-      _timeoutId = Symbol ();
+      _values    = Symbol ();
 
    function X3DObject () { }
 
@@ -13771,7 +13770,6 @@ function (Generator,
       [_name]: "",
       [_interests]: new Map (),
       [_values]: [ ],
-      [_timeoutId]: 0,
       getId: function ()
       {
          return X3DObject .getId (this);
@@ -13833,14 +13831,6 @@ function (Generator,
       getInterests: function ()
       {
          return this [_interests];
-      },
-      requestProcessInterests: function ()
-      {
-         if (this [_interests] .size)
-         {
-            cancelAnimationFrame (this [_timeoutId]);
-            this [_timeoutId] = requestAnimationFrame (this .processInterests .bind (this));
-         }
       },
       processInterests: function ()
       {
@@ -14425,10 +14415,7 @@ function (X3DObject)
  ******************************************************************************/
 
 
-define ('x_ite/Base/X3DInfoArray',[
-   "x_ite/Base/X3DObject",
-],
-function (X3DObject)
+define ('x_ite/Base/X3DInfoArray',['x_ite/Base/X3DBaseNode'],function ()
 {
 "use strict";
 
@@ -14495,8 +14482,6 @@ function (X3DObject)
 
    function X3DInfoArray (values)
    {
-      X3DObject .call (this);
-
       this [_array]           = [ ];
       this [_index]           = new Map ();
       this [Symbol .iterator] = this [_array] [Symbol .iterator];
@@ -14510,8 +14495,7 @@ function (X3DObject)
       return new Proxy (this, handler);
    }
 
-   X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
-   {
+   X3DInfoArray .prototype = {
       constructor: X3DInfoArray,
       equals: function (array)
       {
@@ -14546,12 +14530,10 @@ function (X3DObject)
       {
          this [_array] .push (value);
          this [_index] .set (key, value);
-         this .requestProcessInterests ();
       },
       addAlias: function (alias, key)
       {
          this [_index] .set (alias, this [_index] .get (key));
-         this .requestProcessInterests ();
       },
       update: function (oldKey, newKey, value)
       {
@@ -14574,8 +14556,6 @@ function (X3DObject)
          {
             this [_array] .push (value);
          }
-
-         this .requestProcessInterests ();
       },
       remove: function (key)
       {
@@ -14590,8 +14570,6 @@ function (X3DObject)
 
          if (index > -1)
             this [_array] .splice (index, 1);
-
-         this .requestProcessInterests ();
       },
       at: Array .prototype .at,
       concat: Array .prototype .concat,
@@ -14613,6 +14591,17 @@ function (X3DObject)
       slice: Array .prototype .slice,
       some: Array .prototype .some,
       values: function () { return this [Symbol .iterator]; },
+      toString: function (scene)
+      {
+         const stream = { string: "" };
+
+         if (scene)
+            Generator .Get (stream) .PushExecutionContext (scene);
+
+         this .toStream (stream);
+
+         return stream .string;
+      },
       toVRMLStream: function (stream)
       {
          const X3DBaseNode = require ("x_ite/Base/X3DBaseNode");
@@ -14650,7 +14639,11 @@ function (X3DObject)
             }
          }
       },
-   });
+      toStream: function (stream)
+      {
+         stream .string = "[object " + this .getTypeName () + "]";
+      },
+   };
 
    for (const key of Reflect .ownKeys (X3DInfoArray .prototype))
       Object .defineProperty (X3DInfoArray .prototype, key, { enumerable: false });
@@ -25764,6 +25757,7 @@ function (X3DEventObject,
 
       this .addChildObjects ("name_changed",       new Fields .SFTime (),
                              "typeName_changed",   new Fields .SFTime (),
+                             "fields_changed",     new Fields .SFTime (),
                              "cloneCount_changed", new Fields .SFTime ())
    }
 
@@ -25788,11 +25782,9 @@ function (X3DEventObject,
       },
       getScene: function ()
       {
-         const X3DScene = require ("x_ite/Execution/X3DScene");
-
          let executionContext = this [_executionContext];
 
-         while (!(executionContext instanceof X3DScene))
+         while (!executionContext .isScene ())
             executionContext = executionContext .getExecutionContext ();
 
          return executionContext;
@@ -25996,6 +25988,8 @@ function (X3DEventObject,
 
          if (!this .getPrivate ())
             field .addCloneCount (1);
+
+         this ._fields_changed = this .getBrowser () .getCurrentTime ();
       },
       getField: (function ()
       {
@@ -26062,6 +26056,8 @@ function (X3DEventObject,
 
             if (!this .getPrivate ())
                field .removeCloneCount (1);
+
+            this ._fields_changed = this .getBrowser () .getCurrentTime ();
          }
       },
       canUserDefinedFields: function ()
@@ -26084,6 +26080,8 @@ function (X3DEventObject,
 
          if (!this .getPrivate ())
             field .addCloneCount (1);
+
+         this ._fields_changed = this .getBrowser () .getCurrentTime ();
       },
       removeUserDefinedField: function (name)
       {
@@ -26099,6 +26097,8 @@ function (X3DEventObject,
 
             if (!this .getPrivate ())
                field .removeCloneCount (1);
+
+            this ._fields_changed = this .getBrowser () .getCurrentTime ();
          }
       },
       getUserDefinedFields: function ()
@@ -26209,6 +26209,8 @@ function (X3DEventObject,
          this [_cloneCount] += count;
 
          this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
+
+         this [_executionContext] ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
       },
       removeCloneCount: function (count)
       {
@@ -26218,6 +26220,8 @@ function (X3DEventObject,
          this [_cloneCount] -= count;
 
          this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
+
+         this [_executionContext] ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
       },
       dispose: function ()
       {
@@ -27738,34 +27742,10 @@ function (Fields,
 
          // There's no need to update background shader.
 
-         if (browser .hasPointShader ())
+         for (const shader of browser .getStandardShader ())
          {
-            browser .getPointShader () ._parts [0] .getValue () ._url .addEvent ();
-            browser .getPointShader () ._parts [1] .getValue () ._url .addEvent ();
-         }
-
-         if (browser .hasLineShader ())
-         {
-            browser .getLineShader () ._parts [0] .getValue () ._url .addEvent ();
-            browser .getLineShader () ._parts [1] .getValue () ._url .addEvent ();
-         }
-
-         if (browser .hasGouraudShader ())
-         {
-            browser .getGouraudShader () ._parts [0] .getValue () ._url .addEvent ();
-            browser .getGouraudShader () ._parts [1] .getValue () ._url .addEvent ();
-         }
-
-         if (browser .hasPhongShader ())
-         {
-            browser .getPhongShader () ._parts [0] .getValue () ._url .addEvent ();
-            browser .getPhongShader () ._parts [1] .getValue () ._url .addEvent ();
-         }
-
-         if (browser .hasShadowShader ())
-         {
-            browser .getShadowShader () ._parts [0] .getValue () ._url .addEvent ();
-            browser .getShadowShader () ._parts [1] .getValue () ._url .addEvent ();
+            shader ._parts [0] .getValue () ._url .addEvent ();
+            shader ._parts [1] .getValue () ._url .addEvent ();
          }
       },
       set_timings__: function (timings)
@@ -27992,7 +27972,7 @@ function (Fields,
          const browser = this .getBrowser ();
 
          this ._MaxTextureSize = browser .getMaxTextureSize ();
-         this ._TextureUnits   = browser .getCombinedTextureUnits ();
+         this ._TextureUnits   = browser .getMaxCombinedTextureUnits ();
          this ._MaxLights      = browser .getMaxLights ();
          this ._ColorDepth     = browser .getColorDepth ();
          this ._TextureMemory  = browser .getTextureMemory ();
@@ -31371,7 +31351,7 @@ function (Fields,
                return true;
          }
 
-         if (executionContext .getType () .includes (X3DConstants .X3DScene))
+         if (executionContext .isScene ())
          {
             for (const exportedNode of executionContext .getExportedNodes ())
             {
@@ -31972,7 +31952,7 @@ function (Fields,
 
          // Remove exported node if any.
 
-         if (executionContext .getType () .includes (X3DConstants .X3DScene))
+         if (executionContext .isScene ())
          {
             for (const exportedNode of executionContext .getExportedNodes ())
             {
@@ -33130,7 +33110,7 @@ function (SupportedNodes,
       _routes         = Symbol (),
       _outerNode      = Symbol ();
 
-   SupportedNodes .addAbstractType ("X3DExecutionContext");
+   SupportedNodes .addAbstractType ("X3DExecutionContext", X3DExecutionContext);
 
    function X3DExecutionContext (executionContext)
    {
@@ -33138,8 +33118,9 @@ function (SupportedNodes,
 
       this .addType (X3DConstants .X3DExecutionContext)
 
-      this .addChildObjects ("rootNodes",  new Fields .MFNode (),
-                             "worldInfos", new Fields .MFNode ());
+      this .addChildObjects ("rootNodes",          new Fields .MFNode (),
+                             "worldInfos",         new Fields .MFNode (),
+                             "sceneGraph_changed", new Fields .SFTime ());
 
       this ._rootNodes .setAccessType (X3DConstants .initializeOnly);
       this ._rootNodes .addCloneCount (1);
@@ -33149,11 +33130,33 @@ function (SupportedNodes,
       this [_protos]         = new ProtoDeclarationArray ();
       this [_externprotos]   = new ExternProtoDeclarationArray ();
       this [_routes]         = new RouteArray ();
+
+      this .addChildObjects ("namedNodes_changed",    new Fields .SFTime (),
+                             "importedNodes_changed", new Fields .SFTime (),
+                             "protos_changed",        new Fields .SFTime (),
+                             "externprotos_changed",  new Fields .SFTime (),
+                             "routes_changed",        new Fields .SFTime ())
+
    }
 
    X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       constructor: X3DExecutionContext,
+      initialize: function ()
+      {
+         X3DBaseNode .prototype .initialize .call (this);
+
+         if (!this .isScene ())
+            this ._sceneGraph_changed .addInterest ("set_sceneGraph", this)
+      },
+      set_sceneGraph: function ()
+      {
+         this .getExecutionContext () ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+      },
+      isScene: function ()
+      {
+         return false;
+      },
       getTypeName: function ()
       {
          return "X3DExecutionContext";
@@ -33231,8 +33234,6 @@ function (SupportedNodes,
       {
          name = String (name);
 
-         const X3DScene = require ("x_ite/Execution/X3DScene");
-
          let executionContext = this;
 
          for (;;)
@@ -33247,7 +33248,7 @@ function (SupportedNodes,
             if (externproto)
                return externproto .createInstance (this, setup);
 
-            if (executionContext instanceof X3DScene)
+            if (executionContext .isScene ())
                break;
 
             executionContext = executionContext .getExecutionContext ();
@@ -33289,6 +33290,8 @@ function (SupportedNodes,
          node .setName (name);
 
          this [_namedNodes] .add (name, node);
+
+         this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
       },
       removeNamedNode: function (name)
       {
@@ -33302,6 +33305,8 @@ function (SupportedNodes,
          node .setName ("");
 
          this [_namedNodes] .remove (name);
+
+         this ._namedNodes_changed = this .getBrowser () .getCurrentTime ();
       },
       getNamedNode: function (name)
       {
@@ -33362,6 +33367,8 @@ function (SupportedNodes,
          this [_importedNodes] .add (importedName, importedNode);
 
          importedNode .setup ();
+
+         this ._importedNodes_changed = this .getBrowser () .getCurrentTime ();
       },
       removeImportedNode: function (importedName)
       {
@@ -33375,6 +33382,8 @@ function (SupportedNodes,
          importedNode .dispose ();
 
          this [_importedNodes] .remove (importedName);
+
+         this ._importedNodes_changed = this .getBrowser () .getCurrentTime ();
       },
       getImportedNode: function (importedName)
       {
@@ -33469,6 +33478,8 @@ function (SupportedNodes,
 
          this [_protos] .add (name, proto);
          proto .setName (name);
+
+         this ._protos_changed = this .getBrowser () .getCurrentTime ();
       },
       updateProtoDeclaration (name, proto)
       {
@@ -33486,12 +33497,16 @@ function (SupportedNodes,
 
          this [_protos] .update (proto .getName (), name, proto);
          proto .setName (name);
+
+         this ._protos_changed = this .getBrowser () .getCurrentTime ();
       },
       removeProtoDeclaration (name)
       {
          name = String (name);
 
          this [_protos] .remove (name);
+
+         this ._protos_changed = this .getBrowser () .getCurrentTime ();
       },
       getProtoDeclarations: function ()
       {
@@ -33531,6 +33546,8 @@ function (SupportedNodes,
 
          this [_externprotos] .add (name, externproto);
          externproto .setName (name);
+
+         this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
       },
       updateExternProtoDeclaration (name, externproto)
       {
@@ -33548,12 +33565,16 @@ function (SupportedNodes,
 
          this [_externprotos] .update (externproto .getName (), name, externproto);
          externproto .setName (name);
+
+         this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
       },
       removeExternProtoDeclaration (name)
       {
          name = String (name);
 
          this [_externprotos] .remove (name);
+
+         this ._externprotos_changed = this .getBrowser () .getCurrentTime ();
       },
       getExternProtoDeclarations: function ()
       {
@@ -33658,6 +33679,8 @@ function (SupportedNodes,
 
             this [_routes] .add (id, route);
 
+            this ._routes_changed = this .getBrowser () .getCurrentTime ();
+
             return route;
          }
          catch (error)
@@ -33690,6 +33713,8 @@ function (SupportedNodes,
 
             this [_routes] .remove (id);
             route .disconnect ();
+
+            this ._routes_changed = this .getBrowser () .getCurrentTime ();
 
             return true;
          }
@@ -33777,10 +33802,11 @@ function (SupportedNodes,
       },
       removeWorldInfo: function (worldInfoNode)
       {
-         const index = this ._worldInfos .getValue () .indexOf (worldInfoNode);
-
-         if (index !== -1)
-            this ._worldInfos .splice (index, 1);
+         for (let i = this ._worldInfos .length - 1; i >= 0; -- i)
+         {
+            if (this ._worldInfos [i] .getValue () === worldInfoNode)
+               this ._worldInfos .splice (i, 1);
+         }
       },
       toVRMLStream: function (stream)
       {
@@ -34725,7 +34751,7 @@ function (SupportedNodes,
       _metadata             = Symbol (),
       _exportedNodes        = Symbol ();
 
-   SupportedNodes .addAbstractType ("X3DScene");
+   SupportedNodes .addAbstractType ("X3DScene", X3DScene);
 
    function X3DScene (executionContext)
    {
@@ -34748,6 +34774,12 @@ function (SupportedNodes,
       this [_metadata]      = new Map ();
       this [_exportedNodes] = new ExportedNodesArray ();
 
+      this .addChildObjects ("profile_changed",       new Fields .SFTime (),
+                             "components_changed",    new Fields .SFTime (),
+                             "units_changed",         new Fields .SFTime (),
+                             "metadata_changed",      new Fields .SFTime (),
+                             "exportedNodes_changed", new Fields .SFTime ())
+
       this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 
       this .setLive (false);
@@ -34763,6 +34795,10 @@ function (SupportedNodes,
       isMainScene: function ()
       {
          return this === this .getExecutionContext ();
+      },
+      isScene: function ()
+      {
+         return true;
       },
       setSpecificationVersion: function (specificationVersion)
       {
@@ -34791,6 +34827,8 @@ function (SupportedNodes,
       setProfile: function (profile)
       {
          this [_profile] = profile;
+
+         this ._profile_changed = this .getBrowser () .getCurrentTime ();
       },
       getProfile: function ()
       {
@@ -34799,6 +34837,14 @@ function (SupportedNodes,
       addComponent: function (component)
       {
          this [_components] .add (component .name, component);
+
+         this ._components_changed = this .getBrowser () .getCurrentTime ();
+      },
+      removeComponent: function (component)
+      {
+         this [_components] .remove (component .name);
+
+         this ._components_changed = this .getBrowser () .getCurrentTime ();
       },
       getComponents: function ()
       {
@@ -34815,6 +34861,12 @@ function (SupportedNodes,
 
          unit .name             = String (name);
          unit .conversionFactor = Number (conversionFactor);
+
+         this ._units_changed = this .getBrowser () .getCurrentTime ();
+      },
+      getUnit: function (category)
+      {
+         return this [_units] .get (category);
       },
       getUnits: function ()
       {
@@ -34884,12 +34936,16 @@ function (SupportedNodes,
             return;
 
          this [_metadata] .set (name, String (value));
+
+         this ._metadata_changed = this .getBrowser () .getCurrentTime ();
       },
       removeMetaData: function (name)
       {
          name = String (name);
 
          this [_metadata] .delete (name);
+
+         this ._metadata_changed = this .getBrowser () .getCurrentTime ();
       },
       getMetaData: function (name)
       {
@@ -34909,6 +34965,8 @@ function (SupportedNodes,
             throw new Error ("Couldn't add exported node: exported name '" + exportedName + "' already in use.");
 
          this .updateExportedNode (exportedName, node);
+
+         this ._exportedNodes_changed = this .getBrowser () .getCurrentTime ();
       },
       updateExportedNode: function (exportedName, node)
       {
@@ -34929,12 +34987,16 @@ function (SupportedNodes,
          const exportedNode = new X3DExportedNode (exportedName, node);
 
          this [_exportedNodes] .add (exportedName, exportedNode);
+
+         this ._exportedNodes_changed = this .getBrowser () .getCurrentTime ();
       },
       removeExportedNode: function (exportedName)
       {
          exportedName = String (exportedName);
 
          this [_exportedNodes] .remove (exportedName);
+
+         this ._exportedNodes_changed = this .getBrowser () .getCurrentTime ();
       },
       getExportedNode: function (exportedName)
       {
@@ -35501,10 +35563,10 @@ define ('x_ite/Parser/X3DParser',[],function ()
                   providerUrls .add (providerUrl);
             }
 
-            if (typeof globalRequire === "function" && typeof __filename === "string")
+            if (typeof __global_require__ === "function" && typeof __filename === "string")
             {
                for (const url of providerUrls)
-                  globalRequire (globalRequire ("url") .fileURLToPath (url));
+                  __global_require__ (__global_require__ ("url") .fileURLToPath (url));
             }
 
             return Array .from (providerUrls);
@@ -35747,11 +35809,7 @@ function (Fields,
       set_load__: function ()
       {
          if (this ._load .getValue ())
-         {
-            this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
             this .requestImmediateLoad ();
-         }
          else
             this .requestUnload ();
       },
@@ -35761,7 +35819,6 @@ function (Fields,
             return;
 
          this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
          this .requestImmediateLoad ();
       },
       set_autoRefresh__: function ()
@@ -35995,7 +36052,7 @@ function (Fields,
                return true;
          }
 
-         if (executionContext .getType () .includes (X3DConstants .X3DScene))
+         if (executionContext .isScene ())
          {
             for (const exportedNode of executionContext .getExportedNodes ())
             {
@@ -36596,7 +36653,7 @@ function (Fields,
 
          // Remove exported node if any.
 
-         if (executionContext .getType () .includes (X3DConstants .X3DScene))
+         if (executionContext .isScene ())
          {
             for (const exportedNode of executionContext .getExportedNodes ())
             {
@@ -37351,7 +37408,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-   SupportedNodes .addAbstractType ("X3DProtoDeclarationNode");
+   SupportedNodes .addAbstractType ("X3DProtoDeclarationNode", X3DProtoDeclarationNode);
 
    function X3DProtoDeclarationNode (executionContext)
    {
@@ -37476,7 +37533,7 @@ function ($,
 {
 "use strict";
 
-   SupportedNodes .addAbstractType ("X3DExternProtoDeclaration");
+   SupportedNodes .addAbstractType ("X3DExternProtoDeclaration", X3DExternProtoDeclaration);
 
    const
       _proto = Symbol (),
@@ -37817,7 +37874,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-   SupportedNodes .addAbstractType ("X3DProtoDeclaration");
+   SupportedNodes .addAbstractType ("X3DProtoDeclaration", X3DProtoDeclaration);
 
    const
       _body = Symbol ();
@@ -38425,9 +38482,19 @@ function (Fields,
       MFVec4f: new Fields .MFVec4f (),
       isValid: function ()
       {
-         return !! this .input .match (/^(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{)/);
+         return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{|$))/);
       },
-      parseIntoScene: function (input, success, error)
+      getInput: function ()
+      {
+         return this .input;
+      },
+      setInput: function (vrmlSyntax)
+      {
+         this .input      = vrmlSyntax;
+         this .lineNumber = 1;
+         this .lastIndex  = 0;
+      },
+      parseIntoScene: function (success, error)
       {
          try
          {
@@ -38436,26 +38503,13 @@ function (Fields,
 
             this .getScene () .setEncoding ("VRML");
             this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
-
-            this .setInput (input);
             this .x3dScene ();
-            return;
          }
          catch (error)
          {
             //console .error (error);
             throw new Error (this .getError (error));
          }
-      },
-      setInput: function (value)
-      {
-         this .input      = value;
-         this .lineNumber = 1;
-         this .lastIndex  = 0;
-      },
-      getInput: function ()
-      {
-         return this .input;
       },
       exception: function (string)
       {
@@ -42762,15 +42816,6 @@ function (Fields,
       {
          this ._activationTime = this .getBrowser () .getCurrentTime ();
       },
-      custom: true,
-      setCustom: function (value)
-      {
-         this .custom = value;
-      },
-      getCustom: function ()
-      {
-         return this .custom;
-      },
       setValid: function (value)
       {
          this ._isValid = this .valid = value;
@@ -43762,7 +43807,7 @@ function (X3DChildNode,
       },
       set_fraction__: function ()
       {
-         var
+         const
             key      = this ._key,
             length   = key .length,
             fraction = this ._set_fraction .getValue ();
@@ -43779,11 +43824,11 @@ function (X3DChildNode,
                if (fraction <= key [0])
                   return this .interpolate (0, 1, 0);
 
-               var index1 = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
+               const index1 = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
 
                if (index1 !== length)
                {
-                  var
+                  const
                      index0 = index1 - 1,
                      weight = (fraction - key [index0]) / (key [index1] - key [index0]);
 
@@ -43911,10 +43956,11 @@ function (Fields,
       },
       interpolate: function (index0, index1, weight)
       {
-         var
+         let
             easeOut = this ._easeInEaseOut [index0] .y,
-            easeIn  = this ._easeInEaseOut [index1] .x,
-            sum     = easeOut + easeIn;
+            easeIn  = this ._easeInEaseOut [index1] .x;
+         
+         const sum = easeOut + easeIn;
 
          if (sum < 0)
          {
@@ -43928,7 +43974,7 @@ function (Fields,
                easeOut /= sum;
             }
 
-            var t = 1 / (2 - easeOut - easeIn);
+            const t = 1 / (2 - easeOut - easeIn);
 
             if (weight < easeOut)
             {
@@ -43940,7 +43986,7 @@ function (Fields,
             }
             else
             {
-               var w = 1 - weight;
+               const w = 1 - weight;
 
                this ._modifiedFraction_changed = 1 - ((t * w * w) / easeIn);
             }
@@ -44054,7 +44100,7 @@ function (Fields,
       },
       set_keyValue__: function ()
       {
-         var
+         const
             key      = this ._key,
             keyValue = this ._keyValue;
 
@@ -44063,7 +44109,7 @@ function (Fields,
       },
       interpolate: (function ()
       {
-         var keyValue = new Vector3 (0, 0, 0);
+         const keyValue = new Vector3 (0, 0, 0);
 
          return function (index0, index1, weight)
          {
@@ -44837,7 +44883,7 @@ function (Fields,
       },
       set_keyValue__: function ()
       {
-         var
+         const
             key      = this ._key,
             keyValue = this ._keyValue;
 
@@ -45397,10 +45443,7 @@ function (X3DCast,
       this .x3d_ShadowMatrix                        = [ ];
       this .x3d_ShadowMapSize                       = [ ];
       this .x3d_ShadowMap                           = [ ];
-      this .x3d_TextureType                         = [ ];
-      this .x3d_Texture2D                           = [ ];
-      this .x3d_Texture3D                           = [ ];
-      this .x3d_CubeMapTexture                      = [ ];
+      this .x3d_Textures                            = [ ];
       this .x3d_MultiTextureMode                    = [ ];
       this .x3d_MultiTextureAlphaMode               = [ ];
       this .x3d_MultiTextureSource                  = [ ];
@@ -45474,7 +45517,6 @@ function (X3DCast,
          this .x3d_PointPropertiesPointSizeMinValue    = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeMinValue");
          this .x3d_PointPropertiesPointSizeMaxValue    = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeMaxValue");
          this .x3d_PointPropertiesPointSizeAttenuation = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeAttenuation");
-         this .x3d_PointPropertiesColorMode            = gl .getUniformLocation (program, "x3d_PointProperties.colorMode");
 
          this .x3d_LinePropertiesApplied              = gl .getUniformLocation (program, "x3d_LineProperties.applied");
          this .x3d_LinePropertiesLinewidthScaleFactor = this .getUniformLocation (gl, program, "x3d_LineProperties.linewidthScaleFactor", "x3d_LinewidthScaleFactor");
@@ -45510,12 +45552,41 @@ function (X3DCast,
             this .x3d_ShadowMap [i]       = gl .getUniformLocation (program, "x3d_ShadowMap[" + i + "]");
          }
 
-         this .x3d_AmbientIntensity = this .getUniformLocation (gl, program, "x3d_Material.ambientIntensity", "x3d_FrontMaterial.ambientIntensity");
-         this .x3d_DiffuseColor     = this .getUniformLocation (gl, program, "x3d_Material.diffuseColor",     "x3d_FrontMaterial.diffuseColor");
-         this .x3d_SpecularColor    = this .getUniformLocation (gl, program, "x3d_Material.specularColor",    "x3d_FrontMaterial.specularColor");
-         this .x3d_EmissiveColor    = this .getUniformLocation (gl, program, "x3d_Material.emissiveColor",    "x3d_FrontMaterial.emissiveColor");
-         this .x3d_Shininess        = this .getUniformLocation (gl, program, "x3d_Material.shininess",        "x3d_FrontMaterial.shininess");
-         this .x3d_Transparency     = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
+         this .x3d_AmbientIntensity  = this .getUniformLocation (gl, program, "x3d_Material.ambientIntensity", "x3d_FrontMaterial.ambientIntensity");
+         this .x3d_DiffuseColor      = this .getUniformLocation (gl, program, "x3d_Material.diffuseColor",     "x3d_FrontMaterial.diffuseColor");
+         this .x3d_SpecularColor     = this .getUniformLocation (gl, program, "x3d_Material.specularColor",    "x3d_FrontMaterial.specularColor");
+         this .x3d_EmissiveColor     = this .getUniformLocation (gl, program, "x3d_Material.emissiveColor",    "x3d_FrontMaterial.emissiveColor");
+         this .x3d_Shininess         = this .getUniformLocation (gl, program, "x3d_Material.shininess",        "x3d_FrontMaterial.shininess");
+         this .x3d_BaseColor         = gl .getUniformLocation (program, "x3d_Material.baseColor");
+         this .x3d_Metallic          = gl .getUniformLocation (program, "x3d_Material.metallic");
+         this .x3d_Roughness         = gl .getUniformLocation (program, "x3d_Material.roughness");
+         this .x3d_OcclusionStrength = gl .getUniformLocation (program, "x3d_Material.occlusionStrength");
+         this .x3d_NormalScale       = gl .getUniformLocation (program, "x3d_Material.normalScale");
+         this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
+
+         const materialTextures = [
+            "x3d_AmbientTexture",
+            "x3d_DiffuseTexture",
+            "x3d_SpecularTexture",
+            "x3d_EmissiveTexture",
+            "x3d_ShininessTexture",
+            "x3d_BaseTexture",
+            "x3d_MetallicRoughnessTexture",
+            "x3d_OcclusionTexture",
+            "x3d_NormalTexture",
+         ];
+
+         for (const materialTexture of materialTextures)
+         {
+            this [materialTexture] = {
+               textureType:              gl .getUniformLocation (program, materialTexture + ".textureType"),
+               textureTransformMapping:  gl .getUniformLocation (program, materialTexture + ".textureTransformMapping"),
+               textureCoordinateMapping: gl .getUniformLocation (program, materialTexture + ".textureCoordinateMapping"),
+               texture2D:                gl .getUniformLocation (program, materialTexture + ".texture2D"),
+               texture3D:                gl .getUniformLocation (program, materialTexture + ".texture3D"),
+               textureCube:              gl .getUniformLocation (program, materialTexture + ".textureCube"),
+            };
+         }
 
          this .x3d_NumTextures           = gl .getUniformLocation (program, "x3d_NumTextures");
          this .x3d_NumProjectiveTextures = gl .getUniformLocation (program, "x3d_NumProjectiveTextures");
@@ -45523,10 +45594,12 @@ function (X3DCast,
 
          for (let i = 0; i < this .x3d_MaxTextures; ++ i)
          {
-            this .x3d_TextureType [i]    = gl .getUniformLocation (program, "x3d_TextureType[" + i + "]");
-            this .x3d_Texture2D [i]      = gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]");
-            this .x3d_Texture3D [i]      = gl .getUniformLocation (program, "x3d_Texture3D[" + i + "]");
-            this .x3d_CubeMapTexture [i] = gl .getUniformLocation (program, "x3d_CubeMapTexture[" + i + "]");
+            this .x3d_Textures [i] = {
+               textureType: gl .getUniformLocation (program, "x3d_TextureType[" + i + "]"),
+               texture2D: gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]"),
+               texture3D: gl .getUniformLocation (program, "x3d_Texture3D[" + i + "]"),
+               textureCube: this .getUniformLocation (gl, program, "x3d_TextureCube[" + i + "]", "x3d_CubeMapTexture[" + i + "]"),
+            }
 
             this .x3d_MultiTextureMode [i]      = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].mode");
             this .x3d_MultiTextureAlphaMode [i] = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].alphaMode");
@@ -45561,18 +45634,36 @@ function (X3DCast,
 
          // Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
-         gl .uniform1i  (this .x3d_LinePropertiesLinetype,   browser .getLinetypeUnit ());
-         gl .uniform1i  (this .x3d_FillPropertiesHatchStyle, browser .getHatchStyleUnit ());
-         gl .uniform1i  (this .x3d_NumTextures,              0);
-         gl .uniform1iv (this .x3d_Texture2D [0],            browser .getTexture2DUnits ());
-         gl .uniform1iv (this .x3d_CubeMapTexture [0],       browser .getCubeMapTextureUnits ());
-         gl .uniform1iv (this .x3d_ShadowMap [0],            new Int32Array (this .x3d_MaxLights) .fill (browser .getShadowTextureUnit ()));
+         gl .uniform1i  (this .x3d_LinePropertiesLinetype,   browser .getDefaultTexture2DUnit ());
+         gl .uniform1i  (this .x3d_FillPropertiesHatchStyle, browser .getDefaultTexture2DUnit ());
+
+         for (const materialTexture of materialTextures)
+         {
+            gl .uniform1i (this [materialTexture] .texture2D,   browser .getDefaultTexture2DUnit ());
+            gl .uniform1i (this [materialTexture] .texture3D,   browser .getDefaultTexture3DUnit ());
+            gl .uniform1i (this [materialTexture] .textureCube, browser .getDefaultTextureCubeUnit ());
+         }
+
+         gl .uniform1i (this .x3d_NumTextures, 0);
+
+         for (const uniforms of this .x3d_Textures)
+         {
+            gl .uniform1i (uniforms .texture2D, browser .getDefaultTexture2DUnit ());
+
+            if (gl .getVersion () >= 2)
+               gl .uniform1i (uniforms .texture3D, browser .getDefaultTexture3DUnit ());
+
+            gl .uniform1i (uniforms .textureCube, browser .getDefaultTextureCubeUnit ());
+         }
+
+         for (const uniform of this .x3d_ShadowMap)
+            gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
 
          if (browser .getProjectiveTextureMapping ())
-            gl .uniform1iv (this .x3d_ProjectiveTexture [0], browser .getProjectiveTextureUnits ());
-
-         if (gl .getVersion () >= 2)
-            gl .uniform1iv (this .x3d_Texture3D [0], browser .getTexture3DUnits ());
+         {
+            for (const uniform of this .x3d_ProjectiveTexture)
+               gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
+         }
 
          // Return true if valid, otherwise false.
 
@@ -45887,7 +45978,7 @@ function (X3DCast,
 
                      if (texture)
                      {
-                        this .textures .set (location, { name: field .getName (), texture: texture, textureUnit: undefined } );
+                        this .textures .set (location, { name: field .getName (), texture: texture } );
                         return;
                      }
 
@@ -46057,13 +46148,13 @@ function (X3DCast,
                   {
                      const locations = location .locations;
 
-                     for (let i = 0, length = field .length; i < length; ++ i)
+                     for (const node of field)
                      {
-                        const texture = X3DCast (X3DConstants .X3DTextureNode, field [i]);
+                        const texture = X3DCast (X3DConstants .X3DTextureNode, node);
 
                         if (texture)
                         {
-                           this .textures .set (locations [i], { name: field [i] .getName (), texture: texture, textureUnit: undefined } );
+                           this .textures .set (locations [i], { name: field .getName (), texture: texture } );
                            continue;
                         }
                      }
@@ -46255,7 +46346,7 @@ function (X3DCast,
          this .projectiveTextureNodes .length = 0;
 
          for (const globalObject of globalObjects)
-            globalObject .setShaderUniforms (gl, this);
+            globalObject .setShaderUniforms (gl, this, renderObject);
 
          this .numGlobalLights             = this .numLights;
          this .numGlobalProjectiveTextures = this .numProjectiveTextures;
@@ -46274,6 +46365,7 @@ function (X3DCast,
       setLocalUniforms: function (gl, context, front = true)
       {
          const
+            renderObject          = context .renderer,
             shapeNode             = context .shapeNode,
             geometryNode          = context .geometryContext || shapeNode .getGeometry (),
             geometryType          = geometryNode .geometryType,
@@ -46301,7 +46393,7 @@ function (X3DCast,
          this .numProjectiveTextures = this .numGlobalProjectiveTextures;
 
          for (const localObject of localObjects)
-            localObject .setShaderUniforms (gl, this);
+            localObject .setShaderUniforms (gl, this, renderObject);
 
          gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
          gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
@@ -46323,7 +46415,7 @@ function (X3DCast,
          // Material
 
          gl .uniform1i (this .x3d_ColorMaterial, geometryNode .colorMaterial);
-         materialNode .setShaderUniforms (gl, this, front);
+         materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .textureTransformMapping, geometryNode .textureCoordinateMapping, front);
 
          // Normal matrix
 
@@ -46332,21 +46424,12 @@ function (X3DCast,
          // Texture
 
          if (textureNode)
-         {
-            textureNode           .setShaderUniforms (gl, this, context .renderer);
-            textureTransformNode  .setShaderUniforms (gl, this);
-            textureCoordinateNode .setShaderUniforms (gl, this);
-         }
+            textureNode .setShaderUniforms (gl, this, renderObject);
          else
-         {
             gl .uniform1i (this .x3d_NumTextures, 0);
 
-            if (this .getCustom ())
-            {
-               textureTransformNode  .setShaderUniforms (gl, this);
-               textureCoordinateNode .setShaderUniforms (gl, this);
-            }
-         }
+         textureTransformNode  .setShaderUniforms (gl, this);
+         textureCoordinateNode .setShaderUniforms (gl, this);
       },
       getNormalMatrix: (function ()
       {
@@ -46376,45 +46459,22 @@ function (X3DCast,
       {
          const browser = this .getBrowser ();
 
-         //console .log (this .getName ());
-         //console .log (browser .getCombinedTextureUnits () .length);
-
-         this .textures .forEach (function (object, location)
+         for (const [location, object] of this .textures)
          {
             const
-               name    = object .name,
-               texture = object .texture;
+               texture     = object .texture,
+               textureUnit = browser .getTextureUnit (texture .getTextureType ());
 
-            if (! browser .getCombinedTextureUnits () .length)
+            if (textureUnit === undefined)
             {
-               console .warn ("Not enough combined texture units for uniform variable '" + name + "' available.");
+               console .warn ("Not enough combined texture units for uniform variable '" + object .name + "' available.");
                return;
             }
 
-            const textureUnit = object .textureUnit = browser .getCombinedTextureUnits () .pop ();
-
-            gl .uniform1i (location, textureUnit);
             gl .activeTexture (gl .TEXTURE0 + textureUnit);
             gl .bindTexture (texture .getTarget (), texture .getTexture ());
-         });
-
-         gl .activeTexture (gl .TEXTURE0);
-      },
-      disable: function (gl)
-      {
-         const browser = this .getBrowser ();
-
-         this .textures .forEach (function (object)
-         {
-            const textureUnit = object .textureUnit;
-
-            if (textureUnit !== undefined)
-               browser .getCombinedTextureUnits () .push (textureUnit);
-
-            object .textureUnit = undefined;
-         });
-
-         //console .log (browser .getCombinedTextureUnits () .length);
+            gl .uniform1i (location, textureUnit);
+         }
       },
       enableFloatAttrib: function (gl, name, buffer, components)
       {
@@ -47094,7 +47154,7 @@ function (Fields,
          X3DShaderNode               .prototype .initialize .call (this);
          X3DProgrammableShaderObject .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          this .primitiveMode = gl .TRIANGLES;
 
@@ -47109,13 +47169,49 @@ function (Fields,
 
          //Must not call set_live__.
       },
+      addUserDefinedField: function (accessType, name, field)
+      {
+         const gl = this .getBrowser () .getContext ();
+
+         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
+         {
+            this .enable (gl);
+            this .removeShaderFields ();
+         }
+
+         X3DShaderNode .prototype .addUserDefinedField .call (this, accessType, name, field);
+
+         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
+         {
+            this .enable (gl);
+            this .addShaderFields ();
+         }
+      },
+      removeUserDefinedField: function (name)
+      {
+         const gl = this .getBrowser () .getContext ();
+
+         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
+         {
+            this .enable (gl);
+            this .removeShaderFields ();
+         }
+
+         X3DShaderNode .prototype .removeUserDefinedField .call (this, name);
+
+         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
+         {
+            this .enable (gl);
+            this .addShaderFields ();
+         }
+      },
       getProgram: function ()
       {
          return this .program;
       },
       set_live__: function ()
       {
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (this .isLive () .getValue ())
          {
@@ -47123,7 +47219,6 @@ function (Fields,
             {
                this .enable (gl);
                this .addShaderFields ();
-               this .disable (gl);
             }
          }
          else
@@ -47132,7 +47227,6 @@ function (Fields,
             {
                this .enable (gl);
                this .removeShaderFields ();
-               this .disable (gl);
             }
          }
       },
@@ -47140,20 +47234,20 @@ function (Fields,
       {
          if (this .loadSensor ._isLoaded .getValue ())
          {
-            var
+            const
                gl      = this .getBrowser () .getContext (),
-               program = gl .createProgram (),
-               parts   = this ._parts .getValue (),
-               valid   = 0;
+               program = gl .createProgram ();
+
+            let valid = 0;
 
             if (this .getValid ())
                this .removeShaderFields ();
 
             this .program = program;
 
-            for (var i = 0, length = parts .length; i < length; ++ i)
+            for (const node of this ._parts)
             {
-               var partNode = X3DCast (X3DConstants .ShaderPart, parts [i]);
+               const partNode = X3DCast (X3DConstants .ShaderPart, node);
 
                if (partNode)
                {
@@ -47191,10 +47285,13 @@ function (Fields,
             }
             else
             {
-               console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
+               if (this ._parts .length)
+               {
+                  console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
+               }
             }
 
-            this .setValid (Boolean (valid));
+            this .setValid (!! valid);
          }
          else
          {
@@ -47203,7 +47300,7 @@ function (Fields,
       },
       set_field__: function (field)
       {
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          gl .useProgram (this .program);
 
@@ -47255,7 +47352,15 @@ function (Fields,
 
 
 
-define('text!assets/shaders/Types.glsl',[],function () { return '\nstruct x3d_FogParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float visibilityRange;\n   mediump mat3  matrix;\n   bool          fogCoord;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float intensity;\n   mediump float ambientIntensity;\n   mediump vec3  attenuation;\n   mediump vec3  location;\n   mediump vec3  direction;\n   mediump float radius;\n   mediump float beamWidth;\n   mediump float cutOffAngle;\n   mediump mat3  matrix;\n   #ifdef X3D_SHADOWS\n   mediump vec3  shadowColor;\n   mediump float shadowIntensity;\n   mediump float shadowBias;\n   mediump mat4  shadowMatrix;\n   mediump int   shadowMapSize;\n   #endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_PointPropertiesParameters\n{\n   mediump float pointSizeScaleFactor;\n   mediump float pointSizeMinValue;\n   mediump float pointSizeMaxValue;\n   mediump vec3  pointSizeAttenuation;\n   mediump int   colorMode;\n};\n\n//uniform x3d_PointPropertiesParameters x3d_PointProperties;\n\nstruct x3d_LinePropertiesParameters\n{\n   bool          applied;\n   mediump float linewidthScaleFactor;\n   sampler2D     linetype;\n};\n\n//uniform x3d_LinePropertiesParameters x3d_LineProperties;\n\nstruct x3d_FillPropertiesParameters\n{\n   bool         filled;\n   bool         hatched;\n   mediump vec3 hatchColor;\n   sampler2D    hatchStyle;\n};\n\n//uniform x3d_FillPropertiesParameters x3d_FillProperties;\n\nstruct x3d_MaterialParameters\n{\n   mediump float ambientIntensity;\n   mediump vec3  diffuseColor;\n   mediump vec3  specularColor;\n   mediump vec3  emissiveColor;\n   mediump float shininess;\n   mediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_Material;\n\nstruct x3d_MultiTextureParameters\n{\n   mediump int mode;\n   mediump int alphaMode;\n   mediump int source;\n   mediump int function;\n};\n\n//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nstruct x3d_TextureCoordinateGeneratorParameters\n{\n   mediump int   mode;\n   mediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];\n\nstruct x3d_ParticleParameters\n{\n   mediump int   id;\n   mediump int   life;\n   mediump float elapsedTime;\n};\n\n//uniform x3d_ParticleParameters x3d_Particle;\n';});
+
+
+
+
+
+
+
+
+define('text!assets/shaders/Types.glsl',[],function () { return '\nstruct x3d_FogParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float visibilityRange;\n   mediump mat3  matrix;\n   bool          fogCoord;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float intensity;\n   mediump float ambientIntensity;\n   mediump vec3  attenuation;\n   mediump vec3  location;\n   mediump vec3  direction;\n   mediump float radius;\n   mediump float beamWidth;\n   mediump float cutOffAngle;\n   mediump mat3  matrix;\n   #ifdef X3D_SHADOWS\n   mediump vec3  shadowColor;\n   mediump float shadowIntensity;\n   mediump float shadowBias;\n   mediump mat4  shadowMatrix;\n   mediump int   shadowMapSize;\n   #endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_PointPropertiesParameters\n{\n   mediump float pointSizeScaleFactor;\n   mediump float pointSizeMinValue;\n   mediump float pointSizeMaxValue;\n   mediump vec3  pointSizeAttenuation;\n};\n\n//uniform x3d_PointPropertiesParameters x3d_PointProperties;\n\nstruct x3d_LinePropertiesParameters\n{\n   bool          applied;\n   mediump float linewidthScaleFactor;\n   sampler2D     linetype;\n};\n\n//uniform x3d_LinePropertiesParameters x3d_LineProperties;\n\nstruct x3d_FillPropertiesParameters\n{\n   bool         filled;\n   bool         hatched;\n   mediump vec3 hatchColor;\n   sampler2D    hatchStyle;\n};\n\n//uniform x3d_FillPropertiesParameters x3d_FillProperties;\n\nstruct x3d_UnlitMaterialParameters\n{\n   mediump vec3  emissiveColor;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_UnlitMaterialParameters x3d_Material;\n\nstruct x3d_MaterialParameters\n{\n   mediump float ambientIntensity;\n   mediump vec3  diffuseColor;\n   mediump vec3  specularColor;\n   mediump vec3  emissiveColor;\n   mediump float shininess;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_Material;\n\nstruct x3d_PhysicalMaterialParameters\n{\n   mediump vec3  baseColor;\n   mediump vec3  emissiveColor;\n   mediump float metallic;\n   mediump float roughness;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_PhysicalMaterialParameters x3d_Material;\n\n#ifdef X3D_MATERIAL_TEXTURES\nstruct x3d_AmbientTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_AMBIENT_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_AMBIENT_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_AMBIENT_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_DiffuseTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_DIFFUSE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_DIFFUSE_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_DIFFUSE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_SpecularTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SPECULAR_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_SPECULAR_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SPECULAR_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_EmissiveTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_EMISSIVE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_EMISSIVE_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_EMISSIVE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_ShininessTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SHININESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_SHININESS_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SHININESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_BaseTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_BASE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_BASE_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_BASE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_MetallicRoughnessTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_OcclusionTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_OCCLUSION_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_OCCLUSION_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_OCCLUSION_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_NormalTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_NORMAL_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_NORMAL_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_NORMAL_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n#endif // X3D_MATERIAL_TEXTURES\n\nstruct x3d_MultiTextureParameters\n{\n   mediump int mode;\n   mediump int alphaMode;\n   mediump int source;\n   mediump int function;\n};\n\n//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nstruct x3d_TextureCoordinateGeneratorParameters\n{\n   mediump int   mode;\n   mediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];\n\nstruct x3d_ParticleParameters\n{\n   mediump int   id;\n   mediump int   life;\n   mediump float elapsedTime;\n};\n\n//uniform x3d_ParticleParameters x3d_Particle;\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -47612,7 +47717,7 @@ function (ShaderSource,
 
    const Shader =
    {
-      getShaderSource: function (browser, name, source, shadow)
+      getShaderSource: function (browser, name, source, options)
       {
          const gl = browser .getContext ();
 
@@ -47646,11 +47751,8 @@ function (ShaderSource,
          if (browser .getProjectiveTextureMapping ())
             constants += "#define X3D_PROJECTIVE_TEXTURE_MAPPING\n";
 
-         if (shadow)
-         {
-            constants += "#define X3D_SHADOWS\n";
-            constants += "#define X3D_PCF_FILTERING\n";
-         }
+         for (const option of options)
+            constants += "#define " + option + "\n";
 
          let definitions = "";
 
@@ -47675,11 +47777,7 @@ function (ShaderSource,
          definitions += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
          definitions += "#define x3d_TextureType2D              2\n";
          definitions += "#define x3d_TextureType3D              3\n";
-         definitions += "#define x3d_TextureTypeCubeMapTexture  4\n";
-
-         definitions += "#define x3d_PointColor           0\n";
-         definitions += "#define x3d_TextureColor         1\n";
-         definitions += "#define x3d_TextureAndPointColor 2\n";
+         definitions += "#define x3d_TextureTypeCube  4\n";
 
          definitions += "#define x3d_Replace                   " + MultiTextureModeType .REPLACE                   + "\n";
          definitions += "#define x3d_Modulate                  " + MultiTextureModeType .MODULATE                  + "\n";
@@ -47874,21 +47972,36 @@ function ($,
       constructor: XMLParser,
       isValid: function ()
       {
-         return this .scene [_dom] instanceof XMLDocument;
+         return (this .input instanceof XMLDocument) || (this .input instanceof HTMLElement) || (this .input === null);
       },
-      parseIntoScene: function (xmlElement, success, error)
+      getInput: function ()
       {
-         if (typeof xmlElement === "string")
-            xmlElement = $.parseXML (xmlElement)
+         return this .input;
+      },
+      setInput (xmlElement)
+      {
+         try
+         {
+            if (typeof xmlElement === "string")
+               xmlElement = $.parseXML (xmlElement);
 
-         this .scene [_dom] = xmlElement;
+            this .input = xmlElement;
+         }
+         catch (error)
+         {
+            this .input = undefined;
+         }
+      },
+      parseIntoScene: function (success, error)
+      {
+         this .scene [_dom] = this .input;
          this .success      = success;
          this .error        = error;
 
          this .getScene () .setEncoding ("XML");
          this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
 
-         this .xmlElement (xmlElement);
+         this .xmlElement (this .input);
       },
       parseIntoNode: function (node, xmlElement)
       {
@@ -49127,26 +49240,43 @@ function (XMLParser,
       constructor: JSONParser,
       isValid: function ()
       {
-         return this .jsobj instanceof Object;
+         return this .input instanceof Object;
       },
-      parseIntoScene: function (jsobj, success, error)
+      getInput: function ()
       {
-         if (typeof jsobj === "string")
-            jsobj = JSON .parse (jsobj)
+         return this .input;
+      },
+      setInput: function (json)
+      {
+         try
+         {
+            if (typeof json === "string")
+               json = JSON .parse (json)
 
-         this .jsobj = jsobj;
-
+            this .input = json;
+         }
+         catch (error)
+         {
+            this .input = undefined;
+         }
+      },
+      parseIntoScene: function (success, error)
+      {
          /**
           * Load X3D JSON into an element.
-          * jsobj - the JavaScript object to convert to DOM.
+          * json - the JavaScript object to convert to DOM.
           */
 
          const child = this .createElement ("X3D");
 
-         this .convertToDOM (jsobj, "", child);
+         this .convertToDOM (this .input, "", child);
 
-         // call the DOM parser
-         new XMLParser (this .scene) .parseIntoScene (child, success, error);
+         // Call the DOM parser.
+
+         const parser = new XMLParser (this .getScene ());
+
+         parser .setInput (child);
+         parser .parseIntoScene (success, error);
 
          return child;
       },
@@ -49585,26 +49715,35 @@ function (X3DParser,
       {
          for (const Parser of GoldenGate .Parser)
          {
-            const parser = new Parser (this .getScene ());
-
             try
             {
-               parser .pushExecutionContext (this .getExecutionContext ());
-               parser .parseIntoScene (x3dSyntax, success, error);
-               parser .popExecutionContext ();
+               const parser = new Parser (this .getScene ());
 
-               // console .log (Parser .name, parser .isValid (), this .getScene () .worldURL)
-               // if (!parser .isValid ())
-               //    console .log (x3dSyntax)
+               parser .setInput (x3dSyntax);
 
-               return
-            }
-            catch (error)
-            {
                if (parser .isValid ())
-                  throw error;
+               {
+                  parser .pushExecutionContext (this .getExecutionContext ());
+                  parser .parseIntoScene (success, error);
+                  parser .popExecutionContext ();
+                  return
+               }
+            }
+            catch (exception)
+            {
+               if (error)
+                  error (exception);
+               else
+                  throw exception;
+
+               return;
             }
          }
+
+         if (this .getScene () .worldURL .startsWith ("data:"))
+            throw new Error ("Couldn't parse X3D. No suitable file handler found for 'data:' URL.");
+         else
+            throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + this .getScene () .worldURL + "'.");
       },
    });
 
@@ -57348,8 +57487,6 @@ function (TextureBuffer,
 
                   context .shapeNode .depth (gl, context, shaderNode);
                }
-
-               shaderNode .disable (gl);
             }
          };
       })(),
@@ -57426,17 +57563,11 @@ function (TextureBuffer,
             cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
             projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 
-            if (browser .hasPointShader ())  shaders .add (browser .getPointShader ());
-            if (browser .hasLineShader ())   shaders .add (browser .getLineShader ());
-            if (browser .hasUnlitShader ())  shaders .add (browser .getUnlitShader ());
-            if (browser .hasShadowShader ()) shaders .add (browser .getShadowShader ());
-            shaders .add (browser .getDefaultShader ());
+            for (const shader of browser .getStandardShaders ())
+               shaders .add (shader);
 
-            shaders .forEach (function (shader)
-            {
+            for (const shader of shaders)
                shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-            },
-            this);
 
             // Sorted blend
 
@@ -57460,6 +57591,7 @@ function (TextureBuffer,
                             scissor .w);
 
                context .shapeNode .display (gl, context);
+               browser .resetTextureUnits ();
             }
 
             // Render transparent objects
@@ -57483,6 +57615,7 @@ function (TextureBuffer,
                             scissor .w);
 
                context .shapeNode .display (gl, context);
+               browser .resetTextureUnits ();
             }
 
             gl .depthMask (true);
@@ -57490,9 +57623,6 @@ function (TextureBuffer,
 
 
             // POST DRAW
-
-
-            gl .activeTexture (gl .TEXTURE0);
 
             const globalObjects = this .globalObjects;
 
@@ -59372,7 +59502,7 @@ function (X3DConstants,
 {
 "use strict";
 
-   var Fogs = ObjectCache (FogContainer);
+   const Fogs = ObjectCache (FogContainer);
 
    function FogContainer ()
    {
@@ -59400,7 +59530,7 @@ function (X3DConstants,
          if (shaderObject .hasFog (this))
             return;
 
-         var
+         const
             fogNode         = this .fogNode,
             visibilityRange = Math .max (0, fogNode ._visibilityRange .getValue ());
 
@@ -59410,7 +59540,7 @@ function (X3DConstants,
          }
          else
          {
-            var color  = fogNode ._color .getValue ();
+            const color = fogNode ._color .getValue ();
 
             gl .uniform1i        (shaderObject .x3d_FogType,            fogNode .fogType);
             gl .uniform3f        (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
@@ -59879,14 +60009,15 @@ function (X3DBindableNode,
           Algorithm)
 {
 "use strict";
-   var
+
+   const
       RADIUS      = 1,
       SIZE        = Math .sqrt (RADIUS * RADIUS / 2),
       U_DIMENSION = 20;
 
-   var s = SIZE;
+   const s = SIZE;
 
-   var texCoords = [
+   const texCoords = [
       1, 1, 0, 1,
       0, 1, 0, 1,
       0, 0, 0, 1,
@@ -59895,7 +60026,7 @@ function (X3DBindableNode,
       1, 0, 0, 1,
    ];
 
-   var frontVertices = [
+   const frontVertices = [
        s,  s, -s, 1,
       -s,  s, -s, 1,
       -s, -s, -s, 1,
@@ -59904,7 +60035,7 @@ function (X3DBindableNode,
        s, -s, -s, 1,
    ];
 
-   var backVertices = [
+   const backVertices = [
       -s,  s,  s, 1,
        s,  s,  s, 1,
        s, -s,  s, 1,
@@ -59913,7 +60044,7 @@ function (X3DBindableNode,
       -s, -s,  s, 1,
    ];
 
-   var leftVertices = [
+   const leftVertices = [
       -s,  s, -s, 1,
       -s,  s,  s, 1,
       -s, -s,  s, 1,
@@ -59922,7 +60053,7 @@ function (X3DBindableNode,
       -s, -s, -s, 1,
    ];
 
-   var rightVertices = [
+   const rightVertices = [
       s,  s,  s, 1,
       s,  s, -s, 1,
       s, -s, -s, 1,
@@ -59931,7 +60062,7 @@ function (X3DBindableNode,
       s, -s,  s, 1,
    ];
 
-   var topVertices = [
+   const topVertices = [
        s, s,  s, 1,
       -s, s,  s, 1,
       -s, s, -s, 1,
@@ -59940,7 +60071,7 @@ function (X3DBindableNode,
        s, s, -s, 1,
    ];
 
-   var bottomVertices = [
+   const bottomVertices = [
        s, -s, -s, 1,
       -s, -s, -s, 1,
       -s, -s,  s, 1,
@@ -59949,7 +60080,7 @@ function (X3DBindableNode,
        s, -s,  s, 1,
    ];
 
-   var
+   const
       z1 = new Complex (0, 0),
       z2 = new Complex (0, 0),
       y1 = new Complex (0, 0),
@@ -59983,7 +60114,7 @@ function (X3DBindableNode,
       {
          X3DBindableNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          this .colorBuffer     = gl .createBuffer ();
          this .sphereBuffer    = gl .createBuffer ();
@@ -60092,7 +60223,7 @@ function (X3DBindableNode,
       },
       getColor: function (theta, color, angle)
       {
-         var index = Algorithm .upperBound (angle, 0, angle .length, theta, Algorithm .less);
+         const index = Algorithm .upperBound (angle, 0, angle .length, theta, Algorithm .less);
 
          return color [index];
       },
@@ -60104,11 +60235,11 @@ function (X3DBindableNode,
          if (this ._transparency .getValue () >= 1)
             return;
 
-         var alpha = 1 - Algorithm .clamp (this ._transparency .getValue (), 0, 1);
+         const alpha = 1 - Algorithm .clamp (this ._transparency .getValue (), 0, 1);
 
          if (this ._groundColor .length === 0 && this ._skyColor .length == 1)
          {
-            var s = SIZE;
+            const s = SIZE;
 
             // Build cube
 
@@ -60127,9 +60258,9 @@ function (X3DBindableNode,
                                 -s, -s,  s, 1,  s, -s,  s, 1, -s, -s, -s, 1, // Bottom
                                 -s, -s, -s, 1,  s, -s,  s, 1,  s, -s, -s, 1);
 
-            var c = this ._skyColor [0];
+            const c = this ._skyColor [0];
 
-            for (var i = 0, vertices = this .sphere .vertices; i < vertices; ++ i)
+            for (let i = 0, vertices = this .sphere .vertices; i < vertices; ++ i)
                this .colors .push (c .r, c .g, c .b, alpha);
          }
          else
@@ -60138,30 +60269,23 @@ function (X3DBindableNode,
 
             if (this ._skyColor .length > this ._skyAngle .length)
             {
-               var vAngle = [ ];
-
-               for (var i = 0, length = this ._skyAngle .length; i < length; ++ i)
-                  vAngle .push (this ._skyAngle [i]);
+               const vAngle = this ._skyAngle .slice ();
 
                if (vAngle .length === 0 || vAngle [0] > 0)
                   vAngle .unshift (0);
 
-               var vAngleMax = this ._groundColor .length > this ._groundAngle .length ? Math .PI / 2 : Math .PI;
+               if (vAngle .at (-1) < Math .PI)
+                  vAngle .push (Math .PI);
 
-               if (vAngle .at (-1) < vAngleMax)
-                  vAngle .push (vAngleMax);
+               if (vAngle .length === 2)
+						vAngle .splice (1, 0, (vAngle [0] + vAngle [1]) / 2)
 
                this .buildSphere (RADIUS, vAngle, this ._skyAngle, this ._skyColor, alpha, false);
             }
 
             if (this ._groundColor .length > this ._groundAngle .length)
             {
-               var vAngle = [ ];
-
-               for (var i = 0, length = this ._groundAngle .length; i < length; ++ i)
-                  vAngle .push (this ._groundAngle [i]);
-
-               vAngle .reverse ();
+               const vAngle = this ._groundAngle .slice () .reverse ();
 
                if (vAngle .length === 0 || vAngle [0] < Math .PI / 2)
                   vAngle .unshift (Math .PI / 2);
@@ -60177,14 +60301,13 @@ function (X3DBindableNode,
       },
       buildSphere: function (radius, vAngle, angle, color, alpha, bottom)
       {
-         var
-            phi         = 0,
+         const
             vAngleMax   = bottom ? Math .PI / 2 : Math .PI,
             V_DIMENSION = vAngle .length - 1;
 
-         for (var v = 0; v < V_DIMENSION; ++ v)
+         for (let v = 0; v < V_DIMENSION; ++ v)
          {
-            var
+            let
                theta1 = Algorithm .clamp (vAngle [v],     0, vAngleMax),
                theta2 = Algorithm .clamp (vAngle [v + 1], 0, vAngleMax);
 
@@ -60197,11 +60320,11 @@ function (X3DBindableNode,
             z1 .setPolar (radius, theta1);
             z2 .setPolar (radius, theta2);
 
-            var
+            const
                c1 = this .getColor (vAngle [v],     color, angle),
                c2 = this .getColor (vAngle [v + 1], color, angle);
 
-            for (var u = 0; u < U_DIMENSION; ++ u)
+            for (let u = 0; u < U_DIMENSION; ++ u)
             {
                // p4 --- p1
                //  |   / |
@@ -60209,17 +60332,17 @@ function (X3DBindableNode,
                // p3 --- p2
 
                // The last point is the first one.
-               var u1 = u < U_DIMENSION - 1 ? u + 1 : 0;
+               const u1 = u < U_DIMENSION - 1 ? u + 1 : 0;
 
                // p1, p2
-               phi = 2 * Math .PI * (u / U_DIMENSION);
-               y1  .setPolar (-z1 .imag, phi);
-               y2  .setPolar (-z2 .imag, phi);
+               let phi = 2 * Math .PI * (u / U_DIMENSION);
+               y1 .setPolar (-z1 .imag, phi);
+               y2 .setPolar (-z2 .imag, phi);
 
                // p3, p4
                phi = 2 * Math .PI * (u1 / U_DIMENSION);
-               y3  .setPolar (-z2 .imag, phi);
-               y4  .setPolar (-z1 .imag, phi);
+               y3 .setPolar (-z2 .imag, phi);
+               y4 .setPolar (-z1 .imag, phi);
 
                // Triangle 1 and 2
 
@@ -60243,7 +60366,7 @@ function (X3DBindableNode,
       },
       transferSphere: function ()
       {
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          // Transfer colors.
 
@@ -60258,7 +60381,7 @@ function (X3DBindableNode,
       },
       transferRectangle: function ()
       {
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          // Transfer texCoords.
 
@@ -60298,11 +60421,11 @@ function (X3DBindableNode,
             }
             case TraverseType .DISPLAY:
             {
-               var
+               const
                   sourceObjects = renderObject .getLocalObjects (),
                   destObjects   = this .localObjects;
 
-               for (var i = 0, length = sourceObjects .length; i < length; ++ i)
+               for (let i = 0, length = sourceObjects .length; i < length; ++ i)
                   destObjects [i] = sourceObjects [i];
 
                destObjects .length = sourceObjects .length;
@@ -60312,7 +60435,7 @@ function (X3DBindableNode,
       },
       display: (function ()
       {
-         var
+         const
             invProjectionMatrix = new Matrix4 (),
             modelViewMatrix     = new Matrix4 (),
             rotation            = new Rotation4 (),
@@ -60335,7 +60458,7 @@ function (X3DBindableNode,
 
                // Get background scale.
 
-               var farValue = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
+               const farValue = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
 
                // Get projection matrix.
 
@@ -60367,12 +60490,12 @@ function (X3DBindableNode,
       })(),
       drawSphere: function (renderObject)
       {
-         var transparency = this ._transparency .getValue ();
+         const transparency = this ._transparency .getValue ();
 
          if (transparency >= 1)
             return;
 
-         var
+         const
             browser    = renderObject .getBrowser (),
             gl         = browser .getContext (),
             shaderNode = browser .getBackgroundSphereShader ();
@@ -60409,18 +60532,17 @@ function (X3DBindableNode,
             // Disable vertex attribute arrays.
 
             shaderNode .disableColorAttribute (gl);
-            shaderNode .disable (gl);
          }
       },
       drawCube: (function ()
       {
          const
-            textureMatrixArray = new Float32Array (new Matrix4 ()),
+            textureMatrixArray = new Float32Array (Matrix4 .Identity),
             white              = new Float32Array ([1, 1, 1]);
 
          return function (renderObject)
          {
-            var
+            const
                browser    = renderObject .getBrowser (),
                gl         = browser .getContext (),
                shaderNode = browser .getUnlitShader ();
@@ -60444,9 +60566,9 @@ function (X3DBindableNode,
                gl .uniform1i  (shaderNode .x3d_FillPropertiesHatched,              false);
                gl .uniform1i  (shaderNode .x3d_ColorMaterial,                      false);
                gl .uniform3fv (shaderNode .x3d_EmissiveColor,                      white)
+               gl .uniform1i  (shaderNode .x3d_EmissiveTexture .textureType,       0)
                gl .uniform1f  (shaderNode .x3d_Transparency,                       0)
                gl .uniform1i  (shaderNode .x3d_NumTextures,                        1);
-               gl .uniform1i  (shaderNode .x3d_TextureType [0],                    2);
                gl .uniform1i  (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
                gl .uniform1i  (shaderNode .x3d_NumProjectiveTextures,              0);
 
@@ -60456,25 +60578,24 @@ function (X3DBindableNode,
 
                // Draw.
 
-               this .drawRectangle (gl, shaderNode, this .frontTexture,  this .frontBuffer);
-               this .drawRectangle (gl, shaderNode, this .backTexture,   this .backBuffer);
-               this .drawRectangle (gl, shaderNode, this .leftTexture,   this .leftBuffer);
-               this .drawRectangle (gl, shaderNode, this .rightTexture,  this .rightBuffer);
-               this .drawRectangle (gl, shaderNode, this .topTexture,    this .topBuffer);
-               this .drawRectangle (gl, shaderNode, this .bottomTexture, this .bottomBuffer);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .leftTexture,   this .leftBuffer);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .rightTexture,  this .rightBuffer);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .topTexture,    this .topBuffer);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer);
 
                // Disable vertex attribute arrays.
 
                shaderNode .disableTexCoordAttribute (gl);
-               shaderNode .disable (gl);
             }
          };
       })(),
-      drawRectangle: function (gl, shaderNode, texture, buffer)
+      drawRectangle: function (gl, browser, shaderNode, renderObject, texture, buffer)
       {
          if (texture && (texture .checkLoadState () === X3DConstants .COMPLETE_STATE || texture .getData ()))
          {
-            texture .setShaderUniforms (gl, shaderNode);
+            texture .setShaderUniforms (gl, shaderNode, renderObject);
 
             if (texture ._transparent .getValue ())
                gl .enable (gl .BLEND);
@@ -60486,6 +60607,8 @@ function (X3DBindableNode,
             // Draw.
 
             gl .drawArrays (gl .TRIANGLES, 0, 6);
+
+            browser .resetTextureUnits ();
          }
       },
    });
@@ -60752,7 +60875,7 @@ function (X3DTextureNode,
       })(),
       setShaderUniforms: function (gl, shaderObject, renderObject)
       {
-         this .setShaderUniformsToChannel (gl, shaderObject, renderObject, 0);
+         this .setShaderUniformsToChannel (gl, shaderObject, renderObject, shaderObject .x3d_Textures [0]);
 
          gl .uniform1i (shaderObject .x3d_NumTextures, 1);
          gl .uniform1i (shaderObject .x3d_MultiTextureMode [0],      ModeType .MODULATE);
@@ -60859,6 +60982,14 @@ function (X3DSingleTextureNode,
       {
          return this .target;
       },
+      getTextureType: function ()
+      {
+         return 2;
+      },
+      getTextureTypeString: function ()
+      {
+         return "2D";
+      },
       getWidth: function ()
       {
          return this .width;
@@ -60936,11 +61067,14 @@ function (X3DSingleTextureNode,
                                                                          this ._repeatT .getValue (),
                                                                          false);
       },
-      setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
+      setShaderUniformsToChannel: function (gl, shaderObject, renderObject, channel)
       {
-         gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getTexture2DUnits () [i]);
+         const textureUnit = renderObject .getBrowser () .getTexture2DUnit ();
+
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-         gl .uniform1i (shaderObject .x3d_TextureType [i], 2);
+         gl .uniform1i (channel .textureType, 2);
+         gl .uniform1i (channel .texture2D, textureUnit);
       },
    });
 
@@ -61169,7 +61303,7 @@ function ($,
 
             let transparent = false;
 
-            for (let i = 3; i < data .length; i += 4)
+            for (let i = 3, length = data .length; i < length; i += 4)
             {
                if (data [i] !== 255)
                {
@@ -61178,7 +61312,7 @@ function ($,
                }
             }
 
-            this .setTexture (width, height, transparent, new Uint8Array (data), false);
+            this .setTexture (width, height, transparent, new Uint8Array (data .buffer), false);
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
          catch (error)
@@ -61302,7 +61436,7 @@ function (Fields,
       {
          X3DBackgroundNode .prototype .initialize .call (this);
 
-         var
+         const
             frontTexture      = new ImageTexture (this .getExecutionContext ()),
             backTexture       = new ImageTexture (this .getExecutionContext ()),
             leftTexture       = new ImageTexture (this .getExecutionContext ()),
@@ -62458,7 +62592,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-   SupportedNodes .addAbstractType ("X3DWorld");
+   SupportedNodes .addAbstractType ("X3DWorld", X3DWorld);
 
    function X3DWorld (executionContext)
    {
@@ -66044,49 +66178,12 @@ function ($,
 
             new GoldenGate (scene) .parseIntoScene (string, success, error);
          }
-         catch (error)
-         {
-            console .error (error);
-
-            throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + worldURL + "'.");
-         }
-      },
-      importDocument: function (scene, dom, success, error)
-      {
-         try
-         {
-            if (success)
-               success = this .setScene .bind (this, scene, success, error);
-
-            new XMLParser (scene) .parseIntoScene (dom, success, error);
-
-            //AP: add reference to dom for later access.
-            this .node [_dom] = dom;
-         }
          catch (exception)
          {
             if (error)
                error (exception);
             else
-               throw exception;
-         }
-      },
-      importJS: function (scene, jsobj, success, error)
-      {
-         try
-         {
-            if (success)
-               success = this .setScene .bind (this, scene, success, error);
-
-            //AP: add reference to dom for later access.
-            this .node [_dom] = new JSONParser (scene) .parseIntoScene (jsobj, success, error);
-         }
-         catch (exception)
-         {
-            if (error)
-               error (exception);
-            else
-               throw exception;
+               throw error;
          }
       },
       setScene: function (scene, success, error)
@@ -66398,7 +66495,7 @@ function ($,
             console .warn ("Couldn't load URL '" + decodeURI (this .URL .href) + "':", exception .message);
 
          if (DEBUG)
-            console .log (exception);
+            console .error (exception);
       },
       getReferer: function ()
       {
@@ -66508,7 +66605,8 @@ function (Fields,
 
       this .addType (X3DConstants .ShaderPart);
 
-      this .valid = false;
+      this .valid   = false;
+      this .options = [ ];
    }
 
    ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -66580,13 +66678,13 @@ function (Fields,
       {
          return this ._url;
       },
-      setShadow: function (value)
+      setOptions: function (value)
       {
-         this .shadow = value;
+         this .options = value;
       },
-      getShadow: function ()
+      getOptions: function ()
       {
-         return this .shadow;
+         return this .options;
       },
       unloadNow: function ()
       {
@@ -66608,7 +66706,7 @@ function (Fields,
             {
                const
                   gl     = this .getBrowser () .getContext (),
-                  source = Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .shadow);
+                  source = Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .options);
 
                gl .shaderSource (this .shader, source);
                gl .compileShader (this .shader);
@@ -66773,7 +66871,6 @@ function (TextureBuffer,
             gl .drawArrays (gl .TRIANGLES, 0, 6);
 
             shaderNode .disableNormalAttribute (gl, normalBuffer);
-            shaderNode .disable                (gl);
 
             const data = frameBuffer .readPixels ();
 
@@ -66852,19 +66949,25 @@ function (Shading,
 "use strict";
 
    const
-      _shaders       = Symbol (),
-      _defaultShader = Symbol (),
-      _pointShader   = Symbol (),
-      _lineShader    = Symbol (),
-      _unlitShader   = Symbol (),
-      _gouraudShader = Symbol (),
-      _phongShader   = Symbol (),
-      _shadowShader  = Symbol (),
-      _depthShader   = Symbol ();
+      _shaders                        = Symbol (),
+      _defaultShader                  = Symbol (),
+      _standardShaders                = Symbol (),
+      _pointShader                    = Symbol (),
+      _lineShader                     = Symbol (),
+      _unlitShader                    = Symbol (),
+      _unlitTexturesShader            = Symbol (),
+      _gouraudShader                  = Symbol (),
+      _phongShader                    = Symbol (),
+      _materialTexturesShader         = Symbol (),
+      _physicalMaterialShader         = Symbol (),
+      _physicalMaterialTexturesShader = Symbol (),
+      _shadowShader                   = Symbol (),
+      _depthShader                    = Symbol ();
 
    function X3DShadersContext ()
    {
-      this [_shaders] = new Set ();
+      this [_shaders]         = new Set ();
+      this [_standardShaders] = [ ];
    }
 
    X3DShadersContext .prototype =
@@ -66915,101 +67018,37 @@ function (Shading,
       {
          return this [_defaultShader];
       },
-      hasPointShader: function ()
+      getStandardShaders: function ()
       {
-         return !! this [_pointShader];
+         return this [_standardShaders];
       },
       getPointShader: function ()
       {
-         this [_pointShader] = this .createShader ("PointShader", "PointSet");
-
-         this .getPointShader = function () { return this [_pointShader]; };
-
-         Object .defineProperty (this, "getPointShader", { enumerable: false });
-
-         return this [_pointShader];
-      },
-      hasLineShader: function ()
-      {
-         return !! this [_lineShader];
+         return this .getStandardShader ("getPointShader", _pointShader, "PointShader", "Point", [ ], "set_point_shader_valid__");
       },
       getLineShader: function ()
       {
-         this [_lineShader] = this .createShader ("WireframeShader", "Wireframe");
-
-         this .getLineShader = function () { return this [_lineShader]; };
-
-         Object .defineProperty (this, "getLineShader", { enumerable: false });
-
-         return this [_lineShader];
-      },
-      hasUnlitShader: function ()
-      {
-         return !! this [_unlitShader];
+         return this .getStandardShader ("getLineShader", _lineShader, "LineShader", "Line", [ ], "set_line_shader_valid__");
       },
       getUnlitShader: function ()
       {
-         this [_unlitShader] = this .createShader ("UnlitShader", "Unlit");
-
-         this [_unlitShader] ._isValid .addInterest ("set_unlit_shader_valid__", this);
-
-         this .getUnlitShader = function () { return this [_unlitShader]; };
-
-         Object .defineProperty (this, "getUnlitShader", { enumerable: false });
-
-         return this [_unlitShader];
-      },
-      hasGouraudShader: function ()
-      {
-         return !! this [_gouraudShader];
+         return this .getStandardShader ("getUnlitShader", _unlitShader, "UnlitShader", "Unlit", [ ], "set_unlit_shader_valid__");
       },
       getGouraudShader: function ()
       {
-         this [_gouraudShader] = this .createShader ("GouraudShader", "Gouraud", false);
-
-         this [_gouraudShader] ._isValid .addInterest ("set_gouraud_shader_valid__", this);
-
-         this .getGouraudShader = function () { return this [_gouraudShader]; };
-
-         Object .defineProperty (this, "getGouraudShader", { enumerable: false });
-
-         return this [_gouraudShader];
-      },
-      hasPhongShader: function ()
-      {
-         return !! this [_phongShader];
+         return this .getStandardShader ("getGouraudShader", _gouraudShader, "GouraudShader", "Gouraud", [ ], "set_gouraud_shader_valid__");
       },
       getPhongShader: function ()
       {
-         this [_phongShader] = this .createShader ("PhongShader", "Phong", false);
-
-         this [_phongShader] ._isValid .addInterest ("set_phong_shader_valid__", this);
-
-         this .getPhongShader = function () { return this [_phongShader]; };
-
-         Object .defineProperty (this, "getPhongShader", { enumerable: false });
-
-         return this [_phongShader];
-      },
-      hasShadowShader: function ()
-      {
-         return !! this [_shadowShader];
+         return this .getStandardShader ("getPhongShader", _phongShader, "PhongShader", "Phong", [ ], "set_phong_shader_valid__");
       },
       getShadowShader: function ()
       {
-         this [_shadowShader] = this .createShader ("ShadowShader", "Phong", true);
-
-         this [_shadowShader] ._isValid .addInterest ("set_shadow_shader_valid__", this);
-
-         this .getShadowShader = function () { return this [_shadowShader]; };
-
-         Object .defineProperty (this, "getShadowShader", { enumerable: false });
-
-         return this [_shadowShader];
+         return this .getStandardShader ("getShadowShader", _shadowShader, "ShadowShader", "Phong",["X3D_SHADOWS", "X3D_PCF_FILTERING"], "set_shadow_shader_valid__");
       },
-      hasDepthShader: function ()
+      getPhysicalMaterialShader: function ()
       {
-         return !! this [_depthShader];
+         return this .getStandardShader ("getPhysicalMaterialShader", _physicalMaterialShader, "PhysicalMaterialShader", "PBR", [ ], "set_physical_material_shader_valid__");
       },
       getDepthShader: function ()
       {
@@ -67042,7 +67081,19 @@ function (Shading,
          for (const shader of this .getShaders ())
             shader .setShading (type);
       },
-      createShader: function (name, file, shadow = false)
+      getStandardShader: function (func, property, name, shader, options, valid)
+      {
+         this [property] = this .createShader (name, shader, options);
+
+         this [property] ._isValid .addInterest (valid, this);
+
+         this [func] = function () { return this [property]; };
+
+         Object .defineProperty (this, func, { enumerable: false });
+
+         return this [property];
+      },
+      createShader: function (name, file, options = [ ])
       {
          if (this .getDebug ())
             console .log ("Initializing " + name);
@@ -67054,14 +67105,14 @@ function (Shading,
          const vertexShader = new ShaderPart (this .getPrivateScene ());
          vertexShader .setName (name + "Vertex");
          vertexShader ._url .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".vs"));
-         vertexShader .setShadow (shadow);
+         vertexShader .setOptions (options);
          vertexShader .setup ();
 
          const fragmentShader = new ShaderPart (this .getPrivateScene ());
          fragmentShader .setName (name + "Fragment");
          fragmentShader ._type  = "FRAGMENT";
          fragmentShader ._url .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".fs"));
-         fragmentShader .setShadow (shadow);
+         fragmentShader .setOptions (options);
          fragmentShader .setup ();
 
          const shader = new ComposedShader (this .getPrivateScene ());
@@ -67069,14 +67120,19 @@ function (Shading,
          shader ._language = "GLSL";
          shader ._parts .push (vertexShader);
          shader ._parts .push (fragmentShader);
-         shader .setCustom (false);
          shader .setShading (this .getBrowserOptions () .getShading ());
          shader .setup ();
+
+         this [_standardShaders] .push (shader);
 
          this .addShader (shader);
 
          return shader;
       },
+      set_point_shader_valid__: function ()
+      { },
+      set_line_shader_valid__: function ()
+      { },
       set_unlit_shader_valid__: function (valid)
       {
          this [_unlitShader] ._isValid .removeInterest ("set_unlit_shader_valid__", this);
@@ -67113,6 +67169,19 @@ function (Shading,
          console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
 
          this [_phongShader] = this .getGouraudShader ();
+
+         this .setShading (this .getBrowserOptions () .getShading ());
+      },
+      set_physical_material_shader_valid__: function (valid)
+      {
+         this [_physicalMaterialShader] ._isValid .removeInterest ("set_physical_material_shader_valid__", this);
+
+         if (valid .getValue () && ShaderTest .verify (this, this [_physicalMaterialShader]))
+            return;
+
+         console .warn ("X_ITE: Physical material shading is not available, using Gouraud shading.");
+
+         this [_physicalMaterialShader] = this .getGouraudShader ();
 
          this .setShading (this .getBrowserOptions () .getShading ());
       },
@@ -67922,32 +67991,34 @@ function (Fields,
 
       this .addType (X3DConstants .Appearance);
 
-      this .stylePropertiesNode  = [ ];
-      this .materialNode         = null;
-      this .backMaterialNode     = null;
-      this .textureNode          = null;
-      this .textureTransformNode = null;
-      this .shaderNodes          = [ ];
-      this .shaderNode           = null;
-      this .blendModeNode        = null;
+      this .stylePropertiesNode     = [ ];
+      this .materialNode            = null;
+      this .backMaterialNode        = null;
+      this .textureNode             = null;
+      this .textureTransformNode    = null;
+      this .textureTransformMapping = new Map ();
+      this .shaderNodes             = [ ];
+      this .shaderNode              = null;
+      this .blendModeNode           = null;
    }
 
    Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .prototype),
    {
       constructor: Appearance,
       [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "alphaMode",        new Fields .SFString ("AUTO")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "alphaCutoff",      new Fields .SFFloat (0.5)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "pointProperties",  new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "lineProperties",   new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "fillProperties",   new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "material",         new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "backMaterial",     new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "texture",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "shaders",          new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "blendMode",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "alphaMode",          new Fields .SFString ("AUTO")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "alphaCutoff",        new Fields .SFFloat (0.5)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "acousticProperties", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "pointProperties",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "lineProperties",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fillProperties",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "material",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "backMaterial",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "texture",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "shaders",            new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "blendMode",          new Fields .SFNode ()),
       ]),
       getTypeName: function ()
       {
@@ -68106,12 +68177,23 @@ function (Fields,
       },
       set_textureTransform__: function ()
       {
+         if (this .textureTransformNode)
+            this .textureTransformNode .removeInterest ("updateTextureTransformMapping", this);
+
          this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this ._textureTransform);
 
-         if (this .textureTransformNode)
-            return;
+         if (!this .textureTransformNode)
+            this .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
 
-         this .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
+         this .textureTransformNode .addInterest ("updateTextureTransformMapping", this);
+
+         this .updateTextureTransformMapping ();
+      },
+      updateTextureTransformMapping: function ()
+      {
+         this .textureTransformMapping .clear ();
+
+         this .textureTransformNode .getTextureMapping (this .textureTransformMapping);
       },
       set_shaders__: function ()
       {
@@ -68310,7 +68392,7 @@ function (Fields,
          new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMinValue",    new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMaxValue",    new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeAttenuation", new Fields .MFFloat (1, 0, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "colorMode",            new Fields .SFString ("TEXTURE_AND_POINT_COLOR")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "markerType",           new Fields .SFInt32 (1)),
       ]),
       getTypeName: function ()
       {
@@ -68332,13 +68414,13 @@ function (Fields,
          this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
          this ._pointSizeMaxValue    .addInterest ("set_pointSizeMaxValue__",    this);
          this ._pointSizeAttenuation .addInterest ("set_pointSizeAttenuation__", this);
-         this ._colorMode            .addInterest ("set_colorMode__",            this);
+         this ._markerType           .addInterest ("set_markerType__",           this);
 
          this .set_pointSizeScaleFactor__ ();
          this .set_pointSizeMinValue__ ();
          this .set_pointSizeMaxValue__ ();
          this .set_pointSizeAttenuation__ ();
-         this .set_colorMode__ ();
+         this .set_markerType__ ();
       },
       set_pointSizeScaleFactor__: function ()
       {
@@ -68360,31 +68442,15 @@ function (Fields,
          this .pointSizeAttenuation [1] = length > 1 ? Math .max (0, this ._pointSizeAttenuation [1]) : 0;
          this .pointSizeAttenuation [2] = length > 2 ? Math .max (0, this ._pointSizeAttenuation [2]) : 0;
       },
-      set_colorMode__: (function ()
+      set_markerType__: function ()
       {
-         const colorModes = new Map ([
-            ["POINT_COLOR",             0],
-            ["TEXTURE_COLOR",           1],
-            ["TEXTURE_AND_POINT_COLOR", 2],
-         ]);
-
-         return function ()
-         {
-            const colorMode = colorModes .get (this ._colorMode .getValue ());
-
-            if (colorMode !== undefined)
-               this .colorMode = colorMode;
-            else
-               this .colorMode = colorModes .get ("TEXTURE_AND_POINT_COLOR");
-         };
-      })(),
+      },
       setShaderUniforms: function (gl, shaderObject)
       {
          gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeScaleFactor, this .pointSizeScaleFactor);
          gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMinValue,    this .pointSizeMinValue);
          gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMaxValue,    this .pointSizeMaxValue);
          gl .uniform3fv (shaderObject .x3d_PointPropertiesPointSizeAttenuation, this .pointSizeAttenuation);
-         gl .uniform1i  (shaderObject .x3d_PointPropertiesColorMode,            this .colorMode);
       },
    });
 
@@ -68506,15 +68572,17 @@ function (Fields,
          if (this .applied)
          {
             const
-               browser = shaderObject .getBrowser (),
-               texture = browser .getLinetype (this ._linetype .getValue ());
+               browser     = shaderObject .getBrowser (),
+               texture     = browser .getLinetype (this ._linetype .getValue ()),
+               textureUnit = browser .getTexture2DUnit ();
 
             gl .lineWidth (this .linewidthScaleFactor);
             gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,              true);
             gl .uniform1f (shaderObject .x3d_LinePropertiesLinewidthScaleFactor, this .linewidthScaleFactor);
 
-            gl .activeTexture (gl .TEXTURE0 + browser .getLinetypeUnit ());
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
             gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
+            gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, textureUnit);
          }
          else
          {
@@ -68674,12 +68742,15 @@ function (Fields,
          if (hatched)
          {
             const
-               browser = shaderObject .getBrowser (),
-               texture = browser .getHatchStyle (this ._hatchStyle .getValue ());
+               browser     = shaderObject .getBrowser (),
+               texture     = browser .getHatchStyle (this ._hatchStyle .getValue ()),
+               textureUnit = browser .getTexture2DUnit ();
 
             gl .uniform3fv (shaderObject .x3d_FillPropertiesHatchColor, this .hatchColor);
-            gl .activeTexture (gl .TEXTURE0 + browser .getHatchStyleUnit ());
+
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
             gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
+            gl .uniform1i (shaderObject .x3d_FillPropertiesHatchStyle, textureUnit);
          }
       },
    });
@@ -68825,11 +68896,15 @@ function (Fields,
 
 
  define ('x_ite/Components/Shape/X3DOneSidedMaterialNode',[
+   "x_ite/Fields",
    "x_ite/Components/Shape/X3DMaterialNode",
+   "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
-function (X3DMaterialNode,
+function (Fields,
+          X3DMaterialNode,
+          X3DCast,
           X3DConstants,
           Algorithm)
 {
@@ -68841,7 +68916,10 @@ function (X3DMaterialNode,
 
       this .addType (X3DConstants .X3DOneSidedMaterialNode);
 
+      this .addChildObjects ("textures", new Fields .SFTime ());
+
       this .emissiveColor = new Float32Array (3);
+      this .textures      = 0;
    }
 
    X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
@@ -68851,10 +68929,18 @@ function (X3DMaterialNode,
       {
          X3DMaterialNode .prototype .initialize .call (this);
 
-         this ._emissiveColor .addInterest ("set_emissiveColor__", this);
-         this ._transparency  .addInterest ("set_transparency__",  this);
+         this ._emissiveColor   .addInterest ("set_emissiveColor__",   this);
+         this ._emissiveTexture .addInterest ("set_emissiveTexture__", this);
+         this ._emissiveTexture .addInterest ("set_textures__",        this);
+         this ._normalTexture   .addInterest ("set_normalTexture__",   this);
+         this ._normalTexture   .addInterest ("set_textures__",        this);
+         this ._transparency    .addInterest ("set_transparency__",    this);
+         this ._transparency    .addInterest ("set_transparent__",     this);
+         this ._textures        .addInterest ("set_textures__",        this);
 
          this .set_emissiveColor__ ();
+         this .set_emissiveTexture__ ();
+         this .set_normalTexture__ ();
          this .set_transparency__ ();
       },
       set_emissiveColor__: function ()
@@ -68870,17 +68956,105 @@ function (X3DMaterialNode,
          emissiveColor [1] = emissiveColor_ .g;
          emissiveColor [2] = emissiveColor_ .b;
       },
-      set_shininess__: function ()
+      set_emissiveTexture__: function ()
       {
-         this .shininess = Algorithm .clamp (this ._shininess .getValue (), 0, 1);
+         this .emissiveTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._emissiveTexture);
+
+         this .setTexture (this .getTextureIndices () .EMISSIVE_TEXTURE, this .emissiveTextureNode);
+      },
+      set_normalTexture__: function ()
+      {
+         this .normalTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._normalTexture);
+
+         this .setTexture (this .getTextureIndices () .NORMAL_TEXTURE, this .normalTextureNode);
       },
       set_transparency__: function ()
       {
-         const transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
+         this .transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
+      },
+      set_textures__: function ()
+      { },
+      set_transparent__: function ()
+      {
+         this .setTransparent (Boolean (this .transparency));
+      },
+      getEmissiveTexture: function ()
+      {
+         return this .emissiveTextureNode;
+      },
+      getNormalTexture: function ()
+      {
+         return this .normalTextureNode;
+      },
+      getTransparency: function ()
+      {
+         return this .transparency;
+      },
+      getTextures: function ()
+      {
+         return this .textures;
+      },
+      getTextureIndices: (function ()
+      {
+         const textureIndices = {
+            EMISSIVE_TEXTURE: 0,
+            NORMAL_TEXTURE: 1,
+         };
 
-         this .transparency = transparency;
+         return function ()
+         {
+            return textureIndices;
+         };
+      })(),
+      setTexture: function (index, value)
+      {
+         if (value)
+            this .textures |= 1 << index;
+         else
+            this .textures &= ~(1 << index);
 
-         this .setTransparent (Boolean (transparency));
+         this ._textures = this .getBrowser () .getCurrentTime ();
+      },
+      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+      {
+         gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
+         gl .uniform1f  (shaderObject .x3d_NormalScale,   this ._normalScale .getValue ());
+         gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
+
+         if (this .textures)
+         {
+            const
+               emissiveTexture = shaderObject .x3d_EmissiveTexture,
+               normalTexture   = shaderObject .x3d_NormalTexture;
+
+            // Emissive parameters
+
+            if (this .emissiveTextureNode)
+            {
+               this .emissiveTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, emissiveTexture);
+
+               gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (this ._emissiveTextureMapping .getValue ()) || 0);
+               gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._emissiveTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (emissiveTexture .textureType, 0);
+            }
+
+            // Normal parameters
+
+            if (this .normalTextureNode)
+            {
+               this .normalTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, normalTexture);
+
+               gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (this ._normalTextureMapping .getValue ()) || 0);
+               gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._normalTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (normalTexture .textureType, 0);
+            }
+         }
       },
    });
 
@@ -68983,14 +69157,57 @@ function (Fields,
       {
          return "material";
       },
+      initialize: function ()
+      {
+         X3DOneSidedMaterialNode .prototype .initialize .call (this);
+
+         this .shaderNode = this .getBrowser () .getUnlitShader ();
+
+         this .set_transparent__ ();
+      },
+      set_emissiveTexture__: function ()
+      {
+         if (this .getEmissiveTexture ())
+            this .getEmissiveTexture () ._transparent .removeInterest ("set_transparent__", this);
+
+         X3DOneSidedMaterialNode .prototype .set_emissiveTexture__ .call (this);
+
+         if (this .getEmissiveTexture ())
+            this .getEmissiveTexture () ._transparent .addInterest ("set_transparent__", this);
+      },
+      set_transparent__: function ()
+      {
+         this .setTransparent (Boolean (this .getTransparency () ||
+                               (this .getEmissiveTexture () && this .getEmissiveTexture () .getTransparent ())));
+      },
+      set_textures__: function ()
+      {
+         const browser = this .getBrowser ();
+
+         if (!this .getTextures ())
+            return this .shaderNode = browser .getUnlitShader ();
+
+         const options = ["X3D_MATERIAL_TEXTURES"];
+
+         if (this .getEmissiveTexture ())
+            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+
+         if (this .getNormalTexture ())
+            options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+
+         const shaderNode = browser .createShader ("UnlitTexturesShader", "Unlit", options);
+
+         shaderNode ._isValid .addInterest ("setShader", this, shaderNode);
+      },
       getShader: function (browser, shadow)
       {
-         return browser .getUnlitShader ();
+         return this .shaderNode;
       },
-      setShaderUniforms: function (gl, shaderObject)
+      setShader: function (shaderNode)
       {
-         gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
-         gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
+         shaderNode ._isValid .removeInterest ("setShader", this);
+
+         this .shaderNode = shaderNode;
       },
    });
 
@@ -70365,25 +70582,26 @@ function (Fields,
 
       const browser = this .getBrowser ();
 
-      this .min                   = new Vector3 (0, 0, 0);
-      this .max                   = new Vector3 (0, 0, 0);
-      this .bbox                  = new Box3 (this .min, this .max, true);
-      this .solid                 = true;
-      this .geometryType          = 3;
-      this .primitiveMode         = browser .getContext () .TRIANGLES;
-      this .flatShading           = undefined;
-      this .colorMaterial         = false;
-      this .attribNodes           = [ ];
-      this .attribs               = [ ];
-      this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
-      this .multiTexCoords        = [ ];
-      this .texCoords             = X3DGeometryNode .createArray ();
-      this .fogDepths             = X3DGeometryNode .createArray ();
-      this .colors                = X3DGeometryNode .createArray ();
-      this .normals               = X3DGeometryNode .createArray ();
-      this .flatNormals           = X3DGeometryNode .createArray ();
-      this .vertices              = X3DGeometryNode .createArray ();
-      this .vertexCount           = 0;
+      this .min                      = new Vector3 (0, 0, 0);
+      this .max                      = new Vector3 (0, 0, 0);
+      this .bbox                     = new Box3 (this .min, this .max, true);
+      this .solid                    = true;
+      this .geometryType             = 3;
+      this .primitiveMode            = browser .getContext () .TRIANGLES;
+      this .flatShading              = undefined;
+      this .colorMaterial            = false;
+      this .attribNodes              = [ ];
+      this .attribs                  = [ ];
+      this .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
+      this .textureCoordinateMapping = new Map ();
+      this .multiTexCoords           = [ ];
+      this .texCoords                = X3DGeometryNode .createArray ();
+      this .fogDepths                = X3DGeometryNode .createArray ();
+      this .colors                   = X3DGeometryNode .createArray ();
+      this .normals                  = X3DGeometryNode .createArray ();
+      this .flatNormals              = X3DGeometryNode .createArray ();
+      this .vertices                 = X3DGeometryNode .createArray ();
+      this .vertexCount              = 0;
 
       // This methods are configured in transfer.
       this .depth            = Function .prototype;
@@ -70572,10 +70790,22 @@ function (Fields,
       },
       setTextureCoordinate: function (value)
       {
+         this .textureCoordinateNode .removeInterest ("updateTextureCoordinateMapping", this);
+
          if (value)
             this .textureCoordinateNode = value;
          else
             this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();
+
+         this .textureCoordinateNode .addInterest ("updateTextureCoordinateMapping", this);
+
+         this .updateTextureCoordinateMapping ();
+      },
+      updateTextureCoordinateMapping: function ()
+      {
+         this .textureCoordinateMapping .clear ();
+
+         this .textureCoordinateNode .getTextureMapping (this .textureCoordinateMapping);
       },
       setNormals: function (value)
       {
@@ -71297,7 +71527,6 @@ function (Fields,
 
             shaderNode .disableTexCoordAttribute (gl);
             shaderNode .disableNormalAttribute   (gl);
-            shaderNode .disable                  (gl);
 
             if (blendModeNode)
                blendModeNode .disable (gl);
@@ -71506,7 +71735,6 @@ function (Fields,
 
             shaderNode .disableTexCoordAttribute (gl);
             shaderNode .disableNormalAttribute   (gl);
-            shaderNode .disable                  (gl);
 
             if (blendModeNode)
                blendModeNode .disable (gl);
@@ -71729,8 +71957,6 @@ function (X3DGeometryNode,
                if (this .getMultiTexCoords () .length)
                   shaderNode .disableTexCoordAttribute (gl);
 
-               shaderNode .disable (gl);
-
                if (blendModeNode)
                   blendModeNode .disable (gl);
             }
@@ -71815,7 +72041,6 @@ function (X3DGeometryNode,
                   shaderNode .disableColorAttribute (gl);
 
                shaderNode .disableTexCoordAttribute (gl);
-               shaderNode .disable (gl);
 
                if (blendModeNode)
                   blendModeNode .disable (gl);
@@ -73894,6 +74119,11 @@ function (X3DTextureCoordinateNode,
       addTexCoord: function (index, multiArray)
       {
          this .addTexCoordToChannel (index, multiArray [0]);
+      },
+      getTextureMapping: function (textureCoordinateMapping, channel = 0)
+      {
+         if (this ._mapping .getValue ())
+            textureCoordinateMapping .set (this ._mapping .getValue (), channel);
       },
       setShaderUniforms: function (gl, shaderObject)
       {
@@ -78030,7 +78260,6 @@ function ($,
                gl .enable (gl .DEPTH_TEST);
 
                gl .lineWidth (lineWidth);
-               shaderNode .disable (gl);
             }
          };
       })(),
@@ -79485,7 +79714,7 @@ function (Fields,
 {
 "use strict";
 
-   var DirectionalLights = ObjectCache (DirectionalLightContainer);
+   const DirectionalLights = ObjectCache (DirectionalLightContainer);
 
    function DirectionalLightContainer ()
    {
@@ -79502,7 +79731,7 @@ function (Fields,
       this .shadowMatrix                  = new Matrix4 ();
       this .shadowMatrixArray             = new Float32Array (16);
       this .rotation                      = new Rotation4 ();
-      this .textureUnit                   = 0;
+      this .textureUnit                   = undefined;
    }
 
    DirectionalLightContainer .prototype =
@@ -79514,9 +79743,7 @@ function (Fields,
       },
       set: function (browser, lightNode, groupNode, modelViewMatrix)
       {
-         var
-            gl            = browser .getContext (),
-            shadowMapSize = lightNode .getShadowMapSize ();
+         const shadowMapSize = lightNode .getShadowMapSize ();
 
          this .browser   = browser;
          this .lightNode = lightNode;
@@ -79530,30 +79757,8 @@ function (Fields,
          {
             this .shadowBuffer = browser .popShadowBuffer (shadowMapSize);
 
-            if (this .shadowBuffer)
-            {
-               if (browser .getCombinedTextureUnits () .length)
-               {
-                  this .textureUnit = browser .getCombinedTextureUnits () .pop ();
-
-                  gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
-
-                  if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
-                     gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
-                  else
-                     gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
-
-                  gl .activeTexture (gl .TEXTURE0);
-               }
-               else
-               {
-                  console .warn ("Not enough combined texture units for shadow map available.");
-               }
-            }
-            else
-            {
+            if (!this .shadowBuffer)
                console .warn ("Couldn't create shadow buffer.");
-            }
          }
       },
       renderShadowMap: function (renderObject)
@@ -79563,7 +79768,7 @@ function (Fields,
             if (! this .shadowBuffer)
                return;
 
-            var
+            const
                lightNode            = this .lightNode,
                cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
                modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
@@ -79572,7 +79777,7 @@ function (Fields,
             invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
             invLightSpaceMatrix .inverse ();
 
-            var
+            const
                groupBBox        = this .groupNode .getSubBBox (this .bbox, true), // Group bbox.
                lightBBox        = groupBBox .multRight (invLightSpaceMatrix),     // Group bbox from the perspective of the light.
                shadowMapSize    = lightNode .getShadowMapSize (),
@@ -79613,12 +79818,12 @@ function (Fields,
       },
       setShaderUniforms: function (gl, shaderObject)
       {
-         var i = shaderObject .numLights ++;
+         const i = shaderObject .numLights ++;
 
          if (shaderObject .hasLight (i, this))
             return;
 
-         var
+         const
             lightNode = this .lightNode,
             color     = lightNode .getColor (),
             direction = this .direction;
@@ -79629,38 +79834,55 @@ function (Fields,
          gl .uniform1f (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
          gl .uniform3f (shaderObject .x3d_LightDirection [i],        direction .x, direction .y, direction .z);
 
-         if (this .textureUnit)
+         if (this .shadowBuffer)
          {
-            var shadowColor = lightNode .getShadowColor ();
+            const
+               browser     = this .browser,
+               shadowColor = lightNode .getShadowColor ();
 
             gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
             gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
             gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
             gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
             gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
-            gl .uniform1i        (shaderObject .x3d_ShadowMap [i],           this .textureUnit);
-         }
-         else
-         {
-            // Must be set to zero in case of multiple lights.
-            gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
+
+            this .textureUnit = lightNode .getGlobal ()
+               ? this .textureUnit === undefined ? browser .popTexture2DUnit () : this .textureUnit
+               : browser .getTexture2DUnit ();
+
+            if (this .textureUnit !== undefined)
+            {
+               gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
+
+               if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
+                  gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+               else
+                  gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
+
+               gl .uniform1i (shaderObject .x3d_ShadowMap [i], this .textureUnit);
+            }
+            else
+            {
+               console .warn ("Not enough combined texture units for shadow map available.");
+            }
          }
       },
       dispose: function ()
       {
          // Return shadowBuffer and textureUnit.
 
-         if (this .textureUnit)
-            this .browser .getCombinedTextureUnits () .push (this .textureUnit);
-
          this .browser .pushShadowBuffer (this .shadowBuffer);
+
+         if (this .lightNode .getGlobal ())
+            this .browser .pushTexture2DUnit (this .textureUnit);
+
          this .modelViewMatrix .clear ();
 
          this .browser      = null;
          this .lightNode    = null;
          this .groupNode    = null;
          this .shadowBuffer = null;
-         this .textureUnit  = 0;
+         this .textureUnit  = undefined;
 
          // Return container
 
@@ -97325,6 +97547,11 @@ function (X3DTextureTransformNode,
    X3DSingleTextureTransformNode .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
    {
       constructor: X3DSingleTextureTransformNode,
+      getTextureMapping: function (textureTransformMapping, channel = 0)
+      {
+         if (this ._mapping .getValue ())
+            textureTransformMapping .set (this ._mapping .getValue (), channel);
+      },
       setShaderUniforms: function (gl, shaderObject)
       {
          for (let i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
@@ -97562,20 +97789,22 @@ function (TextureProperties,
       _maxTextures              = Symbol (),
       _multiTexturing           = Symbol (),
       _projectiveTextureMapping = Symbol (),
-      _combinedTextureUnits     = Symbol (),
       _maxTextureSize           = Symbol (),
       _maxCombinedTextureUnits  = Symbol (),
       _textureMemory            = Symbol (),
-      _shadowTextureUnit        = Symbol (),
-      _linetypeUnit             = Symbol (),
-      _hatchStyleUnit           = Symbol (),
+      _combinedTextureUnits     = Symbol (),
+      _texture2DUnit            = Symbol (),
+      _texture3DUnit            = Symbol (),
+      _textureCubeUnit          = Symbol (),
       _texture2DUnits           = Symbol (),
       _texture3DUnits           = Symbol (),
-      _cubeMapTextureUnits      = Symbol (),
-      _projectiveTextureUnits   = Symbol (),
+      _textureCubeUnits         = Symbol (),
+      _texture2DUnitIndex       = Symbol (),
+      _texture3DUnitIndex       = Symbol (),
+      _textureCubeUnitIndex     = Symbol (),
       _defaultTexture2D         = Symbol (),
       _defaultTexture3D         = Symbol (),
-      _defaultCubeMapTexture    = Symbol (),
+      _defaultTextureCube       = Symbol (),
       _defaultTextureProperties = Symbol (),
       _defaultTextureTransform  = Symbol (),
       _defaultTextureCoordinate = Symbol ();
@@ -97583,13 +97812,15 @@ function (TextureProperties,
    function X3DTexturingContext ()
    {
       const
-         gl                    = this .getContext (),
-         maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS);
+         gl                   = this .getContext (),
+         maxTextureImageUnits = gl .getParameter (gl .MAX_TEXTURE_IMAGE_UNITS);
 
-      this [_maxTextures]              = maxVertexTextureUnits > 8 ? 2 : 1;
-      this [_multiTexturing]           = maxVertexTextureUnits > 8;
-      this [_projectiveTextureMapping] = maxVertexTextureUnits > 8;
-      this [_combinedTextureUnits]     = [ ];
+      // console .log (gl .getParameter (gl .MAX_TEXTURE_IMAGE_UNITS))
+      // console .log (gl .getParameter (gl .MAX_ARRAY_TEXTURE_LAYERS))
+
+      this [_maxTextures]              = maxTextureImageUnits > 8 ? 2 : 1;
+      this [_multiTexturing]           = maxTextureImageUnits > 8;
+      this [_projectiveTextureMapping] = maxTextureImageUnits > 8;
    }
 
    X3DTexturingContext .prototype =
@@ -97602,95 +97833,46 @@ function (TextureProperties,
          this [_maxCombinedTextureUnits] = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
          this [_textureMemory]           = NaN;
 
-         const combinedTextureUnits = this [_combinedTextureUnits];
+         // Get texture Units
 
-         // For shaders
-         for (let i = 1, length = this [_maxCombinedTextureUnits]; i < length; ++ i)
-            combinedTextureUnits .push (i);
+         this [_combinedTextureUnits] = [...Array (this [_maxCombinedTextureUnits]) .keys ()];
+         this [_texture2DUnit]        = this [_combinedTextureUnits] .pop ();
+         this [_texture3DUnit]        = this [_combinedTextureUnits] .pop ();
+         this [_textureCubeUnit]      = this [_combinedTextureUnits] .pop ();
+         this [_texture2DUnits]       = [this [_texture2DUnit]];
+         this [_texture3DUnits]       = [this [_texture3DUnit]];
+         this [_textureCubeUnits]     = [this [_textureCubeUnit]];
 
-         // There must always be a texture bound to the used texture units.
-
-         this [_shadowTextureUnit] = this .getCombinedTextureUnits () .pop ();
-         this [_linetypeUnit]      = this .getCombinedTextureUnits () .pop ();
-         this [_hatchStyleUnit]    = this .getCombinedTextureUnits () .pop ();
-
-         this [_texture2DUnits]         = new Int32Array (this .getMaxTextures ());
-         this [_projectiveTextureUnits] = new Int32Array (this .getMaxTextures ());
-
-         for (let i = 0, length = this .getMaxTextures (); i < length; ++ i)
-            this [_texture2DUnits] [i] = this .getCombinedTextureUnits () .pop ();
-
-         if (this .getProjectiveTextureMapping ())
-         {
-            for (let i = 0, length = this .getMaxTextures (); i < length; ++ i)
-               this [_projectiveTextureUnits] [i] = this .getCombinedTextureUnits () .pop ();
-         }
+         // Default Texture 2D Unit
 
          const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
-
-         // Texture 2D Units
 
          this [_defaultTexture2D] = gl .createTexture ();
 
          gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
          gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
-         gl .activeTexture (gl .TEXTURE0 + this [_shadowTextureUnit]);
+         gl .activeTexture (gl .TEXTURE0 + this [_texture2DUnit]);
          gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
 
-         gl .activeTexture (gl .TEXTURE0 + this [_linetypeUnit]);
-         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
-
-         gl .activeTexture (gl .TEXTURE0 + this [_hatchStyleUnit]);
-         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
-
-         for (const unit of this [_texture2DUnits])
-         {
-            gl .activeTexture (gl .TEXTURE0 + unit);
-            gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
-         }
-
-         for (const unit of this [_projectiveTextureUnits])
-         {
-            gl .activeTexture (gl .TEXTURE0 + unit);
-            gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
-         }
-
-         // Texture 3D Units
+         // Default Texture 3D Unit
 
          if (gl .getVersion () >= 2)
          {
-            this [_texture3DUnits] = new Int32Array (this .getMaxTextures ());
-
-            for (let i = 0, length = this .getMaxTextures (); i < length; ++ i)
-               this [_texture3DUnits] [i] = this .getCombinedTextureUnits () .pop ();
-
             this [_defaultTexture3D] = gl .createTexture ();
 
             gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
             gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
-            for (const unit of this [_texture3DUnits])
-            {
-               gl .activeTexture (gl .TEXTURE0 + unit);
-               gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
-            }
-
-            // Fix for Chrome.
-            gl .activeTexture (gl .TEXTURE0);
+            gl .activeTexture (gl .TEXTURE0 + this [_texture3DUnit]);
             gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
          }
 
-         // Cube Map Texture Units
+         // Default Texture Cube Unit
 
-         this [_cubeMapTextureUnits] = new Int32Array (this .getMaxTextures ());
+         this [_defaultTextureCube] = gl .createTexture ();
 
-         for (let i = 0, length = this .getMaxTextures (); i < length; ++ i)
-            this [_cubeMapTextureUnits] [i] = this .getCombinedTextureUnits () .pop ();
-
-          this [_defaultCubeMapTexture] = gl .createTexture ();
-
-         gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultCubeMapTexture]);
+         gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
@@ -97698,13 +97880,12 @@ function (TextureProperties,
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
-         for (const unit of this [_cubeMapTextureUnits])
-         {
-            gl .activeTexture (gl .TEXTURE0 + unit);
-            gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultCubeMapTexture]);
-         }
+         gl .activeTexture (gl .TEXTURE0 + this [_textureCubeUnit]);
+         gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
 
-         gl .activeTexture (gl .TEXTURE0);
+         // Init texture units.
+
+         this .resetTextureUnits ();
       },
       getMaxTextures: function ()
       {
@@ -97722,37 +97903,90 @@ function (TextureProperties,
       {
          return this [_maxCombinedTextureUnits];
       },
-      getCombinedTextureUnits: function ()
+      popTexture2DUnit: function ()
       {
-         return this [_combinedTextureUnits];
+         if (this [_texture2DUnitIndex] > 0)
+         {
+            -- this [_texture2DUnitIndex];
+
+            return this [_texture2DUnits] .shift ();
+         }
+         else
+         {
+            return this [_combinedTextureUnits] .pop ();
+         }
       },
-      getTexture2DUnits: function ()
+      pushTexture2DUnit: function (textureUnit)
       {
-         return this [_texture2DUnits];
+         if (textureUnit === undefined)
+            return;
+
+         this [_texture2DUnitIndex] = Math .max (this [_texture2DUnitIndex] + 1, 1);
+
+         this [_texture2DUnits] .unshift (textureUnit);
       },
-      getTexture3DUnits: function ()
+      getTexture2DUnit: function ()
       {
-         return this [_texture3DUnits];
+         if (this [_texture2DUnitIndex] > 0)
+            return this [_texture2DUnits] [-- this [_texture2DUnitIndex]];
+
+         const textureUnit = this [_combinedTextureUnits] .pop ();
+
+         if (textureUnit !== undefined)
+            this [_texture2DUnits] .push (textureUnit);
+
+         return textureUnit;
       },
-      getCubeMapTextureUnits: function ()
+      getTexture3DUnit: function ()
       {
-         return this [_cubeMapTextureUnits];
+         if (this [_texture3DUnitIndex] > 0)
+            return this [_texture3DUnits] [-- this [_texture3DUnitIndex]];
+
+         const textureUnit = this [_combinedTextureUnits] .pop ();
+
+         if (textureUnit !== undefined)
+            this [_texture3DUnits] .push (textureUnit);
+
+         return textureUnit;
       },
-      getProjectiveTextureUnits: function ()
+      getTextureCubeUnit: function ()
       {
-         return this [_projectiveTextureUnits];
+         if (this [_textureCubeUnitIndex] > 0)
+            return this [_textureCubeUnits] [-- this [_textureCubeUnitIndex]];
+
+         const textureUnit = this [_combinedTextureUnits] .pop ();
+
+         if (textureUnit !== undefined)
+            this [_textureCubeUnits] .push (textureUnit);
+
+         return textureUnit;
       },
-      getShadowTextureUnit: function ()
+      getTextureUnit: function (textureType)
       {
-         return this [_shadowTextureUnit];
+         switch (textureType)
+         {
+            case 2: return this .getTexture2DUnit ();
+            case 3: return this .getTexture3DUnit ();
+            case 4: return this .getTextureCubeUnit ();
+         }
       },
-      getLinetypeUnit: function ()
+      resetTextureUnits: function ()
       {
-         return this [_linetypeUnit];
+         this [_texture2DUnitIndex]   = this [_texture2DUnits]   .length;
+         this [_texture3DUnitIndex]   = this [_texture3DUnits]   .length;
+         this [_textureCubeUnitIndex] = this [_textureCubeUnits] .length;
       },
-      getHatchStyleUnit: function ()
+      getDefaultTexture2DUnit: function ()
       {
-         return this [_hatchStyleUnit];
+         return this [_texture2DUnit];
+      },
+      getDefaultTexture3DUnit: function ()
+      {
+         return this [_texture3DUnit];
+      },
+      getDefaultTextureCubeUnit: function ()
+      {
+         return this [_textureCubeUnit];
       },
       getTextureMemory: function ()
       {
@@ -99379,23 +99613,23 @@ function (Fields,
       },
       addDepths: function (array, min)
       {
-         var length = this .length;
+         const length = this .length;
 
          if (length)
          {
             const depth = this .depth;
 
-            for (var index = 0; index < length; ++ index)
+            for (let index = 0; index < length; ++ index)
                array .push (depth [index]);
 
-            var last = depth [length - 1];
+            const last = depth [length - 1];
 
-            for (var index = length; index < min; ++ index)
+            for (let index = length; index < min; ++ index)
                array .push (last);
          }
          else
          {
-            for (var index = 0; index < min; ++ index)
+            for (let index = 0; index < min; ++ index)
                array .push (0);
          }
       },
@@ -99510,7 +99744,7 @@ function (Fields,
       {
          if (this ._enabled .getValue ())
          {
-            var fogContainer = this .getFogs () .pop ();
+            const fogContainer = this .getFogs () .pop ();
 
             fogContainer .set (this, renderObject .getModelViewMatrix () .get ());
 
@@ -106105,19 +106339,19 @@ function (Fields,
       },
       set_keyValue__: function ()
       {
-         var keyValue = this ._keyValue;
+         const keyValue = this ._keyValue;
 
          if (keyValue .length < this ._key .length)
             this ._keyValue .resize (this ._key .length, keyValue .length ? keyValue [this ._keyValue .length - 1] : new Fields .SFColor ());
 
          this .hsv .length = 0;
 
-         for (var i = 0, length = keyValue .length; i < length; ++ i)
-            this .hsv .push (keyValue [i] .getHSV ([ ]));
+         for (const value of keyValue)
+            this .hsv .push (value .getHSV ([ ]));
       },
       interpolate: (function ()
       {
-         var value = [ ];
+         const value = [ ];
 
          return function (index0, index1, weight)
          {
@@ -106229,13 +106463,13 @@ function (Fields,
       set_keyValue__: function () { },
       interpolate: function (index0, index1, weight)
       {
-         var
-            keyValue = this ._keyValue .getValue (),
-            size     = this ._key .length ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
+         const keyValue = this ._keyValue .getValue ();
+
+         let size = this ._key .length ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
 
          this ._value_changed .length = size;
 
-         var value_changed = this ._value_changed .getValue ();
+         const value_changed = this ._value_changed .getValue ();
 
          index0 *= size;
          index1  = index0 + (this ._key .length > 1 ? size : 0);
@@ -106244,9 +106478,9 @@ function (Fields,
          index1 *= 3;
          size   *= 3;
 
-         for (var i0 = 0; i0 < size; i0 += 3)
+         for (let i0 = 0; i0 < size; i0 += 3)
          {
-            var
+            const
                i1 = i0 + 1,
                i2 = i0 + 2;
 
@@ -106360,13 +106594,13 @@ function (Fields,
       set_keyValue__: function () { },
       interpolate: function (index0, index1, weight)
       {
-         var
-            keyValue = this ._keyValue .getValue (),
-            size     = this ._key .length ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
+         const keyValue = this ._keyValue .getValue ();
+
+         let size = this ._key .length ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
 
          this ._value_changed .length = size;
 
-         var value_changed = this ._value_changed .getValue ();
+         const value_changed = this ._value_changed .getValue ();
 
          index0 *= size;
          index1  = index0 + (this ._key .length > 1 ? size : 0);
@@ -106375,9 +106609,9 @@ function (Fields,
          index1 *= 2;
          size   *= 2;
 
-         for (var i0 = 0; i0 < size; i0 += 2)
+         for (let i0 = 0; i0 < size; i0 += 2)
          {
-            var i1 = i0 + 1;
+            const i1 = i0 + 1;
 
             value_changed [i0] = Algorithm .lerp (keyValue [index0 + i0], keyValue [index1 + i0], weight);
             value_changed [i1] = Algorithm .lerp (keyValue [index0 + i1], keyValue [index1 + i1], weight);
@@ -106458,10 +106692,6 @@ function (Fields,
 {
 "use strict";
 
-   var
-      keyValue0 = new Vector3 (0, 0, 0),
-      keyValue1 = new Vector3 (0, 0, 0);
-
    function NormalInterpolator (executionContext)
    {
       X3DInterpolatorNode .call (this, executionContext);
@@ -106498,46 +106728,55 @@ function (Fields,
          this ._keyValue .addInterest ("set_keyValue__", this);
       },
       set_keyValue__: function () { },
-      interpolate: function (index0, index1, weight)
+      interpolate: (function ()
       {
-         var
-            keyValue = this ._keyValue .getValue (),
-            size     = this ._key .length > 1 ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
+         const
+            keyValue0 = new Vector3 (0, 0, 0),
+            keyValue1 = new Vector3 (0, 0, 0);
 
-         this ._value_changed .length = size;
-
-         var value_changed = this ._value_changed .getValue ();
-
-         index0 *= size;
-         index1  = index0 + size;
-
-         index0 *= 3;
-         index1 *= 3;
-         size   *= 3;
-
-         for (var i0 = 0; i0 < size; i0 += 3)
+         return function (index0, index1, weight)
          {
-            try
+            const keyValue = this ._keyValue .getValue ();
+
+            let size = this ._key .length > 1 ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
+
+            this ._value_changed .length = size;
+
+            const value_changed = this ._value_changed .getValue ();
+
+            index0 *= size;
+            index1  = index0 + size;
+
+            index0 *= 3;
+            index1 *= 3;
+            size   *= 3;
+
+            for (let i0 = 0; i0 < size; i0 += 3)
             {
-               var
-                  i1 = i0 + 1,
-                  i2 = i0 + 2;
+               try
+               {
+                  const
+                     i1 = i0 + 1,
+                     i2 = i0 + 2;
 
-               keyValue0 .set (keyValue [index0 + i0], keyValue [index0 + i1], keyValue [index0 + i2]);
-               keyValue1 .set (keyValue [index1 + i0], keyValue [index1 + i1], keyValue [index1 + i2]);
+                  keyValue0 .set (keyValue [index0 + i0], keyValue [index0 + i1], keyValue [index0 + i2]);
+                  keyValue1 .set (keyValue [index1 + i0], keyValue [index1 + i1], keyValue [index1 + i2]);
 
-               var value = Algorithm .simpleSlerp (keyValue0, keyValue1, weight);
+                  const value = Algorithm .simpleSlerp (keyValue0, keyValue1, weight);
 
-               value_changed [i0] = value [0];
-               value_changed [i1] = value [1];
-               value_changed [i2] = value [2];
+                  value_changed [i0] = value [0];
+                  value_changed [i1] = value [1];
+                  value_changed [i2] = value [2];
+               }
+               catch (error)
+               {
+                  //console .log (error);
+               }
             }
-            catch (error)
-            { }
-         }
 
-         this ._value_changed .addEvent ();
-      },
+            this ._value_changed .addEvent ();
+         };
+      })(),
    });
 
    return NormalInterpolator;
@@ -106646,7 +106885,7 @@ function (Fields,
       },
       set_keyValue__: function ()
       {
-         var
+         const
             key      = this ._key,
             keyValue = this ._keyValue;
 
@@ -106655,7 +106894,7 @@ function (Fields,
       },
       interpolate:  (function ()
       {
-         var keyValue = new Vector2 (0, 0);
+         const keyValue = new Vector2 (0, 0);
 
          return function (index0, index1, weight)
          {
@@ -107141,7 +107380,7 @@ function (Fields,
       },
       set_keyValue__: function ()
       {
-         var
+         const
             key      = this ._key,
             keyValue = this ._keyValue;
 
@@ -107348,7 +107587,7 @@ function (Fields,
       },
       set_keyValue__: function ()
       {
-         var
+         const
             key      = this ._key,
             keyValue = this ._keyValue;
 
@@ -107592,7 +107831,7 @@ function (Fields,
       },
       set_keyValue__: function ()
       {
-         var
+         const
             key      = this ._key,
             keyValue = this ._keyValue;
 
@@ -107854,7 +108093,7 @@ function (Fields,
       },
       set_keyValue__: function ()
       {
-         var
+         const
             key      = this ._key,
             keyValue = this ._keyValue;
 
@@ -108172,7 +108411,7 @@ function (Fields,
    // xzXZ		Char: Axis
    // yyYY		Case: Sign
 
-   var orientationMatrices = [
+   const orientationMatrices = [
       new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 1,  0,  0), Vector3 .zAxis)), // left
       new Matrix4 () .setRotation (new Rotation4 (new Vector3 (-1,  0,  0), Vector3 .zAxis)), // right
       new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  0, -1), Vector3 .zAxis)), // front
@@ -108181,7 +108420,7 @@ function (Fields,
       new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0, -1,  0), Vector3 .zAxis)), // top
    ];
 
-   var viewports = [
+   const viewports = [
       new Vector4 (0,    0.5, 0.25, 0.5), // left
       new Vector4 (0.5,  0.5, 0.25, 0.5), // right
       new Vector4 (0.75, 0.5, 0.25, 0.5), // front
@@ -108190,7 +108429,7 @@ function (Fields,
       new Vector4 (0.5,  0,   0.5,  0.5), // top
    ];
 
-   var PointLights = ObjectCache (PointLightContainer);
+   const PointLights = ObjectCache (PointLightContainer);
 
    function PointLightContainer ()
    {
@@ -108208,7 +108447,7 @@ function (Fields,
       this .shadowMatrixArray             = new Float32Array (16);
       this .rotation                      = new Rotation4 ();
       this .rotationMatrix                = new Matrix4 ();
-      this .textureUnit                   = 0;
+      this .textureUnit                   = undefined;
    }
 
    PointLightContainer .prototype =
@@ -108220,9 +108459,7 @@ function (Fields,
       },
       set: function (browser, lightNode, groupNode, modelViewMatrix)
       {
-         var
-            gl            = browser .getContext (),
-            shadowMapSize = lightNode .getShadowMapSize ();
+         const shadowMapSize = lightNode .getShadowMapSize ();
 
          this .browser   = browser;
          this .lightNode = lightNode;
@@ -108245,30 +108482,8 @@ function (Fields,
          {
             this .shadowBuffer = browser .popShadowBuffer (shadowMapSize);
 
-            if (this .shadowBuffer)
-            {
-               if (browser .getCombinedTextureUnits () .length)
-               {
-                  this .textureUnit = browser .getCombinedTextureUnits () .pop ();
-
-                  gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
-
-                  if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
-                     gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
-                  else
-                     gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
-
-                  gl .activeTexture (gl .TEXTURE0);
-               }
-               else
-               {
-                  console .warn ("Not enough combined texture units for shadow map available.");
-               }
-            }
-            else
-            {
+            if (!this .shadowBuffer)
                console .warn ("Couldn't create shadow buffer.");
-            }
          }
       },
       renderShadowMap: function (renderObject)
@@ -108278,7 +108493,7 @@ function (Fields,
             if (! this .shadowBuffer)
                return;
 
-            var
+            const
                lightNode           = this .lightNode,
                cameraSpaceMatrix   = renderObject .getCameraSpaceMatrix () .get (),
                modelMatrix         = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
@@ -108287,13 +108502,13 @@ function (Fields,
             invLightSpaceMatrix .translate (lightNode .getLocation ());
             invLightSpaceMatrix .inverse ();
 
-            var shadowMapSize  = lightNode .getShadowMapSize ();
+            const shadowMapSize  = lightNode .getShadowMapSize ();
 
             this .shadowBuffer .bind ();
 
-            for (var i = 0; i < 6; ++ i)
+            for (let i = 0; i < 6; ++ i)
             {
-               var
+               const
                   v                = viewports [i],
                   viewport         = this .viewport .set (v [0] * shadowMapSize, v [1] * shadowMapSize, v [2] * shadowMapSize, v [3] * shadowMapSize),
                   projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
@@ -108332,12 +108547,12 @@ function (Fields,
       },
       setShaderUniforms: function (gl, shaderObject)
       {
-         var i = shaderObject .numLights ++;
+         const i = shaderObject .numLights ++;
 
          if (shaderObject .hasLight (i, this))
             return;
 
-         var
+         const
             lightNode   = this .lightNode,
             color       = lightNode .getColor (),
             attenuation = lightNode .getAttenuation (),
@@ -108352,38 +108567,55 @@ function (Fields,
          gl .uniform1f        (shaderObject .x3d_LightRadius [i],           lightNode .getRadius ());
          gl .uniformMatrix3fv (shaderObject .x3d_LightMatrix [i], false,    this .matrixArray);
 
-         if (this .textureUnit)
+         if (this .shadowBuffer)
          {
-            var shadowColor = lightNode .getShadowColor ();
+            const
+               browser     = this .browser,
+               shadowColor = lightNode .getShadowColor ();
 
             gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
             gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
             gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
             gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
             gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
-            gl .uniform1i        (shaderObject .x3d_ShadowMap [i],           this .textureUnit);
-         }
-         else
-         {
-            // Must be set to zero in case of multiple lights.
-            gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
+
+            this .textureUnit = lightNode .getGlobal ()
+               ? this .textureUnit === undefined ? browser .popTexture2DUnit () : this .textureUnit
+               : browser .getTexture2DUnit ();
+
+            if (this .textureUnit !== undefined)
+            {
+               gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
+
+               if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
+                  gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+               else
+                  gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
+
+               gl .uniform1i (shaderObject .x3d_ShadowMap [i], this .textureUnit);
+            }
+            else
+            {
+               console .warn ("Not enough combined texture units for shadow map available.");
+            }
          }
       },
       dispose: function ()
       {
          // Return shadowBuffer and textureUnit.
 
-         if (this .textureUnit)
-            this .browser .getCombinedTextureUnits () .push (this .textureUnit);
-
          this .browser .pushShadowBuffer (this .shadowBuffer);
+
+         if (this .lightNode .getGlobal ())
+            this .browser .pushTexture2DUnit (this .textureUnit);
+
          this .modelViewMatrix .clear ();
 
          this .browser      = null;
          this .lightNode    = null;
          this .groupNode    = null;
          this .shadowBuffer = null;
-         this .textureUnit  = 0;
+         this .textureUnit  = undefined;
 
          // Return container
 
@@ -108544,7 +108776,7 @@ function (Fields,
 {
 "use strict";
 
-   var SpotLights = ObjectCache (SpotLightContainer);
+   const SpotLights = ObjectCache (SpotLightContainer);
 
    function SpotLightContainer ()
    {
@@ -108566,7 +108798,7 @@ function (Fields,
       this .rotation                      = new Rotation4 ();
       this .lightBBoxMin                  = new Vector3 (0, 0, 0);
       this .lightBBoxMax                  = new Vector3 (0, 0, 0);
-      this .textureUnit                   = 0;
+      this .textureUnit                   = undefined;
    }
 
    SpotLightContainer .prototype =
@@ -108578,9 +108810,7 @@ function (Fields,
       },
       set: function (browser, lightNode, groupNode, modelViewMatrix)
       {
-         var
-            gl            = browser .getContext (),
-            shadowMapSize = lightNode .getShadowMapSize ();
+         const shadowMapSize = lightNode .getShadowMapSize ();
 
          this .browser   = browser;
          this .lightNode = lightNode;
@@ -108603,30 +108833,8 @@ function (Fields,
          {
             this .shadowBuffer = browser .popShadowBuffer (shadowMapSize);
 
-            if (this .shadowBuffer)
-            {
-               if (browser .getCombinedTextureUnits () .length)
-               {
-                  this .textureUnit = browser .getCombinedTextureUnits () .pop ();
-
-                  gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
-
-                  if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
-                     gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
-                  else
-                     gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
-
-                  gl .activeTexture (gl .TEXTURE0);
-               }
-               else
-               {
-                  console .warn ("Not enough combined texture units for shadow map available.");
-               }
-            }
-            else
-            {
+            if (!this .shadowBuffer)
                console .warn ("Couldn't create shadow buffer.");
-            }
          }
       },
       renderShadowMap: function (renderObject)
@@ -108636,7 +108844,7 @@ function (Fields,
             if (! this .shadowBuffer)
                return;
 
-            var
+            const
                lightNode            = this .lightNode,
                cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
                modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
@@ -108646,7 +108854,7 @@ function (Fields,
             invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
             invLightSpaceMatrix .inverse ();
 
-            var
+            const
                groupBBox        = this .groupNode .getSubBBox (this .bbox, true),                 // Group bbox.
                lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                     // Group bbox from the perspective of the light.
                lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax), // Result not used, but arguments.
@@ -108684,7 +108892,7 @@ function (Fields,
       },
       setGlobalVariables: function (renderObject)
       {
-         var
+         const
             lightNode       = this .lightNode,
             modelViewMatrix = this .modelViewMatrix .get ();
 
@@ -108696,12 +108904,12 @@ function (Fields,
       },
       setShaderUniforms: function (gl, shaderObject)
       {
-         var i = shaderObject .numLights ++;
+         const i = shaderObject .numLights ++;
 
          if (shaderObject .hasLight (i, this))
             return;
 
-         var
+         const
             lightNode   = this .lightNode,
             color       = lightNode .getColor (),
             attenuation = lightNode .getAttenuation (),
@@ -108720,38 +108928,55 @@ function (Fields,
          gl .uniform1f        (shaderObject .x3d_LightCutOffAngle [i],      lightNode .getCutOffAngle ());
          gl .uniformMatrix3fv (shaderObject .x3d_LightMatrix [i], false,    this .matrixArray);
 
-         if (this .renderShadow && this .textureUnit)
+         if (this .renderShadow && this .shadowBuffer)
          {
-            var shadowColor = lightNode .getShadowColor ();
+            const
+               browser     = this .browser,
+               shadowColor = lightNode .getShadowColor ();
 
             gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
             gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
             gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
             gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
             gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
-            gl .uniform1i        (shaderObject .x3d_ShadowMap [i],           this .textureUnit);
-         }
-         else
-         {
-            // Must be set to zero in case of multiple lights.
-            gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
+
+            this .textureUnit = lightNode .getGlobal ()
+               ? this .textureUnit === undefined ? browser .popTexture2DUnit () : this .textureUnit
+               : browser .getTexture2DUnit ();
+
+            if (this .textureUnit !== undefined)
+            {
+               gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
+
+               if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
+                  gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
+               else
+                  gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
+
+               gl .uniform1i (shaderObject .x3d_ShadowMap [i], this .textureUnit);
+            }
+            else
+            {
+               console .warn ("Not enough combined texture units for shadow map available.");
+            }
          }
       },
       dispose: function ()
       {
          // Return shadowBuffer and textureUnit.
 
-         if (this .textureUnit)
-            this .browser .getCombinedTextureUnits () .push (this .textureUnit);
-
          this .browser .pushShadowBuffer (this .shadowBuffer);
+
+         if (this .lightNode .getGlobal ())
+            this .browser .pushTexture2DUnit (this .textureUnit);
+
          this .modelViewMatrix .clear ();
 
          this .browser      = null;
          this .lightNode    = null;
          this .groupNode    = null;
          this .shadowBuffer = null;
-         this .textureUnit  = 0;
+         this .textureUnit  = undefined;
 
          // Return container
 
@@ -108834,7 +109059,7 @@ function (Fields,
       {
          // If the beamWidth is greater than the cutOffAngle, beamWidth is defined to be equal to the cutOffAngle.
 
-         var
+         const
             beamWidth   = this ._beamWidth .getValue (),
             cutOffAngle = this .getCutOffAngle ();
 
@@ -113855,8 +114080,6 @@ function (X3DGeometryNode,
                if (this .getMultiTexCoords () .length)
                   shaderNode .disableTexCoordAttribute (gl);
 
-               shaderNode .disable (gl);
-
                if (blendModeNode)
                   blendModeNode .disable (gl);
             }
@@ -113941,7 +114164,6 @@ function (X3DGeometryNode,
                   shaderNode .disableColorAttribute (gl);
 
                shaderNode .disableTexCoordAttribute (gl);
-               shaderNode .disable (gl);
 
                if (blendModeNode)
                   blendModeNode .disable (gl);
@@ -115701,11 +115923,112 @@ function (SupportedNodes,
  ******************************************************************************/
 
 
+ define ('x_ite/Components/Shape/AcousticProperties',[
+   "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Components/Shape/X3DAppearanceChildNode",
+   "x_ite/Base/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DAppearanceChildNode,
+          X3DConstants)
+{
+"use strict";
+
+   function AcousticProperties (executionContext)
+   {
+      X3DAppearanceChildNode .call (this, executionContext);
+
+      this .addType (X3DConstants .AcousticProperties);
+   }
+
+   AcousticProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+   {
+      constructor: AcousticProperties,
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "absorption", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "refraction", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "diffuse",    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specular",   new Fields .SFFloat ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "AcousticProperties";
+      },
+      getComponentName: function ()
+      {
+         return "Shape";
+      },
+      getContainerField: function ()
+      {
+         return "AcousticProperties";
+      },
+   });
+
+   return AcousticProperties;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Shape/Material',[
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DOneSidedMaterialNode",
+   "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
@@ -115713,6 +116036,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DOneSidedMaterialNode,
+          X3DCast,
           X3DConstants,
           Algorithm)
 {
@@ -115772,19 +116096,50 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
-         this ._ambientIntensity .addInterest ("set_ambientIntensity__", this);
-         this ._diffuseColor     .addInterest ("set_diffuseColor__",     this);
-         this ._specularColor    .addInterest ("set_specularColor__",    this);
-         this ._shininess        .addInterest ("set_shininess__",        this);
+         this .shaderNode = this .getBrowser () .getDefaultShader ();
 
+         this .isLive () .addInterest ("set_live__", this);
+
+         this ._ambientIntensity  .addInterest ("set_ambientIntensity__",  this);
+         this ._ambientTexture    .addInterest ("set_ambientTexture__",    this);
+         this ._diffuseColor      .addInterest ("set_diffuseColor__",      this);
+         this ._diffuseTexture    .addInterest ("set_diffuseTexture__",    this);
+         this ._specularColor     .addInterest ("set_specularColor__",     this);
+         this ._specularTexture   .addInterest ("set_specularTexture__",   this);
+         this ._shininess         .addInterest ("set_shininess__",         this);
+         this ._shininessTexture  .addInterest ("set_shininessTexture__",  this);
+         this ._occlusionStrength .addInterest ("set_occlusionStrength__", this);
+         this ._occlusionTexture  .addInterest ("set_occlusionTexture__",  this);
+
+         this .set_live__ ();
          this .set_ambientIntensity__ ();
+         this .set_ambientTexture__ ();
          this .set_diffuseColor__ ();
+         this .set_diffuseTexture__ ();
          this .set_specularColor__ ();
+         this .set_specularTexture__ ();
          this .set_shininess__ ();
+         this .set_shininessTexture__ ();
+         this .set_occlusionStrength__ ();
+         this .set_occlusionTexture__ ();
+         this .set_transparent__ ();
+      },
+      set_live__: function ()
+      {
+         if (this .isLive () .getValue ())
+            this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
+         else
+            this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
       },
       set_ambientIntensity__: function ()
       {
-         this .ambientIntensity = Math .max (this ._ambientIntensity .getValue (), 0);
+         this .ambientIntensity = Algorithm .clamp (this ._ambientIntensity .getValue (), 0, 1);
+      },
+      set_ambientTexture__: function ()
+      {
+         this .ambientTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._ambientTexture);
+
+         this .setTexture (this .getTextureIndices () .AMBIENT_TEXTURE, this .ambientTextureNode);
       },
       set_diffuseColor__: function ()
       {
@@ -115799,6 +116154,18 @@ function (Fields,
          diffuseColor [1] = diffuseColor_ .g;
          diffuseColor [2] = diffuseColor_ .b;
       },
+      set_diffuseTexture__: function ()
+      {
+         if (this .diffuseTextureNode)
+            this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__", this);
+
+         this .diffuseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._diffuseTexture);
+
+         if (this .diffuseTextureNode)
+            this .diffuseTextureNode ._transparent .addInterest ("set_transparent__", this);
+
+         this .setTexture (this .getTextureIndices () .DIFFUSE_TEXTURE, this .diffuseTextureNode);
+      },
       set_specularColor__: function ()
       {
          //We cannot use this in Windows Edge:
@@ -115812,26 +116179,506 @@ function (Fields,
          specularColor [1] = specularColor_ .g;
          specularColor [2] = specularColor_ .b;
       },
+      set_specularTexture__: function ()
+      {
+         this .specularTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularTexture);
+
+         this .setTexture (this .getTextureIndices () .SPECULAR_TEXTURE, this .specularTextureNode);
+      },
       set_shininess__: function ()
       {
          this .shininess = Algorithm .clamp (this ._shininess .getValue (), 0, 1);
       },
+      set_shininessTexture__: function ()
+      {
+         this .shininessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._shininessTexture);
+
+         this .setTexture (this .getTextureIndices () .SHININESS_TEXTURE, this .shininessTextureNode);
+      },
+      set_occlusionStrength__: function ()
+      {
+         this .occlusionStrength = Algorithm .clamp (this ._occlusionStrength .getValue (), 0, 1);
+      },
+      set_occlusionTexture__: function ()
+      {
+         this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
+
+         this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
+      },
+      set_transparent__: function ()
+      {
+         this .setTransparent (Boolean (this .getTransparency () ||
+                               (this .diffuseTextureNode && this .diffuseTextureNode .getTransparent ())));
+      },
+      set_textures__: function ()
+      {
+         const browser = this .getBrowser ();
+
+         if (!this .getTextures ())
+            return this .set_shading__ ();
+
+         const options = ["X3D_MATERIAL_TEXTURES"];
+
+         if (this .ambientTextureNode)
+            options .push ("X3D_AMBIENT_TEXTURE", "X3D_AMBIENT_TEXTURE_" + this .ambientTextureNode .getTextureTypeString ());
+
+         if (this .diffuseTextureNode)
+            options .push ("X3D_DIFFUSE_TEXTURE", "X3D_DIFFUSE_TEXTURE_" + this .diffuseTextureNode .getTextureTypeString ());
+
+         if (this .specularTextureNode)
+            options .push ("X3D_SPECULAR_TEXTURE", "X3D_SPECULAR_TEXTURE_" + this .specularTextureNode .getTextureTypeString ());
+
+         if (this .getEmissiveTexture ())
+            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+
+         if (this .shininessTextureNode)
+            options .push ("X3D_SHININESS_TEXTURE", "X3D_SHININESS_TEXTURE_" + this .shininessTextureNode .getTextureTypeString ());
+
+         if (this .occlusionTextureNode)
+            options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
+
+         if (this .getNormalTexture ())
+            options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+
+         const shaderNode = browser .createShader ("MaterialTexturesShader", "Phong", options);
+
+         shaderNode ._isValid .addInterest ("setShader", this, shaderNode);
+      },
+      set_shading__: function ()
+      {
+         const browser = this .getBrowser ();
+
+         if (this .getTextures ())
+            return;
+
+         this .shaderNode = browser .getDefaultShader ();
+      },
+      getTextureIndices: (function ()
+      {
+         const textureIndices = {
+            AMBIENT_TEXTURE: 0,
+            DIFFUSE_TEXTURE: 1,
+            SPECULAR_TEXTURE: 2,
+            EMISSIVE_TEXTURE: 3,
+            SHININESS_TEXTURE: 4,
+            OCCLUSION_TEXTURE: 5,
+            NORMAL_TEXTURE: 6,
+         };
+
+         return function ()
+         {
+            return textureIndices;
+         };
+      })(),
       getShader: function (browser, shadow)
       {
-         return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
+         return shadow && !this .getTextures () ? browser .getShadowShader () : this .shaderNode;
       },
-      setShaderUniforms: function (gl, shaderObject)
+      setShader: function (shaderNode)
       {
-         gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
-         gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColor);
-         gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColor);
-         gl .uniform3fv (shaderObject .x3d_EmissiveColor,    this .emissiveColor);
-         gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
-         gl .uniform1f  (shaderObject .x3d_Transparency,     this .transparency);
+         shaderNode ._isValid .removeInterest ("setShader", this);
+
+         this .shaderNode = shaderNode;
+      },
+      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+      {
+         X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
+
+         gl .uniform1f  (shaderObject .x3d_AmbientIntensity,  this .ambientIntensity);
+         gl .uniform3fv (shaderObject .x3d_DiffuseColor,      this .diffuseColor);
+         gl .uniform3fv (shaderObject .x3d_SpecularColor,     this .specularColor);
+         gl .uniform1f  (shaderObject .x3d_Shininess,         this .shininess);
+         gl .uniform1f  (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+
+         if (this .getTextures ())
+         {
+            const
+               ambientTexture   = shaderObject .x3d_AmbientTexture,
+               diffuseTexture   = shaderObject .x3d_DiffuseTexture,
+               specularTexture  = shaderObject .x3d_SpecularTexture,
+               shininessTexture = shaderObject .x3d_ShininessTexture,
+               occlusionTexture = shaderObject .x3d_OcclusionTexture;
+
+            // Ambient parameters
+
+            if (this .ambientTextureNode)
+            {
+               this .ambientTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, ambientTexture);
+
+               gl .uniform1i (ambientTexture .textureTransformMapping,  textureTransformMapping  .get (this ._ambientTextureMapping .getValue ()) || 0);
+               gl .uniform1i (ambientTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._ambientTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (ambientTexture .textureType, 0);
+            }
+
+            // Diffuse parameters
+
+            if (this .diffuseTextureNode)
+            {
+               this .diffuseTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, diffuseTexture);
+
+               gl .uniform1i (diffuseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._diffuseTextureMapping .getValue ()) || 0);
+               gl .uniform1i (diffuseTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._diffuseTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (diffuseTexture .textureType, 0);
+            }
+
+            // Specular parameters
+
+            if (this .specularTextureNode)
+            {
+               this .specularTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, specularTexture);
+
+               gl .uniform1i (specularTexture .textureTransformMapping,  textureTransformMapping  .get (this ._specularTextureMapping .getValue ()) || 0);
+               gl .uniform1i (specularTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._specularTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (specularTexture .textureType, 0);
+            }
+
+            // Shininess parameters
+
+            if (this .shininessTextureNode)
+            {
+               this .shininessTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, shininessTexture);
+
+               gl .uniform1i (shininessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._shininessTextureMapping .getValue ()) || 0);
+               gl .uniform1i (shininessTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._shininessTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (shininessTexture .textureType, 0);
+            }
+
+            // Occlusion parameters
+
+            if (this .occlusionTextureNode)
+            {
+               this .occlusionTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, occlusionTexture);
+
+               gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
+               gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._occlusionTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (occlusionTexture .textureType, 0);
+            }
+         }
       },
    });
 
    return Material;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+ define ('x_ite/Components/Shape/PhysicalMaterial',[
+   "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Components/Shape/X3DOneSidedMaterialNode",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "standard/Math/Algorithm",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DOneSidedMaterialNode,
+          X3DCast,
+          X3DConstants,
+          Algorithm)
+{
+"use strict";
+
+   function PhysicalMaterial (executionContext)
+   {
+      X3DOneSidedMaterialNode .call (this, executionContext);
+
+      this .addType (X3DConstants .PhysicalMaterial);
+
+      this .baseColor = new Float32Array (3);
+   }
+
+   PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
+   {
+      constructor: PhysicalMaterial,
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "baseColor",                       new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "baseTexture",                     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "baseTextureMapping",              new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",                   new Fields .SFColor (0, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",                 new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metallic",                        new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "roughness",                       new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metallicRoughnessTexture",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metallicRoughnessTextureMapping", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionStrength",               new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTexture",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTextureMapping",         new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalScale",                     new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",                   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",            new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",                    new Fields .SFFloat ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "PhysicalMaterial";
+      },
+      getComponentName: function ()
+      {
+         return "Shape";
+      },
+      getContainerField: function ()
+      {
+         return "material";
+      },
+      initialize: function ()
+      {
+         X3DOneSidedMaterialNode .prototype .initialize .call (this);
+
+         this .shaderNode = this .getBrowser () .getPhysicalMaterialShader ();
+
+         this ._baseColor                .addInterest ("set_baseColor__",                this);
+         this ._baseTexture              .addInterest ("set_baseTexture__",              this);
+         this ._metallic                 .addInterest ("set_metallic__",                 this);
+         this ._roughness                .addInterest ("set_roughness__",                this);
+         this ._metallicRoughnessTexture .addInterest ("set_metallicRoughnessTexture__", this);
+         this ._occlusionStrength        .addInterest ("set_occlusionStrength__",        this);
+         this ._occlusionTexture         .addInterest ("set_occlusionTexture__",         this);
+
+         this .set_baseColor__ ();
+         this .set_baseTexture__ ();
+         this .set_metallic__ ();
+         this .set_roughness__ ();
+         this .set_metallicRoughnessTexture__ ();
+         this .set_occlusionStrength__ ();
+         this .set_occlusionTexture__ ();
+         this .set_transparent__ ();
+      },
+      set_baseColor__: function ()
+      {
+         //We cannot use this in Windows Edge:
+         //this .baseColor .set (this ._baseColor .getValue ());
+
+         const
+            baseColor  = this .baseColor,
+            baseColor_ = this ._baseColor .getValue ();
+
+         baseColor [0] = baseColor_ .r;
+         baseColor [1] = baseColor_ .g;
+         baseColor [2] = baseColor_ .b;
+      },
+      set_baseTexture__: function ()
+      {
+         if (this .baseTextureNode)
+            this .baseTextureNode ._transparent .removeInterest ("set_transparent__", this);
+
+         this .baseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._baseTexture);
+
+         this .setTexture (this .getTextureIndices () .BASE_TEXTURE, this .baseTextureNode);
+
+         if (this .baseTextureNode)
+            this .baseTextureNode ._transparent .addInterest ("set_transparent__", this);
+      },
+      set_metallic__: function ()
+      {
+         this .metallic = Algorithm .clamp (this ._metallic .getValue (), 0, 1);
+      },
+      set_roughness__: function ()
+      {
+         this .roughness = Algorithm .clamp (this ._roughness .getValue (), 0, 1);
+      },
+      set_metallicRoughnessTexture__: function ()
+      {
+         this .metallicRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._metallicRoughnessTexture);
+
+         this .setTexture (this .getTextureIndices () .METALLIC_ROUGHNESS_TEXTURE, this .metallicRoughnessTextureNode);
+      },
+      set_occlusionStrength__: function ()
+      {
+         this .occlusionStrength = Algorithm .clamp (this ._occlusionStrength .getValue (), 0, 1);
+      },
+      set_occlusionTexture__: function ()
+      {
+         this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
+
+         this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
+      },
+      set_transparent__: function ()
+      {
+         this .setTransparent (Boolean (this .getTransparency () ||
+                               (this .baseTextureNode && this .baseTextureNode .getTransparent ())));
+      },
+      set_textures__: function ()
+      {
+         const browser = this .getBrowser ();
+
+         if (!this .getTextures ())
+            return this .shaderNode = browser .getPhysicalMaterialShader ();
+
+         const options = ["X3D_MATERIAL_TEXTURES"];
+
+         if (this .baseTextureNode)
+            options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
+
+         if (this .getEmissiveTexture ())
+            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+
+         if (this .metallicRoughnessTextureNode)
+            options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", "X3D_METALLIC_ROUGHNESS_TEXTURE_" + this .metallicRoughnessTextureNode .getTextureTypeString ());
+
+         if (this .occlusionTextureNode)
+            options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
+
+         if (this .getNormalTexture ())
+            options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+
+         const shaderNode = browser .createShader ("PhysicalMaterialTexturesShader", "PBR", options);
+
+         shaderNode._isValid .addInterest ("setShader", this, shaderNode);
+      },
+      getTextureIndices: (function ()
+      {
+         const textureIndices = {
+            BASE_TEXTURE: 0,
+            EMISSIVE_TEXTURE: 1,
+            METALLIC_ROUGHNESS_TEXTURE: 2,
+            OCCLUSION_TEXTURE: 3,
+            NORMAL_TEXTURE: 4,
+         };
+
+         return function ()
+         {
+            return textureIndices;
+         };
+      })(),
+      getShader: function (browser, shadow)
+      {
+         return this .shaderNode;
+      },
+      setShader: function (shaderNode)
+      {
+         shaderNode ._isValid .removeInterest ("setShader", this);
+
+         this .shaderNode = shaderNode;
+      },
+      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+      {
+         X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
+
+         gl .uniform3fv (shaderObject .x3d_BaseColor,         this .baseColor);
+         gl .uniform1f  (shaderObject .x3d_Metallic,          this .metallic);
+         gl .uniform1f  (shaderObject .x3d_Roughness,         this .roughness);
+         gl .uniform1f  (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+
+         if (this .getTextures ())
+         {
+            const
+               baseTexture              = shaderObject .x3d_BaseTexture,
+               metallicRoughnessTexture = shaderObject .x3d_MetallicRoughnessTexture,
+               occlusionTexture         = shaderObject .x3d_OcclusionTexture;
+
+            // Base parameters
+
+            if (this .baseTextureNode)
+            {
+               this .baseTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, baseTexture);
+
+               gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._baseTextureMapping .getValue ()) || 0);
+               gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._baseTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (baseTexture .textureType, 0);
+            }
+
+            // Metallic roughness parameters
+
+            if (this .metallicRoughnessTextureNode)
+            {
+               this .metallicRoughnessTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, metallicRoughnessTexture);
+
+               gl .uniform1i (metallicRoughnessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
+               gl .uniform1i (metallicRoughnessTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (metallicRoughnessTexture .textureType, 0);
+            }
+
+            // Occlusion parameters
+
+            if (this .occlusionTextureNode)
+            {
+               this .occlusionTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, occlusionTexture);
+
+               gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
+               gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._occlusionTextureMapping .getValue ()) || 0);
+            }
+            else
+            {
+               gl .uniform1i (occlusionTexture .textureType, 0);
+            }
+         }
+      },
+   });
+
+   return PhysicalMaterial;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -115950,8 +116797,6 @@ function (Fields,
       {
          X3DMaterialNode . prototype .initialize .call (this);
 
-         this ._separateBackColor .addInterest ("set_transparent__", this);
-
          this ._ambientIntensity .addInterest ("set_ambientIntensity__", this);
          this ._diffuseColor     .addInterest ("set_diffuseColor__",     this);
          this ._specularColor    .addInterest ("set_specularColor__",    this);
@@ -115966,6 +116811,10 @@ function (Fields,
          this ._backShininess        .addInterest ("set_backShininess__",        this);
          this ._backTransparency     .addInterest ("set_backTransparency__",     this);
 
+         this ._separateBackColor .addInterest ("set_transparent__", this);
+         this ._transparency      .addInterest ("set_transparent__", this);
+         this ._backTransparency  .addInterest ("set_transparent__", this);
+
          this .set_ambientIntensity__ ();
          this .set_diffuseColor__ ();
          this .set_specularColor__ ();
@@ -115979,6 +116828,8 @@ function (Fields,
          this .set_backEmissiveColor__ ();
          this .set_backShininess__ ();
          this .set_backTransparency__ ();
+
+         this .set_transparent__ ();
       },
       set_ambientIntensity__: function ()
       {
@@ -116030,8 +116881,6 @@ function (Fields,
       set_transparency__: function ()
       {
          this .transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
-
-         this .set_transparent__ ();
       },
       /*
        * Back Material
@@ -116086,8 +116935,6 @@ function (Fields,
       set_backTransparency__: function ()
       {
          this .backTransparency = Algorithm .clamp (this ._backTransparency .getValue (), 0, 1);
-
-         this .set_transparent__ ();
       },
       set_transparent__: function ()
       {
@@ -116097,7 +116944,7 @@ function (Fields,
       {
          return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
       },
-      setShaderUniforms: function (gl, shaderObject, front)
+      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, front)
       {
          if (!front && this ._separateBackColor .getValue ())
          {
@@ -116173,10 +117020,12 @@ function (Fields,
 
 define ('x_ite/Components/Shape',[
    "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Shape/AcousticProperties",
    "x_ite/Components/Shape/Appearance",
    "x_ite/Components/Shape/FillProperties",
    "x_ite/Components/Shape/LineProperties",
    "x_ite/Components/Shape/Material",
+   "x_ite/Components/Shape/PhysicalMaterial",
    "x_ite/Components/Shape/PointProperties",
    "x_ite/Components/Shape/Shape",
    "x_ite/Components/Shape/TwoSidedMaterial",
@@ -116188,10 +117037,12 @@ define ('x_ite/Components/Shape',[
    "x_ite/Components/Shape/X3DShapeNode",
 ],
 function (SupportedNodes,
+          AcousticProperties,
           Appearance,
           FillProperties,
           LineProperties,
           Material,
+          PhysicalMaterial,
           PointProperties,
           Shape,
           TwoSidedMaterial,
@@ -116206,14 +117057,16 @@ function (SupportedNodes,
 
    const Types =
    {
-      Appearance:       Appearance,
-      FillProperties:   FillProperties,
-      LineProperties:   LineProperties,
-      Material:         Material,
-      PointProperties:  PointProperties,
-      Shape:            Shape,
-      TwoSidedMaterial: TwoSidedMaterial,
-      UnlitMaterial:    UnlitMaterial,
+      AcousticProperties: AcousticProperties,
+      Appearance:         Appearance,
+      FillProperties:     FillProperties,
+      LineProperties:     LineProperties,
+      Material:           Material,
+      PhysicalMaterial:   PhysicalMaterial,
+      PointProperties:    PointProperties,
+      Shape:              Shape,
+      TwoSidedMaterial:   TwoSidedMaterial,
+      UnlitMaterial:      UnlitMaterial,
    };
 
    const AbstractTypes =
@@ -117625,13 +118478,9 @@ function ($,
 
             const data = cx .getImageData (0, 0, width, height) .data;
 
-            setTimeout (function ()
-            {
-               this .setMedia (this .video);
-               this .setTexture (width, height, false, new Uint8Array (data), true);
-               this .setLoadState (X3DConstants .COMPLETE_STATE);
-            }
-            .bind (this), 16);
+            this .setMedia (this .video);
+            this .setTexture (width, height, false, new Uint8Array (data .buffer), true);
+            this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
          catch (error)
          {
@@ -117960,7 +118809,7 @@ function (Fields,
 
          for (let i = 0; i < channels; ++ i)
          {
-            textureNodes [i] .setShaderUniformsToChannel (gl, shaderObject, renderObject, i);
+            textureNodes [i] .setShaderUniformsToChannel (gl, shaderObject, renderObject, shaderObject .x3d_Textures [i]);
 
             gl .uniform1i  (shaderObject .x3d_MultiTextureMode [i],      this .getMode (i));
             gl .uniform1i  (shaderObject .x3d_MultiTextureAlphaMode [i], this .getAlphaMode (i));
@@ -118131,6 +118980,15 @@ function (Fields,
 
          return array;
       },
+      getTextureMapping: function (textureCoordinateMapping)
+      {
+         const
+            textureCoordinateNodes = this .textureCoordinateNodes,
+            length                 = Math .min (this .getBrowser () .getMaxTextures (), textureCoordinateNodes .length);
+
+         for (let i = 0; i < length; ++ i)
+            textureCoordinateNodes [i] .getTextureMapping (textureCoordinateMapping, i);
+      },
       setShaderUniforms: function (gl, shaderObject)
       {
          const
@@ -118143,7 +119001,7 @@ function (Fields,
          const last = length ? textureCoordinateNodes .at (-1) : this;
 
          for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
-            textureCoordinateNodes [last] .setShaderUniformsToChannel (gl, shaderObject, i);
+            last .setShaderUniformsToChannel (gl, shaderObject, i);
       },
    });
 
@@ -118265,6 +119123,15 @@ function (Fields,
             if (textureTransformNode)
                textureTransformNodes .push (textureTransformNode);
          }
+      },
+      getTextureMapping: function (textureTransformMapping)
+      {
+         const
+            textureTransformNodes = this .textureTransformNodes,
+            length                = Math .min (this .getBrowser () .getMaxTextures (), textureTransformNodes .length);
+
+         for (let i = 0; i < length; ++ i)
+            textureTransformNodes [i] .getTextureMapping (textureTransformMapping, i);
       },
       setShaderUniforms: function (gl, shaderObject)
       {
@@ -118556,7 +119423,7 @@ function ($,
                data = cx2 .getImageData (0, 0, width, height) .data;
             }
 
-            this .setTexture (width, height, transparent, new Uint8Array (data), false);
+            this .setTexture (width, height, transparent, new Uint8Array (data .buffer), false);
             this ._loadState = X3DConstants .COMPLETE_STATE;
          }
          else
@@ -120045,6 +120912,10 @@ function ($,
 
          throw Error ("Profile '" + name + "' is not supported.");
       },
+      getSupportedProfiles: function ()
+      {
+         return SupportedProfiles;
+      },
       getComponent: function (name, level)
       {
          name  = String (name);
@@ -120060,9 +120931,17 @@ function ($,
 
          throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
       },
+      getSupportedComponents: function ()
+      {
+         return SupportedComponents;
+      },
       getSupportedNode: function (typeName)
       {
          return SupportedNodes .getType (String (typeName));
+      },
+      getSupportedNodes: function ()
+      {
+         return SupportedNodes .getTypes ();
       },
       createScene: function (profile, component1 /*, ...*/)
       {
@@ -120272,7 +121151,7 @@ function ($,
       },
       loadURL: function (url, parameter = new Fields .MFString ())
       {
-         const promise = new Promise (function (resolve, reject)
+         return new Promise (function (resolve, reject)
          {
             if (!(url instanceof Fields .MFString))
                throw new Error ("Browser.loadURL: url must be of type MFString.");
@@ -120361,8 +121240,6 @@ function ($,
             .bind (this));
          }
          .bind (this));
-
-         return promise;
       },
       addBrowserListener: function (callback, object)
       {
@@ -120413,7 +121290,10 @@ function ($,
             scene .setLive (currentScene .getLive ());
          }
 
-         new XMLParser (scene) .parseIntoScene (dom, success, error);
+         const parser = new XMLParser (scene);
+
+         parser .setInput (dom)
+         parser .parseIntoScene (success, error);
 
          if (arguments .length === 1)
             return scene;
@@ -120432,7 +121312,10 @@ function ($,
             scene .setLive (currentScene .getLive ());
          }
 
-         new JSONParser (scene) .parseIntoScene (json, success, error);
+         const parser = new JSONParser (scene);
+
+         parser .setInput (json);
+         parser .parseIntoScene (success, error);
 
          if (arguments .length === 1)
             return scene;
@@ -120610,10 +121493,7 @@ function ($,
       },
       print: function ()
       {
-         let string = "";
-
-         for (const argument of arguments)
-            string += argument;
+         const string = Array .prototype .join .call (arguments, "");
 
          console .log (string);
 
@@ -120624,19 +121504,14 @@ function ($,
       },
       println: function ()
       {
-         let string = "";
-
-         for (const argument of arguments)
-            string += argument;
+         const string = Array .prototype .join .call (arguments, "");
 
          console .log (string);
-
-         string += "\n";
 
          const element = $(".x_ite-console");
 
          if (element .length)
-            element .append (document .createTextNode (string));
+            element .append (document .createTextNode (string + "\n"));
       },
       toVRMLStream: function (stream)
       {
@@ -121027,8 +121902,8 @@ function ($,
    {
       const url = urls .getProviderUrl (name);
 
-      if (typeof globalRequire === "function" && typeof __filename === "string")
-         globalRequire (globalRequire ("url") .fileURLToPath (url));
+      if (typeof __global_require__ === "function" && typeof __filename === "string")
+         __global_require__ (__global_require__ ("url") .fileURLToPath (url));
 
       return url;
    }
@@ -121258,8 +122133,8 @@ const getScriptURL = (function ()
 {
    if (document .currentScript)
       var src = document .currentScript .src;
-   else if (typeof globalRequire === "function" && typeof __filename === "string")
-      var src = globalRequire ("url") .pathToFileURL (__filename) .href;
+   else if (typeof __global_require__ === "function" && typeof __filename === "string")
+      var src = __global_require__ ("url") .pathToFileURL (__filename) .href;
 
    return function ()
    {
@@ -121286,7 +122161,7 @@ const getScriptURL = (function ()
             X3D (callback, fallback);
             X3D (resolve, reject);
          },
-         fallback);
+         function () { if (typeof fallback === "function") fallback (); reject (); });
       });
    }
 
@@ -121311,10 +122186,11 @@ const getScriptURL = (function ()
    const X3D_ = window .X3D;
 
    // Now assign our X3D.
-   window .X3D = X_ITE;
+   window .X3D                        = X_ITE;
+   window [Symbol .for ("X_ITE.X3D-5.0.0a")] = X_ITE;
 
-   if (typeof globalModule === "object" && typeof globalModule .exports === "object")
-      globalModule .exports = X_ITE;
+   if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
+      __global_module__ .exports = X_ITE;
 
    // IE fix.
    document .createElement ("X3DCanvas");

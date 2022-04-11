@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = X3D .define,
-	require = X3D .require;
+	define  = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-5.0.0a")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -1247,7 +1247,7 @@ function ($,
          {
             X3DTextGeometry .prototype .update .call (this);
 
-            var
+            const
                fontStyle = this .getFontStyle (),
                text      = this .getText (),
                offset    = 1; // For antialiasing border on bottom and right side
@@ -1302,20 +1302,20 @@ function ($,
       })(),
       build: (function ()
       {
-         var
+         const
             min = new Vector3 (0, 0, 0),
             max = new Vector3 (1, 1, 0);
 
          return function ()
          {
-            var
+            const
                fontStyle = this .getFontStyle (),
                font      = fontStyle .getFont ();
 
             if (! font)
                return;
 
-            var
+            const
                text           = this .getText (),
                glyphs         = this .getGlyphs (),
                minorAlignment = this .getMinorAlignment (),
@@ -1355,7 +1355,7 @@ function ($,
 
             // Generate texture.
 
-            var
+            const
                width  = text ._textBounds .x,
                height = text ._textBounds .y;
 
@@ -1364,7 +1364,7 @@ function ($,
             canvas .width  = Algorithm .nextPowerOfTwo (width),
             canvas .height = Algorithm .nextPowerOfTwo (height);
 
-            var
+            const
                w = width  / canvas .width,
                h = height / canvas .height,
                y = 1 - h;
@@ -1386,17 +1386,18 @@ function ($,
 
             if (fontStyle ._horizontal .getValue ())
             {
-               for (var l = 0, length = glyphs .length; l < length; ++ l)
+               for (let l = 0, length = glyphs .length; l < length; ++ l)
                {
-                  var
-                     line         = glyphs [l],
-                     charSpacing  = charSpacings [l],
-                     translation  = translations [l],
-                     advanceWidth = 0;
+                  const
+                     line        = glyphs [l],
+                     charSpacing = charSpacings [l],
+                     translation = translations [l];
 
-                  for (var g = 0, gl = line .length; g < gl; ++ g)
+                  let advanceWidth = 0;
+
+                  for (let g = 0, gl = line .length; g < gl; ++ g)
                   {
-                     var
+                     const
                         glyph = line [g],
                         x     = minorAlignment .x + translation .x + advanceWidth + g * charSpacing - min .x,
                         y     = minorAlignment .y + translation .y - max .y;
@@ -1405,7 +1406,7 @@ function ($,
 
                      // Calculate advanceWidth.
 
-                     var kerning = 0;
+                     let kerning = 0;
 
                      if (g + 1 < line .length)
                         kerning = font .getKerningValue (glyph, line [g + 1]);
@@ -1416,30 +1417,30 @@ function ($,
             }
             else
             {
-               var
+               const
                   leftToRight = fontStyle ._leftToRight .getValue (),
                   topToBottom = fontStyle ._topToBottom .getValue (),
                   first       = leftToRight ? 0 : text ._string .length - 1,
                   last        = leftToRight ? text ._string .length  : -1,
                   step        = leftToRight ? 1 : -1;
 
-               for (var l = first, t = 0; l !== last; l += step)
+               for (let l = first, t = 0; l !== last; l += step)
                {
-                  var line = glyphs [l];
+                  const line = glyphs [l];
 
-                  var
+                  const
                      numChars = line .length,
                      firstG   = topToBottom ? 0 : numChars - 1,
                      lastG    = topToBottom ? numChars : -1,
                      stepG    = topToBottom ? 1 : -1;
 
-                  for (var g = firstG; g !== lastG; g += stepG, ++ t)
+                  for (let g = firstG; g !== lastG; g += stepG, ++ t)
                   {
-                     var translation = translations [t];
+                     const translation = translations [t];
 
-                        var
-                           x = minorAlignment .x + translation .x - min .x,
-                           y = minorAlignment .y + translation .y - max .y;
+                     const
+                        x = minorAlignment .x + translation .x - min .x,
+                        y = minorAlignment .y + translation .y - max .y;
 
                      this .drawGlyph (cx, font, line [g], x, y, size);
                   }
@@ -1448,11 +1449,11 @@ function ($,
 
             // Transfer texture data.
 
-            var imageData = cx .getImageData (0, 0, canvas .width, canvas .height);
+            const imageData = cx .getImageData (0, 0, canvas .width, canvas .height);
 
             // If the cavas is to large imageData is null.
             if (imageData)
-               this .textureNode .setTexture (canvas .width, canvas .height, true, new Uint8Array (imageData .data), true);
+               this .textureNode .setTexture (canvas .width, canvas .height, true, new Uint8Array (imageData .data .buffer), true);
             else
                this .textureNode .clear ();
          };
@@ -1463,15 +1464,15 @@ function ($,
 
          // Get curves for the current glyph.
 
-         var
+         const
             path     = glyph .getPath (x, -y, size),
             commands = path .commands;
 
          cx .beginPath ();
 
-         for (var i = 0, cl = commands .length; i < cl; ++ i)
+         for (let i = 0, cl = commands .length; i < cl; ++ i)
          {
-            var command = commands [i];
+            const command = commands [i];
 
             switch (command .type)
             {
@@ -1514,14 +1515,14 @@ function ($,
       },
       getGlyphExtents: function (font, glyph, primitiveQuality, min, max)
       {
-         var unitsPerEm = font .unitsPerEm;
+         const unitsPerEm = font .unitsPerEm;
 
          min .set ((glyph .xMin || 0) / unitsPerEm, (glyph .yMin || 0) / unitsPerEm, 0);
          max .set ((glyph .xMax || 0) / unitsPerEm, (glyph .yMax || 0) / unitsPerEm, 0);
       },
       transform: (function ()
       {
-         var
+         const
             x            = new Vector4 (0, 0, 0, 0),
             y            = new Vector4 (0, 0, 0, 0),
             z            = new Vector4 (0, 0, 0, 0),
@@ -1533,7 +1534,7 @@ function ($,
          {
             // throws an exception
 
-            var
+            const
                text             = this .getText (),
                modelViewMatrix  = renderObject .getModelViewMatrix () .get (),
                projectionMatrix = renderObject .getProjectionMatrix () .get (),
@@ -1542,7 +1543,7 @@ function ($,
             // Determine screenMatrix.
             // Same as in ScreenGroup.
 
-            var screenScale = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport); // in meter/pixel
+            const screenScale = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport); // in meter/pixel
 
             x .set (modelViewMatrix [ 0], modelViewMatrix [ 1], modelViewMatrix [ 2], modelViewMatrix [ 3]);
             y .set (modelViewMatrix [ 4], modelViewMatrix [ 5], modelViewMatrix [ 6], modelViewMatrix [ 7]);
