@@ -6,7 +6,7 @@
 precision highp float;
 precision highp int;
 
-uniform int   x3d_GeometryType;
+uniform int x3d_GeometryType;
 uniform float x3d_AlphaCutoff;
 uniform x3d_PointPropertiesParameters x3d_PointProperties;
 
@@ -43,15 +43,18 @@ getPointColor ()
 
    vec4 finalColor = getTextureColor (color, vec4 (1.0));
 
-   if (pointSize > 1.0)
+   if (x3d_NumTextures == 0)
    {
-      float t = max (distance (vec2 (0.5), gl_PointCoord) * pointSize - max (pointSize / 2.0 - 1.0, 0.0), 0.0);
+      if (pointSize > 1.0)
+      {
+         float t = max (distance (vec2 (0.5), gl_PointCoord) * pointSize - max (pointSize / 2.0 - 1.0, 0.0), 0.0);
 
-      finalColor .a = mix (finalColor .a, 0.0, t);
-   }
-   else
-   {
-      finalColor .a *= pointSize;
+         finalColor .a = mix (finalColor .a, 0.0, t);
+      }
+      else
+      {
+         finalColor .a *= pointSize;
+      }
    }
 
    return finalColor;
