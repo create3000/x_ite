@@ -50,7 +50,7 @@ getPointColor ()
    }
    else
    {
-      finalColor .a = pointSize;
+      finalColor .a *= pointSize;
    }
 
    return finalColor;
