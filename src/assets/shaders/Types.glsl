@@ -38,7 +38,6 @@ struct x3d_PointPropertiesParameters
    mediump float pointSizeMinValue;
    mediump float pointSizeMaxValue;
    mediump vec3  pointSizeAttenuation;
-   mediump int   colorMode;
 };
 
 //uniform x3d_PointPropertiesParameters x3d_PointProperties;
