@@ -260,7 +260,13 @@ main ()
    float alphaRoughness = perceptualRoughness * perceptualRoughness;
 
    // The albedo may be defined from a base texture or a flat color.
-   vec4 baseColor    = getBaseColor ();
+   vec4 baseColor = getBaseColor ();
+
+   if (baseColor .a < x3d_AlphaCutoff)
+   {
+      discard;
+   }
+
    vec3 f0           = vec3 (0.04);
    vec3 diffuseColor = baseColor .rgb * (vec3 (1.0) - f0);
    diffuseColor *= 1.0 - metallic;
@@ -354,11 +360,6 @@ main ()
    #endif
 
    finalColor += getEmissiveColor ();
-
-   if (baseColor .a < x3d_AlphaCutoff)
-   {
-      discard;
-   }
 
    // Combine with alpha and do gamma correction.
    x3d_FragColor = Gamma (vec4 (finalColor, baseColor .a));
