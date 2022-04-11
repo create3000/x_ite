@@ -80,7 +80,7 @@ function (Fields,
          new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMinValue",    new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMaxValue",    new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeAttenuation", new Fields .MFFloat (1, 0, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "colorMode",            new Fields .SFString ("TEXTURE_AND_POINT_COLOR")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "markerType",           new Fields .SFInt32 (1)),
       ]),
       getTypeName: function ()
       {
@@ -102,13 +102,13 @@ function (Fields,
          this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
          this ._pointSizeMaxValue    .addInterest ("set_pointSizeMaxValue__",    this);
          this ._pointSizeAttenuation .addInterest ("set_pointSizeAttenuation__", this);
-         this ._colorMode            .addInterest ("set_colorMode__",            this);
+         this ._markerType           .addInterest ("set_markerType__",           this);
 
          this .set_pointSizeScaleFactor__ ();
          this .set_pointSizeMinValue__ ();
          this .set_pointSizeMaxValue__ ();
          this .set_pointSizeAttenuation__ ();
-         this .set_colorMode__ ();
+         this .set_markerType__ ();
       },
       set_pointSizeScaleFactor__: function ()
       {
@@ -130,31 +130,15 @@ function (Fields,
          this .pointSizeAttenuation [1] = length > 1 ? Math .max (0, this ._pointSizeAttenuation [1]) : 0;
          this .pointSizeAttenuation [2] = length > 2 ? Math .max (0, this ._pointSizeAttenuation [2]) : 0;
       },
-      set_colorMode__: (function ()
+      set_markerType__: function ()
       {
-         const colorModes = new Map ([
-            ["POINT_COLOR",             0],
-            ["TEXTURE_COLOR",           1],
-            ["TEXTURE_AND_POINT_COLOR", 2],
-         ]);
-
-         return function ()
-         {
-            const colorMode = colorModes .get (this ._colorMode .getValue ());
-
-            if (colorMode !== undefined)
-               this .colorMode = colorMode;
-            else
-               this .colorMode = colorModes .get ("TEXTURE_AND_POINT_COLOR");
-         };
-      })(),
+      },
       setShaderUniforms: function (gl, shaderObject)
       {
          gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeScaleFactor, this .pointSizeScaleFactor);
          gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMinValue,    this .pointSizeMinValue);
          gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMaxValue,    this .pointSizeMaxValue);
          gl .uniform3fv (shaderObject .x3d_PointPropertiesPointSizeAttenuation, this .pointSizeAttenuation);
-         gl .uniform1i  (shaderObject .x3d_PointPropertiesColorMode,            this .colorMode);
       },
    });
 

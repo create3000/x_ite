@@ -35,36 +35,22 @@ out vec4 x3d_FragColor;
 vec4
 getPointColor ()
 {
-   vec4 finalColor = color;
+   vec4 texCoord  = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
 
-   if (x3d_NumTextures > 0)
+   texCoord0 = texCoord;
+   texCoord1 = texCoord;
+
+   vec4 finalColor = getTextureColor (color, vec4 (1.0));
+
+   if (pointSize > 1.0)
    {
-      vec4 texCoord  = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
+      float t = max (distance (vec2 (0.5), gl_PointCoord) * pointSize - max (pointSize / 2.0 - 1.0, 0.0), 0.0);
 
-      texCoord0 = texCoord;
-      texCoord1 = texCoord;
-
-      vec4 textureColor = getTextureColor (vec4 (1.0), vec4 (1.0));
-
-      switch (x3d_PointProperties .colorMode)
-      {
-         case x3d_PointColor:
-            finalColor .a *= textureColor .a;
-            break;
-         case x3d_TextureColor:
-            finalColor = textureColor;
-            break;
-         case x3d_TextureAndPointColor:
-            finalColor .rgb += textureColor .rgb;
-            finalColor .a   *= textureColor .a;
-            break;
-      }
+      finalColor .a = mix (finalColor .a, 0.0, t);
    }
    else
    {
-      float t = distance (vec2 (0.5), gl_PointCoord) * pointSize - max (pointSize / 2.0 - 1.0, 0.0);
-
-      finalColor .a = mix (finalColor .a, 0.0, max (t, 0.0));
+      finalColor .a = pointSize;
    }
 
    return finalColor;
