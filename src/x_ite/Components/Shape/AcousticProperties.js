@@ -1,4 +1,5 @@
-/*******************************************************************************
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
@@ -46,69 +47,53 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/SupportedNodes",
-   "x_ite/Components/Shape/AcousticProperties",
-   "x_ite/Components/Shape/Appearance",
-   "x_ite/Components/Shape/FillProperties",
-   "x_ite/Components/Shape/LineProperties",
-   "x_ite/Components/Shape/Material",
-   "x_ite/Components/Shape/PhysicalMaterial",
-   "x_ite/Components/Shape/PointProperties",
-   "x_ite/Components/Shape/Shape",
-   "x_ite/Components/Shape/TwoSidedMaterial",
-   "x_ite/Components/Shape/UnlitMaterial",
+ define ([
+   "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Components/Shape/X3DAppearanceNode",
-   "x_ite/Components/Shape/X3DMaterialNode",
-   "x_ite/Components/Shape/X3DOneSidedMaterialNode",
-   "x_ite/Components/Shape/X3DShapeNode",
+   "x_ite/Base/X3DConstants",
 ],
-function (SupportedNodes,
-          AcousticProperties,
-          Appearance,
-          FillProperties,
-          LineProperties,
-          Material,
-          PhysicalMaterial,
-          PointProperties,
-          Shape,
-          TwoSidedMaterial,
-          UnlitMaterial,
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
           X3DAppearanceChildNode,
-          X3DAppearanceNode,
-          X3DMaterialNode,
-          X3DOneSidedMaterialNode,
-          X3DShapeNode)
+          X3DConstants)
 {
 "use strict";
 
-   const Types =
+   function AcousticProperties (executionContext)
    {
-      AcousticProperties: AcousticProperties,
-      Appearance:         Appearance,
-      FillProperties:     FillProperties,
-      LineProperties:     LineProperties,
-      Material:           Material,
-      PhysicalMaterial:   PhysicalMaterial,
-      PointProperties:    PointProperties,
-      Shape:              Shape,
-      TwoSidedMaterial:   TwoSidedMaterial,
-      UnlitMaterial:      UnlitMaterial,
-   };
+      X3DAppearanceChildNode .call (this, executionContext);
 
-   const AbstractTypes =
+      this .addType (X3DConstants .AcousticProperties);
+   }
+
+   AcousticProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
    {
-      X3DAppearanceChildNode:  X3DAppearanceChildNode,
-      X3DAppearanceNode:       X3DAppearanceNode,
-      X3DMaterialNode:         X3DMaterialNode,
-      X3DOneSidedMaterialNode: X3DOneSidedMaterialNode,
-      X3DShapeNode:            X3DShapeNode,
-   };
+      constructor: AcousticProperties,
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "absorption", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "refraction", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "diffuse",    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specular",   new Fields .SFFloat ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "AcousticProperties";
+      },
+      getComponentName: function ()
+      {
+         return "Shape";
+      },
+      getContainerField: function ()
+      {
+         return "AcousticProperties";
+      },
+   });
 
-   for (const typeName in Types)
-      SupportedNodes .addType (typeName, Types [typeName]);
-
-   for (const typeName in AbstractTypes)
-      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   return AcousticProperties;
 });
