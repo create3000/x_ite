@@ -97,6 +97,7 @@ struct x3d_PhysicalMaterialParameters
 //uniform x3d_PhysicalMaterialParameters x3d_Material;
 
 #ifdef X3D_MATERIAL_TEXTURES
+
 struct x3d_AmbientTextureParameters
 {
    mediump int         textureType;
