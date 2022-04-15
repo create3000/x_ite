@@ -2,10 +2,6 @@
 
 // https://github.com/cx20/gltf-test/blob/master/examples/khronos-gltf-loader/shaders/pbr-frag.glsl
 
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-#extension GL_EXT_frag_depth : enable
-#endif
-
 precision highp float;
 precision highp int;
 

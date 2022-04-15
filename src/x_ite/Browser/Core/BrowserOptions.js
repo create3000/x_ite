@@ -410,7 +410,7 @@ function (Fields,
 
          // There's no need to update background shader.
 
-         for (const shader of browser .getStandardShader ())
+         for (const shader of browser .getStandardShaders ())
          {
             shader ._parts [0] .getValue () ._url .addEvent ();
             shader ._parts [1] .getValue () ._url .addEvent ();
