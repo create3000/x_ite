@@ -113,6 +113,8 @@ struct x3d_AmbientTextureParameters
    #endif
 };
 
+//uniform x3d_AmbientTextureParameters x3d_AmbientTexture;
+
 struct x3d_DiffuseTextureParameters
 {
    mediump int         textureType;
@@ -128,6 +130,8 @@ struct x3d_DiffuseTextureParameters
    mediump samplerCube textureCube;
    #endif
 };
+
+//uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
 
 struct x3d_SpecularTextureParameters
 {
@@ -145,6 +149,8 @@ struct x3d_SpecularTextureParameters
    #endif
 };
 
+//uniform x3d_SpecularTextureParameters x3d_SpecularTexture;
+
 struct x3d_EmissiveTextureParameters
 {
    mediump int         textureType;
@@ -160,6 +166,8 @@ struct x3d_EmissiveTextureParameters
    mediump samplerCube textureCube;
    #endif
 };
+
+//uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
 
 struct x3d_ShininessTextureParameters
 {
@@ -177,6 +185,8 @@ struct x3d_ShininessTextureParameters
    #endif
 };
 
+//uniform x3d_ShininessTextureParameters x3d_ShininessTexture;
+
 struct x3d_BaseTextureParameters
 {
    mediump int         textureType;
@@ -192,6 +202,8 @@ struct x3d_BaseTextureParameters
    mediump samplerCube textureCube;
    #endif
 };
+
+//uniform x3d_BaseTextureParameters x3d_BaseTexture;
 
 struct x3d_MetallicRoughnessTextureParameters
 {
@@ -209,6 +221,8 @@ struct x3d_MetallicRoughnessTextureParameters
    #endif
 };
 
+//uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
+
 struct x3d_OcclusionTextureParameters
 {
    mediump int         textureType;
@@ -225,6 +239,8 @@ struct x3d_OcclusionTextureParameters
    #endif
 };
 
+//uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
+
 struct x3d_NormalTextureParameters
 {
    mediump int         textureType;
@@ -240,6 +256,9 @@ struct x3d_NormalTextureParameters
    mediump samplerCube textureCube;
    #endif
 };
+
+//uniform x3d_NormalTextureParameters x3d_NormalTexture;
+
 #endif // X3D_MATERIAL_TEXTURES
 
 struct x3d_MultiTextureParameters
