@@ -105,7 +105,7 @@ struct x3d_AmbientTextureParameters
    #ifdef X3D_AMBIENT_TEXTURE_2D
    mediump sampler2D   texture2D;
    #endif
-   #ifdef X3D_AMBIENT_TEXTURE_3D
+   #if defined(X3D_AMBIENT_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
    #ifdef X3D_AMBIENT_TEXTURE_CUBE
@@ -121,7 +121,7 @@ struct x3d_DiffuseTextureParameters
    #ifdef X3D_DIFFUSE_TEXTURE_2D
    mediump sampler2D   texture2D;
    #endif
-   #ifdef X3D_DIFFUSE_TEXTURE_3D
+   #if defined(X3D_DIFFUSE_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
    #ifdef X3D_DIFFUSE_TEXTURE_CUBE
@@ -137,7 +137,7 @@ struct x3d_SpecularTextureParameters
    #ifdef X3D_SPECULAR_TEXTURE_2D
    mediump sampler2D   texture2D;
    #endif
-   #ifdef X3D_SPECULAR_TEXTURE_3D
+   #if defined(X3D_SPECULAR_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
    #ifdef X3D_SPECULAR_TEXTURE_CUBE
@@ -153,7 +153,7 @@ struct x3d_EmissiveTextureParameters
    #ifdef X3D_EMISSIVE_TEXTURE_2D
    mediump sampler2D   texture2D;
    #endif
-   #ifdef X3D_EMISSIVE_TEXTURE_3D
+   #if defined(X3D_EMISSIVE_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
    #ifdef X3D_EMISSIVE_TEXTURE_CUBE
@@ -169,7 +169,7 @@ struct x3d_ShininessTextureParameters
    #ifdef X3D_SHININESS_TEXTURE_2D
    mediump sampler2D   texture2D;
    #endif
-   #ifdef X3D_SHININESS_TEXTURE_3D
+   #if defined(X3D_SHININESS_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
    #ifdef X3D_SHININESS_TEXTURE_CUBE
@@ -185,7 +185,7 @@ struct x3d_BaseTextureParameters
    #ifdef X3D_BASE_TEXTURE_2D
    mediump sampler2D   texture2D;
    #endif
-   #ifdef X3D_BASE_TEXTURE_3D
+   #if defined(X3D_BASE_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
    #ifdef X3D_BASE_TEXTURE_CUBE
@@ -201,7 +201,7 @@ struct x3d_MetallicRoughnessTextureParameters
    #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_2D
    mediump sampler2D   texture2D;
    #endif
-   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_3D
+   #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
    #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE
@@ -217,7 +217,7 @@ struct x3d_OcclusionTextureParameters
    #ifdef X3D_OCCLUSION_TEXTURE_2D
    mediump sampler2D   texture2D;
    #endif
-   #ifdef X3D_OCCLUSION_TEXTURE_3D
+   #if defined(X3D_OCCLUSION_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
    #ifdef X3D_OCCLUSION_TEXTURE_CUBE
@@ -233,7 +233,7 @@ struct x3d_NormalTextureParameters
    #ifdef X3D_NORMAL_TEXTURE_2D
    mediump sampler2D   texture2D;
    #endif
-   #ifdef X3D_NORMAL_TEXTURE_3D
+   #if defined(X3D_NORMAL_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
    #ifdef X3D_NORMAL_TEXTURE_CUBE
