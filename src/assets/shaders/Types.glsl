@@ -1,3 +1,7 @@
+#if __VERSION__ == 100
+   #extension GL_OES_standard_derivatives : enable
+   #extension GL_EXT_frag_depth : enable
+#endif
 
 struct x3d_FogParameters {
    mediump int   type;

@@ -1,4 +1,3 @@
-
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 #extension GL_EXT_frag_depth : enable
 #endif
@@ -36,34 +35,164 @@ varying float depth;
 
 #pragma X3D include "include/Shadow.glsl"
 #pragma X3D include "include/Texture.glsl"
+#pragma X3D include "include/Normal.glsl"
 #pragma X3D include "include/Hatch.glsl"
 #pragma X3D include "include/Fog.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
 #pragma X3D include "include/SpotFactor.glsl"
 
+#ifdef X3D_MATERIAL_TEXTURES
+uniform x3d_AmbientTextureParameters   x3d_AmbientTexture;
+uniform x3d_DiffuseTextureParameters   x3d_DiffuseTexture;
+uniform x3d_SpecularTextureParameters  x3d_SpecularTexture;
+uniform x3d_EmissiveTextureParameters  x3d_EmissiveTexture;
+uniform x3d_ShininessTextureParameters x3d_ShininessTexture;
+uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
+#endif
+
+vec3
+getAmbientColor ()
+{
+   // Get ambient parameter.
+
+   vec3 ambientParameter = x3d_Material .ambientIntensity * x3d_Material .diffuseColor;
+
+   // Get texture color.
+
+   #if defined(X3D_AMBIENT_TEXTURE) && !defined(X3D_AMBIENT_TEXTURE_3D)
+      vec4 texCoord = getTexCoord (x3d_AmbientTexture .textureTransformMapping, x3d_AmbientTexture .textureCoordinateMapping);
+
+      #if defined(X3D_AMBIENT_TEXTURE_2D)
+         return ambientParameter * texture2D (x3d_AmbientTexture .texture2D, texCoord .st) .rgb;
+      #elif defined(X3D_AMBIENT_TEXTURE_CUBE)
+         return ambientParameter * textureCube (x3d_AmbientTexture .textureCube, texCoord .stp) .rgb;
+      #endif
+   #else
+      return ambientParameter;
+   #endif
+}
+
+vec4
+getDiffuseColor ()
+{
+   // Get diffuse parameter.
+
+   float alpha            = 1.0 - x3d_Material .transparency;
+   vec4  diffuseParameter = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .diffuseColor, alpha);
+
+   // Get texture color.
+
+   #if defined(X3D_DIFFUSE_TEXTURE) && !defined(X3D_DIFFUSE_TEXTURE_3D)
+      vec4 texCoord = getTexCoord (x3d_DiffuseTexture .textureTransformMapping, x3d_DiffuseTexture .textureCoordinateMapping);
+
+      #if defined(X3D_DIFFUSE_TEXTURE_2D)
+         return diffuseParameter * texture2D (x3d_DiffuseTexture .texture2D, texCoord .st) .rgba;
+      #elif defined(X3D_DIFFUSE_TEXTURE_CUBE)
+         return diffuseParameter * textureCube (x3d_DiffuseTexture .textureCube, texCoord .stp) .rgba;
+      #endif
+   #else
+      return getTextureColor (diffuseParameter, vec4 (x3d_Material .specularColor, alpha));
+   #endif
+}
+
+vec3
+getSpecularColor ()
+{
+   // Get specular parameter.
+
+   vec3 specularParameter = x3d_Material .specularColor;
+
+   // Get texture color.
+
+   #if defined(X3D_SPECULAR_TEXTURE) && !defined(X3D_SPECULAR_TEXTURE_3D)
+      vec4 texCoord = getTexCoord (x3d_SpecularTexture .textureTransformMapping, x3d_SpecularTexture .textureCoordinateMapping);
+
+      #if defined(X3D_SPECULAR_TEXTURE_2D)
+         return specularParameter * texture2D (x3d_SpecularTexture .texture2D, texCoord .st) .rgb;
+      #elif defined(X3D_SPECULAR_TEXTURE_CUBE)
+         return specularParameter * textureCube (x3d_SpecularTexture .textureCube, texCoord .stp) .rgb;
+      #endif
+   #else
+      return specularParameter;
+   #endif
+}
+
+vec3
+getEmissiveColor ()
+{
+   // Get emissive parameter.
+
+   vec3 emissiveParameter = x3d_Material .emissiveColor;
+
+   // Get texture color.
+
+   #if defined(X3D_EMISSIVE_TEXTURE) && !defined(X3D_EMISSIVE_TEXTURE_3D)
+      vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+
+      #if defined(X3D_EMISSIVE_TEXTURE_2D)
+         return emissiveParameter * texture2D (x3d_EmissiveTexture .texture2D, texCoord .st) .rgb;
+      #elif defined(X3D_EMISSIVE_TEXTURE_CUBE)
+         return emissiveParameter * textureCube (x3d_EmissiveTexture .textureCube, texCoord .stp) .rgb;
+      #endif
+   #else
+      return emissiveParameter;
+   #endif
+}
+
+float
+getShininessFactor ()
+{
+   // Get shininess parameter.
+
+   float shininess = x3d_Material .shininess;
+
+   // Get texture color.
+
+   #if defined(X3D_SHININESS_TEXTURE) && !defined(X3D_SHININESS_TEXTURE_3D)
+      vec4 texCoord = getTexCoord (x3d_ShininessTexture .textureTransformMapping, x3d_ShininessTexture .textureCoordinateMapping);
+
+      #if defined(X3D_SHININESS_TEXTURE_2D)
+         return shininess * texture2D (x3d_ShininessTexture .texture2D, texCoord .st) .a * 128.0;
+      #elif defined(X3D_SHININESS_TEXTURE_CUBE)
+         return shininess * textureCube (x3d_ShininessTexture .textureCube, texCoord .stp) .a * 128.0;
+      #endif
+   #else
+      return shininess * 128.0;
+   #endif
+}
+
+float
+getOcclusionFactor ()
+{
+   // Get texture color.
+
+   #if defined(X3D_OCCLUSION_TEXTURE) && !defined(X3D_OCCLUSION_TEXTURE_3D)
+      vec4 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
+
+      #if defined(X3D_OCCLUSION_TEXTURE_2D)
+         return texture2D (x3d_OcclusionTexture .texture2D, texCoord .st) .r;
+      #elif defined(X3D_OCCLUSION_TEXTURE_CUBE)
+         return textureCube (x3d_OcclusionTexture .textureCube, texCoord .stp) .r;
+      #endif
+   #else
+      return 1.0;
+   #endif
+}
+
 vec4
 getMaterialColor ()
 {
-   vec3  N  = normalize (gl_FrontFacing ? normal : -normal);
-   vec3  V  = normalize (-vertex); // normalized vector from point on geometry to viewer's position
-   float dV = length (vertex);
+   vec3 N = getNormalVector ();
+   vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
 
    // Calculate diffuseColor & alpha
 
-   vec3  diffuseColor = vec3 (1.0);
-   float alpha        = 1.0 - x3d_Material .transparency;
-
-   // Texture
-
-   vec4 D = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .diffuseColor, alpha);
-   vec4 T = getTextureColor (D, vec4 (x3d_Material .specularColor, alpha));
-
-   diffuseColor = T .rgb;
-   alpha        = T .a;
-
-   // Ambient color
-
-   vec3 ambientColor = diffuseColor * x3d_Material .ambientIntensity;
+   vec4  diffuseColorAlpha = getDiffuseColor ();
+   float alpha             = diffuseColorAlpha .a;
+   vec3  diffuseColor      = diffuseColorAlpha .rgb;
+   vec3  ambientColor      = getAmbientColor ();
+   vec3  specularColor     = getSpecularColor ();
+   float shininessFactor   = getShininessFactor ();
 
    // Projective texture
 
@@ -96,8 +225,8 @@ getMaterialColor ()
 
          float lightAngle     = max (dot (N, L), 0.0);      // Angle between normal and light ray.
          vec3  diffuseTerm    = diffuseColor * lightAngle;
-         float specularFactor = x3d_Material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), x3d_Material .shininess * 128.0) : 1.0;
-         vec3  specularTerm   = x3d_Material .specularColor * specularFactor;
+         float specularFactor = shininessFactor > 0.0 ? pow (max (dot (N, H), 0.0), shininessFactor) : 1.0;
+         vec3  specularTerm   = specularColor * specularFactor;
 
          float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
          float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
@@ -114,7 +243,11 @@ getMaterialColor ()
       }
    }
 
-   finalColor += x3d_Material .emissiveColor;
+   #ifdef X3D_OCCLUSION_TEXTURE
+	finalColor = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
+   #endif
+
+   finalColor += getEmissiveColor ();
 
    return vec4 (finalColor, alpha);
 }

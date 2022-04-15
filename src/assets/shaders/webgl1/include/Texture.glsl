@@ -135,6 +135,29 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
 }
 
 vec4
+getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
+{
+   vec4 texCoord;
+
+   #if x3d_MaxTextures > 0
+   if (textureCoordinateMapping == 0)
+      texCoord = getTexCoord (x3d_TextureCoordinateGenerator [0], textureTransformMapping, textureCoordinateMapping);
+   #endif
+
+   #if x3d_MaxTextures > 1
+   else if (textureCoordinateMapping == 1)
+      texCoord = getTexCoord (x3d_TextureCoordinateGenerator [1], textureTransformMapping, textureCoordinateMapping);
+   #endif
+
+   texCoord .stp /= texCoord .q;
+
+   if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
+      texCoord .s = 1.0 - texCoord .s;
+
+   return texCoord;
+}
+
+vec4
 getTexture2D (const in int i, const in vec2 texCoord)
 {
    vec4 color = vec4 (0.0);
@@ -463,15 +486,24 @@ getProjectiveTextureColor (in vec4 currentColor)
 
    return currentColor;
 }
-#else
+
+#else // X3D_PROJECTIVE_TEXTURE_MAPPING
+
 vec4
 getProjectiveTextureColor (in vec4 currentColor)
 {
    return currentColor;
 }
-#endif
 
-#else
+#endif // X3D_PROJECTIVE_TEXTURE_MAPPING
+
+#else // X3D_MULTI_TEXTURING
+
+vec4
+getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
+{
+   return texCoord0;
+}
 
 vec4
 getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
@@ -503,4 +535,5 @@ getProjectiveTextureColor (in vec4 currentColor)
 {
    return currentColor;
 }
-#endif
+
+#endif // X3D_MULTI_TEXTURING

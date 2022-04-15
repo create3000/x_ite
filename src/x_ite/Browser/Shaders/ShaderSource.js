@@ -49,8 +49,10 @@
 
 define ([
    "text!assets/shaders/webgl1/include/ClipPlanes.glsl",
+   "text!assets/shaders/webgl1/include/Colors.glsl",
    "text!assets/shaders/webgl1/include/Fog.glsl",
    "text!assets/shaders/webgl1/include/Hatch.glsl",
+   "text!assets/shaders/webgl1/include/Normal.glsl",
    "text!assets/shaders/webgl1/include/Pack.glsl",
    "text!assets/shaders/webgl1/include/Perlin.glsl",
    "text!assets/shaders/webgl1/include/Shadow.glsl",
@@ -68,8 +70,10 @@ define ([
    "text!assets/shaders/webgl2/include/Texture.glsl",
 ],
 function (ClipPlanes1,
+          Colors1,
           Fog1,
           Hatch1,
+          Normal1,
           Pack1,
           Perlin1,
           Shadow1,
@@ -92,8 +96,10 @@ function (ClipPlanes1,
 
    const includes1 = {
       ClipPlanes: ClipPlanes1,
+      Colors: Colors1,
       Fog: Fog1,
       Hatch: Hatch1,
+      Normal: Normal1,
       Pack: Pack1,
       Perlin: Perlin1,
       Shadow: Shadow1,
@@ -135,7 +141,7 @@ function (ClipPlanes1,
                source += "#line 1\n";
                source += this .get (gl, includes [match [1]]);
                source += "\n";
-               source += "#line " + (i + 1) + "\n";
+               source += "#line " + (i + 2) + "\n";
             }
             else
             {

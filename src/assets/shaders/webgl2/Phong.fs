@@ -161,7 +161,7 @@ getShininessFactor ()
 
       #if defined(X3D_SHININESS_TEXTURE_2D)
          return shininess * texture (x3d_ShininessTexture .texture2D, texCoord .st) .a * 128.0;
-      #eöif defined(X3D_SHININESS_TEXTURE_3D)
+      #elif defined(X3D_SHININESS_TEXTURE_3D)
          return shininess * texture (x3d_ShininessTexture .texture3D, texCoord .stp) .a * 128.0;
       #elif defined(X3D_SHININESS_TEXTURE_CUBE)
          return shininess * texture (x3d_ShininessTexture .textureCube, texCoord .stp) .a * 128.0;

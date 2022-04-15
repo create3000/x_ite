@@ -1,0 +1,46 @@
+// https://github.com/cx20/gltf-test/blob/master/examples/khronos-gltf-loader/shaders/pbr-vert.glsl
+
+precision highp float;
+precision highp int;
+
+uniform mat4 x3d_ProjectionMatrix;
+uniform mat4 x3d_ModelViewMatrix;
+uniform mat3 x3d_NormalMatrix;
+
+attribute vec4 x3d_Vertex;
+attribute vec3 x3d_Normal;
+attribute vec4 x3d_TexCoord0;
+attribute vec4 x3d_TexCoord1;
+attribute vec4 x3d_Color;
+
+varying vec3 vertex;
+varying vec3 normal;
+varying vec4 texCoord0;
+varying vec4 texCoord1;
+varying vec4 color;       // color from Color node
+varying vec3 localNormal; // normal vector at this point on geometry in local coordinates
+varying vec3 localVertex; // point on geometry in local coordinates
+
+#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+varying float depth;
+#endif
+
+void
+main ()
+{
+   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
+
+   vertex      = position .xyz;
+   normal      = normalize (x3d_NormalMatrix * x3d_Normal);
+   texCoord0   = x3d_TexCoord0;
+   texCoord1   = x3d_TexCoord1;
+   color       = x3d_Color;
+   localNormal = x3d_Normal;
+   localVertex = x3d_Vertex .xyz;
+
+   gl_Position = x3d_ProjectionMatrix * position;
+
+   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   depth = 1.0 + gl_Position .w;
+   #endif
+}
