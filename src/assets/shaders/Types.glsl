@@ -1,6 +1,3 @@
-#extension GL_OES_standard_derivatives : enable
-#extension GL_EXT_frag_depth : enable
-
 struct x3d_FogParameters {
    mediump int   type;
    mediump vec3  color;
