@@ -149,12 +149,10 @@ function (Fields,
       },
       set_live__: function ()
       {
-         const browser = this .getBrowser ();
-
          if (this .isLive () .getValue ())
-            browser .getBrowserOptions () ._Shading .addInterest ("set_textures__", this);
+            this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
          else
-            browser .getBrowserOptions () ._Shading .removeInterest ("set_textures__", this);
+            this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
       },
       set_ambientIntensity__: function ()
       {
@@ -237,11 +235,10 @@ function (Fields,
       },
       set_textures__: function ()
       {
-         const browser = this .getBrowser ();
-
          if (this .getTextures ())
          {
             const
+               browser = this .getBrowser (),
                options = ["X3D_MATERIAL_TEXTURES"];
 
             if (this .ambientTextureNode)
@@ -271,8 +268,15 @@ function (Fields,
          }
          else
          {
-            this .shaderNode = browser .getDefaultShader ();
+            this .set_shading__ ();
          }
+      },
+      set_shading__: function ()
+      {
+         if (this .getTextures ())
+            return;
+
+         this .shaderNode = this .getBrowser () .getDefaultShader ();
       },
       getTextureIndices: (function ()
       {
