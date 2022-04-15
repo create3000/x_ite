@@ -236,8 +236,6 @@ function (Fields,
       },
       setShader: function (shaderNode)
       {
-         shaderNode ._isValid .removeInterest ("setShader", this);
-
          this .shaderNode = shaderNode;
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)

@@ -74,6 +74,7 @@ function (Fields,
 
       this .diffuseColor  = new Float32Array (3);
       this .specularColor = new Float32Array (3);
+      this .shaderNode    = this .getBrowser () .getDefaultShader ();
    }
 
    Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
@@ -120,8 +121,6 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
-         this .shaderNode = this .getBrowser () .getDefaultShader ();
-
          this .isLive () .addInterest ("set_live__", this);
 
          this ._ambientIntensity  .addInterest ("set_ambientIntensity__",  this);
@@ -150,10 +149,12 @@ function (Fields,
       },
       set_live__: function ()
       {
+         const browser = this .getBrowser ();
+
          if (this .isLive () .getValue ())
-            this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
+            browser .getBrowserOptions () ._Shading .addInterest ("set_textures__", this);
          else
-            this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
+            browser .getBrowserOptions () ._Shading .removeInterest ("set_textures__", this);
       },
       set_ambientIntensity__: function ()
       {
@@ -238,44 +239,40 @@ function (Fields,
       {
          const browser = this .getBrowser ();
 
-         if (!this .getTextures ())
-            return this .set_shading__ ();
-
-         const options = ["X3D_MATERIAL_TEXTURES"];
-
-         if (this .ambientTextureNode)
-            options .push ("X3D_AMBIENT_TEXTURE", "X3D_AMBIENT_TEXTURE_" + this .ambientTextureNode .getTextureTypeString ());
-
-         if (this .diffuseTextureNode)
-            options .push ("X3D_DIFFUSE_TEXTURE", "X3D_DIFFUSE_TEXTURE_" + this .diffuseTextureNode .getTextureTypeString ());
-
-         if (this .specularTextureNode)
-            options .push ("X3D_SPECULAR_TEXTURE", "X3D_SPECULAR_TEXTURE_" + this .specularTextureNode .getTextureTypeString ());
-
-         if (this .getEmissiveTexture ())
-            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
-
-         if (this .shininessTextureNode)
-            options .push ("X3D_SHININESS_TEXTURE", "X3D_SHININESS_TEXTURE_" + this .shininessTextureNode .getTextureTypeString ());
-
-         if (this .occlusionTextureNode)
-            options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
-
-         if (this .getNormalTexture ())
-            options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
-
-         const shaderNode = browser .createShader ("MaterialTexturesShader", "Phong", options);
-
-         shaderNode ._isValid .addInterest ("setShader", this, shaderNode);
-      },
-      set_shading__: function ()
-      {
-         const browser = this .getBrowser ();
-
          if (this .getTextures ())
-            return;
+         {
+            const
+               options = ["X3D_MATERIAL_TEXTURES"];
 
-         this .shaderNode = browser .getDefaultShader ();
+            if (this .ambientTextureNode)
+               options .push ("X3D_AMBIENT_TEXTURE", "X3D_AMBIENT_TEXTURE_" + this .ambientTextureNode .getTextureTypeString ());
+
+            if (this .diffuseTextureNode)
+               options .push ("X3D_DIFFUSE_TEXTURE", "X3D_DIFFUSE_TEXTURE_" + this .diffuseTextureNode .getTextureTypeString ());
+
+            if (this .specularTextureNode)
+               options .push ("X3D_SPECULAR_TEXTURE", "X3D_SPECULAR_TEXTURE_" + this .specularTextureNode .getTextureTypeString ());
+
+            if (this .getEmissiveTexture ())
+               options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+
+            if (this .shininessTextureNode)
+               options .push ("X3D_SHININESS_TEXTURE", "X3D_SHININESS_TEXTURE_" + this .shininessTextureNode .getTextureTypeString ());
+
+            if (this .occlusionTextureNode)
+               options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
+
+            if (this .getNormalTexture ())
+               options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+
+            const shaderNode = browser .createShader ("MaterialTexturesShader", "Phong", options);
+
+            shaderNode ._isValid .addInterest ("setShader", this, shaderNode);
+         }
+         else
+         {
+            this .shaderNode = browser .getDefaultShader ();
+         }
       },
       getTextureIndices: (function ()
       {
@@ -296,12 +293,10 @@ function (Fields,
       })(),
       getShader: function (browser, shadow)
       {
-         return shadow && !this .getTextures () ? browser .getShadowShader () : this .shaderNode;
+         return shadow ? browser .getShadowShader () : this .shaderNode;
       },
       setShader: function (shaderNode)
       {
-         shaderNode ._isValid .removeInterest ("setShader", this);
-
          this .shaderNode = shaderNode;
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
