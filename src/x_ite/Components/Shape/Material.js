@@ -153,6 +153,8 @@ function (Fields,
             this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
          else
             this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
+
+         this .set_shading__ ();
       },
       set_ambientIntensity__: function ()
       {
