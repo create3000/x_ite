@@ -1006,18 +1006,14 @@ function (X3DCast,
       setLocalUniforms: function (gl, context, front = true)
       {
          const
-            renderObject          = context .renderer,
-            shapeNode             = context .shapeNode,
-            geometryNode          = context .geometryContext || shapeNode .getGeometry (),
-            geometryType          = geometryNode .geometryType,
-            textureCoordinateNode = geometryNode .textureCoordinateNode,
-            appearanceNode        = shapeNode .getAppearance (),
-            stylePropertiesNode   = appearanceNode .stylePropertiesNode [geometryType],
-            materialNode          = front ? appearanceNode .materialNode : appearanceNode .backMaterialNode,
-            textureNode           = context .textureNode || appearanceNode .textureNode,
-            textureTransformNode  = appearanceNode .textureTransformNode,
-            modelViewMatrix       = context .modelViewMatrix,
-            localObjects          = context .localObjects;
+            renderObject    = context .renderer,
+            shapeNode       = context .shapeNode,
+            geometryNode    = context .geometryContext || shapeNode .getGeometry (),
+            geometryType    = geometryNode .geometryType,
+            appearanceNode  = shapeNode .getAppearance (),
+            materialNode    = front ? appearanceNode .materialNode : appearanceNode .backMaterialNode,
+            textureNode     = context .textureNode || appearanceNode .textureNode,
+            modelViewMatrix = context .modelViewMatrix;
 
          // Model view matrix
 
@@ -1033,7 +1029,7 @@ function (X3DCast,
          this .numLights             = this .numGlobalLights;
          this .numProjectiveTextures = this .numGlobalProjectiveTextures;
 
-         for (const localObject of localObjects)
+         for (const localObject of context .localObjects)
             localObject .setShaderUniforms (gl, this, renderObject);
 
          gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
@@ -1051,7 +1047,7 @@ function (X3DCast,
 
          // Style
 
-         stylePropertiesNode .setShaderUniforms (gl, this);
+         appearanceNode .stylePropertiesNode [geometryType] .setShaderUniforms (gl, this);
 
          // Material
 
@@ -1069,8 +1065,8 @@ function (X3DCast,
          else
             gl .uniform1i (this .x3d_NumTextures, 0);
 
-         textureTransformNode  .setShaderUniforms (gl, this);
-         textureCoordinateNode .setShaderUniforms (gl, this);
+         appearanceNode .textureTransformNode .setShaderUniforms (gl, this);
+         geometryNode .textureCoordinateNode .setShaderUniforms (gl, this);
       },
       getNormalMatrix: (function ()
       {
