@@ -91,11 +91,11 @@ define (function ()
 
                      data [options .dataType] = xhr .response;
 
-                     callback (xhr .status, xhr .statusText, data, xhr .getAllResponseHeaders ());
+                     callback (xhr .status || 200, xhr .statusText, data, xhr .getAllResponseHeaders ());
                   };
 
                   // Setup onerror callback
-                  xhr.onerror = function ()
+                  xhr .onerror = function ()
                   {
                      xhr .onload = xhr .onerror = null;
 
