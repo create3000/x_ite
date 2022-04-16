@@ -144,8 +144,7 @@ function (Fields,
       },
       traverse: function (type, renderObject)
       {
-         if (type !== TraverseType .DISPLAY)
-            return;
+         // TraverseType .DISPLAY
 
          renderObject .getShaders () .add (this);
       },
