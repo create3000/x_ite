@@ -264,19 +264,30 @@ function (Fields,
 
             const shaderNode = browser .createShader ("MaterialTexturesShader", "Phong", options);
 
-            shaderNode ._isValid .addInterest ("setShader", this, shaderNode);
+            shaderNode ._isValid .addInterest ("set_shader__", this, shaderNode);
          }
          else
          {
             this .set_shading__ ();
          }
       },
+      set_shader__: function (shaderNode)
+      {
+         shaderNode ._isValid .removeInterest ("set_shader__", this);
+
+         this .shaderNode = shaderNode;
+      },
       set_shading__: function ()
       {
          if (this .getTextures ())
             return;
 
-         this .shaderNode = this .getBrowser () .getDefaultShader ();
+         const shaderNode = this .getBrowser () .getDefaultShader ();
+
+         if (shaderNode ._isValid .getValue ())
+            this .shaderNode = shaderNode;
+         else
+            shaderNode ._isValid .addInterest ("set_shader__", this, shaderNode);
       },
       getTextureIndices: (function ()
       {
@@ -298,10 +309,6 @@ function (Fields,
       getShader: function (browser, shadow)
       {
          return shadow ? browser .getShadowShader () : this .shaderNode;
-      },
-      setShader: function (shaderNode)
-      {
-         this .shaderNode = shaderNode;
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {

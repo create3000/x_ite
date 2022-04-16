@@ -213,7 +213,13 @@ function (Fields,
 
          const shaderNode = browser .createShader ("PhysicalMaterialTexturesShader", "PBR", options);
 
-         shaderNode._isValid .addInterest ("setShader", this, shaderNode);
+         shaderNode._isValid .addInterest ("set_shader__", this, shaderNode);
+      },
+      set_shader__: function (shaderNode)
+      {
+         shaderNode ._isValid .removeInterest ("set_shader__", this);
+         
+         this .shaderNode = shaderNode;
       },
       getTextureIndices: (function ()
       {
@@ -233,10 +239,6 @@ function (Fields,
       getShader: function (browser, shadow)
       {
          return this .shaderNode;
-      },
-      setShader: function (shaderNode)
-      {
-         this .shaderNode = shaderNode;
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
