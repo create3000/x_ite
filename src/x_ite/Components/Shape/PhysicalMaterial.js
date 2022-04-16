@@ -191,34 +191,38 @@ function (Fields,
       {
          const browser = this .getBrowser ();
 
-         if (!this .getTextures ())
-            return this .shaderNode = browser .getPhysicalMaterialShader ();
+         if (this .getTextures ())
+         {
+            const options = ["X3D_MATERIAL_TEXTURES"];
 
-         const options = ["X3D_MATERIAL_TEXTURES"];
+            if (this .baseTextureNode)
+               options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
 
-         if (this .baseTextureNode)
-            options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
+            if (this .getEmissiveTexture ())
+               options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
 
-         if (this .getEmissiveTexture ())
-            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+            if (this .metallicRoughnessTextureNode)
+               options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", "X3D_METALLIC_ROUGHNESS_TEXTURE_" + this .metallicRoughnessTextureNode .getTextureTypeString ());
 
-         if (this .metallicRoughnessTextureNode)
-            options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", "X3D_METALLIC_ROUGHNESS_TEXTURE_" + this .metallicRoughnessTextureNode .getTextureTypeString ());
+            if (this .occlusionTextureNode)
+               options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
 
-         if (this .occlusionTextureNode)
-            options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
+            if (this .getNormalTexture ())
+               options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
 
-         if (this .getNormalTexture ())
-            options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+            const shaderNode = browser .createShader ("PhysicalMaterialTexturesShader", "PBR", options);
 
-         const shaderNode = browser .createShader ("PhysicalMaterialTexturesShader", "PBR", options);
-
-         shaderNode._isValid .addInterest ("set_shader__", this, shaderNode);
+            shaderNode._isValid .addInterest ("set_shader__", this, shaderNode);
+         }
+         else
+         {
+            this .shaderNode = browser .getPhysicalMaterialShader ();
+         }
       },
       set_shader__: function (shaderNode)
       {
          shaderNode ._isValid .removeInterest ("set_shader__", this);
-         
+
          this .shaderNode = shaderNode;
       },
       getTextureIndices: (function ()
