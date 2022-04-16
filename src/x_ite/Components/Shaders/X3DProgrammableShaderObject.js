@@ -221,7 +221,6 @@ function (X3DCast,
          for (const materialTexture of materialTextures)
          {
             this [materialTexture] = {
-               textureType:              gl .getUniformLocation (program, materialTexture + ".textureType"),
                textureTransformMapping:  gl .getUniformLocation (program, materialTexture + ".textureTransformMapping"),
                textureCoordinateMapping: gl .getUniformLocation (program, materialTexture + ".textureCoordinateMapping"),
                texture2D:                gl .getUniformLocation (program, materialTexture + ".texture2D"),

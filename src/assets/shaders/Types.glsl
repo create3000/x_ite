@@ -100,7 +100,6 @@ struct x3d_PhysicalMaterialParameters
 
 struct x3d_AmbientTextureParameters
 {
-   mediump int         textureType;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #ifdef X3D_AMBIENT_TEXTURE_2D
@@ -118,7 +117,6 @@ struct x3d_AmbientTextureParameters
 
 struct x3d_DiffuseTextureParameters
 {
-   mediump int         textureType;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #ifdef X3D_DIFFUSE_TEXTURE_2D
@@ -136,7 +134,6 @@ struct x3d_DiffuseTextureParameters
 
 struct x3d_SpecularTextureParameters
 {
-   mediump int         textureType;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #ifdef X3D_SPECULAR_TEXTURE_2D
@@ -154,7 +151,6 @@ struct x3d_SpecularTextureParameters
 
 struct x3d_EmissiveTextureParameters
 {
-   mediump int         textureType;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #ifdef X3D_EMISSIVE_TEXTURE_2D
@@ -172,7 +168,6 @@ struct x3d_EmissiveTextureParameters
 
 struct x3d_ShininessTextureParameters
 {
-   mediump int         textureType;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #ifdef X3D_SHININESS_TEXTURE_2D
@@ -190,7 +185,6 @@ struct x3d_ShininessTextureParameters
 
 struct x3d_BaseTextureParameters
 {
-   mediump int         textureType;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #ifdef X3D_BASE_TEXTURE_2D
@@ -208,7 +202,6 @@ struct x3d_BaseTextureParameters
 
 struct x3d_MetallicRoughnessTextureParameters
 {
-   mediump int         textureType;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_2D
@@ -226,7 +219,6 @@ struct x3d_MetallicRoughnessTextureParameters
 
 struct x3d_OcclusionTextureParameters
 {
-   mediump int         textureType;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #ifdef X3D_OCCLUSION_TEXTURE_2D
@@ -244,7 +236,6 @@ struct x3d_OcclusionTextureParameters
 
 struct x3d_NormalTextureParameters
 {
-   mediump int         textureType;
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
    #ifdef X3D_NORMAL_TEXTURE_2D

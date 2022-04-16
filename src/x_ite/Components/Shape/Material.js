@@ -316,10 +316,10 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 
-         gl .uniform1f  (shaderObject .x3d_AmbientIntensity,  this .ambientIntensity);
-         gl .uniform3fv (shaderObject .x3d_DiffuseColor,      this .diffuseColor);
-         gl .uniform3fv (shaderObject .x3d_SpecularColor,     this .specularColor);
-         gl .uniform1f  (shaderObject .x3d_Shininess,         this .shininess);
+         gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
+         gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColor);
+         gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColor);
+         gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
 
          if (this .getTextures ())
          {
