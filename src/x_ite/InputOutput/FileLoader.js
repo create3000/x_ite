@@ -136,6 +136,8 @@ function ($,
                success = this .setScene .bind (this, scene, success, error);
 
             new GoldenGate (scene) .parseIntoScene (string, success, error);
+
+            return scene;
          }
          catch (exception)
          {
