@@ -906,14 +906,12 @@ vec3 normalScale = vec3 (vec2 (x3d_Material .normalScale), 1.0);
 mat3 tbn = getTBNMatrix (texCoord .st);
 #if defined(X3D_NORMAL_TEXTURE_2D)
 vec3 n = texture (x3d_NormalTexture .texture2D, texCoord .st) .rgb;
-return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
 #elif defined(X3D_NORMAL_TEXTURE_3D)
 vec3 n = texture (x3d_NormalTexture .texture3D, texCoord .stp) .rgb;
-return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
 #elif defined(X3D_NORMAL_TEXTURE_CUBE)
 vec3 n = texture (x3d_NormalTexture .textureCube, texCoord .stp) .rgb;
-return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
 #endif
+return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
 #else
 return normalize (normal) * facing;
 #endif
@@ -1074,7 +1072,7 @@ float shininess = x3d_Material .shininess;
 vec4 texCoord = getTexCoord (x3d_ShininessTexture .textureTransformMapping, x3d_ShininessTexture .textureCoordinateMapping);
 #if defined(X3D_SHININESS_TEXTURE_2D)
 return shininess * texture (x3d_ShininessTexture .texture2D, texCoord .st) .a * 128.0;
-#eöif defined(X3D_SHININESS_TEXTURE_3D)
+#elif defined(X3D_SHININESS_TEXTURE_3D)
 return shininess * texture (x3d_ShininessTexture .texture3D, texCoord .stp) .a * 128.0;
 #elif defined(X3D_SHININESS_TEXTURE_CUBE)
 return shininess * texture (x3d_ShininessTexture .textureCube, texCoord .stp) .a * 128.0;
@@ -1144,7 +1142,9 @@ diffuseSpecularTerm = mix (diffuseSpecularTerm, light .shadowColor, getShadowInt
 finalColor += attenuationSpotFactor * light .color * (ambientTerm + diffuseSpecularTerm);
 }
 }
+#ifdef X3D_OCCLUSION_TEXTURE
 finalColor = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
+#endif
 finalColor += getEmissiveColor ();
 return vec4 (finalColor, alpha);
 }

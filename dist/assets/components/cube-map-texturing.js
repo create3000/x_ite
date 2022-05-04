@@ -697,8 +697,7 @@ function (Fields,
       },
       traverse: function (type, renderObject)
       {
-         if (type !== TraverseType .DISPLAY)
-            return;
+         // TraverseType .DISPLAY
 
          if (this ._update .getValue () === "NONE")
             return;

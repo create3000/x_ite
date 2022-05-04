@@ -1,7 +1,4 @@
 #version 300 es
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-#extension GL_EXT_frag_depth : enable
-#endif
 precision highp float;
 precision highp int;
 out vec4 x3d_FragColor;
@@ -669,14 +666,12 @@ vec3 normalScale = vec3 (vec2 (x3d_Material .normalScale), 1.0);
 mat3 tbn = getTBNMatrix (texCoord .st);
 #if defined(X3D_NORMAL_TEXTURE_2D)
 vec3 n = texture (x3d_NormalTexture .texture2D, texCoord .st) .rgb;
-return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
 #elif defined(X3D_NORMAL_TEXTURE_3D)
 vec3 n = texture (x3d_NormalTexture .texture3D, texCoord .stp) .rgb;
-return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
 #elif defined(X3D_NORMAL_TEXTURE_CUBE)
 vec3 n = texture (x3d_NormalTexture .textureCube, texCoord .stp) .rgb;
-return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
 #endif
+return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
 #else
 return normalize (normal) * facing;
 #endif
@@ -839,6 +834,10 @@ float perceptualRoughness = clamp (metallicRoughness [1], c_MinRoughness, 1.0);
 float metallic = clamp (metallicRoughness [0], 0.0, 1.0);
 float alphaRoughness = perceptualRoughness * perceptualRoughness;
 vec4 baseColor = getBaseColor ();
+if (baseColor .a < x3d_AlphaCutoff)
+{
+discard;
+}
 vec3 f0 = vec3 (0.04);
 vec3 diffuseColor = baseColor .rgb * (vec3 (1.0) - f0);
 diffuseColor *= 1.0 - metallic;
@@ -900,12 +899,10 @@ finalColor += color;
 vec3 reflection = -normalize (reflect (v, n));
 finalColor += getIBLContribution (pbrInputs, n, reflection);
 #endif
+#ifdef X3D_OCCLUSION_TEXTURE
 finalColor = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
+#endif
 finalColor += getEmissiveColor ();
-if (baseColor .a < x3d_AlphaCutoff)
-{
-discard;
-}
 x3d_FragColor = Gamma (vec4 (finalColor, baseColor .a));
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 if (x3d_LogarithmicFarFactor1_2 > 0.0)

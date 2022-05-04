@@ -29,13 +29,13 @@ uniform int x3d_TextureType [x3d_MaxTextures];
 uniform sampler2D x3d_Texture2D [x3d_MaxTextures];
 uniform samplerCube x3d_TextureCube [x3d_MaxTextures];
 #ifdef X3D_MULTI_TEXTURING
-#define M_PI 3.14159265358979323846
 float rand (vec2 co) { return fract (sin (dot (co.xy, vec2 (12.9898,78.233))) * 43758.5453); }
 float rand (vec2 co, float l) { return rand (vec2 (rand (co), l)); }
 float rand (vec2 co, float l, float t) { return rand (vec2 (rand (co, l), t)); }
 float
 perlin (vec2 p, float dim, float time)
 {
+const float M_PI = 3.14159265358979323846;
 vec2 pos = floor (p * dim);
 vec2 posx = pos + vec2 (1.0, 0.0);
 vec2 posy = pos + vec2 (0.0, 1.0);
@@ -161,6 +161,23 @@ vec3 eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGen
 return vec4 (refract (normalize (localVertex - eye), -N, eta), 1.0);
 }
 return getTextureMatrix (textureTransformMapping) * getTexCoord (textureCoordinateMapping);
+}
+vec4
+getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
+{
+vec4 texCoord;
+#if x3d_MaxTextures > 0
+if (textureCoordinateMapping == 0)
+texCoord = getTexCoord (x3d_TextureCoordinateGenerator [0], textureTransformMapping, textureCoordinateMapping);
+#endif
+#if x3d_MaxTextures > 1
+else if (textureCoordinateMapping == 1)
+texCoord = getTexCoord (x3d_TextureCoordinateGenerator [1], textureTransformMapping, textureCoordinateMapping);
+#endif
+texCoord .stp /= texCoord .q;
+if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
+texCoord .s = 1.0 - texCoord .s;
+return texCoord;
 }
 vec4
 getTexture2D (const in int i, const in vec2 texCoord)
@@ -438,14 +455,19 @@ currentColor *= getProjectiveTexture (i, texCoord .st);
 }
 return currentColor;
 }
-#else
+#else 
 vec4
 getProjectiveTextureColor (in vec4 currentColor)
 {
 return currentColor;
 }
-#endif
-#else
+#endif 
+#else 
+vec4
+getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
+{
+return texCoord0;
+}
 vec4
 getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 {
@@ -469,7 +491,7 @@ getProjectiveTextureColor (in vec4 currentColor)
 {
 return currentColor;
 }
-#endif
+#endif 
 uniform x3d_FillPropertiesParameters x3d_FillProperties;
 vec4
 getHatchColor (vec4 color)

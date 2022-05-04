@@ -27742,7 +27742,7 @@ function (Fields,
 
          // There's no need to update background shader.
 
-         for (const shader of browser .getStandardShader ())
+         for (const shader of browser .getStandardShaders ())
          {
             shader ._parts [0] .getValue () ._url .addEvent ();
             shader ._parts [1] .getValue () ._url .addEvent ();
@@ -42873,8 +42873,7 @@ function (Fields,
       },
       traverse: function (type, renderObject)
       {
-         if (type !== TraverseType .DISPLAY)
-            return;
+         // TraverseType .DISPLAY
 
          renderObject .getShaders () .add (this);
       },
@@ -45579,7 +45578,6 @@ function (X3DCast,
          for (const materialTexture of materialTextures)
          {
             this [materialTexture] = {
-               textureType:              gl .getUniformLocation (program, materialTexture + ".textureType"),
                textureTransformMapping:  gl .getUniformLocation (program, materialTexture + ".textureTransformMapping"),
                textureCoordinateMapping: gl .getUniformLocation (program, materialTexture + ".textureCoordinateMapping"),
                texture2D:                gl .getUniformLocation (program, materialTexture + ".texture2D"),
@@ -46365,18 +46363,14 @@ function (X3DCast,
       setLocalUniforms: function (gl, context, front = true)
       {
          const
-            renderObject          = context .renderer,
-            shapeNode             = context .shapeNode,
-            geometryNode          = context .geometryContext || shapeNode .getGeometry (),
-            geometryType          = geometryNode .geometryType,
-            textureCoordinateNode = geometryNode .textureCoordinateNode,
-            appearanceNode        = shapeNode .getAppearance (),
-            stylePropertiesNode   = appearanceNode .stylePropertiesNode [geometryType],
-            materialNode          = front ? appearanceNode .materialNode : appearanceNode .backMaterialNode,
-            textureNode           = context .textureNode || appearanceNode .textureNode,
-            textureTransformNode  = appearanceNode .textureTransformNode,
-            modelViewMatrix       = context .modelViewMatrix,
-            localObjects          = context .localObjects;
+            renderObject    = context .renderer,
+            shapeNode       = context .shapeNode,
+            geometryNode    = context .geometryContext || shapeNode .getGeometry (),
+            geometryType    = geometryNode .geometryType,
+            appearanceNode  = shapeNode .getAppearance (),
+            materialNode    = front ? appearanceNode .materialNode : appearanceNode .backMaterialNode,
+            textureNode     = context .textureNode || appearanceNode .textureNode,
+            modelViewMatrix = context .modelViewMatrix;
 
          // Model view matrix
 
@@ -46392,7 +46386,7 @@ function (X3DCast,
          this .numLights             = this .numGlobalLights;
          this .numProjectiveTextures = this .numGlobalProjectiveTextures;
 
-         for (const localObject of localObjects)
+         for (const localObject of context .localObjects)
             localObject .setShaderUniforms (gl, this, renderObject);
 
          gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
@@ -46410,7 +46404,7 @@ function (X3DCast,
 
          // Style
 
-         stylePropertiesNode .setShaderUniforms (gl, this);
+         appearanceNode .stylePropertiesNode [geometryType] .setShaderUniforms (gl, this);
 
          // Material
 
@@ -46428,8 +46422,8 @@ function (X3DCast,
          else
             gl .uniform1i (this .x3d_NumTextures, 0);
 
-         textureTransformNode  .setShaderUniforms (gl, this);
-         textureCoordinateNode .setShaderUniforms (gl, this);
+         appearanceNode .textureTransformNode .setShaderUniforms (gl, this);
+         geometryNode .textureCoordinateNode .setShaderUniforms (gl, this);
       },
       getNormalMatrix: (function ()
       {
@@ -47360,7 +47354,11 @@ function (Fields,
 
 
 
-define('text!assets/shaders/Types.glsl',[],function () { return '\nstruct x3d_FogParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float visibilityRange;\n   mediump mat3  matrix;\n   bool          fogCoord;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float intensity;\n   mediump float ambientIntensity;\n   mediump vec3  attenuation;\n   mediump vec3  location;\n   mediump vec3  direction;\n   mediump float radius;\n   mediump float beamWidth;\n   mediump float cutOffAngle;\n   mediump mat3  matrix;\n   #ifdef X3D_SHADOWS\n   mediump vec3  shadowColor;\n   mediump float shadowIntensity;\n   mediump float shadowBias;\n   mediump mat4  shadowMatrix;\n   mediump int   shadowMapSize;\n   #endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_PointPropertiesParameters\n{\n   mediump float pointSizeScaleFactor;\n   mediump float pointSizeMinValue;\n   mediump float pointSizeMaxValue;\n   mediump vec3  pointSizeAttenuation;\n};\n\n//uniform x3d_PointPropertiesParameters x3d_PointProperties;\n\nstruct x3d_LinePropertiesParameters\n{\n   bool          applied;\n   mediump float linewidthScaleFactor;\n   sampler2D     linetype;\n};\n\n//uniform x3d_LinePropertiesParameters x3d_LineProperties;\n\nstruct x3d_FillPropertiesParameters\n{\n   bool         filled;\n   bool         hatched;\n   mediump vec3 hatchColor;\n   sampler2D    hatchStyle;\n};\n\n//uniform x3d_FillPropertiesParameters x3d_FillProperties;\n\nstruct x3d_UnlitMaterialParameters\n{\n   mediump vec3  emissiveColor;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_UnlitMaterialParameters x3d_Material;\n\nstruct x3d_MaterialParameters\n{\n   mediump float ambientIntensity;\n   mediump vec3  diffuseColor;\n   mediump vec3  specularColor;\n   mediump vec3  emissiveColor;\n   mediump float shininess;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_Material;\n\nstruct x3d_PhysicalMaterialParameters\n{\n   mediump vec3  baseColor;\n   mediump vec3  emissiveColor;\n   mediump float metallic;\n   mediump float roughness;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_PhysicalMaterialParameters x3d_Material;\n\n#ifdef X3D_MATERIAL_TEXTURES\nstruct x3d_AmbientTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_AMBIENT_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_AMBIENT_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_AMBIENT_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_DiffuseTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_DIFFUSE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_DIFFUSE_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_DIFFUSE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_SpecularTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SPECULAR_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_SPECULAR_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SPECULAR_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_EmissiveTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_EMISSIVE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_EMISSIVE_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_EMISSIVE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_ShininessTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SHININESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_SHININESS_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SHININESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_BaseTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_BASE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_BASE_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_BASE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_MetallicRoughnessTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_OcclusionTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_OCCLUSION_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_OCCLUSION_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_OCCLUSION_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\nstruct x3d_NormalTextureParameters\n{\n   mediump int         textureType;\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_NORMAL_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #ifdef X3D_NORMAL_TEXTURE_3D\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_NORMAL_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n#endif // X3D_MATERIAL_TEXTURES\n\nstruct x3d_MultiTextureParameters\n{\n   mediump int mode;\n   mediump int alphaMode;\n   mediump int source;\n   mediump int function;\n};\n\n//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nstruct x3d_TextureCoordinateGeneratorParameters\n{\n   mediump int   mode;\n   mediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];\n\nstruct x3d_ParticleParameters\n{\n   mediump int   id;\n   mediump int   life;\n   mediump float elapsedTime;\n};\n\n//uniform x3d_ParticleParameters x3d_Particle;\n';});
+
+
+
+
+define('text!assets/shaders/Types.glsl',[],function () { return 'struct x3d_FogParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float visibilityRange;\n   mediump mat3  matrix;\n   bool          fogCoord;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float intensity;\n   mediump float ambientIntensity;\n   mediump vec3  attenuation;\n   mediump vec3  location;\n   mediump vec3  direction;\n   mediump float radius;\n   mediump float beamWidth;\n   mediump float cutOffAngle;\n   mediump mat3  matrix;\n   #ifdef X3D_SHADOWS\n   mediump vec3  shadowColor;\n   mediump float shadowIntensity;\n   mediump float shadowBias;\n   mediump mat4  shadowMatrix;\n   mediump int   shadowMapSize;\n   #endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_PointPropertiesParameters\n{\n   mediump float pointSizeScaleFactor;\n   mediump float pointSizeMinValue;\n   mediump float pointSizeMaxValue;\n   mediump vec3  pointSizeAttenuation;\n};\n\n//uniform x3d_PointPropertiesParameters x3d_PointProperties;\n\nstruct x3d_LinePropertiesParameters\n{\n   bool          applied;\n   mediump float linewidthScaleFactor;\n   sampler2D     linetype;\n};\n\n//uniform x3d_LinePropertiesParameters x3d_LineProperties;\n\nstruct x3d_FillPropertiesParameters\n{\n   bool         filled;\n   bool         hatched;\n   mediump vec3 hatchColor;\n   sampler2D    hatchStyle;\n};\n\n//uniform x3d_FillPropertiesParameters x3d_FillProperties;\n\nstruct x3d_UnlitMaterialParameters\n{\n   mediump vec3  emissiveColor;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_UnlitMaterialParameters x3d_Material;\n\nstruct x3d_MaterialParameters\n{\n   mediump float ambientIntensity;\n   mediump vec3  diffuseColor;\n   mediump vec3  specularColor;\n   mediump vec3  emissiveColor;\n   mediump float shininess;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_Material;\n\nstruct x3d_PhysicalMaterialParameters\n{\n   mediump vec3  baseColor;\n   mediump vec3  emissiveColor;\n   mediump float metallic;\n   mediump float roughness;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_PhysicalMaterialParameters x3d_Material;\n\n#ifdef X3D_MATERIAL_TEXTURES\n\nstruct x3d_AmbientTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_AMBIENT_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_AMBIENT_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_AMBIENT_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_AmbientTextureParameters x3d_AmbientTexture;\n\nstruct x3d_DiffuseTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_DIFFUSE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_DIFFUSE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_DIFFUSE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;\n\nstruct x3d_SpecularTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SPECULAR_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_SPECULAR_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SPECULAR_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_SpecularTextureParameters x3d_SpecularTexture;\n\nstruct x3d_EmissiveTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_EMISSIVE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_EMISSIVE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_EMISSIVE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;\n\nstruct x3d_ShininessTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SHININESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_SHININESS_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SHININESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_ShininessTextureParameters x3d_ShininessTexture;\n\nstruct x3d_BaseTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_BASE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_BASE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_BASE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_BaseTextureParameters x3d_BaseTexture;\n\nstruct x3d_MetallicRoughnessTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;\n\nstruct x3d_OcclusionTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_OCCLUSION_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_OCCLUSION_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_OCCLUSION_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;\n\nstruct x3d_NormalTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_NORMAL_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_NORMAL_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_NORMAL_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_NormalTextureParameters x3d_NormalTexture;\n\n#endif // X3D_MATERIAL_TEXTURES\n\nstruct x3d_MultiTextureParameters\n{\n   mediump int mode;\n   mediump int alphaMode;\n   mediump int source;\n   mediump int function;\n};\n\n//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nstruct x3d_TextureCoordinateGeneratorParameters\n{\n   mediump int   mode;\n   mediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];\n\nstruct x3d_ParticleParameters\n{\n   mediump int   id;\n   mediump int   life;\n   mediump float elapsedTime;\n};\n\n//uniform x3d_ParticleParameters x3d_Particle;\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -62789,11 +62787,11 @@ define ('standard/Networking/BinaryTransport',[],function ()
 
                      data [options .dataType] = xhr .response;
 
-                     callback (xhr .status, xhr .statusText, data, xhr .getAllResponseHeaders ());
+                     callback (xhr .status || 200, xhr .statusText, data, xhr .getAllResponseHeaders ());
                   };
 
                   // Setup onerror callback
-                  xhr.onerror = function ()
+                  xhr .onerror = function ()
                   {
                      xhr .onload = xhr .onerror = null;
 
@@ -66177,6 +66175,8 @@ function ($,
                success = this .setScene .bind (this, scene, success, error);
 
             new GoldenGate (scene) .parseIntoScene (string, success, error);
+
+            return scene;
          }
          catch (exception)
          {
@@ -69018,7 +69018,6 @@ function (Fields,
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
          gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
-         gl .uniform1f  (shaderObject .x3d_NormalScale,   this ._normalScale .getValue ());
          gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
 
          if (this .textures)
@@ -69045,6 +69044,8 @@ function (Fields,
 
             if (this .normalTextureNode)
             {
+               gl .uniform1f (shaderObject .x3d_NormalScale, this ._normalScale .getValue ());
+
                this .normalTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, normalTexture);
 
                gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (this ._normalTextureMapping .getValue ()) || 0);
@@ -69184,30 +69185,34 @@ function (Fields,
       {
          const browser = this .getBrowser ();
 
-         if (!this .getTextures ())
-            return this .shaderNode = browser .getUnlitShader ();
+         if (this .getTextures ())
+         {
+            const options = ["X3D_MATERIAL_TEXTURES"];
 
-         const options = ["X3D_MATERIAL_TEXTURES"];
+            if (this .getEmissiveTexture ())
+               options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
 
-         if (this .getEmissiveTexture ())
-            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+            if (this .getNormalTexture ())
+               options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
 
-         if (this .getNormalTexture ())
-            options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+            const shaderNode = browser .createShader ("UnlitTexturesShader", "Unlit", options);
 
-         const shaderNode = browser .createShader ("UnlitTexturesShader", "Unlit", options);
+            shaderNode ._isValid .addInterest ("set_shader__", this, shaderNode);
+         }
+         else
+         {
+            this .shaderNode = browser .getUnlitShader ();
+         }
+      },
+      set_shader__: function (shaderNode)
+      {
+         shaderNode ._isValid .removeInterest ("set_shader__", this);
 
-         shaderNode ._isValid .addInterest ("setShader", this, shaderNode);
+         this .shaderNode = shaderNode;
       },
       getShader: function (browser, shadow)
       {
          return this .shaderNode;
-      },
-      setShader: function (shaderNode)
-      {
-         shaderNode ._isValid .removeInterest ("setShader", this);
-
-         this .shaderNode = shaderNode;
       },
    });
 
@@ -116050,6 +116055,7 @@ function (Fields,
 
       this .diffuseColor  = new Float32Array (3);
       this .specularColor = new Float32Array (3);
+      this .shaderNode    = this .getBrowser () .getDefaultShader ();
    }
 
    Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
@@ -116096,8 +116102,6 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
-         this .shaderNode = this .getBrowser () .getDefaultShader ();
-
          this .isLive () .addInterest ("set_live__", this);
 
          this ._ambientIntensity  .addInterest ("set_ambientIntensity__",  this);
@@ -116130,6 +116134,8 @@ function (Fields,
             this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
          else
             this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
+
+         this .set_shading__ ();
       },
       set_ambientIntensity__: function ()
       {
@@ -116212,46 +116218,59 @@ function (Fields,
       },
       set_textures__: function ()
       {
-         const browser = this .getBrowser ();
+         if (this .getTextures ())
+         {
+            const
+               browser = this .getBrowser (),
+               options = ["X3D_MATERIAL_TEXTURES"];
 
-         if (!this .getTextures ())
-            return this .set_shading__ ();
+            if (this .ambientTextureNode)
+               options .push ("X3D_AMBIENT_TEXTURE", "X3D_AMBIENT_TEXTURE_" + this .ambientTextureNode .getTextureTypeString ());
 
-         const options = ["X3D_MATERIAL_TEXTURES"];
+            if (this .diffuseTextureNode)
+               options .push ("X3D_DIFFUSE_TEXTURE", "X3D_DIFFUSE_TEXTURE_" + this .diffuseTextureNode .getTextureTypeString ());
 
-         if (this .ambientTextureNode)
-            options .push ("X3D_AMBIENT_TEXTURE", "X3D_AMBIENT_TEXTURE_" + this .ambientTextureNode .getTextureTypeString ());
+            if (this .specularTextureNode)
+               options .push ("X3D_SPECULAR_TEXTURE", "X3D_SPECULAR_TEXTURE_" + this .specularTextureNode .getTextureTypeString ());
 
-         if (this .diffuseTextureNode)
-            options .push ("X3D_DIFFUSE_TEXTURE", "X3D_DIFFUSE_TEXTURE_" + this .diffuseTextureNode .getTextureTypeString ());
+            if (this .getEmissiveTexture ())
+               options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
 
-         if (this .specularTextureNode)
-            options .push ("X3D_SPECULAR_TEXTURE", "X3D_SPECULAR_TEXTURE_" + this .specularTextureNode .getTextureTypeString ());
+            if (this .shininessTextureNode)
+               options .push ("X3D_SHININESS_TEXTURE", "X3D_SHININESS_TEXTURE_" + this .shininessTextureNode .getTextureTypeString ());
 
-         if (this .getEmissiveTexture ())
-            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+            if (this .occlusionTextureNode)
+               options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
 
-         if (this .shininessTextureNode)
-            options .push ("X3D_SHININESS_TEXTURE", "X3D_SHININESS_TEXTURE_" + this .shininessTextureNode .getTextureTypeString ());
+            if (this .getNormalTexture ())
+               options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
 
-         if (this .occlusionTextureNode)
-            options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
+            const shaderNode = browser .createShader ("MaterialTexturesShader", "Phong", options);
 
-         if (this .getNormalTexture ())
-            options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+            shaderNode ._isValid .addInterest ("set_shader__", this, shaderNode);
+         }
+         else
+         {
+            this .set_shading__ ();
+         }
+      },
+      set_shader__: function (shaderNode)
+      {
+         shaderNode ._isValid .removeInterest ("set_shader__", this);
 
-         const shaderNode = browser .createShader ("MaterialTexturesShader", "Phong", options);
-
-         shaderNode ._isValid .addInterest ("setShader", this, shaderNode);
+         this .shaderNode = shaderNode;
       },
       set_shading__: function ()
       {
-         const browser = this .getBrowser ();
-
          if (this .getTextures ())
             return;
 
-         this .shaderNode = browser .getDefaultShader ();
+         const shaderNode = this .getBrowser () .getDefaultShader ();
+
+         if (shaderNode ._isValid .getValue ())
+            this .shaderNode = shaderNode;
+         else
+            shaderNode ._isValid .addInterest ("set_shader__", this, shaderNode);
       },
       getTextureIndices: (function ()
       {
@@ -116272,23 +116291,16 @@ function (Fields,
       })(),
       getShader: function (browser, shadow)
       {
-         return shadow && !this .getTextures () ? browser .getShadowShader () : this .shaderNode;
-      },
-      setShader: function (shaderNode)
-      {
-         shaderNode ._isValid .removeInterest ("setShader", this);
-
-         this .shaderNode = shaderNode;
+         return shadow ? browser .getShadowShader () : this .shaderNode;
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
          X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 
-         gl .uniform1f  (shaderObject .x3d_AmbientIntensity,  this .ambientIntensity);
-         gl .uniform3fv (shaderObject .x3d_DiffuseColor,      this .diffuseColor);
-         gl .uniform3fv (shaderObject .x3d_SpecularColor,     this .specularColor);
-         gl .uniform1f  (shaderObject .x3d_Shininess,         this .shininess);
-         gl .uniform1f  (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+         gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
+         gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColor);
+         gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColor);
+         gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
 
          if (this .getTextures ())
          {
@@ -116359,6 +116371,8 @@ function (Fields,
 
             if (this .occlusionTextureNode)
             {
+               gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+
                this .occlusionTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, occlusionTexture);
 
                gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
@@ -116568,29 +116582,39 @@ function (Fields,
       {
          const browser = this .getBrowser ();
 
-         if (!this .getTextures ())
-            return this .shaderNode = browser .getPhysicalMaterialShader ();
+         if (this .getTextures ())
+         {
+            const options = ["X3D_MATERIAL_TEXTURES"];
 
-         const options = ["X3D_MATERIAL_TEXTURES"];
+            if (this .baseTextureNode)
+               options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
 
-         if (this .baseTextureNode)
-            options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
+            if (this .getEmissiveTexture ())
+               options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
 
-         if (this .getEmissiveTexture ())
-            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+            if (this .metallicRoughnessTextureNode)
+               options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", "X3D_METALLIC_ROUGHNESS_TEXTURE_" + this .metallicRoughnessTextureNode .getTextureTypeString ());
 
-         if (this .metallicRoughnessTextureNode)
-            options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", "X3D_METALLIC_ROUGHNESS_TEXTURE_" + this .metallicRoughnessTextureNode .getTextureTypeString ());
+            if (this .occlusionTextureNode)
+               options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
 
-         if (this .occlusionTextureNode)
-            options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
+            if (this .getNormalTexture ())
+               options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
 
-         if (this .getNormalTexture ())
-            options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+            const shaderNode = browser .createShader ("PhysicalMaterialTexturesShader", "PBR", options);
 
-         const shaderNode = browser .createShader ("PhysicalMaterialTexturesShader", "PBR", options);
+            shaderNode._isValid .addInterest ("set_shader__", this, shaderNode);
+         }
+         else
+         {
+            this .shaderNode = browser .getPhysicalMaterialShader ();
+         }
+      },
+      set_shader__: function (shaderNode)
+      {
+         shaderNode ._isValid .removeInterest ("set_shader__", this);
 
-         shaderNode._isValid .addInterest ("setShader", this, shaderNode);
+         this .shaderNode = shaderNode;
       },
       getTextureIndices: (function ()
       {
@@ -116611,20 +116635,13 @@ function (Fields,
       {
          return this .shaderNode;
       },
-      setShader: function (shaderNode)
-      {
-         shaderNode ._isValid .removeInterest ("setShader", this);
-
-         this .shaderNode = shaderNode;
-      },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
          X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
 
-         gl .uniform3fv (shaderObject .x3d_BaseColor,         this .baseColor);
-         gl .uniform1f  (shaderObject .x3d_Metallic,          this .metallic);
-         gl .uniform1f  (shaderObject .x3d_Roughness,         this .roughness);
-         gl .uniform1f  (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+         gl .uniform3fv (shaderObject .x3d_BaseColor, this .baseColor);
+         gl .uniform1f  (shaderObject .x3d_Metallic,  this .metallic);
+         gl .uniform1f  (shaderObject .x3d_Roughness, this .roughness);
 
          if (this .getTextures ())
          {
@@ -116665,6 +116682,8 @@ function (Fields,
 
             if (this .occlusionTextureNode)
             {
+               gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+
                this .occlusionTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, occlusionTexture);
 
                gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
