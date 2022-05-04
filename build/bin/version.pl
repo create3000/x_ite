@@ -37,10 +37,10 @@ sub publish
 {
 	my $version = shift;
 
-	system "git", "tag", "--delete", "$version";
-	system "git", "push", "--delete", "origin", "$version";
+	system "git", "tag", "--delete", $version;
+	system "git", "push", "--delete", "origin", $version;
 
-	system "git", "tag", "$version";
+	system "git", "tag", $version;
 	system "git", "push", "origin", "--tags";
 }
 
