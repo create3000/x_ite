@@ -63,7 +63,7 @@
 		"OpenJPEG.js": "^0.10.2",
 		"opentype.js": "^1.3.4",
 		"pako": "^2.0.4",
-		"require": "2.4.20",
+		"require": "^2.4.20",
 		"requirejs": "^2.3.6",
 		"requirejs-text": "^2.0.16",
 		"terser": "^5.12.1"
