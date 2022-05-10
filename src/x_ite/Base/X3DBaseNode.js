@@ -188,11 +188,11 @@ function (X3DEventObject,
 
             // Connect to execution context.
 
-            if (this [_executionContext] !== this)
-               this [_executionContext] .isLive () .addInterest (_set_live__, this);
-
             if (this .getOuterNode && this .getOuterNode ())
                this .getOuterNode () .isLive () .addInterest (_set_live__, this);
+
+            else if (this [_executionContext] !== this)
+               this [_executionContext] .isLive () .addInterest (_set_live__, this);
 
             // Return field
 
@@ -218,16 +218,13 @@ function (X3DEventObject,
       {
          ///  Determines the live state of this node.
 
-         let live  = this .getLive ();
-         let elive = true;
-
-         if (this !== this [_executionContext])
-            elive = this [_executionContext] .isLive () .getValue ();
-
          if (this .getOuterNode && this .getOuterNode ())
-            elive = elive || this .getOuterNode () .isLive () .getValue ();
+            return this .getLive () && this .getOuterNode () .isLive () .getValue ();
 
-         return live && elive;
+         else if (this !== this [_executionContext])
+            return this .getLive () && this [_executionContext] .isLive () .getValue ();
+
+         return this .getLive ();
       },
       [_set_live__]: function ()
       {
