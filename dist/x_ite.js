@@ -1,4 +1,4 @@
-/* X_ITE v5.0.1-1146 */
+/* X_ITE v5.0.2-1147 */
 
 (function (global, factory)
 {
@@ -25842,6 +25842,9 @@ function (X3DEventObject,
             if (this [_executionContext] !== this)
                this [_executionContext] .isLive () .addInterest (_set_live__, this);
 
+            if (this .getOuterNode && this .getOuterNode ())
+               this .getOuterNode () .isLive () .addInterest (_set_live__, this);
+
             // Return field
 
             return this .isLive ();
@@ -25866,10 +25869,16 @@ function (X3DEventObject,
       {
          ///  Determines the live state of this node.
 
-         if (this !== this [_executionContext])
-            return this .getLive () && this [_executionContext] .isLive () .getValue ();
+         let live  = this .getLive ();
+         let elive = true;
 
-         return this .getLive ();
+         if (this !== this [_executionContext])
+            elive = this [_executionContext] .isLive () .getValue ();
+
+         if (this .getOuterNode && this .getOuterNode ())
+            elive = elive || this .getOuterNode () .isLive () .getValue ();
+
+         return live && elive;
       },
       [_set_live__]: function ()
       {
@@ -26289,7 +26298,7 @@ function (X3DEventObject,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-   return "5.0.1";
+   return "5.0.2";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -122166,7 +122175,7 @@ const getScriptURL = (function ()
 
    // Now assign our X3D.
    window .X3D                        = X_ITE;
-   window [Symbol .for ("X_ITE.X3D-5.0.1")] = X_ITE;
+   window [Symbol .for ("X_ITE.X3D-5.0.2")] = X_ITE;
 
    if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
       __global_module__ .exports = X_ITE;
