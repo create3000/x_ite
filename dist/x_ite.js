@@ -1,4 +1,4 @@
-/* X_ITE v5.0.0-1145 */
+/* X_ITE v5.0.1-1146 */
 
 (function (global, factory)
 {
@@ -26289,7 +26289,7 @@ function (X3DEventObject,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-   return "5.0.0";
+   return "5.0.1";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -69035,10 +69035,6 @@ function (Fields,
                gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (this ._emissiveTextureMapping .getValue ()) || 0);
                gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._emissiveTextureMapping .getValue ()) || 0);
             }
-            else
-            {
-               gl .uniform1i (emissiveTexture .textureType, 0);
-            }
 
             // Normal parameters
 
@@ -69050,10 +69046,6 @@ function (Fields,
 
                gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (this ._normalTextureMapping .getValue ()) || 0);
                gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._normalTextureMapping .getValue ()) || 0);
-            }
-            else
-            {
-               gl .uniform1i (normalTexture .textureType, 0);
             }
          }
       },
@@ -116320,10 +116312,6 @@ function (Fields,
                gl .uniform1i (ambientTexture .textureTransformMapping,  textureTransformMapping  .get (this ._ambientTextureMapping .getValue ()) || 0);
                gl .uniform1i (ambientTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._ambientTextureMapping .getValue ()) || 0);
             }
-            else
-            {
-               gl .uniform1i (ambientTexture .textureType, 0);
-            }
 
             // Diffuse parameters
 
@@ -116333,10 +116321,6 @@ function (Fields,
 
                gl .uniform1i (diffuseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._diffuseTextureMapping .getValue ()) || 0);
                gl .uniform1i (diffuseTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._diffuseTextureMapping .getValue ()) || 0);
-            }
-            else
-            {
-               gl .uniform1i (diffuseTexture .textureType, 0);
             }
 
             // Specular parameters
@@ -116348,10 +116332,6 @@ function (Fields,
                gl .uniform1i (specularTexture .textureTransformMapping,  textureTransformMapping  .get (this ._specularTextureMapping .getValue ()) || 0);
                gl .uniform1i (specularTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._specularTextureMapping .getValue ()) || 0);
             }
-            else
-            {
-               gl .uniform1i (specularTexture .textureType, 0);
-            }
 
             // Shininess parameters
 
@@ -116361,10 +116341,6 @@ function (Fields,
 
                gl .uniform1i (shininessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._shininessTextureMapping .getValue ()) || 0);
                gl .uniform1i (shininessTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._shininessTextureMapping .getValue ()) || 0);
-            }
-            else
-            {
-               gl .uniform1i (shininessTexture .textureType, 0);
             }
 
             // Occlusion parameters
@@ -116377,10 +116353,6 @@ function (Fields,
 
                gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
                gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._occlusionTextureMapping .getValue ()) || 0);
-            }
-            else
-            {
-               gl .uniform1i (occlusionTexture .textureType, 0);
             }
          }
       },
@@ -116659,10 +116631,6 @@ function (Fields,
                gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._baseTextureMapping .getValue ()) || 0);
                gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._baseTextureMapping .getValue ()) || 0);
             }
-            else
-            {
-               gl .uniform1i (baseTexture .textureType, 0);
-            }
 
             // Metallic roughness parameters
 
@@ -116672,10 +116640,6 @@ function (Fields,
 
                gl .uniform1i (metallicRoughnessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
                gl .uniform1i (metallicRoughnessTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
-            }
-            else
-            {
-               gl .uniform1i (metallicRoughnessTexture .textureType, 0);
             }
 
             // Occlusion parameters
@@ -116688,10 +116652,6 @@ function (Fields,
 
                gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
                gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._occlusionTextureMapping .getValue ()) || 0);
-            }
-            else
-            {
-               gl .uniform1i (occlusionTexture .textureType, 0);
             }
          }
       },
@@ -122206,7 +122166,7 @@ const getScriptURL = (function ()
 
    // Now assign our X3D.
    window .X3D                        = X_ITE;
-   window [Symbol .for ("X_ITE.X3D-5.0.0")] = X_ITE;
+   window [Symbol .for ("X_ITE.X3D-5.0.1")] = X_ITE;
 
    if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
       __global_module__ .exports = X_ITE;

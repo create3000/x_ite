@@ -843,9 +843,9 @@ uniform x3d_ShininessTextureParameters x3d_ShininessTexture;
 uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
 #endif
 vec3
-getAmbientColor ()
+getAmbientColor (in vec3 diffuseColor)
 {
-vec3 ambientParameter = x3d_Material .ambientIntensity * x3d_Material .diffuseColor;
+vec3 ambientParameter = x3d_Material .ambientIntensity * diffuseColor;
 #if defined(X3D_AMBIENT_TEXTURE) && !defined(X3D_AMBIENT_TEXTURE_3D)
 vec4 texCoord = getTexCoord (x3d_AmbientTexture .textureTransformMapping, x3d_AmbientTexture .textureCoordinateMapping);
 #if defined(X3D_AMBIENT_TEXTURE_2D)
@@ -940,7 +940,7 @@ vec3 V = normalize (-vertex);
 vec4 diffuseColorAlpha = getDiffuseColor ();
 float alpha = diffuseColorAlpha .a;
 vec3 diffuseColor = diffuseColorAlpha .rgb;
-vec3 ambientColor = getAmbientColor ();
+vec3 ambientColor = getAmbientColor (diffuseColor);
 vec3 specularColor = getSpecularColor ();
 float shininessFactor = getShininessFactor ();
 vec4 P = getProjectiveTextureColor (vec4 (1.0));
