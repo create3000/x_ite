@@ -339,10 +339,6 @@ function (Fields,
                gl .uniform1i (ambientTexture .textureTransformMapping,  textureTransformMapping  .get (this ._ambientTextureMapping .getValue ()) || 0);
                gl .uniform1i (ambientTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._ambientTextureMapping .getValue ()) || 0);
             }
-            else
-            {
-               gl .uniform1i (ambientTexture .textureType, 0);
-            }
 
             // Diffuse parameters
 
@@ -352,10 +348,6 @@ function (Fields,
 
                gl .uniform1i (diffuseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._diffuseTextureMapping .getValue ()) || 0);
                gl .uniform1i (diffuseTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._diffuseTextureMapping .getValue ()) || 0);
-            }
-            else
-            {
-               gl .uniform1i (diffuseTexture .textureType, 0);
             }
 
             // Specular parameters
@@ -367,10 +359,6 @@ function (Fields,
                gl .uniform1i (specularTexture .textureTransformMapping,  textureTransformMapping  .get (this ._specularTextureMapping .getValue ()) || 0);
                gl .uniform1i (specularTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._specularTextureMapping .getValue ()) || 0);
             }
-            else
-            {
-               gl .uniform1i (specularTexture .textureType, 0);
-            }
 
             // Shininess parameters
 
@@ -380,10 +368,6 @@ function (Fields,
 
                gl .uniform1i (shininessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._shininessTextureMapping .getValue ()) || 0);
                gl .uniform1i (shininessTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._shininessTextureMapping .getValue ()) || 0);
-            }
-            else
-            {
-               gl .uniform1i (shininessTexture .textureType, 0);
             }
 
             // Occlusion parameters
@@ -396,10 +380,6 @@ function (Fields,
 
                gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
                gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._occlusionTextureMapping .getValue ()) || 0);
-            }
-            else
-            {
-               gl .uniform1i (occlusionTexture .textureType, 0);
             }
          }
       },

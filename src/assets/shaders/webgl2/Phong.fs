@@ -51,11 +51,11 @@ uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
 #endif
 
 vec3
-getAmbientColor ()
+getAmbientColor (in vec3 diffuseColor)
 {
    // Get ambient parameter.
 
-   vec3 ambientParameter = x3d_Material .ambientIntensity * x3d_Material .diffuseColor;
+   vec3 ambientParameter = x3d_Material .ambientIntensity * diffuseColor;
 
    // Get texture color.
 
@@ -202,7 +202,7 @@ getMaterialColor ()
    vec4  diffuseColorAlpha = getDiffuseColor ();
    float alpha             = diffuseColorAlpha .a;
    vec3  diffuseColor      = diffuseColorAlpha .rgb;
-   vec3  ambientColor      = getAmbientColor ();
+   vec3  ambientColor      = getAmbientColor (diffuseColor);
    vec3  specularColor     = getSpecularColor ();
    float shininessFactor   = getShininessFactor ();
 

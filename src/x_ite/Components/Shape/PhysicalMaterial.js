@@ -268,10 +268,6 @@ function (Fields,
                gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._baseTextureMapping .getValue ()) || 0);
                gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._baseTextureMapping .getValue ()) || 0);
             }
-            else
-            {
-               gl .uniform1i (baseTexture .textureType, 0);
-            }
 
             // Metallic roughness parameters
 
@@ -281,10 +277,6 @@ function (Fields,
 
                gl .uniform1i (metallicRoughnessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
                gl .uniform1i (metallicRoughnessTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
-            }
-            else
-            {
-               gl .uniform1i (metallicRoughnessTexture .textureType, 0);
             }
 
             // Occlusion parameters
@@ -297,10 +289,6 @@ function (Fields,
 
                gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
                gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._occlusionTextureMapping .getValue ()) || 0);
-            }
-            else
-            {
-               gl .uniform1i (occlusionTexture .textureType, 0);
             }
          }
       },

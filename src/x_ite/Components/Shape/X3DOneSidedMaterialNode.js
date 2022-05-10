@@ -187,10 +187,6 @@ function (Fields,
                gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (this ._emissiveTextureMapping .getValue ()) || 0);
                gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._emissiveTextureMapping .getValue ()) || 0);
             }
-            else
-            {
-               gl .uniform1i (emissiveTexture .textureType, 0);
-            }
 
             // Normal parameters
 
@@ -202,10 +198,6 @@ function (Fields,
 
                gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (this ._normalTextureMapping .getValue ()) || 0);
                gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._normalTextureMapping .getValue ()) || 0);
-            }
-            else
-            {
-               gl .uniform1i (normalTexture .textureType, 0);
             }
          }
       },
