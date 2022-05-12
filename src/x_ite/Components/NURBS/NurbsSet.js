@@ -68,12 +68,12 @@ function (Fields,
 
    function remove (array, first, last, range, rfirst, rlast)
    {
-      var set = { };
+      const set = new Set ();
 
-      for (var i = rfirst; i < rlast; ++ i)
-         set [getId (range [i])] = true;
+      for (let i = rfirst; i < rlast; ++ i)
+         set .add (range [i]);
 
-      function compare (value) { return set [getId (value)]; }
+      function compare (value) { return set .has (value); }
 
       return array .remove (first, last, compare);
    }
@@ -131,19 +131,17 @@ function (Fields,
       {
          // Add bounding boxes
 
-         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-         {
-            bbox .add (this .geometryNodes [i] .getBBox ());
-         }
+         for (const geometryNode of this .geometryNodes)
+            bbox .add (geometryNode .getBBox ());
 
          return bbox;
       },
       set_tessellationScale__: function ()
       {
-         var tessellationScale = Math .max (0, this ._tessellationScale .getValue ());
+         const tessellationScale = Math .max (0, this ._tessellationScale .getValue ());
 
-         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-            this .geometryNodes [i] .setTessellationScale (tessellationScale);
+         for (const geometryNode of this .geometryNodes)
+            geometryNode .setTessellationScale (tessellationScale);
       },
       set_addGeometry__: function ()
       {
@@ -153,8 +151,8 @@ function (Fields,
                                             this ._geometry, 0, this ._geometry .length),
                                     this ._addGeometry .length);
 
-         for (var i = 0, length = this ._addGeometry .length; i < length; ++ i)
-            this ._geometry .push (this ._addGeometry [i]);
+         for (const addGeometry of this ._addGeometry)
+            this ._geometry .push (addGeometry);
 
          this ._addGeometry .setTainted (false);
       },
@@ -166,14 +164,14 @@ function (Fields,
       },
       set_geometry__: function ()
       {
-         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-            this .geometryNodes [i] .setTessellationScale (1);
+         for (const geometryNode of this .geometryNodes)
+            geometryNode .setTessellationScale (1);
 
          this .geometryNodes .length = 0;
 
-         for (var i = 0, length = this ._geometry .length; i < length; ++ i)
+         for (const node of this ._geometry)
          {
-            var geometryNode = X3DCast (X3DConstants .X3DNurbsSurfaceGeometryNode, this ._geometry [i]);
+            let geometryNode = X3DCast (X3DConstants .X3DParametricGeometryNode, node);
 
             if (geometryNode)
                this .geometryNodes .push (geometryNode);
