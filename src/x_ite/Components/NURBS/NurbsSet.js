@@ -66,18 +66,6 @@ function (Fields,
 {
 "use strict";
 
-   function remove (array, first, last, range, rfirst, rlast)
-   {
-      const set = new Set ();
-
-      for (let i = rfirst; i < rlast; ++ i)
-         set .add (range [i]);
-
-      function compare (value) { return set .has (value); }
-
-      return array .remove (first, last, compare);
-   }
-
    function NurbsSet (executionContext)
    {
       X3DChildNode     .call (this, executionContext);
@@ -154,13 +142,19 @@ function (Fields,
          for (const addGeometry of this ._addGeometry)
             this ._geometry .push (addGeometry);
 
+         this ._addGeometry .resize (0);
          this ._addGeometry .setTainted (false);
       },
       set_removeGeometry__: function ()
       {
+         this ._removeGeometry .setTainted (true);
+
          this ._geometry .erase (remove (this ._geometry,       0, this ._geometry .length,
                                          this ._removeGeometry, 0, this ._removeGeometry .length),
                                  this .geometry__ .length);
+
+         this ._removeGeometry .resize (0);
+         this ._removeGeometry .setTainted (false);
       },
       set_geometry__: function ()
       {
@@ -171,7 +165,7 @@ function (Fields,
 
          for (const node of this ._geometry)
          {
-            let geometryNode = X3DCast (X3DConstants .X3DParametricGeometryNode, node);
+            const geometryNode = X3DCast (X3DConstants .X3DNurbsSurfaceGeometryNode, node);
 
             if (geometryNode)
                this .geometryNodes .push (geometryNode);
@@ -180,6 +174,18 @@ function (Fields,
          this .set_tessellationScale__ ();
       },
    });
+
+   function remove (array, first, last, range, rfirst, rlast)
+   {
+      const set = new Set ();
+
+      for (let i = rfirst; i < rlast; ++ i)
+         set .add (range [i]);
+
+      function compare (value) { return set .has (value); }
+
+      return array .remove (first, last, compare);
+   }
 
    return NurbsSet;
 });

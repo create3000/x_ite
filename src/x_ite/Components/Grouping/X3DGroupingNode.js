@@ -62,20 +62,6 @@ function (X3DChildNode,
 {
 "use strict";
 
-   function getId (value) { return value ? value .getValue () .getId () : -1; }
-
-   function remove (array, first, last, range, rfirst, rlast)
-   {
-      const set = { };
-
-      for (let i = rfirst; i < rlast; ++ i)
-         set [getId (range [i])] = true;
-
-      function compare (value) { return set [getId (value)]; }
-
-      return array .remove (first, last, compare);
-   }
-
    function X3DGroupingNode (executionContext)
    {
       X3DChildNode     .call (this, executionContext);
@@ -167,13 +153,15 @@ function (X3DChildNode,
          this ._children .insert (this ._children .length, this ._addChildren, 0, this ._addChildren .length);
          this .add (this ._addChildren);
 
-         this ._addChildren .set ([ ]);
+         this ._addChildren .resize (0);
          this ._addChildren .setTainted (false);
       },
       set_removeChildren__: function ()
       {
          if (this ._removeChildren .length === 0)
             return;
+
+         this ._removeChildren .setTainted (true);
 
          if (this ._children .length > 0)
          {
@@ -190,7 +178,8 @@ function (X3DChildNode,
             this .remove (this ._removeChildren);
          }
 
-         this ._removeChildren .set ([ ]);
+         this ._removeChildren .resize (0);
+         this ._removeChildren .setTainted (false);
       },
       set_children__: function ()
       {
@@ -719,6 +708,18 @@ function (X3DChildNode,
          }
       },
    });
+
+   function remove (array, first, last, range, rfirst, rlast)
+   {
+      const set = new Set ();
+
+      for (let i = rfirst; i < rlast; ++ i)
+         set .add (range [i]);
+
+      function compare (value) { return set .has (value); }
+
+      return array .remove (first, last, compare);
+   }
 
    return X3DGroupingNode;
 });
