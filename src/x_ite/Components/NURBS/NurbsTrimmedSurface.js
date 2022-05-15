@@ -112,19 +112,46 @@ function (Fields,
       {
          X3DNurbsSurfaceGeometryNode .prototype .initialize .call (this);
 
-         this ._trimmingContour .addInterest ("set_trimmingContour__", this);
+         this ._addTrimmingContour    .addInterest ("set_addTrimmingContour__",    this);
+         this ._removeTrimmingContour .addInterest ("set_removeTrimmingContour__", this);
+         this ._trimmingContour       .addInterest ("set_trimmingContour__",       this);
 
          this .set_trimmingContour__ ();
       },
+      set_addTrimmingContour__: function ()
+      {
+         this ._addTrimmingContour .setTainted (true);
+
+         this ._addTrimmingContour .erase (remove (this ._addTrimmingContour, 0, this ._addTrimmingContour .length,
+                                                   this ._trimmingContour,    0, this ._trimmingContour .length),
+                                           this ._addTrimmingContour .length);
+
+         for (const trimmingContour of this ._addTrimmingContour)
+            this ._trimmingContour .push (trimmingContour);
+
+         this ._addTrimmingContour .length = 0;
+         this ._addTrimmingContour .setTainted (false);
+      },
+      set_removeTrimmingContour__: function ()
+      {
+         this ._removeTrimmingContour .setTainted (true);
+
+         this ._trimmingContour .erase (remove (this ._trimmingContour,       0, this ._trimmingContour .length,
+                                                this ._removeTrimmingContour, 0, this ._removeTrimmingContour .length),
+                                        this ._trimmingContour .length);
+
+         this ._removeTrimmingContour .length = 0;
+         this ._removeTrimmingContour .setTainted (false);
+      },
       set_trimmingContour__: function ()
       {
-         var trimmingContourNodes = this .trimmingContourNodes;
+         const trimmingContourNodes = this .trimmingContourNodes;
 
          trimmingContourNodes .length = 0;
 
-         for (var i = 0, length = this ._trimmingContour .length; i < length; ++ i)
+         for (const node of this ._trimmingContour)
          {
-            var trimmingContourNode = X3DCast (X3DConstants .Contour2D, this ._trimmingContour [i]);
+            const trimmingContourNode = X3DCast (X3DConstants .Contour2D, node);
 
             if (trimmingContourNode)
                trimmingContourNodes .push (trimmingContourNode);
@@ -132,16 +159,28 @@ function (Fields,
       },
       getTrimmingContours: function ()
       {
-         var
+         const
             trimmingContourNodes = this .trimmingContourNodes,
             trimmingContours     = [ ];
 
-         for (var i = 0, length = trimmingContourNodes .length; i < length; ++ i)
-            trimmingContourNodes [i] .addTrimmingContour (trimmingContours);
+         for (const trimmingContourNode of trimmingContourNodes)
+            trimmingContourNode .addTrimmingContour (trimmingContours);
 
          return trimmingContours;
       },
    });
+
+   function remove (array, first, last, range, rfirst, rlast)
+   {
+      const set = new Set ();
+
+      for (let i = rfirst; i < rlast; ++ i)
+         set .add (range [i]);
+
+      function compare (value) { return set .has (value); }
+
+      return array .remove (first, last, compare);
+   }
 
    return NurbsTrimmedSurface;
 });

@@ -153,7 +153,7 @@ function (X3DChildNode,
          this ._children .insert (this ._children .length, this ._addChildren, 0, this ._addChildren .length);
          this .add (this ._addChildren);
 
-         this ._addChildren .resize (0);
+         this ._addChildren .length = 0;
          this ._addChildren .setTainted (false);
       },
       set_removeChildren__: function ()
@@ -178,7 +178,7 @@ function (X3DChildNode,
             this .remove (this ._removeChildren);
          }
 
-         this ._removeChildren .resize (0);
+         this ._removeChildren .length = 0;
          this ._removeChildren .setTainted (false);
       },
       set_children__: function ()

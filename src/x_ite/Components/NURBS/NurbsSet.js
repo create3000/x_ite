@@ -136,13 +136,13 @@ function (Fields,
          this ._addGeometry .setTainted (true);
 
          this ._addGeometry .erase (remove (this ._addGeometry, 0, this ._addGeometry .length,
-                                            this ._geometry, 0, this ._geometry .length),
+                                            this ._geometry,    0, this ._geometry .length),
                                     this ._addGeometry .length);
 
-         for (const addGeometry of this ._addGeometry)
-            this ._geometry .push (addGeometry);
+         for (const geometry of this ._addGeometry)
+            this ._geometry .push (geometry);
 
-         this ._addGeometry .resize (0);
+         this ._addGeometry .length = 0;
          this ._addGeometry .setTainted (false);
       },
       set_removeGeometry__: function ()
@@ -151,9 +151,9 @@ function (Fields,
 
          this ._geometry .erase (remove (this ._geometry,       0, this ._geometry .length,
                                          this ._removeGeometry, 0, this ._removeGeometry .length),
-                                 this .geometry__ .length);
+                                 this ._geometry .length);
 
-         this ._removeGeometry .resize (0);
+         this ._removeGeometry .length = 0;
          this ._removeGeometry .setTainted (false);
       },
       set_geometry__: function ()
