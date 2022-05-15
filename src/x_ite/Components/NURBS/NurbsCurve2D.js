@@ -131,7 +131,7 @@ function (Fields,
       },
       tessellate: function (type)
       {
-         var array = this .array;
+         const array = this .array;
 
          array .length = 0;
 
@@ -143,22 +143,22 @@ function (Fields,
 
          // Order and dimension are now positive numbers.
 
-         var
+         const
             closed        = this .getClosed (this ._order .getValue (), this ._knot, this ._weight, this ._controlPoint),
             weights       = this .getWeights (this .weights, this ._controlPoint .length, this ._weight),
             controlPoints = this .getControlPoints (this .controlPoints, closed, this ._order .getValue (), weights, this ._controlPoint);
 
          // Knots
 
-         var
+         const
             knots = this .getKnots (this .knots, closed, this ._order .getValue (), this ._controlPoint .length, this ._knot),
             scale = knots .at (-1) - knots [0];
 
          // Initialize NURBS tessellator
 
-         var degree = this ._order .getValue () - 1;
+         const degree = this ._order .getValue () - 1;
 
-         var surface = this .surface = (this .surface || nurbs) ({
+         const surface = this .surface = (this .surface || nurbs) ({
             boundary: ["open"],
             degree: [degree],
             knots: [knots],
@@ -169,7 +169,7 @@ function (Fields,
          this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
          this .sampleOptions .haveWeights    = Boolean (weights);
 
-         var
+         const
             mesh   = nurbs .sample (this .mesh, surface, this .sampleOptions),
             points = mesh .points;
 
@@ -177,7 +177,7 @@ function (Fields,
          {
             case 0:
             {
-               for (var i = 0, length = points .length; i < length; i += 2)
+               for (let i = 0, length = points .length; i < length; i += 2)
                {
                   array .push (points [i], points [i + 1]);
                }
@@ -186,7 +186,7 @@ function (Fields,
             }
             case 1:
             {
-               for (var i = 0, length = points .length; i < length; i += 2)
+               for (let i = 0, length = points .length; i < length; i += 2)
                {
                   array .push (points [i], 0, points [i + 1]);
                }
@@ -195,7 +195,7 @@ function (Fields,
             }
             case 2:
             {
-               for (var i = 0, length = points .length; i < length; i += 2)
+               for (let i = 0, length = points .length; i < length; i += 2)
                {
                   array .push (new Vector3 (points [i], points [i + 1], 0));
                }

@@ -177,22 +177,22 @@ function (Fields,
 
          // Order and dimension are now positive numbers.
 
-         var
+         const
             closed        = this .getClosed (this ._order .getValue (), this ._knot, this ._weight, this .controlPointNode),
             weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this ._weight),
             controlPoints = this .getControlPoints (this .controlPoints, closed, this ._order .getValue (), weights, this .controlPointNode);
 
          // Knots
 
-         var
+         const
             knots = this .getKnots (this .knots, closed, this ._order .getValue (), this .controlPointNode .getSize (), this ._knot),
             scale = knots .at (-1) - knots [0];
 
          // Initialize NURBS tessellator
 
-         var degree = this ._order .getValue () - 1;
+         const degree = this ._order .getValue () - 1;
 
-         var surface = this .surface = (this .surface || nurbs) ({
+         const surface = this .surface = (this .surface || nurbs) ({
             boundary: ["open"],
             degree: [degree],
             knots: [knots],
@@ -202,7 +202,7 @@ function (Fields,
 
          this .sampleOptions .haveWeights = Boolean (weights);
 
-         var
+         const
             mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
             points       = mesh .points,
             interpolator = this .interpolator;
@@ -210,11 +210,11 @@ function (Fields,
          interpolator ._key      .length = 0;
          interpolator ._keyValue .length = 0;
 
-         for (var i = 0, length = points .length - 3; i < length; i += 3)
+         for (let i = 0, length = points .length - 3; i < length; i += 3)
          {
-            var direction = new Vector3 (points [i + 3] - points [i + 0],
-                                         points [i + 4] - points [i + 1],
-                                         points [i + 5] - points [i + 2]);
+            const direction = new Vector3 (points [i + 3] - points [i + 0],
+                                           points [i + 4] - points [i + 1],
+                                           points [i + 5] - points [i + 2]);
 
             interpolator ._key      .push (knots [0] + i / (length - 3 + (3 * closed)) * scale);
             interpolator ._keyValue. push (new Rotation4 (Vector3 .zAxis, direction));

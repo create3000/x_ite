@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 
-define ([
+ define ([
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
@@ -105,20 +105,20 @@ function (Fields,
       },
       getControlPoints: function (texWeights)
       {
-         var
+         const
             controlPointArray = this ._controlPoint .getValue (),
             controlPoints     = this .controlPoints;
 
-         for (var u = 0, uDimension = this ._uDimension .getValue (); u < uDimension; ++ u)
+         for (let u = 0, uDimension = this ._uDimension .getValue (); u < uDimension; ++ u)
          {
-            var cp = controlPoints [u];
+            let cp = controlPoints [u];
 
             if (! cp)
                cp = controlPoints [u] = [ ];
 
-            for (var v = 0, vDimension = this ._vDimension .getValue (); v < vDimension; ++ v)
+            for (let v = 0, vDimension = this ._vDimension .getValue (); v < vDimension; ++ v)
             {
-               var
+               const
                   index = v * uDimension + u,
                   p     = cp [v] || new Vector4 (),
                   i     = index * 2;

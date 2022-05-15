@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 
-define ([
+ define ([
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
@@ -104,7 +104,7 @@ function (Fields,
          this ._crossSectionCurve .addInterest ("set_crossSectionCurve__", this);
          this ._trajectoryCurve   .addInterest ("set_trajectoryCurve__",   this);
 
-         var extrusion = this .extrusion;
+         const extrusion = this .extrusion;
 
          extrusion ._beginCap     = false;
          extrusion ._endCap       = false;
@@ -149,7 +149,7 @@ function (Fields,
          if (! this .trajectoryCurveNode)
             return;
 
-         var extrusion = this .extrusion;
+         const extrusion = this .extrusion;
 
          extrusion ._crossSection = this .crossSectionCurveNode .tessellate (0);
          extrusion ._spine        = this .trajectoryCurveNode   .tessellate (0);
@@ -165,9 +165,9 @@ function (Fields,
 
          if (! this ._ccw .getValue ())
          {
-            var normals = this .getNormals ();
+            const normals = this .getNormals ();
 
-            for (var i = 0, length = normals .length; i < length; ++ i)
+            for (let i = 0, length = normals .length; i < length; ++ i)
                normals [i] = -normals [i];
          }
 

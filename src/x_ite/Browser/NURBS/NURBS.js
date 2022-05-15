@@ -58,7 +58,7 @@ function (Vector2,
 {
 "use strict";
 
-   var NURBS = {
+   const NURBS = {
       getTessellation: function (tessellation, dimension)
       {
          if (tessellation > 0)
@@ -71,7 +71,7 @@ function (Vector2,
       },
       getClosed2D: function (order, knot, weight, controlPoint)
       {
-         var
+         const
             dimension   = controlPoint .length,
             haveWeights = weight .length === dimension;
 
@@ -97,13 +97,13 @@ function (Vector2,
       },
       getClosed: (function ()
       {
-         var
+         const
             firstPoint = new Vector3 (0, 0, 0),
             lastPoint  = new Vector3 (0, 0, 0);
 
          return function (order, knot, weight, controlPointNode)
          {
-            var
+            const
                dimension   = controlPointNode .getSize (),
                haveWeights = weight .length === dimension;
 
@@ -130,17 +130,17 @@ function (Vector2,
       })(),
       getUClosed: (function ()
       {
-         var
+         const
             firstPoint = new Vector3 (0, 0, 0),
             lastPoint  = new Vector3 (0, 0, 0);
 
          return function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
          {
-            var haveWeights = weight .length === controlPointNode .getSize ();
+            const haveWeights = weight .length === controlPointNode .getSize ();
 
-            for (var v = 0, length = vDimension; v < length; ++ v)
+            for (let v = 0, length = vDimension; v < length; ++ v)
             {
-               var
+               const
                   first = v * uDimension,
                   last  = v * uDimension + uDimension - 1;
 
@@ -168,17 +168,17 @@ function (Vector2,
       })(),
       getVClosed: (function ()
       {
-         var
+         const
             firstPoint = new Vector3 (0, 0, 0),
             lastPoint  = new Vector3 (0, 0, 0);
 
          return function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
          {
-            var haveWeights = weight .length === controlPointNode .getSize ();
+            const haveWeights = weight .length === controlPointNode .getSize ();
 
-            for (var u = 0, size = uDimension; u < size; ++ u)
+            for (let u = 0, size = uDimension; u < size; ++ u)
             {
-               var
+               const
                   first = u,
                   last  = (vDimension - 1) * uDimension + u;
 
@@ -211,9 +211,9 @@ function (Vector2,
          if (knot .length === dimension + order)
          {
             {
-               var count = 1;
+               let count = 1;
 
-               for (var i = 1, size = order; i < size; ++ i)
+               for (let i = 1, size = order; i < size; ++ i)
                {
                   count += knot [i] === knot [0];
                }
@@ -223,9 +223,9 @@ function (Vector2,
             }
 
             {
-               var count = 1;
+               let count = 1;
 
-               for (var i = knot .length - order, size = knot .length - 1; i < size; ++ i)
+               for (let i = knot .length - order, size = knot .length - 1; i < size; ++ i)
                {
                   count += knot [i] === knot [size];
                }
@@ -239,9 +239,9 @@ function (Vector2,
       },
       getKnots: function (result, closed, order, dimension, knot)
       {
-         var knots = result || [ ];
+         const knots = result || [ ];
 
-         for (var i = 0, length = knot .length; i < length; ++ i)
+         for (let i = 0, length = knot .length; i < length; ++ i)
             knots [i] = knot [i];
 
          knots .length = knot .length;
@@ -249,15 +249,15 @@ function (Vector2,
          // check the knot-vectors. If they are not according to standard
          // default uniform knot vectors will be generated.
 
-         var generateUniform = true;
+         let generateUniform = true;
 
          if (knots .length === dimension + order)
          {
             generateUniform = false;
 
-            var consecutiveKnots = 0;
+            let consecutiveKnots = 0;
 
-            for (var i = 1, length = knots .length; i < length; ++ i)
+            for (let i = 1, length = knots .length; i < length; ++ i)
             {
                if (knots [i] == knots [i - 1])
                   ++ consecutiveKnots;
@@ -274,13 +274,13 @@ function (Vector2,
 
          if (generateUniform)
          {
-            for (var i = 0, length = dimension + order; i < length; ++ i)
+            for (let i = 0, length = dimension + order; i < length; ++ i)
                knots [i] = i / (length - 1);
          }
 
          if (closed)
          {
-            for (var i = 1, length = order - 1; i < length; ++ i)
+            for (let i = 1, length = order - 1; i < length; ++ i)
                knots .push (knots .at (-1) + (knots [i] - knots [i - 1]));
          }
 
@@ -291,9 +291,9 @@ function (Vector2,
          if (weight .length !== dimension)
             return undefined;
 
-         var weights = result || [ ];
+         const weights = result || [ ];
 
-         for (var i = 0; i < dimension; ++ i)
+         for (let i = 0; i < dimension; ++ i)
          {
             weights [i] = weight [i];
          }
@@ -304,16 +304,16 @@ function (Vector2,
       },
       getUVWeights: function (result, uDimension, vDimension, weight)
       {
-         var dimension = uDimension * vDimension;
+         const dimension = uDimension * vDimension;
 
          if (weight .length !== dimension)
             return undefined;
 
-         var weights = result || [ ];
+         const weights = result || [ ];
 
-         for (var u = 0, i = 0; u < uDimension; ++ u)
+         for (let u = 0, i = 0; u < uDimension; ++ u)
          {
-            for (var v = 0; v < vDimension; ++ v, ++ i)
+            for (let v = 0; v < vDimension; ++ v, ++ i)
             {
                weights [i] = weight [i];
             }
@@ -325,7 +325,7 @@ function (Vector2,
       },
       getControlPoints2D: function (result, closed, order, weights, controlPoint)
       {
-         var
+         const
             controlPoints     = result || [ ],
             controlPointArray = controlPoint .getValue (),
             dimension         = controlPoint .length,
@@ -338,9 +338,9 @@ function (Vector2,
             controlPoints .length      = 0;
          }
 
-         for (var i = 0; i < dimension; ++ i)
+         for (let i = 0; i < dimension; ++ i)
          {
-            var
+            const
                i2 = i * 2,
                p  = controlPoints [i] || new Vector (0, 0, 0);
 
@@ -351,7 +351,7 @@ function (Vector2,
 
          if (closed)
          {
-            for (var i = 1, size = order - 1; i < size; ++ i)
+            for (let i = 1, size = order - 1; i < size; ++ i)
                controlPoints .push (controlPoints [i]);
          }
 
@@ -359,7 +359,7 @@ function (Vector2,
       },
       getControlPoints: function (result, closed, order, weights, controlPointNode)
       {
-         var
+         const
             controlPoints = result || [ ],
             dimension     = controlPointNode .getSize (),
             haveWeights   = Boolean (weights),
@@ -371,9 +371,9 @@ function (Vector2,
             controlPoints .length      = 0;
          }
 
-         for (var i = 0; i < dimension; ++ i)
+         for (let i = 0; i < dimension; ++ i)
          {
-            var cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector (0, 0, 0, 0));
+            const cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector (0, 0, 0, 0));
 
             if (haveWeights)
                cp .w = weights [i];
@@ -383,7 +383,7 @@ function (Vector2,
 
          if (closed)
          {
-            for (var i = 1, size = order - 1; i < size; ++ i)
+            for (let i = 1, size = order - 1; i < size; ++ i)
                controlPoints .push (controlPoints [i]);
          }
 
@@ -391,7 +391,7 @@ function (Vector2,
       },
       getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
       {
-         var
+         const
             controlPoints = result || [ ],
             haveWeights   = Boolean (weights),
             Vector        = haveWeights ? Vector4 : Vector3;
@@ -402,16 +402,16 @@ function (Vector2,
             controlPoints .length      = 0;
          }
 
-         for (var u = 0; u < uDimension; ++ u)
+         for (let u = 0; u < uDimension; ++ u)
          {
-            var cp = controlPoints [u];
+            let cp = controlPoints [u];
 
             if (! cp)
                cp = controlPoints [u] = [ ];
 
-            for (var v = 0; v < vDimension; ++ v)
+            for (let v = 0; v < vDimension; ++ v)
             {
-               var index = v * uDimension + u;
+               const index = v * uDimension + u;
 
                cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector (0, 0, 0, 0));
 
@@ -423,7 +423,7 @@ function (Vector2,
 
             if (vClosed)
             {
-               for (var i = 1, length = vOrder - 1; i < length; ++ i)
+               for (let i = 1, length = vOrder - 1; i < length; ++ i)
                   cp .push (cp [i]);
             }
          }
@@ -432,7 +432,7 @@ function (Vector2,
 
          if (uClosed)
          {
-            for (var i = 1, length = uOrder - 1; i < length; ++ i)
+            for (let i = 1, length = uOrder - 1; i < length; ++ i)
                controlPoints .push (controlPoints [i]);
          }
 
@@ -440,18 +440,18 @@ function (Vector2,
       },
       getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
       {
-         var controlPoints = result || [ ];
+         const controlPoints = result || [ ];
 
-         for (var u = 0; u < uDimension; ++ u)
+         for (let u = 0; u < uDimension; ++ u)
          {
-            var cp = controlPoints [u];
+            let cp = controlPoints [u];
 
             if (! cp)
                cp = controlPoints [u] = [ ];
 
-            for (var v = 0; v < vDimension; ++ v)
+            for (let v = 0; v < vDimension; ++ v)
             {
-               var index = v * uDimension + u;
+               const index = v * uDimension + u;
 
                cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector4 (0, 0, 0, 0));
             }
@@ -460,7 +460,7 @@ function (Vector2,
 
             if (vClosed)
             {
-               for (var i = 1, length = vOrder - 1; i < length; ++ i)
+               for (let i = 1, length = vOrder - 1; i < length; ++ i)
                   cp .push (cp [i]);
             }
          }
@@ -469,7 +469,7 @@ function (Vector2,
 
          if (uClosed)
          {
-            for (var i = 1, length = uOrder - 1; i < length; ++ i)
+            for (let i = 1, length = uOrder - 1; i < length; ++ i)
                controlPoints .push (controlPoints [i]);
          }
 

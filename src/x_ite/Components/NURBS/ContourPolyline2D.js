@@ -98,13 +98,14 @@ function (Fields,
          {
             case 0:
             {
-               var
+               const
                   controlPointArray = this ._controlPoint .getValue (),
-                  controlPoints     = this .controlPoints;
+                  controlPoints     = this .controlPoints,
+                  length            = this ._controlPoint .length;
 
-               for (var i = 0, length = this ._controlPoint .length; i < length; ++ i)
+               for (let i = 0; i < length; ++ i)
                {
-                  var i2 = i * 2;
+                  const i2 = i * 2;
 
                   controlPoints [i2 + 0] = controlPointArray [i2 + 0];
                   controlPoints [i2 + 1] = controlPointArray [i2 + 1];
@@ -116,13 +117,14 @@ function (Fields,
             }
             case 1:
             {
-               var
+               const
                   controlPointArray = this ._controlPoint .getValue (),
-                  controlPoints     = this .controlPoints;
+                  controlPoints     = this .controlPoints,
+                  length            = this ._controlPoint .length;
 
-               for (var i = 0, length = this ._controlPoint .length; i < length; ++ i)
+               for (let i = 0; i < length; ++ i)
                {
-                  var
+                  const
                      i2 = i * 2,
                      i3 = i * 3;
 
@@ -137,13 +139,14 @@ function (Fields,
             }
             case 3:
             {
-               var
+               const
                   controlPointArray = this ._controlPoint .getValue (),
-                  controlPoints     = this .controlPoints;
+                  controlPoints     = this .controlPoints,
+                  length            = this ._controlPoint .length;
 
-               for (var i = 0, length = this ._controlPoint .length; i < length; ++ i)
+               for (let i = 0; i < length; ++ i)
                {
-                  var i2 = i * 2;
+                  const i2 = i * 2;
 
                   controlPoints [i] = new Vector3 (controlPointArray [i2 + 0], controlPointArray [i2 + 1], 0);
                }

@@ -196,7 +196,7 @@ function (X3DParametricGeometryNode,
 
          // ControlPoints
 
-         var
+         const
             uClosed       = this .getUClosed (this ._uOrder .getValue (), this ._uDimension .getValue (), this ._vDimension .getValue (), this ._uKnot, this ._weight, this .controlPointNode),
             vClosed       = this .getVClosed (this ._vOrder .getValue (), this ._uDimension .getValue (), this ._vDimension .getValue (), this ._vKnot, this ._weight, this .controlPointNode),
             weights       = this .getUVWeights (this .weights, this ._uDimension .getValue (), this ._vDimension .getValue (), this ._weight),
@@ -204,7 +204,7 @@ function (X3DParametricGeometryNode,
 
          // Knots
 
-         var
+         const
             uKnots = this .getKnots (this .uKnots, uClosed, this ._uOrder .getValue (), this ._uDimension .getValue (), this ._uKnot),
             vKnots = this .getKnots (this .vKnots, vClosed, this ._vOrder .getValue (), this ._vDimension .getValue (), this ._vKnot),
             uScale = uKnots .at (-1) - uKnots [0],
@@ -212,11 +212,11 @@ function (X3DParametricGeometryNode,
 
          // Initialize NURBS tessellator
 
-         var
+         const
             uDegree = this ._uOrder .getValue () - 1,
             vDegree = this ._vOrder .getValue () - 1;
 
-         var surface = this .surface = (this .surface || nurbs) ({
+         const surface = this .surface = (this .surface || nurbs) ({
             boundary: ["open", "open"],
             degree: [uDegree, vDegree],
             knots: [uKnots, vKnots],
@@ -224,7 +224,7 @@ function (X3DParametricGeometryNode,
             debug: false,
          });
 
-         var sampleOptions = this .sampleOptions;
+         const sampleOptions = this .sampleOptions;
 
          sampleOptions .resolution [0]   = this .getUTessellation (uKnots .length);
          sampleOptions .resolution [1]   = this .getVTessellation (vKnots .length);
@@ -234,15 +234,15 @@ function (X3DParametricGeometryNode,
          sampleOptions .haveWeights      = Boolean (weights);
          sampleOptions .trimmingContours = this .getTrimmingContours ();
 
-         var
+         const
             mesh        = nurbs .sample (this .mesh, surface, sampleOptions),
             faces       = mesh .faces,
             points      = mesh .points,
             vertexArray = this .getVertices ();
 
-         for (var i = 0, length = faces .length; i < length; ++ i)
+         for (let i = 0, length = faces .length; i < length; ++ i)
          {
-            var index = faces [i] * 3;
+            const index = faces [i] * 3;
 
             vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
          }
@@ -254,7 +254,7 @@ function (X3DParametricGeometryNode,
       },
       buildNurbsTexCoords: (function ()
       {
-         var
+         const
             defaultTexUKnots        = [ ],
             defaultTexVKnots        = [ ],
             defaultTexControlPoints = [[[0, 0, 0, 1], [0, 1, 0, 1]], [[1, 0, 0, 1], [1, 1, 0, 1]]];
@@ -268,7 +268,7 @@ function (X3DParametricGeometryNode,
 
          return function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, domain)
          {
-            var sampleOptions = this .sampleOptions;
+            const sampleOptions = this .sampleOptions;
 
             if (this .texCoordNode && this .texCoordNode .getSize () === uDimension * vDimension)
             {
@@ -302,7 +302,7 @@ function (X3DParametricGeometryNode,
                sampleOptions .domain = domain;
             }
 
-            var texSurface = this .texSurface = (this .texSurface || nurbs) ({
+            const texSurface = this .texSurface = (this .texSurface || nurbs) ({
                boundary: ["open", "open"],
                degree: [texUDegree, texVDegree],
                knots: [texUKnots, texVKnots],
@@ -313,15 +313,15 @@ function (X3DParametricGeometryNode,
             sampleOptions .closed [1]  = false;
             sampleOptions .haveWeights = false;
 
-            var
+            const
                texMesh       = nurbs .sample (this .texMesh, texSurface, sampleOptions),
                faces         = texMesh .faces,
                points        = texMesh .points,
                texCoordArray = this .getTexCoords ();
 
-            for (var i = 0, length = faces .length; i < length; ++ i)
+            for (let i = 0, length = faces .length; i < length; ++ i)
             {
-               var index = faces [i] * 4;
+               const index = faces [i] * 4;
 
                texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
             }
@@ -331,28 +331,24 @@ function (X3DParametricGeometryNode,
       })(),
       buildNormals: function (faces, points)
       {
-         var
+         const
             normals     = this .createNormals (faces, points),
             normalArray = this .getNormals ();
 
-         for (var i = 0, length = normals .length; i < length; ++ i)
-         {
-            var normal = normals [i];
-
+         for (const normal of normals)
             normalArray .push (normal .x, normal .y, normal .z);
-         }
       },
       createNormals: function (faces, points)
       {
-         var normals = this .createFaceNormals (faces, points);
+         const
+            normals     = this .createFaceNormals (faces, points),
+            normalIndex = [ ];
 
-         var normalIndex = [ ];
-
-         for (var i = 0, length = faces .length; i < length; ++ i)
+         for (let i = 0, length = faces .length; i < length; ++ i)
          {
-            var
-               index      = faces [i],
-               pointIndex = normalIndex [index];
+            const index = faces [i];
+
+            let pointIndex = normalIndex [index];
 
             if (! pointIndex)
                pointIndex = normalIndex [index] = [ ];
@@ -364,18 +360,20 @@ function (X3DParametricGeometryNode,
       },
       createFaceNormals: (function ()
       {
-         var
+         const
             v1 = new Vector3 (0, 0, 0),
             v2 = new Vector3 (0, 0, 0),
             v3 = new Vector3 (0, 0, 0);
 
          return function (faces, points)
          {
-            var normals = this .faceNormals || [ ];
+            const
+               normals = this .faceNormals || [ ],
+               length  = faces .length;
 
-            for (var i = 0, length = faces .length; i < length; i += 3)
+            for (let i = 0; i < length; i += 3)
             {
-               var
+               const
                   index1 = faces [i]     * 3,
                   index2 = faces [i + 1] * 3,
                   index3 = faces [i + 2] * 3;
@@ -384,7 +382,7 @@ function (X3DParametricGeometryNode,
                v2 .set (points [index2], points [index2 + 1], points [index2 + 2]);
                v3 .set (points [index3], points [index3 + 1], points [index3 + 2]);
 
-               var normal = Triangle3 .normal (v1, v2 ,v3, normals [i] || new Vector3 (0, 0, 0));
+               const normal = Triangle3 .normal (v1, v2 ,v3, normals [i] || new Vector3 (0, 0, 0));
 
                normals [i]     = normal;
                normals [i + 1] = normal;

@@ -136,7 +136,7 @@ function (Fields,
       },
       set_fraction__: (function ()
       {
-         var
+         const
             a     = new Vector3 (0, 0, 0),
             b     = new Vector3 (0, 0, 0),
             c     = new Vector3 (0, 0, 0),
@@ -146,13 +146,13 @@ function (Fields,
 
          return function ()
          {
-            var
+            const
                fraction       = this ._set_fraction .getValue (),
                texCoordsArray = this .geometry .getTexCoords (),
                normalArray    = this .geometry .getNormals (),
                verticesArray  = this .geometry .getVertices ();
 
-            for (var i4 = 0, i3 = 0, length = texCoordsArray .length; i4 < length; i4 += 12, i3 += 9)
+            for (let i4 = 0, i3 = 0, length = texCoordsArray .length; i4 < length; i4 += 12, i3 += 9)
             {
                a .set (texCoordsArray [i4 + 0], texCoordsArray [i4 + 1], 0);
                b .set (texCoordsArray [i4 + 4], texCoordsArray [i4 + 5], 0);
@@ -164,18 +164,18 @@ function (Fields,
 
                   if (line .intersectsTriangle (a, b, c, uvt))
                   {
-                     var
+                     const
                         u = uvt .u,
                         v = uvt .v,
                         t = uvt .t;
 
-                     var normal = new Vector3 (t * normalArray [i3 + 0] + u * normalArray [i3 + 3] + v * normalArray [i3 + 6],
-                                               t * normalArray [i3 + 1] + u * normalArray [i3 + 4] + v * normalArray [i3 + 7],
-                                               t * normalArray [i3 + 2] + u * normalArray [i3 + 5] + v * normalArray [i3 + 8]);
+                     const normal = new Vector3 (t * normalArray [i3 + 0] + u * normalArray [i3 + 3] + v * normalArray [i3 + 6],
+                                                 t * normalArray [i3 + 1] + u * normalArray [i3 + 4] + v * normalArray [i3 + 7],
+                                                 t * normalArray [i3 + 2] + u * normalArray [i3 + 5] + v * normalArray [i3 + 8]);
 
-                     var position = new Vector3 (t * verticesArray [i4 + 0] + u * verticesArray [i4 + 4] + v * verticesArray [i4 +  8],
-                                                 t * verticesArray [i4 + 1] + u * verticesArray [i4 + 5] + v * verticesArray [i4 +  9],
-                                                 t * verticesArray [i4 + 2] + u * verticesArray [i4 + 6] + v * verticesArray [i4 + 10]);
+                     const position = new Vector3 (t * verticesArray [i4 + 0] + u * verticesArray [i4 + 4] + v * verticesArray [i4 +  8],
+                                                   t * verticesArray [i4 + 1] + u * verticesArray [i4 + 5] + v * verticesArray [i4 +  9],
+                                                   t * verticesArray [i4 + 2] + u * verticesArray [i4 + 6] + v * verticesArray [i4 + 10]);
 
                      this ._normal_changed   = normal;
                      this ._position_changed = position;

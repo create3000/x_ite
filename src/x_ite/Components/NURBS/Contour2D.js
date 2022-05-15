@@ -98,43 +98,82 @@ function (Fields,
       {
          X3DNode .prototype .initialize .call (this);
 
-         this ._children .addInterest ("set_children__", this);
+         this ._addChildren    .addInterest ("set_addChildren__",    this);
+         this ._removeChildren .addInterest ("set_removeChildren__", this);
+         this ._children       .addInterest ("set_children__",       this);
 
          this .set_children__ ();
       },
+      set_addChildren__: function ()
+      {
+         this ._addChildren .setTainted (true);
+
+         this ._addChildren .erase (remove (this ._addChildren, 0, this ._addChildren .length,
+                                            this ._children,    0, this ._children .length),
+                                    this ._addChildren .length);
+
+         for (const child of this ._addChildren)
+            this ._children .push (child);
+
+         this ._addChildren .length = 0;
+         this ._addChildren .setTainted (false);
+      },
+      set_removeChildren__: function ()
+      {
+         this ._removeChildren .setTainted (true);
+
+         this ._children .erase (remove (this ._children,       0, this ._children .length,
+                                         this ._removeChildren, 0, this ._removeChildren .length),
+                                 this ._children .length);
+
+         this ._removeChildren .length = 0;
+         this ._removeChildren .setTainted (false);
+      },
       set_children__: function ()
       {
-         var childNodes = this .childNodes;
+         const childNodes = this .childNodes;
 
          childNodes .length = 0;
 
-         for (var i = 0, length = this ._children .length; i < length; ++ i)
+         for (const node of this ._children)
          {
-            var childNode = X3DCast (X3DConstants .NurbsCurve2D, this ._children [i]);
+            const childNode = X3DCast (X3DConstants .NurbsCurve2D, node);
 
             if (childNode)
             {
                childNodes .push (childNode);
                continue;
             }
-
-            var childNode = X3DCast (X3DConstants .ContourPolyline2D, this ._children [i]);
-
-            if (childNode)
+            else
             {
-               childNodes .push (childNode);
-               continue;
+               const childNode = X3DCast (X3DConstants .ContourPolyline2D, node);
+
+               if (childNode)
+               {
+                  childNodes .push (childNode);
+                  continue;
+               }
             }
          }
       },
       addTrimmingContour: function (trimmingContours)
       {
-         var childNodes = this .childNodes;
-
-         for (var i = 0, length = childNodes .length; i < length; ++ i)
-            trimmingContours .push (childNodes [i] .tessellate (2));
+         for (const childNode of this .childNodes)
+            trimmingContours .push (childNode .tessellate (2));
       }
    });
+
+   function remove (array, first, last, range, rfirst, rlast)
+   {
+      const set = new Set ();
+
+      for (let i = rfirst; i < rlast; ++ i)
+         set .add (range [i]);
+
+      function compare (value) { return set .has (value); }
+
+      return array .remove (first, last, compare);
+   }
 
    return Contour2D;
 });
