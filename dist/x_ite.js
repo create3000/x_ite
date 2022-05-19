@@ -1,4 +1,4 @@
-/* X_ITE v5.0.2-1147 */
+/* X_ITE v5.0.3-1148 */
 
 (function (global, factory)
 {
@@ -25839,11 +25839,11 @@ function (X3DEventObject,
 
             // Connect to execution context.
 
-            if (this [_executionContext] !== this)
-               this [_executionContext] .isLive () .addInterest (_set_live__, this);
-
             if (this .getOuterNode && this .getOuterNode ())
                this .getOuterNode () .isLive () .addInterest (_set_live__, this);
+
+            else if (this [_executionContext] !== this)
+               this [_executionContext] .isLive () .addInterest (_set_live__, this);
 
             // Return field
 
@@ -25869,16 +25869,13 @@ function (X3DEventObject,
       {
          ///  Determines the live state of this node.
 
-         let live  = this .getLive ();
-         let elive = true;
-
-         if (this !== this [_executionContext])
-            elive = this [_executionContext] .isLive () .getValue ();
-
          if (this .getOuterNode && this .getOuterNode ())
-            elive = elive || this .getOuterNode () .isLive () .getValue ();
+            return this .getLive () && this .getOuterNode () .isLive () .getValue ();
 
-         return live && elive;
+         else if (this !== this [_executionContext])
+            return this .getLive () && this [_executionContext] .isLive () .getValue ();
+
+         return this .getLive ();
       },
       [_set_live__]: function ()
       {
@@ -26298,7 +26295,7 @@ function (X3DEventObject,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-   return "5.0.2";
+   return "5.0.3";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -57891,20 +57888,6 @@ function (X3DChildNode,
 {
 "use strict";
 
-   function getId (value) { return value ? value .getValue () .getId () : -1; }
-
-   function remove (array, first, last, range, rfirst, rlast)
-   {
-      const set = { };
-
-      for (let i = rfirst; i < rlast; ++ i)
-         set [getId (range [i])] = true;
-
-      function compare (value) { return set [getId (value)]; }
-
-      return array .remove (first, last, compare);
-   }
-
    function X3DGroupingNode (executionContext)
    {
       X3DChildNode     .call (this, executionContext);
@@ -57996,13 +57979,15 @@ function (X3DChildNode,
          this ._children .insert (this ._children .length, this ._addChildren, 0, this ._addChildren .length);
          this .add (this ._addChildren);
 
-         this ._addChildren .set ([ ]);
+         this ._addChildren .length = 0;
          this ._addChildren .setTainted (false);
       },
       set_removeChildren__: function ()
       {
          if (this ._removeChildren .length === 0)
             return;
+
+         this ._removeChildren .setTainted (true);
 
          if (this ._children .length > 0)
          {
@@ -58019,7 +58004,8 @@ function (X3DChildNode,
             this .remove (this ._removeChildren);
          }
 
-         this ._removeChildren .set ([ ]);
+         this ._removeChildren .length = 0;
+         this ._removeChildren .setTainted (false);
       },
       set_children__: function ()
       {
@@ -58548,6 +58534,18 @@ function (X3DChildNode,
          }
       },
    });
+
+   function remove (array, first, last, range, rfirst, rlast)
+   {
+      const set = new Set ();
+
+      for (let i = rfirst; i < rlast; ++ i)
+         set .add (range [i]);
+
+      function compare (value) { return set .has (value); }
+
+      return array .remove (first, last, compare);
+   }
 
    return X3DGroupingNode;
 });
@@ -122175,7 +122173,7 @@ const getScriptURL = (function ()
 
    // Now assign our X3D.
    window .X3D                        = X_ITE;
-   window [Symbol .for ("X_ITE.X3D-5.0.2")] = X_ITE;
+   window [Symbol .for ("X_ITE.X3D-5.0.3")] = X_ITE;
 
    if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
       __global_module__ .exports = X_ITE;

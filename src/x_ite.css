@@ -324,6 +324,7 @@ X3DCanvas #context-menu-layer {
   font-size: 10pt;
   line-height: 1;
   letter-spacing: unset;
+  text-align: left;
 }
 
 .x_ite-private-menu .context-menu-item > label > input,

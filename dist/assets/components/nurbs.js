@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = window [Symbol .for ("X_ITE.X3D-5.0.2")] .define,
-	require = window [Symbol .for ("X_ITE.X3D-5.0.2")] .require;
+	define  = window [Symbol .for ("X_ITE.X3D-5.0.3")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-5.0.3")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -106,43 +106,82 @@ function (Fields,
       {
          X3DNode .prototype .initialize .call (this);
 
-         this ._children .addInterest ("set_children__", this);
+         this ._addChildren    .addInterest ("set_addChildren__",    this);
+         this ._removeChildren .addInterest ("set_removeChildren__", this);
+         this ._children       .addInterest ("set_children__",       this);
 
          this .set_children__ ();
       },
+      set_addChildren__: function ()
+      {
+         this ._addChildren .setTainted (true);
+
+         this ._addChildren .erase (remove (this ._addChildren, 0, this ._addChildren .length,
+                                            this ._children,    0, this ._children .length),
+                                    this ._addChildren .length);
+
+         for (const child of this ._addChildren)
+            this ._children .push (child);
+
+         this ._addChildren .length = 0;
+         this ._addChildren .setTainted (false);
+      },
+      set_removeChildren__: function ()
+      {
+         this ._removeChildren .setTainted (true);
+
+         this ._children .erase (remove (this ._children,       0, this ._children .length,
+                                         this ._removeChildren, 0, this ._removeChildren .length),
+                                 this ._children .length);
+
+         this ._removeChildren .length = 0;
+         this ._removeChildren .setTainted (false);
+      },
       set_children__: function ()
       {
-         var childNodes = this .childNodes;
+         const childNodes = this .childNodes;
 
          childNodes .length = 0;
 
-         for (var i = 0, length = this ._children .length; i < length; ++ i)
+         for (const node of this ._children)
          {
-            var childNode = X3DCast (X3DConstants .NurbsCurve2D, this ._children [i]);
+            const childNode = X3DCast (X3DConstants .NurbsCurve2D, node);
 
             if (childNode)
             {
                childNodes .push (childNode);
                continue;
             }
-
-            var childNode = X3DCast (X3DConstants .ContourPolyline2D, this ._children [i]);
-
-            if (childNode)
+            else
             {
-               childNodes .push (childNode);
-               continue;
+               const childNode = X3DCast (X3DConstants .ContourPolyline2D, node);
+
+               if (childNode)
+               {
+                  childNodes .push (childNode);
+                  continue;
+               }
             }
          }
       },
       addTrimmingContour: function (trimmingContours)
       {
-         var childNodes = this .childNodes;
-
-         for (var i = 0, length = childNodes .length; i < length; ++ i)
-            trimmingContours .push (childNodes [i] .tessellate (2));
+         for (const childNode of this .childNodes)
+            trimmingContours .push (childNode .tessellate (2));
       }
    });
+
+   function remove (array, first, last, range, rfirst, rlast)
+   {
+      const set = new Set ();
+
+      for (let i = rfirst; i < rlast; ++ i)
+         set .add (range [i]);
+
+      function compare (value) { return set .has (value); }
+
+      return array .remove (first, last, compare);
+   }
 
    return Contour2D;
 });
@@ -320,13 +359,14 @@ function (Fields,
          {
             case 0:
             {
-               var
+               const
                   controlPointArray = this ._controlPoint .getValue (),
-                  controlPoints     = this .controlPoints;
+                  controlPoints     = this .controlPoints,
+                  length            = this ._controlPoint .length;
 
-               for (var i = 0, length = this ._controlPoint .length; i < length; ++ i)
+               for (let i = 0; i < length; ++ i)
                {
-                  var i2 = i * 2;
+                  const i2 = i * 2;
 
                   controlPoints [i2 + 0] = controlPointArray [i2 + 0];
                   controlPoints [i2 + 1] = controlPointArray [i2 + 1];
@@ -338,13 +378,14 @@ function (Fields,
             }
             case 1:
             {
-               var
+               const
                   controlPointArray = this ._controlPoint .getValue (),
-                  controlPoints     = this .controlPoints;
+                  controlPoints     = this .controlPoints,
+                  length            = this ._controlPoint .length;
 
-               for (var i = 0, length = this ._controlPoint .length; i < length; ++ i)
+               for (let i = 0; i < length; ++ i)
                {
-                  var
+                  const
                      i2 = i * 2,
                      i3 = i * 3;
 
@@ -359,13 +400,14 @@ function (Fields,
             }
             case 3:
             {
-               var
+               const
                   controlPointArray = this ._controlPoint .getValue (),
-                  controlPoints     = this .controlPoints;
+                  controlPoints     = this .controlPoints,
+                  length            = this ._controlPoint .length;
 
-               for (var i = 0, length = this ._controlPoint .length; i < length; ++ i)
+               for (let i = 0; i < length; ++ i)
                {
-                  var i2 = i * 2;
+                  const i2 = i * 2;
 
                   controlPoints [i] = new Vector3 (controlPointArray [i2 + 0], controlPointArray [i2 + 1], 0);
                }
@@ -536,7 +578,7 @@ function (Vector2,
 {
 "use strict";
 
-   var NURBS = {
+   const NURBS = {
       getTessellation: function (tessellation, dimension)
       {
          if (tessellation > 0)
@@ -549,7 +591,7 @@ function (Vector2,
       },
       getClosed2D: function (order, knot, weight, controlPoint)
       {
-         var
+         const
             dimension   = controlPoint .length,
             haveWeights = weight .length === dimension;
 
@@ -575,13 +617,13 @@ function (Vector2,
       },
       getClosed: (function ()
       {
-         var
+         const
             firstPoint = new Vector3 (0, 0, 0),
             lastPoint  = new Vector3 (0, 0, 0);
 
          return function (order, knot, weight, controlPointNode)
          {
-            var
+            const
                dimension   = controlPointNode .getSize (),
                haveWeights = weight .length === dimension;
 
@@ -608,17 +650,17 @@ function (Vector2,
       })(),
       getUClosed: (function ()
       {
-         var
+         const
             firstPoint = new Vector3 (0, 0, 0),
             lastPoint  = new Vector3 (0, 0, 0);
 
          return function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
          {
-            var haveWeights = weight .length === controlPointNode .getSize ();
+            const haveWeights = weight .length === controlPointNode .getSize ();
 
-            for (var v = 0, length = vDimension; v < length; ++ v)
+            for (let v = 0, length = vDimension; v < length; ++ v)
             {
-               var
+               const
                   first = v * uDimension,
                   last  = v * uDimension + uDimension - 1;
 
@@ -646,17 +688,17 @@ function (Vector2,
       })(),
       getVClosed: (function ()
       {
-         var
+         const
             firstPoint = new Vector3 (0, 0, 0),
             lastPoint  = new Vector3 (0, 0, 0);
 
          return function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
          {
-            var haveWeights = weight .length === controlPointNode .getSize ();
+            const haveWeights = weight .length === controlPointNode .getSize ();
 
-            for (var u = 0, size = uDimension; u < size; ++ u)
+            for (let u = 0, size = uDimension; u < size; ++ u)
             {
-               var
+               const
                   first = u,
                   last  = (vDimension - 1) * uDimension + u;
 
@@ -689,9 +731,9 @@ function (Vector2,
          if (knot .length === dimension + order)
          {
             {
-               var count = 1;
+               let count = 1;
 
-               for (var i = 1, size = order; i < size; ++ i)
+               for (let i = 1, size = order; i < size; ++ i)
                {
                   count += knot [i] === knot [0];
                }
@@ -701,9 +743,9 @@ function (Vector2,
             }
 
             {
-               var count = 1;
+               let count = 1;
 
-               for (var i = knot .length - order, size = knot .length - 1; i < size; ++ i)
+               for (let i = knot .length - order, size = knot .length - 1; i < size; ++ i)
                {
                   count += knot [i] === knot [size];
                }
@@ -717,9 +759,9 @@ function (Vector2,
       },
       getKnots: function (result, closed, order, dimension, knot)
       {
-         var knots = result || [ ];
+         const knots = result || [ ];
 
-         for (var i = 0, length = knot .length; i < length; ++ i)
+         for (let i = 0, length = knot .length; i < length; ++ i)
             knots [i] = knot [i];
 
          knots .length = knot .length;
@@ -727,15 +769,15 @@ function (Vector2,
          // check the knot-vectors. If they are not according to standard
          // default uniform knot vectors will be generated.
 
-         var generateUniform = true;
+         let generateUniform = true;
 
          if (knots .length === dimension + order)
          {
             generateUniform = false;
 
-            var consecutiveKnots = 0;
+            let consecutiveKnots = 0;
 
-            for (var i = 1, length = knots .length; i < length; ++ i)
+            for (let i = 1, length = knots .length; i < length; ++ i)
             {
                if (knots [i] == knots [i - 1])
                   ++ consecutiveKnots;
@@ -752,13 +794,13 @@ function (Vector2,
 
          if (generateUniform)
          {
-            for (var i = 0, length = dimension + order; i < length; ++ i)
+            for (let i = 0, length = dimension + order; i < length; ++ i)
                knots [i] = i / (length - 1);
          }
 
          if (closed)
          {
-            for (var i = 1, length = order - 1; i < length; ++ i)
+            for (let i = 1, length = order - 1; i < length; ++ i)
                knots .push (knots .at (-1) + (knots [i] - knots [i - 1]));
          }
 
@@ -769,9 +811,9 @@ function (Vector2,
          if (weight .length !== dimension)
             return undefined;
 
-         var weights = result || [ ];
+         const weights = result || [ ];
 
-         for (var i = 0; i < dimension; ++ i)
+         for (let i = 0; i < dimension; ++ i)
          {
             weights [i] = weight [i];
          }
@@ -782,16 +824,16 @@ function (Vector2,
       },
       getUVWeights: function (result, uDimension, vDimension, weight)
       {
-         var dimension = uDimension * vDimension;
+         const dimension = uDimension * vDimension;
 
          if (weight .length !== dimension)
             return undefined;
 
-         var weights = result || [ ];
+         const weights = result || [ ];
 
-         for (var u = 0, i = 0; u < uDimension; ++ u)
+         for (let u = 0, i = 0; u < uDimension; ++ u)
          {
-            for (var v = 0; v < vDimension; ++ v, ++ i)
+            for (let v = 0; v < vDimension; ++ v, ++ i)
             {
                weights [i] = weight [i];
             }
@@ -803,7 +845,7 @@ function (Vector2,
       },
       getControlPoints2D: function (result, closed, order, weights, controlPoint)
       {
-         var
+         const
             controlPoints     = result || [ ],
             controlPointArray = controlPoint .getValue (),
             dimension         = controlPoint .length,
@@ -816,9 +858,9 @@ function (Vector2,
             controlPoints .length      = 0;
          }
 
-         for (var i = 0; i < dimension; ++ i)
+         for (let i = 0; i < dimension; ++ i)
          {
-            var
+            const
                i2 = i * 2,
                p  = controlPoints [i] || new Vector (0, 0, 0);
 
@@ -829,7 +871,7 @@ function (Vector2,
 
          if (closed)
          {
-            for (var i = 1, size = order - 1; i < size; ++ i)
+            for (let i = 1, size = order - 1; i < size; ++ i)
                controlPoints .push (controlPoints [i]);
          }
 
@@ -837,7 +879,7 @@ function (Vector2,
       },
       getControlPoints: function (result, closed, order, weights, controlPointNode)
       {
-         var
+         const
             controlPoints = result || [ ],
             dimension     = controlPointNode .getSize (),
             haveWeights   = Boolean (weights),
@@ -849,9 +891,9 @@ function (Vector2,
             controlPoints .length      = 0;
          }
 
-         for (var i = 0; i < dimension; ++ i)
+         for (let i = 0; i < dimension; ++ i)
          {
-            var cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector (0, 0, 0, 0));
+            const cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector (0, 0, 0, 0));
 
             if (haveWeights)
                cp .w = weights [i];
@@ -861,7 +903,7 @@ function (Vector2,
 
          if (closed)
          {
-            for (var i = 1, size = order - 1; i < size; ++ i)
+            for (let i = 1, size = order - 1; i < size; ++ i)
                controlPoints .push (controlPoints [i]);
          }
 
@@ -869,7 +911,7 @@ function (Vector2,
       },
       getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
       {
-         var
+         const
             controlPoints = result || [ ],
             haveWeights   = Boolean (weights),
             Vector        = haveWeights ? Vector4 : Vector3;
@@ -880,16 +922,16 @@ function (Vector2,
             controlPoints .length      = 0;
          }
 
-         for (var u = 0; u < uDimension; ++ u)
+         for (let u = 0; u < uDimension; ++ u)
          {
-            var cp = controlPoints [u];
+            let cp = controlPoints [u];
 
             if (! cp)
                cp = controlPoints [u] = [ ];
 
-            for (var v = 0; v < vDimension; ++ v)
+            for (let v = 0; v < vDimension; ++ v)
             {
-               var index = v * uDimension + u;
+               const index = v * uDimension + u;
 
                cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector (0, 0, 0, 0));
 
@@ -901,7 +943,7 @@ function (Vector2,
 
             if (vClosed)
             {
-               for (var i = 1, length = vOrder - 1; i < length; ++ i)
+               for (let i = 1, length = vOrder - 1; i < length; ++ i)
                   cp .push (cp [i]);
             }
          }
@@ -910,7 +952,7 @@ function (Vector2,
 
          if (uClosed)
          {
-            for (var i = 1, length = uOrder - 1; i < length; ++ i)
+            for (let i = 1, length = uOrder - 1; i < length; ++ i)
                controlPoints .push (controlPoints [i]);
          }
 
@@ -918,18 +960,18 @@ function (Vector2,
       },
       getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
       {
-         var controlPoints = result || [ ];
+         const controlPoints = result || [ ];
 
-         for (var u = 0; u < uDimension; ++ u)
+         for (let u = 0; u < uDimension; ++ u)
          {
-            var cp = controlPoints [u];
+            let cp = controlPoints [u];
 
             if (! cp)
                cp = controlPoints [u] = [ ];
 
-            for (var v = 0; v < vDimension; ++ v)
+            for (let v = 0; v < vDimension; ++ v)
             {
-               var index = v * uDimension + u;
+               const index = v * uDimension + u;
 
                cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector4 (0, 0, 0, 0));
             }
@@ -938,7 +980,7 @@ function (Vector2,
 
             if (vClosed)
             {
-               for (var i = 1, length = vOrder - 1; i < length; ++ i)
+               for (let i = 1, length = vOrder - 1; i < length; ++ i)
                   cp .push (cp [i]);
             }
          }
@@ -947,7 +989,7 @@ function (Vector2,
 
          if (uClosed)
          {
-            for (var i = 1, length = uOrder - 1; i < length; ++ i)
+            for (let i = 1, length = uOrder - 1; i < length; ++ i)
                controlPoints .push (controlPoints [i]);
          }
 
@@ -3076,7 +3118,7 @@ function (Fields,
       },
       tessellate: function (type)
       {
-         var array = this .array;
+         const array = this .array;
 
          array .length = 0;
 
@@ -3088,22 +3130,22 @@ function (Fields,
 
          // Order and dimension are now positive numbers.
 
-         var
+         const
             closed        = this .getClosed (this ._order .getValue (), this ._knot, this ._weight, this ._controlPoint),
             weights       = this .getWeights (this .weights, this ._controlPoint .length, this ._weight),
             controlPoints = this .getControlPoints (this .controlPoints, closed, this ._order .getValue (), weights, this ._controlPoint);
 
          // Knots
 
-         var
+         const
             knots = this .getKnots (this .knots, closed, this ._order .getValue (), this ._controlPoint .length, this ._knot),
             scale = knots .at (-1) - knots [0];
 
          // Initialize NURBS tessellator
 
-         var degree = this ._order .getValue () - 1;
+         const degree = this ._order .getValue () - 1;
 
-         var surface = this .surface = (this .surface || nurbs) ({
+         const surface = this .surface = (this .surface || nurbs) ({
             boundary: ["open"],
             degree: [degree],
             knots: [knots],
@@ -3114,7 +3156,7 @@ function (Fields,
          this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
          this .sampleOptions .haveWeights    = Boolean (weights);
 
-         var
+         const
             mesh   = nurbs .sample (this .mesh, surface, this .sampleOptions),
             points = mesh .points;
 
@@ -3122,7 +3164,7 @@ function (Fields,
          {
             case 0:
             {
-               for (var i = 0, length = points .length; i < length; i += 2)
+               for (let i = 0, length = points .length; i < length; i += 2)
                {
                   array .push (points [i], points [i + 1]);
                }
@@ -3131,7 +3173,7 @@ function (Fields,
             }
             case 1:
             {
-               for (var i = 0, length = points .length; i < length; i += 2)
+               for (let i = 0, length = points .length; i < length; i += 2)
                {
                   array .push (points [i], 0, points [i + 1]);
                }
@@ -3140,7 +3182,7 @@ function (Fields,
             }
             case 2:
             {
-               for (var i = 0, length = points .length; i < length; i += 2)
+               for (let i = 0, length = points .length; i < length; i += 2)
                {
                   array .push (new Vector3 (points [i], points [i + 1], 0));
                }
@@ -3335,22 +3377,22 @@ function (Fields,
 
          // Order and dimension are now positive numbers.
 
-         var
+         const
             closed        = this .getClosed (this ._order .getValue (), this ._knot, this ._weight, this .controlPointNode),
             weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this ._weight),
             controlPoints = this .getControlPoints (this .controlPoints, closed, this ._order .getValue (), weights, this .controlPointNode);
 
          // Knots
 
-         var
+         const
             knots = this .getKnots (this .knots, closed, this ._order .getValue (), this .controlPointNode .getSize (), this ._knot),
             scale = knots .at (-1) - knots [0];
 
          // Initialize NURBS tessellator
 
-         var degree = this ._order .getValue () - 1;
+         const degree = this ._order .getValue () - 1;
 
-         var surface = this .surface = (this .surface || nurbs) ({
+         const surface = this .surface = (this .surface || nurbs) ({
             boundary: ["open"],
             degree: [degree],
             knots: [knots],
@@ -3360,7 +3402,7 @@ function (Fields,
 
          this .sampleOptions .haveWeights = Boolean (weights);
 
-         var
+         const
             mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
             points       = mesh .points,
             interpolator = this .interpolator;
@@ -3368,11 +3410,11 @@ function (Fields,
          interpolator ._key      .length = 0;
          interpolator ._keyValue .length = 0;
 
-         for (var i = 0, length = points .length - 3; i < length; i += 3)
+         for (let i = 0, length = points .length - 3; i < length; i += 3)
          {
-            var direction = new Vector3 (points [i + 3] - points [i + 0],
-                                         points [i + 4] - points [i + 1],
-                                         points [i + 5] - points [i + 2]);
+            const direction = new Vector3 (points [i + 3] - points [i + 0],
+                                           points [i + 4] - points [i + 1],
+                                           points [i + 5] - points [i + 2]);
 
             interpolator ._key      .push (knots [0] + i / (length - 3 + (3 * closed)) * scale);
             interpolator ._keyValue. push (new Rotation4 (Vector3 .zAxis, direction));
@@ -3587,7 +3629,7 @@ function (X3DParametricGeometryNode,
 
          // ControlPoints
 
-         var
+         const
             uClosed       = this .getUClosed (this ._uOrder .getValue (), this ._uDimension .getValue (), this ._vDimension .getValue (), this ._uKnot, this ._weight, this .controlPointNode),
             vClosed       = this .getVClosed (this ._vOrder .getValue (), this ._uDimension .getValue (), this ._vDimension .getValue (), this ._vKnot, this ._weight, this .controlPointNode),
             weights       = this .getUVWeights (this .weights, this ._uDimension .getValue (), this ._vDimension .getValue (), this ._weight),
@@ -3595,7 +3637,7 @@ function (X3DParametricGeometryNode,
 
          // Knots
 
-         var
+         const
             uKnots = this .getKnots (this .uKnots, uClosed, this ._uOrder .getValue (), this ._uDimension .getValue (), this ._uKnot),
             vKnots = this .getKnots (this .vKnots, vClosed, this ._vOrder .getValue (), this ._vDimension .getValue (), this ._vKnot),
             uScale = uKnots .at (-1) - uKnots [0],
@@ -3603,11 +3645,11 @@ function (X3DParametricGeometryNode,
 
          // Initialize NURBS tessellator
 
-         var
+         const
             uDegree = this ._uOrder .getValue () - 1,
             vDegree = this ._vOrder .getValue () - 1;
 
-         var surface = this .surface = (this .surface || nurbs) ({
+         const surface = this .surface = (this .surface || nurbs) ({
             boundary: ["open", "open"],
             degree: [uDegree, vDegree],
             knots: [uKnots, vKnots],
@@ -3615,7 +3657,7 @@ function (X3DParametricGeometryNode,
             debug: false,
          });
 
-         var sampleOptions = this .sampleOptions;
+         const sampleOptions = this .sampleOptions;
 
          sampleOptions .resolution [0]   = this .getUTessellation (uKnots .length);
          sampleOptions .resolution [1]   = this .getVTessellation (vKnots .length);
@@ -3625,15 +3667,15 @@ function (X3DParametricGeometryNode,
          sampleOptions .haveWeights      = Boolean (weights);
          sampleOptions .trimmingContours = this .getTrimmingContours ();
 
-         var
+         const
             mesh        = nurbs .sample (this .mesh, surface, sampleOptions),
             faces       = mesh .faces,
             points      = mesh .points,
             vertexArray = this .getVertices ();
 
-         for (var i = 0, length = faces .length; i < length; ++ i)
+         for (let i = 0, length = faces .length; i < length; ++ i)
          {
-            var index = faces [i] * 3;
+            const index = faces [i] * 3;
 
             vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
          }
@@ -3645,7 +3687,7 @@ function (X3DParametricGeometryNode,
       },
       buildNurbsTexCoords: (function ()
       {
-         var
+         const
             defaultTexUKnots        = [ ],
             defaultTexVKnots        = [ ],
             defaultTexControlPoints = [[[0, 0, 0, 1], [0, 1, 0, 1]], [[1, 0, 0, 1], [1, 1, 0, 1]]];
@@ -3659,7 +3701,7 @@ function (X3DParametricGeometryNode,
 
          return function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, domain)
          {
-            var sampleOptions = this .sampleOptions;
+            const sampleOptions = this .sampleOptions;
 
             if (this .texCoordNode && this .texCoordNode .getSize () === uDimension * vDimension)
             {
@@ -3693,7 +3735,7 @@ function (X3DParametricGeometryNode,
                sampleOptions .domain = domain;
             }
 
-            var texSurface = this .texSurface = (this .texSurface || nurbs) ({
+            const texSurface = this .texSurface = (this .texSurface || nurbs) ({
                boundary: ["open", "open"],
                degree: [texUDegree, texVDegree],
                knots: [texUKnots, texVKnots],
@@ -3704,15 +3746,15 @@ function (X3DParametricGeometryNode,
             sampleOptions .closed [1]  = false;
             sampleOptions .haveWeights = false;
 
-            var
+            const
                texMesh       = nurbs .sample (this .texMesh, texSurface, sampleOptions),
                faces         = texMesh .faces,
                points        = texMesh .points,
                texCoordArray = this .getTexCoords ();
 
-            for (var i = 0, length = faces .length; i < length; ++ i)
+            for (let i = 0, length = faces .length; i < length; ++ i)
             {
-               var index = faces [i] * 4;
+               const index = faces [i] * 4;
 
                texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
             }
@@ -3722,28 +3764,24 @@ function (X3DParametricGeometryNode,
       })(),
       buildNormals: function (faces, points)
       {
-         var
+         const
             normals     = this .createNormals (faces, points),
             normalArray = this .getNormals ();
 
-         for (var i = 0, length = normals .length; i < length; ++ i)
-         {
-            var normal = normals [i];
-
+         for (const normal of normals)
             normalArray .push (normal .x, normal .y, normal .z);
-         }
       },
       createNormals: function (faces, points)
       {
-         var normals = this .createFaceNormals (faces, points);
+         const
+            normals     = this .createFaceNormals (faces, points),
+            normalIndex = [ ];
 
-         var normalIndex = [ ];
-
-         for (var i = 0, length = faces .length; i < length; ++ i)
+         for (let i = 0, length = faces .length; i < length; ++ i)
          {
-            var
-               index      = faces [i],
-               pointIndex = normalIndex [index];
+            const index = faces [i];
+
+            let pointIndex = normalIndex [index];
 
             if (! pointIndex)
                pointIndex = normalIndex [index] = [ ];
@@ -3755,18 +3793,20 @@ function (X3DParametricGeometryNode,
       },
       createFaceNormals: (function ()
       {
-         var
+         const
             v1 = new Vector3 (0, 0, 0),
             v2 = new Vector3 (0, 0, 0),
             v3 = new Vector3 (0, 0, 0);
 
          return function (faces, points)
          {
-            var normals = this .faceNormals || [ ];
+            const
+               normals = this .faceNormals || [ ],
+               length  = faces .length;
 
-            for (var i = 0, length = faces .length; i < length; i += 3)
+            for (let i = 0; i < length; i += 3)
             {
-               var
+               const
                   index1 = faces [i]     * 3,
                   index2 = faces [i + 1] * 3,
                   index3 = faces [i + 2] * 3;
@@ -3775,7 +3815,7 @@ function (X3DParametricGeometryNode,
                v2 .set (points [index2], points [index2 + 1], points [index2 + 2]);
                v3 .set (points [index3], points [index3 + 1], points [index3 + 2]);
 
-               var normal = Triangle3 .normal (v1, v2 ,v3, normals [i] || new Vector3 (0, 0, 0));
+               const normal = Triangle3 .normal (v1, v2 ,v3, normals [i] || new Vector3 (0, 0, 0));
 
                normals [i]     = normal;
                normals [i + 1] = normal;
@@ -4075,22 +4115,22 @@ function (Fields,
 
          // Order and dimension are now positive numbers.
 
-         var
+         const
             closed        = this .getClosed (this ._order .getValue (), this ._knot, this ._weight, this .controlPointNode),
             weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this ._weight),
             controlPoints = this .getControlPoints (this .controlPoints, closed, this ._order .getValue (), weights, this .controlPointNode);
 
          // Knots
 
-         var
+         const
             knots = this .getKnots (this .knots, closed, this ._order .getValue (), this .controlPointNode .getSize (), this ._knot),
             scale = knots .at (-1) - knots [0];
 
          // Initialize NURBS tessellator
 
-         var degree = this ._order .getValue () - 1;
+         const degree = this ._order .getValue () - 1;
 
-         var surface = this .surface = (this .surface || nurbs) ({
+         const surface = this .surface = (this .surface || nurbs) ({
             boundary: ["open"],
             degree: [degree],
             knots: [knots],
@@ -4100,7 +4140,7 @@ function (Fields,
 
          this .sampleOptions .haveWeights = Boolean (weights);
 
-         var
+         const
             mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
             points       = mesh .points,
             interpolator = this .interpolator;
@@ -4108,7 +4148,7 @@ function (Fields,
          interpolator ._key      .length = 0;
          interpolator ._keyValue .length = 0;
 
-         for (var i = 0, length = points .length; i < length; i += 3)
+         for (let i = 0, length = points .length; i < length; i += 3)
          {
             interpolator ._key      .push (knots [0] + i / (length - 3) * scale);
             interpolator ._keyValue. push (new Fields .SFVec3f (points [i], points [i + 1], points [i + 2]));
@@ -4187,18 +4227,6 @@ function (Fields,
 {
 "use strict";
 
-   function remove (array, first, last, range, rfirst, rlast)
-   {
-      var set = { };
-
-      for (var i = rfirst; i < rlast; ++ i)
-         set [getId (range [i])] = true;
-
-      function compare (value) { return set [getId (value)]; }
-
-      return array .remove (first, last, compare);
-   }
-
    function NurbsSet (executionContext)
    {
       X3DChildNode     .call (this, executionContext);
@@ -4252,49 +4280,53 @@ function (Fields,
       {
          // Add bounding boxes
 
-         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-         {
-            bbox .add (this .geometryNodes [i] .getBBox ());
-         }
+         for (const geometryNode of this .geometryNodes)
+            bbox .add (geometryNode .getBBox ());
 
          return bbox;
       },
       set_tessellationScale__: function ()
       {
-         var tessellationScale = Math .max (0, this ._tessellationScale .getValue ());
+         const tessellationScale = Math .max (0, this ._tessellationScale .getValue ());
 
-         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-            this .geometryNodes [i] .setTessellationScale (tessellationScale);
+         for (const geometryNode of this .geometryNodes)
+            geometryNode .setTessellationScale (tessellationScale);
       },
       set_addGeometry__: function ()
       {
          this ._addGeometry .setTainted (true);
 
          this ._addGeometry .erase (remove (this ._addGeometry, 0, this ._addGeometry .length,
-                                            this ._geometry, 0, this ._geometry .length),
+                                            this ._geometry,    0, this ._geometry .length),
                                     this ._addGeometry .length);
 
-         for (var i = 0, length = this ._addGeometry .length; i < length; ++ i)
-            this ._geometry .push (this ._addGeometry [i]);
+         for (const geometry of this ._addGeometry)
+            this ._geometry .push (geometry);
 
+         this ._addGeometry .length = 0;
          this ._addGeometry .setTainted (false);
       },
       set_removeGeometry__: function ()
       {
+         this ._removeGeometry .setTainted (true);
+
          this ._geometry .erase (remove (this ._geometry,       0, this ._geometry .length,
                                          this ._removeGeometry, 0, this ._removeGeometry .length),
-                                 this .geometry__ .length);
+                                 this ._geometry .length);
+
+         this ._removeGeometry .length = 0;
+         this ._removeGeometry .setTainted (false);
       },
       set_geometry__: function ()
       {
-         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-            this .geometryNodes [i] .setTessellationScale (1);
+         for (const geometryNode of this .geometryNodes)
+            geometryNode .setTessellationScale (1);
 
          this .geometryNodes .length = 0;
 
-         for (var i = 0, length = this ._geometry .length; i < length; ++ i)
+         for (const node of this ._geometry)
          {
-            var geometryNode = X3DCast (X3DConstants .X3DNurbsSurfaceGeometryNode, this ._geometry [i]);
+            const geometryNode = X3DCast (X3DConstants .X3DNurbsSurfaceGeometryNode, node);
 
             if (geometryNode)
                this .geometryNodes .push (geometryNode);
@@ -4303,6 +4335,18 @@ function (Fields,
          this .set_tessellationScale__ ();
       },
    });
+
+   function remove (array, first, last, range, rfirst, rlast)
+   {
+      const set = new Set ();
+
+      for (let i = rfirst; i < rlast; ++ i)
+         set .add (range [i]);
+
+      function compare (value) { return set .has (value); }
+
+      return array .remove (first, last, compare);
+   }
 
    return NurbsSet;
 });
@@ -4528,7 +4572,7 @@ function (Fields,
       },
       set_fraction__: (function ()
       {
-         var
+         const
             a     = new Vector3 (0, 0, 0),
             b     = new Vector3 (0, 0, 0),
             c     = new Vector3 (0, 0, 0),
@@ -4538,13 +4582,13 @@ function (Fields,
 
          return function ()
          {
-            var
+            const
                fraction       = this ._set_fraction .getValue (),
                texCoordsArray = this .geometry .getTexCoords (),
                normalArray    = this .geometry .getNormals (),
                verticesArray  = this .geometry .getVertices ();
 
-            for (var i4 = 0, i3 = 0, length = texCoordsArray .length; i4 < length; i4 += 12, i3 += 9)
+            for (let i4 = 0, i3 = 0, length = texCoordsArray .length; i4 < length; i4 += 12, i3 += 9)
             {
                a .set (texCoordsArray [i4 + 0], texCoordsArray [i4 + 1], 0);
                b .set (texCoordsArray [i4 + 4], texCoordsArray [i4 + 5], 0);
@@ -4556,18 +4600,18 @@ function (Fields,
 
                   if (line .intersectsTriangle (a, b, c, uvt))
                   {
-                     var
+                     const
                         u = uvt .u,
                         v = uvt .v,
                         t = uvt .t;
 
-                     var normal = new Vector3 (t * normalArray [i3 + 0] + u * normalArray [i3 + 3] + v * normalArray [i3 + 6],
-                                               t * normalArray [i3 + 1] + u * normalArray [i3 + 4] + v * normalArray [i3 + 7],
-                                               t * normalArray [i3 + 2] + u * normalArray [i3 + 5] + v * normalArray [i3 + 8]);
+                     const normal = new Vector3 (t * normalArray [i3 + 0] + u * normalArray [i3 + 3] + v * normalArray [i3 + 6],
+                                                 t * normalArray [i3 + 1] + u * normalArray [i3 + 4] + v * normalArray [i3 + 7],
+                                                 t * normalArray [i3 + 2] + u * normalArray [i3 + 5] + v * normalArray [i3 + 8]);
 
-                     var position = new Vector3 (t * verticesArray [i4 + 0] + u * verticesArray [i4 + 4] + v * verticesArray [i4 +  8],
-                                                 t * verticesArray [i4 + 1] + u * verticesArray [i4 + 5] + v * verticesArray [i4 +  9],
-                                                 t * verticesArray [i4 + 2] + u * verticesArray [i4 + 6] + v * verticesArray [i4 + 10]);
+                     const position = new Vector3 (t * verticesArray [i4 + 0] + u * verticesArray [i4 + 4] + v * verticesArray [i4 +  8],
+                                                   t * verticesArray [i4 + 1] + u * verticesArray [i4 + 5] + v * verticesArray [i4 +  9],
+                                                   t * verticesArray [i4 + 2] + u * verticesArray [i4 + 6] + v * verticesArray [i4 + 10]);
 
                      this ._normal_changed   = normal;
                      this ._position_changed = position;
@@ -4630,7 +4674,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/NURBS/NurbsSweptSurface',[
+ define ('x_ite/Components/NURBS/NurbsSweptSurface',[
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
@@ -4687,7 +4731,7 @@ function (Fields,
          this ._crossSectionCurve .addInterest ("set_crossSectionCurve__", this);
          this ._trajectoryCurve   .addInterest ("set_trajectoryCurve__",   this);
 
-         var extrusion = this .extrusion;
+         const extrusion = this .extrusion;
 
          extrusion ._beginCap     = false;
          extrusion ._endCap       = false;
@@ -4732,7 +4776,7 @@ function (Fields,
          if (! this .trajectoryCurveNode)
             return;
 
-         var extrusion = this .extrusion;
+         const extrusion = this .extrusion;
 
          extrusion ._crossSection = this .crossSectionCurveNode .tessellate (0);
          extrusion ._spine        = this .trajectoryCurveNode   .tessellate (0);
@@ -4748,9 +4792,9 @@ function (Fields,
 
          if (! this ._ccw .getValue ())
          {
-            var normals = this .getNormals ();
+            const normals = this .getNormals ();
 
-            for (var i = 0, length = normals .length; i < length; ++ i)
+            for (let i = 0, length = normals .length; i < length; ++ i)
                normals [i] = -normals [i];
          }
 
@@ -4868,7 +4912,7 @@ function (Fields,
          this ._profileCurve    .addInterest ("set_profileCurve__",    this);
          this ._trajectoryCurve .addInterest ("set_trajectoryCurve__", this);
 
-         var extrusion = this .extrusion;
+         const extrusion = this .extrusion;
 
          extrusion ._beginCap     = false;
          extrusion ._endCap       = false;
@@ -4913,7 +4957,7 @@ function (Fields,
          if (! this .trajectoryCurveNode)
             return;
 
-         var extrusion = this .extrusion;
+         const extrusion = this .extrusion;
 
          extrusion ._crossSection = this .profileCurveNode    .tessellate (0);
          extrusion ._spine        = this .trajectoryCurveNode .tessellate (1);
@@ -4929,9 +4973,9 @@ function (Fields,
 
          if (! this ._ccw .getValue ())
          {
-            var normals = this .getNormals ();
+            const normals = this .getNormals ();
 
-            for (var i = 0, length = normals .length; i < length; ++ i)
+            for (let i = 0, length = normals .length; i < length; ++ i)
                normals [i] = -normals [i];
          }
 
@@ -4992,7 +5036,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/NURBS/NurbsTextureCoordinate',[
+ define ('x_ite/Components/NURBS/NurbsTextureCoordinate',[
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
@@ -5050,20 +5094,20 @@ function (Fields,
       },
       getControlPoints: function (texWeights)
       {
-         var
+         const
             controlPointArray = this ._controlPoint .getValue (),
             controlPoints     = this .controlPoints;
 
-         for (var u = 0, uDimension = this ._uDimension .getValue (); u < uDimension; ++ u)
+         for (let u = 0, uDimension = this ._uDimension .getValue (); u < uDimension; ++ u)
          {
-            var cp = controlPoints [u];
+            let cp = controlPoints [u];
 
             if (! cp)
                cp = controlPoints [u] = [ ];
 
-            for (var v = 0, vDimension = this ._vDimension .getValue (); v < vDimension; ++ v)
+            for (let v = 0, vDimension = this ._vDimension .getValue (); v < vDimension; ++ v)
             {
-               var
+               const
                   index = v * uDimension + u,
                   p     = cp [v] || new Vector4 (),
                   i     = index * 2;
@@ -5212,19 +5256,46 @@ function (Fields,
       {
          X3DNurbsSurfaceGeometryNode .prototype .initialize .call (this);
 
-         this ._trimmingContour .addInterest ("set_trimmingContour__", this);
+         this ._addTrimmingContour    .addInterest ("set_addTrimmingContour__",    this);
+         this ._removeTrimmingContour .addInterest ("set_removeTrimmingContour__", this);
+         this ._trimmingContour       .addInterest ("set_trimmingContour__",       this);
 
          this .set_trimmingContour__ ();
       },
+      set_addTrimmingContour__: function ()
+      {
+         this ._addTrimmingContour .setTainted (true);
+
+         this ._addTrimmingContour .erase (remove (this ._addTrimmingContour, 0, this ._addTrimmingContour .length,
+                                                   this ._trimmingContour,    0, this ._trimmingContour .length),
+                                           this ._addTrimmingContour .length);
+
+         for (const trimmingContour of this ._addTrimmingContour)
+            this ._trimmingContour .push (trimmingContour);
+
+         this ._addTrimmingContour .length = 0;
+         this ._addTrimmingContour .setTainted (false);
+      },
+      set_removeTrimmingContour__: function ()
+      {
+         this ._removeTrimmingContour .setTainted (true);
+
+         this ._trimmingContour .erase (remove (this ._trimmingContour,       0, this ._trimmingContour .length,
+                                                this ._removeTrimmingContour, 0, this ._removeTrimmingContour .length),
+                                        this ._trimmingContour .length);
+
+         this ._removeTrimmingContour .length = 0;
+         this ._removeTrimmingContour .setTainted (false);
+      },
       set_trimmingContour__: function ()
       {
-         var trimmingContourNodes = this .trimmingContourNodes;
+         const trimmingContourNodes = this .trimmingContourNodes;
 
          trimmingContourNodes .length = 0;
 
-         for (var i = 0, length = this ._trimmingContour .length; i < length; ++ i)
+         for (const node of this ._trimmingContour)
          {
-            var trimmingContourNode = X3DCast (X3DConstants .Contour2D, this ._trimmingContour [i]);
+            const trimmingContourNode = X3DCast (X3DConstants .Contour2D, node);
 
             if (trimmingContourNode)
                trimmingContourNodes .push (trimmingContourNode);
@@ -5232,16 +5303,28 @@ function (Fields,
       },
       getTrimmingContours: function ()
       {
-         var
+         const
             trimmingContourNodes = this .trimmingContourNodes,
             trimmingContours     = [ ];
 
-         for (var i = 0, length = trimmingContourNodes .length; i < length; ++ i)
-            trimmingContourNodes [i] .addTrimmingContour (trimmingContours);
+         for (const trimmingContourNode of trimmingContourNodes)
+            trimmingContourNode .addTrimmingContour (trimmingContours);
 
          return trimmingContours;
       },
    });
+
+   function remove (array, first, last, range, rfirst, rlast)
+   {
+      const set = new Set ();
+
+      for (let i = rfirst; i < rlast; ++ i)
+         set .add (range [i]);
+
+      function compare (value) { return set .has (value); }
+
+      return array .remove (first, last, compare);
+   }
 
    return NurbsTrimmedSurface;
 });
