@@ -66,7 +66,7 @@
 		"require": "^2.4.20",
 		"requirejs": "^2.3.6",
 		"requirejs-text": "^2.0.16",
-		"terser": "^5.12.1"
+		"terser": "^5.14.0"
 	},
 	"scripts": {
 		"lint": "jshint **",
