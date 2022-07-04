@@ -1,4 +1,4 @@
-/* X_ITE v5.0.3-1148 */
+/* X_ITE v5.0.4-1149 */
 
 (function (global, factory)
 {
@@ -26295,7 +26295,7 @@ function (X3DEventObject,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-   return "5.0.3";
+   return "5.0.4";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -31289,6 +31289,8 @@ function (Fields,
                         }
                      }
                   }
+
+                  destinationField .setModificationTime (sourceField .getModificationTime ());
                }
                catch (error)
                {
@@ -31322,6 +31324,8 @@ function (Fields,
                      }
                   }
                }
+
+               destinationField .setModificationTime (sourceField .getModificationTime ());
             }
 
             copy .setup ();
@@ -35990,6 +35994,8 @@ function (Fields,
                         }
                      }
                   }
+
+                  destinationField .setModificationTime (sourceField .getModificationTime ());
                }
                catch (error)
                {
@@ -36023,6 +36029,8 @@ function (Fields,
                      }
                   }
                }
+
+               destinationField .setModificationTime (sourceField .getModificationTime ());
             }
 
             copy .setup ();
@@ -122173,7 +122181,7 @@ const getScriptURL = (function ()
 
    // Now assign our X3D.
    window .X3D                        = X_ITE;
-   window [Symbol .for ("X_ITE.X3D-5.0.3")] = X_ITE;
+   window [Symbol .for ("X_ITE.X3D-5.0.4")] = X_ITE;
 
    if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
       __global_module__ .exports = X_ITE;
