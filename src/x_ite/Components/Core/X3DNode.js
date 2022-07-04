@@ -140,6 +140,8 @@ function (Fields,
                         }
                      }
                   }
+
+                  destinationField .setModificationTime (sourceField .getModificationTime ());
                }
                catch (error)
                {
@@ -173,6 +175,8 @@ function (Fields,
                      }
                   }
                }
+
+               destinationField .setModificationTime (sourceField .getModificationTime ());
             }
 
             copy .setup ();
