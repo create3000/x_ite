@@ -68,7 +68,7 @@ function (X3DNode,
 {
 "use strict";
 
-   var
+   const
       normal       = new Vector3 (0, 0, 0),
       fromPosition = new Vector3 (0, 0, 0),
       line         = new Line3 (Vector3 .Zero, Vector3 .zAxis),
@@ -137,7 +137,7 @@ function (X3DNode,
       },
       getRandomLifetime: function (particleLifetime, lifetimeVariation)
       {
-         var
+         const
             v   = particleLifetime * lifetimeVariation,
             min = Math .max (0, particleLifetime - v),
             max = particleLifetime + v;
@@ -146,7 +146,7 @@ function (X3DNode,
       },
       getRandomSpeed: function ()
       {
-         var
+         const
             speed = this .speed,
             v     = speed * this .variation,
             min   = Math .max (0, speed - v),
@@ -164,7 +164,7 @@ function (X3DNode,
       },
       getRandomNormal: function (normal)
       {
-         var
+         const
             theta = this .getRandomValue (-1, 1) * Math .PI,
             cphi  = this .getRandomValue (-1, 1),
             phi   = Math .acos (cphi),
@@ -176,7 +176,7 @@ function (X3DNode,
       },
       getRandomNormalWithAngle: function (angle, normal)
       {
-         var
+         const
             theta = (Math .random () * 2 - 1) * Math .PI,
             cphi  = this .getRandomValue (Math .cos (angle), 1),
             phi   = Math .acos (cphi),
@@ -194,7 +194,7 @@ function (X3DNode,
       },
       getRandomSurfaceNormal: function (normal)
       {
-         var
+         const
             theta = this .getRandomValue (-1, 1) * Math .PI,
             cphi  = Math .pow (Math .random (), 1/3),
             phi   = Math .acos (cphi),
@@ -206,7 +206,7 @@ function (X3DNode,
       },
       animate: function (particleSystem, deltaTime)
       {
-         var
+         const
             particles         = particleSystem .particles,
             numParticles      = particleSystem .numParticles,
             createParticles   = particleSystem .createParticles,
@@ -220,15 +220,15 @@ function (X3DNode,
             boundedPhysics    = particleSystem .boundedVertices .length,
             boundedVolume     = particleSystem .boundedVolume;
 
-         for (var i = rotations .length; i < numForces; ++ i)
+         for (let i = rotations .length; i < numForces; ++ i)
             rotations [i] = new Rotation4 (0, 0, 1, 0);
 
-         for (var i = 0; i < numForces; ++ i)
+         for (let i = 0; i < numForces; ++ i)
             rotations [i] .setFromToVec (Vector3 .zAxis, velocities [i]);
 
-         for (var i = 0; i < numParticles; ++ i)
+         for (let i = 0; i < numParticles; ++ i)
          {
-            var
+            const
                particle    = particles [i],
                elapsedTime = particle .elapsedTime + deltaTime;
 
@@ -252,11 +252,11 @@ function (X3DNode,
             {
                // Animate particle.
 
-               var
+               const
                   position = particle .position,
                   velocity = particle .velocity;
 
-               for (var f = 0; f < numForces; ++ f)
+               for (let f = 0; f < numForces; ++ f)
                {
                   velocity .add (rotations [f] .multVecRot (this .getRandomNormalWithAngle (turbulences [f], normal)) .multiply (speeds [f]));
                }
@@ -295,25 +295,25 @@ function (X3DNode,
 
          line .set (fromPosition, normal);
 
-         var
+         const
             intersections       = this .intersections,
             intersectionNormals = this .intersectionNormals,
             numIntersections    = boundedVolume .intersectsLine (line, intersections, intersectionNormals);
 
          if (numIntersections)
          {
-            for (var i = 0; i < numIntersections; ++ i)
+            for (let i = 0; i < numIntersections; ++ i)
                intersections [i] .index = i;
 
             plane .set (fromPosition, normal);
 
             this .sorter .sort (0, numIntersections);
 
-            var index = Algorithm .upperBound (intersections, 0, numIntersections, 0, PlaneCompareValue);
+            const index = Algorithm .upperBound (intersections, 0, numIntersections, 0, PlaneCompareValue);
 
             if (index < numIntersections)
             {
-               var
+               const
                   intersection       = intersections [index],
                   intersectionNormal = intersectionNormals [intersection .index];
 
@@ -321,7 +321,7 @@ function (X3DNode,
 
                if (plane .getDistanceToPoint (fromPosition) * plane .getDistanceToPoint (toPosition) < 0)
                {
-                  var dot2 = 2 * intersectionNormal .dot (velocity);
+                  const dot2 = 2 * intersectionNormal .dot (velocity);
 
                   velocity .x -= intersectionNormal .x * dot2;
                   velocity .y -= intersectionNormal .y * dot2;
@@ -329,7 +329,7 @@ function (X3DNode,
 
                   normal .assign (velocity) .normalize ();
 
-                  var distance = intersection .distance (fromPosition);
+                  const distance = intersection .distance (fromPosition);
 
                   toPosition .x = intersection .x + normal .x * distance;
                   toPosition .y = intersection .y + normal .y * distance;
@@ -340,17 +340,18 @@ function (X3DNode,
       },
       getColors: function (particles, colorKeys, colorRamp, numParticles)
       {
-         var
-            length = colorKeys .length,
+         const length = colorKeys .length;
+
+         let
             index0 = 0,
             index1 = 0,
             weight = 0;
 
-         for (var i = 0; i < numParticles; ++ i)
+         for (let i = 0; i < numParticles; ++ i)
          {
             // Determine index0, index1 and weight.
 
-            var
+            const
                particle = particles [i],
                fraction = particle .elapsedTime / particle .lifetime,
                color    = particle .color;
@@ -369,14 +370,14 @@ function (X3DNode,
             }
             else
             {
-               var index = Algorithm .upperBound (colorKeys, 0, length, fraction, Algorithm .less);
+               const index = Algorithm .upperBound (colorKeys, 0, length, fraction, Algorithm .less);
 
                if (index < length)
                {
                   index1 = index;
                   index0 = index - 1;
 
-                  var
+                  const
                      key0 = colorKeys [index0],
                      key1 = colorKeys [index1];
 
@@ -392,7 +393,7 @@ function (X3DNode,
 
             // Interpolate and set color.
 
-            var
+            const
                color0 = colorRamp [index0],
                color1 = colorRamp [index1];
 
