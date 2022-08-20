@@ -80,7 +80,7 @@ function (Fields,
           QuickSort,
           Algorithm,
           BVH,
-          GPU)
+          gpu)
 {
 "use strict";
 
@@ -225,6 +225,51 @@ function (Fields,
          this ._texCoordKey       .addInterest ("set_texCoord__",          this);
          this ._texCoordRamp      .addInterest ("set_texCoordRamp__",      this);
 
+         // Create GPU stuff.
+
+         const kernelOptions = {
+            tactic: "precision",
+            pipeline: true,
+            dynamicOutput: true,
+         };
+
+         const createTimes      = gpu .createKernel (function () { return [-1, 0, 0]; }, kernelOptions) .setOutput ([1]);
+         const createVelocities = gpu .createKernel (function () { return [ 0, 0, 0]; }, kernelOptions) .setOutput ([1]);
+         const createPositions  = gpu .createKernel (function () { return [ 0, 0, 0]; }, kernelOptions) .setOutput ([1]);
+
+         this .particles .times      = createTimes ();
+         this .particles .velocities = createVelocities ();
+         this .particles .positions  = createPositions ();
+
+         this .createTimes = gpu .createKernel (function (times, length)
+         {
+            if (this .thread .x < length)
+               return times [this .thread .x];
+            else
+              return [-1, 0, 0];
+         },
+         kernelOptions);
+
+         this .createVelocities = gpu .createKernel (function (velocities, length)
+         {
+            if (this .thread .x < length)
+               return velocities [this .thread .x];
+            else
+              return [0, 0, 0];
+         },
+         kernelOptions);
+
+         this .createPositions = gpu .createKernel (function (positions, length)
+         {
+            if (this .thread .x < length)
+               return positions [this .thread .x];
+            else
+              return [0, 0, 0];
+         },
+         kernelOptions);
+
+         // Create GL stuff.
+
          this .idBuffer           = gl .createBuffer ();
          this .positionBuffer     = gl .createBuffer ();
          this .elapsedTimeBuffer  = gl .createBuffer ();
@@ -250,11 +295,13 @@ function (Fields,
 
          // Geometry context
 
-         this .geometryContext .fogCoords                 = false;
+         this .geometryContext .fogCoords                = false;
          this .geometryContext .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
          this .geometryContext .textureCoordinateMapping = new Map ();
 
+         // Init fields.
          // Call order is higly important at startup.
+
          this .set_emitter__ ();
          this .set_enabled__ ();
          this .set_createParticles__ ();
@@ -574,6 +621,14 @@ function (Fields,
                distance: 0,
             };
          }
+
+         this .createTimes      .setOutput ([maxParticles]);
+         this .createVelocities .setOutput ([maxParticles]);
+         this .createPositions  .setOutput ([maxParticles]);
+
+         this .particles .times      = this .createTimes      (this .particles .times,      this .maxParticles);
+         this .particles .velocities = this .createVelocities (this .particles .velocities, this .maxParticles);
+         this .particles .positions  = this .createPositions  (this .particles .positions,  this .maxParticles);
 
          this .maxParticles = maxParticles;
          this .numParticles = Math .min (this .numParticles, maxParticles);

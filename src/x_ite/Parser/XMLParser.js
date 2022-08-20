@@ -863,7 +863,7 @@ function ($,
                return;
             }
 
-            //console .error (error);
+            console .error (error);
 
             console .error ("XML Parser Error: " + error .message);
          }

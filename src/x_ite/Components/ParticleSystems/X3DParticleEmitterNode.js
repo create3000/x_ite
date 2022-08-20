@@ -66,7 +66,7 @@ function (X3DNode,
           Plane3,
           Algorithm,
           QuickSort,
-          GPU)
+          gpu)
 {
 "use strict";
 

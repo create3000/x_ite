@@ -82,9 +82,14 @@ require .config ({
          "main": "dummy.js"
       },
       {
-         "name": "gpu",
+         "name": "GPU",
          "location": "lib/gpu",
          "main": "gpu-browser.js"
+      },
+      {
+         "name": "gpu",
+         "location": "lib/gpu",
+         "main": "gpu.js"
       }
    ],
    "shim": { },
