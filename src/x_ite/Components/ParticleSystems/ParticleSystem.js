@@ -241,12 +241,13 @@ function (Fields,
          this .particles .velocities = createVelocities ();
          this .particles .positions  = createPositions ();
 
+         // [life, lifetime, elapsedTime]
          this .createTimes = gpu .createKernel (function (times, length)
          {
             if (this .thread .x < length)
                return times [this .thread .x];
             else
-              return [-1, 0, 0];
+              return [0, -1, 0];
          },
          kernelOptions);
 
