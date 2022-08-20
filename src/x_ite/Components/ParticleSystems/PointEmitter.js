@@ -131,7 +131,7 @@ function (Fields,
       },
       getRandomVelocity: function (velocity)
       {
-         var
+         const
             direction = this .direction,
             speed     = this .getRandomSpeed ();
 

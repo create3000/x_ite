@@ -113,14 +113,14 @@ function (Fields,
       {
          if (this .geometryNode)
          {
-            var
+            const
                normals  = this .geometryNode .getNormals ()  .getValue (),
                vertices = this .geometryNode .getVertices () .getValue ();
 
-            for (var i = 0, length = normals .length; i < length; ++ i)
+            for (let i = 0, length = normals .length; i < length; ++ i)
                boundedNormals .push (normals [i]);
 
-            for (var i = 0, length = vertices .length; i < length; ++ i)
+            for (let i = 0, length = vertices .length; i < length; ++ i)
                boundedVertices .push (vertices [i]);
          }
       },

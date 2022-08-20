@@ -130,7 +130,7 @@ function (Fields,
       },
       set_geometry__: (function ()
       {
-         var
+         const
             vertex1  = new Vector3 (0, 0, 0),
             vertex2  = new Vector3 (0, 0, 0),
             vertex3  = new Vector3 (0, 0, 0);
@@ -142,8 +142,9 @@ function (Fields,
                delete this .getRandomPosition;
                delete this .getRandomVelocity;
 
-               var
-                  areaSoFar      = 0,
+               let areaSoFar = 0;
+
+               const
                   areaSoFarArray = this .areaSoFarArray,
                   vertices       = this .surfaceNode .getVertices () .getValue ();
 
@@ -152,7 +153,7 @@ function (Fields,
 
                areaSoFarArray .length = 1;
 
-               for (var i = 0, length = vertices .length; i < length; i += 12)
+               for (let i = 0, length = vertices .length; i < length; i += 12)
                {
                   vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
                   vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
@@ -173,11 +174,12 @@ function (Fields,
       {
          // Determine index0.
 
-         var
+         const
             areaSoFarArray = this .areaSoFarArray,
             length         = areaSoFarArray .length,
-            fraction       = Math .random () * areaSoFarArray .at (-1),
-            index0         = 0;
+            fraction       = Math .random () * areaSoFarArray .at (-1);
+
+         let index0 = 0;
 
          if (length == 1 || fraction <= areaSoFarArray [0])
          {
@@ -189,7 +191,7 @@ function (Fields,
          }
          else
          {
-            var index = Algorithm .upperBound (areaSoFarArray, 0, length, fraction, Algorithm .less);
+            const index = Algorithm .upperBound (areaSoFarArray, 0, length, fraction, Algorithm .less);
 
             if (index < length)
             {
@@ -203,7 +205,7 @@ function (Fields,
 
          // Random barycentric coordinates.
 
-         var
+         let
             u = Math .random (),
             v = Math .random ();
 
@@ -213,32 +215,32 @@ function (Fields,
             v = 1 - v;
          }
 
-         var t = 1 - u - v;
+         const t = 1 - u - v;
 
          // Interpolate and set position.
 
-         var
-            i        = index0 * 12,
+         const
+            i12       = index0 * 12,
             vertices = this .vertices;
 
-         position .x = u * vertices [i]     + v * vertices [i + 4] + t * vertices [i + 8];
-         position .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
-         position .z = u * vertices [i + 2] + v * vertices [i + 6] + t * vertices [i + 10];
+         position .x = u * vertices [i12]     + v * vertices [i12+ 4] + t * vertices [i12 + 8];
+         position .y = u * vertices [i12 + 1] + v * vertices [i12+ 5] + t * vertices [i12 + 9];
+         position .z = u * vertices [i12 + 2] + v * vertices [i12+ 6] + t * vertices [i12 + 10];
 
-         var
-            i         = index0 * 9,
+         const
+            i9        = index0 * 9,
             normals   = this .normals,
             direction = this .direction;
 
-         direction .x = u * normals [i]     + v * normals [i + 3] + t * normals [i + 6];
-         direction .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
-         direction .z = u * normals [i + 2] + v * normals [i + 5] + t * normals [i + 8];
+         direction .x = u * normals [i9]     + v * normals [i9 + 3] + t * normals [i9 + 6];
+         direction .y = u * normals [i9 + 1] + v * normals [i9 + 4] + t * normals [i9 + 7];
+         direction .z = u * normals [i9 + 2] + v * normals [i9 + 5] + t * normals [i9 + 8];
 
          return position;
       },
       getRandomVelocity: function (velocity)
       {
-         var
+         const
             speed     = this .getRandomSpeed (),
             direction = this .direction;
 

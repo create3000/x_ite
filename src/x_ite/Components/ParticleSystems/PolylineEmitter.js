@@ -139,25 +139,24 @@ function (Fields,
       },
       set_polyline: (function ()
       {
-         var
+         const
             vertex1 = new Vector3 (0, 0, 0),
             vertex2 = new Vector3 (0, 0, 0);
 
          return function ()
          {
-            var vertices = this .vertices = this .polylineNode .getVertices () .getValue ();
+            const vertices = this .vertices = this .polylineNode .getVertices () .getValue ();
 
             if (vertices .length)
             {
                delete this .getRandomPosition;
 
-               var
-                  lengthSoFar      = 0,
-                  lengthSoFarArray = this .lengthSoFarArray;
+               let   lengthSoFar      = 0;
+               const lengthSoFarArray = this .lengthSoFarArray;
 
                lengthSoFarArray .length = 1;
 
-               for (var i = 0, length = vertices .length; i < length; i += 8)
+               for (let i = 0, length = vertices .length; i < length; i += 8)
                {
                   vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
                   vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
@@ -176,13 +175,15 @@ function (Fields,
       {
          // Determine index0 and weight.
 
-         var
+         const
             lengthSoFarArray = this .lengthSoFarArray,
             length           = lengthSoFarArray .length,
-            fraction         = Math .random () * lengthSoFarArray .at (-1),
-            index0           = 0,
-            index1           = 0,
-            weight           = 0;
+            fraction         = Math .random () * lengthSoFarArray .at (-1);
+
+         let
+            index0 = 0,
+            index1 = 0,
+            weight = 0;
 
          if (length == 1 || fraction <= lengthSoFarArray [0])
          {
@@ -196,14 +197,14 @@ function (Fields,
          }
          else
          {
-            var index = Algorithm .upperBound (lengthSoFarArray, 0, length, fraction, Algorithm .less);
+            const index = Algorithm .upperBound (lengthSoFarArray, 0, length, fraction, Algorithm .less);
 
             if (index < length)
             {
                index1 = index;
                index0 = index - 1;
 
-               var
+               const
                   key0 = lengthSoFarArray [index0],
                   key1 = lengthSoFarArray [index1];
 
@@ -221,7 +222,7 @@ function (Fields,
          index0 *= 8;
          index1  = index0 + 4;
 
-         var
+         const
             vertices = this .vertices,
             x1       = vertices [index0],
             y1       = vertices [index0 + 1],
@@ -238,7 +239,7 @@ function (Fields,
       },
       getRandomVelocity: function (velocity)
       {
-         var
+         const
             direction = this .direction,
             speed     = this .getRandomSpeed ();
 

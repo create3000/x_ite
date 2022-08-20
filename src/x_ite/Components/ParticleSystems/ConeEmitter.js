@@ -124,7 +124,7 @@ function (Fields,
       },
       set_direction__: function ()
       {
-         var direction = this ._direction .getValue ();
+         const direction = this ._direction .getValue ();
 
          this .rotation .setFromToVec (Vector3 .zAxis, direction);
 

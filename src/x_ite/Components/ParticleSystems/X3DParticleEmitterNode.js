@@ -56,6 +56,7 @@ define ([
    "standard/Math/Geometry/Plane3",
    "standard/Math/Algorithm",
    "standard/Math/Algorithms/QuickSort",
+   "gpu",
 ],
 function (X3DNode,
           X3DConstants,
@@ -64,7 +65,8 @@ function (X3DNode,
           Line3,
           Plane3,
           Algorithm,
-          QuickSort)
+          QuickSort,
+          GPU)
 {
 "use strict";
 

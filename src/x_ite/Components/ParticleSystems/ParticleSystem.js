@@ -63,6 +63,7 @@ define ([
    "standard/Math/Algorithms/QuickSort",
    "standard/Math/Algorithm",
    "standard/Math/Utility/BVH",
+   "gpu",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -78,11 +79,12 @@ function (Fields,
           Matrix3,
           QuickSort,
           Algorithm,
-          BVH)
+          BVH,
+          GPU)
 {
 "use strict";
 
-   var i = 0;
+   let i = 0;
 
    const
       POINT    = i ++,
@@ -232,7 +234,7 @@ function (Fields,
          this .normalBuffer       = gl .createBuffer ();
          this .vertexBuffer       = gl .createBuffer ();
 
-         for (var i = 1, channels = this .getBrowser () .getMaxTextures (); i < channels; ++ i)
+         for (let i = 1, channels = this .getBrowser () .getMaxTextures (); i < channels; ++ i)
             this .texCoordBuffers .push (this .texCoordBuffers [0]);
 
          this .idArray          = new Float32Array ();
@@ -364,7 +366,7 @@ function (Fields,
       },
       set_geometryType__: function ()
       {
-         var
+         const
             gl           = this .getBrowser () .getContext (),
             maxParticles = this .maxParticles;
 
@@ -390,7 +392,7 @@ function (Fields,
                this .normalArray      = new Float32Array ();
                this .vertexArray      = new Float32Array (4 * maxParticles);
 
-               for (var i = 0, a = this .idArray, l = a .length; i < l; ++ i)
+               for (let i = 0, a = this .idArray, l = a .length; i < l; ++ i)
                   a [i] = i;
 
                this .colorArray  .fill (1);
@@ -415,7 +417,7 @@ function (Fields,
                this .normalArray      = new Float32Array ();
                this .vertexArray      = new Float32Array (2 * 4 * maxParticles);
 
-               for (var i = 0, a = this .idArray, l = a .length; i < l; ++ i)
+               for (let i = 0, a = this .idArray, l = a .length; i < l; ++ i)
                   a [i] = Math .floor (i / 2);
 
                this .colorArray  .fill (1);
@@ -442,17 +444,17 @@ function (Fields,
                this .normalArray      = new Float32Array (6 * 3 * maxParticles);
                this .vertexArray      = new Float32Array (6 * 4 * maxParticles);
 
-               for (var i = 0, a = this .idArray, l = a .length; i < l; ++ i)
+               for (let i = 0, a = this .idArray, l = a .length; i < l; ++ i)
                   a [i] = Math .floor (i / 6);
 
                this .colorArray  .fill (1);
                this .vertexArray .fill (1);
 
-               var
+               const
                   texCoordArray = this .texCoordArray,
                   normalArray   = this .normalArray;
 
-               for (var i = 0, length = 6 * 3 * maxParticles; i < length; i += 3)
+               for (let i = 0, length = 6 * 3 * maxParticles; i < length; i += 3)
                {
                   normalArray [i]     = 0;
                   normalArray [i + 1] = 0;
@@ -462,9 +464,9 @@ function (Fields,
                gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, this .normalArray, gl .STATIC_DRAW);
 
-               for (var i = 0; i < maxParticles; ++ i)
+               for (let i = 0; i < maxParticles; ++ i)
                {
-                  var i24 = i * 24;
+                  const i24 = i * 24;
 
                   // p4 ------ p3
                   // |       / |
@@ -549,17 +551,17 @@ function (Fields,
       },
       set_maxParticles__: function ()
       {
-         var
+         const
             particles    = this .particles,
             maxParticles = Math .max (0, this ._maxParticles .getValue ());
 
-         for (var i = this .numParticles, length = Math .min (particles .length, maxParticles); i < length; ++ i)
+         for (let i = this .numParticles, length = Math .min (particles .length, maxParticles); i < length; ++ i)
          {
             particles [i] .life     = 1;
             particles [i] .lifetime = -1;
          }
 
-         for (var i = particles .length, length = maxParticles; i < length; ++ i)
+         for (let i = particles .length; i < maxParticles; ++ i)
          {
             particles [i] = {
                id: i,
@@ -600,26 +602,26 @@ function (Fields,
       },
       set_physics__: function ()
       {
-         var
+         const
             physics                  = this ._physics .getValue (),
             forcePhysicsModelNodes   = this .forcePhysicsModelNodes,
             boundedPhysicsModelNodes = this .boundedPhysicsModelNodes;
 
-         for (var i = 0, length = boundedPhysicsModelNodes .length; i < length; ++ i)
+         for (let i = 0, length = boundedPhysicsModelNodes .length; i < length; ++ i)
             boundedPhysicsModelNodes [i] .removeInterest ("set_boundedPhysics__", this);
 
          forcePhysicsModelNodes   .length = 0;
          boundedPhysicsModelNodes .length = 0;
 
-         for (var i = 0, length = physics .length; i < length; ++ i)
+         for (let i = 0, length = physics .length; i < length; ++ i)
          {
             try
             {
-               var
+               const
                   innerNode = physics [i] .getValue () .getInnerNode (),
                   type      = innerNode .getType ();
 
-               for (var t = type .length - 1; t >= 0; -- t)
+               for (let t = type .length - 1; t >= 0; -- t)
                {
                   switch (type [t])
                   {
@@ -650,7 +652,7 @@ function (Fields,
       },
       set_boundedPhysics__: function ()
       {
-         var
+         const
             boundedPhysicsModelNodes = this .boundedPhysicsModelNodes,
             boundedNormals           = this .boundedNormals,
             boundedVertices          = this .boundedVertices;
@@ -658,7 +660,7 @@ function (Fields,
          boundedNormals  .length = 0;
          boundedVertices .length = 0;
 
-         for (var i = 0, length = boundedPhysicsModelNodes .length; i < length; ++ i)
+         for (let i = 0, length = boundedPhysicsModelNodes .length; i < length; ++ i)
          {
             boundedPhysicsModelNodes [i] .addGeometry (boundedNormals, boundedVertices);
          }
@@ -680,23 +682,23 @@ function (Fields,
       },
       set_color__: function ()
       {
-         var
+         const
             colorKey  = this ._colorKey,
             colorKeys = this .colorKeys,
             colorRamp = this .colorRamp;
 
-         for (var i = 0, length = colorKey .length; i < length; ++ i)
+         for (let i = 0, length = colorKey .length; i < length; ++ i)
             colorKeys [i] = colorKey [i];
 
-         colorKeys .length = length;
+         colorKeys .length = colorKey .length;
 
          if (this .colorRampNode)
             this .colorRampNode .getVectors (this .colorRamp);
 
-         for (var i = colorRamp .length, length = colorKey .length; i < length; ++ i)
+         for (let i = colorRamp .length, length = colorKey .length; i < length; ++ i)
             colorRamp [i] = new Vector4 (1, 1, 1, 1);
 
-         colorRamp .length = length;
+         colorRamp .length = colorKey .length;
 
          this .geometryContext .colorMaterial = !! (colorKeys .length && this .colorRampNode);
       },
@@ -714,23 +716,23 @@ function (Fields,
       },
       set_texCoord__: function ()
       {
-         var
+         const
             texCoordKey  = this ._texCoordKey,
             texCoordKeys = this .texCoordKeys,
             texCoordRamp = this .texCoordRamp;
 
-         for (var i = 0, length = texCoordKey .length; i < length; ++ i)
+         for (let i = 0, length = texCoordKey .length; i < length; ++ i)
             texCoordKeys [i] = texCoordKey [i];
 
-         texCoordKeys .length = length;
+         texCoordKeys .length = texCoordKey .length;
 
          if (this .texCoordRampNode)
             this .texCoordRampNode .getTexCoord (texCoordRamp);
 
-         for (var i = texCoordRamp .length, length = texCoordKey .length * this .texCoordCount; i < length; ++ i)
+         for (let i = texCoordRamp .length, length = texCoordKey .length * this .texCoordCount; i < length; ++ i)
             texCoordRamp [i] = new Vector4 (0, 0, 0, 0);
 
-         texCoordRamp .length = length;
+         texCoordRamp .length = texCoordKey .length * this .texCoordCount;
 
          this .texCoordAnim = !! (texCoordKeys .length && this .texCoordRampNode);
       },
@@ -740,22 +742,22 @@ function (Fields,
       },
       animateParticles: function ()
       {
-         var emitterNode = this .emitterNode;
+         const emitterNode = this .emitterNode;
 
          // Determine delta time
 
-         var
+         const
             DELAY = 15, // Delay in frames when dt full applys.
             dt    = 1 / Math .max (10, this .getBrowser () .getCurrentFrameRate ());
 
-         // var deltaTime is only for the emitter, this.deltaTime is for the forces.
-         var deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
+         // let deltaTime is only for the emitter, this.deltaTime is for the forces.
+         let deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
 
          // Determine numParticles
 
          if (emitterNode .isExplosive ())
          {
-            var
+            const
                now              = performance .now () / 1000,
                particleLifetime = this .particleLifetime + this .particleLifetime * this .lifetimeVariation;
 
@@ -774,7 +776,7 @@ function (Fields,
          {
             if (this .numParticles < this .maxParticles)
             {
-               var
+               const
                   now          = performance .now () / 1000,
                   newParticles = Math .max (0, Math .floor ((now - this .creationTime) * this .maxParticles / this .particleLifetime));
 
@@ -789,7 +791,7 @@ function (Fields,
 
          if (emitterNode .getMass ())
          {
-            var
+            const
                forcePhysicsModelNodes = this .forcePhysicsModelNodes,
                velocities             = this .velocities,
                speeds                 = this .speeds,
@@ -798,21 +800,21 @@ function (Fields,
 
             // Collect forces in velocities and collect turbulences.
 
-            for (var i = velocities .length, length = forcePhysicsModelNodes .length; i < length; ++ i)
+            for (let i = velocities .length, length = forcePhysicsModelNodes .length; i < length; ++ i)
                velocities [i] = new Vector3 (0, 0, 0);
 
-            for (var i = 0, length = forcePhysicsModelNodes .length; i < length; ++ i)
+            for (let i = 0, length = forcePhysicsModelNodes .length; i < length; ++ i)
                forcePhysicsModelNodes [i] .addForce (i, emitterNode, velocities, turbulences);
 
             // Determine velocities from forces and determine speed.
 
-            for (var i = 0, length = velocities .length; i < length; ++ i)
+            for (let i = 0, length = velocities .length; i < length; ++ i)
             {
                velocities [i] .multiply (deltaMass);
                speeds [i] = velocities [i] .abs ();
             }
 
-            this .numForces = length;
+            this .numForces = velocities .length;
          }
          else
          {
@@ -850,7 +852,7 @@ function (Fields,
       },
       updatePoint: function ()
       {
-         var
+         const
             gl               = this .getBrowser () .getContext (),
             particles        = this .particles,
             numParticles     = this .numParticles,
@@ -864,9 +866,9 @@ function (Fields,
 
          if (this .geometryContext .colorMaterial)
          {
-            for (var i = 0; i < numParticles; ++ i)
+            for (let i = 0; i < numParticles; ++ i)
             {
-               var
+               const
                   color = particles [i] .color,
                   i4    = i * 4;
 
@@ -882,9 +884,9 @@ function (Fields,
 
          // Vertices
 
-         for (var i = 0; i < numParticles; ++ i)
+         for (let i = 0; i < numParticles; ++ i)
          {
-            var
+            const
                position    = particles [i] .position,
                elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
                i3          = i * 3,
@@ -913,7 +915,7 @@ function (Fields,
       },
       updateLine: function ()
       {
-         var
+         const
             gl               = this .getBrowser () .getContext (),
             particles        = this .particles,
             numParticles     = this .numParticles,
@@ -928,9 +930,9 @@ function (Fields,
 
          if (this .geometryContext .colorMaterial)
          {
-            for (var i = 0; i < numParticles; ++ i)
+            for (let i = 0; i < numParticles; ++ i)
             {
-               var
+               const
                   color = particles [i] .color,
                   i8    = i * 8;
 
@@ -951,9 +953,9 @@ function (Fields,
 
          // Vertices
 
-         for (var i = 0; i < numParticles; ++ i)
+         for (let i = 0; i < numParticles; ++ i)
          {
-            var
+            const
                particle    = particles [i],
                position    = particle .position,
                elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
@@ -1003,7 +1005,7 @@ function (Fields,
       {
          try
          {
-            var
+            const
                gl               = this .getBrowser () .getContext (),
                particles        = this .particles,
                maxParticles     = this .maxParticles,
@@ -1022,9 +1024,9 @@ function (Fields,
 
 //				if (this .sortParticles) // always false
 //				{
-//					for (var i = 0; i < numParticles; ++ i)
+//					for (let i = 0; i < numParticles; ++ i)
 //					{
-//						var particle = particles [i];
+//						const particle = particles [i];
 //						particle .distance = modelViewMatrix .getDepth (particle .position);
 //					}
 //
@@ -1038,9 +1040,9 @@ function (Fields,
             {
                if (this .geometryContext .colorMaterial)
                {
-                  for (var i = 0; i < maxParticles; ++ i)
+                  for (let i = 0; i < maxParticles; ++ i)
                   {
-                     var
+                     const
                         color = particles [i] .color,
                         i24   = i * 24;
 
@@ -1064,19 +1066,18 @@ function (Fields,
 
                if (this .texCoordAnim && this .texCoordArray .length)
                {
-                  var
+                  const
                      texCoordKeys = this .texCoordKeys,
-                     texCoordRamp = this .texCoordRamp;
+                     texCoordRamp = this .texCoordRamp,
+                     length       = texCoordKeys .length;
 
-                  var
-                     length = texCoordKeys .length,
-                     index0 = 0;
+                  let index0 = 0;
 
-                  for (var i = 0; i < maxParticles; ++ i)
+                  for (let i = 0; i < maxParticles; ++ i)
                   {
                      // Determine index0.
 
-                     var
+                     const
                         particle = particles [i],
                         fraction = particle .elapsedTime / particle .lifetime;
 
@@ -1090,7 +1091,7 @@ function (Fields,
                      }
                      else
                      {
-                        var index = Algorithm .upperBound (texCoordKeys, 0, length, fraction, Algorithm .less);
+                        const index = Algorithm .upperBound (texCoordKeys, 0, length, fraction, Algorithm .less);
 
                         if (index < length)
                            index0 = index - 1;
@@ -1102,12 +1103,12 @@ function (Fields,
 
                      index0 *= this .texCoordCount;
 
-                     var
+                     const
                         texCoord1 = texCoordRamp [index0],
                         texCoord2 = texCoordRamp [index0 + 1],
                         texCoord3 = texCoordRamp [index0 + 2],
                         texCoord4 = texCoordRamp [index0 + 3],
-                        i24 = i * 24;
+                        i24       = i * 24;
 
                      // p4 ------ p3
                      // |       / |
@@ -1154,19 +1155,19 @@ function (Fields,
                {
                   // Normals
 
-                  var rotation = this .getScreenAlignedRotation (modelViewMatrix);
+                  const rotation = this .getScreenAlignedRotation (modelViewMatrix);
 
                   normal
                      .set (rotation [0], rotation [1], rotation [2])
                      .cross (vector .set (rotation [3], rotation [4], rotation [5]))
                      .normalize ();
 
-                  var
+                  const
                      nx = normal .x,
                      ny = normal .y,
                      nz = normal .z;
 
-                  for (var i = 0, length = 6 * 3 * maxParticles; i < length; i += 3)
+                  for (let i = 0, length = 6 * 3 * maxParticles; i < length; i += 3)
                   {
                      normalArray [i]     = nx;
                      normalArray [i + 1] = ny;
@@ -1188,9 +1189,9 @@ function (Fields,
                   rotation .multVecMatrix (s3);
                   rotation .multVecMatrix (s4);
 
-                  for (var i = 0; i < numParticles; ++ i)
+                  for (let i = 0; i < numParticles; ++ i)
                   {
-                     var
+                     const
                         position    = particles [i] .position,
                         elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
                         x           = position .x,
@@ -1250,9 +1251,9 @@ function (Fields,
             {
                if (! modelViewMatrix) // if called from animateParticles
                {
-                  for (var i = 0; i < numParticles; ++ i)
+                  for (let i = 0; i < numParticles; ++ i)
                   {
-                     var
+                     const
                         position    = particles [i] .position,
                         elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
                         x           = position .x,
@@ -1365,7 +1366,7 @@ function (Fields,
 
          if (this .geometryType === GEOMETRY)
          {
-            var geometryNode = this .getGeometry ();
+            const geometryNode = this .getGeometry ();
 
             if (geometryNode)
                geometryNode .displayParticlesDepth (gl, context, shaderNode, this .particles, this .numParticles);
@@ -1456,7 +1457,7 @@ function (Fields,
                   {
                      // Wireframes are always solid so only one drawing call is needed.
 
-                     for (var i = 0, length = this .numParticles * this .vertexCount; i < length; i += 3)
+                     for (let i = 0, length = this .numParticles * this .vertexCount; i < length; i += 3)
                         gl .drawArrays (shaderNode .primitiveMode, i, 3);
                   }
                   else
@@ -1501,7 +1502,7 @@ function (Fields,
 
          x .assign (viewerYAxis) .cross (billboardToScreen);
          y .assign (billboardToScreen) .cross (x);
-         var z = billboardToScreen;
+         const z = billboardToScreen;
 
          // Compose rotation
 

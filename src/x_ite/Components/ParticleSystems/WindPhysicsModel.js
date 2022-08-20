@@ -100,7 +100,7 @@ function (Fields,
       },
       getRandomSpeed: function (emitterNode)
       {
-         var
+         const
             speed     = Math .max (0, this ._speed .getValue ()),
             variation = speed * Math .max (0, this ._gustiness .getValue ());
 
@@ -108,17 +108,17 @@ function (Fields,
       },
       addForce: (function ()
       {
-         var force = new Vector3 (0, 0, 0);
+         const force = new Vector3 (0, 0, 0);
 
          return function (i, emitterNode, forces, turbulences)
          {
-            var surfaceArea = emitterNode ._surfaceArea .getValue ()
+            const surfaceArea = emitterNode ._surfaceArea .getValue ()
 
             if (this ._enabled .getValue ())
             {
-               var
-                  randomSpeed = this .getRandomSpeed (emitterNode),
-                  pressure    = Math .pow (10, 2 * Math .log (randomSpeed)) * 0.64615;
+               const
+                  speed    = this .getRandomSpeed (emitterNode),
+                  pressure = Math .pow (10, 2 * Math .log (speed)) * 0.64615;
 
                if (this ._direction .getValue () .equals (Vector3 .Zero))
                   emitterNode .getRandomNormal (force);
