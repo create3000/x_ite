@@ -244,28 +244,19 @@ function (Fields,
          // [life, lifetime, elapsedTime]
          this .createTimes = gpu .createKernel (function (times, length)
          {
-            if (this .thread .x < length)
-               return times [this .thread .x];
-            else
-              return [0, -1, 0];
+            return this .thread .x < length ? times [this .thread .x] : [0, -1, 0];
          },
          kernelOptions);
 
          this .createVelocities = gpu .createKernel (function (velocities, length)
          {
-            if (this .thread .x < length)
-               return velocities [this .thread .x];
-            else
-              return [0, 0, 0];
+            return this .thread .x < length ? velocities [this .thread .x] : [0, 0, 0];
          },
          kernelOptions);
 
          this .createPositions = gpu .createKernel (function (positions, length)
          {
-            if (this .thread .x < length)
-               return positions [this .thread .x];
-            else
-              return [0, 0, 0];
+            return this .thread .x < length ? positions [this .thread .x] : [0, 0, 0];
          },
          kernelOptions);
 
