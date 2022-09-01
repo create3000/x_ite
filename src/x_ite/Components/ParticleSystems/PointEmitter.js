@@ -74,8 +74,6 @@ function (Fields,
       this ._speed       .setUnit ("speed");
       this ._mass        .setUnit ("mass");
       this ._surfaceArea .setUnit ("area");
-
-      this .direction = new Vector3 (0, 0, 0);
    }
 
    PointEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
@@ -106,41 +104,48 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this ._position  .addInterest ("set_position__", this);
+         this ._position  .addInterest ("set_position__",  this);
          this ._direction .addInterest ("set_direction__", this);
+
+         this .addFunction (function getRandomVelocity (speed)
+         {
+            if (this .constants .direction [0] == 0 &&
+                this .constants .direction [1] == 0 &&
+                this .constants .direction [2] == 0)
+            {
+               return getRandomSphericalVelocity (speed);
+            }
+            else
+            {
+               return [this .constants .direction [0] * speed,
+                       this .constants .direction [1] * speed,
+                       this .constants .direction [2] * speed];
+            }
+         });
+
+         this .addFunction (function getRandomPosition ()
+         {
+            return [this .constants .position [0],
+                    this .constants .position [1],
+                    this .constants .position [2]];
+         });
 
          this .set_position__ ();
          this .set_direction__ ();
       },
       set_position__: function ()
       {
-         this .position = this ._position .getValue ()
+         this .setConstant ("position", this ._position .getValue ());
       },
-      set_direction__: function ()
+      set_direction__: (function ()
       {
-         this .direction .assign (this ._direction .getValue ()) .normalize ();
+         const direction = new Vector3 (0, 0, 0);
 
-         if (this .direction .equals (Vector3 .Zero))
-            this .getRandomVelocity = this .getSphericalRandomVelocity;
-         else
-            delete this .getRandomVelocity;
-      },
-      getRandomPosition: function (position)
-      {
-         return position .assign (this .position);
-      },
-      getRandomVelocity: function (velocity)
-      {
-         const
-            direction = this .direction,
-            speed     = this .getRandomSpeed ();
-
-         velocity .x = direction .x * speed;
-         velocity .y = direction .y * speed;
-         velocity .z = direction .z * speed;
-
-         return velocity;
-       },
+         return function ()
+         {
+            this .setConstant ("direction", direction .assign (this ._direction .getValue ()) .normalize ());
+         };
+      })(),
    });
 
    return PointEmitter;

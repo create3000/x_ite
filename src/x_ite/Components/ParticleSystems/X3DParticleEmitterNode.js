@@ -96,6 +96,10 @@ function (X3DNode,
       this ._mass        .setUnit ("mass");
       this ._surfaceArea .setUnit ("area");
 
+      this .constants = { };
+      this .kernel    = [ ];
+      this .i         = 0;
+
       this .rotations           = [ ];
       this .intersections       = [ ];
       this .intersectionNormals = [ ];
@@ -109,25 +113,16 @@ function (X3DNode,
       {
          X3DNode .prototype .initialize .call (this);
 
-         this ._speed     .addInterest ("set_speed__", this);
+         this ._speed     .addInterest ("set_speed__",     this);
          this ._variation .addInterest ("set_variation__", this);
-         this ._mass      .addInterest ("set_mass__", this);
+         this ._mass      .addInterest ("set_mass__",      this);
+
+         this .kernel [0] = this .createKernel ();
+         this .kernel [1] = this .createKernel ();
 
          this .set_speed__ ();
          this .set_variation__ ();
          this .set_mass__ ();
-      },
-      set_speed__: function ()
-      {
-         this .speed = this ._speed .getValue ();
-      },
-      set_variation__: function ()
-      {
-         this .variation = this ._variation .getValue ();
-      },
-      set_mass__: function ()
-      {
-         this .mass = this ._mass .getValue ();
       },
       isExplosive: function ()
       {
@@ -137,44 +132,23 @@ function (X3DNode,
       {
          return this .mass;
       },
-      getRandomLifetime: function (particleLifetime, lifetimeVariation)
+      set_speed__: function ()
       {
-         const
-            v   = particleLifetime * lifetimeVariation,
-            min = Math .max (0, particleLifetime - v),
-            max = particleLifetime + v;
-
-         return Math .random () * (max - min) + min;
+         this .setConstant ("speed", this ._speed .getValue ());
       },
-      getRandomSpeed: function ()
+      set_variation__: function ()
       {
-         const
-            speed = this .speed,
-            v     = speed * this .variation,
-            min   = Math .max (0, speed - v),
-            max   = speed + v;
-
-         return Math .random () * (max - min) + min;
+         this .setConstant ("variation", this ._variation .getValue ());
       },
-      getSphericalRandomVelocity: function (velocity)
+      set_mass__: function ()
       {
-         return this .getRandomNormal (velocity) .multiply (this .getRandomSpeed ());
+         this .mass = this ._mass .getValue ();
+
+         this .setConstant ("mass", this ._mass .getValue ());
       },
       getRandomValue: function (min, max)
       {
          return Math .random () * (max - min) + min;
-      },
-      getRandomNormal: function (normal)
-      {
-         const
-            theta = this .getRandomValue (-1, 1) * Math .PI,
-            cphi  = this .getRandomValue (-1, 1),
-            phi   = Math .acos (cphi),
-            r     = Math .sin (phi);
-
-         return normal .set (Math .sin (theta) * r,
-                             Math .cos (theta) * r,
-                             cphi);
       },
       getRandomNormalWithAngle: function (angle, normal)
       {
@@ -210,17 +184,36 @@ function (X3DNode,
       {
          const
             particles         = particleSystem .particles,
-            numParticles      = particleSystem .numParticles,
-            createParticles   = particleSystem .createParticles,
+            numParticles      = Math .max (1, particleSystem .numParticles),
             particleLifetime  = particleSystem .particleLifetime,
             lifetimeVariation = particleSystem .lifetimeVariation,
+            createParticles   = particleSystem .createParticles,
             speeds            = particleSystem .speeds,            // speed of velocities
             velocities        = particleSystem .velocities,        // resulting velocities from forces
             turbulences       = particleSystem .turbulences,       // turbulences
             rotations         = this .rotations,                   // rotation to direction of force
             numForces         = particleSystem .numForces,         // number of forces
-            boundedPhysics    = particleSystem .boundedVertices .length,
+            boundedPhysics    = !! particleSystem .boundedVertices .length,
             boundedVolume     = particleSystem .boundedVolume;
+
+         this .i = (this .i + 1) % 2;
+
+         const result = this .kernel [this .i]
+            .setOutput ([numParticles]) (particles .times,
+                                         particles .velocities,
+                                         particles .positions,
+                                         particleLifetime,
+                                         lifetimeVariation,
+                                         createParticles,
+                                         deltaTime,
+                                         boundedPhysics);
+
+         particles .times      = result .times;
+         particles .velocities = result .velocities;
+         particles .positions  = result .positions;
+
+         console .log (result .positions .toArray () [0]);
+         return;
 
          for (let i = rotations .length; i < numForces; ++ i)
             rotations [i] = new Rotation4 (0, 0, 1, 0);
@@ -405,6 +398,152 @@ function (X3DNode,
             color .z = color0 .z + weight * (color1 .z - color0 .z);
             color .w = color0 .w + weight * (color1 .w - color0 .w);
          }
+      },
+      createKernel: function ()
+      {
+         return gpu .createKernelMap ({
+            times: function updateTimes (times, particleLifetime, lifetimeVariation, createParticles, deltaTime)
+            {
+               let
+                  time        = times [this .thread .x],
+                  life        = time [0],
+                  lifetime    = time [1],
+                  elapsedTime = time [2];
+
+               elapsedTime += deltaTime;
+
+               if (elapsedTime > lifetime)
+               {
+                  // Create new particle or hide particle.
+
+                  life       += createParticles ? 1 : 0;
+                  lifetime    = getRandomLifetime (particleLifetime, lifetimeVariation);
+                  elapsedTime = 0;
+               }
+
+               return [life, lifetime, elapsedTime];
+            },
+            velocities: function updateVelocities (time, velocities, createParticles, boundedPhysics)
+            {
+               const elapsedTime = time [2];
+
+               if (elapsedTime == 0)
+               {
+                  return createParticles ? getRandomVelocity (getRandomSpeed ()) : [0, 0, 0];
+               }
+               else
+               {
+                  const velocity = velocities [this .thread .x];
+
+                  return boundedPhysics ? bounce (velocity) : velocity;
+               }
+            },
+            positions: function updatePositions (time, velocity, positions, createParticles, deltaTime)
+            {
+               const elapsedTime = time [2];
+
+               if (elapsedTime == 0)
+               {
+                  return createParticles ? getRandomPosition () : [Infinity, Infinity, Infinity];
+               }
+               else
+               {
+                  // Animate particle.
+
+                  const position = positions [this .thread .x];
+
+                  // for (let f = 0; f < numForces; ++ f)
+                  // {
+                  //    velocity .add (rotations [f] .multVecRot (this .getRandomNormalWithAngle (turbulences [f], normal)) .multiply (speeds [f]));
+                  // }
+
+                  position [0] += velocity [0] * deltaTime;
+                  position [1] += velocity [1] * deltaTime;
+                  position [2] += velocity [2] * deltaTime;
+
+                  return position;
+               }
+            },
+         },
+         function (times, velocities, positions, particleLifetime, lifetimeVariation, createParticles, deltaTime, boundedPhysics)
+         {
+            // WORKAROUND: include Math.random()
+
+            const
+               time     = updateTimes (times, particleLifetime, lifetimeVariation, createParticles, deltaTime),
+               velocity = updateVelocities (time, velocities, createParticles, boundedPhysics),
+               position = updatePositions (time, velocity, positions, createParticles, deltaTime);
+
+            return position;
+         })
+         .setTactic ("precision")
+         .addFunction (function getRandomValue (min, max)
+         {
+            return Math .random () * (max - min) + min;
+         })
+         .addFunction (function getRandomLifetime (particleLifetime, lifetimeVariation)
+         {
+            const
+               v   = particleLifetime * lifetimeVariation,
+               min = Math .max (0, particleLifetime - v),
+               max = particleLifetime + v;
+
+            return getRandomValue (min, max);
+         })
+         .addFunction (function getRandomSpeed ()
+         {
+            const
+               speed = this .constants .speed,
+               v     = speed * this .constants .variation,
+               min   = Math .max (0.0, speed - v),
+               max   = speed + v;
+
+            return getRandomValue (min, max);
+         })
+         .addFunction (function getRandomNormal ()
+         {
+            const
+               theta = this .getRandomValue (-1, 1) * Math .PI,
+               cphi  = this .getRandomValue (-1, 1),
+               phi   = Math .acos (cphi),
+               r     = Math .sin (phi);
+
+            return [Math .sin (theta) * r,
+                    Math .cos (theta) * r,
+                    cphi];
+         })
+         .addFunction (function getRandomSphericalVelocity (speed)
+         {
+            const normal = getRandomNormal ();
+
+            return [normal [0] * speed,
+                    normal [1] * speed,
+                    normal [2] * speed];
+         })
+         .addFunction (function getRandomPosition ()
+         {
+            return [0, 0, 0];
+         })
+         .addFunction (function bounce (velocity)
+         {
+            return velocity;
+         })
+         .setPipeline (true)
+         .setDynamicOutput (true);
+      },
+      setConstant: function (name, value)
+      {
+         const constants = this .constants;
+
+         constants [name] = value;
+
+         this .kernel [0] .setConstants (constants);
+         this .kernel [1] .setConstants (constants);
+      },
+      addFunction: function (func)
+      {
+         this .kernel [0] .addFunction (func);
+         this .kernel [1] .addFunction (func);
       },
    });
 
