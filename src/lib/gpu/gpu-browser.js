@@ -15111,7 +15111,6 @@
           throw new Error('Error compiling vertex shader: ' + gl.getShaderInfoLog(vertShader));
         }
         if (!gl.getShaderParameter(fragShader, gl.COMPILE_STATUS)) {
-          console.log(compiledFragmentShader);
           throw new Error('Error compiling fragment shader: ' + gl.getShaderInfoLog(fragShader));
         }
 

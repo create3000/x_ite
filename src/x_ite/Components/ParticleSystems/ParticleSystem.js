@@ -233,9 +233,9 @@ function (Fields,
             dynamicOutput: true,
          };
 
-         const createTimes      = gpu .createKernel (function () { return [-1, 0, 0]; }, kernelOptions) .setOutput ([1]);
-         const createVelocities = gpu .createKernel (function () { return [ 0, 0, 0]; }, kernelOptions) .setOutput ([1]);
-         const createPositions  = gpu .createKernel (function () { return [ 0, 0, 0]; }, kernelOptions) .setOutput ([1]);
+         const createTimes      = gpu .createKernel (function () { return [0, 0, 0]; }, kernelOptions) .setOutput ([1]);
+         const createVelocities = gpu .createKernel (function () { return [0, 0, 0]; }, kernelOptions) .setOutput ([1]);
+         const createPositions  = gpu .createKernel (function () { return [0, 0, 0]; }, kernelOptions) .setOutput ([1]);
 
          this .particles .times      = createTimes ();
          this .particles .velocities = createVelocities ();

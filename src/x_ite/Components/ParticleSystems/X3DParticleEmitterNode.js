@@ -202,10 +202,10 @@ function (X3DNode,
             .setOutput ([numParticles]) (particles .times,
                                          particles .velocities,
                                          particles .positions,
+                                         deltaTime,
                                          particleLifetime,
                                          lifetimeVariation,
                                          createParticles,
-                                         deltaTime,
                                          boundedPhysics);
 
          particles .times      = result .times;
@@ -402,7 +402,7 @@ function (X3DNode,
       createKernel: function ()
       {
          return gpu .createKernelMap ({
-            times: function updateTimes (times, particleLifetime, lifetimeVariation, createParticles, deltaTime)
+            times: function updateTimes (times, deltaTime, particleLifetime, lifetimeVariation, createParticles)
             {
                let
                   time        = times [this .thread .x],
@@ -438,7 +438,7 @@ function (X3DNode,
                   return boundedPhysics ? bounce (velocity) : velocity;
                }
             },
-            positions: function updatePositions (time, velocity, positions, createParticles, deltaTime)
+            positions: function updatePositions (time, velocity, positions, deltaTime, createParticles)
             {
                const elapsedTime = time [2];
 
@@ -465,14 +465,14 @@ function (X3DNode,
                }
             },
          },
-         function (times, velocities, positions, particleLifetime, lifetimeVariation, createParticles, deltaTime, boundedPhysics)
+         function (times, velocities, positions, deltaTime, particleLifetime, lifetimeVariation, createParticles, boundedPhysics)
          {
             // WORKAROUND: include Math.random()
 
             const
-               time     = updateTimes (times, particleLifetime, lifetimeVariation, createParticles, deltaTime),
+               time     = updateTimes (times, deltaTime, particleLifetime, lifetimeVariation, createParticles),
                velocity = updateVelocities (time, velocities, createParticles, boundedPhysics),
-               position = updatePositions (time, velocity, positions, createParticles, deltaTime);
+               position = updatePositions (time, velocity, positions, deltaTime, createParticles);
 
             return position;
          })
@@ -519,10 +519,6 @@ function (X3DNode,
             return [normal [0] * speed,
                     normal [1] * speed,
                     normal [2] * speed];
-         })
-         .addFunction (function getRandomPosition ()
-         {
-            return [0, 0, 0];
          })
          .addFunction (function bounce (velocity)
          {
