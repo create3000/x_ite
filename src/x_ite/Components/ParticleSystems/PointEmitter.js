@@ -109,25 +109,25 @@ function (Fields,
 
          this .addFunction (function getRandomVelocity (speed)
          {
-            if (this .constants .direction [0] == 0 &&
-                this .constants .direction [1] == 0 &&
-                this .constants .direction [2] == 0)
+            if (this .constants .directionX == 0 &&
+                this .constants .directionY == 0 &&
+                this .constants .directionZ == 0)
             {
                return getRandomSphericalVelocity (speed);
             }
             else
             {
-               return [this .constants .direction [0] * speed,
-                       this .constants .direction [1] * speed,
-                       this .constants .direction [2] * speed];
+               return [this .constants .directionX * speed,
+                       this .constants .directionY * speed,
+                       this .constants .directionZ * speed];
             }
          });
 
          this .addFunction (function getRandomPosition ()
          {
-            return [this .constants .position [0],
-                    this .constants .position [1],
-                    this .constants .position [2]];
+            return [this .constants .positionX,
+                    this .constants .positionY,
+                    this .constants .positionZ];
          });
 
          this .set_position__ ();
@@ -135,7 +135,11 @@ function (Fields,
       },
       set_position__: function ()
       {
-         this .setConstant ("position", this ._position .getValue ());
+         const position = this ._position .getValue ();
+
+         this .setConstant ("positionX", position .x);
+         this .setConstant ("positionY", position .y);
+         this .setConstant ("positionZ", position .z);
       },
       set_direction__: (function ()
       {
@@ -143,7 +147,11 @@ function (Fields,
 
          return function ()
          {
-            this .setConstant ("direction", direction .assign (this ._direction .getValue ()) .normalize ());
+            direction .assign (this ._direction .getValue ()) .normalize ();
+
+            this .setConstant ("directionX", direction .x);
+            this .setConstant ("directionY", direction .y);
+            this .setConstant ("directionZ", direction .z);
          };
       })(),
    });

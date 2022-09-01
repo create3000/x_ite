@@ -99,6 +99,7 @@ function (X3DNode,
       this .constants = { };
       this .kernel    = [ ];
       this .i         = 0;
+      this .output    = [0];
 
       this .rotations           = [ ];
       this .intersections       = [ ];
@@ -184,6 +185,7 @@ function (X3DNode,
       {
          const
             particles         = particleSystem .particles,
+            maxParticles      = particleSystem .maxParticles,
             numParticles      = Math .max (1, particleSystem .numParticles),
             particleLifetime  = particleSystem .particleLifetime,
             lifetimeVariation = particleSystem .lifetimeVariation,
@@ -196,23 +198,23 @@ function (X3DNode,
             boundedPhysics    = !! particleSystem .boundedVertices .length,
             boundedVolume     = particleSystem .boundedVolume;
 
-         this .i = (this .i + 1) % 2;
+         this .i          = (this .i + 1) % 2;
+         this .output [0] = maxParticles;
 
          const result = this .kernel [this .i]
-            .setOutput ([numParticles]) (particles .times,
-                                         particles .velocities,
-                                         particles .positions,
-                                         deltaTime,
-                                         particleLifetime,
-                                         lifetimeVariation,
-                                         createParticles,
-                                         boundedPhysics);
+            .setOutput (this .output) (particles .times,
+                                       particles .velocities,
+                                       particles .positions,
+                                       numParticles,
+                                       particleLifetime,
+                                       lifetimeVariation,
+                                       createParticles,
+                                       boundedPhysics,
+                                       deltaTime);
 
          particles .times      = result .times;
          particles .velocities = result .velocities;
          particles .positions  = result .positions;
-
-         console .log (result .positions .toArray () [0]);
          return;
 
          for (let i = rotations .length; i < numForces; ++ i)
@@ -402,7 +404,7 @@ function (X3DNode,
       createKernel: function ()
       {
          return gpu .createKernelMap ({
-            times: function updateTimes (times, deltaTime, particleLifetime, lifetimeVariation, createParticles)
+            times: function updateTimes (times, numParticles, particleLifetime, lifetimeVariation, createParticles, deltaTime)
             {
                let
                   time        = times [this .thread .x],
@@ -410,69 +412,86 @@ function (X3DNode,
                   lifetime    = time [1],
                   elapsedTime = time [2];
 
-               elapsedTime += deltaTime;
-
-               if (elapsedTime > lifetime)
+               if (this .thread .x < numParticles)
                {
-                  // Create new particle or hide particle.
+                  elapsedTime += deltaTime;
 
-                  life       += createParticles ? 1 : 0;
-                  lifetime    = getRandomLifetime (particleLifetime, lifetimeVariation);
-                  elapsedTime = 0;
+                  if (elapsedTime > lifetime)
+                  {
+                     // Create new particle or hide particle.
+
+                     life       += createParticles ? 1 : 0;
+                     lifetime    = getRandomLifetime (particleLifetime, lifetimeVariation);
+                     elapsedTime = 0;
+                  }
                }
 
                return [life, lifetime, elapsedTime];
             },
-            velocities: function updateVelocities (time, velocities, createParticles, boundedPhysics)
+            velocities: function updateVelocities (time, velocities, numParticles, createParticles, boundedPhysics)
             {
-               const elapsedTime = time [2];
-
-               if (elapsedTime == 0)
+               if (this .thread .x < numParticles)
                {
-                  return createParticles ? getRandomVelocity (getRandomSpeed ()) : [0, 0, 0];
+                  const elapsedTime = time [2];
+
+                  if (elapsedTime == 0)
+                  {
+                     return createParticles ? getRandomVelocity (getRandomSpeed ()) : [0, 0, 0];
+                  }
+                  else
+                  {
+                     const velocity = velocities [this .thread .x];
+
+                     return boundedPhysics ? bounce (velocity) : velocity;
+                  }
                }
                else
                {
-                  const velocity = velocities [this .thread .x];
-
-                  return boundedPhysics ? bounce (velocity) : velocity;
+                  return velocities [this .thread .x];
                }
             },
-            positions: function updatePositions (time, velocity, positions, deltaTime, createParticles)
+            positions: function updatePositions (time, velocity, positions, numParticles, createParticles, deltaTime)
             {
-               const elapsedTime = time [2];
-
-               if (elapsedTime == 0)
+               if (this .thread .x < numParticles)
                {
-                  return createParticles ? getRandomPosition () : [Infinity, Infinity, Infinity];
+                  const elapsedTime = time [2];
+
+                  if (elapsedTime == 0)
+                  {
+                     return createParticles ? getRandomPosition () : [Infinity, Infinity, Infinity];
+                  }
+                  else
+                  {
+                     // Animate particle.
+
+                     const position = positions [this .thread .x];
+
+                     // for (let f = 0; f < numForces; ++ f)
+                     // {
+                     //    velocity .add (rotations [f] .multVecRot (this .getRandomNormalWithAngle (turbulences [f], normal)) .multiply (speeds [f]));
+                     // }
+
+                     position [0] += velocity [0] * deltaTime;
+                     position [1] += velocity [1] * deltaTime;
+                     position [2] += velocity [2] * deltaTime;
+
+                     return position;
+                  }
                }
                else
                {
-                  // Animate particle.
-
-                  const position = positions [this .thread .x];
-
-                  // for (let f = 0; f < numForces; ++ f)
-                  // {
-                  //    velocity .add (rotations [f] .multVecRot (this .getRandomNormalWithAngle (turbulences [f], normal)) .multiply (speeds [f]));
-                  // }
-
-                  position [0] += velocity [0] * deltaTime;
-                  position [1] += velocity [1] * deltaTime;
-                  position [2] += velocity [2] * deltaTime;
-
-                  return position;
+                  return positions [this .thread .x];
                }
             },
          },
-         function (times, velocities, positions, deltaTime, particleLifetime, lifetimeVariation, createParticles, boundedPhysics)
+         function (times, velocities, positions, numParticles, particleLifetime, lifetimeVariation, createParticles, boundedPhysics, deltaTime)
          {
             // WORKAROUND: include Math.random()
 
             const
-               time     = updateTimes (times, deltaTime, particleLifetime, lifetimeVariation, createParticles),
-               velocity = updateVelocities (time, velocities, createParticles, boundedPhysics),
-               position = updatePositions (time, velocity, positions, deltaTime, createParticles);
+               time     = updateTimes (times, numParticles, particleLifetime, lifetimeVariation, createParticles, deltaTime),
+               velocity = updateVelocities (time, velocities, numParticles, createParticles, boundedPhysics),
+               position = updatePositions (time, velocity, positions, numParticles, createParticles, deltaTime);
 
             return position;
          })
@@ -495,7 +514,7 @@ function (X3DNode,
             const
                speed = this .constants .speed,
                v     = speed * this .constants .variation,
-               min   = Math .max (0.0, speed - v),
+               min   = Math .max (0, speed - v),
                max   = speed + v;
 
             return getRandomValue (min, max);

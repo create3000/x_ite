@@ -422,14 +422,39 @@ function (Fields,
          {
             case POINT:
             {
+               this .getPositionArray = gpu .createKernel (function (positions)
+               {
+                  return positions [this .thread .x / 3] [this .thread .x % 3];
+               })
+               .setTactic ("precision")
+               .setOutput ([3 * maxParticles]);
+
+               this .getVertexArray = gpu .createKernel (function (positions)
+               {
+                  const column = this .thread .x % 4;
+
+                  if (column == 3)
+                  {
+                     return 1;
+                  }
+                  else
+                  {
+                     const
+                        row      = this .thread .x / 4,
+                        position = positions [row];
+
+                     return position [column];
+                  }
+               })
+               .setTactic ("precision")
+               .setOutput ([4 * maxParticles]);
+
                this .idArray          = new Float32Array (maxParticles);
-               this .positionArray    = new Float32Array (3 * maxParticles);
                this .elapsedTimeArray = new Float32Array (maxParticles);
                this .lifeArray        = new Float32Array (maxParticles);
                this .colorArray       = new Float32Array (4 * maxParticles);
                this .texCoordArray    = new Float32Array ();
                this .normalArray      = new Float32Array ();
-               this .vertexArray      = new Float32Array (4 * maxParticles);
 
                for (let i = 0, a = this .idArray, l = a .length; i < l; ++ i)
                   a [i] = i;
@@ -903,11 +928,9 @@ function (Fields,
             gl               = this .getBrowser () .getContext (),
             particles        = this .particles,
             numParticles     = this .numParticles,
-            positionArray    = this .positionArray,
             elapsedTimeArray = this .elapsedTimeArray,
             lifeArray        = this .lifeArray,
-            colorArray       = this .colorArray,
-            vertexArray      = this .vertexArray;
+            colorArray       = this .colorArray;
 
          // Colors
 
@@ -933,23 +956,14 @@ function (Fields,
 
          for (let i = 0; i < numParticles; ++ i)
          {
-            const
-               position    = particles [i] .position,
-               elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
-               i3          = i * 3,
-               i4          = i * 4;
-
-            positionArray [i3]     = position .x;
-            positionArray [i3 + 1] = position .y;
-            positionArray [i3 + 2] = position .z;
+            const elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime;
 
             elapsedTimeArray [i] = elapsedTime;
             lifeArray [i]        = particles [i] .life;
-
-            vertexArray [i4]     = position .x;
-            vertexArray [i4 + 1] = position .y;
-            vertexArray [i4 + 2] = position .z;
          }
+
+         this .positionArray = this .getPositionArray (this .particles .positions);
+         this .vertexArray   = this .getVertexArray   (this .particles .positions);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .positionBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .positionArray, gl .STATIC_DRAW);

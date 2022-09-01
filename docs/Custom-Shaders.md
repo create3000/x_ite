@@ -621,7 +621,7 @@ If the shader node is part of a ParticleSystem node the following attributes are
 | attribute float | x3d\_ParticleId          | integer id of the particle                                |
 | attribute float | x3d\_ParticleLife        | integer number of current life cycle                      |
 | attribute float | x3d\_ParticleElapsedTime | elapsed time normalized in the range \[0, 1\]             |
-| attribute vec4  | x3d\_ParticlePosition    | center coordinate of particle, in relation to x3d\_Vertex |
+| attribute vec3  | x3d\_ParticlePosition    | center coordinate of particle, in relation to x3d\_Vertex |
 
 If the ParticleSystem.*geometryType* is GEOMETRY the following uniforms are available.
 
