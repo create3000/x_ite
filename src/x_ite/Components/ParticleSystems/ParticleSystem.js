@@ -270,12 +270,6 @@ function (Fields,
          for (let i = 1, channels = this .getBrowser () .getMaxTextures (); i < channels; ++ i)
             this .texCoordBuffers .push (this .texCoordBuffers [0]);
 
-         this .idArray       = new Float32Array ();
-         this .colorArray    = new Float32Array ();
-         this .texCoordArray = new Float32Array ();
-         this .normalArray   = new Float32Array ();
-         this .vertexArray   = new Float32Array ();
-
          this .primitiveMode = gl .TRIANGLES;
 
          // Geometry context
@@ -415,16 +409,13 @@ function (Fields,
          {
             case POINT:
             {
-               this .idArray       = new Float32Array (maxParticles);
-               this .colorArray    = new Float32Array (4 * maxParticles);
-               this .texCoordArray = new Float32Array ();
-               this .normalArray   = new Float32Array ();
+               this .idArray = new Float32Array (maxParticles);
+
+               delete this .texCoordArray;
+               delete this .normalArray;
 
                for (let i = 0, a = this .idArray, l = a .length; i < l; ++ i)
                   a [i] = i;
-
-               this .colorArray  .fill (1);
-               this .vertexArray .fill (1);
 
                this .testWireframe = false;
                this .primitiveMode = gl .POINTS;
@@ -436,17 +427,13 @@ function (Fields,
             }
             case LINE:
             {
-               this .idArray       = new Float32Array (2 * maxParticles);
-               this .colorArray    = new Float32Array (2 * 4 * maxParticles);
-               this .texCoordArray = new Float32Array ();
-               this .normalArray   = new Float32Array ();
-               this .vertexArray   = new Float32Array (2 * 4 * maxParticles);
+               this .idArray = new Float32Array (2 * maxParticles);
+
+               delete this .texCoordArray;
+               delete this .normalArray;
 
                for (let i = 0, a = this .idArray, l = a .length; i < l; ++ i)
                   a [i] = Math .floor (i / 2);
-
-               this .colorArray  .fill (1);
-               this .vertexArray .fill (1);
 
                this .testWireframe = false;
                this .primitiveMode = gl .LINES;
@@ -461,16 +448,11 @@ function (Fields,
             case SPRITE:
             {
                this .idArray       = new Float32Array (6 * maxParticles);
-               this .colorArray    = new Float32Array (6 * 4 * maxParticles);
                this .texCoordArray = new Float32Array (6 * 4 * maxParticles);
                this .normalArray   = new Float32Array (6 * 3 * maxParticles);
-               this .vertexArray   = new Float32Array (6 * 4 * maxParticles);
 
                for (let i = 0, a = this .idArray, l = a .length; i < l; ++ i)
                   a [i] = Math .floor (i / 6);
-
-               this .colorArray  .fill (1);
-               this .vertexArray .fill (1);
 
                const
                   texCoordArray = this .texCoordArray,
@@ -890,10 +872,10 @@ function (Fields,
          //    lifeArray [i]        = particles [i] .life;
          // }
 
-         this .vertexArray = particles .positions .renderRawOutput ();
+         const vertexArray = particles .positions .renderRawOutput ();
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, vertexArray, gl .STATIC_DRAW);
       },
       updateLine: function ()
       {
@@ -1394,10 +1376,10 @@ function (Fields,
                   if (this .geometryContext .colorMaterial)
                      shaderNode .enableColorAttribute (gl, this .colorBuffer);
 
-                  if (this .texCoordArray .length)
+                  if (this .texCoordArray)
                      shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
 
-                  if (this .normalArray .length)
+                  if (this .normalArray)
                      shaderNode .enableNormalAttribute (gl, this .normalBuffer);
 
                   shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
