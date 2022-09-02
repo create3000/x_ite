@@ -128,8 +128,7 @@ function (Fields,
 
       this .createParticles          = true;
       this .particles                = [ ];
-      this .velocities               = [ ];
-      this .speeds                   = [ ];
+      this .forces                   = [ ];
       this .turbulences              = [ ];
       this .geometryType             = POINT;
       this .maxParticles             = 0;
@@ -865,28 +864,24 @@ function (Fields,
          {
             const
                forcePhysicsModelNodes = this .forcePhysicsModelNodes,
-               velocities             = this .velocities,
-               speeds                 = this .speeds,
+               forces                 = this .forces,
                turbulences            = this .turbulences,
                deltaMass              = this .deltaTime / emitterNode .getMass ();
 
             // Collect forces in velocities and collect turbulences.
 
-            for (let i = velocities .length, length = forcePhysicsModelNodes .length; i < length; ++ i)
-               velocities [i] = new Vector3 (0, 0, 0);
+            for (let i = forces .length, length = forcePhysicsModelNodes .length; i < length; ++ i)
+               forces [i] = new Vector3 (0, 0, 0);
 
             for (let i = 0, length = forcePhysicsModelNodes .length; i < length; ++ i)
-               forcePhysicsModelNodes [i] .addForce (i, emitterNode, velocities, turbulences);
+               forcePhysicsModelNodes [i] .addForce (i, emitterNode, forces, turbulences);
 
-            // Determine velocities from forces and determine speed.
+            // Determine velocities from forces.
 
-            for (let i = 0, length = velocities .length; i < length; ++ i)
-            {
-               velocities [i] .multiply (deltaMass);
-               speeds [i] = velocities [i] .abs ();
-            }
+           for (let i = 0, length = forces .length; i < length; ++ i)
+              forces [i] .multiply (deltaMass);
 
-            this .numForces = velocities .length;
+            this .numForces = forces .length;
          }
          else
          {
