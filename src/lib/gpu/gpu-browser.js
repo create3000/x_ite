@@ -10313,9 +10313,11 @@
           this.texture,
           0
         );
-        const result = new Float32Array(size[0] * size[1] * 4);
-        gl.readPixels(0, 0, size[0], size[1], gl.RGBA, gl.FLOAT, result);
-        return result;
+        const length = size[0] * size[1] * 4;
+        if (!this .rawOutput || this .rawOutput .length !== length)
+          this .rawOutput = new Float32Array(length);
+        gl.readPixels(0, 0, size[0], size[1], gl.RGBA, gl.FLOAT, this .rawOutput);
+        return this .rawOutput;
       }
       renderValues() {
         if (this._deleted) return null;
@@ -10551,9 +10553,11 @@
           this.texture,
           0
         );
-        const result = new Uint8Array(this.size[0] * this.size[1] * 4);
-        gl.readPixels(0, 0, this.size[0], this.size[1], gl.RGBA, gl.UNSIGNED_BYTE, result);
-        return result;
+        const length = this.size[0] * this.size[1] * 4;
+        if (!this .rawOutput || this .rawOutput .length !== length)
+          this .rawOutput = new Uint8Array(length);
+        gl.readPixels(0, 0, this.size[0], this.size[1], gl.RGBA, gl.UNSIGNED_BYTE, this .rawOutput);
+        return this .rawOutput;
       }
       renderValues() {
         if (this._deleted) return null;
@@ -15111,6 +15115,7 @@
           throw new Error('Error compiling vertex shader: ' + gl.getShaderInfoLog(vertShader));
         }
         if (!gl.getShaderParameter(fragShader, gl.COMPILE_STATUS)) {
+          console.log(compiledFragmentShader);
           throw new Error('Error compiling fragment shader: ' + gl.getShaderInfoLog(fragShader));
         }
 

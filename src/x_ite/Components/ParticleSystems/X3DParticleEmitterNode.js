@@ -410,7 +410,7 @@ function (X3DNode,
                   }
                }
 
-               return [life, lifetime, elapsedTime];
+               return [life, lifetime, elapsedTime, 0];
             },
             velocities: function updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, boundedPhysics)
             {
@@ -420,7 +420,7 @@ function (X3DNode,
 
                   if (elapsedTime == 0)
                   {
-                     return createParticles ? getRandomVelocity (getRandomSpeed ()) : [0, 0, 0];
+                     return createParticles ? getRandomVelocity (getRandomSpeed ()) : [0, 0, 0, 0];
                   }
                   else
                   {
@@ -455,7 +455,7 @@ function (X3DNode,
 
                   if (elapsedTime == 0)
                   {
-                     return createParticles ? getRandomPosition () : [Infinity, Infinity, Infinity];
+                     return createParticles ? getRandomPosition () : [Infinity, Infinity, Infinity, 0];
                   }
                   else
                   {
@@ -624,7 +624,8 @@ function (X3DNode,
 
             return [normal [0] * speed,
                     normal [1] * speed,
-                    normal [2] * speed];
+                    normal [2] * speed,
+                    0];
          })
          .addFunction (function bounce (velocity)
          {

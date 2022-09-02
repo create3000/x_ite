@@ -103,7 +103,7 @@ function (ViewVolume,
          const internalFormat = gl .getVersion () >= 2 ? gl .DEPTH_COMPONENT24 : gl .DEPTH_COMPONENT;
 
          gl .texImage2D (gl .TEXTURE_2D, 0, internalFormat, width, height, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
-         gl.framebufferTexture2D (gl .FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, this .depthTexture, 0);
+         gl .framebufferTexture2D (gl .FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, this .depthTexture, 0);
       }
       else
       {

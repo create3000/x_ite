@@ -119,7 +119,8 @@ function (Fields,
             {
                return [this .constants .direction [0] * speed,
                        this .constants .direction [1] * speed,
-                       this .constants .direction [2] * speed];
+                       this .constants .direction [2] * speed,
+                       0];
             }
          });
 
@@ -127,7 +128,8 @@ function (Fields,
          {
             return [this .constants .position [0],
                     this .constants .position [1],
-                    this .constants .position [2]];
+                    this .constants .position [2],
+                    1];
          });
 
          this .set_position__ ();

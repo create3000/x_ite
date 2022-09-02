@@ -232,9 +232,9 @@ function (Fields,
             dynamicOutput: true,
          };
 
-         const createTimes      = gpu .createKernel (function () { return [0, 0, 0]; }, kernelOptions) .setOutput ([1]);
-         const createVelocities = gpu .createKernel (function () { return [0, 0, 0]; }, kernelOptions) .setOutput ([1]);
-         const createPositions  = gpu .createKernel (function () { return [0, 0, 0]; }, kernelOptions) .setOutput ([1]);
+         const createTimes      = gpu .createKernel (function () { return [0, 0, 0, 0]; }, kernelOptions) .setOutput ([1]);
+         const createVelocities = gpu .createKernel (function () { return [0, 0, 0, 0]; }, kernelOptions) .setOutput ([1]);
+         const createPositions  = gpu .createKernel (function () { return [0, 0, 0, 1]; }, kernelOptions) .setOutput ([1]);
 
          this .particles .times      = createTimes ();
          this .particles .velocities = createVelocities ();
@@ -243,19 +243,19 @@ function (Fields,
          // [life, lifetime, elapsedTime]
          this .createTimes = gpu .createKernel (function (times, length)
          {
-            return this .thread .x < length ? times [this .thread .x] : [0, -1, 0];
+            return this .thread .x < length ? times [this .thread .x] : [0, -1, 0, 0];
          },
          kernelOptions);
 
          this .createVelocities = gpu .createKernel (function (velocities, length)
          {
-            return this .thread .x < length ? velocities [this .thread .x] : [0, 0, 0];
+            return this .thread .x < length ? velocities [this .thread .x] : [0, 0, 0, 0];
          },
          kernelOptions);
 
          this .createPositions = gpu .createKernel (function (positions, length)
          {
-            return this .thread .x < length ? positions [this .thread .x] : [0, 0, 0];
+            return this .thread .x < length ? positions [this .thread .x] : [0, 0, 0, 1];
          },
          kernelOptions);
 
@@ -421,33 +421,6 @@ function (Fields,
          {
             case POINT:
             {
-               this .getPositionArray = gpu .createKernel (function (positions)
-               {
-                  return positions [this .thread .x / 3] [this .thread .x % 3];
-               })
-               .setTactic ("precision")
-               .setOutput ([3 * maxParticles]);
-
-               this .getVertexArray = gpu .createKernel (function (positions)
-               {
-                  const column = this .thread .x % 4;
-
-                  if (column == 3)
-                  {
-                     return 1;
-                  }
-                  else
-                  {
-                     const
-                        row      = this .thread .x / 4,
-                        position = positions [row];
-
-                     return position [column];
-                  }
-               })
-               .setTactic ("precision")
-               .setOutput ([4 * maxParticles]);
-
                this .idArray          = new Float32Array (maxParticles);
                this .elapsedTimeArray = new Float32Array (maxParticles);
                this .lifeArray        = new Float32Array (maxParticles);
@@ -929,36 +902,35 @@ function (Fields,
 
          // Colors
 
-         if (this .geometryContext .colorMaterial)
-         {
-            for (let i = 0; i < numParticles; ++ i)
-            {
-               const
-                  color = particles [i] .color,
-                  i4    = i * 4;
+         // if (this .geometryContext .colorMaterial)
+         // {
+         //    for (let i = 0; i < numParticles; ++ i)
+         //    {
+         //       const
+         //          color = particles [i] .color,
+         //          i4    = i * 4;
 
-               colorArray [i4]     = color .x;
-               colorArray [i4 + 1] = color .y;
-               colorArray [i4 + 2] = color .z;
-               colorArray [i4 + 3] = color .w;
-            }
+         //       colorArray [i4]     = color .x;
+         //       colorArray [i4 + 1] = color .y;
+         //       colorArray [i4 + 2] = color .z;
+         //       colorArray [i4 + 3] = color .w;
+         //    }
 
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, this .colorArray, gl .STATIC_DRAW);
-         }
+         //    gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
+         //    gl .bufferData (gl .ARRAY_BUFFER, this .colorArray, gl .STATIC_DRAW);
+         // }
 
          // Vertices
 
-         for (let i = 0; i < numParticles; ++ i)
-         {
-            const elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime;
+         // for (let i = 0; i < numParticles; ++ i)
+         // {
+         //    const elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime;
 
-            elapsedTimeArray [i] = elapsedTime;
-            lifeArray [i]        = particles [i] .life;
-         }
+         //    elapsedTimeArray [i] = elapsedTime;
+         //    lifeArray [i]        = particles [i] .life;
+         // }
 
-         this .positionArray = this .getPositionArray (this .particles .positions);
-         this .vertexArray   = this .getVertexArray   (this .particles .positions);
+         this .vertexArray = this .particles .positions .renderRawOutput ();
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .positionBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .positionArray, gl .STATIC_DRAW);
