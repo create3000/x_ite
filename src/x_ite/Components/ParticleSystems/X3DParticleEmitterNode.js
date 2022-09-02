@@ -412,7 +412,7 @@ function (X3DNode,
 
                return [life, lifetime, elapsedTime];
             },
-            velocities: function updateVelocities (time, velocities, numParticles, createParticles, boundedPhysics)
+            velocities: function updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, boundedPhysics)
             {
                if (this .thread .x < numParticles)
                {
@@ -424,29 +424,7 @@ function (X3DNode,
                   }
                   else
                   {
-                     const velocity = velocities [this .thread .x];
-
-                     return boundedPhysics ? bounce (velocity) : velocity;
-                  }
-               }
-               else
-               {
-                  return velocities [this .thread .x];
-               }
-            },
-            positions: function updatePositions (time, velocity, positions, numParticles, createParticles, numForces, forces, turbulences, deltaTime)
-            {
-               if (this .thread .x < numParticles)
-               {
-                  const elapsedTime = time [2];
-
-                  if (elapsedTime == 0)
-                  {
-                     return createParticles ? getRandomPosition () : [Infinity, Infinity, Infinity];
-                  }
-                  else
-                  {
-                     // Animate particle.
+                     let velocity = velocities [this .thread .x];
 
                      for (let i = 0; i < numForces; ++ i)
                      {
@@ -460,6 +438,28 @@ function (X3DNode,
                         velocity [1] += normal [1] * speed;
                         velocity [2] += normal [2] * speed;
                      }
+
+                     return boundedPhysics ? bounce (velocity) : velocity;
+                  }
+               }
+               else
+               {
+                  return velocities [this .thread .x];
+               }
+            },
+            positions: function updatePositions (time, velocity, positions, numParticles, createParticles, deltaTime)
+            {
+               if (this .thread .x < numParticles)
+               {
+                  const elapsedTime = time [2];
+
+                  if (elapsedTime == 0)
+                  {
+                     return createParticles ? getRandomPosition () : [Infinity, Infinity, Infinity];
+                  }
+                  else
+                  {
+                     // Animate particle.
 
                      const position = positions [this .thread .x];
 
@@ -482,8 +482,8 @@ function (X3DNode,
 
             const
                time     = updateTimes (times, numParticles, particleLifetime, lifetimeVariation, createParticles, deltaTime),
-               velocity = updateVelocities (time, velocities, numParticles, createParticles, boundedPhysics),
-               position = updatePositions (time, velocity, positions, numParticles, createParticles, numForces, forces, turbulences, deltaTime);
+               velocity = updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, boundedPhysics),
+               position = updatePositions (time, velocity, positions, numParticles, createParticles, deltaTime);
 
             return position;
          })
@@ -491,23 +491,23 @@ function (X3DNode,
          .addFunction (function lengthV (v)
          {
             return Math .sqrt (v [0] * v [0] + v [1] * v [1] + v [2] * v [2]);
-         }, { argumentTypes: { v: 'Array(3)' }, returnType: 'Number' })
+         })
          .addFunction (function normalizeV (v)
          {
             const l = lengthV (v);
 
             return [v [0] / l, v [1] / l, v [2] / l];
-         }, { argumentTypes: { v: 'Array(3)' }, returnType: 'Array(3)' })
+         })
          .addFunction (function dotV (x, y)
          {
-            return x [0] * y [0] + x [1] * y [1] + x [2]  * y [2];
-         }, { argumentTypes: { x: 'Array(3)', y: 'Array(3)' }, returnType: 'Number' })
+            return x [0] * y [0] + x [1] * y [1] + x [2] * y [2];
+         })
          .addFunction (function crossV (x, y)
          {
-            return [x [1] * y [2] - y [1] * x[2],
-                    x [2] * y [0] - y [2] * x[0],
-                    x [0] * y [1] - y [0] * x[1]];
-         }, { argumentTypes: { x: 'Array(3)', y: 'Array(3)' }, returnType: 'Array(3)' })
+            return [x [1] * y [2] - y [1] * x [2],
+                    x [2] * y [0] - y [2] * x [0],
+                    x [0] * y [1] - y [0] * x [1]];
+         })
          .addFunction (function Quaternion (fromVector, toVector)
          {
             const from = normalizeV (fromVector);
@@ -546,7 +546,7 @@ function (X3DNode,
                        crossvec [2] * s,
                        Math .sqrt (Math .abs (1 + cos_angle) * 0.5)];
             }
-         }, { argumentTypes: { fromVector: 'Array(3)', toVector: 'Array(3)' }, returnType: 'Array(4)' })
+         })
          .addFunction (function multVecQuat (vector, quat)
          {
             const
@@ -562,7 +562,7 @@ function (X3DNode,
                rz = a * vz + b * qz + c * (qx * vy - qy * vx);
 
             return [rx, ry, rz];
-         }, { argumentTypes: { vector: 'Array(3)', quat: 'Array(4)' }, returnType: 'Array(3)' })
+         })
          .addFunction (function getRandomValue (min, max)
          {
             return Math .random () * (max - min) + min;
