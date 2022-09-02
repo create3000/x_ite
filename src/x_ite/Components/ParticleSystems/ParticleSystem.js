@@ -261,26 +261,20 @@ function (Fields,
 
          // Create GL stuff.
 
-         this .idBuffer           = gl .createBuffer ();
-         this .positionBuffer     = gl .createBuffer ();
-         this .elapsedTimeBuffer  = gl .createBuffer ();
-         this .lifeBuffer         = gl .createBuffer ();
-         this .colorBuffer        = gl .createBuffer ();
-         this .texCoordBuffers    = [ gl .createBuffer () ];
-         this .normalBuffer       = gl .createBuffer ();
-         this .vertexBuffer       = gl .createBuffer ();
+         this .idBuffer        = gl .createBuffer ();
+         this .colorBuffer     = gl .createBuffer ();
+         this .texCoordBuffers = [ gl .createBuffer () ];
+         this .normalBuffer    = gl .createBuffer ();
+         this .vertexBuffer    = gl .createBuffer ();
 
          for (let i = 1, channels = this .getBrowser () .getMaxTextures (); i < channels; ++ i)
             this .texCoordBuffers .push (this .texCoordBuffers [0]);
 
-         this .idArray          = new Float32Array ();
-         this .positionArray    = new Float32Array ();
-         this .elapsedTimeArray = new Float32Array ();
-         this .lifeArray        = new Float32Array ();
-         this .colorArray       = new Float32Array ();
-         this .texCoordArray    = new Float32Array ();
-         this .normalArray      = new Float32Array ();
-         this .vertexArray      = new Float32Array ();
+         this .idArray       = new Float32Array ();
+         this .colorArray    = new Float32Array ();
+         this .texCoordArray = new Float32Array ();
+         this .normalArray   = new Float32Array ();
+         this .vertexArray   = new Float32Array ();
 
          this .primitiveMode = gl .TRIANGLES;
 
@@ -421,12 +415,10 @@ function (Fields,
          {
             case POINT:
             {
-               this .idArray          = new Float32Array (maxParticles);
-               this .elapsedTimeArray = new Float32Array (maxParticles);
-               this .lifeArray        = new Float32Array (maxParticles);
-               this .colorArray       = new Float32Array (4 * maxParticles);
-               this .texCoordArray    = new Float32Array ();
-               this .normalArray      = new Float32Array ();
+               this .idArray       = new Float32Array (maxParticles);
+               this .colorArray    = new Float32Array (4 * maxParticles);
+               this .texCoordArray = new Float32Array ();
+               this .normalArray   = new Float32Array ();
 
                for (let i = 0, a = this .idArray, l = a .length; i < l; ++ i)
                   a [i] = i;
@@ -444,14 +436,11 @@ function (Fields,
             }
             case LINE:
             {
-               this .idArray          = new Float32Array (2 * maxParticles);
-               this .positionArray    = new Float32Array (2 * 3 * maxParticles);
-               this .elapsedTimeArray = new Float32Array (2 * maxParticles);
-               this .lifeArray        = new Float32Array (2 * maxParticles);
-               this .colorArray       = new Float32Array (2 * 4 * maxParticles);
-               this .texCoordArray    = new Float32Array ();
-               this .normalArray      = new Float32Array ();
-               this .vertexArray      = new Float32Array (2 * 4 * maxParticles);
+               this .idArray       = new Float32Array (2 * maxParticles);
+               this .colorArray    = new Float32Array (2 * 4 * maxParticles);
+               this .texCoordArray = new Float32Array ();
+               this .normalArray   = new Float32Array ();
+               this .vertexArray   = new Float32Array (2 * 4 * maxParticles);
 
                for (let i = 0, a = this .idArray, l = a .length; i < l; ++ i)
                   a [i] = Math .floor (i / 2);
@@ -471,14 +460,11 @@ function (Fields,
             case QUAD:
             case SPRITE:
             {
-               this .idArray          = new Float32Array (6 * maxParticles);
-               this .positionArray    = new Float32Array (6 * 3 * maxParticles);
-               this .elapsedTimeArray = new Float32Array (6 * maxParticles);
-               this .lifeArray        = new Float32Array (6 * maxParticles);
-               this .colorArray       = new Float32Array (6 * 4 * maxParticles);
-               this .texCoordArray    = new Float32Array (6 * 4 * maxParticles);
-               this .normalArray      = new Float32Array (6 * 3 * maxParticles);
-               this .vertexArray      = new Float32Array (6 * 4 * maxParticles);
+               this .idArray       = new Float32Array (6 * maxParticles);
+               this .colorArray    = new Float32Array (6 * 4 * maxParticles);
+               this .texCoordArray = new Float32Array (6 * 4 * maxParticles);
+               this .normalArray   = new Float32Array (6 * 3 * maxParticles);
+               this .vertexArray   = new Float32Array (6 * 4 * maxParticles);
 
                for (let i = 0, a = this .idArray, l = a .length; i < l; ++ i)
                   a [i] = Math .floor (i / 6);
@@ -587,29 +573,7 @@ function (Fields,
       },
       set_maxParticles__: function ()
       {
-         const
-            particles    = this .particles,
-            maxParticles = Math .max (0, this ._maxParticles .getValue ());
-
-         for (let i = this .numParticles, length = Math .min (particles .length, maxParticles); i < length; ++ i)
-         {
-            particles [i] .life     = 1;
-            particles [i] .lifetime = -1;
-         }
-
-         for (let i = particles .length; i < maxParticles; ++ i)
-         {
-            particles [i] = {
-               id: i,
-               life: 1,
-               lifetime: -1,
-               elapsedTime: 0,
-               position: new Vector3 (0, 0, 0),
-               velocity: new Vector3 (0, 0, 0),
-               color: new Vector4 (1, 1, 1, 1),
-               distance: 0,
-            };
-         }
+         const maxParticles = Math .max (0, this ._maxParticles .getValue ());
 
          this .createTimes      .setOutput ([maxParticles]);
          this .createVelocities .setOutput ([maxParticles]);
@@ -893,12 +857,8 @@ function (Fields,
       updatePoint: function ()
       {
          const
-            gl               = this .getBrowser () .getContext (),
-            particles        = this .particles,
-            numParticles     = this .numParticles,
-            elapsedTimeArray = this .elapsedTimeArray,
-            lifeArray        = this .lifeArray,
-            colorArray       = this .colorArray;
+            gl        = this .getBrowser () .getContext (),
+            particles = this .particles;
 
          // Colors
 
@@ -930,29 +890,20 @@ function (Fields,
          //    lifeArray [i]        = particles [i] .life;
          // }
 
-         this .vertexArray = this .particles .positions .renderRawOutput ();
+         this .vertexArray = particles .positions .renderRawOutput ();
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .positionBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .positionArray, gl .STATIC_DRAW);
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .elapsedTimeBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .elapsedTimeArray, gl .STATIC_DRAW);
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .lifeBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .lifeArray, gl .STATIC_DRAW);
          gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
       },
       updateLine: function ()
       {
          const
-            gl               = this .getBrowser () .getContext (),
-            particles        = this .particles,
-            numParticles     = this .numParticles,
-            positionArray    = this .positionArray,
-            elapsedTimeArray = this .elapsedTimeArray,
-            lifeArray        = this .lifeArray,
-            colorArray       = this .colorArray,
-            vertexArray      = this .vertexArray,
-            sy1_2            = this ._particleSize .y / 2;
+            gl           = this .getBrowser () .getContext (),
+            particles    = this .particles,
+            numParticles = this .numParticles,
+            colorArray   = this .colorArray,
+            vertexArray  = this .vertexArray,
+            sy1_2        = this ._particleSize .y / 2;
 
          // Colors
 
@@ -1020,12 +971,6 @@ function (Fields,
             vertexArray [i8 + 6] = z + normal .z;
          }
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .positionBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .positionArray, gl .STATIC_DRAW);
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .elapsedTimeBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .elapsedTimeArray, gl .STATIC_DRAW);
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .lifeBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .lifeArray, gl .STATIC_DRAW);
          gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
       },
@@ -1038,9 +983,6 @@ function (Fields,
                particles        = this .particles,
                maxParticles     = this .maxParticles,
                numParticles     = this .numParticles,
-               positionArray    = this .positionArray,
-               elapsedTimeArray = this .elapsedTimeArray,
-               lifeArray        = this .lifeArray,
                colorArray       = this .colorArray,
                texCoordArray    = this .texCoordArray,
                normalArray      = this .normalArray,
@@ -1265,12 +1207,6 @@ function (Fields,
                      vertexArray [i24 + 22] = z + s4 .z;
                   }
 
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .positionBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .positionArray, gl .STATIC_DRAW);
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .elapsedTimeBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .elapsedTimeArray, gl .STATIC_DRAW);
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .lifeBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .lifeArray, gl .STATIC_DRAW);
                   gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
                   gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
                }
@@ -1326,12 +1262,6 @@ function (Fields,
                      vertexArray [i24 + 22] = z;
                   }
 
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .positionBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .positionArray, gl .STATIC_DRAW);
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .elapsedTimeBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .elapsedTimeArray, gl .STATIC_DRAW);
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .lifeBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .lifeArray, gl .STATIC_DRAW);
                   gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
                   gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
                }
@@ -1408,18 +1338,12 @@ function (Fields,
             {
                // Setup vertex attributes.
 
-               shaderNode .enableFloatAttrib (gl, "x3d_ParticleId",          this .idBuffer,          1);
-               shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition",    this .positionBuffer,    3);
-               shaderNode .enableFloatAttrib (gl, "x3d_ParticleElapsedTime", this .elapsedTimeBuffer, 1);
-               shaderNode .enableFloatAttrib (gl, "x3d_ParticleLife",        this .lifeBuffer,        1);
+               shaderNode .enableFloatAttrib (gl, "x3d_ParticleId", this .idBuffer, 1);
                shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
                gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
 
                shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
-               shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");
-               shaderNode .disableFloatAttrib (gl, "x3d_ParticleElapsedTime");
-               shaderNode .disableFloatAttrib (gl, "x3d_ParticleLife");
             }
          }
       },
@@ -1465,10 +1389,7 @@ function (Fields,
 
                   // Setup vertex attributes.
 
-                  shaderNode .enableFloatAttrib (gl, "x3d_ParticleId",          this .idBuffer,          1);
-                  shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition",    this .positionBuffer,    3);
-                  shaderNode .enableFloatAttrib (gl, "x3d_ParticleElapsedTime", this .elapsedTimeBuffer, 1);
-                  shaderNode .enableFloatAttrib (gl, "x3d_ParticleLife",        this .lifeBuffer,        1);
+                  shaderNode .enableFloatAttrib (gl, "x3d_ParticleId", this .idBuffer, 1);
 
                   if (this .geometryContext .colorMaterial)
                      shaderNode .enableColorAttribute (gl, this .colorBuffer);
@@ -1500,9 +1421,6 @@ function (Fields,
                   }
 
                   shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
-                  shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");
-                  shaderNode .disableFloatAttrib (gl, "x3d_ParticleElapsedTime");
-                  shaderNode .disableFloatAttrib (gl, "x3d_ParticleLife");
 
                   shaderNode .disableColorAttribute    (gl);
                   shaderNode .disableTexCoordAttribute (gl);

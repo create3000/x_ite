@@ -134,29 +134,11 @@ function (X3DNode,
       {
          return Math .random () * (max - min) + min;
       },
-      getRandomNormalWithAngle: function (angle, normal)
-      {
-         const
-            theta = (Math .random () * 2 - 1) * Math .PI,
-            cphi  = this .getRandomValue (Math .cos (angle), 1),
-            phi   = Math .acos (cphi),
-            r     = Math .sin (phi);
-
-         return normal .set (Math .sin (theta) * r,
-                             Math .cos (theta) * r,
-                             cphi);
-      },
-      getRandomNormalWithDirectionAndAngle: function (direction, angle, normal)
-      {
-         rotation .setFromToVec (Vector3 .zAxis, direction);
-
-         return rotation .multVecRot (this .getRandomNormalWithAngle (angle, normal));
-      },
-      getRandomSurfaceNormal: function (normal)
+      getRandomNormal: function (normal)
       {
          const
             theta = this .getRandomValue (-1, 1) * Math .PI,
-            cphi  = Math .pow (Math .random (), 1/3),
+            cphi  = this .getRandomValue (-1, 1),
             phi   = Math .acos (cphi),
             r     = Math .sin (phi);
 
@@ -618,6 +600,18 @@ function (X3DNode,
 
             return multVecQuat (normal, rotation);
          })
+         // getRandomSurfaceNormal: function (normal)
+         // {
+         //    const
+         //       theta = this .getRandomValue (-1, 1) * Math .PI,
+         //       cphi  = Math .pow (Math .random (), 1/3),
+         //       phi   = Math .acos (cphi),
+         //       r     = Math .sin (phi);
+
+         //    return normal .set (Math .sin (theta) * r,
+         //                        Math .cos (theta) * r,
+         //                        cphi);
+         // },
          .addFunction (function getRandomSphericalVelocity (speed)
          {
             const normal = getRandomNormal ();
