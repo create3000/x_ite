@@ -170,6 +170,8 @@ function (X3DNode,
                                        !! particleSystem .boundedVertices .length,
                                        deltaTime);
 
+         particleSystem .particles .positions = particleSystem .particles .result;
+
          /*
          for (let i = 0; i < numParticles; ++ i)
          {
@@ -378,6 +380,10 @@ function (X3DNode,
 
                return [life, lifetime, elapsedTime, 0];
             },
+            colors: function ()
+            {
+               return [1, 1, 1, 1];
+            },
             velocities: function updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, mass, boundedPhysics, deltaTime)
             {
                if (this .thread .x < numParticles)
@@ -386,7 +392,7 @@ function (X3DNode,
 
                   if (elapsedTime == 0)
                   {
-                     return createParticles ? getRandomVelocity (getRandomSpeed ()) : [0, 0, 0, 0];
+                     return createParticles ? getRandomVelocity () : [0, 0, 0, 0];
                   }
                   else
                   {
@@ -413,34 +419,6 @@ function (X3DNode,
                   return velocities [this .thread .x];
                }
             },
-            positions: function updatePositions (time, velocity, positions, numParticles, createParticles, deltaTime)
-            {
-               if (this .thread .x < numParticles)
-               {
-                  const elapsedTime = time [2];
-
-                  if (elapsedTime == 0)
-                  {
-                     return createParticles ? getRandomPosition () : [Infinity, Infinity, Infinity, 0];
-                  }
-                  else
-                  {
-                     // Animate particle.
-
-                     const position = positions [this .thread .x];
-
-                     position [0] += velocity [0] * deltaTime;
-                     position [1] += velocity [1] * deltaTime;
-                     position [2] += velocity [2] * deltaTime;
-
-                     return position;
-                  }
-               }
-               else
-               {
-                  return positions [this .thread .x];
-               }
-            },
          },
          function (times, velocities, positions, numParticles, particleLifetime, lifetimeVariation, createParticles, numForces, forces, turbulences, mass, boundedPhysics, deltaTime)
          {
@@ -448,12 +426,47 @@ function (X3DNode,
 
             const
                time     = updateTimes (times, numParticles, particleLifetime, lifetimeVariation, createParticles, deltaTime),
-               velocity = updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, mass, boundedPhysics, deltaTime),
-               position = updatePositions (time, velocity, positions, numParticles, createParticles, deltaTime);
+               color    = colors (),
+               velocity = updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, mass, boundedPhysics, deltaTime);
 
-            return position;
+            // updatePositions
+
+            if (this .thread .x < numParticles)
+            {
+               const elapsedTime = time [2];
+
+               if (elapsedTime == 0)
+               {
+                  return createParticles ? getRandomPosition () : [Infinity, Infinity, Infinity, 0];
+               }
+               else
+               {
+                  // Animate particle.
+
+                  const position = positions [this .thread .x];
+
+                  position [0] += velocity [0] * deltaTime;
+                  position [1] += velocity [1] * deltaTime;
+                  position [2] += velocity [2] * deltaTime;
+
+                  return position;
+               }
+            }
+            else
+            {
+               return positions [this .thread .x];
+            }
+
+            /* WORKAROUND: include */ prototypes ();
          })
          .setTactic ("precision")
+         .addNativeFunction ("prototypes", `
+            vec4 Quaternion (vec3, vec3);
+            vec3 multVecQuat (vec3, vec4);
+            float getRandomValue (float , float);
+            vec3 getRandomNormalWithAngle (float);
+            void prototypes () { }
+         `)
          .addFunction (function lengthV (v)
          {
             return Math .sqrt (v [0] * v [0] + v [1] * v [1] + v [2] * v [2]);
@@ -596,9 +609,11 @@ function (X3DNode,
          //                        Math .cos (theta) * r,
          //                        cphi);
          // },
-         .addFunction (function getRandomSphericalVelocity (speed)
+         .addFunction (function getRandomSphericalVelocity ()
          {
-            const normal = getRandomNormal ();
+            const
+               normal = getRandomNormal (),
+               speed  = getRandomSpeed ();
 
             return [normal [0] * speed,
                     normal [1] * speed,

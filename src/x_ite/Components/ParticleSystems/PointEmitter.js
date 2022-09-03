@@ -107,16 +107,18 @@ function (Fields,
          this ._position  .addInterest ("set_position__",  this);
          this ._direction .addInterest ("set_direction__", this);
 
-         this .addFunction (function getRandomVelocity (speed)
+         this .addFunction (function getRandomVelocity ()
          {
             if (this .constants .direction [0] == 0 &&
                 this .constants .direction [1] == 0 &&
                 this .constants .direction [2] == 0)
             {
-               return getRandomSphericalVelocity (speed);
+               return getRandomSphericalVelocity ();
             }
             else
             {
+               const speed = getRandomSpeed ();
+               
                return [this .constants .direction [0] * speed,
                        this .constants .direction [1] * speed,
                        this .constants .direction [2] * speed,

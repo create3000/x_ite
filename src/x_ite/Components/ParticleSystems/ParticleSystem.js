@@ -130,8 +130,8 @@ function (Fields,
       this .geometryType             = POINT;
       this .createParticles          = true;
       this .emitterNode              = null;
-      this .forces                   = [ ];
-      this .turbulences              = [ ];
+      this .forces                   = [ new Vector3 (0, 0, 0) ];
+      this .turbulences              = [ 0 ];
       this .forcePhysicsModelNodes   = [ ];
       this .boundedPhysicsModelNodes = [ ];
       this .boundedNormals           = [ ];
@@ -843,33 +843,13 @@ function (Fields,
 
          // Colors
 
-         // if (this .geometryContext .colorMaterial)
-         // {
-         //    for (let i = 0; i < numParticles; ++ i)
-         //    {
-         //       const
-         //          color = particles [i] .color,
-         //          i4    = i * 4;
+         if (this .geometryContext .colorMaterial)
+         {
+            const colorArray = particles .colors .renderRawOutput ();
 
-         //       colorArray [i4]     = color .x;
-         //       colorArray [i4 + 1] = color .y;
-         //       colorArray [i4 + 2] = color .z;
-         //       colorArray [i4 + 3] = color .w;
-         //    }
-
-         //    gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-         //    gl .bufferData (gl .ARRAY_BUFFER, this .colorArray, gl .STATIC_DRAW);
-         // }
-
-         // Vertices
-
-         // for (let i = 0; i < numParticles; ++ i)
-         // {
-         //    const elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime;
-
-         //    elapsedTimeArray [i] = elapsedTime;
-         //    lifeArray [i]        = particles [i] .life;
-         // }
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, colorArray, gl .STATIC_DRAW);
+         }
 
          const vertexArray = particles .positions .renderRawOutput ();
 

@@ -114,37 +114,55 @@ function (Fields,
          this ._direction .addInterest ("set_direction__", this);
          this ._angle     .addInterest ("set_angle__", this);
 
+         this .addFunction (function getRandomVelocity ()
+         {
+            const direction = [this .constants .direction [0],
+                               this .constants .direction [1],
+                               this .constants .direction [2]];
+
+            if (direction [0] == 0 &&
+                direction [1] == 0 &&
+                direction [2] == 0)
+            {
+               return getRandomSphericalVelocity ();
+            }
+            else
+            {
+               const
+                  normal = getRandomNormalWithDirectionAndAngle (direction, this .constants .angle),
+                  speed  = getRandomSpeed ();
+
+               return [normal [0] * speed,
+                       normal [1] * speed,
+                       normal [2] * speed,
+                       0];
+            }
+         });
+
+         this .addFunction (function getRandomPosition ()
+         {
+            return [this .constants .position [0],
+                    this .constants .position [1],
+                    this .constants .position [2],
+                    1];
+         });
+
          this .set_position__ ();
          this .set_direction__ ();
          this .set_angle__ ();
       },
       set_position__: function ()
       {
-         this .position = this ._position .getValue ()
+         this .setConstant ("position", this ._position .getValue ());
       },
       set_direction__: function ()
       {
-         const direction = this ._direction .getValue ();
-
-         this .rotation .setFromToVec (Vector3 .zAxis, direction);
-
-         if (direction .equals (Vector3 .Zero))
-            this .getRandomVelocity = this .getSphericalRandomVelocity;
-         else
-            delete this .getRandomVelocity;
+         this .setConstant ("direction", this ._direction .getValue ());
       },
       set_angle__: function ()
       {
-         this .angle = this ._angle .getValue ()
+         this .setConstant ("angle", this ._angle .getValue ());
       },
-      getRandomPosition: function (position)
-      {
-         return position .assign (this .position);
-      },
-      getRandomVelocity: function (velocity)
-      {
-         return this .rotation .multVecRot (this .getRandomNormalWithAngle (this .angle, velocity) .multiply (this .getRandomSpeed ()));
-       },
    });
 
    return ConeEmitter;
