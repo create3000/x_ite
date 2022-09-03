@@ -384,7 +384,7 @@ function (X3DNode,
                            key0 = colorKeys [index0],
                            key1 = colorKeys [index1];
 
-                        weight = clamp1 ((fraction - key0) / (key1 - key0), 0, 1);
+                        weight = clamp ((fraction - key0) / (key1 - key0), 0, 1);
                      }
                      else
                      {
@@ -400,10 +400,10 @@ function (X3DNode,
                      color0 = [colorRamp [index0 * 4 + 0], colorRamp [index0 * 4 + 1], colorRamp [index0 * 4 + 2], colorRamp [index0 * 4 + 3]],
                      color1 = [colorRamp [index1 * 4 + 0], colorRamp [index1 * 4 + 1], colorRamp [index1 * 4 + 2], colorRamp [index1 * 4 + 3]];
 
-                  return [mix1 (color0 [0], color1 [0], weight),
-                          mix1 (color0 [1], color1 [1], weight),
-                          mix1 (color0 [2], color1 [2], weight),
-                          mix1 (color0 [3], color1 [3], weight)];
+                  return [mix (color0 [0], color1 [0], weight),
+                          mix (color0 [1], color1 [1], weight),
+                          mix (color0 [2], color1 [2], weight),
+                          mix (color0 [3], color1 [3], weight)];
                }
                else
                {
@@ -494,14 +494,6 @@ function (X3DNode,
             vec3 getRandomNormalWithAngle (float);
             void prototypes () { }
          `)
-         .addFunction (function clamp1 (value, min, max)
-         {
-            return Math .min (Math .max (value, min), max);
-         })
-         .addFunction (function mix1 (value1, value2, t)
-         {
-            return value1 + t * (value2 - value1);
-         })
          .addFunction (function length3 (v)
          {
             return Math .sqrt (v [0] * v [0] + v [1] * v [1] + v [2] * v [2]);
