@@ -114,8 +114,6 @@ function (Fields,
       x                  = new Vector3 (0, 0, 0),
       y                  = new Vector3 (0, 0, 0);
 
-   function compareDistance (lhs, rhs) { return lhs .distance < rhs .distance; }
-
    function ParticleSystem (executionContext)
    {
       X3DShapeNode .call (this, executionContext);
@@ -124,16 +122,16 @@ function (Fields,
 
       this ._particleSize .setUnit ("length");
 
-      this .createParticles          = true;
       this .particles                = { };
-      this .forces                   = [ ];
-      this .turbulences              = [ ];
-      this .geometryType             = POINT;
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .particleLifetime         = 0;
       this .lifetimeVariation        = 0;
+      this .geometryType             = POINT;
+      this .createParticles          = true;
       this .emitterNode              = null;
+      this .forces                   = [ ];
+      this .turbulences              = [ ];
       this .forcePhysicsModelNodes   = [ ];
       this .boundedPhysicsModelNodes = [ ];
       this .boundedNormals           = [ ];
@@ -144,7 +142,7 @@ function (Fields,
       this .deltaTime                = 0;
       this .numForces                = 0;
       this .colorKeys                = [ ];
-      this .colorRamppNode           = null;
+      this .colorRampNode            = null;
       this .colorRamp                = [ ];
       this .texCoordKeys             = [ ];
       this .texCoordRampNode         = null;
@@ -153,7 +151,6 @@ function (Fields,
       this .vertexCount              = 0;
       this .shaderNode               = null;
       this .rotation                 = new Matrix3 ();
-      this .sortParticles            = false;
       this .geometryContext          = { };
    }
 
@@ -958,20 +955,6 @@ function (Fields,
                normalArray  = this .normalArray,
                sx1_2        = this ._particleSize .x / 2,
                sy1_2        = this ._particleSize .y / 2;
-
-            // Sort particles
-
-//				if (this .sortParticles) // always false
-//				{
-//					for (let i = 0; i < numParticles; ++ i)
-//					{
-//						const particle = particles [i];
-//						particle .distance = modelViewMatrix .getDepth (particle .position);
-//					}
-//
-//					// Expensisive function!!!
-//					this .particleSorter .sort (0, numParticles);
-//				}
 
             // Colors
 
