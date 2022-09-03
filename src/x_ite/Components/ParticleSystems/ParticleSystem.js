@@ -684,13 +684,13 @@ function (Fields,
 
          this .numColorKeys = numColorKeys;
 
-         for (let i = 0, length = numColorKeys; i < length; ++ i)
+         for (let i = 0; i < numColorKeys; ++ i)
             colorKeys [i] = colorKey [i];
 
          if (this .colorRampNode)
             this .colorRampNode .getVectors (this .colorRamp);
 
-         for (let i = colorRamp .length, length = numColorKeys; i < length; ++ i)
+         for (let i = colorRamp .length; i < numColorKeys; ++ i)
             colorRamp [i] = new Vector4 (1, 1, 1, 1);
 
          this .geometryContext .colorMaterial = !! (colorKeys .length && this .colorRampNode);
