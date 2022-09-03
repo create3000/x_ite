@@ -102,17 +102,12 @@ function (Fields,
    };
 
    const
-      invModelViewMatrix = new Matrix4 (),
-      billboardToScreen  = new Vector3 (0, 0, 0),
-      viewerYAxis        = new Vector3 (0, 0, 0),
-      vector             = new Vector3 (0, 0, 0),
-      normal             = new Vector3 (0, 0, 0),
-      s1                 = new Vector3 (0, 0, 0),
-      s2                 = new Vector3 (0, 0, 0),
-      s3                 = new Vector3 (0, 0, 0),
-      s4                 = new Vector3 (0, 0, 0),
-      x                  = new Vector3 (0, 0, 0),
-      y                  = new Vector3 (0, 0, 0);
+      vector = new Vector3 (0, 0, 0),
+      normal = new Vector3 (0, 0, 0),
+      s1     = new Vector3 (0, 0, 0),
+      s2     = new Vector3 (0, 0, 0),
+      s3     = new Vector3 (0, 0, 0),
+      s4     = new Vector3 (0, 0, 0);
 
    function ParticleSystem (executionContext)
    {
@@ -1380,27 +1375,37 @@ function (Fields,
             console .error (error);
          }
       },
-      getScreenAlignedRotation: function (modelViewMatrix)
+      getScreenAlignedRotation: (function ()
       {
-         invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+         const
+            invModelViewMatrix = new Matrix4 (),
+            billboardToScreen  = new Vector3 (0, 0, 0),
+            viewerYAxis        = new Vector3 (0, 0, 0),
+            x                  = new Vector3 (0, 0, 0),
+            y                  = new Vector3 (0, 0, 0);
 
-         invModelViewMatrix .multDirMatrix (billboardToScreen .assign (Vector3 .zAxis));
-         invModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .yAxis));
+         return function (modelViewMatrix)
+         {
+            invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-         x .assign (viewerYAxis) .cross (billboardToScreen);
-         y .assign (billboardToScreen) .cross (x);
-         const z = billboardToScreen;
+            invModelViewMatrix .multDirMatrix (billboardToScreen .assign (Vector3 .zAxis));
+            invModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .yAxis));
 
-         // Compose rotation
+            x .assign (viewerYAxis) .cross (billboardToScreen);
+            y .assign (billboardToScreen) .cross (x);
+            const z = billboardToScreen;
 
-         x .normalize ();
-         y .normalize ();
-         z .normalize ();
+            // Compose rotation
 
-         return this .rotation .set (x .x, x .y, x .z,
-                                     y .x, y .y, y .z,
-                                     z .x, z .y, z .z);
-      },
+            x .normalize ();
+            y .normalize ();
+            z .normalize ();
+
+            return this .rotation .set (x .x, x .y, x .z,
+                                        y .x, y .y, y .z,
+                                        z .x, z .y, z .z);
+         };
+      })(),
    });
 
    return ParticleSystem;
