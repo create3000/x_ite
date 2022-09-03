@@ -163,8 +163,9 @@ function (X3DNode,
                                        particleSystem .particleLifetime,
                                        particleSystem .lifetimeVariation,
                                        particleSystem .createParticles,
+                                       particleSystem .geometryContext .colorMaterial,
                                        particleSystem .colorKeys,
-                                       particleSystem .colorKeys .length,
+                                       particleSystem .numColorKeys,
                                        particleSystem .colorRamp,
                                        particleSystem .numForces,
                                        particleSystem .forces,
@@ -311,96 +312,104 @@ function (X3DNode,
 
                return [life, lifetime, elapsedTime, 0];
             },
-            colors: function updateColors (time, colorKeys, numColorKeys, colorRamp)
+            colors: function updateColors (colorMaterial, time, colorKeys, numColorKeys, colorRamp)
             {
-               // Determine index0, index1 and weight.
-
-               const
-                  lifetime    = time [1],
-                  elapsedTime = time [2],
-                  fraction    = elapsedTime / lifetime;
-
-               let
-                  index0 = 0,
-                  index1 = 0,
-                  weight = 0;
-
-               if (numColorKeys == 1 || fraction <= colorKeys [0])
+               if (colorMaterial)
                {
-                  index0 = 0;
-                  index1 = 0;
-                  weight = 0;
-               }
-               else if (fraction >= colorKeys [numColorKeys - 1])
-               {
-                  index0 = numColorKeys - 2;
-                  index1 = numColorKeys - 1;
-                  weight = 1;
-               }
-               else
-               {
-                  // BEGIN: upperBound
+                  // Determine index0, index1 and weight.
 
                   const
-                     count = numColorKeys,
-                     value = fraction;
+                     lifetime    = time [1],
+                     elapsedTime = time [2],
+                     fraction    = elapsedTime / lifetime;
 
                   let
-                     first = 0,
-                     step  = 0;
+                     index0 = 0,
+                     index1 = 0,
+                     weight = 0;
 
-                  while (count > 0)
-                  {
-                     let index = first;
-
-                     step = count >> 1;
-
-                     index += step;
-
-                     if (value < colorKeys [index])
-                     {
-                        count = step;
-                     }
-                     else
-                     {
-                        first  = ++ index;
-                        count -= step + 1;
-                     }
-                  }
-
-                  const index = first;
-
-                  // END upperBound.
-
-                  if (index < numColorKeys)
-                  {
-                     index1 = index;
-                     index0 = index - 1;
-
-                     const
-                        key0 = colorKeys [index0],
-                        key1 = colorKeys [index1];
-
-                     weight = clamp1 ((fraction - key0) / (key1 - key0), 0, 1);
-                  }
-                  else
+                  if (numColorKeys == 1 || fraction <= colorKeys [0])
                   {
                      index0 = 0;
                      index1 = 0;
                      weight = 0;
                   }
+                  else if (fraction >= colorKeys [numColorKeys - 1])
+                  {
+                     index0 = numColorKeys - 2;
+                     index1 = numColorKeys - 1;
+                     weight = 1;
+                  }
+                  else
+                  {
+                     // BEGIN: upperBound
+
+                     const
+                        count = numColorKeys,
+                        value = fraction;
+
+                     let
+                        first = 0,
+                        step  = 0;
+
+                     while (count > 0)
+                     {
+                        let index = first;
+
+                        step = count >> 1;
+
+                        index += step;
+
+                        if (value < colorKeys [index])
+                        {
+                           count = step;
+                        }
+                        else
+                        {
+                           first  = ++ index;
+                           count -= step + 1;
+                        }
+                     }
+
+                     const index = first;
+
+                     // END upperBound.
+
+                     if (index < numColorKeys)
+                     {
+                        index1 = index;
+                        index0 = index - 1;
+
+                        const
+                           key0 = colorKeys [index0],
+                           key1 = colorKeys [index1];
+
+                        weight = clamp1 ((fraction - key0) / (key1 - key0), 0, 1);
+                     }
+                     else
+                     {
+                        index0 = 0;
+                        index1 = 0;
+                        weight = 0;
+                     }
+                  }
+
+                  // Interpolate and return color.
+
+                  const
+                     color0 = [colorRamp [index0 * 4 + 0], colorRamp [index0 * 4 + 1], colorRamp [index0 * 4 + 2], colorRamp [index0 * 4 + 3]],
+                     color1 = [colorRamp [index1 * 4 + 0], colorRamp [index1 * 4 + 1], colorRamp [index1 * 4 + 2], colorRamp [index1 * 4 + 3]];
+
+                  return [mix1 (color0 [0], color1 [0], weight),
+                          mix1 (color0 [1], color1 [1], weight),
+                          mix1 (color0 [2], color1 [2], weight),
+                          mix1 (color0 [3], color1 [3], weight)];
                }
-
-               // // Interpolate and return color.
-
-               const
-                  color0 = [colorRamp [index0 * 4 + 0], colorRamp [index0 * 4 + 1], colorRamp [index0 * 4 + 2], colorRamp [index0 * 4 + 3]],
-                  color1 = [colorRamp [index1 * 4 + 0], colorRamp [index1 * 4 + 1], colorRamp [index1 * 4 + 2], colorRamp [index1 * 4 + 3]];
-
-               return [mix1 (color0 [0], color1 [0], weight),
-                       mix1 (color0 [1], color1 [1], weight),
-                       mix1 (color0 [2], color1 [2], weight),
-                       mix1 (color0 [3], color1 [3], weight)];
+               else
+               {
+                  // No color needed.
+                  return [0, 0, 0, 0];
+               }
             },
             velocities: function updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, mass, boundedPhysics, deltaTime)
             {
@@ -438,13 +447,13 @@ function (X3DNode,
                }
             },
          },
-         function (times, velocities, positions, numParticles, particleLifetime, lifetimeVariation, createParticles, colorKeys, numColorKeys, colorRamp, numForces, forces, turbulences, mass, boundedPhysics, deltaTime)
+         function (times, velocities, positions, numParticles, particleLifetime, lifetimeVariation, createParticles, colorMaterial, colorKeys, numColorKeys, colorRamp, numForces, forces, turbulences, mass, boundedPhysics, deltaTime)
          {
             // WORKAROUND: include Math.random()
 
             const
                time     = updateTimes (times, numParticles, particleLifetime, lifetimeVariation, createParticles, deltaTime),
-               color    = updateColors (time, colorKeys, numColorKeys, colorRamp),
+               color    = updateColors (colorMaterial, time, colorKeys, numColorKeys, colorRamp),
                velocity = updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, mass, boundedPhysics, deltaTime);
 
             // updatePositions

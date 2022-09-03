@@ -141,9 +141,9 @@ function (Fields,
       this .pauseTime                = 0;
       this .deltaTime                = 0;
       this .numForces                = 0;
-      this .colorKeys                = [ ];
+      this .colorKeys                = [ 0 ];
       this .colorRampNode            = null;
-      this .colorRamp                = [ ];
+      this .colorRamp                = [ new Vector3 (0, 0, 0) ];
       this .texCoordKeys             = [ ];
       this .texCoordRampNode         = null;
       this .texCoordRamp             = [ ];
@@ -684,15 +684,13 @@ function (Fields,
          for (let i = 0, length = colorKey .length; i < length; ++ i)
             colorKeys [i] = colorKey [i];
 
-         colorKeys .length = colorKey .length;
+         this .numColorKeys = colorKey .length;
 
          if (this .colorRampNode)
             this .colorRampNode .getVectors (this .colorRamp);
 
          for (let i = colorRamp .length, length = colorKey .length; i < length; ++ i)
             colorRamp [i] = new Vector4 (1, 1, 1, 1);
-
-         colorRamp .length = colorKey .length;
 
          this .geometryContext .colorMaterial = !! (colorKeys .length && this .colorRampNode);
       },
