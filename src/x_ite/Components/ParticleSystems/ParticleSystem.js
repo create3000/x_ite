@@ -145,7 +145,6 @@ function (Fields,
       this .texCoordAnim             = false;
       this .vertexCount              = 0;
       this .shaderNode               = null;
-      this .rotation                 = new Matrix3 ();
       this .geometryContext          = { };
    }
 
@@ -1382,7 +1381,8 @@ function (Fields,
             billboardToScreen  = new Vector3 (0, 0, 0),
             viewerYAxis        = new Vector3 (0, 0, 0),
             x                  = new Vector3 (0, 0, 0),
-            y                  = new Vector3 (0, 0, 0);
+            y                  = new Vector3 (0, 0, 0),
+            rotation           = new Matrix3 ();
 
          return function (modelViewMatrix)
          {
@@ -1401,9 +1401,9 @@ function (Fields,
             y .normalize ();
             z .normalize ();
 
-            return this .rotation .set (x .x, x .y, x .z,
-                                        y .x, y .y, y .z,
-                                        z .x, z .y, z .z);
+            return rotation .set (x .x, x .y, x .z,
+                                  y .x, y .y, y .z,
+                                  z .x, z .y, z .z);
          };
       })(),
    });
