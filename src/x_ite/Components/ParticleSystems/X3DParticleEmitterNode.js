@@ -171,12 +171,6 @@ function (X3DNode,
                                        deltaTime);
 
          /*
-         for (let i = rotations .length; i < numForces; ++ i)
-            rotations [i] = new Rotation4 (0, 0, 1, 0);
-
-         for (let i = 0; i < numForces; ++ i)
-            rotations [i] .setFromToVec (Vector3 .zAxis, velocities [i]);
-
          for (let i = 0; i < numParticles; ++ i)
          {
             const

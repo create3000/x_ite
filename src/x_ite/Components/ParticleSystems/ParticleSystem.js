@@ -227,17 +227,25 @@ function (Fields,
          };
 
          const createTimes      = gpu .createKernel (function () { return [0, 0, 0, 0]; }, kernelOptions) .setOutput ([1]);
+         const createColors     = gpu .createKernel (function () { return [0, 0, 0, 0]; }, kernelOptions) .setOutput ([1]);
          const createVelocities = gpu .createKernel (function () { return [0, 0, 0, 0]; }, kernelOptions) .setOutput ([1]);
-         const createPositions  = gpu .createKernel (function () { return [0, 0, 0, 1]; }, kernelOptions) .setOutput ([1]);
+         const createPositions  = gpu .createKernel (function () { return [0, 0, 0, 0]; }, kernelOptions) .setOutput ([1]);
 
          this .particles .times      = createTimes ();
+         this .particles .colors     = createColors ();
          this .particles .velocities = createVelocities ();
          this .particles .positions  = createPositions ();
 
-         // [life, lifetime, elapsedTime]
+         // [life, lifetime, elapsedTime, unused]
          this .createTimes = gpu .createKernel (function (times, length)
          {
             return this .thread .x < length ? times [this .thread .x] : [0, -1, 0, 0];
+         },
+         kernelOptions);
+
+         this .createColors = gpu .createKernel (function (colors, length)
+         {
+            return this .thread .x < length ? colors [this .thread .x] : [0, 0, 0, 0];
          },
          kernelOptions);
 
@@ -552,10 +560,12 @@ function (Fields,
          const maxParticles = Math .max (0, this ._maxParticles .getValue ());
 
          this .createTimes      .setOutput ([maxParticles]);
+         this .createColors     .setOutput ([maxParticles]);
          this .createVelocities .setOutput ([maxParticles]);
          this .createPositions  .setOutput ([maxParticles]);
 
          this .particles .times      = this .createTimes      (this .particles .times,      this .maxParticles);
+         this .particles .colors     = this .createColors     (this .particles .colors,     this .maxParticles);
          this .particles .velocities = this .createVelocities (this .particles .velocities, this .maxParticles);
          this .particles .positions  = this .createPositions  (this .particles .positions,  this .maxParticles);
 
