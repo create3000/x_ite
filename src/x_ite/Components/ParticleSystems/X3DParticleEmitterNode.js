@@ -148,41 +148,29 @@ function (X3DNode,
       },
       animate: function (particleSystem, deltaTime)
       {
-         const
-            particles         = particleSystem .particles,
-            maxParticles      = particleSystem .maxParticles,
-            numParticles      = Math .max (1, particleSystem .numParticles),
-            particleLifetime  = particleSystem .particleLifetime,
-            lifetimeVariation = particleSystem .lifetimeVariation,
-            createParticles   = particleSystem .createParticles,
-            forces            = particleSystem .forces,            // resulting velocities from forces
-            turbulences       = particleSystem .turbulences,       // turbulences
-            numForces         = particleSystem .numForces,         // number of forces
-            boundedPhysics    = !! particleSystem .boundedVertices .length,
-            boundedVolume     = particleSystem .boundedVolume;
+         const particles = particleSystem .particles;
+
+         // boundedVolume = particleSystem .boundedVolume;
 
          this .i          = (this .i + 1) % 2;
-         this .output [0] = maxParticles;
+         this .output [0] = particleSystem .maxParticles;
 
-         const result = this .kernel [this .i]
+         particleSystem .particles = this .kernel [this .i]
             .setOutput (this .output) (particles .times,
                                        particles .velocities,
                                        particles .positions,
-                                       numParticles,
-                                       particleLifetime,
-                                       lifetimeVariation,
-                                       createParticles,
-                                       numForces,
-                                       forces,
-                                       turbulences,
-                                       boundedPhysics,
+                                       particleSystem .numParticles,
+                                       particleSystem .particleLifetime,
+                                       particleSystem .lifetimeVariation,
+                                       particleSystem .createParticles,
+                                       particleSystem .numForces,
+                                       particleSystem .forces,
+                                       particleSystem .turbulences,
+                                       this .mass,
+                                       !! particleSystem .boundedVertices .length,
                                        deltaTime);
 
-         particles .times      = result .times;
-         particles .velocities = result .velocities;
-         particles .positions  = result .positions;
-         return;
-
+         /*
          for (let i = rotations .length; i < numForces; ++ i)
             rotations [i] = new Rotation4 (0, 0, 1, 0);
 
@@ -251,6 +239,8 @@ function (X3DNode,
 
          if (particleSystem .geometryContext .colorMaterial)
             this .getColors (particles, particleSystem .colorKeys, particleSystem .colorRamp, numParticles);
+
+         */
       },
       bounce: function (boundedVolume, fromPosition, toPosition, velocity)
       {
@@ -394,7 +384,7 @@ function (X3DNode,
 
                return [life, lifetime, elapsedTime, 0];
             },
-            velocities: function updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, boundedPhysics)
+            velocities: function updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, mass, boundedPhysics, deltaTime)
             {
                if (this .thread .x < numParticles)
                {
@@ -413,8 +403,8 @@ function (X3DNode,
                         const
                            force      = [forces [i * 3 + 0], forces [i * 3 + 1], forces [i * 3 + 2]],
                            turbulence = turbulences [i],
-                           speed      = lengthV (force),
-                           normal     = getRandomNormalWithDirectionAndAngle (force, turbulence);
+                           normal     = getRandomNormalWithDirectionAndAngle (force, turbulence),
+                           speed      = lengthV (force) * deltaTime / mass;
 
                         velocity [0] += normal [0] * speed;
                         velocity [1] += normal [1] * speed;
@@ -458,13 +448,13 @@ function (X3DNode,
                }
             },
          },
-         function (times, velocities, positions, numParticles, particleLifetime, lifetimeVariation, createParticles, numForces, forces, turbulences, boundedPhysics, deltaTime)
+         function (times, velocities, positions, numParticles, particleLifetime, lifetimeVariation, createParticles, numForces, forces, turbulences, mass, boundedPhysics, deltaTime)
          {
             // WORKAROUND: include Math.random()
 
             const
                time     = updateTimes (times, numParticles, particleLifetime, lifetimeVariation, createParticles, deltaTime),
-               velocity = updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, boundedPhysics),
+               velocity = updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, mass, boundedPhysics, deltaTime),
                position = updatePositions (time, velocity, positions, numParticles, createParticles, deltaTime);
 
             return position;

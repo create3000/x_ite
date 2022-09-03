@@ -60,7 +60,6 @@ define ([
    "standard/Math/Numbers/Vector4",
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Numbers/Matrix3",
-   "standard/Math/Algorithms/QuickSort",
    "standard/Math/Algorithm",
    "standard/Math/Utility/BVH",
    "gpu",
@@ -77,7 +76,6 @@ function (Fields,
           Vector4,
           Matrix4,
           Matrix3,
-          QuickSort,
           Algorithm,
           BVH,
           gpu)
@@ -127,7 +125,7 @@ function (Fields,
       this ._particleSize .setUnit ("length");
 
       this .createParticles          = true;
-      this .particles                = [ ];
+      this .particles                = { };
       this .forces                   = [ ];
       this .turbulences              = [ ];
       this .geometryType             = POINT;
@@ -155,7 +153,6 @@ function (Fields,
       this .vertexCount              = 0;
       this .shaderNode               = null;
       this .rotation                 = new Matrix3 ();
-      this .particleSorter           = new QuickSort (this .particles, compareDistance);
       this .sortParticles            = false;
       this .geometryContext          = { };
    }
@@ -785,7 +782,6 @@ function (Fields,
                forcePhysicsModelNodes = this .forcePhysicsModelNodes,
                forces                 = this .forces,
                turbulences            = this .turbulences,
-               deltaMass              = this .deltaTime / emitterNode .getMass (),
                numForces              = forcePhysicsModelNodes .length;
 
             // Collect forces in velocities and collect turbulences.
@@ -795,11 +791,6 @@ function (Fields,
 
             for (let i = 0; i < numForces; ++ i)
                forcePhysicsModelNodes [i] .addForce (i, emitterNode, forces, turbulences);
-
-            // Determine velocities from forces.
-
-            for (let i = 0; i < numForces; ++ i)
-               forces [i] .multiply (deltaMass);
 
             this .numForces = numForces;
          }
