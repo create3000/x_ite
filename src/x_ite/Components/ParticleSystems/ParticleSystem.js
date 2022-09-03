@@ -785,22 +785,23 @@ function (Fields,
                forcePhysicsModelNodes = this .forcePhysicsModelNodes,
                forces                 = this .forces,
                turbulences            = this .turbulences,
-               deltaMass              = this .deltaTime / emitterNode .getMass ();
+               deltaMass              = this .deltaTime / emitterNode .getMass (),
+               numForces              = forcePhysicsModelNodes .length;
 
             // Collect forces in velocities and collect turbulences.
 
-            for (let i = forces .length, length = forcePhysicsModelNodes .length; i < length; ++ i)
+            for (let i = forces .length; i < numForces; ++ i)
                forces [i] = new Vector3 (0, 0, 0);
 
-            for (let i = 0, length = forcePhysicsModelNodes .length; i < length; ++ i)
+            for (let i = 0; i < numForces; ++ i)
                forcePhysicsModelNodes [i] .addForce (i, emitterNode, forces, turbulences);
 
             // Determine velocities from forces.
 
-           for (let i = 0, length = forces .length; i < length; ++ i)
-              forces [i] .multiply (deltaMass);
+            for (let i = 0; i < numForces; ++ i)
+               forces [i] .multiply (deltaMass);
 
-            this .numForces = forces .length;
+            this .numForces = numForces;
          }
          else
          {
@@ -883,8 +884,6 @@ function (Fields,
             gl           = this .getBrowser () .getContext (),
             particles    = this .particles,
             numParticles = this .numParticles,
-            colorArray   = this .colorArray,
-            vertexArray  = this .vertexArray,
             sy1_2        = this ._particleSize .y / 2;
 
          // Colors
@@ -961,16 +960,13 @@ function (Fields,
          try
          {
             const
-               gl               = this .getBrowser () .getContext (),
-               particles        = this .particles,
-               maxParticles     = this .maxParticles,
-               numParticles     = this .numParticles,
-               colorArray       = this .colorArray,
-               texCoordArray    = this .texCoordArray,
-               normalArray      = this .normalArray,
-               vertexArray      = this .vertexArray,
-               sx1_2            = this ._particleSize .x / 2,
-               sy1_2            = this ._particleSize .y / 2;
+               gl           = this .getBrowser () .getContext (),
+               particles    = this .particles,
+               maxParticles = this .maxParticles,
+               numParticles = this .numParticles,
+               normalArray  = this .normalArray,
+               sx1_2        = this ._particleSize .x / 2,
+               sy1_2        = this ._particleSize .y / 2;
 
             // Sort particles
 
