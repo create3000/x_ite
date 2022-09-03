@@ -677,19 +677,20 @@ function (Fields,
       set_color__: function ()
       {
          const
-            colorKey  = this ._colorKey,
-            colorKeys = this .colorKeys,
-            colorRamp = this .colorRamp;
+            colorKey     = this ._colorKey,
+            numColorKeys = colorKey .length,
+            colorKeys    = this .colorKeys,
+            colorRamp    = this .colorRamp;
 
-         for (let i = 0, length = colorKey .length; i < length; ++ i)
+         this .numColorKeys = numColorKeys;
+
+         for (let i = 0, length = numColorKeys; i < length; ++ i)
             colorKeys [i] = colorKey [i];
-
-         this .numColorKeys = colorKey .length;
 
          if (this .colorRampNode)
             this .colorRampNode .getVectors (this .colorRamp);
 
-         for (let i = colorRamp .length, length = colorKey .length; i < length; ++ i)
+         for (let i = colorRamp .length, length = numColorKeys; i < length; ++ i)
             colorRamp [i] = new Vector4 (1, 1, 1, 1);
 
          this .geometryContext .colorMaterial = !! (colorKeys .length && this .colorRampNode);
