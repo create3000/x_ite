@@ -163,6 +163,9 @@ function (X3DNode,
                                        particleSystem .particleLifetime,
                                        particleSystem .lifetimeVariation,
                                        particleSystem .createParticles,
+                                       particleSystem .colorKeys,
+                                       particleSystem .colorKeys .length,
+                                       particleSystem .colorRamp,
                                        particleSystem .numForces,
                                        particleSystem .forces,
                                        particleSystem .turbulences,
@@ -230,12 +233,6 @@ function (X3DNode,
                particle .elapsedTime = elapsedTime;
             }
          }
-
-         // Animate color if needed.
-
-         if (particleSystem .geometryContext .colorMaterial)
-            this .getColors (particles, particleSystem .colorKeys, particleSystem .colorRamp, numParticles);
-
          */
       },
       bounce: function (boundedVolume, fromPosition, toPosition, velocity)
@@ -287,72 +284,6 @@ function (X3DNode,
             }
          }
       },
-      getColors: function (particles, colorKeys, colorRamp, numParticles)
-      {
-         const length = colorKeys .length;
-
-         let
-            index0 = 0,
-            index1 = 0,
-            weight = 0;
-
-         for (let i = 0; i < numParticles; ++ i)
-         {
-            // Determine index0, index1 and weight.
-
-            const
-               particle = particles [i],
-               fraction = particle .elapsedTime / particle .lifetime,
-               color    = particle .color;
-
-            if (length == 1 || fraction <= colorKeys [0])
-            {
-               index0 = 0;
-               index1 = 0;
-               weight = 0;
-            }
-            else if (fraction >= colorKeys [length - 1])
-            {
-               index0 = length - 2;
-               index1 = length - 1;
-               weight = 1;
-            }
-            else
-            {
-               const index = Algorithm .upperBound (colorKeys, 0, length, fraction, Algorithm .less);
-
-               if (index < length)
-               {
-                  index1 = index;
-                  index0 = index - 1;
-
-                  const
-                     key0 = colorKeys [index0],
-                     key1 = colorKeys [index1];
-
-                  weight = Algorithm .clamp ((fraction - key0) / (key1 - key0), 0, 1);
-               }
-               else
-               {
-                  index0 = 0;
-                  index1 = 0;
-                  weight = 0;
-               }
-            }
-
-            // Interpolate and set color.
-
-            const
-               color0 = colorRamp [index0],
-               color1 = colorRamp [index1];
-
-            // Algorithm .lerp (color0, color1, weight);
-            color .x = color0 .x + weight * (color1 .x - color0 .x);
-            color .y = color0 .y + weight * (color1 .y - color0 .y);
-            color .z = color0 .z + weight * (color1 .z - color0 .z);
-            color .w = color0 .w + weight * (color1 .w - color0 .w);
-         }
-      },
       createKernel: function ()
       {
          return gpu .createKernelMap ({
@@ -380,9 +311,96 @@ function (X3DNode,
 
                return [life, lifetime, elapsedTime, 0];
             },
-            colors: function ()
+            colors: function updateColors (time, colorKeys, numColorKeys, colorRamp)
             {
-               return [1, 1, 1, 1];
+               // Determine index0, index1 and weight.
+
+               const
+                  lifetime    = time [1],
+                  elapsedTime = time [2],
+                  fraction    = elapsedTime / lifetime;
+
+               let
+                  index0 = 0,
+                  index1 = 0,
+                  weight = 0;
+
+               if (numColorKeys == 1 || fraction <= colorKeys [0])
+               {
+                  index0 = 0;
+                  index1 = 0;
+                  weight = 0;
+               }
+               else if (fraction >= colorKeys [numColorKeys - 1])
+               {
+                  index0 = numColorKeys - 2;
+                  index1 = numColorKeys - 1;
+                  weight = 1;
+               }
+               else
+               {
+                  // BEGIN: upperBound
+
+                  const
+                     count = numColorKeys,
+                     value = fraction;
+
+                  let
+                     first = 0,
+                     step  = 0;
+
+                  while (count > 0)
+                  {
+                     let index = first;
+
+                     step = count >> 1;
+
+                     index += step;
+
+                     if (value < colorKeys [index])
+                     {
+                        count = step;
+                     }
+                     else
+                     {
+                        first  = ++ index;
+                        count -= step + 1;
+                     }
+                  }
+
+                  const index = first;
+
+                  // END upperBound.
+
+                  if (index < numColorKeys)
+                  {
+                     index1 = index;
+                     index0 = index - 1;
+
+                     const
+                        key0 = colorKeys [index0],
+                        key1 = colorKeys [index1];
+
+                     weight = clamp1 ((fraction - key0) / (key1 - key0), 0, 1);
+                  }
+                  else
+                  {
+                     index0 = 0;
+                     index1 = 0;
+                     weight = 0;
+                  }
+               }
+
+               // // Interpolate and return color.
+
+               const
+                  color0 = [colorRamp [index0 * 4 + 0], colorRamp [index0 * 4 + 1], colorRamp [index0 * 4 + 2], colorRamp [index0 * 4 + 3]],
+                  color1 = [colorRamp [index1 * 4 + 0], colorRamp [index1 * 4 + 1], colorRamp [index1 * 4 + 2], colorRamp [index1 * 4 + 3]];
+
+               return [mix1 (color0 [0], color1 [0], weight),
+                       mix1 (color0 [1], color1 [1], weight),
+                       mix1 (color0 [2], color1 [2], weight),
+                       mix1 (color0 [3], color1 [3], weight)];
             },
             velocities: function updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, mass, boundedPhysics, deltaTime)
             {
@@ -404,7 +422,7 @@ function (X3DNode,
                            force      = [forces [i * 3 + 0], forces [i * 3 + 1], forces [i * 3 + 2]],
                            turbulence = turbulences [i],
                            normal     = getRandomNormalWithDirectionAndAngle (force, turbulence),
-                           speed      = lengthV (force) * deltaTime / mass;
+                           speed      = length3 (force) * deltaTime / mass;
 
                         velocity [0] += normal [0] * speed;
                         velocity [1] += normal [1] * speed;
@@ -420,13 +438,13 @@ function (X3DNode,
                }
             },
          },
-         function (times, velocities, positions, numParticles, particleLifetime, lifetimeVariation, createParticles, numForces, forces, turbulences, mass, boundedPhysics, deltaTime)
+         function (times, velocities, positions, numParticles, particleLifetime, lifetimeVariation, createParticles, colorKeys, numColorKeys, colorRamp, numForces, forces, turbulences, mass, boundedPhysics, deltaTime)
          {
             // WORKAROUND: include Math.random()
 
             const
                time     = updateTimes (times, numParticles, particleLifetime, lifetimeVariation, createParticles, deltaTime),
-               color    = colors (),
+               color    = updateColors (time, colorKeys, numColorKeys, colorRamp),
                velocity = updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, mass, boundedPhysics, deltaTime);
 
             // updatePositions
@@ -467,21 +485,29 @@ function (X3DNode,
             vec3 getRandomNormalWithAngle (float);
             void prototypes () { }
          `)
-         .addFunction (function lengthV (v)
+         .addFunction (function clamp1 (value, min, max)
+         {
+            return Math .min (Math .max (value, min), max);
+         })
+         .addFunction (function mix1 (value1, value2, t)
+         {
+            return value1 + t * (value2 - value1);
+         })
+         .addFunction (function length3 (v)
          {
             return Math .sqrt (v [0] * v [0] + v [1] * v [1] + v [2] * v [2]);
          })
-         .addFunction (function normalizeV (v)
+         .addFunction (function normalize3 (v)
          {
-            const l = lengthV (v);
+            const l = length3 (v);
 
             return [v [0] / l, v [1] / l, v [2] / l];
          })
-         .addFunction (function dotV (x, y)
+         .addFunction (function dot3 (x, y)
          {
             return x [0] * y [0] + x [1] * y [1] + x [2] * y [2];
          })
-         .addFunction (function crossV (x, y)
+         .addFunction (function cross3 (x, y)
          {
             return [x [1] * y [2] - y [1] * x [2],
                     x [2] * y [0] - y [2] * x [0],
@@ -489,12 +515,12 @@ function (X3DNode,
          })
          .addFunction (function Quaternion (fromVector, toVector)
          {
-            const from = normalizeV (fromVector);
-            const to   = normalizeV (toVector);
+            const from = normalize3 (fromVector);
+            const to   = normalize3 (toVector);
 
-            const cos_angle = dotV (from, to);
-            let   crossvec  = crossV (from, to);
-            const crosslen  = lengthV (crossvec);
+            const cos_angle = dot3 (from, to);
+            let   crossvec  = cross3 (from, to);
+            const crosslen  = length3 (crossvec);
 
             if (crosslen == 0)
             {
@@ -504,12 +530,12 @@ function (X3DNode,
                }
                else
                {
-                  let t = crossV (from, [1, 0, 0]);
+                  let t = cross3 (from, [1, 0, 0]);
 
                   if (dot (t, t) == 0)
-                     t = crossV (from, [0, 1, 0]);
+                     t = cross3 (from, [0, 1, 0]);
 
-                  t = normalizeV (t);
+                  t = normalize3 (t);
 
                   return [t [0], t [1], t [2], 0];
                }
@@ -518,7 +544,7 @@ function (X3DNode,
             {
                const s = Math .sqrt (Math .abs (1 - cos_angle) * 0.5);
 
-               crossvec = normalizeV (crossvec);
+               crossvec = normalize3 (crossvec);
 
                return [crossvec [0] * s,
                        crossvec [1] * s,
