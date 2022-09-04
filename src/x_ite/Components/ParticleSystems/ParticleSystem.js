@@ -138,7 +138,6 @@ function (Fields,
       this .numForces                = 0;
       this .colorKeys                = [ 0 ];
       this .colorRampNode            = null;
-      this .colorRamp                = [ new Vector3 (0, 0, 0) ];
       this .texCoordKeys             = [ ];
       this .texCoordRampNode         = null;
       this .texCoordRamp             = [ ];
@@ -284,7 +283,7 @@ function (Fields,
          this .geometryContext .textureCoordinateMapping = new Map ();
 
          // Init fields.
-         // Call order is higly important at startup.
+         // Call order is very important at startup.
 
          this .set_emitter__ ();
          this .set_enabled__ ();
@@ -562,10 +561,10 @@ function (Fields,
       {
          const maxParticles = Math .max (0, this ._maxParticles .getValue ());
 
-         this .createTimes      .setOutput ([maxParticles]);
-         this .createColors     .setOutput ([maxParticles]);
-         this .createVelocities .setOutput ([maxParticles]);
-         this .createPositions  .setOutput ([maxParticles]);
+         this .createTimes      .setOutput ([Math .max (1, maxParticles)]);
+         this .createColors     .setOutput ([Math .max (1, maxParticles)]);
+         this .createVelocities .setOutput ([Math .max (1, maxParticles)]);
+         this .createPositions  .setOutput ([Math .max (1, maxParticles)]);
 
          this .particles .times      = this .createTimes      (this .particles .times,      this .maxParticles);
          this .particles .colors     = this .createColors     (this .particles .colors,     this .maxParticles);
@@ -701,7 +700,9 @@ function (Fields,
             for (let i = colorRamp .length; i < numColorKeys; ++ i)
                colorRamp [i] = last || Vector4 .One;
 
-            this .colorRamp = this .createColorRamp .setOutput ([numColorKeys]) (colorRamp);
+            colorRamp .push (Vector4 .One);
+
+            this .colorRamp = this .createColorRamp .setOutput ([Math .max (1, numColorKeys)]) (colorRamp);
 
             this .geometryContext .colorMaterial = !! (numColorKeys && this .colorRampNode);
          };

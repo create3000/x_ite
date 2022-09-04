@@ -118,7 +118,8 @@ function (X3DEventObject,
       {
          X3DEventObject .prototype .setName .call (this, value)
 
-         this ._name_changed = this .getBrowser () .getCurrentTime ();
+         if (this .getExecutionContext () .isLive () .getValue ())
+            this ._name_changed = this .getBrowser () .getCurrentTime ();
       },
       getMainScene: function ()
       {
@@ -344,7 +345,8 @@ function (X3DEventObject,
          if (!this .getPrivate ())
             field .addCloneCount (1);
 
-         this ._fields_changed = this .getBrowser () .getCurrentTime ();
+         if (this .getExecutionContext () .isLive () .getValue ())
+            this ._fields_changed = this .getBrowser () .getCurrentTime ();
       },
       getField: (function ()
       {
@@ -412,7 +414,8 @@ function (X3DEventObject,
             if (!this .getPrivate ())
                field .removeCloneCount (1);
 
-            this ._fields_changed = this .getBrowser () .getCurrentTime ();
+             if (this .getExecutionContext () .isLive () .getValue ())
+               this ._fields_changed = this .getBrowser () .getCurrentTime ();
          }
       },
       canUserDefinedFields: function ()
@@ -436,7 +439,8 @@ function (X3DEventObject,
          if (!this .getPrivate ())
             field .addCloneCount (1);
 
-         this ._fields_changed = this .getBrowser () .getCurrentTime ();
+         if (this .getExecutionContext () .isLive () .getValue ())
+            this ._fields_changed = this .getBrowser () .getCurrentTime ();
       },
       removeUserDefinedField: function (name)
       {
@@ -453,7 +457,8 @@ function (X3DEventObject,
             if (!this .getPrivate ())
                field .removeCloneCount (1);
 
-            this ._fields_changed = this .getBrowser () .getCurrentTime ();
+            if (this .getExecutionContext () .isLive () .getValue ())
+               this ._fields_changed = this .getBrowser () .getCurrentTime ();
          }
       },
       getUserDefinedFields: function ()
@@ -563,7 +568,8 @@ function (X3DEventObject,
 
          this [_cloneCount] += count;
 
-         this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
+         if (this .getExecutionContext () .isLive () .getValue ())
+            this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
 
          this [_executionContext] ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
       },
@@ -574,7 +580,8 @@ function (X3DEventObject,
 
          this [_cloneCount] -= count;
 
-         this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
+         if (this .getExecutionContext () .isLive () .getValue ())
+            this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
 
          this [_executionContext] ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
       },
