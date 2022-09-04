@@ -495,8 +495,8 @@ function (X3DNode,
             void prototypes () { }
          `)
          .addNativeFunction ("dot3", "float dot3 (vec3 a, vec3 b) { return dot (a, b); }")
-         .addNativeFunction ("length3", "float length3 (vec3 vector) { return length (vector); }")
-         .addNativeFunction ("normalize3", "vec3 normalize3 (vec3 vector) { return normalize (vector); }")
+         .addNativeFunction ("length3", "float length3 (vec3 v) { return length (v); }")
+         .addNativeFunction ("normalize3", "vec3 normalize3 (vec3 v) { return normalize (v); }")
          .addNativeFunction ("cross3", "vec3 cross3 (vec3 a, vec3 b) { return cross (a, b); }")
          .addFunction (function Quaternion (fromVector, toVector)
          {
