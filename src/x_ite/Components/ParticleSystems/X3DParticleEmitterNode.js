@@ -309,9 +309,9 @@ function (X3DNode,
 
                return [life, lifetime, elapsedTime, 0];
             },
-            colors: function updateColors (colorMaterial, time, colorKeys, numColorKeys, colorRamp)
+            colors: function updateColors (time, numParticles, colorMaterial, colorKeys, numColorKeys, colorRamp)
             {
-               if (colorMaterial)
+               if (this .thread .x < numParticles && colorMaterial)
                {
                   // Determine index0, index1 and weight.
 
@@ -450,7 +450,7 @@ function (X3DNode,
 
             const
                time     = updateTimes (times, numParticles, particleLifetime, lifetimeVariation, createParticles, deltaTime),
-               color    = updateColors (colorMaterial, time, colorKeys, numColorKeys, colorRamp),
+               color    = updateColors (time, numParticles, colorMaterial, colorKeys, numColorKeys, colorRamp),
                velocity = updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, mass, boundedPhysics, deltaTime);
 
             // updatePositions
