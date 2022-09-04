@@ -257,7 +257,10 @@ function (Fields,
 
          this .createColorRamp = gpu .createKernel (function (colorRamp)
          {
-            return [colorRamp [this .thread .x * 4 + 0], colorRamp [this .thread .x * 4 + 1], colorRamp [this .thread .x * 4 + 2], colorRamp [this .thread .x * 4 + 3]];
+            return [colorRamp [this .thread .x * 4 + 0],
+                    colorRamp [this .thread .x * 4 + 1],
+                    colorRamp [this .thread .x * 4 + 2],
+                    colorRamp [this .thread .x * 4 + 3]];
          },
          kernelOptions);
 
