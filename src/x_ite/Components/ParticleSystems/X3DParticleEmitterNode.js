@@ -51,7 +51,6 @@ define ([
    "x_ite/Components/Core/X3DNode",
    "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
    "standard/Math/Geometry/Line3",
    "standard/Math/Geometry/Plane3",
    "standard/Math/Algorithm",
@@ -60,7 +59,6 @@ define ([
 function (X3DNode,
           X3DConstants,
           Vector3,
-          Rotation4,
           Line3,
           Plane3,
           Algorithm,
@@ -69,10 +67,9 @@ function (X3DNode,
 "use strict";
 
    const
-      normal       = new Vector3 (0, 0, 0),
-      fromPosition = new Vector3 (0, 0, 0),
-      line         = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-      plane        = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
+      normal = new Vector3 (0, 0, 0),
+      line   = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+      plane  = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
 
    function X3DParticleEmitterNode (executionContext)
    {
@@ -608,18 +605,18 @@ function (X3DNode,
 
             return multVecQuat (normal, rotation);
          })
-         // getRandomSurfaceNormal: function (normal)
-         // {
-         //    const
-         //       theta = this .getRandomValue (-1, 1) * Math .PI,
-         //       cphi  = Math .pow (Math .random (), 1/3),
-         //       phi   = Math .acos (cphi),
-         //       r     = Math .sin (phi);
+         .addFunction (function getRandomSurfaceNormal ()
+         {
+            const
+               theta = getRandomValue (-1, 1) * Math .PI,
+               cphi  = Math .pow (Math .random (), 1/3),
+               phi   = Math .acos (cphi),
+               r     = Math .sin (phi);
 
-         //    return normal .set (Math .sin (theta) * r,
-         //                        Math .cos (theta) * r,
-         //                        cphi);
-         // },
+            return [Math .sin (theta) * r,
+                    Math .cos (theta) * r,
+                    cphi];
+         })
          .addFunction (function getRandomSphericalVelocity ()
          {
             const
