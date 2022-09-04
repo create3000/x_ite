@@ -844,6 +844,8 @@ function (Fields,
             gl .bufferData (gl .ARRAY_BUFFER, colorArray, gl .STATIC_DRAW);
          }
 
+         // Vertices
+
          const vertexArray = particles .positions .renderRawOutput ();
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
