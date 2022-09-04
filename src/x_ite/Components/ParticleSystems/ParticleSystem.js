@@ -255,6 +255,12 @@ function (Fields,
          },
          kernelOptions);
 
+         this .createColorRamp = gpu .createKernel (function (colorRamp)
+         {
+            return [colorRamp [this .thread .x * 4 + 0], colorRamp [this .thread .x * 4 + 1], colorRamp [this .thread .x * 4 + 2], colorRamp [this .thread .x * 4 + 3]];
+         },
+         kernelOptions);
+
          // Create GL stuff.
 
          this .idBuffer        = gl .createBuffer ();
@@ -668,29 +674,35 @@ function (Fields,
          this .set_color__ ();
          this .set_transparent__ ();
       },
-      set_color__: function ()
+      set_color__: (function ()
       {
-         const
-            colorKey     = this ._colorKey,
-            numColorKeys = colorKey .length,
-            colorKeys    = this .colorKeys,
-            colorRamp    = this .colorRamp;
+         const colorRamp = [ ];
 
-         this .numColorKeys = numColorKeys;
+         return function ()
+         {
+            const
+               colorKey     = this ._colorKey,
+               numColorKeys = colorKey .length,
+               colorKeys    = this .colorKeys;
 
-         for (let i = 0; i < numColorKeys; ++ i)
-            colorKeys [i] = colorKey [i];
+            this .numColorKeys = numColorKeys;
 
-         if (this .colorRampNode)
-            this .colorRampNode .getVectors (colorRamp);
+            for (let i = 0; i < numColorKeys; ++ i)
+               colorKeys [i] = colorKey [i];
 
-         const last = colorRamp .at (-1);
+            if (this .colorRampNode)
+               this .colorRampNode .getVectors (colorRamp);
 
-         for (let i = colorRamp .length; i < numColorKeys; ++ i)
-            colorRamp [i] = last || new Vector4 (1, 1, 1, 1);
+            const last = colorRamp .at (-1);
 
-         this .geometryContext .colorMaterial = !! (colorKeys .length && this .colorRampNode);
-      },
+            for (let i = colorRamp .length; i < numColorKeys; ++ i)
+               colorRamp [i] = last || Vector4 .One;
+
+            this .colorRamp = this .createColorRamp .setOutput ([numColorKeys]) (colorRamp);
+
+            this .geometryContext .colorMaterial = !! (numColorKeys && this .colorRampNode);
+         };
+      })(),
       set_texCoordRamp__: function ()
       {
          if (this .texCoordRampNode)
@@ -724,7 +736,7 @@ function (Fields,
 
          texCoordRamp .length = numTexCoordKeys * this .texCoordCount;
 
-         this .texCoordAnim = !! (texCoordKeys .length && this .texCoordRampNode);
+         this .texCoordAnim = !! (numTexCoordKeys && this .texCoordRampNode);
       },
       intersectsBox: function (box, clipPlanes)
       {

@@ -394,8 +394,8 @@ function (X3DNode,
                   // Interpolate and return color.
 
                   const
-                     color0 = [colorRamp [index0 * 4 + 0], colorRamp [index0 * 4 + 1], colorRamp [index0 * 4 + 2], colorRamp [index0 * 4 + 3]],
-                     color1 = [colorRamp [index1 * 4 + 0], colorRamp [index1 * 4 + 1], colorRamp [index1 * 4 + 2], colorRamp [index1 * 4 + 3]];
+                     color0 = colorRamp [index0],
+                     color1 = colorRamp [index1];
 
                   return [mix (color0 [0], color1 [0], weight),
                           mix (color0 [1], color1 [1], weight),
