@@ -494,26 +494,10 @@ function (X3DNode,
             vec3 getRandomNormalWithAngle (float);
             void prototypes () { }
          `)
-         .addFunction (function length3 (v)
-         {
-            return Math .sqrt (v [0] * v [0] + v [1] * v [1] + v [2] * v [2]);
-         })
-         .addFunction (function normalize3 (v)
-         {
-            const l = length3 (v);
-
-            return [v [0] / l, v [1] / l, v [2] / l];
-         })
-         .addFunction (function dot3 (x, y)
-         {
-            return x [0] * y [0] + x [1] * y [1] + x [2] * y [2];
-         })
-         .addFunction (function cross3 (x, y)
-         {
-            return [x [1] * y [2] - y [1] * x [2],
-                    x [2] * y [0] - y [2] * x [0],
-                    x [0] * y [1] - y [0] * x [1]];
-         })
+         .addNativeFunction ("dot3", "float dot3 (vec3 a, vec3 b) { return dot (a, b); }")
+         .addNativeFunction ("length3", "float length3 (vec3 vector) { return length (vector); }")
+         .addNativeFunction ("normalize3", "vec3 normalize3 (vec3 vector) { return normalize (vector); }")
+         .addNativeFunction ("cross3", "vec3 cross3 (vec3 a, vec3 b) { return cross (a, b); }")
          .addFunction (function Quaternion (fromVector, toVector)
          {
             const from = normalize3 (fromVector);
