@@ -682,10 +682,12 @@ function (Fields,
             colorKeys [i] = colorKey [i];
 
          if (this .colorRampNode)
-            this .colorRampNode .getVectors (this .colorRamp);
+            this .colorRampNode .getVectors (colorRamp);
+
+         const last = colorRamp .at (-1);
 
          for (let i = colorRamp .length; i < numColorKeys; ++ i)
-            colorRamp [i] = new Vector4 (1, 1, 1, 1);
+            colorRamp [i] = last || new Vector4 (1, 1, 1, 1);
 
          this .geometryContext .colorMaterial = !! (colorKeys .length && this .colorRampNode);
       },
@@ -704,22 +706,23 @@ function (Fields,
       set_texCoord__: function ()
       {
          const
-            texCoordKey  = this ._texCoordKey,
-            texCoordKeys = this .texCoordKeys,
-            texCoordRamp = this .texCoordRamp;
+            texCoordKey     = this ._texCoordKey,
+            numTexCoordKeys = texCoordKey .length,
+            texCoordKeys    = this .texCoordKeys,
+            texCoordRamp    = this .texCoordRamp;
 
-         for (let i = 0, length = texCoordKey .length; i < length; ++ i)
+         for (let i = 0; i < numTexCoordKeys; ++ i)
             texCoordKeys [i] = texCoordKey [i];
 
-         texCoordKeys .length = texCoordKey .length;
+         texCoordKeys .length = numTexCoordKeys;
 
          if (this .texCoordRampNode)
             this .texCoordRampNode .getTexCoord (texCoordRamp);
 
-         for (let i = texCoordRamp .length, length = texCoordKey .length * this .texCoordCount; i < length; ++ i)
+         for (let i = texCoordRamp .length, length = numTexCoordKeys * this .texCoordCount; i < length; ++ i)
             texCoordRamp [i] = new Vector4 (0, 0, 0, 0);
 
-         texCoordRamp .length = texCoordKey .length * this .texCoordCount;
+         texCoordRamp .length = numTexCoordKeys * this .texCoordCount;
 
          this .texCoordAnim = !! (texCoordKeys .length && this .texCoordRampNode);
       },

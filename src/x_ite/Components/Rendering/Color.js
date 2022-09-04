@@ -153,9 +153,11 @@ function (Fields,
       },
       getVectors: function (array)
       {
-         const color = this ._color;
+         const
+            color  = this ._color,
+            length = color .length;
 
-         for (var i = 0, length = color .length; i < length; ++ i)
+         for (let i = 0; i < length; ++ i)
          {
             const c = color [i];
 
