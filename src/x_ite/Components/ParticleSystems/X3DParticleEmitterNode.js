@@ -81,10 +81,11 @@ function (X3DNode,
       this ._mass        .setUnit ("mass");
       this ._surfaceArea .setUnit ("area");
 
-      this .constants = { };
-      this .kernel    = [ ];
-      this .i         = 0;
-      this .output    = [0];
+      this .constants    = { };
+      this .functions    = [ ];
+      this .kernel       = [ ];
+      this .i            = 0;
+      this .maxParticles = 0;
    }
 
    X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -97,9 +98,6 @@ function (X3DNode,
          this ._speed     .addInterest ("set_speed__",     this);
          this ._variation .addInterest ("set_variation__", this);
          this ._mass      .addInterest ("set_mass__",      this);
-
-         this .kernel [0] = this .createKernel ();
-         this .kernel [1] = this .createKernel ();
 
          this .set_speed__ ();
          this .set_variation__ ();
@@ -149,27 +147,39 @@ function (X3DNode,
 
          // boundedVolume = particleSystem .boundedVolume;
 
-         this .i          = (this .i + 1) % 2;
-         this .output [0] = particleSystem .maxParticles;
+         if (this .maxParticles !== particleSystem .maxParticles)
+         {
+            if (this .kernel .length)
+            {
+               this .kernel [0] .destroy ();
+               this .kernel [1] .destroy ();
+            }
+
+            this .maxParticles = particleSystem .maxParticles;
+            this .kernel [0]   = this .createKernel ();
+            this .kernel [1]   = this .createKernel ();
+         }
+
+         this .i = (this .i + 1) % 2;
 
          particleSystem .particles = this .kernel [this .i]
-            .setOutput (this .output) (particles .times,
-                                       particles .velocities,
-                                       particles .result,
-                                       particleSystem .numParticles,
-                                       particleSystem .particleLifetime,
-                                       particleSystem .lifetimeVariation,
-                                       particleSystem .createParticles,
-                                       particleSystem .geometryContext .colorMaterial,
-                                       particleSystem .colorKeys,
-                                       particleSystem .numColorKeys,
-                                       particleSystem .colorRamp,
-                                       particleSystem .numForces,
-                                       particleSystem .forces,
-                                       particleSystem .turbulences,
-                                       this .mass,
-                                       !! particleSystem .boundedVertices .length,
-                                       deltaTime);
+            (particles .times,
+             particles .velocities,
+             particles .result,
+             particleSystem .numParticles,
+             particleSystem .particleLifetime,
+             particleSystem .lifetimeVariation,
+             particleSystem .createParticles,
+             particleSystem .geometryContext .colorMaterial,
+             particleSystem .colorKeys,
+             particleSystem .numColorKeys,
+             particleSystem .colorRamp,
+             particleSystem .numForces,
+             particleSystem .forces,
+             particleSystem .turbulences,
+             this .mass,
+             !! particleSystem .boundedVertices .length,
+             deltaTime);
 
          /*
          for (let i = 0; i < numParticles; ++ i)
@@ -481,6 +491,8 @@ function (X3DNode,
 
             /* WORKAROUND: include */ prototypes ();
          })
+         .setConstants (this .constants)
+         .setFunctions (this .functions)
          .setTactic ("precision")
          .addNativeFunction ("prototypes", `
             vec4 Quaternion (vec3, vec3);
@@ -631,7 +643,7 @@ function (X3DNode,
             return velocity;
          })
          .setPipeline (true)
-         .setDynamicOutput (true);
+         .setOutput ([this .maxParticles]);
       },
       setConstant: function (name, value)
       {
@@ -639,13 +651,15 @@ function (X3DNode,
 
          constants [name] = value;
 
-         this .kernel [0] .setConstants (constants);
-         this .kernel [1] .setConstants (constants);
+         if (this .kernel .length)
+         {
+            this .kernel [0] .setConstants (constants);
+            this .kernel [1] .setConstants (constants);
+         }
       },
       addFunction: function (func)
       {
-         this .kernel [0] .addFunction (func);
-         this .kernel [1] .addFunction (func);
+         this .functions .push (func);
       },
    });
 

@@ -101,12 +101,6 @@ function (Fields,
       SPRITE:   SPRITE,
    };
 
-   const kernelOptions = {
-      tactic: "precision",
-      pipeline: true,
-      dynamicOutput: true,
-   };
-
    const
       vector = new Vector3 (0, 0, 0),
       normal = new Vector3 (0, 0, 0),
@@ -231,10 +225,13 @@ function (Fields,
             createVelocities ();
 
             return [0, 0, 0, 0];
-         },
-         kernelOptions);
+         })
+         .setTactic ("precision")
+         .setPipeline (true)
+         .setOutput ([1]);
 
-         this .particles = createParticles .setOutput ([1]) ();
+         this .particles       = createParticles ();
+         this .particlesKernel = createParticles;
 
          this .createColorRamp = gpu .createKernel (function (colorRamp)
          {
@@ -242,8 +239,10 @@ function (Fields,
                     colorRamp [this .thread .x * 4 + 1],
                     colorRamp [this .thread .x * 4 + 2],
                     colorRamp [this .thread .x * 4 + 3]];
-         },
-         kernelOptions);
+         })
+         .setTactic ("precision")
+         .setPipeline (true)
+         .setDynamicOutput (true);
 
          // Create GL stuff.
 
@@ -594,15 +593,20 @@ function (Fields,
             createVelocities (velocities, numParticles);
 
             return this .thread .x < numParticles ? positions [this .thread .x] : [0, 0, 0, 0];
-         },
-         kernelOptions);
+         })
+         .setTactic ("precision")
+         .setPipeline (true)
+         .setOutput ([Math .max (1, maxParticles)]);
 
-         this .particles = createParticles .setOutput ([Math .max (1, maxParticles)])
+         this .particles = createParticles
             (this .particles .times,
              this .particles .colors,
              this .particles .velocities,
              this .particles .result,
              this .numParticles);
+
+         this .particlesKernel .destroy ();
+         this .particlesKernel = createParticles;
 
          console .log (this .particles .result .toArray ())
 
