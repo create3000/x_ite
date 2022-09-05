@@ -570,8 +570,6 @@ function (Fields,
       {
          const maxParticles = Math .max (0, this ._maxParticles .getValue ());
 
-         console .log (this .particles .result .toArray ())
-
          const createParticles = gpu .createKernelMap ({
             times: function createTimes (times, numParticles)
             {
@@ -607,8 +605,6 @@ function (Fields,
 
          this .particlesKernel .destroy ();
          this .particlesKernel = createParticles;
-
-         console .log (this .particles .result .toArray ())
 
          this .maxParticles = maxParticles;
          this .numParticles = Math .min (this .numParticles, maxParticles);
