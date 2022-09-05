@@ -116,9 +116,9 @@ function (Fields,
 
          this .addFunction (function getRandomVelocity ()
          {
-            const direction = [this .constants .direction [0],
-                               this .constants .direction [1],
-                               this .constants .direction [2]];
+            const direction = [this .constants .direction0,
+                               this .constants .direction1,
+                               this .constants .direction2];
 
             if (direction [0] == 0 &&
                 direction [1] == 0 &&
@@ -141,9 +141,9 @@ function (Fields,
 
          this .addFunction (function getRandomPosition ()
          {
-            return [this .constants .position [0],
-                    this .constants .position [1],
-                    this .constants .position [2],
+            return [this .constants .position0,
+                    this .constants .position1,
+                    this .constants .position2,
                     1];
          });
 
@@ -153,11 +153,19 @@ function (Fields,
       },
       set_position__: function ()
       {
-         this .setConstant ("position", this ._position .getValue ());
+         const position = this ._position .getValue ();
+
+         this .setConstant ("position0", position .x);
+         this .setConstant ("position1", position .y);
+         this .setConstant ("position2", position .z);
       },
       set_direction__: function ()
       {
-         this .setConstant ("direction", this ._direction .getValue ());
+         const direction = this ._direction .getValue ();
+
+         this .setConstant ("direction0", direction .x);
+         this .setConstant ("direction1", direction .y);
+         this .setConstant ("direction2", direction .z);
       },
       set_angle__: function ()
       {

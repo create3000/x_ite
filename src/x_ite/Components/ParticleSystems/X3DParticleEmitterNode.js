@@ -81,7 +81,7 @@ function (X3DNode,
       this ._mass        .setUnit ("mass");
       this ._surfaceArea .setUnit ("area");
 
-      this .constants = { array: [0, 0, 0] };
+      this .constants = { };
       this .kernel    = [ ];
       this .i         = 0;
       this .output    = [0];

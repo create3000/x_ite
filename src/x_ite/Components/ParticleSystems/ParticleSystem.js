@@ -445,6 +445,34 @@ function (Fields,
                this .vertexCount   = 2;
 
                this .geometryContext .geometryType = 1;
+
+               this .geometryKernel = gpu .createKernelMap ({
+                  colors: function createColors (colorMaterial, colors, i)
+                  {
+                     return colorMaterial ? colors [i] : [0, 0, 0, 0];
+                  },
+               },
+               function (positions, velocities, colorMaterial, colors, sy1_2)
+               {
+                  const
+                     i        = this .thread .x / 2,
+                     color    = createColors (colorMaterial, colors, i),
+                     velocity = velocities [i],
+                     position = positions [i],
+                     normal   = normalize3 ([velocity [0], velocity [1], velocity [2]]);
+
+                  const s = this .thread .x % 2 == 0 ? -sy1_2 : sy1_2;
+
+                  return [position [0] + normal [0] * s,
+                          position [1] + normal [1] * s,
+                          position [2] + normal [2] * s,
+                          1];
+               })
+               .addNativeFunction ("normalize3", "vec3 normalize3 (vec3 v) { return normalize (v); }")
+               .setTactic ("precision")
+               .setPipeline (true)
+               .setDynamicOutput (true);
+
                break;
             }
             case TRIANGLE:
@@ -870,83 +898,45 @@ function (Fields,
          gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, vertexArray, gl .STATIC_DRAW);
       },
-      updateLine: function ()
+      updateLine: (function ()
       {
-         const
-            gl           = this .getBrowser () .getContext (),
-            particles    = this .particles,
-            numParticles = this .numParticles,
-            sy1_2        = this ._particleSize .y / 2;
+         const output = [1];
 
-         // Colors
-
-         if (this .geometryContext .colorMaterial)
-         {
-            for (let i = 0; i < numParticles; ++ i)
-            {
-               const
-                  color = particles [i] .color,
-                  i8    = i * 8;
-
-               colorArray [i8]     = color .x;
-               colorArray [i8 + 1] = color .y;
-               colorArray [i8 + 2] = color .z;
-               colorArray [i8 + 3] = color .w;
-
-               colorArray [i8 + 4] = color .x;
-               colorArray [i8 + 5] = color .y;
-               colorArray [i8 + 6] = color .z;
-               colorArray [i8 + 7] = color .w;
-            }
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, this .colorArray, gl .STATIC_DRAW);
-         }
-
-         // Vertices
-
-         for (let i = 0; i < numParticles; ++ i)
+         return function ()
          {
             const
-               particle    = particles [i],
-               position    = particle .position,
-               elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
-               life        = particles [i] .life,
-               x           = position .x,
-               y           = position .y,
-               z           = position .z,
-               i2          = i * 2,
-               i6          = i * 6,
-               i8          = i * 8;
+               gl           = this .getBrowser () .getContext (),
+               particles    = this .particles,
+               numParticles = this .numParticles,
+               sy1_2        = this ._particleSize .y / 2;
 
-            positionArray [i6]     = x;
-            positionArray [i6 + 1] = y;
-            positionArray [i6 + 2] = z;
-            positionArray [i6 + 3] = x;
-            positionArray [i6 + 4] = y;
-            positionArray [i6 + 5] = z;
+            output [0] = Math .max (1, numParticles) * this .vertexCount;
 
-            elapsedTimeArray [i2]     = elapsedTime;
-            elapsedTimeArray [i2 + 1] = elapsedTime;
+            const geometry = this .geometryKernel .setOutput (output)
+               (particles .positions,
+                particles .velocities,
+                this .geometryContext .colorMaterial,
+                particles .colors,
+                sy1_2);
 
-            lifeArray [i2]     = life;
-            lifeArray [i2 + 1] = life;
+            // Colors
 
-            // Length of line / 2.
-            normal .assign (particle .velocity) .normalize () .multiply (sy1_2);
+            if (this .geometryContext .colorMaterial)
+            {
+               const colorArray = geometry .colors .renderRawOutput ();
 
-            vertexArray [i8]     = x - normal .x;
-            vertexArray [i8 + 1] = y - normal .y;
-            vertexArray [i8 + 2] = z - normal .z;
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
+               gl .bufferData (gl .ARRAY_BUFFER, colorArray, gl .STATIC_DRAW);
+            }
 
-            vertexArray [i8 + 4] = x + normal .x;
-            vertexArray [i8 + 5] = y + normal .y;
-            vertexArray [i8 + 6] = z + normal .z;
-         }
+            // Vertices
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
-      },
+            const vertexArray = geometry .result .renderRawOutput ();
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, vertexArray, gl .STATIC_DRAW);
+         };
+      })(),
       updateQuad: function (modelViewMatrix)
       {
          try
