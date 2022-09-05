@@ -700,7 +700,7 @@ function (Fields,
             for (let i = colorRamp .length; i < numColorKeys; ++ i)
                colorRamp [i] = last || Vector4 .One;
 
-            colorRamp .push (Vector4 .One);
+            colorRamp .push (Vector4 .One); // Must create at least one value.
 
             this .colorRamp = this .createColorRamp .setOutput ([Math .max (1, numColorKeys)]) (colorRamp);
 
