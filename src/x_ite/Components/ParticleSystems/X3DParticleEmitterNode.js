@@ -155,7 +155,7 @@ function (X3DNode,
          particleSystem .particles = this .kernel [this .i]
             .setOutput (this .output) (particles .times,
                                        particles .velocities,
-                                       particles .positions,
+                                       particles .result,
                                        particleSystem .numParticles,
                                        particleSystem .particleLifetime,
                                        particleSystem .lifetimeVariation,
@@ -170,8 +170,6 @@ function (X3DNode,
                                        this .mass,
                                        !! particleSystem .boundedVertices .length,
                                        deltaTime);
-
-         particleSystem .particles .positions = particleSystem .particles .result;
 
          /*
          for (let i = 0; i < numParticles; ++ i)

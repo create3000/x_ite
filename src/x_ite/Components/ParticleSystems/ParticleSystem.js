@@ -101,6 +101,12 @@ function (Fields,
       SPRITE:   SPRITE,
    };
 
+   const kernelOptions = {
+      tactic: "precision",
+      pipeline: true,
+      dynamicOutput: true,
+   };
+
    const
       vector = new Vector3 (0, 0, 0),
       normal = new Vector3 (0, 0, 0),
@@ -213,46 +219,22 @@ function (Fields,
 
          // Create GPU stuff.
 
-         const kernelOptions = {
-            tactic: "precision",
-            pipeline: true,
-            dynamicOutput: true,
-         };
-
-         const createTimes      = gpu .createKernel (function () { return [0, 0, 0, 0]; }, kernelOptions) .setOutput ([1]);
-         const createColors     = gpu .createKernel (function () { return [0, 0, 0, 0]; }, kernelOptions) .setOutput ([1]);
-         const createVelocities = gpu .createKernel (function () { return [0, 0, 0, 0]; }, kernelOptions) .setOutput ([1]);
-         const createPositions  = gpu .createKernel (function () { return [0, 0, 0, 0]; }, kernelOptions) .setOutput ([1]);
-
-         this .particles .times      = createTimes ();
-         this .particles .colors     = createColors ();
-         this .particles .velocities = createVelocities ();
-         this .particles .positions  = createPositions ();
-
-         // [life, lifetime, elapsedTime, unused]
-         this .createTimes = gpu .createKernel (function (times, length)
+         const createParticles = gpu .createKernelMap ({
+            times: function createTimes () { return [0, 0, 0, 0]; },
+            colors: function createColors () { return [0, 0, 0, 0]; },
+            velocities: function createVelocities () { return [0, 0, 0, 0]; },
+         },
+         function ()
          {
-            return this .thread .x < length ? times [this .thread .x] : [0, -1, 0, 0];
+            createTimes ();
+            createColors ();
+            createVelocities ();
+
+            return [0, 0, 0, 0];
          },
          kernelOptions);
 
-         this .createColors = gpu .createKernel (function (colors, length)
-         {
-            return this .thread .x < length ? colors [this .thread .x] : [0, 0, 0, 0];
-         },
-         kernelOptions);
-
-         this .createVelocities = gpu .createKernel (function (velocities, length)
-         {
-            return this .thread .x < length ? velocities [this .thread .x] : [0, 0, 0, 0];
-         },
-         kernelOptions);
-
-         this .createPositions = gpu .createKernel (function (positions, length)
-         {
-            return this .thread .x < length ? positions [this .thread .x] : [0, 0, 0, 1];
-         },
-         kernelOptions);
+         this .particles = createParticles .setOutput ([1]) ();
 
          this .createColorRamp = gpu .createKernel (function (colorRamp)
          {
@@ -589,15 +571,40 @@ function (Fields,
       {
          const maxParticles = Math .max (0, this ._maxParticles .getValue ());
 
-         this .createTimes      .setOutput ([Math .max (1, maxParticles)]);
-         this .createColors     .setOutput ([Math .max (1, maxParticles)]);
-         this .createVelocities .setOutput ([Math .max (1, maxParticles)]);
-         this .createPositions  .setOutput ([Math .max (1, maxParticles)]);
+         console .log (this .particles .times .toArray ())
 
-         this .particles .times      = this .createTimes      (this .particles .times,      this .maxParticles);
-         this .particles .colors     = this .createColors     (this .particles .colors,     this .maxParticles);
-         this .particles .velocities = this .createVelocities (this .particles .velocities, this .maxParticles);
-         this .particles .positions  = this .createPositions  (this .particles .positions,  this .maxParticles);
+         const createParticles = gpu .createKernelMap ({
+            times: function createTimes (times, numParticles)
+            {
+               return this .thread .x < numParticles ? times [this .thread .x] : [0, -1, 0, 0];
+            },
+            colors: function createColors (colors, numParticles)
+            {
+               return this .thread .x < numParticles ? colors [this .thread .x] : [0, 0, 0, 0];
+            },
+            velocities: function createVelocities (velocities, numParticles)
+            {
+               return this .thread .x < numParticles ? velocities [this .thread .x] : [0, 0, 0, 0];
+            },
+         },
+         function (times, colors, velocities, positions, numParticles)
+         {
+            createTimes (times, numParticles);
+            createColors (colors, numParticles);
+            createVelocities (velocities, numParticles);
+
+            return this .thread .x < numParticles ? positions [this .thread .x] : [0, 0, 0, 1];
+         },
+         kernelOptions);
+
+         this .particles = createParticles .setOutput ([Math .max (1, maxParticles)])
+            (this .particles .times,
+             this .particles .colors,
+             this .particles .velocities,
+             this .particles .result,
+             this .numParticles);
+
+         console .log (this .particles .times .toArray ())
 
          this .maxParticles = maxParticles;
          this .numParticles = Math .min (this .numParticles, maxParticles);
@@ -893,7 +900,7 @@ function (Fields,
 
          // Vertices
 
-         const vertexArray = particles .positions .renderRawOutput ();
+         const vertexArray = particles .result .renderRawOutput ();
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, vertexArray, gl .STATIC_DRAW);
@@ -913,7 +920,7 @@ function (Fields,
             output [0] = Math .max (1, numParticles) * this .vertexCount;
 
             const geometry = this .geometryKernel .setOutput (output)
-               (particles .positions,
+               (particles .result,
                 particles .velocities,
                 this .geometryContext .colorMaterial,
                 particles .colors,
