@@ -571,7 +571,7 @@ function (Fields,
       {
          const maxParticles = Math .max (0, this ._maxParticles .getValue ());
 
-         console .log (this .particles .times .toArray ())
+         console .log (this .particles .result .toArray ())
 
          const createParticles = gpu .createKernelMap ({
             times: function createTimes (times, numParticles)
@@ -593,7 +593,7 @@ function (Fields,
             createColors (colors, numParticles);
             createVelocities (velocities, numParticles);
 
-            return this .thread .x < numParticles ? positions [this .thread .x] : [0, 0, 0, 1];
+            return this .thread .x < numParticles ? positions [this .thread .x] : [0, 0, 0, 0];
          },
          kernelOptions);
 
@@ -604,7 +604,7 @@ function (Fields,
              this .particles .result,
              this .numParticles);
 
-         console .log (this .particles .times .toArray ())
+         console .log (this .particles .result .toArray ())
 
          this .maxParticles = maxParticles;
          this .numParticles = Math .min (this .numParticles, maxParticles);
