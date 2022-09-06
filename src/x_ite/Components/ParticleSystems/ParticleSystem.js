@@ -213,7 +213,7 @@ function (Fields,
 
          // Create GPU stuff.
 
-         const createParticles = gpu .createKernelMap ({
+         const particlesKernel = gpu .createKernelMap ({
             times: function createTimes () { return [0, 0, 0, 0]; },
             colors: function createColors () { return [0, 0, 0, 0]; },
             velocities: function createVelocities () { return [0, 0, 0, 0]; },
@@ -230,8 +230,8 @@ function (Fields,
          .setPipeline (true)
          .setOutput ([1]);
 
-         this .particles       = createParticles ();
-         this .particlesKernel = createParticles;
+         this .particles       = particlesKernel ();
+         this .particlesKernel = particlesKernel;
 
          this .createColorRamp = gpu .createKernel (function (colorRamp)
          {
@@ -570,7 +570,7 @@ function (Fields,
       {
          const maxParticles = Math .max (0, this ._maxParticles .getValue ());
 
-         const createParticles = gpu .createKernelMap ({
+         const particlesKernel = gpu .createKernelMap ({
             times: function createTimes (times, numParticles)
             {
                return this .thread .x < numParticles ? times [this .thread .x] : [0, -1, 0, 0];
@@ -596,7 +596,7 @@ function (Fields,
          .setPipeline (true)
          .setOutput ([Math .max (1, maxParticles)]);
 
-         this .particles = createParticles
+         this .particles = particlesKernel
             (this .particles .times,
              this .particles .colors,
              this .particles .velocities,
@@ -604,7 +604,7 @@ function (Fields,
              this .numParticles);
 
          this .particlesKernel .destroy ();
-         this .particlesKernel = createParticles;
+         this .particlesKernel = particlesKernel;
 
          this .maxParticles = maxParticles;
          this .numParticles = Math .min (this .numParticles, maxParticles);
