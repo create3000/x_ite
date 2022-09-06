@@ -381,6 +381,9 @@ function (Fields,
             gl           = this .getBrowser () .getContext (),
             maxParticles = this .maxParticles;
 
+         if (this .geometryKernel)
+            this .geometryKernel .destroy ();
+
          // geometryType
 
          this .geometryType = GeometryTypes [this ._geometryType .getValue ()];
@@ -408,6 +411,8 @@ function (Fields,
                this .vertexCount   = 1;
 
                this .geometryContext .geometryType = 0;
+
+               delete this .geometryKernel;
                break;
             }
             case LINE:
@@ -532,6 +537,8 @@ function (Fields,
             {
                this .texCoordCount = 0;
                this .vertexCount   = 0;
+
+               delete this .geometryKernel;
                break;
             }
          }
