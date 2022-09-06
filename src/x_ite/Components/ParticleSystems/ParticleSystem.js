@@ -233,7 +233,7 @@ function (Fields,
          this .particles       = particlesKernel ();
          this .particlesKernel = particlesKernel;
 
-         this .createColorRamp = gpu .createKernel (function (colorRamp)
+         this .colorRampKernel = gpu .createKernel (function (colorRamp)
          {
             return [colorRamp [this .thread .x * 4 + 0],
                     colorRamp [this .thread .x * 4 + 1],
@@ -737,7 +737,7 @@ function (Fields,
 
             colorRamp .push (Vector4 .One); // Must create at least one value.
 
-            this .colorRamp = this .createColorRamp .setOutput ([Math .max (1, numColorKeys)]) (colorRamp);
+            this .colorRamp = this .colorRampKernel .setOutput ([Math .max (1, numColorKeys)]) (colorRamp);
 
             this .geometryContext .colorMaterial = !! (numColorKeys && this .colorRampNode);
          };
