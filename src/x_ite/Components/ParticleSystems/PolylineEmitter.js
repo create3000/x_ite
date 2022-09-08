@@ -80,7 +80,6 @@ function (Fields,
 
       this .direction        = new Vector3 (0, 0, 0);
       this .polylineNode     = new IndexedLineSet (executionContext);
-      this .polylines        = [ ];
       this .lengthSoFarArray = [ 0 ];
    }
 
