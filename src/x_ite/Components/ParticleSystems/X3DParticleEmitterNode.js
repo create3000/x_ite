@@ -141,106 +141,116 @@ function (X3DNode,
                              Math .cos (theta) * r,
                              cphi);
       },
-      animate: function (particleSystem, deltaTime)
+      animate: (function ()
       {
-         const particles = particleSystem .particles;
+         const removedKernels = [ ];
 
-         // boundedVolume = particleSystem .boundedVolume;
-
-         if (this .maxParticles !== particleSystem .maxParticles)
+         return function (particleSystem, deltaTime)
          {
-            if (this .kernel .length)
+            const particles = particleSystem .particles;
+
+            // boundedVolume = particleSystem .boundedVolume;
+
+            if (this .maxParticles !== particleSystem .maxParticles)
             {
-               this .kernel [0] .destroy ();
-               this .kernel [1] .destroy ();
+               if (this .kernel .length)
+                  removedKernels .push (this .kernel [0], this .kernel [1]);
+
+               this .maxParticles = particleSystem .maxParticles;
+               this .kernel [0]   = this .createKernel ();
+               this .kernel [1]   = this .createKernel ();
             }
 
-            this .maxParticles = particleSystem .maxParticles;
-            this .kernel [0]   = this .createKernel ();
-            this .kernel [1]   = this .createKernel ();
-         }
+            this .i = (this .i + 1) % 2;
 
-         this .i = (this .i + 1) % 2;
+            particleSystem .particles = this .kernel [this .i]
+               (particles .times,
+               particles .velocities,
+               particles .result,
+               particleSystem .numParticles,
+               particleSystem .particleLifetime,
+               particleSystem .lifetimeVariation,
+               particleSystem .createParticles,
+               particleSystem .geometryContext .colorMaterial,
+               particleSystem .colorKeys,
+               particleSystem .numColorKeys,
+               particleSystem .colorRamp,
+               particleSystem .numForces,
+               particleSystem .forces,
+               particleSystem .turbulences,
+               this .mass,
+               !! particleSystem .boundedVertices .length,
+               deltaTime);
 
-         particleSystem .particles = this .kernel [this .i]
-            (particles .times,
-             particles .velocities,
-             particles .result,
-             particleSystem .numParticles,
-             particleSystem .particleLifetime,
-             particleSystem .lifetimeVariation,
-             particleSystem .createParticles,
-             particleSystem .geometryContext .colorMaterial,
-             particleSystem .colorKeys,
-             particleSystem .numColorKeys,
-             particleSystem .colorRamp,
-             particleSystem .numForces,
-             particleSystem .forces,
-             particleSystem .turbulences,
-             this .mass,
-             !! particleSystem .boundedVertices .length,
-             deltaTime);
-
-         /*
-         for (let i = 0; i < numParticles; ++ i)
-         {
-            const
-               particle    = particles [i],
-               elapsedTime = particle .elapsedTime + deltaTime;
-
-            if (elapsedTime > particle .lifetime)
+            if (removedKernels .length)
             {
-               // Create new particle or hide particle.
+               removedKernels [0] .destroy ();
+               removedKernels [1] .destroy ();
 
-               particle .lifetime    = this .getRandomLifetime (particleLifetime, lifetimeVariation);
-               particle .elapsedTime = 0;
-
-               if (createParticles)
-               {
-                  ++ particle .life;
-                  this .getRandomPosition (particle .position);
-                  this .getRandomVelocity (particle .velocity);
-               }
-               else
-                  particle .position .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
+               removedKernels .length = 0;
             }
-            else
-            {
-               // Animate particle.
 
+            /*
+            for (let i = 0; i < numParticles; ++ i)
+            {
                const
-                  position = particle .position,
-                  velocity = particle .velocity;
+                  particle    = particles [i],
+                  elapsedTime = particle .elapsedTime + deltaTime;
 
-               for (let f = 0; f < numForces; ++ f)
+               if (elapsedTime > particle .lifetime)
                {
-                  velocity .add (rotations [f] .multVecRot (this .getRandomNormalWithAngle (turbulences [f], normal)) .multiply (speeds [f]));
-               }
+                  // Create new particle or hide particle.
 
-               if (boundedPhysics)
-               {
-                  fromPosition .x = position .x;
-                  fromPosition .y = position .y;
-                  fromPosition .z = position .z;
+                  particle .lifetime    = this .getRandomLifetime (particleLifetime, lifetimeVariation);
+                  particle .elapsedTime = 0;
 
-                  position .x += velocity .x * deltaTime;
-                  position .y += velocity .y * deltaTime;
-                  position .z += velocity .z * deltaTime;
-
-                  this .bounce (boundedVolume, fromPosition, position, velocity);
+                  if (createParticles)
+                  {
+                     ++ particle .life;
+                     this .getRandomPosition (particle .position);
+                     this .getRandomVelocity (particle .velocity);
+                  }
+                  else
+                     particle .position .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
                }
                else
                {
-                  position .x += velocity .x * deltaTime;
-                  position .y += velocity .y * deltaTime;
-                  position .z += velocity .z * deltaTime;
-               }
+                  // Animate particle.
 
-               particle .elapsedTime = elapsedTime;
+                  const
+                     position = particle .position,
+                     velocity = particle .velocity;
+
+                  for (let f = 0; f < numForces; ++ f)
+                  {
+                     velocity .add (rotations [f] .multVecRot (this .getRandomNormalWithAngle (turbulences [f], normal)) .multiply (speeds [f]));
+                  }
+
+                  if (boundedPhysics)
+                  {
+                     fromPosition .x = position .x;
+                     fromPosition .y = position .y;
+                     fromPosition .z = position .z;
+
+                     position .x += velocity .x * deltaTime;
+                     position .y += velocity .y * deltaTime;
+                     position .z += velocity .z * deltaTime;
+
+                     this .bounce (boundedVolume, fromPosition, position, velocity);
+                  }
+                  else
+                  {
+                     position .x += velocity .x * deltaTime;
+                     position .y += velocity .y * deltaTime;
+                     position .z += velocity .z * deltaTime;
+                  }
+
+                  particle .elapsedTime = elapsedTime;
+               }
             }
-         }
-         */
-      },
+            */
+         };
+      })(),
       bounce: function (boundedVolume, fromPosition, toPosition, velocity)
       {
          normal .assign (velocity) .normalize ();
@@ -647,15 +657,8 @@ function (X3DNode,
       },
       setConstant: function (name, value)
       {
-         const constants = this .constants;
-
-         constants [name] = value;
-
-         if (this .kernel .length)
-         {
-            this .kernel [0] .setConstants (constants);
-            this .kernel [1] .setConstants (constants);
-         }
+         this .constants [name] = value;
+         this .maxParticles     = -1; // Trigger kernel rebuild.
       },
       addFunction: function (func)
       {
