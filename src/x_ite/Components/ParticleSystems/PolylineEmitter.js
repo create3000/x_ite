@@ -55,7 +55,7 @@ define ([
    "x_ite/Components/Rendering/IndexedLineSet",
    "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
-   "standard/Math/Algorithm",
+   "gpu",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,7 +64,7 @@ function (Fields,
           IndexedLineSet,
           X3DConstants,
           Vector3,
-          Algorithm)
+          gpu)
 {
 "use strict";
 
@@ -125,18 +125,145 @@ function (Fields,
          this .polylineNode .setPrivate (true);
          this .polylineNode .setup ();
 
+         this .addFunction (function getRandomVelocity ()
+         {
+            if (this .constants .direction0 == 0 &&
+                this .constants .direction1 == 0 &&
+                this .constants .direction2 == 0)
+            {
+               return getRandomSphericalVelocity ();
+            }
+            else
+            {
+               const speed = getRandomSpeed ();
+
+               return [this .constants .direction0 * speed,
+                       this .constants .direction1 * speed,
+                       this .constants .direction2 * speed,
+                       0];
+            }
+         });
+
+         this .addFunction (function getRandomPosition ()
+         {
+            // Determine index0 and weight.
+
+            const numLengthSoFar = this .constants .numLengthSoFar;
+
+            if (numLengthSoFar > 0)
+            {
+               const
+                  lastLengthSoFar = this .constants .lengthSoFarArray [numLengthSoFar - 1],
+                  fraction        = Math .random () * lastLengthSoFar;
+
+               let
+                  index0 = 0,
+                  index1 = 0,
+                  weight = 0;
+
+               if (numLengthSoFar == 1 || fraction <= this .constants .lengthSoFarArray [0])
+               {
+                  index0 = 0;
+                  weight = 0;
+               }
+               else if (fraction >= lastLengthSoFar)
+               {
+                  index0 = numLengthSoFar - 2;
+                  weight = 1;
+               }
+               else
+               {
+                  // BEGIN: upperBound
+
+                  const
+                     count = numLengthSoFar,
+                     value = fraction;
+
+                  let
+                     first = 0,
+                     step  = 0;
+
+                  while (count > 0)
+                  {
+                     let index = first;
+
+                     step = count >> 1;
+
+                     index += step;
+
+                     if (value < this .constants .lengthSoFarArray [index])
+                     {
+                        count = step;
+                     }
+                     else
+                     {
+                        first  = ++ index;
+                        count -= step + 1;
+                     }
+                  }
+
+                  const index = first;
+
+                  // END upperBound.
+
+                  if (index < numLengthSoFar)
+                  {
+                     index1 = index;
+                     index0 = index - 1;
+
+                     const
+                        key0 = this .constants .lengthSoFarArray [index0],
+                        key1 = this .constants .lengthSoFarArray [index1];
+
+                     weight = clamp ((fraction - key0) / (key1 - key0), 0, 1);
+                  }
+                  else
+                  {
+                     index0 = 0;
+                     weight = 0;
+                  }
+               }
+
+               // Interpolate and set position.
+
+               index0 *= 8;
+               index1  = index0 + 4;
+
+               const
+                  x1 = this .constants .vertices [index0],
+                  y1 = this .constants .vertices [index0 + 1],
+                  z1 = this .constants .vertices [index0 + 2],
+                  x2 = this .constants .vertices [index1],
+                  y2 = this .constants .vertices [index1 + 1],
+                  z2 = this .constants .vertices [index1 + 2];
+
+               return [mix (x1, x2, weight),
+                       mix (y1, y2, weight),
+                       mix (z1, z2, weight),
+                       1];
+            }
+            else
+            {
+               return [0, 0, 0, 1]
+            }
+         });
+
          this .set_direction__ ();
          this .set_polyline ();
       },
-      set_direction__: function ()
+      set_direction__: (function ()
       {
-         this .direction .assign (this ._direction .getValue ()) .normalize ();
+         const direction = new Vector3 (0, 0, 0);
 
-         if (this .direction .equals (Vector3 .Zero))
-            this .getRandomVelocity = this .getSphericalRandomVelocity;
-         else
-            delete this .getRandomVelocity;
-      },
+         return function ()
+         {
+            direction .assign (this ._direction .getValue ()) .normalize ();
+
+            this .setConstant ("direction0", direction .x);
+            this .setConstant ("direction1", direction .y);
+            this .setConstant ("direction2", direction .z);
+         };
+      })(),
       set_polyline: (function ()
       {
          const
@@ -145,12 +272,10 @@ function (Fields,
 
          return function ()
          {
-            const vertices = this .vertices = this .polylineNode .getVertices () .getValue ();
+            const vertices = this .polylineNode .getVertices () .getValue ();
 
             if (vertices .length)
             {
-               delete this .getRandomPosition;
-
                let   lengthSoFar      = 0;
                const lengthSoFarArray = this .lengthSoFarArray;
 
@@ -164,97 +289,48 @@ function (Fields,
                   lengthSoFar += vertex2 .subtract (vertex1) .abs ();
                   lengthSoFarArray .push (lengthSoFar);
                }
+
+               const createVertices = gpu .createKernel (function (vertices)
+               {
+                  return vertices [this .thread .x];
+               })
+               .setPipeline (true)
+               .setOutput ([vertices .length]);
+
+               const createLengthSoFarArray = gpu .createKernel (function (lengthSoFarArray)
+               {
+                  return lengthSoFarArray [this .thread .x];
+               })
+               .setPipeline (true)
+               .setOutput ([lengthSoFarArray .length]);
+
+               this .setConstant ("vertices", createVertices (vertices));
+               this .setConstant ("lengthSoFarArray", createLengthSoFarArray (lengthSoFarArray));
+               this .setConstant ("numLengthSoFar", lengthSoFarArray .length);
             }
             else
             {
-               this .getRandomPosition = getPosition;
+               const createVertices = gpu .createKernel (function (vertices)
+               {
+                  return vertices [this .thread .x];
+               })
+               .setPipeline (true)
+               .setOutput ([1]);
+
+               const createLengthSoFarArray = gpu .createKernel (function (lengthSoFarArray)
+               {
+                  return lengthSoFarArray [this .thread .x];
+               })
+               .setPipeline (true)
+               .setOutput ([1]);
+
+               this .setConstant ("vertices", createVertices ([0]));
+               this .setConstant ("lengthSoFarArray", createLengthSoFarArray ([0]));
+               this .setConstant ("numLengthSoFar", 0);
             }
          };
       })(),
-      getRandomPosition: function (position)
-      {
-         // Determine index0 and weight.
-
-         const
-            lengthSoFarArray = this .lengthSoFarArray,
-            length           = lengthSoFarArray .length,
-            fraction         = Math .random () * lengthSoFarArray .at (-1);
-
-         let
-            index0 = 0,
-            index1 = 0,
-            weight = 0;
-
-         if (length == 1 || fraction <= lengthSoFarArray [0])
-         {
-            index0 = 0;
-            weight = 0;
-         }
-         else if (fraction >= lengthSoFarArray .at (-1))
-         {
-            index0 = length - 2;
-            weight = 1;
-         }
-         else
-         {
-            const index = Algorithm .upperBound (lengthSoFarArray, 0, length, fraction, Algorithm .less);
-
-            if (index < length)
-            {
-               index1 = index;
-               index0 = index - 1;
-
-               const
-                  key0 = lengthSoFarArray [index0],
-                  key1 = lengthSoFarArray [index1];
-
-               weight = Algorithm .clamp ((fraction - key0) / (key1 - key0), 0, 1);
-            }
-            else
-            {
-               index0 = 0;
-               weight = 0;
-            }
-         }
-
-         // Interpolate and set position.
-
-         index0 *= 8;
-         index1  = index0 + 4;
-
-         const
-            vertices = this .vertices,
-            x1       = vertices [index0],
-            y1       = vertices [index0 + 1],
-            z1       = vertices [index0 + 2],
-            x2       = vertices [index1],
-            y2       = vertices [index1 + 1],
-            z2       = vertices [index1 + 2];
-
-         position .x = x1 + weight * (x2 - x1);
-         position .y = y1 + weight * (y2 - y1);
-         position .z = z1 + weight * (z2 - z1);
-
-         return position;
-      },
-      getRandomVelocity: function (velocity)
-      {
-         const
-            direction = this .direction,
-            speed     = this .getRandomSpeed ();
-
-         velocity .x = direction .x * speed;
-         velocity .y = direction .y * speed;
-         velocity .z = direction .z * speed;
-
-         return velocity;
-       },
    });
-
-   function getPosition (position)
-   {
-      return position .set (0, 0, 0);
-   }
 
    return PolylineEmitter;
 });
