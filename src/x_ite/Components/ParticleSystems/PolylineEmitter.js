@@ -289,43 +289,15 @@ function (Fields,
                   lengthSoFarArray .push (lengthSoFar);
                }
 
-               const createVertices = gpu .createKernel (function (vertices)
-               {
-                  return vertices [this .thread .x];
-               })
-               .setPipeline (true)
-               .setOutput ([vertices .length]);
-
-               const createLengthSoFarArray = gpu .createKernel (function (lengthSoFarArray)
-               {
-                  return lengthSoFarArray [this .thread .x];
-               })
-               .setPipeline (true)
-               .setOutput ([lengthSoFarArray .length]);
-
-               this .setConstant ("vertices", createVertices (vertices));
-               this .setConstant ("lengthSoFarArray", createLengthSoFarArray (lengthSoFarArray));
-               this .setConstant ("numLengthSoFar", lengthSoFarArray .length);
+               this .setConstant ("vertices",         vertices);
+               this .setConstant ("lengthSoFarArray", lengthSoFarArray);
+               this .setConstant ("numLengthSoFar",   lengthSoFarArray .length);
             }
             else
             {
-               const createVertices = gpu .createKernel (function (vertices)
-               {
-                  return vertices [this .thread .x];
-               })
-               .setPipeline (true)
-               .setOutput ([1]);
-
-               const createLengthSoFarArray = gpu .createKernel (function (lengthSoFarArray)
-               {
-                  return lengthSoFarArray [this .thread .x];
-               })
-               .setPipeline (true)
-               .setOutput ([1]);
-
-               this .setConstant ("vertices", createVertices ([0]));
-               this .setConstant ("lengthSoFarArray", createLengthSoFarArray ([0]));
-               this .setConstant ("numLengthSoFar", 0);
+               this .setConstant ("vertices",         [0]);
+               this .setConstant ("lengthSoFarArray", [0]);
+               this .setConstant ("numLengthSoFar",   0);
             }
          };
       })(),
