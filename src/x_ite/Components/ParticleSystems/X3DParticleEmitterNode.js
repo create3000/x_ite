@@ -66,11 +66,6 @@ function (X3DNode,
 {
 "use strict";
 
-   const
-      normal = new Vector3 (0, 0, 0),
-      line   = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-      plane  = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
-
    function X3DParticleEmitterNode (executionContext)
    {
       X3DNode .call (this, executionContext);
@@ -251,55 +246,63 @@ function (X3DNode,
             */
          };
       })(),
-      bounce: function (boundedVolume, fromPosition, toPosition, velocity)
+      bounce: (function ()
       {
-         normal .assign (velocity) .normalize ();
-
-         line .set (fromPosition, normal);
-
          const
-            intersections       = this .intersections,
-            intersectionNormals = this .intersectionNormals,
-            numIntersections    = boundedVolume .intersectsLine (line, intersections, intersectionNormals);
+            normal = new Vector3 (0, 0, 0),
+            line   = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+            plane  = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
 
-         if (numIntersections)
+         return function (boundedVolume, fromPosition, toPosition, velocity)
          {
-            for (let i = 0; i < numIntersections; ++ i)
-               intersections [i] .index = i;
+            normal .assign (velocity) .normalize ();
 
-            plane .set (fromPosition, normal);
+            line .set (fromPosition, normal);
 
-            this .sorter .sort (0, numIntersections);
+            const
+               intersections       = this .intersections,
+               intersectionNormals = this .intersectionNormals,
+               numIntersections    = boundedVolume .intersectsLine (line, intersections, intersectionNormals);
 
-            const index = Algorithm .upperBound (intersections, 0, numIntersections, 0, PlaneCompareValue);
-
-            if (index < numIntersections)
+            if (numIntersections)
             {
-               const
-                  intersection       = intersections [index],
-                  intersectionNormal = intersectionNormals [intersection .index];
+               for (let i = 0; i < numIntersections; ++ i)
+                  intersections [i] .index = i;
 
-               plane .set (intersection, intersectionNormal);
+               plane .set (fromPosition, normal);
 
-               if (plane .getDistanceToPoint (fromPosition) * plane .getDistanceToPoint (toPosition) < 0)
+               this .sorter .sort (0, numIntersections);
+
+               const index = Algorithm .upperBound (intersections, 0, numIntersections, 0, PlaneCompareValue);
+
+               if (index < numIntersections)
                {
-                  const dot2 = 2 * intersectionNormal .dot (velocity);
+                  const
+                     intersection       = intersections [index],
+                     intersectionNormal = intersectionNormals [intersection .index];
 
-                  velocity .x -= intersectionNormal .x * dot2;
-                  velocity .y -= intersectionNormal .y * dot2;
-                  velocity .z -= intersectionNormal .z * dot2;
+                  plane .set (intersection, intersectionNormal);
 
-                  normal .assign (velocity) .normalize ();
+                  if (plane .getDistanceToPoint (fromPosition) * plane .getDistanceToPoint (toPosition) < 0)
+                  {
+                     const dot2 = 2 * intersectionNormal .dot (velocity);
 
-                  const distance = intersection .distance (fromPosition);
+                     velocity .x -= intersectionNormal .x * dot2;
+                     velocity .y -= intersectionNormal .y * dot2;
+                     velocity .z -= intersectionNormal .z * dot2;
 
-                  toPosition .x = intersection .x + normal .x * distance;
-                  toPosition .y = intersection .y + normal .y * distance;
-                  toPosition .z = intersection .z + normal .z * distance;
+                     normal .assign (velocity) .normalize ();
+
+                     const distance = intersection .distance (fromPosition);
+
+                     toPosition .x = intersection .x + normal .x * distance;
+                     toPosition .y = intersection .y + normal .y * distance;
+                     toPosition .z = intersection .z + normal .z * distance;
+                  }
                }
             }
-         }
-      },
+         };
+      })(),
       createKernel: function ()
       {
          return gpu .createKernelMap ({
@@ -658,7 +661,7 @@ function (X3DNode,
       setConstant: function (name, value)
       {
          this .constants [name] = value;
-         this .maxParticles     = -1; // Trigger kernel rebuild.
+         this .maxParticles     = 0;     // Trigger kernel rebuild.
       },
       addFunction: function (func)
       {
