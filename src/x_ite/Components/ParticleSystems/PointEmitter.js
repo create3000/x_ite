@@ -85,7 +85,7 @@ function (Fields,
             return direction * getRandomSpeed ();
       }`);
 
-      this .addFunction (`vec3 getRandomPosition () { return position; }`);
+      this .addFunction (`vec4 getRandomPosition () { return vec4 (position, 1.0); }`);
    }
 
    PointEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),

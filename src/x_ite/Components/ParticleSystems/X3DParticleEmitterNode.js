@@ -219,6 +219,7 @@ function (X3DNode,
             const
                gl                 = this .getBrowser () .getContext (),
                kernel             = this .kernels [this .i],
+               other              = this .kernels [(this .i + 1) % 2],
                program            = kernel .program,
                currentFrameBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
@@ -231,6 +232,15 @@ function (X3DNode,
             gl .uniform1f (gl .getUniformLocation (program, "particleLifetime"), particleSystem .particleLifetime);
             gl .uniform1f (gl .getUniformLocation (program, "lifetimeVariation"), particleSystem .lifetimeVariation);
             gl .uniform1f (gl .getUniformLocation (program, "deltaTime"), deltaTime);
+
+            gl .activeTexture (gl .TEXTURE0 + 0);
+            gl .bindTexture (gl .TEXTURE_2D, other .textures [0]);
+            gl .activeTexture (gl .TEXTURE0 + 1);
+            gl .bindTexture (gl .TEXTURE_2D, other .textures [1]);
+            gl .activeTexture (gl .TEXTURE0 + 2);
+            gl .bindTexture (gl .TEXTURE_2D, other .textures [2]);
+            gl .activeTexture (gl .TEXTURE0 + 3);
+            gl .bindTexture (gl .TEXTURE_2D, other .textures [3]);
 
             gl .enableVertexAttribArray (kernel .program .x3d_Vertex);
             gl .bindBuffer (gl .ARRAY_BUFFER, kernel .vertexBuffer);
@@ -248,9 +258,10 @@ function (X3DNode,
 
             gl .drawArrays (gl .TRIANGLES, 0, 6);
 
-            gl .readBuffer (gl .COLOR_ATTACHMENT0);
-            gl .readPixels (0, 0, 10, 10, gl .RGBA, gl .FLOAT, kernel .textures [0] .data);
-            console .log (kernel .textures [0] .data);
+            const data = kernel .textures [3] .data;
+            gl .readBuffer (gl .COLOR_ATTACHMENT3);
+            gl .readPixels (0, 0, 10, 10, gl .RGBA, gl .FLOAT, data);
+            console .log (data);
 
             gl .bindFramebuffer (gl .FRAMEBUFFER, currentFrameBuffer);
 
@@ -898,6 +909,12 @@ function (X3DNode,
             return normal * speed;
          }
 
+         vec4
+         getColor (const in float elapsedTime)
+         {
+            return vec4 (1.0);
+         }
+
          ${this .functions .join ("\n")}
 
          void
@@ -923,16 +940,16 @@ function (X3DNode,
                   elapsedTime = 0.0;
 
                   output0 = vec4 (life, lifetime, elapsedTime, 0.0);
-                  output1 = vec4 (1.0);
-                  output2 = vec4 (2.0);
-                  output3 = vec4 (3.0);
+                  output1 = getColor (elapsedTime);
+                  output2 = createParticles ? vec4 (getRandomVelocity (), 0.0) : vec4 (0.0);
+                  output3 = createParticles ? getRandomPosition () : vec4 (0.0);
                }
                else
                {
                   output0 = vec4 (life, lifetime, elapsedTime, 0.0);
-                  output1 = vec4 (1.0);
-                  output2 = vec4 (2.0);
-                  output3 = vec4 (3.0);
+                  output1 = getColor (elapsedTime);
+                  output2 = input2;
+                  output3 = input3;
                }
             }
             else
@@ -982,6 +999,13 @@ function (X3DNode,
             console .warn ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
 
          program .x3d_Vertex = gl. getAttribLocation (program, "x3d_Vertex");
+
+         gl .useProgram (program);
+
+         gl .uniform1i (gl .getUniformLocation (program, "inputSampler0"), 0);
+         gl .uniform1i (gl .getUniformLocation (program, "inputSampler1"), 1);
+         gl .uniform1i (gl .getUniformLocation (program, "inputSampler2"), 2);
+         gl .uniform1i (gl .getUniformLocation (program, "inputSampler3"), 3);
 
          return program;
       },
