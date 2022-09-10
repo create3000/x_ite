@@ -76,6 +76,8 @@ function (X3DNode,
       this ._mass        .setUnit ("mass");
       this ._surfaceArea .setUnit ("area");
 
+      this .programs = [ ];
+
       this .constants    = { };
       this .functions    = [ ];
       this .kernel       = [ ];
@@ -89,6 +91,9 @@ function (X3DNode,
       initialize: function ()
       {
          X3DNode .prototype .initialize .call (this);
+
+         this .programs [0] = this .createProgram ();
+         this .programs [1] = this .createProgram ();
 
          this ._speed     .addInterest ("set_speed__",     this);
          this ._variation .addInterest ("set_variation__", this);
@@ -666,6 +671,73 @@ function (X3DNode,
       addFunction: function (func)
       {
          this .functions .push (func);
+      },
+      createProgram: function ()
+      {
+         const
+            gl      = this .getBrowser () .getContext (),
+            program = gl .createProgram ();
+
+         const vertexShaderSource = `#version 300 es
+
+precision highp float;
+precision highp int;
+
+in vec4 aVertex;
+out vec4 vVertex;
+
+void
+main ()
+{
+   vVertex     = aVertex;
+   gl_Position = aVertex;
+}
+`;
+
+         const fragmentShaderSource = `#version 300 es
+
+precision highp float;
+precision highp int;
+precision highp sampler2D;
+
+in vec4 vVertex;
+
+layout(location = 0) out vec4 data0;
+// layout(location = 1) out vec4 data1;
+// layout(location = 2) out vec4 data2;
+// layout(location = 3) out vec4 data3;
+
+void
+main ()
+{
+   data0 = vVertex;
+}
+`;
+
+         // Vertex shader
+
+         const vertexShader = gl .createShader (gl .VERTEX_SHADER);
+
+         gl .shaderSource (vertexShader, vertexShaderSource);
+         gl .compileShader (vertexShader);
+
+         // Fragment shader
+
+         const fragmentShader = gl .createShader (gl .FRAGMENT_SHADER);
+
+         gl .shaderSource (fragmentShader, fragmentShaderSource);
+         gl .compileShader (fragmentShader);
+
+         // Program
+
+         gl .attachShader (program, vertexShader);
+         gl .attachShader (program, fragmentShader);
+         gl .linkProgram (program);
+
+         if (!gl .getProgramParameter (program, gl .LINK_STATUS))
+            console .warn ("Couldn't initialize particele shader: " + gl .getProgramInfoLog (program));
+
+         return program;
       },
    });
 
