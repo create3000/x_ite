@@ -770,16 +770,25 @@ layout(location = 3) out vec4 data3;
 
 const ivec2 size = ivec2 (10, 10);
 
+int
+getId (const in vec2 texCoord)
+{
+   int x  = int (texCoord .x * float (size .x));
+   int y  = int (texCoord .y * float (size .y));
+   int id = y * size .x + x;
+
+   return id;
+}
+
 void
 main ()
 {
-   vec2  texCoord = (vertex .xy + 1.0) * 0.5;
+   vec2 texCoord = (vertex .xy + 1.0) * 0.5;
 
-   int x = int (texCoord .x * float (size .x));
-   int y = int (texCoord .y * float (size .y));
+   int id = getId (texCoord);
 
-   data0 = vec4 (x);
-   data1 = vec4 (y);
+   data0 = vec4 (id);
+   data1 = vec4 (2.0);
 }
 `;
 
