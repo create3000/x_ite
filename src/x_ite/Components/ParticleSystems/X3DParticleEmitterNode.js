@@ -76,7 +76,8 @@ function (X3DNode,
       this ._mass        .setUnit ("mass");
       this ._surfaceArea .setUnit ("area");
 
-      this .programs = [ ];
+      this .programs     = [ ];
+      this .frameBuffers = [ ];
 
       this .constants    = { };
       this .functions    = [ ];
@@ -92,8 +93,10 @@ function (X3DNode,
       {
          X3DNode .prototype .initialize .call (this);
 
-         this .programs [0] = this .createProgram ();
-         this .programs [1] = this .createProgram ();
+         this .programs [0]     = this .createProgram ();
+         this .programs [1]     = this .createProgram ();
+         this .frameBuffers [0] = this .createFrameBuffer ();
+         this .frameBuffers [1] = this .createFrameBuffer ();
 
          this ._speed     .addInterest ("set_speed__",     this);
          this ._variation .addInterest ("set_variation__", this);
@@ -674,9 +677,7 @@ function (X3DNode,
       },
       createProgram: function ()
       {
-         const
-            gl      = this .getBrowser () .getContext (),
-            program = gl .createProgram ();
+         const gl = this .getBrowser () .getContext ();
 
          const vertexShaderSource = `#version 300 es
 
@@ -730,14 +731,50 @@ main ()
 
          // Program
 
+         const program = gl .createProgram ();
+
          gl .attachShader (program, vertexShader);
          gl .attachShader (program, fragmentShader);
          gl .linkProgram (program);
 
          if (!gl .getProgramParameter (program, gl .LINK_STATUS))
-            console .warn ("Couldn't initialize particele shader: " + gl .getProgramInfoLog (program));
+            console .warn ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
 
          return program;
+      },
+      createFrameBuffer: function ()
+      {
+         const gl = this .getBrowser () .getContext ();
+
+         // Create frame buffer.
+
+         const
+            current     = gl .getParameter (gl .FRAMEBUFFER_BINDING),
+            frameBuffer = gl .createFramebuffer ();
+
+         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+
+         // Texture 0
+
+         const texture0 = gl .createTexture ();
+
+         gl .bindTexture (gl .TEXTURE_2D, texture0);
+
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, 1000, 1, 0, gl .RGBA, gl .FLOAT, null);
+         gl .framebufferTexture2D (gl .FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture0, 0);
+
+         frameBuffer .texture0 = texture0;
+
+         // Reset frame buffer
+
+         gl .bindFramebuffer (gl .FRAMEBUFFER, current);
+
+         return frameBuffer;
       },
    });
 
