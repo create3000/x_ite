@@ -76,8 +76,7 @@ function (X3DNode,
       this ._mass        .setUnit ("mass");
       this ._surfaceArea .setUnit ("area");
 
-      this .programs     = [ ];
-      this .frameBuffers = [ ];
+      this .kernels = [{ }, { }];
 
       this .constants    = { };
       this .functions    = [ ];
@@ -93,10 +92,12 @@ function (X3DNode,
       {
          X3DNode .prototype .initialize .call (this);
 
-         this .programs [0]     = this .createProgram ();
-         this .programs [1]     = this .createProgram ();
-         this .frameBuffers [0] = this .createFrameBuffer ();
-         this .frameBuffers [1] = this .createFrameBuffer ();
+         this .kernels [0] .texture0     = this .createTexture ();
+         this .kernels [1] .texture0     = this .createTexture ();
+         this .kernels [0] .frameBuffers = this .createFrameBuffer (this .kernels [0]);
+         this .kernels [1] .frameBuffers = this .createFrameBuffer (this .kernels [1]);
+         this .kernels [0] .program      = this .createProgram (this .kernels [1]);
+         this .kernels [1] .program      = this .createProgram (this .kernels [0]);
 
          this ._speed     .addInterest ("set_speed__",     this);
          this ._variation .addInterest ("set_variation__", this);
@@ -192,6 +193,19 @@ function (X3DNode,
 
                removedKernels .length = 0;
             }
+
+            const
+               gl                 = this .getBrowser () .getContext (),
+               kernel             = this .kernels [this .i],
+               program            = kernel .program,
+               frameBuffer        = kernel .frameBuffer,
+               currentFrameBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+
+            gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+
+
+
+            gl .bindFramebuffer (gl .FRAMEBUFFER, currentFrameBuffer);
 
             /*
             for (let i = 0; i < numParticles; ++ i)
@@ -675,7 +689,7 @@ function (X3DNode,
       {
          this .functions .push (func);
       },
-      createProgram: function ()
+      createProgram: function (kernel)
       {
          const gl = this .getBrowser () .getContext ();
 
@@ -742,23 +756,35 @@ main ()
 
          return program;
       },
-      createFrameBuffer: function ()
+      createFrameBuffer: function (kernel)
       {
          const gl = this .getBrowser () .getContext ();
 
          // Create frame buffer.
 
          const
-            current     = gl .getParameter (gl .FRAMEBUFFER_BINDING),
-            frameBuffer = gl .createFramebuffer ();
+            currentFrameBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING),
+            frameBuffer        = gl .createFramebuffer ();
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
-         // Texture 0
+         // Assign textures
 
-         const texture0 = gl .createTexture ();
+         gl .framebufferTexture2D (gl .FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, kernel .texture0, 0);
 
-         gl .bindTexture (gl .TEXTURE_2D, texture0);
+         // Reset frame buffer
+
+         gl .bindFramebuffer (gl .FRAMEBUFFER, currentFrameBuffer);
+
+         return frameBuffer;
+      },
+      createTexture: function ()
+      {
+         const
+            gl      = this .getBrowser () .getContext (),
+            texture = gl .createTexture ();
+
+         gl .bindTexture (gl .TEXTURE_2D, texture);
 
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
@@ -766,17 +792,10 @@ main ()
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
 
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, 1000, 1, 0, gl .RGBA, gl .FLOAT, null);
-         gl .framebufferTexture2D (gl .FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture0, 0);
 
-         frameBuffer .texture0 = texture0;
-
-         // Reset frame buffer
-
-         gl .bindFramebuffer (gl .FRAMEBUFFER, current);
-
-         return frameBuffer;
+         return texture;
       },
-   });
+  });
 
    return X3DParticleEmitterNode;
 });
