@@ -76,10 +76,16 @@ function (X3DNode,
       this ._mass        .setUnit ("mass");
       this ._surfaceArea .setUnit ("area");
 
-      this .kernels = [{ textures: [ ] }, { textures: [ ] }];
+      this .uniforms  = [ ];
+      this .functions = [ ];
+      this .kernels   = [{ textures: [ ] }, { textures: [ ] }];
+
+      this .addUniform ("uniform float speed;");
+      this .addUniform ("uniform float variation;");
+      this .addUniform ("uniform float mass;");
 
       this .constants    = { };
-      this .functions    = [ ];
+      this .functionsO    = [ ];
       this .kernel       = [ ];
       this .i            = 0;
       this .maxParticles = 0;
@@ -91,6 +97,8 @@ function (X3DNode,
       initialize: function ()
       {
          X3DNode .prototype .initialize .call (this);
+
+         // Create kernels.
 
          for (let i = 0; i < 4; ++ i)
          {
@@ -104,6 +112,8 @@ function (X3DNode,
          this .kernels [1] .program      = this .createProgram (this .kernels [0] .textures);
          this .kernels [0] .vertexBuffer = this .createVertexBuffer ();
          this .kernels [1] .vertexBuffer = this .createVertexBuffer ();
+
+         // Initialize fields.
 
          this ._speed     .addInterest ("set_speed__",     this);
          this ._variation .addInterest ("set_variation__", this);
@@ -124,16 +134,22 @@ function (X3DNode,
       set_speed__: function ()
       {
          this .setConstant ("speed", this ._speed .getValue ());
+
+         this .setUniform ("uniform1f", "speed", this ._speed .getValue ());
       },
       set_variation__: function ()
       {
          this .setConstant ("variation", this ._variation .getValue ());
+
+         this .setUniform ("uniform1f", "variation", this ._variation .getValue ());
       },
       set_mass__: function ()
       {
          this .mass = this ._mass .getValue ();
 
          this .setConstant ("mass", this ._mass .getValue ());
+
+         this .setUniform ("uniform1f", "mass", this ._mass .getValue ());
       },
       getRandomValue: function (min, max)
       {
@@ -203,10 +219,18 @@ function (X3DNode,
             const
                gl                 = this .getBrowser () .getContext (),
                kernel             = this .kernels [this .i],
+               program            = kernel .program,
                currentFrameBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
             gl .bindFramebuffer (gl .FRAMEBUFFER, kernel .frameBuffer);
-            gl .useProgram (kernel .program);
+            gl .useProgram (program);
+
+            gl .uniform1i (gl .getUniformLocation (program, "randomSeed"), Math .random () * particleSystem .maxParticles);
+            gl .uniform1i (gl .getUniformLocation (program, "createParticles"), Number (particleSystem .createParticles));
+            gl .uniform1i (gl .getUniformLocation (program, "numParticles"), particleSystem .numParticles);
+            gl .uniform1f (gl .getUniformLocation (program, "particleLifetime"), particleSystem .particleLifetime);
+            gl .uniform1f (gl .getUniformLocation (program, "lifetimeVariation"), particleSystem .lifetimeVariation);
+            gl .uniform1f (gl .getUniformLocation (program, "deltaTime"), deltaTime);
 
             gl .enableVertexAttribArray (kernel .program .x3d_Vertex);
             gl .bindBuffer (gl .ARRAY_BUFFER, kernel .vertexBuffer);
@@ -550,7 +574,7 @@ function (X3DNode,
             /* WORKAROUND: include */ prototypes ();
          })
          .setConstants (this .constants)
-         .setFunctions (this .functions)
+         .setFunctions (this .functionsO)
          .setTactic ("precision")
          .addNativeFunction ("prototypes", `
             vec4 Quaternion (vec3, vec3);
@@ -708,9 +732,9 @@ function (X3DNode,
          this .constants [name] = value;
          this .maxParticles     = 0;     // Trigger kernel rebuild.
       },
-      addFunction: function (func)
+      addFunctionO: function (func)
       {
-         this .functions .push (func);
+         this .functionsO .push (func);
       },
       createVertexBuffer: (function ()
       {
@@ -741,58 +765,196 @@ function (X3DNode,
 
          const vertexShaderSource = `#version 300 es
 
-precision highp float;
-precision highp int;
+         precision highp float;
+         precision highp int;
 
-in vec4 x3d_Vertex;
-out vec4 vertex;
+         in vec4 x3d_Vertex;
+         out vec4 vertex;
 
-void
-main ()
-{
-   vertex      = x3d_Vertex;
-   gl_Position = x3d_Vertex;
-}
-`;
+         void
+         main ()
+         {
+            vertex      = x3d_Vertex;
+            gl_Position = x3d_Vertex;
+         }
+         `;
 
          const fragmentShaderSource = `#version 300 es
 
-precision highp float;
-precision highp int;
-precision highp sampler2D;
+         precision highp float;
+         precision highp int;
+         precision highp sampler2D;
 
-in vec4 vertex;
+         in vec4 vertex;
 
-layout(location = 0) out vec4 data0;
-layout(location = 1) out vec4 data1;
-layout(location = 2) out vec4 data2;
-layout(location = 3) out vec4 data3;
+         layout(location = 0) out vec4 output0;
+         layout(location = 1) out vec4 output1;
+         layout(location = 2) out vec4 output2;
+         layout(location = 3) out vec4 output3;
 
-const ivec2 size = ivec2 (10, 10);
+         const ivec2 size = ivec2 (10, 10);
+         uniform int randomSeed;
+         uniform bool createParticles;
+         uniform int numParticles;
+         uniform float particleLifetime;
+         uniform float lifetimeVariation;
+         uniform float deltaTime;
 
-int
-getId (const in vec2 texCoord)
-{
-   int x  = int (texCoord .x * float (size .x));
-   int y  = int (texCoord .y * float (size .y));
-   int id = y * size .x + x;
+         uniform sampler2D inputSampler0;
+         uniform sampler2D inputSampler1;
+         uniform sampler2D inputSampler2;
+         uniform sampler2D inputSampler3;
 
-   return id;
-}
+         ${this .uniforms .join ("\n")}
 
-void
-main ()
-{
-   vec2 texCoord = (vertex .xy + 1.0) * 0.5;
+         #define M_PI 3.14159265359
 
-   int id = getId (texCoord);
+         int
+         getId (const in vec2 texCoord)
+         {
+            int x  = int (texCoord .x * float (size .x));
+            int y  = int (texCoord .y * float (size .y));
+            int id = y * size .x + x;
 
-   data0 = vec4 (id);
-   data1 = vec4 (1.0);
-   data2 = vec4 (2.0);
-   data3 = vec4 (3.0);
-}
-`;
+            return id;
+         }
+
+         /* Random number generation */
+
+         const int RAND_MAX = int (0x7fffffff);
+         const int RAND_MIN = int (0x80000000);
+
+         int seed = 1;
+
+         int
+         srand ()
+         {
+            return seed;
+         }
+
+         void
+         srand (in int value)
+         {
+            seed = value;
+         }
+
+         // Return a uniform distributed random integral number in the interval [RAND_MIN, RAND_MAX].
+         int
+         rand ()
+         {
+            return seed = seed * 1103515245 + 12345;
+         }
+
+         // Return a uniform distributed random floating point number in the interval [-1, 1].
+         float
+         random1 ()
+         {
+            return float (rand ()) / float (RAND_MAX);
+         }
+
+         float
+         getRandomValue (const in float min, const in float max)
+         {
+            return min + fract (random1 ()) * (max - min);
+         }
+
+         float
+         getRandomLifetime (const in float particleLifetime, const in float lifetimeVariation)
+         {
+            float v   = particleLifetime * lifetimeVariation;
+            float min = max (0.0, particleLifetime - v);
+            float max = particleLifetime + v;
+
+            return getRandomValue (min, max);
+         }
+
+         float
+         getRandomSpeed ()
+         {
+            float v    = speed * variation;
+            float min_ = max (0.0, speed - v);
+            float max_ = speed + v;
+
+            return getRandomValue (min_, max_);
+         }
+
+         vec3
+         getRandomNormal ()
+         {
+            float theta = getRandomValue (-1.0, 1.0) * M_PI;
+            float cphi  = getRandomValue (-1.0, 1.0);
+            float phi   = acos (cphi);
+            float r     = sin (phi);
+
+            return vec3 (sin (theta) * r, cos (theta) * r, cphi);
+         }
+
+         vec3
+         getRandomSphericalVelocity ()
+         {
+            vec3  normal = getRandomNormal ();
+            float speed  = getRandomSpeed ();
+
+            return normal * speed;
+         }
+
+         ${this .functions .join ("\n")}
+
+         void
+         animate (const in vec2 texCoord, const in int id)
+         {
+            vec4 input0 = texture (inputSampler0, texCoord);
+            vec4 input1 = texture (inputSampler1, texCoord);
+            vec4 input2 = texture (inputSampler2, texCoord);
+            vec4 input3 = texture (inputSampler3, texCoord);
+
+            if (id < numParticles)
+            {
+               float life        = input0 [0];
+               float lifetime    = input0 [1];
+               float elapsedTime = input0 [2] + deltaTime;
+
+               if (elapsedTime > lifetime)
+               {
+                  // Create new particle or hide particle.
+
+                  life       += createParticles ? 1.0 : 0.0;
+                  lifetime    = getRandomLifetime (particleLifetime, lifetimeVariation);
+                  elapsedTime = 0.0;
+
+                  output0 = vec4 (life, lifetime, elapsedTime, 0.0);
+                  output1 = vec4 (1.0);
+                  output2 = vec4 (2.0);
+                  output3 = vec4 (3.0);
+               }
+               else
+               {
+                  output0 = vec4 (life, lifetime, elapsedTime, 0.0);
+                  output1 = vec4 (1.0);
+                  output2 = vec4 (2.0);
+                  output3 = vec4 (3.0);
+               }
+            }
+            else
+            {
+               output0 = input0;
+               output1 = input1;
+               output2 = input2;
+               output3 = input3;
+            }
+         }
+
+         void
+         main ()
+         {
+            vec2 texCoord = (vertex .xy + 1.0) * 0.5;
+            int  id       = getId (texCoord);
+
+            srand ((id + 1) * randomSeed);
+
+            animate (texCoord, id);
+         }
+         `;
 
          // Vertex shader
 
@@ -873,6 +1035,24 @@ main ()
          texture .data = new Float32Array (10 * 10 * 4);
 
          return texture;
+      },
+      addUniform: function (uniform)
+      {
+         this .uniforms .push (uniform);
+      },
+      setUniform: function (func, name, value1, value2, value3)
+      {
+         const gl = this .getBrowser () .getContext ();
+
+         for (const kernel of this .kernels)
+         {
+            gl .useProgram (kernel .program);
+            gl [func] (gl .getUniformLocation (kernel .program, name), value1, value2, value3);
+         }
+      },
+      addFunction: function (func)
+      {
+         this .functions .push (func);
       },
    });
 

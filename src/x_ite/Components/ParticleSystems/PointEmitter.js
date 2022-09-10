@@ -70,10 +70,22 @@ function (Fields,
 
       this .addType (X3DConstants .PointEmitter);
 
-      this ._position    .setUnit ("length");
-      this ._speed       .setUnit ("speed");
-      this ._mass        .setUnit ("mass");
-      this ._surfaceArea .setUnit ("area");
+      this ._position .setUnit ("length");
+
+      this .addUniform ("uniform vec3 position;");
+      this .addUniform ("uniform vec3 direction;");
+
+
+      this .addFunction (`vec3 getRandomVelocity ()
+      {
+         if (direction == vec3 (0.0))
+            return getRandomSphericalVelocity ();
+
+         else
+            return direction * getRandomSpeed ();
+      }`);
+
+      this .addFunction (`vec3 getRandomPosition () { return position; }`);
    }
 
    PointEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
@@ -81,6 +93,7 @@ function (Fields,
       constructor: PointEmitter,
       [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "on",          new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "position",    new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",   new Fields .SFVec3f (0, 1, 0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
@@ -107,7 +120,7 @@ function (Fields,
          this ._position  .addInterest ("set_position__",  this);
          this ._direction .addInterest ("set_direction__", this);
 
-         this .addFunction (function getRandomVelocity ()
+         this .addFunctionO (function getRandomVelocity ()
          {
             if (this .constants .direction0 == 0 &&
                 this .constants .direction1 == 0 &&
@@ -126,7 +139,7 @@ function (Fields,
             }
          });
 
-         this .addFunction (function getRandomPosition ()
+         this .addFunctionO (function getRandomPosition ()
          {
             return [this .constants .position0,
                     this .constants .position1,
@@ -144,6 +157,8 @@ function (Fields,
          this .setConstant ("position0", position .x);
          this .setConstant ("position1", position .y);
          this .setConstant ("position2", position .z);
+
+         this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
       },
       set_direction__: (function ()
       {
@@ -156,6 +171,8 @@ function (Fields,
             this .setConstant ("direction0", direction .x);
             this .setConstant ("direction1", direction .y);
             this .setConstant ("direction2", direction .z);
+
+            this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
          };
       })(),
    });

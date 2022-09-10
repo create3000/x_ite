@@ -74,10 +74,6 @@ function (Fields,
 
       this .addType (X3DConstants .PolylineEmitter);
 
-      this ._speed       .setUnit ("speed");
-      this ._mass        .setUnit ("mass");
-      this ._surfaceArea .setUnit ("area");
-
       this .direction        = new Vector3 (0, 0, 0);
       this .polylineNode     = new IndexedLineSet (executionContext);
       this .lengthSoFarArray = [ 0 ];
@@ -88,6 +84,7 @@ function (Fields,
       constructor: PolylineEmitter,
       [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "on",          new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",   new Fields .SFVec3f (0, 1, 0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
@@ -124,7 +121,7 @@ function (Fields,
          this .polylineNode .setPrivate (true);
          this .polylineNode .setup ();
 
-         this .addFunction (function getRandomVelocity ()
+         this .addFunctionO (function getRandomVelocity ()
          {
             if (this .constants .direction0 == 0 &&
                 this .constants .direction1 == 0 &&
@@ -143,7 +140,7 @@ function (Fields,
             }
          });
 
-         this .addFunction (function getRandomPosition ()
+         this .addFunctionO (function getRandomPosition ()
          {
             // Determine index0 and weight.
 

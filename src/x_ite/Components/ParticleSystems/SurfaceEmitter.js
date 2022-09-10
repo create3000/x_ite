@@ -76,10 +76,6 @@ function (Fields,
 
       this .addType (X3DConstants .SurfaceEmitter);
 
-      this ._speed       .setUnit ("speed");
-      this ._mass        .setUnit ("mass");
-      this ._surfaceArea .setUnit ("area");
-
       this .surfaceNode    = null;
       this .areaSoFarArray = [ 0 ];
       this .direction      = new Vector3 (0, 0, 0);
@@ -90,6 +86,7 @@ function (Fields,
       constructor: SurfaceEmitter,
       [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "on",          new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",        new Fields .SFFloat ()),

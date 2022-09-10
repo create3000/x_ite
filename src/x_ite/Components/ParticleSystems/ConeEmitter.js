@@ -53,7 +53,6 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
    "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
 ],
 function (Fields,
@@ -61,7 +60,6 @@ function (Fields,
           FieldDefinitionArray,
           X3DParticleEmitterNode,
           X3DConstants,
-          Vector3,
           Rotation4)
 {
 "use strict";
@@ -72,11 +70,8 @@ function (Fields,
 
       this .addType (X3DConstants .ConeEmitter);
 
-      this ._position    .setUnit ("length");
-      this ._angle       .setUnit ("angle");
-      this ._speed       .setUnit ("speed");
-      this ._mass        .setUnit ("mass");
-      this ._surfaceArea .setUnit ("area");
+      this ._position .setUnit ("length");
+      this ._angle    .setUnit ("angle");
 
       this .rotation = new Rotation4 (0, 0, 1, 0);
    }
@@ -86,6 +81,7 @@ function (Fields,
       constructor: ConeEmitter,
       [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "on",          new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "position",    new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",   new Fields .SFVec3f (0, 1, 0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "angle",       new Fields .SFFloat (0.7854)),
@@ -114,7 +110,7 @@ function (Fields,
          this ._direction .addInterest ("set_direction__", this);
          this ._angle     .addInterest ("set_angle__", this);
 
-         this .addFunction (function getRandomVelocity ()
+         this .addFunctionO (function getRandomVelocity ()
          {
             const direction = [this .constants .direction0,
                                this .constants .direction1,
@@ -139,7 +135,7 @@ function (Fields,
             }
          });
 
-         this .addFunction (function getRandomPosition ()
+         this .addFunctionO (function getRandomPosition ()
          {
             return [this .constants .position0,
                     this .constants .position1,

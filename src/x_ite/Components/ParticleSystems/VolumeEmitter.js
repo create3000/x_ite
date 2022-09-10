@@ -86,10 +86,6 @@ function (Fields,
 
       this .addType (X3DConstants .VolumeEmitter);
 
-      this ._speed       .setUnit ("speed");
-      this ._mass        .setUnit ("mass");
-      this ._surfaceArea .setUnit ("area");
-
       this .direction      = new Vector3 (0, 0, 0);
       this .volumeNode     = new IndexedFaceSet (executionContext);
       this .areaSoFarArray = [ 0 ];
@@ -100,6 +96,7 @@ function (Fields,
       constructor: VolumeEmitter,
       [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "on",          new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "internal",    new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",   new Fields .SFVec3f (0, 1, 0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
