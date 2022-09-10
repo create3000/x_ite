@@ -76,7 +76,7 @@ function (X3DNode,
       this ._mass        .setUnit ("mass");
       this ._surfaceArea .setUnit ("area");
 
-      this .kernels = [{ }, { }];
+      this .kernels = [{ textures: [ ] }, { textures: [ ] }];
 
       this .constants    = { };
       this .functions    = [ ];
@@ -92,12 +92,18 @@ function (X3DNode,
       {
          X3DNode .prototype .initialize .call (this);
 
-         this .kernels [0] .texture0     = this .createTexture ();
-         this .kernels [1] .texture0     = this .createTexture ();
-         this .kernels [0] .frameBuffers = this .createFrameBuffer (this .kernels [0]);
-         this .kernels [1] .frameBuffers = this .createFrameBuffer (this .kernels [1]);
+         for (let i = 0; i < 4; ++ i)
+         {
+            this .kernels [0] .textures [i] = this .createTexture ();
+            this .kernels [1] .textures [i] = this .createTexture ();
+         }
+
+         this .kernels [0] .frameBuffer  = this .createFrameBuffer (this .kernels [0]);
+         this .kernels [1] .frameBuffer  = this .createFrameBuffer (this .kernels [1]);
          this .kernels [0] .program      = this .createProgram (this .kernels [1]);
          this .kernels [1] .program      = this .createProgram (this .kernels [0]);
+         this .kernels [0] .vertexBuffer = this .createVertexBuffer ();
+         this .kernels [1] .vertexBuffer = this .createVertexBuffer ();
 
          this ._speed     .addInterest ("set_speed__",     this);
          this ._variation .addInterest ("set_variation__", this);
@@ -197,13 +203,30 @@ function (X3DNode,
             const
                gl                 = this .getBrowser () .getContext (),
                kernel             = this .kernels [this .i],
-               program            = kernel .program,
-               frameBuffer        = kernel .frameBuffer,
                currentFrameBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
-            gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+            gl .bindFramebuffer (gl .FRAMEBUFFER, kernel .frameBuffer);
+            gl .useProgram (kernel .program);
 
+            gl .enableVertexAttribArray (kernel .program .x3d_Vertex);
+            gl .bindBuffer (gl .ARRAY_BUFFER, kernel .vertexBuffer);
+            gl .vertexAttribPointer (this .x3d_Vertex, 4, gl .FLOAT, false, 0, 0);
 
+            gl .clearColor (1, 2, 3, 4);
+            gl .clear (gl .COLOR_BUFFER_BIT);
+
+            gl .viewport (0, 0, 10, 10);
+            gl .disable (gl .DEPTH_TEST);
+            gl .disable (gl .BLEND);
+            gl .frontFace (gl .CCW);
+            gl .enable (gl .CULL_FACE);
+            gl .cullFace (gl .BACK);
+
+            gl .drawArrays (gl .TRIANGLES, 0, 6);
+
+            gl .readBuffer (gl .COLOR_ATTACHMENT0);
+            gl .readPixels (0, 0, 10, 10, gl .RGBA, gl .FLOAT, kernel .textures [0] .data);
+            console .log (kernel .textures [0] .data);
 
             gl .bindFramebuffer (gl .FRAMEBUFFER, currentFrameBuffer);
 
@@ -689,6 +712,29 @@ function (X3DNode,
       {
          this .functions .push (func);
       },
+      createVertexBuffer: (function ()
+      {
+         const vertices = [
+             1,  1, 0, 1,
+            -1,  1, 0, 1,
+            -1, -1, 0, 1,
+             1,  1, 0, 1,
+            -1, -1, 0, 1,
+             1, -1, 0, 1,
+         ];
+
+         return function ()
+         {
+            const
+               gl              = this .getBrowser () .getContext (),
+               vertexBuffer    = gl .createBuffer ();
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .STATIC_DRAW);
+
+            return vertexBuffer;
+         };
+      })(),
       createProgram: function (kernel)
       {
          const gl = this .getBrowser () .getContext ();
@@ -698,14 +744,14 @@ function (X3DNode,
 precision highp float;
 precision highp int;
 
-in vec4 aVertex;
-out vec4 vVertex;
+in vec4 x3d_Vertex;
+out vec4 vertex;
 
 void
 main ()
 {
-   vVertex     = aVertex;
-   gl_Position = aVertex;
+   vertex      = x3d_Vertex;
+   gl_Position = x3d_Vertex;
 }
 `;
 
@@ -715,17 +761,25 @@ precision highp float;
 precision highp int;
 precision highp sampler2D;
 
-in vec4 vVertex;
+in vec4 vertex;
 
 layout(location = 0) out vec4 data0;
-// layout(location = 1) out vec4 data1;
-// layout(location = 2) out vec4 data2;
-// layout(location = 3) out vec4 data3;
+layout(location = 1) out vec4 data1;
+layout(location = 2) out vec4 data2;
+layout(location = 3) out vec4 data3;
+
+const ivec2 size = ivec2 (10, 10);
 
 void
 main ()
 {
-   data0 = vVertex;
+   vec2  texCoord = (vertex .xy + 1.0) * 0.5;
+
+   int x = int (texCoord .x * float (size .x));
+   int y = int (texCoord .y * float (size .y));
+
+   data0 = vec4 (x);
+   data1 = vec4 (y);
 }
 `;
 
@@ -754,11 +808,15 @@ main ()
          if (!gl .getProgramParameter (program, gl .LINK_STATUS))
             console .warn ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
 
+         program .x3d_Vertex = gl. getAttribLocation (program, "x3d_Vertex");
+
          return program;
       },
       createFrameBuffer: function (kernel)
       {
          const gl = this .getBrowser () .getContext ();
+
+         // console .log (gl .getParameter (gl .MAX_COLOR_ATTACHMENTS));
 
          // Create frame buffer.
 
@@ -768,11 +826,17 @@ main ()
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
-         // Assign textures
+         // Assign textures.
 
-         gl .framebufferTexture2D (gl .FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, kernel .texture0, 0);
+         for (let i = 0; i < 4; ++ i)
+            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, kernel .textures [i], 0);
 
-         // Reset frame buffer
+         gl .drawBuffers ([gl .COLOR_ATTACHMENT0, gl .COLOR_ATTACHMENT, gl .COLOR_ATTACHMENT2, gl .COLOR_ATTACHMENT3]);
+
+         if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) !== gl .FRAMEBUFFER_COMPLETE)
+            console .log ("Particle frame buffer is not complete.");
+
+         // Reset frame buffer.
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, currentFrameBuffer);
 
@@ -791,11 +855,15 @@ main ()
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
 
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, 1000, 1, 0, gl .RGBA, gl .FLOAT, null);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, 10, 10, 0, gl .RGBA, gl .FLOAT, null);
+
+         // Create data.
+
+         texture .data = new Float32Array (10 * 10 * 4);
 
          return texture;
       },
-  });
+   });
 
    return X3DParticleEmitterNode;
 });
