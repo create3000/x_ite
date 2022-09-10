@@ -98,10 +98,10 @@ function (X3DNode,
             this .kernels [1] .textures [i] = this .createTexture ();
          }
 
-         this .kernels [0] .frameBuffer  = this .createFrameBuffer (this .kernels [0]);
-         this .kernels [1] .frameBuffer  = this .createFrameBuffer (this .kernels [1]);
-         this .kernels [0] .program      = this .createProgram (this .kernels [1]);
-         this .kernels [1] .program      = this .createProgram (this .kernels [0]);
+         this .kernels [0] .frameBuffer  = this .createFrameBuffer (this .kernels [0] .textures);
+         this .kernels [1] .frameBuffer  = this .createFrameBuffer (this .kernels [1] .textures);
+         this .kernels [0] .program      = this .createProgram (this .kernels [1] .textures);
+         this .kernels [1] .program      = this .createProgram (this .kernels [0] .textures);
          this .kernels [0] .vertexBuffer = this .createVertexBuffer ();
          this .kernels [1] .vertexBuffer = this .createVertexBuffer ();
 
@@ -735,7 +735,7 @@ function (X3DNode,
             return vertexBuffer;
          };
       })(),
-      createProgram: function (kernel)
+      createProgram: function (textures)
       {
          const gl = this .getBrowser () .getContext ();
 
@@ -788,7 +788,9 @@ main ()
    int id = getId (texCoord);
 
    data0 = vec4 (id);
-   data1 = vec4 (2.0);
+   data1 = vec4 (1.0);
+   data2 = vec4 (2.0);
+   data3 = vec4 (3.0);
 }
 `;
 
@@ -821,7 +823,7 @@ main ()
 
          return program;
       },
-      createFrameBuffer: function (kernel)
+      createFrameBuffer: function (textures)
       {
          const gl = this .getBrowser () .getContext ();
 
@@ -838,9 +840,9 @@ main ()
          // Assign textures.
 
          for (let i = 0; i < 4; ++ i)
-            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, kernel .textures [i], 0);
+            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl.COLOR_ATTACHMENT0 + i, gl.TEXTURE_2D, textures [i], 0);
 
-         gl .drawBuffers ([gl .COLOR_ATTACHMENT0, gl .COLOR_ATTACHMENT, gl .COLOR_ATTACHMENT2, gl .COLOR_ATTACHMENT3]);
+         gl .drawBuffers ([gl .COLOR_ATTACHMENT0, gl .COLOR_ATTACHMENT1, gl .COLOR_ATTACHMENT2, gl .COLOR_ATTACHMENT3]);
 
          if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) !== gl .FRAMEBUFFER_COMPLETE)
             console .log ("Particle frame buffer is not complete.");
