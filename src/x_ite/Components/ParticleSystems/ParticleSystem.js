@@ -724,13 +724,11 @@ function (Fields,
       },
       createFrameBuffer: function (textures)
       {
-         const gl = this .getBrowser () .getContext ();
-
-         // console .log (gl .getParameter (gl .MAX_COLOR_ATTACHMENTS));
-
          // Create frame buffer.
 
-         const frameBuffer = gl .createFramebuffer ();
+         const
+            gl          = this .getBrowser () .getContext (),
+            frameBuffer = gl .createFramebuffer ();
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
