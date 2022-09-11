@@ -68,7 +68,7 @@ function (X3DNode,
 
       this .uniforms     = { };
       this .functions    = [ ];
-      this .kernels      = [{ textures: [ ] }, { textures: [ ] }];
+      this .programs     = [];
       this .i            = 0;
       this .maxParticles = 0;
 
@@ -84,20 +84,10 @@ function (X3DNode,
       {
          X3DNode .prototype .initialize .call (this);
 
-         // Create kernels.
+         // Create Programs.
 
-         for (let i = 0; i < 4; ++ i)
-         {
-            this .kernels [0] .textures [i] = this .createTexture ();
-            this .kernels [1] .textures [i] = this .createTexture ();
-         }
-
-         this .kernels [0] .frameBuffer  = this .createFrameBuffer (this .kernels [0] .textures);
-         this .kernels [1] .frameBuffer  = this .createFrameBuffer (this .kernels [1] .textures);
-         this .kernels [0] .program      = this .createProgram (this .kernels [1] .textures);
-         this .kernels [1] .program      = this .createProgram (this .kernels [0] .textures);
-         this .kernels [0] .vertexBuffer = this .createVertexBuffer ();
-         this .kernels [1] .vertexBuffer = this .createVertexBuffer ();
+         this .programs [0] = this .createProgram ();
+         this .programs [1] = this .createProgram ();
 
          // Initialize fields.
 
@@ -149,23 +139,17 @@ function (X3DNode,
       },
       animate: function (particleSystem, deltaTime)
       {
-         if (particleSystem .maxParticles !== this .maxParticles)
-         {
-            this .maxParticles = particleSystem .maxParticles;
-            this .resizeTextures ();
-         }
-
-         const other = this .kernels [this .i];
+         const other = particleSystem .particles [this .i];
 
          this .i = (this .i + 1) % 2;
 
          const
-            gl      = this .getBrowser () .getContext (),
-            kernel  = this .kernels [this .i],
-            program = kernel .program,
-            size    = Math .ceil (Math .sqrt (particleSystem .maxParticles));
+            gl        = this .getBrowser () .getContext (),
+            particles = particleSystem .particles [this .i],
+            program   = this .programs [this .i],
+            size      = Math .ceil (Math .sqrt (particleSystem .maxParticles));
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, kernel .frameBuffer);
+         gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
          gl .viewport (0, 0, size, size);
          gl .useProgram (program);
 
@@ -184,7 +168,7 @@ function (X3DNode,
          }
 
          gl .enableVertexAttribArray (program .x3d_Vertex);
-         gl .bindBuffer (gl .ARRAY_BUFFER, kernel .vertexBuffer);
+         gl .bindBuffer (gl .ARRAY_BUFFER, program .vertexBuffer);
          gl .vertexAttribPointer (this .x3d_Vertex, 4, gl .FLOAT, false, 0, 0);
 
          gl .disable (gl .DEPTH_TEST);
@@ -195,14 +179,14 @@ function (X3DNode,
 
          gl .drawArrays (gl .TRIANGLES, 0, 6);
 
-         // const data = kernel .textures [3] .data;
+         // const data = particles .textures [3] .data;
          // gl .readBuffer (gl .COLOR_ATTACHMENT3);
          // gl .readPixels (0, 0, 10, 10, gl .RGBA, gl .FLOAT, data);
-         // console .log (kernel .textures [3] .width, Math .ceil (Math .sqrt (particleSystem .maxParticles)), data);
+         // console .log (particles .textures [3] .width, Math .ceil (Math .sqrt (particleSystem .maxParticles)), data);
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
-         return kernel;
+         return particles;
       },
       bounce: (function ()
       {
@@ -400,30 +384,7 @@ function (X3DNode,
             },
          })
       },
-      createVertexBuffer: (function ()
-      {
-         const vertices = [
-             1,  1, 0, 1,
-            -1,  1, 0, 1,
-            -1, -1, 0, 1,
-             1,  1, 0, 1,
-            -1, -1, 0, 1,
-             1, -1, 0, 1,
-         ];
-
-         return function ()
-         {
-            const
-               gl              = this .getBrowser () .getContext (),
-               vertexBuffer    = gl .createBuffer ();
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .STATIC_DRAW);
-
-            return vertexBuffer;
-         };
-      })(),
-      createProgram: function (textures)
+      createProgram: function ()
       {
          const gl = this .getBrowser () .getContext ();
 
@@ -759,96 +720,33 @@ function (X3DNode,
          for (const uniform of Object .keys (this .uniforms))
             program [uniform] = gl .getUniformLocation (program, uniform);
 
+         program .vertexBuffer = this .createVertexBuffer ();
+
          return program;
       },
-      createFrameBuffer: function (textures)
+      createVertexBuffer: (function ()
       {
-         const gl = this .getBrowser () .getContext ();
+         const vertices = [
+             1,  1, 0, 1,
+            -1,  1, 0, 1,
+            -1, -1, 0, 1,
+             1,  1, 0, 1,
+            -1, -1, 0, 1,
+             1, -1, 0, 1,
+         ];
 
-         // console .log (gl .getParameter (gl .MAX_COLOR_ATTACHMENTS));
-
-         // Create frame buffer.
-
-         const frameBuffer = gl .createFramebuffer ();
-
-         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
-
-         // Assign textures.
-
-         for (let i = 0; i < 4; ++ i)
-            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl.COLOR_ATTACHMENT0 + i, gl.TEXTURE_2D, textures [i], 0);
-
-         gl .drawBuffers ([gl .COLOR_ATTACHMENT0, gl .COLOR_ATTACHMENT1, gl .COLOR_ATTACHMENT2, gl .COLOR_ATTACHMENT3]);
-
-         if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) !== gl .FRAMEBUFFER_COMPLETE)
-            console .log ("Particle frame buffer is not complete.");
-
-         // Reset frame buffer.
-
-         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
-         return frameBuffer;
-      },
-      createTexture: function ()
-      {
-         const
-            gl      = this .getBrowser () .getContext (),
-            texture = gl .createTexture ();
-
-         texture .width  = 0;
-         texture .height = 0;
-         texture .data   = new Float32Array ();
-
-         gl .bindTexture (gl .TEXTURE_2D, texture);
-
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
-
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, texture .width, texture .height, 0, gl .RGBA, gl .FLOAT, null);
-
-         return texture;
-      },
-      resizeTextures: function ()
-      {
-         const
-            gl   = this .getBrowser () .getContext (),
-            size = Math .ceil (Math .sqrt (this .maxParticles));
-
-         for (const kernel of this .kernels)
+         return function ()
          {
-            gl .bindFramebuffer (gl .FRAMEBUFFER, kernel .frameBuffer);
+            const
+               gl              = this .getBrowser () .getContext (),
+               vertexBuffer    = gl .createBuffer ();
 
-            // Resize and copy data.
+            gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .STATIC_DRAW);
 
-            for (let i = 0; i < kernel .textures .length; ++ i)
-            {
-               const
-                  texture = kernel .textures [i],
-                  data    = texture .data;
-
-               gl .readBuffer (gl .COLOR_ATTACHMENT0 + i);
-               gl .readPixels (0, 0, texture .width, texture .height, gl .RGBA, gl .FLOAT, data);
-
-               texture .width  = size;
-               texture .height = size;
-               texture .data   = new Float32Array (size * size * 4);
-
-               texture .data .set (data .slice (0, texture .data .length));
-            }
-
-            // Set data to texture.
-
-            for (const texture of kernel .textures)
-            {
-               gl .bindTexture (gl .TEXTURE_2D, texture);
-               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, texture .width, texture .height, 0, gl .RGBA, gl .FLOAT, texture .data);
-            }
-         }
-
-         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-      },
+            return vertexBuffer;
+         };
+      })(),
       addUniform: function (name, uniform)
       {
          this .uniforms [name] = uniform;
@@ -857,7 +755,7 @@ function (X3DNode,
       {
          const gl = this .getBrowser () .getContext ();
 
-         for (const { program } of this .kernels)
+         for (const program of this .programs)
          {
             gl .useProgram (program);
             gl [func] (program [name], value1, value2, value3);

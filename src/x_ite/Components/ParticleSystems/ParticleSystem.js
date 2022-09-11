@@ -115,7 +115,8 @@ function (Fields,
 
       this ._particleSize .setUnit ("length");
 
-      this .particles                = null;
+      this .particles                = [{ textures: [ ] }, { textures: [ ] }];
+      this .currentParticles         = null;
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .particleLifetime         = 0;
@@ -208,6 +209,17 @@ function (Fields,
          this ._colorRamp         .addInterest ("set_colorRamp__",         this);
          this ._texCoordKey       .addInterest ("set_texCoord__",          this);
          this ._texCoordRamp      .addInterest ("set_texCoordRamp__",      this);
+
+         // Create particles stuff.
+
+         for (let i = 0; i < 4; ++ i)
+         {
+            this .particles [0] .textures [i] = this .createTexture ();
+            this .particles [1] .textures [i] = this .createTexture ();
+         }
+
+         this .particles [0] .frameBuffer  = this .createFrameBuffer (this .particles [0] .textures);
+         this .particles [1] .frameBuffer  = this .createFrameBuffer (this .particles [1] .textures);
 
          // Create GL stuff.
 
@@ -541,6 +553,8 @@ function (Fields,
          if (! this .emitterNode .isExplosive ())
             this .creationTime = performance .now () / 1000;
 
+         this .resizeTextures ();
+
          this .set_geometryType__ ();
       },
       set_particleLifetime__: function ()
@@ -708,6 +722,92 @@ function (Fields,
       {
          // TODO: implement me.
       },
+      createFrameBuffer: function (textures)
+      {
+         const gl = this .getBrowser () .getContext ();
+
+         // console .log (gl .getParameter (gl .MAX_COLOR_ATTACHMENTS));
+
+         // Create frame buffer.
+
+         const frameBuffer = gl .createFramebuffer ();
+
+         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+
+         // Assign textures.
+
+         for (let i = 0; i < 4; ++ i)
+            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl.COLOR_ATTACHMENT0 + i, gl.TEXTURE_2D, textures [i], 0);
+
+         gl .drawBuffers ([gl .COLOR_ATTACHMENT0, gl .COLOR_ATTACHMENT1, gl .COLOR_ATTACHMENT2, gl .COLOR_ATTACHMENT3]);
+
+         if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) !== gl .FRAMEBUFFER_COMPLETE)
+            console .log ("Particle frame buffer is not complete.");
+
+         // Reset frame buffer.
+
+         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+
+         return frameBuffer;
+      },
+      createTexture: function ()
+      {
+         const
+            gl      = this .getBrowser () .getContext (),
+            texture = gl .createTexture ();
+
+         texture .width  = 0;
+         texture .height = 0;
+         texture .data   = new Float32Array ();
+
+         gl .bindTexture (gl .TEXTURE_2D, texture);
+
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, texture .width, texture .height, 0, gl .RGBA, gl .FLOAT, null);
+
+         return texture;
+      },
+      resizeTextures: function ()
+      {
+         const
+            gl   = this .getBrowser () .getContext (),
+            size = Math .ceil (Math .sqrt (this .maxParticles));
+
+         for (const particles of this .particles)
+         {
+            gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
+
+            // Resize and copy data.
+
+            for (let i = 0; i < particles .textures .length; ++ i)
+            {
+               const
+                  texture = particles .textures [i],
+                  data    = texture .data;
+
+               gl .readBuffer (gl .COLOR_ATTACHMENT0 + i);
+               gl .readPixels (0, 0, texture .width, texture .height, gl .RGBA, gl .FLOAT, data);
+
+               texture .width  = size;
+               texture .height = size;
+               texture .data   = new Float32Array (size * size * 4);
+
+               texture .data .set (data .slice (0, texture .data .length));
+            }
+
+            for (const texture of particles .textures)
+            {
+               gl .bindTexture (gl .TEXTURE_2D, texture);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, texture .width, texture .height, 0, gl .RGBA, gl .FLOAT, texture .data);
+            }
+         }
+
+         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+      },
       animateParticles: function ()
       {
          const emitterNode = this .emitterNode;
@@ -782,7 +882,7 @@ function (Fields,
 
          // Determine particle position, velocity and colors
 
-         this .particles = emitterNode .animate (this, deltaTime);
+         this .currentParticles = emitterNode .animate (this, deltaTime);
 
          this .updateGeometry (null);
 
@@ -813,7 +913,7 @@ function (Fields,
       {
          const
             gl        = this .getBrowser () .getContext (),
-            particles = this .particles;
+            particles = this .currentParticles;
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
 
