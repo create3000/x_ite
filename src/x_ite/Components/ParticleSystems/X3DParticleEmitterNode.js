@@ -431,7 +431,7 @@ function (X3DNode,
          uniform sampler2D inputSampler2;
          uniform sampler2D inputSampler3;
 
-         ${[...Object .values (this .uniforms)] .join ("\n")}
+         ${Object .values (this .uniforms) .join ("\n")}
 
          layout(location = 0) out vec4 output0;
          layout(location = 1) out vec4 output1;
