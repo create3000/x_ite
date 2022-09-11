@@ -526,17 +526,17 @@ function (X3DNode,
             return seed = seed * 1103515245 + 12345;
          }
 
-         // Return a uniform distributed random floating point number in the interval [-1, 1].
+         // Return a uniform distributed random floating point number in the interval [0, 1).
          float
-         random1 ()
+         random ()
          {
-            return float (rand ()) / float (RAND_MAX);
+            return fract (float (rand ()) / float (RAND_MAX));
          }
 
          float
          getRandomValue (const in float min, const in float max)
          {
-            return min + fract (random1 ()) * (max - min);
+            return min + random () * (max - min);
          }
 
          float
