@@ -149,6 +149,12 @@ function (X3DNode,
       },
       animate: function (particleSystem, deltaTime)
       {
+         if (particleSystem .maxParticles !== this .maxParticles)
+         {
+            this .maxParticles = particleSystem .maxParticles;
+            this .resizeTextures ();
+         }
+
          const other = this .kernels [this .i];
 
          this .i = (this .i + 1) % 2;
@@ -789,8 +795,9 @@ function (X3DNode,
             gl      = this .getBrowser () .getContext (),
             texture = gl .createTexture ();
 
-         texture .width  = Math .ceil (Math .sqrt (100000));
-         texture .height = Math .ceil (Math .sqrt (100000));
+         texture .width  = 0;
+         texture .height = 0;
+         texture .data   = new Float32Array ();
 
          gl .bindTexture (gl .TEXTURE_2D, texture);
 
@@ -801,11 +808,46 @@ function (X3DNode,
 
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, texture .width, texture .height, 0, gl .RGBA, gl .FLOAT, null);
 
-         // Create data.
-
-         texture .data = new Float32Array (texture .width * texture .height * 4);
-
          return texture;
+      },
+      resizeTextures: function ()
+      {
+         const
+            gl   = this .getBrowser () .getContext (),
+            size = Math .ceil (Math .sqrt (this .maxParticles));
+
+         for (const kernel of this .kernels)
+         {
+            gl .bindFramebuffer (gl .FRAMEBUFFER, kernel .frameBuffer);
+
+            // Resize and copy data.
+
+            for (let i = 0; i < kernel .textures .length; ++ i)
+            {
+               const
+                  texture = kernel .textures [i],
+                  data    = texture .data;
+
+               gl .readBuffer (gl .COLOR_ATTACHMENT0 + i);
+               gl .readPixels (0, 0, texture .width, texture .height, gl .RGBA, gl .FLOAT, data);
+
+               texture .width  = size;
+               texture .height = size;
+               texture .data   = new Float32Array (size * size * 4);
+
+               texture .data .set (data .slice (0, texture .data .length));
+            }
+
+            // Set data to texture.
+
+            for (const texture of kernel .textures)
+            {
+               gl .bindTexture (gl .TEXTURE_2D, texture);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, texture .width, texture .height, 0, gl .RGBA, gl .FLOAT, texture .data);
+            }
+         }
+
+         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
       },
       addUniform: function (name, uniform)
       {
