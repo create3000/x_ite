@@ -796,7 +796,7 @@ function (Fields,
                texture .width  = size;
                texture .height = size;
 
-               if (length < data .length)
+               if (length <= data .length)
                {
                   texture .data = new Float32Array (data .buffer, 0, length);
                }
