@@ -400,12 +400,10 @@ function (X3DNode,
          precision highp int;
 
          in vec4 inputVertex;
-         out vec4 vertex;
 
          void
          main ()
          {
-            vertex      = inputVertex;
             gl_Position = inputVertex;
          }
          `;
@@ -434,8 +432,6 @@ function (X3DNode,
          uniform sampler2D inputSampler3;
 
          ${[...Object .values (this .uniforms)] .join ("\n")}
-
-         in vec4 vertex;
 
          layout(location = 0) out vec4 output0;
          layout(location = 1) out vec4 output1;
@@ -611,13 +607,9 @@ function (X3DNode,
          // Current values
 
          int
-         getId (const in vec2 texCoord)
+         getId (const in ivec2 index)
          {
-            int x  = int (texCoord .x * float (size));
-            int y  = int (texCoord .y * float (size));
-            int id = y * size + x;
-
-            return id;
+            return index .y * size + index .x;
          }
 
          vec4
@@ -633,14 +625,14 @@ function (X3DNode,
          }
 
          void
-         animate (const in vec2 texCoord, const in int id)
+         animate (const in ivec2 index, const in int id)
          {
             if (id < numParticles)
             {
-               vec4 input0 = texture (inputSampler0, texCoord);
-               vec4 input1 = texture (inputSampler1, texCoord);
-               vec4 input2 = texture (inputSampler2, texCoord);
-               vec4 input3 = texture (inputSampler3, texCoord);
+               vec4 input0 = texelFetch (inputSampler0, index, 0);
+               vec4 input1 = texelFetch (inputSampler1, index, 0);
+               vec4 input2 = texelFetch (inputSampler2, index, 0);
+               vec4 input3 = texelFetch (inputSampler3, index, 0);
 
                float life        = input0 [0];
                float lifetime    = input0 [1];
@@ -679,9 +671,9 @@ function (X3DNode,
                      if (i >= numForces)
                         break;
 
-                     vec2  index      = vec2 ((float (i) + 0.5) / float (numForces), 0.5);
-                     vec3  force      = texture (forces, index) .xyz;
-                     float turbulence = texture (turbulences, index) .x;
+                     ivec2 index      = ivec2 (i, 0);
+                     vec3  force      = texelFetch (forces, index, 0) .xyz;
+                     float turbulence = texelFetch (turbulences, index, 0) .x;
                      vec3  normal     = getRandomNormalWithDirectionAndAngle (force, turbulence);
                      float speed      = length (force) * deltaTime / mass;
 
@@ -703,12 +695,12 @@ function (X3DNode,
          void
          main ()
          {
-            vec2 texCoord = (vertex .xy + 1.0) * 0.5;
-            int  id       = getId (texCoord);
+            ivec2 index = ivec2 (gl_FragCoord .xy);
+            int   id    = getId (index);
 
-            srand ((id + 1) * randomSeed);
+            srand ((id + randomSeed) * randomSeed);
 
-            animate (texCoord, id);
+            animate (index, id);
          }
          `;
 
