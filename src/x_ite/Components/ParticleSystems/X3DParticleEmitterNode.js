@@ -169,7 +169,7 @@ function (X3DNode,
 
          gl .enableVertexAttribArray (program .x3d_Vertex);
          gl .bindBuffer (gl .ARRAY_BUFFER, program .vertexBuffer);
-         gl .vertexAttribPointer (this .x3d_Vertex, 4, gl .FLOAT, false, 0, 0);
+         gl .vertexAttribPointer (program .x3d_Vertex, 4, gl .FLOAT, false, 0, 0);
 
          gl .disable (gl .DEPTH_TEST);
          gl .disable (gl .BLEND);
