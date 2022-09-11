@@ -66,11 +66,10 @@ function (X3DNode,
       this ._mass        .setUnit ("mass");
       this ._surfaceArea .setUnit ("area");
 
-      this .uniforms     = { };
-      this .functions    = [ ];
-      this .programs     = [];
-      this .i            = 0;
-      this .maxParticles = 0;
+      this .uniforms  = { };
+      this .functions = [ ];
+      this .program   = null;
+      this .i         = 0;
 
       this .addUniform ("speed",     "uniform float speed;");
       this .addUniform ("variation", "uniform float variation;");
@@ -84,10 +83,9 @@ function (X3DNode,
       {
          X3DNode .prototype .initialize .call (this);
 
-         // Create Programs.
+         // Create Program.
 
-         this .programs [0] = this .createProgram ();
-         this .programs [1] = this .createProgram ();
+         this .program = this .createProgram ();
 
          // Initialize fields.
 
@@ -146,7 +144,7 @@ function (X3DNode,
          const
             gl        = this .getBrowser () .getContext (),
             particles = particleSystem .particles [this .i],
-            program   = this .programs [this .i],
+            program   = this .program,
             size      = Math .ceil (Math .sqrt (particleSystem .maxParticles));
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
@@ -383,6 +381,23 @@ function (X3DNode,
                }
             },
          })
+      },
+      addUniform: function (name, uniform)
+      {
+         this .uniforms [name] = uniform;
+      },
+      setUniform: function (func, name, value1, value2, value3)
+      {
+         const
+            gl      = this .getBrowser () .getContext (),
+            program = this .program;
+
+         gl .useProgram (program);
+         gl [func] (program [name], value1, value2, value3);
+      },
+      addFunction: function (func)
+      {
+         this .functions .push (func);
       },
       createProgram: function ()
       {
@@ -747,24 +762,6 @@ function (X3DNode,
             return vertexBuffer;
          };
       })(),
-      addUniform: function (name, uniform)
-      {
-         this .uniforms [name] = uniform;
-      },
-      setUniform: function (func, name, value1, value2, value3)
-      {
-         const gl = this .getBrowser () .getContext ();
-
-         for (const program of this .programs)
-         {
-            gl .useProgram (program);
-            gl [func] (program [name], value1, value2, value3);
-         }
-      },
-      addFunction: function (func)
-      {
-         this .functions .push (func);
-      },
    });
 
    return X3DParticleEmitterNode;
