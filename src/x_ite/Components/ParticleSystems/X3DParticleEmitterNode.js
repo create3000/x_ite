@@ -191,6 +191,8 @@ function (X3DNode,
          gl .bindBuffer (gl .ARRAY_BUFFER, program .vertexBuffer);
          gl .vertexAttribPointer (program .x3d_Vertex, 4, gl .FLOAT, false, 0, 0);
 
+         this .activateTextures ();
+
          gl .disable (gl .DEPTH_TEST);
          gl .disable (gl .BLEND);
          gl .frontFace (gl .CCW);
@@ -604,6 +606,8 @@ function (X3DNode,
             return normal * speed;
          }
 
+         ${this .functions .join ("\n")}
+
          // Current values
 
          int
@@ -627,8 +631,6 @@ function (X3DNode,
          {
             return vec4 (position .xyz + velocity * deltaTime, position .w);
          }
-
-         ${this .functions .join ("\n")}
 
          void
          animate (const in vec2 texCoord, const in int id)
@@ -788,6 +790,8 @@ function (X3DNode,
             return vertexBuffer;
          };
       })(),
+      activateTextures: function ()
+      { },
    });
 
    return X3DParticleEmitterNode;
