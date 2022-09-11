@@ -83,7 +83,7 @@ function (X3DNode,
       {
          X3DNode .prototype .initialize .call (this);
 
-         // Create Program.
+         // Create program.
 
          this .program = this .createProgram ();
 
