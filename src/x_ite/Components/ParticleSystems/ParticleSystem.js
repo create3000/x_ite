@@ -742,7 +742,7 @@ function (Fields,
          gl .drawBuffers ([gl .COLOR_ATTACHMENT0, gl .COLOR_ATTACHMENT1, gl .COLOR_ATTACHMENT2, gl .COLOR_ATTACHMENT3]);
 
          if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) !== gl .FRAMEBUFFER_COMPLETE)
-            console .log ("Particle frame buffer is not complete.");
+            console .error ("Particle frame buffer is not complete.");
 
          // Reset frame buffer.
 
