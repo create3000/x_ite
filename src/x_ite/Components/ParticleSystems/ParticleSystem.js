@@ -862,7 +862,7 @@ function (Fields,
 
          // Determine particle position, velocity and colors
 
-         emitterNode .animate (this, deltaTime);
+         this .particles = emitterNode .animate (this, deltaTime);
 
          this .updateGeometry (null);
 
@@ -895,11 +895,18 @@ function (Fields,
             gl        = this .getBrowser () .getContext (),
             particles = this .particles;
 
+         gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
+
          // Colors
 
          if (this .geometryContext .colorMaterial)
          {
-            const colorArray = particles .colors .renderRawOutput ();
+            const
+               texture1   = particles .textures [1],
+               colorArray = texture1 .data;
+
+            gl .readBuffer (gl .COLOR_ATTACHMENT1);
+            gl .readPixels (0, 0, texture1 .width, texture1 .height, gl .RGBA, gl .FLOAT, vertexArray);
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
             gl .bufferData (gl .ARRAY_BUFFER, colorArray, gl .STATIC_DRAW);
@@ -907,10 +914,17 @@ function (Fields,
 
          // Vertices
 
-         const vertexArray = particles .result .renderRawOutput ();
+         const
+            texture3    = particles .textures [3],
+            vertexArray = texture3 .data;
+
+         gl .readBuffer (gl .COLOR_ATTACHMENT3);
+         gl .readPixels (0, 0, texture3 .width, texture3 .height, gl .RGBA, gl .FLOAT, vertexArray);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, vertexArray, gl .STATIC_DRAW);
+
+         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
       },
       updateLine: (function ()
       {

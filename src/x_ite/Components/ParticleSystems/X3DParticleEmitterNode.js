@@ -50,19 +50,9 @@
 define ([
    "x_ite/Components/Core/X3DNode",
    "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Geometry/Line3",
-   "standard/Math/Geometry/Plane3",
-   "standard/Math/Algorithm",
-   "gpu",
 ],
 function (X3DNode,
-          X3DConstants,
-          Vector3,
-          Line3,
-          Plane3,
-          Algorithm,
-          gpu)
+          X3DConstants)
 {
 "use strict";
 
@@ -76,19 +66,15 @@ function (X3DNode,
       this ._mass        .setUnit ("mass");
       this ._surfaceArea .setUnit ("area");
 
-      this .uniforms  = [ ];
-      this .functions = [ ];
-      this .kernels   = [{ textures: [ ] }, { textures: [ ] }];
+      this .uniforms     = [ ];
+      this .functions    = [ ];
+      this .kernels      = [{ textures: [ ] }, { textures: [ ] }];
+      this .i            = 0;
+      this .maxParticles = 0;
 
       this .addUniform ("uniform float speed;");
       this .addUniform ("uniform float variation;");
       this .addUniform ("uniform float mass;");
-
-      this .constants    = { };
-      this .functionsO    = [ ];
-      this .kernel       = [ ];
-      this .i            = 0;
-      this .maxParticles = 0;
    }
 
    X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -133,21 +119,15 @@ function (X3DNode,
       },
       set_speed__: function ()
       {
-         this .setConstant ("speed", this ._speed .getValue ());
-
          this .setUniform ("uniform1f", "speed", this ._speed .getValue ());
       },
       set_variation__: function ()
       {
-         this .setConstant ("variation", this ._variation .getValue ());
-
          this .setUniform ("uniform1f", "variation", this ._variation .getValue ());
       },
       set_mass__: function ()
       {
          this .mass = this ._mass .getValue ();
-
-         this .setConstant ("mass", this ._mass .getValue ());
 
          this .setUniform ("uniform1f", "mass", this ._mass .getValue ());
       },
@@ -167,171 +147,123 @@ function (X3DNode,
                              Math .cos (theta) * r,
                              cphi);
       },
-      animate: (function ()
+      animate: function (particleSystem, deltaTime)
       {
-         const removedKernels = [ ];
+         const other = this .kernels [this .i];
 
-         return function (particleSystem, deltaTime)
+         this .i = (this .i + 1) % 2;
+
+         const
+            gl      = this .getBrowser () .getContext (),
+            kernel  = this .kernels [this .i],
+            program = kernel .program,
+            size    = Math .ceil (Math .sqrt (particleSystem .maxParticles));
+
+         gl .bindFramebuffer (gl .FRAMEBUFFER, kernel .frameBuffer);
+         gl .viewport (0, 0, size, size);
+         gl .useProgram (program);
+
+         gl .uniform1i (gl .getUniformLocation (program, "size"), size);
+         gl .uniform1i (gl .getUniformLocation (program, "randomSeed"), Math .random () * particleSystem .maxParticles);
+         gl .uniform1i (gl .getUniformLocation (program, "createParticles"), Number (particleSystem .createParticles));
+         gl .uniform1i (gl .getUniformLocation (program, "numParticles"), particleSystem .numParticles);
+         gl .uniform1f (gl .getUniformLocation (program, "particleLifetime"), particleSystem .particleLifetime);
+         gl .uniform1f (gl .getUniformLocation (program, "lifetimeVariation"), particleSystem .lifetimeVariation);
+         gl .uniform1f (gl .getUniformLocation (program, "deltaTime"), deltaTime);
+
+         for (let i = 0; i < 4; ++ i)
          {
-            const particles = particleSystem .particles;
+            gl .activeTexture (gl .TEXTURE0 + i);
+            gl .bindTexture (gl .TEXTURE_2D, other .textures [i]);
+         }
 
-            // boundedVolume = particleSystem .boundedVolume;
+         gl .enableVertexAttribArray (kernel .program .x3d_Vertex);
+         gl .bindBuffer (gl .ARRAY_BUFFER, kernel .vertexBuffer);
+         gl .vertexAttribPointer (this .x3d_Vertex, 4, gl .FLOAT, false, 0, 0);
 
-            if (this .maxParticles !== particleSystem .maxParticles)
-            {
-               if (this .kernel .length)
-                  removedKernels .push (this .kernel [0], this .kernel [1]);
+         gl .disable (gl .DEPTH_TEST);
+         gl .disable (gl .BLEND);
+         gl .frontFace (gl .CCW);
+         gl .enable (gl .CULL_FACE);
+         gl .cullFace (gl .BACK);
 
-               this .maxParticles = particleSystem .maxParticles;
-               this .kernel [0]   = this .createKernel ();
-               this .kernel [1]   = this .createKernel ();
-            }
+         gl .drawArrays (gl .TRIANGLES, 0, 6);
 
-            this .i = (this .i + 1) % 2;
+         // const data = kernel .textures [3] .data;
+         // gl .readBuffer (gl .COLOR_ATTACHMENT3);
+         // gl .readPixels (0, 0, 10, 10, gl .RGBA, gl .FLOAT, data);
+         // console .log (kernel .textures [3] .width, Math .ceil (Math .sqrt (particleSystem .maxParticles)), data);
 
-            particleSystem .particles = this .kernel [this .i]
-               (particles .times,
-               particles .velocities,
-               particles .result,
-               particleSystem .numParticles,
-               particleSystem .particleLifetime,
-               particleSystem .lifetimeVariation,
-               particleSystem .createParticles,
-               particleSystem .geometryContext .colorMaterial,
-               particleSystem .colorKeys,
-               particleSystem .numColorKeys,
-               particleSystem .colorRamp,
-               particleSystem .numForces,
-               particleSystem .forces,
-               particleSystem .turbulences,
-               this .mass,
-               !! particleSystem .boundedVertices .length,
-               deltaTime);
+         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
-            if (removedKernels .length)
-            {
-               removedKernels [0] .destroy ();
-               removedKernels [1] .destroy ();
+         return kernel;
 
-               removedKernels .length = 0;
-            }
-
+         /*
+         for (let i = 0; i < numParticles; ++ i)
+         {
             const
-               gl                 = this .getBrowser () .getContext (),
-               kernel             = this .kernels [this .i],
-               other              = this .kernels [(this .i + 1) % 2],
-               program            = kernel .program,
-               currentFrameBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+               particle    = particles [i],
+               elapsedTime = particle .elapsedTime + deltaTime;
 
-            gl .bindFramebuffer (gl .FRAMEBUFFER, kernel .frameBuffer);
-            gl .useProgram (program);
-
-            gl .uniform1i (gl .getUniformLocation (program, "randomSeed"), Math .random () * particleSystem .maxParticles);
-            gl .uniform1i (gl .getUniformLocation (program, "createParticles"), Number (particleSystem .createParticles));
-            gl .uniform1i (gl .getUniformLocation (program, "numParticles"), particleSystem .numParticles);
-            gl .uniform1f (gl .getUniformLocation (program, "particleLifetime"), particleSystem .particleLifetime);
-            gl .uniform1f (gl .getUniformLocation (program, "lifetimeVariation"), particleSystem .lifetimeVariation);
-            gl .uniform1f (gl .getUniformLocation (program, "deltaTime"), deltaTime);
-
-            gl .activeTexture (gl .TEXTURE0 + 0);
-            gl .bindTexture (gl .TEXTURE_2D, other .textures [0]);
-            gl .activeTexture (gl .TEXTURE0 + 1);
-            gl .bindTexture (gl .TEXTURE_2D, other .textures [1]);
-            gl .activeTexture (gl .TEXTURE0 + 2);
-            gl .bindTexture (gl .TEXTURE_2D, other .textures [2]);
-            gl .activeTexture (gl .TEXTURE0 + 3);
-            gl .bindTexture (gl .TEXTURE_2D, other .textures [3]);
-
-            gl .enableVertexAttribArray (kernel .program .x3d_Vertex);
-            gl .bindBuffer (gl .ARRAY_BUFFER, kernel .vertexBuffer);
-            gl .vertexAttribPointer (this .x3d_Vertex, 4, gl .FLOAT, false, 0, 0);
-
-            gl .clearColor (1, 2, 3, 4);
-            gl .clear (gl .COLOR_BUFFER_BIT);
-
-            gl .viewport (0, 0, 10, 10);
-            gl .disable (gl .DEPTH_TEST);
-            gl .disable (gl .BLEND);
-            gl .frontFace (gl .CCW);
-            gl .enable (gl .CULL_FACE);
-            gl .cullFace (gl .BACK);
-
-            gl .drawArrays (gl .TRIANGLES, 0, 6);
-
-            const data = kernel .textures [3] .data;
-            gl .readBuffer (gl .COLOR_ATTACHMENT3);
-            gl .readPixels (0, 0, 10, 10, gl .RGBA, gl .FLOAT, data);
-            console .log (data);
-
-            gl .bindFramebuffer (gl .FRAMEBUFFER, currentFrameBuffer);
-
-            /*
-            for (let i = 0; i < numParticles; ++ i)
+            if (elapsedTime > particle .lifetime)
             {
-               const
-                  particle    = particles [i],
-                  elapsedTime = particle .elapsedTime + deltaTime;
+               // Create new particle or hide particle.
 
-               if (elapsedTime > particle .lifetime)
+               particle .lifetime    = this .getRandomLifetime (particleLifetime, lifetimeVariation);
+               particle .elapsedTime = 0;
+
+               if (createParticles)
                {
-                  // Create new particle or hide particle.
+                  ++ particle .life;
+                  this .getRandomPosition (particle .position);
+                  this .getRandomVelocity (particle .velocity);
+               }
+               else
+                  particle .position .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
+            }
+            else
+            {
+               // Animate particle.
 
-                  particle .lifetime    = this .getRandomLifetime (particleLifetime, lifetimeVariation);
-                  particle .elapsedTime = 0;
+               const
+                  position = particle .position,
+                  velocity = particle .velocity;
 
-                  if (createParticles)
-                  {
-                     ++ particle .life;
-                     this .getRandomPosition (particle .position);
-                     this .getRandomVelocity (particle .velocity);
-                  }
-                  else
-                     particle .position .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
+               for (let f = 0; f < numForces; ++ f)
+               {
+                  velocity .add (rotations [f] .multVecRot (this .getRandomNormalWithAngle (turbulences [f], normal)) .multiply (speeds [f]));
+               }
+
+               if (boundedPhysics)
+               {
+                  fromPosition .x = position .x;
+                  fromPosition .y = position .y;
+                  fromPosition .z = position .z;
+
+                  position .x += velocity .x * deltaTime;
+                  position .y += velocity .y * deltaTime;
+                  position .z += velocity .z * deltaTime;
+
+                  this .bounce (boundedVolume, fromPosition, position, velocity);
                }
                else
                {
-                  // Animate particle.
-
-                  const
-                     position = particle .position,
-                     velocity = particle .velocity;
-
-                  for (let f = 0; f < numForces; ++ f)
-                  {
-                     velocity .add (rotations [f] .multVecRot (this .getRandomNormalWithAngle (turbulences [f], normal)) .multiply (speeds [f]));
-                  }
-
-                  if (boundedPhysics)
-                  {
-                     fromPosition .x = position .x;
-                     fromPosition .y = position .y;
-                     fromPosition .z = position .z;
-
-                     position .x += velocity .x * deltaTime;
-                     position .y += velocity .y * deltaTime;
-                     position .z += velocity .z * deltaTime;
-
-                     this .bounce (boundedVolume, fromPosition, position, velocity);
-                  }
-                  else
-                  {
-                     position .x += velocity .x * deltaTime;
-                     position .y += velocity .y * deltaTime;
-                     position .z += velocity .z * deltaTime;
-                  }
-
-                  particle .elapsedTime = elapsedTime;
+                  position .x += velocity .x * deltaTime;
+                  position .y += velocity .y * deltaTime;
+                  position .z += velocity .z * deltaTime;
                }
+
+               particle .elapsedTime = elapsedTime;
             }
-            */
-         };
-      })(),
+         }
+         */
+      },
       bounce: (function ()
       {
-         const
-            normal = new Vector3 (0, 0, 0),
-            line   = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-            plane  = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
+         // const
+         //    normal = new Vector3 (0, 0, 0),
+         //    line   = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+         //    plane  = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
 
          return function (boundedVolume, fromPosition, toPosition, velocity)
          {
@@ -386,30 +318,6 @@ function (X3DNode,
       createKernel: function ()
       {
          return gpu .createKernelMap ({
-            times: function updateTimes (times, numParticles, particleLifetime, lifetimeVariation, createParticles, deltaTime)
-            {
-               let
-                  time        = times [this .thread .x],
-                  life        = time [0],
-                  lifetime    = time [1],
-                  elapsedTime = time [2];
-
-               if (this .thread .x < numParticles)
-               {
-                  elapsedTime += deltaTime;
-
-                  if (elapsedTime > lifetime)
-                  {
-                     // Create new particle or hide particle.
-
-                     life       += createParticles ? 1 : 0;
-                     lifetime    = getRandomLifetime (particleLifetime, lifetimeVariation);
-                     elapsedTime = 0;
-                  }
-               }
-
-               return [life, lifetime, elapsedTime, 0];
-            },
             colors: function updateColors (time, numParticles, colorMaterial, colorKeys, numColorKeys, colorRamp)
             {
                if (this .thread .x < numParticles && colorMaterial)
@@ -544,60 +452,7 @@ function (X3DNode,
                   return velocities [this .thread .x];
                }
             },
-         },
-         function (times, velocities, positions, numParticles, particleLifetime, lifetimeVariation, createParticles, colorMaterial, colorKeys, numColorKeys, colorRamp, numForces, forces, turbulences, mass, boundedPhysics, deltaTime)
-         {
-            // WORKAROUND: include Math.random()
-
-            const
-               time     = updateTimes (times, numParticles, particleLifetime, lifetimeVariation, createParticles, deltaTime),
-               color    = updateColors (time, numParticles, colorMaterial, colorKeys, numColorKeys, colorRamp),
-               velocity = updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, mass, boundedPhysics, deltaTime);
-
-            // updatePositions
-
-            if (this .thread .x < numParticles)
-            {
-               const elapsedTime = time [2];
-
-               if (elapsedTime == 0)
-               {
-                  return createParticles ? getRandomPosition () : [Infinity, Infinity, Infinity, 0];
-               }
-               else
-               {
-                  // Animate particle.
-
-                  const position = positions [this .thread .x];
-
-                  position [0] += velocity [0] * deltaTime;
-                  position [1] += velocity [1] * deltaTime;
-                  position [2] += velocity [2] * deltaTime;
-
-                  return position;
-               }
-            }
-            else
-            {
-               return positions [this .thread .x];
-            }
-
-            /* WORKAROUND: include */ prototypes ();
          })
-         .setConstants (this .constants)
-         .setFunctions (this .functionsO)
-         .setTactic ("precision")
-         .addNativeFunction ("prototypes", `
-            vec4 Quaternion (vec3, vec3);
-            vec3 multVecQuat (vec3, vec4);
-            float getRandomValue (float , float);
-            vec3 getRandomNormalWithAngle (float);
-            void prototypes () { }
-         `)
-         .addNativeFunction ("dot3", "float dot3 (vec3 a, vec3 b) { return dot (a, b); }")
-         .addNativeFunction ("length3", "float length3 (vec3 v) { return length (v); }")
-         .addNativeFunction ("normalize3", "vec3 normalize3 (vec3 v) { return normalize (v); }")
-         .addNativeFunction ("cross3", "vec3 cross3 (vec3 a, vec3 b) { return cross (a, b); }")
          .addFunction (function Quaternion (fromVector, toVector)
          {
             const from = normalize3 (fromVector);
@@ -735,17 +590,6 @@ function (X3DNode,
          {
             return velocity;
          })
-         .setPipeline (true)
-         .setOutput ([this .maxParticles]);
-      },
-      setConstant: function (name, value)
-      {
-         this .constants [name] = value;
-         this .maxParticles     = 0;     // Trigger kernel rebuild.
-      },
-      addFunctionO: function (func)
-      {
-         this .functionsO .push (func);
       },
       createVertexBuffer: (function ()
       {
@@ -796,17 +640,10 @@ function (X3DNode,
          precision highp int;
          precision highp sampler2D;
 
-         in vec4 vertex;
-
-         layout(location = 0) out vec4 output0;
-         layout(location = 1) out vec4 output1;
-         layout(location = 2) out vec4 output2;
-         layout(location = 3) out vec4 output3;
-
-         const ivec2 size = ivec2 (10, 10);
-         uniform int randomSeed;
-         uniform bool createParticles;
-         uniform int numParticles;
+         uniform int   size;
+         uniform int   randomSeed;
+         uniform bool  createParticles;
+         uniform int   numParticles;
          uniform float particleLifetime;
          uniform float lifetimeVariation;
          uniform float deltaTime;
@@ -818,14 +655,21 @@ function (X3DNode,
 
          ${this .uniforms .join ("\n")}
 
+         in vec4 vertex;
+
+         layout(location = 0) out vec4 output0;
+         layout(location = 1) out vec4 output1;
+         layout(location = 2) out vec4 output2;
+         layout(location = 3) out vec4 output3;
+
          #define M_PI 3.14159265359
 
          int
          getId (const in vec2 texCoord)
          {
-            int x  = int (texCoord .x * float (size .x));
-            int y  = int (texCoord .y * float (size .y));
-            int id = y * size .x + x;
+            int x  = int (texCoord .x * float (size));
+            int y  = int (texCoord .y * float (size));
+            int id = y * size + x;
 
             return id;
          }
@@ -915,6 +759,12 @@ function (X3DNode,
             return vec4 (1.0);
          }
 
+         vec4
+         getPosition (const in vec4 position, const in vec3 velocity)
+         {
+            return vec4 (position .xyz + velocity * deltaTime, position .w);
+         }
+
          ${this .functions .join ("\n")}
 
          void
@@ -949,15 +799,15 @@ function (X3DNode,
                   output0 = vec4 (life, lifetime, elapsedTime, 0.0);
                   output1 = getColor (elapsedTime);
                   output2 = input2;
-                  output3 = input3;
+                  output3 = getPosition (input3, input2 .xyz);
                }
             }
             else
             {
-               output0 = input0;
-               output1 = input1;
-               output2 = input2;
-               output3 = input3;
+               output0 = vec4 (0.0);
+               output1 = vec4 (0.0);
+               output2 = vec4 (0.0);
+               output3 = vec4 (0.0);
             }
          }
 
@@ -1017,9 +867,7 @@ function (X3DNode,
 
          // Create frame buffer.
 
-         const
-            currentFrameBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING),
-            frameBuffer        = gl .createFramebuffer ();
+         const frameBuffer = gl .createFramebuffer ();
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
@@ -1035,7 +883,7 @@ function (X3DNode,
 
          // Reset frame buffer.
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, currentFrameBuffer);
+         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
          return frameBuffer;
       },
@@ -1045,6 +893,9 @@ function (X3DNode,
             gl      = this .getBrowser () .getContext (),
             texture = gl .createTexture ();
 
+         texture .width  = Math .ceil (Math .sqrt (100000));
+         texture .height = Math .ceil (Math .sqrt (100000));
+
          gl .bindTexture (gl .TEXTURE_2D, texture);
 
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
@@ -1052,11 +903,11 @@ function (X3DNode,
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
 
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, 10, 10, 0, gl .RGBA, gl .FLOAT, null);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, texture .width, texture .height, 0, gl .RGBA, gl .FLOAT, null);
 
          // Create data.
 
-         texture .data = new Float32Array (10 * 10 * 4);
+         texture .data = new Float32Array (texture .width * texture .height * 4);
 
          return texture;
       },

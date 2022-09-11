@@ -55,7 +55,6 @@ define ([
    "x_ite/Components/Rendering/IndexedLineSet",
    "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
-   "gpu",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -63,8 +62,7 @@ function (Fields,
           X3DParticleEmitterNode,
           IndexedLineSet,
           X3DConstants,
-          Vector3,
-          gpu)
+          Vector3)
 {
 "use strict";
 
@@ -74,9 +72,11 @@ function (Fields,
 
       this .addType (X3DConstants .PolylineEmitter);
 
-      this .direction        = new Vector3 (0, 0, 0);
       this .polylineNode     = new IndexedLineSet (executionContext);
       this .lengthSoFarArray = [ 0 ];
+
+      this .addUniform ("uniform vec3 position;");
+      this .addUniform ("uniform vec3 direction;");
    }
 
    PolylineEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
@@ -255,9 +255,7 @@ function (Fields,
          {
             direction .assign (this ._direction .getValue ()) .normalize ();
 
-            this .setConstant ("direction0", direction .x);
-            this .setConstant ("direction1", direction .y);
-            this .setConstant ("direction2", direction .z);
+            this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
          };
       })(),
       set_polyline: (function ()

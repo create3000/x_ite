@@ -75,7 +75,6 @@ function (Fields,
       this .addUniform ("uniform vec3 position;");
       this .addUniform ("uniform vec3 direction;");
 
-
       this .addFunction (`vec3 getRandomVelocity ()
       {
          if (direction == vec3 (0.0))
@@ -120,43 +119,12 @@ function (Fields,
          this ._position  .addInterest ("set_position__",  this);
          this ._direction .addInterest ("set_direction__", this);
 
-         this .addFunctionO (function getRandomVelocity ()
-         {
-            if (this .constants .direction0 == 0 &&
-                this .constants .direction1 == 0 &&
-                this .constants .direction2 == 0)
-            {
-               return getRandomSphericalVelocity ();
-            }
-            else
-            {
-               const speed = getRandomSpeed ();
-
-               return [this .constants .direction0 * speed,
-                       this .constants .direction1 * speed,
-                       this .constants .direction2 * speed,
-                       0];
-            }
-         });
-
-         this .addFunctionO (function getRandomPosition ()
-         {
-            return [this .constants .position0,
-                    this .constants .position1,
-                    this .constants .position2,
-                    1];
-         });
-
          this .set_position__ ();
          this .set_direction__ ();
       },
       set_position__: function ()
       {
          const position = this ._position .getValue ();
-
-         this .setConstant ("position0", position .x);
-         this .setConstant ("position1", position .y);
-         this .setConstant ("position2", position .z);
 
          this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
       },
@@ -167,10 +135,6 @@ function (Fields,
          return function ()
          {
             direction .assign (this ._direction .getValue ()) .normalize ();
-
-            this .setConstant ("direction0", direction .x);
-            this .setConstant ("direction1", direction .y);
-            this .setConstant ("direction2", direction .z);
 
             this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
          };

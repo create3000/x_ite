@@ -53,14 +53,12 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
    "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Rotation4",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticleEmitterNode,
-          X3DConstants,
-          Rotation4)
+          X3DConstants)
 {
 "use strict";
 
@@ -73,7 +71,9 @@ function (Fields,
       this ._position .setUnit ("length");
       this ._angle    .setUnit ("angle");
 
-      this .rotation = new Rotation4 (0, 0, 1, 0);
+      this .addUniform ("uniform vec3 position;");
+      this .addUniform ("uniform vec3 direction;");
+      this .addUniform ("uniform float angle;");
    }
 
    ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
@@ -151,21 +151,17 @@ function (Fields,
       {
          const position = this ._position .getValue ();
 
-         this .setConstant ("position0", position .x);
-         this .setConstant ("position1", position .y);
-         this .setConstant ("position2", position .z);
+         this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
       },
       set_direction__: function ()
       {
          const direction = this ._direction .getValue ();
 
-         this .setConstant ("direction0", direction .x);
-         this .setConstant ("direction1", direction .y);
-         this .setConstant ("direction2", direction .z);
+         this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
       },
       set_angle__: function ()
       {
-         this .setConstant ("angle", this ._angle .getValue ());
+         this .setUniform ("uniform1f", "angle", this ._angle .getValue ());
       },
    });
 
