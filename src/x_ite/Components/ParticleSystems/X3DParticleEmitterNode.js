@@ -197,66 +197,6 @@ function (X3DNode,
          gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
          return kernel;
-
-         /*
-         for (let i = 0; i < numParticles; ++ i)
-         {
-            const
-               particle    = particles [i],
-               elapsedTime = particle .elapsedTime + deltaTime;
-
-            if (elapsedTime > particle .lifetime)
-            {
-               // Create new particle or hide particle.
-
-               particle .lifetime    = this .getRandomLifetime (particleLifetime, lifetimeVariation);
-               particle .elapsedTime = 0;
-
-               if (createParticles)
-               {
-                  ++ particle .life;
-                  this .getRandomPosition (particle .position);
-                  this .getRandomVelocity (particle .velocity);
-               }
-               else
-                  particle .position .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
-            }
-            else
-            {
-               // Animate particle.
-
-               const
-                  position = particle .position,
-                  velocity = particle .velocity;
-
-               for (let f = 0; f < numForces; ++ f)
-               {
-                  velocity .add (rotations [f] .multVecRot (this .getRandomNormalWithAngle (turbulences [f], normal)) .multiply (speeds [f]));
-               }
-
-               if (boundedPhysics)
-               {
-                  fromPosition .x = position .x;
-                  fromPosition .y = position .y;
-                  fromPosition .z = position .z;
-
-                  position .x += velocity .x * deltaTime;
-                  position .y += velocity .y * deltaTime;
-                  position .z += velocity .z * deltaTime;
-
-                  this .bounce (boundedVolume, fromPosition, position, velocity);
-               }
-               else
-               {
-                  position .x += velocity .x * deltaTime;
-                  position .y += velocity .y * deltaTime;
-                  position .z += velocity .z * deltaTime;
-               }
-
-               particle .elapsedTime = elapsedTime;
-            }
-         }
-         */
       },
       bounce: (function ()
       {

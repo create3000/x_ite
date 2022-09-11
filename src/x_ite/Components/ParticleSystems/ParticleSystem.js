@@ -62,7 +62,6 @@ define ([
    "standard/Math/Numbers/Matrix3",
    "standard/Math/Algorithm",
    "standard/Math/Utility/BVH",
-   "gpu",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -77,8 +76,7 @@ function (Fields,
           Matrix4,
           Matrix3,
           Algorithm,
-          BVH,
-          gpu)
+          BVH)
 {
 "use strict";
 
@@ -117,7 +115,7 @@ function (Fields,
 
       this ._particleSize .setUnit ("length");
 
-      this .particles                = { };
+      this .particles                = null;
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .particleLifetime         = 0;
@@ -210,39 +208,6 @@ function (Fields,
          this ._colorRamp         .addInterest ("set_colorRamp__",         this);
          this ._texCoordKey       .addInterest ("set_texCoord__",          this);
          this ._texCoordRamp      .addInterest ("set_texCoordRamp__",      this);
-
-         // Create GPU stuff.
-
-         const particlesKernel = gpu .createKernelMap ({
-            times: function createTimes () { return [0, 0, 0, 0]; },
-            colors: function createColors () { return [0, 0, 0, 0]; },
-            velocities: function createVelocities () { return [0, 0, 0, 0]; },
-         },
-         function ()
-         {
-            createTimes ();
-            createColors ();
-            createVelocities ();
-
-            return [0, 0, 0, 0];
-         })
-         .setTactic ("precision")
-         .setPipeline (true)
-         .setOutput ([1]);
-
-         this .particles       = particlesKernel ();
-         this .particlesKernel = particlesKernel;
-
-         this .colorRampKernel = gpu .createKernel (function (colorRamp)
-         {
-            return [colorRamp [this .thread .x * 4 + 0],
-                    colorRamp [this .thread .x * 4 + 1],
-                    colorRamp [this .thread .x * 4 + 2],
-                    colorRamp [this .thread .x * 4 + 3]];
-         })
-         .setTactic ("precision")
-         .setPipeline (true)
-         .setDynamicOutput (true);
 
          // Create GL stuff.
 
@@ -381,9 +346,6 @@ function (Fields,
             gl           = this .getBrowser () .getContext (),
             maxParticles = this .maxParticles;
 
-         if (this .geometryKernel)
-            this .geometryKernel .destroy ();
-
          // geometryType
 
          this .geometryType = GeometryTypes [this ._geometryType .getValue ()];
@@ -411,8 +373,6 @@ function (Fields,
                this .vertexCount   = 1;
 
                this .geometryContext .geometryType = 0;
-
-               delete this .geometryKernel;
                break;
             }
             case LINE:
@@ -432,32 +392,32 @@ function (Fields,
 
                this .geometryContext .geometryType = 1;
 
-               this .geometryKernel = gpu .createKernelMap ({
-                  colors: function createColors (colorMaterial, colors, i)
-                  {
-                     return colorMaterial ? colors [i] : [0, 0, 0, 0];
-                  },
-               },
-               function (positions, velocities, colorMaterial, colors, sy1_2)
-               {
-                  const
-                     i        = this .thread .x / 2,
-                     color    = createColors (colorMaterial, colors, i),
-                     velocity = velocities [i],
-                     position = positions [i],
-                     normal   = normalize3 ([velocity [0], velocity [1], velocity [2]]);
+               // this .geometryKernel = gpu .createKernelMap ({
+               //    colors: function createColors (colorMaterial, colors, i)
+               //    {
+               //       return colorMaterial ? colors [i] : [0, 0, 0, 0];
+               //    },
+               // },
+               // function (positions, velocities, colorMaterial, colors, sy1_2)
+               // {
+               //    const
+               //       i        = this .thread .x / 2,
+               //       color    = createColors (colorMaterial, colors, i),
+               //       velocity = velocities [i],
+               //       position = positions [i],
+               //       normal   = normalize3 ([velocity [0], velocity [1], velocity [2]]);
 
-                  const s = this .thread .x % 2 == 0 ? -sy1_2 : sy1_2;
+               //    const s = this .thread .x % 2 == 0 ? -sy1_2 : sy1_2;
 
-                  return [position [0] + normal [0] * s,
-                          position [1] + normal [1] * s,
-                          position [2] + normal [2] * s,
-                          1];
-               })
-               .addNativeFunction ("normalize3", "vec3 normalize3 (vec3 v) { return normalize (v); }")
-               .setTactic ("precision")
-               .setPipeline (true)
-               .setDynamicOutput (true);
+               //    return [position [0] + normal [0] * s,
+               //            position [1] + normal [1] * s,
+               //            position [2] + normal [2] * s,
+               //            1];
+               // })
+               // .addNativeFunction ("normalize3", "vec3 normalize3 (vec3 v) { return normalize (v); }")
+               // .setTactic ("precision")
+               // .setPipeline (true)
+               // .setDynamicOutput (true);
 
                break;
             }
@@ -537,8 +497,6 @@ function (Fields,
             {
                this .texCoordCount = 0;
                this .vertexCount   = 0;
-
-               delete this .geometryKernel;
                break;
             }
          }
@@ -576,42 +534,6 @@ function (Fields,
       set_maxParticles__: function ()
       {
          const maxParticles = Math .max (0, this ._maxParticles .getValue ());
-
-         const particlesKernel = gpu .createKernelMap ({
-            times: function createTimes (times, numParticles)
-            {
-               return this .thread .x < numParticles ? times [this .thread .x] : [0, -1, 0, 0];
-            },
-            colors: function createColors (colors, numParticles)
-            {
-               return this .thread .x < numParticles ? colors [this .thread .x] : [0, 0, 0, 0];
-            },
-            velocities: function createVelocities (velocities, numParticles)
-            {
-               return this .thread .x < numParticles ? velocities [this .thread .x] : [0, 0, 0, 0];
-            },
-         },
-         function (times, colors, velocities, positions, numParticles)
-         {
-            createTimes (times, numParticles);
-            createColors (colors, numParticles);
-            createVelocities (velocities, numParticles);
-
-            return this .thread .x < numParticles ? positions [this .thread .x] : [0, 0, 0, 0];
-         })
-         .setTactic ("precision")
-         .setPipeline (true)
-         .setOutput ([Math .max (1, maxParticles)]);
-
-         this .particles = particlesKernel
-            (this .particles .times,
-             this .particles .colors,
-             this .particles .velocities,
-             this .particles .result,
-             this .numParticles);
-
-         this .particlesKernel .destroy ();
-         this .particlesKernel = particlesKernel;
 
          this .maxParticles = maxParticles;
          this .numParticles = Math .min (this .numParticles, maxParticles);
@@ -743,8 +665,6 @@ function (Fields,
                colorRamp [i] = last || Vector4 .One;
 
             colorRamp .push (Vector4 .One); // Must create at least one value.
-
-            this .colorRamp = this .colorRampKernel .setOutput ([Math .max (1, numColorKeys)]) (colorRamp);
 
             this .geometryContext .colorMaterial = !! (numColorKeys && this .colorRampNode);
          };
@@ -926,45 +846,38 @@ function (Fields,
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, null);
       },
-      updateLine: (function ()
+      updateLine: function ()
       {
-         const output = [1];
+         const
+            gl           = this .getBrowser () .getContext (),
+            particles    = this .particles,
+            numParticles = this .numParticles,
+            sy1_2        = this ._particleSize .y / 2;
 
-         return function ()
+         // const geometry = this .geometryKernel .setOutput (output)
+         //    (particles .result,
+         //     particles .velocities,
+         //     this .geometryContext .colorMaterial,
+         //     particles .colors,
+         //     sy1_2);
+
+         // Colors
+
+         if (this .geometryContext .colorMaterial)
          {
-            const
-               gl           = this .getBrowser () .getContext (),
-               particles    = this .particles,
-               numParticles = this .numParticles,
-               sy1_2        = this ._particleSize .y / 2;
+            const colorArray = geometry .colors .renderRawOutput ();
 
-            output [0] = Math .max (1, numParticles) * this .vertexCount;
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, colorArray, gl .STATIC_DRAW);
+         }
 
-            const geometry = this .geometryKernel .setOutput (output)
-               (particles .result,
-                particles .velocities,
-                this .geometryContext .colorMaterial,
-                particles .colors,
-                sy1_2);
+         // Vertices
 
-            // Colors
+         const vertexArray = geometry .result .renderRawOutput ();
 
-            if (this .geometryContext .colorMaterial)
-            {
-               const colorArray = geometry .colors .renderRawOutput ();
-
-               gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-               gl .bufferData (gl .ARRAY_BUFFER, colorArray, gl .STATIC_DRAW);
-            }
-
-            // Vertices
-
-            const vertexArray = geometry .result .renderRawOutput ();
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, vertexArray, gl .STATIC_DRAW);
-         };
-      })(),
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
+         gl .bufferData (gl .ARRAY_BUFFER, vertexArray, gl .STATIC_DRAW);
+      },
       updateQuad: function (modelViewMatrix)
       {
          try
