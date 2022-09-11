@@ -959,7 +959,7 @@ function (Fields,
                colorArray = texture1 .data;
 
             gl .readBuffer (gl .COLOR_ATTACHMENT1);
-            gl .readPixels (0, 0, texture1 .width, texture1 .height, gl .RGBA, gl .FLOAT, vertexArray);
+            gl .readPixels (0, 0, texture1 .width, texture1 .height, gl .RGBA, gl .FLOAT, colorArray);
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
             gl .bufferData (gl .ARRAY_BUFFER, colorArray, gl .STATIC_DRAW);

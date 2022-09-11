@@ -71,9 +71,26 @@ function (Fields,
       this ._position .setUnit ("length");
       this ._angle    .setUnit ("angle");
 
-      this .addUniform ("position",  "uniform vec3 position;");
-      this .addUniform ("direction", "uniform vec3 direction;");
+      this .addUniform ("position",  "uniform vec3  position;");
+      this .addUniform ("direction", "uniform vec3  direction;");
       this .addUniform ("angle",     "uniform float angle;");
+
+      this .addFunction (`vec3 getRandomVelocity ()
+      {
+         if (direction == vec3 (0.0))
+         {
+            return getRandomSphericalVelocity ();
+         }
+         else
+         {
+            vec3  normal = getRandomNormalWithDirectionAndAngle (direction, angle);
+            float speed  = getRandomSpeed ();
+
+            return normal * speed;
+         }
+      }`);
+
+      this .addFunction (`vec4 getRandomPosition () { return vec4 (position, 1.0); }`);
    }
 
    ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
@@ -109,39 +126,6 @@ function (Fields,
          this ._position  .addInterest ("set_position__", this);
          this ._direction .addInterest ("set_direction__", this);
          this ._angle     .addInterest ("set_angle__", this);
-
-         this .addFunctionO (function getRandomVelocity ()
-         {
-            const direction = [this .constants .direction0,
-                               this .constants .direction1,
-                               this .constants .direction2];
-
-            if (direction [0] == 0 &&
-                direction [1] == 0 &&
-                direction [2] == 0)
-            {
-               return getRandomSphericalVelocity ();
-            }
-            else
-            {
-               const
-                  normal = getRandomNormalWithDirectionAndAngle (direction, this .constants .angle),
-                  speed  = getRandomSpeed ();
-
-               return [normal [0] * speed,
-                       normal [1] * speed,
-                       normal [2] * speed,
-                       0];
-            }
-         });
-
-         this .addFunctionO (function getRandomPosition ()
-         {
-            return [this .constants .position0,
-                    this .constants .position1,
-                    this .constants .position2,
-                    1];
-         });
 
          this .set_position__ ();
          this .set_direction__ ();
