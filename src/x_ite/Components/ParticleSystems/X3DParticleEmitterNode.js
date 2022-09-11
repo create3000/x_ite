@@ -660,8 +660,16 @@ function (X3DNode,
 
                   output0 = vec4 (life, lifetime, elapsedTime, 0.0);
                   output1 = getColor (elapsedTime);
-                  output2 = createParticles ? vec4 (getRandomVelocity (), 0.0) : vec4 (0.0);
-                  output3 = createParticles ? getRandomPosition () : vec4 (0.0);
+
+                  if (createParticles)
+                  {
+                     output2 = vec4 (getRandomVelocity (), 0.0);
+                     output3 = getRandomPosition ();
+                  }
+                  else
+                  {
+                     output2 = output3 = vec4 (0.0);
+                  }
                }
                else
                {
