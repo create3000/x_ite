@@ -93,11 +93,8 @@ function (Fields,
       },
       addForce: function (i, emitterNode, forces, turbulences)
       {
-         if (this ._enabled .getValue ())
-         {
-            forces      [i] .assign (this ._force .getValue ());
-            turbulences [i] = 0;
-         }
+         forces .set (this ._force .getValue (), i * 4);
+         turbulences [i * 4] = 0;
       },
    });
 

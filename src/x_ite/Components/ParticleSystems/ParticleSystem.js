@@ -124,17 +124,16 @@ function (Fields,
       this .geometryType             = POINT;
       this .createParticles          = true;
       this .emitterNode              = null;
-      this .forces                   = [ new Vector3 (0, 0, 0) ];
-      this .turbulences              = [ 0 ];
       this .forcePhysicsModelNodes   = [ ];
+      this .numForces                = 0;
+      this .forces                   = new Float32Array (4);
+      this .turbulences              = new Float32Array (4);
+      this .forcesTexture            = null;
+      this .turbulencesTexture       = null;
       this .boundedPhysicsModelNodes = [ ];
       this .boundedNormals           = [ ];
       this .boundedVertices          = [ ];
       this .boundedVolume            = null;
-      this .creationTime             = 0;
-      this .pauseTime                = 0;
-      this .deltaTime                = 0;
-      this .numForces                = 0;
       this .colorKeys                = [ 0 ];
       this .colorRampNode            = null;
       this .texCoordKeys             = [ ];
@@ -144,6 +143,9 @@ function (Fields,
       this .vertexCount              = 0;
       this .shaderNode               = null;
       this .geometryContext          = { };
+      this .creationTime             = 0;
+      this .pauseTime                = 0;
+      this .deltaTime                = 0;
    }
 
    ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
@@ -212,14 +214,19 @@ function (Fields,
 
          // Create particles stuff.
 
-         for (let i = 0; i < 4; ++ i)
+         for (const particles of this .particles)
          {
-            this .particles [0] .textures [i] = this .createTexture ();
-            this .particles [1] .textures [i] = this .createTexture ();
+            for (let i = 0; i < 4; ++ i)
+               particles .textures [i] = this .createTexture (true);
          }
 
-         this .particles [0] .frameBuffer  = this .createFrameBuffer (this .particles [0] .textures);
-         this .particles [1] .frameBuffer  = this .createFrameBuffer (this .particles [1] .textures);
+         this .particles [0] .frameBuffer = this .createFrameBuffer (this .particles [0] .textures);
+         this .particles [1] .frameBuffer = this .createFrameBuffer (this .particles [1] .textures);
+
+         // Create forces stuff.
+
+         this .forcesTexture      = this .createTexture (false);
+         this .turbulencesTexture = this .createTexture (false);
 
          // Create GL stuff.
 
@@ -745,15 +752,18 @@ function (Fields,
 
          return frameBuffer;
       },
-      createTexture: function ()
+      createTexture: function (properties)
       {
          const
             gl      = this .getBrowser () .getContext (),
             texture = gl .createTexture ();
 
-         texture .width  = 0;
-         texture .height = 0;
-         texture .data   = new Float32Array ();
+         if (properties)
+         {
+            texture .width  = 0;
+            texture .height = 0;
+            texture .data   = new Float32Array ();
+         }
 
          gl .bindTexture (gl .TEXTURE_2D, texture);
 
@@ -813,7 +823,10 @@ function (Fields,
       },
       animateParticles: function ()
       {
-         const emitterNode = this .emitterNode;
+         const
+            browser     = this .getBrowser (),
+            gl          = browser .getContext (),
+            emitterNode = this .emitterNode;
 
          // Determine delta time
 
@@ -862,21 +875,39 @@ function (Fields,
 
          if (emitterNode .getMass ())
          {
-            const
-               forcePhysicsModelNodes = this .forcePhysicsModelNodes,
-               forces                 = this .forces,
-               turbulences            = this .turbulences,
-               numForces              = forcePhysicsModelNodes .length;
+            const forcePhysicsModelNodes = this .forcePhysicsModelNodes;
+
+            let
+               numForces   = forcePhysicsModelNodes .length,
+               forces      = this .forces,
+               turbulences = this .turbulences;
 
             // Collect forces in velocities and collect turbulences.
 
-            for (let i = forces .length; i < numForces; ++ i)
-               forces [i] = new Vector3 (0, 0, 0);
+            if (numForces * 4 > forces .length)
+            {
+               forces      = this .forces      = new Float32Array (numForces * 4);
+               turbulences = this .turbulences = new Float32Array (numForces * 4);
+            }
+
+            let disabledForces = 0;
 
             for (let i = 0; i < numForces; ++ i)
-               forcePhysicsModelNodes [i] .addForce (i, emitterNode, forces, turbulences);
+            {
+               const forcePhysicsModelNode = forcePhysicsModelNodes [i];
 
-            this .numForces = numForces;
+               if (forcePhysicsModelNode ._enabled .getValue ())
+                  forcePhysicsModelNode .addForce (i - disabledForces, emitterNode, forces, turbulences);
+               else
+                  ++ disabledForces;
+            }
+
+            this .numForces = numForces -= disabledForces;
+
+            gl .bindTexture (gl .TEXTURE_2D, this .forcesTexture);
+            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numForces, 1, 0, gl .RGBA, gl .FLOAT, forces);
+            gl .bindTexture (gl .TEXTURE_2D, this .turbulencesTexture);
+            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numForces, 1, 0, gl .RGBA, gl .FLOAT, turbulences);
          }
          else
          {
@@ -888,8 +919,7 @@ function (Fields,
          this .currentParticles = emitterNode .animate (this, deltaTime);
 
          this .updateGeometry (null);
-
-         this .getBrowser () .addBrowserEvent ();
+         browser .addBrowserEvent ();
       },
       updateGeometry: function (modelViewMatrix)
       {

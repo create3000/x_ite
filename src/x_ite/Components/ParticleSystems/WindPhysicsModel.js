@@ -112,23 +112,19 @@ function (Fields,
 
          return function (i, emitterNode, forces, turbulences)
          {
-            const surfaceArea = emitterNode ._surfaceArea .getValue ()
+            const
+               surfaceArea = emitterNode ._surfaceArea .getValue (),
+               speed       = this .getRandomSpeed (emitterNode),
+               pressure    = Math .pow (10, 2 * Math .log (speed)) * 0.64615;
 
-            if (this ._enabled .getValue ())
-            {
-               const
-                  speed    = this .getRandomSpeed (emitterNode),
-                  pressure = Math .pow (10, 2 * Math .log (speed)) * 0.64615;
+            if (this ._direction .getValue () .equals (Vector3 .Zero))
+               emitterNode .getRandomNormal (force);
+            else
+               force .assign (this ._direction .getValue ()) .normalize ();
 
-               if (this ._direction .getValue () .equals (Vector3 .Zero))
-                  emitterNode .getRandomNormal (force);
-               else
-                  force .assign (this ._direction .getValue ()) .normalize ();
-
-               forces [i] .assign (force .multiply (surfaceArea * pressure));
-               turbulences [i] = Math .PI * Algorithm .clamp (this ._turbulence .getValue (), 0, 1);
-            }
-         };
+            forces .set (force .multiply (surfaceArea * pressure), i * 4);
+            turbulences [i * 4] = Math .PI * Algorithm .clamp (this ._turbulence .getValue (), 0, 1);
+         }
       })(),
    });
 

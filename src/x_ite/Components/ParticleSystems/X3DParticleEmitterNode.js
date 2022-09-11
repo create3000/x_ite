@@ -142,7 +142,8 @@ function (X3DNode,
          this .i = (this .i + 1) % 2;
 
          const
-            gl        = this .getBrowser () .getContext (),
+            browser   = this .getBrowser (),
+            gl        = browser .getContext (),
             particles = particleSystem .particles [this .i],
             program   = this .program,
             size      = Math .ceil (Math .sqrt (particleSystem .maxParticles));
@@ -159,10 +160,31 @@ function (X3DNode,
          gl .uniform1f (program .lifetimeVariation, particleSystem .lifetimeVariation);
          gl .uniform1f (program .deltaTime,         deltaTime);
 
+         gl .uniform1i (program .numForces, particleSystem .numForces);
+
+         {
+            const textureUnit = browser .getTexture2DUnit ();
+
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, particleSystem .forcesTexture);
+            gl .uniform1i (program .forces, textureUnit);
+         }
+
+         {
+            const textureUnit = browser .getTexture2DUnit ();
+
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, particleSystem .turbulencesTexture);
+            gl .uniform1i (program .turbulences, textureUnit);
+         }
+
          for (let i = 0; i < 4; ++ i)
          {
-            gl .activeTexture (gl .TEXTURE0 + i);
+            const textureUnit = browser .getTexture2DUnit ();
+
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
             gl .bindTexture (gl .TEXTURE_2D, other .textures [i]);
+            gl .uniform1i (program .inputSampler [i], textureUnit);
          }
 
          gl .enableVertexAttribArray (program .x3d_Vertex);
@@ -177,12 +199,14 @@ function (X3DNode,
 
          gl .drawArrays (gl .TRIANGLES, 0, 6);
 
-         // const data = particles .textures [3] .data;
-         // gl .readBuffer (gl .COLOR_ATTACHMENT3);
+         // const data = particles .textures [2] .data;
+         // gl .readBuffer (gl .COLOR_ATTACHMENT2);
          // gl .readPixels (0, 0, 10, 10, gl .RGBA, gl .FLOAT, data);
          // console .log (data);
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+
+         browser .resetTextureUnits ();
 
          return particles;
       },
@@ -345,41 +369,6 @@ function (X3DNode,
                   return [0, 0, 0, 0];
                }
             },
-            velocities: function updateVelocities (time, velocities, numParticles, createParticles, numForces, forces, turbulences, mass, boundedPhysics, deltaTime)
-            {
-               if (this .thread .x < numParticles)
-               {
-                  const elapsedTime = time [2];
-
-                  if (elapsedTime == 0)
-                  {
-                     return createParticles ? getRandomVelocity () : [0, 0, 0, 0];
-                  }
-                  else
-                  {
-                     let velocity = velocities [this .thread .x];
-
-                     for (let i = 0; i < numForces; ++ i)
-                     {
-                        const
-                           force      = [forces [i * 3 + 0], forces [i * 3 + 1], forces [i * 3 + 2]],
-                           turbulence = turbulences [i],
-                           normal     = getRandomNormalWithDirectionAndAngle (force, turbulence),
-                           speed      = length3 (force) * deltaTime / mass;
-
-                        velocity [0] += normal [0] * speed;
-                        velocity [1] += normal [1] * speed;
-                        velocity [2] += normal [2] * speed;
-                     }
-
-                     return boundedPhysics ? bounce (velocity) : velocity;
-                  }
-               }
-               else
-               {
-                  return velocities [this .thread .x];
-               }
-            },
          })
       },
       addUniform: function (name, uniform)
@@ -433,6 +422,10 @@ function (X3DNode,
          uniform float lifetimeVariation;
          uniform float deltaTime;
 
+         uniform int       numForces;
+         uniform sampler2D forces;
+         uniform sampler2D turbulences;
+
          uniform sampler2D inputSampler0;
          uniform sampler2D inputSampler1;
          uniform sampler2D inputSampler2;
@@ -448,6 +441,7 @@ function (X3DNode,
          layout(location = 3) out vec4 output3;
 
          #define M_PI 3.14159265359
+         #define MAX_FORCES 32
 
          // Quaternion
 
@@ -673,10 +667,29 @@ function (X3DNode,
                }
                else
                {
+                  // Animate particle.
+
+                  vec3 velocity = input2 .xyz;
+                  vec4 position = input3;
+
+                  for (int i = 0; i < MAX_FORCES; ++ i)
+                  {
+                     if (i >= numForces)
+                        break;
+
+                     vec2  index      = vec2 ((float (i) + 0.5) / float (numForces), 0.5);
+                     vec3  force      = texture (forces, index) .xyz;
+                     float turbulence = texture (turbulences, index) .x;
+                     vec3  normal     = getRandomNormalWithDirectionAndAngle (force, turbulence);
+                     float speed      = length (force) * deltaTime / mass;
+
+                     velocity += normal * speed;
+                  }
+
                   output0 = vec4 (life, lifetime, elapsedTime, 0.0);
                   output1 = getColor (elapsedTime);
-                  output2 = input2;
-                  output3 = getPosition (input3, input2 .xyz);
+                  output2 = vec4 (velocity, 0.0);
+                  output3 = getPosition (position, velocity);
                }
             }
             else
@@ -726,10 +739,12 @@ function (X3DNode,
 
          gl .useProgram (program);
 
-         gl .uniform1i (gl .getUniformLocation (program, "inputSampler0"), 0);
-         gl .uniform1i (gl .getUniformLocation (program, "inputSampler1"), 1);
-         gl .uniform1i (gl .getUniformLocation (program, "inputSampler2"), 2);
-         gl .uniform1i (gl .getUniformLocation (program, "inputSampler3"), 3);
+         program .inputSampler = [
+            gl .getUniformLocation (program, "inputSampler0"),
+            gl .getUniformLocation (program, "inputSampler1"),
+            gl .getUniformLocation (program, "inputSampler2"),
+            gl .getUniformLocation (program, "inputSampler3"),
+         ];
 
          program .size              = gl .getUniformLocation (program, "size");
          program .randomSeed        = gl .getUniformLocation (program, "randomSeed");
@@ -738,6 +753,10 @@ function (X3DNode,
          program .particleLifetime  = gl .getUniformLocation (program, "particleLifetime");
          program .lifetimeVariation = gl .getUniformLocation (program, "lifetimeVariation");
          program .deltaTime         = gl .getUniformLocation (program, "deltaTime");
+
+         program .numForces   = gl .getUniformLocation (program, "numForces");
+         program .forces      = gl .getUniformLocation (program, "forces");
+         program .turbulences = gl .getUniformLocation (program, "turbulences");
 
          for (const uniform of Object .keys (this .uniforms))
             program [uniform] = gl .getUniformLocation (program, uniform);
