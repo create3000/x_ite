@@ -774,8 +774,9 @@ function (Fields,
       resizeTextures: function ()
       {
          const
-            gl   = this .getBrowser () .getContext (),
-            size = Math .ceil (Math .sqrt (this .maxParticles));
+            gl     = this .getBrowser () .getContext (),
+            size   = Math .ceil (Math .sqrt (this .maxParticles)),
+            length = size * size * 4;
 
          for (const particles of this .particles)
          {
@@ -794,9 +795,16 @@ function (Fields,
 
                texture .width  = size;
                texture .height = size;
-               texture .data   = new Float32Array (size * size * 4);
 
-               texture .data .set (data .slice (0, texture .data .length));
+               if (length < data .length)
+               {
+                  texture .data = new Float32Array (data .buffer, 0, length);
+               }
+               else
+               {
+                  texture .data = new Float32Array (length);
+                  texture .data .set (data);
+               }
             }
 
             for (const texture of particles .textures)

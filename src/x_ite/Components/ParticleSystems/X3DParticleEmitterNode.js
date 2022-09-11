@@ -182,7 +182,7 @@ function (X3DNode,
          // const data = particles .textures [3] .data;
          // gl .readBuffer (gl .COLOR_ATTACHMENT3);
          // gl .readPixels (0, 0, 10, 10, gl .RGBA, gl .FLOAT, data);
-         // console .log (particles .textures [3] .width, Math .ceil (Math .sqrt (particleSystem .maxParticles)), data);
+         // console .log (data);
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
