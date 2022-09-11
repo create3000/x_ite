@@ -80,16 +80,6 @@ require .config ({
          "name": "zlib",
          "location": "../src",
          "main": "dummy.js"
-      },
-      {
-         "name": "GPU",
-         "location": "lib/gpu",
-         "main": "gpu-browser.js"
-      },
-      {
-         "name": "gpu",
-         "location": "lib/gpu",
-         "main": "gpu.js"
       }
    ],
    "shim": { },
