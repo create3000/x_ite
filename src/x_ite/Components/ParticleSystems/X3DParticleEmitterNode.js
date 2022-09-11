@@ -639,13 +639,13 @@ function (X3DNode,
          void
          animate (const in vec2 texCoord, const in int id)
          {
-            vec4 input0 = texture (inputSampler0, texCoord);
-            vec4 input1 = texture (inputSampler1, texCoord);
-            vec4 input2 = texture (inputSampler2, texCoord);
-            vec4 input3 = texture (inputSampler3, texCoord);
-
             if (id < numParticles)
             {
+               vec4 input0 = texture (inputSampler0, texCoord);
+               vec4 input1 = texture (inputSampler1, texCoord);
+               vec4 input2 = texture (inputSampler2, texCoord);
+               vec4 input3 = texture (inputSampler3, texCoord);
+
                float life        = input0 [0];
                float lifetime    = input0 [1];
                float elapsedTime = input0 [2] + deltaTime;
@@ -673,10 +673,7 @@ function (X3DNode,
             }
             else
             {
-               output0 = vec4 (0.0);
-               output1 = vec4 (0.0);
-               output2 = vec4 (0.0);
-               output3 = vec4 (0.0);
+               output0 = output1 = output2 = output3 = vec4 (0.0);
             }
          }
 
