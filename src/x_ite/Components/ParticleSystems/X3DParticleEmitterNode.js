@@ -187,9 +187,9 @@ function (X3DNode,
             gl .uniform1i (program .inputSampler [i], textureUnit);
          }
 
-         gl .enableVertexAttribArray (program .x3d_Vertex);
+         gl .enableVertexAttribArray (program .inputVertex);
          gl .bindBuffer (gl .ARRAY_BUFFER, program .vertexBuffer);
-         gl .vertexAttribPointer (program .x3d_Vertex, 4, gl .FLOAT, false, 0, 0);
+         gl .vertexAttribPointer (program .inputVertex, 4, gl .FLOAT, false, 0, 0);
 
          this .activateTextures ();
 
@@ -399,14 +399,14 @@ function (X3DNode,
          precision highp float;
          precision highp int;
 
-         in vec4 x3d_Vertex;
+         in vec4 inputVertex;
          out vec4 vertex;
 
          void
          main ()
          {
-            vertex      = x3d_Vertex;
-            gl_Position = x3d_Vertex;
+            vertex      = inputVertex;
+            gl_Position = inputVertex;
          }
          `;
 
@@ -737,7 +737,7 @@ function (X3DNode,
          if (!gl .getProgramParameter (program, gl .LINK_STATUS))
             console .error ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
 
-         program .x3d_Vertex = gl. getAttribLocation (program, "x3d_Vertex");
+         program .inputVertex = gl. getAttribLocation (program, "inputVertex");
 
          gl .useProgram (program);
 
