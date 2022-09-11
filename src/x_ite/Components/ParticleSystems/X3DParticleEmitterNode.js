@@ -606,12 +606,6 @@ function (X3DNode,
 
          // Current values
 
-         int
-         getId (const in ivec2 index)
-         {
-            return index .y * size + index .x;
-         }
-
          vec4
          getColor (const in float elapsedTime)
          {
@@ -696,7 +690,7 @@ function (X3DNode,
          main ()
          {
             ivec2 index = ivec2 (gl_FragCoord .xy);
-            int   id    = getId (index);
+            int   id    = index .y * size + index .x;
 
             srand ((id + randomSeed) * randomSeed);
 
