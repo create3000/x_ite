@@ -654,7 +654,7 @@ function (X3DNode,
                {
                   // Create new particle or hide particle.
 
-                  life       += float (createParticles);
+                  life       += createParticles ? 1.0 : 0.0;
                   lifetime    = getRandomLifetime (particleLifetime, lifetimeVariation);
                   elapsedTime = 0.0;
 
