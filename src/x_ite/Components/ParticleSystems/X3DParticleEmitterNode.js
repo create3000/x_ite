@@ -610,6 +610,18 @@ function (X3DNode,
             return normal * speed;
          }
 
+         // Current values
+
+         int
+         getId (const in vec2 texCoord)
+         {
+            int x  = int (texCoord .x * float (size));
+            int y  = int (texCoord .y * float (size));
+            int id = y * size + x;
+
+            return id;
+         }
+
          vec4
          getColor (const in float elapsedTime)
          {
@@ -620,16 +632,6 @@ function (X3DNode,
          getPosition (const in vec4 position, const in vec3 velocity)
          {
             return vec4 (position .xyz + velocity * deltaTime, position .w);
-         }
-
-         int
-         getId (const in vec2 texCoord)
-         {
-            int x  = int (texCoord .x * float (size));
-            int y  = int (texCoord .y * float (size));
-            int id = y * size + x;
-
-            return id;
          }
 
          ${this .functions .join ("\n")}
