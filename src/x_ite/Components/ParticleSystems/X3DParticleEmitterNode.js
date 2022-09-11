@@ -438,8 +438,8 @@ function (X3DNode,
          layout(location = 2) out vec4 output2;
          layout(location = 3) out vec4 output3;
 
-         #define M_PI 3.14159265359
-         #define MAX_FORCES 32
+         const float M_PI       = 3.14159265359;
+         const int   MAX_FORCES = 32;
 
          // Quaternion
 
