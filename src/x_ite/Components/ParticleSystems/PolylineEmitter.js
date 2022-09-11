@@ -75,8 +75,8 @@ function (Fields,
       this .polylineNode     = new IndexedLineSet (executionContext);
       this .lengthSoFarArray = [ 0 ];
 
-      this .addUniform ("uniform vec3 position;");
-      this .addUniform ("uniform vec3 direction;");
+      this .addUniform ("position",  "uniform vec3 position;");
+      this .addUniform ("direction", "uniform vec3 direction;");
    }
 
    PolylineEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),

@@ -72,8 +72,8 @@ function (Fields,
 
       this ._position .setUnit ("length");
 
-      this .addUniform ("uniform vec3 position;");
-      this .addUniform ("uniform vec3 direction;");
+      this .addUniform ("position",  "uniform vec3 position;");
+      this .addUniform ("direction", "uniform vec3 direction;");
 
       this .addFunction (`vec3 getRandomVelocity ()
       {

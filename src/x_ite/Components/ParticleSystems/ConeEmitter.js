@@ -71,9 +71,9 @@ function (Fields,
       this ._position .setUnit ("length");
       this ._angle    .setUnit ("angle");
 
-      this .addUniform ("uniform vec3 position;");
-      this .addUniform ("uniform vec3 direction;");
-      this .addUniform ("uniform float angle;");
+      this .addUniform ("position",  "uniform vec3 position;");
+      this .addUniform ("direction", "uniform vec3 direction;");
+      this .addUniform ("angle",     "uniform float angle;");
    }
 
    ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),

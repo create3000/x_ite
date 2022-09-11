@@ -66,15 +66,15 @@ function (X3DNode,
       this ._mass        .setUnit ("mass");
       this ._surfaceArea .setUnit ("area");
 
-      this .uniforms     = [ ];
+      this .uniforms     = { };
       this .functions    = [ ];
       this .kernels      = [{ textures: [ ] }, { textures: [ ] }];
       this .i            = 0;
       this .maxParticles = 0;
 
-      this .addUniform ("uniform float speed;");
-      this .addUniform ("uniform float variation;");
-      this .addUniform ("uniform float mass;");
+      this .addUniform ("speed",     "uniform float speed;");
+      this .addUniform ("variation", "uniform float variation;");
+      this .addUniform ("mass",      "uniform float mass;");
    }
 
    X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -163,13 +163,13 @@ function (X3DNode,
          gl .viewport (0, 0, size, size);
          gl .useProgram (program);
 
-         gl .uniform1i (gl .getUniformLocation (program, "size"), size);
-         gl .uniform1i (gl .getUniformLocation (program, "randomSeed"), Math .random () * particleSystem .maxParticles);
-         gl .uniform1i (gl .getUniformLocation (program, "createParticles"), Number (particleSystem .createParticles));
-         gl .uniform1i (gl .getUniformLocation (program, "numParticles"), particleSystem .numParticles);
-         gl .uniform1f (gl .getUniformLocation (program, "particleLifetime"), particleSystem .particleLifetime);
-         gl .uniform1f (gl .getUniformLocation (program, "lifetimeVariation"), particleSystem .lifetimeVariation);
-         gl .uniform1f (gl .getUniformLocation (program, "deltaTime"), deltaTime);
+         gl .uniform1i (program .size,              size);
+         gl .uniform1i (program .randomSeed,        Math .random () * particleSystem .maxParticles);
+         gl .uniform1i (program .createParticles,   Number (particleSystem .createParticles));
+         gl .uniform1i (program .numParticles,      particleSystem .numParticles);
+         gl .uniform1f (program .particleLifetime,  particleSystem .particleLifetime);
+         gl .uniform1f (program .lifetimeVariation, particleSystem .lifetimeVariation);
+         gl .uniform1f (program .deltaTime,         deltaTime);
 
          for (let i = 0; i < 4; ++ i)
          {
@@ -177,7 +177,7 @@ function (X3DNode,
             gl .bindTexture (gl .TEXTURE_2D, other .textures [i]);
          }
 
-         gl .enableVertexAttribArray (kernel .program .x3d_Vertex);
+         gl .enableVertexAttribArray (program .x3d_Vertex);
          gl .bindBuffer (gl .ARRAY_BUFFER, kernel .vertexBuffer);
          gl .vertexAttribPointer (this .x3d_Vertex, 4, gl .FLOAT, false, 0, 0);
 
@@ -453,143 +453,6 @@ function (X3DNode,
                }
             },
          })
-         .addFunction (function Quaternion (fromVector, toVector)
-         {
-            const from = normalize3 (fromVector);
-            const to   = normalize3 (toVector);
-
-            const cos_angle = dot3 (from, to);
-            let   crossvec  = cross3 (from, to);
-            const crosslen  = length3 (crossvec);
-
-            if (crosslen == 0)
-            {
-               if (cos_angle > 0)
-               {
-                  return [0, 0, 0, 1];
-               }
-               else
-               {
-                  let t = cross3 (from, [1, 0, 0]);
-
-                  if (dot (t, t) == 0)
-                     t = cross3 (from, [0, 1, 0]);
-
-                  t = normalize3 (t);
-
-                  return [t [0], t [1], t [2], 0];
-               }
-            }
-            else
-            {
-               const s = Math .sqrt (Math .abs (1 - cos_angle) * 0.5);
-
-               crossvec = normalize3 (crossvec);
-
-               return [crossvec [0] * s,
-                       crossvec [1] * s,
-                       crossvec [2] * s,
-                       Math .sqrt (Math .abs (1 + cos_angle) * 0.5)];
-            }
-         })
-         .addFunction (function multVecQuat (vector, quat)
-         {
-            const
-               qx = quat [0], qy = quat [1], qz = quat [2], qw = quat [3],
-               vx = vector [0], vy = vector [1], vz = vector [2],
-               a  = qw * qw - qx * qx - qy * qy - qz * qz,
-               b  = 2 * (vx * qx + vy * qy + vz * qz),
-               c  = 2 * qw;
-
-            const
-               rx = a * vx + b * qx + c * (qy * vz - qz * vy),
-               ry = a * vy + b * qy + c * (qz * vx - qx * vz),
-               rz = a * vz + b * qz + c * (qx * vy - qy * vx);
-
-            return [rx, ry, rz];
-         })
-         .addFunction (function getRandomValue (min, max)
-         {
-            return Math .random () * (max - min) + min;
-         })
-         .addFunction (function getRandomLifetime (particleLifetime, lifetimeVariation)
-         {
-            const
-               v   = particleLifetime * lifetimeVariation,
-               min = Math .max (0, particleLifetime - v),
-               max = particleLifetime + v;
-
-            return getRandomValue (min, max);
-         })
-         .addFunction (function getRandomSpeed ()
-         {
-            const
-               speed = this .constants .speed,
-               v     = speed * this .constants .variation,
-               min   = Math .max (0, speed - v),
-               max   = speed + v;
-
-            return getRandomValue (min, max);
-         })
-         .addFunction (function getRandomNormal ()
-         {
-            const
-               theta = this .getRandomValue (-1, 1) * Math .PI,
-               cphi  = this .getRandomValue (-1, 1),
-               phi   = Math .acos (cphi),
-               r     = Math .sin (phi);
-
-            return [Math .sin (theta) * r,
-                    Math .cos (theta) * r,
-                    cphi];
-         })
-        .addFunction (function getRandomNormalWithAngle (angle)
-         {
-            const
-               theta = this .getRandomValue (-1, 1) * Math .PI,
-               cphi  = this .getRandomValue (Math .cos (angle), 1),
-               phi   = Math .acos (cphi),
-               r     = Math .sin (phi);
-
-            return [Math .sin (theta) * r,
-                    Math .cos (theta) * r,
-                    cphi];
-         })
-         .addFunction (function getRandomNormalWithDirectionAndAngle (direction, angle)
-         {
-            const
-               rotation = Quaternion ([0, 0, 1], direction),
-               normal   = getRandomNormalWithAngle (angle);
-
-            return multVecQuat (normal, rotation);
-         })
-         .addFunction (function getRandomSurfaceNormal ()
-         {
-            const
-               theta = getRandomValue (-1, 1) * Math .PI,
-               cphi  = Math .pow (Math .random (), 1/3),
-               phi   = Math .acos (cphi),
-               r     = Math .sin (phi);
-
-            return [Math .sin (theta) * r,
-                    Math .cos (theta) * r,
-                    cphi];
-         })
-         .addFunction (function getRandomSphericalVelocity ()
-         {
-            const
-               normal = getRandomNormal (),
-               speed  = getRandomSpeed ();
-
-            return [normal [0] * speed,
-                    normal [1] * speed,
-                    normal [2] * speed,
-                    0];
-         })
-         .addFunction (function bounce (velocity)
-         {
-            return velocity;
-         })
       },
       createVertexBuffer: (function ()
       {
@@ -653,7 +516,7 @@ function (X3DNode,
          uniform sampler2D inputSampler2;
          uniform sampler2D inputSampler3;
 
-         ${this .uniforms .join ("\n")}
+         ${[...Object .values (this .uniforms)] .join ("\n")}
 
          in vec4 vertex;
 
@@ -664,14 +527,55 @@ function (X3DNode,
 
          #define M_PI 3.14159265359
 
-         int
-         getId (const in vec2 texCoord)
-         {
-            int x  = int (texCoord .x * float (size));
-            int y  = int (texCoord .y * float (size));
-            int id = y * size + x;
+         // Quaternion
 
-            return id;
+         vec4
+         Quaternion (const in vec3 fromVector, const in vec3 toVector)
+         {
+            vec3 from = normalize (fromVector);
+            vec3 to   = normalize (toVector);
+
+            float cos_angle = dot (from, to);
+            vec3  crossvec  = cross (from, to);
+            float crosslen  = length (crossvec);
+
+            if (crosslen == 0.0)
+            {
+               if (cos_angle > 0.0)
+               {
+                  return vec4 (0.0, 0.0, 0.0, 1.0);
+               }
+               else
+               {
+                  vec3 t = cross (from, vec3 (1.0, 0.0, 0.0));
+
+                  if (dot (t, t) == 0.0)
+                     t = cross (from, vec3 (0.0, 1.0, 0.0));
+
+                  t = normalize (t);
+
+                  return vec4 (t, 0.0);
+               }
+            }
+            else
+            {
+               float s = sqrt (abs (1.0 - cos_angle) * 0.5);
+
+               crossvec = normalize (crossvec);
+
+               return vec4 (crossvec * s, sqrt (abs (1.0 + cos_angle) * 0.5));
+            }
+         }
+
+         vec3
+         multVecQuat (const in vec3 v, const in vec4 q)
+         {
+            float a = q .w * q .w - q .x * q .x - q .y * q .y - q .z * q .z;
+            float b = 2.0 * (v .x * q .x + v .y * q .y + v .z * q .z);
+            float c = 2.0 * q .w;
+            vec3  r = a * v .xyz + b * q .xyz + c * (q .yzx * v .zxy - q .zxy * v .yzx);
+
+            return r;
          }
 
          /* Random number generation */
@@ -745,6 +649,37 @@ function (X3DNode,
          }
 
          vec3
+         getRandomNormalWithAngle (const in float angle)
+         {
+            float theta = getRandomValue (-1.0, 1.0) * M_PI;
+            float cphi  = getRandomValue (cos (angle), 1.0);
+            float phi   = acos (cphi);
+            float r     = sin (phi);
+
+            return vec3 (sin (theta) * r, cos (theta) * r, cphi);
+         }
+
+         vec3
+         getRandomNormalWithDirectionAndAngle (const in vec3 direction, const in float angle)
+         {
+            vec4 rotation = Quaternion (vec3 (0.0, 0.0, 1.0), direction);
+            vec3 normal   = getRandomNormalWithAngle (angle);
+
+            return multVecQuat (normal, rotation);
+         }
+
+         vec3
+         getRandomSurfaceNormal ()
+         {
+            float theta = getRandomValue (-1.0, 1.0) * M_PI;
+            float cphi  = pow (getRandomValue (0.0, 1.0), 1.0 / 3.0);
+            float phi   = acos (cphi);
+            float r     = sin (phi);
+
+            return vec3 (sin (theta) * r, cos (theta) * r, cphi);
+         }
+
+         vec3
          getRandomSphericalVelocity ()
          {
             vec3  normal = getRandomNormal ();
@@ -763,6 +698,16 @@ function (X3DNode,
          getPosition (const in vec4 position, const in vec3 velocity)
          {
             return vec4 (position .xyz + velocity * deltaTime, position .w);
+         }
+
+         int
+         getId (const in vec2 texCoord)
+         {
+            int x  = int (texCoord .x * float (size));
+            int y  = int (texCoord .y * float (size));
+            int id = y * size + x;
+
+            return id;
          }
 
          ${this .functions .join ("\n")}
@@ -857,6 +802,17 @@ function (X3DNode,
          gl .uniform1i (gl .getUniformLocation (program, "inputSampler2"), 2);
          gl .uniform1i (gl .getUniformLocation (program, "inputSampler3"), 3);
 
+         program .size              = gl .getUniformLocation (program, "size");
+         program .randomSeed        = gl .getUniformLocation (program, "randomSeed");
+         program .createParticles   = gl .getUniformLocation (program, "createParticles");
+         program .numParticles      = gl .getUniformLocation (program, "numParticles");
+         program .particleLifetime  = gl .getUniformLocation (program, "particleLifetime");
+         program .lifetimeVariation = gl .getUniformLocation (program, "lifetimeVariation");
+         program .deltaTime         = gl .getUniformLocation (program, "deltaTime");
+
+         for (const uniform of Object .keys (this .uniforms))
+            program [uniform] = gl .getUniformLocation (program, uniform);
+
          return program;
       },
       createFrameBuffer: function (textures)
@@ -911,18 +867,18 @@ function (X3DNode,
 
          return texture;
       },
-      addUniform: function (uniform)
+      addUniform: function (name, uniform)
       {
-         this .uniforms .push (uniform);
+         this .uniforms [name] = uniform;
       },
       setUniform: function (func, name, value1, value2, value3)
       {
          const gl = this .getBrowser () .getContext ();
 
-         for (const kernel of this .kernels)
+         for (const { program } of this .kernels)
          {
-            gl .useProgram (kernel .program);
-            gl [func] (gl .getUniformLocation (kernel .program, name), value1, value2, value3);
+            gl .useProgram (program);
+            gl [func] (program [name], value1, value2, value3);
          }
       },
       addFunction: function (func)
