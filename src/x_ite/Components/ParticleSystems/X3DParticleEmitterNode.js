@@ -157,7 +157,7 @@ function (X3DNode,
          // Uniforms
 
          gl .uniform1i (program .randomSeed,        Math .random () * particleSystem .maxParticles);
-         gl .uniform1i (program .createParticles,   particleSystem .createParticles);
+         gl .uniform1i (program .createParticles,   particleSystem .createParticles && this ._on .getValue ());
          gl .uniform1i (program .numParticles,      particleSystem .numParticles);
          gl .uniform1f (program .particleLifetime,  particleSystem .particleLifetime);
          gl .uniform1f (program .lifetimeVariation, particleSystem .lifetimeVariation);
