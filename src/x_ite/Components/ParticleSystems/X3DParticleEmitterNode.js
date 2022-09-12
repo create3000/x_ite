@@ -152,7 +152,6 @@ function (X3DNode,
          gl .viewport (0, 0, size, size);
          gl .useProgram (program);
 
-         gl .uniform1i (program .size,              size);
          gl .uniform1i (program .randomSeed,        Math .random () * particleSystem .maxParticles);
          gl .uniform1i (program .createParticles,   particleSystem .createParticles);
          gl .uniform1i (program .numParticles,      particleSystem .numParticles);
@@ -414,7 +413,6 @@ function (X3DNode,
          precision highp int;
          precision highp sampler2D;
 
-         uniform int   size;
          uniform int   randomSeed;
          uniform bool  createParticles;
          uniform int   numParticles;
@@ -690,7 +688,7 @@ function (X3DNode,
          main ()
          {
             ivec2 index = ivec2 (gl_FragCoord .xy);
-            int   id    = index .y * size + index .x;
+            int   id    = index .y * textureSize (inputSampler0, 0) .x + index .x;
 
             srand ((id + randomSeed) * randomSeed);
 
@@ -734,7 +732,6 @@ function (X3DNode,
             gl .getUniformLocation (program, "inputSampler3"),
          ];
 
-         program .size              = gl .getUniformLocation (program, "size");
          program .randomSeed        = gl .getUniformLocation (program, "randomSeed");
          program .createParticles   = gl .getUniformLocation (program, "createParticles");
          program .numParticles      = gl .getUniformLocation (program, "numParticles");
