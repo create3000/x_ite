@@ -145,11 +145,11 @@ function (X3DNode,
             browser   = this .getBrowser (),
             gl        = browser .getContext (),
             particles = particleSystem .particles [this .i],
-            program   = this .program,
-            size      = Math .ceil (Math .sqrt (particleSystem .maxParticles));
+            texture0  = particles .textures [0],
+            program   = this .program;
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
-         gl .viewport (0, 0, size, size);
+         gl .viewport (0, 0, texture0 .width, texture0 .height);
          gl .useProgram (program);
 
          gl .uniform1i (program .randomSeed,        Math .random () * particleSystem .maxParticles);
@@ -158,8 +158,7 @@ function (X3DNode,
          gl .uniform1f (program .particleLifetime,  particleSystem .particleLifetime);
          gl .uniform1f (program .lifetimeVariation, particleSystem .lifetimeVariation);
          gl .uniform1f (program .deltaTime,         deltaTime);
-
-         gl .uniform1i (program .numForces, particleSystem .numForces);
+         gl .uniform1i (program .numForces,         particleSystem .numForces);
 
          {
             const textureUnit = browser .getTexture2DUnit ();
@@ -186,11 +185,11 @@ function (X3DNode,
             gl .uniform1i (program .inputSampler [i], textureUnit);
          }
 
+         this .activateTextures ();
+
          gl .enableVertexAttribArray (program .inputVertex);
          gl .bindBuffer (gl .ARRAY_BUFFER, program .vertexBuffer);
          gl .vertexAttribPointer (program .inputVertex, 4, gl .FLOAT, false, 0, 0);
-
-         this .activateTextures ();
 
          gl .disable (gl .DEPTH_TEST);
          gl .disable (gl .BLEND);
