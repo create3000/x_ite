@@ -650,12 +650,6 @@ function (X3DNode,
             }
          }
 
-         vec4
-         getPosition (const in vec4 position, const in vec3 velocity)
-         {
-            return vec4 (position .xyz + velocity * deltaTime, position .w);
-         }
-
          void
          animate (const in ivec2 index, const in int id)
          {
@@ -711,10 +705,12 @@ function (X3DNode,
                      velocity += normal * speed;
                   }
 
+                  position .xyz += velocity * deltaTime;
+
                   output0 = vec4 (life, lifetime, elapsedTime, 0.0);
                   output1 = getColor (lifetime, elapsedTime);
                   output2 = vec4 (velocity, 0.0);
-                  output3 = getPosition (position, velocity);
+                  output3 = position;
                }
             }
             else
