@@ -308,110 +308,6 @@ function (X3DNode,
             }
          };
       })(),
-      createKernel: function ()
-      {
-         return gpu .createKernelMap ({
-            colors: function updateColors (time, numParticles, colorMaterial, colorKeys, numColors, colorRamp)
-            {
-               if (this .thread .x < numParticles && colorMaterial)
-               {
-                  // Determine index0, index1 and weight.
-
-                  const
-                     lifetime    = time [1],
-                     elapsedTime = time [2],
-                     fraction    = elapsedTime / lifetime;
-
-                  let
-                     index0 = 0,
-                     index1 = 0,
-                     weight = 0;
-
-                  if (numColors == 1 || fraction <= colorKeys [0])
-                  {
-                     index0 = 0;
-                     index1 = 0;
-                     weight = 0;
-                  }
-                  else if (fraction >= colorKeys [numColors - 1])
-                  {
-                     index0 = numColors - 2;
-                     index1 = numColors - 1;
-                     weight = 1;
-                  }
-                  else
-                  {
-                     // BEGIN: upperBound
-
-                     const
-                        count = numColors,
-                        value = fraction;
-
-                     let
-                        first = 0,
-                        step  = 0;
-
-                     while (count > 0)
-                     {
-                        let index = first;
-
-                        step = count >> 1;
-
-                        index += step;
-
-                        if (value < colorKeys [index])
-                        {
-                           count = step;
-                        }
-                        else
-                        {
-                           first  = ++ index;
-                           count -= step + 1;
-                        }
-                     }
-
-                     const index = first;
-
-                     // END upperBound.
-
-                     if (index < numColors)
-                     {
-                        index1 = index;
-                        index0 = index - 1;
-
-                        const
-                           key0 = colorKeys [index0],
-                           key1 = colorKeys [index1];
-
-                        weight = clamp ((fraction - key0) / (key1 - key0), 0, 1);
-                     }
-                     else
-                     {
-                        index0 = 0;
-                        index1 = 0;
-                        weight = 0;
-                     }
-                  }
-
-                  // Interpolate and return color.
-
-                  const
-                     color0 = colorRamp [index0],
-                     color1 = colorRamp [index1];
-
-                  return [mix (color0 [0], color1 [0], weight),
-                          mix (color0 [1], color1 [1], weight),
-                          mix (color0 [2], color1 [2], weight),
-                          mix (color0 [3], color1 [3], weight)];
-               }
-               else
-               {
-                  // No color needed.
-                  return [0, 0, 0, 0];
-               }
-            },
-         })
-      },
       addUniform: function (name, uniform)
       {
          this .uniforms [name] = uniform;
@@ -646,7 +542,7 @@ function (X3DNode,
             return normal * speed;
          }
 
-         // Algorithms
+         // Texture
 
          vec4
          texelFetch (const in sampler2D sampler, const in int index, const in int lod)
@@ -657,6 +553,8 @@ function (X3DNode,
 
             return t;
          }
+
+         // Algorithms
 
          int
          upperBound (const in sampler2D sampler, in int count, const in float value)
