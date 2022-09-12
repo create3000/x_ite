@@ -123,7 +123,7 @@ function (X3DNode,
       {
          this .mass = this ._mass .getValue ();
 
-         this .setUniform ("uniform1f", "mass", this ._mass .getValue ());
+         this .setUniform ("uniform1f", "mass", this .mass);
       },
       getRandomValue: function (min, max)
       {
