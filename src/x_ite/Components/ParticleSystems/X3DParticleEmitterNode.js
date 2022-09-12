@@ -148,9 +148,13 @@ function (X3DNode,
             texture0  = particles .textures [0],
             program   = this .program;
 
+         // Start
+
          gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
          gl .viewport (0, 0, texture0 .width, texture0 .height);
          gl .useProgram (program);
+
+         // Uniforms
 
          gl .uniform1i (program .randomSeed,        Math .random () * particleSystem .maxParticles);
          gl .uniform1i (program .createParticles,   particleSystem .createParticles);
@@ -158,23 +162,54 @@ function (X3DNode,
          gl .uniform1f (program .particleLifetime,  particleSystem .particleLifetime);
          gl .uniform1f (program .lifetimeVariation, particleSystem .lifetimeVariation);
          gl .uniform1f (program .deltaTime,         deltaTime);
-         gl .uniform1i (program .numForces,         particleSystem .numForces);
 
+         // Forces
+
+         gl .uniform1i (program .numForces, particleSystem .numForces);
+
+         if (particleSystem .numForces)
          {
-            const textureUnit = browser .getTexture2DUnit ();
+            {
+               const textureUnit = browser .getTexture2DUnit ();
 
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
-            gl .bindTexture (gl .TEXTURE_2D, particleSystem .forcesTexture);
-            gl .uniform1i (program .forces, textureUnit);
+               gl .activeTexture (gl .TEXTURE0 + textureUnit);
+               gl .bindTexture (gl .TEXTURE_2D, particleSystem .forcesTexture);
+               gl .uniform1i (program .forces, textureUnit);
+            }
+
+            {
+               const textureUnit = browser .getTexture2DUnit ();
+
+               gl .activeTexture (gl .TEXTURE0 + textureUnit);
+               gl .bindTexture (gl .TEXTURE_2D, particleSystem .turbulencesTexture);
+               gl .uniform1i (program .turbulences, textureUnit);
+            }
          }
 
-         {
-            const textureUnit = browser .getTexture2DUnit ();
+         // Colors
 
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
-            gl .bindTexture (gl .TEXTURE_2D, particleSystem .turbulencesTexture);
-            gl .uniform1i (program .turbulences, textureUnit);
+         gl .uniform1i (program .numColors, particleSystem .numColors);
+
+         if (particleSystem .numColors)
+         {
+            {
+               const textureUnit = browser .getTexture2DUnit ();
+
+               gl .activeTexture (gl .TEXTURE0 + textureUnit);
+               gl .bindTexture (gl .TEXTURE_2D, particleSystem .colorKeysTexture);
+               gl .uniform1i (program .colorKeys, textureUnit);
+            }
+
+            {
+               const textureUnit = browser .getTexture2DUnit ();
+
+               gl .activeTexture (gl .TEXTURE0 + textureUnit);
+               gl .bindTexture (gl .TEXTURE_2D, particleSystem .colorRampTexture);
+               gl .uniform1i (program .colorRamp, textureUnit);
+            }
          }
+
+         // Input textures
 
          for (let i = 0; i < 4; ++ i)
          {
@@ -185,7 +220,11 @@ function (X3DNode,
             gl .uniform1i (program .inputSampler [i], textureUnit);
          }
 
+         // Other textures
+
          this .activateTextures ();
+
+         // Render
 
          gl .enableVertexAttribArray (program .inputVertex);
          gl .bindBuffer (gl .ARRAY_BUFFER, program .vertexBuffer);
@@ -203,6 +242,8 @@ function (X3DNode,
          // gl .readBuffer (gl .COLOR_ATTACHMENT2);
          // gl .readPixels (0, 0, 10, 10, gl .RGBA, gl .FLOAT, data);
          // console .log (data);
+
+         // Restore/Finish
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
@@ -390,7 +431,9 @@ function (X3DNode,
       },
       createProgram: function ()
       {
-         const gl = this .getBrowser () .getContext ();
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
 
          const vertexShaderSource = `#version 300 es
 
@@ -422,6 +465,10 @@ function (X3DNode,
          uniform int       numForces;
          uniform sampler2D forces;
          uniform sampler2D turbulences;
+
+         uniform int       numColors;
+         uniform sampler2D colorKeys;
+         uniform sampler2D colorRamp;
 
          uniform sampler2D inputSampler0;
          uniform sampler2D inputSampler1;
@@ -606,7 +653,14 @@ function (X3DNode,
          vec4
          getColor (const in float elapsedTime)
          {
-            return vec4 (1.0);
+            if (numColors > 0)
+            {
+               return texelFetch (colorRamp, ivec2 (0, 0), 0);
+            }
+            else
+            {
+               return vec4 (1.0);
+            }
          }
 
          vec4
@@ -742,8 +796,17 @@ function (X3DNode,
          program .forces      = gl .getUniformLocation (program, "forces");
          program .turbulences = gl .getUniformLocation (program, "turbulences");
 
+         program .numColors = gl .getUniformLocation (program, "numColors");
+         program .colorKeys = gl .getUniformLocation (program, "colorKeys");
+         program .colorRamp = gl .getUniformLocation (program, "colorRamp");
+
          for (const uniform of Object .keys (this .uniforms))
             program [uniform] = gl .getUniformLocation (program, uniform);
+
+         gl .uniform1i (program .forces,      browser .getDefaultTexture2DUnit ());
+         gl .uniform1i (program .turbulences, browser .getDefaultTexture2DUnit ());
+         gl .uniform1i (program .colorKeys,   browser .getDefaultTexture2DUnit ());
+         gl .uniform1i (program .colorRamp,   browser .getDefaultTexture2DUnit ());
 
          program .vertexBuffer = this .createVertexBuffer ();
 

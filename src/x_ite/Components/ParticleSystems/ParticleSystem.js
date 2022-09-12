@@ -134,8 +134,9 @@ function (Fields,
       this .boundedNormals           = [ ];
       this .boundedVertices          = [ ];
       this .boundedVolume            = null;
-      this .colorKeys                = [ 0 ];
+      this .colorKeys                = new Float32Array ();
       this .colorRampNode            = null;
+      this .colorRamp                = new Float32Array ();
       this .texCoordKeys             = [ ];
       this .texCoordRampNode         = null;
       this .texCoordRamp             = [ ];
@@ -227,6 +228,8 @@ function (Fields,
 
          this .forcesTexture      = this .createTexture (false);
          this .turbulencesTexture = this .createTexture (false);
+         this .colorKeysTexture   = this .createTexture (false);
+         this .colorRampTexture   = this .createTexture (false);
 
          // Create GL stuff.
 
@@ -663,31 +666,43 @@ function (Fields,
       },
       set_color__: (function ()
       {
-         const colorRamp = [ ];
+         const array = [ ];
 
          return function ()
          {
             const
+               gl           = this .getBrowser () .getContext (),
                colorKey     = this ._colorKey,
-               numColorKeys = colorKey .length,
-               colorKeys    = this .colorKeys;
+               numColors    = colorKey .length,
+               textureSize  = Math .ceil (Math .sqrt (numColors));
 
-            this .numColorKeys = numColorKeys;
+            let
+               colorKeys = this .colorKeys,
+               colorRamp = this .colorRamp;
 
-            for (let i = 0; i < numColorKeys; ++ i)
-               colorKeys [i] = colorKey [i];
+            if (numColors * 4 > colorKeys .length)
+            {
+               colorKeys = this .colorKeys = new Float32Array (textureSize * textureSize * 4);
+               colorRamp = this .colorRamp = new Float32Array (textureSize * textureSize * 4);
+            }
+
+            for (let i = 0; i < numColors; ++ i)
+               colorKeys [i * 4] = colorKey [i];
+
+            array .length = 0;
 
             if (this .colorRampNode)
-               this .colorRampNode .getVectors (colorRamp);
+               colorRamp .set (this .colorRampNode .addColors (array, numColors));
+            else
+               colorRamp .fill (1);
 
-            const last = colorRamp .at (-1);
+            gl .bindTexture (gl .TEXTURE_2D, this .colorKeysTexture);
+            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorKeys);
+            gl .bindTexture (gl .TEXTURE_2D, this .colorRampTexture);
+            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorRamp);
 
-            for (let i = colorRamp .length; i < numColorKeys; ++ i)
-               colorRamp [i] = last || Vector4 .One;
-
-            colorRamp .push (Vector4 .One); // Must create at least one value.
-
-            this .geometryContext .colorMaterial = !! (numColorKeys && this .colorRampNode);
+            this .numColors                      = numColors;
+            this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
          };
       })(),
       set_texCoordRamp__: function ()

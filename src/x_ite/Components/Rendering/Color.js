@@ -132,39 +132,27 @@ function (Fields,
          {
             const color = this .color;
 
-            for (var index = 0, length = this .length * 3; index < length; index += 3)
+            for (var index = 0, length = Math .min (min, this .length) * 3; index < length; index += 3)
                array .push (color [index], color [index + 1], color [index + 2], 1);
 
-            var index = (this .length - 1) * 3;
+            if (this .length < min)
+            {
+               var index = (this .length - 1) * 3;
 
-            const
-               r = color [index],
-               g = color [index + 1],
-               b = color [index + 2];
+               const
+                  r = color [index],
+                  g = color [index + 1],
+                  b = color [index + 2];
 
-            for (var index = length, length = min * 3; index < length; index += 3)
-               array .push (r, g, b, 1);
+               for (var index = length, length = min * 3; index < length; index += 3)
+                  array .push (r, g, b, 1);
+            }
          }
          else
          {
             for (let index = 0; index < min; ++ index)
                array .push (1, 1, 1, 1);
          }
-      },
-      getVectors: function (array)
-      {
-         const
-            color  = this ._color,
-            length = color .length;
-
-         for (let i = 0; i < length; ++ i)
-         {
-            const c = color [i];
-
-            array [i] = new Vector4 (c .r, c .g, c .b, 1);
-         }
-
-         array .length = length;
 
          return array;
       },
