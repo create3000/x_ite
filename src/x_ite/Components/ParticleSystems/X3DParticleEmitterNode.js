@@ -653,7 +653,7 @@ function (X3DNode,
          vec4
          texelFetch (const in sampler2D sampler, const in int index, const in int lod)
          {
-            int   x = textureSize (sampler, 0) .x;
+            int   x = textureSize (sampler, lod) .x;
             ivec2 p = ivec2 (index % x, index / x);
             vec4  t = texelFetch (sampler, p, lod);
 
