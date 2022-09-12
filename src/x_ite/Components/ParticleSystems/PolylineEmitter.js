@@ -73,10 +73,54 @@ function (Fields,
       this .addType (X3DConstants .PolylineEmitter);
 
       this .polylineNode     = new IndexedLineSet (executionContext);
-      this .lengthSoFarArray = [ 0 ];
+      this .lengthSoFarArray = new Float32Array ();
+      this .verticesArray    = new Float32Array ();
 
-      this .addUniform ("position",  "uniform vec3 position;");
-      this .addUniform ("direction", "uniform vec3 direction;");
+      this .addUniform ("position",       "uniform vec3 position;");
+      this .addUniform ("direction",      "uniform vec3 direction;");
+      this .addUniform ("numLengthSoFar", "uniform int numLengthSoFar;");
+      this .addUniform ("lengthSoFar",    "uniform sampler2D lengthSoFar;");
+      this .addUniform ("vertices",       "uniform sampler2D vertices;");
+
+      this .addFunction (`vec3 getRandomVelocity ()
+      {
+         if (direction == vec3 (0.0))
+            return getRandomSphericalVelocity ();
+
+         else
+            return direction * getRandomSpeed ();
+      }`);
+
+      this .addFunction (`vec4 getRandomPosition ()
+      {
+         // Determine index0 and weight.
+
+         if (numLengthSoFar > 0)
+         {
+            float lastLengthSoFar = texelFetch (lengthSoFar, numLengthSoFar - 1, 0) .x;
+            float fraction        = random () * lastLengthSoFar;
+
+            int   index0 = 0;
+            int   index1 = 0;
+            float weight = 0.0;
+
+            interpolate (lengthSoFar, numLengthSoFar, fraction, index0, index1, weight);
+
+            // Interpolate and set position.
+
+            index0 *= 2;
+            index1  = index0 + 1;
+
+            vec4 vertex0 = texelFetch (vertices, index0, 0);
+            vec4 vertex1 = texelFetch (vertices, index1, 0);
+
+            return mix (vertex0, vertex1, weight);
+         }
+         else
+         {
+            return vec4 (0.0);
+         }
+      }`);
    }
 
    PolylineEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
@@ -109,10 +153,15 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
+         const browser = this .getBrowser ();
+
          this ._direction .addInterest ("set_direction__", this);
 
          this ._coordIndex .addFieldInterest (this .polylineNode ._coordIndex);
          this ._coord      .addFieldInterest (this .polylineNode ._coord);
+
+         this .lengthSoFarTexture = this .createTexture ();
+         this .verticesTexture    = this .createTexture ();
 
          this .polylineNode ._coordIndex = this ._coordIndex;
          this .polylineNode ._coord      = this ._coord;
@@ -121,128 +170,8 @@ function (Fields,
          this .polylineNode .setPrivate (true);
          this .polylineNode .setup ();
 
-         this .addFunctionO (function getRandomVelocity ()
-         {
-            if (this .constants .direction0 == 0 &&
-                this .constants .direction1 == 0 &&
-                this .constants .direction2 == 0)
-            {
-               return getRandomSphericalVelocity ();
-            }
-            else
-            {
-               const speed = getRandomSpeed ();
-
-               return [this .constants .direction0 * speed,
-                       this .constants .direction1 * speed,
-                       this .constants .direction2 * speed,
-                       0];
-            }
-         });
-
-         this .addFunctionO (function getRandomPosition ()
-         {
-            // Determine index0 and weight.
-
-            const numLengthSoFar = this .constants .numLengthSoFar;
-
-            if (numLengthSoFar > 0)
-            {
-               const
-                  lastLengthSoFar = this .constants .lengthSoFarArray [numLengthSoFar - 1],
-                  fraction        = Math .random () * lastLengthSoFar;
-
-               let
-                  index0 = 0,
-                  index1 = 0,
-                  weight = 0;
-
-               if (numLengthSoFar == 1 || fraction <= this .constants .lengthSoFarArray [0])
-               {
-                  index0 = 0;
-                  weight = 0;
-               }
-               else if (fraction >= lastLengthSoFar)
-               {
-                  index0 = numLengthSoFar - 2;
-                  weight = 1;
-               }
-               else
-               {
-                  // BEGIN: upperBound
-
-                  const
-                     count = numLengthSoFar,
-                     value = fraction;
-
-                  let
-                     first = 0,
-                     step  = 0;
-
-                  while (count > 0)
-                  {
-                     let index = first;
-
-                     step = count >> 1;
-
-                     index += step;
-
-                     if (value < this .constants .lengthSoFarArray [index])
-                     {
-                        count = step;
-                     }
-                     else
-                     {
-                        first  = ++ index;
-                        count -= step + 1;
-                     }
-                  }
-
-                  const index = first;
-
-                  // END upperBound.
-
-                  if (index < numLengthSoFar)
-                  {
-                     index1 = index;
-                     index0 = index - 1;
-
-                     const
-                        key0 = this .constants .lengthSoFarArray [index0],
-                        key1 = this .constants .lengthSoFarArray [index1];
-
-                     weight = clamp ((fraction - key0) / (key1 - key0), 0, 1);
-                  }
-                  else
-                  {
-                     index0 = 0;
-                     weight = 0;
-                  }
-               }
-
-               // Interpolate and set position.
-
-               index0 *= 8;
-               index1  = index0 + 4;
-
-               const
-                  x1 = this .constants .vertices [index0],
-                  y1 = this .constants .vertices [index0 + 1],
-                  z1 = this .constants .vertices [index0 + 2],
-                  x2 = this .constants .vertices [index1],
-                  y2 = this .constants .vertices [index1 + 1],
-                  z2 = this .constants .vertices [index1 + 2];
-
-               return [mix (x1, x2, weight),
-                       mix (y1, y2, weight),
-                       mix (z1, z2, weight),
-                       1];
-            }
-            else
-            {
-               return [0, 0, 0, 1]
-            }
-         });
+         this .setUniform ("uniform1i", "lengthSoFar", browser .getDefaultTexture2DUnit ());
+         this .setUniform ("uniform1i", "vertices",    browser .getDefaultTexture2DUnit ());
 
          this .set_direction__ ();
          this .set_polyline ();
@@ -266,36 +195,74 @@ function (Fields,
 
          return function ()
          {
-            const vertices = this .polylineNode .getVertices () .getValue ();
+            const
+               gl          = this .getBrowser () .getContext (),
+               vertices    = this .polylineNode .getVertices () .getValue (),
+               numVertices = vertices .length / 4;
 
-            if (vertices .length)
+            if (numVertices)
             {
-               let   lengthSoFar      = 0;
-               const lengthSoFarArray = this .lengthSoFarArray;
+               const
+                  numLengthSoFar     = numVertices / 2 + 1,
+                  numLengthSoFarSize = Math .ceil (Math .sqrt (numLengthSoFar)),
+                  numVerticesSize    = Math .ceil (Math .sqrt (numVertices));
 
-               lengthSoFarArray .length = 1;
+               let
+                  lengthSoFarArray = this .lengthSoFarArray,
+                  verticesArray    = this .verticesArray,
+                  lengthSoFar      = 0;
 
-               for (let i = 0, length = vertices .length; i < length; i += 8)
+               if (lengthSoFarArray .length < numLengthSoFar * 4)
+                  lengthSoFarArray = this .lengthSoFarArray = new Float32Array (numLengthSoFarSize * numLengthSoFarSize * 4);
+
+               if (verticesArray .length < numVertices * 4)
+                  verticesArray = this .verticesArray = new Float32Array (numVerticesSize * numVerticesSize * 4);
+
+               for (let i = 0, length = numVertices * 4; i < length; i += 8)
                {
                   vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
                   vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-                  lengthSoFar += vertex2 .subtract (vertex1) .abs ();
-                  lengthSoFarArray .push (lengthSoFar);
+                  lengthSoFarArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .abs ();
                }
 
-               this .setConstant ("vertices",         vertices);
-               this .setConstant ("lengthSoFarArray", lengthSoFarArray);
-               this .setConstant ("numLengthSoFar",   lengthSoFarArray .length);
+               verticesArray .set (vertices);
+
+               this .setUniform ("uniform1i", "numLengthSoFar", numLengthSoFar);
+
+               gl .bindTexture (gl .TEXTURE_2D, this .lengthSoFarTexture);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numLengthSoFarSize, numLengthSoFarSize, 0, gl .RGBA, gl .FLOAT, lengthSoFarArray);
+               gl .bindTexture (gl .TEXTURE_2D, this .verticesTexture);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numVerticesSize, numVerticesSize, 0, gl .RGBA, gl .FLOAT, verticesArray);
             }
             else
             {
-               this .setConstant ("vertices",         [0]);
-               this .setConstant ("lengthSoFarArray", [0]);
-               this .setConstant ("numLengthSoFar",   0);
+               this .setUniform ("uniform1i", "numLengthSoFar", 0);
             }
          };
       })(),
+      activateTextures: function ()
+      {
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
+
+         {
+            const textureUnit = browser .getTexture2DUnit ();
+
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, this .lengthSoFarTexture);
+            this .setUniform ("uniform1i", "lengthSoFar", textureUnit);
+         }
+
+         {
+            const textureUnit = browser .getTexture2DUnit ();
+
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, this .verticesTexture);
+            this .setUniform ("uniform1i", "vertices", textureUnit);
+         }
+      },
    });
 
    return PolylineEmitter;

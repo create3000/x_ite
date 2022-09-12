@@ -244,8 +244,8 @@ function (X3DNode,
 
          gl .drawArrays (gl .TRIANGLES, 0, 6);
 
-         // const data = particles .textures [2] .data;
-         // gl .readBuffer (gl .COLOR_ATTACHMENT2);
+         // const data = particles .textures [3] .data;
+         // gl .readBuffer (gl .COLOR_ATTACHMENT3);
          // gl .readPixels (0, 0, 10, 10, gl .RGBA, gl .FLOAT, data);
          // console .log (data);
 
@@ -576,7 +576,7 @@ function (X3DNode,
 
                index += step;
 
-               if (value < texelFetch (colorKeys, index, 0) .x)
+               if (value < texelFetch (sampler, index, 0) .x)
                {
                   count = step;
                }
@@ -588,6 +588,46 @@ function (X3DNode,
             }
 
             return first;
+         }
+
+         void
+         interpolate (const in sampler2D sampler, const in int count, const in float fraction, inout int index0, inout int index1, inout float weight)
+         {
+            // Determine index0, index1 and weight.
+
+            if (count == 1 || fraction <= texelFetch (sampler, 0, 0) .x)
+            {
+               index0 = 0;
+               index1 = 0;
+               weight = 0.0;
+            }
+            else if (fraction >= texelFetch (sampler, count - 1, 0) .x)
+            {
+               index0 = count - 2;
+               index1 = count - 1;
+               weight = 1.0;
+            }
+            else
+            {
+               int index = upperBound (sampler, count, fraction);
+
+               if (index < count)
+               {
+                  index1 = index;
+                  index0 = index - 1;
+
+                  float key0 = texelFetch (sampler, index0, 0) .x;
+                  float key1 = texelFetch (sampler, index1, 0) .x;
+
+                  weight = clamp ((fraction - key0) / (key1 - key0), 0.0, 1.0);
+               }
+               else
+               {
+                  index0 = 0;
+                  index1 = 0;
+                  weight = 0.0;
+               }
+            }
          }
 
          // Functions
@@ -609,39 +649,7 @@ function (X3DNode,
                int   index1 = 0;
                float weight = 0.0;
 
-               if (numColors == 1 || fraction <= texelFetch (colorKeys, 0, 0) .x)
-               {
-                  index0 = 0;
-                  index1 = 0;
-                  weight = 0.0;
-               }
-               else if (fraction >= texelFetch (colorKeys, numColors - 1, 0) .x)
-               {
-                  index0 = numColors - 2;
-                  index1 = numColors - 1;
-                  weight = 1.0;
-               }
-               else
-               {
-                  int index = upperBound (colorKeys, numColors, fraction);
-
-                  if (index < numColors)
-                  {
-                     index1 = index;
-                     index0 = index - 1;
-
-                     float key0 = texelFetch (colorKeys, index0, 0) .x;
-                     float key1 = texelFetch (colorKeys, index1, 0) .x;
-
-                     weight = clamp ((fraction - key0) / (key1 - key0), 0.0, 1.0);
-                  }
-                  else
-                  {
-                     index0 = 0;
-                     index1 = 0;
-                     weight = 0.0;
-                  }
-               }
+               interpolate (colorKeys, numColors, fraction, index0, index1, weight);
 
                // Interpolate and return color.
 
@@ -825,6 +833,23 @@ function (X3DNode,
       })(),
       activateTextures: function ()
       { },
+      createTexture: function ()
+      {
+         const
+            gl      = this .getBrowser () .getContext (),
+            texture = gl .createTexture ();
+
+         gl .bindTexture (gl .TEXTURE_2D, texture);
+
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, texture .width, texture .height, 0, gl .RGBA, gl .FLOAT, null);
+
+         return texture;
+      },
    });
 
    return X3DParticleEmitterNode;
