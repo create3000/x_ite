@@ -89,10 +89,12 @@ function (X3DNode,
 
          // Initialize fields.
 
+         this ._on        .addInterest ("set_on__",        this);
          this ._speed     .addInterest ("set_speed__",     this);
          this ._variation .addInterest ("set_variation__", this);
          this ._mass      .addInterest ("set_mass__",      this);
 
+         this .set_on__ ();
          this .set_speed__ ();
          this .set_variation__ ();
          this .set_mass__ ();
@@ -104,6 +106,10 @@ function (X3DNode,
       getMass: function ()
       {
          return this .mass;
+      },
+      set_on__: function ()
+      {
+         this .on = this ._on .getValue ();
       },
       set_speed__: function ()
       {
@@ -157,7 +163,7 @@ function (X3DNode,
          // Uniforms
 
          gl .uniform1i (program .randomSeed,        Math .random () * particleSystem .maxParticles);
-         gl .uniform1i (program .createParticles,   particleSystem .createParticles && this ._on .getValue ());
+         gl .uniform1i (program .createParticles,   particleSystem .createParticles && this .on);
          gl .uniform1i (program .numParticles,      particleSystem .numParticles);
          gl .uniform1f (program .particleLifetime,  particleSystem .particleLifetime);
          gl .uniform1f (program .lifetimeVariation, particleSystem .lifetimeVariation);
