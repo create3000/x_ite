@@ -145,7 +145,7 @@ function (X3DNode,
       {
          const other = particleSystem .particles [this .i];
 
-         this .i = this .i === 0 ? 1 : 0;
+         this .i = +! this .i;
 
          const
             browser   = this .getBrowser (),
