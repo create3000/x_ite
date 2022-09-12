@@ -440,16 +440,10 @@ function (X3DNode,
 
          /* Random number generation */
 
-         const int RAND_MAX = int (0x7fffffff);
-         const int RAND_MIN = int (0x80000000);
+         const float RAND_MAX = float (0x7fffffff);
+         const float RAND_MIN = float (0x80000000);
 
          int seed = 1;
-
-         int
-         srand ()
-         {
-            return seed;
-         }
 
          void
          srand (in int value)
@@ -457,18 +451,13 @@ function (X3DNode,
             seed = value;
          }
 
-         // Return a uniform distributed random integral number in the interval [RAND_MIN, RAND_MAX].
-         int
-         rand ()
-         {
-            return seed = seed * 1103515245 + 12345;
-         }
-
          // Return a uniform distributed random floating point number in the interval [0, 1).
          float
          random ()
          {
-            return fract (float (rand ()) / float (RAND_MAX));
+            seed = seed * 1103515245 + 12345;
+
+            return fract (float (seed) / RAND_MAX);
          }
 
          float
@@ -674,6 +663,8 @@ function (X3DNode,
                vec4 input2 = texelFetch (inputSampler2, index, 0);
                vec4 input3 = texelFetch (inputSampler3, index, 0);
 
+               srand ((id + randomSeed) * randomSeed);
+
                float life        = input0 [0];
                float lifetime    = input0 [1];
                float elapsedTime = input0 [2] + deltaTime;
@@ -738,8 +729,6 @@ function (X3DNode,
          {
             ivec2 index = ivec2 (gl_FragCoord .xy);
             int   id    = index .y * textureSize (inputSampler0, 0) .x + index .x;
-
-            srand ((id + randomSeed) * randomSeed);
 
             animate (index, id);
          }
