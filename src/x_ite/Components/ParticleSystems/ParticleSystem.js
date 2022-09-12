@@ -116,6 +116,7 @@ function (Fields,
       this ._particleSize .setUnit ("length");
 
       this .particles                = [{ textures: [ ] }, { textures: [ ] }];
+      this .i                        = 0;
       this .currentParticles         = null;
       this .maxParticles             = 0;
       this .numParticles             = 0;

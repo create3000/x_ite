@@ -69,7 +69,6 @@ function (X3DNode,
       this .uniforms  = { };
       this .functions = [ ];
       this .program   = null;
-      this .i         = 0;
 
       this .addUniform ("speed",     "uniform float speed;");
       this .addUniform ("variation", "uniform float variation;");
@@ -143,14 +142,14 @@ function (X3DNode,
       },
       animate: function (particleSystem, deltaTime)
       {
-         const other = particleSystem .particles [this .i];
+         const other = particleSystem .particles [particleSystem .i];
 
-         this .i = +! this .i;
+         particleSystem .i = +! particleSystem .i;
 
          const
             browser   = this .getBrowser (),
             gl        = browser .getContext (),
-            particles = particleSystem .particles [this .i],
+            particles = particleSystem .particles [particleSystem .i],
             texture0  = particles .textures [0],
             program   = this .program;
 
