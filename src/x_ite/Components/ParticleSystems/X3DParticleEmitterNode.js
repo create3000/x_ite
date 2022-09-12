@@ -311,7 +311,7 @@ function (X3DNode,
       createKernel: function ()
       {
          return gpu .createKernelMap ({
-            colors: function updateColors (time, numParticles, colorMaterial, colorKeys, numColorKeys, colorRamp)
+            colors: function updateColors (time, numParticles, colorMaterial, colorKeys, numColors, colorRamp)
             {
                if (this .thread .x < numParticles && colorMaterial)
                {
@@ -327,16 +327,16 @@ function (X3DNode,
                      index1 = 0,
                      weight = 0;
 
-                  if (numColorKeys == 1 || fraction <= colorKeys [0])
+                  if (numColors == 1 || fraction <= colorKeys [0])
                   {
                      index0 = 0;
                      index1 = 0;
                      weight = 0;
                   }
-                  else if (fraction >= colorKeys [numColorKeys - 1])
+                  else if (fraction >= colorKeys [numColors - 1])
                   {
-                     index0 = numColorKeys - 2;
-                     index1 = numColorKeys - 1;
+                     index0 = numColors - 2;
+                     index1 = numColors - 1;
                      weight = 1;
                   }
                   else
@@ -344,7 +344,7 @@ function (X3DNode,
                      // BEGIN: upperBound
 
                      const
-                        count = numColorKeys,
+                        count = numColors,
                         value = fraction;
 
                      let
@@ -374,7 +374,7 @@ function (X3DNode,
 
                      // END upperBound.
 
-                     if (index < numColorKeys)
+                     if (index < numColors)
                      {
                         index1 = index;
                         index0 = index - 1;
@@ -646,9 +646,7 @@ function (X3DNode,
             return normal * speed;
          }
 
-         ${this .functions .join ("\n")}
-
-         // Current values
+         // Algorithms
 
          vec4
          texelFetch (const in sampler2D sampler, const in int index, const in int lod)
@@ -660,12 +658,93 @@ function (X3DNode,
             return t;
          }
 
+         int
+         upperBound (const in sampler2D sampler, in int count, const in float value)
+         {
+            int first = 0;
+            int step  = 0;
+
+            while (count > 0)
+            {
+               int index = first;
+
+               step = count >> 1;
+
+               index += step;
+
+               if (value < texelFetch (colorKeys, index, 0) .x)
+               {
+                  count = step;
+               }
+               else
+               {
+                  first  = ++ index;
+                  count -= step + 1;
+               }
+            }
+
+            return first;
+         }
+
+         // Functions
+
+         ${this .functions .join ("\n")}
+
+         // Current values
+
          vec4
-         getColor (const in float elapsedTime)
+         getColor (const in float lifetime, const in float elapsedTime)
          {
             if (numColors > 0)
             {
-               return texelFetch (colorRamp, 0, 0);
+               // Determine index0, index1 and weight.
+
+               float fraction = elapsedTime / lifetime;
+
+               int   index0 = 0;
+               int   index1 = 0;
+               float weight = 0.0;
+
+               if (numColors == 1 || fraction <= texelFetch (colorKeys, 0, 0) .x)
+               {
+                  index0 = 0;
+                  index1 = 0;
+                  weight = 0.0;
+               }
+               else if (fraction >= texelFetch (colorKeys, numColors - 1, 0) .x)
+               {
+                  index0 = numColors - 2;
+                  index1 = numColors - 1;
+                  weight = 1.0;
+               }
+               else
+               {
+                  int index = upperBound (colorKeys, numColors, fraction);
+
+                  if (index < numColors)
+                  {
+                     index1 = index;
+                     index0 = index - 1;
+
+                     float key0 = texelFetch (colorKeys, index0, 0) .x;
+                     float key1 = texelFetch (colorKeys, index1, 0) .x;
+
+                     weight = clamp ((fraction - key0) / (key1 - key0), 0.0, 1.0);
+                  }
+                  else
+                  {
+                     index0 = 0;
+                     index1 = 0;
+                     weight = 0.0;
+                  }
+               }
+
+               // Interpolate and return color.
+
+               vec4 color0 = texelFetch (colorRamp, index0, 0);
+               vec4 color1 = texelFetch (colorRamp, index1, 0);
+
+               return mix (color0, color1, weight);
             }
             else
             {
@@ -702,7 +781,7 @@ function (X3DNode,
                   elapsedTime = 0.0;
 
                   output0 = vec4 (life, lifetime, elapsedTime, 0.0);
-                  output1 = getColor (elapsedTime);
+                  output1 = getColor (lifetime, elapsedTime);
 
                   if (createParticles)
                   {
@@ -736,7 +815,7 @@ function (X3DNode,
                   }
 
                   output0 = vec4 (life, lifetime, elapsedTime, 0.0);
-                  output1 = getColor (elapsedTime);
+                  output1 = getColor (lifetime, elapsedTime);
                   output2 = vec4 (velocity, 0.0);
                   output3 = getPosition (position, velocity);
                }
