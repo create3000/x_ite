@@ -703,9 +703,8 @@ function (X3DNode,
                      if (i >= numForces)
                         break;
 
-                     ivec2 index      = ivec2 (i, 0);
-                     vec3  force      = texelFetch (forces, index, 0) .xyz;
-                     float turbulence = texelFetch (turbulences, index, 0) .x;
+                     vec3  force      = texelFetch (forces, i, 0) .xyz;
+                     float turbulence = texelFetch (turbulences, i, 0) .x;
                      vec3  normal     = getRandomNormalWithDirectionAndAngle (force, turbulence);
                      float speed      = length (force) * deltaTime / mass;
 
