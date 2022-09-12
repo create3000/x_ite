@@ -244,8 +244,8 @@ function (X3DNode,
 
          gl .drawArrays (gl .TRIANGLES, 0, 6);
 
-         // const data = particles .textures [3] .data;
-         // gl .readBuffer (gl .COLOR_ATTACHMENT3);
+         // const data = particles .textures [0] .data;
+         // gl .readBuffer (gl .COLOR_ATTACHMENT0);
          // gl .readPixels (0, 0, 10, 10, gl .RGBA, gl .FLOAT, data);
          // console .log (data);
 

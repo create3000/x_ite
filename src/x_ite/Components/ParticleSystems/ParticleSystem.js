@@ -757,7 +757,7 @@ function (Fields,
          // Assign textures.
 
          for (let i = 0; i < 4; ++ i)
-            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl.COLOR_ATTACHMENT0 + i, gl.TEXTURE_2D, textures [i], 0);
+            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0 + i, gl .TEXTURE_2D, textures [i], 0);
 
          gl .drawBuffers ([gl .COLOR_ATTACHMENT0, gl .COLOR_ATTACHMENT1, gl .COLOR_ATTACHMENT2, gl .COLOR_ATTACHMENT3]);
 
@@ -816,25 +816,29 @@ function (Fields,
                texture .width  = size;
                texture .height = size;
 
-               if (length <= data .length)
+               if (length * 4 < data .buffer .byteLength)
                {
                   texture .data = new Float32Array (data .buffer, 0, length);
+                  texture .data .fill (0, this .numParticles * 4);
                }
-               else
+               else if (length > data .length)
                {
                   texture .data = new Float32Array (length);
                   texture .data .set (data);
                }
             }
-
-            for (const texture of particles .textures)
-            {
-               gl .bindTexture (gl .TEXTURE_2D, texture);
-               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, texture .width, texture .height, 0, gl .RGBA, gl .FLOAT, texture .data);
-            }
          }
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+
+         for (const particles of this .particles)
+         {
+            for (const texture of particles .textures)
+            {
+               gl .bindTexture (gl .TEXTURE_2D, texture);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, texture .data);
+            }
+         }
       },
       animateParticles: function ()
       {
