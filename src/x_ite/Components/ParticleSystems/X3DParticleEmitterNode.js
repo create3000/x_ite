@@ -651,11 +651,21 @@ function (X3DNode,
          // Current values
 
          vec4
+         texelFetch (const in sampler2D sampler, const in int index, const in int lod)
+         {
+            int   x = textureSize (sampler, 0) .x;
+            ivec2 p = ivec2 (index % x, index / x);
+            vec4  t = texelFetch (sampler, p, lod);
+
+            return t;
+         }
+
+         vec4
          getColor (const in float elapsedTime)
          {
             if (numColors > 0)
             {
-               return texelFetch (colorRamp, ivec2 (0, 0), 0);
+               return texelFetch (colorRamp, 0, 0);
             }
             else
             {
