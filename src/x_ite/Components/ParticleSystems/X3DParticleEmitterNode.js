@@ -143,15 +143,15 @@ function (X3DNode,
       animate: function (particleSystem, deltaTime)
       {
          const
-            browser   = this .getBrowser (),
-            gl        = browser .getContext (),
-            output    = particleSystem .outputParticles,
-            particles = particleSystem .particles [particleSystem .i = +! particleSystem .i],
-            program   = this .program;
+            browser = this .getBrowser (),
+            gl      = browser .getContext (),
+            input   = particleSystem .particles [particleSystem .i],
+            output  = particleSystem .particles [particleSystem .i = +! particleSystem .i],
+            program = this .program;
 
          // Start
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
+         gl .bindFramebuffer (gl .FRAMEBUFFER, output .frameBuffer);
          gl .useProgram (program);
 
          // Uniforms
@@ -216,7 +216,7 @@ function (X3DNode,
             const textureUnit = browser .getTexture2DUnit ();
 
             gl .activeTexture (gl .TEXTURE0 + textureUnit);
-            gl .bindTexture (gl .TEXTURE_2D, output .textures [i]);
+            gl .bindTexture (gl .TEXTURE_2D, input .textures [i]);
             gl .uniform1i (program .inputSampler [i], textureUnit);
          }
 
@@ -238,7 +238,7 @@ function (X3DNode,
 
          gl .drawArrays (gl .TRIANGLES, 0, 6);
 
-         // const data = particles .textures [0] .data;
+         // const data = output .textures [0] .data;
          // gl .readBuffer (gl .COLOR_ATTACHMENT0);
          // gl .readPixels (0, 0, 10, 10, gl .RGBA, gl .FLOAT, data);
          // console .log (data);
@@ -249,7 +249,7 @@ function (X3DNode,
 
          browser .resetTextureUnits ();
 
-         return particles;
+         return output;
       },
       bounce: (function ()
       {
@@ -652,12 +652,12 @@ function (X3DNode,
          {
             if (id < numParticles)
             {
+               srand ((id + randomSeed) * randomSeed);
+
                vec4 input0 = texelFetch (inputSampler0, index, 0);
                vec4 input1 = texelFetch (inputSampler1, index, 0);
                vec4 input2 = texelFetch (inputSampler2, index, 0);
                vec4 input3 = texelFetch (inputSampler3, index, 0);
-
-               srand ((id + randomSeed) * randomSeed);
 
                float life        = input0 [0];
                float lifetime    = input0 [1];
@@ -681,7 +681,8 @@ function (X3DNode,
                   }
                   else
                   {
-                     output2 = output3 = vec4 (0.0);
+                     output2 = vec4 (0.0);
+                     output3 = vec4 (0.0);
                   }
                }
                else
@@ -714,7 +715,10 @@ function (X3DNode,
             }
             else
             {
-               output0 = output1 = output2 = output3 = vec4 (0.0);
+               output0 = vec4 (0.0);
+               output1 = vec4 (0.0);
+               output2 = vec4 (0.0);
+               output3 = vec4 (0.0);
             }
          }
 

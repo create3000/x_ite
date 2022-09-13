@@ -117,7 +117,7 @@ function (Fields,
 
       this .particles                = [{ textures: [ ] }, { textures: [ ] }];
       this .i                        = 0;
-      this .outputParticles          = this .particles [this .i];
+      this .outputParticles          = null;
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .particleLifetime         = 0;
