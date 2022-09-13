@@ -805,11 +805,9 @@ function (Fields,
 
             // Resize and copy data.
 
-            for (let i = 0; i < particles .textures .length; ++ i)
+            for (const [i, texture] of particles .textures .entries ())
             {
-               const
-                  texture = particles .textures [i],
-                  data    = texture .data;
+               const data = texture .data;
 
                gl .readBuffer (gl .COLOR_ATTACHMENT0 + i);
                gl .readPixels (0, 0, texture .width, texture .height, gl .RGBA, gl .FLOAT, data);
