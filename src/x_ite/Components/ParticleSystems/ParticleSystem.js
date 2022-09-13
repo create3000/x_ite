@@ -816,7 +816,7 @@ function (Fields,
                texture .width  = size;
                texture .height = size;
 
-               if (length * Float32Array .BYTES_PER_ELEMENT < data .buffer .byteLength)
+               if (length * Float32Array .BYTES_PER_ELEMENT <= data .buffer .byteLength)
                {
                   texture .data = new Float32Array (data .buffer, 0, length);
                   texture .data .fill (0, this .numParticles * 4);
@@ -825,6 +825,7 @@ function (Fields,
                {
                   texture .data = new Float32Array (length);
                   texture .data .set (data);
+                  texture .data .fill (0);
                }
             }
          }
