@@ -127,7 +127,6 @@ function (TextureBuffer,
             gl .uniform1f (shaderNode .x3d_Shininess,        0);
             gl .uniform1f (shaderNode .x3d_Transparency,     0);
 
-            gl .viewport (0, 0, 16, 16);
             gl .clearColor (0, 0, 0, 0);
             gl .clear (gl .COLOR_BUFFER_BIT);
 

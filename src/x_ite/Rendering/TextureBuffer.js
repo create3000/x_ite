@@ -73,6 +73,7 @@ function (ViewVolume,
       this .buffer     = gl .createFramebuffer ();
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .buffer);
+      gl .viewport (0, 0, width, height);
 
       // The depth texture
 
