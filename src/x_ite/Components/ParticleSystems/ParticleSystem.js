@@ -117,7 +117,7 @@ function (Fields,
 
       this .particles                = [{ textures: [ ] }, { textures: [ ] }];
       this .i                        = 0;
-      this .outputParticles          = null;
+      this .output                   = this .particles [this .i];
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .particleLifetime         = 0;
@@ -830,10 +830,10 @@ function (Fields,
 
          for (const particles of this .particles)
          {
-            for (const texture of particles .textures)
+            for (const [i, texture] of particles .textures .entries ())
             {
                gl .bindTexture (gl .TEXTURE_2D, texture);
-               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, texture .data);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, this .output .textures [i] .data);
             }
          }
       },
@@ -926,7 +926,7 @@ function (Fields,
 
          // Determine particle position, velocity and colors
 
-         this .outputParticles = emitterNode .animate (this, deltaTime);
+         this .output = emitterNode .animate (this, deltaTime);
 
          this .updateGeometry (null);
          browser .addBrowserEvent ();
@@ -956,7 +956,7 @@ function (Fields,
       {
          const
             gl        = this .getBrowser () .getContext (),
-            particles = this .outputParticles;
+            particles = this .output;
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
 
