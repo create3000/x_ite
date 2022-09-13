@@ -216,14 +216,14 @@ function (Fields,
 
          // Create particles stuff.
 
-         for (const particles of this .particles)
+         for (const { textures } of this .particles)
          {
             for (let i = 0; i < 4; ++ i)
-               particles .textures [i] = this .createTexture (true);
+               textures [i] = this .createTexture (true);
          }
 
-         this .particles [0] .frameBuffer = this .createFrameBuffer (this .particles [0] .textures);
-         this .particles [1] .frameBuffer = this .createFrameBuffer (this .particles [1] .textures);
+         for (const particles of this .particles)
+            particles .frameBuffer = this .createFrameBuffer (particles .textures);
 
          // Create forces stuff.
 
@@ -757,8 +757,8 @@ function (Fields,
 
          // Assign textures.
 
-         for (let i = 0; i < 4; ++ i)
-            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0 + i, gl .TEXTURE_2D, textures [i], 0);
+         for (const [i, texture] of textures .entries ())
+            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0 + i, gl .TEXTURE_2D, texture, 0);
 
          gl .drawBuffers ([gl .COLOR_ATTACHMENT0, gl .COLOR_ATTACHMENT1, gl .COLOR_ATTACHMENT2, gl .COLOR_ATTACHMENT3]);
 

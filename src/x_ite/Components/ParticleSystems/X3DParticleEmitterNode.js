@@ -757,7 +757,7 @@ function (X3DNode,
          if (!gl .getProgramParameter (program, gl .LINK_STATUS))
             console .error ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
 
-         program .inputVertex = gl. getAttribLocation (program, "inputVertex");
+         program .inputVertex = gl .getAttribLocation (program, "inputVertex");
 
          gl .useProgram (program);
 
