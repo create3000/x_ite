@@ -142,21 +142,16 @@ function (X3DNode,
       },
       animate: function (particleSystem, deltaTime)
       {
-         const other = particleSystem .particles [particleSystem .i];
-
-         particleSystem .i = +! particleSystem .i;
-
          const
             browser   = this .getBrowser (),
             gl        = browser .getContext (),
-            particles = particleSystem .particles [particleSystem .i],
-            texture0  = particles .textures [0],
+            output    = particleSystem .outputParticles,
+            particles = particleSystem .particles [particleSystem .i = +! particleSystem .i],
             program   = this .program;
 
          // Start
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
-         gl .viewport (0, 0, texture0 .width, texture0 .height);
          gl .useProgram (program);
 
          // Uniforms
@@ -221,7 +216,7 @@ function (X3DNode,
             const textureUnit = browser .getTexture2DUnit ();
 
             gl .activeTexture (gl .TEXTURE0 + textureUnit);
-            gl .bindTexture (gl .TEXTURE_2D, other .textures [i]);
+            gl .bindTexture (gl .TEXTURE_2D, output .textures [i]);
             gl .uniform1i (program .inputSampler [i], textureUnit);
          }
 

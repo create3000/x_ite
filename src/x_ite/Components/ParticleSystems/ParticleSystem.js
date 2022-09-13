@@ -117,7 +117,7 @@ function (Fields,
 
       this .particles                = [{ textures: [ ] }, { textures: [ ] }];
       this .i                        = 0;
-      this .currentParticles         = null;
+      this .outputParticles          = this .particles [this .i];
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .particleLifetime         = 0;
@@ -802,6 +802,7 @@ function (Fields,
          for (const particles of this .particles)
          {
             gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
+            gl .viewport (0, 0, size, size);
 
             // Resize and copy data.
 
@@ -934,7 +935,7 @@ function (Fields,
 
          // Determine particle position, velocity and colors
 
-         this .currentParticles = emitterNode .animate (this, deltaTime);
+         this .outputParticles = emitterNode .animate (this, deltaTime);
 
          this .updateGeometry (null);
          browser .addBrowserEvent ();
@@ -964,7 +965,7 @@ function (Fields,
       {
          const
             gl        = this .getBrowser () .getContext (),
-            particles = this .currentParticles;
+            particles = this .outputParticles;
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
 
