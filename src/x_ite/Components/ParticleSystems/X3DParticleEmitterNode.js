@@ -169,21 +169,11 @@ function (X3DNode,
 
          if (particleSystem .numForces)
          {
-            {
-               const textureUnit = browser .getTexture2DUnit ();
+            const textureUnit = browser .getTexture2DUnit ();
 
-               gl .activeTexture (gl .TEXTURE0 + textureUnit);
-               gl .bindTexture (gl .TEXTURE_2D, particleSystem .forcesTexture);
-               gl .uniform1i (program .forces, textureUnit);
-            }
-
-            {
-               const textureUnit = browser .getTexture2DUnit ();
-
-               gl .activeTexture (gl .TEXTURE0 + textureUnit);
-               gl .bindTexture (gl .TEXTURE_2D, particleSystem .turbulencesTexture);
-               gl .uniform1i (program .turbulences, textureUnit);
-            }
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, particleSystem .forcesTexture);
+            gl .uniform1i (program .forces, textureUnit);
          }
 
          // Colors
@@ -360,7 +350,6 @@ function (X3DNode,
 
          uniform int       numForces;
          uniform sampler2D forces;
-         uniform sampler2D turbulences;
 
          uniform int       numColors;
          uniform sampler2D colorKeys;
@@ -697,10 +686,10 @@ function (X3DNode,
                      if (i >= numForces)
                         break;
 
-                     vec3  force      = texelFetch (forces, i, 0) .xyz;
-                     float turbulence = texelFetch (turbulences, i, 0) .x;
-                     vec3  normal     = getRandomNormalWithDirectionAndAngle (force, turbulence);
-                     float speed      = length (force) * deltaTime / mass;
+                     vec4  force      = texelFetch (forces, i, 0);
+                     float turbulence = force .w;
+                     vec3  normal     = getRandomNormalWithDirectionAndAngle (force .xyz, turbulence);
+                     float speed      = length (force .xyz) * deltaTime / mass;
 
                      velocity += normal * speed;
                   }
@@ -775,9 +764,8 @@ function (X3DNode,
          program .lifetimeVariation = gl .getUniformLocation (program, "lifetimeVariation");
          program .deltaTime         = gl .getUniformLocation (program, "deltaTime");
 
-         program .numForces   = gl .getUniformLocation (program, "numForces");
-         program .forces      = gl .getUniformLocation (program, "forces");
-         program .turbulences = gl .getUniformLocation (program, "turbulences");
+         program .numForces = gl .getUniformLocation (program, "numForces");
+         program .forces    = gl .getUniformLocation (program, "forces");
 
          program .numColors = gl .getUniformLocation (program, "numColors");
          program .colorKeys = gl .getUniformLocation (program, "colorKeys");
@@ -786,10 +774,9 @@ function (X3DNode,
          for (const uniform of Object .keys (this .uniforms))
             program [uniform] = gl .getUniformLocation (program, uniform);
 
-         gl .uniform1i (program .forces,      browser .getDefaultTexture2DUnit ());
-         gl .uniform1i (program .turbulences, browser .getDefaultTexture2DUnit ());
-         gl .uniform1i (program .colorKeys,   browser .getDefaultTexture2DUnit ());
-         gl .uniform1i (program .colorRamp,   browser .getDefaultTexture2DUnit ());
+         gl .uniform1i (program .forces,    browser .getDefaultTexture2DUnit ());
+         gl .uniform1i (program .colorKeys, browser .getDefaultTexture2DUnit ());
+         gl .uniform1i (program .colorRamp, browser .getDefaultTexture2DUnit ());
 
          program .vertexBuffer = this .createVertexBuffer ();
 

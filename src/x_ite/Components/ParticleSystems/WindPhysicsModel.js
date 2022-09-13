@@ -110,7 +110,7 @@ function (Fields,
       {
          const force = new Vector3 (0, 0, 0);
 
-         return function (i, emitterNode, forces, turbulences)
+         return function (i, emitterNode, forces)
          {
             const
                surfaceArea = emitterNode ._surfaceArea .getValue (),
@@ -123,7 +123,7 @@ function (Fields,
                force .assign (this ._direction .getValue ()) .normalize ();
 
             forces .set (force .multiply (surfaceArea * pressure), i * 4);
-            turbulences [i * 4] = Math .PI * Algorithm .clamp (this ._turbulence .getValue (), 0, 1);
+            forces [i * 4 + 3] = Math .PI * Algorithm .clamp (this ._turbulence .getValue (), 0, 1);
          }
       })(),
    });

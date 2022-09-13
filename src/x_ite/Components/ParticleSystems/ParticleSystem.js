@@ -128,9 +128,7 @@ function (Fields,
       this .forcePhysicsModelNodes   = [ ];
       this .numForces                = 0;
       this .forces                   = new Float32Array (4);
-      this .turbulences              = new Float32Array (4);
       this .forcesTexture            = null;
-      this .turbulencesTexture       = null;
       this .boundedPhysicsModelNodes = [ ];
       this .boundedNormals           = [ ];
       this .boundedVertices          = [ ];
@@ -228,7 +226,6 @@ function (Fields,
          // Create forces stuff.
 
          this .forcesTexture      = this .createTexture (false);
-         this .turbulencesTexture = this .createTexture (false);
          this .colorKeysTexture   = this .createTexture (false);
          this .colorRampTexture   = this .createTexture (false);
 
@@ -836,6 +833,7 @@ function (Fields,
             for (const texture of particles .textures)
             {
                gl .bindTexture (gl .TEXTURE_2D, texture);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, 0, 0, 0, gl .RGBA, gl .FLOAT, null);
                gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, texture .data);
             }
          }
@@ -897,17 +895,13 @@ function (Fields,
             const forcePhysicsModelNodes = this .forcePhysicsModelNodes;
 
             let
-               numForces   = forcePhysicsModelNodes .length,
-               forces      = this .forces,
-               turbulences = this .turbulences;
+               numForces = forcePhysicsModelNodes .length,
+               forces    = this .forces;
 
             // Collect forces in velocities and collect turbulences.
 
             if (numForces * 4 > forces .length)
-            {
-               forces      = this .forces      = new Float32Array (numForces * 4);
-               turbulences = this .turbulences = new Float32Array (numForces * 4);
-            }
+               forces = this .forces = new Float32Array (numForces * 4);
 
             let disabledForces = 0;
 
@@ -916,7 +910,7 @@ function (Fields,
                const forcePhysicsModelNode = forcePhysicsModelNodes [i];
 
                if (forcePhysicsModelNode ._enabled .getValue ())
-                  forcePhysicsModelNode .addForce (i - disabledForces, emitterNode, forces, turbulences);
+                  forcePhysicsModelNode .addForce (i - disabledForces, emitterNode, forces);
                else
                   ++ disabledForces;
             }
@@ -925,8 +919,6 @@ function (Fields,
 
             gl .bindTexture (gl .TEXTURE_2D, this .forcesTexture);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numForces, 1, 0, gl .RGBA, gl .FLOAT, forces);
-            gl .bindTexture (gl .TEXTURE_2D, this .turbulencesTexture);
-            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numForces, 1, 0, gl .RGBA, gl .FLOAT, turbulences);
          }
          else
          {

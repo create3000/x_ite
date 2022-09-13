@@ -91,10 +91,10 @@ function (Fields,
       {
          return "physics";
       },
-      addForce: function (i, emitterNode, forces, turbulences)
+      addForce: function (i, emitterNode, forces)
       {
          forces .set (this ._force .getValue (), i * 4);
-         turbulences [i * 4] = 0;
+         forces [i * 4 + 3] = 0;
       },
    });
 
