@@ -825,7 +825,6 @@ function (Fields,
                {
                   texture .data = new Float32Array (length);
                   texture .data .set (data);
-                  texture .data .fill (0);
                }
             }
          }
