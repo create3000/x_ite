@@ -759,18 +759,14 @@ function (Fields,
 
          return frameBuffer;
       },
-      createTexture: function (properties)
+      createTexture: function (data)
       {
          const
             gl      = this .getBrowser () .getContext (),
             texture = gl .createTexture ();
 
-         if (properties)
-         {
-            texture .width  = 0;
-            texture .height = 0;
-            texture .data   = new Float32Array ();
-         }
+         if (data)
+            texture .data = new Float32Array ();
 
          gl .bindTexture (gl .TEXTURE_2D, texture);
 
@@ -794,9 +790,6 @@ function (Fields,
          {
             const frameBuffer = particles .frameBuffer;
 
-            frameBuffer .width  = size;
-            frameBuffer .height = size;
-
             gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
             // Resize and copy data.
@@ -806,10 +799,7 @@ function (Fields,
                const data = texture .data;
 
                gl .readBuffer (gl .COLOR_ATTACHMENT0 + i);
-               gl .readPixels (0, 0, texture .width, texture .height, gl .RGBA, gl .FLOAT, data);
-
-               texture .width  = size;
-               texture .height = size;
+               gl .readPixels (0, 0, frameBuffer .width, frameBuffer .height, gl .RGBA, gl .FLOAT, data);
 
                if (length * Float32Array .BYTES_PER_ELEMENT <= data .buffer .byteLength)
                {
@@ -822,7 +812,10 @@ function (Fields,
                   texture .data .set (data);
                }
             }
-         }
+
+            frameBuffer .width  = size;
+            frameBuffer .height = size;
+        }
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
@@ -953,10 +946,11 @@ function (Fields,
       updatePoint: function ()
       {
          const
-            gl        = this .getBrowser () .getContext (),
-            particles = this .output;
+            gl          = this .getBrowser () .getContext (),
+            particles   = this .output,
+            frameBuffer = particles .frameBuffer;
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
+         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
          // Colors
 
@@ -967,7 +961,7 @@ function (Fields,
                colorArray = texture1 .data;
 
             gl .readBuffer (gl .COLOR_ATTACHMENT1);
-            gl .readPixels (0, 0, texture1 .width, texture1 .height, gl .RGBA, gl .FLOAT, colorArray);
+            gl .readPixels (0, 0, frameBuffer .width, frameBuffer .height, gl .RGBA, gl .FLOAT, colorArray);
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
             gl .bufferData (gl .ARRAY_BUFFER, colorArray, gl .STATIC_DRAW);
@@ -980,7 +974,7 @@ function (Fields,
             vertexArray = texture3 .data;
 
          gl .readBuffer (gl .COLOR_ATTACHMENT3);
-         gl .readPixels (0, 0, texture3 .width, texture3 .height, gl .RGBA, gl .FLOAT, vertexArray);
+         gl .readPixels (0, 0, frameBuffer .width, frameBuffer .height, gl .RGBA, gl .FLOAT, vertexArray);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, vertexArray, gl .STATIC_DRAW);

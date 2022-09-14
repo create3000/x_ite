@@ -810,7 +810,7 @@ function (X3DNode,
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
 
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, texture .width, texture .height, 0, gl .RGBA, gl .FLOAT, null);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, 0, 0, 0, gl .RGBA, gl .FLOAT, null);
 
          return texture;
       },
