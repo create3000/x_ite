@@ -644,7 +644,7 @@ function (X3DNode,
                vec4 input2 = texelFetch (inputSampler2, fragCoord, 0);
                vec4 input3 = texelFetch (inputSampler3, fragCoord, 0);
 
-               float life        = input0 [0];
+               uint  life        = uint (input0 [0]);
                float lifetime    = input0 [1];
                float elapsedTime = input0 [2] + deltaTime;
 
@@ -652,7 +652,7 @@ function (X3DNode,
                {
                   // Create new particle or hide particle.
 
-                  life       += createParticles ? 1.0 : 0.0;
+                  life       += createParticles ? 1u : 0u;
                   lifetime    = getRandomLifetime (particleLifetime, lifetimeVariation);
                   elapsedTime = 0.0;
 
