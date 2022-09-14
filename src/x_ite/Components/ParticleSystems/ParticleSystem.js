@@ -821,10 +821,10 @@ function (Fields,
 
          for (const particles of this .particles)
          {
-            for (const [i, texture] of particles .textures .entries ())
+            for (const texture of particles .textures )
             {
                gl .bindTexture (gl .TEXTURE_2D, texture);
-               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, this .output .textures [i] .data);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, texture .data);
             }
          }
       },
@@ -947,8 +947,8 @@ function (Fields,
       {
          const
             gl          = this .getBrowser () .getContext (),
-            particles   = this .output,
-            frameBuffer = particles .frameBuffer;
+            frameBuffer = this .output .frameBuffer,
+            textures    = this .output .textures;
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
@@ -956,9 +956,7 @@ function (Fields,
 
          if (this .geometryContext .colorMaterial)
          {
-            const
-               texture1   = particles .textures [1],
-               colorArray = texture1 .data;
+            const colorArray = textures [1] .data;
 
             gl .readBuffer (gl .COLOR_ATTACHMENT1);
             gl .readPixels (0, 0, frameBuffer .width, frameBuffer .height, gl .RGBA, gl .FLOAT, colorArray);
@@ -969,9 +967,7 @@ function (Fields,
 
          // Vertices
 
-         const
-            texture3    = particles .textures [3],
-            vertexArray = texture3 .data;
+         const vertexArray = textures [3] .data;
 
          gl .readBuffer (gl .COLOR_ATTACHMENT3);
          gl .readPixels (0, 0, frameBuffer .width, frameBuffer .height, gl .RGBA, gl .FLOAT, vertexArray);
