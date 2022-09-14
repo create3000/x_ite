@@ -793,7 +793,7 @@ function (Fields,
             const data = this .data [i];
 
             gl .readBuffer (gl .COLOR_ATTACHMENT0 + i);
-            gl .readPixels (0, 0, Math .min (size, this .size), Math .min (size, this .size), gl .RGBA, gl .FLOAT, data);
+            gl .readPixels (0, 0, this .size, this .size, gl .RGBA, gl .FLOAT, data);
 
             if (length * Float32Array .BYTES_PER_ELEMENT <= data .buffer .byteLength)
             {
