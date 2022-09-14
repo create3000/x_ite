@@ -784,7 +784,8 @@ function (Fields,
          const
             gl     = this .getBrowser () .getContext (),
             size   = Math .ceil (Math .sqrt (this .maxParticles)),
-            length = size * size * 4;
+            length = size * size * 4,
+            output = this .output;
 
          for (const particles of this .particles)
          {
@@ -798,24 +799,31 @@ function (Fields,
             {
                const data = texture .data;
 
-               gl .readBuffer (gl .COLOR_ATTACHMENT0 + i);
-               gl .readPixels (0, 0, frameBuffer .width, frameBuffer .height, gl .RGBA, gl .FLOAT, data);
+               if (particles === output)
+               {
+                  gl .readBuffer (gl .COLOR_ATTACHMENT0 + i);
+                  gl .readPixels (0, 0, Math .min (size, frameBuffer .width), Math .min (size, frameBuffer .height), gl .RGBA, gl .FLOAT, data);
+               }
 
                if (length * Float32Array .BYTES_PER_ELEMENT <= data .buffer .byteLength)
                {
                   texture .data = new Float32Array (data .buffer, 0, length);
-                  texture .data .fill (0, this .numParticles * 4);
+
+                  if (particles === output)
+                     texture .data .fill (0, this .numParticles * 4);
                }
                else if (length > data .length)
                {
                   texture .data = new Float32Array (length);
-                  texture .data .set (data);
+
+                  if (particles === output)
+                     texture .data .set (data);
                }
             }
 
             frameBuffer .width  = size;
             frameBuffer .height = size;
-        }
+         }
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
@@ -824,7 +832,7 @@ function (Fields,
             for (const texture of particles .textures )
             {
                gl .bindTexture (gl .TEXTURE_2D, texture);
-               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, texture .data);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, particles === output ? texture .data : null);
             }
          }
       },
