@@ -147,14 +147,15 @@ function (X3DNode,
             gl          = browser .getContext (),
             input       = particleSystem .particles [particleSystem .i],
             output      = particleSystem .particles [particleSystem .i = +! particleSystem .i],
+            size        = particleSystem .size,
             frameBuffer = output .frameBuffer,
             program     = this .program;
 
          // Start
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
-         gl .viewport (0, 0, frameBuffer .width, frameBuffer .height);
-         gl .scissor (0, 0, frameBuffer .width, frameBuffer .height);
+         gl .viewport (0, 0, size, size);
+         gl .scissor (0, 0, size, size);
          gl .useProgram (program);
 
          // Uniforms
@@ -221,9 +222,9 @@ function (X3DNode,
 
          gl .drawArrays (gl .TRIANGLES, 0, 6);
 
-         // const data = output .textures [0] .data;
+         // const data = particleSystem .data [0];
          // gl .readBuffer (gl .COLOR_ATTACHMENT0);
-         // gl .readPixels (0, 0, frameBuffer .width, frameBuffer .height, gl .RGBA, gl .FLOAT, data);
+         // gl .readPixels (0, 0, size, size, gl .RGBA, gl .FLOAT, data);
          // console .log (data);
 
          // Restore/Finish

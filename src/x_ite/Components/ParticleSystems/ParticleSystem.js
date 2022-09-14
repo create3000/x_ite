@@ -116,8 +116,10 @@ function (Fields,
       this ._particleSize .setUnit ("length");
 
       this .particles                = [{ textures: [ ] }, { textures: [ ] }];
+      this .data                     = [new Float32Array (), new Float32Array (), new Float32Array (), new Float32Array ()];
       this .i                        = 0;
       this .output                   = this .particles [this .i];
+      this .size                     = 0;
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .particleLifetime         = 0;
@@ -216,7 +218,7 @@ function (Fields,
          for (const { textures } of this .particles)
          {
             for (let i = 0; i < 4; ++ i)
-               textures [i] = this .createTexture (true);
+               textures [i] = this .createTexture ();
          }
 
          for (const particles of this .particles)
@@ -224,8 +226,8 @@ function (Fields,
 
          // Create forces stuff.
 
-         this .forcesTexture    = this .createTexture (false);
-         this .colorRampTexture = this .createTexture (false);
+         this .forcesTexture    = this .createTexture ();
+         this .colorRampTexture = this .createTexture ();
 
          // Create GL stuff.
 
@@ -741,9 +743,6 @@ function (Fields,
             gl          = this .getBrowser () .getContext (),
             frameBuffer = gl .createFramebuffer ();
 
-         frameBuffer .width  = 0;
-         frameBuffer .height = 0;
-
          gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
          // Assign textures.
@@ -759,14 +758,11 @@ function (Fields,
 
          return frameBuffer;
       },
-      createTexture: function (data)
+      createTexture: function ()
       {
          const
             gl      = this .getBrowser () .getContext (),
             texture = gl .createTexture ();
-
-         if (data)
-            texture .data = new Float32Array ();
 
          gl .bindTexture (gl .TEXTURE_2D, texture);
 
@@ -782,59 +778,49 @@ function (Fields,
       resizeTextures: function ()
       {
          const
-            gl     = this .getBrowser () .getContext (),
-            size   = Math .ceil (Math .sqrt (this .maxParticles)),
-            length = size * size * 4,
-            output = this .output;
+            gl          = this .getBrowser () .getContext (),
+            size        = Math .ceil (Math .sqrt (this .maxParticles)),
+            length      = size * size * 4,
+            particles   = this .output,
+            frameBuffer = particles .frameBuffer;
 
-         for (const particles of this .particles)
+         // Resize and get data.
+
+         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+
+         for (let i = 0; i < 4; ++ i)
          {
-            const frameBuffer = particles .frameBuffer;
+            const data = this .data [i];
 
-            gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+            gl .readBuffer (gl .COLOR_ATTACHMENT0 + i);
+            gl .readPixels (0, 0, Math .min (size, this .size), Math .min (size, this .size), gl .RGBA, gl .FLOAT, data);
 
-            // Resize and copy data.
-
-            for (const [i, texture] of particles .textures .entries ())
+            if (length * Float32Array .BYTES_PER_ELEMENT <= data .buffer .byteLength)
             {
-               const data = texture .data;
-
-               if (particles === output)
-               {
-                  gl .readBuffer (gl .COLOR_ATTACHMENT0 + i);
-                  gl .readPixels (0, 0, Math .min (size, frameBuffer .width), Math .min (size, frameBuffer .height), gl .RGBA, gl .FLOAT, data);
-               }
-
-               if (length * Float32Array .BYTES_PER_ELEMENT <= data .buffer .byteLength)
-               {
-                  texture .data = new Float32Array (data .buffer, 0, length);
-
-                  if (particles === output)
-                     texture .data .fill (0, this .numParticles * 4);
-               }
-               else if (length > data .length)
-               {
-                  texture .data = new Float32Array (length);
-
-                  if (particles === output)
-                     texture .data .set (data);
-               }
+               this .data [i] = new Float32Array (data .buffer, 0, length);
+               this .data [i] .fill (0, this .numParticles * 4);
             }
-
-            frameBuffer .width  = size;
-            frameBuffer .height = size;
+            else if (length > data .length)
+            {
+               this .data [i] = new Float32Array (length);
+               this .data [i] .set (data);
+            }
          }
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
+         // Resize textures.
+
          for (const particles of this .particles)
          {
-            for (const texture of particles .textures )
+            for (const [i, texture] of particles .textures .entries ())
             {
                gl .bindTexture (gl .TEXTURE_2D, texture);
-               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, particles === output ? texture .data : null);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, particles === this .output ? this .data [i] : null);
             }
          }
+
+         this .size = size;
       },
       animateParticles: function ()
       {
@@ -956,7 +942,8 @@ function (Fields,
          const
             gl          = this .getBrowser () .getContext (),
             frameBuffer = this .output .frameBuffer,
-            textures    = this .output .textures;
+            data        = this .data,
+            size        = this .size;
 
          gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
@@ -964,10 +951,10 @@ function (Fields,
 
          if (this .geometryContext .colorMaterial)
          {
-            const colorArray = textures [1] .data;
+            const colorArray = data [1];
 
             gl .readBuffer (gl .COLOR_ATTACHMENT1);
-            gl .readPixels (0, 0, frameBuffer .width, frameBuffer .height, gl .RGBA, gl .FLOAT, colorArray);
+            gl .readPixels (0, 0, size, size, gl .RGBA, gl .FLOAT, colorArray);
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
             gl .bufferData (gl .ARRAY_BUFFER, colorArray, gl .STATIC_DRAW);
@@ -975,10 +962,10 @@ function (Fields,
 
          // Vertices
 
-         const vertexArray = textures [3] .data;
+         const vertexArray = data [3];
 
          gl .readBuffer (gl .COLOR_ATTACHMENT3);
-         gl .readPixels (0, 0, frameBuffer .width, frameBuffer .height, gl .RGBA, gl .FLOAT, vertexArray);
+         gl .readPixels (0, 0, size, size, gl .RGBA, gl .FLOAT, vertexArray);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, vertexArray, gl .STATIC_DRAW);
