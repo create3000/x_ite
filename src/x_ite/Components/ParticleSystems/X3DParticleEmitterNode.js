@@ -143,15 +143,18 @@ function (X3DNode,
       animate: function (particleSystem, deltaTime)
       {
          const
-            browser = this .getBrowser (),
-            gl      = browser .getContext (),
-            input   = particleSystem .particles [particleSystem .i],
-            output  = particleSystem .particles [particleSystem .i = +! particleSystem .i],
-            program = this .program;
+            browser     = this .getBrowser (),
+            gl          = browser .getContext (),
+            input       = particleSystem .particles [particleSystem .i],
+            output      = particleSystem .particles [particleSystem .i = +! particleSystem .i],
+            frameBuffer = output .frameBuffer,
+            program     = this .program;
 
          // Start
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, output .frameBuffer);
+         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+         gl .viewport (0, 0, frameBuffer .width, frameBuffer .height);
+         gl .scissor (0, 0, frameBuffer .width, frameBuffer .height);
          gl .useProgram (program);
 
          // Uniforms
@@ -230,7 +233,7 @@ function (X3DNode,
 
          // const data = output .textures [0] .data;
          // gl .readBuffer (gl .COLOR_ATTACHMENT0);
-         // gl .readPixels (0, 0, 10, 10, gl .RGBA, gl .FLOAT, data);
+         // gl .readPixels (0, 0, frameBuffer .width, frameBuffer .height, gl .RGBA, gl .FLOAT, data);
          // console .log (data);
 
          // Restore/Finish
@@ -637,16 +640,16 @@ function (X3DNode,
          }
 
          void
-         animate (const in ivec2 index, const in int id)
+         animate (const in ivec2 fragCoord, const in int id)
          {
             if (id < numParticles)
             {
                srand ((id + randomSeed) * randomSeed);
 
-               vec4 input0 = texelFetch (inputSampler0, index, 0);
-               vec4 input1 = texelFetch (inputSampler1, index, 0);
-               vec4 input2 = texelFetch (inputSampler2, index, 0);
-               vec4 input3 = texelFetch (inputSampler3, index, 0);
+               vec4 input0 = texelFetch (inputSampler0, fragCoord, 0);
+               vec4 input1 = texelFetch (inputSampler1, fragCoord, 0);
+               vec4 input2 = texelFetch (inputSampler2, fragCoord, 0);
+               vec4 input3 = texelFetch (inputSampler3, fragCoord, 0);
 
                float life        = input0 [0];
                float lifetime    = input0 [1];
@@ -696,7 +699,7 @@ function (X3DNode,
 
                   position .xyz += velocity * deltaTime;
 
-                  output0 = vec4 (life, lifetime, elapsedTime, 0.0);
+                  output0 = vec4 (life, lifetime, elapsedTime, id);
                   output1 = getColor (lifetime, elapsedTime);
                   output2 = vec4 (velocity, 0.0);
                   output3 = position;
@@ -714,10 +717,10 @@ function (X3DNode,
          void
          main ()
          {
-            ivec2 index = ivec2 (gl_FragCoord .xy);
-            int   id    = index .y * textureSize (inputSampler0, 0) .x + index .x;
+            ivec2 fragCoord = ivec2 (gl_FragCoord .xy);
+            int   id        = fragCoord .y * textureSize (inputSampler0, 0) .x + fragCoord .x;
 
-            animate (index, id);
+            animate (fragCoord, id);
          }
          `;
 

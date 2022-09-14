@@ -750,6 +750,9 @@ function (Fields,
             gl          = this .getBrowser () .getContext (),
             frameBuffer = gl .createFramebuffer ();
 
+         frameBuffer .width  = 0;
+         frameBuffer .height = 0;
+
          gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
          // Assign textures.
@@ -785,7 +788,7 @@ function (Fields,
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
 
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, texture .width, texture .height, 0, gl .RGBA, gl .FLOAT, null);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, 0, 0, 0, gl .RGBA, gl .FLOAT, null);
 
          return texture;
       },
@@ -798,8 +801,12 @@ function (Fields,
 
          for (const particles of this .particles)
          {
-            gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
-            gl .viewport (0, 0, size, size);
+            const frameBuffer = particles .frameBuffer;
+
+            frameBuffer .width  = size;
+            frameBuffer .height = size;
+
+            gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
             // Resize and copy data.
 
