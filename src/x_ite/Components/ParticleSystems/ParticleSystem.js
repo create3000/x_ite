@@ -779,14 +779,13 @@ function (Fields,
       {
          const
             gl          = this .getBrowser () .getContext (),
-            size        = Math .ceil (Math .sqrt (this .maxParticles)),
-            length      = size * size * 4,
             particles   = this .output,
-            frameBuffer = particles .frameBuffer;
+            size        = Math .ceil (Math .sqrt (this .maxParticles)),
+            length      = size * size * 4;
 
          // Resize and get data.
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+         gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
 
          for (let i = 0; i < 4; ++ i)
          {
