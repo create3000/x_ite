@@ -196,6 +196,9 @@ function (Fields,
             browser = this .getBrowser (),
             gl      = browser .getContext ();
 
+         if (browser .getContext () .getVersion () < 2)
+            return;
+
          this .isLive () .addInterest ("set_live__", this);
 
          browser .getBrowserOptions () ._Shading .addInterest ("set_shader__", this);

@@ -82,6 +82,9 @@ function (X3DNode,
       {
          X3DNode .prototype .initialize .call (this);
 
+         if (this .getBrowser () .getContext () .getVersion () < 2)
+            return;
+
          // Create program.
 
          this .program = this .createProgram ();

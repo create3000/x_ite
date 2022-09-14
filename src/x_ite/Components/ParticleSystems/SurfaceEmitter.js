@@ -109,6 +109,9 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
+         if (this .getBrowser () .getContext () .getVersion () < 2)
+            return;
+
          this ._surface .addInterest ("set_surface__", this);
 
          this .set_surface__ ();

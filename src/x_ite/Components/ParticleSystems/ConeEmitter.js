@@ -123,6 +123,9 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
+         if (this .getBrowser () .getContext () .getVersion () < 2)
+            return;
+
          this ._position  .addInterest ("set_position__", this);
          this ._direction .addInterest ("set_direction__", this);
          this ._angle     .addInterest ("set_angle__", this);

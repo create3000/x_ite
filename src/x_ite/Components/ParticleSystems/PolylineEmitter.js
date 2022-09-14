@@ -155,6 +155,9 @@ function (Fields,
 
          const browser = this .getBrowser ();
 
+         if (browser .getContext () .getVersion () < 2)
+            return;
+
          this ._direction .addInterest ("set_direction__", this);
 
          this ._coordIndex .addFieldInterest (this .polylineNode ._coordIndex);
