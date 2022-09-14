@@ -185,21 +185,11 @@ function (X3DNode,
 
          if (particleSystem .numColors)
          {
-            {
-               const textureUnit = browser .getTexture2DUnit ();
+            const textureUnit = browser .getTexture2DUnit ();
 
-               gl .activeTexture (gl .TEXTURE0 + textureUnit);
-               gl .bindTexture (gl .TEXTURE_2D, particleSystem .colorKeysTexture);
-               gl .uniform1i (program .colorKeys, textureUnit);
-            }
-
-            {
-               const textureUnit = browser .getTexture2DUnit ();
-
-               gl .activeTexture (gl .TEXTURE0 + textureUnit);
-               gl .bindTexture (gl .TEXTURE_2D, particleSystem .colorRampTexture);
-               gl .uniform1i (program .colorRamp, textureUnit);
-            }
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, particleSystem .colorRampTexture);
+            gl .uniform1i (program .colorRamp, textureUnit);
          }
 
          // Input textures
@@ -355,7 +345,6 @@ function (X3DNode,
          uniform sampler2D forces;
 
          uniform int       numColors;
-         uniform sampler2D colorKeys;
          uniform sampler2D colorRamp;
 
          uniform sampler2D inputSampler0;
@@ -624,12 +613,12 @@ function (X3DNode,
                int   index1 = 0;
                float weight = 0.0;
 
-               interpolate (colorKeys, numColors, fraction, index0, index1, weight);
+               interpolate (colorRamp, numColors, fraction, index0, index1, weight);
 
                // Interpolate and return color.
 
-               vec4 color0 = texelFetch (colorRamp, index0, 0);
-               vec4 color1 = texelFetch (colorRamp, index1, 0);
+               vec4 color0 = texelFetch (colorRamp, numColors + index0, 0);
+               vec4 color1 = texelFetch (colorRamp, numColors + index1, 0);
 
                return mix (color0, color1, weight);
             }
@@ -771,14 +760,12 @@ function (X3DNode,
          program .forces    = gl .getUniformLocation (program, "forces");
 
          program .numColors = gl .getUniformLocation (program, "numColors");
-         program .colorKeys = gl .getUniformLocation (program, "colorKeys");
          program .colorRamp = gl .getUniformLocation (program, "colorRamp");
 
          for (const uniform of Object .keys (this .uniforms))
             program [uniform] = gl .getUniformLocation (program, uniform);
 
          gl .uniform1i (program .forces,    browser .getDefaultTexture2DUnit ());
-         gl .uniform1i (program .colorKeys, browser .getDefaultTexture2DUnit ());
          gl .uniform1i (program .colorRamp, browser .getDefaultTexture2DUnit ());
 
          program .vertexBuffer = this .createVertexBuffer ();

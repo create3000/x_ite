@@ -133,11 +133,10 @@ function (Fields,
       this .boundedNormals           = [ ];
       this .boundedVertices          = [ ];
       this .boundedVolume            = null;
-      this .colorKeys                = new Float32Array ();
       this .colorRampNode            = null;
       this .colorRamp                = new Float32Array ();
-      this .texCoordKeys             = [ ];
       this .texCoordRampNode         = null;
+      this .texCoordKeys             = [ ];
       this .texCoordRamp             = [ ];
       this .texCoordAnim             = false;
       this .vertexCount              = 0;
@@ -225,9 +224,8 @@ function (Fields,
 
          // Create forces stuff.
 
-         this .forcesTexture      = this .createTexture (false);
-         this .colorKeysTexture   = this .createTexture (false);
-         this .colorRampTexture   = this .createTexture (false);
+         this .forcesTexture    = this .createTexture (false);
+         this .colorRampTexture = this .createTexture (false);
 
          // Create GL stuff.
 
@@ -672,30 +670,23 @@ function (Fields,
                gl           = this .getBrowser () .getContext (),
                colorKey     = this ._colorKey,
                numColors    = colorKey .length,
-               textureSize  = Math .ceil (Math .sqrt (numColors));
+               textureSize  = Math .ceil (Math .sqrt (numColors * 2));
 
-            let
-               colorKeys = this .colorKeys,
-               colorRamp = this .colorRamp;
+            let colorRamp = this .colorRamp;
 
-            if (numColors * 4 > colorKeys .length)
-            {
-               colorKeys = this .colorKeys = new Float32Array (textureSize * textureSize * 4);
-               colorRamp = this .colorRamp = new Float32Array (textureSize * textureSize * 4);
-            }
+            if (numColors * 4 > colorRamp .length)
+               colorRamp = this .colorRamp = new Float32Array (textureSize * textureSize * 4 * 2);
 
             for (let i = 0; i < numColors; ++ i)
-               colorKeys [i * 4] = colorKey [i];
+               colorRamp [i * 4] = colorKey [i];
 
             array .length = 0;
 
             if (this .colorRampNode)
-               colorRamp .set (this .colorRampNode .addColors (array, numColors));
+               colorRamp .set (this .colorRampNode .addColors (array, numColors), numColors * 4);
             else
-               colorRamp .fill (1);
+               colorRamp .fill (1, numColors * 4);
 
-            gl .bindTexture (gl .TEXTURE_2D, this .colorKeysTexture);
-            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorKeys);
             gl .bindTexture (gl .TEXTURE_2D, this .colorRampTexture);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorRamp);
 
