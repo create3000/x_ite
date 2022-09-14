@@ -366,13 +366,26 @@ function (X3DNode,
          const float M_PI       = 3.14159265359;
          const int   MAX_FORCES = 32;
 
+         // Math
+
+         vec3
+         save_normalize (const in vec3 vector)
+         {
+            float l = length (vector);
+
+            if (l == 0.0)
+               return vec3 (0.0);
+            else
+               return vector / l;
+         }
+
          // Quaternion
 
          vec4
          Quaternion (const in vec3 fromVector, const in vec3 toVector)
          {
-            vec3 from = normalize (fromVector);
-            vec3 to   = normalize (toVector);
+            vec3 from = save_normalize (fromVector);
+            vec3 to   = save_normalize (toVector);
 
             float cos_angle = dot (from, to);
             vec3  crossvec  = cross (from, to);
@@ -391,7 +404,7 @@ function (X3DNode,
                   if (dot (t, t) == 0.0)
                      t = cross (from, vec3 (0.0, 1.0, 0.0));
 
-                  t = normalize (t);
+                  t = save_normalize (t);
 
                   return vec4 (t, 0.0);
                }
@@ -400,7 +413,7 @@ function (X3DNode,
             {
                float s = sqrt (abs (1.0 - cos_angle) * 0.5);
 
-               crossvec = normalize (crossvec);
+               crossvec = save_normalize (crossvec);
 
                return vec4 (crossvec * s, sqrt (abs (1.0 + cos_angle) * 0.5));
             }
@@ -446,7 +459,7 @@ function (X3DNode,
          }
 
          float
-         getRandomLifetime (const in float particleLifetime, const in float lifetimeVariation)
+         getRandomLifetime ()
          {
             float v   = particleLifetime * lifetimeVariation;
             float min = max (0.0, particleLifetime - v);
@@ -653,7 +666,7 @@ function (X3DNode,
                   // Create new particle or hide particle.
 
                   life       += createParticles ? 1u : 0u;
-                  lifetime    = getRandomLifetime (particleLifetime, lifetimeVariation);
+                  lifetime    = getRandomLifetime ();
                   elapsedTime = 0.0;
 
                   output0 = vec4 (life, lifetime, elapsedTime, 0.0);
