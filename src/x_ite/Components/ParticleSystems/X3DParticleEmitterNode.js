@@ -629,11 +629,11 @@ function (X3DNode,
          }
 
          void
-         animate (const in ivec2 fragCoord, const in int id)
+         animate (const in ivec2 fragCoord, const in int index)
          {
-            if (id < numParticles)
+            if (index < numParticles)
             {
-               srand ((id + randomSeed) * randomSeed);
+               srand ((index + randomSeed) * randomSeed);
 
                vec4 input0 = texelFetch (inputSampler0, fragCoord, 0);
                vec4 input1 = texelFetch (inputSampler1, fragCoord, 0);
@@ -688,7 +688,7 @@ function (X3DNode,
 
                   position .xyz += velocity * deltaTime;
 
-                  output0 = vec4 (life, lifetime, elapsedTime, id);
+                  output0 = vec4 (life, lifetime, elapsedTime, 0.0);
                   output1 = getColor (lifetime, elapsedTime);
                   output2 = vec4 (velocity, 0.0);
                   output3 = position;
@@ -707,9 +707,9 @@ function (X3DNode,
          main ()
          {
             ivec2 fragCoord = ivec2 (gl_FragCoord .xy);
-            int   id        = fragCoord .y * textureSize (inputSampler0, 0) .x + fragCoord .x;
+            int   index     = fragCoord .y * textureSize (inputSampler0, 0) .x + fragCoord .x;
 
-            animate (fragCoord, id);
+            animate (fragCoord, index);
          }
          `;
 
