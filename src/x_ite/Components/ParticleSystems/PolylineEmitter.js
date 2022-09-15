@@ -207,7 +207,7 @@ function (Fields,
                   polylineArray = this .polylineArray,
                   lengthSoFar   = 0;
 
-               if (polylineArray .length < polylineArraySize * 4)
+               if (polylineArray .length < polylineArraySize * polylineArraySize * 4)
                   polylineArray = this .polylineArray = new Float32Array (polylineArraySize * polylineArraySize * 4);
 
                for (let i = 0, length = numVertices * 4; i < length; i += 8)
