@@ -75,7 +75,7 @@ function (Fields,
       this .addUniform ("position",  "uniform vec3 position;");
       this .addUniform ("direction", "uniform vec3 direction;");
 
-      this .addFunction (`vec3 getRandomVelocity ()
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
       {
          if (direction == vec3 (0.0))
             return getRandomSphericalVelocity ();
@@ -84,7 +84,7 @@ function (Fields,
             return direction * getRandomSpeed ();
       }`);
 
-      this .addFunction (`vec4 getRandomPosition () { return vec4 (position, 1.0); }`);
+      this .addFunction (/* glsl */ `vec4 getRandomPosition () { return vec4 (position, 1.0); }`);
    }
 
    PointEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),

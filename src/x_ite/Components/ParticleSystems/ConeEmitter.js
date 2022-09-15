@@ -75,7 +75,7 @@ function (Fields,
       this .addUniform ("direction", "uniform vec3  direction;");
       this .addUniform ("angle",     "uniform float angle;");
 
-      this .addFunction (`vec3 getRandomVelocity ()
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
       {
          if (direction == vec3 (0.0))
          {
@@ -90,7 +90,7 @@ function (Fields,
          }
       }`);
 
-      this .addFunction (`vec4 getRandomPosition () { return vec4 (position, 1.0); }`);
+      this .addFunction (/* glsl */ `vec4 getRandomPosition () { return vec4 (position, 1.0); }`);
    }
 
    ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),

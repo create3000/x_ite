@@ -82,7 +82,7 @@ function (Fields,
       this .addUniform ("lengthSoFar",    "uniform sampler2D lengthSoFar;");
       this .addUniform ("vertices",       "uniform sampler2D vertices;");
 
-      this .addFunction (`vec3 getRandomVelocity ()
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
       {
          if (direction == vec3 (0.0))
             return getRandomSphericalVelocity ();
@@ -91,7 +91,7 @@ function (Fields,
             return direction * getRandomSpeed ();
       }`);
 
-      this .addFunction (`vec4 getRandomPosition ()
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
       {
          // Determine index0 and weight.
 

@@ -314,7 +314,7 @@ function (X3DNode,
             browser = this .getBrowser (),
             gl      = browser .getContext ();
 
-         const vertexShaderSource = `#version 300 es
+         const vertexShaderSource = /* glsl */ `#version 300 es
 
          precision highp float;
          precision highp int;
@@ -328,7 +328,7 @@ function (X3DNode,
          }
          `;
 
-         const fragmentShaderSource = `#version 300 es
+         const fragmentShaderSource = /* glsl */ `#version 300 es
 
          precision highp float;
          precision highp int;
@@ -399,10 +399,10 @@ function (X3DNode,
             vec3 to   = normalize (toVector);
 
             float cos_angle = dot (from, to);
-            vec3  crossvec  = cross (from, to);
-            float crosslen  = length (crossvec);
+            vec3  cross_vec = cross (from, to);
+            float cross_len = length (cross_vec);
 
-            if (crosslen == 0.0)
+            if (cross_len == 0.0)
             {
                if (cos_angle > 0.0)
                {
@@ -424,9 +424,9 @@ function (X3DNode,
             {
                float s = sqrt (abs (1.0 - cos_angle) * 0.5);
 
-               crossvec = normalize (crossvec);
+               cross_vec = normalize (cross_vec);
 
-               return vec4 (crossvec * s, sqrt (abs (1.0 + cos_angle) * 0.5));
+               return vec4 (cross_vec * s, sqrt (abs (1.0 + cos_angle) * 0.5));
             }
          }
 
