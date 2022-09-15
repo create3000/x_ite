@@ -143,17 +143,16 @@ function (X3DNode,
       animate: function (particleSystem, deltaTime)
       {
          const
-            browser     = this .getBrowser (),
-            gl          = browser .getContext (),
-            input       = particleSystem .particles [particleSystem .i],
-            output      = particleSystem .particles [particleSystem .i = +! particleSystem .i],
-            size        = particleSystem .size,
-            frameBuffer = output .frameBuffer,
-            program     = this .program;
+            browser = this .getBrowser (),
+            gl      = browser .getContext (),
+            input   = particleSystem .particles [particleSystem .i],
+            output  = particleSystem .particles [particleSystem .i = +! particleSystem .i],
+            size    = particleSystem .size,
+            program = this .program;
 
          // Start
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+         gl .bindFramebuffer (gl .FRAMEBUFFER, output .frameBuffer);
          gl .viewport (0, 0, size, size);
          gl .scissor (0, 0, size, size);
          gl .useProgram (program);
