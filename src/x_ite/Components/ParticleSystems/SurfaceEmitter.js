@@ -80,7 +80,7 @@ function (Fields,
       this .surfaceArray = new Float32Array ();
 
       this .addUniform ("numAreaSoFar", "uniform int numAreaSoFar;");
-      this .addUniform ("numVertices", "uniform int numVertices;");
+      this .addUniform ("numVertices",  "uniform int numVertices;");
       this .addUniform ("surface",      "uniform sampler2D surface;");
 
       this .addFunction (/* glsl */ `vec3 getRandomBarycentricCoord ()
