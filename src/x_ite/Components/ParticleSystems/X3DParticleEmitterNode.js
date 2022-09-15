@@ -519,7 +519,7 @@ function (X3DNode,
          getRandomSurfaceNormal ()
          {
             float theta = getRandomValue (-M_PI, M_PI);
-            float cphi  = pow (getRandomValue (0.0, 1.0), 1.0 / 3.0);
+            float cphi  = pow (random (), 1.0 / 3.0);
             float r     = sqrt (1.0 - cphi * cphi); // sin (acos (cphi));
 
             return vec3 (sin (theta) * r, cos (theta) * r, cphi);
