@@ -446,7 +446,7 @@ function (X3DNode,
          uint seed = 1u;
 
          void
-         srand (in int value)
+         srand (const in int value)
          {
             seed = uint (value);
          }

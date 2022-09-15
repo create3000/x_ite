@@ -93,8 +93,6 @@ function (Fields,
 
       this .addFunction (/* glsl */ `vec4 getRandomPosition ()
       {
-         // Determine index0 and weight.
-
          if (numLengthSoFar > 0)
          {
             float lastLengthSoFar = texelFetch (lengthSoFar, numLengthSoFar - 1, 0) .x;
