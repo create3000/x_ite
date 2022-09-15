@@ -233,16 +233,13 @@ function (Fields,
             }
          };
       })(),
-      activateTextures: function ()
+      activateTextures: function (browser, gl, program)
       {
-         const
-            browser     = this .getBrowser (),
-            gl          = browser .getContext (),
-            textureUnit = browser .getTexture2DUnit ();
+         const textureUnit = browser .getTexture2DUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, this .polylineTexture);
-         this .setUniform ("uniform1i", "lengthSoFar", textureUnit);
+         gl .uniform1i (program .polylines, textureUnit);
       },
    });
 

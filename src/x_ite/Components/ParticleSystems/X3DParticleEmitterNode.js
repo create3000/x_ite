@@ -205,7 +205,7 @@ function (X3DNode,
 
          // Other textures
 
-         this .activateTextures ();
+         this .activateTextures (browser, gl, program);
 
          // Render
 
