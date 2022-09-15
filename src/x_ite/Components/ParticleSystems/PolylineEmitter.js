@@ -210,7 +210,7 @@ function (Fields,
                if (polylineArray .length < polylineArraySize * polylineArraySize * 4)
                   polylineArray = this .polylineArray = new Float32Array (polylineArraySize * polylineArraySize * 4);
 
-               for (let i = 0, length = numVertices * 4; i < length; i += 8)
+               for (let i = 0, length = vertices .length; i < length; i += 8)
                {
                   vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
                   vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
