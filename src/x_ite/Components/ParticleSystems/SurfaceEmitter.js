@@ -149,7 +149,7 @@ function (Fields,
 
             getRandomPointOnSurface (position, normal);
 
-            if (solid && random () > 0.5)
+            if (solid == false && random () > 0.5)
                normal = -normal;
 
             return normal * speed;
