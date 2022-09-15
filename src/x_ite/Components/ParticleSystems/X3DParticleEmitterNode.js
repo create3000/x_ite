@@ -72,7 +72,6 @@ function (X3DNode,
 
       this .addUniform ("speed",     "uniform float speed;");
       this .addUniform ("variation", "uniform float variation;");
-      this .addUniform ("mass",      "uniform float mass;");
    }
 
    X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -124,8 +123,6 @@ function (X3DNode,
       set_mass__: function ()
       {
          this .mass = this ._mass .getValue ();
-
-         this .setUniform ("uniform1f", "mass", this .mass);
       },
       getRandomValue: function (min, max)
       {
@@ -368,15 +365,16 @@ function (X3DNode,
 
          // Math
 
+         // Save normalize, that will not divide by zero.
          vec3
-         save_normalize (const in vec3 vector)
+         normalize (const in vec3 vector)
          {
             float l = length (vector);
 
             if (l == 0.0)
                return vec3 (0.0);
-            else
-               return vector / l;
+
+            return vector / l;
          }
 
          // Quaternion
@@ -384,8 +382,8 @@ function (X3DNode,
          vec4
          Quaternion (const in vec3 fromVector, const in vec3 toVector)
          {
-            vec3 from = save_normalize (fromVector);
-            vec3 to   = save_normalize (toVector);
+            vec3 from = normalize (fromVector);
+            vec3 to   = normalize (toVector);
 
             float cos_angle = dot (from, to);
             vec3  crossvec  = cross (from, to);
@@ -404,7 +402,7 @@ function (X3DNode,
                   if (dot (t, t) == 0.0)
                      t = cross (from, vec3 (0.0, 1.0, 0.0));
 
-                  t = save_normalize (t);
+                  t = normalize (t);
 
                   return vec4 (t, 0.0);
                }
@@ -413,7 +411,7 @@ function (X3DNode,
             {
                float s = sqrt (abs (1.0 - cos_angle) * 0.5);
 
-               crossvec = save_normalize (crossvec);
+               crossvec = normalize (crossvec);
 
                return vec4 (crossvec * s, sqrt (abs (1.0 + cos_angle) * 0.5));
             }
@@ -698,7 +696,7 @@ function (X3DNode,
                      vec4  force      = texelFetch (forces, i, 0);
                      float turbulence = force .w;
                      vec3  normal     = getRandomNormalWithDirectionAndAngle (force .xyz, turbulence);
-                     float speed      = length (force .xyz) * deltaTime / mass;
+                     float speed      = length (force .xyz);
 
                      velocity += normal * speed;
                   }

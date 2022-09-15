@@ -53,12 +53,14 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
    "x_ite/Base/X3DConstants",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticlePhysicsModelNode,
-          X3DConstants)
+          X3DConstants,
+          Vector3)
 {
 "use strict";
 
@@ -91,11 +93,25 @@ function (Fields,
       {
          return "physics";
       },
-      addForce: function (i, emitterNode, forces)
+      addForce: (function ()
       {
-         forces .set (this ._force .getValue (), i * 4);
-         forces [i * 4 + 3] = 0;
-      },
+         const force = new Vector3 (0, 0, 0);
+
+         return function (i, emitterNode, timeByMass, forces)
+         {
+            if (this ._enabled .getValue ())
+            {
+               forces .set (force .assign (this ._force .getValue ()) .multiply (timeByMass), i * 4);
+               forces [i * 4 + 3] = 0;
+
+               return true;
+            }
+            else
+            {
+               return false;
+            }
+        };
+      })(),
    });
 
    return ForcePhysicsModel;

@@ -834,7 +834,7 @@ function (Fields,
          // Determine delta time
 
          const
-            DELAY = 15, // Delay in frames when dt full applys.
+            DELAY = 15, // Delay in frames when dt fully applies.
             dt    = 1 / Math .max (10, this .getBrowser () .getCurrentFrameRate ());
 
          // let deltaTime is only for the emitter, this.deltaTime is for the forces.
@@ -881,8 +881,9 @@ function (Fields,
             const forcePhysicsModelNodes = this .forcePhysicsModelNodes;
 
             let
-               numForces = forcePhysicsModelNodes .length,
-               forces    = this .forces;
+               numForces  = forcePhysicsModelNodes .length,
+               forces     = this .forces,
+               timeByMass = deltaTime / emitterNode .getMass ();
 
             // Collect forces in velocities and collect turbulences.
 
@@ -893,12 +894,7 @@ function (Fields,
 
             for (let i = 0; i < numForces; ++ i)
             {
-               const forcePhysicsModelNode = forcePhysicsModelNodes [i];
-
-               if (forcePhysicsModelNode ._enabled .getValue ())
-                  forcePhysicsModelNode .addForce (i - disabledForces, emitterNode, forces);
-               else
-                  ++ disabledForces;
+               disabledForces += !forcePhysicsModelNodes [i] .addForce (i - disabledForces, emitterNode, timeByMass, forces);
             }
 
             this .numForces = numForces -= disabledForces;
