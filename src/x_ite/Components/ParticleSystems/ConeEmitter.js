@@ -90,7 +90,10 @@ function (Fields,
          }
       }`);
 
-      this .addFunction (/* glsl */ `vec4 getRandomPosition () { return vec4 (position, 1.0); }`);
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         return vec4 (position, 1.0);
+      }`);
    }
 
    ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
