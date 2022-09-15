@@ -76,9 +76,90 @@ function (Fields,
 
       this .addType (X3DConstants .SurfaceEmitter);
 
-      this .surfaceNode    = null;
-      this .areaSoFarArray = [ 0 ];
-      this .direction      = new Vector3 (0, 0, 0);
+      this .surfaceNode  = null;
+      this .surfaceArray = new Float32Array ();
+
+      this .addUniform ("numAreaSoFar", "uniform int numAreaSoFar;");
+      this .addUniform ("numVertices", "uniform int numVertices;");
+      this .addUniform ("surface",      "uniform sampler2D surface;");
+
+      this .addFunction (/* glsl */ `vec3 getRandomBarycentricCoord ()
+      {
+         // Random barycentric coordinates.
+
+         float u = random ();
+         float v = random ();
+
+         if (u + v > 1.0)
+         {
+            u = 1.0 - u;
+            v = 1.0 - v;
+         }
+
+         float t = 1.0 - u - v;
+
+         return vec3 (t, u, v);
+      }`);
+
+      this .addFunction (/* glsl */ `void getRandomPointOnSurface (inout vec4 position, inout vec3 normal)
+      {
+         // Determine index0, index1 and weight.
+
+         float lastAreaSoFar = texelFetch (surface, numAreaSoFar - 1, 0) .x;
+         float fraction      = random () * lastAreaSoFar;
+
+         int   index0 = 0;
+         int   index1 = 0;
+         int   index2 = 0;
+         float weight = 0.0;
+
+         interpolate (surface, numAreaSoFar, fraction, index0, index1, weight);
+
+         // Interpolate and return position.
+
+         index0 *= 3;
+         index1  = index0 + 1;
+         index2  = index0 + 2;
+
+         vec4 vertex0 = texelFetch (surface, numAreaSoFar + index0, 0);
+         vec4 vertex1 = texelFetch (surface, numAreaSoFar + index1, 0);
+         vec4 vertex2 = texelFetch (surface, numAreaSoFar + index2, 0);
+
+         vec3 normal0 = texelFetch (surface, numAreaSoFar + numVertices + index0, 0) .xyz;
+         vec3 normal1 = texelFetch (surface, numAreaSoFar + numVertices + index1, 0) .xyz;
+         vec3 normal2 = texelFetch (surface, numAreaSoFar + numVertices + index2, 0) .xyz;
+
+         // Random barycentric coordinates.
+
+         vec3 b = getRandomBarycentricCoord ();
+
+         // Calculate position and direction.
+
+         position = b .x * vertex0 + b .y * vertex1 + b .z * vertex2;
+         normal   = normalize (b .x * normal0 + b .y * normal1 + b .z * normal2);
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 position = vec4 (0.0); vec3 getRandomVelocity ()
+      {
+         if (numAreaSoFar > 0)
+         {
+            float speed  = getRandomSpeed ();
+            vec3  normal = vec3 (0.0);
+
+            getRandomPointOnSurface (position, normal);
+
+            return normal * speed;
+         }
+         else
+         {
+            return vec3 (0.0);
+         }
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         return numAreaSoFar > 0 ? position : vec4 (0.0);
+      }`);
    }
 
    SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
@@ -109,8 +190,18 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         if (this .getBrowser () .getContext () .getVersion () < 2)
+         const browser = this .getBrowser ();
+
+         if (browser .getContext () .getVersion () < 2)
             return;
+
+         // Create GL stuff.
+
+         this .surfaceTexture = this .createTexture ();
+
+         this .setUniform ("uniform1i", "surface", browser .getDefaultTexture2DUnit ());
+
+         // Initialize fields.
 
          this ._surface .addInterest ("set_surface__", this);
 
@@ -137,21 +228,23 @@ function (Fields,
 
          return function ()
          {
+            const gl = this .getBrowser () .getContext ();
+
             if (this .surfaceNode)
             {
-               delete this .getRandomPosition;
-               delete this .getRandomVelocity;
-
-               let areaSoFar = 0;
-
                const
-                  areaSoFarArray = this .areaSoFarArray,
-                  vertices       = this .surfaceNode .getVertices () .getValue ();
+                  vertices         = this .surfaceNode .getVertices () .getValue (),
+                  normals          = this .surfaceNode .getNormals () .getValue (),
+                  numVertices      = vertices .length / 4,
+                  numAreaSoFar     = numVertices / 3 + 1,
+                  surfaceArraySize = Math .ceil (Math .sqrt (numAreaSoFar + numVertices + numVertices));
 
-               this .normals  = this .surfaceNode .getNormals () .getValue ();
-               this .vertices = vertices;
+               let
+                  surfaceArray = this .surfaceArray,
+                  areaSoFar = 0;
 
-               areaSoFarArray .length = 1;
+               if (surfaceArray .length < surfaceArraySize * surfaceArraySize * 4)
+                  surfaceArray = this .surfaceArray = new Float32Array (surfaceArraySize * surfaceArraySize * 4);
 
                for (let i = 0, length = vertices .length; i < length; i += 12)
                {
@@ -159,17 +252,38 @@ function (Fields,
                   vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
                   vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
 
-                  areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
-                  areaSoFarArray .push (areaSoFar);
+                  surfaceArray [i / 3 + 4] = areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
                }
+
+               surfaceArray .set (vertices, numAreaSoFar * 4);
+
+               for (let s = (numAreaSoFar + numVertices) * 4, n = 0, l = normals .length; n < l; s += 4, n += 3)
+               {
+                  surfaceArray [s + 0] = normals [n + 0];
+                  surfaceArray [s + 1] = normals [n + 1];
+                  surfaceArray [s + 2] = normals [n + 2];
+               }
+
+               this .setUniform ("uniform1i", "numAreaSoFar", numAreaSoFar);
+               this .setUniform ("uniform1i", "numVertices",  numVertices);
+
+               gl .bindTexture (gl .TEXTURE_2D, this .surfaceTexture);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, surfaceArraySize, surfaceArraySize, 0, gl .RGBA, gl .FLOAT, surfaceArray);
             }
             else
             {
-               this .getRandomPosition = getPosition;
-               this .getRandomVelocity = this .getSphericalRandomVelocity;
+               this .setUniform ("uniform1i", "numAreaSoFar", 0);
             }
          };
       })(),
+      activateTextures: function (browser, gl, program)
+      {
+         const textureUnit = browser .getTexture2DUnit ();
+
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, this .surfaceTexture);
+         gl .uniform1i (program .surface, textureUnit);
+      },
       getRandomPosition: function (position)
       {
          // Determine index0.
@@ -238,24 +352,7 @@ function (Fields,
 
          return position;
       },
-      getRandomVelocity: function (velocity)
-      {
-         const
-            speed     = this .getRandomSpeed (),
-            direction = this .direction;
-
-         velocity .x = direction .x * speed;
-         velocity .y = direction .y * speed;
-         velocity .z = direction .z * speed;
-
-         return velocity;
-       },
    });
-
-   function getPosition (position)
-   {
-      return position .set (0, 0, 0);
-   }
 
    return SurfaceEmitter;
 });

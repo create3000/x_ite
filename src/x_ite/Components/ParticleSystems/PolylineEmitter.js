@@ -75,7 +75,6 @@ function (Fields,
       this .polylineNode  = new IndexedLineSet (executionContext);
       this .polylineArray = new Float32Array ();
 
-      this .addUniform ("position",       "uniform vec3 position;");
       this .addUniform ("direction",      "uniform vec3 direction;");
       this .addUniform ("numLengthSoFar", "uniform int numLengthSoFar;");
       this .addUniform ("polylines",      "uniform sampler2D polylines;");
