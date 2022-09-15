@@ -93,6 +93,8 @@ function (Fields,
       {
          if (numLengthSoFar > 0)
          {
+            // Determine index0, index1 and weight.
+
             float lastLengthSoFar = texelFetch (polylines, numLengthSoFar - 1, 0) .x;
             float fraction        = random () * lastLengthSoFar;
 
