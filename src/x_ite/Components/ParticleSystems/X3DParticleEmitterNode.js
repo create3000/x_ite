@@ -160,7 +160,7 @@ function (X3DNode,
 
          // Uniforms
 
-         gl .uniform1i (program .randomSeed,        Math .random () * particleSystem .maxParticles);
+         gl .uniform1i (program .randomSeed,        Math .random () * 0xffffffff);
          gl .uniform1i (program .createParticles,   particleSystem .createParticles && this .on);
          gl .uniform1i (program .numParticles,      particleSystem .numParticles);
          gl .uniform1f (program .particleLifetime,  particleSystem .particleLifetime);
@@ -430,24 +430,21 @@ function (X3DNode,
 
          /* Random number generation */
 
-         const float RAND_MAX = float (0x7fffffff);
-         const float RAND_MIN = float (0x80000000);
-
-         int seed = 1;
+         uint seed = 1u;
 
          void
          srand (in int value)
          {
-            seed = value;
+            seed = uint (value);
          }
 
-         // Return a uniform distributed random floating point number in the interval [0, 1).
+         // Return a uniform distributed random floating point number in the interval [0, 1].
          float
          random ()
          {
-            seed = seed * 1103515245 + 12345;
+            seed = seed * 1103515245u + 12345u;
 
-            return fract (float (seed) / RAND_MAX);
+            return float (seed) / float (0xffffffffu);
          }
 
          float
