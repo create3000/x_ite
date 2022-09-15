@@ -444,7 +444,7 @@ function (X3DNode,
          {
             seed = seed * 1103515245u + 12345u;
 
-            return float (seed) / float (0xffffffffu);
+            return float (seed) / 4294967295.0;
          }
 
          float
