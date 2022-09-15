@@ -456,11 +456,11 @@ function (X3DNode,
          float
          getRandomLifetime ()
          {
-            float v   = particleLifetime * lifetimeVariation;
-            float min = max (0.0, particleLifetime - v);
-            float max = particleLifetime + v;
+            float v    = particleLifetime * lifetimeVariation;
+            float min_ = max (0.0, particleLifetime - v);
+            float max_ = particleLifetime + v;
 
-            return getRandomValue (min, max);
+            return getRandomValue (min_, max_);
          }
 
          float
@@ -476,7 +476,7 @@ function (X3DNode,
          vec3
          getRandomNormal ()
          {
-            float theta = getRandomValue (-1.0, 1.0) * M_PI;
+            float theta = getRandomValue (-M_PI, M_PI);
             float cphi  = getRandomValue (-1.0, 1.0);
             float phi   = acos (cphi);
             float r     = sin (phi);
@@ -487,7 +487,7 @@ function (X3DNode,
          vec3
          getRandomNormalWithAngle (const in float angle)
          {
-            float theta = getRandomValue (-1.0, 1.0) * M_PI;
+            float theta = getRandomValue (-M_PI, M_PI);
             float cphi  = getRandomValue (cos (angle), 1.0);
             float phi   = acos (cphi);
             float r     = sin (phi);
@@ -507,7 +507,7 @@ function (X3DNode,
          vec3
          getRandomSurfaceNormal ()
          {
-            float theta = getRandomValue (-1.0, 1.0) * M_PI;
+            float theta = getRandomValue (-M_PI, M_PI);
             float cphi  = pow (getRandomValue (0.0, 1.0), 1.0 / 3.0);
             float phi   = acos (cphi);
             float r     = sin (phi);
