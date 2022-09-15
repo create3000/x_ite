@@ -72,15 +72,13 @@ function (Fields,
 
       this .addType (X3DConstants .PolylineEmitter);
 
-      this .polylineNode     = new IndexedLineSet (executionContext);
-      this .lengthSoFarArray = new Float32Array ();
-      this .verticesArray    = new Float32Array ();
+      this .polylineNode  = new IndexedLineSet (executionContext);
+      this .polylineArray = new Float32Array ();
 
       this .addUniform ("position",       "uniform vec3 position;");
       this .addUniform ("direction",      "uniform vec3 direction;");
       this .addUniform ("numLengthSoFar", "uniform int numLengthSoFar;");
-      this .addUniform ("lengthSoFar",    "uniform sampler2D lengthSoFar;");
-      this .addUniform ("vertices",       "uniform sampler2D vertices;");
+      this .addUniform ("polylines",      "uniform sampler2D polylines;");
 
       this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
       {
@@ -95,22 +93,22 @@ function (Fields,
       {
          if (numLengthSoFar > 0)
          {
-            float lastLengthSoFar = texelFetch (lengthSoFar, numLengthSoFar - 1, 0) .x;
+            float lastLengthSoFar = texelFetch (polylines, numLengthSoFar - 1, 0) .x;
             float fraction        = random () * lastLengthSoFar;
 
             int   index0 = 0;
             int   index1 = 0;
             float weight = 0.0;
 
-            interpolate (lengthSoFar, numLengthSoFar, fraction, index0, index1, weight);
+            interpolate (polylines, numLengthSoFar, fraction, index0, index1, weight);
 
             // Interpolate and set position.
 
             index0 *= 2;
             index1  = index0 + 1;
 
-            vec4 vertex0 = texelFetch (vertices, index0, 0);
-            vec4 vertex1 = texelFetch (vertices, index1, 0);
+            vec4 vertex0 = texelFetch (polylines, numLengthSoFar + index0, 0);
+            vec4 vertex1 = texelFetch (polylines, numLengthSoFar + index1, 0);
 
             return mix (vertex0, vertex1, weight);
          }
@@ -161,8 +159,7 @@ function (Fields,
          this ._coordIndex .addFieldInterest (this .polylineNode ._coordIndex);
          this ._coord      .addFieldInterest (this .polylineNode ._coord);
 
-         this .lengthSoFarTexture = this .createTexture ();
-         this .verticesTexture    = this .createTexture ();
+         this .polylineTexture = this .createTexture ();
 
          this .polylineNode ._coordIndex = this ._coordIndex;
          this .polylineNode ._coord      = this ._coord;
@@ -171,8 +168,7 @@ function (Fields,
          this .polylineNode .setPrivate (true);
          this .polylineNode .setup ();
 
-         this .setUniform ("uniform1i", "lengthSoFar", browser .getDefaultTexture2DUnit ());
-         this .setUniform ("uniform1i", "vertices",    browser .getDefaultTexture2DUnit ());
+         this .setUniform ("uniform1i", "polylines", browser .getDefaultTexture2DUnit ());
 
          this .set_direction__ ();
          this .set_polyline ();
@@ -204,37 +200,30 @@ function (Fields,
             if (numVertices)
             {
                const
-                  numLengthSoFar     = numVertices / 2 + 1,
-                  numLengthSoFarSize = Math .ceil (Math .sqrt (numLengthSoFar)),
-                  numVerticesSize    = Math .ceil (Math .sqrt (numVertices));
+                  numLengthSoFar    = numVertices / 2 + 1,
+                  polylineArraySize = Math .ceil (Math .sqrt (numLengthSoFar + numVertices));
 
                let
-                  lengthSoFarArray = this .lengthSoFarArray,
-                  verticesArray    = this .verticesArray,
-                  lengthSoFar      = 0;
+                  polylineArray = this .polylineArray,
+                  lengthSoFar   = 0;
 
-               if (lengthSoFarArray .length < numLengthSoFar * 4)
-                  lengthSoFarArray = this .lengthSoFarArray = new Float32Array (numLengthSoFarSize * numLengthSoFarSize * 4);
-
-               if (verticesArray .length < numVertices * 4)
-                  verticesArray = this .verticesArray = new Float32Array (numVerticesSize * numVerticesSize * 4);
+               if (polylineArray .length < polylineArraySize * 4)
+                  polylineArray = this .polylineArray = new Float32Array (polylineArraySize * polylineArraySize * 4);
 
                for (let i = 0, length = numVertices * 4; i < length; i += 8)
                {
                   vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
                   vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-                  lengthSoFarArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .abs ();
+                  polylineArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .abs ();
                }
 
-               verticesArray .set (vertices);
+               polylineArray .set (vertices, numLengthSoFar * 4);
 
                this .setUniform ("uniform1i", "numLengthSoFar", numLengthSoFar);
 
-               gl .bindTexture (gl .TEXTURE_2D, this .lengthSoFarTexture);
-               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numLengthSoFarSize, numLengthSoFarSize, 0, gl .RGBA, gl .FLOAT, lengthSoFarArray);
-               gl .bindTexture (gl .TEXTURE_2D, this .verticesTexture);
-               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numVerticesSize, numVerticesSize, 0, gl .RGBA, gl .FLOAT, verticesArray);
+               gl .bindTexture (gl .TEXTURE_2D, this .polylineTexture);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, polylineArraySize, polylineArraySize, 0, gl .RGBA, gl .FLOAT, polylineArray);
             }
             else
             {
@@ -245,24 +234,13 @@ function (Fields,
       activateTextures: function ()
       {
          const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
+            browser     = this .getBrowser (),
+            gl          = browser .getContext (),
+            textureUnit = browser .getTexture2DUnit ();
 
-         {
-            const textureUnit = browser .getTexture2DUnit ();
-
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
-            gl .bindTexture (gl .TEXTURE_2D, this .lengthSoFarTexture);
-            this .setUniform ("uniform1i", "lengthSoFar", textureUnit);
-         }
-
-         {
-            const textureUnit = browser .getTexture2DUnit ();
-
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
-            gl .bindTexture (gl .TEXTURE_2D, this .verticesTexture);
-            this .setUniform ("uniform1i", "vertices", textureUnit);
-         }
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, this .polylineTexture);
+         this .setUniform ("uniform1i", "lengthSoFar", textureUnit);
       },
    });
 

@@ -17,6 +17,7 @@
       "glsl",
       "highp",
       "mult",
+      "polylines",
       "srand",
       "tessellator"
    ]
