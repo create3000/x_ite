@@ -156,12 +156,18 @@ function (Fields,
          if (browser .getContext () .getVersion () < 2)
             return;
 
+         // Create GL stuff.
+
+         this .polylineTexture = this .createTexture ();
+
+         this .setUniform ("uniform1i", "polylines", browser .getDefaultTexture2DUnit ());
+
+         // Initialize fields.
+
          this ._direction .addInterest ("set_direction__", this);
 
          this ._coordIndex .addFieldInterest (this .polylineNode ._coordIndex);
          this ._coord      .addFieldInterest (this .polylineNode ._coord);
-
-         this .polylineTexture = this .createTexture ();
 
          this .polylineNode ._coordIndex = this ._coordIndex;
          this .polylineNode ._coord      = this ._coord;
@@ -169,8 +175,6 @@ function (Fields,
          this .polylineNode ._rebuild .addInterest ("set_polyline", this);
          this .polylineNode .setPrivate (true);
          this .polylineNode .setup ();
-
-         this .setUniform ("uniform1i", "polylines", browser .getDefaultTexture2DUnit ());
 
          this .set_direction__ ();
          this .set_polyline ();
