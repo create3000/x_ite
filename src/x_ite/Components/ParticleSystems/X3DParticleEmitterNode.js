@@ -359,8 +359,22 @@ function (X3DNode,
          layout(location = 2) out vec4 output2;
          layout(location = 3) out vec4 output3;
 
-         const float M_PI       = 3.14159265359;
+         // Constants
+
          const int   MAX_FORCES = 32;
+         const float M_PI       = 3.14159265359;
+
+         // Texture
+
+         vec4
+         texelFetch (const in sampler2D sampler, const in int index, const in int lod)
+         {
+            int   x = textureSize (sampler, lod) .x;
+            ivec2 p = ivec2 (index % x, index / x);
+            vec4  t = texelFetch (sampler, p, lod);
+
+            return t;
+         }
 
          // Math
 
@@ -477,8 +491,7 @@ function (X3DNode,
          {
             float theta = getRandomValue (-M_PI, M_PI);
             float cphi  = getRandomValue (-1.0, 1.0);
-            float phi   = acos (cphi);
-            float r     = sin (phi);
+            float r     = sqrt (1.0 - cphi * cphi); // sin (acos (cphi));
 
             return vec3 (sin (theta) * r, cos (theta) * r, cphi);
          }
@@ -488,8 +501,7 @@ function (X3DNode,
          {
             float theta = getRandomValue (-M_PI, M_PI);
             float cphi  = getRandomValue (cos (angle), 1.0);
-            float phi   = acos (cphi);
-            float r     = sin (phi);
+            float r     = sqrt (1.0 - cphi * cphi); // sin (acos (cphi));
 
             return vec3 (sin (theta) * r, cos (theta) * r, cphi);
          }
@@ -508,8 +520,7 @@ function (X3DNode,
          {
             float theta = getRandomValue (-M_PI, M_PI);
             float cphi  = pow (getRandomValue (0.0, 1.0), 1.0 / 3.0);
-            float phi   = acos (cphi);
-            float r     = sin (phi);
+            float r     = sqrt (1.0 - cphi * cphi); // sin (acos (cphi));
 
             return vec3 (sin (theta) * r, cos (theta) * r, cphi);
          }
@@ -521,18 +532,6 @@ function (X3DNode,
             float speed  = getRandomSpeed ();
 
             return normal * speed;
-         }
-
-         // Texture
-
-         vec4
-         texelFetch (const in sampler2D sampler, const in int index, const in int lod)
-         {
-            int   x = textureSize (sampler, lod) .x;
-            ivec2 p = ivec2 (index % x, index / x);
-            vec4  t = texelFetch (sampler, p, lod);
-
-            return t;
          }
 
          // Algorithms
