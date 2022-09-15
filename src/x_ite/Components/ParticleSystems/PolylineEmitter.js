@@ -104,7 +104,7 @@ function (Fields,
 
             interpolate (polylines, numLengthSoFar, fraction, index0, index1, weight);
 
-            // Interpolate and set position.
+            // Interpolate and return position.
 
             index0 *= 2;
             index1  = index0 + 1;
