@@ -82,6 +82,7 @@ function (Fields,
       this .addUniform ("numAreaSoFar", "uniform int numAreaSoFar;");
       this .addUniform ("numVertices",  "uniform int numVertices;");
       this .addUniform ("surface",      "uniform sampler2D surface;");
+      this .addUniform ("solid",        "uniform bool solid;");
 
       this .addFunction (/* glsl */ `vec3 getRandomBarycentricCoord ()
       {
@@ -148,6 +149,9 @@ function (Fields,
 
             getRandomPointOnSurface (position, normal);
 
+            if (solid && random () > 0.5)
+               normal = -normal;
+
             return normal * speed;
          }
          else
@@ -210,14 +214,26 @@ function (Fields,
       set_surface__: function ()
       {
          if (this .surfaceNode)
+         {
+            this .surfaceNode ._solid   .removeInterest ("set_solid__",    this);
             this .surfaceNode ._rebuild .removeInterest ("set_geometry__", this);
+         }
 
          this .surfaceNode = X3DCast (X3DConstants .X3DGeometryNode, this ._surface);
 
          if (this .surfaceNode)
+         {
+            this .surfaceNode ._solid   .addInterest ("set_solid__",    this);
             this .surfaceNode ._rebuild .addInterest ("set_geometry__", this);
+         }
 
+         this .set_solid__ ();
          this .set_geometry__ ();
+      },
+      set_solid__: function ()
+      {
+         if (this .surfaceNode)
+            this .setUniform ("uniform1i", "solid", this .surfaceNode ._solid .getValue ());
       },
       set_geometry__: (function ()
       {
