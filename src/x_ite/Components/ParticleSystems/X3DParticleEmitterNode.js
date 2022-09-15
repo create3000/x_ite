@@ -361,7 +361,7 @@ function (X3DNode,
 
          // Constants
 
-         const int   MAX_FORCES = 32;
+         const int   MAX_FORCES = 1024;
          const float M_PI       = 3.14159265359;
 
          // Texture
