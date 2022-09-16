@@ -84,6 +84,7 @@ function (Fields,
       this .addUniform ("numAreaSoFar", "uniform int numAreaSoFar;");
       this .addUniform ("numVertices",  "uniform int numVertices;");
       this .addUniform ("volume",       "uniform sampler2D volume;");
+      this .addUniform ("bvhLength",    "uniform int bvhLength;");
       this .addUniform ("bvh",          "uniform sampler2D bvh;");
 
       this .addFunction (/* glsl */ `vec4 position = vec4 (0.0); vec3 getRandomVelocity ()
@@ -234,7 +235,19 @@ function (Fields,
             gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, volumeArraySize, volumeArraySize, 0, gl .RGBA, gl .FLOAT, volumeArray);
 
-            const bvhArray = new BVH (vertices, normals) .toArray (this .bvhArray);
+            // BVH
+
+            const
+               bvhArray     = new BVH (vertices, normals) .toArray (this .bvhArray),
+               bvhArraySize = Math .ceil (Math .sqrt (bvhArray .length)),
+               bvhLength    = bvhArray .length / 4;
+
+            bvhArray .length = bvhArraySize * bvhArraySize * 4;
+
+            this .setUniform ("uniform1i", "bvhLength", bvhLength);
+
+            gl .bindTexture (gl .TEXTURE_2D, this .bvhTexture);
+            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, bvhArraySize, bvhArraySize, 0, gl .RGBA, gl .FLOAT, new Float32Array (bvhArray));
          };
       })(),
       activateTextures: function (browser, gl, program)

@@ -87,6 +87,7 @@ function (Vector3,
    {
       this .vertices = tree .vertices;
       this .normals  = tree .normals;
+      this .triangle = triangle;
       this .i4       = triangle * 12;
       this .i3       = triangle * 9;
    }
@@ -138,6 +139,11 @@ function (Vector3,
       },
       toArray: function (array)
       {
+         const index = array .length / 4;
+
+         array .push (1, this .triangle * 3, 0, 0);
+
+         return index;
       },
    };
 
@@ -299,6 +305,18 @@ function (Vector3,
       },
       toArray: function (array)
       {
+         const
+            leftIndex  = this .left .toArray (array),
+            rightIndex = this .right .toArray (array),
+            min        = this .min,
+            max        = this .max,
+            index      = array .length / 4;
+
+         array .push (0, leftIndex, rightIndex, 0,
+                      min .x, min .y, min .z, 0,
+                      max .x, max .y, max .z, 0);
+
+         return index;
       },
    };
 
@@ -354,7 +372,12 @@ function (Vector3,
       {
          array .length = 0;
 
-         this .root .toArray (array);
+         if (this .root)
+         {
+            const index = this .root .toArray (array);
+
+            array .push (index, 0, 0, 0);
+         }
 
          return array;
       },
