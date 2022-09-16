@@ -147,7 +147,7 @@ getIntersections (const in int bvhLength, const in sampler2D bvh, const in Line3
 
 				current = -1;
 
-				int  i = getBVHLeft (bvh);
+				int  i = getBVHTriangle (bvh);
 				vec3 b = vec3 (0.0);
 
 				vec3 a = texelFetch (surface, verticesIndex + i + 0) .xyz;
