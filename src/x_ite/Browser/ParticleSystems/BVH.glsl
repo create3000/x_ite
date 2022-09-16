@@ -12,7 +12,7 @@ setBVHIndex (const in int index)
 }
 
 int
-getBVHRoot (const in bvhLength)
+getBVHRoot (const in int bvhLength)
 {
 	return bvhLength - 1;
 }
@@ -20,7 +20,7 @@ getBVHRoot (const in bvhLength)
 int
 getBVHType (const in sampler2D bvh)
 {
-	return texelFetch (bvh, bvhNodeIndex, 0) .x;
+	return int (texelFetch (bvh, bvhNodeIndex, 0) .x);
 }
 
 vec3
