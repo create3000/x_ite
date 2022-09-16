@@ -74,6 +74,10 @@ function (Vector3,
       // left: We do not have to test for left.
    ];
 
+   const
+      NODE     = 0,
+      TRIANGLE = 1;
+
    function SortComparator (vertices, axis)
    {
       return function compare (a, b)
@@ -141,7 +145,7 @@ function (Vector3,
       {
          const index = array .length / 4;
 
-         array .push (1, this .triangle * 3, 0, 0);
+         array .push (TRIANGLE, this .triangle * 3, 0, 0);
 
          return index;
       },
@@ -312,7 +316,7 @@ function (Vector3,
             max        = this .max,
             index      = array .length / 4;
 
-         array .push (0, leftIndex, rightIndex, 0,
+         array .push (NODE, leftIndex, rightIndex, 0,
                       min .x, min .y, min .z, 0,
                       max .x, max .y, max .z, 0);
 
