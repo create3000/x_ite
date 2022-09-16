@@ -239,8 +239,8 @@ function (Fields,
 
             const
                bvhArray     = new BVH (vertices, normals) .toArray (this .bvhArray),
-               bvhArraySize = Math .ceil (Math .sqrt (bvhArray .length)),
-               bvhLength    = bvhArray .length / 4;
+               bvhLength    = bvhArray .length / 4,
+               bvhArraySize = Math .ceil (Math .sqrt (bvhLength));
 
             bvhArray .length = bvhArraySize * bvhArraySize * 4;
 
