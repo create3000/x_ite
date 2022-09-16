@@ -98,7 +98,7 @@ function (Fields,
 
       this .addFunction (/* glsl */ `vec4 position = vec4 (0.0); vec3 getRandomVelocity ()
       {
-         if (numAreaSoFar > 0)
+         if (numVertices > 0)
          {
             vec3  normal = vec3 (0.0);
             float speed  = getRandomSpeed ();
@@ -118,7 +118,7 @@ function (Fields,
 
       this .addFunction (/* glsl */ `vec4 getRandomPosition ()
       {
-         return numAreaSoFar > 0 ? position : vec4 (0.0);
+         return numVertices > 0 ? position : vec4 (0.0);
       }`);
    }
 
