@@ -604,6 +604,64 @@ function (X3DNode,
             }
          }
 
+         vec3
+         getRandomBarycentricCoord ()
+         {
+            // Random barycentric coordinates.
+
+            float u = random ();
+            float v = random ();
+
+            if (u + v > 1.0)
+            {
+               u = 1.0 - u;
+               v = 1.0 - v;
+            }
+
+            float t = 1.0 - u - v;
+
+            return vec3 (t, u, v);
+         }
+
+         void
+         getRandomPointOnSurface (const in sampler2D surface, const in int numAreaSoFar, const in int numVertices, inout vec4 position, inout vec3 normal)
+         {
+            // Determine index0, index1 and weight.
+
+            float lastAreaSoFar = texelFetch (surface, numAreaSoFar - 1, 0) .x;
+            float fraction      = random () * lastAreaSoFar;
+
+            int   index0 = 0;
+            int   index1 = 0;
+            int   index2 = 0;
+            float weight = 0.0;
+
+            interpolate (surface, numAreaSoFar, fraction, index0, index1, weight);
+
+            // Interpolate and return position.
+
+            index0 *= 3;
+            index1  = index0 + 1;
+            index2  = index0 + 2;
+
+            vec4 vertex0 = texelFetch (surface, numAreaSoFar + index0, 0);
+            vec4 vertex1 = texelFetch (surface, numAreaSoFar + index1, 0);
+            vec4 vertex2 = texelFetch (surface, numAreaSoFar + index2, 0);
+
+            vec3 normal0 = texelFetch (surface, numAreaSoFar + numVertices + index0, 0) .xyz;
+            vec3 normal1 = texelFetch (surface, numAreaSoFar + numVertices + index1, 0) .xyz;
+            vec3 normal2 = texelFetch (surface, numAreaSoFar + numVertices + index2, 0) .xyz;
+
+            // Random barycentric coordinates.
+
+            vec3 b = getRandomBarycentricCoord ();
+
+            // Calculate position and direction.
+
+            position = b .x * vertex0 + b .y * vertex1 + b .z * vertex2;
+            normal   = normalize (b .x * normal0 + b .y * normal1 + b .z * normal2);
+         }
+
          // Functions
 
          ${this .functions .join ("\n")}

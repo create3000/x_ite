@@ -56,7 +56,6 @@ define ([
    "x_ite/Base/X3DCast",
    "standard/Math/Geometry/Triangle3",
    "standard/Math/Numbers/Vector3",
-   "standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -65,8 +64,7 @@ function (Fields,
           X3DConstants,
           X3DCast,
           Triangle3,
-          Vector3,
-          Algorithm)
+          Vector3)
 {
 "use strict";
 
@@ -84,70 +82,14 @@ function (Fields,
       this .addUniform ("surface",      "uniform sampler2D surface;");
       this .addUniform ("solid",        "uniform bool solid;");
 
-      this .addFunction (/* glsl */ `vec3 getRandomBarycentricCoord ()
-      {
-         // Random barycentric coordinates.
-
-         float u = random ();
-         float v = random ();
-
-         if (u + v > 1.0)
-         {
-            u = 1.0 - u;
-            v = 1.0 - v;
-         }
-
-         float t = 1.0 - u - v;
-
-         return vec3 (t, u, v);
-      }`);
-
-      this .addFunction (/* glsl */ `void getRandomPointOnSurface (inout vec4 position, inout vec3 normal)
-      {
-         // Determine index0, index1 and weight.
-
-         float lastAreaSoFar = texelFetch (surface, numAreaSoFar - 1, 0) .x;
-         float fraction      = random () * lastAreaSoFar;
-
-         int   index0 = 0;
-         int   index1 = 0;
-         int   index2 = 0;
-         float weight = 0.0;
-
-         interpolate (surface, numAreaSoFar, fraction, index0, index1, weight);
-
-         // Interpolate and return position.
-
-         index0 *= 3;
-         index1  = index0 + 1;
-         index2  = index0 + 2;
-
-         vec4 vertex0 = texelFetch (surface, numAreaSoFar + index0, 0);
-         vec4 vertex1 = texelFetch (surface, numAreaSoFar + index1, 0);
-         vec4 vertex2 = texelFetch (surface, numAreaSoFar + index2, 0);
-
-         vec3 normal0 = texelFetch (surface, numAreaSoFar + numVertices + index0, 0) .xyz;
-         vec3 normal1 = texelFetch (surface, numAreaSoFar + numVertices + index1, 0) .xyz;
-         vec3 normal2 = texelFetch (surface, numAreaSoFar + numVertices + index2, 0) .xyz;
-
-         // Random barycentric coordinates.
-
-         vec3 b = getRandomBarycentricCoord ();
-
-         // Calculate position and direction.
-
-         position = b .x * vertex0 + b .y * vertex1 + b .z * vertex2;
-         normal   = normalize (b .x * normal0 + b .y * normal1 + b .z * normal2);
-      }`);
-
       this .addFunction (/* glsl */ `vec4 position = vec4 (0.0); vec3 getRandomVelocity ()
       {
          if (numAreaSoFar > 0)
          {
-            float speed  = getRandomSpeed ();
             vec3  normal = vec3 (0.0);
+            float speed  = getRandomSpeed ();
 
-            getRandomPointOnSurface (position, normal);
+            getRandomPointOnSurface (surface, numAreaSoFar, numVertices, position, normal);
 
             if (solid == false && random () > 0.5)
                normal = -normal;
@@ -257,7 +199,7 @@ function (Fields,
 
                let
                   surfaceArray = this .surfaceArray,
-                  areaSoFar = 0;
+                  areaSoFar    = 0;
 
                if (surfaceArray .length < surfaceArraySize * surfaceArraySize * 4)
                   surfaceArray = this .surfaceArray = new Float32Array (surfaceArraySize * surfaceArraySize * 4);

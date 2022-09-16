@@ -86,9 +86,40 @@ function (Fields,
 
       this .addType (X3DConstants .VolumeEmitter);
 
-      this .direction      = new Vector3 (0, 0, 0);
-      this .volumeNode     = new IndexedFaceSet (executionContext);
-      this .areaSoFarArray = [ 0 ];
+      this .volumeNode  = new IndexedFaceSet (executionContext);
+      this .volumeArray = new Float32Array ();
+      this .bvhArray    = [ ];
+
+      this .addUniform ("direction",    "uniform vec3 direction;");
+      this .addUniform ("numAreaSoFar", "uniform int numAreaSoFar;");
+      this .addUniform ("numVertices",  "uniform int numVertices;");
+      this .addUniform ("volume",       "uniform sampler2D volume;");
+      this .addUniform ("bvh",          "uniform sampler2D bvh;");
+
+      this .addFunction (/* glsl */ `vec4 position = vec4 (0.0); vec3 getRandomVelocity ()
+      {
+         if (numAreaSoFar > 0)
+         {
+            vec3  normal = vec3 (0.0);
+            float speed  = getRandomSpeed ();
+
+            getRandomPointOnSurface (volume, numAreaSoFar, numVertices, position, normal);
+
+            if (direction == vec3 (0.0))
+               return getRandomSphericalVelocity ();
+            else
+               return direction * speed;
+         }
+         else
+         {
+            return vec3 (0.0);
+         }
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         return numAreaSoFar > 0 ? position : vec4 (0.0);
+      }`);
    }
 
    VolumeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
@@ -122,8 +153,20 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         if (this .getBrowser () .getContext () .getVersion () < 2)
+         const browser = this .getBrowser ();
+
+         if (browser .getContext () .getVersion () < 2)
             return;
+
+         // Create GL stuff.
+
+         this .volumeTexture = this .createTexture ();
+         this .bvhTexture    = this .createTexture ();
+
+         this .setUniform ("uniform1i", "volume", browser .getDefaultTexture2DUnit ());
+         this .setUniform ("uniform1i", "bhv",    browser .getDefaultTexture2DUnit ());
+
+         // Initialize fields.
 
          this ._direction .addInterest ("set_direction__", this);
 
@@ -142,15 +185,17 @@ function (Fields,
          this .set_direction__ ();
          this .set_geometry__ ();
       },
-      set_direction__: function ()
+      set_direction__: (function ()
       {
-         this .direction .assign (this ._direction .getValue ()) .normalize ();
+         const direction = new Vector3 (0, 0, 0);
 
-         if (this .direction .equals (Vector3 .Zero))
-            this .getRandomVelocity = this .getSphericalRandomVelocity;
-         else
-            delete this .getRandomVelocity;
-      },
+         return function ()
+         {
+            direction .assign (this ._direction .getValue ()) .normalize ();
+
+            this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
+         };
+      })(),
       set_geometry__: (function ()
       {
          const
@@ -160,17 +205,20 @@ function (Fields,
 
          return function ()
          {
-            let areaSoFar = 0;
-
             const
-               areaSoFarArray = this .areaSoFarArray,
-               normals        = this .volumeNode .getNormals () .getValue (),
-               vertices       = this .volumeNode .getVertices () .getValue ();
+               gl              = this .getBrowser () .getContext (),
+               vertices        = this .volumeNode .getVertices () .getValue (),
+               normals         = this .volumeNode .getNormals () .getValue (),
+               numVertices     = vertices .length / 4,
+               numAreaSoFar    = numVertices / 3 + 1,
+               volumeArraySize = Math .ceil (Math .sqrt (numAreaSoFar + numVertices + numVertices));
 
-            this .normals  = normals;
-            this .vertices = vertices;
+            let
+               volumeArray = this .volumeArray,
+               areaSoFar   = 0;
 
-            areaSoFarArray .length = 1;
+            if (volumeArray .length < volumeArraySize * volumeArraySize * 4)
+               volumeArray = this .volumeArray = new Float32Array (volumeArraySize * volumeArraySize * 4);
 
             for (let i = 0, length = vertices .length; i < length; i += 12)
             {
@@ -178,150 +226,170 @@ function (Fields,
                vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
                vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
 
-               areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
-               areaSoFarArray .push (areaSoFar);
+               volumeArray [i / 3 + 4] = areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
             }
 
-            this .bvh = new BVH (vertices, normals);
+            volumeArray .set (vertices, numAreaSoFar * 4);
+
+            for (let s = (numAreaSoFar + numVertices) * 4, n = 0, l = normals .length; n < l; s += 4, n += 3)
+            {
+               volumeArray [s + 0] = normals [n + 0];
+               volumeArray [s + 1] = normals [n + 1];
+               volumeArray [s + 2] = normals [n + 2];
+            }
+
+            this .setUniform ("uniform1i", "numAreaSoFar", numAreaSoFar);
+            this .setUniform ("uniform1i", "numVertices",  numVertices);
+
+            gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
+            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, volumeArraySize, volumeArraySize, 0, gl .RGBA, gl .FLOAT, volumeArray);
+
+            const bvh = new BVH (vertices, normals);
          };
       })(),
-      getRandomPosition: (function ()
+      activateTextures: function (browser, gl, program)
       {
-         const
-            point         = new Vector3 (0, 0, 0),
-            normal        = new Vector3 (0, 0, 0),
-            rotation      = new Rotation4 (0, 0, 1, 0),
-            line          = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-            plane         = new Plane3 (Vector3 .Zero, Vector3 .zAxis),
-            intersections = [ ],
-            sorter        = new QuickSort (intersections, PlaneCompare);
-
-         function PlaneCompare (a, b)
          {
-            return plane .getDistanceToPoint (a) < plane .getDistanceToPoint (b);
+            const textureUnit = browser .getTexture2DUnit ();
+
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
+            gl .uniform1i (program .volume, textureUnit);
          }
 
-         return function (position)
          {
-            // Get random point on surface
+            const textureUnit = browser .getTexture2DUnit ();
 
-            // Determine index0.
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, this .bvhTexture);
+            gl .uniform1i (program .bvh, textureUnit);
+         }
+      },
+      // getRandomPosition: (function ()
+      // {
+      //    const
+      //       point         = new Vector3 (0, 0, 0),
+      //       normal        = new Vector3 (0, 0, 0),
+      //       rotation      = new Rotation4 (0, 0, 1, 0),
+      //       line          = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+      //       plane         = new Plane3 (Vector3 .Zero, Vector3 .zAxis),
+      //       intersections = [ ],
+      //       sorter        = new QuickSort (intersections, PlaneCompare);
 
-            const
-               areaSoFarArray = this .areaSoFarArray,
-               length         = areaSoFarArray .length,
-               fraction       = Math .random () * areaSoFarArray .at (-1);
+      //    function PlaneCompare (a, b)
+      //    {
+      //       return plane .getDistanceToPoint (a) < plane .getDistanceToPoint (b);
+      //    }
 
-            let index0 = 0;
+      //    return function (position)
+      //    {
+      //       // Get random point on surface
 
-            if (length == 1 || fraction <= areaSoFarArray [0])
-            {
-               index0 = 0;
-            }
-            else if (fraction >= areaSoFarArray .at (-1))
-            {
-               index0 = length - 2;
-            }
-            else
-            {
-               const index = Algorithm .upperBound (areaSoFarArray, 0, length, fraction, Algorithm .less);
+      //       // Determine index0.
 
-               if (index < length)
-               {
-                  index0 = index - 1;
-               }
-               else
-               {
-                  index0 = 0;
-               }
-            }
+      //       const
+      //          areaSoFarArray = this .areaSoFarArray,
+      //          length         = areaSoFarArray .length,
+      //          fraction       = Math .random () * areaSoFarArray .at (-1);
 
-            // Random barycentric coordinates.
+      //       let index0 = 0;
 
-            let
-               u = Math .random (),
-               v = Math .random ();
+      //       if (length == 1 || fraction <= areaSoFarArray [0])
+      //       {
+      //          index0 = 0;
+      //       }
+      //       else if (fraction >= areaSoFarArray .at (-1))
+      //       {
+      //          index0 = length - 2;
+      //       }
+      //       else
+      //       {
+      //          const index = Algorithm .upperBound (areaSoFarArray, 0, length, fraction, Algorithm .less);
 
-            if (u + v > 1)
-            {
-               u = 1 - u;
-               v = 1 - v;
-            }
+      //          if (index < length)
+      //          {
+      //             index0 = index - 1;
+      //          }
+      //          else
+      //          {
+      //             index0 = 0;
+      //          }
+      //       }
 
-            const t = 1 - u - v;
+      //       // Random barycentric coordinates.
 
-            // Interpolate and determine random point on surface and normal.
+      //       let
+      //          u = Math .random (),
+      //          v = Math .random ();
 
-            const
-               i12      = index0 * 12,
-               vertices = this .vertices;
+      //       if (u + v > 1)
+      //       {
+      //          u = 1 - u;
+      //          v = 1 - v;
+      //       }
 
-            point .x = u * vertices [i12]     + v * vertices [i12 + 4] + t * vertices [i12 + 8];
-            point .y = u * vertices [i12 + 1] + v * vertices [i12 + 5] + t * vertices [i12 + 9];
-            point .z = u * vertices [i12 + 2] + v * vertices [i12 + 6] + t * vertices [i12 + 10];
+      //       const t = 1 - u - v;
 
-            const
-               i9      = index0 * 9,
-               normals = this .normals;
+      //       // Interpolate and determine random point on surface and normal.
 
-            normal .x = u * normals [i9]     + v * normals [i9 + 3] + t * normals [i9 + 6];
-            normal .y = u * normals [i9 + 1] + v * normals [i9 + 4] + t * normals [i9 + 7];
-            normal .z = u * normals [i9 + 2] + v * normals [i9 + 5] + t * normals [i9 + 8];
+      //       const
+      //          i12      = index0 * 12,
+      //          vertices = this .vertices;
 
-            rotation .setFromToVec (Vector3 .zAxis, normal);
-            rotation .multVecRot (this .getRandomSurfaceNormal (normal));
+      //       point .x = u * vertices [i12]     + v * vertices [i12 + 4] + t * vertices [i12 + 8];
+      //       point .y = u * vertices [i12 + 1] + v * vertices [i12 + 5] + t * vertices [i12 + 9];
+      //       point .z = u * vertices [i12 + 2] + v * vertices [i12 + 6] + t * vertices [i12 + 10];
 
-            // Setup random line throu volume for intersection text
-            // and a plane corresponding to the line for intersection sorting.
+      //       const
+      //          i9      = index0 * 9,
+      //          normals = this .normals;
 
-            line  .set (point, normal);
-            plane .set (point, normal);
+      //       normal .x = u * normals [i9]     + v * normals [i9 + 3] + t * normals [i9 + 6];
+      //       normal .y = u * normals [i9 + 1] + v * normals [i9 + 4] + t * normals [i9 + 7];
+      //       normal .z = u * normals [i9 + 2] + v * normals [i9 + 5] + t * normals [i9 + 8];
 
-            // Find random point in volume.
+      //       rotation .setFromToVec (Vector3 .zAxis, normal);
+      //       rotation .multVecRot (this .getRandomSurfaceNormal (normal));
 
-            let numIntersections = this .bvh .intersectsLine (line, intersections);
+      //       // Setup random line throu volume for intersection text
+      //       // and a plane corresponding to the line for intersection sorting.
 
-            numIntersections -= numIntersections % 2; // We need an even count of intersections.
+      //       line  .set (point, normal);
+      //       plane .set (point, normal);
 
-            if (numIntersections)
-            {
-               // Sort intersections along line with a little help from the plane.
+      //       // Find random point in volume.
 
-               sorter .sort (0, numIntersections);
+      //       let numIntersections = this .bvh .intersectsLine (line, intersections);
 
-               // Select random intersection pair.
+      //       numIntersections -= numIntersections % 2; // We need an even count of intersections.
 
-               const
-                  index  = Math .round (this .getRandomValue (0, numIntersections / 2 - 1)) * 2,
-                  point0 = intersections [index],
-                  point1 = intersections [index + 1],
-                  t      = Math .random ();
+      //       if (numIntersections)
+      //       {
+      //          // Sort intersections along line with a little help from the plane.
 
-               // lerp
-               position .x = point0 .x + (point1 .x - point0 .x) * t;
-               position .y = point0 .y + (point1 .y - point0 .y) * t;
-               position .z = point0 .z + (point1 .z - point0 .z) * t;
+      //          sorter .sort (0, numIntersections);
 
-               return position;
-            }
+      //          // Select random intersection pair.
 
-            // Discard point.
+      //          const
+      //             index  = Math .round (this .getRandomValue (0, numIntersections / 2 - 1)) * 2,
+      //             point0 = intersections [index],
+      //             point1 = intersections [index + 1],
+      //             t      = Math .random ();
 
-            return position .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
-         };
-      })(),
-      getRandomVelocity: function (velocity)
-      {
-         const
-            direction = this .direction,
-            speed     = this .getRandomSpeed ();
+      //          // lerp
+      //          position .x = point0 .x + (point1 .x - point0 .x) * t;
+      //          position .y = point0 .y + (point1 .y - point0 .y) * t;
+      //          position .z = point0 .z + (point1 .z - point0 .z) * t;
 
-         velocity .x = direction .x * speed;
-         velocity .y = direction .y * speed;
-         velocity .z = direction .z * speed;
+      //          return position;
+      //       }
 
-         return velocity;
-       },
+      //       // Discard point.
+
+      //       return position .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
+      //    };
+      // })(),
    });
 
    return VolumeEmitter;
