@@ -231,6 +231,7 @@ function (Fields,
             else
             {
                this .setUniform ("uniform1i", "numAreaSoFar", 0);
+               this .setUniform ("uniform1i", "numVertices",  0);
             }
          };
       })(),
