@@ -76,20 +76,11 @@ function (Vector3,
 
    function SortComparator (vertices, axis)
    {
-      function compare (a, b)
+      return function compare (a, b)
       {
-         const
-            vertices = compare .vertices;
-            axis     = compare .axis;
-
-         return Math .min (vertices [a + axis], vertices [a + 4 + axis], vertices [a + 8 + axis]) <
-                Math .min (vertices [b + axis], vertices [b + 4 + axis], vertices [b + 8 + axis]);
+          return Math .min (vertices [a + axis], vertices [a + 4 + axis], vertices [a + 8 + axis]) <
+                 Math .min (vertices [b + axis], vertices [b + 4 + axis], vertices [b + 8 + axis]);
       }
-
-      compare .vertices = vertices;
-      compare .axis     = axis;
-
-      return compare;
    }
 
    function Triangle (tree, triangle)
@@ -144,6 +135,9 @@ function (Vector3,
                                              t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
             }
          }
+      },
+      toArray: function (array)
+      {
       },
    };
 
@@ -303,14 +297,17 @@ function (Vector3,
             return 0;
          }
       },
+      toArray: function (array)
+      {
+      },
    };
 
    function BVH (vertices, normals)
    {
+      const numTriangles = vertices .length / 12;
+
       this .vertices = vertices;
       this .normals  = normals;
-
-      const numTriangles = vertices .length / 12;
 
       switch (numTriangles)
       {
@@ -332,8 +329,7 @@ function (Vector3,
                triangles .push (i);
 
             this .sorter = new QuickSort (triangles, SortComparator (vertices, 0));
-
-            this .root = new Node (this, triangles, 0, numTriangles);
+            this .root   = new Node (this, triangles, 0, numTriangles);
             break;
          }
       }
@@ -342,7 +338,6 @@ function (Vector3,
    BVH .prototype =
    {
       constructor: BVH,
-
       intersectsLine: function (line, intersections, intersectionNormals)
       {
          intersections .size = 0;
@@ -354,6 +349,14 @@ function (Vector3,
          }
 
          return 0;
+      },
+      toArray: function (array)
+      {
+         array .length = 0;
+
+         this .root .toArray (array);
+
+         return array;
       },
    };
 

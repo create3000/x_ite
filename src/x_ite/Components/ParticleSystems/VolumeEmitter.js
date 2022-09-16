@@ -55,13 +55,8 @@ define ([
    "x_ite/Components/Geometry3D/IndexedFaceSet",
    "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Geometry/Line3",
-   "standard/Math/Geometry/Plane3",
    "standard/Math/Geometry/Triangle3",
-   "standard/Math/Algorithm",
    "standard/Math/Utility/BVH",
-   "standard/Math/Algorithms/QuickSort",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -70,13 +65,8 @@ function (Fields,
           IndexedFaceSet,
           X3DConstants,
           Vector3,
-          Rotation4,
-          Line3,
-          Plane3,
           Triangle3,
-          Algorithm,
-          BVH,
-          QuickSort)
+          BVH)
 {
 "use strict";
 
@@ -100,15 +90,15 @@ function (Fields,
       {
          if (numVertices > 0)
          {
-            vec3  normal = vec3 (0.0);
-            float speed  = getRandomSpeed ();
+            vec3 normal = vec3 (0.0);
 
             getRandomPointOnSurface (volume, numAreaSoFar, numVertices, position, normal);
 
             if (direction == vec3 (0.0))
                return getRandomSphericalVelocity ();
+
             else
-               return direction * speed;
+               return direction * getRandomSpeed ();
          }
          else
          {
@@ -244,7 +234,7 @@ function (Fields,
             gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, volumeArraySize, volumeArraySize, 0, gl .RGBA, gl .FLOAT, volumeArray);
 
-            const bvh = new BVH (vertices, normals);
+            const bvhArray = new BVH (vertices, normals) .toArray (this .bvhArray);
          };
       })(),
       activateTextures: function (browser, gl, program)
