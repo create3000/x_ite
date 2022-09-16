@@ -639,20 +639,20 @@ function (X3DNode,
          }
 
          void
-         animate (const in ivec2 fragCoord, const in int index)
+         animate (const in ivec2 fragCoord, const in int id)
          {
-            if (index < numParticles)
+            if (id < numParticles)
             {
-               srand ((index + randomSeed) * randomSeed);
+               srand ((id + randomSeed) * randomSeed);
 
                vec4 input0 = texelFetch (inputSampler0, fragCoord, 0);
                vec4 input1 = texelFetch (inputSampler1, fragCoord, 0);
                vec4 input2 = texelFetch (inputSampler2, fragCoord, 0);
                vec4 input3 = texelFetch (inputSampler3, fragCoord, 0);
 
-               uint  life        = uint (input0 [0]);
-               float lifetime    = input0 [1];
-               float elapsedTime = input0 [2] + deltaTime;
+               uint  life        = uint (input0 [1]);
+               float lifetime    = input0 [2];
+               float elapsedTime = input0 [3] + deltaTime;
 
                if (elapsedTime > lifetime)
                {
@@ -662,7 +662,7 @@ function (X3DNode,
                   lifetime    = getRandomLifetime ();
                   elapsedTime = 0.0;
 
-                  output0 = vec4 (life, lifetime, elapsedTime, 0.0);
+                  output0 = vec4 (id, life, lifetime, elapsedTime);
                   output1 = getColor (lifetime, elapsedTime);
 
                   if (createParticles)
@@ -698,7 +698,7 @@ function (X3DNode,
 
                   position .xyz += velocity * deltaTime;
 
-                  output0 = vec4 (life, lifetime, elapsedTime, 0.0);
+                  output0 = vec4 (id, life, lifetime, elapsedTime);
                   output1 = getColor (lifetime, elapsedTime);
                   output2 = vec4 (velocity, 0.0);
                   output3 = position;
@@ -717,9 +717,9 @@ function (X3DNode,
          main ()
          {
             ivec2 fragCoord = ivec2 (gl_FragCoord .xy);
-            int   index     = fragCoord .y * textureSize (inputSampler0, 0) .x + fragCoord .x;
+            int   id        = fragCoord .y * textureSize (inputSampler0, 0) .x + fragCoord .x;
 
-            animate (fragCoord, index);
+            animate (fragCoord, id);
          }
          `;
 
