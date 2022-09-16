@@ -310,13 +310,13 @@ function (Vector3,
       toArray: function (array)
       {
          const
-            leftIndex  = this .left .toArray (array),
-            rightIndex = this .right .toArray (array),
-            min        = this .min,
-            max        = this .max,
-            index      = array .length / 4;
+            left  = this .left .toArray (array),
+            right = this .right .toArray (array),
+            min   = this .min,
+            max   = this .max,
+            index = array .length / 4;
 
-         array .push (NODE, leftIndex, rightIndex, 0,
+         array .push (NODE, left, right, 0,
                       min .x, min .y, min .z, 0,
                       max .x, max .y, max .z, 0);
 
@@ -378,9 +378,9 @@ function (Vector3,
 
          if (this .root)
          {
-            const index = this .root .toArray (array);
+            const root = this .root .toArray (array);
 
-            array .push (index, 0, 0, 0);
+            array .push (root, 0, 0, 0);
          }
 
          return array;
