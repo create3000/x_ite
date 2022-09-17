@@ -120,8 +120,8 @@ function (Fields,
       {
          if (numVertices > 0)
          {
-            vec4 point  = vec4 (0.0);
-            vec3 normal = vec3 (0.0);
+            vec4 point;
+            vec3 normal;
 
             getRandomPointOnSurface (volume, numAreaSoFar, numVertices, point, normal);
 

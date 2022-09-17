@@ -82,19 +82,18 @@ function (Fields,
       this .addUniform ("surface",      "uniform sampler2D surface;");
       this .addUniform ("solid",        "uniform bool solid;");
 
-      this .addFunction (/* glsl */ `vec4 position = vec4 (0.0); vec3 getRandomVelocity ()
+      this .addFunction (/* glsl */ `vec4 position; vec3 getRandomVelocity ()
       {
          if (numVertices > 0)
          {
-            vec3  normal = vec3 (0.0);
-            float speed  = getRandomSpeed ();
+            vec3 normal;
 
             getRandomPointOnSurface (surface, numAreaSoFar, numVertices, position, normal);
 
             if (solid == false && random () > 0.5)
                normal = -normal;
 
-            return normal * speed;
+            return normal * getRandomSpeed ();
          }
          else
          {

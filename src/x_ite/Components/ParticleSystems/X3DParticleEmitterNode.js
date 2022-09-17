@@ -569,7 +569,7 @@ function (X3DNode,
          }
 
          void
-         interpolate (const in sampler2D sampler, const in int count, const in float fraction, inout int index0, inout int index1, inout float weight)
+         interpolate (const in sampler2D sampler, const in int count, const in float fraction, out int index0, out int index1, out float weight)
          {
             // Determine index0, index1 and weight.
 
@@ -628,17 +628,17 @@ function (X3DNode,
          }
 
          void
-         getRandomPointOnSurface (const in sampler2D surface, const in int numAreaSoFar, const in int numVertices, inout vec4 position, inout vec3 normal)
+         getRandomPointOnSurface (const in sampler2D surface, const in int numAreaSoFar, const in int numVertices, out vec4 position, out vec3 normal)
          {
             // Determine index0, index1 and weight.
 
             float lastAreaSoFar = texelFetch (surface, numAreaSoFar - 1, 0) .x;
             float fraction      = random () * lastAreaSoFar;
 
-            int   index0 = 0;
-            int   index1 = 0;
-            int   index2 = 0;
-            float weight = 0.0;
+            int   index0;
+            int   index1;
+            int   index2;
+            float weight;
 
             interpolate (surface, numAreaSoFar, fraction, index0, index1, weight);
 
@@ -681,9 +681,9 @@ function (X3DNode,
 
                float fraction = elapsedTime / lifetime;
 
-               int   index0 = 0;
-               int   index1 = 0;
-               float weight = 0.0;
+               int   index0;
+               int   index1;
+               float weight;
 
                interpolate (colorRamp, numColors, fraction, index0, index1, weight);
 
