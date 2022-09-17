@@ -221,8 +221,8 @@ function (X3DNode,
 
          gl .drawArrays (gl .TRIANGLES, 0, 6);
 
-         // const data = particleSystem .data [0];
-         // gl .readBuffer (gl .COLOR_ATTACHMENT0);
+         // const data = particleSystem .data [3];
+         // gl .readBuffer (gl .COLOR_ATTACHMENT3);
          // gl .readPixels (0, 0, size, size, gl .RGBA, gl .FLOAT, data);
          // console .log (data);
 
@@ -363,6 +363,8 @@ function (X3DNode,
 
          const int   MAX_FORCES = 1024;
          const float M_PI       = 3.14159265359;
+
+         #define ARRAY_SIZE  32
 
          // Texture
 
