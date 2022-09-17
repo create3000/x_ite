@@ -658,12 +658,12 @@ function (X3DNode,
 
             // Random barycentric coordinates.
 
-            vec3 b = getRandomBarycentricCoord ();
+            vec3 r = getRandomBarycentricCoord ();
 
             // Calculate position and direction.
 
-            position = b .x * vertex0 + b .y * vertex1 + b .z * vertex2;
-            normal   = normalize (b .x * normal0 + b .y * normal1 + b .z * normal2);
+            position = r .z * vertex0 + r .x * vertex1 + r .y * vertex2;
+            normal   = normalize (r .z * normal0 + r .x * normal1 + r .y * normal2);
          }
 
          // Functions
