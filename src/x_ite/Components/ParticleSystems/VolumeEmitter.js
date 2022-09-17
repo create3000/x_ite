@@ -125,7 +125,7 @@ function (Fields,
 
             getRandomPointOnSurface (volume, numAreaSoFar, numVertices, point, normal);
 
-            vec4 rotation = Quaternion (normal, vec3 (0.0, 0.0, 1.0));
+            vec4 rotation = Quaternion (vec3 (0.0, 0.0, 1.0), normal);
 
             Line3 line = Line3 (point .xyz, multVecQuat (getRandomSurfaceNormal (), rotation));
 
