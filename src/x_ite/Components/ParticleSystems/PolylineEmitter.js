@@ -90,7 +90,7 @@ function (Fields,
 
       this .addFunction (/* glsl */ `vec4 getRandomPosition ()
       {
-         if (numLengthSoFar > 0)
+         if (numLengthSoFar != 0)
          {
             // Determine index0, index1 and weight.
 

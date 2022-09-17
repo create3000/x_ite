@@ -84,7 +84,7 @@ function (Fields,
 
       this .addFunction (/* glsl */ `vec4 position; vec3 getRandomVelocity ()
       {
-         if (numVertices > 0)
+         if (numVertices != 0)
          {
             vec3 normal;
 

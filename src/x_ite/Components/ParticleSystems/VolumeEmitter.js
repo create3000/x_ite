@@ -118,7 +118,7 @@ function (Fields,
 
       this .addFunction (/* glsl */ `vec4 getRandomPosition ()
       {
-         if (numVertices > 0)
+         if (numVertices != 0)
          {
             vec4 point;
             vec3 normal;
