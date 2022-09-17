@@ -70,7 +70,17 @@ function (Fields,
 
       this ._position .setUnit ("length");
 
-      this .getRandomVelocity = this .getSphericalRandomVelocity;
+      this .addUniform ("position", "uniform vec3 position;");
+
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      {
+         return getRandomSphericalVelocity ();
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         return vec4 (position, 1.0);
+      }`);
    }
 
    ExplosionEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
@@ -108,17 +118,15 @@ function (Fields,
 
          this .set_position__ ();
       },
-      set_position__: function ()
-      {
-         this .position = this ._position .getValue ()
-      },
       isExplosive: function ()
       {
          return true;
       },
-      getRandomPosition: function (position)
+      set_position__: function ()
       {
-         return position .assign (this .position);
+         const position = this ._position .getValue ();
+
+         this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
       },
    });
 
