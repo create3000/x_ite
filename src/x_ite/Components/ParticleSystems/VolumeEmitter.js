@@ -125,9 +125,7 @@ function (Fields,
 
             getRandomPointOnSurface (volume, numAreaSoFar, numVertices, point, normal);
 
-            vec4 rotation = Quaternion (vec3 (0.0, 0.0, 1.0), normal);
-
-            Line3 line = Line3 (point .xyz, multVecQuat (getRandomSurfaceNormal (), rotation));
+            Line3 line = Line3 (point .xyz, getRandomSurfaceNormal (normal));
 
             vec4 points [ARRAY_SIZE];
             int  intersections = getIntersections (bvh, bvhLength, line, volume, numAreaSoFar, points);

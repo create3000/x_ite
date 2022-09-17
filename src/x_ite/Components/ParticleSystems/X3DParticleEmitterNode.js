@@ -518,13 +518,15 @@ function (X3DNode,
          }
 
          vec3
-         getRandomSurfaceNormal ()
+         getRandomSurfaceNormal (const in vec3 direction)
          {
-            float theta = getRandomValue (-M_PI, M_PI);
-            float cphi  = pow (random (), 1.0 / 3.0);
-            float r     = sqrt (1.0 - cphi * cphi); // sin (acos (cphi));
+            float theta    = getRandomValue (-M_PI, M_PI);
+            float cphi     = pow (random (), 1.0 / 3.0);
+            float r        = sqrt (1.0 - cphi * cphi); // sin (acos (cphi));
+            vec3  normal   = vec3 (sin (theta) * r, cos (theta) * r, cphi);
+            vec4  rotation = Quaternion (vec3 (0.0, 0.0, 1.0), direction);
 
-            return vec3 (sin (theta) * r, cos (theta) * r, cphi);
+            return multVecQuat (normal, rotation);
          }
 
          vec3
