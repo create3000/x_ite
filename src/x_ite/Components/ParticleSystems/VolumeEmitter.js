@@ -135,7 +135,7 @@ function (Fields,
             intersections -= intersections % 2; // We need an even count of intersections.
 
             if (intersections == 0)
-               return vec4 (float (intersections));
+               return vec4 (0.0);
 
             sort (points, intersections, plane3 (line .point, line .direction));
 
