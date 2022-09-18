@@ -374,8 +374,6 @@ function (Vector3,
       },
       toArray: function (array)
       {
-         array .length = 0;
-
          if (this .root)
          {
             const root = this .root .toArray (array);

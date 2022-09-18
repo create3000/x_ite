@@ -57,10 +57,6 @@ define ([
    "standard/Math/Numbers/Vector3",
    "standard/Math/Geometry/Triangle3",
    "standard/Math/Utility/BVH",
-   "text!x_ite/Browser/ParticleSystems/Line3.glsl",
-   "text!x_ite/Browser/ParticleSystems/Plane3.glsl",
-   "text!x_ite/Browser/ParticleSystems/Box3.glsl",
-   "text!x_ite/Browser/ParticleSystems/BVH.glsl",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -70,11 +66,7 @@ function (Fields,
           X3DConstants,
           Vector3,
           Triangle3,
-          BVH,
-          Line3Source,
-          Plane3Source,
-          Box3Source,
-          BVHSource)
+          BVH)
 {
 "use strict";
 
@@ -86,7 +78,6 @@ function (Fields,
 
       this .volumeNode  = new IndexedFaceSet (executionContext);
       this .volumeArray = new Float32Array ();
-      this .bvhArray    = [ ];
 
       this .addUniform ("direction",    "uniform vec3 direction;");
       this .addUniform ("numAreaSoFar", "uniform int numAreaSoFar;");
@@ -94,11 +85,6 @@ function (Fields,
       this .addUniform ("volume",       "uniform sampler2D volume;");
       this .addUniform ("bvhLength",    "uniform int bvhLength;");
       this .addUniform ("bvh",          "uniform sampler2D bvh;");
-
-      this .addFunction (Line3Source);
-      this .addFunction (Plane3Source);
-      this .addFunction (Box3Source);
-      this .addFunction (BVHSource);
 
       this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
       {
@@ -273,7 +259,7 @@ function (Fields,
             // BVH
 
             const
-               bvhArray     = new BVH (vertices, normals) .toArray (this .bvhArray),
+               bvhArray     = new BVH (vertices, normals) .toArray ([ ]),
                bvhLength    = bvhArray .length / 4,
                bvhArraySize = Math .ceil (Math .sqrt (bvhLength));
 

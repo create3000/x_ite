@@ -50,9 +50,17 @@
 define ([
    "x_ite/Components/Core/X3DNode",
    "x_ite/Base/X3DConstants",
+   "text!x_ite/Browser/ParticleSystems/Line3.glsl",
+   "text!x_ite/Browser/ParticleSystems/Plane3.glsl",
+   "text!x_ite/Browser/ParticleSystems/Box3.glsl",
+   "text!x_ite/Browser/ParticleSystems/BVH.glsl",
 ],
 function (X3DNode,
-          X3DConstants)
+          X3DConstants,
+          Line3Source,
+          Plane3Source,
+          Box3Source,
+          BVHSource)
 {
 "use strict";
 
@@ -72,6 +80,11 @@ function (X3DNode,
 
       this .addUniform ("speed",     "uniform float speed;");
       this .addUniform ("variation", "uniform float variation;");
+
+      this .addFunction (Line3Source);
+      this .addFunction (Plane3Source);
+      this .addFunction (Box3Source);
+      this .addFunction (BVHSource);
    }
 
    X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -190,6 +203,31 @@ function (X3DNode,
             gl .activeTexture (gl .TEXTURE0 + textureUnit);
             gl .bindTexture (gl .TEXTURE_2D, particleSystem .colorRampTexture);
             gl .uniform1i (program .colorRamp, textureUnit);
+         }
+
+         // Bounded Physics
+
+         gl .uniform1i (program .numBoundedVertices, particleSystem .numBoundedVertices);
+
+         if (particleSystem .numBoundedVertices)
+         {
+            {
+               const textureUnit = browser .getTexture2DUnit ();
+
+               gl .activeTexture (gl .TEXTURE0 + textureUnit);
+               gl .bindTexture (gl .TEXTURE_2D, particleSystem .boundedVolumeTexture);
+               gl .uniform1i (program .boundedVolume, textureUnit);
+            }
+
+            gl .uniform1i (program .boundedVolumeHierarchyLength, particleSystem .boundedVolumeHierarchyLength);
+
+            {
+               const textureUnit = browser .getTexture2DUnit ();
+
+               gl .activeTexture (gl .TEXTURE0 + textureUnit);
+               gl .bindTexture (gl .TEXTURE_2D, particleSystem .boundedVolumeHierarchyTexture);
+               gl .uniform1i (program .boundedVolumeHierarchy, textureUnit);
+            }
          }
 
          // Input textures
@@ -346,6 +384,11 @@ function (X3DNode,
 
          uniform int       numColors;
          uniform sampler2D colorRamp;
+
+         uniform int       numBoundedVertices;
+         uniform sampler2D boundedVolume;
+         uniform int       boundedVolumeHierarchyLength;
+         uniform sampler2D boundedVolumeHierarchy;
 
          uniform sampler2D inputSampler0;
          uniform sampler2D inputSampler1;
@@ -701,6 +744,39 @@ function (X3DNode,
          }
 
          void
+         bounce (const in vec3 fromPosition, out vec3 toPosition, inout vec3 velocity)
+         {
+            if (numBoundedVertices == 0)
+               return;
+
+            Line3 line = line3 (fromPosition, toPosition);
+
+            vec3 normals [ARRAY_SIZE];
+            vec4 points  [ARRAY_SIZE];
+            int  intersections = getIntersections (boundedVolumeHierarchy, boundedVolumeHierarchyLength, line, boundedVolume, 0, numBoundedVertices, points, normals);
+
+            if (intersections == 0)
+               return;
+
+            Plane3 plane1 = plane3 (line .point, line .direction);
+
+            sort (points, normals, intersections, plane1);
+
+            int index = upper_bound (points, intersections, 0.0, plane1);
+
+            if (index >= intersections)
+               return;
+
+            Plane3 plane2 = plane3 (points [index] .xyz, normals [index]);
+
+            if (sign (distance (plane2, fromPosition)) == sign (distance (plane2, toPosition)))
+               return;
+
+            velocity   = reflect (velocity, normals [index]);
+            toPosition = points [index] .xyz;
+         }
+
+         void
          animate (const in ivec2 fragCoord, const in int id)
          {
             if (id < numParticles)
@@ -759,6 +835,8 @@ function (X3DNode,
                   }
 
                   position .xyz += velocity * deltaTime;
+
+                  bounce (input3 .xyz, position .xyz, velocity);
 
                   output0 = vec4 (id, life, lifetime, elapsedTime);
                   output1 = getColor (lifetime, elapsedTime);
@@ -834,11 +912,19 @@ function (X3DNode,
          program .numColors = gl .getUniformLocation (program, "numColors");
          program .colorRamp = gl .getUniformLocation (program, "colorRamp");
 
+         program .numBoundedVertices           = gl .getUniformLocation (program, "numBoundedVertices");
+         program .boundedVolume                = gl .getUniformLocation (program, "boundedVolume");
+         program .boundedVolumeHierarchyLength = gl .getUniformLocation (program, "boundedVolumeHierarchyLength");
+         program .boundedVolumeHierarchy       = gl .getUniformLocation (program, "boundedVolumeHierarchy");
+
          for (const uniform of Object .keys (this .uniforms))
             program [uniform] = gl .getUniformLocation (program, uniform);
 
          gl .uniform1i (program .forces,    browser .getDefaultTexture2DUnit ());
          gl .uniform1i (program .colorRamp, browser .getDefaultTexture2DUnit ());
+
+         gl .uniform1i (program .boundedVolume,          browser .getDefaultTexture2DUnit ());
+         gl .uniform1i (program .boundedVolumeHierarchy, browser .getDefaultTexture2DUnit ());
 
          program .vertexBuffer = this .createVertexBuffer ();
 

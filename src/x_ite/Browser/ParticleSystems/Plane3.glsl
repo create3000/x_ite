@@ -39,7 +39,7 @@ intersects (const in Plane3 plane, const in Line3 line, out vec3 point)
 
 /* Find find the first point that is farther to the plane than value. */
 int
-upper_bound (const in vec3 points [ARRAY_SIZE], in int count, const in float value, const in Plane3 plane)
+upper_bound (const in vec4 points [ARRAY_SIZE], in int count, const in float value, const in Plane3 plane)
 {
    int first = 0;
    int step  = 0;
@@ -52,7 +52,7 @@ upper_bound (const in vec3 points [ARRAY_SIZE], in int count, const in float val
 
       index += step;
 
-      if (value < distance (plane, points [index]))
+      if (value < distance (plane, points [index] .xyz))
          count = step;
       else
       {
