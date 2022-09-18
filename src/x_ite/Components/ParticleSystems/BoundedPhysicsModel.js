@@ -111,17 +111,17 @@ function (Fields,
       },
       addGeometry: function (boundedNormals, boundedVertices)
       {
-         if (this .geometryNode)
+         if (this .geometryNode && this ._enabled .getValue ())
          {
             const
                normals  = this .geometryNode .getNormals ()  .getValue (),
                vertices = this .geometryNode .getVertices () .getValue ();
 
-            for (let i = 0, length = normals .length; i < length; ++ i)
-               boundedNormals .push (normals [i]);
+            for (const value of normals)
+               boundedNormals .push (value);
 
-            for (let i = 0, length = vertices .length; i < length; ++ i)
-               boundedVertices .push (vertices [i]);
+            for (const value of vertices)
+               boundedVertices .push (value);
          }
       },
    });

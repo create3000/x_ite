@@ -272,63 +272,6 @@ function (X3DNode,
 
          return output;
       },
-      bounce: (function ()
-      {
-         // const
-         //    normal = new Vector3 (0, 0, 0),
-         //    line   = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-         //    plane  = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
-
-         return function (boundedVolume, fromPosition, toPosition, velocity)
-         {
-            normal .assign (velocity) .normalize ();
-
-            line .set (fromPosition, normal);
-
-            const
-               intersections       = this .intersections,
-               intersectionNormals = this .intersectionNormals,
-               numIntersections    = boundedVolume .intersectsLine (line, intersections, intersectionNormals);
-
-            if (numIntersections)
-            {
-               for (let i = 0; i < numIntersections; ++ i)
-                  intersections [i] .index = i;
-
-               plane .set (fromPosition, normal);
-
-               this .sorter .sort (0, numIntersections);
-
-               const index = Algorithm .upperBound (intersections, 0, numIntersections, 0, PlaneCompareValue);
-
-               if (index < numIntersections)
-               {
-                  const
-                     intersection       = intersections [index],
-                     intersectionNormal = intersectionNormals [intersection .index];
-
-                  plane .set (intersection, intersectionNormal);
-
-                  if (plane .getDistanceToPoint (fromPosition) * plane .getDistanceToPoint (toPosition) < 0)
-                  {
-                     const dot2 = 2 * intersectionNormal .dot (velocity);
-
-                     velocity .x -= intersectionNormal .x * dot2;
-                     velocity .y -= intersectionNormal .y * dot2;
-                     velocity .z -= intersectionNormal .z * dot2;
-
-                     normal .assign (velocity) .normalize ();
-
-                     const distance = intersection .distance (fromPosition);
-
-                     toPosition .x = intersection .x + normal .x * distance;
-                     toPosition .y = intersection .y + normal .y * distance;
-                     toPosition .z = intersection .z + normal .z * distance;
-                  }
-               }
-            }
-         };
-      })(),
       addUniform: function (name, uniform)
       {
          this .uniforms [name] = uniform;
@@ -744,12 +687,12 @@ function (X3DNode,
          }
 
          void
-         bounce (const in vec3 fromPosition, out vec3 toPosition, inout vec3 velocity)
+         bounce (const in vec4 fromPosition, inout vec4 toPosition, inout vec3 velocity)
          {
             if (numBoundedVertices == 0)
                return;
 
-            Line3 line = line3 (fromPosition, toPosition);
+            Line3 line = line3 (fromPosition .xyz, toPosition .xyz);
 
             vec3 normals [ARRAY_SIZE];
             vec4 points  [ARRAY_SIZE];
@@ -769,11 +712,11 @@ function (X3DNode,
 
             Plane3 plane2 = plane3 (points [index] .xyz, normals [index]);
 
-            if (sign (distance (plane2, fromPosition)) == sign (distance (plane2, toPosition)))
+            if (sign (distance (plane2, fromPosition .xyz)) == sign (distance (plane2, toPosition .xyz)))
                return;
 
             velocity   = reflect (velocity, normals [index]);
-            toPosition = points [index] .xyz;
+            toPosition = points [index];
          }
 
          void
@@ -836,7 +779,7 @@ function (X3DNode,
 
                   position .xyz += velocity * deltaTime;
 
-                  bounce (input3 .xyz, position .xyz, velocity);
+                  bounce (input3, position, velocity);
 
                   output0 = vec4 (id, life, lifetime, elapsedTime);
                   output1 = getColor (lifetime, elapsedTime);

@@ -53,7 +53,9 @@ upper_bound (const in vec4 points [ARRAY_SIZE], in int count, const in float val
       index += step;
 
       if (value < distance (plane, points [index] .xyz))
+      {
          count = step;
+      }
       else
       {
          first  = ++ index;

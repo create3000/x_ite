@@ -143,7 +143,7 @@ getIntersections (const in sampler2D bvh, const in int bvhLength, const in Line3
          else
          {
             // Triangle
-            
+
             current = -1;
 
             int  i = getBVHTriangle (bvh);
