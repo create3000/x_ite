@@ -692,7 +692,7 @@ function (X3DNode,
             if (numBoundedVertices == 0)
                return;
 
-            Line3 line = line3 (fromPosition .xyz, toPosition .xyz);
+            Line3 line = Line3 (fromPosition .xyz, save_normalize (velocity));
 
             vec4 points  [ARRAY_SIZE];
             vec3 normals [ARRAY_SIZE];
@@ -780,7 +780,6 @@ function (X3DNode,
 
                   position .xyz += velocity * deltaTime;
 
-                  //output1 = input1;
                   bounce (input3, position, velocity);
 
                   output0 = vec4 (id, life, lifetime, elapsedTime);
