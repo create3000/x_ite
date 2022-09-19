@@ -115,16 +115,16 @@ function (Fields,
 
             vec4 points [ARRAY_SIZE];
 
-            int intersections = getIntersections (bvh, bvhLength, line, volume, numAreaSoFar, points);
+            int numIntersections = getIntersections (bvh, bvhLength, line, volume, numAreaSoFar, points);
 
-            intersections -= intersections % 2; // We need an even count of intersections.
+            numIntersections -= numIntersections % 2; // We need an even count of intersections.
 
-            if (intersections == 0)
+            if (numIntersections == 0)
                return vec4 (0.0);
 
-            sort (points, intersections, plane3 (line .point, line .direction));
+            sort (points, numIntersections, plane3 (line .point, line .direction));
 
-            int index = int (round (random () * float (intersections / 2 - 1))) * 2; // Select random intersection.
+            int index = int (round (random () * float (numIntersections / 2 - 1))) * 2; // Select random intersection.
 
             return mix (points [index], points [index + 1], random ());
          }

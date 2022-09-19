@@ -697,18 +697,18 @@ function (X3DNode,
             vec4 points  [ARRAY_SIZE];
             vec3 normals [ARRAY_SIZE];
 
-            int intersections = getIntersections (boundedVolumeHierarchy, boundedVolumeHierarchyLength, line, boundedVolume, 0, numBoundedVertices, points, normals);
+            int numIntersections = getIntersections (boundedVolumeHierarchy, boundedVolumeHierarchyLength, line, boundedVolume, 0, numBoundedVertices, points, normals);
 
-            if (intersections == 0)
+            if (numIntersections == 0)
                return;
 
             Plane3 plane1 = plane3 (line .point, line .direction);
 
-            sort (points, normals, intersections, plane1);
+            sort (points, normals, numIntersections, plane1);
 
-            int index = upper_bound (points, intersections, 0.0, plane1);
+            int index = upper_bound (points, numIntersections, 0.0, plane1);
 
-            if (index >= intersections)
+            if (index >= numIntersections)
                return;
 
             Plane3 plane2 = plane3 (points [index] .xyz, normals [index]);
