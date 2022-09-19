@@ -114,7 +114,8 @@ function (Fields,
             Line3 line = Line3 (point .xyz, getRandomSurfaceNormal (normal));
 
             vec4 points [ARRAY_SIZE];
-            int  intersections = getIntersections (bvh, bvhLength, line, volume, numAreaSoFar, points);
+
+            int intersections = getIntersections (bvh, bvhLength, line, volume, numAreaSoFar, points);
 
             intersections -= intersections % 2; // We need an even count of intersections.
 

@@ -6,7 +6,7 @@ struct Line3 {
 Line3
 line3 (const in vec3 point1, const in vec3 point2)
 {
-   return Line3 (point1, normalize (point2 - point1));
+   return Line3 (point1, save_normalize (point2 - point1));
 }
 
 /* Line intersect triangle */

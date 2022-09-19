@@ -92,12 +92,12 @@ getIntersections (const in sampler2D bvh, const in int bvhLength, const in Line3
             int  i = getBVHTriangle (bvh);
             vec3 r = vec3 (0.0);
 
-            vec4 a = texelFetch (surface, verticesIndex + i + 0, 0);
-            vec4 b = texelFetch (surface, verticesIndex + i + 1, 0);
-            vec4 c = texelFetch (surface, verticesIndex + i + 2, 0);
+            vec3 a = texelFetch (surface, verticesIndex + i + 0, 0) .xyz;
+            vec3 b = texelFetch (surface, verticesIndex + i + 1, 0) .xyz;
+            vec3 c = texelFetch (surface, verticesIndex + i + 2, 0) .xyz;
 
-            if (intersects (line, a .xyz, b .xyz, c .xyz, r))
-               points [count ++] = r .z * a + r .x * b + r .y * c;
+            if (intersects (line, a, b, c, r))
+               points [count ++] = vec4 (r .z * a + r .x * b + r .y * c, 1.0);
          }
       }
       else
@@ -149,19 +149,19 @@ getIntersections (const in sampler2D bvh, const in int bvhLength, const in Line3
             int  i = getBVHTriangle (bvh);
             vec3 r = vec3 (0.0);
 
-            vec4 a = texelFetch (surface, verticesIndex + i + 0, 0);
-            vec4 b = texelFetch (surface, verticesIndex + i + 1, 0);
-            vec4 c = texelFetch (surface, verticesIndex + i + 2, 0);
+            vec3 a = texelFetch (surface, verticesIndex + i + 0, 0) .xyz;
+            vec3 b = texelFetch (surface, verticesIndex + i + 1, 0) .xyz;
+            vec3 c = texelFetch (surface, verticesIndex + i + 2, 0) .xyz;
 
-            if (intersects (line, a .xyz, b .xyz, c .xyz, r))
+            if (intersects (line, a, b, c, r))
             {
-               points [count] = r .z * a + r .x * b + r .y * c;
+               points [count] = vec4 (r .z * a + r .x * b + r .y * c, 1.0);
 
                vec3 n1 = texelFetch (surface, normalsIndex + i + 0, 0) .xyz;
                vec3 n2 = texelFetch (surface, normalsIndex + i + 1, 0) .xyz;
                vec3 n3 = texelFetch (surface, normalsIndex + i + 2, 0) .xyz;
 
-               normals [count] = normalize (r .z * n1 + r .x * n2 + r .y * n3);
+               normals [count] = save_normalize (r .z * n1 + r .x * n2 + r .y * n3);
 
                ++ count;
             }

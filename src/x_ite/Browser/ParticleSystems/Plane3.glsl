@@ -11,7 +11,7 @@ plane3 (const in vec3 point, const in vec3 normal)
 }
 
 float
-distance (const in Plane3 plane, const in vec3 point)
+plane_distance (const in Plane3 plane, const in vec3 point)
 {
    return dot (point, plane .normal) - plane .distanceFromOrigin;
 }
@@ -52,7 +52,7 @@ upper_bound (const in vec4 points [ARRAY_SIZE], in int count, const in float val
 
       index += step;
 
-      if (value < distance (plane, points [index] .xyz))
+      if (value < plane_distance (plane, points [index] .xyz))
       {
          count = step;
       }
@@ -86,7 +86,7 @@ sort (inout vec4 points [ARRAY_SIZE], const in int count, const in Plane3 plane)
       {
          int j = i + gap;
 
-         if (distance (plane, points [j] .xyz) < distance (plane, points [i] .xyz))
+         if (plane_distance (plane, points [j] .xyz) < plane_distance (plane, points [i] .xyz))
          {
             vec4 tmp = points [i];
 
@@ -121,7 +121,7 @@ sort (inout vec4 points [ARRAY_SIZE], inout vec3 normals [ARRAY_SIZE], const in 
       {
          int j = i + gap;
 
-         if (distance (plane, points [j] .xyz) < distance (plane, points [i] .xyz))
+         if (plane_distance (plane, points [j] .xyz) < plane_distance (plane, points [i] .xyz))
          {
             vec4 tmp1 = points [i];
             points [i] = points [j];

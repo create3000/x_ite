@@ -259,10 +259,10 @@ function (X3DNode,
 
          gl .drawArrays (gl .TRIANGLES, 0, 6);
 
-         // const data = particleSystem .data [3];
+         // const data3 = particleSystem .data [3];
          // gl .readBuffer (gl .COLOR_ATTACHMENT3);
-         // gl .readPixels (0, 0, size, size, gl .RGBA, gl .FLOAT, data);
-         // console .log (data);
+         // gl .readPixels (0, 0, size, size, gl .RGBA, gl .FLOAT, data3);
+         // console .log (data3);
 
          // Restore/Finish
 
@@ -368,7 +368,7 @@ function (X3DNode,
 
          // Save normalize, that will not divide by zero.
          vec3
-         normalize (const in vec3 vector)
+         save_normalize (const in vec3 vector)
          {
             float l = length (vector);
 
@@ -383,8 +383,8 @@ function (X3DNode,
          vec4
          Quaternion (const in vec3 fromVector, const in vec3 toVector)
          {
-            vec3 from = normalize (fromVector);
-            vec3 to   = normalize (toVector);
+            vec3 from = save_normalize (fromVector);
+            vec3 to   = save_normalize (toVector);
 
             float cos_angle = dot (from, to);
             vec3  cross_vec = cross (from, to);
@@ -403,7 +403,7 @@ function (X3DNode,
                   if (dot (t, t) == 0.0)
                      t = cross (from, vec3 (0.0, 1.0, 0.0));
 
-                  t = normalize (t);
+                  t = save_normalize (t);
 
                   return vec4 (t, 0.0);
                }
@@ -412,7 +412,7 @@ function (X3DNode,
             {
                float s = sqrt (abs (1.0 - cos_angle) * 0.5);
 
-               cross_vec = normalize (cross_vec);
+               cross_vec = save_normalize (cross_vec);
 
                return vec4 (cross_vec * s, sqrt (abs (1.0 + cos_angle) * 0.5));
             }
@@ -649,7 +649,7 @@ function (X3DNode,
             // Calculate position and direction.
 
             position = r .z * vertex0 + r .x * vertex1 + r .y * vertex2;
-            normal   = normalize (r .z * normal0 + r .x * normal1 + r .y * normal2);
+            normal   = save_normalize (r .z * normal0 + r .x * normal1 + r .y * normal2);
          }
 
          // Functions
@@ -694,9 +694,10 @@ function (X3DNode,
 
             Line3 line = line3 (fromPosition .xyz, toPosition .xyz);
 
-            vec3 normals [ARRAY_SIZE];
             vec4 points  [ARRAY_SIZE];
-            int  intersections = getIntersections (boundedVolumeHierarchy, boundedVolumeHierarchyLength, line, boundedVolume, 0, numBoundedVertices, points, normals);
+            vec3 normals [ARRAY_SIZE];
+
+            int intersections = getIntersections (boundedVolumeHierarchy, boundedVolumeHierarchyLength, line, boundedVolume, 0, numBoundedVertices, points, normals);
 
             if (intersections == 0)
                return;
@@ -712,11 +713,11 @@ function (X3DNode,
 
             Plane3 plane2 = plane3 (points [index] .xyz, normals [index]);
 
-            if (sign (distance (plane2, fromPosition .xyz)) == sign (distance (plane2, toPosition .xyz)))
+            if (sign (plane_distance (plane2, fromPosition .xyz)) == sign (plane_distance (plane2, toPosition .xyz)))
                return;
 
             velocity   = reflect (velocity, normals [index]);
-            toPosition = points [index];
+            toPosition = vec4 (points [index] .xyz + reflect (points [index] .xyz - fromPosition .xyz, normals [index]), 1.0);
          }
 
          void
@@ -779,6 +780,7 @@ function (X3DNode,
 
                   position .xyz += velocity * deltaTime;
 
+                  //output1 = input1;
                   bounce (input3, position, velocity);
 
                   output0 = vec4 (id, life, lifetime, elapsedTime);
