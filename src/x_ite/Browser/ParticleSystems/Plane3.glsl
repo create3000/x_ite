@@ -147,11 +147,8 @@ min_index (const in vec4 points [ARRAY_SIZE], const in int count, const in float
    int   index = -1;
    float dist  = 1000000.0;
 
-   for (int i = 0; i < ARRAY_SIZE; ++ i)
+   for (int i = 0; i < count; ++ i)
    {
-      if (i >= count)
-         break;
-
       float d = plane_distance (plane, points [i] .xyz);
 
       if (d >= value && d < dist)

@@ -769,11 +769,8 @@ function (X3DNode,
                   vec3 velocity = input2 .xyz;
                   vec4 position = input3;
 
-                  for (int i = 0; i < MAX_FORCES; ++ i)
+                  for (int i = 0; i < numForces; ++ i)
                   {
-                     if (i >= numForces)
-                        break;
-
                      vec4  force      = texelFetch (forces, i, 0);
                      float turbulence = force .w;
                      vec3  normal     = getRandomNormalWithDirectionAndAngle (force .xyz, turbulence);
