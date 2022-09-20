@@ -704,11 +704,16 @@ function (X3DNode,
 
             Plane3 plane1 = plane3 (line .point, line .direction);
 
-            sort (points, normals, numIntersections, plane1);
+            // sort (points, normals, numIntersections, plane1);
 
-            int index = upper_bound (points, numIntersections, 0.0, plane1);
+            // int index = upper_bound (points, numIntersections, 0.0, plane1);
 
-            if (index >= numIntersections)
+            // if (index >= numIntersections)
+            //    return;
+
+            int index = min_index (points, numIntersections, 0.0, plane1);
+
+            if (index == -1)
                return;
 
             Plane3 plane2 = plane3 (points [index] .xyz, normals [index]);
@@ -728,7 +733,6 @@ function (X3DNode,
                srand ((id + randomSeed) * randomSeed);
 
                vec4 input0 = texelFetch (inputSampler0, fragCoord, 0);
-               vec4 input1 = texelFetch (inputSampler1, fragCoord, 0);
                vec4 input2 = texelFetch (inputSampler2, fragCoord, 0);
                vec4 input3 = texelFetch (inputSampler3, fragCoord, 0);
 

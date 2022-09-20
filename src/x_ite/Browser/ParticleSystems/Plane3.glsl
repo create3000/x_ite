@@ -38,102 +38,128 @@ intersects (const in Plane3 plane, const in Line3 line, out vec3 point)
 }
 
 /* Find find the first point that is farther to the plane than value. */
-int
-upper_bound (const in vec4 points [ARRAY_SIZE], in int count, const in float value, const in Plane3 plane)
-{
-   int first = 0;
-   int step  = 0;
+// int
+// upper_bound (const in vec4 points [ARRAY_SIZE], in int count, const in float value, const in Plane3 plane)
+// {
+//    int first = 0;
+//    int step  = 0;
 
-   while (count > 0)
-   {
-      int index = first;
+//    while (count > 0)
+//    {
+//       int index = first;
 
-      step = count >> 1;
+//       step = count >> 1;
 
-      index += step;
+//       index += step;
 
-      if (value < plane_distance (plane, points [index] .xyz))
-      {
-         count = step;
-      }
-      else
-      {
-         first  = ++ index;
-         count -= step + 1;
-      }
-   }
+//       if (value < plane_distance (plane, points [index] .xyz))
+//       {
+//          count = step;
+//       }
+//       else
+//       {
+//          first  = ++ index;
+//          count -= step + 1;
+//       }
+//    }
 
-   return first;
-}
+//    return first;
+// }
 
 /* CombSort: sort points in distance to a plane. */
 void
 sort (inout vec4 points [ARRAY_SIZE], const in int count, const in Plane3 plane)
 {
-   const float shrinkFactor = 0.801711847137793;
+   const float shrink = 1.0 / 1.3;
 
    int  gap       = count;
-   bool exchanged = false;
+   bool exchanged = true;
 
-   do
+   while (exchanged)
    {
-      exchanged = false;
+      gap = int (float (gap) * shrink);
 
-      if (gap > 1)
-         gap = int (float (gap) * shrinkFactor);
-
-      for (int i = 0; i + gap < count; ++ i)
+      if (gap <= 1)
       {
-         int j = i + gap;
-
-         if (plane_distance (plane, points [j] .xyz) < plane_distance (plane, points [i] .xyz))
-         {
-            vec4 tmp = points [i];
-
-            points [i] = points [j];
-            points [j] = tmp;
-
-            exchanged = true;
-         }
+         exchanged = false;
+         gap       = 1;
       }
-   }
-   while (exchanged || gap > 1);
-}
 
-
-/* CombSort: sort points and normals in distance to a plane. */
-void
-sort (inout vec4 points [ARRAY_SIZE], inout vec3 normals [ARRAY_SIZE], const in int count, const in Plane3 plane)
-{
-   const float shrinkFactor = 0.801711847137793;
-
-   int  gap       = count;
-   bool exchanged = false;
-
-   do
-   {
-      exchanged = false;
-
-      if (gap > 1)
-         gap = int (float (gap) * shrinkFactor);
-
-      for (int i = 0; i + gap < count; ++ i)
+      for (int i = 0, l = count - gap; i < l; ++ i)
       {
-         int j = i + gap;
+         int j = gap + i;
 
-         if (plane_distance (plane, points [j] .xyz) < plane_distance (plane, points [i] .xyz))
+         if (plane_distance (plane, points [i] .xyz) > plane_distance (plane, points [j] .xyz))
          {
             vec4 tmp1 = points [i];
             points [i] = points [j];
             points [j] = tmp1;
 
-            vec3 tmp2   = normals [i];
-            normals [i] = normals [j];
-            normals [j] = tmp2;
-
             exchanged = true;
          }
       }
    }
-   while (exchanged || gap > 1);
+}
+
+
+// /* CombSort: sort points and normals in distance to a plane. */
+// void
+// sort (inout vec4 points [ARRAY_SIZE], inout vec3 normals [ARRAY_SIZE], const in int count, const in Plane3 plane)
+// {
+//    const float shrink = 1.0 / 1.3;
+
+//    int  gap       = count;
+//    bool exchanged = true;
+
+//    while (exchanged)
+//    {
+//       gap = int (float (gap) * shrink);
+
+//       if (gap <= 1)
+//       {
+//          exchanged = false;
+//          gap       = 1;
+//       }
+
+//       for (int i = 0, l = count - gap; i < l; ++ i)
+//       {
+//          int j = gap + i;
+
+//          if (plane_distance (plane, points [i] .xyz) > plane_distance (plane, points [j] .xyz))
+//          {
+//             vec4 tmp1 = points [i];
+//             points [i] = points [j];
+//             points [j] = tmp1;
+
+//             vec3 tmp2   = normals [i];
+//             normals [i] = normals [j];
+//             normals [j] = tmp2;
+
+//             exchanged = true;
+//          }
+//       }
+//    }
+// }
+
+int
+min_index (const in vec4 points [ARRAY_SIZE], const in int count, const in float value, const in Plane3 plane)
+{
+   int   index = -1;
+   float dist  = 1000000.0;
+
+   for (int i = 0; i < ARRAY_SIZE; ++ i)
+   {
+      if (i >= count)
+         break;
+
+      float d = plane_distance (plane, points [i] .xyz);
+
+      if (d >= value && d < dist)
+      {
+         dist  = d;
+         index = i;
+      }
+   }
+
+   return index;
 }
