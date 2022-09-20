@@ -130,7 +130,7 @@ function (Fields,
                   break;
             }
 
-            int index = int (round (random () * float (numIntersections / 2 - 1))) * 2; // Select random intersection.
+            int index = int (fract (random ()) * float (numIntersections / 2)) * 2; // Select random intersection.
 
             return mix (points [index], points [index + 1], random ());
          }
