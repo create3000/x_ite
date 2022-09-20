@@ -119,10 +119,16 @@ function (Fields,
 
             numIntersections -= numIntersections % 2; // We need an even count of intersections.
 
-            if (numIntersections == 0)
-               return vec4 (0.0);
-
-            sort (points, numIntersections, plane3 (line .point, line .direction));
+            switch (numIntersections)
+            {
+               case 0:
+                  return vec4 (0.0);
+               case 2:
+                  break;
+               default:
+                  sort (points, numIntersections, plane3 (line .point, line .direction));
+                  break;
+            }
 
             int index = int (round (random () * float (numIntersections / 2 - 1))) * 2; // Select random intersection.
 
