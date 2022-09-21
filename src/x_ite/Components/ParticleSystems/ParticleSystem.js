@@ -60,7 +60,6 @@ define ([
    "standard/Math/Numbers/Vector4",
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Numbers/Matrix3",
-   "standard/Math/Algorithm",
    "standard/Math/Utility/BVH",
 ],
 function (Fields,
@@ -75,7 +74,6 @@ function (Fields,
           Vector4,
           Matrix4,
           Matrix3,
-          Algorithm,
           BVH)
 {
 "use strict";
@@ -346,13 +344,15 @@ function (Fields,
       {
          const gl = this .getBrowser () .getContext ();
 
-         // geometryType
+         // Set geometryType.
 
-         this .geometryType = GeometryTypes [this ._geometryType .getValue ()] || GeometryTypes .POINT;
+         this .geometryType = GeometryTypes .hasOwnProperty (this ._geometryType .getValue ())
+            ? GeometryTypes [this ._geometryType .getValue ()]
+            : GeometryTypes .QUAD;
+
+         // Create buffers and geometry program.
 
          gl .deleteProgram (this .program);
-
-         // Create buffers
 
          switch (this .geometryType)
          {
