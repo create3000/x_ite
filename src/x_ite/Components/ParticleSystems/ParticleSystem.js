@@ -1344,6 +1344,12 @@ function (Fields,
 
                   // Setup vertex attributes.
 
+                  shaderNode .enableFloatAttrib (gl, "x3d_Particle",         this .outputParticles [0], 4);
+                  shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition", this .outputParticles [3], 4);
+
+                  shaderNode .vertexAttribDivisor (gl, "x3d_Particle",         this .vertexCount);
+                  shaderNode .vertexAttribDivisor (gl, "x3d_ParticlePosition", this .vertexCount);
+
                   if (this .geometryContext .colorMaterial)
                      shaderNode .enableColorAttribute (gl, this .colorBuffer);
 
@@ -1372,6 +1378,12 @@ function (Fields,
 
                      gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
                   }
+
+                  shaderNode .vertexAttribDivisor (gl, "x3d_Particle",         0);
+                  shaderNode .vertexAttribDivisor (gl, "x3d_ParticlePosition", 0);
+
+                  shaderNode .disableFloatAttrib (gl, "x3d_Particle");
+                  shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");
 
                   shaderNode .disableColorAttribute    (gl);
                   shaderNode .disableTexCoordAttribute (gl);
