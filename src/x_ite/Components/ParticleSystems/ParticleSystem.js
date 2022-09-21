@@ -387,7 +387,6 @@ function (Fields,
                this .primitiveMode   = gl .LINES;
                this .texCoordCount   = 2;
                this .vertexCount     = 2;
-               this .colorBuffer     = this .geometryColorBuffer;
                this .texCoordBuffers = null;
                this .normalBuffer    = null;
                this .vertexBuffer    = this .geometryVertexBuffer;
@@ -484,7 +483,6 @@ function (Fields,
                this .primitiveMode   = gl .TRIANGLES;
                this .texCoordCount   = 4;
                this .vertexCount     = 6;
-               this .colorBuffer     = this .geometryColorBuffer;
                this .texCoordBuffers = this .geometryTexCoordBuffers;
                this .normalBuffer    = this .geometryNormalBuffer;
                this .vertexBuffer    = this .geometryVertexBuffer;
