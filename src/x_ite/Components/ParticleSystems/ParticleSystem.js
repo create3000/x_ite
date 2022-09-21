@@ -229,11 +229,12 @@ function (Fields,
 
          // Create GL stuff.
 
-         this .texCoordBuffers = [ gl .createBuffer () ];
-         this .normalBuffer    = gl .createBuffer ();
+         this .geometryTexCoordBuffers = [ gl .createBuffer () ];
+         this .geometryNormalBuffer    = gl .createBuffer ();
+         this .geometryVertexBuffer    = gl .createBuffer ();
 
          for (let i = 1, channels = this .getBrowser () .getMaxTextures (); i < channels; ++ i)
-            this .texCoordBuffers .push (this .texCoordBuffers [0]);
+            this .geometryTexCoordBuffers .push (this .geometryTexCoordBuffers [0]);
 
          this .primitiveMode = gl .TRIANGLES;
 
@@ -248,6 +249,7 @@ function (Fields,
 
          this .set_emitter__ ();
          this .set_enabled__ ();
+         this .set_geometryType__ ();
          this .set_createParticles__ ();
          this .set_particleLifetime__ ();
          this .set_lifetimeVariation__ ();
@@ -357,16 +359,11 @@ function (Fields,
       },
       set_geometryType__: function ()
       {
-         const
-            gl           = this .getBrowser () .getContext (),
-            maxParticles = this .maxParticles;
+         const gl = this .getBrowser () .getContext ();
 
          // geometryType
 
-         this .geometryType = GeometryTypes [this ._geometryType .getValue ()];
-
-         if (! this .geometryType)
-            this .geometryType = POINT;
+         this .geometryType = GeometryTypes [this ._geometryType .getValue ()] || POINT;
 
          // Create buffers
 
@@ -374,24 +371,26 @@ function (Fields,
          {
             case POINT:
             {
-               this .testWireframe = false;
-               this .primitiveMode = gl .POINTS;
-               this .hasTexCoords  = false;
-               this .hasNormals    = false;
-               this .texCoordCount = 0;
-               this .vertexCount   = 1;
+               this .testWireframe   = false;
+               this .primitiveMode   = gl .POINTS;
+               this .texCoordCount   = 0;
+               this .vertexCount     = 1;
+               this .texCoordBuffers = null;
+               this .normalBuffer    = null;
 
                this .geometryContext .geometryType = 0;
                break;
             }
             case LINE:
             {
-               this .testWireframe = false;
-               this .primitiveMode = gl .LINES;
-               this .hasTexCoords  = false;
-               this .hasNormals    = false;
-               this .texCoordCount = 0;
-               this .vertexCount   = 2;
+               this .testWireframe   = false;
+               this .primitiveMode   = gl .LINES;
+               this .texCoordCount   = 2;
+               this .vertexCount     = 2;
+               this .colorBuffer     = this .geometryColorBuffer;
+               this .texCoordBuffers = null;
+               this .normalBuffer    = null;
+               this .vertexBuffer    = this .geometryVertexBuffer;
 
                this .geometryContext .geometryType = 1;
 
@@ -481,12 +480,14 @@ function (Fields,
                gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
                gl .bufferData (gl .ARRAY_BUFFER, this .texCoordArray, gl .STATIC_DRAW);
 
-               this .testWireframe = true;
-               this .primitiveMode = gl .TRIANGLES;
-               this .hasTexCoords  = true;
-               this .hasNormals    = true;
-               this .texCoordCount = 4;
-               this .vertexCount   = 6;
+               this .testWireframe   = true;
+               this .primitiveMode   = gl .TRIANGLES;
+               this .texCoordCount   = 4;
+               this .vertexCount     = 6;
+               this .colorBuffer     = this .geometryColorBuffer;
+               this .texCoordBuffers = this .geometryTexCoordBuffers;
+               this .normalBuffer    = this .geometryNormalBuffer;
+               this .vertexBuffer    = this .geometryVertexBuffer;
 
                this .geometryContext .geometryType = 2;
                break;
@@ -540,8 +541,6 @@ function (Fields,
             this .creationTime = performance .now () / 1000;
 
          this .resizeBuffers (lastMaxParticles, lastNumParticles);
-
-         this .set_geometryType__ ();
       },
       set_particleLifetime__: function ()
       {
@@ -1353,10 +1352,10 @@ function (Fields,
                   if (this .geometryContext .colorMaterial)
                      shaderNode .enableColorAttribute (gl, this .colorBuffer);
 
-                  if (this .hasTexCoords)
+                  if (this .texCoordBuffers)
                      shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
 
-                  if (this .hasNormals)
+                  if (this .normalBuffer)
                      shaderNode .enableNormalAttribute (gl, this .normalBuffer);
 
                   shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
