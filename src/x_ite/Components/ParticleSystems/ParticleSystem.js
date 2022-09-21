@@ -433,8 +433,14 @@ function (Fields,
                   this .geometryVertexBuffer,
                ];
 
-               this .program .sizeArray = new Float32Array (2);
-               this .program .size      = gl .getUniformLocation (this .program, "size");
+               this .program .uniforms = {
+                  size: {
+                     func: "uniform1fv",
+                     location: gl .getUniformLocation (this .program, "size"),
+                     value: new Float32Array (2),
+                  },
+               };
+
                break;
             }
             case TRIANGLE:
@@ -1007,18 +1013,15 @@ function (Fields,
       updateLine: function ()
       {
          const
-            gl      = this .getBrowser () .getContext (),
-            program = this .program,
-            size1_2 = this ._particleSize .y / 2;
+            gl       = this .getBrowser () .getContext (),
+            program  = this .program,
+            uniforms = program .uniforms,
+            size1_2  = this ._particleSize .y / 2;
 
-         gl .useProgram (program);
+         uniforms .size .value [0] = -size1_2;
+         uniforms .size .value [1] =  size1_2;
 
-         program .sizeArray [0] = -size1_2;
-         program .sizeArray [1] =  size1_2;
-
-         gl .uniform1fv (program .size, program .sizeArray);
-
-         this .updateBuffers (gl, program);
+         this .updateBuffers (gl, program, uniforms);
       },
       updateQuad: function (modelViewMatrix)
       {
@@ -1301,11 +1304,20 @@ function (Fields,
          //    console .error (error);
          // }
       },
-      updateBuffers: function (gl, program)
+      updateBuffers: function (gl, program, uniforms)
       {
          const
             outputParticles = this .outputParticles,
             inputs          = program .inputs;
+
+         gl .useProgram (program);
+
+         for (const key in uniforms)
+         {
+            const { func, location, value } = uniforms [key];
+
+            gl [func] (location, value);
+         }
 
          for (let i = 0; i < 4; ++ i)
          {
