@@ -197,6 +197,8 @@ function (Fields,
             if (this .getValid ())
                this .removeShaderFields ();
 
+            gl .deleteProgram (this .program);
+
             this .program = program;
 
             for (const node of this ._parts)

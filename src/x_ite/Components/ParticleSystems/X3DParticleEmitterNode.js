@@ -806,8 +806,6 @@ function (X3DNode,
          if (!gl .getProgramParameter (program, gl .LINK_STATUS))
             console .error ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
 
-         gl .useProgram (program);
-
          program .inputs = [
             gl .getAttribLocation (program, "input0"),
             gl .getAttribLocation (program, "input1"),
@@ -835,6 +833,8 @@ function (X3DNode,
 
          for (const uniform of Object .keys (this .uniforms))
             program [uniform] = gl .getUniformLocation (program, uniform);
+
+         gl .useProgram (program);
 
          gl .uniform1i (program .forces,    browser .getDefaultTexture2DUnit ());
          gl .uniform1i (program .colorRamp, browser .getDefaultTexture2DUnit ());

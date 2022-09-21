@@ -99,14 +99,6 @@ function (Fields,
       SPRITE:   SPRITE,
    };
 
-   const
-      vector = new Vector3 (0, 0, 0),
-      normal = new Vector3 (0, 0, 0),
-      s1     = new Vector3 (0, 0, 0),
-      s2     = new Vector3 (0, 0, 0),
-      s3     = new Vector3 (0, 0, 0),
-      s4     = new Vector3 (0, 0, 0);
-
    function ParticleSystem (executionContext)
    {
       X3DShapeNode .call (this, executionContext);
@@ -236,6 +228,8 @@ function (Fields,
          this .geometryNormalBuffer    = gl .createBuffer ();
          this .geometryVertexBuffer    = gl .createBuffer ();
 
+         this .transformFeedBack = gl .createTransformFeedback ();
+
          // Geometry context
 
          this .geometryContext .fogCoords                = false;
@@ -363,24 +357,30 @@ function (Fields,
 
          this .geometryType = GeometryTypes [this ._geometryType .getValue ()] || POINT;
 
+         gl .deleteProgram (this .program);
+
          // Create buffers
 
          switch (this .geometryType)
          {
             case POINT:
             {
+               this .geometryContext .geometryType = 0;
+
                this .texCoordCount   = 0;
                this .vertexCount     = 1;
                this .texCoordBuffers = null;
                this .normalBuffer    = null;
                this .testWireframe   = false;
                this .primitiveMode   = gl .POINTS;
+               this .program         = null;
 
-               this .geometryContext .geometryType = 0;
                break;
             }
             case LINE:
             {
+               this .geometryContext .geometryType = 1;
+
                this .texCoordCount   = 2;
                this .vertexCount     = 2;
                this .particleBuffer  = this .geometryParticleBuffer;
@@ -392,35 +392,49 @@ function (Fields,
                this .testWireframe   = false;
                this .primitiveMode   = gl .LINES;
 
-               this .geometryContext .geometryType = 1;
+               this .program = this .createProgram ([
+                  "particle",
+                  "position",
+                  "color",
+                  "vertex"
+               ],
+               /* glsl */ `#version 300 es
 
-               // this .geometryKernel = gpu .createKernelMap ({
-               //    colors: function createColors (colorMaterial, colors, i)
-               //    {
-               //       return colorMaterial ? colors [i] : [0, 0, 0, 0];
-               //    },
-               // },
-               // function (positions, velocities, colorMaterial, colors, sy1_2)
-               // {
-               //    const
-               //       i        = this .thread .x / 2,
-               //       color    = createColors (colorMaterial, colors, i),
-               //       velocity = velocities [i],
-               //       position = positions [i],
-               //       normal   = normalize3 ([velocity [0], velocity [1], velocity [2]]);
+               precision highp float;
 
-               //    const s = this .thread .x % 2 == 0 ? -sy1_2 : sy1_2;
+               uniform float size [2];
 
-               //    return [position [0] + normal [0] * s,
-               //            position [1] + normal [1] * s,
-               //            position [2] + normal [2] * s,
-               //            1];
-               // })
-               // .addNativeFunction ("normalize3", "vec3 normalize3 (vec3 v) { return normalize (v); }")
-               // .setTactic ("precision")
-               // .setPipeline (true)
-               // .setDynamicOutput (true);
+               in vec4 input0;
+               in vec4 input1;
+               in vec4 input2;
+               in vec4 input3;
 
+               out vec4 particle;
+               out vec4 position;
+               out vec4 color;
+               out vec4 vertex;
+
+               void
+               main ()
+               {
+                  vec3 normal = normalize (input2 .xyz);
+
+                  particle = input0;
+                  position = input3;
+                  color    = input1;
+                  vertex   = vec4 (position .xyz + normal * size [gl_VertexID % 2], 1.0);
+               }
+               `);
+
+               this .program .outputs = [
+                  this .geometryParticleBuffer,
+                  this .geometryPositionBuffer,
+                  this .geometryColorBuffer,
+                  this .geometryVertexBuffer,
+               ];
+
+               this .program .sizeArray = new Float32Array (2);
+               this .program .size      = gl .getUniformLocation (this .program, "size");
                break;
             }
             case TRIANGLE:
@@ -480,6 +494,8 @@ function (Fields,
                // gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
                // gl .bufferData (gl .ARRAY_BUFFER, this .texCoordArray, gl .STATIC_DRAW);
 
+               this .geometryContext .geometryType = 2;
+
                this .texCoordCount   = 4;
                this .vertexCount     = 6;
                this .particleBuffer  = this .geometryParticleBuffer;
@@ -491,16 +507,18 @@ function (Fields,
                this .testWireframe   = true;
                this .primitiveMode   = gl .TRIANGLES;
 
-               this .geometryContext .geometryType = 2;
                break;
             }
             case GEOMETRY:
             {
                this .texCoordCount = 0;
                this .vertexCount   = 0;
+               this .program       = null;
                break;
             }
          }
+
+         this .resizeGeometryBuffers ();
 
          this .set_shader__ ();
          this .set_transparent__ ();
@@ -747,6 +765,53 @@ function (Fields,
       {
          // TODO: implement me.
       },
+      createProgram: function (varyings, vertexShaderSource)
+      {
+         const gl = this .getBrowser () .getContext ();
+
+         const fragmentShaderSource = /* glsl */ `#version 300 es
+
+         precision highp float;
+
+         void
+         main () { }
+         `;
+
+         // Vertex shader
+
+         const vertexShader = gl .createShader (gl .VERTEX_SHADER);
+
+         gl .shaderSource (vertexShader, vertexShaderSource);
+         gl .compileShader (vertexShader);
+
+         // Fragment shader
+
+         const fragmentShader = gl .createShader (gl .FRAGMENT_SHADER);
+
+         gl .shaderSource (fragmentShader, fragmentShaderSource);
+         gl .compileShader (fragmentShader);
+
+         // Program
+
+         const program = gl .createProgram ();
+
+         gl .attachShader (program, vertexShader);
+         gl .attachShader (program, fragmentShader);
+         gl .transformFeedbackVaryings (program, varyings, gl .SEPARATE_ATTRIBS);
+         gl .linkProgram (program);
+
+         if (!gl .getProgramParameter (program, gl .LINK_STATUS))
+            console .error ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
+
+         program .inputs = [
+            gl .getAttribLocation (program, "input0"),
+            gl .getAttribLocation (program, "input1"),
+            gl .getAttribLocation (program, "input2"),
+            gl .getAttribLocation (program, "input3"),
+         ];
+
+         return program;
+      },
       createTexture: function ()
       {
          const
@@ -794,6 +859,12 @@ function (Fields,
          }
 
          // Resize geometry buffers.
+
+         this .resizeGeometryBuffers ();
+      },
+      resizeGeometryBuffers: function ()
+      {
+         const gl = this .getBrowser () .getContext ();
 
          const buffers = [
             this .geometryParticleBuffer,
@@ -935,35 +1006,19 @@ function (Fields,
       },
       updateLine: function ()
       {
-         // const
-         //    gl           = this .getBrowser () .getContext (),
-         //    particles    = this .particles,
-         //    numParticles = this .numParticles,
-         //    sy1_2        = this ._particleSize .y / 2;
+         const
+            gl      = this .getBrowser () .getContext (),
+            program = this .program,
+            size1_2 = this ._particleSize .y / 2;
 
-         // // const geometry = this .geometryKernel .setOutput (output)
-         // //    (particles .result,
-         // //     particles .velocities,
-         // //     this .geometryContext .colorMaterial,
-         // //     particles .colors,
-         // //     sy1_2);
+         gl .useProgram (program);
 
-         // // Colors
+         program .sizeArray [0] = -size1_2;
+         program .sizeArray [1] =  size1_2;
 
-         // if (this .geometryContext .colorMaterial)
-         // {
-         //    const colorArray = geometry .colors .renderRawOutput ();
+         gl .uniform1fv (program .size, program .sizeArray);
 
-         //    gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-         //    gl .bufferData (gl .ARRAY_BUFFER, colorArray, gl .STATIC_DRAW);
-         // }
-
-         // // Vertices
-
-         // const vertexArray = geometry .result .renderRawOutput ();
-
-         // gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-         // gl .bufferData (gl .ARRAY_BUFFER, vertexArray, gl .STATIC_DRAW);
+         this .updateBuffers (gl, program);
       },
       updateQuad: function (modelViewMatrix)
       {
@@ -1245,6 +1300,53 @@ function (Fields,
          // {
          //    console .error (error);
          // }
+      },
+      updateBuffers: function (gl, program)
+      {
+         const
+            outputParticles = this .outputParticles,
+            inputs          = program .inputs;
+
+         for (let i = 0; i < 4; ++ i)
+         {
+            const attribute = inputs [i];
+
+            if (attribute < 0)
+               continue;
+
+            gl .enableVertexAttribArray (attribute);
+            gl .bindBuffer (gl .ARRAY_BUFFER, outputParticles [i]);
+            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, 0, 0);
+            gl .vertexAttribDivisor (attribute, 1);
+         }
+
+         gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedBack);
+
+         for (let i = 0, l = program .outputs .length; i < l; ++ i)
+            gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, i, program .outputs [i]);
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
+         gl .enable (gl .RASTERIZER_DISCARD);
+         gl .beginTransformFeedback (gl .POINTS);
+         gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount, this .numParticles);
+         gl .endTransformFeedback ();
+         gl .disable (gl .RASTERIZER_DISCARD);
+         gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
+
+         for (let i = 0; i < 4; ++ i)
+         {
+            const attribute = inputs [i];
+
+            if (attribute < 0)
+               continue;
+
+            gl .vertexAttribDivisor (attribute, 0);
+         }
+
+         // const data = new Float32Array (this .maxParticles * this .vertexCount * 4);
+         // gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
+         // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
+         // console .log (data .slice (0, 4));
       },
       traverse: function (type, renderObject)
       {
