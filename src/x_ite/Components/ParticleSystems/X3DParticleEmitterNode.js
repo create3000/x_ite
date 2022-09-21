@@ -262,6 +262,16 @@ function (X3DNode,
          gl .disable (gl .RASTERIZER_DISCARD);
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
 
+         for (let i = 0; i < 4; ++ i)
+         {
+            const attribute = program .inputs [i];
+
+            if (attribute < 0)
+               continue;
+
+            gl .disableVertexAttribArray (attribute);
+         }
+
          // const data = new Float32Array (particleSystem .numParticles * 4);
          // gl .bindBuffer (gl .ARRAY_BUFFER, outputParticles [3]);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);

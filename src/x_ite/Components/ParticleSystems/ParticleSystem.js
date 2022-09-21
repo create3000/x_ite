@@ -1355,6 +1355,7 @@ function (Fields,
             if (attribute < 0)
                continue;
 
+            gl .disableVertexAttribArray (attribute);
             gl .vertexAttribDivisor (attribute, 0);
          }
 
