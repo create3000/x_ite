@@ -779,22 +779,13 @@ function (Fields,
 
          // Resize input and output buffers.
 
-         for (const [i, buffer] of this .particles [this .i] .entries ())
+         for (const buffer of this .particles [this .i])
          {
             gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
             gl .getBufferSubData (gl .ARRAY_BUFFER, 0, inputData);
 
             if (lastNumParticles < this .maxParticles)
-            {
                outputData .set (inputData);
-
-               if (i === 0)
-               {
-                  // Create id.
-                  for (let i = lastMaxParticles, l = this .maxParticles; i < l; ++ i)
-                     outputData [i * 4] = i;
-               }
-            }
 
             gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, this .maxParticles * 4);
          }
@@ -802,7 +793,7 @@ function (Fields,
          for (const buffer of this .particles [(this .i + 1) % 2])
          {
             gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-            gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, this .maxParticles * 4);
          }
       },
       animateParticles: function ()

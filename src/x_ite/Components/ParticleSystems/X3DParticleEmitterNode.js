@@ -715,12 +715,11 @@ function (X3DNode,
          void
          animate ()
          {
-            uint  id          = uint (input0 [0]);
             uint  life        = uint (input0 [1]);
             float lifetime    = input0 [2];
             float elapsedTime = input0 [3] + deltaTime;
 
-            srand ((int (id) + randomSeed) * randomSeed);
+            srand ((gl_VertexID + randomSeed) * randomSeed);
 
             if (elapsedTime > lifetime)
             {
@@ -729,7 +728,7 @@ function (X3DNode,
                lifetime    = getRandomLifetime ();
                elapsedTime = 0.0;
 
-               output0 = vec4 (id, life + 1u, lifetime, elapsedTime);
+               output0 = vec4 (gl_VertexID, life + 1u, lifetime, elapsedTime);
 
                if (createParticles)
                {
@@ -765,7 +764,7 @@ function (X3DNode,
 
                bounce (input3, position, velocity);
 
-               output0 = vec4 (id, life, lifetime, elapsedTime);
+               output0 = vec4 (gl_VertexID, life, lifetime, elapsedTime);
                output1 = getColor (lifetime, elapsedTime);
                output2 = vec4 (velocity, 0.0);
                output3 = position;
