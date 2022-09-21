@@ -94,12 +94,15 @@ function (X3DNode,
       {
          X3DNode .prototype .initialize .call (this);
 
-         if (this .getBrowser () .getContext () .getVersion () < 2)
+         const gl = this .getBrowser () .getContext ();
+
+         if (gl .getVersion () < 2)
             return;
 
          // Create program.
 
-         this .program = this .createProgram ();
+         this .program           = this .createProgram ();
+         this .transformFeedBack = gl .createTransformFeedback ();
 
          // Initialize fields.
 
@@ -160,14 +163,10 @@ function (X3DNode,
             gl      = browser .getContext (),
             input   = particleSystem .particles [particleSystem .i],
             output  = particleSystem .particles [particleSystem .i = +! particleSystem .i],
-            size    = particleSystem .size,
             program = this .program;
 
          // Start
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, output .frameBuffer);
-         gl .viewport (0, 0, size, size);
-         gl .scissor (0, 0, size, size);
          gl .useProgram (program);
 
          // Uniforms
@@ -230,15 +229,18 @@ function (X3DNode,
             }
          }
 
-         // Input textures
+         // Input attributes
 
          for (let i = 0; i < 4; ++ i)
          {
-            const textureUnit = browser .getTexture2DUnit ();
+            const attribute = program .inputs [i];
 
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
-            gl .bindTexture (gl .TEXTURE_2D, input .textures [i]);
-            gl .uniform1i (program .inputSampler [i], textureUnit);
+            if (attribute < 0)
+               continue;
+
+            gl .enableVertexAttribArray (attribute);
+            gl .bindBuffer (gl .ARRAY_BUFFER, input [i]);
+            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, 0,0);
          }
 
          // Other textures
@@ -247,26 +249,25 @@ function (X3DNode,
 
          // Render
 
-         gl .enableVertexAttribArray (program .inputVertex);
-         gl .bindBuffer (gl .ARRAY_BUFFER, program .vertexBuffer);
-         gl .vertexAttribPointer (program .inputVertex, 4, gl .FLOAT, false, 0, 0);
+         gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedBack);
 
-         gl .disable (gl .DEPTH_TEST);
-         gl .disable (gl .BLEND);
-         gl .frontFace (gl .CCW);
-         gl .enable (gl .CULL_FACE);
-         gl .cullFace (gl .BACK);
+         for (let i = 0; i < 4; ++ i)
+            gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, i, output [i]);
 
-         gl .drawArrays (gl .TRIANGLES, 0, 6);
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
+         gl .enable (gl .RASTERIZER_DISCARD);
+         gl .beginTransformFeedback (gl .POINTS);
+         gl .drawArrays (gl .POINTS, 0, particleSystem .numParticles);
+         gl .endTransformFeedback ();
+         gl .disable (gl .RASTERIZER_DISCARD);
+         gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
 
-         // const data3 = particleSystem .data [3];
-         // gl .readBuffer (gl .COLOR_ATTACHMENT3);
-         // gl .readPixels (0, 0, size, size, gl .RGBA, gl .FLOAT, data3);
-         // console .log (data3);
+         // const data = new Float32Array (particleSystem .numParticles * 4);
+         // gl .bindBuffer (gl .ARRAY_BUFFER, output [3]);
+         // gl .getBufferSubData (gl.ARRAY_BUFFER, 0, data);
+         // console .log (data);
 
          // Restore/Finish
-
-         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
 
          browser .resetTextureUnits ();
 
@@ -299,20 +300,6 @@ function (X3DNode,
 
          precision highp float;
          precision highp int;
-
-         in vec4 inputVertex;
-
-         void
-         main ()
-         {
-            gl_Position = inputVertex;
-         }
-         `;
-
-         const fragmentShaderSource = /* glsl */ `#version 300 es
-
-         precision highp float;
-         precision highp int;
          precision highp sampler2D;
 
          uniform int   randomSeed;
@@ -333,17 +320,17 @@ function (X3DNode,
          uniform int       boundedVolumeHierarchyLength;
          uniform sampler2D boundedVolumeHierarchy;
 
-         uniform sampler2D inputSampler0;
-         uniform sampler2D inputSampler1;
-         uniform sampler2D inputSampler2;
-         uniform sampler2D inputSampler3;
-
          ${Object .values (this .uniforms) .join ("\n")}
 
-         layout(location = 0) out vec4 output0;
-         layout(location = 1) out vec4 output1;
-         layout(location = 2) out vec4 output2;
-         layout(location = 3) out vec4 output3;
+         in vec4 input0;
+         in vec4 input1;
+         in vec4 input2;
+         in vec4 input3;
+
+         out vec4 output0;
+         out vec4 output1;
+         out vec4 output2;
+         out vec4 output3;
 
          // Constants
 
@@ -726,86 +713,78 @@ function (X3DNode,
          }
 
          void
-         animate (const in ivec2 fragCoord, const in int id)
+         animate ()
          {
-            if (id < numParticles)
+            uint  id          = uint (input0 [0]);
+            uint  life        = uint (input0 [1]);
+            float lifetime    = input0 [2];
+            float elapsedTime = input0 [3] + deltaTime;
+
+            srand ((int (id) + randomSeed) * randomSeed);
+
+            if (elapsedTime > lifetime)
             {
-               srand ((id + randomSeed) * randomSeed);
+               // Create new particle or hide particle.
 
-               vec4 input0 = texelFetch (inputSampler0, fragCoord, 0);
-               vec4 input2 = texelFetch (inputSampler2, fragCoord, 0);
-               vec4 input3 = texelFetch (inputSampler3, fragCoord, 0);
+               lifetime    = getRandomLifetime ();
+               elapsedTime = 0.0;
 
-               uint  life        = uint (input0 [1]);
-               float lifetime    = input0 [2];
-               float elapsedTime = input0 [3] + deltaTime;
+               output0 = vec4 (id, life + 1u, lifetime, elapsedTime);
 
-               if (elapsedTime > lifetime)
+               if (createParticles)
                {
-                  // Create new particle or hide particle.
-
-                  lifetime    = getRandomLifetime ();
-                  elapsedTime = 0.0;
-
-                  output0 = vec4 (id, life + 1u, lifetime, elapsedTime);
-
-                  if (createParticles)
-                  {
-                     output1 = getColor (lifetime, elapsedTime);
-                     output2 = vec4 (getRandomVelocity (), 0.0);
-                     output3 = getRandomPosition ();
-                  }
-                  else
-                  {
-                     output1 = vec4 (0.0);
-                     output2 = vec4 (0.0);
-                     output3 = vec4 (0.0);
-                  }
+                  output1 = getColor (lifetime, elapsedTime);
+                  output2 = vec4 (getRandomVelocity (), 0.0);
+                  output3 = getRandomPosition ();
                }
                else
                {
-                  // Animate particle.
-
-                  vec3 velocity = input2 .xyz;
-                  vec4 position = input3;
-
-                  for (int i = 0; i < numForces; ++ i)
-                  {
-                     vec4  force      = texelFetch (forces, i, 0);
-                     float turbulence = force .w;
-                     vec3  normal     = getRandomNormalWithDirectionAndAngle (force .xyz, turbulence);
-                     float speed      = length (force .xyz);
-
-                     velocity += normal * speed;
-                  }
-
-                  position .xyz += velocity * deltaTime;
-
-                  bounce (input3, position, velocity);
-
-                  output0 = vec4 (id, life, lifetime, elapsedTime);
-                  output1 = getColor (lifetime, elapsedTime);
-                  output2 = vec4 (velocity, 0.0);
-                  output3 = position;
+                  output1 = vec4 (0.0);
+                  output2 = vec4 (0.0);
+                  output3 = vec4 (0.0);
                }
             }
             else
             {
-               output0 = vec4 (0.0);
-               output1 = vec4 (0.0);
-               output2 = vec4 (0.0);
-               output3 = vec4 (0.0);
+               // Animate particle.
+
+               vec3 velocity = input2 .xyz;
+               vec4 position = input3;
+
+               for (int i = 0; i < numForces; ++ i)
+               {
+                  vec4  force      = texelFetch (forces, i, 0);
+                  float turbulence = force .w;
+                  vec3  normal     = getRandomNormalWithDirectionAndAngle (force .xyz, turbulence);
+                  float speed      = length (force .xyz);
+
+                  velocity += normal * speed;
+               }
+
+               position .xyz += velocity * deltaTime;
+
+               bounce (input3, position, velocity);
+
+               output0 = vec4 (id, life, lifetime, elapsedTime);
+               output1 = getColor (lifetime, elapsedTime);
+               output2 = vec4 (velocity, 0.0);
+               output3 = position;
             }
          }
 
          void
          main ()
          {
-            ivec2 fragCoord = ivec2 (gl_FragCoord .xy);
-            int   id        = fragCoord .y * textureSize (inputSampler0, 0) .x + fragCoord .x;
-
-            animate (fragCoord, id);
+            animate ();
          }
+         `;
+
+         const fragmentShaderSource = /* glsl */ `#version 300 es
+
+         precision highp float;
+
+         void
+         main () { }
          `;
 
          // Vertex shader
@@ -828,20 +807,19 @@ function (X3DNode,
 
          gl .attachShader (program, vertexShader);
          gl .attachShader (program, fragmentShader);
+         gl .transformFeedbackVaryings (program, ["output0", "output1", "output2", "output3"], gl .SEPARATE_ATTRIBS);
          gl .linkProgram (program);
 
          if (!gl .getProgramParameter (program, gl .LINK_STATUS))
             console .error ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
 
-         program .inputVertex = gl .getAttribLocation (program, "inputVertex");
-
          gl .useProgram (program);
 
-         program .inputSampler = [
-            gl .getUniformLocation (program, "inputSampler0"),
-            gl .getUniformLocation (program, "inputSampler1"),
-            gl .getUniformLocation (program, "inputSampler2"),
-            gl .getUniformLocation (program, "inputSampler3"),
+         program .inputs = [
+            gl .getAttribLocation (program, "input0"),
+            gl .getAttribLocation (program, "input1"),
+            gl .getAttribLocation (program, "input2"),
+            gl .getAttribLocation (program, "input3"),
          ];
 
          program .randomSeed        = gl .getUniformLocation (program, "randomSeed");
@@ -871,33 +849,8 @@ function (X3DNode,
          gl .uniform1i (program .boundedVolume,          browser .getDefaultTexture2DUnit ());
          gl .uniform1i (program .boundedVolumeHierarchy, browser .getDefaultTexture2DUnit ());
 
-         program .vertexBuffer = this .createVertexBuffer ();
-
          return program;
       },
-      createVertexBuffer: (function ()
-      {
-         const vertices = [
-             1,  1, 0, 1,
-            -1,  1, 0, 1,
-            -1, -1, 0, 1,
-             1,  1, 0, 1,
-            -1, -1, 0, 1,
-             1, -1, 0, 1,
-         ];
-
-         return function ()
-         {
-            const
-               gl              = this .getBrowser () .getContext (),
-               vertexBuffer    = gl .createBuffer ();
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .STATIC_DRAW);
-
-            return vertexBuffer;
-         };
-      })(),
       activateTextures: function ()
       { },
       createTexture: function ()

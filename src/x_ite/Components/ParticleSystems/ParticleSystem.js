@@ -115,11 +115,9 @@ function (Fields,
 
       this ._particleSize .setUnit ("length");
 
-      this .particles                = [{ textures: [ ] }, { textures: [ ] }];
-      this .data                     = [new Float32Array (), new Float32Array (), new Float32Array (), new Float32Array ()];
+      this .particles                = [[ ], [ ]];
       this .i                        = 0;
       this .output                   = this .particles [this .i];
-      this .size                     = 0;
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .particleLifetime         = 0;
@@ -217,14 +215,11 @@ function (Fields,
 
          // Create particles stuff.
 
-         for (const { textures } of this .particles)
+         for (const buffers of this .particles)
          {
             for (let i = 0; i < 4; ++ i)
-               textures [i] = this .createTexture ();
+               buffers [i] = gl .createBuffer ();
          }
-
-         for (const particles of this .particles)
-            particles .frameBuffer = this .createFrameBuffer (particles .textures);
 
          // Create forces stuff.
 
@@ -235,11 +230,8 @@ function (Fields,
 
          // Create GL stuff.
 
-         this .idBuffer        = gl .createBuffer ();
-         this .colorBuffer     = gl .createBuffer ();
          this .texCoordBuffers = [ gl .createBuffer () ];
          this .normalBuffer    = gl .createBuffer ();
-         this .vertexBuffer    = gl .createBuffer ();
 
          for (let i = 1, channels = this .getBrowser () .getMaxTextures (); i < channels; ++ i)
             this .texCoordBuffers .push (this .texCoordBuffers [0]);
@@ -383,16 +375,10 @@ function (Fields,
          {
             case POINT:
             {
-               this .idArray = new Float32Array (maxParticles);
-
-               delete this .texCoordArray;
-               delete this .normalArray;
-
-               for (let i = 0, a = this .idArray, l = a .length; i < l; ++ i)
-                  a [i] = i;
-
                this .testWireframe = false;
                this .primitiveMode = gl .POINTS;
+               this .hasTexCoords  = false;
+               this .hasNormals    = false;
                this .texCoordCount = 0;
                this .vertexCount   = 1;
 
@@ -401,17 +387,11 @@ function (Fields,
             }
             case LINE:
             {
-               this .idArray = new Float32Array (2 * maxParticles);
-
-               delete this .texCoordArray;
-               delete this .normalArray;
-
-               for (let i = 0, a = this .idArray, l = a .length; i < l; ++ i)
-                  a [i] = Math .floor (i / 2);
-
                this .testWireframe = false;
                this .primitiveMode = gl .LINES;
-               this .texCoordCount = 2;
+               this .hasTexCoords  = false;
+               this .hasNormals    = false;
+               this .texCoordCount = 0;
                this .vertexCount   = 2;
 
                this .geometryContext .geometryType = 1;
@@ -449,13 +429,6 @@ function (Fields,
             case QUAD:
             case SPRITE:
             {
-               this .idArray       = new Float32Array (6 * maxParticles);
-               this .texCoordArray = new Float32Array (6 * 4 * maxParticles);
-               this .normalArray   = new Float32Array (6 * 3 * maxParticles);
-
-               for (let i = 0, a = this .idArray, l = a .length; i < l; ++ i)
-                  a [i] = Math .floor (i / 6);
-
                const
                   texCoordArray = this .texCoordArray,
                   normalArray   = this .normalArray;
@@ -511,6 +484,8 @@ function (Fields,
 
                this .testWireframe = true;
                this .primitiveMode = gl .TRIANGLES;
+               this .hasTexCoords  = true;
+               this .hasNormals    = true;
                this .texCoordCount = 4;
                this .vertexCount   = 6;
 
@@ -524,9 +499,6 @@ function (Fields,
                break;
             }
          }
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .idBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .idArray, gl .STATIC_DRAW);
 
          this .set_shader__ ();
          this .set_transparent__ ();
@@ -557,7 +529,10 @@ function (Fields,
       },
       set_maxParticles__: function ()
       {
-         const maxParticles = Math .max (0, this ._maxParticles .getValue ());
+         const
+            lastMaxParticles = this .maxParticles,
+            lastNumParticles = this .numParticles,
+            maxParticles     = Math .max (0, this ._maxParticles .getValue ());
 
          this .maxParticles = maxParticles;
          this .numParticles = Math .min (this .numParticles, maxParticles);
@@ -565,7 +540,7 @@ function (Fields,
          if (! this .emitterNode .isExplosive ())
             this .creationTime = performance .now () / 1000;
 
-         this .resizeTextures ();
+         this .resizeBuffers (lastMaxParticles, lastNumParticles);
 
          this .set_geometryType__ ();
       },
@@ -775,29 +750,6 @@ function (Fields,
       {
          // TODO: implement me.
       },
-      createFrameBuffer: function (textures)
-      {
-         // Create frame buffer.
-
-         const
-            gl          = this .getBrowser () .getContext (),
-            frameBuffer = gl .createFramebuffer ();
-
-         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
-
-         // Assign textures.
-
-         for (const [i, texture] of textures .entries ())
-            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0 + i, gl .TEXTURE_2D, texture, 0);
-
-         gl .drawBuffers ([gl .COLOR_ATTACHMENT0, gl .COLOR_ATTACHMENT1, gl .COLOR_ATTACHMENT2, gl .COLOR_ATTACHMENT3]);
-
-         // Reset frame buffer.
-
-         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
-         return frameBuffer;
-      },
       createTexture: function ()
       {
          const
@@ -815,51 +767,43 @@ function (Fields,
 
          return texture;
       },
-      resizeTextures: function ()
+      resizeBuffers: function (lastMaxParticles, lastNumParticles)
       {
          const
-            gl          = this .getBrowser () .getContext (),
-            particles   = this .output,
-            size        = Math .ceil (Math .sqrt (this .maxParticles)),
-            length      = size * size * 4;
+            gl         = this .getBrowser () .getContext (),
+            inputData  = new Float32Array (lastNumParticles * 4);
 
-         // Resize and get data.
+         const outputData = lastNumParticles < this .maxParticles
+            ? new Float32Array (this .maxParticles * 4)
+            : inputData;
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, particles .frameBuffer);
+         // Resize input and output buffers.
 
-         for (let i = 0; i < 4; ++ i)
+         for (const [i, buffer] of this .particles [this .i] .entries ())
          {
-            const data = this .data [i];
+            gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+            gl .getBufferSubData (gl .ARRAY_BUFFER, 0, inputData);
 
-            gl .readBuffer (gl .COLOR_ATTACHMENT0 + i);
-            gl .readPixels (0, 0, this .size, this .size, gl .RGBA, gl .FLOAT, data);
+            if (lastNumParticles < this .maxParticles)
+            {
+               outputData .set (inputData);
 
-            if (length * Float32Array .BYTES_PER_ELEMENT <= data .buffer .byteLength)
-            {
-               this .data [i] = new Float32Array (data .buffer, 0, length);
-               this .data [i] .fill (0, this .numParticles * 4);
+               if (i === 0)
+               {
+                  // Create id.
+                  for (let i = lastMaxParticles, l = this .maxParticles; i < l; ++ i)
+                     outputData [i * 4] = i;
+               }
             }
-            else if (length > data .length)
-            {
-               this .data [i] = new Float32Array (length);
-               this .data [i] .set (data);
-            }
+
+            gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, this .maxParticles * 4);
          }
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
-
-         // Resize textures.
-
-         for (const particles of this .particles)
+         for (const buffer of this .particles [(this .i + 1) % 2])
          {
-            for (const [i, texture] of particles .textures .entries ())
-            {
-               gl .bindTexture (gl .TEXTURE_2D, texture);
-               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, particles === this .output ? this .data [i] : null);
-            }
+            gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+            gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW);
          }
-
-         this .size = size;
       },
       animateParticles: function ()
       {
@@ -974,38 +918,8 @@ function (Fields,
       },
       updatePoint: function ()
       {
-         const
-            gl          = this .getBrowser () .getContext (),
-            frameBuffer = this .output .frameBuffer,
-            data        = this .data,
-            size        = this .size;
-
-         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
-
-         // Colors
-
-         if (this .geometryContext .colorMaterial)
-         {
-            const colorArray = data [1];
-
-            gl .readBuffer (gl .COLOR_ATTACHMENT1);
-            gl .readPixels (0, 0, size, size, gl .RGBA, gl .FLOAT, colorArray);
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, colorArray, gl .STATIC_DRAW);
-         }
-
-         // Vertices
-
-         const vertexArray = data [3];
-
-         gl .readBuffer (gl .COLOR_ATTACHMENT3);
-         gl .readPixels (0, 0, size, size, gl .RGBA, gl .FLOAT, vertexArray);
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, vertexArray, gl .STATIC_DRAW);
-
-         gl .bindFramebuffer (gl .FRAMEBUFFER, null);
+         this .colorBuffer  = this .output [1];
+         this .vertexBuffer = this .output [3];
       },
       updateLine: function ()
       {
@@ -1386,12 +1300,12 @@ function (Fields,
             {
                // Setup vertex attributes.
 
-               shaderNode .enableFloatAttrib (gl, "x3d_ParticleId", this .idBuffer, 1);
+               //shaderNode .enableFloatAttrib (gl, "x3d_ParticleId", this .idBuffer, 1);
                shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
                gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
 
-               shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
+               //shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
             }
          }
       },
@@ -1437,15 +1351,13 @@ function (Fields,
 
                   // Setup vertex attributes.
 
-                  shaderNode .enableFloatAttrib (gl, "x3d_ParticleId", this .idBuffer, 1);
-
                   if (this .geometryContext .colorMaterial)
                      shaderNode .enableColorAttribute (gl, this .colorBuffer);
 
-                  if (this .texCoordArray)
+                  if (this .hasTexCoords)
                      shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
 
-                  if (this .normalArray)
+                  if (this .hasNormals)
                      shaderNode .enableNormalAttribute (gl, this .normalBuffer);
 
                   shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
@@ -1467,8 +1379,6 @@ function (Fields,
 
                      gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
                   }
-
-                  shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
 
                   shaderNode .disableColorAttribute    (gl);
                   shaderNode .disableTexCoordAttribute (gl);
