@@ -197,6 +197,7 @@ function (Fields,
          this ._maxParticles      .addInterest ("set_enabled__",           this);
          this ._particleLifetime  .addInterest ("set_particleLifetime__",  this);
          this ._lifetimeVariation .addInterest ("set_lifetimeVariation__", this);
+         this ._particleSize      .addInterest ("set_particleSize__",      this);
          this ._emitter           .addInterest ("set_emitter__",           this);
          this ._physics           .addInterest ("set_physics__",           this);
          this ._colorKey          .addInterest ("set_color__",             this);
@@ -402,7 +403,7 @@ function (Fields,
 
                precision highp float;
 
-               uniform float size [2];
+               uniform vec2 particleSize;
 
                in vec4 input0;
                in vec4 input1;
@@ -417,12 +418,13 @@ function (Fields,
                void
                main ()
                {
-                  vec3 normal = normalize (input2 .xyz);
+                  vec3  normal  = normalize (input2 .xyz);
+                  float size1_2 = gl_VertexID % 2 == 0 ? particleSize .y / -2.0 : particleSize .y / 2.0;
 
                   particle = input0;
                   position = input3;
                   color    = input1;
-                  vertex   = vec4 (position .xyz + normal * size [gl_VertexID % 2], 1.0);
+                  vertex   = vec4 (position .xyz + normal * size1_2, 1.0);
                }
                `);
 
@@ -432,14 +434,6 @@ function (Fields,
                   this .geometryColorBuffer,
                   this .geometryVertexBuffer,
                ];
-
-               this .program .uniforms = {
-                  size: {
-                     func: "uniform1fv",
-                     location: gl .getUniformLocation (this .program, "size"),
-                     value: new Float32Array (2),
-                  },
-               };
 
                break;
             }
@@ -526,6 +520,7 @@ function (Fields,
 
          this .resizeGeometryBuffers ();
 
+         this .set_particleSize__ ();
          this .set_shader__ ();
          this .set_transparent__ ();
       },
@@ -572,6 +567,18 @@ function (Fields,
       set_lifetimeVariation__: function ()
       {
          this .lifetimeVariation = this ._lifetimeVariation .getValue ();
+      },
+      set_particleSize__: function ()
+      {
+         const
+            gl      = this .getBrowser () .getContext (),
+            program = this .program;
+
+         if (!program)
+            return;
+
+         gl .useProgram (program);
+         gl .uniform2f (program .particleSize, this ._particleSize .x, this ._particleSize .y);
       },
       set_emitter__: function ()
       {
@@ -816,6 +823,8 @@ function (Fields,
             gl .getAttribLocation (program, "input3"),
          ];
 
+         program .particleSize = gl .getUniformLocation (program, "particleSize");
+
          return program;
       },
       createTexture: function ()
@@ -1014,17 +1023,7 @@ function (Fields,
       },
       updateLine: function ()
       {
-         const
-            gl        = this .getBrowser () .getContext (),
-            program   = this .program,
-            uniforms  = program .uniforms,
-            sizeArray = uniforms .size .value,
-            size1_2   = this ._particleSize .y / 2;
-
-         sizeArray [0] = -size1_2;
-         sizeArray [1] =  size1_2;
-
-         this .updateBuffers (gl, program, uniforms);
+         this .updateBuffers ();
       },
       updateQuad: function (modelViewMatrix)
       {
@@ -1307,21 +1306,16 @@ function (Fields,
          //    console .error (error);
          // }
       },
-      updateBuffers: function (gl, program, uniforms)
+      updateBuffers: function ()
       {
          const
+            gl              = this .getBrowser () .getContext (),
             outputParticles = this .outputParticles,
+            program         = this .program,
             inputs          = program .inputs,
             outputs         = program .outputs;
 
          gl .useProgram (program);
-
-         for (const key in uniforms)
-         {
-            const { func, location, value } = uniforms [key];
-
-            gl [func] (location, value);
-         }
 
          for (let i = 0; i < 4; ++ i)
          {
