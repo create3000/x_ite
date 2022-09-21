@@ -1311,7 +1311,8 @@ function (Fields,
       {
          const
             outputParticles = this .outputParticles,
-            inputs          = program .inputs;
+            inputs          = program .inputs,
+            outputs         = program .outputs;
 
          gl .useProgram (program);
 
@@ -1337,8 +1338,8 @@ function (Fields,
 
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedBack);
 
-         for (let i = 0, l = program .outputs .length; i < l; ++ i)
-            gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, i, program .outputs [i]);
+         for (let i = 0, l = outputs .length; i < l; ++ i)
+            gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, i, outputs [i]);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, null);
          gl .enable (gl .RASTERIZER_DISCARD);
