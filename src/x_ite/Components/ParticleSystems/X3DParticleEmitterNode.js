@@ -240,7 +240,7 @@ function (X3DNode,
 
             gl .enableVertexAttribArray (attribute);
             gl .bindBuffer (gl .ARRAY_BUFFER, inputParticles [i]);
-            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, 0,0);
+            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, 0, 0);
          }
 
          // Other textures
@@ -264,7 +264,7 @@ function (X3DNode,
 
          // const data = new Float32Array (particleSystem .numParticles * 4);
          // gl .bindBuffer (gl .ARRAY_BUFFER, outputParticles [3]);
-         // gl .getBufferSubData (gl.ARRAY_BUFFER, 0, data);
+         // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
          // console .log (data);
 
          // Restore/Finish
