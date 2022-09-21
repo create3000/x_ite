@@ -390,11 +390,11 @@ function (Fields,
                let offset = 0;
 
                this .particleOffset = offset;
-               this .positionOffset = offset += 16;
-               this .colorOffset    = offset += 16;
-               this .texCoordOffset = offset += 16;
-               this .vertexOffset   = offset += 16;
-               this .stride         = offset += 16;
+               this .positionOffset = offset += Float32Array .BYTES_PER_ELEMENT * 4;
+               this .colorOffset    = offset += Float32Array .BYTES_PER_ELEMENT * 4;
+               this .texCoordOffset = offset += Float32Array .BYTES_PER_ELEMENT * 4;
+               this .vertexOffset   = offset += Float32Array .BYTES_PER_ELEMENT * 4;
+               this .stride         = offset += Float32Array .BYTES_PER_ELEMENT * 4;
 
                this .program = this .createProgram ([
                   "particle",
@@ -508,12 +508,12 @@ function (Fields,
                let offset = 0;
 
                this .particleOffset = offset;
-               this .positionOffset = offset += 16;
-               this .colorOffset    = offset += 16;
-               this .texCoordOffset = offset += 16;
-               this .normalOffset   = offset += 16;
-               this .vertexOffset   = offset += 12;
-               this .stride         = offset += 16;
+               this .positionOffset = offset += Float32Array .BYTES_PER_ELEMENT * 4;
+               this .colorOffset    = offset += Float32Array .BYTES_PER_ELEMENT * 4;
+               this .texCoordOffset = offset += Float32Array .BYTES_PER_ELEMENT * 4;
+               this .normalOffset   = offset += Float32Array .BYTES_PER_ELEMENT * 4;
+               this .vertexOffset   = offset += Float32Array .BYTES_PER_ELEMENT * 3;
+               this .stride         = offset += Float32Array .BYTES_PER_ELEMENT * 4;
 
                break;
             }
