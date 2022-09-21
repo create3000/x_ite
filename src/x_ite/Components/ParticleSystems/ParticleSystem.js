@@ -1005,21 +1005,24 @@ function (Fields,
       },
       updatePoint: function ()
       {
-         this .particleBuffer = this .outputParticles [0];
-         this .positionBuffer = this .outputParticles [3];
-         this .colorBuffer    = this .outputParticles [1];
-         this .vertexBuffer   = this .outputParticles [3];
+         const outputParticles = this .outputParticles;
+
+         this .particleBuffer = outputParticles [0];
+         this .positionBuffer = outputParticles [3];
+         this .colorBuffer    = outputParticles [1];
+         this .vertexBuffer   = outputParticles [3];
       },
       updateLine: function ()
       {
          const
-            gl       = this .getBrowser () .getContext (),
-            program  = this .program,
-            uniforms = program .uniforms,
-            size1_2  = this ._particleSize .y / 2;
+            gl        = this .getBrowser () .getContext (),
+            program   = this .program,
+            uniforms  = program .uniforms,
+            sizeArray = uniforms .size .value,
+            size1_2   = this ._particleSize .y / 2;
 
-         uniforms .size .value [0] = -size1_2;
-         uniforms .size .value [1] =  size1_2;
+         sizeArray [0] = -size1_2;
+         sizeArray [1] =  size1_2;
 
          this .updateBuffers (gl, program, uniforms);
       },
