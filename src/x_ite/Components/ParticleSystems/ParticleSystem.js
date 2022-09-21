@@ -898,7 +898,7 @@ function (Fields,
             {
                const
                   gl           = this .getBrowser () .getContext (),
-                  geometryData = new Float32Array (this .maxParticles * this .vertexCount * 4 * 6);
+                  geometryData = new Float32Array (this .maxParticles * this .vertexCount * this .stride / Float32Array .BYTES_PER_ELEMENT);
 
                gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, geometryData, gl .STATIC_DRAW);
