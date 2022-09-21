@@ -556,17 +556,16 @@ function (Fields,
       set_maxParticles__: function ()
       {
          const
-            lastMaxParticles = this .maxParticles,
             lastNumParticles = this .numParticles,
             maxParticles     = Math .max (0, this ._maxParticles .getValue ());
 
          this .maxParticles = maxParticles;
          this .numParticles = Math .min (this .numParticles, maxParticles);
 
-         if (! this .emitterNode .isExplosive ())
+         if (!this .emitterNode .isExplosive ())
             this .creationTime = performance .now () / 1000;
 
-         this .resizeBuffers (lastMaxParticles, lastNumParticles);
+         this .resizeBuffers (lastNumParticles);
       },
       set_particleLifetime__: function ()
       {
@@ -852,7 +851,7 @@ function (Fields,
 
          return texture;
       },
-      resizeBuffers: function (lastMaxParticles, lastNumParticles)
+      resizeBuffers: function (lastNumParticles)
       {
          const
             gl         = this .getBrowser () .getContext (),
