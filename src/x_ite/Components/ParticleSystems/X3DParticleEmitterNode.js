@@ -715,7 +715,7 @@ function (X3DNode,
          void
          animate ()
          {
-            uint  life        = uint (input0 [1]);
+            int  life         = int (input0 [1]);
             float lifetime    = input0 [2];
             float elapsedTime = input0 [3] + deltaTime;
 
@@ -728,7 +728,7 @@ function (X3DNode,
                lifetime    = getRandomLifetime ();
                elapsedTime = 0.0;
 
-               output0 = vec4 (gl_VertexID, life + 1u, lifetime, elapsedTime);
+               output0 = vec4 (gl_VertexID, max (life + 1, 0), lifetime, elapsedTime);
 
                if (createParticles)
                {
