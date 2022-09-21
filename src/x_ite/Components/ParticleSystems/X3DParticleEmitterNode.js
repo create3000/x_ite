@@ -173,7 +173,6 @@ function (X3DNode,
 
          gl .uniform1i (program .randomSeed,        Math .random () * 0xffffffff);
          gl .uniform1i (program .createParticles,   particleSystem .createParticles && this .on);
-         gl .uniform1i (program .numParticles,      particleSystem .numParticles);
          gl .uniform1f (program .particleLifetime,  particleSystem .particleLifetime);
          gl .uniform1f (program .lifetimeVariation, particleSystem .lifetimeVariation);
          gl .uniform1f (program .deltaTime,         deltaTime);
@@ -314,7 +313,6 @@ function (X3DNode,
 
          uniform int   randomSeed;
          uniform bool  createParticles;
-         uniform int   numParticles;
          uniform float particleLifetime;
          uniform float lifetimeVariation;
          uniform float deltaTime;
@@ -825,7 +823,6 @@ function (X3DNode,
 
          program .randomSeed        = gl .getUniformLocation (program, "randomSeed");
          program .createParticles   = gl .getUniformLocation (program, "createParticles");
-         program .numParticles      = gl .getUniformLocation (program, "numParticles");
          program .particleLifetime  = gl .getUniformLocation (program, "particleLifetime");
          program .lifetimeVariation = gl .getUniformLocation (program, "lifetimeVariation");
          program .deltaTime         = gl .getUniformLocation (program, "deltaTime");
