@@ -680,7 +680,7 @@ function (Fields,
 
          boundedVolumeHierarchyArray .length = boundedVolumeHierarchyArraySize * boundedVolumeHierarchyArraySize * 4;
 
-         this .boundedVolumeHierarchyLength = boundedVolumeHierarchyLength;
+         this .boundedVolumeHierarchyRoot = boundedVolumeHierarchyLength - 1;
 
          gl .bindTexture (gl .TEXTURE_2D, this .boundedVolumeHierarchyTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, boundedVolumeHierarchyArraySize, boundedVolumeHierarchyArraySize, 0, gl .RGBA, gl .FLOAT, new Float32Array (boundedVolumeHierarchyArray));

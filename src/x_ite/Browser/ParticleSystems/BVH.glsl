@@ -11,9 +11,9 @@ setBVHIndex (const in int index)
 }
 
 int
-getBVHRoot (const in sampler2D bvh, const in int bvhLength)
+getBVHRoot (const in sampler2D bvh, const in int root)
 {
-   return int (texelFetch (bvh, bvhLength - 1, 0) .x);
+   return int (texelFetch (bvh, root, 0) .x);
 }
 
 int
@@ -55,9 +55,9 @@ getBVHTriangle (const in sampler2D bvh)
 /* Ray triangle intersection test */
 
 int
-getIntersections (const in sampler2D bvh, const in int bvhLength, const in Line3 line, const in sampler2D surface, const in int verticesIndex, out vec4 points [ARRAY_SIZE])
+getIntersections (const in sampler2D bvh, const in int bvhRoot, const in Line3 line, const in sampler2D surface, const in int verticesIndex, out vec4 points [ARRAY_SIZE])
 {
-   int current = getBVHRoot (bvh, bvhLength);
+   int current = getBVHRoot (bvh, bvhRoot);
    int count   = 0;
    int id      = -1;
    int stack [BVH_STACK_SIZE];

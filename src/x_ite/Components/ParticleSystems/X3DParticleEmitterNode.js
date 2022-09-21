@@ -217,7 +217,7 @@ function (X3DNode,
                gl .uniform1i (program .boundedVolume, textureUnit);
             }
 
-            gl .uniform1i (program .boundedVolumeHierarchyLength, particleSystem .boundedVolumeHierarchyLength);
+            gl .uniform1i (program .boundedVolumeHierarchyRoot, particleSystem .boundedVolumeHierarchyRoot);
 
             {
                const textureUnit = browser .getTexture2DUnit ();
@@ -325,7 +325,7 @@ function (X3DNode,
 
          uniform int       numBoundedVertices;
          uniform sampler2D boundedVolume;
-         uniform int       boundedVolumeHierarchyLength;
+         uniform int       boundedVolumeHierarchyRoot;
          uniform sampler2D boundedVolumeHierarchy;
 
          ${Object .values (this .uniforms) .join ("\n")}
@@ -692,7 +692,7 @@ function (X3DNode,
             vec4 points  [ARRAY_SIZE];
             vec3 normals [ARRAY_SIZE];
 
-            int numIntersections = getIntersections (boundedVolumeHierarchy, boundedVolumeHierarchyLength, line, boundedVolume, 0, numBoundedVertices, points, normals);
+            int numIntersections = getIntersections (boundedVolumeHierarchy, boundedVolumeHierarchyRoot, line, boundedVolume, 0, numBoundedVertices, points, normals);
 
             if (numIntersections == 0)
                return;
@@ -833,10 +833,10 @@ function (X3DNode,
          program .numColors = gl .getUniformLocation (program, "numColors");
          program .colorRamp = gl .getUniformLocation (program, "colorRamp");
 
-         program .numBoundedVertices           = gl .getUniformLocation (program, "numBoundedVertices");
-         program .boundedVolume                = gl .getUniformLocation (program, "boundedVolume");
-         program .boundedVolumeHierarchyLength = gl .getUniformLocation (program, "boundedVolumeHierarchyLength");
-         program .boundedVolumeHierarchy       = gl .getUniformLocation (program, "boundedVolumeHierarchy");
+         program .numBoundedVertices         = gl .getUniformLocation (program, "numBoundedVertices");
+         program .boundedVolume              = gl .getUniformLocation (program, "boundedVolume");
+         program .boundedVolumeHierarchyRoot = gl .getUniformLocation (program, "boundedVolumeHierarchyRoot");
+         program .boundedVolumeHierarchy     = gl .getUniformLocation (program, "boundedVolumeHierarchy");
 
          for (const uniform of Object .keys (this .uniforms))
             program [uniform] = gl .getUniformLocation (program, uniform);

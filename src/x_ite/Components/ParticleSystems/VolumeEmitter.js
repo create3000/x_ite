@@ -83,7 +83,7 @@ function (Fields,
       this .addUniform ("numAreaSoFar", "uniform int numAreaSoFar;");
       this .addUniform ("numVertices",  "uniform int numVertices;");
       this .addUniform ("volume",       "uniform sampler2D volume;");
-      this .addUniform ("bvhLength",    "uniform int bvhLength;");
+      this .addUniform ("bvhRoot",      "uniform int bvhRoot;");
       this .addUniform ("bvh",          "uniform sampler2D bvh;");
 
       this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
@@ -115,7 +115,7 @@ function (Fields,
 
             vec4 points [ARRAY_SIZE];
 
-            int numIntersections = getIntersections (bvh, bvhLength, line, volume, numAreaSoFar, points);
+            int numIntersections = getIntersections (bvh, bvhRoot, line, volume, numAreaSoFar, points);
 
             numIntersections -= numIntersections % 2; // We need an even count of intersections.
 
@@ -272,7 +272,7 @@ function (Fields,
 
             bvhArray .length = bvhArraySize * bvhArraySize * 4;
 
-            this .setUniform ("uniform1i", "bvhLength", bvhLength);
+            this .setUniform ("uniform1i", "bvhRoot", bvhLength - 1);
 
             gl .bindTexture (gl .TEXTURE_2D, this .bvhTexture);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, bvhArraySize, bvhArraySize, 0, gl .RGBA, gl .FLOAT, new Float32Array (bvhArray));
