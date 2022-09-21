@@ -82,21 +82,13 @@ function (Fields,
 
    let i = 0;
 
-   const
-      POINT    = i ++,
-      LINE     = i ++,
-      TRIANGLE = i ++,
-      QUAD     = i ++,
-      GEOMETRY = i ++,
-      SPRITE   = i ++;
-
    const GeometryTypes = {
-      POINT:    POINT,
-      LINE:     LINE,
-      TRIANGLE: TRIANGLE,
-      QUAD:     QUAD,
-      GEOMETRY: GEOMETRY,
-      SPRITE:   SPRITE,
+      POINT:    i ++,
+      LINE:     i ++,
+      TRIANGLE: i ++,
+      QUAD:     i ++,
+      SPRITE:   i ++,
+      GEOMETRY: i ++,
    };
 
    function ParticleSystem (executionContext)
@@ -113,7 +105,7 @@ function (Fields,
       this .numParticles             = 0;
       this .particleLifetime         = 0;
       this .lifetimeVariation        = 0;
-      this .geometryType             = POINT;
+      this .geometryType             = GeometryTypes .POINT;
       this .createParticles          = true;
       this .emitterNode              = null;
       this .forcePhysicsModelNodes   = [ ];
@@ -266,7 +258,7 @@ function (Fields,
          {
             switch (this .geometryType)
             {
-               case POINT:
+               case GeometryTypes .POINT:
                {
                   this .setTransparent (true);
                   break;
@@ -275,7 +267,7 @@ function (Fields,
                {
                   this .setTransparent (this .getAppearance () .getTransparent () ||
                                         (this .colorRampNode && this .colorRampNode .getTransparent ()) ||
-                                        (this .geometryType === GEOMETRY && this .geometryNode && this .geometryNode .getTransparent ()));
+                                        (this .geometryType === GeometryTypes .GEOMETRY && this .geometryNode && this .geometryNode .getTransparent ()));
                   break;
                }
             }
@@ -356,7 +348,7 @@ function (Fields,
 
          // geometryType
 
-         this .geometryType = GeometryTypes [this ._geometryType .getValue ()] || POINT;
+         this .geometryType = GeometryTypes [this ._geometryType .getValue ()] || GeometryTypes .POINT;
 
          gl .deleteProgram (this .program);
 
@@ -364,7 +356,7 @@ function (Fields,
 
          switch (this .geometryType)
          {
-            case POINT:
+            case GeometryTypes .POINT:
             {
                this .geometryContext .geometryType = 0;
 
@@ -378,7 +370,7 @@ function (Fields,
 
                break;
             }
-            case LINE:
+            case GeometryTypes .LINE:
             {
                this .geometryContext .geometryType = 1;
 
@@ -437,9 +429,9 @@ function (Fields,
 
                break;
             }
-            case TRIANGLE:
-            case QUAD:
-            case SPRITE:
+            case GeometryTypes .TRIANGLE:
+            case GeometryTypes .QUAD:
+            case GeometryTypes .SPRITE:
             {
                // const
                //    texCoordArray = this .texCoordArray,
@@ -509,7 +501,7 @@ function (Fields,
 
                break;
             }
-            case GEOMETRY:
+            case GeometryTypes .GEOMETRY:
             {
                this .texCoordCount = 0;
                this .vertexCount   = 0;
@@ -528,12 +520,12 @@ function (Fields,
       {
          switch (this .geometryType)
          {
-            case POINT:
+            case GeometryTypes .POINT:
             {
                this .shaderNode = this .getBrowser () .getPointShader ();
                break;
             }
-            case LINE:
+            case GeometryTypes .LINE:
             {
                this .shaderNode = this .getBrowser () .getLineShader ();
                break;
@@ -879,23 +871,36 @@ function (Fields,
       },
       resizeGeometryBuffers: function ()
       {
-         const gl = this .getBrowser () .getContext ();
-
-         const buffers = [
-            this .geometryParticleBuffer,
-            this .geometryPositionBuffer,
-            this .geometryColorBuffer,
-            this .geometryTexCoordBuffers [0],
-            this .geometryNormalBuffer,
-            this .geometryVertexBuffer,
-         ];
-
-         const geometryData = new Float32Array (this .maxParticles * this .vertexCount * 4);
-
-         for (const buffer of buffers)
+         switch (this .geometryType)
          {
-            gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-            gl .bufferData (gl .ARRAY_BUFFER, geometryData, gl .STATIC_DRAW);
+            case GeometryTypes .POINT:
+            case GeometryTypes .GEOMETRY:
+            {
+               return;
+            }
+            default:
+            {
+               const gl = this .getBrowser () .getContext ();
+
+               const buffers = [
+                  this .geometryParticleBuffer,
+                  this .geometryPositionBuffer,
+                  this .geometryColorBuffer,
+                  this .geometryTexCoordBuffers [0],
+                  this .geometryNormalBuffer,
+                  this .geometryVertexBuffer,
+               ];
+
+               const geometryData = new Float32Array (this .maxParticles * this .vertexCount * 4);
+
+               for (const buffer of buffers)
+               {
+                  gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+                  gl .bufferData (gl .ARRAY_BUFFER, geometryData, gl .STATIC_DRAW);
+               }
+
+               return;
+            }
          }
       },
       animateParticles: function ()
@@ -995,20 +1000,20 @@ function (Fields,
       {
          switch (this .geometryType)
          {
-            case POINT:
+            case GeometryTypes .POINT:
                if (! modelViewMatrix)
                   this .updatePoint ();
                break;
-            case LINE:
+            case GeometryTypes .LINE:
                if (! modelViewMatrix)
                   this .updateLine ();
                break;
-            case TRIANGLE:
-            case QUAD:
-            case SPRITE:
+            case GeometryTypes .TRIANGLE:
+            case GeometryTypes .QUAD:
+            case GeometryTypes .SPRITE:
                this .updateQuad (modelViewMatrix);
                break;
-            case GEOMETRY:
+            case GeometryTypes .GEOMETRY:
                break;
          }
       },
@@ -1393,7 +1398,7 @@ function (Fields,
             }
          }
 
-         if (this .geometryType === GEOMETRY)
+         if (this .geometryType === GeometryTypes .GEOMETRY)
          {
             if (this .getGeometry ())
                this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
@@ -1407,7 +1412,7 @@ function (Fields,
 
          // Display geometry.
 
-         if (this .geometryType === GEOMETRY)
+         if (this .geometryType === GeometryTypes .GEOMETRY)
          {
             const geometryNode = this .getGeometry ();
 
@@ -1445,7 +1450,7 @@ function (Fields,
 
             // Display geometry.
 
-            if (this .geometryType === GEOMETRY)
+            if (this .geometryType === GeometryTypes .GEOMETRY)
             {
                const geometryNode = this .getGeometry ();
 
