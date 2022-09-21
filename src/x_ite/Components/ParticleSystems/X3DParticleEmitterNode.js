@@ -270,14 +270,16 @@ function (X3DNode,
             gl .disableVertexAttribArray (attribute);
          }
 
+         // Restore/Finish
+
+         browser .resetTextureUnits ();
+
+         // DEBUG
+
          // const data = new Float32Array (particleSystem .numParticles * 4);
          // gl .bindBuffer (gl .ARRAY_BUFFER, outputParticles [3]);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
          // console .log (data);
-
-         // Restore/Finish
-
-         browser .resetTextureUnits ();
 
          return outputParticles;
       },
