@@ -262,10 +262,8 @@ function (X3DNode,
          gl .disable (gl .RASTERIZER_DISCARD);
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
 
-         for (let i = 0; i < 4; ++ i)
+         for (const attribute of program .inputs)
          {
-            const attribute = program .inputs [i];
-
             if (attribute < 0)
                continue;
 
