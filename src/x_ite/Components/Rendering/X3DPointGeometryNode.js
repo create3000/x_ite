@@ -148,7 +148,7 @@ function (X3DGeometryNode,
                   shaderNode .enableColorAttribute (gl, this .colorBuffer);
 
                if (this .getMultiTexCoords () .length)
-                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, true);
+                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
 
                shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 

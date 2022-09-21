@@ -212,14 +212,8 @@ function (Fields,
 
          // Create GL stuff.
 
-         this .geometryParticleBuffer  = gl .createBuffer ();
-         this .geometryPositionBuffer  = gl .createBuffer ();
-         this .geometryColorBuffer     = gl .createBuffer ();
-         this .geometryTexCoordBuffers = new Array (this .getBrowser () .getMaxTextures ()) .fill (gl .createBuffer ());
-         this .geometryNormalBuffer    = gl .createBuffer ();
-         this .geometryVertexBuffer    = gl .createBuffer ();
-
          this .transformFeedBack = gl .createTransformFeedback ();
+         this .geometryBuffer    = gl .createBuffer ();
 
          // Geometry context
 
@@ -342,7 +336,9 @@ function (Fields,
       },
       set_geometryType__: function ()
       {
-         const gl = this .getBrowser () .getContext ();
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
 
          // Set geometryType.
 
@@ -368,27 +364,43 @@ function (Fields,
                this .primitiveMode   = gl .POINTS;
                this .program         = null;
 
+               this .particleOffset = 0;
+               this .positionOffset = 0;
+               this .colorOffset    = 0;
+               this .vertexOffset   = 0;
+               this .stride         = 0;
+
                break;
             }
             case GeometryTypes .LINE:
             {
                this .geometryContext .geometryType = 1;
 
-               this .texCoordCount   = 2;
+               this .texCoordCount   = 0;
                this .vertexCount     = 2;
-               this .particleBuffer  = this .geometryParticleBuffer;
-               this .positionBuffer  = this .geometryPositionBuffer;
-               this .colorBuffer     = this .geometryColorBuffer;
-               this .texCoordBuffers = null;
+               this .particleBuffer  = this .geometryBuffer;
+               this .positionBuffer  = this .geometryBuffer;
+               this .colorBuffer     = this .geometryBuffer;
+               this .texCoordBuffers = new Array (browser .getMaxTextures ()) .fill (this .geometryBuffer);
                this .normalBuffer    = null;
-               this .vertexBuffer    = this .geometryVertexBuffer;
+               this .vertexBuffer    = this .geometryBuffer;
                this .testWireframe   = false;
                this .primitiveMode   = gl .LINES;
+
+               let offset = 0;
+
+               this .particleOffset = offset;
+               this .positionOffset = offset += 16;
+               this .colorOffset    = offset += 16;
+               this .texCoordOffset = offset += 16;
+               this .vertexOffset   = offset += 16;
+               this .stride         = offset += 16;
 
                this .program = this .createProgram ([
                   "particle",
                   "position",
                   "color",
+                  "texCoord",
                   "vertex"
                ],
                /* glsl */ `#version 300 es
@@ -405,6 +417,7 @@ function (Fields,
                out vec4 particle;
                out vec4 position;
                out vec4 color;
+               out vec4 texCoord;
                out vec4 vertex;
 
                void
@@ -416,16 +429,10 @@ function (Fields,
                   particle = input0;
                   position = input3;
                   color    = input1;
+                  texCoord = vec4 (position .xyz + direction * (particleSize .y / -2.0), 1.0);
                   vertex   = vec4 (position .xyz + direction * particleSize1_2, 1.0);
                }
                `);
-
-               this .program .outputs = [
-                  this .geometryParticleBuffer,
-                  this .geometryPositionBuffer,
-                  this .geometryColorBuffer,
-                  this .geometryVertexBuffer,
-               ];
 
                break;
             }
@@ -490,14 +497,24 @@ function (Fields,
 
                this .texCoordCount   = 4;
                this .vertexCount     = 6;
-               this .particleBuffer  = this .geometryParticleBuffer;
-               this .positionBuffer  = this .geometryPositionBuffer;
-               this .colorBuffer     = this .geometryColorBuffer;
-               this .texCoordBuffers = this .geometryTexCoordBuffers;
-               this .normalBuffer    = this .geometryNormalBuffer;
-               this .vertexBuffer    = this .geometryVertexBuffer;
+               this .particleBuffer  = this .geometryBuffer;
+               this .positionBuffer  = this .geometryBuffer;
+               this .colorBuffer     = this .geometryBuffer;
+               this .texCoordBuffers = new Array (browser .getMaxTextures ()) .fill (this .geometryBuffer);
+               this .normalBuffer    = this .geometryBuffer;
+               this .vertexBuffer    = this .geometryBuffer;
                this .testWireframe   = true;
                this .primitiveMode   = gl .TRIANGLES;
+
+               let offset = 0;
+
+               this .particleOffset = offset;
+               this .positionOffset = offset += 16;
+               this .colorOffset    = offset += 16;
+               this .texCoordOffset = offset += 16;
+               this .normalOffset   = offset += 16;
+               this .vertexOffset   = offset += 12;
+               this .stride         = offset += 16;
 
                break;
             }
@@ -802,7 +819,7 @@ function (Fields,
 
          gl .attachShader (program, vertexShader);
          gl .attachShader (program, fragmentShader);
-         gl .transformFeedbackVaryings (program, varyings, gl .SEPARATE_ATTRIBS);
+         gl .transformFeedbackVaryings (program, varyings, gl .INTERLEAVED_ATTRIBS);
          gl .linkProgram (program);
 
          if (!gl .getProgramParameter (program, gl .LINK_STATUS))
@@ -880,25 +897,12 @@ function (Fields,
             }
             default:
             {
-               const gl = this .getBrowser () .getContext ();
+               const
+                  gl           = this .getBrowser () .getContext (),
+                  geometryData = new Float32Array (this .maxParticles * this .vertexCount * 4 * 6);
 
-               const buffers = [
-                  this .geometryParticleBuffer,
-                  this .geometryPositionBuffer,
-                  this .geometryColorBuffer,
-                  this .geometryTexCoordBuffers [0],
-                  this .geometryNormalBuffer,
-                  this .geometryVertexBuffer,
-               ];
-
-               const geometryData = new Float32Array (this .maxParticles * this .vertexCount * 4);
-
-               for (const buffer of buffers)
-               {
-                  gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, geometryData, gl .STATIC_DRAW);
-               }
-
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
+               gl .bufferData (gl .ARRAY_BUFFER, geometryData, gl .STATIC_DRAW);
                return;
             }
          }
@@ -1317,8 +1321,7 @@ function (Fields,
             gl              = this .getBrowser () .getContext (),
             outputParticles = this .outputParticles,
             program         = this .program,
-            inputs          = program .inputs,
-            outputs         = program .outputs;
+            inputs          = program .inputs;
 
          gl .useProgram (program);
 
@@ -1336,10 +1339,7 @@ function (Fields,
          }
 
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedBack);
-
-         for (let i = 0, l = outputs .length; i < l; ++ i)
-            gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, i, outputs [i]);
-
+         gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .geometryBuffer);
          gl .bindBuffer (gl .ARRAY_BUFFER, null);
          gl .enable (gl .RASTERIZER_DISCARD);
          gl .beginTransformFeedback (gl .POINTS);
@@ -1479,19 +1479,21 @@ function (Fields,
 
                   // Setup vertex attributes.
 
-                  shaderNode .enableFloatAttrib (gl, "x3d_Particle",         this .particleBuffer, 4);
-                  shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition", this .positionBuffer, 4);
+                  const stride = this .stride;
+
+                  shaderNode .enableFloatAttrib (gl, "x3d_Particle",         this .particleBuffer, 4, stride, this .particleOffset);
+                  shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition", this .positionBuffer, 4, stride, this .positionOffset);
 
                   if (this .geometryContext .colorMaterial)
-                     shaderNode .enableColorAttribute (gl, this .colorBuffer);
+                     shaderNode .enableColorAttribute (gl, this .colorBuffer, stride, this .colorOffset);
 
                   if (this .texCoordBuffers)
-                     shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+                     shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, stride, this .texCoordOffset);
 
                   if (this .normalBuffer)
-                     shaderNode .enableNormalAttribute (gl, this .normalBuffer);
+                     shaderNode .enableNormalAttribute (gl, this .normalBuffer, stride, this .normalOffset);
 
-                  shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+                  shaderNode .enableVertexAttribute (gl, this .vertexBuffer, stride, this .vertexOffset);
 
                   if (shaderNode .wireframe && this .testWireframe)
                   {
