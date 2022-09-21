@@ -423,14 +423,13 @@ function (Fields,
                void
                main ()
                {
-                  vec3  direction       = normalize (input2 .xyz);
-                  float particleSize1_2 = particleSize .y / (gl_VertexID % 2 == 0 ? -2.0 : 2.0);
+                  vec3 offset = normalize (input2 .xyz) * particleSize .y;
 
                   particle = input0;
                   position = input3;
                   color    = input1;
-                  texCoord = vec4 (position .xyz + direction * (particleSize .y / -2.0), 1.0);
-                  vertex   = vec4 (position .xyz + direction * particleSize1_2, 1.0);
+                  texCoord = vec4 (position .xyz - offset, 1.0);
+                  vertex   = vec4 ((gl_VertexID % 2 == 0 ? texCoord .xyz : position .xyz + offset), 1.0);
                }
                `);
 
@@ -587,7 +586,7 @@ function (Fields,
             return;
 
          gl .useProgram (program);
-         gl .uniform2f (program .particleSize, this ._particleSize .x, this ._particleSize .y);
+         gl .uniform2f (program .particleSize, this ._particleSize .x / 2, this ._particleSize .y / 2);
       },
       set_emitter__: function ()
       {
