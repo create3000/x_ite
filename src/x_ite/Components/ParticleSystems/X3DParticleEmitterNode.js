@@ -744,20 +744,20 @@ function (X3DNode,
                {
                   // Create new particle or hide particle.
 
-                  life       += createParticles ? 1u : 0u;
                   lifetime    = getRandomLifetime ();
                   elapsedTime = 0.0;
 
-                  output0 = vec4 (id, life, lifetime, elapsedTime);
-                  output1 = getColor (lifetime, elapsedTime);
+                  output0 = vec4 (id, life + 1u, lifetime, elapsedTime);
 
                   if (createParticles)
                   {
+                     output1 = getColor (lifetime, elapsedTime);
                      output2 = vec4 (getRandomVelocity (), 0.0);
                      output3 = getRandomPosition ();
                   }
                   else
                   {
+                     output1 = vec4 (0.0);
                      output2 = vec4 (0.0);
                      output3 = vec4 (0.0);
                   }
