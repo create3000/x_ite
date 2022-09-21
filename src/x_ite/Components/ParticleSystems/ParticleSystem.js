@@ -418,13 +418,13 @@ function (Fields,
                void
                main ()
                {
-                  vec3  normal          = normalize (input2 .xyz);
+                  vec3  direction       = normalize (input2 .xyz);
                   float particleSize1_2 = particleSize .y / (gl_VertexID % 2 == 0 ? -2.0 : 2.0);
 
                   particle = input0;
                   position = input3;
                   color    = input1;
-                  vertex   = vec4 (position .xyz + normal * particleSize1_2, 1.0);
+                  vertex   = vec4 (position .xyz + direction * particleSize1_2, 1.0);
                }
                `);
 
