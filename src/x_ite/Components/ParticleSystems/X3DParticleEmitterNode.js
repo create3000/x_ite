@@ -159,11 +159,11 @@ function (X3DNode,
       animate: function (particleSystem, deltaTime)
       {
          const
-            browser = this .getBrowser (),
-            gl      = browser .getContext (),
-            input   = particleSystem .particles [particleSystem .i],
-            output  = particleSystem .particles [particleSystem .i = +! particleSystem .i],
-            program = this .program;
+            browser         = this .getBrowser (),
+            gl              = browser .getContext (),
+            inputParticles  = particleSystem .outputParticles,
+            outputParticles = particleSystem .inputParticles,
+            program         = this .program;
 
          // Start
 
@@ -239,7 +239,7 @@ function (X3DNode,
                continue;
 
             gl .enableVertexAttribArray (attribute);
-            gl .bindBuffer (gl .ARRAY_BUFFER, input [i]);
+            gl .bindBuffer (gl .ARRAY_BUFFER, inputParticles [i]);
             gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, 0,0);
          }
 
@@ -252,7 +252,7 @@ function (X3DNode,
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedBack);
 
          for (let i = 0; i < 4; ++ i)
-            gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, i, output [i]);
+            gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, i, outputParticles [i]);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, null);
          gl .enable (gl .RASTERIZER_DISCARD);
@@ -263,7 +263,7 @@ function (X3DNode,
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
 
          // const data = new Float32Array (particleSystem .numParticles * 4);
-         // gl .bindBuffer (gl .ARRAY_BUFFER, output [3]);
+         // gl .bindBuffer (gl .ARRAY_BUFFER, outputParticles [3]);
          // gl .getBufferSubData (gl.ARRAY_BUFFER, 0, data);
          // console .log (data);
 
@@ -271,7 +271,7 @@ function (X3DNode,
 
          browser .resetTextureUnits ();
 
-         return output;
+         return outputParticles;
       },
       addUniform: function (name, uniform)
       {

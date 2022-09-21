@@ -115,9 +115,8 @@ function (Fields,
 
       this ._particleSize .setUnit ("length");
 
-      this .particles                = [[ ], [ ]];
-      this .i                        = 0;
-      this .output                   = this .particles [this .i];
+      this .inputParticles           = [ ];
+      this .outputParticles          = [ ];
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .particleLifetime         = 0;
@@ -215,10 +214,10 @@ function (Fields,
 
          // Create particles stuff.
 
-         for (const buffers of this .particles)
+         for (let i = 0; i < 4; ++ i)
          {
-            for (let i = 0; i < 4; ++ i)
-               buffers [i] = gl .createBuffer ();
+            this .inputParticles [i]  = gl .createBuffer ();
+            this .outputParticles [i] = gl .createBuffer ();
          }
 
          // Create forces stuff.
@@ -779,7 +778,7 @@ function (Fields,
 
          // Resize input and output buffers.
 
-         for (const buffer of this .particles [this .i])
+         for (const buffer of this .outputParticles)
          {
             gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
             gl .getBufferSubData (gl .ARRAY_BUFFER, 0, inputData);
@@ -790,7 +789,7 @@ function (Fields,
             gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, this .maxParticles * 4);
          }
 
-         for (const buffer of this .particles [(this .i + 1) % 2])
+         for (const buffer of this .inputParticles)
          {
             gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
             gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, this .maxParticles * 4);
@@ -879,9 +878,12 @@ function (Fields,
             this .numForces = 0;
          }
 
-         // Determine particle position, velocity and colors
+         // Determine particle position, velocity and colors.
 
-         this .output = emitterNode .animate (this, deltaTime);
+         const inputParticles = this .outputParticles;
+
+         this .outputParticles = emitterNode .animate (this, deltaTime);
+         this .inputParticles  = inputParticles;
 
          this .updateGeometry (null);
          browser .addBrowserEvent ();
@@ -909,8 +911,8 @@ function (Fields,
       },
       updatePoint: function ()
       {
-         this .colorBuffer  = this .output [1];
-         this .vertexBuffer = this .output [3];
+         this .colorBuffer  = this .outputParticles [1];
+         this .vertexBuffer = this .outputParticles [3];
       },
       updateLine: function ()
       {
@@ -1280,7 +1282,7 @@ function (Fields,
             const geometryNode = this .getGeometry ();
 
             if (geometryNode)
-               geometryNode .displayParticlesDepth (gl, context, shaderNode, this .particles, this .numParticles);
+               geometryNode .displayParticlesDepth (gl, context, shaderNode, this .outputParticles, this .numParticles);
          }
          else
          {
@@ -1318,7 +1320,7 @@ function (Fields,
                const geometryNode = this .getGeometry ();
 
                if (geometryNode)
-                  geometryNode .displayParticles (gl, context, this .particles, this .numParticles);
+                  geometryNode .displayParticles (gl, context, this .outputParticles, this .numParticles);
             }
             else
             {
