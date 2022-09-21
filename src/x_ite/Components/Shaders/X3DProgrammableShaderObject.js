@@ -1261,15 +1261,6 @@ function (X3DCast,
       {
          gl .disableVertexAttribArray (this .x3d_Vertex);
       },
-      vertexAttribDivisor: function (gl, name, divisor)
-      {
-         const location = gl .getAttribLocation (this .getProgram (), name);
-
-         if (location === -1)
-            return;
-
-         gl .vertexAttribDivisor (location, divisor);
-      },
       setParticle: function (gl, particle, modelViewMatrix)
       {
          gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);

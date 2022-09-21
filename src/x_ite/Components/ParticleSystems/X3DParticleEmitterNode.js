@@ -713,7 +713,7 @@ function (X3DNode,
          }
 
          void
-         animate ()
+         main ()
          {
             int  life         = int (input0 [1]);
             float lifetime    = input0 [2];
@@ -769,12 +769,6 @@ function (X3DNode,
                output2 = vec4 (velocity, 0.0);
                output3 = position;
             }
-         }
-
-         void
-         main ()
-         {
-            animate ();
          }
          `;
 

@@ -216,7 +216,7 @@ function (Fields,
 
          for (let i = 0; i < 4; ++ i)
          {
-            this .inputParticles [i]  = gl .createBuffer ();
+            this .inputParticles  [i] = gl .createBuffer ();
             this .outputParticles [i] = gl .createBuffer ();
          }
 
@@ -229,14 +229,12 @@ function (Fields,
 
          // Create GL stuff.
 
-         this .geometryTexCoordBuffers = [ gl .createBuffer () ];
+         this .geometryParticleBuffer  = gl .createBuffer ();
+         this .geometryPositionBuffer  = gl .createBuffer ();
+         this .geometryColorBuffer     = gl .createBuffer ();
+         this .geometryTexCoordBuffers = new Array (this .getBrowser () .getMaxTextures ()) .fill (gl .createBuffer ());
          this .geometryNormalBuffer    = gl .createBuffer ();
          this .geometryVertexBuffer    = gl .createBuffer ();
-
-         for (let i = 1, channels = this .getBrowser () .getMaxTextures (); i < channels; ++ i)
-            this .geometryTexCoordBuffers .push (this .geometryTexCoordBuffers [0]);
-
-         this .primitiveMode = gl .TRIANGLES;
 
          // Geometry context
 
@@ -371,25 +369,28 @@ function (Fields,
          {
             case POINT:
             {
-               this .testWireframe   = false;
-               this .primitiveMode   = gl .POINTS;
                this .texCoordCount   = 0;
                this .vertexCount     = 1;
                this .texCoordBuffers = null;
                this .normalBuffer    = null;
+               this .testWireframe   = false;
+               this .primitiveMode   = gl .POINTS;
 
                this .geometryContext .geometryType = 0;
                break;
             }
             case LINE:
             {
-               this .testWireframe   = false;
-               this .primitiveMode   = gl .LINES;
                this .texCoordCount   = 2;
                this .vertexCount     = 2;
+               this .particleBuffer  = this .geometryParticleBuffer;
+               this .positionBuffer  = this .geometryPositionBuffer;
+               this .colorBuffer     = this .geometryColorBuffer;
                this .texCoordBuffers = null;
                this .normalBuffer    = null;
                this .vertexBuffer    = this .geometryVertexBuffer;
+               this .testWireframe   = false;
+               this .primitiveMode   = gl .LINES;
 
                this .geometryContext .geometryType = 1;
 
@@ -426,66 +427,69 @@ function (Fields,
             case QUAD:
             case SPRITE:
             {
-               const
-                  texCoordArray = this .texCoordArray,
-                  normalArray   = this .normalArray;
+               // const
+               //    texCoordArray = this .texCoordArray,
+               //    normalArray   = this .normalArray;
 
-               for (let i = 0, length = 6 * 3 * maxParticles; i < length; i += 3)
-               {
-                  normalArray [i]     = 0;
-                  normalArray [i + 1] = 0;
-                  normalArray [i + 2] = 1;
-               }
+               // for (let i = 0, length = 6 * 3 * maxParticles; i < length; i += 3)
+               // {
+               //    normalArray [i]     = 0;
+               //    normalArray [i + 1] = 0;
+               //    normalArray [i + 2] = 1;
+               // }
 
-               gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-               gl .bufferData (gl .ARRAY_BUFFER, this .normalArray, gl .STATIC_DRAW);
+               // gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
+               // gl .bufferData (gl .ARRAY_BUFFER, this .normalArray, gl .STATIC_DRAW);
 
-               for (let i = 0; i < maxParticles; ++ i)
-               {
-                  const i24 = i * 24;
+               // for (let i = 0; i < maxParticles; ++ i)
+               // {
+               //    const i24 = i * 24;
 
-                  // p4 ------ p3
-                  // |       / |
-                  // |     /   |
-                  // |   /     |
-                  // | /       |
-                  // p1 ------ p2
+               //    // p4 ------ p3
+               //    // |       / |
+               //    // |     /   |
+               //    // |   /     |
+               //    // | /       |
+               //    // p1 ------ p2
 
-                  // p1
-                  texCoordArray [i24]     = texCoordArray [i24 + 12] = 0;
-                  texCoordArray [i24 + 1] = texCoordArray [i24 + 13] = 0;
-                  texCoordArray [i24 + 2] = texCoordArray [i24 + 14] = 0;
-                  texCoordArray [i24 + 3] = texCoordArray [i24 + 15] = 1;
+               //    // p1
+               //    texCoordArray [i24]     = texCoordArray [i24 + 12] = 0;
+               //    texCoordArray [i24 + 1] = texCoordArray [i24 + 13] = 0;
+               //    texCoordArray [i24 + 2] = texCoordArray [i24 + 14] = 0;
+               //    texCoordArray [i24 + 3] = texCoordArray [i24 + 15] = 1;
 
-                  // p2
-                  texCoordArray [i24 + 4] = 1;
-                  texCoordArray [i24 + 5] = 0;
-                  texCoordArray [i24 + 6] = 0;
-                  texCoordArray [i24 + 7] = 1;
+               //    // p2
+               //    texCoordArray [i24 + 4] = 1;
+               //    texCoordArray [i24 + 5] = 0;
+               //    texCoordArray [i24 + 6] = 0;
+               //    texCoordArray [i24 + 7] = 1;
 
-                  // p3
-                  texCoordArray [i24 + 8]  = texCoordArray [i24 + 16] = 1;
-                  texCoordArray [i24 + 9]  = texCoordArray [i24 + 17] = 1;
-                  texCoordArray [i24 + 10] = texCoordArray [i24 + 18] = 0;
-                  texCoordArray [i24 + 11] = texCoordArray [i24 + 19] = 1;
+               //    // p3
+               //    texCoordArray [i24 + 8]  = texCoordArray [i24 + 16] = 1;
+               //    texCoordArray [i24 + 9]  = texCoordArray [i24 + 17] = 1;
+               //    texCoordArray [i24 + 10] = texCoordArray [i24 + 18] = 0;
+               //    texCoordArray [i24 + 11] = texCoordArray [i24 + 19] = 1;
 
-                  // p4
-                  texCoordArray [i24 + 20] = 0;
-                  texCoordArray [i24 + 21] = 1;
-                  texCoordArray [i24 + 22] = 0;
-                  texCoordArray [i24 + 23] = 1;
-               }
+               //    // p4
+               //    texCoordArray [i24 + 20] = 0;
+               //    texCoordArray [i24 + 21] = 1;
+               //    texCoordArray [i24 + 22] = 0;
+               //    texCoordArray [i24 + 23] = 1;
+               // }
 
-               gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
-               gl .bufferData (gl .ARRAY_BUFFER, this .texCoordArray, gl .STATIC_DRAW);
+               // gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
+               // gl .bufferData (gl .ARRAY_BUFFER, this .texCoordArray, gl .STATIC_DRAW);
 
-               this .testWireframe   = true;
-               this .primitiveMode   = gl .TRIANGLES;
                this .texCoordCount   = 4;
                this .vertexCount     = 6;
+               this .particleBuffer  = this .geometryParticleBuffer;
+               this .positionBuffer  = this .geometryPositionBuffer;
+               this .colorBuffer     = this .geometryColorBuffer;
                this .texCoordBuffers = this .geometryTexCoordBuffers;
                this .normalBuffer    = this .geometryNormalBuffer;
                this .vertexBuffer    = this .geometryVertexBuffer;
+               this .testWireframe   = true;
+               this .primitiveMode   = gl .TRIANGLES;
 
                this .geometryContext .geometryType = 2;
                break;
@@ -515,10 +519,7 @@ function (Fields,
                this .shaderNode = this .getBrowser () .getLineShader ();
                break;
             }
-            case TRIANGLE:
-            case QUAD:
-            case SPRITE:
-            case GEOMETRY:
+            default:
             {
                this .shaderNode = null;
                break;
@@ -791,6 +792,25 @@ function (Fields,
             gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
             gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, this .maxParticles * 4);
          }
+
+         // Resize geometry buffers.
+
+         const buffers = [
+            this .geometryParticleBuffer,
+            this .geometryPositionBuffer,
+            this .geometryColorBuffer,
+            this .geometryTexCoordBuffers [0],
+            this .geometryNormalBuffer,
+            this .geometryVertexBuffer,
+         ];
+
+         const geometryData = new Float32Array (this .maxParticles * this .vertexCount * 4);
+
+         for (const buffer of buffers)
+         {
+            gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+            gl .bufferData (gl .ARRAY_BUFFER, geometryData, gl .STATIC_DRAW);
+         }
       },
       animateParticles: function ()
       {
@@ -908,321 +928,323 @@ function (Fields,
       },
       updatePoint: function ()
       {
-         this .colorBuffer  = this .outputParticles [1];
-         this .vertexBuffer = this .outputParticles [3];
+         this .particleBuffer = this .outputParticles [0];
+         this .positionBuffer = this .outputParticles [3];
+         this .colorBuffer    = this .outputParticles [1];
+         this .vertexBuffer   = this .outputParticles [3];
       },
       updateLine: function ()
       {
-         const
-            gl           = this .getBrowser () .getContext (),
-            particles    = this .particles,
-            numParticles = this .numParticles,
-            sy1_2        = this ._particleSize .y / 2;
+         // const
+         //    gl           = this .getBrowser () .getContext (),
+         //    particles    = this .particles,
+         //    numParticles = this .numParticles,
+         //    sy1_2        = this ._particleSize .y / 2;
 
-         // const geometry = this .geometryKernel .setOutput (output)
-         //    (particles .result,
-         //     particles .velocities,
-         //     this .geometryContext .colorMaterial,
-         //     particles .colors,
-         //     sy1_2);
+         // // const geometry = this .geometryKernel .setOutput (output)
+         // //    (particles .result,
+         // //     particles .velocities,
+         // //     this .geometryContext .colorMaterial,
+         // //     particles .colors,
+         // //     sy1_2);
 
-         // Colors
+         // // Colors
 
-         if (this .geometryContext .colorMaterial)
-         {
-            const colorArray = geometry .colors .renderRawOutput ();
+         // if (this .geometryContext .colorMaterial)
+         // {
+         //    const colorArray = geometry .colors .renderRawOutput ();
 
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, colorArray, gl .STATIC_DRAW);
-         }
+         //    gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
+         //    gl .bufferData (gl .ARRAY_BUFFER, colorArray, gl .STATIC_DRAW);
+         // }
 
-         // Vertices
+         // // Vertices
 
-         const vertexArray = geometry .result .renderRawOutput ();
+         // const vertexArray = geometry .result .renderRawOutput ();
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, vertexArray, gl .STATIC_DRAW);
+         // gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
+         // gl .bufferData (gl .ARRAY_BUFFER, vertexArray, gl .STATIC_DRAW);
       },
       updateQuad: function (modelViewMatrix)
       {
-         try
-         {
-            const
-               gl           = this .getBrowser () .getContext (),
-               particles    = this .particles,
-               maxParticles = this .maxParticles,
-               numParticles = this .numParticles,
-               normalArray  = this .normalArray,
-               sx1_2        = this ._particleSize .x / 2,
-               sy1_2        = this ._particleSize .y / 2;
+         // try
+         // {
+         //    const
+         //       gl           = this .getBrowser () .getContext (),
+         //       particles    = this .particles,
+         //       maxParticles = this .maxParticles,
+         //       numParticles = this .numParticles,
+         //       normalArray  = this .normalArray,
+         //       sx1_2        = this ._particleSize .x / 2,
+         //       sy1_2        = this ._particleSize .y / 2;
 
-            // Colors
+         //    // Colors
 
-            if (! modelViewMatrix) // if called from animateParticles
-            {
-               if (this .geometryContext .colorMaterial)
-               {
-                  for (let i = 0; i < maxParticles; ++ i)
-                  {
-                     const
-                        color = particles [i] .color,
-                        i24   = i * 24;
+         //    if (! modelViewMatrix) // if called from animateParticles
+         //    {
+         //       if (this .geometryContext .colorMaterial)
+         //       {
+         //          for (let i = 0; i < maxParticles; ++ i)
+         //          {
+         //             const
+         //                color = particles [i] .color,
+         //                i24   = i * 24;
 
-                     // p4 ------ p3
-                     // |       / |
-                     // |     /   |
-                     // |   /     |
-                     // | /       |
-                     // p1 ------ p2
+         //             // p4 ------ p3
+         //             // |       / |
+         //             // |     /   |
+         //             // |   /     |
+         //             // | /       |
+         //             // p1 ------ p2
 
-                     // p1, p2, p3; p1, p3, p4
-                     colorArray [i24]     = colorArray [i24 + 4] = colorArray [i24 + 8]  = colorArray [i24 + 12] = colorArray [i24 + 16] = colorArray [i24 + 20] = color .x;
-                     colorArray [i24 + 1] = colorArray [i24 + 5] = colorArray [i24 + 9]  = colorArray [i24 + 13] = colorArray [i24 + 17] = colorArray [i24 + 21] = color .y;
-                     colorArray [i24 + 2] = colorArray [i24 + 6] = colorArray [i24 + 10] = colorArray [i24 + 14] = colorArray [i24 + 18] = colorArray [i24 + 22] = color .z;
-                     colorArray [i24 + 3] = colorArray [i24 + 7] = colorArray [i24 + 11] = colorArray [i24 + 15] = colorArray [i24 + 19] = colorArray [i24 + 23] = color .w;
-                  }
+         //             // p1, p2, p3; p1, p3, p4
+         //             colorArray [i24]     = colorArray [i24 + 4] = colorArray [i24 + 8]  = colorArray [i24 + 12] = colorArray [i24 + 16] = colorArray [i24 + 20] = color .x;
+         //             colorArray [i24 + 1] = colorArray [i24 + 5] = colorArray [i24 + 9]  = colorArray [i24 + 13] = colorArray [i24 + 17] = colorArray [i24 + 21] = color .y;
+         //             colorArray [i24 + 2] = colorArray [i24 + 6] = colorArray [i24 + 10] = colorArray [i24 + 14] = colorArray [i24 + 18] = colorArray [i24 + 22] = color .z;
+         //             colorArray [i24 + 3] = colorArray [i24 + 7] = colorArray [i24 + 11] = colorArray [i24 + 15] = colorArray [i24 + 19] = colorArray [i24 + 23] = color .w;
+         //          }
 
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .colorArray, gl .STATIC_DRAW);
-               }
+         //          gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
+         //          gl .bufferData (gl .ARRAY_BUFFER, this .colorArray, gl .STATIC_DRAW);
+         //       }
 
-               if (this .texCoordAnim && this .texCoordArray .length)
-               {
-                  const
-                     texCoordKeys = this .texCoordKeys,
-                     texCoordRamp = this .texCoordRamp,
-                     length       = texCoordKeys .length;
+         //       if (this .texCoordAnim && this .texCoordArray .length)
+         //       {
+         //          const
+         //             texCoordKeys = this .texCoordKeys,
+         //             texCoordRamp = this .texCoordRamp,
+         //             length       = texCoordKeys .length;
 
-                  let index0 = 0;
+         //          let index0 = 0;
 
-                  for (let i = 0; i < maxParticles; ++ i)
-                  {
-                     // Determine index0.
+         //          for (let i = 0; i < maxParticles; ++ i)
+         //          {
+         //             // Determine index0.
 
-                     const
-                        particle = particles [i],
-                        fraction = particle .elapsedTime / particle .lifetime;
+         //             const
+         //                particle = particles [i],
+         //                fraction = particle .elapsedTime / particle .lifetime;
 
-                     if (length == 1 || fraction <= texCoordKeys [0])
-                     {
-                        index0 = 0;
-                     }
-                     else if (fraction >= texCoordKeys .at (-1))
-                     {
-                        index0 = length - 2;
-                     }
-                     else
-                     {
-                        const index = Algorithm .upperBound (texCoordKeys, 0, length, fraction, Algorithm .less);
+         //             if (length == 1 || fraction <= texCoordKeys [0])
+         //             {
+         //                index0 = 0;
+         //             }
+         //             else if (fraction >= texCoordKeys .at (-1))
+         //             {
+         //                index0 = length - 2;
+         //             }
+         //             else
+         //             {
+         //                const index = Algorithm .upperBound (texCoordKeys, 0, length, fraction, Algorithm .less);
 
-                        if (index < length)
-                           index0 = index - 1;
-                        else
-                           index0 = 0;
-                     }
+         //                if (index < length)
+         //                   index0 = index - 1;
+         //                else
+         //                   index0 = 0;
+         //             }
 
-                     // Set texCoord.
+         //             // Set texCoord.
 
-                     index0 *= this .texCoordCount;
+         //             index0 *= this .texCoordCount;
 
-                     const
-                        texCoord1 = texCoordRamp [index0],
-                        texCoord2 = texCoordRamp [index0 + 1],
-                        texCoord3 = texCoordRamp [index0 + 2],
-                        texCoord4 = texCoordRamp [index0 + 3],
-                        i24       = i * 24;
+         //             const
+         //                texCoord1 = texCoordRamp [index0],
+         //                texCoord2 = texCoordRamp [index0 + 1],
+         //                texCoord3 = texCoordRamp [index0 + 2],
+         //                texCoord4 = texCoordRamp [index0 + 3],
+         //                i24       = i * 24;
 
-                     // p4 ------ p3
-                     // |       / |
-                     // |     /   |
-                     // |   /     |
-                     // | /       |
-                     // p1 ------ p2
+         //             // p4 ------ p3
+         //             // |       / |
+         //             // |     /   |
+         //             // |   /     |
+         //             // | /       |
+         //             // p1 ------ p2
 
-                     // p1
-                     texCoordArray [i24]     = texCoordArray [i24 + 12] = texCoord1 .x;
-                     texCoordArray [i24 + 1] = texCoordArray [i24 + 13] = texCoord1 .y;
-                     texCoordArray [i24 + 2] = texCoordArray [i24 + 14] = texCoord1 .z;
-                     texCoordArray [i24 + 3] = texCoordArray [i24 + 15] = texCoord1 .w;
+         //             // p1
+         //             texCoordArray [i24]     = texCoordArray [i24 + 12] = texCoord1 .x;
+         //             texCoordArray [i24 + 1] = texCoordArray [i24 + 13] = texCoord1 .y;
+         //             texCoordArray [i24 + 2] = texCoordArray [i24 + 14] = texCoord1 .z;
+         //             texCoordArray [i24 + 3] = texCoordArray [i24 + 15] = texCoord1 .w;
 
-                     // p2
-                     texCoordArray [i24 + 4] = texCoord2 .x;
-                     texCoordArray [i24 + 5] = texCoord2 .y;
-                     texCoordArray [i24 + 6] = texCoord2 .z;
-                     texCoordArray [i24 + 7] = texCoord2 .w;
+         //             // p2
+         //             texCoordArray [i24 + 4] = texCoord2 .x;
+         //             texCoordArray [i24 + 5] = texCoord2 .y;
+         //             texCoordArray [i24 + 6] = texCoord2 .z;
+         //             texCoordArray [i24 + 7] = texCoord2 .w;
 
-                     // p3
-                     texCoordArray [i24 + 8]  = texCoordArray [i24 + 16] = texCoord3 .x;
-                     texCoordArray [i24 + 9]  = texCoordArray [i24 + 17] = texCoord3 .y;
-                     texCoordArray [i24 + 10] = texCoordArray [i24 + 18] = texCoord3 .z;
-                     texCoordArray [i24 + 11] = texCoordArray [i24 + 19] = texCoord3 .w;
+         //             // p3
+         //             texCoordArray [i24 + 8]  = texCoordArray [i24 + 16] = texCoord3 .x;
+         //             texCoordArray [i24 + 9]  = texCoordArray [i24 + 17] = texCoord3 .y;
+         //             texCoordArray [i24 + 10] = texCoordArray [i24 + 18] = texCoord3 .z;
+         //             texCoordArray [i24 + 11] = texCoordArray [i24 + 19] = texCoord3 .w;
 
-                     // p4
-                     texCoordArray [i24 + 20] = texCoord4 .x;
-                     texCoordArray [i24 + 21] = texCoord4 .y;
-                     texCoordArray [i24 + 22] = texCoord4 .z;
-                     texCoordArray [i24 + 23] = texCoord4 .w;
-                  }
+         //             // p4
+         //             texCoordArray [i24 + 20] = texCoord4 .x;
+         //             texCoordArray [i24 + 21] = texCoord4 .y;
+         //             texCoordArray [i24 + 22] = texCoord4 .z;
+         //             texCoordArray [i24 + 23] = texCoord4 .w;
+         //          }
 
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .texCoordArray, gl .STATIC_DRAW);
-               }
-            }
+         //          gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
+         //          gl .bufferData (gl .ARRAY_BUFFER, this .texCoordArray, gl .STATIC_DRAW);
+         //       }
+         //    }
 
-            // Vertices
+         //    // Vertices
 
-            if (this .geometryType === SPRITE)
-            {
-               if (modelViewMatrix) // if called from depth or draw
-               {
-                  // Normals
+         //    if (this .geometryType === SPRITE)
+         //    {
+         //       if (modelViewMatrix) // if called from depth or draw
+         //       {
+         //          // Normals
 
-                  const rotation = this .getScreenAlignedRotation (modelViewMatrix);
+         //          const rotation = this .getScreenAlignedRotation (modelViewMatrix);
 
-                  normal
-                     .set (rotation [0], rotation [1], rotation [2])
-                     .cross (vector .set (rotation [3], rotation [4], rotation [5]))
-                     .normalize ();
+         //          normal
+         //             .set (rotation [0], rotation [1], rotation [2])
+         //             .cross (vector .set (rotation [3], rotation [4], rotation [5]))
+         //             .normalize ();
 
-                  const
-                     nx = normal .x,
-                     ny = normal .y,
-                     nz = normal .z;
+         //          const
+         //             nx = normal .x,
+         //             ny = normal .y,
+         //             nz = normal .z;
 
-                  for (let i = 0, length = 6 * 3 * maxParticles; i < length; i += 3)
-                  {
-                     normalArray [i]     = nx;
-                     normalArray [i + 1] = ny;
-                     normalArray [i + 2] = nz;
-                  }
+         //          for (let i = 0, length = 6 * 3 * maxParticles; i < length; i += 3)
+         //          {
+         //             normalArray [i]     = nx;
+         //             normalArray [i + 1] = ny;
+         //             normalArray [i + 2] = nz;
+         //          }
 
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .normalArray, gl .STATIC_DRAW);
+         //          gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
+         //          gl .bufferData (gl .ARRAY_BUFFER, this .normalArray, gl .STATIC_DRAW);
 
-                  // Vertices
+         //          // Vertices
 
-                  s1 .set (-sx1_2, -sy1_2, 0);
-                  s2 .set ( sx1_2, -sy1_2, 0);
-                  s3 .set ( sx1_2,  sy1_2, 0);
-                  s4 .set (-sx1_2,  sy1_2, 0);
+         //          s1 .set (-sx1_2, -sy1_2, 0);
+         //          s2 .set ( sx1_2, -sy1_2, 0);
+         //          s3 .set ( sx1_2,  sy1_2, 0);
+         //          s4 .set (-sx1_2,  sy1_2, 0);
 
-                  rotation .multVecMatrix (s1);
-                  rotation .multVecMatrix (s2);
-                  rotation .multVecMatrix (s3);
-                  rotation .multVecMatrix (s4);
+         //          rotation .multVecMatrix (s1);
+         //          rotation .multVecMatrix (s2);
+         //          rotation .multVecMatrix (s3);
+         //          rotation .multVecMatrix (s4);
 
-                  for (let i = 0; i < numParticles; ++ i)
-                  {
-                     const
-                        position    = particles [i] .position,
-                        elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
-                        x           = position .x,
-                        y           = position .y,
-                        z           = position .z,
-                        i6          = i * 6,
-                        i18         = i * 18,
-                        i24         = i * 24;
+         //          for (let i = 0; i < numParticles; ++ i)
+         //          {
+         //             const
+         //                position    = particles [i] .position,
+         //                elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
+         //                x           = position .x,
+         //                y           = position .y,
+         //                z           = position .z,
+         //                i6          = i * 6,
+         //                i18         = i * 18,
+         //                i24         = i * 24;
 
-                     // p4 ------ p3
-                     // |       / |
-                     // |     /   |
-                     // |   /     |
-                     // | /       |
-                     // p1 ------ p2
+         //             // p4 ------ p3
+         //             // |       / |
+         //             // |     /   |
+         //             // |   /     |
+         //             // | /       |
+         //             // p1 ------ p2
 
 
-                     positionArray [i18]     = positionArray [i18 + 3] = positionArray [i18 + 6] = positionArray [i18 +  9] = positionArray [i18 + 12] = positionArray [i18 + 15] = x;
-                     positionArray [i18 + 1] = positionArray [i18 + 4] = positionArray [i18 + 7] = positionArray [i18 + 10] = positionArray [i18 + 13] = positionArray [i18 + 16] = y;
-                     positionArray [i18 + 2] = positionArray [i18 + 5] = positionArray [i18 + 8] = positionArray [i18 + 11] = positionArray [i18 + 14] = positionArray [i18 + 17] = z;
+         //             positionArray [i18]     = positionArray [i18 + 3] = positionArray [i18 + 6] = positionArray [i18 +  9] = positionArray [i18 + 12] = positionArray [i18 + 15] = x;
+         //             positionArray [i18 + 1] = positionArray [i18 + 4] = positionArray [i18 + 7] = positionArray [i18 + 10] = positionArray [i18 + 13] = positionArray [i18 + 16] = y;
+         //             positionArray [i18 + 2] = positionArray [i18 + 5] = positionArray [i18 + 8] = positionArray [i18 + 11] = positionArray [i18 + 14] = positionArray [i18 + 17] = z;
 
-                     elapsedTimeArray [i6] = elapsedTimeArray [i6 + 1] = elapsedTimeArray [i6 + 2] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 4] = elapsedTimeArray [i6 + 5] = elapsedTime;
-                     lifeArray [i6]        = lifeArray [i6 + 1]        = lifeArray [i6 + 2]        = lifeArray [i6 + 3]        = lifeArray [i6 + 4]        = lifeArray [i6 + 5]        = particles [i] .life;
+         //             elapsedTimeArray [i6] = elapsedTimeArray [i6 + 1] = elapsedTimeArray [i6 + 2] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 4] = elapsedTimeArray [i6 + 5] = elapsedTime;
+         //             lifeArray [i6]        = lifeArray [i6 + 1]        = lifeArray [i6 + 2]        = lifeArray [i6 + 3]        = lifeArray [i6 + 4]        = lifeArray [i6 + 5]        = particles [i] .life;
 
-                     // p1
-                     vertexArray [i24]     = vertexArray [i24 + 12] = x + s1 .x;
-                     vertexArray [i24 + 1] = vertexArray [i24 + 13] = y + s1 .y;
-                     vertexArray [i24 + 2] = vertexArray [i24 + 14] = z + s1 .z;
+         //             // p1
+         //             vertexArray [i24]     = vertexArray [i24 + 12] = x + s1 .x;
+         //             vertexArray [i24 + 1] = vertexArray [i24 + 13] = y + s1 .y;
+         //             vertexArray [i24 + 2] = vertexArray [i24 + 14] = z + s1 .z;
 
-                     // p2
-                     vertexArray [i24 + 4] = x + s2 .x;
-                     vertexArray [i24 + 5] = y + s2 .y;
-                     vertexArray [i24 + 6] = z + s2 .z;
+         //             // p2
+         //             vertexArray [i24 + 4] = x + s2 .x;
+         //             vertexArray [i24 + 5] = y + s2 .y;
+         //             vertexArray [i24 + 6] = z + s2 .z;
 
-                     // p3
-                     vertexArray [i24 + 8]  = vertexArray [i24 + 16] = x + s3 .x;
-                     vertexArray [i24 + 9]  = vertexArray [i24 + 17] = y + s3 .y;
-                     vertexArray [i24 + 10] = vertexArray [i24 + 18] = z + s3 .z;
+         //             // p3
+         //             vertexArray [i24 + 8]  = vertexArray [i24 + 16] = x + s3 .x;
+         //             vertexArray [i24 + 9]  = vertexArray [i24 + 17] = y + s3 .y;
+         //             vertexArray [i24 + 10] = vertexArray [i24 + 18] = z + s3 .z;
 
-                     // p4
-                     vertexArray [i24 + 20] = x + s4 .x;
-                     vertexArray [i24 + 21] = y + s4 .y;
-                     vertexArray [i24 + 22] = z + s4 .z;
-                  }
+         //             // p4
+         //             vertexArray [i24 + 20] = x + s4 .x;
+         //             vertexArray [i24 + 21] = y + s4 .y;
+         //             vertexArray [i24 + 22] = z + s4 .z;
+         //          }
 
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
-               }
-            }
-            else
-            {
-               if (! modelViewMatrix) // if called from animateParticles
-               {
-                  for (let i = 0; i < numParticles; ++ i)
-                  {
-                     const
-                        position    = particles [i] .position,
-                        elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
-                        x           = position .x,
-                        y           = position .y,
-                        z           = position .z,
-                        i6          = i * 6,
-                        i18         = i * 18,
-                        i24         = i * 24;
+         //          gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
+         //          gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
+         //       }
+         //    }
+         //    else
+         //    {
+         //       if (! modelViewMatrix) // if called from animateParticles
+         //       {
+         //          for (let i = 0; i < numParticles; ++ i)
+         //          {
+         //             const
+         //                position    = particles [i] .position,
+         //                elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
+         //                x           = position .x,
+         //                y           = position .y,
+         //                z           = position .z,
+         //                i6          = i * 6,
+         //                i18         = i * 18,
+         //                i24         = i * 24;
 
-                     // p4 ------ p3
-                     // |       / |
-                     // |     /   |
-                     // |   /     |
-                     // | /       |
-                     // p1 ------ p2
+         //             // p4 ------ p3
+         //             // |       / |
+         //             // |     /   |
+         //             // |   /     |
+         //             // | /       |
+         //             // p1 ------ p2
 
-                     positionArray [i18]     = positionArray [i18 + 3] = positionArray [i18 + 6] = positionArray [i18 +  9] = positionArray [i18 + 12] = positionArray [i18 + 15] = x;
-                     positionArray [i18 + 1] = positionArray [i18 + 4] = positionArray [i18 + 7] = positionArray [i18 + 10] = positionArray [i18 + 13] = positionArray [i18 + 16] = y;
-                     positionArray [i18 + 2] = positionArray [i18 + 5] = positionArray [i18 + 8] = positionArray [i18 + 11] = positionArray [i18 + 14] = positionArray [i18 + 17] = z;
+         //             positionArray [i18]     = positionArray [i18 + 3] = positionArray [i18 + 6] = positionArray [i18 +  9] = positionArray [i18 + 12] = positionArray [i18 + 15] = x;
+         //             positionArray [i18 + 1] = positionArray [i18 + 4] = positionArray [i18 + 7] = positionArray [i18 + 10] = positionArray [i18 + 13] = positionArray [i18 + 16] = y;
+         //             positionArray [i18 + 2] = positionArray [i18 + 5] = positionArray [i18 + 8] = positionArray [i18 + 11] = positionArray [i18 + 14] = positionArray [i18 + 17] = z;
 
-                     elapsedTimeArray [i6] = elapsedTimeArray [i6 + 1] = elapsedTimeArray [i6 + 2] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 4] = elapsedTimeArray [i6 + 5] = elapsedTime;
-                     lifeArray [i6]        = lifeArray [i6 + 1]        = lifeArray [i6 + 2]        = lifeArray [i6 + 3]        = lifeArray [i6 + 4]        = lifeArray [i6 + 5]        = particles [i] .life;
+         //             elapsedTimeArray [i6] = elapsedTimeArray [i6 + 1] = elapsedTimeArray [i6 + 2] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 4] = elapsedTimeArray [i6 + 5] = elapsedTime;
+         //             lifeArray [i6]        = lifeArray [i6 + 1]        = lifeArray [i6 + 2]        = lifeArray [i6 + 3]        = lifeArray [i6 + 4]        = lifeArray [i6 + 5]        = particles [i] .life;
 
-                     // p1
-                     vertexArray [i24]     = vertexArray [i24 + 12] = x - sx1_2;
-                     vertexArray [i24 + 1] = vertexArray [i24 + 13] = y - sy1_2;
-                     vertexArray [i24 + 2] = vertexArray [i24 + 14] = z;
+         //             // p1
+         //             vertexArray [i24]     = vertexArray [i24 + 12] = x - sx1_2;
+         //             vertexArray [i24 + 1] = vertexArray [i24 + 13] = y - sy1_2;
+         //             vertexArray [i24 + 2] = vertexArray [i24 + 14] = z;
 
-                     // p2
-                     vertexArray [i24 + 4] = x + sx1_2;
-                     vertexArray [i24 + 5] = y - sy1_2;
-                     vertexArray [i24 + 6] = z;
+         //             // p2
+         //             vertexArray [i24 + 4] = x + sx1_2;
+         //             vertexArray [i24 + 5] = y - sy1_2;
+         //             vertexArray [i24 + 6] = z;
 
-                     // p3
-                     vertexArray [i24 + 8]  = vertexArray [i24 + 16] = x + sx1_2;
-                     vertexArray [i24 + 9]  = vertexArray [i24 + 17] = y + sy1_2;
-                     vertexArray [i24 + 10] = vertexArray [i24 + 18] = z;
+         //             // p3
+         //             vertexArray [i24 + 8]  = vertexArray [i24 + 16] = x + sx1_2;
+         //             vertexArray [i24 + 9]  = vertexArray [i24 + 17] = y + sy1_2;
+         //             vertexArray [i24 + 10] = vertexArray [i24 + 18] = z;
 
-                     // p4
-                     vertexArray [i24 + 20] = x - sx1_2;
-                     vertexArray [i24 + 21] = y + sy1_2;
-                     vertexArray [i24 + 22] = z;
-                  }
+         //             // p4
+         //             vertexArray [i24 + 20] = x - sx1_2;
+         //             vertexArray [i24 + 21] = y + sy1_2;
+         //             vertexArray [i24 + 22] = z;
+         //          }
 
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
-               }
-            }
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         //          gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
+         //          gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
+         //       }
+         //    }
+         // }
+         // catch (error)
+         // {
+         //    console .error (error);
+         // }
       },
       traverse: function (type, renderObject)
       {
@@ -1341,11 +1363,8 @@ function (Fields,
 
                   // Setup vertex attributes.
 
-                  shaderNode .enableFloatAttrib (gl, "x3d_Particle",         this .outputParticles [0], 4);
-                  shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition", this .outputParticles [3], 4);
-
-                  shaderNode .vertexAttribDivisor (gl, "x3d_Particle",         this .vertexCount);
-                  shaderNode .vertexAttribDivisor (gl, "x3d_ParticlePosition", this .vertexCount);
+                  shaderNode .enableFloatAttrib (gl, "x3d_Particle",         this .particleBuffer, 4);
+                  shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition", this .positionBuffer, 4);
 
                   if (this .geometryContext .colorMaterial)
                      shaderNode .enableColorAttribute (gl, this .colorBuffer);
@@ -1375,9 +1394,6 @@ function (Fields,
 
                      gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
                   }
-
-                  shaderNode .vertexAttribDivisor (gl, "x3d_Particle",         0);
-                  shaderNode .vertexAttribDivisor (gl, "x3d_ParticlePosition", 0);
 
                   shaderNode .disableFloatAttrib (gl, "x3d_Particle");
                   shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");

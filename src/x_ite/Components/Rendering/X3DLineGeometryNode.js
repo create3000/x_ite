@@ -227,7 +227,7 @@ function (X3DGeometryNode,
             const
                browser        = context .browser,
                appearanceNode = context .shapeNode .getAppearance (),
-               shaderNode     = appearanceNode .shaderNode || this .getShader (browser);
+               shaderNode     = appearanceNode .shaderNode || browser .getLineShader ();
 
             if (shaderNode .getValid ())
             {
@@ -258,7 +258,7 @@ function (X3DGeometryNode,
                if (this .getMultiTexCoords () .length)
                   shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
 
-               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+               shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
                // Wireframes are always solid so only one drawing call is needed.
 
