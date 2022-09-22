@@ -159,12 +159,14 @@ function (X3DNode,
       animate: function (particleSystem, deltaTime)
       {
          const
-            browser         = this .getBrowser (),
-            gl              = browser .getContext (),
-            inputParticles  = particleSystem .outputParticles,
-            outputParticles = particleSystem .inputParticles,
-            program         = this .program,
-            inputs          = program .inputs;
+            browser          = this .getBrowser (),
+            gl               = browser .getContext (),
+            inputParticles   = particleSystem .outputParticles,
+            outputParticles  = particleSystem .inputParticles,
+            particlesStride  = particleSystem .particlesStride,
+            particlesOffsets = particleSystem .particlesOffsets,
+            program          = this .program,
+            inputs           = program .inputs;
 
          // Start
 
@@ -240,7 +242,7 @@ function (X3DNode,
 
             gl .enableVertexAttribArray (attribute);
             gl .bindBuffer (gl .ARRAY_BUFFER, inputParticles);
-            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particleSystem .particlesStride, particleSystem .particlesOffsets [i]);
+            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particlesStride, particlesOffsets [i]);
          }
 
          // Other textures

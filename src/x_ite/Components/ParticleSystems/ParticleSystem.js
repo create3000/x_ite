@@ -1314,10 +1314,12 @@ function (Fields,
       updateBuffers: function ()
       {
          const
-            gl              = this .getBrowser () .getContext (),
-            outputParticles = this .outputParticles,
-            program         = this .program,
-            inputs          = program .inputs;
+            gl               = this .getBrowser () .getContext (),
+            outputParticles  = this .outputParticles,
+            particlesStride  = this .particlesStride,
+            particlesOffsets = this .particlesOffsets,
+            program          = this .program,
+            inputs           = program .inputs;
 
          gl .useProgram (program);
 
@@ -1330,7 +1332,7 @@ function (Fields,
 
             gl .enableVertexAttribArray (attribute);
             gl .bindBuffer (gl .ARRAY_BUFFER, outputParticles);
-            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, this .particlesStride, this .particlesOffsets [i]);
+            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particlesStride, particlesOffsets [i]);
             gl .vertexAttribDivisor (attribute, 1);
          }
 
