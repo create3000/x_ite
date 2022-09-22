@@ -11,9 +11,9 @@ setBVHIndex (const in int index)
 }
 
 int
-getBVHRoot (const in sampler2D bvh, const in int root)
+getBVHRoot (const in sampler2D bvh, const in int rootIndex)
 {
-   return int (texelFetch (bvh, root, 0) .x);
+   return int (texelFetch (bvh, rootIndex, 0) .x);
 }
 
 int
@@ -55,9 +55,9 @@ getBVHTriangle (const in sampler2D bvh)
 /* Ray triangle intersection test */
 
 int
-getIntersections (const in sampler2D bvh, const in int bvhRoot, const in Line3 line, const in sampler2D surface, const in int verticesIndex, out vec4 points [ARRAY_SIZE])
+getIntersections (const in sampler2D bvh, const in int rootIndex, const in Line3 line, const in sampler2D surface, const in int verticesIndex, out vec4 points [ARRAY_SIZE])
 {
-   int current = getBVHRoot (bvh, bvhRoot);
+   int current = getBVHRoot (bvh, rootIndex);
    int count   = 0;
    int id      = -1;
    int stack [BVH_STACK_SIZE];
@@ -90,11 +90,12 @@ getIntersections (const in sampler2D bvh, const in int bvhRoot, const in Line3 l
             current = -1;
 
             int  i = getBVHTriangle (bvh);
+            int  v = verticesIndex + i;
             vec3 r = vec3 (0.0);
 
-            vec3 a = texelFetch (surface, verticesIndex + i + 0, 0) .xyz;
-            vec3 b = texelFetch (surface, verticesIndex + i + 1, 0) .xyz;
-            vec3 c = texelFetch (surface, verticesIndex + i + 2, 0) .xyz;
+            vec3 a = texelFetch (surface, v,     0) .xyz;
+            vec3 b = texelFetch (surface, v + 1, 0) .xyz;
+            vec3 c = texelFetch (surface, v + 2, 0) .xyz;
 
             if (intersects (line, a, b, c, r))
                points [count ++] = vec4 (r .z * a + r .x * b + r .y * c, 1.0);
@@ -112,9 +113,9 @@ getIntersections (const in sampler2D bvh, const in int bvhRoot, const in Line3 l
 }
 
 int
-getIntersections (const in sampler2D bvh, const in int bvhLength, const in Line3 line, const in sampler2D surface, const in int verticesIndex, const in int normalsIndex, out vec4 points [ARRAY_SIZE], out vec3 normals [ARRAY_SIZE])
+getIntersections (const in sampler2D bvh, const in int rootIndex, const in Line3 line, const in sampler2D surface, const in int verticesIndex, const in int normalsIndex, out vec4 points [ARRAY_SIZE], out vec3 normals [ARRAY_SIZE])
 {
-   int current = getBVHRoot (bvh, bvhLength);
+   int current = getBVHRoot (bvh, rootIndex);
    int count   = 0;
    int id      = -1;
    int stack [BVH_STACK_SIZE];
@@ -147,21 +148,24 @@ getIntersections (const in sampler2D bvh, const in int bvhLength, const in Line3
             current = -1;
 
             int  i = getBVHTriangle (bvh);
+            int  v = verticesIndex + i;
             vec3 r = vec3 (0.0);
 
-            vec3 a = texelFetch (surface, verticesIndex + i + 0, 0) .xyz;
-            vec3 b = texelFetch (surface, verticesIndex + i + 1, 0) .xyz;
-            vec3 c = texelFetch (surface, verticesIndex + i + 2, 0) .xyz;
+            vec3 a = texelFetch (surface, v,     0) .xyz;
+            vec3 b = texelFetch (surface, v + 1, 0) .xyz;
+            vec3 c = texelFetch (surface, v + 2, 0) .xyz;
 
             if (intersects (line, a, b, c, r))
             {
                points [count] = vec4 (r .z * a + r .x * b + r .y * c, 1.0);
 
-               vec3 n1 = texelFetch (surface, normalsIndex + i + 0, 0) .xyz;
-               vec3 n2 = texelFetch (surface, normalsIndex + i + 1, 0) .xyz;
-               vec3 n3 = texelFetch (surface, normalsIndex + i + 2, 0) .xyz;
+               int n = normalsIndex + i;
 
-               normals [count] = save_normalize (r .z * n1 + r .x * n2 + r .y * n3);
+               vec3 n0 = texelFetch (surface, n,     0) .xyz;
+               vec3 n1 = texelFetch (surface, n + 1, 0) .xyz;
+               vec3 n2 = texelFetch (surface, n + 2, 0) .xyz;
+
+               normals [count] = save_normalize (r .z * n0 + r .x * n1 + r .y * n2);
 
                ++ count;
             }
