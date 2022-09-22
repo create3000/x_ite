@@ -97,8 +97,8 @@ function (Fields,
 
       this ._particleSize .setUnit ("length");
 
-      this .inputParticles           = [ ];
-      this .outputParticles          = [ ];
+      this .particlesStride          = Float32Array .BYTES_PER_ELEMENT * 4 * 4; // 4 x vec4
+      this .particlesOffset          = Float32Array .BYTES_PER_ELEMENT * 4; // 1 x vec4
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .particleLifetime         = 0;
@@ -197,11 +197,8 @@ function (Fields,
 
          // Create particles stuff.
 
-         for (let i = 0; i < 4; ++ i)
-         {
-            this .inputParticles  [i] = gl .createBuffer ();
-            this .outputParticles [i] = gl .createBuffer ();
-         }
+         this .inputParticles  = gl .createBuffer ();
+         this .outputParticles = gl .createBuffer ();
 
          // Create forces stuff.
 
@@ -364,11 +361,14 @@ function (Fields,
                this .primitiveMode   = gl .POINTS;
                this .program         = null;
 
-               this .particleOffset = 0;
-               this .positionOffset = 0;
-               this .colorOffset    = 0;
-               this .vertexOffset   = 0;
-               this .stride         = 0;
+               let offset = 0;
+
+               this .particleOffset = offset;
+               this .colorOffset    = offset += Float32Array .BYTES_PER_ELEMENT * 4;
+               this .velocityOffset = offset += Float32Array .BYTES_PER_ELEMENT * 4;
+               this .vertexOffset   = offset += Float32Array .BYTES_PER_ELEMENT * 4;
+               this .positionOffset = this .vertexOffset;
+               this .stride         = offset += Float32Array .BYTES_PER_ELEMENT * 4;
 
                break;
             }
@@ -855,30 +855,26 @@ function (Fields,
       {
          const
             gl         = this .getBrowser () .getContext (),
-            inputData  = new Float32Array (lastNumParticles * 4);
+            inputData  = new Float32Array (lastNumParticles * 4 * 4);
 
          const outputData = lastNumParticles < this .maxParticles
-            ? new Float32Array (this .maxParticles * 4)
+            ? new Float32Array (this .maxParticles * 4 * 4)
             : inputData;
 
-         // Resize input and output buffers.
+         // Resize output buffer.
 
-         for (const buffer of this .outputParticles)
-         {
-            gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-            gl .getBufferSubData (gl .ARRAY_BUFFER, 0, inputData);
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .outputParticles);
+         gl .getBufferSubData (gl .ARRAY_BUFFER, 0, inputData);
 
-            if (lastNumParticles < this .maxParticles)
-               outputData .set (inputData);
+         if (lastNumParticles < this .maxParticles)
+            outputData .set (inputData);
 
-            gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, this .maxParticles * 4);
-         }
+         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, this .maxParticles * 4 * 4);
 
-         for (const buffer of this .inputParticles)
-         {
-            gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-            gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, this .maxParticles * 4);
-         }
+         // Resize input buffer.
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .inputParticles);
+         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, this .maxParticles * 4 * 4);
 
          // Resize geometry buffers.
 
@@ -1023,10 +1019,10 @@ function (Fields,
       {
          const outputParticles = this .outputParticles;
 
-         this .particleBuffer = outputParticles [0];
-         this .positionBuffer = outputParticles [3];
-         this .colorBuffer    = outputParticles [1];
-         this .vertexBuffer   = outputParticles [3];
+         this .particleBuffer = outputParticles;
+         this .positionBuffer = outputParticles;
+         this .colorBuffer    = outputParticles;
+         this .vertexBuffer   = outputParticles;
       },
       updateLine: function ()
       {
@@ -1331,8 +1327,8 @@ function (Fields,
                continue;
 
             gl .enableVertexAttribArray (attribute);
-            gl .bindBuffer (gl .ARRAY_BUFFER, outputParticles [i]);
-            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, 0, 0);
+            gl .bindBuffer (gl .ARRAY_BUFFER, outputParticles);
+            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, this .particlesStride, this .particlesOffset * i);
             gl .vertexAttribDivisor (attribute, 1);
          }
 

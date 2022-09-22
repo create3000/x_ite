@@ -163,7 +163,8 @@ function (X3DNode,
             gl              = browser .getContext (),
             inputParticles  = particleSystem .outputParticles,
             outputParticles = particleSystem .inputParticles,
-            program         = this .program;
+            program         = this .program,
+            inputs          = program .inputs;
 
          // Start
 
@@ -232,14 +233,14 @@ function (X3DNode,
 
          for (let i = 0; i < 4; ++ i)
          {
-            const attribute = program .inputs [i];
+            const attribute = inputs [i];
 
             if (attribute < 0)
                continue;
 
             gl .enableVertexAttribArray (attribute);
-            gl .bindBuffer (gl .ARRAY_BUFFER, inputParticles [i]);
-            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, 0, 0);
+            gl .bindBuffer (gl .ARRAY_BUFFER, inputParticles);
+            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particleSystem .particlesStride, particleSystem .particlesOffset * i);
          }
 
          // Other textures
@@ -249,10 +250,7 @@ function (X3DNode,
          // Render
 
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedBack);
-
-         for (let i = 0; i < 4; ++ i)
-            gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, i, outputParticles [i]);
-
+         gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, outputParticles);
          gl .bindBuffer (gl .ARRAY_BUFFER, null);
          gl .enable (gl .RASTERIZER_DISCARD);
          gl .beginTransformFeedback (gl .POINTS);
@@ -261,7 +259,7 @@ function (X3DNode,
          gl .disable (gl .RASTERIZER_DISCARD);
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
 
-         for (const attribute of program .inputs)
+         for (const attribute of inputs)
          {
             if (attribute < 0)
                continue;
@@ -808,7 +806,7 @@ function (X3DNode,
 
          gl .attachShader (program, vertexShader);
          gl .attachShader (program, fragmentShader);
-         gl .transformFeedbackVaryings (program, ["output0", "output1", "output2", "output3"], gl .SEPARATE_ATTRIBS);
+         gl .transformFeedbackVaryings (program, ["output0", "output1", "output2", "output3"], gl .INTERLEAVED_ATTRIBS);
          gl .linkProgram (program);
 
          if (!gl .getProgramParameter (program, gl .LINK_STATUS))
