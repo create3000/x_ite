@@ -835,8 +835,8 @@ function (X3DNode,
          program .boundedVolumeHierarchyRoot = gl .getUniformLocation (program, "boundedVolumeHierarchyRoot");
          program .boundedVolumeHierarchy     = gl .getUniformLocation (program, "boundedVolumeHierarchy");
 
-         for (const uniform of Object .keys (this .uniforms))
-            program [uniform] = gl .getUniformLocation (program, uniform);
+         for (const name of Object .keys (this .uniforms))
+            program [name] = gl .getUniformLocation (program, name);
 
          gl .useProgram (program);
 
