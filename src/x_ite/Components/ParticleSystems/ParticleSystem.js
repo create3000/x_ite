@@ -361,14 +361,11 @@ function (Fields,
                this .primitiveMode   = gl .POINTS;
                this .program         = null;
 
-               let offset = 0;
-
-               this .particleOffset = offset;
-               this .colorOffset    = offset += Float32Array .BYTES_PER_ELEMENT * 4;
-               this .velocityOffset = offset += Float32Array .BYTES_PER_ELEMENT * 4;
-               this .vertexOffset   = offset += Float32Array .BYTES_PER_ELEMENT * 4;
-               this .positionOffset = this .vertexOffset;
-               this .stride         = offset += Float32Array .BYTES_PER_ELEMENT * 4;
+               this .particleOffset = this .particlesOffsets [0];
+               this .positionOffset = this .particlesOffsets [3];
+               this .colorOffset    = this .particlesOffsets [1];
+               this .vertexOffset   = this .particlesOffsets [3];
+               this .stride         = this .particlesStride;
 
                break;
             }
