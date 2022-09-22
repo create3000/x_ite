@@ -161,8 +161,7 @@ function (X3DNode,
          const
             browser          = this .getBrowser (),
             gl               = browser .getContext (),
-            inputParticles   = particleSystem .outputParticles,
-            outputParticles  = particleSystem .inputParticles,
+            inputParticles   = particleSystem .inputParticles,
             particlesStride  = particleSystem .particlesStride,
             particlesOffsets = particleSystem .particlesOffsets,
             program          = this .program,
@@ -252,7 +251,7 @@ function (X3DNode,
          // Render
 
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedBack);
-         gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, outputParticles);
+         gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, particleSystem .outputParticles);
          gl .bindBuffer (gl .ARRAY_BUFFER, null);
          gl .enable (gl .RASTERIZER_DISCARD);
          gl .beginTransformFeedback (gl .POINTS);
@@ -276,11 +275,9 @@ function (X3DNode,
          // DEBUG
 
          // const data = new Float32Array (particleSystem .numParticles * 4);
-         // gl .bindBuffer (gl .ARRAY_BUFFER, outputParticles [3]);
+         // gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles [3]);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
          // console .log (data);
-
-         return outputParticles;
       },
       addUniform: function (name, uniform)
       {

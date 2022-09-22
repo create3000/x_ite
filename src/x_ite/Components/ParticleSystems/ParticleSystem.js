@@ -986,12 +986,15 @@ function (Fields,
             this .numForces = 0;
          }
 
+         // Swap buffers.
+
+         const inputParticles  = this .outputParticles;
+         this .outputParticles = this .inputParticles;
+         this .inputParticles  = inputParticles;
+
          // Determine particle position, velocity and colors.
 
-         const inputParticles = this .outputParticles;
-
-         this .outputParticles = emitterNode .animate (this, deltaTime);
-         this .inputParticles  = inputParticles;
+         emitterNode .animate (this, deltaTime);
 
          this .updateGeometry (null);
          browser .addBrowserEvent ();
