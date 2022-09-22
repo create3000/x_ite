@@ -854,11 +854,13 @@ function (Fields,
       resizeBuffers: function (lastNumParticles)
       {
          const
-            gl         = this .getBrowser () .getContext (),
-            inputData  = new Float32Array (lastNumParticles * 4 * 4);
+            gl              = this .getBrowser () .getContext (),
+            maxParticles    = this .maxParticles,
+            particlesStride = this .particlesStride,
+            inputData       = new Uint8Array (lastNumParticles * particlesStride);
 
-         const outputData = lastNumParticles < this .maxParticles
-            ? new Float32Array (this .maxParticles * 4 * 4)
+         const outputData = lastNumParticles < maxParticles
+            ? new Uint8Array (maxParticles * particlesStride)
             : inputData;
 
          // Resize output buffer.
@@ -866,15 +868,15 @@ function (Fields,
          gl .bindBuffer (gl .ARRAY_BUFFER, this .outputParticles);
          gl .getBufferSubData (gl .ARRAY_BUFFER, 0, inputData);
 
-         if (lastNumParticles < this .maxParticles)
+         if (lastNumParticles < maxParticles)
             outputData .set (inputData);
 
-         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, this .maxParticles * 4 * 4);
+         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, maxParticles * particlesStride);
 
          // Resize input buffer.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .inputParticles);
-         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, this .maxParticles * 4 * 4);
+         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, maxParticles * particlesStride);
 
          // Resize geometry buffers.
 
