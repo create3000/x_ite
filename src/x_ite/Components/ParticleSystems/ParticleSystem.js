@@ -98,7 +98,7 @@ function (Fields,
       this ._particleSize .setUnit ("length");
 
       this .particlesStride          = Float32Array .BYTES_PER_ELEMENT * 4 * 4; // 4 x vec4
-      this .particlesOffset          = Float32Array .BYTES_PER_ELEMENT * 4; // 1 x vec4
+      this .particlesOffsets         = Array .from ({length: 4}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .particleLifetime         = 0;
@@ -1330,7 +1330,7 @@ function (Fields,
 
             gl .enableVertexAttribArray (attribute);
             gl .bindBuffer (gl .ARRAY_BUFFER, outputParticles);
-            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, this .particlesStride, this .particlesOffset * i);
+            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, this .particlesStride, this .particlesOffsets [i]);
             gl .vertexAttribDivisor (attribute, 1);
          }
 
