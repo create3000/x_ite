@@ -57,7 +57,6 @@ define ([
    "x_ite/Base/X3DCast",
    "x_ite/Browser/Shape/AlphaMode",
    "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Vector4",
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Numbers/Matrix3",
    "standard/Math/Utility/BVH",
@@ -71,7 +70,6 @@ function (Fields,
           X3DCast,
           AlphaMode,
           Vector3,
-          Vector4,
           Matrix4,
           Matrix3,
           BVH)
@@ -116,8 +114,7 @@ function (Fields,
       this .colorRampNode            = null;
       this .colorRamp                = new Float32Array ();
       this .texCoordRampNode         = null;
-      this .texCoordKeys             = [ ];
-      this .texCoordRamp             = [ ];
+      this .texCoordRamp             = new Float32Array ();
       this .texCoordAnim             = false;
       this .vertexCount              = 0;
       this .shaderNode               = null;
@@ -202,9 +199,10 @@ function (Fields,
 
          // Create forces stuff.
 
-         this .forcesTexture    = this .createTexture ();
-         this .colorRampTexture = this .createTexture ();
-         this .boundedTexture   = this .createTexture ();
+         this .forcesTexture       = this .createTexture ();
+         this .colorRampTexture    = this .createTexture ();
+         this .texCoordRampTexture = this .createTexture ();
+         this .boundedTexture      = this .createTexture ();
 
          // Create GL stuff.
 
@@ -472,8 +470,10 @@ function (Fields,
 
                precision highp float;
 
-               uniform vec2 particleSize1_2;
-               uniform mat3 rotation;
+               uniform vec2      particleSize1_2;
+               uniform mat3      rotation;
+               uniform int       numTexCoords;
+               uniform sampler2D texCoordRamp;
 
                in vec4 input0;
                in vec4 input1;
@@ -485,6 +485,86 @@ function (Fields,
                out vec4 texCoord;
                out vec3 normal;
                out vec4 vertex;
+
+               vec4
+               texelFetch (const in sampler2D sampler, const in int index, const in int lod)
+               {
+                  int   x = textureSize (sampler, lod) .x;
+                  ivec2 p = ivec2 (index % x, index / x);
+                  vec4  t = texelFetch (sampler, p, lod);
+
+                  return t;
+               }
+
+               int
+               upperBound (const in sampler2D sampler, in int count, const in float value)
+               {
+                  int first = 0;
+                  int step  = 0;
+
+                  while (count > 0)
+                  {
+                     int index = first;
+
+                     step = count >> 1;
+
+                     index += step;
+
+                     if (value < texelFetch (sampler, index, 0) .x)
+                     {
+                        count = step;
+                     }
+                     else
+                     {
+                        first  = ++ index;
+                        count -= step + 1;
+                     }
+                  }
+
+                  return first;
+               }
+
+               void
+               interpolate (const in sampler2D sampler, const in int count, const in float fraction, out int index0)
+               {
+                  // Determine index0, index1 and weight.
+
+                  if (count == 1 || fraction <= texelFetch (sampler, 0, 0) .x)
+                  {
+                     index0 = 0;
+                  }
+                  else if (fraction >= texelFetch (sampler, count - 1, 0) .x)
+                  {
+                     index0 = count - 2;
+                  }
+                  else
+                  {
+                     int index = upperBound (sampler, count, fraction);
+
+                     if (index < count)
+                        index0 = index - 1;
+                     else
+                        index0 = 0;
+                  }
+               }
+
+               vec4
+               getTexCoord (const in int i, const in float lifetime, const in float elapsedTime, const in vec4 defaultTexCoord)
+               {
+                  if (numTexCoords > 0)
+                  {
+                     float fraction = elapsedTime / lifetime;
+                     int   index0   = 0;
+
+                     interpolate (texCoordRamp, numTexCoords, fraction, index0);
+
+                     return texelFetch (texCoordRamp, numTexCoords + index0 * 4 + i, 0);
+                  }
+                  else
+                  {
+                     return defaultTexCoord;
+                  }
+               }
 
                void
                main ()
@@ -509,23 +589,24 @@ function (Fields,
                   {
                      case 0:
                      case 3:
-                        texCoord = vec4 (0.0, 0.0, 0.0, 1.0);
+                        texCoord = getTexCoord (0, particle [2], particle [3], vec4 (0.0, 0.0, 0.0, 1.0));
                         vertex   = vec4 (rotation * vec3 (x - particleSize1_2 .x, y - particleSize1_2 .y, z), 1.0);
                         break;
                      case 1:
-                        texCoord = vec4 (1.0, 0.0, 0.0, 1.0);
+                        texCoord = getTexCoord (1, particle [2], particle [3], vec4 (1.0, 0.0, 0.0, 1.0));
                         vertex   = vec4 (rotation * vec3 (x + particleSize1_2 .x, y - particleSize1_2 .y, z), 1.0);
                         break;
                      case 2:
                      case 4:
-                        texCoord = vec4 (1.0, 1.0, 0.0, 1.0);
+                        texCoord = getTexCoord (2, particle [2], particle [3], vec4 (1.0, 1.0, 0.0, 1.0));
                         vertex   = vec4 (rotation * vec3 (x + particleSize1_2 .x, y + particleSize1_2 .y, z), 1.0);
                         break;
                      case 5:
-                        texCoord = vec4 (0.0, 1.0, 0.0, 1.0);
+                        texCoord = getTexCoord (3, particle [2], particle [3], vec4 (0.0, 1.0, 0.0, 1.0));
                         vertex   = vec4 (rotation * vec3 (x - particleSize1_2 .x, y + particleSize1_2 .y, z), 1.0);
                         break;
                   }
+
                }
                `);
 
@@ -543,6 +624,7 @@ function (Fields,
          this .resizeGeometryBuffers ();
 
          this .set_particleSize__ ();
+         this .set_texCoord__ ();
          this .set_shader__ ();
          this .set_transparent__ ();
       },
@@ -732,8 +814,8 @@ function (Fields,
 
             let colorRamp = this .colorRamp;
 
-            if (numColors * 4 > colorRamp .length)
-               colorRamp = this .colorRamp = new Float32Array (textureSize * textureSize * 4 * 2);
+            if (textureSize * textureSize * 4 > colorRamp .length)
+               colorRamp = this .colorRamp = new Float32Array (textureSize * textureSize * 4);
 
             for (let i = 0; i < numColors; ++ i)
                colorRamp [i * 4] = colorKey [i];
@@ -764,36 +846,49 @@ function (Fields,
 
          this .set_texCoord__ ();
       },
-      set_texCoord__: function ()
+      set_texCoord__: (function ()
       {
-         const
-            texCoordKey     = this ._texCoordKey,
-            numTexCoordKeys = texCoordKey .length,
-            texCoordKeys    = this .texCoordKeys,
-            texCoordRamp    = this .texCoordRamp;
+         const array = [ ];
 
-         for (let i = 0; i < numTexCoordKeys; ++ i)
-            texCoordKeys [i] = texCoordKey [i];
+         return function ()
+         {
+            const
+               gl           = this .getBrowser () .getContext (),
+               texCoordKey  = this ._texCoordKey,
+               numTexCoords = texCoordKey .length,
+               textureSize  = Math .ceil (Math .sqrt (numTexCoords + numTexCoords * this .texCoordCount));
 
-         texCoordKeys .length = numTexCoordKeys;
+            let texCoordRamp = this .texCoordRamp;
 
-         if (this .texCoordRampNode)
-            this .texCoordRampNode .getTexCoord (texCoordRamp);
+            if (textureSize * textureSize * 4 > texCoordRamp .length)
+               texCoordRamp = this .texCoordRamp = new Float32Array (textureSize * textureSize * 4);
 
-         for (let i = texCoordRamp .length, length = numTexCoordKeys * this .texCoordCount; i < length; ++ i)
-            texCoordRamp [i] = new Vector4 (0, 0, 0, 0);
+            for (let i = 0; i < numTexCoords; ++ i)
+               texCoordRamp [i * 4] = texCoordKey [i];
 
-         texCoordRamp .length = numTexCoordKeys * this .texCoordCount;
+            array .length = 0;
 
-         this .texCoordAnim = !! (numTexCoordKeys && this .texCoordRampNode);
-      },
+            if (this .texCoordRampNode)
+               texCoordRamp .set (this .texCoordRampNode .getTexCoord (array), numTexCoords * 4);
+
+            texCoordRamp .fill (0, numTexCoords * 4 + array .length);
+
+            gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, texCoordRamp);
+
+            this .numTexCoords = numTexCoords;
+            this .texCoordAnim = !! (numTexCoords && this .texCoordRampNode);
+         };
+      })(),
       intersectsBox: function (box, clipPlanes)
       {
          // TODO: implement me.
       },
       createProgram: function (varyings, vertexShaderSource)
       {
-         const gl = this .getBrowser () .getContext ();
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
 
          const fragmentShaderSource = /* glsl */ `#version 300 es
 
@@ -838,9 +933,12 @@ function (Fields,
 
          program .particleSize1_2 = gl .getUniformLocation (program, "particleSize1_2");
          program .rotation        = gl .getUniformLocation (program, "rotation");
+         program .numTexCoords    = gl .getUniformLocation (program, "numTexCoords");
+         program .texCoordRamp    = gl .getUniformLocation (program, "texCoordRamp");
 
          gl .useProgram (program);
          gl .uniformMatrix3fv (program .rotation, false, new Float32Array (Matrix3 .Identity));
+         gl .uniform1i (program .texCoordRamp, browser .getDefaultTexture2DUnit ());
 
          return program;
       },
@@ -1032,7 +1130,8 @@ function (Fields,
       updateBuffers: function (rotation)
       {
          const
-            gl               = this .getBrowser () .getContext (),
+            browser          = this .getBrowser (),
+            gl               = browser .getContext (),
             outputParticles  = this .outputParticles,
             particlesStride  = this .particlesStride,
             particlesOffsets = this .particlesOffsets,
@@ -1043,6 +1142,17 @@ function (Fields,
 
          if (rotation)
             gl .uniformMatrix3fv (program .rotation, false, rotation);
+
+         if (this .texCoordAnim)
+         {
+            gl .uniform1i (program .numTexCoords, this .numTexCoords);
+
+            const textureUnit = browser .getTexture2DUnit ();
+
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+            gl .uniform1i (program .texCoordRamp, textureUnit);
+         }
 
          for (let i = 0; i < 4; ++ i)
          {
