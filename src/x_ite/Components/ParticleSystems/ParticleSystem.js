@@ -552,7 +552,11 @@ function (Fields,
                vec4
                getTexCoord (const in int i, const in float lifetime, const in float elapsedTime, const in vec4 defaultTexCoord)
                {
-                  if (numTexCoords > 0)
+                  if (numTexCoords == 0)
+                  {
+                     return defaultTexCoord;
+                  }
+                  else
                   {
                      float fraction = elapsedTime / lifetime;
                      int   index0   = 0;
@@ -560,10 +564,6 @@ function (Fields,
                      interpolate (texCoordRamp, numTexCoords, fraction, index0);
 
                      return texelFetch (texCoordRamp, numTexCoords + index0 * 4 + i, 0);
-                  }
-                  else
-                  {
-                     return defaultTexCoord;
                   }
                }
 
@@ -1136,6 +1136,10 @@ function (Fields,
             gl .activeTexture (gl .TEXTURE0 + textureUnit);
             gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
             gl .uniform1i (program .texCoordRamp, textureUnit);
+         }
+         else
+         {
+            gl .uniform1i (program .numTexCoords, 0);
          }
 
          for (let i = 0; i < 4; ++ i)
