@@ -573,7 +573,7 @@ function (Fields,
                   particle = input0;
                   position = input3;
                   color    = input1;
-                  normal   = rotation * vec3 (0.0, 0.0, 1.0);
+                  normal   = rotation [2];
 
                   //    // p4 ------ p3
                   //    // |       / |
