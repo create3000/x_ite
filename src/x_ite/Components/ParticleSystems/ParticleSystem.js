@@ -582,29 +582,25 @@ function (Fields,
                   //    // | /       |
                   //    // p1 ------ p2
 
-                  float x = position .x;
-                  float y = position .y;
-                  float z = position .z;
-
                   switch (gl_VertexID % 6)
                   {
                      case 0:
                      case 3:
                         texCoord = getTexCoord (0, particle [2], particle [3], vec4 (0.0, 0.0, 0.0, 1.0));
-                        vertex   = vec4 (rotation * vec3 (x - particleSize1_2 .x, y - particleSize1_2 .y, z), 1.0);
+                        vertex   = vec4 (position .xyz + rotation * vec3 (-particleSize1_2 .x, -particleSize1_2 .y, 0.0), 1.0);
                         break;
                      case 1:
                         texCoord = getTexCoord (1, particle [2], particle [3], vec4 (1.0, 0.0, 0.0, 1.0));
-                        vertex   = vec4 (rotation * vec3 (x + particleSize1_2 .x, y - particleSize1_2 .y, z), 1.0);
+                        vertex   = vec4 (position .xyz + rotation * vec3 (particleSize1_2 .x, -particleSize1_2 .y, 0.0), 1.0);
                         break;
                      case 2:
                      case 4:
                         texCoord = getTexCoord (2, particle [2], particle [3], vec4 (1.0, 1.0, 0.0, 1.0));
-                        vertex   = vec4 (rotation * vec3 (x + particleSize1_2 .x, y + particleSize1_2 .y, z), 1.0);
+                        vertex   = vec4 (position .xyz + rotation * vec3 (particleSize1_2 .x, particleSize1_2 .y, 0.0), 1.0);
                         break;
                      case 5:
                         texCoord = getTexCoord (3, particle [2], particle [3], vec4 (0.0, 1.0, 0.0, 1.0));
-                        vertex   = vec4 (rotation * vec3 (x - particleSize1_2 .x, y + particleSize1_2 .y, z), 1.0);
+                        vertex   = vec4 (position .xyz + rotation * vec3 (-particleSize1_2 .x, particleSize1_2 .y, 0.0), 1.0);
                         break;
                   }
                }
@@ -800,40 +796,33 @@ function (Fields,
          this .set_color__ ();
          this .set_transparent__ ();
       },
-      set_color__: (function ()
+      set_color__: function ()
       {
-         const array = [ ];
+         const
+            gl           = this .getBrowser () .getContext (),
+            colorKey     = this ._colorKey,
+            numColors    = colorKey .length,
+            textureSize  = Math .ceil (Math .sqrt (numColors * 2));
 
-         return function ()
-         {
-            const
-               gl           = this .getBrowser () .getContext (),
-               colorKey     = this ._colorKey,
-               numColors    = colorKey .length,
-               textureSize  = Math .ceil (Math .sqrt (numColors * 2));
+         let colorRamp = this .colorRamp;
 
-            let colorRamp = this .colorRamp;
+         if (textureSize * textureSize * 4 > colorRamp .length)
+            colorRamp = this .colorRamp = new Float32Array (textureSize * textureSize * 4);
 
-            if (textureSize * textureSize * 4 > colorRamp .length)
-               colorRamp = this .colorRamp = new Float32Array (textureSize * textureSize * 4);
+         for (let i = 0; i < numColors; ++ i)
+            colorRamp [i * 4] = colorKey [i];
 
-            for (let i = 0; i < numColors; ++ i)
-               colorRamp [i * 4] = colorKey [i];
+         if (this .colorRampNode)
+            colorRamp .set (this .colorRampNode .addColors ([ ], numColors), numColors * 4);
+         else
+            colorRamp .fill (1, numColors * 4);
 
-            array .length = 0;
+         gl .bindTexture (gl .TEXTURE_2D, this .colorRampTexture);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorRamp);
 
-            if (this .colorRampNode)
-               colorRamp .set (this .colorRampNode .addColors (array, numColors), numColors * 4);
-            else
-               colorRamp .fill (1, numColors * 4);
-
-            gl .bindTexture (gl .TEXTURE_2D, this .colorRampTexture);
-            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorRamp);
-
-            this .numColors                      = numColors;
-            this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
-         };
-      })(),
+         this .numColors                      = numColors;
+         this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
+      },
       set_texCoordRamp__: function ()
       {
          if (this .texCoordRampNode)
@@ -846,40 +835,35 @@ function (Fields,
 
          this .set_texCoord__ ();
       },
-      set_texCoord__: (function ()
+      set_texCoord__: function ()
       {
+         const
+            gl           = this .getBrowser () .getContext (),
+            texCoordKey  = this ._texCoordKey,
+            numTexCoords = texCoordKey .length,
+            textureSize  = Math .ceil (Math .sqrt (numTexCoords + numTexCoords * this .texCoordCount));
+
+         let texCoordRamp = this .texCoordRamp;
+
+         if (textureSize * textureSize * 4 > texCoordRamp .length)
+            texCoordRamp = this .texCoordRamp = new Float32Array (textureSize * textureSize * 4);
+
+         for (let i = 0; i < numTexCoords; ++ i)
+            texCoordRamp [i * 4] = texCoordKey [i];
+
          const array = [ ];
 
-         return function ()
-         {
-            const
-               gl           = this .getBrowser () .getContext (),
-               texCoordKey  = this ._texCoordKey,
-               numTexCoords = texCoordKey .length,
-               textureSize  = Math .ceil (Math .sqrt (numTexCoords + numTexCoords * this .texCoordCount));
+         if (this .texCoordRampNode)
+            texCoordRamp .set (this .texCoordRampNode .getTexCoord (array), numTexCoords * 4);
 
-            let texCoordRamp = this .texCoordRamp;
+         texCoordRamp .fill (0, numTexCoords * 4 + array .length);
 
-            if (textureSize * textureSize * 4 > texCoordRamp .length)
-               texCoordRamp = this .texCoordRamp = new Float32Array (textureSize * textureSize * 4);
+         gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, texCoordRamp);
 
-            for (let i = 0; i < numTexCoords; ++ i)
-               texCoordRamp [i * 4] = texCoordKey [i];
-
-            array .length = 0;
-
-            if (this .texCoordRampNode)
-               texCoordRamp .set (this .texCoordRampNode .getTexCoord (array), numTexCoords * 4);
-
-            texCoordRamp .fill (0, numTexCoords * 4 + array .length);
-
-            gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
-            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, texCoordRamp);
-
-            this .numTexCoords = numTexCoords;
-            this .texCoordAnim = !! (numTexCoords && this .texCoordRampNode);
-         };
-      })(),
+         this .numTexCoords = numTexCoords;
+         this .texCoordAnim = !! (numTexCoords && this .texCoordRampNode);
+      },
       intersectsBox: function (box, clipPlanes)
       {
          // TODO: implement me.
