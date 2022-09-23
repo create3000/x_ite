@@ -606,7 +606,6 @@ function (Fields,
                         vertex   = vec4 (rotation * vec3 (x - particleSize1_2 .x, y + particleSize1_2 .y, z), 1.0);
                         break;
                   }
-
                }
                `);
 
