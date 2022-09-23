@@ -70,17 +70,6 @@ function (Fields,
 {
 "use strict";
 
-   const
-      inverseModelViewMatrix = new Matrix4 (),
-      yAxis                  = new Vector3 (0, 1, 0),
-      zAxis                  = new Vector3 (0, 0, 1),
-      viewerYAxis            = new Vector3 (0, 0, 0),
-      x                      = new Vector3 (0, 0, 0),
-      y                      = new Vector3 (0, 0, 0),
-      N1                     = new Vector3 (0, 0, 0),
-      N2                     = new Vector3 (0, 0, 0),
-      rotation               = new Rotation4 (0, 0, 1, 0);
-
    function Billboard (executionContext)
    {
       X3DGroupingNode .call (this, executionContext);
@@ -124,42 +113,53 @@ function (Fields,
       {
          return this .matrix;
       },
-      rotate: function (modelViewMatrix)
+      rotate: (function ()
       {
-         // throws domain error
+         const
+            inverseModelViewMatrix = new Matrix4 (),
+            viewerYAxis            = new Vector3 (0, 0, 0),
+            y                      = new Vector3 (0, 0, 0),
+            N1                     = new Vector3 (0, 0, 0),
+            N2                     = new Vector3 (0, 0, 0),
+            rotation               = new Rotation4 (0, 0, 1, 0);
 
-         inverseModelViewMatrix .assign (modelViewMatrix) .inverse ();
-
-         const billboardToViewer = inverseModelViewMatrix .origin .normalize (); // Normalized to get work with Geo
-
-         if (this ._axisOfRotation .getValue () .equals (Vector3 .Zero))
+         return function (modelViewMatrix)
          {
-            inverseModelViewMatrix .multDirMatrix (viewerYAxis .assign (yAxis)) .normalize (); // Normalized to get work with Geo
+            // throws domain error
 
-            x .assign (viewerYAxis) .cross (billboardToViewer);
-            y .assign (billboardToViewer) .cross (x);
-            const z = billboardToViewer;
+            inverseModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-            // Compose rotation
+            const billboardToViewer = inverseModelViewMatrix .origin .normalize (); // Normalized to get work with Geo
 
-            x .normalize ();
-            y .normalize ();
+            if (this ._axisOfRotation .getValue () .equals (Vector3 .Zero))
+            {
+               inverseModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .yAxis)) .normalize (); // Normalized to get work with Geo
 
-            this .matrix .set (x [0], x [1], x [2], 0,
-                               y [0], y [1], y [2], 0,
-                               z [0], z [1], z [2], 0,
-                               0,     0,     0,     1);
-         }
-         else
-         {
-            N1 .assign (this ._axisOfRotation .getValue ()) .cross (billboardToViewer); // Normal vector of plane as in specification
-            N2 .assign (this ._axisOfRotation .getValue ()) .cross (zAxis);             // Normal vector of plane between axisOfRotation and zAxis
+               const x = viewerYAxis .cross (billboardToViewer);
+               y .assign (billboardToViewer) .cross (x);
+               const z = billboardToViewer;
 
-            this .matrix .setRotation (rotation .setFromToVec (N2, N1));                // Rotate zAxis in plane
-         }
+               // Compose rotation
 
-         return this .matrix;
-      },
+               x .normalize ();
+               y .normalize ();
+
+               this .matrix .set (x .x, x .y, x .z, 0,
+                                  y .x, y .y, y .z, 0,
+                                  z .x, z .y, z .z, 0,
+                                  0,    0,    0,    1);
+            }
+            else
+            {
+               N1 .assign (this ._axisOfRotation .getValue ()) .cross (billboardToViewer); // Normal vector of plane as in specification
+               N2 .assign (this ._axisOfRotation .getValue ()) .cross (Vector3 .zAxis);    // Normal vector of plane between axisOfRotation and zAxis
+
+               this .matrix .setRotation (rotation .setFromToVec (N2, N1));                // Rotate zAxis in plane
+            }
+
+            return this .matrix;
+         };
+      })(),
       traverse: function (type, renderObject)
       {
          const modelViewMatrix = renderObject .getModelViewMatrix ();

@@ -1357,7 +1357,6 @@ function (Fields,
             invModelViewMatrix = new Matrix4 (),
             billboardToScreen  = new Vector3 (0, 0, 0),
             viewerYAxis        = new Vector3 (0, 0, 0),
-            x                  = new Vector3 (0, 0, 0),
             y                  = new Vector3 (0, 0, 0),
             rotation           = new Float32Array (9);
 
@@ -1367,7 +1366,7 @@ function (Fields,
             invModelViewMatrix .multDirMatrix (billboardToScreen .assign (Vector3 .zAxis));
             invModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .yAxis));
 
-            x .assign (viewerYAxis) .cross (billboardToScreen);
+            const x = viewerYAxis .cross (billboardToScreen);
             y .assign (billboardToScreen) .cross (x);
             const z = billboardToScreen;
 
