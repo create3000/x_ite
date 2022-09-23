@@ -1247,23 +1247,13 @@ function (Fields,
 
                break;
             }
-            case GeometryTypes .SPRITE:
-            {
-               // this .updateBuffers (this .getScreenAlignedRotation (context .modelViewMatrix));
-               // fall trough
-            }
             default:
             {
                if (shaderNode .getValid ())
                {
-                  // Setup vertex attributes.
-
-                  //shaderNode .enableFloatAttrib (gl, "x3d_ParticleId", this .idBuffer, 1);
-                  shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+                  shaderNode .enableVertexAttribute (gl, this .vertexBuffer, this .stride, this .vertexOffset);
 
                   gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
-
-                  //shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
                }
 
                break;
