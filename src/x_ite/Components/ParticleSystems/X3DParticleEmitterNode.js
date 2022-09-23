@@ -235,7 +235,7 @@ function (X3DNode,
          {
             const attribute = inputs [i];
 
-            if (attribute < 0)
+            if (attribute === -1)
                continue;
 
             gl .enableVertexAttribArray (attribute);
@@ -249,9 +249,9 @@ function (X3DNode,
 
          // Render
 
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedBack);
          gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, particleSystem .outputParticles);
-         gl .bindBuffer (gl .ARRAY_BUFFER, null);
          gl .enable (gl .RASTERIZER_DISCARD);
          gl .beginTransformFeedback (gl .POINTS);
          gl .drawArrays (gl .POINTS, 0, particleSystem .numParticles);
@@ -261,7 +261,7 @@ function (X3DNode,
 
          for (const attribute of inputs)
          {
-            if (attribute < 0)
+            if (attribute === -1)
                continue;
 
             gl .disableVertexAttribArray (attribute);
