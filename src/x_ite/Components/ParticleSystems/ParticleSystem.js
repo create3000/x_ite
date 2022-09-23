@@ -408,6 +408,7 @@ function (Fields,
 
                in vec4 input0;
                in vec4 input1;
+               in vec4 input2;
                in vec4 input3;
 
                out vec4 particle;
@@ -527,7 +528,7 @@ function (Fields,
                void
                interpolate (const in sampler2D sampler, const in int count, const in float fraction, out int index0)
                {
-                  // Determine index0, index1 and weight.
+                  // Determine index0.
 
                   if (count == 1 || fraction <= texelFetch (sampler, 0, 0) .x)
                   {
@@ -572,7 +573,7 @@ function (Fields,
                   particle = input0;
                   position = input3;
                   color    = input1;
-                  normal   = vec3 (0.0, 0.0, 1.0);
+                  normal   = rotation * vec3 (0.0, 0.0, 1.0);
 
                   //    // p4 ------ p3
                   //    // |       / |
@@ -926,7 +927,7 @@ function (Fields,
          program .inputs = [
             gl .getAttribLocation (program, "input0"),
             gl .getAttribLocation (program, "input1"),
-            -1,
+            gl .getAttribLocation (program, "input2"),
             gl .getAttribLocation (program, "input3"),
          ];
 
@@ -1338,13 +1339,19 @@ function (Fields,
                         gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
                      }
 
-                     shaderNode .disableFloatAttrib (gl, "x3d_Particle");
-                     shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");
+                     shaderNode .forceDisableFloatAttrib (gl, "x3d_Particle");
+                     shaderNode .forceDisableFloatAttrib (gl, "x3d_ParticlePosition");
 
-                     shaderNode .disableColorAttribute    (gl);
-                     shaderNode .disableTexCoordAttribute (gl);
-                     shaderNode .disableNormalAttribute   (gl);
-                     shaderNode .disableVertexAttribute   (gl);
+                     if (this .geometryContext .colorMaterial)
+                        shaderNode .forceDisableColorAttribute (gl);
+
+                     if (this .texCoordBuffers)
+                        shaderNode .forceDisableTexCoordAttribute (gl);
+
+                     if (this .normalBuffer)
+                        shaderNode .forceDisableNormalAttribute (gl);
+
+                     shaderNode .forceDisableVertexAttribute (gl);
 
                      if (blendModeNode)
                         blendModeNode .disable (gl);

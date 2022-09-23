@@ -276,7 +276,7 @@ function (X3DNode,
          // const data = new Float32Array (particleSystem .numParticles * (particleSystem .particlesStride / 4));
          // gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
-         // console .log (data);
+         // console .log (data .slice (12, 16));
       },
       addUniform: function (name, uniform)
       {

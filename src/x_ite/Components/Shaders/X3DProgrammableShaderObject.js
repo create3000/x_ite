@@ -1134,6 +1134,17 @@ function (X3DCast,
 
          gl .disableVertexAttribArray (location);
       },
+      forceDisableFloatAttrib: function (gl, name)
+      {
+         const location = gl .getAttribLocation (this .getProgram (), name);
+
+         if (location === -1)
+            return;
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
+         gl .vertexAttribPointer (location, components, gl .FLOAT, false, 0, 0);
+         gl .disableVertexAttribArray (location);
+      },
       enableMatrix3Attrib: function (gl, name, buffer)
       {
          const location = gl .getAttribLocation (this .getProgram (), name);
@@ -1157,6 +1168,23 @@ function (X3DCast,
 
          if (location === -1)
             return;
+
+         gl .disableVertexAttribArray (location);
+         gl .disableVertexAttribArray (location + 1);
+         gl .disableVertexAttribArray (location + 2);
+      },
+      forceDisableMatrix3Attrib: function (gl, name)
+      {
+         const location = gl .getAttribLocation (this .getProgram (), name);
+
+         if (location === -1)
+            return;
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
+
+         gl .vertexAttribPointer (location,     3, gl .FLOAT, false, 0, 0);
+         gl .vertexAttribPointer (location + 1, 3, gl .FLOAT, false, 0, 0);
+         gl .vertexAttribPointer (location + 2, 3, gl .FLOAT, false, 0, 0);
 
          gl .disableVertexAttribArray (location);
          gl .disableVertexAttribArray (location + 1);
@@ -1193,6 +1221,25 @@ function (X3DCast,
          gl .disableVertexAttribArray (location + 2);
          gl .disableVertexAttribArray (location + 3);
       },
+      forceDisableMatrix4Attrib: function (gl, name)
+      {
+         const location = gl .getAttribLocation (this .getProgram (), name);
+
+         if (location === -1)
+            return;
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
+
+         gl .vertexAttribPointer (location,     4, gl .FLOAT, false, 0, 0);
+         gl .vertexAttribPointer (location + 1, 4, gl .FLOAT, false, 0, 0);
+         gl .vertexAttribPointer (location + 2, 4, gl .FLOAT, false, 0, 0);
+         gl .vertexAttribPointer (location + 3, 4, gl .FLOAT, false, 0, 0);
+
+         gl .disableVertexAttribArray (location);
+         gl .disableVertexAttribArray (location + 1);
+         gl .disableVertexAttribArray (location + 2);
+         gl .disableVertexAttribArray (location + 3);
+      },
       enableFogDepthAttribute: function (gl, fogDepthBuffer, stride, offset)
       {
          gl .enableVertexAttribArray (this .x3d_FogDepth);
@@ -1203,6 +1250,12 @@ function (X3DCast,
       {
          gl .disableVertexAttribArray (this .x3d_FogDepth);
       },
+      forceDisableFogDepthAttribute: function (gl)
+      {
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
+         gl .vertexAttribPointer (this .x3d_FogDepth, 1, gl .FLOAT, false, 0, 0);
+         gl .disableVertexAttribArray (this .x3d_FogDepth);
+      },
       enableColorAttribute: function (gl, colorBuffer, stride, offset)
       {
          gl .enableVertexAttribArray (this .x3d_Color);
@@ -1211,6 +1264,12 @@ function (X3DCast,
       },
       disableColorAttribute: function (gl)
       {
+         gl .disableVertexAttribArray (this .x3d_Color);
+      },
+      forceDisableColorAttribute: function (gl)
+      {
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
+         gl .vertexAttribPointer (this .x3d_Color, 4, gl .FLOAT, false, 0, 0);
          gl .disableVertexAttribArray (this .x3d_Color);
       },
       enableTexCoordAttribute: function (gl, texCoordBuffers, stride, offset)
@@ -1241,6 +1300,20 @@ function (X3DCast,
             gl .disableVertexAttribArray (x3d_TexCoord);
          }
       },
+      forceDisableTexCoordAttribute: function (gl)
+      {
+         for (let i = 0, length = this .x3d_MaxTextures; i < length; ++ i)
+         {
+            const x3d_TexCoord = this .x3d_TexCoord [i];
+
+            if (x3d_TexCoord === -1)
+               continue;
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, null);
+            gl .vertexAttribPointer (x3d_TexCoord, 4, gl .FLOAT, false, 0, 0);
+            gl .disableVertexAttribArray (x3d_TexCoord);
+         }
+      },
       enableNormalAttribute: function (gl, normalBuffer, stride, offset)
       {
          gl .enableVertexAttribArray (this .x3d_Normal);
@@ -1249,6 +1322,14 @@ function (X3DCast,
       },
       disableNormalAttribute: function (gl)
       {
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
+         gl .vertexAttribPointer (this .x3d_Normal, 3, gl .FLOAT, false, 0, 0);
+         gl .disableVertexAttribArray (this .x3d_Normal);
+      },
+      forceDisableNormalAttribute: function (gl)
+      {
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
+         gl .vertexAttribPointer (this .x3d_Normal, 3, gl .FLOAT, false, 0, 0);
          gl .disableVertexAttribArray (this .x3d_Normal);
       },
       enableVertexAttribute: function (gl, vertexBuffer, stride, offset)
@@ -1259,6 +1340,12 @@ function (X3DCast,
       },
       disableVertexAttribute: function (gl)
       {
+         gl .disableVertexAttribArray (this .x3d_Vertex);
+      },
+      forceDisableVertexAttribute: function (gl)
+      {
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
+         gl .vertexAttribPointer (this .x3d_Vertex, 4, gl .FLOAT, false, 0, 0);
          gl .disableVertexAttribArray (this .x3d_Vertex);
       },
       setParticle: function (gl, particle, modelViewMatrix)
