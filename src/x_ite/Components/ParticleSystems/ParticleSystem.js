@@ -1354,7 +1354,7 @@ function (Fields,
                      if (blendModeNode)
                         blendModeNode .disable (gl);
 
-                     context .geometryContext = null;
+                     delete context .geometryContext;
                   }
 
                   break;
