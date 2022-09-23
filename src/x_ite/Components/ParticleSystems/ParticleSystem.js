@@ -1346,7 +1346,7 @@ function (Fields,
                         shaderNode .disableColorAttribute (gl);
 
                      if (this .texCoordBuffers)
-                        shaderNode .forceDisableTexCoordAttribute (gl);
+                        shaderNode .forceDisableTexCoordAttribute (gl); // forced
 
                      if (this .normalBuffer)
                         shaderNode .disableNormalAttribute (gl);
