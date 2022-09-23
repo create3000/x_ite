@@ -21,6 +21,7 @@
       "polylines",
       "srand",
       "tessellator",
-      "Wireframe"
+      "Wireframe",
+      "Wireframes"
    ]
 }
