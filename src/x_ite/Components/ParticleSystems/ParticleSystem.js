@@ -1339,19 +1339,17 @@ function (Fields,
                         gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
                      }
 
-                     shaderNode .forceDisableFloatAttrib (gl, "x3d_Particle");
-                     shaderNode .forceDisableFloatAttrib (gl, "x3d_ParticlePosition");
+                     shaderNode .disableFloatAttrib (gl, "x3d_Particle");
+                     shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");
 
                      if (this .geometryContext .colorMaterial)
-                        shaderNode .forceDisableColorAttribute (gl);
+                        shaderNode .disableColorAttribute (gl);
 
                      if (this .texCoordBuffers)
                         shaderNode .forceDisableTexCoordAttribute (gl);
 
                      if (this .normalBuffer)
-                        shaderNode .forceDisableNormalAttribute (gl);
-
-                     shaderNode .forceDisableVertexAttribute (gl);
+                        shaderNode .disableNormalAttribute (gl);
 
                      if (blendModeNode)
                         blendModeNode .disable (gl);
