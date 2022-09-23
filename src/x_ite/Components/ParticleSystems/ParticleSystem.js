@@ -202,10 +202,9 @@ function (Fields,
 
          // Create forces stuff.
 
-         this .forcesTexture                 = this .createTexture ();
-         this .colorRampTexture              = this .createTexture ();
-         this .boundedVolumeTexture          = this .createTexture ();
-         this .boundedVolumeHierarchyTexture = this .createTexture ();
+         this .forcesTexture    = this .createTexture ();
+         this .colorRampTexture = this .createTexture ();
+         this .boundedTexture   = this .createTexture ();
 
          // Create GL stuff.
 
@@ -662,39 +661,31 @@ function (Fields,
          // Texture
 
          const
+            boundedHierarchy       = new BVH (boundedVertices, boundedNormals) .toArray ([ ]),
             numBoundedVertices     = boundedVertices .length / 4,
             numBoundedNormals      = boundedNormals .length / 3,
-            boundedVolumeArraySize = Math .ceil (Math .sqrt (numBoundedVertices + numBoundedNormals)),
-            boundedVolumeArray     = new Float32Array (boundedVolumeArraySize * boundedVolumeArraySize * 4);
+            boundedHierarchyLength = boundedHierarchy .length / 4,
+            boundedArraySize       = Math .ceil (Math .sqrt (numBoundedVertices + numBoundedNormals + boundedHierarchyLength)),
+            boundedArray           = new Float32Array (boundedArraySize * boundedArraySize * 4);
 
-         boundedVolumeArray .set (boundedVertices);
+         this .boundedVerticesIndex  = 0;
+         this .boundedNormalsIndex   = numBoundedVertices;
+         this .boundedHierarchyIndex = this .boundedNormalsIndex + numBoundedNormals;
+         this .boundedHierarchyRoot  = this .boundedHierarchyIndex + boundedHierarchyLength - 1;
 
-         for (let s = numBoundedVertices * 4, n = 0, l = boundedNormals .length; n < l; s += 4, n += 3)
+         boundedArray .set (boundedVertices);
+
+         for (let s = this .boundedNormalsIndex * 4, n = 0, l = boundedNormals .length; n < l; s += 4, n += 3)
          {
-            boundedVolumeArray [s + 0] = boundedNormals [n + 0];
-            boundedVolumeArray [s + 1] = boundedNormals [n + 1];
-            boundedVolumeArray [s + 2] = boundedNormals [n + 2];
+            boundedArray [s + 0] = boundedNormals [n + 0];
+            boundedArray [s + 1] = boundedNormals [n + 1];
+            boundedArray [s + 2] = boundedNormals [n + 2];
          }
 
-         this .numBoundedVertices = numBoundedVertices;
-         this .numBoundedNormals  = numBoundedNormals;
+         boundedArray .set (boundedHierarchy, this .boundedHierarchyIndex * 4);
 
-         gl .bindTexture (gl .TEXTURE_2D, this .boundedVolumeTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, boundedVolumeArraySize, boundedVolumeArraySize, 0, gl .RGBA, gl .FLOAT, boundedVolumeArray);
-
-         // BVH
-
-         const
-            boundedVolumeHierarchyArray     = new BVH (boundedVertices, boundedNormals) .toArray ([ ]),
-            boundedVolumeHierarchyLength    = boundedVolumeHierarchyArray .length / 4,
-            boundedVolumeHierarchyArraySize = Math .ceil (Math .sqrt (boundedVolumeHierarchyLength));
-
-         boundedVolumeHierarchyArray .length = boundedVolumeHierarchyArraySize * boundedVolumeHierarchyArraySize * 4;
-
-         this .boundedVolumeHierarchyRoot = boundedVolumeHierarchyLength - 1;
-
-         gl .bindTexture (gl .TEXTURE_2D, this .boundedVolumeHierarchyTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, boundedVolumeHierarchyArraySize, boundedVolumeHierarchyArraySize, 0, gl .RGBA, gl .FLOAT, new Float32Array (boundedVolumeHierarchyArray));
+         gl .bindTexture (gl .TEXTURE_2D, this .boundedTexture);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, boundedArraySize, boundedArraySize, 0, gl .RGBA, gl .FLOAT, boundedArray);
       },
       set_colorRamp__: function ()
       {

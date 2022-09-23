@@ -75,9 +75,9 @@ function (Fields,
       this .polylineNode  = new IndexedLineSet (executionContext);
       this .polylineArray = new Float32Array ();
 
-      this .addUniform ("direction",      "uniform vec3 direction;");
-      this .addUniform ("numLengthSoFar", "uniform int numLengthSoFar;");
-      this .addUniform ("polylines",      "uniform sampler2D polylines;");
+      this .addUniform ("direction",     "uniform vec3 direction;");
+      this .addUniform ("verticesIndex", "uniform int verticesIndex;");
+      this .addUniform ("polylines",     "uniform sampler2D polylines;");
 
       this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
       {
@@ -90,32 +90,32 @@ function (Fields,
 
       this .addFunction (/* glsl */ `vec4 getRandomPosition ()
       {
-         if (numLengthSoFar != 0)
+         if (verticesIndex < 0)
+         {
+            return vec4 (0.0);
+         }
+         else
          {
             // Determine index0, index1 and weight.
 
-            float lastLengthSoFar = texelFetch (polylines, numLengthSoFar - 1, 0) .x;
+            float lastLengthSoFar = texelFetch (polylines, verticesIndex - 1, 0) .x;
             float fraction        = random () * lastLengthSoFar;
 
             int   index0 = 0;
             int   index1 = 0;
             float weight = 0.0;
 
-            interpolate (polylines, numLengthSoFar, fraction, index0, index1, weight);
+            interpolate (polylines, verticesIndex, fraction, index0, index1, weight);
 
             // Interpolate and return position.
 
             index0 *= 2;
             index1  = index0 + 1;
 
-            vec4 vertex0 = texelFetch (polylines, numLengthSoFar + index0, 0);
-            vec4 vertex1 = texelFetch (polylines, numLengthSoFar + index1, 0);
+            vec4 vertex0 = texelFetch (polylines, verticesIndex + index0, 0);
+            vec4 vertex1 = texelFetch (polylines, verticesIndex + index1, 0);
 
             return mix (vertex0, vertex1, weight);
-         }
-         else
-         {
-            return vec4 (0.0);
          }
       }`);
    }
@@ -198,42 +198,35 @@ function (Fields,
          return function ()
          {
             const
-               gl          = this .getBrowser () .getContext (),
-               vertices    = this .polylineNode .getVertices () .getValue (),
-               numVertices = vertices .length / 4;
+               gl                = this .getBrowser () .getContext (),
+               vertices          = this .polylineNode .getVertices () .getValue (),
+               numVertices       = vertices .length / 4,
+               numLengthSoFar    = numVertices / 2 + 1,
+               polylineArraySize = Math .ceil (Math .sqrt (numLengthSoFar + numVertices));
 
-            if (numVertices)
+            const verticesIndex = numLengthSoFar;
+
+            let polylineArray = this .polylineArray;
+
+            if (polylineArray .length < polylineArraySize * polylineArraySize * 4)
+               polylineArray = this .polylineArray = new Float32Array (polylineArraySize * polylineArraySize * 4);
+
+            let lengthSoFar = 0;
+
+            for (let i = 0, length = vertices .length; i < length; i += 8)
             {
-               const
-                  numLengthSoFar    = numVertices / 2 + 1,
-                  polylineArraySize = Math .ceil (Math .sqrt (numLengthSoFar + numVertices));
+               vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
+               vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-               let
-                  polylineArray = this .polylineArray,
-                  lengthSoFar   = 0;
-
-               if (polylineArray .length < polylineArraySize * polylineArraySize * 4)
-                  polylineArray = this .polylineArray = new Float32Array (polylineArraySize * polylineArraySize * 4);
-
-               for (let i = 0, length = vertices .length; i < length; i += 8)
-               {
-                  vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
-                  vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
-
-                  polylineArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .abs ();
-               }
-
-               polylineArray .set (vertices, numLengthSoFar * 4);
-
-               this .setUniform ("uniform1i", "numLengthSoFar", numLengthSoFar);
-
-               gl .bindTexture (gl .TEXTURE_2D, this .polylineTexture);
-               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, polylineArraySize, polylineArraySize, 0, gl .RGBA, gl .FLOAT, polylineArray);
+               polylineArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .abs ();
             }
-            else
-            {
-               this .setUniform ("uniform1i", "numLengthSoFar", 0);
-            }
+
+            polylineArray .set (vertices, verticesIndex * 4);
+
+            this .setUniform ("uniform1i", "verticesIndex", numVertices ? verticesIndex : -1);
+
+            gl .bindTexture (gl .TEXTURE_2D, this .polylineTexture);
+            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, polylineArraySize, polylineArraySize, 0, gl .RGBA, gl .FLOAT, polylineArray);
          };
       })(),
       activateTextures: function (browser, gl, program)

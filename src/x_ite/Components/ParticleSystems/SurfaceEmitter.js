@@ -77,33 +77,33 @@ function (Fields,
       this .surfaceNode  = null;
       this .surfaceArray = new Float32Array ();
 
-      this .addUniform ("numAreaSoFar", "uniform int numAreaSoFar;");
-      this .addUniform ("numVertices",  "uniform int numVertices;");
-      this .addUniform ("surface",      "uniform sampler2D surface;");
-      this .addUniform ("solid",        "uniform bool solid;");
+      this .addUniform ("solid",         "uniform bool solid;");
+      this .addUniform ("verticesIndex", "uniform int verticesIndex;");
+      this .addUniform ("normalsIndex",  "uniform int normalsIndex;");
+      this .addUniform ("surface",       "uniform sampler2D surface;");
 
       this .addFunction (/* glsl */ `vec4 position; vec3 getRandomVelocity ()
       {
-         if (numVertices != 0)
+         if (verticesIndex < 0)
+         {
+            return vec3 (0.0);
+         }
+         else
          {
             vec3 normal;
 
-            getRandomPointOnSurface (surface, numAreaSoFar, numVertices, position, normal);
+            getRandomPointOnSurface (surface, verticesIndex, normalsIndex, position, normal);
 
             if (solid == false && random () > 0.5)
                normal = -normal;
 
             return normal * getRandomSpeed ();
          }
-         else
-         {
-            return vec3 (0.0);
-         }
       }`);
 
       this .addFunction (/* glsl */ `vec4 getRandomPosition ()
       {
-         return numVertices > 0 ? position : vec4 (0.0);
+         return verticesIndex < 0 ? vec4 (0.0) : position;
       }`);
    }
 
@@ -196,12 +196,16 @@ function (Fields,
                   numAreaSoFar     = numVertices / 3 + 1,
                   surfaceArraySize = Math .ceil (Math .sqrt (numAreaSoFar + numVertices + numVertices));
 
-               let
-                  surfaceArray = this .surfaceArray,
-                  areaSoFar    = 0;
+               const
+                  verticesIndex = numAreaSoFar,
+                  normalsIndex  = verticesIndex + numVertices;
+
+               let surfaceArray = this .surfaceArray;
 
                if (surfaceArray .length < surfaceArraySize * surfaceArraySize * 4)
                   surfaceArray = this .surfaceArray = new Float32Array (surfaceArraySize * surfaceArraySize * 4);
+
+               let areaSoFar     = 0;
 
                for (let i = 0, length = vertices .length; i < length; i += 12)
                {
@@ -212,25 +216,25 @@ function (Fields,
                   surfaceArray [i / 3 + 4] = areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
                }
 
-               surfaceArray .set (vertices, numAreaSoFar * 4);
+               surfaceArray .set (vertices, verticesIndex * 4);
 
-               for (let s = (numAreaSoFar + numVertices) * 4, n = 0, l = normals .length; n < l; s += 4, n += 3)
+               for (let s = normalsIndex * 4, n = 0, l = normals .length; n < l; s += 4, n += 3)
                {
                   surfaceArray [s + 0] = normals [n + 0];
                   surfaceArray [s + 1] = normals [n + 1];
                   surfaceArray [s + 2] = normals [n + 2];
                }
 
-               this .setUniform ("uniform1i", "numAreaSoFar", numAreaSoFar);
-               this .setUniform ("uniform1i", "numVertices",  numVertices);
+               this .setUniform ("uniform1i", "verticesIndex", numVertices ? verticesIndex : -1);
+               this .setUniform ("uniform1i", "normalsIndex",  numVertices ? normalsIndex  : -1);
 
                gl .bindTexture (gl .TEXTURE_2D, this .surfaceTexture);
                gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, surfaceArraySize, surfaceArraySize, 0, gl .RGBA, gl .FLOAT, surfaceArray);
             }
             else
             {
-               this .setUniform ("uniform1i", "numAreaSoFar", 0);
-               this .setUniform ("uniform1i", "numVertices",  0);
+               this .setUniform ("uniform1i", "verticesIndex", -1);
+               this .setUniform ("uniform1i", "normalsIndex",  -1);
             }
          };
       })(),

@@ -209,24 +209,23 @@ function (X3DNode,
 
          gl .uniform1i (program .numBoundedVertices, particleSystem .numBoundedVertices);
 
-         if (particleSystem .numBoundedVertices)
+         if (particleSystem .boundedHierarchyRoot < 0)
          {
+            gl .uniform1i (program .boundedHierarchyRoot, -1);
+         }
+         else
+         {
+            gl .uniform1i (program .boundedVerticesIndex,  particleSystem .boundedVerticesIndex);
+            gl .uniform1i (program .boundedNormalsIndex,   particleSystem .boundedNormalsIndex);
+            gl .uniform1i (program .boundedHierarchyIndex, particleSystem .boundedHierarchyIndex);
+            gl .uniform1i (program .boundedHierarchyRoot,  particleSystem .boundedHierarchyRoot);
+
             {
                const textureUnit = browser .getTexture2DUnit ();
 
                gl .activeTexture (gl .TEXTURE0 + textureUnit);
-               gl .bindTexture (gl .TEXTURE_2D, particleSystem .boundedVolumeTexture);
+               gl .bindTexture (gl .TEXTURE_2D, particleSystem .boundedTexture);
                gl .uniform1i (program .boundedVolume, textureUnit);
-            }
-
-            gl .uniform1i (program .boundedVolumeHierarchyRoot, particleSystem .boundedVolumeHierarchyRoot);
-
-            {
-               const textureUnit = browser .getTexture2DUnit ();
-
-               gl .activeTexture (gl .TEXTURE0 + textureUnit);
-               gl .bindTexture (gl .TEXTURE_2D, particleSystem .boundedVolumeHierarchyTexture);
-               gl .uniform1i (program .boundedVolumeHierarchy, textureUnit);
             }
          }
 
@@ -320,10 +319,11 @@ function (X3DNode,
          uniform int       numColors;
          uniform sampler2D colorRamp;
 
-         uniform int       numBoundedVertices;
+         uniform int       boundedVerticesIndex;
+         uniform int       boundedNormalsIndex;
+         uniform int       boundedHierarchyIndex;
+         uniform int       boundedHierarchyRoot;
          uniform sampler2D boundedVolume;
-         uniform int       boundedVolumeHierarchyRoot;
-         uniform sampler2D boundedVolumeHierarchy;
 
          ${Object .values (this .uniforms) .join ("\n")}
 
@@ -606,11 +606,11 @@ function (X3DNode,
          }
 
          void
-         getRandomPointOnSurface (const in sampler2D surface, const in int numAreaSoFar, const in int numVertices, out vec4 position, out vec3 normal)
+         getRandomPointOnSurface (const in sampler2D surface, const in int verticesIndex, const in int normalsIndex, out vec4 position, out vec3 normal)
          {
             // Determine index0, index1 and weight.
 
-            float lastAreaSoFar = texelFetch (surface, numAreaSoFar - 1, 0) .x;
+            float lastAreaSoFar = texelFetch (surface, verticesIndex - 1, 0) .x;
             float fraction      = random () * lastAreaSoFar;
 
             int   index0;
@@ -618,7 +618,7 @@ function (X3DNode,
             int   index2;
             float weight;
 
-            interpolate (surface, numAreaSoFar, fraction, index0, index1, weight);
+            interpolate (surface, verticesIndex, fraction, index0, index1, weight);
 
             // Interpolate and return position.
 
@@ -626,13 +626,13 @@ function (X3DNode,
             index1  = index0 + 1;
             index2  = index0 + 2;
 
-            vec4 vertex0 = texelFetch (surface, numAreaSoFar + index0, 0);
-            vec4 vertex1 = texelFetch (surface, numAreaSoFar + index1, 0);
-            vec4 vertex2 = texelFetch (surface, numAreaSoFar + index2, 0);
+            vec4 vertex0 = texelFetch (surface, verticesIndex + index0, 0);
+            vec4 vertex1 = texelFetch (surface, verticesIndex + index1, 0);
+            vec4 vertex2 = texelFetch (surface, verticesIndex + index2, 0);
 
-            vec3 normal0 = texelFetch (surface, numAreaSoFar + numVertices + index0, 0) .xyz;
-            vec3 normal1 = texelFetch (surface, numAreaSoFar + numVertices + index1, 0) .xyz;
-            vec3 normal2 = texelFetch (surface, numAreaSoFar + numVertices + index2, 0) .xyz;
+            vec3 normal0 = texelFetch (surface, normalsIndex + index0, 0) .xyz;
+            vec3 normal1 = texelFetch (surface, normalsIndex + index1, 0) .xyz;
+            vec3 normal2 = texelFetch (surface, normalsIndex + index2, 0) .xyz;
 
             // Random barycentric coordinates.
 
@@ -681,7 +681,7 @@ function (X3DNode,
          void
          bounce (const in vec4 fromPosition, inout vec4 toPosition, inout vec3 velocity)
          {
-            if (numBoundedVertices == 0)
+            if (boundedHierarchyRoot < 0)
                return;
 
             Line3 line = Line3 (fromPosition .xyz, save_normalize (velocity));
@@ -689,7 +689,7 @@ function (X3DNode,
             vec4 points  [ARRAY_SIZE];
             vec3 normals [ARRAY_SIZE];
 
-            int numIntersections = getIntersections (boundedVolumeHierarchy, boundedVolumeHierarchyRoot, line, boundedVolume, 0, numBoundedVertices, points, normals);
+            int numIntersections = getIntersections (boundedVolume, boundedVerticesIndex, boundedNormalsIndex, boundedHierarchyIndex, boundedHierarchyRoot, line, points, normals);
 
             if (numIntersections == 0)
                return;
@@ -830,21 +830,20 @@ function (X3DNode,
          program .numColors = gl .getUniformLocation (program, "numColors");
          program .colorRamp = gl .getUniformLocation (program, "colorRamp");
 
-         program .numBoundedVertices         = gl .getUniformLocation (program, "numBoundedVertices");
-         program .boundedVolume              = gl .getUniformLocation (program, "boundedVolume");
-         program .boundedVolumeHierarchyRoot = gl .getUniformLocation (program, "boundedVolumeHierarchyRoot");
-         program .boundedVolumeHierarchy     = gl .getUniformLocation (program, "boundedVolumeHierarchy");
+         program .boundedVerticesIndex  = gl .getUniformLocation (program, "boundedVerticesIndex");
+         program .boundedNormalsIndex   = gl .getUniformLocation (program, "boundedNormalsIndex");
+         program .boundedHierarchyIndex = gl .getUniformLocation (program, "boundedHierarchyIndex");
+         program .boundedHierarchyRoot  = gl .getUniformLocation (program, "boundedHierarchyRoot");
+         program .boundedVolume         = gl .getUniformLocation (program, "boundedVolume");
 
          for (const name of Object .keys (this .uniforms))
             program [name] = gl .getUniformLocation (program, name);
 
          gl .useProgram (program);
 
-         gl .uniform1i (program .forces,    browser .getDefaultTexture2DUnit ());
-         gl .uniform1i (program .colorRamp, browser .getDefaultTexture2DUnit ());
-
-         gl .uniform1i (program .boundedVolume,          browser .getDefaultTexture2DUnit ());
-         gl .uniform1i (program .boundedVolumeHierarchy, browser .getDefaultTexture2DUnit ());
+         gl .uniform1i (program .forces,        browser .getDefaultTexture2DUnit ());
+         gl .uniform1i (program .colorRamp,     browser .getDefaultTexture2DUnit ());
+         gl .uniform1i (program .boundedVolume, browser .getDefaultTexture2DUnit ());
 
          return program;
       },

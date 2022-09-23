@@ -79,16 +79,20 @@ function (Fields,
       this .volumeNode  = new IndexedFaceSet (executionContext);
       this .volumeArray = new Float32Array ();
 
-      this .addUniform ("direction",    "uniform vec3 direction;");
-      this .addUniform ("numAreaSoFar", "uniform int numAreaSoFar;");
-      this .addUniform ("numVertices",  "uniform int numVertices;");
-      this .addUniform ("volume",       "uniform sampler2D volume;");
-      this .addUniform ("bvhRoot",      "uniform int bvhRoot;");
-      this .addUniform ("bvh",          "uniform sampler2D bvh;");
+      this .addUniform ("direction",      "uniform vec3 direction;");
+      this .addUniform ("verticesIndex",  "uniform int verticesIndex;");
+      this .addUniform ("normalsIndex",   "uniform int normalsIndex;");
+      this .addUniform ("hierarchyIndex", "uniform int hierarchyIndex;");
+      this .addUniform ("hierarchyRoot",  "uniform int hierarchyRoot;");
+      this .addUniform ("volume",         "uniform sampler2D volume;");
 
       this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
       {
-         if (numVertices > 0)
+         if (hierarchyRoot < 0)
+         {
+            return vec3 (0.0);
+         }
+         else
          {
             if (direction == vec3 (0.0))
                return getRandomSphericalVelocity ();
@@ -96,26 +100,26 @@ function (Fields,
             else
                return direction * getRandomSpeed ();
          }
-         else
-         {
-            return vec3 (0.0);
-         }
       }`);
 
       this .addFunction (/* glsl */ `vec4 getRandomPosition ()
       {
-         if (numVertices != 0)
+         if (hierarchyRoot < 0)
+         {
+            return vec4 (0.0);
+         }
+         else
          {
             vec4 point;
             vec3 normal;
 
-            getRandomPointOnSurface (volume, numAreaSoFar, numVertices, point, normal);
+            getRandomPointOnSurface (volume, verticesIndex, normalsIndex, point, normal);
 
             Line3 line = Line3 (point .xyz, getRandomSurfaceNormal (normal));
 
             vec4 points [ARRAY_SIZE];
 
-            int numIntersections = getIntersections (bvh, bvhRoot, line, volume, numAreaSoFar, points);
+            int numIntersections = getIntersections (volume, verticesIndex, hierarchyIndex, hierarchyRoot, line, points);
 
             numIntersections -= numIntersections % 2; // We need an even count of intersections.
 
@@ -133,10 +137,6 @@ function (Fields,
             int index = int (fract (random ()) * float (numIntersections / 2)) * 2; // Select random intersection.
 
             return mix (points [index], points [index + 1], random ());
-         }
-         else
-         {
-            return vec4 (0.0);
          }
       }`);
    }
@@ -180,10 +180,8 @@ function (Fields,
          // Create GL stuff.
 
          this .volumeTexture = this .createTexture ();
-         this .bvhTexture    = this .createTexture ();
 
          this .setUniform ("uniform1i", "volume", browser .getDefaultTexture2DUnit ());
-         this .setUniform ("uniform1i", "bhv",    browser .getDefaultTexture2DUnit ());
 
          // Initialize fields.
 
@@ -228,16 +226,24 @@ function (Fields,
                gl              = this .getBrowser () .getContext (),
                vertices        = this .volumeNode .getVertices () .getValue (),
                normals         = this .volumeNode .getNormals () .getValue (),
+               hierarchy       = new BVH (vertices, normals) .toArray ([ ]),
                numVertices     = vertices .length / 4,
+               numNormals      = normals .length / 3,
                numAreaSoFar    = numVertices / 3 + 1,
-               volumeArraySize = Math .ceil (Math .sqrt (numAreaSoFar + numVertices + numVertices));
+               hierarchyLength = hierarchy .length / 4,
+               volumeArraySize = Math .ceil (Math .sqrt (numAreaSoFar + numVertices + numVertices + hierarchyLength));
 
-            let
-               volumeArray = this .volumeArray,
-               areaSoFar   = 0;
+            const
+               verticesIndex  = numAreaSoFar,
+               normalsIndex   = verticesIndex + numVertices,
+               hierarchyIndex = normalsIndex + numNormals;
+
+            let volumeArray = this .volumeArray;
 
             if (volumeArray .length < volumeArraySize * volumeArraySize * 4)
                volumeArray = this .volumeArray = new Float32Array (volumeArraySize * volumeArraySize * 4);
+
+            let areaSoFar   = 0;
 
             for (let i = 0, length = vertices .length; i < length; i += 12)
             {
@@ -248,53 +254,33 @@ function (Fields,
                volumeArray [i / 3 + 4] = areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
             }
 
-            volumeArray .set (vertices, numAreaSoFar * 4);
+            volumeArray .set (vertices, verticesIndex * 4);
 
-            for (let s = (numAreaSoFar + numVertices) * 4, n = 0, l = normals .length; n < l; s += 4, n += 3)
+            for (let s = normalsIndex * 4, n = 0, l = normals .length; n < l; s += 4, n += 3)
             {
                volumeArray [s + 0] = normals [n + 0];
                volumeArray [s + 1] = normals [n + 1];
                volumeArray [s + 2] = normals [n + 2];
             }
 
-            this .setUniform ("uniform1i", "numAreaSoFar", numAreaSoFar);
-            this .setUniform ("uniform1i", "numVertices",  numVertices);
+            volumeArray .set (hierarchy, hierarchyIndex * 4);
+
+            this .setUniform ("uniform1i", "verticesIndex",  verticesIndex);
+            this .setUniform ("uniform1i", "normalsIndex",   normalsIndex);
+            this .setUniform ("uniform1i", "hierarchyIndex", hierarchyIndex);
+            this .setUniform ("uniform1i", "hierarchyRoot",  hierarchyIndex + hierarchyLength - 1);
 
             gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, volumeArraySize, volumeArraySize, 0, gl .RGBA, gl .FLOAT, volumeArray);
-
-            // BVH
-
-            const
-               bvhArray     = new BVH (vertices, normals) .toArray ([ ]),
-               bvhLength    = bvhArray .length / 4,
-               bvhArraySize = Math .ceil (Math .sqrt (bvhLength));
-
-            bvhArray .length = bvhArraySize * bvhArraySize * 4;
-
-            this .setUniform ("uniform1i", "bvhRoot", bvhLength - 1);
-
-            gl .bindTexture (gl .TEXTURE_2D, this .bvhTexture);
-            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, bvhArraySize, bvhArraySize, 0, gl .RGBA, gl .FLOAT, new Float32Array (bvhArray));
          };
       })(),
       activateTextures: function (browser, gl, program)
       {
-         {
-            const textureUnit = browser .getTexture2DUnit ();
+         const textureUnit = browser .getTexture2DUnit ();
 
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
-            gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
-            gl .uniform1i (program .volume, textureUnit);
-         }
-
-         {
-            const textureUnit = browser .getTexture2DUnit ();
-
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
-            gl .bindTexture (gl .TEXTURE_2D, this .bvhTexture);
-            gl .uniform1i (program .bvh, textureUnit);
-         }
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
+         gl .uniform1i (program .volume, textureUnit);
       },
    });
 
