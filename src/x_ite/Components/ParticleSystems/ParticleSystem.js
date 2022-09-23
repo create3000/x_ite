@@ -1364,7 +1364,6 @@ function (Fields,
          return function (modelViewMatrix)
          {
             invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-
             invModelViewMatrix .multDirMatrix (billboardToScreen .assign (Vector3 .zAxis));
             invModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .yAxis));
 
@@ -1372,7 +1371,7 @@ function (Fields,
             y .assign (billboardToScreen) .cross (x);
             const z = billboardToScreen;
 
-            // Compose rotation
+            // Compose rotation matrix.
 
             rotation .set (x .normalize (), 0);
             rotation .set (y .normalize (), 3);
