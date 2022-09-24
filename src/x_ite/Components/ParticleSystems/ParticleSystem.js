@@ -435,12 +435,12 @@ function (Fields,
                   switch (gl_VertexID % 2)
                   {
                      case 0:
-                        texCoord = getTexCoord (0, 2, input0 [2], input0 [3], vec4 (position .xyz - offset, 1.0));
                         vertex   = vec4 (position .xyz - offset, 1.0);
+                        texCoord = getTexCoord (0, 2, input0 [2], input0 [3], vertex);
                         break;
                      case 1:
-                        texCoord = getTexCoord (1, 2, input0 [2], input0 [3], vec4 (position .xyz - offset, 1.0));
                         vertex   = vec4 (position .xyz + offset, 1.0);
+                        texCoord = getTexCoord (1, 2, input0 [2], input0 [3], vec4 (position .xyz - offset, 1.0));
                         break;
                   }
                }
