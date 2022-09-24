@@ -513,12 +513,12 @@ function (Fields,
                   color    = input1;
                   normal   = rotation [2];
 
-                  //    // p4 ------ p3
-                  //    // |       / |
-                  //    // |     /   |
-                  //    // |   /     |
-                  //    // | /       |
-                  //    // p1 ------ p2
+                  // p4 ------ p3
+                  // |       / |
+                  // |     /   |
+                  // |   /     |
+                  // | /       |
+                  // p1 ------ p2
 
                   switch (gl_VertexID % 6)
                   {
