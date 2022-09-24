@@ -183,6 +183,7 @@ function (Fields,
          this ._enabled           .addInterest ("set_enabled__",           this);
          this ._createParticles   .addInterest ("set_createParticles__",   this);
          this ._geometryType      .addInterest ("set_geometryType__",      this);
+         this ._geometryType      .addInterest ("set_texCoord__",          this);
          this ._maxParticles      .addInterest ("set_enabled__",           this);
          this ._particleLifetime  .addInterest ("set_particleLifetime__",  this);
          this ._lifetimeVariation .addInterest ("set_lifetimeVariation__", this);
@@ -558,7 +559,6 @@ function (Fields,
          this .resizeGeometryBuffers ();
 
          this .set_particleSize__ ();
-         this .set_texCoord__ ();
          this .set_shader__ ();
          this .set_transparent__ ();
       },
