@@ -751,7 +751,7 @@ function (Fields,
             colorRamp [i * 4] = colorKey [i];
 
          if (this .colorRampNode)
-            colorRamp .set (this .colorRampNode .addColors ([ ], numColors), numColors * 4);
+            colorRamp .set (this .colorRampNode .addColors ([ ], numColors) .slice (0, numColors * 4), numColors * 4);
          else
             colorRamp .fill (1, numColors * 4);
 
@@ -785,16 +785,14 @@ function (Fields,
 
          if (textureSize * textureSize * 4 > texCoordRamp .length)
             texCoordRamp = this .texCoordRamp = new Float32Array (textureSize * textureSize * 4);
+         else
+            texCoordRamp .fill (0);
 
          for (let i = 0; i < numTexCoords; ++ i)
             texCoordRamp [i * 4] = texCoordKey [i];
 
-         const array = [ ];
-
          if (this .texCoordRampNode)
-            texCoordRamp .set (this .texCoordRampNode .getTexCoord (array), numTexCoords * 4);
-
-         texCoordRamp .fill (0, numTexCoords * 4 + array .length);
+            texCoordRamp .set (this .texCoordRampNode .getTexCoord ([ ]) .slice (0, numTexCoords * this .texCoordCount * 4), numTexCoords * 4);
 
          gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, texCoordRamp);
