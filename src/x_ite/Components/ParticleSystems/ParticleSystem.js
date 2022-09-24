@@ -1159,7 +1159,7 @@ function (Fields,
                const geometryNode = this .getGeometry ();
 
                if (geometryNode)
-                  geometryNode .displayParticlesDepth (gl, context, shaderNode, this .outputParticles, this .numParticles);
+                  geometryNode .displayParticlesDepth (gl, context, shaderNode, this);
 
                break;
             }
@@ -1189,7 +1189,7 @@ function (Fields,
                   const geometryNode = this .getGeometry ();
 
                   if (geometryNode)
-                     geometryNode .displayParticles (gl, context, this .outputParticles, this .numParticles);
+                     geometryNode .displayParticles (gl, context, this);
 
                   break;
                }
