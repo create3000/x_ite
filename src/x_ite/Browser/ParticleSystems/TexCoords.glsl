@@ -61,7 +61,7 @@ interpolate (const in sampler2D sampler, const in int count, const in float frac
 }
 
 vec4
-getTexCoord (const in int i, const in int factor, const in float lifetime, const in float elapsedTime, const in vec4 defaultTexCoord)
+getTexCoord (const in int vertex, const in int factor, const in float lifetime, const in float elapsedTime, const in vec4 defaultTexCoord)
 {
    if (numTexCoords == 0)
    {
@@ -74,6 +74,6 @@ getTexCoord (const in int i, const in int factor, const in float lifetime, const
 
       interpolate (texCoordRamp, numTexCoords, fraction, index0);
 
-      return texelFetch (texCoordRamp, numTexCoords + index0 * factor + i, 0);
+      return texelFetch (texCoordRamp, numTexCoords + index0 * factor + vertex, 0);
    }
 }
