@@ -800,10 +800,6 @@ function (Fields,
          this .numTexCoords = numTexCoords;
          this .texCoordAnim = !! (numTexCoords && this .texCoordRampNode);
       },
-      intersectsBox: function (box, clipPlanes)
-      {
-         // TODO: implement me.
-      },
       createProgram: function (varyings, vertexShaderSource)
       {
          const
@@ -1115,6 +1111,8 @@ function (Fields,
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
          // console .log (data .slice (0, 4));
       },
+      intersectsBox: function (box, clipPlanes)
+      { },
       traverse: function (type, renderObject)
       {
          if (this .numParticles === 0)
@@ -1123,16 +1121,9 @@ function (Fields,
          switch (type)
          {
             case TraverseType .POINTER:
-            {
-               break;
-            }
             case TraverseType .PICKING:
-            {
-               break;
-            }
             case TraverseType .COLLISION:
             {
-               // TODO: to be implemented.
                break;
             }
             case TraverseType .SHADOW:
