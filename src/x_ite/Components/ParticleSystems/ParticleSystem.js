@@ -353,7 +353,6 @@ function (Fields,
             {
                this .geometryContext .geometryType = 0;
 
-               this .texCoordCount   = 0;
                this .vertexCount     = 1;
                this .texCoordBuffers = null;
                this .normalBuffer    = null;
@@ -373,7 +372,6 @@ function (Fields,
             {
                this .geometryContext .geometryType = 1;
 
-               this .texCoordCount   = 0;
                this .vertexCount     = 2;
                this .particleBuffer  = this .geometryBuffer;
                this .positionBuffer  = this .geometryBuffer;
@@ -438,7 +436,6 @@ function (Fields,
             {
                this .geometryContext .geometryType = 2;
 
-               this .texCoordCount   = 4;
                this .vertexCount     = 6;
                this .particleBuffer  = this .geometryBuffer;
                this .positionBuffer  = this .geometryBuffer;
@@ -610,9 +607,8 @@ function (Fields,
             }
             case GeometryTypes .GEOMETRY:
             {
-               this .texCoordCount = 0;
-               this .vertexCount   = 0;
-               this .program       = null;
+               this .vertexCount = 0;
+               this .program     = null;
                break;
             }
          }
@@ -620,7 +616,6 @@ function (Fields,
          this .resizeGeometryBuffers ();
 
          this .set_particleSize__ ();
-         this .set_texCoord__ ();
          this .set_shader__ ();
          this .set_transparent__ ();
       },
@@ -841,7 +836,7 @@ function (Fields,
             gl           = this .getBrowser () .getContext (),
             texCoordKey  = this ._texCoordKey,
             numTexCoords = texCoordKey .length,
-            textureSize  = Math .ceil (Math .sqrt (numTexCoords + numTexCoords * this .texCoordCount));
+            textureSize  = Math .ceil (Math .sqrt (numTexCoords + numTexCoords * 4));
 
          let texCoordRamp = this .texCoordRamp;
 
