@@ -125,7 +125,7 @@ A ComposedShader node provides the capability to define custom fields like the S
 
 ### X3D field types to GLSL data types
 
-<table class=" table">
+<table>
    <thead>
       <tr>
          <th>X3D field type</th>
@@ -355,7 +355,7 @@ A ComposedShader node provides the capability to define custom fields like the S
 
 A ComposedShader defines a number of special variables for the various shader stages. These built-in variables have special properties. They are usually for communicating with certain fixed-functionality. By convention, all predefined variables start with »x3d\_«; no user-defined variables may start with this.
 
-<table class=" table">
+<table>
    <thead>
       <tr>
          <th>Type</th>
@@ -632,7 +632,7 @@ If the ParticleSystem.*geometryType* is GEOMETRY the following uniforms are avai
 
 Some built-in variables are enumerated and have special values and meanings. The following table list all of them and their corresponding values. Note: as of version 1.27 these constant are built-in.
 
-<table class=" table">
+<table>
    <thead>
       <tr>
          <th>Variable</th>

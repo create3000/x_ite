@@ -76,7 +76,7 @@ Returns a browser property with the corresponding name.
 
 #### Browser Properties
 
-<table class=" table">
+<table>
    <thead>
       <tr>
          <th>Name</th>
@@ -134,7 +134,7 @@ Returns a browser option with the corresponding name.
 
 #### Browser Options
 
-<table class=" table">
+<table>
    <thead>
       <tr>
          <th>Name</th>
@@ -241,7 +241,7 @@ Returns a rendering property with the corresponding *name*.
 
 #### Rendering Properties
 
-<table class=" table">
+<table>
    <thead>
       <tr>
          <th>Name</th>

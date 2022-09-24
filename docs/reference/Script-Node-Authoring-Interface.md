@@ -111,7 +111,7 @@ let b = new MFFloat (1, 2, 3, 4) // 'b' has a MFFloat containing 4 floats
 
 Combining objects of different types in a single expression or assignment statement will often perform implicit type conversion. Rules for this conversion are described in the following table:
 
-<table class=" table">
+<table>
    <thead>
       <tr>
          <th>Type</th>

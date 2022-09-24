@@ -227,7 +227,7 @@ The category of default unit being modified as defined in the table. This proper
 
 #### Standard units
 
-<table class=" table" style="height: 210px;" width="466">
+<table style="height: 210px;" width="466">
    <thead>
       <tr>
          <th style="width: 229.833px;">Category</th>
@@ -260,7 +260,7 @@ Additional units, called *derived units* are used in this International Standard
 
 #### Derived Units
 
-<table class=" table">
+<table>
    <thead>
       <tr>
          <th>Category</th>
