@@ -97,8 +97,8 @@ function (Fields,
 
       this ._particleSize .setUnit ("length");
 
-      this .particlesStride          = Float32Array .BYTES_PER_ELEMENT * 4 * 4; // 4 x vec4
-      this .particlesOffsets         = Array .from ({length: 4}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
+      this .particleStride           = Float32Array .BYTES_PER_ELEMENT * 4 * 4; // 4 x vec4
+      this .particleOffsets          = Array .from ({length: 4}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .particleLifetime         = 0;
@@ -121,6 +121,7 @@ function (Fields,
       this .vertexCount              = 0;
       this .shaderNode               = null;
       this .geometryContext          = { };
+      this .geometryArray            = new Float32Array ();
       this .creationTime             = 0;
       this .pauseTime                = 0;
       this .deltaTime                = 0;
@@ -364,11 +365,11 @@ function (Fields,
                this .primitiveMode   = gl .POINTS;
                this .program         = null;
 
-               this .particleOffset = this .particlesOffsets [0];
-               this .positionOffset = this .particlesOffsets [3];
-               this .colorOffset    = this .particlesOffsets [1];
-               this .vertexOffset   = this .particlesOffsets [3];
-               this .stride         = this .particlesStride;
+               this .particleOffset = this .particleOffsets [0];
+               this .positionOffset = this .particleOffsets [3];
+               this .colorOffset    = this .particleOffsets [1];
+               this .vertexOffset   = this .particleOffsets [3];
+               this .stride         = this .particleStride;
 
                break;
             }
@@ -878,13 +879,13 @@ function (Fields,
       resizeBuffers: function (lastNumParticles)
       {
          const
-            gl              = this .getBrowser () .getContext (),
-            maxParticles    = this .maxParticles,
-            particlesStride = this .particlesStride,
-            inputData       = new Uint8Array (lastNumParticles * particlesStride);
+            gl             = this .getBrowser () .getContext (),
+            maxParticles   = this .maxParticles,
+            particleStride = this .particleStride,
+            inputData      = new Uint8Array (lastNumParticles * particleStride);
 
          const outputData = lastNumParticles < maxParticles
-            ? new Uint8Array (maxParticles * particlesStride)
+            ? new Uint8Array (maxParticles * particleStride)
             : inputData;
 
          // Resize output buffer.
@@ -895,12 +896,12 @@ function (Fields,
          if (lastNumParticles < maxParticles)
             outputData .set (inputData);
 
-         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, maxParticles * particlesStride);
+         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, maxParticles * particleStride);
 
          // Resize input buffer.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .inputParticles);
-         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, maxParticles * particlesStride);
+         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, maxParticles * particleStride);
 
          // Resize geometry buffers.
 
@@ -911,19 +912,28 @@ function (Fields,
          switch (this .geometryType)
          {
             case GeometryTypes .POINT:
+            {
+               break;
+            }
             case GeometryTypes .GEOMETRY:
             {
-               return;
+               const length = this .maxParticles * this .particleStride / Float32Array .BYTES_PER_ELEMENT;
+
+               if (this .geometryArray .length < length)
+                  this .geometryArray = new Float32Array (length);
+
+               break;
             }
             default:
             {
                const
                   gl           = this .getBrowser () .getContext (),
-                  geometryData = new Uint8Array (this .maxParticles * this .vertexCount * this .stride);
+                  geometryData = new Uint8Array (this .maxParticles * this .stride * this .vertexCount);
 
                gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, geometryData, gl .STATIC_DRAW);
-               return;
+
+               break;
             }
          }
       },
@@ -1030,6 +1040,10 @@ function (Fields,
             case GeometryTypes .QUAD:
                this .updateBuffers ();
                break;
+            case GeometryTypes .GEOMETRY:
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .outputParticles);
+               gl .getBufferSubData (gl .ARRAY_BUFFER, 0, this .geometryArray);
+               break;
          }
 
          browser .addBrowserEvent ();
@@ -1046,13 +1060,13 @@ function (Fields,
       updateBuffers: function (rotation)
       {
          const
-            browser          = this .getBrowser (),
-            gl               = browser .getContext (),
-            outputParticles  = this .outputParticles,
-            particlesStride  = this .particlesStride,
-            particlesOffsets = this .particlesOffsets,
-            program          = this .program,
-            inputs           = program .inputs;
+            browser         = this .getBrowser (),
+            gl              = browser .getContext (),
+            outputParticles = this .outputParticles,
+            particleStride  = this .particleStride,
+            particleOffsets = this .particleOffsets,
+            program         = this .program,
+            inputs          = program .inputs;
 
          gl .useProgram (program);
 
@@ -1083,7 +1097,7 @@ function (Fields,
 
             gl .enableVertexAttribArray (attribute);
             gl .bindBuffer (gl .ARRAY_BUFFER, outputParticles);
-            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particlesStride, particlesOffsets [i]);
+            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particleStride, particleOffsets [i]);
             gl .vertexAttribDivisor (attribute, 1);
          }
 

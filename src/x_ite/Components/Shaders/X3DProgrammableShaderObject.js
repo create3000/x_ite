@@ -269,9 +269,7 @@ function (X3DCast,
          this .x3d_Normal   = gl .getAttribLocation (program, "x3d_Normal");
          this .x3d_Vertex   = gl .getAttribLocation (program, "x3d_Vertex");
 
-         this .x3d_ParticleId          = gl .getUniformLocation (program, "x3d_Particle.id");
-         this .x3d_ParticleLife        = gl .getUniformLocation (program, "x3d_Particle.life");
-         this .x3d_ParticleElapsedTime = gl .getUniformLocation (program, "x3d_Particle.elapsedTime");
+         this .x3d_Particle = gl .getUniformLocation (program, "x3d_Particle");
 
          // Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
@@ -1348,13 +1346,10 @@ function (X3DCast,
          gl .vertexAttribPointer (this .x3d_Vertex, 4, gl .FLOAT, false, 0, 0);
          gl .disableVertexAttribArray (this .x3d_Vertex);
       },
-      setParticle: function (gl, particle, modelViewMatrix)
+      setParticle: function (gl, modelViewMatrix, geometryArray, offset)
       {
          gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
-
-         gl .uniform1i (this .x3d_ParticleId,          particle .id);
-         gl .uniform1i (this .x3d_ParticleLife,        particle .life);
-         gl .uniform1f (this .x3d_ParticleElapsedTime, particle .elapsedTime / particle .lifetime);
+         gl .uniform4f (this .x3d_Particle, geometryArray [offset], geometryArray [offset + 1], geometryArray [offset + 2], geometryArray [offset + 3]);
       },
       getProgramInfo: function ()
       {

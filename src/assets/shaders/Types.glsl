@@ -270,12 +270,3 @@ struct x3d_TextureCoordinateGeneratorParameters
 };
 
 //uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];
-
-struct x3d_ParticleParameters
-{
-   mediump int   id;
-   mediump int   life;
-   mediump float elapsedTime;
-};
-
-//uniform x3d_ParticleParameters x3d_Particle;

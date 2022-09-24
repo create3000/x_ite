@@ -618,24 +618,15 @@ If the shader node is part of a ParticleSystem node the following attributes are
 
 | Type            | Name                     | Comment                                                   |
 |-----------------|--------------------------|-----------------------------------------------------------|
-| attribute float | x3d\_ParticleId          | integer id of the particle                                |
-| attribute float | x3d\_ParticleLife        | integer number of current life cycle                      |
-| attribute float | x3d\_ParticleElapsedTime | elapsed time normalized in the range \[0, 1\]             |
-| attribute vec3  | x3d\_ParticlePosition    | center coordinate of particle, in relation to x3d\_Vertex |
+| attribute vec4  | x3d\_Particle            | vec4(int id, int life, float lifetime, float elapsedTime) |
+| attribute vec4  | x3d\_ParticlePosition    | center coordinate of particle, in relation to x3d\_Vertex |
 
 If the ParticleSystem.*geometryType* is GEOMETRY the following uniforms are available.
 
-| Type                            | Name          | Comment                                            |
-|---------------------------------|---------------|----------------------------------------------------|
-| uniform x3d\_ParticleParameters | x3d\_Particle | see table »Uniform Struct x3d\_ParticleParameters« |
-
-#### Uniform Struct x3d\_ParticleParameters
-
-| Type  | Name        | Comment                                       |
-|-------|-------------|-----------------------------------------------|
-| int   | id          | integer id of the particle                    |
-| int   | life        | integer number of current life cycle          |
-| float | elapsedTime | elapsed time normalized in the range \[0, 1\] |
+| Type            | Name                     | Comment                                                   |
+|-----------------|--------------------------|-----------------------------------------------------------|
+| uniform vec4    | x3d\_Particle            | vec4(int id, int life, float lifetime, float elapsedTime) |
+| uniform vec4    | x3d\_ParticlePosition    | center coordinate of particle, in relation to x3d\_Vertex |
 
 ## Built-in Constants
 

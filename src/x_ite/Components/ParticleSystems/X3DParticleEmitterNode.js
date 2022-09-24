@@ -159,13 +159,13 @@ function (X3DNode,
       animate: function (particleSystem, deltaTime)
       {
          const
-            browser          = this .getBrowser (),
-            gl               = browser .getContext (),
-            inputParticles   = particleSystem .inputParticles,
-            particlesStride  = particleSystem .particlesStride,
-            particlesOffsets = particleSystem .particlesOffsets,
-            program          = this .program,
-            inputs           = program .inputs;
+            browser         = this .getBrowser (),
+            gl              = browser .getContext (),
+            inputParticles  = particleSystem .inputParticles,
+            particleStride  = particleSystem .particleStride,
+            particleOffsets = particleSystem .particleOffsets,
+            program         = this .program,
+            inputs          = program .inputs;
 
          // Start
 
@@ -240,7 +240,7 @@ function (X3DNode,
 
             gl .enableVertexAttribArray (attribute);
             gl .bindBuffer (gl .ARRAY_BUFFER, inputParticles);
-            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particlesStride, particlesOffsets [i]);
+            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particleStride, particleOffsets [i]);
          }
 
          // Other textures
@@ -273,7 +273,7 @@ function (X3DNode,
 
          // DEBUG
 
-         // const data = new Float32Array (particleSystem .numParticles * (particleSystem .particlesStride / 4));
+         // const data = new Float32Array (particleSystem .numParticles * (particleSystem .particleStride / 4));
          // gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
          // console .log (data .slice (12, 16));
@@ -720,7 +720,7 @@ function (X3DNode,
          void
          main ()
          {
-            int  life         = int (input0 [1]);
+            int   life        = int (input0 [1]);
             float lifetime    = input0 [2];
             float elapsedTime = input0 [3] + deltaTime;
 

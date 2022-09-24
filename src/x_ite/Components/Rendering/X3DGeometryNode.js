@@ -1054,41 +1054,41 @@ function (Fields,
                blendModeNode .disable (gl);
          }
       },
-      displayParticlesDepth: function (gl, context, shaderNode, particles, numParticles)
+      displayParticlesDepth: (function ()
       {
-         // Attribs in depth rendering are not supported:
-         //for (let i = 0, length = attribNodes .length; i < length; ++ i)
-         //	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+         const position = new Vector3 (0, 0, 0);
 
-         shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
-
-         // Draw depending on wireframe, solid and transparent.
-
-         const
-            modelViewMatrix = context .modelViewMatrix,
-            x               = modelViewMatrix [12],
-            y               = modelViewMatrix [13],
-            z               = modelViewMatrix [14];
-
-         for (let p = 0; p < numParticles; ++ p)
+         return function (gl, context, shaderNode, particleSystem)
          {
-            const particle = particles [p];
+            const
+               geometryArray   = particleSystem .geometryArray,
+               numParticles    = particleSystem .numParticles,
+               particleStride  = particleSystem .particleStride / Float32Array .BYTES_PER_ELEMENT,
+               length          = numParticles * particleStride,
+               modelViewMatrix = context .modelViewMatrix,
+               x               = modelViewMatrix [12],
+               y               = modelViewMatrix [13],
+               z               = modelViewMatrix [14];
 
-            modelViewMatrix [12] = x;
-            modelViewMatrix [13] = y;
-            modelViewMatrix [14] = z;
+            shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
-            Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+            for (let offset = 0; offset < length; offset += particleStride)
+            {
+               modelViewMatrix [12] = x;
+               modelViewMatrix [13] = y;
+               modelViewMatrix [14] = z;
 
-            shaderNode .setParticle (gl, particle, modelViewMatrix);
+               position .set (geometryArray [offset + 12], geometryArray [offset + 13], geometryArray [offset + 14])
 
-            gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-         }
+               Matrix4 .prototype .translate .call (modelViewMatrix, position);
 
-         //for (let i = 0, length = attribNodes .length; i < length; ++ i)
-         //	attribNodes [i] .disable (gl, shaderNode);
-      },
-      displayParticles: function (gl, context, particles, numParticles)
+               shaderNode .setParticle (gl, modelViewMatrix, geometryArray, offset);
+
+               gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+            }
+         };
+      })(),
+      displayParticles: function (gl, context, particleSystem)
       {
          try
          {
@@ -1100,14 +1100,14 @@ function (Fields,
 
             if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
             {
-               this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particles, numParticles);
+               this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particleSystem);
             }
             else
             {
                const backShaderNode = appearanceNode .shaderNode || backMaterialNode .getShader (context .browser, context .shadow);
 
-               this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode,  true,  false, particles, numParticles);
-               this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, false, true,  particles, numParticles);
+               this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode,  true,  false, particleSystem);
+               this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, false, true,  particleSystem);
             }
          }
          catch (error)
@@ -1116,152 +1116,161 @@ function (Fields,
             console .log (error);
          }
       },
-      displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particles, numParticles)
+      displayParticlesGeometry: (function ()
       {
-         if (shaderNode .getValid ())
+         const position = new Vector3 (0, 0, 0);
+
+         return function (gl, context, appearanceNode, shaderNode, back, front, particleSystem)
          {
-            const
-               blendModeNode = appearanceNode .blendModeNode,
-               attribNodes   = this .attribNodes,
-               attribBuffers = this .attribBuffers;
-
-            if (blendModeNode)
-               blendModeNode .enable (gl);
-
-            // Setup shader.
-
-            shaderNode .enable (gl);
-            shaderNode .setLocalUniforms (gl, context, front);
-
-            // Setup vertex attributes.
-
-            for (let i = 0, length = attribNodes .length; i < length; ++ i)
-               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-            if (this .fogCoords)
-               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
-
-            if (this .colorMaterial)
-               shaderNode .enableColorAttribute (gl, this .colorBuffer);
-
-            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-            shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
-            shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
-
-            // Draw depending on wireframe, solid and transparent.
-
-            const
-               modelViewMatrix = context .modelViewMatrix,
-               x               = modelViewMatrix [12],
-               y               = modelViewMatrix [13],
-               z               = modelViewMatrix [14];
-
-            if (shaderNode .wireframe)
+            if (shaderNode .getValid ())
             {
-               // Points and Wireframes.
+               const
+                  blendModeNode = appearanceNode .blendModeNode,
+                  attribNodes   = this .attribNodes,
+                  attribBuffers = this .attribBuffers;
 
-               for (let p = 0; p < numParticles; ++ p)
+               if (blendModeNode)
+                  blendModeNode .enable (gl);
+
+               // Setup shader.
+
+               shaderNode .enable (gl);
+               shaderNode .setLocalUniforms (gl, context, front);
+
+               // Setup vertex attributes.
+
+               for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+               if (this .fogCoords)
+                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+
+               if (this .colorMaterial)
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer);
+
+               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+               shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
+               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+
+               // Draw depending on wireframe, solid and transparent.
+
+               const
+                  geometryArray   = particleSystem .geometryArray,
+                  numParticles    = particleSystem .numParticles,
+                  particleStride  = particleSystem .particleStride / Float32Array .BYTES_PER_ELEMENT,
+                  length          = numParticles * particleStride,
+                  modelViewMatrix = context .modelViewMatrix,
+                  x               = modelViewMatrix [12],
+                  y               = modelViewMatrix [13],
+                  z               = modelViewMatrix [14];
+
+               if (shaderNode .wireframe)
                {
-                  const particle = particles [p];
+                  // Points and Wireframes.
 
-                  modelViewMatrix [12] = x;
-                  modelViewMatrix [13] = y;
-                  modelViewMatrix [14] = z;
-
-                  Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-
-                  shaderNode .setParticle (gl, particle, modelViewMatrix);
-
-                  if (shaderNode .primitiveMode === gl .POINTS)
+                  for (let offset = 0; offset < length; offset += particleStride)
                   {
-                     gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-                  }
-                  else
-                  {
-                     for (let i = 0, length = this .vertexCount; i < length; i += 3)
-                        gl .drawArrays (shaderNode .primitiveMode, i, 3);
-                  }
-               }
-            }
-            else
-            {
-               const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
-
-               gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
-
-               if (context .transparent || back !== front)
-               {
-                  // Render transparent or back or front.
-
-                  for (let p = 0; p < numParticles; ++ p)
-                  {
-                     const particle = particles [p];
-
                      modelViewMatrix [12] = x;
                      modelViewMatrix [13] = y;
                      modelViewMatrix [14] = z;
 
-                     Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+                     position .set (geometryArray [offset + 12], geometryArray [offset + 13], geometryArray [offset + 14])
 
-                     shaderNode .setParticle (gl, particle, modelViewMatrix);
+                     Matrix4 .prototype .translate .call (modelViewMatrix, position);
 
-                     gl .enable (gl .CULL_FACE);
+                     shaderNode .setParticle (gl, modelViewMatrix, geometryArray, offset);
 
-                     if (back && !this .solid)
+                     if (shaderNode .primitiveMode === gl .POINTS)
                      {
-                        gl .cullFace (gl .FRONT);
                         gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
                      }
-
-                     if (front)
+                     else
                      {
-                        gl .cullFace (gl .BACK);
-                        gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+                        for (let i = 0, length = this .vertexCount; i < length; i += 3)
+                           gl .drawArrays (shaderNode .primitiveMode, i, 3);
                      }
                   }
                }
                else
                {
-                  // Render solid or both sides.
+                  const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
 
-                  if (this .solid)
-                     gl .enable (gl .CULL_FACE);
-                  else
-                     gl .disable (gl .CULL_FACE);
+                  gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
 
-                  for (let p = 0; p < numParticles; ++ p)
+                  if (context .transparent || back !== front)
                   {
-                     const particle = particles [p];
+                     // Render transparent or back or front.
 
-                     modelViewMatrix [12] = x;
-                     modelViewMatrix [13] = y;
-                     modelViewMatrix [14] = z;
+                     for (let offset = 0; offset < length; offset += particleStride)
+                     {
+                        modelViewMatrix [12] = x;
+                        modelViewMatrix [13] = y;
+                        modelViewMatrix [14] = z;
 
-                     Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+                        position .set (geometryArray [offset + 12], geometryArray [offset + 13], geometryArray [offset + 14])
 
-                     shaderNode .setParticle (gl, particle, modelViewMatrix);
+                        Matrix4 .prototype .translate .call (modelViewMatrix, position);
 
-                     gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+                        shaderNode .setParticle (gl, modelViewMatrix, geometryArray, offset);
+
+                        gl .enable (gl .CULL_FACE);
+
+                        if (back && !this .solid)
+                        {
+                           gl .cullFace (gl .FRONT);
+                           gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+                        }
+
+                        if (front)
+                        {
+                           gl .cullFace (gl .BACK);
+                           gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+                        }
+                     }
+                  }
+                  else
+                  {
+                     // Render solid or both sides.
+
+                     if (this .solid)
+                        gl .enable (gl .CULL_FACE);
+                     else
+                        gl .disable (gl .CULL_FACE);
+
+                     for (let offset = 0; offset < length; offset += particleStride)
+                     {
+                        modelViewMatrix [12] = x;
+                        modelViewMatrix [13] = y;
+                        modelViewMatrix [14] = z;
+
+                        position .set (geometryArray [offset + 12], geometryArray [offset + 13], geometryArray [offset + 14])
+
+                        Matrix4 .prototype .translate .call (modelViewMatrix, position);
+
+                        shaderNode .setParticle (gl, modelViewMatrix, geometryArray, offset);
+
+                        gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+                     }
                   }
                }
+
+               for (const attribNode of attribNodes)
+                  attribNode .disable (gl, shaderNode);
+
+               if (this .fogCoords)
+                  shaderNode .disableFogDepthAttribute (gl);
+
+               if (this .colorMaterial)
+                  shaderNode .disableColorAttribute (gl);
+
+               shaderNode .disableTexCoordAttribute (gl);
+               shaderNode .disableNormalAttribute   (gl);
+
+               if (blendModeNode)
+                  blendModeNode .disable (gl);
             }
-
-            for (const attribNode of attribNodes)
-               attribNode .disable (gl, shaderNode);
-
-            if (this .fogCoords)
-               shaderNode .disableFogDepthAttribute (gl);
-
-            if (this .colorMaterial)
-               shaderNode .disableColorAttribute (gl);
-
-            shaderNode .disableTexCoordAttribute (gl);
-            shaderNode .disableNormalAttribute   (gl);
-
-            if (blendModeNode)
-               blendModeNode .disable (gl);
-         }
-      },
+         };
+      })(),
    });
 
    return X3DGeometryNode;
