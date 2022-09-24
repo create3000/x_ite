@@ -60,6 +60,7 @@ define ([
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Numbers/Matrix3",
    "standard/Math/Utility/BVH",
+   "text!x_ite/Browser/ParticleSystems/TexCoords.glsl",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -72,7 +73,8 @@ function (Fields,
           Vector3,
           Matrix4,
           Matrix3,
-          BVH)
+          BVH,
+          TexCoordsSource)
 {
 "use strict";
 
@@ -353,6 +355,7 @@ function (Fields,
             {
                this .geometryContext .geometryType = 0;
 
+               this .texCoordCount   = 0;
                this .vertexCount     = 1;
                this .texCoordBuffers = null;
                this .normalBuffer    = null;
@@ -372,6 +375,7 @@ function (Fields,
             {
                this .geometryContext .geometryType = 1;
 
+               this .texCoordCount   = 2;
                this .vertexCount     = 2;
                this .particleBuffer  = this .geometryBuffer;
                this .positionBuffer  = this .geometryBuffer;
@@ -402,7 +406,9 @@ function (Fields,
 
                precision highp float;
 
-               uniform vec2 particleSize1_2;
+               uniform vec2      particleSize1_2;
+               uniform int       numTexCoords;
+               uniform sampler2D texCoordRamp;
 
                in vec4 input0;
                in vec4 input1;
@@ -415,16 +421,28 @@ function (Fields,
                out vec4 texCoord;
                out vec4 vertex;
 
+               ${TexCoordsSource}
+
                void
                main ()
                {
-                  vec3 offset = normalize (input2 .xyz) * particleSize1_2 .y;
-
                   particle = input0;
                   position = input3;
                   color    = input1;
-                  texCoord = vec4 (position .xyz - offset, 1.0);
-                  vertex   = vec4 ((gl_VertexID % 2 == 0 ? texCoord .xyz : position .xyz + offset), 1.0);
+
+                  vec3 offset = normalize (input2 .xyz) * particleSize1_2 .y;
+
+                  switch (gl_VertexID % 2)
+                  {
+                     case 0:
+                        texCoord = getTexCoord (0, 2, input0 [2], input0 [3], vec4 (position .xyz - offset, 1.0));
+                        vertex   = vec4 (position .xyz - offset, 1.0);
+                        break;
+                     case 1:
+                        texCoord = getTexCoord (1, 2, input0 [2], input0 [3], vec4 (position .xyz - offset, 1.0));
+                        vertex   = vec4 (position .xyz + offset, 1.0);
+                        break;
+                  }
                }
                `);
 
@@ -436,6 +454,7 @@ function (Fields,
             {
                this .geometryContext .geometryType = 2;
 
+               this .texCoordCount   = 4;
                this .vertexCount     = 6;
                this .particleBuffer  = this .geometryBuffer;
                this .positionBuffer  = this .geometryBuffer;
@@ -484,85 +503,7 @@ function (Fields,
                out vec3 normal;
                out vec4 vertex;
 
-               vec4
-               texelFetch (const in sampler2D sampler, const in int index, const in int lod)
-               {
-                  int   x = textureSize (sampler, lod) .x;
-                  ivec2 p = ivec2 (index % x, index / x);
-                  vec4  t = texelFetch (sampler, p, lod);
-
-                  return t;
-               }
-
-               int
-               upperBound (const in sampler2D sampler, in int count, const in float value)
-               {
-                  int first = 0;
-                  int step  = 0;
-
-                  while (count > 0)
-                  {
-                     int index = first;
-
-                     step = count >> 1;
-
-                     index += step;
-
-                     if (value < texelFetch (sampler, index, 0) .x)
-                     {
-                        count = step;
-                     }
-                     else
-                     {
-                        first  = ++ index;
-                        count -= step + 1;
-                     }
-                  }
-
-                  return first;
-               }
-
-               void
-               interpolate (const in sampler2D sampler, const in int count, const in float fraction, out int index0)
-               {
-                  // Determine index0.
-
-                  if (count == 1 || fraction <= texelFetch (sampler, 0, 0) .x)
-                  {
-                     index0 = 0;
-                  }
-                  else if (fraction >= texelFetch (sampler, count - 1, 0) .x)
-                  {
-                     index0 = count - 2;
-                  }
-                  else
-                  {
-                     int index = upperBound (sampler, count, fraction);
-
-                     if (index < count)
-                        index0 = index - 1;
-                     else
-                        index0 = 0;
-                  }
-               }
-
-               vec4
-               getTexCoord (const in int i, const in float lifetime, const in float elapsedTime, const in vec4 defaultTexCoord)
-               {
-                  if (numTexCoords == 0)
-                  {
-                     return defaultTexCoord;
-                  }
-                  else
-                  {
-                     float fraction = elapsedTime / lifetime;
-                     int   index0   = 0;
-
-                     interpolate (texCoordRamp, numTexCoords, fraction, index0);
-
-                     return texelFetch (texCoordRamp, numTexCoords + index0 * 4 + i, 0);
-                  }
-               }
+               ${TexCoordsSource}
 
                void
                main ()
@@ -583,20 +524,20 @@ function (Fields,
                   {
                      case 0:
                      case 3:
-                        texCoord = getTexCoord (0, particle [2], particle [3], vec4 (0.0, 0.0, 0.0, 1.0));
+                        texCoord = getTexCoord (0, 4, particle [2], particle [3], vec4 (0.0, 0.0, 0.0, 1.0));
                         vertex   = vec4 (position .xyz + rotation * vec3 (-particleSize1_2 .x, -particleSize1_2 .y, 0.0), 1.0);
                         break;
                      case 1:
-                        texCoord = getTexCoord (1, particle [2], particle [3], vec4 (1.0, 0.0, 0.0, 1.0));
+                        texCoord = getTexCoord (1, 4, particle [2], particle [3], vec4 (1.0, 0.0, 0.0, 1.0));
                         vertex   = vec4 (position .xyz + rotation * vec3 (particleSize1_2 .x, -particleSize1_2 .y, 0.0), 1.0);
                         break;
                      case 2:
                      case 4:
-                        texCoord = getTexCoord (2, particle [2], particle [3], vec4 (1.0, 1.0, 0.0, 1.0));
+                        texCoord = getTexCoord (2, 4, particle [2], particle [3], vec4 (1.0, 1.0, 0.0, 1.0));
                         vertex   = vec4 (position .xyz + rotation * vec3 (particleSize1_2 .x, particleSize1_2 .y, 0.0), 1.0);
                         break;
                      case 5:
-                        texCoord = getTexCoord (3, particle [2], particle [3], vec4 (0.0, 1.0, 0.0, 1.0));
+                        texCoord = getTexCoord (3, 4, particle [2], particle [3], vec4 (0.0, 1.0, 0.0, 1.0));
                         vertex   = vec4 (position .xyz + rotation * vec3 (-particleSize1_2 .x, particleSize1_2 .y, 0.0), 1.0);
                         break;
                   }
@@ -607,8 +548,9 @@ function (Fields,
             }
             case GeometryTypes .GEOMETRY:
             {
-               this .vertexCount = 0;
-               this .program     = null;
+               this .texCoordCount = 0;
+               this .vertexCount   = 0;
+               this .program       = null;
                break;
             }
          }
@@ -616,6 +558,7 @@ function (Fields,
          this .resizeGeometryBuffers ();
 
          this .set_particleSize__ ();
+         this .set_texCoord__ ();
          this .set_shader__ ();
          this .set_transparent__ ();
       },
@@ -836,7 +779,7 @@ function (Fields,
             gl           = this .getBrowser () .getContext (),
             texCoordKey  = this ._texCoordKey,
             numTexCoords = texCoordKey .length,
-            textureSize  = Math .ceil (Math .sqrt (numTexCoords + numTexCoords * 4));
+            textureSize  = Math .ceil (Math .sqrt (numTexCoords + numTexCoords * this .texCoordCount));
 
          let texCoordRamp = this .texCoordRamp;
 
