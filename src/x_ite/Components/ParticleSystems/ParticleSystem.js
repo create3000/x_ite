@@ -1130,6 +1130,8 @@ function (Fields,
             gl .vertexAttribDivisor (attribute, 0);
          }
 
+         browser .resetTextureUnits ();
+
          // const data = new Float32Array (this .maxParticles * this .vertexCount * 4);
          // gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
