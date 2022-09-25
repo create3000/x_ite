@@ -165,7 +165,7 @@ function ($,
 
       // Feature detection:
 
-      // If the aliased lineWidth ranges are both 1, gl.lineWidth is probably not possible,
+      // If the aliased lineWidth ranges are both 1, gl .lineWidth is probably not possible,
       // thus we disable it completely to prevent webgl errors.
 
       const aliasedLineWidthRange = gl .getParameter (gl .ALIASED_LINE_WIDTH_RANGE);

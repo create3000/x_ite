@@ -239,7 +239,9 @@ function (X3DGeometryNode,
                      modelViewMatrix [13] = y;
                      modelViewMatrix [14] = z;
 
-                     position .set (geometryArray [offset + 12], geometryArray [offset + 13], geometryArray [offset + 14])
+                     position .set (geometryArray [offset + 12],
+                                    geometryArray [offset + 13],
+                                    geometryArray [offset + 14]);
 
                      Matrix4 .prototype .translate .call (modelViewMatrix, position);
 

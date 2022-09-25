@@ -1113,7 +1113,7 @@ function (X3DCast,
       },
       enableFloatAttrib: function (gl, name, buffer, components, stride, offset)
       {
-         const location = gl. getAttribLocation (this .getProgram (), name);
+         const location = gl .getAttribLocation (this .getProgram (), name);
 
          if (location === -1)
             return;
@@ -1366,8 +1366,8 @@ function (X3DCast,
                attributeCount: 0,
                uniformCount: 0,
             },
-            activeUniforms   = gl .getProgramParameter (program, gl.ACTIVE_UNIFORMS),
-            activeAttributes = gl .getProgramParameter (program, gl.ACTIVE_ATTRIBUTES);
+            activeUniforms   = gl .getProgramParameter (program, gl .ACTIVE_UNIFORMS),
+            activeAttributes = gl .getProgramParameter (program, gl .ACTIVE_ATTRIBUTES);
 
          // Taken from the WebGl spec:
          // http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.14
