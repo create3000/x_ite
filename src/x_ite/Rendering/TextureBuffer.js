@@ -67,14 +67,14 @@ function (ViewVolume,
       this .height  = height;
       this .array   = new Uint8Array (width * height * 4);
 
-      // The frame buffer.
+      // Create frame buffer.
 
       this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
       this .buffer     = gl .createFramebuffer ();
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .buffer);
 
-      // The depth texture
+      // Create color texture.
 
       this .colorTexture = gl .createTexture ();
 
@@ -87,7 +87,7 @@ function (ViewVolume,
 
       gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .colorTexture, 0);
 
-      // The depth buffer
+      // Create depth buffer.
 
       if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
       {
@@ -114,7 +114,7 @@ function (ViewVolume,
          gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
       }
 
-      // Always check that our framebuffer is ok
+      // Always check that our framebuffer is ok.
 
       const complete = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
