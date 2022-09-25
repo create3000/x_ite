@@ -182,7 +182,7 @@ function (TextureProperties,
          {
             -- this [_texture2DUnitIndex];
 
-            return this [_texture2DUnits] .shift ();
+            return this [_texture2DUnits] .pop ();
          }
          else
          {
@@ -194,9 +194,9 @@ function (TextureProperties,
          if (textureUnit === undefined)
             return;
 
-         this [_texture2DUnitIndex] = Math .max (this [_texture2DUnitIndex] + 1, 1);
+         ++ this [_texture2DUnitIndex];
 
-         this [_texture2DUnits] .unshift (textureUnit);
+         this [_texture2DUnits] .push (textureUnit);
       },
       getTexture2DUnit: function ()
       {

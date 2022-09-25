@@ -104,7 +104,7 @@ function ($,
          if (dbgRenderInfo)
             return gl .getParameter (dbgRenderInfo .UNMASKED_RENDERER_WEBGL);
 
-         return gl .getParameter (this .getContext () .RENDERER);
+         return gl .getParameter (gl .RENDERER);
       },
       getVendor: function ()
       {
@@ -115,7 +115,7 @@ function ($,
          if (dbgRenderInfo)
             return gl .getParameter (dbgRenderInfo .UNMASKED_VENDOR_WEBGL);
 
-         return gl .getParameter (this .getContext () .VENDOR);
+         return gl .getParameter (gl .VENDOR);
       },
       getWebGLVersion: function ()
       {

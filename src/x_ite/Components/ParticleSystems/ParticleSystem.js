@@ -198,8 +198,8 @@ function (Fields,
 
          // Create particles stuff.
 
-         this .inputParticles  = gl .createBuffer ();
-         this .outputParticles = gl .createBuffer ();
+         this .inputParticles  = this .createBuffer ();
+         this .outputParticles = this .createBuffer ();
 
          // Create forces stuff.
 
@@ -211,7 +211,7 @@ function (Fields,
          // Create GL stuff.
 
          this .transformFeedBack = gl .createTransformFeedback ();
-         this .geometryBuffer    = gl .createBuffer ();
+         this .geometryBuffer    = this .createBuffer ();
 
          // Geometry context
 
@@ -876,6 +876,17 @@ function (Fields,
 
          return texture;
       },
+      createBuffer: function ()
+      {
+         const
+            gl     = this .getBrowser () .getContext (),
+            buffer = gl .createBuffer ();
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+         gl .bufferData (gl .ARRAY_BUFFER, new Uint32Array (), gl .DYNAMIC_READ);
+
+         return buffer;
+      },
       resizeBuffers: function (lastNumParticles)
       {
          const
@@ -896,12 +907,12 @@ function (Fields,
          if (lastNumParticles < maxParticles)
             outputData .set (inputData);
 
-         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, maxParticles * particleStride);
+         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .DYNAMIC_READ, 0, maxParticles * particleStride);
 
          // Resize input buffer.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .inputParticles);
-         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .STATIC_DRAW, 0, maxParticles * particleStride);
+         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .DYNAMIC_READ, 0, maxParticles * particleStride);
 
          // Resize geometry buffers.
 
@@ -930,7 +941,7 @@ function (Fields,
                   geometryData = new Uint8Array (this .maxParticles * this .stride * this .vertexCount);
 
                gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
-               gl .bufferData (gl .ARRAY_BUFFER, geometryData, gl .STATIC_DRAW);
+               gl .bufferData (gl .ARRAY_BUFFER, geometryData, gl .DYNAMIC_READ);
 
                break;
             }

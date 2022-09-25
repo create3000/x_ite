@@ -78,15 +78,15 @@ function (X3DTextureNode,
       {
          X3DTextureNode .prototype .initialize .call (this);
 
-         this ._textureProperties .addInterest ("set_textureProperties__", this);
+         this ._textureProperties .addInterest ("set_textureProperties__", this, true);
 
          const gl = this .getBrowser () .getContext ();
 
          this .texture = gl .createTexture ();
 
-         this .set_textureProperties__ ();
+         this .set_textureProperties__ (false);
       },
-      set_textureProperties__: function ()
+      set_textureProperties__: function (update)
       {
          if (this .texturePropertiesNode)
             this .texturePropertiesNode .removeInterest ("updateTextureProperties", this);
@@ -98,7 +98,8 @@ function (X3DTextureNode,
 
          this .texturePropertiesNode .addInterest ("updateTextureProperties", this);
 
-         this .updateTextureProperties ();
+         if (update)
+            this .updateTextureProperties ();
       },
       getTexture: function ()
       {

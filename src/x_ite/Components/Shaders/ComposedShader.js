@@ -225,16 +225,8 @@ function (Fields,
             {
                gl .useProgram (this .program);
 
-               // Initialize uniform variables and attributes
-               if (this .getDefaultUniforms ())
-               {
-                  // Setup user-defined fields.
-                  this .addShaderFields ();
-               }
-               else
-               {
-                  valid = false;
-               }
+               // Initialize uniform variables and attributes.
+               valid = this .getDefaultUniforms ();
 
                // Debug, print complete shader info and statistics.
                // this .printProgramInfo ();
@@ -248,6 +240,7 @@ function (Fields,
             }
 
             this .setValid (!! valid);
+            this .addShaderFields ();
          }
          else
          {
@@ -256,17 +249,23 @@ function (Fields,
       },
       set_field__: function (field)
       {
-         const gl = this .getBrowser () .getContext ();
+         if (this .getValid ())
+         {
+            const gl = this .getBrowser () .getContext ();
 
-         gl .useProgram (this .program);
+            gl .useProgram (this .program);
 
-         X3DProgrammableShaderObject .prototype .set_field__ .call (this, field);
+            X3DProgrammableShaderObject .prototype .set_field__ .call (this, field);
+         }
       },
       setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
       {
-         gl .useProgram (this .program);
+         if (this .getValid ())
+         {
+            gl .useProgram (this .program);
 
-         X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+            X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+         }
       },
       enable: function (gl)
       {
