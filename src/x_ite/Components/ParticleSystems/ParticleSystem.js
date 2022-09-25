@@ -919,8 +919,7 @@ function (Fields,
             {
                const length = this .maxParticles * this .particleStride / Float32Array .BYTES_PER_ELEMENT;
 
-               if (this .geometryArray .length < length)
-                  this .geometryArray = new Float32Array (length);
+               this .geometryArray = new Float32Array (length);
 
                break;
             }
