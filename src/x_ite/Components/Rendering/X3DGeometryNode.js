@@ -723,7 +723,7 @@ function (Fields,
             // Transfer normals.
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .STATIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .DYNAMIC_DRAW);
          };
       })(),
       requestRebuild: function ()
@@ -858,18 +858,18 @@ function (Fields,
          for (let i = 0, length = this .attribs .length; i < length; ++ i)
          {
             gl .bindBuffer (gl .ARRAY_BUFFER, this .attribBuffers [i]);
-            gl .bufferData (gl .ARRAY_BUFFER, this .attribs [i] .getValue (), gl .STATIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, this .attribs [i] .getValue (), gl .DYNAMIC_DRAW);
          }
 
          // Transfer fog depths.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .fogDepthBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .fogDepths .getValue (), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, this .fogDepths .getValue (), gl .DYNAMIC_DRAW);
          this .fogCoords = !! (this .fogDepths .length);
          // Transfer colors.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .DYNAMIC_DRAW);
          this .colorMaterial = !! (this .colors .length);
 
          // Transfer multiTexCoords.
@@ -880,13 +880,13 @@ function (Fields,
          for (let i = 0, length = this .multiTexCoords .length; i < length; ++ i)
          {
             gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [i]);
-            gl .bufferData (gl .ARRAY_BUFFER, this .multiTexCoords [i] .getValue (), gl .STATIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, this .multiTexCoords [i] .getValue (), gl .DYNAMIC_DRAW);
          }
 
          // Transfer vertices.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .vertices .getValue (), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, this .vertices .getValue (), gl .DYNAMIC_DRAW);
          this .vertexCount = count;
 
          // Setup render functions.

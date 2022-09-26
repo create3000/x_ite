@@ -98,9 +98,9 @@ function (TextureBuffer,
             shaderNode .setLocalObjects (gl, [ ]);
 
             gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .STATIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .DYNAMIC_DRAW);
             gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .STATIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .DYNAMIC_DRAW);
 
             // Matrices
 

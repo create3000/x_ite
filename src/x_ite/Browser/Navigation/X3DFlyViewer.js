@@ -744,7 +744,7 @@ function ($,
          // Transfer line.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .lineBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .lineArray, gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, this .lineArray, gl .DYNAMIC_DRAW);
       },
       disconnect: function ()
       {

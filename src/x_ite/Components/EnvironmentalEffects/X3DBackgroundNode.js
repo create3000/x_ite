@@ -431,12 +431,12 @@ function (X3DBindableNode,
          // Transfer colors.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (this .colors), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (this .colors), gl .DYNAMIC_DRAW);
 
          // Transfer sphere.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .sphereBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (this .sphere), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (this .sphere), gl .DYNAMIC_DRAW);
          this .sphereCount = this .sphere .length / 4;
       },
       transferRectangle: function ()
@@ -446,27 +446,27 @@ function (X3DBindableNode,
          // Transfer texCoords.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (texCoords), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (texCoords), gl .DYNAMIC_DRAW);
 
          // Transfer rectangle.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .frontBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (frontVertices), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (frontVertices), gl .DYNAMIC_DRAW);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .backBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (backVertices), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (backVertices), gl .DYNAMIC_DRAW);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .leftBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (leftVertices), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (leftVertices), gl .DYNAMIC_DRAW);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .rightBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (rightVertices), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (rightVertices), gl .DYNAMIC_DRAW);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .topBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (topVertices), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (topVertices), gl .DYNAMIC_DRAW);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .bottomBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (bottomVertices), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (bottomVertices), gl .DYNAMIC_DRAW);
       },
       traverse: function (type, renderObject)
       {
