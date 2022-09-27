@@ -66,9 +66,6 @@ function (TextureProperties,
       _maxCombinedTextureUnits  = Symbol (),
       _textureMemory            = Symbol (),
       _combinedTextureUnits     = Symbol (),
-      _texture2DUnit            = Symbol (),
-      _texture3DUnit            = Symbol (),
-      _textureCubeUnit          = Symbol (),
       _texture2DUnits           = Symbol (),
       _texture3DUnits           = Symbol (),
       _textureCubeUnits         = Symbol (),
@@ -102,6 +99,8 @@ function (TextureProperties,
       {
          const gl = this .getContext ();
 
+         gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
+
          this [_maxTextureSize]          = gl .getParameter (gl .MAX_TEXTURE_SIZE);
          this [_maxCombinedTextureUnits] = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
          this [_textureMemory]           = NaN;
@@ -109,12 +108,9 @@ function (TextureProperties,
          // Get texture Units
 
          this [_combinedTextureUnits] = [...Array (this [_maxCombinedTextureUnits]) .keys ()];
-         this [_texture2DUnit]        = this [_combinedTextureUnits] .pop ();
-         this [_texture3DUnit]        = this [_combinedTextureUnits] .pop ();
-         this [_textureCubeUnit]      = this [_combinedTextureUnits] .pop ();
-         this [_texture2DUnits]       = [this [_texture2DUnit]];
-         this [_texture3DUnits]       = [this [_texture3DUnit]];
-         this [_textureCubeUnits]     = [this [_textureCubeUnit]];
+         this [_texture2DUnits]       = [this [_combinedTextureUnits] .pop ()];
+         this [_texture3DUnits]       = [this [_combinedTextureUnits] .pop ()];
+         this [_textureCubeUnits]     = [this [_combinedTextureUnits] .pop ()];
 
          // Default Texture 2D Unit
 
@@ -122,7 +118,7 @@ function (TextureProperties,
 
          this [_defaultTexture2D] = gl .createTexture ();
 
-         gl .activeTexture (gl .TEXTURE0 + this [_texture2DUnit]);
+         gl .activeTexture (gl .TEXTURE0 + this [_texture2DUnits] [0]);
          gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
@@ -132,7 +128,7 @@ function (TextureProperties,
          {
             this [_defaultTexture3D] = gl .createTexture ();
 
-            gl .activeTexture (gl .TEXTURE0 + this [_texture3DUnit]);
+            gl .activeTexture (gl .TEXTURE0 + this [_texture3DUnits] [0]);
             gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
             gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          }
@@ -141,7 +137,7 @@ function (TextureProperties,
 
          this [_defaultTextureCube] = gl .createTexture ();
 
-         gl .activeTexture (gl .TEXTURE0 + this [_textureCubeUnit]);
+         gl .activeTexture (gl .TEXTURE0 + this [_textureCubeUnits] [0]);
          gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
          gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
@@ -245,15 +241,15 @@ function (TextureProperties,
       },
       getDefaultTexture2DUnit: function ()
       {
-         return this [_texture2DUnit];
+         return this [_texture2DUnits] [0];
       },
       getDefaultTexture3DUnit: function ()
       {
-         return this [_texture3DUnit];
+         return this [_texture3DUnits] [0];
       },
       getDefaultTextureCubeUnit: function ()
       {
-         return this [_textureCubeUnit];
+         return this [_textureCubeUnits] [0];
       },
       getTextureMemory: function ()
       {

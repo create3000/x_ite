@@ -209,7 +209,6 @@ function (Fields,
                   data    = texture .getData ();
 
                gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, !texture .getFlipY ());
-               gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
 
                if (data instanceof Uint8Array)
                {

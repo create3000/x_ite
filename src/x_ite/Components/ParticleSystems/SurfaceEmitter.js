@@ -205,7 +205,7 @@ function (Fields,
                if (surfaceArray .length < surfaceArraySize * surfaceArraySize * 4)
                   surfaceArray = this .surfaceArray = new Float32Array (surfaceArraySize * surfaceArraySize * 4);
 
-               let areaSoFar     = 0;
+               let areaSoFar = 0;
 
                for (let i = 0, length = vertices .length; i < length; i += 12)
                {

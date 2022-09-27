@@ -243,7 +243,7 @@ function (Fields,
             if (volumeArray .length < volumeArraySize * volumeArraySize * 4)
                volumeArray = this .volumeArray = new Float32Array (volumeArraySize * volumeArraySize * 4);
 
-            let areaSoFar   = 0;
+            let areaSoFar = 0;
 
             for (let i = 0, length = vertices .length; i < length; i += 12)
             {

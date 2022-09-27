@@ -134,7 +134,6 @@ function (X3DSingleTextureNode,
             const gl = this .getBrowser () .getContext ();
 
             gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
-            gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
             gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
             gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 

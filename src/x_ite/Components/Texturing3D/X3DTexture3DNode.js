@@ -147,7 +147,6 @@ function (X3DSingleTextureNode,
                return;
 
             gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
-            gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
             gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
             gl .texImage3D  (gl .TEXTURE_3D, 0, format, width, height, depth, 0, format, gl .UNSIGNED_BYTE, data);
 
