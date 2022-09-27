@@ -719,9 +719,12 @@ function (Fields,
 
          boundedArray .set (boundedHierarchy, this .boundedHierarchyIndex * 4);
 
-         gl .bindTexture (gl .TEXTURE_2D, this .boundedTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, boundedArraySize, boundedArraySize, 0, gl .RGBA, gl .FLOAT, boundedArray);
-      },
+         if (boundedArraySize)
+         {
+            gl .bindTexture (gl .TEXTURE_2D, this .boundedTexture);
+            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, boundedArraySize, boundedArraySize, 0, gl .RGBA, gl .FLOAT, boundedArray);
+         }
+       },
       set_colorRamp__: function ()
       {
          if (this .colorRampNode)
@@ -756,8 +759,11 @@ function (Fields,
          else
             colorRamp .fill (1, numColors * 4);
 
-         gl .bindTexture (gl .TEXTURE_2D, this .colorRampTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorRamp);
+         if (textureSize)
+         {
+            gl .bindTexture (gl .TEXTURE_2D, this .colorRampTexture);
+            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorRamp);
+         }
 
          this .numColors                      = numColors;
          this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
@@ -795,8 +801,11 @@ function (Fields,
          if (this .texCoordRampNode)
             texCoordRamp .set (this .texCoordRampNode .getTexCoord ([ ]) .slice (0, numTexCoords * this .texCoordCount * 4), numTexCoords * 4);
 
-         gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, texCoordRamp);
+         if (textureSize)
+         {
+            gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, texCoordRamp);
+         }
 
          this .numTexCoords = numTexCoords;
          this .texCoordAnim = !! (numTexCoords && this .texCoordRampNode);
@@ -872,7 +881,7 @@ function (Fields,
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
 
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, 0, 0, 0, gl .RGBA, gl .FLOAT, null);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, 1, 1, 0, gl .RGBA, gl .FLOAT, new Float32Array (4));
 
          return texture;
       },
@@ -1022,8 +1031,11 @@ function (Fields,
 
             this .numForces = numForces -= disabledForces;
 
-            gl .bindTexture (gl .TEXTURE_2D, this .forcesTexture);
-            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numForces, 1, 0, gl .RGBA, gl .FLOAT, forces);
+            if (numForces)
+            {
+               gl .bindTexture (gl .TEXTURE_2D, this .forcesTexture);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numForces, 1, 0, gl .RGBA, gl .FLOAT, forces);
+            }
          }
          else
          {

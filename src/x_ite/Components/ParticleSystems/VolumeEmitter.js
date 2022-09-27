@@ -270,8 +270,11 @@ function (Fields,
             this .setUniform ("uniform1i", "hierarchyIndex", hierarchyIndex);
             this .setUniform ("uniform1i", "hierarchyRoot",  hierarchyIndex + hierarchyLength - 1);
 
-            gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
-            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, volumeArraySize, volumeArraySize, 0, gl .RGBA, gl .FLOAT, volumeArray);
+            if (volumeArraySize)
+            {
+               gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, volumeArraySize, volumeArraySize, 0, gl .RGBA, gl .FLOAT, volumeArray);
+            }
          };
       })(),
       activateTextures: function (browser, gl, program)

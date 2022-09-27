@@ -225,8 +225,11 @@ function (Fields,
 
             this .setUniform ("uniform1i", "verticesIndex", numVertices ? verticesIndex : -1);
 
-            gl .bindTexture (gl .TEXTURE_2D, this .polylineTexture);
-            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, polylineArraySize, polylineArraySize, 0, gl .RGBA, gl .FLOAT, polylineArray);
+            if (polylineArraySize)
+            {
+               gl .bindTexture (gl .TEXTURE_2D, this .polylineTexture);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, polylineArraySize, polylineArraySize, 0, gl .RGBA, gl .FLOAT, polylineArray);
+            }
          };
       })(),
       activateTextures: function (browser, gl, program)
