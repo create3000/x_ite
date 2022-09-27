@@ -113,11 +113,12 @@ function (Fields,
       this .boundedPhysicsModelNodes = [ ];
       this .boundedNormals           = [ ];
       this .boundedVertices          = [ ];
+      this .numColors                = 0;
       this .colorRampNode            = null;
       this .colorRamp                = new Float32Array ();
+      this .numTexCoords             = 0;
       this .texCoordRampNode         = null;
       this .texCoordRamp             = new Float32Array ();
-      this .texCoordAnim             = false;
       this .vertexCount              = 0;
       this .shaderNode               = null;
       this .geometryContext          = { };
@@ -807,8 +808,7 @@ function (Fields,
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, texCoordRamp);
          }
 
-         this .numTexCoords = numTexCoords;
-         this .texCoordAnim = !! (numTexCoords && this .texCoordRampNode);
+         this .numTexCoords = this .texCoordRampNode ? numTexCoords : 0;
       },
       createProgram: function (varyings, vertexShaderSource)
       {
@@ -1095,7 +1095,7 @@ function (Fields,
          if (rotation)
             gl .uniformMatrix3fv (program .rotation, false, rotation);
 
-         if (this .texCoordAnim)
+         if (this .numTexCoord)
          {
             gl .uniform1i (program .numTexCoords, this .numTexCoords);
 
