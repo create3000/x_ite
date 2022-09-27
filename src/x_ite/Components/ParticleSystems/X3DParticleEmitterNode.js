@@ -207,8 +207,6 @@ function (X3DNode,
 
          // Bounded Physics
 
-         gl .uniform1i (program .numBoundedVertices, particleSystem .numBoundedVertices);
-
          if (particleSystem .boundedHierarchyRoot < 0)
          {
             gl .uniform1i (program .boundedHierarchyRoot, -1);
@@ -276,7 +274,7 @@ function (X3DNode,
          // const data = new Float32Array (particleSystem .numParticles * (particleSystem .particleStride / 4));
          // gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
-         // console .log (data .slice (12, 16));
+         // console .log (particleSystem .numParticles, data .slice (4, 8));
       },
       addUniform: function (name, uniform)
       {
@@ -774,6 +772,8 @@ function (X3DNode,
                output2 = vec4 (velocity, 0.0);
                output3 = position;
             }
+
+            // output1 = vec4 (textureSize (surface, 0), textureSize (forces, 0));
          }
          `;
 

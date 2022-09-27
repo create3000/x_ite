@@ -228,8 +228,11 @@ function (Fields,
                this .setUniform ("uniform1i", "verticesIndex", numVertices ? verticesIndex : -1);
                this .setUniform ("uniform1i", "normalsIndex",  numVertices ? normalsIndex  : -1);
 
-               gl .bindTexture (gl .TEXTURE_2D, this .surfaceTexture);
-               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, surfaceArraySize, surfaceArraySize, 0, gl .RGBA, gl .FLOAT, surfaceArray);
+               if (surfaceArraySize)
+               {
+                  gl .bindTexture (gl .TEXTURE_2D, this .surfaceTexture);
+                  gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, surfaceArraySize, surfaceArraySize, 0, gl .RGBA, gl .FLOAT, surfaceArray);
+               }
             }
             else
             {
