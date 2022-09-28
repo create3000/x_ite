@@ -79,6 +79,8 @@ function (Fields,
       this .volumeNode  = new IndexedFaceSet (executionContext);
       this .volumeArray = new Float32Array ();
 
+      this .addSampler ("volume");
+
       this .addUniform ("direction",      "uniform vec3 direction;");
       this .addUniform ("verticesIndex",  "uniform int verticesIndex;");
       this .addUniform ("normalsIndex",   "uniform int normalsIndex;");
@@ -181,8 +183,6 @@ function (Fields,
 
          this .volumeTexture = this .createTexture ();
 
-         this .setUniform ("uniform1i", "volume", browser .getDefaultTexture2DUnit ());
-
          // Initialize fields.
 
          this ._direction .addInterest ("set_direction__", this);
@@ -277,13 +277,10 @@ function (Fields,
             }
          };
       })(),
-      activateTextures: function (browser, gl, program)
+      activateTextures: function (gl, program)
       {
-         const textureUnit = browser .getTexture2DUnit ();
-
-         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .activeTexture (gl .TEXTURE0 + program .volumeTextureUnit);
          gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
-         gl .uniform1i (program .volume, textureUnit);
       },
    });
 

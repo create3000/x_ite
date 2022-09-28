@@ -74,9 +74,14 @@ function (X3DNode,
       this ._mass        .setUnit ("mass");
       this ._surfaceArea .setUnit ("area");
 
+      this .samplers  = [ ];
       this .uniforms  = { };
       this .functions = [ ];
       this .program   = null;
+
+      this .addSampler ("forces");
+      this .addSampler ("colorRamp");
+      this .addSampler ("boundedVolume");
 
       this .addUniform ("speed",     "uniform float speed;");
       this .addUniform ("variation", "uniform float variation;");
@@ -185,11 +190,8 @@ function (X3DNode,
 
          if (particleSystem .numForces)
          {
-            const textureUnit = browser .getTexture2DUnit ();
-
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+            gl .activeTexture (gl .TEXTURE0 + program .forcesTextureUnit);
             gl .bindTexture (gl .TEXTURE_2D, particleSystem .forcesTexture);
-            gl .uniform1i (program .forces, textureUnit);
          }
 
          // Colors
@@ -198,11 +200,8 @@ function (X3DNode,
 
          if (particleSystem .numColors)
          {
-            const textureUnit = browser .getTexture2DUnit ();
-
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+            gl .activeTexture (gl .TEXTURE0 + program .colorRampTextureUnit);
             gl .bindTexture (gl .TEXTURE_2D, particleSystem .colorRampTexture);
-            gl .uniform1i (program .colorRamp, textureUnit);
          }
 
          // Bounded Physics
@@ -218,13 +217,8 @@ function (X3DNode,
             gl .uniform1i (program .boundedHierarchyIndex, particleSystem .boundedHierarchyIndex);
             gl .uniform1i (program .boundedHierarchyRoot,  particleSystem .boundedHierarchyRoot);
 
-            {
-               const textureUnit = browser .getTexture2DUnit ();
-
-               gl .activeTexture (gl .TEXTURE0 + textureUnit);
-               gl .bindTexture (gl .TEXTURE_2D, particleSystem .boundedTexture);
-               gl .uniform1i (program .boundedVolume, textureUnit);
-            }
+            gl .activeTexture (gl .TEXTURE0 + program .boundedVolumeTextureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, particleSystem .boundedTexture);
          }
 
          // Input attributes
@@ -243,7 +237,7 @@ function (X3DNode,
 
          // Other textures
 
-         this .activateTextures (browser, gl, program);
+         this .activateTextures (gl, program);
 
          // Render
 
@@ -265,16 +259,16 @@ function (X3DNode,
             gl .disableVertexAttribArray (attribute);
          }
 
-         // Restore/Finish
-
-         browser .resetTextureUnits ();
-
          // DEBUG
 
-         // const data = new Float32Array (particleSystem .numParticles * (particleSystem .particleStride / 4));
+         // const data = new Float32Array (particleSystem .numParticles * (particleStride / 4));
          // gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
          // console .log (particleSystem .numParticles, data .slice (4, 8));
+      },
+      addSampler: function (name)
+      {
+         this .samplers .push (name);
       },
       addUniform: function (name, uniform)
       {
@@ -841,9 +835,12 @@ function (X3DNode,
 
          gl .useProgram (program);
 
-         gl .uniform1i (program .forces,        browser .getDefaultTexture2DUnit ());
-         gl .uniform1i (program .colorRamp,     browser .getDefaultTexture2DUnit ());
-         gl .uniform1i (program .boundedVolume, browser .getDefaultTexture2DUnit ());
+         for (const name of this .samplers)
+         {
+            gl .uniform1i (gl .getUniformLocation (program, name), program [name + "TextureUnit"] = browser .getTexture2DUnit ());
+         }
+
+         browser .resetTextureUnits ();
 
          return program;
       },
@@ -865,6 +862,15 @@ function (X3DNode,
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, 1, 1, 0, gl .RGBA, gl .FLOAT, new Float32Array (4));
 
          return texture;
+      },
+      getTexture2DUnit: function (browser, object, property)
+      {
+         const textureUnit = object [property];
+
+         if (textureUnit === undefined)
+            return object [property] = browser .getTexture2DUnit ();
+
+         return textureUnit;
       },
    });
 

@@ -77,6 +77,8 @@ function (Fields,
       this .surfaceNode  = null;
       this .surfaceArray = new Float32Array ();
 
+      this .addSampler ("surface");
+
       this .addUniform ("solid",         "uniform bool solid;");
       this .addUniform ("verticesIndex", "uniform int verticesIndex;");
       this .addUniform ("normalsIndex",  "uniform int normalsIndex;");
@@ -143,8 +145,6 @@ function (Fields,
          // Create GL stuff.
 
          this .surfaceTexture = this .createTexture ();
-
-         this .setUniform ("uniform1i", "surface", browser .getDefaultTexture2DUnit ());
 
          // Initialize fields.
 
@@ -241,13 +241,10 @@ function (Fields,
             }
          };
       })(),
-      activateTextures: function (browser, gl, program)
+      activateTextures: function (gl, program)
       {
-         const textureUnit = browser .getTexture2DUnit ();
-
-         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .activeTexture (gl .TEXTURE0 + program .surfaceTextureUnit);
          gl .bindTexture (gl .TEXTURE_2D, this .surfaceTexture);
-         gl .uniform1i (program .surface, textureUnit);
       },
    });
 

@@ -75,6 +75,8 @@ function (Fields,
       this .polylineNode  = new IndexedLineSet (executionContext);
       this .polylineArray = new Float32Array ();
 
+      this .addSampler ("polylines");
+
       this .addUniform ("direction",     "uniform vec3 direction;");
       this .addUniform ("verticesIndex", "uniform int verticesIndex;");
       this .addUniform ("polylines",     "uniform sampler2D polylines;");
@@ -159,8 +161,6 @@ function (Fields,
 
          this .polylineTexture = this .createTexture ();
 
-         this .setUniform ("uniform1i", "polylines", browser .getDefaultTexture2DUnit ());
-
          // Initialize fields.
 
          this ._direction .addInterest ("set_direction__", this);
@@ -232,13 +232,10 @@ function (Fields,
             }
          };
       })(),
-      activateTextures: function (browser, gl, program)
+      activateTextures: function (gl, program)
       {
-         const textureUnit = browser .getTexture2DUnit ();
-
-         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .activeTexture (gl .TEXTURE0 + program .polylineTextureUnit);
          gl .bindTexture (gl .TEXTURE_2D, this .polylineTexture);
-         gl .uniform1i (program .polylines, textureUnit);
       },
    });
 
