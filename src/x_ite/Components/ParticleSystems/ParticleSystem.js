@@ -864,7 +864,9 @@ function (Fields,
 
          gl .useProgram (program);
          gl .uniformMatrix3fv (program .rotation, false, new Float32Array (Matrix3 .Identity));
-         gl .uniform1i (program .texCoordRamp, browser .getDefaultTexture2DUnit ());
+         gl .uniform1i (program .texCoordRamp, program .texCoordRampTextureUnit = browser .getTexture2DUnit ());
+
+         browser .resetTextureUnits ();
 
          return program;
       },
@@ -1095,15 +1097,11 @@ function (Fields,
          if (rotation)
             gl .uniformMatrix3fv (program .rotation, false, rotation);
 
-         if (this .numTexCoord)
+         if (this .numTexCoords)
          {
             gl .uniform1i (program .numTexCoords, this .numTexCoords);
-
-            const textureUnit = browser .getTexture2DUnit ();
-
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+            gl .activeTexture (gl .TEXTURE0 + program .texCoordRampTextureUnit);
             gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
-            gl .uniform1i (program .texCoordRamp, textureUnit);
          }
          else
          {
@@ -1141,8 +1139,6 @@ function (Fields,
             gl .disableVertexAttribArray (attribute);
             gl .vertexAttribDivisor (attribute, 0);
          }
-
-         browser .resetTextureUnits ();
 
          // const data = new Float32Array (this .maxParticles * this .vertexCount * 4);
          // gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
