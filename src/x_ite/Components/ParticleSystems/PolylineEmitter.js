@@ -72,8 +72,8 @@ function (Fields,
 
       this .addType (X3DConstants .PolylineEmitter);
 
-      this .polylineNode  = new IndexedLineSet (executionContext);
-      this .polylineArray = new Float32Array ();
+      this .polylinesNode  = new IndexedLineSet (executionContext);
+      this .polylinesArray = new Float32Array ();
 
       this .addSampler ("polylines");
 
@@ -159,21 +159,21 @@ function (Fields,
 
          // Create GL stuff.
 
-         this .polylineTexture = this .createTexture ();
+         this .polylinesTexture = this .createTexture ();
 
          // Initialize fields.
 
          this ._direction .addInterest ("set_direction__", this);
 
-         this ._coordIndex .addFieldInterest (this .polylineNode ._coordIndex);
-         this ._coord      .addFieldInterest (this .polylineNode ._coord);
+         this ._coordIndex .addFieldInterest (this .polylinesNode ._coordIndex);
+         this ._coord      .addFieldInterest (this .polylinesNode ._coord);
 
-         this .polylineNode ._coordIndex = this ._coordIndex;
-         this .polylineNode ._coord      = this ._coord;
+         this .polylinesNode ._coordIndex = this ._coordIndex;
+         this .polylinesNode ._coord      = this ._coord;
 
-         this .polylineNode ._rebuild .addInterest ("set_polyline", this);
-         this .polylineNode .setPrivate (true);
-         this .polylineNode .setup ();
+         this .polylinesNode ._rebuild .addInterest ("set_polyline", this);
+         this .polylinesNode .setPrivate (true);
+         this .polylinesNode .setup ();
 
          this .set_direction__ ();
          this .set_polyline ();
@@ -199,17 +199,17 @@ function (Fields,
          {
             const
                gl                = this .getBrowser () .getContext (),
-               vertices          = this .polylineNode .getVertices () .getValue (),
+               vertices          = this .polylinesNode .getVertices () .getValue (),
                numVertices       = vertices .length / 4,
                numLengthSoFar    = numVertices / 2 + 1,
                polylineArraySize = Math .ceil (Math .sqrt (numLengthSoFar + numVertices));
 
             const verticesIndex = numLengthSoFar;
 
-            let polylineArray = this .polylineArray;
+            let polylinesArray = this .polylinesArray;
 
-            if (polylineArray .length < polylineArraySize * polylineArraySize * 4)
-               polylineArray = this .polylineArray = new Float32Array (polylineArraySize * polylineArraySize * 4);
+            if (polylinesArray .length < polylineArraySize * polylineArraySize * 4)
+               polylinesArray = this .polylinesArray = new Float32Array (polylineArraySize * polylineArraySize * 4);
 
             let lengthSoFar = 0;
 
@@ -218,24 +218,24 @@ function (Fields,
                vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
                vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-               polylineArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .abs ();
+               polylinesArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .abs ();
             }
 
-            polylineArray .set (vertices, verticesIndex * 4);
+            polylinesArray .set (vertices, verticesIndex * 4);
 
             this .setUniform ("uniform1i", "verticesIndex", numVertices ? verticesIndex : -1);
 
             if (polylineArraySize)
             {
-               gl .bindTexture (gl .TEXTURE_2D, this .polylineTexture);
-               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, polylineArraySize, polylineArraySize, 0, gl .RGBA, gl .FLOAT, polylineArray);
+               gl .bindTexture (gl .TEXTURE_2D, this .polylinesTexture);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, polylineArraySize, polylineArraySize, 0, gl .RGBA, gl .FLOAT, polylinesArray);
             }
          };
       })(),
       activateTextures: function (gl, program)
       {
          gl .activeTexture (gl .TEXTURE0 + program .polylinesTextureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, this .polylineTexture);
+         gl .bindTexture (gl .TEXTURE_2D, this .polylinesTexture);
       },
    });
 
