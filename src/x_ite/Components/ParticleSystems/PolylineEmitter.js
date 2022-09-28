@@ -234,7 +234,7 @@ function (Fields,
       })(),
       activateTextures: function (gl, program)
       {
-         gl .activeTexture (gl .TEXTURE0 + program .polylineTextureUnit);
+         gl .activeTexture (gl .TEXTURE0 + program .polylinesTextureUnit);
          gl .bindTexture (gl .TEXTURE_2D, this .polylineTexture);
       },
    });
