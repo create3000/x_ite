@@ -193,7 +193,6 @@ function (Fields,
          const gl = this .getBrowser () .getContext ();
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
-         gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
          if (this .isComplete ())
          {
@@ -202,7 +201,6 @@ function (Fields,
             for (let i = 0; i < 6; ++ i)
             {
                const
-                  gl      = this .getBrowser () .getContext (),
                   texture = textures [i],
                   width   = texture .getWidth (),
                   height  = texture .getHeight (),
@@ -216,9 +214,11 @@ function (Fields,
                }
                else
                {
-                  gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, data);
+                  gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, data);
                }
             }
+
+            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
             this .updateTextureProperties ();
          }

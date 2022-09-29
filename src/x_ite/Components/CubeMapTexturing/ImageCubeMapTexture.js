@@ -232,7 +232,6 @@ function ($,
             let opaque = true;
 
             gl .bindTexture (this .getTarget (), this .getTexture ());
-            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
             for (let i = 0; i < 6; ++ i)
             {

@@ -721,7 +721,6 @@ function (Fields,
 
          if (boundedArraySize)
          {
-            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
             gl .bindTexture (gl .TEXTURE_2D, this .boundedTexture);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, boundedArraySize, boundedArraySize, 0, gl .RGBA, gl .FLOAT, boundedArray);
          }
@@ -762,7 +761,6 @@ function (Fields,
 
          if (textureSize)
          {
-            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
             gl .bindTexture (gl .TEXTURE_2D, this .colorRampTexture);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorRamp);
         }
@@ -805,7 +803,6 @@ function (Fields,
 
          if (textureSize)
          {
-            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
             gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, texCoordRamp);
          }
@@ -1037,7 +1034,6 @@ function (Fields,
 
             if (numForces)
             {
-               gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
                gl .bindTexture (gl .TEXTURE_2D, this .forcesTexture);
                gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numForces, 1, 0, gl .RGBA, gl .FLOAT, forces);
             }

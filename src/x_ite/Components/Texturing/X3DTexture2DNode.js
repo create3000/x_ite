@@ -136,6 +136,7 @@ function (X3DSingleTextureNode,
             gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
             gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
             gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
             this .setTransparent (transparent);
             this .updateTextureProperties ();
@@ -155,6 +156,7 @@ function (X3DSingleTextureNode,
             gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
             gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
             gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
             if (this .texturePropertiesNode ._generateMipMaps .getValue ())
                gl .generateMipmap (gl .TEXTURE_2D);
