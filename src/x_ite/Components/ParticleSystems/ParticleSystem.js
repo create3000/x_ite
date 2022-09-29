@@ -210,7 +210,7 @@ function (Fields,
 
          // Create GL stuff.
 
-         this .transformFeedBack = gl .createTransformFeedback ();
+         this .transformFeedback = gl .createTransformFeedback ();
          this .geometryBuffer    = this .createBuffer ();
 
          // Geometry context
@@ -1121,7 +1121,7 @@ function (Fields,
          }
 
          gl .bindBuffer (gl .ARRAY_BUFFER, null);
-         gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedBack);
+         gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedback);
          gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .geometryBuffer);
          gl .enable (gl .RASTERIZER_DISCARD);
          gl .beginTransformFeedback (gl .POINTS);
