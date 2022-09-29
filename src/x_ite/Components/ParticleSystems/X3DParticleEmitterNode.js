@@ -837,7 +837,9 @@ function (X3DNode,
 
          for (const name of this .samplers)
          {
-            gl .uniform1i (gl .getUniformLocation (program, name), program [name + "TextureUnit"] = browser .getTexture2DUnit ());
+            const location = gl .getUniformLocation (program, name);
+
+            gl .uniform1i (location, program [name + "TextureUnit"] = browser .getTexture2DUnit ());
          }
 
          browser .resetTextureUnits ();

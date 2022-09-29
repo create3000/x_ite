@@ -109,7 +109,6 @@ function (Fields,
       this .forcePhysicsModelNodes   = [ ];
       this .numForces                = 0;
       this .forces                   = new Float32Array (4);
-      this .forcesTexture            = null;
       this .boundedPhysicsModelNodes = [ ];
       this .boundedNormals           = [ ];
       this .boundedVertices          = [ ];
