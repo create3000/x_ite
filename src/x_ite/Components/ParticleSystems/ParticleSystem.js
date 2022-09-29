@@ -765,8 +765,7 @@ function (Fields,
             gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
             gl .bindTexture (gl .TEXTURE_2D, this .colorRampTexture);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorRamp);
-            console .log (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorRamp);
-         }
+        }
 
          this .numColors                      = numColors;
          this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
