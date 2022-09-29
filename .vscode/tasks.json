@@ -20,6 +20,21 @@
             "type": "shell",
             "command": "git ls-files --others --exclude-standard",
             "problemMatcher": []
+        },
+        {
+            "label": "Make Docs",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/docs"
+            },
+            "command": "bundle exec jekyll serve",
+            "problemMatcher": []
+        },
+        {
+            "label": "Open Docs in Browser",
+            "type": "shell",
+            "command": "open http://localhost:4000",
+            "problemMatcher": []
         }
     ]
 }
