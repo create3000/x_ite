@@ -9,6 +9,10 @@ $link-color: #b3531a !default;
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
 
+#adBlock {
+   display: none;
+}
+
 .masthead__inner-wrap {
    padding-left: 67px;
 }
