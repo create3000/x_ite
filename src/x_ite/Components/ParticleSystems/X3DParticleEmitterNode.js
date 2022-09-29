@@ -261,6 +261,9 @@ function (X3DNode,
 
          // DEBUG
 
+         // if (this .getTypeName () !== "ConeEmitter")
+         //    return;
+
          // const data = new Float32Array (particleSystem .numParticles * (particleStride / 4));
          // gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
@@ -766,8 +769,6 @@ function (X3DNode,
                output2 = vec4 (velocity, 0.0);
                output3 = position;
             }
-
-            // output1 = vec4 (textureSize (surface, 0), textureSize (forces, 0));
          }
          `;
 

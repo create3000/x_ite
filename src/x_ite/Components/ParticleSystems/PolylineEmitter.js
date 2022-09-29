@@ -227,6 +227,7 @@ function (Fields,
 
             if (polylineArraySize)
             {
+               gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
                gl .bindTexture (gl .TEXTURE_2D, this .polylinesTexture);
                gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, polylineArraySize, polylineArraySize, 0, gl .RGBA, gl .FLOAT, polylinesArray);
             }

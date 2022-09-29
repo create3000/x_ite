@@ -230,6 +230,7 @@ function (Fields,
 
                if (surfaceArraySize)
                {
+                  gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
                   gl .bindTexture (gl .TEXTURE_2D, this .surfaceTexture);
                   gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, surfaceArraySize, surfaceArraySize, 0, gl .RGBA, gl .FLOAT, surfaceArray);
                }

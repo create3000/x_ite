@@ -272,6 +272,7 @@ function (Fields,
 
             if (volumeArraySize)
             {
+               gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
                gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
                gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, volumeArraySize, volumeArraySize, 0, gl .RGBA, gl .FLOAT, volumeArray);
             }
