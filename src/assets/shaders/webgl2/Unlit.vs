@@ -43,15 +43,15 @@ out float depth;
 void
 main ()
 {
-   vec3 local    = real (x3d_ParticlePosition) + real (x3d_Vertex);
-   vec4 position = x3d_ModelViewMatrix * vec4 (local, 1.0);
+   vec4 local    = vec4 (x3d_ParticlePosition .xyz + x3d_Vertex .xyz, x3d_ParticlePosition .w * x3d_Vertex .w);
+   vec4 position = x3d_ModelViewMatrix * local;
 
    fogDepth    = x3d_FogDepth;
    color       = x3d_Color;
    normal      = x3d_NormalMatrix * x3d_Normal;
    vertex      = position .xyz;
    localNormal = x3d_Normal;
-   localVertex = local;
+   localVertex = local .xyz;
 
    #if x3d_MaxTextures > 0
    texCoord0 = x3d_TexCoord0;

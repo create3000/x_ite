@@ -31,8 +31,8 @@ out float depth;
 void
 main ()
 {
-   vec3 local    = real (x3d_ParticlePosition) + real (x3d_Vertex);
-   vec4 position = x3d_ModelViewMatrix * vec4 (local, 1.0);
+   vec4 local    = vec4 (x3d_ParticlePosition .xyz + x3d_Vertex .xyz, x3d_ParticlePosition .w * x3d_Vertex .w);
+   vec4 position = x3d_ModelViewMatrix * local;
 
    vertex      = position .xyz;
    normal      = normalize (x3d_NormalMatrix * x3d_Normal);
@@ -40,7 +40,7 @@ main ()
    texCoord1   = x3d_TexCoord1;
    color       = x3d_Color;
    localNormal = x3d_Normal;
-   localVertex = local;
+   localVertex = local .xyz;
 
    gl_Position = x3d_ProjectionMatrix * position;
 

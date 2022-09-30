@@ -31,8 +31,8 @@ main ()
 {
    // Determine varyings.
 
-   vec3 local    = real (x3d_ParticlePosition) + real (x3d_Vertex);
-   vec4 position = x3d_ModelViewMatrix * vec4 (local, 1.0);
+   vec4 local    = vec4 (x3d_ParticlePosition .xyz + x3d_Vertex .xyz, x3d_ParticlePosition .w * x3d_Vertex .w);
+   vec4 position = x3d_ModelViewMatrix * local;
 
    fogDepth = x3d_FogDepth;
    vertex   = position .xyz;

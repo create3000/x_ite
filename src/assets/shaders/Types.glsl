@@ -270,9 +270,3 @@ struct x3d_TextureCoordinateGeneratorParameters
 };
 
 //uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];
-
-mediump vec3
-real (mediump vec4 vector)
-{
-   return vector .xyz / vector .w;
-}

@@ -31,8 +31,8 @@ out float depth;
 void
 main ()
 {
-   vec3 local    = real (x3d_ParticlePosition) + real (x3d_Vertex);
-   vec4 position = x3d_ModelViewMatrix * vec4 (local, 1.0);
+   vec4 local    = vec4 (x3d_ParticlePosition .xyz + x3d_Vertex .xyz, x3d_ParticlePosition .w * x3d_Vertex .w);
+   vec4 position = x3d_ModelViewMatrix * local;
 
    fogDepth = x3d_FogDepth;
    vertex   = position .xyz;
@@ -41,10 +41,10 @@ main ()
 
    #ifdef X_ITE
    // Line Stipple
-   vec4 start = x3d_ProjectionMatrix * x3d_ModelViewMatrix * vec4 (real (x3d_ParticlePosition) + real (x3d_TexCoord0), 1.0);
+   vec4 start = x3d_ProjectionMatrix * x3d_ModelViewMatrix * vec4 (x3d_ParticlePosition .xyz + x3d_TexCoord0 .xyz, x3d_ParticlePosition .w * x3d_TexCoord0 .w);
 
-   startPosition  = real (start);
-   vertexPosition = real (gl_Position);
+   startPosition  = start .xyz / start .w;
+   vertexPosition = gl_Position .xyz / gl_Position .w;
    #endif
 
    #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
