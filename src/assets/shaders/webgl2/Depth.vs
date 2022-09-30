@@ -14,8 +14,8 @@ out vec3 vertex; // point on geometry
 void
 main ()
 {
-   vec3 local    = x3d_ParticlePosition .xyz + x3d_Vertex .xyz;
-   vec4 position = x3d_ModelViewMatrix * vec4 (local, x3d_Vertex .w);
+   vec3 local    = real (x3d_ParticlePosition) + real (x3d_Vertex);
+   vec4 position = x3d_ModelViewMatrix * vec4 (local, 1.0);
 
    vertex = position .xyz;
 
