@@ -771,6 +771,7 @@ function ($,
          this .setLive (true);
          this .getExecutionContext () .setLive (true);
          this .advanceTime (performance .now ());
+         this .addBrowserEvent ();
       },
       endUpdate: function ()
       {
