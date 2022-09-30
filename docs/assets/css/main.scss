@@ -9,9 +9,7 @@ $link-color: #b3531a !default;
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
 
-#adBlock {
-   display: none;
-}
+// Global
 
 .masthead__inner-wrap {
    padding-left: 67px;
@@ -101,4 +99,28 @@ $link-color: #b3531a !default;
    .h-card {
       height: unset;
    }
+}
+
+// Search
+
+.gsc-adBlock {
+   display: none !important;
+}
+
+.search-content__inner-wrap form {
+   background: none !important;
+}
+
+.gsc-control-cse {
+   background: none !important;
+   border: none !important;
+}
+
+.gsc-results {
+   background: none !important;
+}
+
+.gsc-webResult.gsc-result {
+   border: none !important;
+   border-bottom: 1px solid #fff !important;
 }
