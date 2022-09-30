@@ -213,6 +213,9 @@ function (Fields,
          this .pointBuffer       = this .createBuffer ();
          this .geometryBuffer    = this .createBuffer ();
 
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .pointBuffer);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([0, 0, 0, 1]), gl .DYNAMIC_DRAW);
+
          // Geometry context
 
          this .geometryContext .fogCoords                = false;
@@ -372,6 +375,7 @@ function (Fields,
                this .vertexOffset   = 0;
                this .stride         = this .particleStride;
                this .vertexStride   = 0;
+               this .vertexDivisor  = 1;
 
                break;
             }
@@ -399,6 +403,7 @@ function (Fields,
                this .vertexOffset   = offset += Float32Array .BYTES_PER_ELEMENT * 4;
                this .stride         = offset += Float32Array .BYTES_PER_ELEMENT * 4;
                this .vertexStride   = this .stride;
+               this .vertexDivisor  = 0;
 
                this .program = this .createProgram ([
                   "particle",
@@ -480,6 +485,7 @@ function (Fields,
                this .vertexOffset   = offset += Float32Array .BYTES_PER_ELEMENT * 3;
                this .stride         = offset += Float32Array .BYTES_PER_ELEMENT * 4;
                this .vertexStride   = this .stride;
+               this .vertexDivisor  = 0;
 
                this .program = this .createProgram ([
                   "particle",
@@ -944,16 +950,6 @@ function (Fields,
          switch (this .geometryType)
          {
             case GeometryTypes .POINT:
-            {
-               const geometryData = new Float32Array (this .maxParticles * 4);
-
-               for (let i = 3, length = geometryData .length; i < length; i += 4)
-                  geometryData [i] = 1;
-
-               gl .bindBuffer (gl .ARRAY_BUFFER, this .pointBuffer);
-               gl .bufferData (gl .ARRAY_BUFFER, geometryData, gl .DYNAMIC_DRAW);
-               break;
-            }
             case GeometryTypes .GEOMETRY:
             {
                break;
@@ -1298,6 +1294,7 @@ function (Fields,
                         shaderNode .enableNormalAttribute (gl, this .normalBuffer, stride, this .normalOffset);
 
                      shaderNode .enableVertexAttribute (gl, this .vertexBuffer, this .vertexStride, this .vertexOffset);
+                     shaderNode .vertexAttributeDivisor (gl, this .vertexDivisor);
 
                      if (shaderNode .wireframe && this .testWireframe)
                      {
@@ -1332,6 +1329,8 @@ function (Fields,
                         shaderNode .forceDisableNormalAttribute (gl);
 
                      shaderNode .forceDisableVertexAttribute (gl);
+
+                     shaderNode .vertexAttributeDivisor (gl, 0);
 
                      if (blendModeNode)
                         blendModeNode .disable (gl);

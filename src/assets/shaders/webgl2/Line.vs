@@ -12,7 +12,7 @@ uniform mat4 x3d_ModelViewMatrix;
 in float x3d_FogDepth;
 in vec4  x3d_Color;
 in vec4  x3d_Vertex;
-in vec4  x3d_ParticlePosition;
+in vec3  x3d_ParticlePosition;
 
 out float fogDepth; // fog depth
 out vec4  color;    // color
@@ -31,7 +31,7 @@ out float depth;
 void
 main ()
 {
-   vec4 local    = vec4 (x3d_ParticlePosition .xyz + x3d_Vertex .xyz, x3d_ParticlePosition .w * x3d_Vertex .w);
+   vec4 local    = vec4 (x3d_ParticlePosition + x3d_Vertex .xyz, x3d_Vertex .w);
    vec4 position = x3d_ModelViewMatrix * local;
 
    fogDepth = x3d_FogDepth;
@@ -41,7 +41,7 @@ main ()
 
    #ifdef X_ITE
    // Line Stipple
-   vec4 start = x3d_ProjectionMatrix * x3d_ModelViewMatrix * vec4 (x3d_ParticlePosition .xyz + x3d_TexCoord0 .xyz, x3d_ParticlePosition .w * x3d_TexCoord0 .w);
+   vec4 start = x3d_ProjectionMatrix * x3d_ModelViewMatrix * vec4 (x3d_ParticlePosition + x3d_TexCoord0 .xyz, x3d_TexCoord0 .w);
 
    startPosition  = start .xyz / start .w;
    vertexPosition = gl_Position .xyz / gl_Position .w;

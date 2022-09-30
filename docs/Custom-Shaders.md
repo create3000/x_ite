@@ -625,7 +625,7 @@ If the shader node is part of a ParticleSystem node the following attributes are
 | Type           | Name                  | Comment                                                       |
 |--------------- |---------------------- |---------------------------------------------------------------|
 | attribute vec4 | x3d\_Particle         | vec4(int id, int life, float lifetime, float elapsedTime)     |
-| attribute vec4 | x3d\_ParticlePosition | center coordinate of particle, should be added to x3d\_Vertex |
+| attribute vec3 | x3d\_ParticlePosition | center coordinate of particle, should be added to x3d\_Vertex |
 
 ## Built-in Constants
 

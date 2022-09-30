@@ -740,7 +740,7 @@ function (X3DNode,
                {
                   output1 = vec4 (0.0);
                   output2 = vec4 (0.0);
-                  output3 = vec4 (0.0);
+                  output3 = vec4 (0.0 / 0.0);
                }
             }
             else

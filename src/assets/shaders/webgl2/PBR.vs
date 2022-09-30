@@ -9,7 +9,7 @@ uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 uniform mat3 x3d_NormalMatrix;
 
-in vec4 x3d_ParticlePosition;
+in vec3 x3d_ParticlePosition;
 in vec4 x3d_Vertex;
 in vec3 x3d_Normal;
 in vec4 x3d_TexCoord0;
@@ -31,7 +31,7 @@ out float depth;
 void
 main ()
 {
-   vec4 local    = vec4 (x3d_ParticlePosition .xyz + x3d_Vertex .xyz, x3d_ParticlePosition .w * x3d_Vertex .w);
+   vec4 local    = vec4 (x3d_ParticlePosition + x3d_Vertex .xyz, x3d_Vertex .w);
    vec4 position = x3d_ModelViewMatrix * local;
 
    vertex      = position .xyz;

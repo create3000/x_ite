@@ -1367,6 +1367,10 @@ function (X3DCast,
          gl .vertexAttribPointer (this .x3d_Vertex, 4, gl .FLOAT, false, 0, 0);
          gl .disableVertexAttribArray (this .x3d_Vertex);
       },
+      vertexAttributeDivisor: function (gl, divisor)
+      {
+         gl .vertexAttribDivisor (this .x3d_Vertex, divisor);
+      },
       enableParticleAttribute: function (gl, buffer, stride, offset, divisor)
       {
          gl .enableVertexAttribArray (this .x3d_Particle);
@@ -1389,7 +1393,7 @@ function (X3DCast,
       {
          gl .enableVertexAttribArray (this .x3d_ParticlePosition);
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-         gl .vertexAttribPointer (this .x3d_ParticlePosition, 4, gl .FLOAT, false, stride, offset);
+         gl .vertexAttribPointer (this .x3d_ParticlePosition, 3, gl .FLOAT, false, stride, offset);
          gl .vertexAttribDivisor (this .x3d_ParticlePosition, divisor);
       },
       disableParticlePositionAttribute: function (gl)

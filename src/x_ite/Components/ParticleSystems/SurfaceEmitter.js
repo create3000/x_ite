@@ -105,7 +105,7 @@ function (Fields,
 
       this .addFunction (/* glsl */ `vec4 getRandomPosition ()
       {
-         return verticesIndex < 0 ? vec4 (0.0) : position;
+         return verticesIndex < 0 ? vec4 (0.0 / 0.0) : position;
       }`);
    }
 
