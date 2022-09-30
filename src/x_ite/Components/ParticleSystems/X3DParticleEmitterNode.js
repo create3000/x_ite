@@ -332,7 +332,6 @@ function (X3DNode,
          // Constants
 
          const int   ARRAY_SIZE = 32;
-         const int   MAX_FORCES = 1024;
          const float M_PI       = 3.14159265359;
          const float NaN        = 0.0 / 0.0;
 
