@@ -147,9 +147,6 @@ function (X3DGeometryNode,
                if (this .colorMaterial)
                   shaderNode .enableColorAttribute (gl, this .colorBuffer);
 
-               if (this .getMultiTexCoords () .length)
-                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-
                shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
                gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
@@ -163,8 +160,72 @@ function (X3DGeometryNode,
                if (this .colorMaterial)
                   shaderNode .disableColorAttribute (gl);
 
-               if (this .getMultiTexCoords () .length)
-                  shaderNode .disableTexCoordAttribute (gl);
+               if (blendModeNode)
+                  blendModeNode .disable (gl);
+            }
+         }
+         catch (error)
+         {
+            // Catch error from setLocalUniforms.
+            console .error (error);
+         }
+      },
+      displayParticles: function (gl, context, particleSystem)
+      {
+         try
+         {
+            const
+               browser        = context .browser,
+               appearanceNode = context .shapeNode .getAppearance (),
+               shaderNode     = appearanceNode .shaderNode || browser .getPointShader ();
+
+            if (shaderNode .getValid ())
+            {
+               const
+                  blendModeNode = appearanceNode .blendModeNode,
+                  attribNodes   = this .attribNodes,
+                  attribBuffers = this .attribBuffers;
+
+               if (blendModeNode)
+                  blendModeNode .enable (gl);
+
+               // Setup shader.
+
+               shaderNode .enable (gl);
+               shaderNode .setLocalUniforms (gl, context);
+
+               // Setup vertex attributes.
+
+               shaderNode .enableParticleAttribute (gl, particleSystem .particleBuffer, particleSystem .stride, particleSystem .particleOffset, 1);
+               shaderNode .enableParticlePositionAttribute (gl, particleSystem .positionBuffer, particleSystem .stride, particleSystem .positionOffset, 1);
+
+               for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+               if (this .fogCoords)
+                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+
+               if (this .colorMaterial)
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer);
+
+               shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+
+               // Wireframes are always solid so only one drawing call is needed.
+
+               gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+               gl .bindBuffer (gl .ARRAY_BUFFER, null);
+
+               shaderNode .forceDisableParticleAttribute         (gl);
+               shaderNode .forceDisableParticlePositionAttribute (gl);
+
+               for (const attribNode of attribNodes)
+                  attribNode .disable (gl, shaderNode);
+
+               if (this .fogCoords)
+                  shaderNode .disableFogDepthAttribute (gl);
+
+               if (this .colorMaterial)
+                  shaderNode .disableColorAttribute (gl);
 
                if (blendModeNode)
                   blendModeNode .disable (gl);
@@ -176,102 +237,6 @@ function (X3DGeometryNode,
             console .error (error);
          }
       },
-      displayParticles: (function ()
-      {
-         const position = new Vector3 (0, 0, 0);
-
-         return function (gl, context, particleSystem)
-         {
-            try
-            {
-               const
-                  browser        = context .browser,
-                  appearanceNode = context .shapeNode .getAppearance (),
-                  shaderNode     = appearanceNode .shaderNode || browser .getPointShader ();
-
-               if (shaderNode .getValid ())
-               {
-                  const
-                     blendModeNode = appearanceNode .blendModeNode,
-                     attribNodes   = this .attribNodes,
-                     attribBuffers = this .attribBuffers;
-
-                  if (blendModeNode)
-                     blendModeNode .enable (gl);
-
-                  // Setup shader.
-
-                  shaderNode .enable (gl);
-                  shaderNode .setLocalUniforms (gl, context);
-
-                  // Setup vertex attributes.
-
-                  for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                     attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-                  if (this .fogCoords)
-                     shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
-
-                  if (this .colorMaterial)
-                     shaderNode .enableColorAttribute (gl, this .colorBuffer);
-
-                  if (this .getMultiTexCoords () .length)
-                     shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-
-                  shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
-
-                  // Wireframes are always solid so only one drawing call is needed.
-
-                  const
-                     geometryArray   = particleSystem .geometryArray,
-                     numParticles    = particleSystem .numParticles,
-                     particleStride  = particleSystem .particleStride / Float32Array .BYTES_PER_ELEMENT,
-                     length          = numParticles * particleStride,
-                     modelViewMatrix = context .modelViewMatrix,
-                     x               = modelViewMatrix [12],
-                     y               = modelViewMatrix [13],
-                     z               = modelViewMatrix [14],
-                     primitiveMode   = this .primitiveMode;
-
-                  for (let offset = 0; offset < length; offset += particleStride)
-                  {
-                     modelViewMatrix [12] = x;
-                     modelViewMatrix [13] = y;
-                     modelViewMatrix [14] = z;
-
-                     position .set (geometryArray [offset + 12],
-                                    geometryArray [offset + 13],
-                                    geometryArray [offset + 14]);
-
-                     Matrix4 .prototype .translate .call (modelViewMatrix, position);
-
-                     shaderNode .setParticle (gl, modelViewMatrix, geometryArray, offset);
-
-                     gl .drawArrays (primitiveMode, 0, this .vertexCount);
-                  }
-
-                  for (const attribNode of attribNodes)
-                     attribNode .disable (gl, shaderNode);
-
-                  if (this .fogCoords)
-                     shaderNode .disableFogDepthAttribute (gl);
-
-                  if (this .colorMaterial)
-                     shaderNode .disableColorAttribute (gl);
-
-                  shaderNode .disableTexCoordAttribute (gl);
-
-                  if (blendModeNode)
-                     blendModeNode .disable (gl);
-               }
-            }
-            catch (error)
-            {
-               // Catch error from setLocalUniforms.
-               console .error (error);
-            }
-         };
-      })(),
    });
 
    return X3DLineGeometryNode;

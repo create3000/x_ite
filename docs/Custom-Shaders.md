@@ -620,19 +620,12 @@ A ComposedShader defines a number of special variables for the various shader st
 
 ### ParticleSystem
 
-If the shader node is part of a ParticleSystem node the following attributes are available if ParticleSystem.*geometryType* is POINT, LINE, TRIANGLE, QUAD, or SPRITE.
+If the shader node is part of a ParticleSystem node the following attributes are available.
 
-| Type           | Name                  | Comment                                                   |
-|--------------- |---------------------- |-----------------------------------------------------------|
-| attribute vec4 | x3d\_Particle         | vec4(int id, int life, float lifetime, float elapsedTime) |
-| attribute vec4 | x3d\_ParticlePosition | center coordinate of particle, in relation to x3d\_Vertex |
-
-If the ParticleSystem.*geometryType* is GEOMETRY the following uniforms are available.
-
-| Type         | Name                  | Comment                                                   |
-|------------- |---------------------- |-----------------------------------------------------------|
-| uniform vec4 | x3d\_Particle         | vec4(int id, int life, float lifetime, float elapsedTime) |
-| uniform vec4 | x3d\_ParticlePosition | center coordinate of particle, in relation to x3d\_Vertex |
+| Type           | Name                  | Comment                                                       |
+|--------------- |---------------------- |---------------------------------------------------------------|
+| attribute vec4 | x3d\_Particle         | vec4(int id, int life, float lifetime, float elapsedTime)     |
+| attribute vec4 | x3d\_ParticlePosition | center coordinate of particle, should be added to x3d\_Vertex |
 
 ## Built-in Constants
 

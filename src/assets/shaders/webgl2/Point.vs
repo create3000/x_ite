@@ -15,6 +15,7 @@ uniform mat4 x3d_ModelViewMatrix;
 in float x3d_FogDepth;
 in vec4  x3d_Color;
 in vec4  x3d_Vertex;
+in vec4  x3d_ParticlePosition;
 
 out float pointSize; // point size
 out float fogDepth;  // fog depth
@@ -30,7 +31,8 @@ main ()
 {
    // Determine varyings.
 
-   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
+   vec3 local    = x3d_ParticlePosition .xyz + x3d_Vertex .xyz;
+   vec4 position = x3d_ModelViewMatrix * vec4 (local, x3d_Vertex .w);
 
    fogDepth = x3d_FogDepth;
    vertex   = position .xyz;
