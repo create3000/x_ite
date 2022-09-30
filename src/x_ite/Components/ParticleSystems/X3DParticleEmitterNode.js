@@ -261,13 +261,10 @@ function (X3DNode,
 
          // DEBUG
 
-         // if (this .getTypeName () !== "ConeEmitter")
-         //    return;
-
          // const data = new Float32Array (particleSystem .numParticles * (particleStride / 4));
          // gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
-         // console .log (particleSystem .numParticles, data .slice (4, 8));
+         // console .log (data .slice (12, 16));
       },
       addSampler: function (name)
       {
@@ -336,6 +333,7 @@ function (X3DNode,
 
          const int   MAX_FORCES = 1024;
          const float M_PI       = 3.14159265359;
+         const float NaN        = 0.0 / 0.0;
 
          #define ARRAY_SIZE  32
 
@@ -740,7 +738,7 @@ function (X3DNode,
                {
                   output1 = vec4 (0.0);
                   output2 = vec4 (0.0);
-                  output3 = vec4 (0.0 / 0.0);
+                  output3 = vec4 (NaN);
                }
             }
             else

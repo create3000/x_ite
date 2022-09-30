@@ -108,7 +108,7 @@ function (Fields,
       {
          if (hierarchyRoot < 0)
          {
-            return vec4 (0.0 / 0.0);
+            return vec4 (NaN);
          }
          else
          {
