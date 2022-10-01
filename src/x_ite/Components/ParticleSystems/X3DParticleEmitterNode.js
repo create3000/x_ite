@@ -169,8 +169,7 @@ function (X3DNode,
             inputParticles  = particleSystem .inputParticles,
             particleStride  = particleSystem .particleStride,
             particleOffsets = particleSystem .particleOffsets,
-            program         = this .program,
-            inputs          = program .inputs;
+            program         = this .program;
 
          // Start
 
@@ -179,10 +178,12 @@ function (X3DNode,
          // Uniforms
 
          gl .uniform1i (program .randomSeed,        Math .random () * 0xffffffff);
+         gl .uniform1i (program .geometryType,      particleSystem .geometryType);
          gl .uniform1i (program .createParticles,   particleSystem .createParticles && this .on);
          gl .uniform1f (program .particleLifetime,  particleSystem .particleLifetime);
          gl .uniform1f (program .lifetimeVariation, particleSystem .lifetimeVariation);
          gl .uniform1f (program .deltaTime,         deltaTime);
+         gl .uniform2f (program .particleSize,      particleSystem ._particleSize .x, particleSystem ._particleSize .y);
 
          // Forces
 
@@ -223,13 +224,8 @@ function (X3DNode,
 
          // Input attributes
 
-         for (let i = 0; i < 4; ++ i)
+         for (const [i, attribute] of program .inputs)
          {
-            const attribute = inputs [i];
-
-            if (attribute === -1)
-               continue;
-
             gl .enableVertexAttribArray (attribute);
             gl .bindBuffer (gl .ARRAY_BUFFER, inputParticles);
             gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particleStride, particleOffsets [i]);
@@ -251,20 +247,15 @@ function (X3DNode,
          gl .disable (gl .RASTERIZER_DISCARD);
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
 
-         for (const attribute of inputs)
-         {
-            if (attribute === -1)
-               continue;
-
+         for (const [i, attribute] of program .inputs)
             gl .disableVertexAttribArray (attribute);
-         }
 
          // DEBUG
 
          // const data = new Float32Array (particleSystem .numParticles * (particleStride / 4));
          // gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles);
          // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
-         // console .log (data .slice (12, 16));
+         // console .log (data .slice (4, 8));
       },
       addSampler: function (name)
       {
@@ -300,10 +291,12 @@ function (X3DNode,
          precision highp sampler2D;
 
          uniform int   randomSeed;
+         uniform int   geometryType;
          uniform bool  createParticles;
          uniform float particleLifetime;
          uniform float lifetimeVariation;
          uniform float deltaTime;
+         uniform vec2  particleSize;
 
          uniform int       numForces;
          uniform sampler2D forces;
@@ -320,14 +313,17 @@ function (X3DNode,
          ${Object .values (this .uniforms) .join ("\n")}
 
          in vec4 input0;
-         in vec4 input1;
          in vec4 input2;
-         in vec4 input3;
+         in vec4 input6;
 
          out vec4 output0;
          out vec4 output1;
          out vec4 output2;
+
          out vec4 output3;
+         out vec4 output4;
+         out vec4 output5;
+         out vec4 output6;
 
          // Constants
 
@@ -410,6 +406,34 @@ function (X3DNode,
             vec3  r = a * v .xyz + b * q .xyz + c * (q .yzx * v .zxy - q .zxy * v .yzx);
 
             return r;
+         }
+
+         mat3
+         Matrix3 (const in vec4 quaternion)
+         {
+            float x = quaternion .x;
+            float y = quaternion .y;
+            float z = quaternion .z;
+            float w = quaternion .w;
+            float A = y * y;
+            float B = z * z;
+            float C = x * y;
+            float D = z * w;
+            float E = z * x;
+            float F = y * w;
+            float G = x * x;
+            float H = y * z;
+            float I = x * w;
+
+            return mat3 (1.0 - 2.0 * (A + B),
+                         2.0 * (C + D),
+                         2.0 * (E - F),
+                         2.0 * (C - D),
+                         1.0 - 2.0 * (B + G),
+                         2.0 * (H + I),
+                         2.0 * (E + F),
+                         2.0 * (H - I),
+                         1.0 - 2.0 * (A + G));
          }
 
          /* Random number generation */
@@ -730,13 +754,13 @@ function (X3DNode,
                {
                   output1 = getColor (lifetime, elapsedTime);
                   output2 = vec4 (getRandomVelocity (), 0.0);
-                  output3 = getRandomPosition ();
+                  output6 = getRandomPosition ();
                }
                else
                {
                   output1 = vec4 (0.0);
                   output2 = vec4 (0.0);
-                  output3 = vec4 (NaN);
+                  output6 = vec4 (NaN);
                }
             }
             else
@@ -744,7 +768,7 @@ function (X3DNode,
                // Animate particle.
 
                vec3 velocity = input2 .xyz;
-               vec4 position = input3;
+               vec4 position = input6;
 
                for (int i = 0; i < numForces; ++ i)
                {
@@ -758,12 +782,42 @@ function (X3DNode,
 
                position .xyz += velocity * deltaTime;
 
-               bounce (input3, position, velocity);
+               bounce (input6, position, velocity);
 
                output0 = vec4 (gl_VertexID, life, lifetime, elapsedTime);
                output1 = getColor (lifetime, elapsedTime);
                output2 = vec4 (velocity, 0.0);
-               output3 = position;
+               output6 = position;
+            }
+
+            switch (geometryType)
+            {
+               case 0: // POINT
+               case 4: // SPRITE
+               {
+                  output3 = vec4 (1.0, 0.0, 0.0, 0.0);
+                  output4 = vec4 (0.0, 1.0, 0.0, 0.0);
+                  output5 = vec4 (0.0, 0.0, 1.0, 0.0);
+                  break;
+               }
+               case 1: // LINE
+               {
+                  mat3 r = Matrix3 (Quaternion (vec3 (0.0, 0.0, 1.0), output2 .xyz));
+                  mat3 s = mat3 (1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, particleSize .y);
+                  mat3 m = r * s;
+
+                  output3 = vec4 (m [0], 0.0);
+                  output4 = vec4 (m [1], 0.0);
+                  output5 = vec4 (m [2], 0.0);
+                  break;
+               }
+               default: // QUAD, TRIANGLE
+               {
+                  output3 = vec4 (particleSize .x, 0.0, 0.0, 0.0);
+                  output4 = vec4 (0.0, particleSize .y, 0.0, 0.0);
+                  output5 = vec4 (0.0, 0.0, 1.0, 0.0);
+                  break;
+               }
             }
          }
          `;
@@ -796,24 +850,25 @@ function (X3DNode,
 
          gl .attachShader (program, vertexShader);
          gl .attachShader (program, fragmentShader);
-         gl .transformFeedbackVaryings (program, ["output0", "output1", "output2", "output3"], gl .INTERLEAVED_ATTRIBS);
+         gl .transformFeedbackVaryings (program, ["output0", "output1", "output2", "output3", "output4", "output5", "output6"], gl .INTERLEAVED_ATTRIBS);
          gl .linkProgram (program);
 
          if (!gl .getProgramParameter (program, gl .LINK_STATUS))
             console .error ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
 
          program .inputs = [
-            gl .getAttribLocation (program, "input0"),
-            gl .getAttribLocation (program, "input1"),
-            gl .getAttribLocation (program, "input2"),
-            gl .getAttribLocation (program, "input3"),
+            [0, gl .getAttribLocation (program, "input0")],
+            [2, gl .getAttribLocation (program, "input2")],
+            [6, gl .getAttribLocation (program, "input6")],
          ];
 
          program .randomSeed        = gl .getUniformLocation (program, "randomSeed");
+         program .geometryType      = gl .getUniformLocation (program, "geometryType");
          program .createParticles   = gl .getUniformLocation (program, "createParticles");
          program .particleLifetime  = gl .getUniformLocation (program, "particleLifetime");
          program .lifetimeVariation = gl .getUniformLocation (program, "lifetimeVariation");
          program .deltaTime         = gl .getUniformLocation (program, "deltaTime");
+         program .particleSize      = gl .getUniformLocation (program, "particleSize");
 
          program .numForces = gl .getUniformLocation (program, "numForces");
          program .forces    = gl .getUniformLocation (program, "forces");

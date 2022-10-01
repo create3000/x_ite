@@ -11,7 +11,7 @@ in float x3d_FogDepth;
 in vec4  x3d_Color;
 in vec3  x3d_Normal;
 in vec4  x3d_Vertex;
-in vec3  x3d_ParticlePosition;
+in mat4  x3d_ParticleMatrix;
 
 #if x3d_MaxTextures > 0
 in vec4 x3d_TexCoord0;
@@ -43,15 +43,14 @@ out float depth;
 void
 main ()
 {
-   vec4 local    = vec4 (x3d_ParticlePosition + x3d_Vertex .xyz, x3d_Vertex .w);
-   vec4 position = x3d_ModelViewMatrix * local;
+   vec4 position = x3d_ModelViewMatrix * (x3d_ParticleMatrix * x3d_Vertex);
 
    fogDepth    = x3d_FogDepth;
    color       = x3d_Color;
    normal      = x3d_NormalMatrix * x3d_Normal;
    vertex      = position .xyz;
    localNormal = x3d_Normal;
-   localVertex = local .xyz;
+   localVertex = x3d_Vertex .xyz;
 
    #if x3d_MaxTextures > 0
    texCoord0 = x3d_TexCoord0;

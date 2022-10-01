@@ -142,10 +142,6 @@ function (Fields,
       {
          shaderNode .enableFloatAttrib (gl, this ._name .getValue (), buffer, this .numComponents);
       },
-      disable: function (gl, shaderNode)
-      {
-         shaderNode .disableFloatAttrib (gl, this ._name .getValue ());
-      },
    });
 
    return FloatVertexAttribute;

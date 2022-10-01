@@ -130,11 +130,7 @@ function (Fields,
       },
       enable: function (gl, shaderNode, buffer)
       {
-         shaderNode .enableMatrix4Attrib (gl, this ._name .getValue (), buffer);
-      },
-      disable: function (gl, shaderNode)
-      {
-         shaderNode .disableMatrix4Attrib (gl, this ._name .getValue ());
+         shaderNode .enableMatrix4Attrib (gl, this ._name .getValue (), buffer, 0, 0);
       },
    });
 

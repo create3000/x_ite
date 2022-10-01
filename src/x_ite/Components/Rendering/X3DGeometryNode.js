@@ -187,14 +187,14 @@ function (Fields,
 
          const gl = this .getBrowser () .getContext ();
 
-         this .frontFace       = gl .CCW;
-         this .attribBuffers   = [ ];
-         this .texCoordBuffers = [ ];
-         this .fogDepthBuffer  = gl .createBuffer ();
-         this .colorBuffer     = gl .createBuffer ();
-         this .normalBuffer    = gl .createBuffer ();
-         this .vertexBuffer    = gl .createBuffer ();
-         this .planes          = [ ];
+         this .frontFace            = gl .CCW;
+         this .attribBuffers        = [ ];
+         this .texCoordBuffers      = [ ];
+         this .fogDepthBuffer       = gl .createBuffer ();
+         this .colorBuffer          = gl .createBuffer ();
+         this .normalBuffer         = gl .createBuffer ();
+         this .vertexBuffer         = gl .createBuffer ();
+         this .planes               = [ ];
 
          for (let i = 0; i < 5; ++ i)
             this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
@@ -910,16 +910,7 @@ function (Fields,
       { },
       depth: function (gl, context, shaderNode)
       {
-         // Setup vertex attributes.
-
-         // Attribs in depth rendering are not supported.
-         //for (let i = 0, length = attribNodes .length; i < length; ++ i)
-         //	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
-
-         //for (let i = 0, length = attribNodes .length; i < length; ++ i)
-         //	attribNodes [i] .disable (gl, shaderNode);
 
          gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
       },
@@ -1038,17 +1029,7 @@ function (Fields,
                }
             }
 
-            for (const attribNode of attribNodes)
-               attribNode .disable (gl, shaderNode);
-
-            if (this .fogCoords)
-               shaderNode .disableFogDepthAttribute (gl);
-
-            if (this .colorMaterial)
-               shaderNode .disableColorAttribute (gl);
-
-            shaderNode .disableTexCoordAttribute (gl);
-            shaderNode .disableNormalAttribute   (gl);
+            shaderNode .disable (gl);
 
             if (blendModeNode)
                blendModeNode .disable (gl);
@@ -1056,16 +1037,14 @@ function (Fields,
       },
       displayParticlesDepth: function (gl, context, shaderNode, particleSystem)
       {
-         shaderNode .enableParticleAttribute (gl, particleSystem .particleBuffer, particleSystem .stride, particleSystem .particleOffset, 1);
-         shaderNode .enableParticlePositionAttribute (gl, particleSystem .positionBuffer, particleSystem .stride, particleSystem .positionOffset, 1);
+         shaderNode .enableParticleAttribute (gl, particleSystem .outputParticles, particleSystem .particleStride, particleSystem .particleOffset, 1);
+         shaderNode .enableParticleMatrixAttribute (gl, particleSystem .outputParticles, particleSystem .particleStride, particleSystem .matrixOffset, 1);
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
          gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 
-         shaderNode .forceDisableAttributes                (gl);
-         shaderNode .forceDisableParticleAttribute         (gl);
-         shaderNode .forceDisableParticlePositionAttribute (gl);
+         shaderNode .disable (gl);
       },
       displayParticles: function (gl, context, particleSystem)
       {
@@ -1114,8 +1093,8 @@ function (Fields,
 
             // Setup vertex attributes.
 
-            shaderNode .enableParticleAttribute (gl, particleSystem .particleBuffer, particleSystem .stride, particleSystem .particleOffset, 1);
-            shaderNode .enableParticlePositionAttribute (gl, particleSystem .positionBuffer, particleSystem .stride, particleSystem .positionOffset, 1);
+            shaderNode .enableParticleAttribute (gl, particleSystem .outputParticles, particleSystem .particleStride, particleSystem .particleOffset, 1);
+            shaderNode .enableParticleMatrixAttribute (gl, particleSystem .outputParticles, particleSystem .particleStride, particleSystem .matrixOffset, 1);
 
             for (let i = 0, length = attribNodes .length; i < length; ++ i)
                attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -1183,21 +1162,7 @@ function (Fields,
                }
             }
 
-            shaderNode .forceDisableAttributes                (gl);
-            shaderNode .forceDisableParticleAttribute         (gl);
-            shaderNode .forceDisableParticlePositionAttribute (gl);
-
-            for (const attribNode of attribNodes)
-               attribNode .disable (gl, shaderNode);
-
-            if (this .fogCoords)
-               shaderNode .disableFogDepthAttribute (gl);
-
-            if (this .colorMaterial)
-               shaderNode .disableColorAttribute (gl);
-
-            shaderNode .disableTexCoordAttribute (gl);
-            shaderNode .disableNormalAttribute   (gl);
+            shaderNode .disable (gl);
 
             if (blendModeNode)
                blendModeNode .disable (gl);

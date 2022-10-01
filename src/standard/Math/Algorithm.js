@@ -70,7 +70,7 @@ define (function ()
       },
       fract: function (value)
       {
-         return value > 0 ? value - Math .floor (value) : value - Math .ceil (value);
+         return value % 1;
       },
       clamp: function (value, min, max)
       {

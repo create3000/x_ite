@@ -7,15 +7,14 @@ uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
 in vec4 x3d_Vertex;
-in vec3 x3d_ParticlePosition;
+in mat4 x3d_ParticleMatrix;
 
 out vec3 vertex; // point on geometry
 
 void
 main ()
 {
-   vec4 local    = vec4 (x3d_ParticlePosition + x3d_Vertex .xyz, x3d_Vertex .w);
-   vec4 position = x3d_ModelViewMatrix * local;
+   vec4 position = x3d_ModelViewMatrix * (x3d_ParticleMatrix * x3d_Vertex);
 
    vertex = position .xyz;
 

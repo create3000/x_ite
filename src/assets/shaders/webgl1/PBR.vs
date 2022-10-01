@@ -31,7 +31,7 @@ main ()
    vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
    vertex      = position .xyz;
-   normal      = normalize (x3d_NormalMatrix * x3d_Normal);
+   normal      = x3d_NormalMatrix * x3d_Normal;
    texCoord0   = x3d_TexCoord0;
    texCoord1   = x3d_TexCoord1;
    color       = x3d_Color;

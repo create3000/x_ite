@@ -196,16 +196,7 @@ function (X3DGeometryNode,
 
                gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
 
-               for (const attribNode of attribNodes)
-                  attribNode .disable (gl, shaderNode);
-
-               if (this .fogCoords)
-                  shaderNode .disableFogDepthAttribute (gl);
-
-               if (this .colorMaterial)
-                  shaderNode .disableColorAttribute (gl);
-
-               shaderNode .disableTexCoordAttribute (gl);
+               shaderNode .disable (gl);
 
                if (blendModeNode)
                   blendModeNode .disable (gl);
@@ -264,20 +255,7 @@ function (X3DGeometryNode,
 
                gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 
-               shaderNode .forceDisableAttributes                (gl);
-               shaderNode .forceDisableParticleAttribute         (gl);
-               shaderNode .forceDisableParticlePositionAttribute (gl);
-
-               for (const attribNode of attribNodes)
-                  attribNode .disable (gl, shaderNode);
-
-               if (this .fogCoords)
-                  shaderNode .disableFogDepthAttribute (gl);
-
-               if (this .colorMaterial)
-                  shaderNode .disableColorAttribute (gl);
-
-               shaderNode .disableTexCoordAttribute (gl);
+               shaderNode .disable (gl);
 
                if (blendModeNode)
                   blendModeNode .disable (gl);

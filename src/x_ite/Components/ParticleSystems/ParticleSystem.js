@@ -60,7 +60,6 @@ define ([
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Numbers/Matrix3",
    "standard/Math/Utility/BVH",
-   "text!x_ite/Browser/ParticleSystems/TexCoords.glsl",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -73,8 +72,7 @@ function (Fields,
           Vector3,
           Matrix4,
           Matrix3,
-          BVH,
-          TexCoordsSource)
+          BVH)
 {
 "use strict";
 
@@ -97,8 +95,12 @@ function (Fields,
 
       this ._particleSize .setUnit ("length");
 
-      this .particleStride           = Float32Array .BYTES_PER_ELEMENT * 4 * 4; // 4 x vec4
-      this .particleOffsets          = Array .from ({length: 4}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
+      this .particleStride           = Float32Array .BYTES_PER_ELEMENT * 7 * 4; // 7 x vec4
+      this .particleOffsets          = Array .from ({length: 7}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
+      this .particleOffset           = this .particleOffsets [0];
+      this .colorOffset              = this .particleOffsets [1];
+      this .matrixOffset             = this .particleOffsets [3];
+      this .texCoordOffset           = this .particleOffsets [7];
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .particleLifetime         = 0;
@@ -169,9 +171,7 @@ function (Fields,
       {
          X3DShapeNode .prototype .initialize .call (this);
 
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
+         const browser = this .getBrowser ();
 
          if (browser .getContext () .getVersion () < 2)
             return;
@@ -187,7 +187,6 @@ function (Fields,
          this ._maxParticles      .addInterest ("set_enabled__",           this);
          this ._particleLifetime  .addInterest ("set_particleLifetime__",  this);
          this ._lifetimeVariation .addInterest ("set_lifetimeVariation__", this);
-         this ._particleSize      .addInterest ("set_particleSize__",      this);
          this ._emitter           .addInterest ("set_emitter__",           this);
          this ._physics           .addInterest ("set_physics__",           this);
          this ._colorKey          .addInterest ("set_color__",             this);
@@ -203,18 +202,16 @@ function (Fields,
          // Create forces stuff.
 
          this .forcesTexture       = this .createTexture ();
+         this .boundedTexture      = this .createTexture ();
          this .colorRampTexture    = this .createTexture ();
          this .texCoordRampTexture = this .createTexture ();
-         this .boundedTexture      = this .createTexture ();
 
          // Create GL stuff.
 
-         this .transformFeedback = gl .createTransformFeedback ();
-         this .pointBuffer       = this .createBuffer ();
-         this .geometryBuffer    = this .createBuffer ();
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .pointBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([0, 0, 0, 1]), gl .DYNAMIC_DRAW);
+         this .texCoordBuffer  = this .createBuffer ();
+         this .texCoordBuffers = new Array (browser .getMaxTextures ()) .fill (this .texCoordBuffer);
+         this .normalBuffer    = this .createBuffer ();
+         this .vertexBuffer    = this .createBuffer ();
 
          // Geometry context
 
@@ -350,9 +347,7 @@ function (Fields,
             ? GeometryTypes [this ._geometryType .getValue ()]
             : GeometryTypes .QUAD;
 
-         // Create buffers and geometry program.
-
-         gl .deleteProgram (this .program);
+         // Create buffers.
 
          switch (this .geometryType)
          {
@@ -360,22 +355,14 @@ function (Fields,
             {
                this .geometryContext .geometryType = 0;
 
-               this .texCoordCount   = 0;
-               this .vertexCount     = 1;
-               this .texCoordBuffers = null;
-               this .normalBuffer    = null;
-               this .vertexBuffer    = this .pointBuffer;
-               this .testWireframe   = false;
-               this .primitiveMode   = gl .POINTS;
-               this .program         = null;
+               this .texCoordCount = 0;
+               this .vertexCount   = 1;
+               this .hasNormals    = false;
+               this .testWireframe = false;
+               this .primitiveMode = gl .POINTS;
 
-               this .particleOffset = this .particleOffsets [0];
-               this .positionOffset = this .particleOffsets [3];
-               this .colorOffset    = this .particleOffsets [1];
-               this .vertexOffset   = 0;
-               this .stride         = this .particleStride;
-               this .vertexStride   = 0;
-               this .vertexDivisor  = 1;
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
+               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([0, 0, 0, 1]), gl .DYNAMIC_DRAW);
 
                break;
             }
@@ -383,78 +370,21 @@ function (Fields,
             {
                this .geometryContext .geometryType = 1;
 
-               this .texCoordCount   = 2;
-               this .vertexCount     = 2;
-               this .particleBuffer  = this .geometryBuffer;
-               this .positionBuffer  = this .geometryBuffer;
-               this .colorBuffer     = this .geometryBuffer;
-               this .texCoordBuffers = new Array (browser .getMaxTextures ()) .fill (this .geometryBuffer);
-               this .normalBuffer    = null;
-               this .vertexBuffer    = this .geometryBuffer;
-               this .testWireframe   = false;
-               this .primitiveMode   = gl .LINES;
+               this .texCoordCount = 2;
+               this .vertexCount   = 2;
+               this .hasNormals    = false;
+               this .testWireframe = false;
+               this .primitiveMode = gl .LINES;
 
-               let offset = 0;
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffer);
+               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([
+                  0, 0, 0, 1,
+                  1, 0, 0, 1,
+               ]),
+               gl .DYNAMIC_DRAW);
 
-               this .particleOffset = offset;
-               this .positionOffset = offset += Float32Array .BYTES_PER_ELEMENT * 4;
-               this .colorOffset    = offset += Float32Array .BYTES_PER_ELEMENT * 4;
-               this .texCoordOffset = offset += Float32Array .BYTES_PER_ELEMENT * 4;
-               this .vertexOffset   = offset += Float32Array .BYTES_PER_ELEMENT * 4;
-               this .stride         = offset += Float32Array .BYTES_PER_ELEMENT * 4;
-               this .vertexStride   = this .stride;
-               this .vertexDivisor  = 0;
-
-               this .program = this .createProgram ([
-                  "particle",
-                  "position",
-                  "color",
-                  "texCoord",
-                  "vertex"
-               ],
-               /* glsl */ `#version 300 es
-
-               precision highp float;
-
-               uniform vec2      particleSize1_2;
-               uniform int       numTexCoords;
-               uniform sampler2D texCoordRamp;
-
-               in vec4 input0;
-               in vec4 input1;
-               in vec4 input2;
-               in vec4 input3;
-
-               out vec4 particle;
-               out vec4 position;
-               out vec4 color;
-               out vec4 texCoord;
-               out vec4 vertex;
-
-               ${TexCoordsSource}
-
-               void
-               main ()
-               {
-                  particle = input0;
-                  position = input3;
-                  color    = input1;
-
-                  vec3 offset = normalize (input2 .xyz) * particleSize1_2 .y;
-
-                  switch (gl_VertexID % 2)
-                  {
-                     case 0:
-                        vertex   = vec4 (-offset, 1.0);
-                        texCoord = getTexCoord (0, 2, input0 [2], input0 [3], vertex);
-                        break;
-                     case 1:
-                        vertex   = vec4 (offset, 1.0);
-                        texCoord = getTexCoord (1, 2, input0 [2], input0 [3], vec4 (-offset, 1.0));
-                        break;
-                  }
-               }
-               `);
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
+               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([0, 0, -0.5, 1, 0, 0, 0.5, 1]), gl .DYNAMIC_DRAW);
 
                break;
             }
@@ -464,97 +394,43 @@ function (Fields,
             {
                this .geometryContext .geometryType = 2;
 
-               this .texCoordCount   = 4;
-               this .vertexCount     = 6;
-               this .particleBuffer  = this .geometryBuffer;
-               this .positionBuffer  = this .geometryBuffer;
-               this .colorBuffer     = this .geometryBuffer;
-               this .texCoordBuffers = new Array (browser .getMaxTextures ()) .fill (this .geometryBuffer);
-               this .normalBuffer    = this .geometryBuffer;
-               this .vertexBuffer    = this .geometryBuffer;
-               this .testWireframe   = true;
-               this .primitiveMode   = gl .TRIANGLES;
+               this .texCoordCount = 4;
+               this .vertexCount   = 6;
+               this .hasNormals    = true;
+               this .testWireframe = true;
+               this .primitiveMode = gl .TRIANGLES;
 
-               let offset = 0;
+               // p4 ------ p3
+               // |       / |
+               // |     /   |
+               // |   /     |
+               // | /       |
+               // p1 ------ p2
 
-               this .particleOffset = offset;
-               this .positionOffset = offset += Float32Array .BYTES_PER_ELEMENT * 4;
-               this .colorOffset    = offset += Float32Array .BYTES_PER_ELEMENT * 4;
-               this .texCoordOffset = offset += Float32Array .BYTES_PER_ELEMENT * 4;
-               this .normalOffset   = offset += Float32Array .BYTES_PER_ELEMENT * 4;
-               this .vertexOffset   = offset += Float32Array .BYTES_PER_ELEMENT * 3;
-               this .stride         = offset += Float32Array .BYTES_PER_ELEMENT * 4;
-               this .vertexStride   = this .stride;
-               this .vertexDivisor  = 0;
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffer);
+               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([
+                  0, 0, 0, 1,
+                  1, 0, 0, 1,
+                  1, 1, 0, 1,
+                  0, 0, 0, 1,
+                  1, 1, 0, 1,
+                  0, 1, 0, 1,
+               ]),
+               gl .DYNAMIC_DRAW);
 
-               this .program = this .createProgram ([
-                  "particle",
-                  "position",
-                  "color",
-                  "texCoord",
-                  "normal",
-                  "vertex",
-               ],
-               /* glsl */ `#version 300 es
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
+               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([0, 0, 1]), gl .DYNAMIC_DRAW);
 
-               precision highp float;
-
-               uniform vec2      particleSize1_2;
-               uniform mat3      rotation;
-               uniform int       numTexCoords;
-               uniform sampler2D texCoordRamp;
-
-               in vec4 input0;
-               in vec4 input1;
-               in vec4 input3;
-
-               out vec4 particle;
-               out vec4 position;
-               out vec4 color;
-               out vec4 texCoord;
-               out vec3 normal;
-               out vec4 vertex;
-
-               ${TexCoordsSource}
-
-               void
-               main ()
-               {
-                  particle = input0;
-                  position = input3;
-                  color    = input1;
-                  normal   = rotation [2];
-
-                  // p4 ------ p3
-                  // |       / |
-                  // |     /   |
-                  // |   /     |
-                  // | /       |
-                  // p1 ------ p2
-
-                  switch (gl_VertexID % 6)
-                  {
-                     case 0:
-                     case 3:
-                        texCoord = getTexCoord (0, 4, particle [2], particle [3], vec4 (0.0, 0.0, 0.0, 1.0));
-                        vertex   = vec4 (rotation * vec3 (-particleSize1_2 .x, -particleSize1_2 .y, 0.0), 1.0);
-                        break;
-                     case 1:
-                        texCoord = getTexCoord (1, 4, particle [2], particle [3], vec4 (1.0, 0.0, 0.0, 1.0));
-                        vertex   = vec4 (rotation * vec3 (particleSize1_2 .x, -particleSize1_2 .y, 0.0), 1.0);
-                        break;
-                     case 2:
-                     case 4:
-                        texCoord = getTexCoord (2, 4, particle [2], particle [3], vec4 (1.0, 1.0, 0.0, 1.0));
-                        vertex   = vec4 (rotation * vec3 (particleSize1_2 .x, particleSize1_2 .y, 0.0), 1.0);
-                        break;
-                     case 5:
-                        texCoord = getTexCoord (3, 4, particle [2], particle [3], vec4 (0.0, 1.0, 0.0, 1.0));
-                        vertex   = vec4 (rotation * vec3 (-particleSize1_2 .x, particleSize1_2 .y, 0.0), 1.0);
-                        break;
-                  }
-               }
-               `);
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
+               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([
+                  -0.5, -0.5, 0, 1,
+                   0.5, -0.5, 0, 1,
+                   0.5,  0.5, 0, 1,
+                  -0.5, -0.5, 0, 1,
+                   0.5,  0.5, 0, 1,
+                  -0.5,  0.5, 0, 1,
+               ]),
+               gl .DYNAMIC_DRAW);
 
                break;
             }
@@ -562,19 +438,11 @@ function (Fields,
             {
                this .texCoordCount = 0;
                this .vertexCount   = 0;
-               this .program       = null;
-
-               this .particleOffset = this .particleOffsets [0];
-               this .positionOffset = this .particleOffsets [3];
-               this .stride         = this .particleStride;
 
                break;
             }
          }
 
-         this .resizeGeometryBuffers ();
-
-         this .set_particleSize__ ();
          this .set_shader__ ();
          this .set_transparent__ ();
       },
@@ -620,18 +488,6 @@ function (Fields,
       set_lifetimeVariation__: function ()
       {
          this .lifetimeVariation = this ._lifetimeVariation .getValue ();
-      },
-      set_particleSize__: function ()
-      {
-         const
-            gl      = this .getBrowser () .getContext (),
-            program = this .program;
-
-         if (!program)
-            return;
-
-         gl .useProgram (program);
-         gl .uniform2f (program .particleSize1_2, this ._particleSize .x / 2, this ._particleSize .y / 2);
       },
       set_emitter__: function ()
       {
@@ -824,66 +680,6 @@ function (Fields,
 
          this .numTexCoords = this .texCoordRampNode ? numTexCoords : 0;
       },
-      createProgram: function (varyings, vertexShaderSource)
-      {
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
-
-         const fragmentShaderSource = /* glsl */ `#version 300 es
-
-         precision highp float;
-
-         void
-         main () { }
-         `;
-
-         // Vertex shader
-
-         const vertexShader = gl .createShader (gl .VERTEX_SHADER);
-
-         gl .shaderSource (vertexShader, vertexShaderSource);
-         gl .compileShader (vertexShader);
-
-         // Fragment shader
-
-         const fragmentShader = gl .createShader (gl .FRAGMENT_SHADER);
-
-         gl .shaderSource (fragmentShader, fragmentShaderSource);
-         gl .compileShader (fragmentShader);
-
-         // Program
-
-         const program = gl .createProgram ();
-
-         gl .attachShader (program, vertexShader);
-         gl .attachShader (program, fragmentShader);
-         gl .transformFeedbackVaryings (program, varyings, gl .INTERLEAVED_ATTRIBS);
-         gl .linkProgram (program);
-
-         if (!gl .getProgramParameter (program, gl .LINK_STATUS))
-            console .error ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
-
-         program .inputs = [
-            gl .getAttribLocation (program, "input0"),
-            gl .getAttribLocation (program, "input1"),
-            gl .getAttribLocation (program, "input2"),
-            gl .getAttribLocation (program, "input3"),
-         ];
-
-         program .particleSize1_2 = gl .getUniformLocation (program, "particleSize1_2");
-         program .rotation        = gl .getUniformLocation (program, "rotation");
-         program .numTexCoords    = gl .getUniformLocation (program, "numTexCoords");
-         program .texCoordRamp    = gl .getUniformLocation (program, "texCoordRamp");
-
-         gl .useProgram (program);
-         gl .uniformMatrix3fv (program .rotation, false, new Float32Array (Matrix3 .Identity));
-         gl .uniform1i (program .texCoordRamp, program .texCoordRampTextureUnit = browser .getTexture2DUnit ());
-
-         browser .resetTextureUnits ();
-
-         return program;
-      },
       createTexture: function ()
       {
          const
@@ -938,32 +734,6 @@ function (Fields,
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .inputParticles);
          gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .DYNAMIC_DRAW, 0, maxParticles * particleStride);
-
-         // Resize geometry buffers.
-
-         this .resizeGeometryBuffers ();
-      },
-      resizeGeometryBuffers: function ()
-      {
-         const gl = this .getBrowser () .getContext ();
-
-         switch (this .geometryType)
-         {
-            case GeometryTypes .POINT:
-            case GeometryTypes .GEOMETRY:
-            {
-               break;
-            }
-            default:
-            {
-               const geometryData = new Uint8Array (this .maxParticles * this .stride * this .vertexCount);
-
-               gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
-               gl .bufferData (gl .ARRAY_BUFFER, geometryData, gl .DYNAMIC_DRAW);
-
-               break;
-            }
-         }
       },
       animateParticles: function ()
       {
@@ -1063,100 +833,62 @@ function (Fields,
 
          switch (this .geometryType)
          {
-            case GeometryTypes .POINT:
-               this .updatePoint ();
-               break;
             case GeometryTypes .LINE:
             case GeometryTypes .TRIANGLE:
             case GeometryTypes .QUAD:
-               this .updateBuffers ();
-               break;
-            case GeometryTypes .GEOMETRY:
-               this .updateGeometry ();
+            case GeometryTypes .SPRITE:
+               this .updateTexCoord (gl);
                break;
          }
 
          browser .addBrowserEvent ();
       },
-      updatePoint: function ()
+      updateTexCoord: function (rotation)
       {
-         const outputParticles = this .outputParticles;
 
-         this .particleBuffer = outputParticles;
-         this .positionBuffer = outputParticles;
-         this .colorBuffer    = outputParticles;
       },
-      updateBuffers: function (rotation)
+      updateSprite: (function ()
       {
          const
-            browser         = this .getBrowser (),
-            gl              = browser .getContext (),
-            outputParticles = this .outputParticles,
-            particleStride  = this .particleStride,
-            particleOffsets = this .particleOffsets,
-            program         = this .program,
-            inputs          = program .inputs;
+            normal   = new Float32Array (3),
+            vertices = new Float32Array (24);
 
-         gl .useProgram (program);
+         vertices .fill (1);
 
-         if (rotation)
-            gl .uniformMatrix3fv (program .rotation, false, rotation);
+         const quad = [
+            new Vector3 (-0.5, -0.5, 0),
+            new Vector3 ( 0.5, -0.5, 0),
+            new Vector3 ( 0.5,  0.5, 0),
+            new Vector3 (-0.5, -0.5, 0),
+            new Vector3 ( 0.5,  0.5, 0),
+            new Vector3 (-0.5,  0.5, 0),
+         ];
 
-         if (this .numTexCoords)
+         const
+            vertex = new Vector3 (0, 0, 0),
+            scale  = new Vector3 (0, 0, 0);
+
+         return function (gl, rotation)
          {
-            gl .uniform1i (program .numTexCoords, this .numTexCoords);
-            gl .activeTexture (gl .TEXTURE0 + program .texCoordRampTextureUnit);
-            gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
-         }
-         else
-         {
-            gl .uniform1i (program .numTexCoords, 0);
-         }
+            // Normal
 
-         for (let i = 0; i < 4; ++ i)
-         {
-            const attribute = inputs [i];
+            for (let i = 0; i < 3; ++ i)
+               normal [i] = rotation [i + 6];
 
-            if (attribute === -1)
-               continue;
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, normal, gl .DYNAMIC_DRAW);
 
-            gl .enableVertexAttribArray (attribute);
-            gl .bindBuffer (gl .ARRAY_BUFFER, outputParticles);
-            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particleStride, particleOffsets [i]);
-            gl .vertexAttribDivisor (attribute, 1);
-         }
+            // Vertices
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, null);
-         gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedback);
-         gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .geometryBuffer);
-         gl .enable (gl .RASTERIZER_DISCARD);
-         gl .beginTransformFeedback (gl .POINTS);
-         gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount, this .numParticles);
-         gl .endTransformFeedback ();
-         gl .disable (gl .RASTERIZER_DISCARD);
-         gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
+            scale .set (this ._particleSize .x, this ._particleSize .y, 1);
 
-         for (const attribute of inputs)
-         {
-            if (attribute === -1)
-               continue;
+            for (let i = 0; i < 6; ++ i)
+               vertices .set (rotation .multVecMatrix (vertex .assign (quad [i]) .multVec (scale)), i * 4);
 
-            gl .disableVertexAttribArray (attribute);
-            gl .vertexAttribDivisor (attribute, 0);
-         }
-
-         // const data = new Float32Array (this .maxParticles * this .vertexCount * 4);
-         // gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-         // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
-         // console .log (data .slice (0, 4));
-      },
-      updateGeometry: function ()
-      {
-         const outputParticles = this .outputParticles;
-
-         this .particleBuffer = outputParticles;
-         this .positionBuffer = outputParticles;
-      },
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, vertices, gl .DYNAMIC_DRAW);
+         };
+      })(),
       intersectsBox: function (box, clipPlanes)
       { },
       traverse: function (type, renderObject)
@@ -1211,24 +943,22 @@ function (Fields,
             }
             case GeometryTypes .SPRITE:
             {
-               this .updateBuffers (this .getScreenAlignedRotation (context .modelViewMatrix));
-               shaderNode .enable (gl);
+               this .updateSprite (gl, this .getScreenAlignedRotation (context .modelViewMatrix));
                // [fall trough]
             }
             default:
             {
-               const stride = this .stride;
+               const
+                  outputParticles = this .outputParticles,
+                  particleStride  = this .particleStride;
 
-               shaderNode .enableParticleAttribute         (gl, this .particleBuffer, stride, this .particleOffset, 0);
-               shaderNode .enableParticlePositionAttribute (gl, this .positionBuffer, stride, this .positionOffset, 0);
-               shaderNode .enableVertexAttribute           (gl, this .vertexBuffer, this .vertexStride, this .vertexOffset);
+               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset, 1);
+               shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
-               gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
+               gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
 
-               shaderNode .forceDisableAttributes                (gl);
-               shaderNode .forceDisableParticleAttribute         (gl);
-               shaderNode .forceDisableParticlePositionAttribute (gl);
-               shaderNode .forceDisableVertexAttribute           (gl);
+               shaderNode .disable (gl);
+               shaderNode .enable (gl);
 
                break;
             }
@@ -1253,7 +983,18 @@ function (Fields,
                }
                case GeometryTypes .SPRITE:
                {
-                  this .updateBuffers (this .getScreenAlignedRotation (context .modelViewMatrix));
+                  this .updateSprite (gl, this .getScreenAlignedRotation (context .modelViewMatrix));
+                  // [fall trough]
+               }
+               case GeometryTypes .QUAD:
+               case GeometryTypes .TRIANGLE:
+               {
+                  const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+
+                  gl .frontFace (positiveScale ? gl .CCW : gl .CW);
+                  gl .enable (gl .CULL_FACE);
+                  gl .cullFace (gl .BACK);
+
                   // [fall trough]
                }
                default:
@@ -1278,22 +1019,29 @@ function (Fields,
 
                      // Setup vertex attributes.
 
-                     const stride = this .stride;
+                     const
+                        outputParticles = this .outputParticles,
+                        particleStride  = this .particleStride;
 
-                     shaderNode .enableParticleAttribute         (gl, this .particleBuffer, stride, this .particleOffset, 0);
-                     shaderNode .enableParticlePositionAttribute (gl, this .positionBuffer, stride, this .positionOffset, 0);
+                     shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
+                     shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
 
                      if (this .geometryContext .colorMaterial)
-                        shaderNode .enableColorAttribute (gl, this .colorBuffer, stride, this .colorOffset);
+                     {
+                        shaderNode .colorAttributeDivisor (gl, 1);
+                        shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
+                     }
 
-                     if (this .texCoordBuffers)
-                        shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, stride, this .texCoordOffset);
+                     if (this .texCoordCount)
+                        shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
 
-                     if (this .normalBuffer)
-                        shaderNode .enableNormalAttribute (gl, this .normalBuffer, stride, this .normalOffset);
+                     if (this .hasNormals)
+                     {
+                        shaderNode .normalAttributeDivisor (gl, this .numParticles);
+                        shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+                     }
 
-                     shaderNode .enableVertexAttribute (gl, this .vertexBuffer, this .vertexStride, this .vertexOffset);
-                     shaderNode .vertexAttributeDivisor (gl, this .vertexDivisor);
+                     shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
                      if (shaderNode .wireframe && this .testWireframe)
                      {
@@ -1304,30 +1052,10 @@ function (Fields,
                      }
                      else
                      {
-                        const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
-
-                        gl .frontFace (positiveScale ? gl .CCW : gl .CW);
-                        gl .enable (gl .CULL_FACE);
-                        gl .cullFace (gl .BACK);
-
-                        gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
+                        gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
                      }
 
-                     shaderNode .forceDisableAttributes                (gl);
-                     shaderNode .forceDisableParticleAttribute         (gl);
-                     shaderNode .forceDisableParticlePositionAttribute (gl);
-
-                     if (this .geometryContext .colorMaterial)
-                        shaderNode .forceDisableColorAttribute (gl);
-
-                     if (this .texCoordBuffers)
-                        shaderNode .forceDisableTexCoordAttribute (gl);
-
-                     if (this .normalBuffer)
-                        shaderNode .forceDisableNormalAttribute (gl);
-
-                     shaderNode .forceDisableVertexAttribute (gl);
-                     shaderNode .vertexAttributeDivisor (gl, 0);
+                     shaderNode .disable (gl);
 
                      if (blendModeNode)
                         blendModeNode .disable (gl);
@@ -1352,7 +1080,7 @@ function (Fields,
             billboardToScreen  = new Vector3 (0, 0, 0),
             viewerYAxis        = new Vector3 (0, 0, 0),
             y                  = new Vector3 (0, 0, 0),
-            rotation           = new Float32Array (9);
+            rotation           = new Matrix3 (9);
 
          return function (modelViewMatrix)
          {
@@ -1366,9 +1094,13 @@ function (Fields,
 
             // Compose rotation matrix.
 
-            rotation .set (x .normalize (), 0);
-            rotation .set (y .normalize (), 3);
-            rotation .set (z .normalize (), 6);
+            x .normalize ();
+            y .normalize ();
+            z .normalize ();
+
+            rotation .set (x .x, x .y, x .z,
+                           y .x, y .y, y .z,
+                           z .x, z .y, z .z);
 
             return rotation;
          };
