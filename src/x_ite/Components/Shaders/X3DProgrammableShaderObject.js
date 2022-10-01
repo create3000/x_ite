@@ -1192,9 +1192,9 @@ function (X3DCast,
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
-         gl .vertexAttribPointer (location,     3, gl .FLOAT, false, 9 * 4, 3 * 4 * 0);
-         gl .vertexAttribPointer (location + 1, 3, gl .FLOAT, false, 9 * 4, 3 * 4 * 1);
-         gl .vertexAttribPointer (location + 2, 3, gl .FLOAT, false, 9 * 4, 3 * 4 * 2);
+         gl .vertexAttribPointer (location,     3, gl .FLOAT, false, 36, 0);
+         gl .vertexAttribPointer (location + 1, 3, gl .FLOAT, false, 36, 12);
+         gl .vertexAttribPointer (location + 2, 3, gl .FLOAT, false, 36, 24);
       },
       disableMatrix3Attrib: function (gl, name)
       {
@@ -1236,10 +1236,10 @@ function (X3DCast,
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
-         gl .vertexAttribPointer (location,     4, gl .FLOAT, false, 16 * 4, 4 * 4 * 0);
-         gl .vertexAttribPointer (location + 1, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 1);
-         gl .vertexAttribPointer (location + 2, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 2);
-         gl .vertexAttribPointer (location + 3, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 3);
+         gl .vertexAttribPointer (location,     4, gl .FLOAT, false, 64, 0);
+         gl .vertexAttribPointer (location + 1, 4, gl .FLOAT, false, 64, 16);
+         gl .vertexAttribPointer (location + 2, 4, gl .FLOAT, false, 64, 32);
+         gl .vertexAttribPointer (location + 3, 4, gl .FLOAT, false, 64, 48);
       },
       disableMatrix4Attrib: function (gl, name)
       {
