@@ -189,10 +189,8 @@ function (X3DGeometryNode,
                if (this .colorMaterial)
                   shaderNode .enableColorAttribute (gl, this .colorBuffer);
 
-               if (this .getMultiTexCoords () .length)
-                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-
-               shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
 
                // WireFrames are always solid so only one drawing call is needed.
 
@@ -207,8 +205,7 @@ function (X3DGeometryNode,
                if (this .colorMaterial)
                   shaderNode .disableColorAttribute (gl);
 
-               if (this .getMultiTexCoords () .length)
-                  shaderNode .disableTexCoordAttribute (gl);
+               shaderNode .disableTexCoordAttribute (gl);
 
                if (blendModeNode)
                   blendModeNode .disable (gl);
@@ -258,10 +255,8 @@ function (X3DGeometryNode,
                if (this .colorMaterial)
                   shaderNode .enableColorAttribute (gl, this .colorBuffer);
 
-               if (this .getMultiTexCoords () .length)
-                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-
-               shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
 
                // Wireframes are always solid so only one drawing call is needed.
 
