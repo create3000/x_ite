@@ -213,8 +213,8 @@ function (X3DGeometryNode,
                // Wireframes are always solid so only one drawing call is needed.
 
                gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-               gl .bindBuffer (gl .ARRAY_BUFFER, null);
 
+               shaderNode .forceDisableAttributes                (gl);
                shaderNode .forceDisableParticleAttribute         (gl);
                shaderNode .forceDisableParticlePositionAttribute (gl);
 

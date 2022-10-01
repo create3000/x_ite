@@ -268,8 +268,8 @@ function (X3DGeometryNode,
                const primitiveMode = shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode;
 
                gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-               gl .bindBuffer (gl .ARRAY_BUFFER, null);
 
+               shaderNode .forceDisableAttributes                (gl);
                shaderNode .forceDisableParticleAttribute         (gl);
                shaderNode .forceDisableParticlePositionAttribute (gl);
 

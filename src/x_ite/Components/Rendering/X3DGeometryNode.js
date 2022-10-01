@@ -1062,8 +1062,8 @@ function (Fields,
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
          gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-         gl .bindBuffer (gl .ARRAY_BUFFER, null);
 
+         shaderNode .forceDisableAttributes                (gl);
          shaderNode .forceDisableParticleAttribute         (gl);
          shaderNode .forceDisableParticlePositionAttribute (gl);
       },
@@ -1183,8 +1183,7 @@ function (Fields,
                }
             }
 
-            gl .bindBuffer (gl .ARRAY_BUFFER, null);
-
+            shaderNode .forceDisableAttributes                (gl);
             shaderNode .forceDisableParticleAttribute         (gl);
             shaderNode .forceDisableParticlePositionAttribute (gl);
 

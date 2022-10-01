@@ -1145,6 +1145,10 @@ function (X3DCast,
             gl .uniform1i (location, textureUnit);
          }
       },
+      forceDisableAttributes: function (gl)
+      {
+         gl .bindBuffer (gl .ARRAY_BUFFER, null);
+      },
       enableFloatAttrib: function (gl, name, buffer, components, stride, offset)
       {
          const location = gl .getAttribLocation (this .getProgram (), name);
