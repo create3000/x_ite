@@ -80,8 +80,9 @@ function (X3DNode,
       this .program   = null;
 
       this .addSampler ("forces");
-      this .addSampler ("colorRamp");
       this .addSampler ("boundedVolume");
+      this .addSampler ("colorRamp");
+      this .addSampler ("texCoordRamp");
 
       this .addUniform ("speed",     "uniform float speed;");
       this .addUniform ("variation", "uniform float variation;");
@@ -195,16 +196,6 @@ function (X3DNode,
             gl .bindTexture (gl .TEXTURE_2D, particleSystem .forcesTexture);
          }
 
-         // Colors
-
-         gl .uniform1i (program .numColors, particleSystem .numColors);
-
-         if (particleSystem .numColors)
-         {
-            gl .activeTexture (gl .TEXTURE0 + program .colorRampTextureUnit);
-            gl .bindTexture (gl .TEXTURE_2D, particleSystem .colorRampTexture);
-         }
-
          // Bounded Physics
 
          if (particleSystem .boundedHierarchyRoot < 0)
@@ -220,6 +211,28 @@ function (X3DNode,
 
             gl .activeTexture (gl .TEXTURE0 + program .boundedVolumeTextureUnit);
             gl .bindTexture (gl .TEXTURE_2D, particleSystem .boundedTexture);
+         }
+
+         // Colors
+
+         gl .uniform1i (program .numColors, particleSystem .numColors);
+
+         if (particleSystem .numColors)
+         {
+            gl .activeTexture (gl .TEXTURE0 + program .colorRampTextureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, particleSystem .colorRampTexture);
+         }
+
+         // TexCoords
+
+         gl .uniform1i (program .numTexCoords, particleSystem .numTexCoords);
+
+         if (particleSystem .numTexCoords)
+         {
+            gl .uniform1i (program .texCoordCount, particleSystem .texCoordCount);
+
+            gl .activeTexture (gl .TEXTURE0 + program .texCoordRampTextureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, particleSystem .texCoordRampTexture);
          }
 
          // Input attributes
@@ -252,10 +265,10 @@ function (X3DNode,
 
          // DEBUG
 
-         // const data = new Float32Array (particleSystem .numParticles * (particleStride / 4));
-         // gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles);
-         // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
-         // console .log (data .slice (4, 8));
+         const data = new Float32Array (particleSystem .numParticles * (particleStride / 4));
+         gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles);
+         gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
+         console .log (data .slice (0, particleStride / 4));
       },
       addSampler: function (name)
       {
@@ -301,14 +314,18 @@ function (X3DNode,
          uniform int       numForces;
          uniform sampler2D forces;
 
-         uniform int       numColors;
-         uniform sampler2D colorRamp;
-
          uniform int       boundedVerticesIndex;
          uniform int       boundedNormalsIndex;
          uniform int       boundedHierarchyIndex;
          uniform int       boundedHierarchyRoot;
          uniform sampler2D boundedVolume;
+
+         uniform int       numColors;
+         uniform sampler2D colorRamp;
+
+         uniform int       texCoordCount;
+         uniform int       numTexCoords;
+         uniform sampler2D texCoordRamp;
 
          ${Object .values (this .uniforms) .join ("\n")}
 
@@ -324,6 +341,11 @@ function (X3DNode,
          out vec4 output4;
          out vec4 output5;
          out vec4 output6;
+
+         out vec4 output7;
+         out vec4 output8;
+         out vec4 output9;
+         out vec4 output10;
 
          // Constants
 
@@ -601,6 +623,30 @@ function (X3DNode,
             }
          }
 
+         void
+         interpolate (const in sampler2D sampler, const in int count, const in float fraction, out int index0)
+         {
+            // Determine index0.
+
+            if (count == 1 || fraction <= texelFetch (sampler, 0, 0) .x)
+            {
+               index0 = 0;
+            }
+            else if (fraction >= texelFetch (sampler, count - 1, 0) .x)
+            {
+               index0 = count - 2;
+            }
+            else
+            {
+               int index = upperBound (sampler, count, fraction);
+
+               if (index < count)
+                  index0 = index - 1;
+               else
+                  index0 = 0;
+            }
+         }
+
          vec3
          getRandomBarycentricCoord ()
          {
@@ -711,13 +757,6 @@ function (X3DNode,
 
             Plane3 plane1 = plane3 (line .point, line .direction);
 
-            // sort (points, normals, numIntersections, plane1);
-
-            // int index = upper_bound (points, numIntersections, 0.0, plane1);
-
-            // if (index >= numIntersections)
-            //    return;
-
             int index = min_index (points, numIntersections, 0.0, plane1);
 
             if (index == -1)
@@ -819,6 +858,51 @@ function (X3DNode,
                   break;
                }
             }
+
+            if (numTexCoords > 0)
+            {
+               float fraction = output0 [3] / output0 [2];
+               int   index0   = 0;
+
+               interpolate (texCoordRamp, numTexCoords, fraction, index0);
+
+               index0 = numTexCoords + index0 * texCoordCount;
+
+               switch (geometryType)
+               {
+                  case 0: // POINT
+                  {
+                     output7  = vec4 (0.0);
+                     output8  = vec4 (0.0);
+                     output9  = vec4 (0.0);
+                     output10 = vec4 (0.0);
+                     break;
+                  }
+                  case 1: // LINE
+                  {
+                     output7  = texelFetch (texCoordRamp, index0 + 0, 0);
+                     output8  = texelFetch (texCoordRamp, index0 + 1, 0);
+                     output9  = vec4 (0.0);
+                     output10 = vec4 (0.0);
+                     break;
+                  }
+                  default: // QUAD, TRIANGLE, SPRITE
+                  {
+                     output7  = texelFetch (texCoordRamp, index0 + 0, 0);
+                     output8  = texelFetch (texCoordRamp, index0 + 1, 0);
+                     output9  = texelFetch (texCoordRamp, index0 + 2, 0);
+                     output10 = texelFetch (texCoordRamp, index0 + 3, 0);
+                     break;
+                  }
+               }
+            }
+            else
+            {
+               output7  = vec4 (0.0, 0.0, 0.0, 1.0);
+               output8  = vec4 (1.0, 0.0, 0.0, 1.0);
+               output9  = vec4 (1.0, 1.0, 0.0, 1.0);
+               output10 = vec4 (0.0, 0.0, 0.0, 1.0);
+            }
          }
          `;
 
@@ -850,7 +934,7 @@ function (X3DNode,
 
          gl .attachShader (program, vertexShader);
          gl .attachShader (program, fragmentShader);
-         gl .transformFeedbackVaryings (program, ["output0", "output1", "output2", "output3", "output4", "output5", "output6"], gl .INTERLEAVED_ATTRIBS);
+         gl .transformFeedbackVaryings (program, Array .from ({length: 11}, (_, i) => "output" + i), gl .INTERLEAVED_ATTRIBS);
          gl .linkProgram (program);
 
          if (!gl .getProgramParameter (program, gl .LINK_STATUS))
@@ -873,14 +957,18 @@ function (X3DNode,
          program .numForces = gl .getUniformLocation (program, "numForces");
          program .forces    = gl .getUniformLocation (program, "forces");
 
-         program .numColors = gl .getUniformLocation (program, "numColors");
-         program .colorRamp = gl .getUniformLocation (program, "colorRamp");
-
          program .boundedVerticesIndex  = gl .getUniformLocation (program, "boundedVerticesIndex");
          program .boundedNormalsIndex   = gl .getUniformLocation (program, "boundedNormalsIndex");
          program .boundedHierarchyIndex = gl .getUniformLocation (program, "boundedHierarchyIndex");
          program .boundedHierarchyRoot  = gl .getUniformLocation (program, "boundedHierarchyRoot");
          program .boundedVolume         = gl .getUniformLocation (program, "boundedVolume");
+
+         program .numColors = gl .getUniformLocation (program, "numColors");
+         program .colorRamp = gl .getUniformLocation (program, "colorRamp");
+
+         program .texCoordCount = gl .getUniformLocation (program, "texCoordCount");
+         program .numTexCoords  = gl .getUniformLocation (program, "numTexCoords");
+         program .texCoordRamp  = gl .getUniformLocation (program, "texCoordRamp");
 
          for (const name of Object .keys (this .uniforms))
             program [name] = gl .getUniformLocation (program, name);

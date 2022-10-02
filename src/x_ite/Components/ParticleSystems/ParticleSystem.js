@@ -132,33 +132,21 @@ function (Fields,
 
       this ._particleSize .setUnit ("length");
 
-      this .particleStride           = Float32Array .BYTES_PER_ELEMENT * 7 * 4; // 7 x vec4
-      this .particleOffsets          = Array .from ({length: 7}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
+      this .particleStride           = Float32Array .BYTES_PER_ELEMENT * 11 * 4; // 7 x vec4
+      this .particleOffsets          = Array .from ({length: 11}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
       this .particleOffset           = this .particleOffsets [0];
       this .colorOffset              = this .particleOffsets [1];
       this .matrixOffset             = this .particleOffsets [3];
-      this .texCoordOffset           = this .particleOffsets [7];
+      this .texCoordOffset           = 0; // this .particleOffsets [7];
       this .maxParticles             = 0;
       this .numParticles             = 0;
-      this .particleLifetime         = 0;
-      this .lifetimeVariation        = 0;
-      this .geometryType             = GeometryTypes .POINT;
-      this .createParticles          = true;
-      this .emitterNode              = null;
       this .forcePhysicsModelNodes   = [ ];
-      this .numForces                = 0;
       this .forces                   = new Float32Array (4);
       this .boundedPhysicsModelNodes = [ ];
       this .boundedNormals           = [ ];
       this .boundedVertices          = [ ];
-      this .numColors                = 0;
-      this .colorRampNode            = null;
       this .colorRamp                = new Float32Array ();
-      this .numTexCoords             = 0;
-      this .texCoordRampNode         = null;
       this .texCoordRamp             = new Float32Array ();
-      this .vertexCount              = 0;
-      this .shaderNode               = null;
       this .geometryContext          = { };
       this .creationTime             = 0;
       this .pauseTime                = 0;
@@ -935,11 +923,7 @@ function (Fields,
             }
             default:
             {
-               const
-                  outputParticles = this .outputParticles,
-                  particleStride  = this .particleStride;
-
-               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset, 1);
+               shaderNode .enableParticleMatrixAttribute (gl, this .outputParticles, this .particleStride, this .matrixOffset, 1);
                shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
 
                gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
@@ -1019,8 +1003,8 @@ function (Fields,
                         shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
                      }
 
-                     if (this .texCoordCount)
-                        shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
+                     // if (this .texCoordCount)
+                     //    shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
 
                      if (this .hasNormals)
                      {
