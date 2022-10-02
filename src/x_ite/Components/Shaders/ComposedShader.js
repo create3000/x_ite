@@ -224,9 +224,8 @@ function (Fields,
             if (valid)
             {
                gl .useProgram (this .program);
-
-               // Initialize uniform variables and attributes.
-               valid = this .getDefaultUniforms ();
+               
+               this .getDefaultUniforms ();
 
                // Debug, print complete shader info and statistics.
                // this .printProgramInfo ();

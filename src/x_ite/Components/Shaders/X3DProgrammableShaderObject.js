@@ -148,6 +148,10 @@ function (X3DCast,
             gl      = browser .getContext (),
             program = this .getProgram ();
 
+         /*
+          * Uniforms.
+          */
+
          this .x3d_LogarithmicFarFactor1_2 = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor1_2");
 
          this .x3d_GeometryType  = gl .getUniformLocation (program, "x3d_GeometryType");
@@ -269,7 +273,9 @@ function (X3DCast,
 
             this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
 
-            const x3d_TexCoord = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
+            // Attribute
+
+            const x3d_TexCoord = gl .getAttribLocation (program, "x3d_TexCoord");
 
             if (x3d_TexCoord !== -1)
                this .x3d_TexCoord .push ([i, x3d_TexCoord]);
@@ -281,12 +287,40 @@ function (X3DCast,
          this .x3d_NormalMatrix      = gl .getUniformLocation (program, "x3d_NormalMatrix");
          this .x3d_CameraSpaceMatrix = gl .getUniformLocation (program, "x3d_CameraSpaceMatrix");
 
-         this .x3d_FogDepth       = gl .getAttribLocation (program, "x3d_FogDepth");
-         this .x3d_Color          = gl .getAttribLocation (program, "x3d_Color");
-         this .x3d_Normal         = gl .getAttribLocation (program, "x3d_Normal");
-         this .x3d_Vertex         = gl .getAttribLocation (program, "x3d_Vertex");
-         this .x3d_Particle       = gl .getAttribLocation (program, "x3d_Particle");
-         this .x3d_ParticleMatrix = gl .getAttribLocation (program, "x3d_ParticleMatrix");
+         /*
+          * Attributes.
+          */
+
+         const attributes = [
+            "FogDepth",
+            "Color",
+            "Normal",
+            "Vertex",
+            "Particle",
+            "ParticleMatrix",
+         ];
+
+         for (const name of attributes)
+         {
+            const attribute = gl .getAttribLocation (program, "x3d_" + name);
+
+            this ["x3d_" + name] = attribute;
+
+            if (attribute < 0)
+            {
+               this ["enable" + name + "Attribute"]  = Function .prototype;
+               this [name [0] .toLowerCase () + name .slice (1) + "AttributeDivisor"] = Function .prototype;
+            }
+            else
+            {
+               delete this ["enable" + name + "Attribute"];
+               delete this [name [0] .toLowerCase () + name .slice (1) + "AttributeDivisor"];
+            }
+         }
+
+         /*
+          * Fill uniforms with defaults.
+          */
 
          // Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
@@ -321,67 +355,17 @@ function (X3DCast,
                gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
          }
 
-         // Return true if valid, otherwise false.
-
-         if (this .x3d_FogDepth < 0)
-            this .enableFogDepthAttribute = Function .prototype;
-         else
-            delete this .enableFogDepthAttribute;
-
-         if (this .x3d_Color < 0)
-         {
-            this .enableColorAttribute  = Function .prototype;
-            this .colorAttributeDivisor = Function .prototype;
-         }
-         else
-         {
-            delete this .enableColorAttribute;
-            delete this .colorAttributeDivisor;
-         }
-
-         if (this .x3d_TexCoord .length)
-         {
-            delete this .enableTexCoordAttribute;
-            delete this .texCoordAttributeDivisor;
-         }
-         else
-         {
-            this .enableTexCoordAttribute  = Function .prototype;
-            this .texCoordAttributeDivisor = Function .prototype;
-         }
-
-         if (this .x3d_Normal < 0)
-         {
-            this .enableNormalAttribute  = Function .prototype;
-            this .normalAttributeDivisor = Function .prototype;
-         }
-         else
-         {
-            delete this .enableNormalAttribute;
-            delete this .normalAttributeDivisor;
-         }
+         /*
+          * Check x3d_Vertex.
+          */
 
          if (this .x3d_Vertex < 0)
          {
             if (gl .getVersion () >= 2)
-               console .warn ("Missing »in vec4 x3d_Vertex;«.");
+              console .warn ("Missing »in vec4 x3d_Vertex;«.");
             else
                console .warn ("Missing »attribute vec4 x3d_Vertex;«.");
-
-            return false;
          }
-
-         if (this .x3d_Particle < 0)
-            this .enableParticleAttribute = Function .prototype;
-         else
-            delete this .enableParticleAttribute;
-
-         if (this .x3d_ParticleMatrix < 0)
-            this .enableParticleMatrixAttribute  = Function .prototype;
-         else
-            delete this .enableParticleMatrixAttribute;
-
-         return true;
       },
       getUniformLocation: function (gl, program, name, depreciated)
       {
