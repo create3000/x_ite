@@ -133,10 +133,12 @@ function (X3DGeometryNode,
          // Line stipple support.
 
          const
-            texCoords = this .getTexCoords (),
-            vertices  = this .getVertices ();
+            maxTextures = this .getBrowser () .getMaxTextures (),
+            texCoords   = this .getTexCoords (),
+            vertices    = this .getVertices ();
 
-         this .getMultiTexCoords () .push (texCoords);
+         for (let i = 0; i < maxTextures; ++ i)
+            this .getMultiTexCoords () .push (texCoords);
 
          for (let i = 0, length = vertices .length; i < length; i += 8)
          {

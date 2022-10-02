@@ -275,7 +275,7 @@ function (X3DCast,
 
             // Attribute
 
-            const x3d_TexCoord = gl .getAttribLocation (program, "x3d_TexCoord");
+            const x3d_TexCoord = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
 
             if (x3d_TexCoord !== -1)
                this .x3d_TexCoord .push ([i, x3d_TexCoord]);
@@ -316,6 +316,17 @@ function (X3DCast,
                delete this ["enable" + name + "Attribute"];
                delete this [name [0] .toLowerCase () + name .slice (1) + "AttributeDivisor"];
             }
+         }
+
+         if (this .x3d_TexCoord .length === 0)
+         {
+            this .enableTexCoordAttribute  = Function .prototype;
+            this .texCoordAttributeDivisor = Function .prototype;
+         }
+         else
+         {
+            delete this .enableTexCoordAttribute;
+            delete this .texCoordAttributeDivisor;
          }
 
          /*
