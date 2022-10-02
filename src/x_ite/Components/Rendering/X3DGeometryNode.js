@@ -372,7 +372,7 @@ function (Fields,
             texCoords .shrinkToFit ();
          }
 
-         return texCoords;
+         this .getMultiTexCoords () .push (texCoords);
       },
       getTexCoordParams: (function ()
       {
@@ -786,7 +786,18 @@ function (Fields,
 
             // Generate texCoord if needed.
 
-            this .rebuildTexCoords ();
+            if (this .multiTexCoords .length === 0)
+               this .buildTexCoords ();
+
+            if (this .multiTexCoords .length)
+            {
+               const maxTextures = this .getBrowser () .getMaxTextures ();
+
+               for (let i = this .multiTexCoords .length; i < maxTextures; ++ i)
+                  this .multiTexCoords [i] = this .multiTexCoords .at (-1);
+
+               this .multiTexCoords .length = maxTextures;
+            }
 
             // Upload normals or flat normals.
 
@@ -797,20 +808,6 @@ function (Fields,
             this .transfer ();
          };
       })(),
-      rebuildTexCoords: function ()
-      {
-         if (this .multiTexCoords .length === 0)
-            this .multiTexCoords .push (this .buildTexCoords ());
-
-         const
-            last   = this .multiTexCoords .length - 1,
-            length = this .getBrowser () .getMaxTextures ();
-
-         for (let i = this .multiTexCoords .length; i < length; ++ i)
-            this .multiTexCoords [i] = this .multiTexCoords [last];
-
-         this .multiTexCoords .length = length;
-      },
       clear: function ()
       {
          // BBox

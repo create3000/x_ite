@@ -112,7 +112,7 @@ function (X3DGeometryNode,
       {
          return false;
       },
-      rebuildTexCoords: function ()
+      buildTexCoords: function ()
       { },
       display: function (gl, context)
       {

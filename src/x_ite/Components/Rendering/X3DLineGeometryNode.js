@@ -128,17 +128,13 @@ function (X3DGeometryNode,
       {
          return false;
       },
-      rebuildTexCoords: function ()
+      buildTexCoords: function ()
       {
          // Line stipple support.
 
          const
-            maxTextures = this .getBrowser () .getMaxTextures (),
-            texCoords   = this .getTexCoords (),
-            vertices    = this .getVertices ();
-
-         for (let i = 0; i < maxTextures; ++ i)
-            this .getMultiTexCoords () .push (texCoords);
+            texCoords = this .getTexCoords (),
+            vertices  = this .getVertices ();
 
          for (let i = 0, length = vertices .length; i < length; i += 8)
          {
@@ -153,6 +149,8 @@ function (X3DGeometryNode,
          }
 
          texCoords .shrinkToFit ();
+
+         this .getMultiTexCoords () .push (texCoords);
       },
       display: function (gl, context)
       {

@@ -131,7 +131,7 @@ function (Fields,
             texCoordArray .shrinkToFit ();
          }
 
-         return texCoordArray;
+         this .getMultiTexCoords () .push (texCoordArray);
       },
    });
 
