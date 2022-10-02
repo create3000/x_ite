@@ -907,7 +907,7 @@ function (X3DNode,
                output7  = vec4 (0.0, 0.0, 0.0, 1.0);
                output8  = vec4 (1.0, 0.0, 0.0, 1.0);
                output9  = vec4 (1.0, 1.0, 0.0, 1.0);
-               output10 = vec4 (0.0, 0.0, 0.0, 1.0);
+               output10 = vec4 (0.0, 1.0, 0.0, 1.0);
             }
          }
          `;
