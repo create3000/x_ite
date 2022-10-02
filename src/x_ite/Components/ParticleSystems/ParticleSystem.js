@@ -208,10 +208,8 @@ function (Fields,
 
          // Create GL stuff.
 
-         this .texCoordBuffer  = this .createBuffer ();
-         this .texCoordBuffers = new Array (browser .getMaxTextures ()) .fill (this .texCoordBuffer);
-         this .normalBuffer    = this .createBuffer ();
-         this .vertexBuffer    = this .createBuffer ();
+         this .geometryBuffer  = this .createBuffer ();
+         this .texCoordBuffers = new Array (browser .getMaxTextures ()) .fill (this .geometryBuffer);
 
          // Geometry context
 
@@ -361,7 +359,9 @@ function (Fields,
                this .testWireframe = false;
                this .primitiveMode = gl .POINTS;
 
-               gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
+               this .verticesOffset = 0;
+
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([0, 0, 0, 1]), gl .DYNAMIC_DRAW);
 
                break;
@@ -376,15 +376,19 @@ function (Fields,
                this .testWireframe = false;
                this .primitiveMode = gl .LINES;
 
-               gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffer);
+               this .texCoordsOffset = 0;
+               this .verticesOffset  = Float32Array .BYTES_PER_ELEMENT * 8;
+
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([
+                  // TexCoords
                   0, 0, 0, 1,
                   1, 0, 0, 1,
+                  // Vertices
+                  0, 0, -0.5, 1,
+                  0, 0,  0.5, 1
                ]),
                gl .DYNAMIC_DRAW);
-
-               gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([0, 0, -0.5, 1, 0, 0, 0.5, 1]), gl .DYNAMIC_DRAW);
 
                break;
             }
@@ -407,22 +411,22 @@ function (Fields,
                // | /       |
                // p1 ------ p2
 
-               gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffer);
+               this .texCoordsOffset = 0;
+               this .normalOffset    = Float32Array .BYTES_PER_ELEMENT * 24;
+               this .verticesOffset  = Float32Array .BYTES_PER_ELEMENT * 27;
+
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([
+                  // TexCoords
                   0, 0, 0, 1,
                   1, 0, 0, 1,
                   1, 1, 0, 1,
                   0, 0, 0, 1,
                   1, 1, 0, 1,
                   0, 1, 0, 1,
-               ]),
-               gl .DYNAMIC_DRAW);
-
-               gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([0, 0, 1]), gl .DYNAMIC_DRAW);
-
-               gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([
+                  // Normal
+                  0, 0, 1,
+                  // Vertices
                   -0.5, -0.5, 0, 1,
                    0.5, -0.5, 0, 1,
                    0.5,  0.5, 0, 1,
@@ -849,11 +853,24 @@ function (Fields,
       },
       updateSprite: (function ()
       {
-         const
-            normal   = new Float32Array (3),
-            vertices = new Float32Array (24);
-
-         vertices .fill (1);
+         const data = new Float32Array ([
+            // TexCoords
+            0, 0, 0, 1,
+            1, 0, 0, 1,
+            1, 1, 0, 1,
+            0, 0, 0, 1,
+            1, 1, 0, 1,
+            0, 1, 0, 1,
+            // Normal
+            0, 0, 1,
+            // Vertices
+            -0.5, -0.5, 0, 1,
+             0.5, -0.5, 0, 1,
+             0.5,  0.5, 0, 1,
+            -0.5, -0.5, 0, 1,
+             0.5,  0.5, 0, 1,
+            -0.5,  0.5, 0, 1,
+         ]);
 
          const quad = [
             new Vector3 (-0.5, -0.5, 0),
@@ -866,27 +883,24 @@ function (Fields,
 
          const
             vertex = new Vector3 (0, 0, 0),
-            scale  = new Vector3 (0, 0, 0);
+            size   = new Vector3 (0, 0, 0);
 
          return function (gl, rotation)
          {
             // Normal
 
             for (let i = 0; i < 3; ++ i)
-               normal [i] = rotation [i + 6];
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, normal, gl .DYNAMIC_DRAW);
+               data [24 + i] = rotation [i + 6];
 
             // Vertices
 
-            scale .set (this ._particleSize .x, this ._particleSize .y, 1);
+            size .set (this ._particleSize .x, this ._particleSize .y, 1);
 
             for (let i = 0; i < 6; ++ i)
-               vertices .set (rotation .multVecMatrix (vertex .assign (quad [i]) .multVec (scale)), i * 4);
+               data .set (rotation .multVecMatrix (vertex .assign (quad [i]) .multVec (size)), 27 + i * 4);
 
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, vertices, gl .DYNAMIC_DRAW);
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
          };
       })(),
       intersectsBox: function (box, clipPlanes)
@@ -953,7 +967,7 @@ function (Fields,
                   particleStride  = this .particleStride;
 
                shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset, 1);
-               shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+               shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
 
                gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
 
@@ -1033,15 +1047,15 @@ function (Fields,
                      }
 
                      if (this .texCoordCount)
-                        shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+                        shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
 
                      if (this .hasNormals)
                      {
                         shaderNode .normalAttributeDivisor (gl, this .numParticles);
-                        shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+                        shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
                      }
 
-                     shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+                     shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
 
                      if (shaderNode .wireframe && this .testWireframe)
                      {
