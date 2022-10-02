@@ -839,21 +839,7 @@ function (Fields,
 
          emitterNode .animate (this, deltaTime);
 
-         switch (this .geometryType)
-         {
-            case GeometryTypes .LINE:
-            case GeometryTypes .TRIANGLE:
-            case GeometryTypes .QUAD:
-            case GeometryTypes .SPRITE:
-               this .updateTexCoord (gl);
-               break;
-         }
-
          browser .addBrowserEvent ();
-      },
-      updateTexCoord: function (rotation)
-      {
-
       },
       updateSprite: (function ()
       {
