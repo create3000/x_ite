@@ -112,6 +112,8 @@ function (X3DGeometryNode,
       {
          return false;
       },
+      rebuildTexCoords: function ()
+      { },
       display: function (gl, context)
       {
          try

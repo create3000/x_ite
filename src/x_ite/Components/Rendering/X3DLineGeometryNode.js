@@ -128,7 +128,7 @@ function (X3DGeometryNode,
       {
          return false;
       },
-      transfer: function ()
+      rebuildTexCoords: function ()
       {
          // Line stipple support.
 
@@ -153,8 +153,6 @@ function (X3DGeometryNode,
          }
 
          texCoords .shrinkToFit ();
-
-         X3DGeometryNode .prototype .transfer .call (this);
       },
       display: function (gl, context)
       {

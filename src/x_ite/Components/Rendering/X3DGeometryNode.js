@@ -786,20 +786,7 @@ function (Fields,
 
             // Generate texCoord if needed.
 
-            if (this .geometryType > 1)
-            {
-               if (this .multiTexCoords .length === 0)
-                  this .multiTexCoords .push (this .buildTexCoords ());
-
-               const
-                  last   = this .multiTexCoords .length - 1,
-                  length = this .getBrowser () .getMaxTextures ();
-
-               for (let i = this .multiTexCoords .length; i < length; ++ i)
-                  this .multiTexCoords [i] = this .multiTexCoords [last];
-
-               this .multiTexCoords .length = length;
-            }
+            this .rebuildTexCoords ();
 
             // Upload normals or flat normals.
 
@@ -810,6 +797,20 @@ function (Fields,
             this .transfer ();
          };
       })(),
+      rebuildTexCoords: function ()
+      {
+         if (this .multiTexCoords .length === 0)
+            this .multiTexCoords .push (this .buildTexCoords ());
+
+         const
+            last   = this .multiTexCoords .length - 1,
+            length = this .getBrowser () .getMaxTextures ();
+
+         for (let i = this .multiTexCoords .length; i < length; ++ i)
+            this .multiTexCoords [i] = this .multiTexCoords [last];
+
+         this .multiTexCoords .length = length;
+      },
       clear: function ()
       {
          // BBox
@@ -905,7 +906,7 @@ function (Fields,
             this .display          = Function .prototype;
             this .displayParticles = Function .prototype;
          }
-        },
+      },
       traverse: function (type, renderObject)
       { },
       depth: function (gl, context, shaderNode)
