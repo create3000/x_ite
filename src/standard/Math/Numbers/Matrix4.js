@@ -835,6 +835,18 @@ function (Vector3,
       configurable: false
    });
 
+   Object .defineProperty (Matrix4 .prototype, "w",
+   {
+      get: (function ()
+      {
+         const vector = new Vector4 (0, 0, 0, 0);
+
+         return function () { return vector .set (this [12], this [13], this [14], this [15]); };
+      })(),
+      enumerable: false,
+      configurable: false
+   });
+
    Object .defineProperty (Matrix4 .prototype, "xAxis",
    {
       get: (function ()

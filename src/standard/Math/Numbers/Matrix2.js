@@ -220,6 +220,18 @@ function (Vector2,
       configurable: false
    });
 
+   Object .defineProperty (Matrix2 .prototype, "y",
+   {
+      get: (function ()
+      {
+         const vector = new Vector2 (0, 0);
+
+         return function () { return vector .set (this [2], this [3]); };
+      })(),
+      enumerable: false,
+      configurable: false
+   });
+
    Object .defineProperty (Matrix2 .prototype, "xAxis",
    {
       get: function () { return this [0]; },

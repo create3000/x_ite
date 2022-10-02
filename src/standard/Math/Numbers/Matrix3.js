@@ -644,6 +644,18 @@ function (Vector2,
       configurable: false
    });
 
+   Object .defineProperty (Matrix3 .prototype, "z",
+   {
+      get: (function ()
+      {
+         const vector = new Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [6], this [7], this [8]); };
+      })(),
+      enumerable: false,
+      configurable: false
+   });
+
    Object .defineProperty (Matrix3 .prototype, "xAxis",
    {
       get: (function ()
