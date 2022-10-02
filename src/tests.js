@@ -184,6 +184,7 @@ const X_ITE_TESTS = [
    { path: "ParticleSystems/DolphinSurfaceEmitter.x3d" },
    { path: "ParticleSystems/Earth.x3dz" },
    { path: "ParticleSystems/ExplosionEmitter.x3d" },
+   { path: "ParticleSystems/ExplosionEmitterGeometry.x3d" },
    { path: "ParticleSystems/Fire.x3d" },
    { path: "ParticleSystems/Geometry.x3d" },
    { path: "ParticleSystems/GeometryLineSet.x3d" },

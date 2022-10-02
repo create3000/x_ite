@@ -1037,14 +1037,19 @@ function (Fields,
       },
       displayParticlesDepth: function (gl, context, shaderNode, particleSystem)
       {
-         shaderNode .enableParticleAttribute (gl, particleSystem .outputParticles, particleSystem .particleStride, particleSystem .particleOffset, 1);
-         shaderNode .enableParticleMatrixAttribute (gl, particleSystem .outputParticles, particleSystem .particleStride, particleSystem .matrixOffset, 1);
+         const
+            outputParticles = particleSystem .outputParticles,
+            particleStride  = particleSystem .particleStride;
+
+         shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
          gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 
          shaderNode .disable (gl);
+         shaderNode .enable (gl);
       },
       displayParticles: function (gl, context, particleSystem)
       {
@@ -1093,8 +1098,12 @@ function (Fields,
 
             // Setup vertex attributes.
 
-            shaderNode .enableParticleAttribute (gl, particleSystem .outputParticles, particleSystem .particleStride, particleSystem .particleOffset, 1);
-            shaderNode .enableParticleMatrixAttribute (gl, particleSystem .outputParticles, particleSystem .particleStride, particleSystem .matrixOffset, 1);
+            const
+               outputParticles = particleSystem .outputParticles,
+               particleStride  = particleSystem .particleStride;
+
+            shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+            shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
 
             for (let i = 0, length = attribNodes .length; i < length; ++ i)
                attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);

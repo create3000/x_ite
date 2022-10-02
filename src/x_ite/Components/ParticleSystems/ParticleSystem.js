@@ -52,6 +52,7 @@ define ([
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DShapeNode",
+   "x_ite/Browser/ParticleSystems/GeometryTypes",
    "x_ite/Rendering/TraverseType",
    "x_ite/Base/X3DConstants",
    "x_ite/Base/X3DCast",
@@ -65,6 +66,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShapeNode,
+          GeometryTypes,
           TraverseType,
           X3DConstants,
           X3DCast,
@@ -75,17 +77,6 @@ function (Fields,
           BVH)
 {
 "use strict";
-
-   let i = 0;
-
-   const GeometryTypes = {
-      POINT:    i ++,
-      LINE:     i ++,
-      TRIANGLE: i ++,
-      QUAD:     i ++,
-      SPRITE:   i ++,
-      GEOMETRY: i ++,
-   };
 
    const PointGeometry = new Float32Array ([0, 0, 0, 1]);
 
@@ -1003,8 +994,8 @@ function (Fields,
                         shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
                      }
 
-                     // if (this .texCoordCount)
-                     //    shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
+                     if (this .texCoordCount)
+                        shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
 
                      if (this .hasNormals)
                      {

@@ -49,6 +49,7 @@
 
 define ([
    "x_ite/Components/Core/X3DNode",
+   "x_ite/Browser/ParticleSystems/GeometryTypes",
    "x_ite/Base/X3DConstants",
    "text!x_ite/Browser/ParticleSystems/Line3.glsl",
    "text!x_ite/Browser/ParticleSystems/Plane3.glsl",
@@ -56,6 +57,7 @@ define ([
    "text!x_ite/Browser/ParticleSystems/BVH.glsl",
 ],
 function (X3DNode,
+          GeometryTypes,
           X3DConstants,
           Line3Source,
           Plane3Source,
@@ -265,10 +267,10 @@ function (X3DNode,
 
          // DEBUG
 
-         const data = new Float32Array (particleSystem .numParticles * (particleStride / 4));
-         gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles);
-         gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
-         console .log (data .slice (0, particleStride / 4));
+         // const data = new Float32Array (particleSystem .numParticles * (particleStride / 4));
+         // gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles);
+         // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
+         // console .log (data .slice (0, particleStride / 4));
       },
       addSampler: function (name)
       {
@@ -348,6 +350,8 @@ function (X3DNode,
          out vec4 output10;
 
          // Constants
+
+         ${Object .entries (GeometryTypes) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
 
          const int   ARRAY_SIZE = 32;
          const float M_PI       = 3.14159265359;
@@ -831,15 +835,16 @@ function (X3DNode,
 
             switch (geometryType)
             {
-               case 0: // POINT
-               case 4: // SPRITE
+               case POINT:
+               case SPRITE:
+               case GEOMETRY:
                {
                   output3 = vec4 (1.0, 0.0, 0.0, 0.0);
                   output4 = vec4 (0.0, 1.0, 0.0, 0.0);
                   output5 = vec4 (0.0, 0.0, 1.0, 0.0);
                   break;
                }
-               case 1: // LINE
+               case LINE:
                {
                   mat3 r = Matrix3 (Quaternion (vec3 (0.0, 0.0, 1.0), output2 .xyz));
                   mat3 s = mat3 (1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, particleSize .y);
@@ -870,7 +875,8 @@ function (X3DNode,
 
                switch (geometryType)
                {
-                  case 0: // POINT
+                  case POINT:
+                  case GEOMETRY:
                   {
                      output7  = vec4 (0.0);
                      output8  = vec4 (0.0);
@@ -878,7 +884,7 @@ function (X3DNode,
                      output10 = vec4 (0.0);
                      break;
                   }
-                  case 1: // LINE
+                  case LINE:
                   {
                      output7  = texelFetch (texCoordRamp, index0 + 0, 0);
                      output8  = texelFetch (texCoordRamp, index0 + 1, 0);
