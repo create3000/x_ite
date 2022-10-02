@@ -87,6 +87,43 @@ function (Fields,
       GEOMETRY: i ++,
    };
 
+   const PointGeometry = new Float32Array ([0, 0, 0, 1]);
+
+   const LineGeometry = new Float32Array ([
+      // TexCoords
+      0, 0, 0, 1,
+      1, 0, 0, 1,
+      // Vertices
+      0, 0, -0.5, 1,
+      0, 0,  0.5, 1,
+   ]);
+
+   // p4 ------ p3
+   // |       / |
+   // |     /   |
+   // |   /     |
+   // | /       |
+   // p1 ------ p2
+
+   const QuadGeometry = new Float32Array ([
+      // TexCoords
+      0, 0, 0, 1,
+      1, 0, 0, 1,
+      1, 1, 0, 1,
+      0, 0, 0, 1,
+      1, 1, 0, 1,
+      0, 1, 0, 1,
+      // Normal
+      0, 0, 1,
+      // Vertices
+      -0.5, -0.5, 0, 1,
+       0.5, -0.5, 0, 1,
+       0.5,  0.5, 0, 1,
+      -0.5, -0.5, 0, 1,
+       0.5,  0.5, 0, 1,
+      -0.5,  0.5, 0, 1,
+   ]);
+
    function ParticleSystem (executionContext)
    {
       X3DShapeNode .call (this, executionContext);
@@ -362,7 +399,7 @@ function (Fields,
                this .verticesOffset = 0;
 
                gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
-               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([0, 0, 0, 1]), gl .DYNAMIC_DRAW);
+               gl .bufferData (gl .ARRAY_BUFFER, PointGeometry, gl .DYNAMIC_DRAW);
 
                break;
             }
@@ -380,15 +417,7 @@ function (Fields,
                this .verticesOffset  = Float32Array .BYTES_PER_ELEMENT * 8;
 
                gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
-               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([
-                  // TexCoords
-                  0, 0, 0, 1,
-                  1, 0, 0, 1,
-                  // Vertices
-                  0, 0, -0.5, 1,
-                  0, 0,  0.5, 1
-               ]),
-               gl .DYNAMIC_DRAW);
+               gl .bufferData (gl .ARRAY_BUFFER, LineGeometry, gl .DYNAMIC_DRAW);
 
                break;
             }
@@ -404,37 +433,12 @@ function (Fields,
                this .testWireframe = true;
                this .primitiveMode = gl .TRIANGLES;
 
-               // p4 ------ p3
-               // |       / |
-               // |     /   |
-               // |   /     |
-               // | /       |
-               // p1 ------ p2
-
                this .texCoordsOffset = 0;
                this .normalOffset    = Float32Array .BYTES_PER_ELEMENT * 24;
                this .verticesOffset  = Float32Array .BYTES_PER_ELEMENT * 27;
 
                gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
-               gl .bufferData (gl .ARRAY_BUFFER, new Float32Array ([
-                  // TexCoords
-                  0, 0, 0, 1,
-                  1, 0, 0, 1,
-                  1, 1, 0, 1,
-                  0, 0, 0, 1,
-                  1, 1, 0, 1,
-                  0, 1, 0, 1,
-                  // Normal
-                  0, 0, 1,
-                  // Vertices
-                  -0.5, -0.5, 0, 1,
-                   0.5, -0.5, 0, 1,
-                   0.5,  0.5, 0, 1,
-                  -0.5, -0.5, 0, 1,
-                   0.5,  0.5, 0, 1,
-                  -0.5,  0.5, 0, 1,
-               ]),
-               gl .DYNAMIC_DRAW);
+               gl .bufferData (gl .ARRAY_BUFFER, QuadGeometry, gl .DYNAMIC_DRAW);
 
                break;
             }
@@ -853,24 +857,7 @@ function (Fields,
       },
       updateSprite: (function ()
       {
-         const data = new Float32Array ([
-            // TexCoords
-            0, 0, 0, 1,
-            1, 0, 0, 1,
-            1, 1, 0, 1,
-            0, 0, 0, 1,
-            1, 1, 0, 1,
-            0, 1, 0, 1,
-            // Normal
-            0, 0, 1,
-            // Vertices
-            -0.5, -0.5, 0, 1,
-             0.5, -0.5, 0, 1,
-             0.5,  0.5, 0, 1,
-            -0.5, -0.5, 0, 1,
-             0.5,  0.5, 0, 1,
-            -0.5,  0.5, 0, 1,
-         ]);
+         const data = new Float32Array (QuadGeometry);
 
          const quad = [
             new Vector3 (-0.5, -0.5, 0),
