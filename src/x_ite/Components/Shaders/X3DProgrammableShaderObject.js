@@ -308,7 +308,7 @@ function (X3DCast,
 
             if (attribute < 0)
             {
-               this ["enable" + name + "Attribute"]  = Function .prototype;
+               this ["enable" + name + "Attribute"] = Function .prototype;
                this [name [0] .toLowerCase () + name .slice (1) + "AttributeDivisor"] = Function .prototype;
             }
             else
