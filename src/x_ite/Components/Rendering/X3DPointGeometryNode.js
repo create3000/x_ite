@@ -167,62 +167,54 @@ function (X3DGeometryNode,
       },
       displayParticles: function (gl, context, particleSystem)
       {
-         try
+         const
+            browser        = context .browser,
+            appearanceNode = context .shapeNode .getAppearance (),
+            shaderNode     = appearanceNode .shaderNode || browser .getPointShader ();
+
+         if (shaderNode .getValid ())
          {
             const
-               browser        = context .browser,
-               appearanceNode = context .shapeNode .getAppearance (),
-               shaderNode     = appearanceNode .shaderNode || browser .getPointShader ();
+               blendModeNode = appearanceNode .blendModeNode,
+               attribNodes   = this .attribNodes,
+               attribBuffers = this .attribBuffers;
 
-            if (shaderNode .getValid ())
-            {
-               const
-                  blendModeNode = appearanceNode .blendModeNode,
-                  attribNodes   = this .attribNodes,
-                  attribBuffers = this .attribBuffers;
+            if (blendModeNode)
+               blendModeNode .enable (gl);
 
-               if (blendModeNode)
-                  blendModeNode .enable (gl);
+            // Setup shader.
 
-               // Setup shader.
+            shaderNode .enable (gl);
+            shaderNode .setLocalUniforms (gl, context);
 
-               shaderNode .enable (gl);
-               shaderNode .setLocalUniforms (gl, context);
+            // Setup vertex attributes.
 
-               // Setup vertex attributes.
+            const
+               outputParticles = particleSystem .outputParticles,
+               particleStride  = particleSystem .particleStride;
 
-               const
-                  outputParticles = particleSystem .outputParticles,
-                  particleStride  = particleSystem .particleStride;
+            shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+            shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
 
-               shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
-               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
+            for (let i = 0, length = attribNodes .length; i < length; ++ i)
+               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-               for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+            if (this .fogCoords)
+               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
-               if (this .fogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+            if (this .colorMaterial)
+               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-               if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
-               shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+            // Wireframes are always solid so only one drawing call is needed.
 
-               // Wireframes are always solid so only one drawing call is needed.
+            gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 
-               gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+            shaderNode .disable (gl);
 
-               shaderNode .disable (gl);
-
-               if (blendModeNode)
-                  blendModeNode .disable (gl);
-            }
-         }
-         catch (error)
-         {
-            // Catch error from setLocalUniforms.
-            console .error (error);
+            if (blendModeNode)
+               blendModeNode .disable (gl);
          }
       },
    });

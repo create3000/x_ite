@@ -914,30 +914,22 @@ function (Fields,
       },
       display: function (gl, context)
       {
-         try
+         const
+            appearanceNode   = context .shapeNode .getAppearance (),
+            materialNode     = appearanceNode .materialNode,
+            backMaterialNode = appearanceNode .backMaterialNode,
+            frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
+
+         if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
          {
-            const
-               appearanceNode   = context .shapeNode .getAppearance (),
-               materialNode     = appearanceNode .materialNode,
-               backMaterialNode = appearanceNode .backMaterialNode,
-               frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
-
-            if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
-            {
-               this .displayGeometry (gl, context, appearanceNode, frontShaderNode, true, true);
-            }
-            else
-            {
-               const backShaderNode = appearanceNode .shaderNode || backMaterialNode .getShader (context .browser, context .shadow)
-
-               this .displayGeometry (gl, context, appearanceNode, backShaderNode,  true,  false);
-               this .displayGeometry (gl, context, appearanceNode, frontShaderNode, false, true);
-            }
+            this .displayGeometry (gl, context, appearanceNode, frontShaderNode, true, true);
          }
-         catch (error)
+         else
          {
-            // Catch error from setLocalUniforms.
-            console .log (error);
+            const backShaderNode = appearanceNode .shaderNode || backMaterialNode .getShader (context .browser, context .shadow)
+
+            this .displayGeometry (gl, context, appearanceNode, backShaderNode,  true,  false);
+            this .displayGeometry (gl, context, appearanceNode, frontShaderNode, false, true);
          }
       },
       displayGeometry: function (gl, context, appearanceNode, shaderNode, back, front)
@@ -1049,30 +1041,22 @@ function (Fields,
       },
       displayParticles: function (gl, context, particleSystem)
       {
-         try
+         const
+            appearanceNode   = context .shapeNode .getAppearance (),
+            materialNode     = appearanceNode .materialNode,
+            backMaterialNode = appearanceNode .backMaterialNode,
+            frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
+
+         if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
          {
-            const
-               appearanceNode   = context .shapeNode .getAppearance (),
-               materialNode     = appearanceNode .materialNode,
-               backMaterialNode = appearanceNode .backMaterialNode,
-               frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
-
-            if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
-            {
-               this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particleSystem);
-            }
-            else
-            {
-               const backShaderNode = appearanceNode .shaderNode || backMaterialNode .getShader (context .browser, context .shadow);
-
-               this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode,  true,  false, particleSystem);
-               this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, false, true,  particleSystem);
-            }
+            this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particleSystem);
          }
-         catch (error)
+         else
          {
-            // Catch error from setLocalUniforms.
-            console .log (error);
+            const backShaderNode = appearanceNode .shaderNode || backMaterialNode .getShader (context .browser, context .shadow);
+
+            this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode,  true,  false, particleSystem);
+            this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, false, true,  particleSystem);
          }
       },
       displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particleSystem)

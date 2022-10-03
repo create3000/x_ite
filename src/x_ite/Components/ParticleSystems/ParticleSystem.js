@@ -932,122 +932,114 @@ function (Fields,
       },
       display: function (gl, context)
       {
-         try
+         // Display geometry.
+
+         switch (this .geometryType)
          {
-            // Display geometry.
-
-            switch (this .geometryType)
+            case GeometryTypes .GEOMETRY:
             {
-               case GeometryTypes .GEOMETRY:
-               {
-                  const geometryNode = this .getGeometry ();
+               const geometryNode = this .getGeometry ();
 
-                  if (geometryNode)
-                     geometryNode .displayParticles (gl, context, this);
+               if (geometryNode)
+                  geometryNode .displayParticles (gl, context, this);
 
-                  break;
-               }
-               case GeometryTypes .SPRITE:
-               {
-                  this .updateSprite (gl, this .getScreenAlignedRotation (context .modelViewMatrix));
-                  // [fall trough]
-               }
-               case GeometryTypes .QUAD:
-               case GeometryTypes .TRIANGLE:
-               {
-                  const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+               break;
+            }
+            case GeometryTypes .SPRITE:
+            {
+               this .updateSprite (gl, this .getScreenAlignedRotation (context .modelViewMatrix));
+               // [fall trough]
+            }
+            case GeometryTypes .QUAD:
+            case GeometryTypes .TRIANGLE:
+            {
+               const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
 
-                  gl .frontFace (positiveScale ? gl .CCW : gl .CW);
-                  gl .enable (gl .CULL_FACE);
-                  gl .cullFace (gl .BACK);
+               gl .frontFace (positiveScale ? gl .CCW : gl .CW);
+               gl .enable (gl .CULL_FACE);
+               gl .cullFace (gl .BACK);
 
-                  // [fall trough]
-               }
-               default:
+               // [fall trough]
+            }
+            default:
+            {
+               const
+                  appearanceNode = this .getAppearance (),
+                  shaderNode     = appearanceNode .shaderNode || this .shaderNode || appearanceNode .materialNode .getShader (context .browser, context .shadow);
+
+               // Setup shader.
+
+               if (shaderNode .getValid ())
                {
+                  context .geometryContext = this .geometryContext;
+
+                  const blendModeNode = appearanceNode .blendModeNode;
+
+                  if (blendModeNode)
+                     blendModeNode .enable (gl);
+
+                  shaderNode .enable (gl);
+                  shaderNode .setLocalUniforms (gl, context);
+
+                  // Setup vertex attributes.
+
                   const
-                     appearanceNode = this .getAppearance (),
-                     shaderNode     = appearanceNode .shaderNode || this .shaderNode || appearanceNode .materialNode .getShader (context .browser, context .shadow);
+                     outputParticles = this .outputParticles,
+                     particleStride  = this .particleStride;
 
-                  // Setup shader.
+                  shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
+                  shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
 
-                  if (shaderNode .getValid ())
+                  if (this .geometryContext .colorMaterial)
                   {
-                     context .geometryContext = this .geometryContext;
-
-                     const blendModeNode = appearanceNode .blendModeNode;
-
-                     if (blendModeNode)
-                        blendModeNode .enable (gl);
-
-                     shaderNode .enable (gl);
-                     shaderNode .setLocalUniforms (gl, context);
-
-                     // Setup vertex attributes.
-
-                     const
-                        outputParticles = this .outputParticles,
-                        particleStride  = this .particleStride;
-
-                     shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
-                     shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
-
-                     if (this .geometryContext .colorMaterial)
-                     {
-                        shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
-                        shaderNode .colorAttributeDivisor (gl, 1);
-                     }
-
-                     if (this .texCoordCount)
-                     {
-                        shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
-
-                        if (this .numTexCoords)
-                        {
-                           const textureUnit = context .browser .getTexture2DUnit ();
-
-                           gl .activeTexture (gl .TEXTURE0 + textureUnit);
-                           gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
-                           gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
-                        }
-                     }
-
-                     if (this .hasNormals)
-                     {
-                        shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
-                        shaderNode .normalAttributeDivisor (gl, this .numParticles);
-                     }
-
-                     shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
-
-                     if (shaderNode .wireframe && this .testWireframe)
-                     {
-                        // Wireframes are always solid so only one drawing call is needed.
-
-                        for (let i = 0, length = this .numParticles * this .vertexCount; i < length; i += 3)
-                           gl .drawArrays (shaderNode .primitiveMode, i, 3);
-                     }
-                     else
-                     {
-                        gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
-                     }
-
-                     shaderNode .disable (gl);
-
-                     if (blendModeNode)
-                        blendModeNode .disable (gl);
-
-                     delete context .geometryContext;
+                     shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
+                     shaderNode .colorAttributeDivisor (gl, 1);
                   }
 
-                  break;
+                  if (this .texCoordCount)
+                  {
+                     shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
+
+                     if (this .numTexCoords)
+                     {
+                        const textureUnit = context .browser .getTexture2DUnit ();
+
+                        gl .activeTexture (gl .TEXTURE0 + textureUnit);
+                        gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+                        gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
+                     }
+                  }
+
+                  if (this .hasNormals)
+                  {
+                     shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
+                     shaderNode .normalAttributeDivisor (gl, this .numParticles);
+                  }
+
+                  shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
+
+                  if (shaderNode .wireframe && this .testWireframe)
+                  {
+                     // Wireframes are always solid so only one drawing call is needed.
+
+                     for (let i = 0, length = this .numParticles * this .vertexCount; i < length; i += 3)
+                        gl .drawArrays (shaderNode .primitiveMode, i, 3);
+                  }
+                  else
+                  {
+                     gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
+                  }
+
+                  shaderNode .disable (gl);
+
+                  if (blendModeNode)
+                     blendModeNode .disable (gl);
+
+                  delete context .geometryContext;
                }
+
+               break;
             }
-         }
-         catch (error)
-         {
-            // Catch error from setLocalUniforms.
-            console .error (error);
          }
       },
       getScreenAlignedRotation: (function ()
