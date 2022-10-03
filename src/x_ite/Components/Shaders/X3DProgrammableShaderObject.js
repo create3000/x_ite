@@ -1297,8 +1297,8 @@ function (X3DCast,
       {
          const location = this .x3d_Particle;
 
-         this .attributes .add (location);
-         this .divisors   .add (location);
+         this .attributes .delete (location);
+         this .divisors   .delete (location);
 
          gl .disableVertexAttribArray (location);
          gl .vertexAttribDivisor (location, 0);
