@@ -620,12 +620,14 @@ A ComposedShader defines a number of special variables for the various shader st
 
 ### ParticleSystem
 
-If the shader node is part of a ParticleSystem node the following attributes are available.
+If the shader node is part of a ParticleSystem node the following attributes and uniforms are available.
 
-| Type           | Name                  | Comment                                                       |
-|--------------- |---------------------- |---------------------------------------------------------------|
-| attribute vec4 | x3d\_Particle         | vec4(int id, int life, float lifetime, float elapsedTime)     |
-| attribute vec3 | x3d\_ParticlePosition | center coordinate of particle, should be added to x3d\_Vertex |
+| Type              | Name                  | Comment                                                               |
+|------------------ |---------------------- |-----------------------------------------------------------------------|
+| attribute vec4    | x3d\_Particle         | vec4(int life, float lifetime, float elapsedTime, int texCoordIndex0) |
+| attribute mat4    | x3d\_ParticleMatrix   | particle matrix, should be multiplied with x3d\_Vertex                |
+| uniform sampler2D | x3d\_TexCoordRamp     | texture coordinate ramp                                               |
+|                   | gl_InstanceId         | available                                                             |
 
 ## Built-in Constants
 
