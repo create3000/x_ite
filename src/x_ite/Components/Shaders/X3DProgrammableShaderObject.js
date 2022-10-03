@@ -109,8 +109,8 @@ function (X3DCast,
       this .numGlobalProjectiveTextures = 0;
       this .projectiveTextureNodes      = [ ];
       this .textures                    = new Set ();
-      this .attributes                  = new Set ();
-      this .divisors                    = new Set ();
+      this .attributes                  = [ ];
+      this .divisors                    = [ ];
    }
 
    X3DProgrammableShaderObject .prototype =
@@ -1145,8 +1145,8 @@ function (X3DCast,
          for (const location of this .divisors)
             gl .vertexAttribDivisor (location, 0);
 
-         this .attributes .clear ();
-         this .divisors   .clear ();
+         this .attributes .length = 0;
+         this .divisors   .length = 0;
       },
       enableFloatAttrib: function (gl, name, buffer, components, stride, offset)
       {
@@ -1155,7 +1155,7 @@ function (X3DCast,
          if (location === -1)
             return;
 
-         this .attributes .add (location);
+         this .attributes .push (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
          gl .enableVertexAttribArray (location);
@@ -1176,7 +1176,7 @@ function (X3DCast,
          {
             const location = location0 + i;
 
-            this .attributes .add (location);
+            this .attributes .push (location);
 
             gl .enableVertexAttribArray (location);
             gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset + 12 * i);
@@ -1197,7 +1197,7 @@ function (X3DCast,
          {
             const location = location0 + i;
 
-            this .attributes .add (location);
+            this .attributes .push (location);
 
             gl .enableVertexAttribArray (location);
             gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset + 16 * i);
@@ -1207,7 +1207,7 @@ function (X3DCast,
       {
          const location = this .x3d_FogDepth;
 
-         this .attributes .add (location);
+         this .attributes .push (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
          gl .enableVertexAttribArray (location);
@@ -1217,7 +1217,7 @@ function (X3DCast,
       {
          const location = this .x3d_Color;
 
-         this .attributes .add (location);
+         this .attributes .push (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
          gl .enableVertexAttribArray (location);
@@ -1225,7 +1225,7 @@ function (X3DCast,
       },
       colorAttributeDivisor: function (gl, divisor)
       {
-         this .divisors .add (this .x3d_Color);
+         this .divisors .push (this .x3d_Color);
 
          gl .vertexAttribDivisor (this .x3d_Color, divisor);
       },
@@ -1233,7 +1233,7 @@ function (X3DCast,
       {
          for (const [i, x3d_TexCoord] of this .x3d_TexCoord)
          {
-            this .attributes .add (x3d_TexCoord);
+            this .attributes .push (x3d_TexCoord);
 
             gl .bindBuffer (gl .ARRAY_BUFFER, buffers [i]);
             gl .enableVertexAttribArray (x3d_TexCoord);
@@ -1244,7 +1244,7 @@ function (X3DCast,
       {
          for (const [i, x3d_TexCoord] of this .x3d_TexCoord)
          {
-            this .divisors .add (x3d_TexCoord);
+            this .divisors .push (x3d_TexCoord);
 
             gl .vertexAttribDivisor (x3d_TexCoord, divisor);
          }
@@ -1253,7 +1253,7 @@ function (X3DCast,
       {
          const location = this .x3d_Normal;
 
-         this .attributes .add (location);
+         this .attributes .push (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
          gl .enableVertexAttribArray (location);
@@ -1261,7 +1261,7 @@ function (X3DCast,
       },
       normalAttributeDivisor: function (gl, divisor)
       {
-         this .divisors .add (this .x3d_Normal);
+         this .divisors .push (this .x3d_Normal);
 
          gl .vertexAttribDivisor (this .x3d_Normal, divisor);
       },
@@ -1269,7 +1269,7 @@ function (X3DCast,
       {
          const location = this .x3d_Vertex;
 
-         this .attributes .add (location);
+         this .attributes .push (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
          gl .enableVertexAttribArray (location);
@@ -1277,7 +1277,7 @@ function (X3DCast,
       },
       vertexAttributeDivisor: function (gl, divisor)
       {
-         this .divisors .add (this .x3d_Vertex);
+         this .divisors .push (this .x3d_Vertex);
 
          gl .vertexAttribDivisor (this .x3d_Vertex, divisor);
       },
@@ -1285,8 +1285,8 @@ function (X3DCast,
       {
          const location = this .x3d_Particle;
 
-         this .attributes .add (location);
-         this .divisors   .add (location);
+         this .attributes .push (location);
+         this .divisors   .push (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
          gl .enableVertexAttribArray (location);
@@ -1305,8 +1305,8 @@ function (X3DCast,
          {
             const location = location0 + i;
 
-            this .attributes .add (location);
-            this .divisors   .add (location);
+            this .attributes .push (location);
+            this .divisors   .push (location);
 
             gl .enableVertexAttribArray (location);
             gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset + 16 * i);
