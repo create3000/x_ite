@@ -137,8 +137,8 @@ function (TextureBuffer,
             gl .enable (gl .CULL_FACE);
             gl .cullFace (gl .BACK);
 
-            shaderNode .enableNormalAttribute (gl, normalBuffer);
-            shaderNode .enableVertexAttribute (gl, vertexBuffer);
+            shaderNode .enableNormalAttribute (gl, normalBuffer, 0, 0);
+            shaderNode .enableVertexAttribute (gl, vertexBuffer, 0, 0);
 
             gl .drawArrays (gl .TRIANGLES, 0, 6);
 

@@ -140,7 +140,7 @@ function (Fields,
       },
       enable: function (gl, shaderNode, buffer)
       {
-         shaderNode .enableFloatAttrib (gl, this ._name .getValue (), buffer, this .numComponents);
+         shaderNode .enableFloatAttrib (gl, this ._name .getValue (), buffer, this .numComponents, 0, 0);
       },
    });
 

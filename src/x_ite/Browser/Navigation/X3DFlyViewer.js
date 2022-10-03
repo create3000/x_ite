@@ -694,7 +694,7 @@ function ($,
             if (shaderNode .getValid ())
             {
                shaderNode .enable (gl);
-               shaderNode .enableVertexAttribute (gl, this .lineBuffer);
+               shaderNode .enableVertexAttribute (gl, this .lineBuffer, 0, 0);
 
                gl .uniform1i (shaderNode .x3d_NumClipPlanes,         0);
                gl .uniform1i (shaderNode .x3d_FogType,               0);

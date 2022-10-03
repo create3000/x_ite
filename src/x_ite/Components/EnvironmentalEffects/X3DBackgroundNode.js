@@ -174,13 +174,15 @@ function (X3DBindableNode,
       {
          X3DBindableNode .prototype .initialize .call (this);
 
-         const gl = this .getBrowser () .getContext ();
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
 
          this .colorBuffer     = gl .createBuffer ();
          this .sphereBuffer    = gl .createBuffer ();
          this .texCoordBuffer  = gl .createBuffer ();
          this .cubeBuffer      = gl .createBuffer ();
-         this .texCoordBuffers = [ gl .createBuffer () ];
+         this .texCoordBuffers = new Array (browser .getMaxTextures ()) .fill (gl .createBuffer ());
          this .frontBuffer     = gl .createBuffer ();
          this .backBuffer      = gl .createBuffer ();
          this .leftBuffer      = gl .createBuffer ();
@@ -570,8 +572,8 @@ function (X3DBindableNode,
 
             // Enable vertex attribute arrays.
 
-            shaderNode .enableColorAttribute  (gl, this .colorBuffer);
-            shaderNode .enableVertexAttribute (gl, this .sphereBuffer);
+            shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
+            shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
 
             // Uniforms
 
@@ -617,7 +619,7 @@ function (X3DBindableNode,
 
                // Enable vertex attribute arrays.
 
-               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
 
                // Uniforms
 
@@ -662,7 +664,7 @@ function (X3DBindableNode,
             else
                gl .disable (gl .BLEND);
 
-            shaderNode .enableVertexAttribute (gl, buffer);
+            shaderNode .enableVertexAttribute (gl, buffer, 0, 0);
 
             // Draw.
 

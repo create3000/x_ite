@@ -908,7 +908,7 @@ function (Fields,
       { },
       depth: function (gl, context, shaderNode)
       {
-         shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
          gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
       },
@@ -961,14 +961,14 @@ function (Fields,
                attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
             if (this .fogCoords)
-               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
             if (this .colorMaterial)
-               shaderNode .enableColorAttribute (gl, this .colorBuffer);
+               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-            shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
-            shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+            shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
+            shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
 
             // Draw depending on wireframe, solid and transparent.
 
@@ -1042,7 +1042,7 @@ function (Fields,
          shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
          shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
 
-         shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
          gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 
@@ -1107,14 +1107,14 @@ function (Fields,
                attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
             if (this .fogCoords)
-               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
             if (this .colorMaterial)
-               shaderNode .enableColorAttribute (gl, this .colorBuffer);
+               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-            shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
-            shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+            shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
+            shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
 
             // Draw depending on wireframe, solid and transparent.
 

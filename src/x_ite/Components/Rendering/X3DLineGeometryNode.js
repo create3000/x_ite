@@ -182,13 +182,13 @@ function (X3DGeometryNode,
                   attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
                if (this .fogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
                if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer);
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
 
                // WireFrames are always solid so only one drawing call is needed.
 
@@ -243,13 +243,13 @@ function (X3DGeometryNode,
                   attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
                if (this .fogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
                if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer);
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
 
                // Wireframes are always solid so only one drawing call is needed.
 

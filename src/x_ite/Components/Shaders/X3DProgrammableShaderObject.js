@@ -1205,19 +1205,23 @@ function (X3DCast,
       },
       enableFogDepthAttribute: function (gl, buffer, stride, offset)
       {
-         this .attributes .add (this .x3d_FogDepth);
+         const location = this .x3d_FogDepth;
+
+         this .attributes .add (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-         gl .vertexAttribPointer (this .x3d_FogDepth, 1, gl .FLOAT, false, stride, offset);
-         gl .enableVertexAttribArray (this .x3d_FogDepth);
+         gl .vertexAttribPointer (location, 1, gl .FLOAT, false, stride, offset);
+         gl .enableVertexAttribArray (location);
       },
       enableColorAttribute: function (gl, buffer, stride, offset)
       {
-         this .attributes .add (this .x3d_Color);
+         const location = this .x3d_Color;
+
+         this .attributes .add (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-         gl .vertexAttribPointer (this .x3d_Color, 4, gl .FLOAT, false, stride, offset);
-         gl .enableVertexAttribArray (this .x3d_Color);
+         gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
+         gl .enableVertexAttribArray (location);
       },
       colorAttributeDivisor: function (gl, divisor)
       {
@@ -1247,11 +1251,13 @@ function (X3DCast,
       },
       enableNormalAttribute: function (gl, buffer, stride, offset)
       {
-         this .attributes .add (this .x3d_Normal);
+         const location = this .x3d_Normal;
+
+         this .attributes .add (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-         gl .vertexAttribPointer (this .x3d_Normal, 3, gl .FLOAT, false, stride, offset);
-         gl .enableVertexAttribArray (this .x3d_Normal);
+         gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset);
+         gl .enableVertexAttribArray (location);
       },
       normalAttributeDivisor: function (gl, divisor)
       {
@@ -1261,11 +1267,13 @@ function (X3DCast,
       },
       enableVertexAttribute: function (gl, buffer, stride, offset)
       {
-         this .attributes .add (this .x3d_Vertex);
+         const location = this .x3d_Vertex;
+
+         this .attributes .add (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-         gl .vertexAttribPointer (this .x3d_Vertex, 4, gl .FLOAT, false, stride, offset);
-         gl .enableVertexAttribArray (this .x3d_Vertex);
+         gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
+         gl .enableVertexAttribArray (location);
       },
       vertexAttributeDivisor: function (gl, divisor)
       {
@@ -1275,13 +1283,15 @@ function (X3DCast,
       },
       enableParticleAttribute: function (gl, buffer, stride, offset, divisor)
       {
-         this .attributes .add (this .x3d_Particle);
-         this .divisors   .add (this .x3d_Particle);
+         const location = this .x3d_Particle;
+
+         this .attributes .add (location);
+         this .divisors   .add (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-         gl .vertexAttribPointer (this .x3d_Particle, 4, gl .FLOAT, false, stride, offset);
-         gl .vertexAttribDivisor (this .x3d_Particle, divisor);
-         gl .enableVertexAttribArray (this .x3d_Particle);
+         gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
+         gl .vertexAttribDivisor (location, divisor);
+         gl .enableVertexAttribArray (location);
       },
       enableParticleMatrixAttribute: function (gl, buffer, stride, offset, divisor)
       {
