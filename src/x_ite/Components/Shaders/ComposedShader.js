@@ -125,39 +125,23 @@ function (Fields,
       },
       addUserDefinedField: function (accessType, name, field)
       {
-         const gl = this .getBrowser () .getContext ();
-
          if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
-         {
-            this .enable (gl);
             this .removeShaderFields ();
-         }
 
          X3DShaderNode .prototype .addUserDefinedField .call (this, accessType, name, field);
 
          if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
-         {
-            this .enable (gl);
-            this .addShaderFields ();
-         }
+            this .addShaderFields (this .program);
       },
       removeUserDefinedField: function (name)
       {
-         const gl = this .getBrowser () .getContext ();
-
          if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
-         {
-            this .enable (gl);
             this .removeShaderFields ();
-         }
 
          X3DShaderNode .prototype .removeUserDefinedField .call (this, name);
 
          if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
-         {
-            this .enable (gl);
-            this .addShaderFields ();
-         }
+            this .addShaderFields (this .program);
       },
       getProgram: function ()
       {
@@ -165,23 +149,15 @@ function (Fields,
       },
       set_live__: function ()
       {
-         const gl = this .getBrowser () .getContext ();
-
          if (this .isLive () .getValue ())
          {
             if (this .getValid ())
-            {
-               this .enable (gl);
-               this .addShaderFields ();
-            }
+               this .addShaderFields (this .program);
          }
          else
          {
             if (this .getValid ())
-            {
-               this .enable (gl);
                this .removeShaderFields ();
-            }
          }
       },
       set_loaded__: function ()
@@ -214,8 +190,6 @@ function (Fields,
 
             if (valid)
             {
-               this .bindAttributeLocations (gl, program);
-
                gl .linkProgram (program);
 
                valid = gl .getProgramParameter (program, gl .LINK_STATUS);
@@ -223,9 +197,7 @@ function (Fields,
 
             if (valid)
             {
-               gl .useProgram (this .program);
-               
-               this .getDefaultUniforms ();
+               this .getDefaultUniformsAndAttributes (program);
 
                // Debug, print complete shader info and statistics.
                // this .printProgramInfo ();
@@ -239,7 +211,9 @@ function (Fields,
             }
 
             this .setValid (!! valid);
-            this .addShaderFields ();
+
+            if (valid)
+               this .addShaderFields (this .program);
          }
          else
          {
@@ -249,28 +223,18 @@ function (Fields,
       set_field__: function (field)
       {
          if (this .getValid ())
-         {
-            const gl = this .getBrowser () .getContext ();
-
-            gl .useProgram (this .program);
-
-            X3DProgrammableShaderObject .prototype .set_field__ .call (this, field);
-         }
+            X3DProgrammableShaderObject .prototype .set_field__ .call (this, field, this .program);
       },
       setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
       {
          if (this .getValid ())
          {
-            gl .useProgram (this .program);
-
-            X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+            X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, gl, this .program, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
          }
       },
       enable: function (gl)
       {
-         gl .useProgram (this .program);
-
-         X3DProgrammableShaderObject .prototype .enable .call (this, gl);
+         X3DProgrammableShaderObject .prototype .enable .call (this, gl, this .program);
       },
    });
 

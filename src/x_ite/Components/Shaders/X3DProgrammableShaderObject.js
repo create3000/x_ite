@@ -128,18 +128,15 @@ function (X3DCast,
       {
          return true;
       },
-      bindAttributeLocations: function (gl, program)
-      {
-         gl .bindAttribLocation (program, 0, "x3d_Vertex");
-      },
-      getDefaultUniforms: function ()
+      getDefaultUniformsAndAttributes: function (program)
       {
          // Get uniforms and attributes.
 
          const
             browser = this .getBrowser (),
-            gl      = browser .getContext (),
-            program = this .getProgram ();
+            gl      = browser .getContext ();
+
+         gl .useProgram (program);
 
          /*
           * Uniforms.
@@ -425,11 +422,11 @@ function (X3DCast,
 
          return -1;
       },
-      addShaderFields: function ()
+      addShaderFields: function (program)
       {
-         const
-            gl      = this .getBrowser () .getContext (),
-            program = this .getProgram ();
+         const gl = this .getBrowser () .getContext ();
+
+         gl .useProgram (program);
 
          this .textures .clear ();
 
@@ -539,7 +536,7 @@ function (X3DCast,
 
                field .addInterest ("set_field__", this);
 
-               this .set_field__ (field);
+               this .set_field__ (field, program);
             }
          }
       },
@@ -552,11 +549,13 @@ function (X3DCast,
       {
          const matrix3 = new Matrix3 ();
 
-         return function (field)
+         return function (field, program)
          {
             const
                gl       = this .getBrowser () .getContext (),
                location = field [_uniformLocation];
+
+            gl .useProgram (program);
 
             if (location)
             {
@@ -984,9 +983,11 @@ function (X3DCast,
          gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
          gl .uniform1i (this .x3d_NumProjectiveTextures, Math .min (this .numProjectiveTextures, this .x3d_MaxTextures));
       },
-      setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
+      setGlobalUniforms: function (gl, program, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
       {
          const globalObjects = renderObject .getGlobalObjects ();
+
+         gl .useProgram (program);
 
          // Set viewport
 
@@ -1114,9 +1115,11 @@ function (X3DCast,
             }
          };
       })(),
-      enable: function (gl)
+      enable: function (gl, program)
       {
          const browser = this .getBrowser ();
+
+         gl .useProgram (program);
 
          for (const location of this .textures)
          {
