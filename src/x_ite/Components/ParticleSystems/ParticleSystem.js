@@ -996,8 +996,8 @@ function (Fields,
 
                      if (this .geometryContext .colorMaterial)
                      {
-                        shaderNode .colorAttributeDivisor (gl, 1);
                         shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
+                        shaderNode .colorAttributeDivisor (gl, 1);
                      }
 
                      if (this .texCoordCount)
@@ -1016,8 +1016,8 @@ function (Fields,
 
                      if (this .hasNormals)
                      {
-                        shaderNode .normalAttributeDivisor (gl, this .numParticles);
                         shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
+                        shaderNode .normalAttributeDivisor (gl, this .numParticles);
                      }
 
                      shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);

@@ -1158,8 +1158,8 @@ function (X3DCast,
          this .attributes .add (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-         gl .vertexAttribPointer (location, components, gl .FLOAT, false, stride, offset);
          gl .enableVertexAttribArray (location);
+         gl .vertexAttribPointer (location, components, gl .FLOAT, false, stride, offset);
       },
       enableMatrix3Attrib: function (gl, name, buffer, stride, offset)
       {
@@ -1178,8 +1178,8 @@ function (X3DCast,
 
             this .attributes .add (location);
 
-            gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset + 12 * i);
             gl .enableVertexAttribArray (location);
+            gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset + 12 * i);
          }
       },
       enableMatrix4Attrib: function (gl, name, buffer, stride, offset)
@@ -1199,8 +1199,8 @@ function (X3DCast,
 
             this .attributes .add (location);
 
-            gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset + 16 * i);
             gl .enableVertexAttribArray (location);
+            gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset + 16 * i);
          }
       },
       enableFogDepthAttribute: function (gl, buffer, stride, offset)
@@ -1210,8 +1210,8 @@ function (X3DCast,
          this .attributes .add (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-         gl .vertexAttribPointer (location, 1, gl .FLOAT, false, stride, offset);
          gl .enableVertexAttribArray (location);
+         gl .vertexAttribPointer (location, 1, gl .FLOAT, false, stride, offset);
       },
       enableColorAttribute: function (gl, buffer, stride, offset)
       {
@@ -1220,8 +1220,8 @@ function (X3DCast,
          this .attributes .add (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-         gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
          gl .enableVertexAttribArray (location);
+         gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
       },
       colorAttributeDivisor: function (gl, divisor)
       {
@@ -1236,8 +1236,8 @@ function (X3DCast,
             this .attributes .add (x3d_TexCoord);
 
             gl .bindBuffer (gl .ARRAY_BUFFER, buffers [i]);
-            gl .vertexAttribPointer (x3d_TexCoord, 4, gl .FLOAT, false, stride, offset);
             gl .enableVertexAttribArray (x3d_TexCoord);
+            gl .vertexAttribPointer (x3d_TexCoord, 4, gl .FLOAT, false, stride, offset);
          }
       },
       texCoordAttributeDivisor: function (gl, divisor)
@@ -1256,8 +1256,8 @@ function (X3DCast,
          this .attributes .add (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-         gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset);
          gl .enableVertexAttribArray (location);
+         gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset);
       },
       normalAttributeDivisor: function (gl, divisor)
       {
@@ -1272,8 +1272,8 @@ function (X3DCast,
          this .attributes .add (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-         gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
          gl .enableVertexAttribArray (location);
+         gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
       },
       vertexAttributeDivisor: function (gl, divisor)
       {
@@ -1289,9 +1289,9 @@ function (X3DCast,
          this .divisors   .add (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+         gl .enableVertexAttribArray (location);
          gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
          gl .vertexAttribDivisor (location, divisor);
-         gl .enableVertexAttribArray (location);
       },
       enableParticleMatrixAttribute: function (gl, buffer, stride, offset, divisor)
       {
@@ -1308,9 +1308,9 @@ function (X3DCast,
             this .attributes .add (location);
             this .divisors   .add (location);
 
+            gl .enableVertexAttribArray (location);
             gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset + 16 * i);
             gl .vertexAttribDivisor (location, divisor);
-            gl .enableVertexAttribArray (location);
          }
       },
       getProgramInfo: function ()
