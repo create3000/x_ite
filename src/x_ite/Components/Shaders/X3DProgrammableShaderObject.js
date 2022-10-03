@@ -1297,9 +1297,6 @@ function (X3DCast,
       {
          const location = this .x3d_Particle;
 
-         this .attributes .delete (location);
-         this .divisors   .delete (location);
-
          gl .disableVertexAttribArray (location);
          gl .vertexAttribDivisor (location, 0);
       },
@@ -1326,9 +1323,6 @@ function (X3DCast,
       disableParticleMatrixAttribute: function (gl)
       {
          const location = this .x3d_ParticleMatrix;
-
-         this .attributes .delete (location);
-         this .divisors   .delete (location);
 
          gl .disableVertexAttribArray (location);
          gl .vertexAttribDivisor (location, 0);
