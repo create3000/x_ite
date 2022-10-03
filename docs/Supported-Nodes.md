@@ -314,9 +314,11 @@ X\_ITE supports a limited set of nodes defined by the X3D specification. There a
 - [FillProperties](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#FillProperties)
 - [LineProperties](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#LineProperties)
 - [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material)
-- [PointProperties](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#PointProperties)
+- [PhysicalMaterial](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shape.html#PhysicalMaterial)
+- [PointProperties](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shape.html#PointProperties)
 - [Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape)
 - [TwoSidedMaterial](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#TwoSidedMaterial)
+- [UnlitMaterial](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/components/shape.html#UnlitMaterial)
 
 ### Sound
 
