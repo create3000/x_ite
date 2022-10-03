@@ -123,12 +123,6 @@ function (Fields,
 
       this ._particleSize .setUnit ("length");
 
-      this .particleStride           = Float32Array .BYTES_PER_ELEMENT * 11 * 4; // 7 x vec4
-      this .particleOffsets          = Array .from ({length: 11}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
-      this .particleOffset           = this .particleOffsets [0];
-      this .colorOffset              = this .particleOffsets [1];
-      this .matrixOffset             = this .particleOffsets [3];
-      this .texCoordOffset           = 0; // this .particleOffsets [7];
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .forcePhysicsModelNodes   = [ ];
@@ -142,6 +136,12 @@ function (Fields,
       this .creationTime             = 0;
       this .pauseTime                = 0;
       this .deltaTime                = 0;
+      this .particleStride           = Float32Array .BYTES_PER_ELEMENT * 7 * 4; // 7 x vec4
+      this .particleOffsets          = Array .from ({length: 7}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
+      this .particleOffset           = this .particleOffsets [0];
+      this .colorOffset              = this .particleOffsets [1];
+      this .matrixOffset             = this .particleOffsets [3];
+      this .texCoordOffset           = 0;
    }
 
    ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
@@ -914,7 +914,13 @@ function (Fields,
             }
             default:
             {
-               shaderNode .enableParticleMatrixAttribute (gl, this .outputParticles, this .particleStride, this .matrixOffset, 1);
+               const
+                  outputParticles = this .outputParticles,
+                  particleStride  = this .particleStride;
+
+               shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
+               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
+
                shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
 
                gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
@@ -995,7 +1001,18 @@ function (Fields,
                      }
 
                      if (this .texCoordCount)
+                     {
                         shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
+
+                        if (this .numTexCoords)
+                        {
+                           const textureUnit = context .browser .getTexture2DUnit ();
+
+                           gl .activeTexture (gl .TEXTURE0 + textureUnit);
+                           gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+                           gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
+                        }
+                     }
 
                      if (this .hasNormals)
                      {

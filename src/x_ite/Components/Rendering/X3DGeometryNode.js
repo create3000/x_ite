@@ -1039,8 +1039,8 @@ function (Fields,
             outputParticles = particleSystem .outputParticles,
             particleStride  = particleSystem .particleStride;
 
-         shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
-         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
+         shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
 
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 

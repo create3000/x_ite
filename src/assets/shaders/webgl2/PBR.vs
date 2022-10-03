@@ -4,17 +4,17 @@
 
 precision highp float;
 precision highp int;
+precision highp sampler2D;
 
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 uniform mat3 x3d_NormalMatrix;
 
-in mat4 x3d_ParticleMatrix;
-in vec4 x3d_Vertex;
-in vec3 x3d_Normal;
+in vec4 x3d_Color;
 in vec4 x3d_TexCoord0;
 in vec4 x3d_TexCoord1;
-in vec4 x3d_Color;
+in vec3 x3d_Normal;
+in vec4 x3d_Vertex;
 
 out vec3 vertex;
 out vec3 normal;
@@ -28,15 +28,17 @@ out vec3 localVertex; // point on geometry in local coordinates
 out float depth;
 #endif
 
+#pragma X3D include "include/Particle.glsl"
+
 void
 main ()
 {
-   vec4 position = x3d_ModelViewMatrix * (x3d_ParticleMatrix * x3d_Vertex);
+   vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
 
    vertex      = position .xyz;
    normal      = x3d_NormalMatrix * x3d_Normal;
-   texCoord0   = x3d_TexCoord0;
-   texCoord1   = x3d_TexCoord1;
+   texCoord0   = getTexCoord (x3d_TexCoord0);
+   texCoord1   = getTexCoord (x3d_TexCoord1);
    color       = x3d_Color;
    localNormal = x3d_Normal;
    localVertex = x3d_Vertex .xyz;

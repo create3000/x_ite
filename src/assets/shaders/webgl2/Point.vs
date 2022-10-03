@@ -2,6 +2,7 @@
 
 precision highp float;
 precision highp int;
+precision highp sampler2D;
 
 uniform x3d_PointPropertiesParameters x3d_PointProperties;
 
@@ -15,7 +16,6 @@ uniform mat4 x3d_ModelViewMatrix;
 in float x3d_FogDepth;
 in vec4  x3d_Color;
 in vec4  x3d_Vertex;
-in mat4  x3d_ParticleMatrix;
 
 out float pointSize; // point size
 out float fogDepth;  // fog depth
@@ -26,10 +26,12 @@ out vec3  vertex;    // point on geometry
 out float depth;
 #endif
 
+#pragma X3D include "include/Particle.glsl"
+
 void
 main ()
 {
-   vec4 position = x3d_ModelViewMatrix * (x3d_ParticleMatrix * x3d_Vertex);
+   vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
 
    fogDepth = x3d_FogDepth;
    vertex   = position .xyz;

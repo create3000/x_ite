@@ -125,11 +125,6 @@ function (X3DCast,
          this .x3d_MaxClipPlanes = browser .getMaxClipPlanes ();
          this .x3d_MaxLights     = browser .getMaxLights ();
          this .x3d_MaxTextures   = browser .getMaxTextures ();
-
-         this .particleMatrixBuffer = gl .createBuffer ();
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .particleMatrixBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (Matrix4 .Identity), gl .STATIC_READ);
       },
       canUserDefinedFields: function ()
       {
@@ -281,6 +276,8 @@ function (X3DCast,
                this .x3d_TexCoord .push ([i, x3d_TexCoord]);
          }
 
+         this .x3d_TexCoordRamp = gl .getUniformLocation (program, "x3d_TexCoordRamp");
+
          this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
          this .x3d_ProjectionMatrix  = gl .getUniformLocation (program, "x3d_ProjectionMatrix");
          this .x3d_ModelViewMatrix   = gl .getUniformLocation (program, "x3d_ModelViewMatrix");
@@ -365,6 +362,8 @@ function (X3DCast,
             for (const uniform of this .x3d_ProjectiveTexture)
                gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
          }
+
+         gl .uniform1i  (this .x3d_TexCoordRamp, browser .getDefaultTexture2DUnit ());
 
          /*
           * Check x3d_Vertex.
@@ -1120,8 +1119,6 @@ function (X3DCast,
       enable: function (gl)
       {
          const browser = this .getBrowser ();
-
-         this .enableParticleMatrixAttribute (gl, this .particleMatrixBuffer, 0, 0, 1);
 
          for (const location of this .textures)
          {

@@ -344,11 +344,6 @@ function (X3DNode,
          out vec4 output5;
          out vec4 output6;
 
-         out vec4 output7;
-         out vec4 output8;
-         out vec4 output9;
-         out vec4 output10;
-
          // Constants
 
          ${Object .entries (GeometryTypes) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
@@ -775,12 +770,30 @@ function (X3DNode,
             toPosition = vec4 (points [index] .xyz + reflect (points [index] .xyz - fromPosition .xyz, normals [index]), 1.0);
          }
 
+         int
+         getTexCoordIndex0 (const in float lifetime, const in float elapsedTime)
+         {
+            if (numTexCoords == 0)
+            {
+               return -1;
+            }
+            else
+            {
+               float fraction = elapsedTime / lifetime;
+               int   index0   = 0;
+
+               interpolate (texCoordRamp, numTexCoords, fraction, index0);
+
+               return numTexCoords + index0 * texCoordCount;
+            }
+         }
+
          void
          main ()
          {
-            int   life        = int (input0 [1]);
-            float lifetime    = input0 [2];
-            float elapsedTime = input0 [3] + deltaTime;
+            int   life        = int (input0 [0]);
+            float lifetime    = input0 [1];
+            float elapsedTime = input0 [2] + deltaTime;
 
             srand ((gl_VertexID + randomSeed) * randomSeed);
 
@@ -791,7 +804,7 @@ function (X3DNode,
                lifetime    = getRandomLifetime ();
                elapsedTime = 0.0;
 
-               output0 = vec4 (gl_VertexID, max (life + 1, 0), lifetime, elapsedTime);
+               output0 = vec4 (max (life + 1, 1), lifetime, elapsedTime, getTexCoordIndex0 (lifetime, elapsedTime));
 
                if (createParticles)
                {
@@ -827,7 +840,7 @@ function (X3DNode,
 
                bounce (input6, position, velocity);
 
-               output0 = vec4 (gl_VertexID, life, lifetime, elapsedTime);
+               output0 = vec4 (life, lifetime, elapsedTime, getTexCoordIndex0 (lifetime, elapsedTime));
                output1 = getColor (lifetime, elapsedTime);
                output2 = vec4 (velocity, 0.0);
                output6 = position;
@@ -863,52 +876,6 @@ function (X3DNode,
                   break;
                }
             }
-
-            if (numTexCoords > 0)
-            {
-               float fraction = output0 [3] / output0 [2];
-               int   index0   = 0;
-
-               interpolate (texCoordRamp, numTexCoords, fraction, index0);
-
-               index0 = numTexCoords + index0 * texCoordCount;
-
-               switch (geometryType)
-               {
-                  case POINT:
-                  case GEOMETRY:
-                  {
-                     output7  = vec4 (0.0);
-                     output8  = vec4 (0.0);
-                     output9  = vec4 (0.0);
-                     output10 = vec4 (0.0);
-                     break;
-                  }
-                  case LINE:
-                  {
-                     output7  = texelFetch (texCoordRamp, index0 + 0, 0);
-                     output8  = texelFetch (texCoordRamp, index0 + 1, 0);
-                     output9  = vec4 (0.0);
-                     output10 = vec4 (0.0);
-                     break;
-                  }
-                  default: // QUAD, TRIANGLE, SPRITE
-                  {
-                     output7  = texelFetch (texCoordRamp, index0 + 0, 0);
-                     output8  = texelFetch (texCoordRamp, index0 + 1, 0);
-                     output9  = texelFetch (texCoordRamp, index0 + 2, 0);
-                     output10 = texelFetch (texCoordRamp, index0 + 3, 0);
-                     break;
-                  }
-               }
-            }
-            else
-            {
-               output7  = vec4 (0.0, 0.0, 0.0, 1.0);
-               output8  = vec4 (1.0, 0.0, 0.0, 1.0);
-               output9  = vec4 (1.0, 1.0, 0.0, 1.0);
-               output10 = vec4 (0.0, 1.0, 0.0, 1.0);
-            }
          }
          `;
 
@@ -940,7 +907,7 @@ function (X3DNode,
 
          gl .attachShader (program, vertexShader);
          gl .attachShader (program, fragmentShader);
-         gl .transformFeedbackVaryings (program, Array .from ({length: 11}, (_, i) => "output" + i), gl .INTERLEAVED_ATTRIBS);
+         gl .transformFeedbackVaryings (program, Array .from ({length: 7}, (_, i) => "output" + i), gl .INTERLEAVED_ATTRIBS);
          gl .linkProgram (program);
 
          if (!gl .getProgramParameter (program, gl .LINK_STATUS))

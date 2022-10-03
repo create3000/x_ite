@@ -2,6 +2,7 @@
 
 precision highp float;
 precision highp int;
+precision highp sampler2D;
 
 uniform mat3 x3d_NormalMatrix;
 uniform mat4 x3d_ProjectionMatrix;
@@ -11,7 +12,6 @@ in float x3d_FogDepth;
 in vec4  x3d_Color;
 in vec3  x3d_Normal;
 in vec4  x3d_Vertex;
-in mat4  x3d_ParticleMatrix;
 
 #if x3d_MaxTextures > 0
 in vec4 x3d_TexCoord0;
@@ -40,10 +40,12 @@ out vec4  texCoord1;   // texCoord1
 out float depth;
 #endif
 
+#pragma X3D include "include/Particle.glsl"
+
 void
 main ()
 {
-   vec4 position = x3d_ModelViewMatrix * (x3d_ParticleMatrix * x3d_Vertex);
+   vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
 
    fogDepth    = x3d_FogDepth;
    color       = x3d_Color;
@@ -53,11 +55,11 @@ main ()
    localVertex = x3d_Vertex .xyz;
 
    #if x3d_MaxTextures > 0
-   texCoord0 = x3d_TexCoord0;
+   texCoord0 = getTexCoord (x3d_TexCoord0);
    #endif
 
    #if x3d_MaxTextures > 1
-   texCoord1 = x3d_TexCoord1;
+   texCoord1 = getTexCoord (x3d_TexCoord1);
    #endif
 
    gl_Position = x3d_ProjectionMatrix * position;
