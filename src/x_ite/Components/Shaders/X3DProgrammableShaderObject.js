@@ -1100,9 +1100,9 @@ function (X3DCast,
          {
             try
             {
-               normalMatrix [0] = modelViewMatrix [0], normalMatrix [3] = modelViewMatrix [1], normalMatrix [6] = modelViewMatrix [ 2],
-               normalMatrix [1] = modelViewMatrix [4], normalMatrix [4] = modelViewMatrix [5], normalMatrix [7] = modelViewMatrix [ 6],
-               normalMatrix [2] = modelViewMatrix [8], normalMatrix [5] = modelViewMatrix [9], normalMatrix [8] = modelViewMatrix [10];
+               normalMatrix [0] = modelViewMatrix [0]; normalMatrix [3] = modelViewMatrix [1]; normalMatrix [6] = modelViewMatrix [ 2];
+               normalMatrix [1] = modelViewMatrix [4]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [7] = modelViewMatrix [ 6];
+               normalMatrix [2] = modelViewMatrix [8]; normalMatrix [5] = modelViewMatrix [9]; normalMatrix [8] = modelViewMatrix [10];
 
                Matrix3 .prototype .inverse .call (normalMatrix);
 
@@ -1165,7 +1165,7 @@ function (X3DCast,
       {
          const location0 = gl .getAttribLocation (this .getProgram (), name);
 
-         if (location === -1)
+         if (location0 === -1)
             return;
 
          stride = stride || 36;
@@ -1186,7 +1186,7 @@ function (X3DCast,
       {
          const location0 = gl .getAttribLocation (this .getProgram (), name);
 
-         if (location === -1)
+         if (location0 === -1)
             return;
 
          stride = stride || 64;
