@@ -1041,13 +1041,12 @@ function (Fields,
 
          shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
          shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
-
-         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+         shaderNode .enableVertexAttribute         (gl, this .vertexBuffer, 0, 0);
 
          gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 
-         shaderNode .disable (gl);
-         shaderNode .enable (gl);
+         shaderNode .disableParticleAttribute       (gl);
+         shaderNode .disableParticleMatrixAttribute (gl);
       },
       displayParticles: function (gl, context, particleSystem)
       {

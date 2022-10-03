@@ -920,13 +920,12 @@ function (Fields,
 
                shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
                shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
-
-               shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
+               shaderNode .enableVertexAttribute         (gl, this .geometryBuffer, 0, this .verticesOffset);
 
                gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
 
-               shaderNode .disable (gl);
-               shaderNode .enable (gl);
+               shaderNode .disableParticleAttribute       (gl);
+               shaderNode .disableParticleMatrixAttribute (gl);
 
                break;
             }
