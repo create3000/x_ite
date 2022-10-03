@@ -118,9 +118,7 @@ function (X3DCast,
       constructor: X3DProgrammableShaderObject,
       initialize: function ()
       {
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
+         const browser = this .getBrowser ();
 
          this .x3d_MaxClipPlanes = browser .getMaxClipPlanes ();
          this .x3d_MaxLights     = browser .getMaxLights ();
