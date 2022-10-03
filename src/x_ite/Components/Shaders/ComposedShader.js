@@ -125,22 +125,22 @@ function (Fields,
       },
       addUserDefinedField: function (accessType, name, field)
       {
-         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
+         if (this .isInitialized () && this .isLive () .getValue () && this .isValid ())
             this .removeShaderFields ();
 
          X3DShaderNode .prototype .addUserDefinedField .call (this, accessType, name, field);
 
-         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
+         if (this .isInitialized () && this .isLive () .getValue () && this .isValid ())
             this .addShaderFields (this .program);
       },
       removeUserDefinedField: function (name)
       {
-         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
+         if (this .isInitialized () && this .isLive () .getValue () && this .isValid ())
             this .removeShaderFields ();
 
          X3DShaderNode .prototype .removeUserDefinedField .call (this, name);
 
-         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
+         if (this .isInitialized () && this .isLive () .getValue () && this .isValid ())
             this .addShaderFields (this .program);
       },
       getProgram: function ()
@@ -151,12 +151,12 @@ function (Fields,
       {
          if (this .isLive () .getValue ())
          {
-            if (this .getValid ())
+            if (this .isValid ())
                this .addShaderFields (this .program);
          }
          else
          {
-            if (this .getValid ())
+            if (this .isValid ())
                this .removeShaderFields ();
          }
       },
@@ -170,7 +170,7 @@ function (Fields,
 
             let valid = 0;
 
-            if (this .getValid ())
+            if (this .isValid ())
                this .removeShaderFields ();
 
             gl .deleteProgram (this .program);
@@ -222,12 +222,12 @@ function (Fields,
       },
       set_field__: function (field)
       {
-         if (this .getValid ())
+         if (this .isValid ())
             X3DProgrammableShaderObject .prototype .set_field__ .call (this, field, this .program);
       },
       setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
       {
-         if (this .getValid ())
+         if (this .isValid ())
          {
             X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, gl, this .program, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
          }

@@ -934,7 +934,7 @@ function (Fields,
       },
       displayGeometry: function (gl, context, appearanceNode, shaderNode, back, front)
       {
-         if (shaderNode .getValid ())
+         if (shaderNode .isValid ())
          {
             const
                blendModeNode = appearanceNode .blendModeNode,
@@ -1061,7 +1061,7 @@ function (Fields,
       },
       displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particleSystem)
       {
-         if (shaderNode .getValid ())
+         if (shaderNode .isValid ())
          {
             const
                blendModeNode = appearanceNode .blendModeNode,

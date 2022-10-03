@@ -91,7 +91,7 @@ function (Fields,
       {
          this ._isValid = this .valid = value;
       },
-      getValid: function ()
+      isValid: function ()
       {
          return this .valid;
       },

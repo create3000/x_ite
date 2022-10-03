@@ -562,7 +562,7 @@ function (X3DBindableNode,
             gl         = browser .getContext (),
             shaderNode = browser .getBackgroundSphereShader ();
 
-         if (shaderNode .getValid ())
+         if (shaderNode .isValid ())
          {
             shaderNode .enable (gl);
 
@@ -609,7 +609,7 @@ function (X3DBindableNode,
                gl         = browser .getContext (),
                shaderNode = browser .getUnlitShader ();
 
-            if (shaderNode .getValid ())
+            if (shaderNode .isValid ())
             {
                shaderNode .enable (gl);
 

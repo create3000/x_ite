@@ -969,7 +969,7 @@ function (Fields,
 
                // Setup shader.
 
-               if (shaderNode .getValid ())
+               if (shaderNode .isValid ())
                {
                   context .geometryContext = this .geometryContext;
 

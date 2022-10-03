@@ -673,7 +673,7 @@ function (TextureBuffer,
                   browser    = this .getBrowser (),
                   shaderNode = browser .getDepthShader ();
 
-               if (shaderNode .getValid ())
+               if (shaderNode .isValid ())
                {
                   // Terrain following and gravitation
 
@@ -799,7 +799,7 @@ function (TextureBuffer,
 
             // Configure depth shader.
 
-            if (shaderNode .getValid ())
+            if (shaderNode .isValid ())
             {
                shaderNode .enable (gl);
 

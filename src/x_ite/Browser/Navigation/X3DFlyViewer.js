@@ -691,7 +691,7 @@ function ($,
                shaderNode = browser .getLineShader (),
                lineWidth  = gl .getParameter (gl .LINE_WIDTH);
 
-            if (shaderNode .getValid ())
+            if (shaderNode .isValid ())
             {
                shaderNode .enable (gl);
                shaderNode .enableVertexAttribute (gl, this .lineBuffer, 0, 0);

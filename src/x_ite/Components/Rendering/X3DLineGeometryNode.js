@@ -159,7 +159,7 @@ function (X3DGeometryNode,
             appearanceNode = context .shapeNode .getAppearance (),
             shaderNode     = appearanceNode .shaderNode || browser .getLineShader ();
 
-         if (shaderNode .getValid ())
+         if (shaderNode .isValid ())
          {
             const
                blendModeNode = appearanceNode .blendModeNode,
@@ -205,7 +205,7 @@ function (X3DGeometryNode,
             appearanceNode = context .shapeNode .getAppearance (),
             shaderNode     = appearanceNode .shaderNode || browser .getLineShader ();
 
-         if (shaderNode .getValid ())
+         if (shaderNode .isValid ())
          {
             const
                blendModeNode = appearanceNode .blendModeNode,
