@@ -924,8 +924,7 @@ function (Fields,
 
                gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
 
-               shaderNode .disableParticleAttribute       (gl);
-               shaderNode .disableParticleMatrixAttribute (gl);
+               shaderNode .disable (gl);
 
                break;
             }

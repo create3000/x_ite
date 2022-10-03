@@ -1045,8 +1045,7 @@ function (Fields,
 
          gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 
-         shaderNode .disableParticleAttribute       (gl);
-         shaderNode .disableParticleMatrixAttribute (gl);
+         shaderNode .disable (gl);
       },
       displayParticles: function (gl, context, particleSystem)
       {

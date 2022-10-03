@@ -1293,13 +1293,6 @@ function (X3DCast,
          gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
          gl .vertexAttribDivisor (location, divisor);
       },
-      disableParticleAttribute: function (gl)
-      {
-         const location = this .x3d_Particle;
-
-         gl .disableVertexAttribArray (location);
-         gl .vertexAttribDivisor (location, 0);
-      },
       enableParticleMatrixAttribute: function (gl, buffer, stride, offset, divisor)
       {
          const location0 = this .x3d_ParticleMatrix;
@@ -1319,13 +1312,6 @@ function (X3DCast,
             gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset + 16 * i);
             gl .vertexAttribDivisor (location, divisor);
          }
-      },
-      disableParticleMatrixAttribute: function (gl)
-      {
-         const location = this .x3d_ParticleMatrix;
-
-         gl .disableVertexAttribArray (location);
-         gl .vertexAttribDivisor (location, 0);
       },
       getProgramInfo: function ()
       {
