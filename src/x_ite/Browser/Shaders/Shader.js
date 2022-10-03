@@ -123,9 +123,9 @@ function (ShaderSource,
          definitions += "#define x3d_PointLight        2\n";
          definitions += "#define x3d_SpotLight         3\n";
 
-         definitions += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
-         definitions += "#define x3d_TextureType2D              2\n";
-         definitions += "#define x3d_TextureType3D              3\n";
+         definitions += "#define x3d_MaxTextures      " + browser .getMaxTextures () + "\n";
+         definitions += "#define x3d_TextureType2D    2\n";
+         definitions += "#define x3d_TextureType3D    3\n";
          definitions += "#define x3d_TextureTypeCube  4\n";
 
          definitions += "#define x3d_Replace                   " + MultiTextureModeType .REPLACE                   + "\n";
