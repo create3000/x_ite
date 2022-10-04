@@ -168,7 +168,7 @@ function ($,
                gl .deleteVertexArray =  ext .deleteVertexArrayOES .bind (ext);
                gl .isVertexArray     =  ext .isVertexArrayOES     .bind (ext);
             }
-          }
+         }
        }
 
       if (! gl)
