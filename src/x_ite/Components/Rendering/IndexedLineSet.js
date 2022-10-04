@@ -123,7 +123,10 @@ function (Fields,
          const attribNodes = this .getAttribNodes ();
 
          for (const attribNode of attribNodes)
+         {
             attribNode .removeInterest ("requestRebuild", this);
+            attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
+         }
 
          attribNodes .length = 0;
 
@@ -136,7 +139,10 @@ function (Fields,
          }
 
          for (const attribNode of attribNodes)
+         {
             attribNode .addInterest ("requestRebuild", this);
+            attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
+         }
 
          this .updateVertexArrays ();
       },

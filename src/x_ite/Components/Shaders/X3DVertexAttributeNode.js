@@ -48,10 +48,12 @@
 
 
 define ([
+   "x_ite/Fields",
    "x_ite/Components/Rendering/X3DGeometricPropertyNode",
    "x_ite/Base/X3DConstants",
 ],
-function (X3DGeometricPropertyNode,
+function (Fields,
+          X3DGeometricPropertyNode,
           X3DConstants)
 {
 "use strict";
@@ -61,11 +63,23 @@ function (X3DGeometricPropertyNode,
       X3DGeometricPropertyNode .call (this, executionContext);
 
       this .addType (X3DConstants .X3DVertexAttributeNode);
+
+      this .addChildObjects ("attribute_changed", new Fields .SFTime ());
    }
 
    X3DVertexAttributeNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
    {
       constructor: X3DVertexAttributeNode,
+      initialize: function ()
+      {
+         X3DGeometricPropertyNode .prototype .initialize .call (this);
+
+         this ._name .addInterest ("set_attribute__", this);
+      },
+      set_attribute__: function ()
+      {
+         this ._attribute_changed = this .getBrowser () .getCurrentTime ();
+      },
    });
 
    return X3DVertexAttributeNode;

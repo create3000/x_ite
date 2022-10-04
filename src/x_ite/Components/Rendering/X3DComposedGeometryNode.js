@@ -119,11 +119,14 @@ function (X3DGeometryNode,
          const attribNodes = this .getAttribNodes ();
 
          for (const attribNode of attribNodes)
+         {
             attribNode .removeInterest ("requestRebuild", this);
+            attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
+         }
 
          attribNodes .length = 0;
 
-         for (const node of  this ._attrib)
+         for (const node of this ._attrib)
          {
             const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
 
@@ -132,7 +135,10 @@ function (X3DGeometryNode,
          }
 
          for (const attribNode of attribNodes)
+         {
             attribNode .addInterest ("requestRebuild", this);
+            attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
+         }
 
          this .updateVertexArrays ();
       },

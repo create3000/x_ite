@@ -96,17 +96,18 @@ function (Fields,
       {
          X3DVertexAttributeNode .prototype .initialize .call (this);
 
-         this ._numComponents .addInterest ("set_numComponents", this);
-         this ._value         .addInterest ("set_value",         this);
+         this ._numComponents .addInterest ("set_numComponents__", this);
+         this ._numComponents .addInterest ("set_attribute__",     this);
+         this ._value         .addInterest ("set_value__",         this);
 
-         this .set_numComponents ();
-         this .set_value ();
+         this .set_numComponents__ ();
+         this .set_value__ ();
       },
-      set_numComponents: function ()
+      set_numComponents__: function ()
       {
          this .numComponents = Algorithm .clamp (this ._numComponents .getValue (), 1, 4);
       },
-      set_value: function ()
+      set_value__: function ()
       {
          this .value  = this ._value .getValue ();
          this .length = this ._value .length;

@@ -125,6 +125,7 @@ function (Fields,
       this .normals                  = X3DGeometryNode .createArray ();
       this .flatNormals              = X3DGeometryNode .createArray ();
       this .vertices                 = X3DGeometryNode .createArray ();
+      this .fogCoords                = false;
       this .vertexCount              = 0;
 
       // This methods are configured in transfer.
@@ -860,8 +861,6 @@ function (Fields,
 
          // Transfer attribs.
 
-         const numAttribBuffers = this .attribBuffers .length;
-
          for (let i = this .attribBuffers .length, length = this .attribs .length; i < length; ++ i)
             this .attribBuffers .push (gl .createBuffer ());
 
@@ -871,31 +870,28 @@ function (Fields,
             gl .bufferData (gl .ARRAY_BUFFER, this .attribs [i] .getValue (), gl .DYNAMIC_DRAW);
          }
 
-         if (this .attribBuffers .length !== numAttribBuffers)
-            this .updateVertexArrays ();
-
          // Transfer fog depths.
 
-         const fogCoords = this .fogCoords;
+         const lastFogCoords = this .fogCoords;
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .fogDepthBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .fogDepths .getValue (), gl .DYNAMIC_DRAW);
 
          this .fogCoords = !! (this .fogDepths .length);
 
-         if (this .fogCoords !== fogCoords)
+         if (this .fogCoords !== lastFogCoords)
             this .updateVertexArrays ();
 
          // Transfer colors.
 
-         const colorMaterial = this .colorMaterial;
+         const lastColorMaterial = this .colorMaterial;
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .DYNAMIC_DRAW);
 
          this .colorMaterial = !! (this .colors .length);
 
-         if (this .colorMaterial !== colorMaterial)
+         if (this .colorMaterial !== lastColorMaterial)
             this .updateVertexArrays ();
 
          // Transfer multiTexCoords.
