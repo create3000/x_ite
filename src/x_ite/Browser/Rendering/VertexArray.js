@@ -55,23 +55,23 @@ define (function ()
    {
       this .vertexArray = gl .createVertexArray ();
       this .shaderNode  = null;
-      this .state       = true;
+      this .tainted     = true;
    }
 
    VertexArray .prototype =
    {
       update: function ()
       {
-         this .state = true;
+         this .tainted = true;
       },
       enable: function (gl, shaderNode)
       {
          gl .bindVertexArray (this .vertexArray);
 
-         const update = this .state || this .shaderNode !== shaderNode;
+         const update = this .tainted || this .shaderNode !== shaderNode;
 
          this .shaderNode = shaderNode;
-         this .state      = false;
+         this .tainted    = false;
 
          return update;
       },
