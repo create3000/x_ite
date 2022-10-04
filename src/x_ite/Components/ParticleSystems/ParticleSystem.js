@@ -53,7 +53,7 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DShapeNode",
    "x_ite/Browser/ParticleSystems/GeometryTypes",
-   "x_ite/Browser/Rendering/VertexArray",
+   "x_ite/Rendering/VertexArray",
    "x_ite/Rendering/TraverseType",
    "x_ite/Base/X3DConstants",
    "x_ite/Base/X3DCast",
@@ -219,12 +219,12 @@ function (Fields,
          this .inputParticles  = this .createBuffer (true);
          this .outputParticles = this .createBuffer (true);
 
-         this .inputParticles . emitterArray = new VertexArray (gl);
-         this .inputParticles . vertexArray  = new VertexArray (gl);
-         this .inputParticles  .shadowArray  = new VertexArray (gl);
-         this .outputParticles .emitterArray = new VertexArray (gl);
-         this .outputParticles .vertexArray  = new VertexArray (gl);
-         this .outputParticles .shadowArray  = new VertexArray (gl);
+         this .inputParticles . emitterArray = new VertexArray ();
+         this .inputParticles . vertexArray  = new VertexArray ();
+         this .inputParticles  .shadowArray  = new VertexArray ();
+         this .outputParticles .emitterArray = new VertexArray ();
+         this .outputParticles .vertexArray  = new VertexArray ();
+         this .outputParticles .shadowArray  = new VertexArray ();
 
          // Create forces stuff.
 
@@ -952,9 +952,6 @@ function (Fields,
 
                gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
 
-               outputParticles .shadowArray .disable (gl);
-               shaderNode .disable (gl);
-
                break;
             }
          }
@@ -1059,9 +1056,6 @@ function (Fields,
                   {
                      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
                   }
-
-                  outputParticles .vertexArray .disable (gl);
-                  shaderNode .disable (gl);
 
                   if (blendModeNode)
                      blendModeNode .disable (gl);

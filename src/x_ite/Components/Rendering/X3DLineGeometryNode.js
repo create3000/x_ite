@@ -195,9 +195,6 @@ function (X3DGeometryNode,
 
             gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
 
-            this .vertexArray .disable (gl);
-            shaderNode .disable (gl);
-
             if (blendModeNode)
                blendModeNode .disable (gl);
          }
@@ -259,9 +256,6 @@ function (X3DGeometryNode,
             const primitiveMode = shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode;
 
             gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-
-            outputParticles .shadowArray .disable (gl);
-            shaderNode .disable (gl);
 
             if (blendModeNode)
                blendModeNode .disable (gl);

@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Fields",
-   "x_ite/Browser/Rendering/VertexArray",
+   "x_ite/Rendering/VertexArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Base/X3DConstants",
    "x_ite/Browser/Core/Shading",
@@ -198,7 +198,8 @@ function (Fields,
          this .colorBuffer           = gl .createBuffer ();
          this .normalBuffer          = gl .createBuffer ();
          this .vertexBuffer          = gl .createBuffer ();
-         this .vertexArray           = new VertexArray (gl);
+         this .vertexArray           = new VertexArray ();
+         this .shadowArray           = new VertexArray ();
 
          this .set_live__ ();
       },
@@ -349,6 +350,7 @@ function (Fields,
       updateVertexArrays: function ()
       {
          this .vertexArray .update ();
+         this .shadowArray .update ();
 
          this .updateParticlesShadow = true;
          this .updateParticles       = true;
@@ -929,7 +931,8 @@ function (Fields,
       { },
       depth: function (gl, context, shaderNode)
       {
-         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+         if (this .shadowArray .enable (gl ,shaderNode))
+            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
          gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
       },
@@ -1043,9 +1046,6 @@ function (Fields,
                }
             }
 
-            this .vertexArray .disable (gl);
-            shaderNode .disable (gl);
-
             if (blendModeNode)
                blendModeNode .disable (gl);
          }
@@ -1066,9 +1066,6 @@ function (Fields,
          }
 
          gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-
-         outputParticles .shadowArray .disable (gl);
-         shaderNode .disable (gl);
       },
       displayParticles: function (gl, context, particleSystem)
       {
@@ -1186,9 +1183,6 @@ function (Fields,
                   gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
                }
             }
-
-            outputParticles .shadowArray .disable (gl);
-            shaderNode .disable (gl);
 
             if (blendModeNode)
                blendModeNode .disable (gl);

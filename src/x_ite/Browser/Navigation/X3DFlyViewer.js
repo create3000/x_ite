@@ -51,6 +51,7 @@ define ([
    "jquery",
    "x_ite/Browser/Navigation/X3DViewer",
    "x_ite/Components/Followers/OrientationChaser",
+   "x_ite/Rendering/VertexArray",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Matrix4",
@@ -60,6 +61,7 @@ define ([
 function ($,
           X3DViewer,
           OrientationChaser,
+          VertexArray,
           Vector3,
           Rotation4,
           Matrix4,
@@ -94,10 +96,11 @@ function ($,
       this .toVector          = new Vector3 (0, 0, 0);
       this .direction         = new Vector3 (0, 0, 0);
       this .startTime         = 0;
-      this .lineBuffer        = gl .createBuffer ();
       this .lineCount         = 2;
       this .lineVertices      = new Array (this .lineCount * 4);
       this .lineArray         = new Float32Array (this .lineVertices);
+      this .lineBuffer        = gl .createBuffer ();
+      this .lineVertexArray   = new VertexArray ();
       this .event             = null;
       this .lookAround        = false;
       this .orientationChaser = new OrientationChaser (executionContext);
@@ -694,7 +697,9 @@ function ($,
             if (shaderNode .isValid ())
             {
                shaderNode .enable (gl);
-               shaderNode .enableVertexAttribute (gl, this .lineBuffer, 0, 0);
+
+               if (this .lineVertexArray .enable (gl, shaderNode))
+                  shaderNode .enableVertexAttribute (gl, this .lineBuffer, 0, 0);
 
                gl .uniform1i (shaderNode .x3d_NumClipPlanes,         0);
                gl .uniform1i (shaderNode .x3d_FogType,               0);
@@ -720,7 +725,6 @@ function ($,
                gl .enable (gl .DEPTH_TEST);
 
                gl .lineWidth (lineWidth);
-               shaderNode .disable (gl);
             }
          };
       })(),
@@ -763,6 +767,11 @@ function ($,
       },
       dispose: function ()
       {
+         const gl = this .getBrowser () .getContext ();
+
+         gl .deleteBuffer (this .lineBuffer);
+         this .lineVertexArray .delete (gl);
+
          this .disconnect ();
          this .getBrowser () ._controlKey .removeInterest ("set_controlKey__", this);
          this .getBrowser () .getSurface () .unbind (".X3DFlyViewer");

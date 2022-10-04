@@ -154,9 +154,6 @@ function (X3DGeometryNode,
 
             gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
 
-            this .vertexArray .disable (gl);
-            shaderNode .disable (gl);
-
             if (blendModeNode)
                blendModeNode .disable (gl);
          }
@@ -215,9 +212,6 @@ function (X3DGeometryNode,
             // Wireframes are always solid so only one drawing call is needed.
 
             gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-
-            outputParticles .shadowArray .disable (gl);
-            shaderNode .disable (gl);
 
             if (blendModeNode)
                blendModeNode .disable (gl);

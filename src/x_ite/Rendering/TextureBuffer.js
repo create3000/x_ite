@@ -219,8 +219,21 @@ function (ViewVolume,
       unbind: function ()
       {
          const gl = this .browser .getContext ();
+
          gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
       },
+      delete: function ()
+      {
+         const gl = this .browser .getContext ();
+
+         gl .deleteFramebuffer (this .buffer);
+         gl .deleteTexture (this .colorTexture);
+
+         if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
+            gl .deleteTexture (this .depthTexture);
+         else
+            gl .deleteRenderbuffer (this .depthBuffer);
+       },
    };
 
    for (const key of Reflect .ownKeys (TextureBuffer .prototype))

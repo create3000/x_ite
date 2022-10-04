@@ -49,6 +49,7 @@
 
 define ([
    "x_ite/Components/Core/X3DBindableNode",
+   "x_ite/Rendering/VertexArray",
    "x_ite/Rendering/TraverseType",
    "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/ViewVolume",
@@ -59,6 +60,7 @@ define ([
    "standard/Math/Algorithm",
 ],
 function (X3DBindableNode,
+          VertexArray,
           TraverseType,
           X3DConstants,
           ViewVolume,
@@ -189,6 +191,13 @@ function (X3DBindableNode,
          this .rightBuffer     = gl .createBuffer ();
          this .topBuffer       = gl .createBuffer ();
          this .bottomBuffer    = gl .createBuffer ();
+         this .sphereArray     = new VertexArray ();
+         this .frontArray      = new VertexArray ();
+         this .backArray       = new VertexArray ();
+         this .leftArray       = new VertexArray ();
+         this .rightArray      = new VertexArray ();
+         this .topArray        = new VertexArray ();
+         this .bottomArray     = new VertexArray ();
 
          this ._groundAngle  .addInterest ("build", this);
          this ._groundColor  .addInterest ("build", this);
@@ -572,8 +581,11 @@ function (X3DBindableNode,
 
             // Enable vertex attribute arrays.
 
-            shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
-            shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
+            if (this .sphereArray .enable (gl ,shaderNode))
+            {
+               shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
+               shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
+            }
 
             // Uniforms
 
@@ -590,10 +602,6 @@ function (X3DBindableNode,
             // Draw.
 
             gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
-
-            // Disable vertex attribute arrays.
-
-            shaderNode .disable (gl);
          }
       },
       drawCube: (function ()
@@ -617,10 +625,6 @@ function (X3DBindableNode,
 
                shaderNode .setLocalObjects (gl, this .localObjects);
 
-               // Enable vertex attribute arrays.
-
-               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-
                // Uniforms
 
                gl .uniform1i  (shaderNode .x3d_FogType,                            0);
@@ -640,20 +644,16 @@ function (X3DBindableNode,
 
                // Draw.
 
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .leftTexture,   this .leftBuffer);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .rightTexture,  this .rightBuffer);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .topTexture,    this .topBuffer);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer);
-
-               // Disable vertex attribute arrays.
-
-               shaderNode .disable (gl);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer,  this .frontArray);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer,   this .backArray);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .leftTexture,   this .leftBuffer,   this .leftArray);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .rightTexture,  this .rightBuffer,  this .rightArray);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .topTexture,    this .topBuffer,    this .topArray);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer, this .bottomArray);
             }
          };
       })(),
-      drawRectangle: function (gl, browser, shaderNode, renderObject, texture, buffer)
+      drawRectangle: function (gl, browser, shaderNode, renderObject, texture, buffer, vertexArray)
       {
          if (texture && (texture .checkLoadState () === X3DConstants .COMPLETE_STATE || texture .getData ()))
          {
@@ -664,7 +664,11 @@ function (X3DBindableNode,
             else
                gl .disable (gl .BLEND);
 
-            shaderNode .enableVertexAttribute (gl, buffer, 0, 0);
+            if (vertexArray .enable (gl, shaderNode))
+            {
+               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+               shaderNode .enableVertexAttribute (gl, buffer, 0, 0);
+            }
 
             // Draw.
 

@@ -265,8 +265,6 @@ function (X3DNode,
          gl .disable (gl .RASTERIZER_DISCARD);
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
 
-         inputParticles .emitterArray .disable (gl);
-
          // DEBUG
 
          // const data = new Float32Array (particleSystem .numParticles * (particleStride / 4));

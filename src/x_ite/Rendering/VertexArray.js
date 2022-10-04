@@ -51,7 +51,7 @@ define (function ()
 {
 "use strict";
 
-   function VertexArray (gl)
+   function VertexArray ()
    {
       this .vertexArray = null;
       this .shaderNode  = null;
@@ -76,6 +76,8 @@ define (function ()
 
             gl .bindVertexArray (this .vertexArray);
 
+            console .log ("update vao");
+
             return true;
          }
          else
@@ -88,6 +90,10 @@ define (function ()
       disable: function (gl)
       {
          gl .bindVertexArray (null);
+      },
+      delete: function (gl)
+      {
+         gl .deleteVertexArray (this .vertexArray);
       },
    };
 
