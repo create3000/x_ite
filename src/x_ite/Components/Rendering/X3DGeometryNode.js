@@ -159,10 +159,10 @@ function (Fields,
 
       array .shrinkToFit = function ()
       {
-         if (this .length !== this .typedArray .length)
-            this .typedArray = new Float32Array (this);
-         else
+         if (this .length === this .typedArray .length)
             this .typedArray .set (this);
+         else
+            this .typedArray = new Float32Array (this);
       };
 
       return array;
