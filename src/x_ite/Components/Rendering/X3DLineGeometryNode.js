@@ -52,13 +52,11 @@ define ([
    "standard/Math/Geometry/Line3",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
           Line3,
           Vector2,
-          Vector3,
-          Matrix4)
+          Vector3)
 {
 "use strict";
 
@@ -128,30 +126,61 @@ function (X3DGeometryNode,
       {
          return false;
       },
-      buildTexCoords: function ()
+      buildTexCoords: (function ()
       {
-         // Line stipple support.
+         const vector = new Vector3 (0, 0, 0);
 
-         const
-            texCoords = this .getTexCoords (),
-            vertices  = this .getVertices ();
-
-         for (let i = 0, length = vertices .length; i < length; i += 8)
+         return function ()
          {
-            texCoords .push (vertices [i],
-                             vertices [i + 1],
-                             vertices [i + 2],
-                             vertices [i + 3],
-                             vertices [i],
-                             vertices [i + 1],
-                             vertices [i + 2],
-                             vertices [i + 3]);
-         }
+            // Line stipple support.
 
-         texCoords .shrinkToFit ();
+            const
+               texCoords = this .getTexCoords (),
+               vertices  = this .getVertices ();
 
-         this .getMultiTexCoords () .push (texCoords);
-      },
+            let lengthSoFar = 0;
+
+            for (let i = 0, length = vertices .length; i < length; i += 8)
+            {
+               let
+                  x0 = vertices [i],
+                  y0 = vertices [i + 1],
+                  z0 = vertices [i + 2],
+                  w0 = vertices [i + 3],
+                  x1 = vertices [i + 4],
+                  y1 = vertices [i + 5],
+                  z1 = vertices [i + 6];
+
+               vector .set (x0 - x1, y0 - y1, z0 - z1);
+
+               const l = vector .abs ();
+
+               if (i && x0 === vertices [i - 4] &&
+                        y0 === vertices [i - 3] &&
+                        z0 === vertices [i - 2])
+               {
+                  vector .normalize () .multiply (lengthSoFar);
+
+                  x0 += vector .x;
+                  y0 += vector .y;
+                  z0 += vector .z;
+               }
+               else
+               {
+                  lengthSoFar = 0;
+               }
+
+               texCoords .push (x0, y0, z0, w0,
+                                x0, y0, z0, w0);
+
+               lengthSoFar += l;
+            }
+
+            texCoords .shrinkToFit ();
+
+            this .getMultiTexCoords () .push (texCoords);
+         };
+      })(),
       display: function (gl, context)
       {
          const
