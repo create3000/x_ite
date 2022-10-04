@@ -1207,18 +1207,18 @@ function (X3DCast,
       },
       enableTexCoordAttribute: function (gl, buffers, stride, offset)
       {
-         for (const [i, x3d_TexCoord] of this .x3d_TexCoord)
+         for (const [i, location] of this .x3d_TexCoord)
          {
             gl .bindBuffer (gl .ARRAY_BUFFER, buffers [i]);
-            gl .enableVertexAttribArray (x3d_TexCoord);
-            gl .vertexAttribPointer (x3d_TexCoord, 4, gl .FLOAT, false, stride, offset);
+            gl .enableVertexAttribArray (location);
+            gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
          }
       },
       texCoordAttributeDivisor: function (gl, divisor)
       {
-         for (const [i, x3d_TexCoord] of this .x3d_TexCoord)
+         for (const [i, location] of this .x3d_TexCoord)
          {
-            gl .vertexAttribDivisor (x3d_TexCoord, divisor);
+            gl .vertexAttribDivisor (location, divisor);
          }
       },
       enableNormalAttribute: function (gl, buffer, stride, offset)

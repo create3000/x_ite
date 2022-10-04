@@ -42,7 +42,7 @@ main ()
 
    #ifdef X_ITE
    // Line Stipple
-   vec4 start = x3d_ProjectionMatrix * x3d_TexCoord0;
+   vec4 start = x3d_ProjectionMatrix * (x3d_ModelViewMatrix * x3d_TexCoord0);
 
    startPosition  = start .xyz / start .w;
    vertexPosition = gl_Position .xyz / gl_Position .w;

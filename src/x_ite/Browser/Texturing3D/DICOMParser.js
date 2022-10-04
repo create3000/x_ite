@@ -110,8 +110,8 @@ function (dicomParser,
          this .getTansferSyntax ();
          this .getPixelData ();
 
-         if (DEBUG)
-            console .log (this);
+         // if (DEBUG)
+         //    console .log (this);
 
          return this .dicom;
       },
