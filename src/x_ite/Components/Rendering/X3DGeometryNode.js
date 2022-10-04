@@ -49,6 +49,7 @@
 
 define ([
    "x_ite/Fields",
+   "x_ite/Browser/Rendering/VertexArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Base/X3DConstants",
    "x_ite/Browser/Core/Shading",
@@ -61,6 +62,7 @@ define ([
    "standard/Math/Algorithm",
 ],
 function (Fields,
+          VertexArray,
           X3DNode,
           X3DConstants,
           Shading,
@@ -180,21 +182,24 @@ function (Fields,
       {
          X3DNode .prototype .initialize .call (this);
 
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
+
          this .isLive () .addInterest ("set_live__", this);
 
          this .addInterest ("requestRebuild", this);
          this ._rebuild .addInterest ("rebuild", this);
 
-         const gl = this .getBrowser () .getContext ();
-
-         this .frontFace            = gl .CCW;
-         this .attribBuffers        = [ ];
-         this .texCoordBuffers      = [ ];
-         this .fogDepthBuffer       = gl .createBuffer ();
-         this .colorBuffer          = gl .createBuffer ();
-         this .normalBuffer         = gl .createBuffer ();
-         this .vertexBuffer         = gl .createBuffer ();
-         this .planes               = [ ];
+         this .frontFace       = gl .CCW;
+         this .attribBuffers   = [ ];
+         this .texCoordBuffers = Array .from ({length: browser .getMaxTextures ()}, () => gl .createBuffer ());
+         this .fogDepthBuffer  = gl .createBuffer ();
+         this .colorBuffer     = gl .createBuffer ();
+         this .normalBuffer    = gl .createBuffer ();
+         this .vertexBuffer    = gl .createBuffer ();
+         this .vertexArray     = new VertexArray (gl);
+         this .planes          = [ ];
 
          for (let i = 0; i < 5; ++ i)
             this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
@@ -267,7 +272,7 @@ function (Fields,
       {
          this .frontFace = value ? this .getBrowser () .getContext () .CCW : this .getBrowser () .getContext () .CW;
       },
-      getAttrib: function ()
+      getAttribNodes: function ()
       {
          return this .attribNodes;
       },
@@ -344,6 +349,13 @@ function (Fields,
       getVertices: function ()
       {
          return this .vertices;
+      },
+      updateVertexArrays: function ()
+      {
+         this .vertexArray .update ();
+
+         this .updateParticlesShadow = true;
+         this .updateParticles       = true;
       },
       buildTexCoords: function ()
       {
@@ -850,6 +862,8 @@ function (Fields,
 
          // Transfer attribs.
 
+         const numAttribBuffers = this .attribBuffers .length;
+
          for (let i = this .attribBuffers .length, length = this .attribs .length; i < length; ++ i)
             this .attribBuffers .push (gl .createBuffer ());
 
@@ -859,21 +873,34 @@ function (Fields,
             gl .bufferData (gl .ARRAY_BUFFER, this .attribs [i] .getValue (), gl .DYNAMIC_DRAW);
          }
 
+         if (this .attribBuffers .length !== numAttribBuffers)
+            this .updateVertexArrays ();
+
          // Transfer fog depths.
+
+         const fogCoords = this .fogCoords;
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .fogDepthBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .fogDepths .getValue (), gl .DYNAMIC_DRAW);
+
          this .fogCoords = !! (this .fogDepths .length);
+
+         if (this .fogCoords !== fogCoords)
+            this .updateVertexArrays ();
+
          // Transfer colors.
+
+         const colorMaterial = this .colorMaterial;
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .DYNAMIC_DRAW);
+
          this .colorMaterial = !! (this .colors .length);
 
-         // Transfer multiTexCoords.
+         if (this .colorMaterial !== colorMaterial)
+            this .updateVertexArrays ();
 
-         for (let i = this .texCoordBuffers .length, length = this .multiTexCoords .length; i < length; ++ i)
-            this .texCoordBuffers .push (gl .createBuffer ());
+         // Transfer multiTexCoords.
 
          for (let i = 0, length = this .multiTexCoords .length; i < length; ++ i)
          {
@@ -885,6 +912,7 @@ function (Fields,
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .vertices .getValue (), gl .DYNAMIC_DRAW);
+
          this .vertexCount = count;
 
          // Setup render functions.
@@ -892,16 +920,20 @@ function (Fields,
          if (this .vertexCount)
          {
             // Use default render functions.
+
             delete this .depth;
             delete this .display;
+            delete this .displayParticlesDepth;
             delete this .displayParticles;
          }
          else
          {
             // Use no render function.
-            this .depth            = Function .prototype;
-            this .display          = Function .prototype;
-            this .displayParticles = Function .prototype;
+
+            this .depth                 = Function .prototype;
+            this .display               = Function .prototype;
+            this .displayParticlesDepth = Function .prototype;
+            this .displayParticles      = Function .prototype;
          }
       },
       traverse: function (type, renderObject)
@@ -949,18 +981,21 @@ function (Fields,
 
             // Setup vertex attributes.
 
-            for (let i = 0, length = attribNodes .length; i < length; ++ i)
-               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+            if (this .vertexArray .enable (gl, shaderNode))
+            {
+               for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-            if (this .fogCoords)
-               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+               if (this .fogCoords)
+                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
-            if (this .colorMaterial)
-               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+               if (this .colorMaterial)
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-            shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
-            shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+               shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
+               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+            }
 
             // Draw depending on wireframe, solid and transparent.
 
@@ -1019,6 +1054,7 @@ function (Fields,
                }
             }
 
+            this .vertexArray .disable (gl);
             shaderNode .disable (gl);
 
             if (blendModeNode)
@@ -1027,16 +1063,26 @@ function (Fields,
       },
       displayParticlesDepth: function (gl, context, shaderNode, particleSystem)
       {
-         const
-            outputParticles = particleSystem .outputParticles,
-            particleStride  = particleSystem .particleStride;
+         const outputParticles = particleSystem .outputParticles;
 
-         shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
-         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
-         shaderNode .enableVertexAttribute         (gl, this .vertexBuffer, 0, 0);
+         if (this .updateParticlesShadow)
+         {
+            this .updateParticlesShadow = false;
+            outputParticles .shadowArray .update ();
+         }
+
+         if (outputParticles .shadowArray .enable (gl ,shaderNode))
+         {
+            const particleStride = particleSystem .particleStride;
+
+            shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+            shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
+            shaderNode .enableVertexAttribute         (gl, this .vertexBuffer, 0, 0);
+         }
 
          gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 
+         outputParticles .shadowArray .disable (gl);
          shaderNode .disable (gl);
       },
       displayParticles: function (gl, context, particleSystem)
@@ -1078,25 +1124,34 @@ function (Fields,
 
             // Setup vertex attributes.
 
-            const
-               outputParticles = particleSystem .outputParticles,
-               particleStride  = particleSystem .particleStride;
+            const outputParticles = particleSystem .outputParticles;
 
-            shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
-            shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
+            if (this .updateParticles)
+            {
+               this .updateParticles = false;
+               outputParticles .vertexArray .update ();
+            }
 
-            for (let i = 0, length = attribNodes .length; i < length; ++ i)
-               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+            if (outputParticles .vertexArray .enable (gl ,shaderNode))
+            {
+               const particleStride = particleSystem .particleStride;
 
-            if (this .fogCoords)
-               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+               shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
 
-            if (this .colorMaterial)
-               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+               for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-            shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
-            shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+               if (this .fogCoords)
+                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+
+               if (this .colorMaterial)
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+               shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
+               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+            }
 
             // Draw depending on wireframe, solid and transparent.
 
@@ -1151,6 +1206,7 @@ function (Fields,
                }
             }
 
+            outputParticles .shadowArray .disable (gl);
             shaderNode .disable (gl);
 
             if (blendModeNode)

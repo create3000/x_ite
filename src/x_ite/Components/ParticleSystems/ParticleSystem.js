@@ -53,6 +53,7 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DShapeNode",
    "x_ite/Browser/ParticleSystems/GeometryTypes",
+   "x_ite/Browser/Rendering/VertexArray",
    "x_ite/Rendering/TraverseType",
    "x_ite/Base/X3DConstants",
    "x_ite/Base/X3DCast",
@@ -67,6 +68,7 @@ function (Fields,
           FieldDefinitionArray,
           X3DShapeNode,
           GeometryTypes,
+          VertexArray,
           TraverseType,
           X3DConstants,
           X3DCast,
@@ -187,7 +189,9 @@ function (Fields,
       {
          X3DShapeNode .prototype .initialize .call (this);
 
-         const browser = this .getBrowser ();
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
 
          if (browser .getContext () .getVersion () < 2)
             return;
@@ -214,6 +218,11 @@ function (Fields,
 
          this .inputParticles  = this .createBuffer (true);
          this .outputParticles = this .createBuffer (true);
+
+         this .inputParticles . vertexArray = new VertexArray (gl);
+         this .inputParticles  .shadowArray = new VertexArray (gl);
+         this .outputParticles .vertexArray = new VertexArray (gl);
+         this .outputParticles .shadowArray = new VertexArray (gl);
 
          // Create forces stuff.
 
@@ -430,6 +439,8 @@ function (Fields,
             }
          }
 
+         this .updateVertexArrays ();
+
          this .set_shader__ ();
          this .set_transparent__ ();
       },
@@ -467,6 +478,7 @@ function (Fields,
             this .creationTime = performance .now () / 1000;
 
          this .resizeBuffers (lastNumParticles);
+         this .updateVertexArrays ();
       },
       set_particleLifetime__: function ()
       {
@@ -625,6 +637,8 @@ function (Fields,
 
          this .numColors                      = numColors;
          this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
+
+         this .updateVertexArrays ();
       },
       set_texCoordRamp__: function ()
       {
@@ -666,6 +680,15 @@ function (Fields,
          }
 
          this .numTexCoords = this .texCoordRampNode ? numTexCoords : 0;
+
+         this .updateVertexArrays ();
+      },
+      updateVertexArrays: function ()
+      {
+         this .inputParticles . vertexArray .update ();
+         this .inputParticles  .shadowArray .update ();
+         this .outputParticles .vertexArray .update ();
+         this .outputParticles .shadowArray .update ();
       },
       createTexture: function ()
       {
@@ -914,16 +937,20 @@ function (Fields,
             }
             default:
             {
-               const
-                  outputParticles = this .outputParticles,
-                  particleStride  = this .particleStride;
+               const outputParticles = this .outputParticles;
 
-               shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
-               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
-               shaderNode .enableVertexAttribute         (gl, this .geometryBuffer, 0, this .verticesOffset);
+               if (outputParticles .shadowArray .enable (gl, shaderNode))
+               {
+                  const particleStride = this .particleStride;
+
+                  shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
+                  shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
+                  shaderNode .enableVertexAttribute         (gl, this .geometryBuffer, 0, this .verticesOffset);
+               }
 
                gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
 
+               outputParticles .shadowArray .disable (gl);
                shaderNode .disable (gl);
 
                break;
@@ -981,42 +1008,43 @@ function (Fields,
                   shaderNode .enable (gl);
                   shaderNode .setLocalUniforms (gl, context);
 
+                  if (this .numTexCoords)
+                  {
+                     const textureUnit = context .browser .getTexture2DUnit ();
+
+                     gl .activeTexture (gl .TEXTURE0 + textureUnit);
+                     gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+                     gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
+                  }
+
                   // Setup vertex attributes.
 
-                  const
-                     outputParticles = this .outputParticles,
-                     particleStride  = this .particleStride;
+                  const outputParticles = this .outputParticles;
 
-                  shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
-                  shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
-
-                  if (this .geometryContext .colorMaterial)
+                  if (outputParticles .vertexArray .enable (gl, shaderNode))
                   {
-                     shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
-                     shaderNode .colorAttributeDivisor (gl, 1);
-                  }
+                     const particleStride = this .particleStride;
 
-                  if (this .texCoordCount)
-                  {
-                     shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
+                     shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
+                     shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
 
-                     if (this .numTexCoords)
+                     if (this .geometryContext .colorMaterial)
                      {
-                        const textureUnit = context .browser .getTexture2DUnit ();
-
-                        gl .activeTexture (gl .TEXTURE0 + textureUnit);
-                        gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
-                        gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
+                        shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
+                        shaderNode .colorAttributeDivisor (gl, 1);
                      }
-                  }
 
-                  if (this .hasNormals)
-                  {
-                     shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
-                     shaderNode .normalAttributeDivisor (gl, this .numParticles);
-                  }
+                     if (this .texCoordCount)
+                        shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
 
-                  shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
+                     if (this .hasNormals)
+                     {
+                        shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
+                        shaderNode .normalAttributeDivisor (gl, this .maxParticles);
+                     }
+
+                     shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
+                  }
 
                   if (shaderNode .wireframe && this .testWireframe)
                   {
@@ -1030,6 +1058,7 @@ function (Fields,
                      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
                   }
 
+                  outputParticles .vertexArray .disable (gl);
                   shaderNode .disable (gl);
 
                   if (blendModeNode)

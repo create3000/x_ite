@@ -241,8 +241,8 @@ function (X3DNode,
 
          for (const [i, attribute] of program .inputs)
          {
-            gl .enableVertexAttribArray (attribute);
             gl .bindBuffer (gl .ARRAY_BUFFER, inputParticles);
+            gl .enableVertexAttribArray (attribute);
             gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particleStride, particleOffsets [i]);
          }
 

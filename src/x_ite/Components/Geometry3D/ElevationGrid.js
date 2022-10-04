@@ -141,7 +141,7 @@ function (Fields,
       },
       set_attrib__: function ()
       {
-         const attribNodes = this .getAttrib ();
+         const attribNodes = this .getAttribNodes ();
 
          for (const attribNode of attribNodes)
             attribNode .removeInterest ("requestRebuild", this);
@@ -158,6 +158,8 @@ function (Fields,
 
          for (const attribNode of attribNodes)
             attribNode .addInterest ("requestRebuild", this);
+
+         this .updateVertexArrays ();
       },
       set_fogCoord__: function ()
       {
@@ -349,7 +351,7 @@ function (Fields,
             colorPerVertex     = this ._colorPerVertex .getValue (),
             normalPerVertex    = this ._normalPerVertex .getValue (),
             coordIndex         = this .createCoordIndex (),
-            attribNodes        = this .getAttrib (),
+            attribNodes        = this .getAttribNodes (),
             numAttrib          = attribNodes .length,
             attribs            = this .getAttribs (),
             fogCoordNode       = this .fogCoordNode,

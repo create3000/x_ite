@@ -116,7 +116,7 @@ function (X3DGeometryNode,
       },
       set_attrib__: function ()
       {
-         const attribNodes = this .getAttrib ();
+         const attribNodes = this .getAttribNodes ();
 
          for (const attribNode of attribNodes)
             attribNode .removeInterest ("requestRebuild", this);
@@ -133,6 +133,8 @@ function (X3DGeometryNode,
 
          for (const attribNode of attribNodes)
             attribNode .addInterest ("requestRebuild", this);
+
+         this .updateVertexArrays ();
       },
       set_fogCoord__: function ()
       {
@@ -221,7 +223,7 @@ function (X3DGeometryNode,
          const
             colorPerVertex     = this ._colorPerVertex .getValue (),
             normalPerVertex    = this ._normalPerVertex .getValue (),
-            attribNodes        = this .getAttrib (),
+            attribNodes        = this .getAttribNodes (),
             numAttrib          = attribNodes .length,
             attribs            = this .getAttribs (),
             fogCoordNode       = this .getFogCoord (),
