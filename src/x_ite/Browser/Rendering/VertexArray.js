@@ -53,7 +53,7 @@ define (function ()
 
    function VertexArray (gl)
    {
-      this .vertexArray = gl .createVertexArray ();
+      this .vertexArray = null;
       this .shaderNode  = null;
       this .tainted     = true;
    }
@@ -66,14 +66,24 @@ define (function ()
       },
       enable: function (gl, shaderNode)
       {
-         gl .bindVertexArray (this .vertexArray);
+         if (this .tainted || this .shaderNode !== shaderNode)
+         {
+            gl .deleteVertexArray (this .vertexArray);
 
-         const update = this .tainted || this .shaderNode !== shaderNode;
+            this .vertexArray = gl .createVertexArray ();
+            this .shaderNode  = shaderNode;
+            this .tainted     = false;
 
-         this .shaderNode = shaderNode;
-         this .tainted    = false;
+            gl .bindVertexArray (this .vertexArray);
 
-         return update;
+            return true;
+         }
+         else
+         {
+            gl .bindVertexArray (this .vertexArray);
+
+            return false;
+         }
       },
       disable: function (gl)
       {
