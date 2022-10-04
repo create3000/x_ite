@@ -114,7 +114,7 @@ function (Fields,
       },
       set_attrib__: function ()
       {
-         const attribNodes = this .getAttribNodes ();
+         const attribNodes = this .getAttrib ();
 
          for (const attribNode of attribNodes)
          {
@@ -192,17 +192,17 @@ function (Fields,
          // Fill GeometryNode
 
          const
-            vertexCount   = this ._vertexCount,
-            attribNodes   = this .getAttribNodes (),
-            numAttrib     = attribNodes .length,
-            attribs       = this .getAttribs (),
-            fogCoordNode  = this .fogCoordNode,
-            colorNode     = this .colorNode,
-            coordNode     = this .coordNode,
-            fogDepthArray = this .getFogDepths (),
-            colorArray    = this .getColors (),
-            vertexArray   = this .getVertices (),
-            size          = coordNode .getSize ();
+            vertexCount    = this ._vertexCount,
+            attribNodes    = this .getAttrib (),
+            numAttribNodes = attribNodes .length,
+            attribArrays   = this .getAttribs (),
+            fogCoordNode   = this .fogCoordNode,
+            colorNode      = this .colorNode,
+            coordNode      = this .coordNode,
+            fogDepthArray  = this .getFogDepths (),
+            colorArray     = this .getColors (),
+            vertexArray    = this .getVertices (),
+            size           = coordNode .getSize ();
 
          let index = 0;
 
@@ -217,8 +217,8 @@ function (Fields,
 
                for (let i = 0; i < count; ++ i, index += i & 1)
                {
-                  for (let a = 0; a < numAttrib; ++ a)
-                     attribNodes [a] .addValue (index, attribs [a]);
+                  for (let a = 0; a < numAttribNodes; ++ a)
+                     attribNodes [a] .addValue (index, attribArrays [a]);
 
                   if (fogCoordNode)
                      fogCoordNode .addDepth (index, fogDepthArray);

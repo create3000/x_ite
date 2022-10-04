@@ -117,7 +117,7 @@ function (Fields,
       },
       set_attrib__: function ()
       {
-         const attribNodes = this .getAttribNodes ();
+         const attribNodes = this .getAttrib ();
 
          for (const attribNode of attribNodes)
          {
@@ -179,21 +179,21 @@ function (Fields,
             return;
 
          const
-            attribNodes   = this .getAttribNodes (),
-            numAttrib     = attribNodes .length,
-            attribs       = this .getAttribs (),
-            fogCoordNode  = this .fogCoordNode,
-            fogDepthArray = this .getFogDepths (),
-            colorNode     = this .colorNode,
-            colorArray    = this .getColors (),
-            coordNode     = this .coordNode,
-            vertexArray   = this .getVertices (),
-            numPoints     = coordNode ._point .length;
+            attribNodes    = this .getAttrib (),
+            numAttribNodes = attribNodes .length,
+            attribArrays   = this .getAttribs (),
+            fogCoordNode   = this .fogCoordNode,
+            fogDepthArray  = this .getFogDepths (),
+            colorNode      = this .colorNode,
+            colorArray     = this .getColors (),
+            coordNode      = this .coordNode,
+            vertexArray    = this .getVertices (),
+            numPoints      = coordNode ._point .length;
 
-         for (let a = 0; a < numAttrib; ++ a)
+         for (let a = 0; a < numAttribNodes; ++ a)
          {
             for (let i = 0; i < numPoints; ++ i)
-               attribNodes [a] .addValue (i, attribs [a]);
+               attribNodes [a] .addValue (i, attribArrays [a]);
          }
 
          if (fogCoordNode)

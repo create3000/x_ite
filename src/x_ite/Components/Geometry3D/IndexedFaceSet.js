@@ -176,9 +176,9 @@ function (Fields,
             colorPerVertex     = this ._colorPerVertex .getValue (),
             normalPerVertex    = this ._normalPerVertex .getValue (),
             coordIndex         = this ._coordIndex .getValue (),
-            attribNodes        = this .getAttribNodes (),
-            numAttrib          = attribNodes .length,
-            attribs            = this .getAttribs (),
+            attribNodes        = this .getAttrib (),
+            numAttribNodes     = attribNodes .length,
+            attribArrays       = this .getAttribs (),
             fogCoordNode       = this .getFogCoord (),
             colorNode          = this .getColor (),
             texCoordNode       = this .getTexCoord (),
@@ -203,8 +203,8 @@ function (Fields,
             {
                const index = coordIndex [i];
 
-               for (let a = 0; a < numAttrib; ++ a)
-                  attribNodes [a] .addValue (index, attribs [a]);
+               for (let a = 0; a < numAttribNodes; ++ a)
+                  attribNodes [a] .addValue (index, attribArrays [a]);
 
                if (fogCoordNode)
                   fogCoordNode .addDepth (index, fogDepthArray);

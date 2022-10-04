@@ -116,7 +116,7 @@ function (X3DGeometryNode,
       },
       set_attrib__: function ()
       {
-         const attribNodes = this .getAttribNodes ();
+         const attribNodes = this .getAttrib ();
 
          for (const attribNode of attribNodes)
          {
@@ -229,9 +229,9 @@ function (X3DGeometryNode,
          const
             colorPerVertex     = this ._colorPerVertex .getValue (),
             normalPerVertex    = this ._normalPerVertex .getValue (),
-            attribNodes        = this .getAttribNodes (),
-            numAttrib          = attribNodes .length,
-            attribs            = this .getAttribs (),
+            attribNodes        = this .getAttrib (),
+            numAttribNodes     = attribNodes .length,
+            attribArrays       = this .getAttribs (),
             fogCoordNode       = this .getFogCoord (),
             colorNode          = this .getColor (),
             texCoordNode       = this .getTexCoord (),
@@ -254,8 +254,8 @@ function (X3DGeometryNode,
                face  = Math .floor (i / verticesPerFace),
                index = this .getPolygonIndex (this .getTriangleIndex (i));
 
-            for (let a = 0; a < numAttrib; ++ a)
-               attribNodes [a] .addValue (index, attribs [a]);
+            for (let a = 0; a < numAttribNodes; ++ a)
+               attribNodes [a] .addValue (index, attribArrays [a]);
 
             if (fogCoordNode)
                fogCoordNode .addDepth (index, fogDepthArray);

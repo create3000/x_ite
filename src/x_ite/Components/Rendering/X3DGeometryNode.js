@@ -115,7 +115,7 @@ function (Fields,
       this .flatShading              = undefined;
       this .colorMaterial            = false;
       this .attribNodes              = [ ];
-      this .attribs                  = [ ];
+      this .attribArrays             = [ ];
       this .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
       this .textureCoordinateMapping = new Map ();
       this .multiTexCoords           = [ ];
@@ -273,13 +273,13 @@ function (Fields,
       {
          this .frontFace = value ? this .getBrowser () .getContext () .CCW : this .getBrowser () .getContext () .CW;
       },
-      getAttribNodes: function ()
+      getAttrib: function ()
       {
          return this .attribNodes;
       },
       getAttribs: function ()
       {
-         return this .attribs;
+         return this .attribArrays;
       },
       setFogDepths: function (value)
       {
@@ -754,8 +754,8 @@ function (Fields,
 
             // Shrink arrays before transfer to graphics card.
 
-            for (const attrib of this .attribs)
-               attrib .shrinkToFit ();
+            for (const attribArray of this .attribArrays)
+               attribArray .shrinkToFit ();
 
             for (const multiTexCoord of this .multiTexCoords)
                multiTexCoord .shrinkToFit ();
@@ -828,19 +828,19 @@ function (Fields,
          this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
          this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
 
-         // Create attrib arrays.
+         // Create attribArray arrays.
          {
-            const attribs = this .attribs;
+            const attribArrays = this .attribArrays;
 
-            for (const attrib of attribs)
-               attrib .length = 0;
+            for (const attribArray of attribArrays)
+               attribArray .length = 0;
 
             const length = this .attribNodes .length;
 
-            for (let a = attribs .length; a < length; ++ a)
-               attribs [a] = X3DGeometryNode .createArray ();
+            for (let a = attribArrays .length; a < length; ++ a)
+               attribArrays [a] = X3DGeometryNode .createArray ();
 
-            attribs .length = length;
+            attribArrays .length = length;
          }
 
          // Buffer
@@ -859,15 +859,15 @@ function (Fields,
       {
          const gl = this .getBrowser () .getContext ();
 
-         // Transfer attribs.
+         // Transfer attribArrays.
 
-         for (let i = this .attribBuffers .length, length = this .attribs .length; i < length; ++ i)
+         for (let i = this .attribBuffers .length, length = this .attribArrays .length; i < length; ++ i)
             this .attribBuffers .push (gl .createBuffer ());
 
-         for (let i = 0, length = this .attribs .length; i < length; ++ i)
+         for (let i = 0, length = this .attribArrays .length; i < length; ++ i)
          {
             gl .bindBuffer (gl .ARRAY_BUFFER, this .attribBuffers [i]);
-            gl .bufferData (gl .ARRAY_BUFFER, this .attribs [i] .getValue (), gl .DYNAMIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, this .attribArrays [i] .getValue (), gl .DYNAMIC_DRAW);
          }
 
          // Transfer fog depths.

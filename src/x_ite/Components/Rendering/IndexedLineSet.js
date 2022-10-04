@@ -120,7 +120,7 @@ function (Fields,
       },
       set_attrib__: function ()
       {
-         const attribNodes = this .getAttribNodes ();
+         const attribNodes = this .getAttrib ();
 
          for (const attribNode of attribNodes)
          {
@@ -249,9 +249,9 @@ function (Fields,
             coordIndex     = this ._coordIndex,
             polylines      = this .getPolylineIndices (),
             colorPerVertex = this ._colorPerVertex .getValue (),
-            attribNodes    = this .getAttribNodes (),
-            numAttrib      = attribNodes .length,
-            attribs        = this .getAttribs (),
+            attribNodes    = this .getAttrib (),
+            numAttribNodes = attribNodes .length,
+            attribArrays   = this .getAttribs (),
             fogCoordNode   = this .fogCoordNode,
             colorNode      = this .colorNode,
             coordNode      = this .coordNode,
@@ -277,8 +277,8 @@ function (Fields,
                         i     = polyline [l],
                         index = coordIndex [i];
 
-                     for (let a = 0; a < numAttrib; ++ a)
-                        attribNodes [a] .addValue (index, attribs [a]);
+                     for (let a = 0; a < numAttribNodes; ++ a)
+                        attribNodes [a] .addValue (index, attribArrays [a]);
 
                      if (fogCoordNode)
                         fogCoordNode .addDepth (index, fogDepthArray);
