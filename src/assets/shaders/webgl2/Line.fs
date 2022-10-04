@@ -7,14 +7,10 @@ uniform float x3d_AlphaCutoff;
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
 uniform ivec4 x3d_Viewport;
 
+in float lengthSoFar;
 in float fogDepth; // fog depth
 in vec4  color;    // color
 in vec3  vertex;   // point on geometry
-
-#ifdef X_ITE
-in vec3 startPosition;  // line stipple start
-in vec3 vertexPosition; // current line stipple position
-#endif
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 uniform float x3d_LogarithmicFarFactor1_2;
@@ -26,21 +22,17 @@ out vec4 x3d_FragColor;
 #pragma X3D include "include/Fog.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
 
-#ifdef X_ITE
 void
 stipple ()
 {
    if (x3d_LineProperties .applied)
    {
-      vec2  direction = (vertexPosition .xy - startPosition .xy) * vec2 (x3d_Viewport .zw) * 0.5;
-      float distance  = length (direction) / 16.0;
-      float color     = texture (x3d_LineProperties .linetype, vec2 (distance, distance)) .a;
+      float color = texture (x3d_LineProperties .linetype, vec2 (lengthSoFar, 0.5)) .a;
 
-      if (color == 0.0)
+      if (color < 1.0)
          discard;
    }
 }
-#endif
 
 void
 main ()

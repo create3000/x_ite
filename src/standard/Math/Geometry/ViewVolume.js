@@ -406,6 +406,26 @@ function (Plane3,
                               (vin .z * d + 0.5));
          };
       })(),
+      projectPointMatrix: (function ()
+      {
+         const vin = new Vector4 (0, 0, 0, 0);
+
+         return function (point, modelViewProjectionMatrix, viewport, vout)
+         {
+            vin .set (point .x, point .y, point .z, 1);
+
+            modelViewProjectionMatrix .multVecMatrix (vin);
+
+            if (vin .w === 0)
+               throw new Error ("Couldn't project point: divisor is 0.");
+
+            const d = 1 / (2 * vin .w);
+
+            return vout .set ((vin .x * d + 0.5) * viewport [2] + viewport [0],
+                              (vin .y * d + 0.5) * viewport [3] + viewport [1],
+                              (vin .z * d + 0.5));
+         };
+      })(),
       projectLine: (function ()
       {
          const

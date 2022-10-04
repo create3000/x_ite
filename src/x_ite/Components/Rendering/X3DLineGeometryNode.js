@@ -49,14 +49,18 @@
 
 define ([
    "x_ite/Components/Rendering/X3DGeometryNode",
+   "standard/Math/Geometry/ViewVolume",
    "standard/Math/Geometry/Line3",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
+          ViewVolume,
           Line3,
           Vector2,
-          Vector3)
+          Vector3,
+          Matrix4)
 {
 "use strict";
 
@@ -126,108 +130,126 @@ function (X3DGeometryNode,
       {
          return false;
       },
-      buildTexCoords: (function ()
+      buildTexCoords: function ()
       {
-         const vector = new Vector3 (0, 0, 0);
+         // Line stipple support.
 
-         return function ()
-         {
-            // Line stipple support.
+         const
+            texCoords = this .getTexCoords (),
+            vertices  = this .getVertices ();
 
-            const
-               texCoords = this .getTexCoords (),
-               vertices  = this .getVertices ();
+         texCoords .length = vertices .length;
 
-            let lengthSoFar = 0;
+         texCoords .shrinkToFit ();
 
-            for (let i = 0, length = vertices .length; i < length; i += 8)
-            {
-               let
-                  x0 = vertices [i],
-                  y0 = vertices [i + 1],
-                  z0 = vertices [i + 2],
-                  w0 = vertices [i + 3],
-                  x1 = vertices [i + 4],
-                  y1 = vertices [i + 5],
-                  z1 = vertices [i + 6];
-
-               vector .set (x0 - x1, y0 - y1, z0 - z1);
-
-               const l = vector .abs ();
-
-               if (i && x0 === vertices [i - 4] &&
-                        y0 === vertices [i - 3] &&
-                        z0 === vertices [i - 2])
-               {
-                  vector .normalize () .multiply (lengthSoFar);
-
-                  x0 += vector .x;
-                  y0 += vector .y;
-                  z0 += vector .z;
-               }
-               else
-               {
-                  lengthSoFar = 0;
-               }
-
-               texCoords .push (x0, y0, z0, w0,
-                                x0, y0, z0, w0);
-
-               lengthSoFar += l;
-            }
-
-            texCoords .shrinkToFit ();
-
-            this .getMultiTexCoords () .push (texCoords);
-         };
-      })(),
-      display: function (gl, context)
+         this .getMultiTexCoords () .push (texCoords);
+      },
+      display: (function ()
       {
          const
-            browser        = context .browser,
-            appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .shaderNode || browser .getLineShader ();
+            modelViewProjectionMatrix = new Matrix4 (),
+            point0                    = new Vector3 (0, 0, 0),
+            point1                    = new Vector3 (0, 0, 0),
+            projectedPoint0           = new Vector3 (0, 0, 0),
+            projectedPoint1           = new Vector3 (0, 0, 0);
 
-         if (shaderNode .isValid ())
+         return function (gl, context)
          {
             const
-               blendModeNode = appearanceNode .blendModeNode,
-               attribNodes   = this .attribNodes,
-               attribBuffers = this .attribBuffers;
+               browser        = context .browser,
+               appearanceNode = context .shapeNode .getAppearance (),
+               shaderNode     = appearanceNode .shaderNode || browser .getLineShader ();
 
-            if (blendModeNode)
-               blendModeNode .enable (gl);
-
-            // Setup shader.
-
-            shaderNode .enable (gl);
-            shaderNode .setLocalUniforms (gl, context);
-
-            // Setup vertex attributes.
-
-            if (this .vertexArrayObject .enable (gl, shaderNode))
+            if (shaderNode .isValid ())
             {
-               for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+               const
+                  linePropertiesNode = appearanceNode .stylePropertiesNode [1],
+                  blendModeNode      = appearanceNode .blendModeNode,
+                  attribNodes        = this .attribNodes,
+                  attribBuffers      = this .attribBuffers;
 
-               if (this .fogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+               // Calculate length so far for line stipples.
 
-               if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+               if (linePropertiesNode ._applied .getValue () && linePropertiesNode ._linetype .getValue () !== 0)
+               {
+                  const
+                     viewport         = context .renderer .getViewVolume () .getViewport (),
+                     projectionMatrix = context .renderer .getProjectionMatrix () .get (),
+                     texCoordArray    = this .getTexCoords () .getValue (),
+                     vertices         = this .getVertices ();
 
-               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+                  modelViewProjectionMatrix .assign (context .modelViewMatrix) .multRight (projectionMatrix);
+
+                  let lengthSoFar = 0;
+
+                  for (let i = 0, length = vertices .length; i < length; i += 8)
+                  {
+                     point0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
+                     point1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+
+                     ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
+                     ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
+
+                     const l = projectedPoint1 .subtract (projectedPoint0) .abs () / 16; // 16px
+
+                     if (i && vertices [i]     === vertices [i - 4] &&
+                              vertices [i + 1] === vertices [i - 3] &&
+                              vertices [i + 2] === vertices [i - 2])
+                     {
+                        texCoordArray [i] = lengthSoFar;
+
+                        lengthSoFar += l;
+
+                        texCoordArray [i + 4] = lengthSoFar;
+                     }
+                     else
+                     {
+                        texCoordArray [i] = 0;
+
+                        lengthSoFar = l;
+
+                        texCoordArray [i + 4] = lengthSoFar;
+                     }
+                  }
+
+                  gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
+                  gl .bufferData (gl .ARRAY_BUFFER, texCoordArray, gl .DYNAMIC_DRAW);
+               }
+
+               if (blendModeNode)
+                  blendModeNode .enable (gl);
+
+               // Setup shader.
+
+               shaderNode .enable (gl);
+               shaderNode .setLocalUniforms (gl, context);
+
+               // Setup vertex attributes.
+
+               if (this .vertexArrayObject .enable (gl, shaderNode))
+               {
+                  for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                     attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                  if (this .fogCoords)
+                     shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+
+                  if (this .colorMaterial)
+                     shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+                  shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+               }
+
+               // WireFrames are always solid so only one drawing call is needed.
+
+               gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
+
+               if (blendModeNode)
+                  blendModeNode .disable (gl);
             }
-
-            // WireFrames are always solid so only one drawing call is needed.
-
-            gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
-
-            if (blendModeNode)
-               blendModeNode .disable (gl);
-         }
-      },
+         };
+      })(),
       displayParticles: function (gl, context, particleSystem)
       {
          const
