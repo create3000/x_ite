@@ -104,19 +104,15 @@ function (Fields,
 
       // Members
 
-      const browser = this .getBrowser ();
-
       this .min                      = new Vector3 (0, 0, 0);
       this .max                      = new Vector3 (0, 0, 0);
       this .bbox                     = new Box3 (this .min, this .max, true);
       this .solid                    = true;
       this .geometryType             = 3;
-      this .primitiveMode            = browser .getContext () .TRIANGLES;
       this .flatShading              = undefined;
       this .colorMaterial            = false;
       this .attribNodes              = [ ];
       this .attribArrays             = [ ];
-      this .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
       this .textureCoordinateMapping = new Map ();
       this .multiTexCoords           = [ ];
       this .texCoords                = X3DGeometryNode .createArray ();
@@ -127,11 +123,10 @@ function (Fields,
       this .vertices                 = X3DGeometryNode .createArray ();
       this .fogCoords                = false;
       this .vertexCount              = 0;
+      this .planes                   = [ ];
 
-      // This methods are configured in transfer.
-      this .depth            = Function .prototype;
-      this .display          = Function .prototype;
-      this .displayParticles = Function .prototype;
+      for (let i = 0; i < 5; ++ i)
+         this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
    }
 
    // Function to select ether Array or MFFloat for color/normal/vertex arrays.
@@ -192,18 +187,16 @@ function (Fields,
          this .addInterest ("requestRebuild", this);
          this ._rebuild .addInterest ("rebuild", this);
 
-         this .frontFace       = gl .CCW;
-         this .attribBuffers   = [ ];
-         this .texCoordBuffers = Array .from ({length: browser .getMaxTextures ()}, () => gl .createBuffer ());
-         this .fogDepthBuffer  = gl .createBuffer ();
-         this .colorBuffer     = gl .createBuffer ();
-         this .normalBuffer    = gl .createBuffer ();
-         this .vertexBuffer    = gl .createBuffer ();
-         this .vertexArray     = new VertexArray (gl);
-         this .planes          = [ ];
-
-         for (let i = 0; i < 5; ++ i)
-            this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
+         this .primitiveMode         = gl .TRIANGLES;
+         this .frontFace             = gl .CCW;
+         this .attribBuffers         = [ ];
+         this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
+         this .texCoordBuffers       = Array .from ({length: browser .getMaxTextures ()}, () => gl .createBuffer ());
+         this .fogDepthBuffer        = gl .createBuffer ();
+         this .colorBuffer           = gl .createBuffer ();
+         this .normalBuffer          = gl .createBuffer ();
+         this .vertexBuffer          = gl .createBuffer ();
+         this .vertexArray           = new VertexArray (gl);
 
          this .set_live__ ();
       },
