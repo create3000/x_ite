@@ -76,7 +76,7 @@ define (function ()
 
             gl .bindVertexArray (this .vertexArray);
 
-            console .log ("update vao");
+            // console .log ("update vao");
 
             return true;
          }
