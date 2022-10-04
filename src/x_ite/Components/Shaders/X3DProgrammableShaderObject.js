@@ -294,19 +294,19 @@ function (X3DCast,
 
          for (const name of attributes)
          {
-            const attribute = gl .getAttribLocation (program, "x3d_" + name);
+            const attribute = gl .getAttribLocation (program, `x3d_${name}`);
 
-            this ["x3d_" + name] = attribute;
+            this [`x3d_${name}`] = attribute;
 
             if (attribute < 0)
             {
-               this ["enable" + name + "Attribute"] = Function .prototype;
-               this [name [0] .toLowerCase () + name .slice (1) + "AttributeDivisor"] = Function .prototype;
+               this [`enable${name}Attribute`]            = Function .prototype;
+               this [`${lcfirst (name)}AttributeDivisor`] = Function .prototype;
             }
             else
             {
-               delete this ["enable" + name + "Attribute"];
-               delete this [name [0] .toLowerCase () + name .slice (1) + "AttributeDivisor"];
+               delete this [`enable${name}Attribute`];
+               delete this [`${lcfirst (name)}AttributeDivisor`];
             }
          }
 
@@ -1394,6 +1394,11 @@ function (X3DCast,
          console .log (this .getName (), "uniformCount", programInfo .uniformCount);
       },
    };
+
+   function lcfirst (string)
+   {
+      return string [0] .toLowerCase () + string .slice (1);
+   }
 
    return X3DProgrammableShaderObject;
 });
