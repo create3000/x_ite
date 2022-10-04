@@ -100,7 +100,7 @@ function ($,
       this .lineVertices      = new Array (this .lineCount * 4);
       this .lineArray         = new Float32Array (this .lineVertices);
       this .lineBuffer        = gl .createBuffer ();
-      this .lineVertexArray   = new VertexArray ();
+      this .lineArrayObject   = new VertexArray ();
       this .event             = null;
       this .lookAround        = false;
       this .orientationChaser = new OrientationChaser (executionContext);
@@ -698,7 +698,7 @@ function ($,
             {
                shaderNode .enable (gl);
 
-               if (this .lineVertexArray .enable (gl, shaderNode))
+               if (this .lineArrayObject .enable (gl, shaderNode))
                   shaderNode .enableVertexAttribute (gl, this .lineBuffer, 0, 0);
 
                gl .uniform1i (shaderNode .x3d_NumClipPlanes,         0);
@@ -770,7 +770,7 @@ function ($,
          const gl = this .getBrowser () .getContext ();
 
          gl .deleteBuffer (this .lineBuffer);
-         this .lineVertexArray .delete (gl);
+         this .lineArrayObject .delete (gl);
 
          this .disconnect ();
          this .getBrowser () ._controlKey .removeInterest ("set_controlKey__", this);

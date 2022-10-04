@@ -91,7 +91,7 @@ function (VertexArray,
                frameBuffer  = new TextureBuffer (browser, 16, 16),
                normalBuffer = gl .createBuffer (),
                vertexBuffer = gl .createBuffer (),
-               vertexArray  = new VertexArray ();
+               vertexArrayObject  = new VertexArray ();
 
             frameBuffer .bind ();
 
@@ -138,7 +138,7 @@ function (VertexArray,
             gl .enable (gl .CULL_FACE);
             gl .cullFace (gl .BACK);
 
-            vertexArray .enable (gl, shaderNode);
+            vertexArrayObject .enable (gl, shaderNode);
             shaderNode .enableNormalAttribute (gl, normalBuffer, 0, 0);
             shaderNode .enableVertexAttribute (gl, vertexBuffer, 0, 0);
 
@@ -152,7 +152,7 @@ function (VertexArray,
             gl .deleteBuffer (normalBuffer);
             gl .deleteBuffer (vertexBuffer);
 
-            vertexArray .delete (gl);
+            vertexArrayObject .delete (gl);
 
             return true || (data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255);
          };

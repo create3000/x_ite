@@ -176,7 +176,7 @@ function (X3DGeometryNode,
 
             // Setup vertex attributes.
 
-            if (this .vertexArray .enable (gl, shaderNode))
+            if (this .vertexArrayObject .enable (gl, shaderNode))
             {
                for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -228,10 +228,10 @@ function (X3DGeometryNode,
             if (this .updateParticles)
             {
                this .updateParticles = false;
-               outputParticles .vertexArray .update ();
+               outputParticles .vertexArrayObject .update ();
             }
 
-            if (outputParticles .vertexArray .enable (gl ,shaderNode))
+            if (outputParticles .vertexArrayObject .enable (gl ,shaderNode))
             {
                const particleStride = particleSystem .particleStride;
 

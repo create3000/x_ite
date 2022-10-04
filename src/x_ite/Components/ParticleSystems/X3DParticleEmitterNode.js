@@ -243,7 +243,7 @@ function (X3DNode,
 
          // Input attributes
 
-         if (inputParticles .emitterArray .enable (gl, program))
+         if (inputParticles .emitterArrayObject .enable (gl, program))
          {
             for (const [i, attribute] of program .inputs)
             {

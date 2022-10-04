@@ -180,24 +180,24 @@ function (X3DBindableNode,
             browser = this .getBrowser (),
             gl      = browser .getContext ();
 
-         this .colorBuffer     = gl .createBuffer ();
-         this .sphereBuffer    = gl .createBuffer ();
-         this .texCoordBuffer  = gl .createBuffer ();
-         this .cubeBuffer      = gl .createBuffer ();
-         this .texCoordBuffers = new Array (browser .getMaxTextures ()) .fill (gl .createBuffer ());
-         this .frontBuffer     = gl .createBuffer ();
-         this .backBuffer      = gl .createBuffer ();
-         this .leftBuffer      = gl .createBuffer ();
-         this .rightBuffer     = gl .createBuffer ();
-         this .topBuffer       = gl .createBuffer ();
-         this .bottomBuffer    = gl .createBuffer ();
-         this .sphereArray     = new VertexArray ();
-         this .frontArray      = new VertexArray ();
-         this .backArray       = new VertexArray ();
-         this .leftArray       = new VertexArray ();
-         this .rightArray      = new VertexArray ();
-         this .topArray        = new VertexArray ();
-         this .bottomArray     = new VertexArray ();
+         this .colorBuffer       = gl .createBuffer ();
+         this .sphereBuffer      = gl .createBuffer ();
+         this .texCoordBuffer    = gl .createBuffer ();
+         this .cubeBuffer        = gl .createBuffer ();
+         this .texCoordBuffers   = new Array (browser .getMaxTextures ()) .fill (gl .createBuffer ());
+         this .frontBuffer       = gl .createBuffer ();
+         this .backBuffer        = gl .createBuffer ();
+         this .leftBuffer        = gl .createBuffer ();
+         this .rightBuffer       = gl .createBuffer ();
+         this .topBuffer         = gl .createBuffer ();
+         this .bottomBuffer      = gl .createBuffer ();
+         this .sphereArrayObject = new VertexArray ();
+         this .frontArrayObject  = new VertexArray ();
+         this .backArrayObject   = new VertexArray ();
+         this .leftArrayObject   = new VertexArray ();
+         this .rightArrayObject  = new VertexArray ();
+         this .topArrayObject    = new VertexArray ();
+         this .bottomArrayObject = new VertexArray ();
 
          this ._groundAngle  .addInterest ("build", this);
          this ._groundColor  .addInterest ("build", this);
@@ -581,7 +581,7 @@ function (X3DBindableNode,
 
             // Enable vertex attribute arrays.
 
-            if (this .sphereArray .enable (gl ,shaderNode))
+            if (this .sphereArrayObject .enable (gl ,shaderNode))
             {
                shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
                shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
@@ -644,12 +644,12 @@ function (X3DBindableNode,
 
                // Draw.
 
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer,  this .frontArray);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer,   this .backArray);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .leftTexture,   this .leftBuffer,   this .leftArray);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .rightTexture,  this .rightBuffer,  this .rightArray);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .topTexture,    this .topBuffer,    this .topArray);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer, this .bottomArray);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer,  this .frontArrayObject);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer,   this .backArrayObject);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .leftTexture,   this .leftBuffer,   this .leftArrayObject);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .rightTexture,  this .rightBuffer,  this .rightArrayObject);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .topTexture,    this .topBuffer,    this .topArrayObject);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer, this .bottomArrayObject);
             }
          };
       })(),

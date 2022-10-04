@@ -198,8 +198,8 @@ function (Fields,
          this .colorBuffer           = gl .createBuffer ();
          this .normalBuffer          = gl .createBuffer ();
          this .vertexBuffer          = gl .createBuffer ();
-         this .vertexArray           = new VertexArray ();
-         this .shadowArray           = new VertexArray ();
+         this .vertexArrayObject           = new VertexArray ();
+         this .shadowArrayObject           = new VertexArray ();
 
          this .set_live__ ();
       },
@@ -349,8 +349,8 @@ function (Fields,
       },
       updateVertexArrays: function ()
       {
-         this .vertexArray .update ();
-         this .shadowArray .update ();
+         this .vertexArrayObject .update ();
+         this .shadowArrayObject .update ();
 
          this .updateParticlesShadow = true;
          this .updateParticles       = true;
@@ -931,7 +931,7 @@ function (Fields,
       { },
       depth: function (gl, context, shaderNode)
       {
-         if (this .shadowArray .enable (gl ,shaderNode))
+         if (this .shadowArrayObject .enable (gl ,shaderNode))
             shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
          gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
@@ -973,7 +973,7 @@ function (Fields,
 
             // Setup vertex attributes.
 
-            if (this .vertexArray .enable (gl, shaderNode))
+            if (this .vertexArrayObject .enable (gl, shaderNode))
             {
                for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -1054,7 +1054,7 @@ function (Fields,
       {
          const outputParticles = particleSystem .outputParticles;
 
-         if (outputParticles .shadowArray .enable (gl ,shaderNode) || this .updateParticlesShadow)
+         if (outputParticles .shadowArrayObject .enable (gl ,shaderNode) || this .updateParticlesShadow)
          {
             this .updateParticlesShadow = false;
 
@@ -1108,7 +1108,7 @@ function (Fields,
 
             const outputParticles = particleSystem .outputParticles;
 
-            if (outputParticles .vertexArray .enable (gl ,shaderNode) || this .updateParticles)
+            if (outputParticles .vertexArrayObject .enable (gl ,shaderNode) || this .updateParticles)
             {
                this .updateParticles = false;
 

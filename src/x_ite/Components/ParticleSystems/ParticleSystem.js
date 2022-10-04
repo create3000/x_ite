@@ -219,12 +219,12 @@ function (Fields,
          this .inputParticles  = this .createBuffer (true);
          this .outputParticles = this .createBuffer (true);
 
-         this .inputParticles . emitterArray = new VertexArray ();
-         this .inputParticles . vertexArray  = new VertexArray ();
-         this .inputParticles  .shadowArray  = new VertexArray ();
-         this .outputParticles .emitterArray = new VertexArray ();
-         this .outputParticles .vertexArray  = new VertexArray ();
-         this .outputParticles .shadowArray  = new VertexArray ();
+         this .inputParticles . emitterArrayObject = new VertexArray ();
+         this .inputParticles . vertexArrayObject  = new VertexArray ();
+         this .inputParticles  .shadowArrayObject  = new VertexArray ();
+         this .outputParticles .emitterArrayObject = new VertexArray ();
+         this .outputParticles .vertexArrayObject  = new VertexArray ();
+         this .outputParticles .shadowArrayObject  = new VertexArray ();
 
          // Create forces stuff.
 
@@ -687,10 +687,10 @@ function (Fields,
       },
       updateVertexArrays: function ()
       {
-         this .inputParticles . vertexArray .update ();
-         this .inputParticles  .shadowArray .update ();
-         this .outputParticles .vertexArray .update ();
-         this .outputParticles .shadowArray .update ();
+         this .inputParticles . vertexArrayObject .update ();
+         this .inputParticles  .shadowArrayObject .update ();
+         this .outputParticles .vertexArrayObject .update ();
+         this .outputParticles .shadowArrayObject .update ();
       },
       createTexture: function ()
       {
@@ -941,7 +941,7 @@ function (Fields,
             {
                const outputParticles = this .outputParticles;
 
-               if (outputParticles .shadowArray .enable (gl, shaderNode))
+               if (outputParticles .shadowArrayObject .enable (gl, shaderNode))
                {
                   const particleStride = this .particleStride;
 
@@ -1020,7 +1020,7 @@ function (Fields,
 
                   const outputParticles = this .outputParticles;
 
-                  if (outputParticles .vertexArray .enable (gl, shaderNode))
+                  if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
                   {
                      const particleStride = this .particleStride;
 
