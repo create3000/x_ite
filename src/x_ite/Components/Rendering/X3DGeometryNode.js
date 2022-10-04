@@ -1065,14 +1065,10 @@ function (Fields,
       {
          const outputParticles = particleSystem .outputParticles;
 
-         if (this .updateParticlesShadow)
+         if (outputParticles .shadowArray .enable (gl ,shaderNode) || this .updateParticlesShadow)
          {
             this .updateParticlesShadow = false;
-            outputParticles .shadowArray .update ();
-         }
 
-         if (outputParticles .shadowArray .enable (gl ,shaderNode))
-         {
             const particleStride = particleSystem .particleStride;
 
             shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
@@ -1126,14 +1122,10 @@ function (Fields,
 
             const outputParticles = particleSystem .outputParticles;
 
-            if (this .updateParticles)
+            if (outputParticles .vertexArray .enable (gl ,shaderNode) || this .updateParticles)
             {
                this .updateParticles = false;
-               outputParticles .vertexArray .update ();
-            }
 
-            if (outputParticles .vertexArray .enable (gl ,shaderNode))
-            {
                const particleStride = particleSystem .particleStride;
 
                shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
