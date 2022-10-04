@@ -89,7 +89,7 @@ function (ViewVolume,
 
       // Create depth buffer.
 
-      if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
+      if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
       {
          this .depthTexture = gl .createTexture ();
 

@@ -104,10 +104,13 @@ function (Fields,
 
       // Members
 
+      const browser = this .getBrowser ();
+
       this .min                      = new Vector3 (0, 0, 0);
       this .max                      = new Vector3 (0, 0, 0);
       this .bbox                     = new Box3 (this .min, this .max, true);
       this .solid                    = true;
+      this .primitiveMode            = browser .getContext () .TRIANGLES;
       this .geometryType             = 3;
       this .flatShading              = undefined;
       this .colorMaterial            = false;
@@ -187,7 +190,6 @@ function (Fields,
          this .addInterest ("requestRebuild", this);
          this ._rebuild .addInterest ("rebuild", this);
 
-         this .primitiveMode         = gl .TRIANGLES;
          this .frontFace             = gl .CCW;
          this .attribBuffers         = [ ];
          this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();

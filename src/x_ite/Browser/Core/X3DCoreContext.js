@@ -50,6 +50,7 @@
 define ([
    "jquery",
    "x_ite/Fields",
+   "x_ite/Browser/Core/Context",
    "x_ite/Browser/Core/BrowserTimings",
    "x_ite/Browser/Core/BrowserOptions",
    "x_ite/Browser/Core/BrowserProperties",
@@ -64,6 +65,7 @@ define ([
 ],
 function ($,
           Fields,
+          Context,
           BrowserTimings,
           BrowserOptions,
           BrowserProperties,
@@ -80,117 +82,6 @@ function ($,
 
    const WEBGL_LATEST_VERSION = 2;
 
-   const extensions = [
-      "ANGLE_instanced_arrays",
-      "EXT_blend_minmax",
-      "EXT_frag_depth",
-      "EXT_shader_texture_lod",
-      "EXT_texture_filter_anisotropic",
-      "OES_element_index_uint",
-      "OES_standard_derivatives",
-      "OES_texture_float",
-      "OES_texture_float_linear",
-      "OES_texture_half_float",
-      "OES_texture_half_float_linear",
-      "OES_vertex_array_object",
-      "WEBGL_compressed_texture_s3tc",
-      "WEBGL_debug_renderer_info",
-      "WEBGL_debug_shaders",
-      "WEBGL_depth_texture",
-      "WEBGL_draw_buffers",
-      "WEBGL_lose_context",
-
-      "EXT_color_buffer_float",
-      "EXT_color_buffer_half_float",
-      "EXT_disjoint_timer_query",
-      "EXT_disjoint_timer_query_webgl2",
-      "EXT_sRGB",
-      "WEBGL_color_buffer_float",
-      "WEBGL_compressed_texture_astc",
-      "WEBGL_compressed_texture_atc",
-      "WEBGL_compressed_texture_etc",
-      "WEBGL_compressed_texture_etc1",
-      "WEBGL_compressed_texture_pvrtc",
-      "WEBGL_compressed_texture_s3tc",
-      "WEBGL_compressed_texture_s3tc_srgb",
-
-      "EXT_float_blend",
-      "OES_fbo_render_mipmap",
-      "WEBGL_get_buffer_sub_data_async",
-      "WEBGL_multiview",
-      "WEBGL_security_sensitive_resources",
-      "WEBGL_shared_resources",
-
-      "EXT_clip_cull_distance",
-      "WEBGL_debug",
-      "WEBGL_dynamic_texture",
-      "WEBGL_subarray_uploads",
-      "WEBGL_texture_multisample",
-      "WEBGL_texture_source_iframe",
-      "WEBGL_video_texture",
-
-      "EXT_texture_storage",
-      "OES_depth24",
-      "WEBGL_debug_shader_precision",
-      "WEBGL_draw_elements_no_range_check",
-      "WEBGL_subscribe_uniform",
-      "WEBGL_texture_from_depth_video",
-   ];
-
-   function getContext (canvas, version, preserveDrawingBuffer)
-   {
-      const options = { preserveDrawingBuffer: preserveDrawingBuffer };
-
-      let gl = null;
-
-      if (version >= 2 && ! gl)
-      {
-         gl = canvas .getContext ("webgl2", options);
-
-         if (gl)
-            gl .getVersion = function () { return 2; };
-      }
-
-      if (version >= 1 && ! gl)
-      {
-         gl = canvas .getContext ("webgl",              options) ||
-              canvas .getContext ("experimental-webgl", options);
-
-         if (gl)
-         {
-            gl .getVersion = function () { return 1; };
-
-            {
-               const ext = gl .getExtension ("OES_vertex_array_object");
-
-               gl .bindVertexArray   =  ext .bindVertexArrayOES   .bind (ext);
-               gl .createVertexArray =  ext .createVertexArrayOES .bind (ext);
-               gl .deleteVertexArray =  ext .deleteVertexArrayOES .bind (ext);
-               gl .isVertexArray     =  ext .isVertexArrayOES     .bind (ext);
-            }
-         }
-       }
-
-      if (! gl)
-         throw new Error ("Couldn't create WebGL context.");
-
-      // Feature detection:
-
-      // If the aliased lineWidth ranges are both 1, gl .lineWidth is probably not possible,
-      // thus we disable it completely to prevent webgl errors.
-
-      const aliasedLineWidthRange = gl .getParameter (gl .ALIASED_LINE_WIDTH_RANGE);
-
-      if (aliasedLineWidthRange [0] === 1 && aliasedLineWidthRange [1] === 1)
-      {
-         gl .lineWidth = Function .prototype;
-      }
-
-      // Return context.
-
-      return gl;
-   }
-
    const
       _number              = Symbol (),
       _element             = Symbol (),
@@ -198,7 +89,6 @@ function ($,
       _surface             = Symbol (),
       _canvas              = Symbol (),
       _context             = Symbol (),
-      _extensions          = Symbol (),
       _localStorage        = Symbol (),
       _mobile              = Symbol (),
       _browserTimings      = Symbol (),
@@ -235,15 +125,7 @@ function ($,
       this [_splashScreen] = splashScreen;
       this [_surface]      = surface;
       this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
-      this [_context]      = getContext (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
-      this [_extensions]   = new Map ();
-
-      const gl = this .getContext ();
-
-      for (const extension of extensions)
-      {
-         this [_extensions] .set (extension, gl .getExtension (extension));
-      }
+      this [_context]      = Context .create (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
 
       this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_number] + ").");
       this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
@@ -361,10 +243,6 @@ function ($,
       getContext: function ()
       {
          return this [_context];
-      },
-      getExtension: function (name)
-      {
-         return this [_extensions] .get (name);
       },
       getMobile: function ()
       {

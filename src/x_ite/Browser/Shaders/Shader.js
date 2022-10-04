@@ -91,7 +91,7 @@ function (ShaderSource,
          if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
             constants += "#define X3D_LOGARITHMIC_DEPTH_BUFFER\n";
 
-         if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
+         if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
             constants += "#define X3D_DEPTH_TEXTURE\n";
 
          if (browser .getMultiTexturing ())

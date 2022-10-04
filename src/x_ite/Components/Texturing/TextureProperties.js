@@ -201,7 +201,7 @@ function (Fields,
             const
                browser            = this .getBrowser (),
                gl                 = browser .getContext (),
-               compressedTexture  = browser .getExtension ("WEBGL_compressed_texture_etc"), // TODO: find suitable compression.
+               compressedTexture  = gl .getExtension ("WEBGL_compressed_texture_etc"), // TODO: find suitable compression.
                textureCompression = compressedTexture ? compressedTexture [textureCompressions .get (this ._textureCompression .getValue ())] : undefined;
 
             if (textureCompression !== undefined)

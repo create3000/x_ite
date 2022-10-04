@@ -268,7 +268,7 @@ function (Fields,
             {
                gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
 
-               if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
+               if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
                   gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
                else
                   gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());

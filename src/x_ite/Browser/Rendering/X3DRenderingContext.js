@@ -99,7 +99,7 @@ function ($,
       {
          const
             gl            = this .getContext (),
-            dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
+            dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
 
          if (dbgRenderInfo)
             return gl .getParameter (dbgRenderInfo .UNMASKED_RENDERER_WEBGL);
@@ -110,7 +110,7 @@ function ($,
       {
          const
             gl            = this .getContext (),
-            dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
+            dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
 
          if (dbgRenderInfo)
             return gl .getParameter (dbgRenderInfo .UNMASKED_VENDOR_WEBGL);
