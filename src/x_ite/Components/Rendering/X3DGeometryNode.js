@@ -856,9 +856,7 @@ function (Fields,
       },
       transfer: function ()
       {
-         const
-            gl    = this .getBrowser () .getContext (),
-            count = this .vertices .length / 4;
+         const gl = this .getBrowser () .getContext ();
 
          // Transfer attribs.
 
@@ -913,7 +911,7 @@ function (Fields,
          gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .vertices .getValue (), gl .DYNAMIC_DRAW);
 
-         this .vertexCount = count;
+         this .vertexCount = this .vertices .length / 4;
 
          // Setup render functions.
 
