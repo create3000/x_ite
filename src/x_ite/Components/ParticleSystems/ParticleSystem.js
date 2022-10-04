@@ -219,10 +219,12 @@ function (Fields,
          this .inputParticles  = this .createBuffer (true);
          this .outputParticles = this .createBuffer (true);
 
-         this .inputParticles . vertexArray = new VertexArray (gl);
-         this .inputParticles  .shadowArray = new VertexArray (gl);
-         this .outputParticles .vertexArray = new VertexArray (gl);
-         this .outputParticles .shadowArray = new VertexArray (gl);
+         this .inputParticles . emitterArray = new VertexArray (gl);
+         this .inputParticles . vertexArray  = new VertexArray (gl);
+         this .inputParticles  .shadowArray  = new VertexArray (gl);
+         this .outputParticles .emitterArray = new VertexArray (gl);
+         this .outputParticles .vertexArray  = new VertexArray (gl);
+         this .outputParticles .shadowArray  = new VertexArray (gl);
 
          // Create forces stuff.
 

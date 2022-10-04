@@ -237,18 +237,21 @@ function (X3DNode,
             gl .bindTexture (gl .TEXTURE_2D, particleSystem .texCoordRampTexture);
          }
 
-         // Input attributes
-
-         for (const [i, attribute] of program .inputs)
-         {
-            gl .bindBuffer (gl .ARRAY_BUFFER, inputParticles);
-            gl .enableVertexAttribArray (attribute);
-            gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particleStride, particleOffsets [i]);
-         }
-
          // Other textures
 
          this .activateTextures (gl, program);
+
+         // Input attributes
+
+         if (inputParticles .emitterArray .enable (gl, program))
+         {
+            for (const [i, attribute] of program .inputs)
+            {
+               gl .bindBuffer (gl .ARRAY_BUFFER, inputParticles);
+               gl .enableVertexAttribArray (attribute);
+               gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particleStride, particleOffsets [i]);
+            }
+         }
 
          // Render
 
@@ -262,8 +265,7 @@ function (X3DNode,
          gl .disable (gl .RASTERIZER_DISCARD);
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
 
-         for (const [i, attribute] of program .inputs)
-            gl .disableVertexAttribArray (attribute);
+         inputParticles .emitterArray .disable (gl);
 
          // DEBUG
 
