@@ -53,12 +53,14 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
    "x_ite/Base/X3DConstants",
+   "standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DAppearanceChildNode,
-          X3DConstants)
+          X3DConstants,
+          Algorithm)
 {
 "use strict";
 
@@ -95,14 +97,28 @@ function (Fields,
          X3DAppearanceChildNode .prototype .initialize .call (this);
 
          this ._applied              .addInterest ("set_applied__",              this);
+         this ._linetype             .addInterest ("set_linetype__",             this);
          this ._linewidthScaleFactor .addInterest ("set_linewidthScaleFactor__", this);
 
          this .set_applied__ ();
+         this .set_linetype__ ();
          this .set_linewidthScaleFactor__ ();
+      },
+      getApplied: function ()
+      {
+         return this .applied;
+      },
+      getLinetype: function ()
+      {
+         return this .linetype;
       },
       set_applied__: function ()
       {
          this .applied = this ._applied .getValue ();
+      },
+      set_linetype__: function ()
+      {
+         this .linetype = Algorithm .clamp (this ._linetype .getValue (), 1, 16);
       },
       set_linewidthScaleFactor__: function ()
       {
@@ -114,7 +130,7 @@ function (Fields,
          {
             const
                browser     = shaderObject .getBrowser (),
-               texture     = browser .getLinetype (this ._linetype .getValue ()),
+               texture     = browser .getLinetype (this .linetype),
                textureUnit = browser .getTexture2DUnit ();
 
             gl .lineWidth (this .linewidthScaleFactor);

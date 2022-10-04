@@ -134,11 +134,9 @@ function (X3DGeometryNode,
       {
          // Line stipple support.
 
-         const
-            texCoords = this .getTexCoords (),
-            vertices  = this .getVertices ();
+         const texCoords = this .getTexCoords ();
 
-         texCoords .length = vertices .length;
+         texCoords .length = this .getVertices () .length;
 
          texCoords .shrinkToFit ();
 
@@ -170,7 +168,7 @@ function (X3DGeometryNode,
 
                // Calculate length so far for line stipples.
 
-               if (linePropertiesNode ._applied .getValue () && linePropertiesNode ._linetype .getValue () !== 0)
+               if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
                {
                   const
                      viewport         = context .renderer .getViewVolume () .getViewport (),
@@ -190,26 +188,11 @@ function (X3DGeometryNode,
                      ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
                      ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
 
-                     const l = projectedPoint1 .subtract (projectedPoint0) .abs () / 16; // 16px
+                     texCoordArray [i] = lengthSoFar;
 
-                     if (i && vertices [i]     === vertices [i - 4] &&
-                              vertices [i + 1] === vertices [i - 3] &&
-                              vertices [i + 2] === vertices [i - 2])
-                     {
-                        texCoordArray [i] = lengthSoFar;
+                     lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs () / 16; // 16px
 
-                        lengthSoFar += l;
-
-                        texCoordArray [i + 4] = lengthSoFar;
-                     }
-                     else
-                     {
-                        texCoordArray [i] = 0;
-
-                        lengthSoFar = l;
-
-                        texCoordArray [i + 4] = lengthSoFar;
-                     }
+                     texCoordArray [i + 4] = lengthSoFar;
                   }
 
                   gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
