@@ -157,8 +157,19 @@ function ($,
               canvas .getContext ("experimental-webgl", options);
 
          if (gl)
+         {
             gl .getVersion = function () { return 1; };
-      }
+
+            {
+               const ext = gl .getExtension ("OES_vertex_array_object");
+
+               gl .bindVertexArray   =  ext .bindVertexArrayOES   .bind (ext);
+               gl .createVertexArray =  ext .createVertexArrayOES .bind (ext);
+               gl .deleteVertexArray =  ext .deleteVertexArrayOES .bind (ext);
+               gl .isVertexArray     =  ext .isVertexArrayOES     .bind (ext);
+            }
+          }
+       }
 
       if (! gl)
          throw new Error ("Couldn't create WebGL context.");
