@@ -337,7 +337,7 @@ function (Fields,
                         skinNormalNode .get1Vector (index, skin);
                         normalMatrix .multVecMatrix (vector) .subtract (rest) .multiply (weight) .add (skin);
                         skinNormalNode .set1Vector (index, vector);
-                        // Should the normals be normalzed at end, or let it the shader do?
+                        // Should the normals be normalized at end, or let it the shader do?
                      }
 
                      //skin += (rest * J - rest) * weight
