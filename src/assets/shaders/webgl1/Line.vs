@@ -9,18 +9,14 @@ uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
 attribute float x3d_FogDepth;
+attribute vec4  x3d_TexCoord0;
 attribute vec4  x3d_Color;
 attribute vec4  x3d_Vertex;
 
-varying float fogDepth; // fog depth
-varying vec4  color;    // color
-varying vec3  vertex;   // point on geometry
-
-#ifdef X_ITE
-attribute vec4 x3d_TexCoord0;
-varying   vec3 startPosition;  // line stipple start
-varying   vec3 vertexPosition; // current line stipple position
-#endif
+varying float lengthSoFar; // stipple support
+varying float fogDepth;    // fog depth
+varying vec4  color;       // color
+varying vec3  vertex;      // point on geometry
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 varying float depth;
@@ -31,18 +27,11 @@ main ()
 {
    vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
-   fogDepth = x3d_FogDepth;
-   vertex   = position .xyz;
+   lengthSoFar = x3d_TexCoord0 .r;
+   fogDepth    = x3d_FogDepth;
+   vertex      = position .xyz;
 
    gl_Position = x3d_ProjectionMatrix * position;
-
-   #ifdef X_ITE
-   // Line Stipple
-   vec4 start = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_TexCoord0;
-
-   startPosition  = start .xyz / start .w;
-   vertexPosition = gl_Position .xyz / gl_Position .w;
-   #endif
 
    #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
    depth = 1.0 + gl_Position .w;

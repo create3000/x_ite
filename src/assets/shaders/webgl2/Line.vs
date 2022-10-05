@@ -15,10 +15,10 @@ in vec4  x3d_TexCoord0;
 in vec4  x3d_Color;
 in vec4  x3d_Vertex;
 
-out float lengthSoFar;
-out float fogDepth; // fog depth
-out vec4  color;    // color
-out vec3  vertex;   // point on geometry
+out float lengthSoFar; // stipple support
+out float fogDepth;    // fog depth
+out vec4  color;       // color
+out vec3  vertex;      // point on geometry
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 out float depth;

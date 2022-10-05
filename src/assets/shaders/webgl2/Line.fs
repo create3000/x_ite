@@ -7,10 +7,10 @@ uniform float x3d_AlphaCutoff;
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
 uniform ivec4 x3d_Viewport;
 
-in float lengthSoFar;
-in float fogDepth; // fog depth
-in vec4  color;    // color
-in vec3  vertex;   // point on geometry
+in float lengthSoFar; // stipple support
+in float fogDepth;    // fog depth
+in vec4  color;       // color
+in vec3  vertex;      // point on geometry
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 uniform float x3d_LogarithmicFarFactor1_2;
@@ -29,7 +29,7 @@ stipple ()
    {
       float color = texture (x3d_LineProperties .linetype, vec2 (lengthSoFar, 0.5)) .a;
 
-      if (color < 1.0)
+      if (color != 1.0)
          discard;
    }
 }
