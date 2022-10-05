@@ -392,7 +392,10 @@ function (Plane3,
 
          return function (point, modelViewMatrix, projectionMatrix, viewport, vout)
          {
-            vin .set (point .x, point .y, point .z, 1);
+            if (point .length === 4)
+               vin .assign (point);
+            else
+               vin .set (point .x, point .y, point .z, 1);
 
             projectionMatrix .multVecMatrix (modelViewMatrix .multVecMatrix (vin));
 
@@ -412,7 +415,10 @@ function (Plane3,
 
          return function (point, modelViewProjectionMatrix, viewport, vout)
          {
-            vin .set (point .x, point .y, point .z, 1);
+            if (point .length === 4)
+               vin .assign (point);
+            else
+               vin .set (point .x, point .y, point .z, 1);
 
             modelViewProjectionMatrix .multVecMatrix (vin);
 

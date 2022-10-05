@@ -53,6 +53,7 @@ define ([
    "standard/Math/Geometry/Line3",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Vector4",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
@@ -60,6 +61,7 @@ function (X3DGeometryNode,
           Line3,
           Vector2,
           Vector3,
+          Vector4,
           Matrix4)
 {
 "use strict";
@@ -146,8 +148,8 @@ function (X3DGeometryNode,
       {
          const
             modelViewProjectionMatrix = new Matrix4 (),
-            point0                    = new Vector3 (0, 0, 0),
-            point1                    = new Vector3 (0, 0, 0),
+            point0                    = new Vector4 (0, 0, 0),
+            point1                    = new Vector4 (0, 0, 0),
             projectedPoint0           = new Vector2 (0, 0),
             projectedPoint1           = new Vector2 (0, 0);
 
@@ -185,8 +187,8 @@ function (X3DGeometryNode,
 
                      for (let i = 0, length = vertices .length; i < length; i += 8)
                      {
-                        point0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
-                        point1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+                        point0 .set (vertices [i],     vertices [i + 1], vertices [i + 2], vertices [i + 3]);
+                        point1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6], vertices [i + 7]);
 
                         ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
                         ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
