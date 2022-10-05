@@ -193,7 +193,7 @@ function (X3DGeometryNode,
 
                         texCoordArray [i + 3] = lengthSoFar;
 
-                        lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs () / lineStippleScale;
+                        lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs () * lineStippleScale;
 
                         texCoordArray [i + 7] = lengthSoFar;
                      }

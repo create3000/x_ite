@@ -85,7 +85,7 @@ function (Appearance,
       this [_hatchStyleTextures] = [ ];
 
       const div = $("<div></div>") .css ("height", "1in") .css ("display", "none");
-      this [_lineStippleScale] = div .appendTo ($("body")) .height () / 72 * 16; // 16px
+      this [_lineStippleScale] = 1 / (div .appendTo ($("body")) .height () / 72 * 16); // 16px
       div .remove ();
    }
 
