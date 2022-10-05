@@ -187,6 +187,7 @@ function (X3DGeometryNode,
             if (this .updateParticles)
             {
                this .updateParticles = false;
+
                outputParticles .vertexArrayObject .update ();
             }
 
