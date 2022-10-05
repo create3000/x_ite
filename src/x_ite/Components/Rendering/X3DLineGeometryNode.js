@@ -148,8 +148,8 @@ function (X3DGeometryNode,
             modelViewProjectionMatrix = new Matrix4 (),
             point0                    = new Vector3 (0, 0, 0),
             point1                    = new Vector3 (0, 0, 0),
-            projectedPoint0           = new Vector3 (0, 0, 0),
-            projectedPoint1           = new Vector3 (0, 0, 0);
+            projectedPoint0           = new Vector2 (0, 0),
+            projectedPoint1           = new Vector2 (0, 0);
 
          return function (gl, context)
          {
