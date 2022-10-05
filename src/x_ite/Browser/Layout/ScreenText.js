@@ -247,6 +247,10 @@ function ($,
             cx .fillRect (0, 0, canvas .width, canvas .height);
             cx .fillStyle = "rgba(255,255,255,1)";
 
+            cx .save ();
+            cx .translate (0, canvas .height);
+            cx .scale (1, -1);
+
             // Draw glyphs.
 
             if (fontStyle ._horizontal .getValue ())
@@ -312,13 +316,16 @@ function ($,
                }
             }
 
+            cx .restore ();
+
             // Transfer texture data.
 
             const imageData = cx .getImageData (0, 0, canvas .width, canvas .height);
 
-            // If the cavas is to large imageData is null.
+            // If the canvas is to large imageData is null.
+
             if (imageData)
-               this .textureNode .setTexture (canvas .width, canvas .height, true, new Uint8Array (imageData .data .buffer), true);
+               this .textureNode .setTexture (canvas .width, canvas .height, true, new Uint8Array (imageData .data .buffer), false);
             else
                this .textureNode .clear ();
          };
@@ -458,12 +465,12 @@ function ($,
       },
       transformLine: function (line)
       {
-         // Apply sceen nodes transformation in place here.
+         // Apply screen nodes transformation in place here.
          return line .multLineMatrix (Matrix4 .inverse (this .matrix));
       },
       transformMatrix: function (matrix)
       {
-         // Apply sceen nodes transformation in place here.
+         // Apply screen nodes transformation in place here.
          return matrix .multLeft (this .matrix);
       },
    });

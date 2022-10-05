@@ -53,14 +53,12 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
    "x_ite/Base/X3DConstants",
-   "standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DAppearanceChildNode,
-          X3DConstants,
-          Algorithm)
+          X3DConstants)
 {
 "use strict";
 
