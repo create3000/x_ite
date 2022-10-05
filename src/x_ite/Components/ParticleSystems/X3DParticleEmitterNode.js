@@ -350,7 +350,8 @@ function (X3DNode,
 
          const int   ARRAY_SIZE = 32;
          const float M_PI       = 3.14159265359;
-         const float NaN        = 0.0 / 0.0;
+
+         uniform float NaN;
 
          // Texture
 
@@ -946,6 +947,8 @@ function (X3DNode,
          for (const name of Object .keys (this .uniforms))
             program [name] = gl .getUniformLocation (program, name);
 
+         program .NaN = gl .getUniformLocation (program, "NaN");
+
          gl .useProgram (program);
 
          for (const name of this .samplers)
@@ -954,6 +957,8 @@ function (X3DNode,
 
             gl .uniform1i (location, program [name + "TextureUnit"] = browser .getTexture2DUnit ());
          }
+
+         gl .uniform1f (program .NaN, NaN);
 
          browser .resetTextureUnits ();
 
