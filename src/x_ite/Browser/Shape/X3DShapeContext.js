@@ -187,6 +187,10 @@ function (Appearance,
       getLineFillTextureProperties: function ()
       {
          this [_lineFillTextureProperties] = new TextureProperties (this .getPrivateScene ());
+
+         this [_lineFillTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
+         this [_lineFillTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
+
          this [_lineFillTextureProperties] .setup ();
 
          this .getLineFillTextureProperties = function () { return this [_lineFillTextureProperties]; };

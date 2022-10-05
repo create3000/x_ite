@@ -266,7 +266,7 @@ function (TextureProperties,
       getDefaultTextureProperties: function ()
       {
          this [_defaultTextureProperties] = new TextureProperties (this .getPrivateScene ());
-         this [_defaultTextureProperties] ._magnificationFilter = "NICEST";
+         this [_defaultTextureProperties] ._magnificationFilter = "AVG_PIXEL";
          this [_defaultTextureProperties] ._minificationFilter  = "AVG_PIXEL_AVG_MIPMAP";
          this [_defaultTextureProperties] ._textureCompression  = "NICEST";
          this [_defaultTextureProperties] ._generateMipMaps     = true;
