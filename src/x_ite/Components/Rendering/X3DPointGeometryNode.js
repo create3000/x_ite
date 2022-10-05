@@ -191,7 +191,7 @@ function (X3DGeometryNode,
                outputParticles .vertexArrayObject .update ();
             }
 
-            if (outputParticles .vertexArrayObject .enable (gl ,shaderNode))
+            if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
             {
                const particleStride = particleSystem .particleStride;
 
