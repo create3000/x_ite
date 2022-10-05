@@ -69,6 +69,7 @@ function (Appearance,
 "use strict";
 
    const
+      _lineStippleScale          = Symbol (),
       _linetypeTextures          = Symbol (),
       _hatchStyleTextures        = Symbol (),
       _defaultAppearance         = Symbol (),
@@ -82,6 +83,10 @@ function (Appearance,
    {
       this [_linetypeTextures]   = [ ];
       this [_hatchStyleTextures] = [ ];
+
+      const div = $("<div></div>") .css ("height", "1in") .css ("display", "none");
+      this [_lineStippleScale] = div .appendTo ($("body")) .height () / 72 * 16; // 16px
+      div .remove ();
    }
 
    X3DShapeContext .prototype =
@@ -109,6 +114,10 @@ function (Appearance,
          Object .defineProperty (this, "getDefaultPointProperties", { enumerable: false });
 
          return this [_defaultPointProperties];
+      },
+      getLineStippleScale: function ()
+      {
+         return this [_lineStippleScale];
       },
       getDefaultLineProperties: function ()
       {
@@ -148,11 +157,8 @@ function (Appearance,
 
          return this [_defaultMaterial];
       },
-      getLinetype: function (index)
+      getLinetypeTexture: function (index)
       {
-         if (index < 1 || index > 15)
-            index = 1;
-
          let linetypeTexture = this [_linetypeTextures] [index];
 
          if (linetypeTexture)
@@ -166,11 +172,8 @@ function (Appearance,
 
          return linetypeTexture;
       },
-      getHatchStyle: function (index)
+      getHatchStyleTexture: function (index)
       {
-         if (index < 1 || index > 19)
-            index = 1;
-
          let hatchStyleTexture = this [_hatchStyleTextures] [index];
 
          if (hatchStyleTexture)

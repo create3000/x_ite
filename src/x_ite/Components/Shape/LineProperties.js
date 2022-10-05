@@ -118,7 +118,12 @@ function (Fields,
       },
       set_linetype__: function ()
       {
-         this .linetype = Algorithm .clamp (this ._linetype .getValue (), 1, 16);
+         let linetype = this ._linetype .getValue ();
+
+         if (linetype < 1 || linetype > 15)
+            linetype = 1;
+
+         this .linetype = linetype;
       },
       set_linewidthScaleFactor__: function ()
       {
@@ -130,7 +135,7 @@ function (Fields,
          {
             const
                browser     = shaderObject .getBrowser (),
-               texture     = browser .getLinetype (this .linetype),
+               texture     = browser .getLinetypeTexture (this .linetype),
                textureUnit = browser .getTexture2DUnit ();
 
             gl .lineWidth (this .linewidthScaleFactor);

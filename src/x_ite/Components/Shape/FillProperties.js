@@ -104,10 +104,12 @@ function (Fields,
          this ._filled     .addInterest ("set_filled__",     this);
          this ._hatched    .addInterest ("set_hatched__",    this);
          this ._hatchColor .addInterest ("set_hatchColor__", this);
+         this ._hatchStyle .addInterest ("set_hatchStyle__", this);
 
          this .set_filled__ ();
          this .set_hatched__ ();
          this .set_hatchColor__ ();
+         this .set_hatchStyle__ ();
       },
       set_filled__: function ()
       {
@@ -124,6 +126,15 @@ function (Fields,
          this .hatchColor [0] = this ._hatchColor [0];
          this .hatchColor [1] = this ._hatchColor [1];
          this .hatchColor [2] = this ._hatchColor [2];
+      },
+      set_hatchStyle__: function ()
+      {
+         let hatchStyle = this ._hatchStyle .getValue ();
+
+         if (hatchStyle < 1 || hatchStyle > 19)
+            hatchStyle = 1;
+
+         this .hatchStyle = hatchStyle;
       },
       setTransparent: function (value)
       {
@@ -145,7 +156,7 @@ function (Fields,
          {
             const
                browser     = shaderObject .getBrowser (),
-               texture     = browser .getHatchStyle (this ._hatchStyle .getValue ()),
+               texture     = browser .getHatchStyleTexture (this .hatchStyle),
                textureUnit = browser .getTexture2DUnit ();
 
             gl .uniform3fv (shaderObject .x3d_FillPropertiesHatchColor, this .hatchColor);

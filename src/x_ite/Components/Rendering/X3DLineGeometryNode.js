@@ -166,37 +166,41 @@ function (X3DGeometryNode,
                   attribNodes        = this .attribNodes,
                   attribBuffers      = this .attribBuffers;
 
-               // Calculate length so far for line stipples.
-
-               if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
+               if (linePropertiesNode .getApplied ())
                {
-                  const
-                     viewport         = context .renderer .getViewVolume () .getViewport (),
-                     projectionMatrix = context .renderer .getProjectionMatrix () .get (),
-                     texCoordArray    = this .getTexCoords () .getValue (),
-                     vertices         = this .getVertices ();
+                  // Calculate length so far for line stipples.
 
-                  modelViewProjectionMatrix .assign (context .modelViewMatrix) .multRight (projectionMatrix);
-
-                  let lengthSoFar = 0;
-
-                  for (let i = 0, length = vertices .length; i < length; i += 8)
+                  if (linePropertiesNode .getLinetype () !== 1)
                   {
-                     point0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
-                     point1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+                     const
+                        viewport         = context .renderer .getViewVolume () .getViewport (),
+                        projectionMatrix = context .renderer .getProjectionMatrix () .get (),
+                        texCoordArray    = this .getTexCoords () .getValue (),
+                        vertices         = this .getVertices (),
+                        lineStippleScale = browser .getLineStippleScale ();
 
-                     ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
-                     ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
+                     modelViewProjectionMatrix .assign (context .modelViewMatrix) .multRight (projectionMatrix);
 
-                     texCoordArray [i] = lengthSoFar;
+                     let lengthSoFar = 0;
 
-                     lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs () / 16; // 16px
+                     for (let i = 0, length = vertices .length; i < length; i += 8)
+                     {
+                        point0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
+                        point1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-                     texCoordArray [i + 4] = lengthSoFar;
+                        ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
+                        ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
+
+                        texCoordArray [i + 3] = lengthSoFar;
+
+                        lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs () / lineStippleScale;
+
+                        texCoordArray [i + 7] = lengthSoFar;
+                     }
+
+                     gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
+                     gl .bufferData (gl .ARRAY_BUFFER, texCoordArray, gl .DYNAMIC_DRAW);
                   }
-
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
-                  gl .bufferData (gl .ARRAY_BUFFER, texCoordArray, gl .DYNAMIC_DRAW);
                }
 
                if (blendModeNode)

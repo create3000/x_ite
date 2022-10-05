@@ -66,7 +66,7 @@ function ($,
    function X3DTextContext ()
    {
       this [_fontCache]  = new Map ();
-      this [_glyphCache] = new Map (); // [font] [primitveQuality] [glyphIndex]
+      this [_glyphCache] = new Map (); // [font] [primitiveQuality] [glyphIndex]
    }
 
    X3DTextContext .prototype =
@@ -102,30 +102,21 @@ function ($,
       setFont: function (deferred, error, font)
       {
          if (error)
-         {
             deferred .reject (error);
-         }
          else
-         {
-//				// Workaround to initialize composite glyphs.
-//				for (let i = 0, length = font .numGlyphs; i < length; ++ i)
-//					font .glyphs .get (i) .getPath (0, 0, 1);
-
-            // Resolve callbacks.
             deferred .resolve (font);
-         }
       },
-      getGlyph: function (font, primitveQuality, glyphIndex)
+      getGlyph: function (font, primitiveQuality, glyphIndex)
       {
          let cachedFont = this [_glyphCache] .get (font);
 
          if (!cachedFont)
             this [_glyphCache] .set (font, cachedFont = [ ]);
 
-         let cachedQuality = cachedFont [primitveQuality];
+         let cachedQuality = cachedFont [primitiveQuality];
 
          if (!cachedQuality)
-            cachedQuality = cachedFont [primitveQuality] = [ ];
+            cachedQuality = cachedFont [primitiveQuality] = [ ];
 
          let cachedGlyph = cachedQuality [glyphIndex];
 

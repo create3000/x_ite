@@ -31,7 +31,7 @@ main ()
 {
    vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
 
-   lengthSoFar = x3d_TexCoord0 .r;
+   lengthSoFar = x3d_TexCoord0 .a;
    fogDepth    = x3d_FogDepth;
    vertex      = position .xyz;
 

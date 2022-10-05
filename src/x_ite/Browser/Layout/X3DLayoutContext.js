@@ -60,19 +60,17 @@ function ($,
       _pointSize               = Symbol (),
       _screenTextureProperties = Symbol ();
 
-   function X3DLayoutContext () { }
+   function X3DLayoutContext ()
+   {
+      const div = $("<div></div>") .css ("height", "1in") .css ("display", "none");
+      this [_pointSize] = div .appendTo ($("body")) .height () / 72;
+      div .remove ();
+   }
 
    X3DLayoutContext .prototype =
    {
       getPointSize: function ()
       {
-         if (this [_pointSize] === undefined)
-         {
-            const div = $("<div></div>") .css ("height", "1in") .css ("display", "none");
-            this [_pointSize] = div .appendTo ($("body")) .height () / 72;
-            div .remove ();
-         }
-
          return this [_pointSize];
       },
       getScreenTextureProperties: function ()
@@ -82,8 +80,8 @@ function ($,
          this [_screenTextureProperties] ._boundaryModeS       = "CLAMP";
          this [_screenTextureProperties] ._boundaryModeT       = "CLAMP";
          this [_screenTextureProperties] ._boundaryModeR       = "CLAMP";
-         this [_screenTextureProperties] ._minificationFilter  = "NEAREST";
-         this [_screenTextureProperties] ._magnificationFilter = "NEAREST";
+         this [_screenTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
+         this [_screenTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
          this [_screenTextureProperties] ._generateMipMaps     = false;
 
          this [_screenTextureProperties] .setup ();
