@@ -216,8 +216,8 @@ function (Fields,
 
          // Create particles stuff.
 
-         this .inputParticles  = this .createBuffer (true);
-         this .outputParticles = this .createBuffer (true);
+         this .inputParticles  = this .createBuffer ();
+         this .outputParticles = this .createBuffer ();
 
          this .inputParticles . emitterArrayObject = new VertexArray ();
          this .inputParticles . vertexArrayObject  = new VertexArray ();
@@ -687,10 +687,12 @@ function (Fields,
       },
       updateVertexArrays: function ()
       {
-         this .inputParticles . vertexArrayObject .update ();
-         this .inputParticles  .shadowArrayObject .update ();
-         this .outputParticles .vertexArrayObject .update ();
-         this .outputParticles .shadowArrayObject .update ();
+         this .inputParticles  .vertexArrayObject  .update ();
+         this .inputParticles  .shadowArrayObject  .update ();
+         this .inputParticles  .emitterArrayObject .update ();
+         this .outputParticles .vertexArrayObject  .update ();
+         this .outputParticles .shadowArrayObject  .update ();
+         this .outputParticles .emitterArrayObject .update ();
       },
       createTexture: function ()
       {
@@ -709,43 +711,40 @@ function (Fields,
 
          return texture;
       },
-      createBuffer: function (read = false)
+      createBuffer: function ()
       {
          const
             gl     = this .getBrowser () .getContext (),
             buffer = gl .createBuffer ();
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Uint32Array (), read ? gl .DYNAMIC_READ : gl .DYNAMIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Uint32Array (), gl .DYNAMIC_DRAW);
 
          return buffer;
       },
       resizeBuffers: function (lastNumParticles)
       {
          const
-            gl             = this .getBrowser () .getContext (),
-            maxParticles   = this .maxParticles,
-            particleStride = this .particleStride,
-            inputData      = new Uint8Array (lastNumParticles * particleStride);
-
-         const outputData = lastNumParticles < maxParticles
-            ? new Uint8Array (maxParticles * particleStride)
-            : inputData;
-
-         // Resize output buffer.
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .outputParticles);
-         gl .getBufferSubData (gl .ARRAY_BUFFER, 0, inputData);
-
-         if (lastNumParticles < maxParticles)
-            outputData .set (inputData);
-
-         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .DYNAMIC_DRAW, 0, maxParticles * particleStride);
+            gl              = this .getBrowser () .getContext (),
+            maxParticles    = this .maxParticles,
+            particleStride  = this .particleStride,
+            outputParticles = Object .assign (gl .createBuffer (), this .outputParticles),
+            data            = new Uint8Array (maxParticles * particleStride);
 
          // Resize input buffer.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .inputParticles);
-         gl .bufferData (gl .ARRAY_BUFFER, outputData, gl .DYNAMIC_DRAW, 0, maxParticles * particleStride);
+         gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
+
+         // Resize output buffer.
+
+         gl .bindBuffer (gl .COPY_READ_BUFFER, this .outputParticles);
+         gl .bindBuffer (gl .ARRAY_BUFFER, outputParticles);
+         gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
+         gl .copyBufferSubData (gl .COPY_READ_BUFFER, gl .ARRAY_BUFFER, 0, 0, Math .min (maxParticles * particleStride, lastNumParticles * particleStride));
+         gl .deleteBuffer (this .outputParticles);
+
+         this .outputParticles = outputParticles;
       },
       animateParticles: function ()
       {
