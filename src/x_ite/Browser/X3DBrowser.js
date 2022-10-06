@@ -465,7 +465,7 @@ function ($,
             {
                if (loader !== this [_loader])
                {
-                  reject ("Loading of X3D file cancelled.");
+                  reject ("Loading of X3D file aborted.");
                   return;
                }
 
@@ -494,7 +494,7 @@ function ($,
             {
                if (loader !== this [_loader])
                {
-                  reject ("Change viewpoint cancelled.");
+                  reject ("Change viewpoint aborted.");
                   return;
                }
 
@@ -509,7 +509,7 @@ function ($,
             {
                if (loader !== this [_loader])
                {
-                  reject ("Loading of file cancelled.");
+                  reject ("Loading of file aborted.");
                   return;
                }
 
