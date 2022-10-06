@@ -417,7 +417,7 @@ function ($,
 
          // arguments .length === 1
 
-         if (!(url instanceof Fields .MFString))
+         if (! (url instanceof Fields .MFString))
             throw new Error ("Browser.createX3DFromURL: url must be of type MFString.");
 
          const
@@ -465,7 +465,7 @@ function ($,
             {
                if (loader !== this [_loader])
                {
-                  reject ();
+                  reject ("Loading of X3D file cancelled.");
                   return;
                }
 
@@ -486,7 +486,7 @@ function ($,
 
                   setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
 
-                  reject ();
+                  reject ("Couldn't load X3D file.");
                }
             }
             .bind (this),
@@ -494,7 +494,7 @@ function ($,
             {
                if (loader !== this [_loader])
                {
-                  reject ();
+                  reject ("Change viewpoint cancelled.");
                   return;
                }
 
@@ -509,7 +509,7 @@ function ($,
             {
                if (loader !== this [_loader])
                {
-                  reject ();
+                  reject ("Loading of file cancelled.");
                   return;
                }
 
