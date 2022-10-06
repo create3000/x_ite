@@ -20,8 +20,6 @@ plane_distance (const in Plane3 plane, const in vec3 point)
 bool
 intersects (const in Plane3 plane, const in Line3 line, out vec3 point)
 {
-   point = vec3 (0.0);
-
    // Check if the line is parallel to the plane.
    float theta = dot (line .direction, plane .normal);
 

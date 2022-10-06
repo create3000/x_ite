@@ -1,6 +1,6 @@
 #define BVH_NODE        0
 #define BVH_TRIANGLE    1
-#define BVH_STACK_SIZE  64
+#define BVH_STACK_SIZE  32
 
 int bvhNodeIndex = 0;
 
@@ -57,12 +57,12 @@ getBVHTriangle (const in sampler2D volume)
 int
 getIntersections (const in sampler2D volume, const in int verticesIndex, const in int hierarchyIndex, const in int rootIndex, const in Line3 line, out vec4 points [ARRAY_SIZE])
 {
-   int current = getBVHRoot (volume, hierarchyIndex, rootIndex);
-   int count   = 0;
-   int id      = -1;
+   int current    = getBVHRoot (volume, hierarchyIndex, rootIndex);
+   int count      = 0;
+   int stackIndex = -1;
    int stack [BVH_STACK_SIZE];
 
-   while (id >= 0 || current >= 0)
+   while (stackIndex >= 0 || current >= 0)
    {
       if (current >= 0)
       {
@@ -74,7 +74,7 @@ getIntersections (const in sampler2D volume, const in int verticesIndex, const i
 
             if (intersects (getBVHMin (volume), getBVHMax (volume), line))
             {
-               stack [++ id] = current;
+               stack [++ stackIndex] = current;
 
                current = getBVHLeft (volume, hierarchyIndex);
             }
@@ -87,10 +87,8 @@ getIntersections (const in sampler2D volume, const in int verticesIndex, const i
          {
             // Triangle
 
-            current = -1;
-
-            int  i = getBVHTriangle (volume);
-            int  v = verticesIndex + i;
+            int  t = getBVHTriangle (volume);
+            int  v = verticesIndex + t;
             vec3 r = vec3 (0.0);
 
             vec3 a = texelFetch (volume, v,     0) .xyz;
@@ -99,11 +97,13 @@ getIntersections (const in sampler2D volume, const in int verticesIndex, const i
 
             if (intersects (line, a, b, c, r))
                points [count ++] = vec4 (r .z * a + r .x * b + r .y * c, 1.0);
+
+            current = -1;
          }
       }
       else
       {
-         setBVHIndex (stack [id --]);
+         setBVHIndex (stack [stackIndex --]);
 
          current = getBVHRight (volume, hierarchyIndex);
       }
@@ -115,12 +115,12 @@ getIntersections (const in sampler2D volume, const in int verticesIndex, const i
 int
 getIntersections (const in sampler2D volume, const in int verticesIndex, const in int normalsIndex, const in int hierarchyIndex, const in int rootIndex, const in Line3 line, out vec4 points [ARRAY_SIZE], out vec3 normals [ARRAY_SIZE])
 {
-   int current = getBVHRoot (volume, hierarchyIndex, rootIndex);
-   int count   = 0;
-   int id      = -1;
+   int current    = getBVHRoot (volume, hierarchyIndex, rootIndex);
+   int count      = 0;
+   int stackIndex = -1;
    int stack [BVH_STACK_SIZE];
 
-   while (id >= 0 || current >= 0)
+   while (stackIndex >= 0 || current >= 0)
    {
       if (current >= 0)
       {
@@ -132,7 +132,7 @@ getIntersections (const in sampler2D volume, const in int verticesIndex, const i
 
             if (intersects (getBVHMin (volume), getBVHMax (volume), line))
             {
-               stack [++ id] = current;
+               stack [++ stackIndex] = current;
 
                current = getBVHLeft (volume, hierarchyIndex);
             }
@@ -145,10 +145,8 @@ getIntersections (const in sampler2D volume, const in int verticesIndex, const i
          {
             // Triangle
 
-            current = -1;
-
-            int  i = getBVHTriangle (volume);
-            int  v = verticesIndex + i;
+            int  t = getBVHTriangle (volume);
+            int  v = verticesIndex + t;
             vec3 r = vec3 (0.0);
 
             vec3 a = texelFetch (volume, v,     0) .xyz;
@@ -159,7 +157,7 @@ getIntersections (const in sampler2D volume, const in int verticesIndex, const i
             {
                points [count] = vec4 (r .z * a + r .x * b + r .y * c, 1.0);
 
-               int n = normalsIndex + i;
+               int n = normalsIndex + t;
 
                vec3 n0 = texelFetch (volume, n,     0) .xyz;
                vec3 n1 = texelFetch (volume, n + 1, 0) .xyz;
@@ -169,11 +167,13 @@ getIntersections (const in sampler2D volume, const in int verticesIndex, const i
 
                ++ count;
             }
+
+            current = -1;
          }
       }
       else
       {
-         setBVHIndex (stack [id --]);
+         setBVHIndex (stack [stackIndex --]);
 
          current = getBVHRight (volume, hierarchyIndex);
       }

@@ -159,7 +159,7 @@ define (function ()
             gl .lineWidth = Function .prototype;
          }
 
-         // Extensions
+         // Load extensions.
 
          for (const extension of extensions)
             gl .getExtension (extension);

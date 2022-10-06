@@ -11,37 +11,34 @@ intersects (const in vec3 min, const in vec3 max, const in Line3 line)
 {
    vec3 intersection = vec3 (0.0);
 
-   for (int i = 0; i < 5; ++ i)
+   if (intersects (plane3 (max, BOX3_NORMALS [0]), line, intersection))
    {
-      if (intersects (plane3 ((i & 1) == 1 ? min : max, BOX3_NORMALS [i]), line, intersection))
-      {
-         switch (i)
-         {
-            case 0:
-            case 1:
+      if (all (greaterThanEqual (vec4 (intersection .xy, max .xy), vec4 (min .xy, intersection .xy))))
+         return true;
+   }
 
-               if (intersection .x >= min .x && intersection .x <= max .x &&
-                   intersection .y >= min .y && intersection .y <= max .y)
-                  return true;
+   if (intersects (plane3 (min, BOX3_NORMALS [1]), line, intersection))
+   {
+      if (all (greaterThanEqual (vec4 (intersection .xy, max .xy), vec4 (min .xy, intersection .xy))))
+         return true;
+   }
 
-               break;
-            case 2:
-            case 3:
+   if (intersects (plane3 (max, BOX3_NORMALS [2]), line, intersection))
+   {
+      if (all (greaterThanEqual (vec4 (intersection .xz, max .xz), vec4 (min .xz, intersection .xz))))
+         return true;
+   }
 
-               if (intersection .x >= min .x && intersection .x <= max .x &&
-                   intersection .z >= min .z && intersection .z <= max .z)
-                  return true;
+   if (intersects (plane3 (min, BOX3_NORMALS [3]), line, intersection))
+   {
+      if (all (greaterThanEqual (vec4 (intersection .xz, max .xz), vec4 (min .xz, intersection .xz))))
+         return true;
+   }
 
-               break;
-            case 4:
-
-               if (intersection .y >= min .y && intersection .y <= max .y &&
-                   intersection .z >= min .z && intersection .z <= max .z)
-                  return true;
-
-               break;
-         }
-      }
+   if (intersects (plane3 (max, BOX3_NORMALS [4]), line, intersection))
+   {
+      if (all (greaterThanEqual (vec4 (intersection .yz, max .yz), vec4 (min .yz, intersection .yz))))
+         return true;
    }
 
    return false;

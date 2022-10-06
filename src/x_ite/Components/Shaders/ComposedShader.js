@@ -168,8 +168,6 @@ function (Fields,
                gl      = this .getBrowser () .getContext (),
                program = gl .createProgram ();
 
-            let valid = 0;
-
             if (this .isValid ())
                this .removeShaderFields ();
 
@@ -182,25 +180,15 @@ function (Fields,
                const partNode = X3DCast (X3DConstants .ShaderPart, node);
 
                if (partNode)
-               {
-                  valid += partNode .isValid ();
                   gl .attachShader (program, partNode .getShader ());
-               }
             }
 
-            if (valid)
-            {
-               gl .linkProgram (program);
+            gl .linkProgram (program);
 
-               valid = gl .getProgramParameter (program, gl .LINK_STATUS);
-            }
-
-            if (valid)
+            if (gl .getProgramParameter (program, gl .LINK_STATUS))
             {
                this .getDefaultUniformsAndAttributes (program);
-
-               // Debug, print complete shader info and statistics.
-               // this .printProgramInfo ();
+               this .setValid (true);
             }
             else
             {
@@ -208,11 +196,11 @@ function (Fields,
                {
                   console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
                }
+
+               this .setValid (false);
             }
 
-            this .setValid (!! valid);
-
-            if (valid)
+            if (this .isValid ())
                this .addShaderFields (this .program);
          }
          else

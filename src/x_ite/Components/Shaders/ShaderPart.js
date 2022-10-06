@@ -77,7 +77,6 @@ function (Fields,
 
       this .addType (X3DConstants .ShaderPart);
 
-      this .valid   = false;
       this .options = [ ];
    }
 
@@ -115,10 +114,6 @@ function (Fields,
          this .shader = gl .createShader (gl [this .getShaderType ()]);
 
          this .requestImmediateLoad ();
-      },
-      isValid: function ()
-      {
-         return this .valid;
       },
       getShader: function ()
       {
@@ -164,8 +159,6 @@ function (Fields,
       },
       loadNow: function ()
       {
-         this .valid = false;
-
          new FileLoader (this) .loadDocument (this ._url,
          function (data)
          {
@@ -183,9 +176,7 @@ function (Fields,
                gl .shaderSource (this .shader, source);
                gl .compileShader (this .shader);
 
-               this .valid = gl .getShaderParameter (this .shader, gl .COMPILE_STATUS);
-
-               if (! this .valid)
+               if (!gl .getShaderParameter (this .shader, gl .COMPILE_STATUS))
                   throw new Error (this .getTypeName () + " '" + this .getName () + "': " + gl .getShaderInfoLog (this .shader));
 
                this .setLoadState (X3DConstants .COMPLETE_STATE);
