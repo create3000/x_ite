@@ -250,12 +250,12 @@ function (X3DNode,
                gl .bindBuffer (gl .ARRAY_BUFFER, inputParticles);
                gl .enableVertexAttribArray (attribute);
                gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particleStride, particleOffsets [i]);
+               gl .bindBuffer (gl .ARRAY_BUFFER, null);
             }
          }
 
          // Render
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, null);
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedback);
          gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, particleSystem .outputParticles);
          gl .enable (gl .RASTERIZER_DISCARD);
