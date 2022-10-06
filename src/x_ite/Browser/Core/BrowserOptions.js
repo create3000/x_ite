@@ -343,7 +343,7 @@ function (Fields,
                this .textureQuality = TextureQuality .MEDIUM;
 
                textureProperties ._magnificationFilter = "NICEST";
-               textureProperties ._minificationFilter  = "AVG_PIXEL_AVG_MIPMAP";
+               textureProperties ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
                textureProperties ._textureCompression  = "NICEST";
                textureProperties ._generateMipMaps     = true;
 
