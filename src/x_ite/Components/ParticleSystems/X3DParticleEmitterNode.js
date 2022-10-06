@@ -255,7 +255,6 @@ function (X3DNode,
 
          // Render
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, null);
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedback);
          gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, particleSystem .outputParticles);
          gl .enable (gl .RASTERIZER_DISCARD);
