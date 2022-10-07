@@ -62,9 +62,9 @@ function ($,
 
    function X3DLayoutContext ()
    {
-      const div = $("<div></div>") .css ("height", "1in") .css ("display", "none");
-      this [_pointSize] = div .appendTo ($("body")) .height () / 72;
-      div .remove ();
+      const inch = $("<div></div>") .css ("height", "1in") .css ("display", "none");
+      this [_pointSize] = inch .appendTo ($("body")) .height () / 72;
+      inch .remove ();
    }
 
    X3DLayoutContext .prototype =
