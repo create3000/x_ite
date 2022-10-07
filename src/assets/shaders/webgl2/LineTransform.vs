@@ -25,10 +25,10 @@ projectPoint (const in vec4 point, const in mat4 modelViewProjectionMatrix, cons
 }
 
 vec4
-unProjectPoint (const in float winx, const in float winy, const in float winz, const in mat4 invModelViewProjection, const in vec4 viewport)
+unProjectPoint (const in vec3 win, const in mat4 invModelViewProjection, const in vec4 viewport)
 {
-   vec4 vin = vec4 ((vec2 (winx, winy) - viewport .xy) / viewport .zw * 2.0 - 1.0,
-                    2.0 * winz - 1.0,
+   vec4 vin = vec4 ((win .xy - viewport .xy) / viewport .zw * 2.0 - 1.0,
+                    2.0 * win .z - 1.0,
                     1.0);
 
    vin = invModelViewProjection * vin;
@@ -54,9 +54,9 @@ main ()
       vec2 pq1 = projected0 .xy - offset;
       vec2 pq2 = projected1 .xy - offset;
 
-      vec4 p0 = unProjectPoint (pq0 .x, pq0 .y, projected0 .z, invModelViewProjectionMatrix, viewport);
-      vec4 p1 = unProjectPoint (pq1 .x, pq1 .y, projected0 .z, invModelViewProjectionMatrix, viewport);
-      vec4 p2 = unProjectPoint (pq2 .x, pq2 .y, projected1 .z, invModelViewProjectionMatrix, viewport);
+      vec4 p0 = unProjectPoint (vec3 (pq0 .xy, projected0 .z), invModelViewProjectionMatrix, viewport);
+      vec4 p1 = unProjectPoint (vec3 (pq1 .xy, projected0 .z), invModelViewProjectionMatrix, viewport);
+      vec4 p2 = unProjectPoint (vec3 (pq2 .xy, projected1 .z), invModelViewProjectionMatrix, viewport);
 
       fogDepth0 = x3d_FogDepth0; color0 = x3d_Color0; texCoord0 = x3d_TexCoord0; vertex0 = p0;
       fogDepth1 = x3d_FogDepth0; color1 = x3d_Color0; texCoord1 = x3d_TexCoord0; vertex1 = p1;
@@ -68,9 +68,9 @@ main ()
       vec2 pq2 = projected1 .xy - offset;
       vec2 pq3 = projected1 .xy + offset;
 
-      vec4 p0 = unProjectPoint (pq0 .x, pq0 .y, projected0 .z, invModelViewProjectionMatrix, viewport);
-      vec4 p2 = unProjectPoint (pq2 .x, pq2 .y, projected1 .z, invModelViewProjectionMatrix, viewport);
-      vec4 p3 = unProjectPoint (pq3 .x, pq3 .y, projected1 .z, invModelViewProjectionMatrix, viewport);
+      vec4 p0 = unProjectPoint (vec3 (pq0 .xy, projected0 .z), invModelViewProjectionMatrix, viewport);
+      vec4 p2 = unProjectPoint (vec3 (pq2 .xy, projected1 .z), invModelViewProjectionMatrix, viewport);
+      vec4 p3 = unProjectPoint (vec3 (pq3 .xy, projected1 .z), invModelViewProjectionMatrix, viewport);
 
       fogDepth0 = x3d_FogDepth0; color0 = x3d_Color0; texCoord0 = x3d_TexCoord0; vertex0 = p0;
       fogDepth1 = x3d_FogDepth1; color1 = x3d_Color1; texCoord1 = x3d_TexCoord1; vertex1 = p2;
