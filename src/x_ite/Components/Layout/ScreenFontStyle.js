@@ -104,7 +104,7 @@ function (Fields,
       },
       getScale: function ()
       {
-         return this ._pointSize .getValue () * this .getBrowser () .getPointSize ();
+         return this ._pointSize .getValue () * this .getBrowser () .getPixelPerPoint ();
       },
    });
 

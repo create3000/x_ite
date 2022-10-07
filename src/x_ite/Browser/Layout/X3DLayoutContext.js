@@ -57,22 +57,13 @@ function ($,
 "use strict";
 
    const
-      _pointSize               = Symbol (),
       _screenTextureProperties = Symbol ();
 
    function X3DLayoutContext ()
-   {
-      const inch = $("<div></div>") .css ("height", "1in") .css ("display", "none");
-      this [_pointSize] = inch .appendTo ($("body")) .height () / 72;
-      inch .remove ();
-   }
+   { }
 
    X3DLayoutContext .prototype =
    {
-      getPointSize: function ()
-      {
-         return this [_pointSize];
-      },
       getScreenTextureProperties: function ()
       {
          this [_screenTextureProperties] = new TextureProperties (this .getPrivateScene ());

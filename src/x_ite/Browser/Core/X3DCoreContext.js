@@ -100,7 +100,8 @@ function ($,
       _observer            = Symbol (),
       _privateScene        = Symbol (),
       _keydown             = Symbol (),
-      _keyup               = Symbol ();
+      _keyup               = Symbol (),
+      _pixelPerPoint       = Symbol ();
 
    let browserNumber = 0;
 
@@ -136,6 +137,10 @@ function ($,
       this [_renderingProperties] = new RenderingProperties (this .getPrivateScene ());
       this [_notification]        = new Notification        (this .getPrivateScene ());
       this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
+
+      const inch = $("<div></div>") .css ("height", "1in") .css ("display", "none") .appendTo ($("body"));
+      this [_pixelPerPoint] = inch .height () / 72;
+      inch .remove ();
 
       $(".x_ite-console") .empty ();
 
@@ -695,6 +700,10 @@ function ($,
          $temp .text (text) .select ();
          document .execCommand ("copy");
          $temp .remove ();
+      },
+      getPixelPerPoint: function ()
+      {
+         return this [_pixelPerPoint];
       },
    };
 

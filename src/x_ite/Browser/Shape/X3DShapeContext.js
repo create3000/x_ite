@@ -85,10 +85,7 @@ function (Appearance,
    {
       this [_linetypeTextures]   = [ ];
       this [_hatchStyleTextures] = [ ];
-
-      const inch = $("<div></div>") .css ("height", "1in") .css ("display", "none");
-      this [_lineStippleScale] = 1 / (inch .appendTo ($("body")) .height () / 72 * 16); // 16px
-      inch .remove ();
+      this [_lineStippleScale]   = 1 / (this .getPixelPerPoint () * 16); // 16px
    }
 
    X3DShapeContext .prototype =
