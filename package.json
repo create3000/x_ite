@@ -1,6 +1,6 @@
 {
 	"name": "x_ite",
-	"version": "5.0.4",
+	"version": "6.0.0",
 	"revision": "1149",
 	"description": "X_ITE X3D Browser, a framework for integrating and manipulating X3D and VRML scenes in HTML.",
 	"main": "dist/x_ite.js",
