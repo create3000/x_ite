@@ -138,8 +138,8 @@ function ($,
       this [_notification]        = new Notification        (this .getPrivateScene ());
       this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
 
-      const inch = $("<div></div>") .css ("height", "1in") .css ("display", "none") .appendTo ($("body"));
-      this [_pixelPerPoint] = inch .height () / 72;
+      const inch = $("<div></div>") .css ("height", "10in") .css ("display", "none") .appendTo (element);
+      this [_pixelPerPoint] = inch .height () / 720;
       inch .remove ();
 
       $(".x_ite-console") .empty ();
