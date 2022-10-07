@@ -138,9 +138,13 @@ function (X3DGeometryNode,
 
          const texCoords = this .getTexCoords ();
 
-         texCoords .length = this .getVertices () .length;
+         if (texCoords .getValue () .length !== this .getVertices () .length)
+         {
+            texCoords .length = this .getVertices () .length;
 
-         texCoords .shrinkToFit ();
+            texCoords .fill (0);
+            texCoords .shrinkToFit ();
+         }
 
          this .getMultiTexCoords () .push (texCoords);
       },
