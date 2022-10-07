@@ -153,9 +153,11 @@ function (X3DGeometryNode,
             projectedPoint0           = new Vector2 (0, 0),
             projectedPoint1           = new Vector2 (0, 0);
 
-         return function (gl, context, browser, appearanceNode)
+         return function (gl, context)
          {
-            const linePropertiesNode = appearanceNode .stylePropertiesNode [1];
+            const
+               appearanceNode     = context .shapeNode .getAppearance (),
+               linePropertiesNode = appearanceNode .stylePropertiesNode [1];
 
             if (linePropertiesNode .getApplied ())
             {
@@ -168,7 +170,7 @@ function (X3DGeometryNode,
                      projectionMatrix = context .renderer .getProjectionMatrix () .get (),
                      texCoordArray    = this .getTexCoords () .getValue (),
                      vertices         = this .getVertices (),
-                     lineStippleScale = browser .getLineStippleScale ();
+                     lineStippleScale = context .browser .getLineStippleScale ();
 
                   modelViewProjectionMatrix .assign (context .modelViewMatrix) .multRight (projectionMatrix);
 
@@ -195,6 +197,15 @@ function (X3DGeometryNode,
             }
          };
       })(),
+      // depth: function (gl, context, shaderNode)
+      // {
+      //    this .applyLineProperties (gl, context); // TOD: Depth shader has not stipple support.
+
+      //    if (this .shadowArrayObject .enable (gl, shaderNode))
+      //       shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+
+      //    gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+      // },
       display: function (gl, context)
       {
          const
@@ -212,7 +223,7 @@ function (X3DGeometryNode,
             if (blendModeNode)
                blendModeNode .enable (gl);
 
-            this .applyLineProperties (gl, context, browser, appearanceNode);
+            this .applyLineProperties (gl, context);
 
             // Setup shader.
 

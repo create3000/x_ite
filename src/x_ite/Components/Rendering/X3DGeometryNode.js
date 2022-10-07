@@ -931,7 +931,7 @@ function (Fields,
       { },
       depth: function (gl, context, shaderNode)
       {
-         if (this .shadowArrayObject .enable (gl ,shaderNode))
+         if (this .shadowArrayObject .enable (gl, shaderNode))
             shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
          gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
@@ -1061,7 +1061,7 @@ function (Fields,
             outputParticles .shadowArrayObject .update ();
          }
 
-         if (outputParticles .shadowArrayObject .enable (gl ,shaderNode))
+         if (outputParticles .shadowArrayObject .enable (gl, shaderNode))
          {
             const particleStride = particleSystem .particleStride;
 

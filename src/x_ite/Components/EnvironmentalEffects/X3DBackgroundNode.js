@@ -581,7 +581,7 @@ function (X3DBindableNode,
 
             // Enable vertex attribute arrays.
 
-            if (this .sphereArrayObject .enable (gl ,shaderNode))
+            if (this .sphereArrayObject .enable (gl, shaderNode))
             {
                shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
                shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
