@@ -336,9 +336,7 @@ function (X3DGeometryNode,
                      gl .bindBuffer (gl .ARRAY_BUFFER, null);
                   }
 
-                  const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
-
-                  gl .frontFace (positiveScale ? gl .CCW : gl .CW);
+                  gl .frontFace (gl .CCW);
                   gl .enable (gl .CULL_FACE);
                   gl .drawArrays (gl .TRIANGLES, 0, this .vertexCount * 3);
 
