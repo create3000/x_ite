@@ -154,6 +154,10 @@ function (Fields,
       {
          return this .alphaMode;
       },
+      getLineProperties: function ()
+      {
+         return this .stylePropertiesNode [1];
+      },
       set_live__: function ()
       {
          if (this .isLive () .getValue ())

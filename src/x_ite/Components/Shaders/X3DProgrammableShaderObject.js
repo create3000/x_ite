@@ -68,6 +68,8 @@ function (X3DCast,
    {
       this .addType (X3DConstants .X3DProgrammableShaderObject);
 
+      this .uniforms = [ ];
+
       this .x3d_ClipPlane                           = [ ];
       this .x3d_LightType                           = [ ];
       this .x3d_LightOn                             = [ ];
@@ -126,6 +128,10 @@ function (X3DCast,
       {
          return true;
       },
+      setUniforms: function (value)
+      {
+         this .uniforms = value;
+      },
       getDefaultUniformsAndAttributes: function (program)
       {
          // Get uniforms and attributes.
@@ -135,6 +141,9 @@ function (X3DCast,
             gl      = browser .getContext ();
 
          gl .useProgram (program);
+
+         for (const name of this .uniforms)
+            this [name] = gl .getUniformLocation (program, name);
 
          /*
           * Uniforms.
@@ -362,13 +371,13 @@ function (X3DCast,
           * Check x3d_Vertex.
           */
 
-         if (this .x3d_Vertex < 0)
-         {
-            if (gl .getVersion () >= 2)
-              console .warn ("Missing »in vec4 x3d_Vertex;«.");
-            else
-               console .warn ("Missing »attribute vec4 x3d_Vertex;«.");
-         }
+         // if (this .x3d_Vertex < 0)
+         // {
+         //    if (gl .getVersion () >= 2)
+         //      console .warn ("Missing »in vec4 x3d_Vertex;«.");
+         //    else
+         //       console .warn ("Missing »attribute vec4 x3d_Vertex;«.");
+         // }
       },
       getUniformLocation: function (gl, program, name, depreciated)
       {

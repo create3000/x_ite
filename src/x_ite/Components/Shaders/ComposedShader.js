@@ -75,7 +75,8 @@ function (Fields,
 
       this .addType (X3DConstants .ComposedShader);
 
-      this .loadSensor = new LoadSensor (executionContext);
+      this .loadSensor                = new LoadSensor (executionContext);
+      this .transformFeedbackVaryings = [ ];
    }
 
    ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
@@ -143,6 +144,10 @@ function (Fields,
          if (this .isInitialized () && this .isLive () .getValue () && this .isValid ())
             this .addShaderFields (this .program);
       },
+      setTransformFeedbackVaryings: function (value)
+      {
+         this .transformFeedbackVaryings = value;
+      },
       getProgram: function ()
       {
          return this .program;
@@ -182,6 +187,9 @@ function (Fields,
                if (partNode)
                   gl .attachShader (program, partNode .getShader ());
             }
+
+            if (this .transformFeedbackVaryings .length)
+               gl .transformFeedbackVaryings (program, this .transformFeedbackVaryings, gl .INTERLEAVED_ATTRIBS);
 
             gl .linkProgram (program);
 

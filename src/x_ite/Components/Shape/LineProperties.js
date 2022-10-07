@@ -110,6 +110,14 @@ function (Fields,
       {
          return this .linetype;
       },
+      getLinewidthScaleFactor: function ()
+      {
+         return this .linewidthScaleFactor;
+      },
+      getMustTransformLines: function ()
+      {
+         return this .mustTransformLines;
+      },
       set_applied__: function ()
       {
          this .applied = this ._applied .getValue ();
@@ -125,7 +133,12 @@ function (Fields,
       },
       set_linewidthScaleFactor__: function ()
       {
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
+
          this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ());
+         this .mustTransformLines   = gl .getVersion () >= 2 && this .linewidthScaleFactor > 1 && gl .lineWidth === Function .prototype;
       },
       setShaderUniforms: function (gl, shaderObject)
       {

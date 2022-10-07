@@ -255,7 +255,7 @@ function (X3DNode,
             gl .bindBuffer (gl .ARRAY_BUFFER, null);
          }
 
-         // Render
+         // Transform particles.
 
          gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedback);
          gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, particleSystem .outputParticles);

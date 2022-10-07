@@ -77,7 +77,9 @@ function (Appearance,
       _defaultLineProperties     = Symbol (),
       _defaultFillProperties     = Symbol (),
       _defaultMaterial           = Symbol (),
-      _lineFillTextureProperties = Symbol ();
+      _lineFillTextureProperties = Symbol (),
+      _lineTransformShaderNode   = Symbol (),
+      _lineTransformFeedback     = Symbol ();
 
    function X3DShapeContext ()
    {
@@ -201,6 +203,41 @@ function (Appearance,
          Object .defineProperty (this, "getLineFillTextureProperties", { enumerable: false });
 
          return this [_lineFillTextureProperties];
+      },
+      getLineTransformShader: function ()
+      {
+         this [_lineTransformShaderNode] = this .createShader ("LineTransformShader", "LineTransform");
+
+         this [_lineTransformShaderNode] .setUniforms ([
+            "viewport",
+            "modelViewProjectionMatrix",
+            "invModelViewProjectionMatrix",
+            "scale",
+         ]);
+
+         this [_lineTransformShaderNode] .setTransformFeedbackVaryings ([
+            "fogDepth0", "color0", "texCoord0", "vertex0",
+            "fogDepth1", "color1", "texCoord1", "vertex1",
+            "fogDepth2", "color2", "texCoord2", "vertex2",
+         ]);
+
+         this .getLineTransformShader = function () { return this [_lineTransformShaderNode]; };
+
+         Object .defineProperty (this, "getLineTransformShader", { enumerable: false });
+
+         return this [_lineTransformShaderNode];
+      },
+      getLineTransformFeedback: function ()
+      {
+         const gl = this .getContext ();
+
+         this [_lineTransformFeedback] = gl .createTransformFeedback ();
+
+         this .getLineTransformFeedback = function () { return this [_lineTransformFeedback]; };
+
+         Object .defineProperty (this, "getLineTransformFeedback", { enumerable: false });
+
+         return this [_lineTransformFeedback];
       },
    };
 

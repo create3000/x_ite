@@ -47,7 +47,10 @@
  ******************************************************************************/
 
 
-define (function ()
+define ([
+   "x_ite/DEBUG",
+],
+function (DEBUG)
 {
 "use strict";
 
@@ -157,6 +160,9 @@ define (function ()
          if (aliasedLineWidthRange [0] === 1 && aliasedLineWidthRange [1] === 1)
          {
             gl .lineWidth = Function .prototype;
+
+            if (DEBUG)
+               console .info ("Lines are transformed if necessary to obtain thick lines.");
          }
 
          // Load extensions.
