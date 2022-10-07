@@ -101,7 +101,7 @@ if ($result == 0)
 
 	docs ($VERSION) unless $ALPHA;
 
-	# GitHub
+	# tags
 
 	commit;
 
