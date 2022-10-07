@@ -53,7 +53,6 @@ sub update
 	say "Uploading $release";
 
 	system "rm", "-r", "$code/dist";
-
 	system "mkdir", "-p", $code;
 	system "cp", "-r", $dist, "$code/dist";
 }
