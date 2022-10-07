@@ -366,7 +366,7 @@ function (Plane3,
 
             const d = 1 / vin .w;
 
-            return point .set (vin .x * d, vin .y * d, vin .z * d);
+            return point .set (vin .x * d, vin .y * d, vin .z * d, 1);
          };
       })(),
       unProjectRay: (function ()

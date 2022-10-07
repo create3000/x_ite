@@ -197,15 +197,6 @@ function (X3DGeometryNode,
             }
          };
       })(),
-      // depth: function (gl, context, shaderNode)
-      // {
-      //    this .applyLineProperties (gl, context); // TOD: Depth shader has not stipple support.
-
-      //    if (this .shadowArrayObject .enable (gl, shaderNode))
-      //       shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
-
-      //    gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
-      // },
       display: function (gl, context)
       {
          const
