@@ -29,7 +29,6 @@ sub commit
 	my $version = shift;
 
 	system "git", "commit", "-am", "Published version $VERSION-$REVISION";
-	system "git", "push";
 	system "git", "push", "origin";
 }
 
@@ -65,7 +64,6 @@ sub upload
 
 	system "git", "add", "-A";
 	system "git", "commit", "-am", "Published version $VERSION-$REVISION";
-	system "git", "push";
 	system "git", "push", "origin";
 }
 
