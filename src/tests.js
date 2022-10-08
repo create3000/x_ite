@@ -1,4 +1,6 @@
 const X_ITE_TESTS = [
+   { component: "Examples" },
+   { path: "../../Examples/Rathaus/index.x3dv" },
    { component: "CADGeometry" },
    { path: "CADGeometry/CADGeometry.x3d" },
    { path: "CADGeometry/CADLayer.x3d" },

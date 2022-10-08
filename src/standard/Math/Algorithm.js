@@ -99,12 +99,12 @@ define (function ()
          if (cosom <= -1)
             throw new Error ("slerp is not possible: vectors are inverse collinear.");
 
-         if (cosom >= 1) // both normal vectors are equal
+         if (cosom >= 1) // Both normal vectors are equal.
             return source;
 
          if (cosom < 0)
          {
-            // Reverse signs so we travel the short way round
+            // Reverse signs so we travel the short way round.
             cosom = -cosom;
             destination .negate ();
          }
@@ -130,7 +130,7 @@ define (function ()
          if (cosom <= -1)
             throw new Error ("slerp is not possible: vectors are inverse collinear.");
 
-         if (cosom >= 1) // both normal vectors are equal
+         if (cosom >= 1) // Both normal vectors are equal.
             return source;
 
          const
