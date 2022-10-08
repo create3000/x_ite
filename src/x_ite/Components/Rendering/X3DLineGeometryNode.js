@@ -268,23 +268,37 @@ function (X3DGeometryNode,
                      // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                      //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
+                     const
+                        fogDepthStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
+                        fogDepthOffset0 = 0,
+                        fogDepthOffset1 = 1 * Float32Array .BYTES_PER_ELEMENT,
+                        colorStride     = 8 * Float32Array .BYTES_PER_ELEMENT,
+                        colorOffset0    = 0,
+                        colorOffset1    = 4 * Float32Array .BYTES_PER_ELEMENT,
+                        texCoordStride  = 8 * Float32Array .BYTES_PER_ELEMENT,
+                        texCoordOffset0 = 0,
+                        texCoordOffset1 = 4 * Float32Array .BYTES_PER_ELEMENT,
+                        vertexStride    = 8 * Float32Array .BYTES_PER_ELEMENT,
+                        vertexOffset0   = 0,
+                        vertexOffset1   = 4 * Float32Array .BYTES_PER_ELEMENT;
+
                      if (this .fogCoords)
                      {
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth0", this .fogDepthBuffer, 1, 2 * Float32Array .BYTES_PER_ELEMENT, 0);
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth1", this .fogDepthBuffer, 1, 2 * Float32Array .BYTES_PER_ELEMENT, 1 * Float32Array .BYTES_PER_ELEMENT);
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth0", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset0);
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth1", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset1);
                      }
 
                      if (this .colorMaterial)
                      {
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, 8 * Float32Array .BYTES_PER_ELEMENT, 0);
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, 8 * Float32Array .BYTES_PER_ELEMENT, 4 * Float32Array .BYTES_PER_ELEMENT);
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
                      }
 
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord0", this .texCoordBuffers [0], 4, 8 * Float32Array .BYTES_PER_ELEMENT, 0);
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord1", this .texCoordBuffers [0], 4, 8 * Float32Array .BYTES_PER_ELEMENT, 4 * Float32Array .BYTES_PER_ELEMENT);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord0", this .texCoordBuffers [0], 4, texCoordStride, texCoordOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord1", this .texCoordBuffers [0], 4, texCoordStride, texCoordOffset1);
 
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, 8 * Float32Array .BYTES_PER_ELEMENT, 0);
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, 8 * Float32Array .BYTES_PER_ELEMENT, 4 * Float32Array .BYTES_PER_ELEMENT);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
                   }
 
                   // Transform lines.
@@ -319,19 +333,24 @@ function (X3DGeometryNode,
 
                   if (this .vertexArrayObject .enable (gl, shaderNode))
                   {
-                     const stride = 13 * Float32Array .BYTES_PER_ELEMENT;
+                     const
+                        stride         = 13 * Float32Array .BYTES_PER_ELEMENT,
+                        fogCoordOffset = 0,
+                        colorOffset    = 1 * Float32Array .BYTES_PER_ELEMENT,
+                        texCoordOffset = 5 * Float32Array .BYTES_PER_ELEMENT,
+                        vertexOffset   = 9 * Float32Array .BYTES_PER_ELEMENT;
 
                      // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                      //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
                      if (this .fogCoords)
-                        shaderNode .enableFogDepthAttribute (gl, this .trianglesBuffer, stride, 0);
+                        shaderNode .enableFogDepthAttribute (gl, this .trianglesBuffer, stride, fogCoordOffset);
 
                      if (this .colorMaterial)
-                        shaderNode .enableColorAttribute (gl, this .trianglesBuffer, stride, 1 * Float32Array .BYTES_PER_ELEMENT);
+                        shaderNode .enableColorAttribute (gl, this .trianglesBuffer, stride, colorOffset);
 
-                     shaderNode .enableTexCoordAttribute (gl, this .trianglesTexCoordBuffers, stride, 5 * Float32Array .BYTES_PER_ELEMENT);
-                     shaderNode .enableVertexAttribute   (gl, this .trianglesBuffer, stride, 9 * Float32Array .BYTES_PER_ELEMENT);
+                     shaderNode .enableTexCoordAttribute (gl, this .trianglesTexCoordBuffers, stride, texCoordOffset);
+                     shaderNode .enableVertexAttribute   (gl, this .trianglesBuffer,          stride, vertexOffset);
 
                      gl .bindBuffer (gl .ARRAY_BUFFER, null);
                   }
