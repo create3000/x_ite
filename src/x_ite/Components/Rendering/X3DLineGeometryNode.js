@@ -169,7 +169,7 @@ function (X3DGeometryNode,
 
          this .getMultiTexCoords () .push (texCoords);
       },
-      applyLineProperties: (function ()
+      updateLengthSoFar: (function ()
       {
          const
             modelViewProjectionMatrix = new Matrix4 (),
@@ -178,7 +178,7 @@ function (X3DGeometryNode,
             projectedPoint0           = new Vector2 (0, 0),
             projectedPoint1           = new Vector2 (0, 0);
 
-         return function (gl, context, appearanceNode, linePropertiesNode)
+         return function (gl, context, linePropertiesNode)
          {
             if (linePropertiesNode .getApplied ())
             {
@@ -237,7 +237,7 @@ function (X3DGeometryNode,
                attribNodes        = this .attribNodes,
                attribBuffers      = this .attribBuffers;
 
-            this .applyLineProperties (gl, context, appearanceNode, linePropertiesNode);
+            this .updateLengthSoFar (gl, context, linePropertiesNode);
 
             if (linePropertiesNode .getMustTransformLines ())
             {
