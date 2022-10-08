@@ -85,7 +85,7 @@ function (Appearance,
    {
       this [_linetypeTextures]   = [ ];
       this [_hatchStyleTextures] = [ ];
-      this [_lineStippleScale]   = 1 / (this .getPixelPerPoint () * 32); // 16px
+      this [_lineStippleScale]   = 1 / (this .getPixelPerPoint () * 32); // 32px
    }
 
    X3DShapeContext .prototype =
