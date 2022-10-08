@@ -162,14 +162,7 @@ function (PointingDevice,
       },
       setHitRay: function (projectionMatrix, viewport)
       {
-         try
-         {
-            ViewVolume .unProjectRay (this [_pointer] .x, this [_pointer] .y, Matrix4 .Identity, projectionMatrix, viewport, this [_hitRay]);
-         }
-         catch (error)
-         {
-            this [_hitRay] .set (Vector3 .Zero, Vector3 .Zero);
-         }
+         ViewVolume .unProjectRay (this [_pointer] .x, this [_pointer] .y, Matrix4 .Identity, projectionMatrix, viewport, this [_hitRay]);
       },
       getHitRay: function ()
       {

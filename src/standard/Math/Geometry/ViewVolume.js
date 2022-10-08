@@ -136,66 +136,57 @@ function (Plane3,
 
          return function (projectionMatrix, viewport, scissor)
          {
-            try
-            {
-               this .viewport .assign (viewport);
-               this .scissor  .assign (scissor);
+            this .viewport .assign (viewport);
+            this .scissor  .assign (scissor);
 
-               const points = this .points;
+            const points = this .points;
 
-               const
-                  p0 = points [0],
-                  p1 = points [1],
-                  p2 = points [2],
-                  p3 = points [3],
-                  p4 = points [4],
-                  p5 = points [5],
-                  p6 = points [6],
-                  p7 = points [7];
+            const
+               p0 = points [0],
+               p1 = points [1],
+               p2 = points [2],
+               p3 = points [3],
+               p4 = points [4],
+               p5 = points [5],
+               p6 = points [6],
+               p7 = points [7];
 
-               const
-                  x1 = scissor [0],
-                  x2 = x1 + scissor [2],
-                  y1 = scissor [1],
-                  y2 = y1 + scissor [3];
+            const
+               x1 = scissor [0],
+               x2 = x1 + scissor [2],
+               y1 = scissor [1],
+               y2 = y1 + scissor [3];
 
-               matrix .assign (projectionMatrix) .inverse ();
+            matrix .assign (projectionMatrix) .inverse ();
 
-               ViewVolume .unProjectPointMatrix (x1, y1, 0, matrix, viewport, p0),
-               ViewVolume .unProjectPointMatrix (x2, y1, 0, matrix, viewport, p1),
-               ViewVolume .unProjectPointMatrix (x2, y2, 0, matrix, viewport, p2),
-               ViewVolume .unProjectPointMatrix (x1, y2, 0, matrix, viewport, p3),
-               ViewVolume .unProjectPointMatrix (x1, y1, 1, matrix, viewport, p4),
-               ViewVolume .unProjectPointMatrix (x2, y1, 1, matrix, viewport, p5);
-               ViewVolume .unProjectPointMatrix (x2, y2, 1, matrix, viewport, p6);
-               ViewVolume .unProjectPointMatrix (x1, y2, 1, matrix, viewport, p7);
+            ViewVolume .unProjectPointMatrix (x1, y1, 0, matrix, viewport, p0),
+            ViewVolume .unProjectPointMatrix (x2, y1, 0, matrix, viewport, p1),
+            ViewVolume .unProjectPointMatrix (x2, y2, 0, matrix, viewport, p2),
+            ViewVolume .unProjectPointMatrix (x1, y2, 0, matrix, viewport, p3),
+            ViewVolume .unProjectPointMatrix (x1, y1, 1, matrix, viewport, p4),
+            ViewVolume .unProjectPointMatrix (x2, y1, 1, matrix, viewport, p5);
+            ViewVolume .unProjectPointMatrix (x2, y2, 1, matrix, viewport, p6);
+            ViewVolume .unProjectPointMatrix (x1, y2, 1, matrix, viewport, p7);
 
-               const normals = this .normals;
+            const normals = this .normals;
 
-               Triangle3 .normal (p0, p1, p2, normals [0]); // front
-               Triangle3 .normal (p7, p4, p0, normals [1]); // left
-               Triangle3 .normal (p6, p2, p1, normals [2]); // right
-               Triangle3 .normal (p2, p6, p7, normals [3]); // top
-               Triangle3 .normal (p1, p0, p4, normals [4]); // bottom
-               Triangle3 .normal (p4, p7, p6, normals [5]); // back
+            Triangle3 .normal (p0, p1, p2, normals [0]); // front
+            Triangle3 .normal (p7, p4, p0, normals [1]); // left
+            Triangle3 .normal (p6, p2, p1, normals [2]); // right
+            Triangle3 .normal (p2, p6, p7, normals [3]); // top
+            Triangle3 .normal (p1, p0, p4, normals [4]); // bottom
+            Triangle3 .normal (p4, p7, p6, normals [5]); // back
 
-               const planes = this .planes;
+            const planes = this .planes;
 
-               planes [0] .set (p1, normals [0]); // front
-               planes [1] .set (p4, normals [1]); // left
-               planes [2] .set (p2, normals [2]); // right
-               planes [3] .set (p6, normals [3]); // top
-               planes [4] .set (p0, normals [4]); // bottom
-               planes [5] .set (p7, normals [5]); // back
+            planes [0] .set (p1, normals [0]); // front
+            planes [1] .set (p4, normals [1]); // left
+            planes [2] .set (p2, normals [2]); // right
+            planes [3] .set (p6, normals [3]); // top
+            planes [4] .set (p0, normals [4]); // bottom
+            planes [5] .set (p7, normals [5]); // back
 
-               this .edges .tainted = true;
-               this .valid          = true;
-            }
-            catch (error)
-            {
-               this .valid = false;
-               //console .log (error);
-            }
+            this .edges .tainted = true;
 
             return this;
          };
@@ -237,28 +228,25 @@ function (Plane3,
       },
       intersectsSphere: function (radius, center)
       {
-         if (this .valid)
-         {
-            const planes = this .planes;
+         const planes = this .planes;
 
-            if (planes [0] .getDistanceToPoint (center) > radius)
-               return false;
+         if (planes [0] .getDistanceToPoint (center) > radius)
+            return false;
 
-            if (planes [1] .getDistanceToPoint (center) > radius)
-               return false;
+         if (planes [1] .getDistanceToPoint (center) > radius)
+            return false;
 
-            if (planes [2] .getDistanceToPoint (center) > radius)
-               return false;
+         if (planes [2] .getDistanceToPoint (center) > radius)
+            return false;
 
-            if (planes [3] .getDistanceToPoint (center) > radius)
-               return false;
+         if (planes [3] .getDistanceToPoint (center) > radius)
+            return false;
 
-            if (planes [4] .getDistanceToPoint (center) > radius)
-               return false;
+         if (planes [4] .getDistanceToPoint (center) > radius)
+            return false;
 
-            if (planes [5] .getDistanceToPoint (center) > radius)
-               return false;
-         }
+         if (planes [5] .getDistanceToPoint (center) > radius)
+            return false;
 
          return true;
       },
@@ -361,9 +349,6 @@ function (Plane3,
             //Objects coordinates
             invModelViewProjection .multVecMatrix (vin);
 
-            if (vin .w === 0)
-               throw new Error ("Couldn't unproject point: divisor is 0.");
-
             const d = 1 / vin .w;
 
             return point .set (vin .x * d, vin .y * d, vin .z * d, 1);
@@ -399,9 +384,6 @@ function (Plane3,
 
             projectionMatrix .multVecMatrix (modelViewMatrix .multVecMatrix (vin));
 
-            if (vin .w === 0)
-               throw new Error ("Couldn't project point: divisor is 0.");
-
             const d = 1 / (2 * vin .w);
 
             return vout .set ((vin .x * d + 0.5) * viewport [2] + viewport [0],
@@ -421,9 +403,6 @@ function (Plane3,
                vin .set (point .x, point .y, point .z, 1);
 
             modelViewProjectionMatrix .multVecMatrix (vin);
-
-            if (vin .w === 0)
-               throw new Error ("Couldn't project point: divisor is 0.");
 
             const d = 1 / (2 * vin .w);
 

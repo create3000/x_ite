@@ -130,42 +130,35 @@ function (X3DConstants,
       },
       set_originMatrix__: function ()
       {
-         try
+         if (this .geoOriginNode)
          {
-            if (this .geoOriginNode)
-            {
-               // Position
-               var t = this .origin;
+            // Position
+            var t = this .origin;
 
-               // Let's work out the orientation at that location in order
-               // to maintain a view where +Y is in the direction of gravitional
-               // up for that region of the planet's surface. This will be the
-               // value of the rotation matrix for the transform.
+            // Let's work out the orientation at that location in order
+            // to maintain a view where +Y is in the direction of gravitional
+            // up for that region of the planet's surface. This will be the
+            // value of the rotation matrix for the transform.
 
-               this .elevationFrame .normal (t, y);
+            this .elevationFrame .normal (t, y);
 
-               x .set (0, 0, 1) .cross (y);
+            x .set (0, 0, 1) .cross (y);
 
-               // Handle pole cases.
-               if (x .equals (Vector3 .Zero))
-                  x .set (1, 0, 0);
+            // Handle pole cases.
+            if (x .equals (Vector3 .Zero))
+               x .set (1, 0, 0);
 
-               z .assign (x) .cross (y);
+            z .assign (x) .cross (y);
 
-               x .normalize ();
-               z .normalize ();
+            x .normalize ();
+            z .normalize ();
 
-               this .originMatrix .set (x .x, x .y, x .z, 0,
-                                        y .x, y .y, y .z, 0,
-                                        z .x, z .y, z .z, 0,
-                                        t .x, t .y, t .z, 1);
+            this .originMatrix .set (x .x, x .y, x .z, 0,
+                                       y .x, y .y, y .z, 0,
+                                       z .x, z .y, z .z, 0,
+                                       t .x, t .y, t .z, 1);
 
-               this .invOriginMatrix .assign (this .originMatrix) .inverse ();
-            }
-         }
-         catch (error)
-         {
-            /// ???
+            this .invOriginMatrix .assign (this .originMatrix) .inverse ();
          }
       },
       set_rotateYUp__: function ()

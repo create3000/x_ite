@@ -146,14 +146,7 @@ function (Fields,
          this .lightNode = lightNode;
          this .groupNode = groupNode;
 
-         try
-         {
-            this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
-         }
-         catch (error)
-         {
-            this .matrixArray .set (Matrix3 .Identity);
-         }
+         this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
 
          this .modelViewMatrix .pushMatrix (modelViewMatrix);
 
@@ -169,55 +162,47 @@ function (Fields,
       },
       renderShadowMap: function (renderObject)
       {
-         try
-         {
-            if (! this .shadowBuffer)
-               return;
+         if (! this .shadowBuffer)
+            return;
 
+         const
+            lightNode           = this .lightNode,
+            cameraSpaceMatrix   = renderObject .getCameraSpaceMatrix () .get (),
+            modelMatrix         = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+            invLightSpaceMatrix = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+
+         invLightSpaceMatrix .translate (lightNode .getLocation ());
+         invLightSpaceMatrix .inverse ();
+
+         const shadowMapSize  = lightNode .getShadowMapSize ();
+
+         this .shadowBuffer .bind ();
+
+         for (let i = 0; i < 6; ++ i)
+         {
             const
-               lightNode           = this .lightNode,
-               cameraSpaceMatrix   = renderObject .getCameraSpaceMatrix () .get (),
-               modelMatrix         = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-               invLightSpaceMatrix = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+               v                = viewports [i],
+               viewport         = this .viewport .set (v [0] * shadowMapSize, v [1] * shadowMapSize, v [2] * shadowMapSize, v [3] * shadowMapSize),
+               projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
 
-            invLightSpaceMatrix .translate (lightNode .getLocation ());
-            invLightSpaceMatrix .inverse ();
+            renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+            renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
+            renderObject .getModelViewMatrix  () .pushMatrix (orientationMatrices [i]);
+            renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
 
-            const shadowMapSize  = lightNode .getShadowMapSize ();
+            renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
 
-            this .shadowBuffer .bind ();
-
-            for (let i = 0; i < 6; ++ i)
-            {
-               const
-                  v                = viewports [i],
-                  viewport         = this .viewport .set (v [0] * shadowMapSize, v [1] * shadowMapSize, v [2] * shadowMapSize, v [3] * shadowMapSize),
-                  projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
-
-               renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
-               renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
-               renderObject .getModelViewMatrix  () .pushMatrix (orientationMatrices [i]);
-               renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
-
-               renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
-
-               renderObject .getModelViewMatrix  () .pop ();
-               renderObject .getProjectionMatrix () .pop ();
-               renderObject .getViewVolumes () .pop ();
-            }
-
-            this .shadowBuffer .unbind ();
-
-            if (! lightNode .getGlobal ())
-               invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
-
-            this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix);
+            renderObject .getModelViewMatrix  () .pop ();
+            renderObject .getProjectionMatrix () .pop ();
+            renderObject .getViewVolumes () .pop ();
          }
-         catch (error)
-         {
-            // Catch error from matrix inverse.
-            console .error (error);
-         }
+
+         this .shadowBuffer .unbind ();
+
+         if (! lightNode .getGlobal ())
+            invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
+
+         this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix);
       },
       setGlobalVariables: function (renderObject)
       {

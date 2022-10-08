@@ -124,26 +124,14 @@ function (Fields,
       },
       eventsProcessed: function ()
       {
-         try
-         {
-            this .setHidden (this ._scale .x === 0 ||
-                             this ._scale .y === 0 ||
-                             this ._scale .z === 0);
+         this .getLocationMatrix (this ._geoCenter .getValue (), locationMatrix);
 
-            this .getLocationMatrix (this ._geoCenter .getValue (), locationMatrix);
+         matrix .set (this ._translation      .getValue (),
+                        this ._rotation         .getValue (),
+                        this ._scale            .getValue (),
+                        this ._scaleOrientation .getValue ());
 
-            matrix .set (this ._translation      .getValue (),
-                         this ._rotation         .getValue (),
-                         this ._scale            .getValue (),
-                         this ._scaleOrientation .getValue ());
-
-            this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
-         }
-         catch (error)
-         {
-            // Should normally not happen.
-            this .setHidden (true);
-         }
+         this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
       },
    });
 

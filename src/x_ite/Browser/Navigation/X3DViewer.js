@@ -122,29 +122,21 @@ function (X3DBaseNode,
 
          return function (x, y, result)
          {
-            try
-            {
-               const
-                  navigationInfo   = this .getNavigationInfo (),
-                  viewpoint        = this .getActiveViewpoint (),
-                  viewport         = this .getViewport () .getRectangle (this .getBrowser ()),
-                  projectionMatrix = viewpoint .getProjectionMatrixWithLimits (navigationInfo .getNearValue (), navigationInfo .getFarValue (viewpoint), viewport);
+            const
+               navigationInfo   = this .getNavigationInfo (),
+               viewpoint        = this .getActiveViewpoint (),
+               viewport         = this .getViewport () .getRectangle (this .getBrowser ()),
+               projectionMatrix = viewpoint .getProjectionMatrixWithLimits (navigationInfo .getNearValue (), navigationInfo .getFarValue (viewpoint), viewport);
 
-               // Far plane point
-               ViewVolume .unProjectPoint (x, this .getBrowser () .getViewport () [3] - y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
+            // Far plane point
+            ViewVolume .unProjectPoint (x, this .getBrowser () .getViewport () [3] - y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
 
-               if (viewpoint instanceof OrthoViewpoint)
-                  return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .abs ());
+            if (viewpoint instanceof OrthoViewpoint)
+               return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .abs ());
 
-               const direction = far .normalize ();
+            const direction = far .normalize ();
 
-               return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .abs () / direction .dot (axis));
-            }
-            catch (error)
-            {
-               console .error (error);
-               return result .set (0, 0, 0);
-            }
+            return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .abs () / direction .dot (axis));
          };
       })(),
       getDistanceToCenter: function (distance, positionOffset)

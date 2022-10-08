@@ -71,15 +71,8 @@ function (X3DConstants,
       set: function (fogNode, modelViewMatrix)
       {
          this .fogNode = fogNode;
-
-         try
-         {
-            this .fogMatrix .set (modelViewMatrix .submatrix .inverse ());
-         }
-         catch (error)
-         {
-            this .fogMatrix .set (Matrix3 .Identity);
-         }
+         
+         this .fogMatrix .set (modelViewMatrix .submatrix .inverse ());
       },
       setShaderUniforms: function (gl, shaderObject)
       {

@@ -133,51 +133,43 @@ function (Fields,
       },
       renderShadowMap: function (renderObject)
       {
-         try
-         {
-            if (! this .shadowBuffer)
-               return;
+         if (! this .shadowBuffer)
+            return;
 
-            const
-               lightNode            = this .lightNode,
-               cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
-               modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-               invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+         const
+            lightNode            = this .lightNode,
+            cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
+            modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+            invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
-            invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
-            invLightSpaceMatrix .inverse ();
+         invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
+         invLightSpaceMatrix .inverse ();
 
-            const
-               groupBBox        = this .groupNode .getSubBBox (this .bbox, true), // Group bbox.
-               lightBBox        = groupBBox .multRight (invLightSpaceMatrix),     // Group bbox from the perspective of the light.
-               shadowMapSize    = lightNode .getShadowMapSize (),
-               viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
-               projectionMatrix = Camera .orthoBox (lightBBox, this .projectionMatrix);
+         const
+            groupBBox        = this .groupNode .getSubBBox (this .bbox, true), // Group bbox.
+            lightBBox        = groupBBox .multRight (invLightSpaceMatrix),     // Group bbox from the perspective of the light.
+            shadowMapSize    = lightNode .getShadowMapSize (),
+            viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
+            projectionMatrix = Camera .orthoBox (lightBBox, this .projectionMatrix);
 
-            this .shadowBuffer .bind ();
+         this .shadowBuffer .bind ();
 
-            renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
-            renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
-            renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
+         renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+         renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
+         renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
 
-            renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
+         renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
 
-            renderObject .getModelViewMatrix  () .pop ();
-            renderObject .getProjectionMatrix () .pop ();
-            renderObject .getViewVolumes      () .pop ();
+         renderObject .getModelViewMatrix  () .pop ();
+         renderObject .getProjectionMatrix () .pop ();
+         renderObject .getViewVolumes      () .pop ();
 
-            this .shadowBuffer .unbind ();
+         this .shadowBuffer .unbind ();
 
-            if (! lightNode .getGlobal ())
-               invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
+         if (! lightNode .getGlobal ())
+            invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
-            this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix) .multRight (projectionMatrix) .multRight (lightNode .getBiasMatrix ());
-         }
-         catch (error)
-         {
-            // Catch error from matrix inverse.
-            console .error (error);
-         }
+         this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix) .multRight (projectionMatrix) .multRight (lightNode .getBiasMatrix ());
       },
       setGlobalVariables: function (renderObject)
       {

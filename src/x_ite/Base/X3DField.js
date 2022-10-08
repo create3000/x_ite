@@ -176,7 +176,7 @@ function ($,
          const references = this .getReferences ();
 
          if (references .has (reference))
-            return; // throw ???
+            return;
 
          references .add (reference);
 

@@ -515,48 +515,41 @@ function (X3DBindableNode,
 
          return function (gl, renderObject, viewport)
          {
-            try
-            {
-               if (this .hidden)
-                  return;
+            if (this .hidden)
+               return;
 
-               // Setup context.
+            // Setup context.
 
-               gl .disable (gl .DEPTH_TEST);
-               gl .depthMask (false);
-               gl .enable (gl .CULL_FACE);
-               gl .frontFace (gl .CCW);
+            gl .disable (gl .DEPTH_TEST);
+            gl .depthMask (false);
+            gl .enable (gl .CULL_FACE);
+            gl .frontFace (gl .CCW);
 
-               // Get background scale.
+            // Get background scale.
 
-               const farValue = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
+            const farValue = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
 
-               // Get projection matrix.
+            // Get projection matrix.
 
-               this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());
+            this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());
 
-               // Rotate and scale background.
+            // Rotate and scale background.
 
-               modelViewMatrix .assign (this .modelMatrix);
-               modelViewMatrix .multRight (renderObject .getViewMatrix () .get ());
-               modelViewMatrix .get (null, rotation);
-               modelViewMatrix .identity ();
-               modelViewMatrix .rotate (rotation);
-               modelViewMatrix .scale (scale .set (farValue, farValue, farValue));
+            modelViewMatrix .assign (this .modelMatrix);
+            modelViewMatrix .multRight (renderObject .getViewMatrix () .get ());
+            modelViewMatrix .get (null, rotation);
+            modelViewMatrix .identity ();
+            modelViewMatrix .rotate (rotation);
+            modelViewMatrix .scale (scale .set (farValue, farValue, farValue));
 
-               this .modelViewMatrixArray .set (modelViewMatrix);
+            this .modelViewMatrixArray .set (modelViewMatrix);
 
-               // Draw background sphere and texture cube.
+            // Draw background sphere and texture cube.
 
-               this .drawSphere (renderObject);
+            this .drawSphere (renderObject);
 
-               if (this .textures)
-                  this .drawCube (renderObject);
-            }
-            catch (error)
-            {
-               console .error (error);
-            }
+            if (this .textures)
+               this .drawCube (renderObject);
          };
       })(),
       drawSphere: function (renderObject)

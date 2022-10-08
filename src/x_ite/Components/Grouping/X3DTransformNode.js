@@ -79,10 +79,6 @@ function (X3DTransformMatrix3DNode,
       },
       eventsProcessed: function ()
       {
-         this .setHidden (this ._scale .x === 0 ||
-                          this ._scale .y === 0 ||
-                          this ._scale .z === 0);
-
          this .setTransform (this ._translation      .getValue (),
                              this ._rotation         .getValue (),
                              this ._scale            .getValue (),

@@ -134,27 +134,22 @@ function (X3DSingleTextureNode,
       },
       setTexture: function (width, height, depth, transparent, format, data)
       {
-         try
-         {
-            this .width  = width;
-            this .height = height;
-            this .depth  = depth;
-            this .data   = data;
+         this .width  = width;
+         this .height = height;
+         this .depth  = depth;
+         this .data   = data;
 
-            const gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
-            if (gl .getVersion () < 2)
-               return;
+         if (gl .getVersion () < 2)
+            return;
 
-            gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-            gl .texImage3D  (gl .TEXTURE_3D, 0, format, width, height, depth, 0, format, gl .UNSIGNED_BYTE, data);
+         gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+         gl .texImage3D  (gl .TEXTURE_3D, 0, format, width, height, depth, 0, format, gl .UNSIGNED_BYTE, data);
 
-            this .setTransparent (transparent);
-            this .updateTextureProperties ();
-            this .addNodeEvent ();
-         }
-         catch (error)
-         { }
+         this .setTransparent (transparent);
+         this .updateTextureProperties ();
+         this .addNodeEvent ();
       },
       updateTextureProperties: function ()
       {

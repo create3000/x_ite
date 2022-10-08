@@ -166,27 +166,20 @@ function (Fields,
 
          modelViewMatrix .push ();
 
-         try
+         switch (type)
          {
-            switch (type)
-            {
-               case TraverseType .CAMERA:
-               case TraverseType .PICKING:
-               case TraverseType .SHADOW:
-                  // No clone support for shadow, generated cube map texture, and bbox
-                  modelViewMatrix .multLeft (this .matrix);
-                  break;
-               default:
-                  modelViewMatrix .multLeft (this .rotate (modelViewMatrix .get ()));
-                  break;
-            }
+            case TraverseType .CAMERA:
+            case TraverseType .PICKING:
+            case TraverseType .SHADOW:
+               // No clone support for shadow, generated cube map texture, and bbox
+               modelViewMatrix .multLeft (this .matrix);
+               break;
+            default:
+               modelViewMatrix .multLeft (this .rotate (modelViewMatrix .get ()));
+               break;
+         }
 
-            X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
          modelViewMatrix .pop ();
       },

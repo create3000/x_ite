@@ -151,82 +151,75 @@ function (Fields,
       {
          X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
 
-         try
+         if (this ._isActive .getValue ())
          {
-            if (this ._isActive .getValue ())
+            this .modelViewMatrix    .assign (modelViewMatrix);
+            this .projectionMatrix   .assign (projectionMatrix);
+            this .viewport           .assign (viewport);
+            this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+
+            var
+               hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+               hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
+
+            var axisRotation = this ._axisRotation .getValue ();
+
+            if (this ._minPosition .x === this ._maxPosition .x)
             {
-               this .modelViewMatrix    .assign (modelViewMatrix);
-               this .projectionMatrix   .assign (projectionMatrix);
-               this .viewport           .assign (viewport);
-               this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+               this .planeSensor = false;
 
-               var
-                  hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-                  hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
+               var direction = axisRotation .multVecRot (new Vector3 (0, Math .abs (this ._maxPosition .y - this ._minPosition .y), 0));
 
-               var axisRotation = this ._axisRotation .getValue ();
+               this .line = new Line3 (hitPoint, direction .normalize ());
+            }
+            else if (this ._minPosition .y === this ._maxPosition .y)
+            {
+               this .planeSensor = false;
 
-               if (this ._minPosition .x === this ._maxPosition .x)
-               {
-                  this .planeSensor = false;
+               var direction = axisRotation .multVecRot (new Vector3 (Math .abs (this ._maxPosition .x - this ._minPosition .x), 0, 0));
 
-                  var direction = axisRotation .multVecRot (new Vector3 (0, Math .abs (this ._maxPosition .y - this ._minPosition .y), 0));
-
-                  this .line = new Line3 (hitPoint, direction .normalize ());
-               }
-               else if (this ._minPosition .y === this ._maxPosition .y)
-               {
-                  this .planeSensor = false;
-
-                  var direction = axisRotation .multVecRot (new Vector3 (Math .abs (this ._maxPosition .x - this ._minPosition .x), 0, 0));
-
-                  this .line = new Line3 (hitPoint, direction .normalize ());
-               }
-               else
-               {
-                  this .planeSensor = true;
-                  this .plane       = new Plane3 (hitPoint, axisRotation .multVecRot (new Vector3 (0, 0, 1)));
-               }
-
-               if (this .planeSensor)
-               {
-                  if (this .plane .intersectsLine (hitRay, this .startPoint))
-                  {
-                     this .trackStart (this .startPoint);
-                  }
-
-//						new Plane3 (new Vector3 (0, 0, 0), this .plane .normal) .intersectsLine (hitRay, trackPoint);
-               }
-               else
-               {
-                  if (this .getLineTrackPoint (hit, this .line, this .startPoint))
-                  {
-                     var trackPoint = new Vector3 (0, 0, 0);
-
-                     try
-                     {
-                        this .getLineTrackPoint (hit, new Line3 (this .line .direction, this .line .direction), trackPoint);
-                     }
-                     catch (error)
-                     {
-                        //console .error (error);
-
-                        trackPoint = this .startPoint;
-                     }
-
-                     this .trackStart (trackPoint);
-                  }
-               }
+               this .line = new Line3 (hitPoint, direction .normalize ());
             }
             else
             {
-               if (this ._autoOffset .getValue ())
-                  this ._offset = this ._translation_changed;
+               this .planeSensor = true;
+               this .plane       = new Plane3 (hitPoint, axisRotation .multVecRot (new Vector3 (0, 0, 1)));
+            }
+
+            if (this .planeSensor)
+            {
+               if (this .plane .intersectsLine (hitRay, this .startPoint))
+               {
+                  this .trackStart (this .startPoint);
+               }
+
+//						new Plane3 (new Vector3 (0, 0, 0), this .plane .normal) .intersectsLine (hitRay, trackPoint);
+            }
+            else
+            {
+               if (this .getLineTrackPoint (hit, this .line, this .startPoint))
+               {
+                  var trackPoint = new Vector3 (0, 0, 0);
+
+                  try
+                  {
+                     this .getLineTrackPoint (hit, new Line3 (this .line .direction, this .line .direction), trackPoint);
+                  }
+                  catch (error)
+                  {
+                     //console .error (error);
+
+                     trackPoint = this .startPoint;
+                  }
+
+                  this .trackStart (trackPoint);
+               }
             }
          }
-         catch (error)
+         else
          {
-            console .error (error);
+            if (this ._autoOffset .getValue ())
+               this ._offset = this ._translation_changed;
          }
       },
       trackStart: function (trackPoint)

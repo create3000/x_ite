@@ -119,25 +119,18 @@ function (Fields,
       },
       set_over__: function (over, hit, modelViewMatrix, projectionMatrix, viewport)
       {
-         try
+         X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
+
+         if (this ._isOver .getValue ())
          {
-            X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
+            var intersection = hit .intersection;
 
-            if (this ._isOver .getValue ())
-            {
-               var intersection = hit .intersection;
+            invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-               invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-
-               this ._hitTexCoord_changed = intersection .texCoord;
-               this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
-               this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
-               this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
-            }
-         }
-         catch (error)
-         {
-            console .error (error);
+            this ._hitTexCoord_changed = intersection .texCoord;
+            this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
+            this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
+            this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
          }
       },
    });

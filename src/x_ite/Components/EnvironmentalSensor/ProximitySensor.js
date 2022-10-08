@@ -165,61 +165,54 @@ function (Fields,
 
          return function ()
          {
-            try
+            if (this .inside && this .getTraversed ())
             {
-               if (this .inside && this .getTraversed ())
+               if (this .viewpointNode)
                {
-                  if (this .viewpointNode)
-                  {
-                     const modelMatrix = this .modelMatrix;
+                  const modelMatrix = this .modelMatrix;
 
-                     centerOfRotationMatrix .assign (this .viewpointNode .getModelMatrix ());
-                     centerOfRotationMatrix .translate (this .viewpointNode .getUserCenterOfRotation ());
-                     centerOfRotationMatrix .multRight (invModelMatrix .assign (modelMatrix) .inverse ());
+                  centerOfRotationMatrix .assign (this .viewpointNode .getModelMatrix ());
+                  centerOfRotationMatrix .translate (this .viewpointNode .getUserCenterOfRotation ());
+                  centerOfRotationMatrix .multRight (invModelMatrix .assign (modelMatrix) .inverse ());
 
-                     modelMatrix .multRight (this .viewpointNode .getViewMatrix ());
-                     modelMatrix .get (null, orientation);
-                     modelMatrix .inverse ();
+                  modelMatrix .multRight (this .viewpointNode .getViewMatrix ());
+                  modelMatrix .get (null, orientation);
+                  modelMatrix .inverse ();
 
-                     position .set (modelMatrix [12], modelMatrix [13], modelMatrix [14]);
+                  position .set (modelMatrix [12], modelMatrix [13], modelMatrix [14]);
 
-                     orientation .inverse ();
+                  orientation .inverse ();
 
-                     centerOfRotation .set (centerOfRotationMatrix [12], centerOfRotationMatrix [13], centerOfRotationMatrix [14]);
+                  centerOfRotation .set (centerOfRotationMatrix [12], centerOfRotationMatrix [13], centerOfRotationMatrix [14]);
 
-                     if (this ._isActive .getValue ())
-                     {
-                        if (! this ._position_changed .getValue () .equals (position))
-                           this ._position_changed = position;
-
-                        if (! this ._orientation_changed .getValue () .equals (orientation))
-                           this ._orientation_changed = orientation;
-
-                        if (! this ._centerOfRotation_changed .getValue () .equals (centerOfRotation))
-                           this ._centerOfRotation_changed = centerOfRotation;
-                     }
-                     else
-                     {
-                        this ._isActive                 = true;
-                        this ._enterTime                = this .getBrowser () .getCurrentTime ();
-                        this ._position_changed         = position;
-                        this ._orientation_changed      = orientation;
-                        this ._centerOfRotation_changed = centerOfRotation;
-                     }
-                  }
-               }
-               else
-               {
                   if (this ._isActive .getValue ())
                   {
-                     this ._isActive = false;
-                     this ._exitTime = this .getBrowser () .getCurrentTime ();
+                     if (! this ._position_changed .getValue () .equals (position))
+                        this ._position_changed = position;
+
+                     if (! this ._orientation_changed .getValue () .equals (orientation))
+                        this ._orientation_changed = orientation;
+
+                     if (! this ._centerOfRotation_changed .getValue () .equals (centerOfRotation))
+                        this ._centerOfRotation_changed = centerOfRotation;
+                  }
+                  else
+                  {
+                     this ._isActive                 = true;
+                     this ._enterTime                = this .getBrowser () .getCurrentTime ();
+                     this ._position_changed         = position;
+                     this ._orientation_changed      = orientation;
+                     this ._centerOfRotation_changed = centerOfRotation;
                   }
                }
             }
-            catch (error)
+            else
             {
-               //console .log (error .message);
+               if (this ._isActive .getValue ())
+               {
+                  this ._isActive = false;
+                  this ._exitTime = this .getBrowser () .getCurrentTime ();
+               }
             }
 
             this .inside        = false;
@@ -236,41 +229,34 @@ function (Fields,
 
          return function (type, renderObject)
          {
-            try
+            switch (type)
             {
-               switch (type)
+               case TraverseType .CAMERA:
                {
-                  case TraverseType .CAMERA:
-                  {
-                     this .viewpointNode = renderObject .getViewpoint ();
-                     this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-                     return;
-                  }
-                  case TraverseType .DISPLAY:
-                  {
-                     this .setTraversed (true);
-
-                     if (this .inside)
-                        return;
-
-                     if (this ._size .getValue () .equals (infinity))
-                     {
-                        this .inside = true;
-                     }
-                     else
-                     {
-                        invModelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .inverse ();
-
-                        this .inside = this .containsPoint (invModelViewMatrix .origin);
-                     }
-
-                     return;
-                  }
+                  this .viewpointNode = renderObject .getViewpoint ();
+                  this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+                  return;
                }
-            }
-            catch (error)
-            {
-               console .error (error);
+               case TraverseType .DISPLAY:
+               {
+                  this .setTraversed (true);
+
+                  if (this .inside)
+                     return;
+
+                  if (this ._size .getValue () .equals (infinity))
+                  {
+                     this .inside = true;
+                  }
+                  else
+                  {
+                     invModelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .inverse ();
+
+                     this .inside = this .containsPoint (invModelViewMatrix .origin);
+                  }
+
+                  return;
+               }
             }
          };
       })(),

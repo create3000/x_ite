@@ -190,60 +190,50 @@ function (Fields,
 
          return function (type, renderObject)
          {
-            try
+            if (type !== TraverseType .DISPLAY)
+               return;
+
+            if (! this .sourceNode)
+               return;
+
+            if (! this .sourceNode ._isActive .getValue () || this .sourceNode ._isPaused .getValue ())
+               return;
+
+            this .setTraversed (true);
+
+            const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
+
+            this .getEllipsoidParameter (modelViewMatrix,
+                                          Math .max (this ._maxBack  .getValue (), 0),
+                                          Math .max (this ._maxFront .getValue (), 0),
+                                          max);
+
+            if (max .distance < 1) // Sphere radius is 1
             {
-               if (type !== TraverseType .DISPLAY)
-                  return;
-
-               if (! this .sourceNode)
-                  return;
-
-               if (! this .sourceNode ._isActive .getValue () || this .sourceNode ._isPaused .getValue ())
-                  return;
-
-               this .setTraversed (true);
-
-               const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
-
                this .getEllipsoidParameter (modelViewMatrix,
-                                            Math .max (this ._maxBack  .getValue (), 0),
-                                            Math .max (this ._maxFront .getValue (), 0),
-                                            max);
+                                             Math .max (this ._minBack  .getValue (), 0),
+                                             Math .max (this ._minFront .getValue (), 0),
+                                             min);
 
-               if (max .distance < 1) // Sphere radius is 1
+               if (min .distance < 1) // Sphere radius is 1
                {
-                  this .getEllipsoidParameter (modelViewMatrix,
-                                               Math .max (this ._minBack  .getValue (), 0),
-                                               Math .max (this ._minFront .getValue (), 0),
-                                               min);
-
-                  if (min .distance < 1) // Sphere radius is 1
-                  {
-                     this .sourceNode .setVolume (this ._intensity .getValue ());
-                  }
-                  else
-                  {
-                     const
-                        d1        = max .intersection .abs (), // Viewer is here at (0, 0, 0)
-                        d2        = max .intersection .distance (min .intersection),
-                        d         = Math .min (d1 / d2, 1),
-                        intensity = Algorithm .clamp (this ._intensity .getValue (), 0, 1),
-                        volume    = intensity * d;
-
-                     this .sourceNode .setVolume (volume);
-                  }
+                  this .sourceNode .setVolume (this ._intensity .getValue ());
                }
                else
                {
-                  this .sourceNode .setVolume (0);
+                  const
+                     d1        = max .intersection .abs (), // Viewer is here at (0, 0, 0)
+                     d2        = max .intersection .distance (min .intersection),
+                     d         = Math .min (d1 / d2, 1),
+                     intensity = Algorithm .clamp (this ._intensity .getValue (), 0, 1),
+                     volume    = intensity * d;
+
+                  this .sourceNode .setVolume (volume);
                }
             }
-            catch (error)
+            else
             {
-               //console .error (error);
-
-               if (this .sourceNode)
-                  this .sourceNode .setVolume (0);
+               this .sourceNode .setVolume (0);
             }
          };
       })(),

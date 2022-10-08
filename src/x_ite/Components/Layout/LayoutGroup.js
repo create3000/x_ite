@@ -131,15 +131,10 @@ function (Fields,
       },
       getMatrix: function ()
       {
-         try
-         {
-            if (this .layoutNode)
-               this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
-            else
-               this .matrix .identity ();
-         }
-         catch (error)
-         { }
+         if (this .layoutNode)
+            this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
+         else
+            this .matrix .identity ();
 
          return this .matrix;
       },

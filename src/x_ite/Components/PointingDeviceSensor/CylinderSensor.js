@@ -179,143 +179,126 @@ function (Fields,
       {
          X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
 
-         try
+         if (this ._isActive .getValue ())
          {
-            if (this ._isActive .getValue ())
-            {
-               this .modelViewMatrix    .assign (modelViewMatrix);
-               this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+            this .modelViewMatrix    .assign (modelViewMatrix);
+            this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-               const
-                  hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-                  hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
-
-               const
-                  yAxis      = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
-                  cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
-
-               const
-                  axis   = new Line3 (new Vector3 (0, 0, 0), yAxis),
-                  radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .abs ();
-
-               this .cylinder = new Cylinder3 (axis, radius);
-               this .disk     = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this ._diskAngle .getValue ());
-               this .behind   = this .isBehind (hitRay, hitPoint);
-               this .yPlane   = new Plane3 (hitPoint, yAxis);             // Sensor aligned y-plane
-               this .zPlane   = new Plane3 (hitPoint, cameraBack);        // Screen aligned z-plane
-
-               // Compute normal like in Billboard with yAxis as axis of rotation.
-               const
-                  billboardToViewer = this .invModelViewMatrix .origin,
-                  sxNormal          = Vector3 .cross (yAxis, billboardToViewer) .normalize ();
-
-               this .sxPlane  = new Plane3 (new Vector3 (0, 0, 0), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
-               this .szNormal = Vector3 .cross (sxNormal, yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
-
-               const trackPoint = new Vector3 (0, 0, 0);
-
-               if (this .disk)
-                  this .yPlane .intersectsLine (hitRay, trackPoint);
-               else
-                  this .getTrackPoint (hitRay, trackPoint);
-
-               this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate ();
-               this .startOffset = new Rotation4 (yAxis, this ._offset .getValue ());
-
-               this ._trackPoint_changed = trackPoint;
-               this ._rotation_changed   = this .startOffset;
-
-               // For min/max angle.
-
-               this .angle       = this ._offset .getValue ();
-               this .startVector = this ._rotation_changed .getValue () .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1)));
-            }
-            else
-            {
-               if (this ._autoOffset .getValue ())
-                  this ._offset = this .getAngle (this ._rotation_changed .getValue ());
-            }
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
-      },
-      set_motion__: function (hit)
-      {
-         try
-         {
             const
-               hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-               trackPoint = new Vector3 (0, 0, 0);
+               hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+               hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
+
+            const
+               yAxis      = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
+               cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
+
+            const
+               axis   = new Line3 (new Vector3 (0, 0, 0), yAxis),
+               radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .abs ();
+
+            this .cylinder = new Cylinder3 (axis, radius);
+            this .disk     = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this ._diskAngle .getValue ());
+            this .behind   = this .isBehind (hitRay, hitPoint);
+            this .yPlane   = new Plane3 (hitPoint, yAxis);             // Sensor aligned y-plane
+            this .zPlane   = new Plane3 (hitPoint, cameraBack);        // Screen aligned z-plane
+
+            // Compute normal like in Billboard with yAxis as axis of rotation.
+            const
+               billboardToViewer = this .invModelViewMatrix .origin,
+               sxNormal          = Vector3 .cross (yAxis, billboardToViewer) .normalize ();
+
+            this .sxPlane  = new Plane3 (new Vector3 (0, 0, 0), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
+            this .szNormal = Vector3 .cross (sxNormal, yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
+
+            const trackPoint = new Vector3 (0, 0, 0);
 
             if (this .disk)
                this .yPlane .intersectsLine (hitRay, trackPoint);
             else
                this .getTrackPoint (hitRay, trackPoint);
 
+            this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate ();
+            this .startOffset = new Rotation4 (yAxis, this ._offset .getValue ());
+
             this ._trackPoint_changed = trackPoint;
+            this ._rotation_changed   = this .startOffset;
 
-            const
-               toVector = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate (),
-               rotation = new Rotation4 (this .fromVector, toVector);
+            // For min/max angle.
 
-            if (this .disk)
-            {
-               // The trackpoint can swap behind the viewpoint if viewpoint is a Viewpoint node
-               // as the viewing volume is not a cube where the picking ray goes straight up.
-               // This phenomenon is very clear on the viewport corners.
-
-               const trackPoint_ = this .modelViewMatrix .multVecMatrix (trackPoint .copy ());
-
-               if (trackPoint_ .z > 0)
-                  rotation .multRight (new Rotation4 (this .yPlane .normal, Math .PI));
-            }
-            else
-            {
-               if (this .behind)
-                  rotation .inverse ();
-            }
-
-            rotation .multLeft (this .startOffset);
-
-            if (this ._minAngle .getValue () > this ._maxAngle .getValue ())
-            {
-               this ._rotation_changed = rotation;
-            }
-            else
-            {
-               const
-                  endVector     = rotation .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1))),
-                  deltaRotation = new Rotation4 (this .startVector, endVector),
-                  axis          = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
-                  sign          = axis .dot (deltaRotation .getAxis ()) > 0 ? 1 : -1,
-                  min           = this ._minAngle .getValue (),
-                  max           = this ._maxAngle .getValue ();
-
-               this .angle += sign * deltaRotation .angle;
-
-               this .startVector .assign (endVector);
-
-               //console .log (this .angle, min, max);
-
-               if (this .angle < min)
-                  rotation .setAxisAngle (this .cylinder .axis .direction, min);
-               else if (this .angle > max)
-                  rotation .setAxisAngle (this .cylinder .axis .direction, max);
-               else
-                  rotation .setAxisAngle (this .cylinder .axis .direction, this .angle);
-
-               if (! this ._rotation_changed .getValue () .equals (rotation))
-                  this ._rotation_changed = rotation;
-            }
+            this .angle       = this ._offset .getValue ();
+            this .startVector = this ._rotation_changed .getValue () .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1)));
          }
-         catch (error)
+         else
          {
-            console .error (error);
+            if (this ._autoOffset .getValue ())
+               this ._offset = this .getAngle (this ._rotation_changed .getValue ());
+         }
+      },
+      set_motion__: function (hit)
+      {
+         const
+            hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+            trackPoint = new Vector3 (0, 0, 0);
 
-            this ._trackPoint_changed .addEvent ();
-            this ._rotation_changed   .addEvent ();
+         if (this .disk)
+            this .yPlane .intersectsLine (hitRay, trackPoint);
+         else
+            this .getTrackPoint (hitRay, trackPoint);
+
+         this ._trackPoint_changed = trackPoint;
+
+         const
+            toVector = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate (),
+            rotation = new Rotation4 (this .fromVector, toVector);
+
+         if (this .disk)
+         {
+            // The trackpoint can swap behind the viewpoint if viewpoint is a Viewpoint node
+            // as the viewing volume is not a cube where the picking ray goes straight up.
+            // This phenomenon is very clear on the viewport corners.
+
+            const trackPoint_ = this .modelViewMatrix .multVecMatrix (trackPoint .copy ());
+
+            if (trackPoint_ .z > 0)
+               rotation .multRight (new Rotation4 (this .yPlane .normal, Math .PI));
+         }
+         else
+         {
+            if (this .behind)
+               rotation .inverse ();
+         }
+
+         rotation .multLeft (this .startOffset);
+
+         if (this ._minAngle .getValue () > this ._maxAngle .getValue ())
+         {
+            this ._rotation_changed = rotation;
+         }
+         else
+         {
+            const
+               endVector     = rotation .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1))),
+               deltaRotation = new Rotation4 (this .startVector, endVector),
+               axis          = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
+               sign          = axis .dot (deltaRotation .getAxis ()) > 0 ? 1 : -1,
+               min           = this ._minAngle .getValue (),
+               max           = this ._maxAngle .getValue ();
+
+            this .angle += sign * deltaRotation .angle;
+
+            this .startVector .assign (endVector);
+
+            //console .log (this .angle, min, max);
+
+            if (this .angle < min)
+               rotation .setAxisAngle (this .cylinder .axis .direction, min);
+            else if (this .angle > max)
+               rotation .setAxisAngle (this .cylinder .axis .direction, max);
+            else
+               rotation .setAxisAngle (this .cylinder .axis .direction, this .angle);
+
+            if (! this ._rotation_changed .getValue () .equals (rotation))
+               this ._rotation_changed = rotation;
          }
       },
    });

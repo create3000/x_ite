@@ -493,65 +493,57 @@ function (Fields,
 
          return function (hitRay, clipPlanes, modelViewMatrix_, intersections)
          {
-            try
+            if (this .intersectsBBox (hitRay))
             {
-               if (this .intersectsBBox (hitRay))
+               this .transformLine (hitRay);                                       // Apply screen transformations from screen nodes.
+               this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
+
+               const
+                  texCoords  = this .multiTexCoords [0] .getValue (),
+                  normals    = this .normals .getValue (),
+                  vertices   = this .vertices .getValue ();
+
+               for (let i = 0, length = this .vertexCount; i < length; i += 3)
                {
-                  this .transformLine   (hitRay);                                       // Apply screen transformations from screen nodes.
-                  this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
+                  const i4 = i * 4;
 
-                  const
-                     texCoords  = this .multiTexCoords [0] .getValue (),
-                     normals    = this .normals .getValue (),
-                     vertices   = this .vertices .getValue ();
+                  v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+                  v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
+                  v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
-                  for (let i = 0, length = this .vertexCount; i < length; i += 3)
+                  if (hitRay .intersectsTriangle (v0, v1, v2, uvt))
                   {
-                     const i4 = i * 4;
+                     // Get barycentric coordinates.
 
-                     v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
-                     v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
-                     v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
+                     const
+                        u = uvt .u,
+                        v = uvt .v,
+                        t = uvt .t;
 
-                     if (hitRay .intersectsTriangle (v0, v1, v2, uvt))
-                     {
-                        // Get barycentric coordinates.
+                     // Determine vectors for X3DPointingDeviceSensors.
 
-                        const
-                           u = uvt .u,
-                           v = uvt .v,
-                           t = uvt .t;
+                     const point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
+                                                t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
+                                                t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
-                        // Determine vectors for X3DPointingDeviceSensors.
+                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                        continue;
 
-                        const point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
-                                                   t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
-                                                   t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
+                     const texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
+                                                   t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
 
-                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                           continue;
+                     const i3 = i * 3;
 
-                        const texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
-                                                      t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
+                     const normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
+                                                   t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
+                                                   t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
 
-                        const i3 = i * 3;
-
-                        const normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
-                                                    t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
-                                                    t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
-
-                        intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
-                     }
+                     intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
                   }
                }
+            }
 
-               return intersections .length;
-            }
-            catch (error)
-            {
-               console .log (error);
-               return false;
-            }
+            return intersections .length;
          };
       })(),
       intersectsBBox: (function ()
@@ -625,50 +617,42 @@ function (Fields,
 
          return function (box, clipPlanes, modelViewMatrix)
          {
-            try
+            if (box .intersectsBox (this .bbox))
             {
-               if (box .intersectsBox (this .bbox))
+               box .multRight (invMatrix .assign (this .getMatrix ()) .inverse ());
+
+               this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
+
+               const vertices = this .vertices .getValue ();
+
+               for (let i = 0, length = this .vertexCount; i < length; i += 3)
                {
-                  box .multRight (invMatrix .assign (this .getMatrix ()) .inverse ());
+                  const i4 = i * 4;
 
-                  this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
+                  v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+                  v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
+                  v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
-                  const vertices = this .vertices .getValue ();
-
-                  for (let i = 0, length = this .vertexCount; i < length; i += 3)
+                  if (box .intersectsTriangle (v0, v1, v2))
                   {
-                     const i4 = i * 4;
-
-                     v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
-                     v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
-                     v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-
-                     if (box .intersectsTriangle (v0, v1, v2))
+                     if (clipPlanes .length)
                      {
-                        if (clipPlanes .length)
-                        {
-                           if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v0)), clipPlanes))
-                              continue;
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v0)), clipPlanes))
+                           continue;
 
-                           if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v1)), clipPlanes))
-                              continue;
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v1)), clipPlanes))
+                           continue;
 
-                           if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v2)), clipPlanes))
-                              continue;
-                        }
-
-                        return true;
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v2)), clipPlanes))
+                           continue;
                      }
+
+                     return true;
                   }
                }
+            }
 
-               return false;
-            }
-            catch (error)
-            {
-               console .log (error);
-               return false;
-            }
+            return false;
          };
       })(),
       set_live__: function ()

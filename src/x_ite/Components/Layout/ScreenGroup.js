@@ -169,31 +169,26 @@ function (Fields,
       })(),
       traverse: function (type, renderObject)
       {
-         try
+         switch (type)
          {
-            switch (type)
-            {
-               case TraverseType .CAMERA:
-               case TraverseType .PICKING:
-               case TraverseType .SHADOW: // ???
-                  // No clone support for shadow, generated cube map texture and bbox
-                  break;
-               default:
-                  this .scale (renderObject);
-                  break;
-            }
-
-            var modelViewMatrix = renderObject .getModelViewMatrix ();
-
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .matrix);
-
-            X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-
-            modelViewMatrix .pop ();
+            case TraverseType .CAMERA:
+            case TraverseType .PICKING:
+            case TraverseType .SHADOW: // ???
+               // No clone support for shadow, generated cube map texture and bbox
+               break;
+            default:
+               this .scale (renderObject);
+               break;
          }
-         catch (error)
-         { }
+
+         var modelViewMatrix = renderObject .getModelViewMatrix ();
+
+         modelViewMatrix .push ();
+         modelViewMatrix .multLeft (this .matrix);
+
+         X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+
+         modelViewMatrix .pop ();
       },
    });
 

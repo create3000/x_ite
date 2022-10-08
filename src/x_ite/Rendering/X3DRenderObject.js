@@ -324,57 +324,50 @@ function (TextureBuffer,
          {
             ///  Returns the distance to the closest object in @a direction.  The maximum determinable value is avatarHeight * 2.
 
-            try
-            {
-               const t0 = performance .now ();
+            const t0 = performance .now ();
 
-               const
-                  viewpoint       = this .getViewpoint (),
-                  navigationInfo  = this .getNavigationInfo (),
-                  collisionRadius = navigationInfo .getCollisionRadius (),
-                  bottom          = navigationInfo .getStepHeight () - navigationInfo .getAvatarHeight (),
-                  nearValue       = navigationInfo .getNearValue (),
-                  avatarHeight    = navigationInfo .getAvatarHeight ();
+            const
+               viewpoint       = this .getViewpoint (),
+               navigationInfo  = this .getNavigationInfo (),
+               collisionRadius = navigationInfo .getCollisionRadius (),
+               bottom          = navigationInfo .getStepHeight () - navigationInfo .getAvatarHeight (),
+               nearValue       = navigationInfo .getNearValue (),
+               avatarHeight    = navigationInfo .getAvatarHeight ();
 
-               // Determine width and height of camera
+            // Determine width and height of camera
 
-               // Reshape camera
+            // Reshape camera
 
-               Camera .ortho (-collisionRadius,
-                              collisionRadius,
-                              Math .min (bottom, -collisionRadius), /// TODO: bottom could be a positive value if stepHeight > avatarHeight.
-                              collisionRadius,
-                              nearValue,
-                              Math .max (collisionRadius * 2, avatarHeight * 2),
-                              projectionMatrix);
+            Camera .ortho (-collisionRadius,
+                           collisionRadius,
+                           Math .min (bottom, -collisionRadius), /// TODO: bottom could be a positive value if stepHeight > avatarHeight.
+                           collisionRadius,
+                           nearValue,
+                           Math .max (collisionRadius * 2, avatarHeight * 2),
+                           projectionMatrix);
 
-               // Translate camera to user position and to look in the direction of the direction.
+            // Translate camera to user position and to look in the direction of the direction.
 
-               localOrientation .assign (viewpoint ._orientation .getValue ()) .inverse () .multRight (viewpoint .getOrientation ());
-               rotation .setFromToVec (Vector3 .zAxis, vector .assign (direction) .negate ()) .multRight (localOrientation);
-               viewpoint .straightenHorizon (rotation);
+            localOrientation .assign (viewpoint ._orientation .getValue ()) .inverse () .multRight (viewpoint .getOrientation ());
+            rotation .setFromToVec (Vector3 .zAxis, vector .assign (direction) .negate ()) .multRight (localOrientation);
+            viewpoint .straightenHorizon (rotation);
 
-               cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
-               cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
-               cameraSpaceProjectionMatrix .rotate (rotation);
-               cameraSpaceProjectionMatrix .inverse ();
+            cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
+            cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
+            cameraSpaceProjectionMatrix .rotate (rotation);
+            cameraSpaceProjectionMatrix .inverse ();
 
-               cameraSpaceProjectionMatrix .multRight (projectionMatrix);
-               cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
+            cameraSpaceProjectionMatrix .multRight (projectionMatrix);
+            cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
 
-               this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
+            this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
 
-               const depth = this .getDepth (projectionMatrix);
+            const depth = this .getDepth (projectionMatrix);
 
-               this .getProjectionMatrix () .pop ();
+            this .getProjectionMatrix () .pop ();
 
-               this .collisionTime += performance .now () - t0;
-               return -depth;
-            }
-            catch (error)
-            {
-               console .error (error);
-            }
+            this .collisionTime += performance .now () - t0;
+            return -depth;
          };
       })(),
       getDepth: (function ()
@@ -613,27 +606,20 @@ function (TextureBuffer,
 
             for (let i = 0, length = this .numCollisionShapes; i < length; ++ i)
             {
-               try
-               {
-                  const
-                     context    = this .collisionShapes [i],
-                     collisions = context .collisions;
+               const
+                  context    = this .collisionShapes [i],
+                  collisions = context .collisions;
 
-                  if (collisions .length)
+               if (collisions .length)
+               {
+                  collisionBox .set (collisionSize, Vector3 .Zero);
+                  collisionBox .multRight (invModelViewMatrix .assign (context .modelViewMatrix) .inverse ());
+
+                  if (context .shapeNode .intersectsBox (collisionBox, context .clipPlanes, modelViewMatrix .assign (context .modelViewMatrix)))
                   {
-                     collisionBox .set (collisionSize, Vector3 .Zero);
-                     collisionBox .multRight (invModelViewMatrix .assign (context .modelViewMatrix) .inverse ());
-
-                     if (context .shapeNode .intersectsBox (collisionBox, context .clipPlanes, modelViewMatrix .assign (context .modelViewMatrix)))
-                     {
-                        for (const collision of collisions)
-                           activeCollisions .add (collision);
-                     }
+                     for (const collision of collisions)
+                        activeCollisions .add (collision);
                   }
-               }
-               catch (error)
-               {
-                  console .error (error);
                }
             }
 
@@ -667,121 +653,114 @@ function (TextureBuffer,
 
          return function ()
          {
-            try
+            const
+               browser    = this .getBrowser (),
+               shaderNode = browser .getDepthShader ();
+
+            if (shaderNode .isValid ())
             {
-               const
-                  browser    = this .getBrowser (),
-                  shaderNode = browser .getDepthShader ();
+               // Terrain following and gravitation
 
-               if (shaderNode .isValid ())
+               if (browser .getActiveLayer () === this)
                {
-                  // Terrain following and gravitation
-
-                  if (browser .getActiveLayer () === this)
-                  {
-                     if (browser .getCurrentViewer () !== "WALK")
-                        return;
-                  }
-                  else if (this .getNavigationInfo () .getViewer () !== "WALK")
+                  if (browser .getCurrentViewer () !== "WALK")
                      return;
+               }
+               else if (this .getNavigationInfo () .getViewer () !== "WALK")
+                  return;
 
-                  // Get NavigationInfo values
+               // Get NavigationInfo values
 
-                  const
-                     navigationInfo  = this .getNavigationInfo (),
-                     viewpoint       = this .getViewpoint (),
-                     collisionRadius = navigationInfo .getCollisionRadius (),
-                     nearValue       = navigationInfo .getNearValue (),
-                     avatarHeight    = navigationInfo .getAvatarHeight (),
-                     stepHeight      = navigationInfo .getStepHeight ();
+               const
+                  navigationInfo  = this .getNavigationInfo (),
+                  viewpoint       = this .getViewpoint (),
+                  collisionRadius = navigationInfo .getCollisionRadius (),
+                  nearValue       = navigationInfo .getNearValue (),
+                  avatarHeight    = navigationInfo .getAvatarHeight (),
+                  stepHeight      = navigationInfo .getStepHeight ();
 
-                  // Reshape viewpoint for gravite.
+               // Reshape viewpoint for gravite.
 
-                  Camera .ortho (-collisionRadius,
-                                 collisionRadius,
-                                 -collisionRadius,
-                                 collisionRadius,
-                                 nearValue,
-                                 Math .max (collisionRadius * 2, avatarHeight * 2),
-                                 projectionMatrix);
+               Camera .ortho (-collisionRadius,
+                              collisionRadius,
+                              -collisionRadius,
+                              collisionRadius,
+                              nearValue,
+                              Math .max (collisionRadius * 2, avatarHeight * 2),
+                              projectionMatrix);
 
-                  // Transform viewpoint to look down the up vector
+               // Transform viewpoint to look down the up vector
 
-                  const
-                     upVector = viewpoint .getUpVector (),
-                     down     = rotation .setFromToVec (Vector3 .zAxis, upVector);
+               const
+                  upVector = viewpoint .getUpVector (),
+                  down     = rotation .setFromToVec (Vector3 .zAxis, upVector);
 
-                  cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
-                  cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
-                  cameraSpaceProjectionMatrix .rotate (down);
-                  cameraSpaceProjectionMatrix .inverse ();
+               cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
+               cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
+               cameraSpaceProjectionMatrix .rotate (down);
+               cameraSpaceProjectionMatrix .inverse ();
 
-                  cameraSpaceProjectionMatrix .multRight (projectionMatrix);
-                  cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
+               cameraSpaceProjectionMatrix .multRight (projectionMatrix);
+               cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
 
-                  this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
+               this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
 
-                  let distance = -this .getDepth (projectionMatrix);
+               let distance = -this .getDepth (projectionMatrix);
 
-                  this .getProjectionMatrix () .pop ();
+               this .getProjectionMatrix () .pop ();
 
-                  // Gravite or step up
+               // Gravite or step up
 
-                  distance -= avatarHeight;
+               distance -= avatarHeight;
 
-                  const up = rotation .setFromToVec (Vector3 .yAxis, upVector);
+               const up = rotation .setFromToVec (Vector3 .yAxis, upVector);
 
-                  if (distance > 0)
+               if (distance > 0)
+               {
+                  // Gravite and fall down the to the floor
+
+                  const currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
+
+                  this .speed -= browser .getBrowserOptions () ._Gravity .getValue () / currentFrameRate;
+
+                  let y = this .speed / currentFrameRate;
+
+                  if (y < -distance)
                   {
-                     // Gravite and fall down the to the floor
-
-                     const currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
-
-                     this .speed -= browser .getBrowserOptions () ._Gravity .getValue () / currentFrameRate;
-
-                     let y = this .speed / currentFrameRate;
-
-                     if (y < -distance)
-                     {
-                        // The ground is reached.
-                        y = -distance;
-                        this .speed = 0;
-                     }
-
-                     viewpoint ._positionOffset = viewpoint ._positionOffset .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
-                  }
-                  else
-                  {
+                     // The ground is reached.
+                     y = -distance;
                      this .speed = 0;
+                  }
 
-                     distance = -distance;
+                  viewpoint ._positionOffset = viewpoint ._positionOffset .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
+               }
+               else
+               {
+                  this .speed = 0;
 
-                     if (distance > 0.01 && distance < stepHeight)
-                     {
-                        // Step up
-                        this .constrainTranslation (up .multVecRot (translation .set (0, distance, 0)), false);
+                  distance = -distance;
 
-                        //if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
-                        //{
-                        //	float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
-                        //	step = abs (getViewMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
-                        //
-                        //	Vector3f offset = Vector3f (0, step, 0) * up;
-                        //
-                        //	if (math::abs (offset) > math::abs (translation) or getBrowser () -> getCurrentSpeed () == 0)
-                        //		offset = translation;
-                        //
-                        //	getViewpoint () -> positionOffset () += offset;
-                        //}
-                        //else
-                           viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
-                     }
+                  if (distance > 0.01 && distance < stepHeight)
+                  {
+                     // Step up
+                     this .constrainTranslation (up .multVecRot (translation .set (0, distance, 0)), false);
+
+                     //if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
+                     //{
+                     //	float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
+                     //	step = abs (getViewMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
+                     //
+                     //	Vector3f offset = Vector3f (0, step, 0) * up;
+                     //
+                     //	if (math::abs (offset) > math::abs (translation) or getBrowser () -> getCurrentSpeed () == 0)
+                     //		offset = translation;
+                     //
+                     //	getViewpoint () -> positionOffset () += offset;
+                     //}
+                     //else
+                        viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
                   }
                }
-            }
-            catch (error)
-            {
-               console .error (error);
             }
          };
       })(),

@@ -105,45 +105,38 @@ function (Fields,
       },
       setGlobalVariables: function (renderObject)
       {
-         try
-         {
-            var
-               textureProjectorNode  = this .textureProjectorNode,
-               cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
-               modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
-               invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (textureProjectorNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+         var
+            textureProjectorNode  = this .textureProjectorNode,
+            cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
+            modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
+            invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (textureProjectorNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
-            this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (textureProjectorNode .getDirection ()) .negate ());
-            textureProjectorNode .straightenHorizon (this .rotation);
+         this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (textureProjectorNode .getDirection ()) .negate ());
+         textureProjectorNode .straightenHorizon (this .rotation);
 
-            invTextureSpaceMatrix .translate (textureProjectorNode .getLocation ());
-            invTextureSpaceMatrix .rotate (this .rotation);
-            invTextureSpaceMatrix .inverse ();
+         invTextureSpaceMatrix .translate (textureProjectorNode .getLocation ());
+         invTextureSpaceMatrix .rotate (this .rotation);
+         invTextureSpaceMatrix .inverse ();
 
-            var
-               width            = textureProjectorNode .getTexture () .getWidth (),
-               height           = textureProjectorNode .getTexture () .getHeight (),
-               nearDistance     = textureProjectorNode .getNearDistance (),
-               farDistance      = textureProjectorNode .getFarDistance (),
-               fieldOfView      = textureProjectorNode .getFieldOfView ();
+         var
+            width            = textureProjectorNode .getTexture () .getWidth (),
+            height           = textureProjectorNode .getTexture () .getHeight (),
+            nearDistance     = textureProjectorNode .getNearDistance (),
+            farDistance      = textureProjectorNode .getFarDistance (),
+            fieldOfView      = textureProjectorNode .getFieldOfView ();
 
-            Camera .perspective (fieldOfView, nearDistance, farDistance, width, height, this .projectionMatrix);
+         Camera .perspective (fieldOfView, nearDistance, farDistance, width, height, this .projectionMatrix);
 
-            if (! textureProjectorNode .getGlobal ())
-               invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
+         if (! textureProjectorNode .getGlobal ())
+            invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
 
-            this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (textureProjectorNode .getBiasMatrix ());
+         this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (textureProjectorNode .getBiasMatrix ());
 
-            this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
-            this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
+         this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
+         this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
-            this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode ._location .getValue ()));
-            this .locationArray .set (this .location);
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode ._location .getValue ()));
+         this .locationArray .set (this .location);
       },
       setShaderUniforms: function (gl, shaderObject, renderObject)
       {

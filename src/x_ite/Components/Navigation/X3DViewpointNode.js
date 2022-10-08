@@ -226,105 +226,98 @@ function (Fields,
 
          return function (layerNode, fromViewpointNode, toViewpointNode)
          {
-            try
+            this .to = toViewpointNode;
+
+            if (toViewpointNode ._jump .getValue ())
             {
-               this .to = toViewpointNode;
+               if (! toViewpointNode ._retainUserOffsets .getValue ())
+                  toViewpointNode .resetUserOffsets ();
 
-               if (toViewpointNode ._jump .getValue ())
+               // Copy from toViewpointNode all fields.
+
+               if (this !== toViewpointNode)
                {
-                  if (! toViewpointNode ._retainUserOffsets .getValue ())
-                     toViewpointNode .resetUserOffsets ();
+                  for (const field of toViewpointNode .getFields ())
+                     this .getField (field .getName ()) .assign (field);
+               }
 
-                  // Copy from toViewpointNode all fields.
+               // Respect NavigationInfo.
 
-                  if (this !== toViewpointNode)
-                  {
-                     for (const field of toViewpointNode .getFields ())
-                        this .getField (field .getName ()) .assign (field);
-                  }
+               const
+                  navigationInfoNode = layerNode .getNavigationInfo (),
+                  transitionTime     = navigationInfoNode ._transitionTime .getValue ();
 
-                  // Respect NavigationInfo.
+               let transitionType = navigationInfoNode .getTransitionType ();
 
-                  const
-                     navigationInfoNode = layerNode .getNavigationInfo (),
-                     transitionTime     = navigationInfoNode ._transitionTime .getValue ();
+               // VRML behavior
 
-                  let transitionType = navigationInfoNode .getTransitionType ();
-
-                  // VRML behavior
-
-                  if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
-                  {
-                     if (toViewpointNode .getVRMLTransition ())
-                        transitionType = "LINEAR";
-                     else
-                        transitionType = "TELEPORT";
-                  }
-
-                  toViewpointNode .setVRMLTransition (false);
-
-                  // End VRML behavior
-
-                  if (transitionTime <= 0)
+               if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
+               {
+                  if (toViewpointNode .getVRMLTransition ())
+                     transitionType = "LINEAR";
+                  else
                      transitionType = "TELEPORT";
-
-                  switch (transitionType)
-                  {
-                     case "TELEPORT":
-                     {
-                        navigationInfoNode ._transitionComplete = true;
-                        return;
-                     }
-                     case "ANIMATE":
-                     {
-                        this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-                        break;
-                     }
-                     default:
-                     {
-                        // LINEAR
-                        this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
-                        break;
-                     }
-                  }
-
-                  this .timeSensor ._cycleInterval = transitionTime;
-                  this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-                  this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
-
-                  this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
-
-                  toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-                  this .positionInterpolator         ._keyValue = new Fields .MFVec3f    (relativePosition,         toViewpointNode ._positionOffset);
-                  this .orientationInterpolator      ._keyValue = new Fields .MFRotation (relativeOrientation,      toViewpointNode ._orientationOffset);
-                  this .scaleInterpolator            ._keyValue = new Fields .MFVec3f    (relativeScale,            toViewpointNode ._scaleOffset);
-                  this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (relativeScaleOrientation, toViewpointNode ._scaleOrientationOffset);
-
-                  this ._positionOffset         = relativePosition;
-                  this ._orientationOffset      = relativeOrientation;
-                  this ._scaleOffset            = relativeScale;
-                  this ._scaleOrientationOffset = relativeScaleOrientation;
-
-                  this .setInterpolators (fromViewpointNode, toViewpointNode);
-
-                  this ._transitionActive = true;
                }
-               else
+
+               toViewpointNode .setVRMLTransition (false);
+
+               // End VRML behavior
+
+               if (transitionTime <= 0)
+                  transitionType = "TELEPORT";
+
+               switch (transitionType)
                {
-                  toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-                  toViewpointNode ._positionOffset         = relativePosition;
-                  toViewpointNode ._orientationOffset      = relativeOrientation;
-                  toViewpointNode ._scaleOffset            = relativeScale;
-                  toViewpointNode ._scaleOrientationOffset = relativeScaleOrientation;
-
-                  toViewpointNode .setInterpolators (fromViewpointNode, toViewpointNode);
+                  case "TELEPORT":
+                  {
+                     navigationInfoNode ._transitionComplete = true;
+                     return;
+                  }
+                  case "ANIMATE":
+                  {
+                     this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+                     break;
+                  }
+                  default:
+                  {
+                     // LINEAR
+                     this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+                     break;
+                  }
                }
+
+               this .timeSensor ._cycleInterval = transitionTime;
+               this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+               this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+               this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
+
+               toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+
+               this .positionInterpolator         ._keyValue = new Fields .MFVec3f    (relativePosition,         toViewpointNode ._positionOffset);
+               this .orientationInterpolator      ._keyValue = new Fields .MFRotation (relativeOrientation,      toViewpointNode ._orientationOffset);
+               this .scaleInterpolator            ._keyValue = new Fields .MFVec3f    (relativeScale,            toViewpointNode ._scaleOffset);
+               this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (relativeScaleOrientation, toViewpointNode ._scaleOrientationOffset);
+
+               this ._positionOffset         = relativePosition;
+               this ._orientationOffset      = relativeOrientation;
+               this ._scaleOffset            = relativeScale;
+               this ._scaleOrientationOffset = relativeScaleOrientation;
+
+               this .setInterpolators (fromViewpointNode, toViewpointNode);
+
+               this ._transitionActive = true;
             }
-            catch (error)
+            else
             {
-               console .error (error);
+               toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+
+               toViewpointNode ._positionOffset         = relativePosition;
+               toViewpointNode ._orientationOffset      = relativeOrientation;
+               toViewpointNode ._scaleOffset            = relativeScale;
+               toViewpointNode ._scaleOrientationOffset = relativeScaleOrientation;
+
+               toViewpointNode .setInterpolators (fromViewpointNode, toViewpointNode);
             }
          };
       })(),
@@ -343,7 +336,6 @@ function (Fields,
          this ._fieldOfViewScale       = 1;
       },
       getRelativeTransformation: function (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
-      // throw
       {
          const differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpointNode .getViewMatrix ()) .inverse ();
 
@@ -354,35 +346,21 @@ function (Fields,
       },
       lookAtPoint: function (layerNode, point, factor, straighten)
       {
-         try
-         {
-            this .getCameraSpaceMatrix () .multVecMatrix (point);
+         this .getCameraSpaceMatrix () .multVecMatrix (point);
 
-            Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
+         Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
 
-            const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+         const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
 
-            this .lookAt (layerNode, point, minDistance, factor, straighten);
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         this .lookAt (layerNode, point, minDistance, factor, straighten);
       },
       lookAtBBox: function (layerNode, bbox, factor, straighten)
       {
-         try
-         {
-            bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
+         bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
 
-            const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+         const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
 
-            this .lookAt (layerNode, bbox .center, minDistance, factor, straighten);
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         this .lookAt (layerNode, bbox .center, minDistance, factor, straighten);
       },
       lookAt: function (layerNode, point, distance, factor, straighten)
       {
@@ -496,21 +474,14 @@ function (Fields,
       },
       update: function ()
       {
-         try
-         {
-            this .cameraSpaceMatrix .set (this .getUserPosition (),
-                                          this .getUserOrientation (),
-                                          this ._scaleOffset .getValue (),
-                                          this ._scaleOrientationOffset .getValue ());
+         this .cameraSpaceMatrix .set (this .getUserPosition (),
+                                       this .getUserOrientation (),
+                                       this ._scaleOffset .getValue (),
+                                       this ._scaleOrientationOffset .getValue ());
 
-            this .cameraSpaceMatrix .multRight ((this .to || this) .modelMatrix);
+         this .cameraSpaceMatrix .multRight ((this .to || this) .modelMatrix);
 
-            this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
       }
    });
 

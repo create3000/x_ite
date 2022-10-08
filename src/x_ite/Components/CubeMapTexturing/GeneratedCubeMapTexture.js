@@ -230,17 +230,7 @@ function (Fields,
                renderer .getCameraSpaceMatrix () .rotate (rotations [i]);
                renderer .getCameraSpaceMatrix () .scale (scales [i]);
 
-               try
-               {
-                  renderer .getViewMatrix () .pushMatrix (invCameraSpaceMatrix .assign (renderer .getCameraSpaceMatrix () .get ()) .inverse ());
-               }
-               catch (error)
-               {
-                  console .error (error);
-
-                  renderer .getViewMatrix () .pushMatrix (Matrix4 .Identity);
-               }
-
+               renderer .getViewMatrix () .pushMatrix (invCameraSpaceMatrix .assign (renderer .getCameraSpaceMatrix () .get ()) .inverse ());
                renderer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
 
                // Setup headlight if enabled.

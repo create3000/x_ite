@@ -154,9 +154,6 @@ function (Vector2,
             D = this [3],
             d = A * D - B * C;
 
-         if (d === 0)
-            throw new Error ("Matrix2 .inverse: determinant is 0.");
-
          this [0] =  D / d;
          this [1] = -B / d;
          this [2] = -C / d;

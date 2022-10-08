@@ -166,46 +166,39 @@ function (ViewVolume,
 
          return function (projectionMatrix, viewport)
          {
-            try
+            const
+               gl     = this .browser .getContext (),
+               array  = this .array,
+               width  = this .width,
+               height = this .height;
+
+            let
+               winx = 0,
+               winy = 0,
+               winz = Number .POSITIVE_INFINITY;
+
+            invProjectionMatrix .assign (projectionMatrix) .inverse ();
+
+            gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
+
+            for (let wy = 0, i = 0; wy < height; ++ wy)
             {
-               const
-                  gl     = this .browser .getContext (),
-                  array  = this .array,
-                  width  = this .width,
-                  height = this .height;
-
-               let
-                  winx = 0,
-                  winy = 0,
-                  winz = Number .POSITIVE_INFINITY;
-
-               invProjectionMatrix .assign (projectionMatrix) .inverse ();
-
-               gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
-
-               for (let wy = 0, i = 0; wy < height; ++ wy)
+               for (let wx = 0; wx < width; ++ wx, i += 4)
                {
-                  for (let wx = 0; wx < width; ++ wx, i += 4)
-                  {
-                     const wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
+                  const wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
 
-                     if (wz < winz)
-                     {
-                        winx = wx;
-                        winy = wy;
-                        winz = wz;
-                     }
+                  if (wz < winz)
+                  {
+                     winx = wx;
+                     winy = wy;
+                     winz = wz;
                   }
                }
-
-               ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, point);
-
-               return point .z;
             }
-            catch (error)
-            {
-               return 0;
-            }
+
+            ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, point);
+
+            return point .z;
          };
       })(),
       bind: function ()

@@ -90,7 +90,6 @@ function (Vector3,
          return this;
       },
       multRight: function (matrix)
-      //throw
       {
          // Taken from Inventor:
 
@@ -116,7 +115,6 @@ function (Vector3,
          return this;
       },
       multLeft: function (matrix)
-      //throw
       {
          // Taken from Inventor:
 

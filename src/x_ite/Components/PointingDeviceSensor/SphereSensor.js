@@ -141,97 +141,80 @@ function (Fields,
       {
          X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
 
-         try
+         if (this ._isActive .getValue ())
          {
-            if (this ._isActive .getValue ())
-            {
-               this .modelViewMatrix    .assign (modelViewMatrix);
-               this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+            this .modelViewMatrix    .assign (modelViewMatrix);
+            this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-               var
-                  hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ()),
-                  center   = new Vector3 (0, 0, 0);
+            var
+               hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ()),
+               center   = new Vector3 (0, 0, 0);
 
-               this .zPlane = new Plane3 (center, this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ()); // Screen aligned Z-plane
-               this .sphere = new Sphere3 (hitPoint .abs (), center);
-               this .behind = this .zPlane .getDistanceToPoint (hitPoint) < 0;
+            this .zPlane = new Plane3 (center, this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ()); // Screen aligned Z-plane
+            this .sphere = new Sphere3 (hitPoint .abs (), center);
+            this .behind = this .zPlane .getDistanceToPoint (hitPoint) < 0;
 
-               this .fromVector  .assign (hitPoint);
-               this .startPoint  .assign (hitPoint);
-               this .startOffset .assign (this ._offset .getValue ());
+            this .fromVector  .assign (hitPoint);
+            this .startPoint  .assign (hitPoint);
+            this .startOffset .assign (this ._offset .getValue ());
 
-               this ._trackPoint_changed = hitPoint;
-               this ._rotation_changed   = this ._offset .getValue ();
-            }
-            else
-            {
-               if (this ._autoOffset .getValue ())
-                  this ._offset = this ._rotation_changed;
-            }
+            this ._trackPoint_changed = hitPoint;
+            this ._rotation_changed   = this ._offset .getValue ();
          }
-         catch (error)
+         else
          {
-            //console .error (error);
+            if (this ._autoOffset .getValue ())
+               this ._offset = this ._rotation_changed;
          }
       },
       set_motion__: function (hit)
       {
-         try
+         var
+            hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+            trackPoint = new Vector3 (0, 0, 0);
+
+         if (this .getTrackPoint (hitRay, trackPoint, this .behind))
          {
-            var
-               hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-               trackPoint = new Vector3 (0, 0, 0);
+            var zAxis = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize (); // Camera direction
+            this .zPlane = new Plane3 (trackPoint, zAxis);                                             // Screen aligned Z-plane
+         }
+         else
+         {
+            // Find trackPoint on the plane with sphere
 
-            if (this .getTrackPoint (hitRay, trackPoint, this .behind))
-            {
-               var zAxis = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize (); // Camera direction
-               this .zPlane = new Plane3 (trackPoint, zAxis);                                             // Screen aligned Z-plane
-            }
-            else
-            {
-               // Find trackPoint on the plane with sphere
+            var tangentPoint = new Vector3 (0, 0, 0);
+            this .zPlane .intersectsLine (hitRay, tangentPoint);
 
-               var tangentPoint = new Vector3 (0, 0, 0);
-               this .zPlane .intersectsLine (hitRay, tangentPoint);
+            hitRay = new Line3 (tangentPoint, Vector3 .subtract (this .sphere .center, tangentPoint) .normalize ());
 
-               hitRay = new Line3 (tangentPoint, Vector3 .subtract (this .sphere .center, tangentPoint) .normalize ());
+            //console .log (hitRay .toString ());
 
-               //console .log (hitRay .toString ());
+            this .getTrackPoint (hitRay, trackPoint, false);
 
-               this .getTrackPoint (hitRay, trackPoint, false);
-
-               // Find trackPoint behind sphere
-
-               var
-                  triNormal     = Triangle3 .normal (this .sphere .center, trackPoint, this .startPoint, new Vector3 (0, 0, 0)),
-                  dirFromCenter = Vector3 .subtract (trackPoint, this .sphere .center) .normalize (),
-                  normal        = Vector3 .cross (triNormal, dirFromCenter) .normalize ();
-
-               var point1 = Vector3 .subtract (trackPoint, normal .multiply (Vector3 .subtract (tangentPoint, trackPoint) .abs ()));
-
-               hitRay = new Line3 (point1, Vector3 .subtract (this .sphere .center, point1) .normalize ());
-
-               this .getTrackPoint (hitRay, trackPoint, false);
-            }
-
-            this ._trackPoint_changed = trackPoint;
+            // Find trackPoint behind sphere
 
             var
-               toVector = Vector3 .subtract (trackPoint, this .sphere .center),
-               rotation = new Rotation4 (this .fromVector, toVector);
+               triNormal     = Triangle3 .normal (this .sphere .center, trackPoint, this .startPoint, new Vector3 (0, 0, 0)),
+               dirFromCenter = Vector3 .subtract (trackPoint, this .sphere .center) .normalize (),
+               normal        = Vector3 .cross (triNormal, dirFromCenter) .normalize ();
 
-            if (this .behind)
-               rotation .inverse ();
+            var point1 = Vector3 .subtract (trackPoint, normal .multiply (Vector3 .subtract (tangentPoint, trackPoint) .abs ()));
 
-            this ._rotation_changed = Rotation4 .multRight (this .startOffset, rotation);
+            hitRay = new Line3 (point1, Vector3 .subtract (this .sphere .center, point1) .normalize ());
+
+            this .getTrackPoint (hitRay, trackPoint, false);
          }
-         catch (error)
-         {
-            //console .error (error);
 
-            this ._trackPoint_changed .addEvent ();
-            this ._rotation_changed   .addEvent ();
-         }
+         this ._trackPoint_changed = trackPoint;
+
+         var
+            toVector = Vector3 .subtract (trackPoint, this .sphere .center),
+            rotation = new Rotation4 (this .fromVector, toVector);
+
+         if (this .behind)
+            rotation .inverse ();
+
+         this ._rotation_changed = Rotation4 .multRight (this .startOffset, rotation);
       },
    });
 

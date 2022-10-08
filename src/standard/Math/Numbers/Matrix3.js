@@ -138,136 +138,141 @@ function (Vector2,
       {
          return this [r * this .order + c];
       },
-      set: function (translation, rotation, scale, scaleOrientation, center)
+      set: (function ()
       {
-         switch (arguments .length)
+         const invCenter = new Vector2 (0, 0);
+
+         return function (translation, rotation, scale, scaleOrientation, center)
          {
-            case 0:
+            switch (arguments .length)
             {
-               this .identity ();
-               break;
-            }
-            case 1:
-            {
-               if (translation === null) translation = Vector2 .Zero;
-
-               this .identity ();
-               this .translate (translation);
-               break;
-            }
-            case 2:
-            {
-               if (translation === null) translation = Vector2 .Zero;
-               if (rotation    === null) rotation    = 0;
-
-               this .identity ();
-               this .translate (translation);
-
-               if (rotation !== 0)
-                  this .rotate (rotation);
-
-               break;
-            }
-            case 3:
-            {
-               if (translation === null) translation = Vector2 .Zero;
-               if (rotation    === null) rotation    = 0;
-               if (scale       === null) scale       = Vector2 .One;
-
-               this .identity ();
-               this .translate (translation);
-
-               if (rotation !== 0)
-                  this .rotate (rotation);
-
-               if (! scale .equals (Vector2 .One))
-                  this .scale  (scale);
-
-               break;
-            }
-            case 4:
-            {
-               if (translation      === null) translation      = Vector2 .Zero;
-               if (rotation         === null) rotation         = 0;
-               if (scale            === null) scale            = Vector2 .One;
-               if (scaleOrientation === null) scaleOrientation = 0;
-
-               this .identity ();
-               this .translate (translation);
-
-               if (rotation !== 0)
-                  this .rotate (rotation);
-
-               if (! scale .equals (Vector2 .One))
+               case 0:
                {
-                  const hasScaleOrientation = scaleOrientation !== 0;
-
-                  if (hasScaleOrientation)
-                  {
-                     this .rotate (scaleOrientation);
-                     this .scale (scale);
-                     this .rotate (-scaleOrientation);
-                  }
-                  else
-                     this .scale (scale);
+                  this .identity ();
+                  break;
                }
-
-               break;
-            }
-            case 5:
-            {
-               if (translation      === null) translation      = Vector2 .Zero;
-               if (rotation         === null) rotation         = 0;
-               if (scale            === null) scale            = Vector2 .One;
-               if (scaleOrientation === null) scaleOrientation = 0;
-               if (center           === null) center           = Vector2 .Zero;
-
-               // P' = T * C * R * SR * S * -SR * -C * P
-               this .identity ();
-               this .translate (translation);
-
-               const hasCenter = ! center .equals (Vector2 .Zero);
-
-               if (hasCenter)
-                  this .translate (center);
-
-               if (rotation !== 0)
-                  this .rotate (rotation);
-
-               if (! scale .equals (Vector2 .One))
+               case 1:
                {
-                  if (scaleOrientation !== 0)
-                  {
-                     this .rotate (scaleOrientation);
-                     this .scale (scale);
-                     this .rotate (-scaleOrientation);
-                  }
-                  else
-                     this .scale (scale);
+                  if (translation === null) translation = Vector2 .Zero;
+
+                  this .identity ();
+                  this .translate (translation);
+                  break;
                }
+               case 2:
+               {
+                  if (translation === null) translation = Vector2 .Zero;
+                  if (rotation    === null) rotation    = 0;
 
-               if (hasCenter)
-                  this .translate (Vector2 .negate (center));
+                  this .identity ();
+                  this .translate (translation);
 
-               break;
+                  if (rotation !== 0)
+                     this .rotate (rotation);
+
+                  break;
+               }
+               case 3:
+               {
+                  if (translation === null) translation = Vector2 .Zero;
+                  if (rotation    === null) rotation    = 0;
+                  if (scale       === null) scale       = Vector2 .One;
+
+                  this .identity ();
+                  this .translate (translation);
+
+                  if (rotation !== 0)
+                     this .rotate (rotation);
+
+                  if (! scale .equals (Vector2 .One))
+                     this .scale  (scale);
+
+                  break;
+               }
+               case 4:
+               {
+                  if (translation      === null) translation      = Vector2 .Zero;
+                  if (rotation         === null) rotation         = 0;
+                  if (scale            === null) scale            = Vector2 .One;
+                  if (scaleOrientation === null) scaleOrientation = 0;
+
+                  this .identity ();
+                  this .translate (translation);
+
+                  if (rotation !== 0)
+                     this .rotate (rotation);
+
+                  if (! scale .equals (Vector2 .One))
+                  {
+                     const hasScaleOrientation = scaleOrientation !== 0;
+
+                     if (hasScaleOrientation)
+                     {
+                        this .rotate (scaleOrientation);
+                        this .scale (scale);
+                        this .rotate (-scaleOrientation);
+                     }
+                     else
+                        this .scale (scale);
+                  }
+
+                  break;
+               }
+               case 5:
+               {
+                  if (translation      === null) translation      = Vector2 .Zero;
+                  if (rotation         === null) rotation         = 0;
+                  if (scale            === null) scale            = Vector2 .One;
+                  if (scaleOrientation === null) scaleOrientation = 0;
+                  if (center           === null) center           = Vector2 .Zero;
+
+                  // P' = T * C * R * SR * S * -SR * -C * P
+                  this .identity ();
+                  this .translate (translation);
+
+                  const hasCenter = ! center .equals (Vector2 .Zero);
+
+                  if (hasCenter)
+                     this .translate (center);
+
+                  if (rotation !== 0)
+                     this .rotate (rotation);
+
+                  if (! scale .equals (Vector2 .One))
+                  {
+                     if (scaleOrientation !== 0)
+                     {
+                        this .rotate (scaleOrientation);
+                        this .scale (scale);
+                        this .rotate (-scaleOrientation);
+                     }
+                     else
+                        this .scale (scale);
+                  }
+
+                  if (hasCenter)
+                     this .translate (invCenter .assign (center) .negate ());
+
+                  break;
+               }
+               case 9:
+               {
+                  this [0] = arguments [0];
+                  this [1] = arguments [1];
+                  this [2] = arguments [2];
+                  this [3] = arguments [3];
+                  this [4] = arguments [4];
+                  this [5] = arguments [5];
+                  this [6] = arguments [6];
+                  this [7] = arguments [7];
+                  this [8] = arguments [8];
+                  break;
+               }
             }
-            case 9:
-            {
-               this [0] = arguments [0];
-               this [1] = arguments [1];
-               this [2] = arguments [2];
-               this [3] = arguments [3];
-               this [4] = arguments [4];
-               this [5] = arguments [5];
-               this [6] = arguments [6];
-               this [7] = arguments [7];
-               this [8] = arguments [8];
-               break;
-            }
-         }
 
-         return this;
-      },
+            return this;
+         };
+      })(),
       get: (function ()
       {
          const
@@ -361,9 +366,6 @@ function (Vector2,
             const det      = a .determinant ();
             const det_sign = det < 0 ? -1 : 1;
 
-            if (det === 0)
-               throw new Error ("Matrix3 .factor: determinant is 0.");
-
             // (4) B = A * !A  (here !A means A transpose)
             b .assign (a) .transpose () .multLeft (a);
             const e = eigendecomposition (b, eigen);
@@ -431,9 +433,6 @@ function (Vector2,
             t14 = m6 * m4;
 
          let d = (t4 * m8 - t6 * m5 - t8 * m8 + t10 * m2 + t12 * m5 - t14 * m2);
-
-         if (d === 0)
-            throw new Error ("Matrix3 .inverse: determinant is 0.");
 
          d = 1 / d;
 

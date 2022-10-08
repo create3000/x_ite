@@ -225,7 +225,6 @@ function (X3DGeometryNode,
             modelViewProjectionMatrixArray    = new Float32Array (16),
             invModelViewProjectionMatrixArray = new Float32Array (16);
 
-
          return function (gl, context)
          {
             const

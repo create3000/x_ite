@@ -124,47 +124,37 @@ function (X3DSingleTextureNode,
       },
       setTexture: function (width, height, transparent, data, flipY)
       {
-         try
-         {
-            this .width  = width;
-            this .height = height;
-            this .flipY  = flipY;
-            this .data   = data;
+         this .width  = width;
+         this .height = height;
+         this .flipY  = flipY;
+         this .data   = data;
 
-            const gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
-            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
-            gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-            gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
-            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
+         gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
+         gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
+         gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+         gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
-            this .setTransparent (transparent);
-            this .updateTextureProperties ();
-            this .addNodeEvent ();
-         }
-         catch (error)
-         { }
+         this .setTransparent (transparent);
+         this .updateTextureProperties ();
+         this .addNodeEvent ();
       },
       updateTexture: function (data, flipY)
       {
-         try
-         {
-            this .data = data;
+         this .data = data;
 
-            const gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
-            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
-            gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-            gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
-            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
+         gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
+         gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
+         gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+         gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
-            if (this .texturePropertiesNode ._generateMipMaps .getValue ())
-               gl .generateMipmap (gl .TEXTURE_2D);
+         if (this .texturePropertiesNode ._generateMipMaps .getValue ())
+            gl .generateMipmap (gl .TEXTURE_2D);
 
-            this .addNodeEvent ();
-         }
-         catch (error)
-         { }
+         this .addNodeEvent ();
       },
       updateTextureProperties: function ()
       {

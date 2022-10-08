@@ -90,18 +90,10 @@ function (Fields,
             plane      = this .plane,
             localPlane = clipPlane .plane;
 
-         try
-         {
-            plane .normal .assign (localPlane);
-            plane .distanceFromOrigin = -localPlane .w;
+         plane .normal .assign (localPlane);
+         plane .distanceFromOrigin = -localPlane .w;
 
-            plane .multRight (modelViewMatrix);
-         }
-         catch (error)
-         {
-            plane .normal .set (0, 0, 0);
-            plane .distanceFromOrigin = 0;
-         }
+         plane .multRight (modelViewMatrix);
       },
       setShaderUniforms: function (gl, shaderObject)
       {

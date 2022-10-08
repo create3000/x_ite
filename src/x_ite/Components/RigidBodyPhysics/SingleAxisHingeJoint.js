@@ -232,27 +232,20 @@ function ($,
 
          return function ()
          {
-            try
+            if (this .outputs .body2AnchorPoint)
+               this ._body2AnchorPoint = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
+
+            if (this .outputs .angle)
             {
-               if (this .outputs .body2AnchorPoint)
-                  this ._body2AnchorPoint = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
+               var lastAngle  = this ._angle .getValue ();
 
-               if (this .outputs .angle)
-               {
-                  var lastAngle  = this ._angle .getValue ();
+               difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
+               difference .get (null, rotation);
 
-                  difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
-                  difference .get (null, rotation);
+               this ._angle = rotation .angle;
 
-                  this ._angle = rotation .angle;
-
-                  if (this .outputs .angleRate)
-                     this ._angleRate = (this ._angle .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
-               }
-            }
-            catch (error)
-            {
-               // matrix .get
+               if (this .outputs .angleRate)
+                  this ._angleRate = (this ._angle .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
             }
          };
       })(),

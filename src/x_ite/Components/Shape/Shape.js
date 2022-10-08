@@ -186,49 +186,42 @@ function (Fields,
 
          return function (renderObject)
          {
-            try
+            const
+               browser      = renderObject .getBrowser (),
+               geometryNode = this .getGeometry ();
+
+            modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
+            invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+
+            hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
+
+            if (geometryNode .intersectsLine (hitRay, renderObject .getLocalObjects (), modelViewMatrix, intersections))
             {
-               const
-                  browser      = renderObject .getBrowser (),
-                  geometryNode = this .getGeometry ();
+               // Finally we have intersections and must now find the closest hit in front of the camera.
 
-               modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
-               invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+               // Transform hitPoints to absolute space.
+               for (const intersection of intersections)
+                  modelViewMatrix .multVecMatrix (intersection .point);
 
-               hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
+               intersectionSorter .sort (0, intersections .length);
 
-               if (geometryNode .intersectsLine (hitRay, renderObject .getLocalObjects (), modelViewMatrix, intersections))
+               // Find first point that is not greater than near plane;
+               const index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
+               function (lhs, rhs)
                {
-                  // Finally we have intersections and must now find the closest hit in front of the camera.
+                  return lhs .point .z > rhs;
+               });
 
-                  // Transform hitPoints to absolute space.
-                  for (const intersection of intersections)
-                     modelViewMatrix .multVecMatrix (intersection .point);
+               // Are there intersections before the camera?
+               if (index !== intersections .length)
+               {
+                  // Transform hitNormal to absolute space.
+                  invModelViewMatrix .multMatrixDir (intersections [index] .normal) .normalize ();
 
-                  intersectionSorter .sort (0, intersections .length);
-
-                  // Find first point that is not greater than near plane;
-                  const index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
-                  function (lhs, rhs)
-                  {
-                     return lhs .point .z > rhs;
-                  });
-
-                  // Are there intersections before the camera?
-                  if (index !== intersections .length)
-                  {
-                     // Transform hitNormal to absolute space.
-                     invModelViewMatrix .multMatrixDir (intersections [index] .normal) .normalize ();
-
-                     browser .addHit (intersections [index], renderObject .getLayer (), this, modelViewMatrix .multRight (renderObject .getCameraSpaceMatrix () .get ()));
-                  }
-
-                  intersections .length = 0;
+                  browser .addHit (intersections [index], renderObject .getLayer (), this, modelViewMatrix .multRight (renderObject .getCameraSpaceMatrix () .get ()));
                }
-            }
-            catch (error)
-            {
-               console .error (error);
+
+               intersections .length = 0;
             }
          };
       })(),

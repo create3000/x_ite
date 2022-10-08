@@ -156,29 +156,15 @@ function (Fields,
       },
       traverse: function (type, renderObject)
       {
-         try
-         {
-            this .textGeometry .traverse (type, renderObject);
+         this .textGeometry .traverse (type, renderObject);
 
-            X3DGeometryNode .prototype .traverse .call (this, type, renderObject);
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         X3DGeometryNode .prototype .traverse .call (this, type, renderObject);
       },
       display: function (gl, context)
       {
-         try
-         {
-            this .textGeometry .display (gl, context);
+         this .textGeometry .display (gl, context);
 
-            X3DGeometryNode .prototype .display .call (this, gl, context);
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         X3DGeometryNode .prototype .display .call (this, gl, context);
       },
       transformLine: function (line)
       {
