@@ -265,9 +265,6 @@ function (X3DGeometryNode,
 
                   if (this .transformVertexArrayObject .enable (gl, shaderNode))
                   {
-                     // for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                     //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
                      const
                         fogDepthStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
                         fogDepthOffset0 = 0,
@@ -281,6 +278,9 @@ function (X3DGeometryNode,
                         vertexStride    = 8 * Float32Array .BYTES_PER_ELEMENT,
                         vertexOffset0   = 0,
                         vertexOffset1   = 4 * Float32Array .BYTES_PER_ELEMENT;
+
+                     // for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                     //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
                      if (this .fogCoords)
                      {
