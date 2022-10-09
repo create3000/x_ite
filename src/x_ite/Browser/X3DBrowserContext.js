@@ -211,27 +211,25 @@ function ($,
          // callback when other events occur, but if we trigger it here again, it works.
          if (navigator .userAgent .match (/Firefox/))
          {
-            const exclude = [
+            const excludes = [
                "devicemotion",
                "deviceorientation",
-               "absolutedeviceorientation"
+               "absolutedeviceorientation",
             ];
 
-            function eventsOf (element)
+            function eventsOf (element, excludes)
             {
                return Object .keys (element)
                   .filter (key => key .indexOf ("on") === 0)
                   .map (key => key .slice (2))
-                  .filter (event => ! exclude .includes (event))
+                  .filter (event => ! excludes .includes (event))
                   .join (" ");
             }
 
-            $(window) .on (eventsOf (window), function ()
+            $(window) .on (eventsOf (window, excludes), () =>
             {
-               window .cancelAnimationFrame (this .animationFrameRequest);
-               this .requestAnimationFrame ();
-            }
-            .bind (this));
+               setTimeout (this .requestAnimationFrame .bind (this), 0);
+            });
          }
       },
       initialized: function ()
@@ -286,7 +284,9 @@ function ($,
       },
       requestAnimationFrame: function ()
       {
-         this .animationFrameRequest = window .requestAnimationFrame (this [_renderCallback]);
+         cancelAnimationFrame (this .animationFrameRequest);
+
+         this .animationFrameRequest = requestAnimationFrame (this [_renderCallback]);
       },
       traverse: function (now)
       {
