@@ -97,23 +97,29 @@ function ($,
       },
       getRenderer: function ()
       {
-         const
-            gl            = this .getContext (),
-            dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
+         const gl = this .getContext ();
 
-         if (dbgRenderInfo)
-            return gl .getParameter (dbgRenderInfo .UNMASKED_RENDERER_WEBGL);
+         if (! navigator .userAgent .match (/Firefox/))
+         {
+            const dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
+
+            if (dbgRenderInfo)
+               return gl .getParameter (dbgRenderInfo .UNMASKED_RENDERER_WEBGL);
+         }
 
          return gl .getParameter (gl .RENDERER);
       },
       getVendor: function ()
       {
-         const
-            gl            = this .getContext (),
-            dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
+         const gl = this .getContext ();
 
-         if (dbgRenderInfo)
-            return gl .getParameter (dbgRenderInfo .UNMASKED_VENDOR_WEBGL);
+         if (! navigator .userAgent .match (/Firefox/))
+         {
+            const dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
+
+            if (dbgRenderInfo)
+               return gl .getParameter (dbgRenderInfo .UNMASKED_VENDOR_WEBGL);
+         }
 
          return gl .getParameter (gl .VENDOR);
       },

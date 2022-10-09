@@ -68,7 +68,7 @@ function (DEBUG)
       "OES_texture_half_float_linear",
       "OES_vertex_array_object",
       "WEBGL_compressed_texture_s3tc",
-      "WEBGL_debug_renderer_info",
+      //"WEBGL_debug_renderer_info",
       "WEBGL_debug_shaders",
       "WEBGL_depth_texture",
       "WEBGL_draw_buffers",

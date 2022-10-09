@@ -211,11 +211,18 @@ function ($,
          // callback when other events occur, but if we trigger it here again, it works.
          if (navigator .userAgent .match (/Firefox/))
          {
+            const exclude = [
+               "devicemotion",
+               "deviceorientation",
+               "absolutedeviceorientation"
+            ];
+
             function eventsOf (element)
             {
                return Object .keys (element)
                   .filter (key => key .indexOf ("on") === 0)
                   .map (key => key .slice (2))
+                  .filter (event => ! exclude .includes (event))
                   .join (" ");
             }
 
