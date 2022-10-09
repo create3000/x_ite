@@ -356,7 +356,7 @@ function (X3DGeometryNode,
 
                   gl .frontFace (gl .CCW);
                   gl .enable (gl .CULL_FACE);
-                  gl .drawArrays (gl .TRIANGLES, 0, this .vertexCount * 3);
+                  gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : gl .TRIANGLES, 0, this .vertexCount * 3);
 
                   if (blendModeNode)
                      blendModeNode .disable (gl);

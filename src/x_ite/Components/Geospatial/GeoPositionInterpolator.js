@@ -133,18 +133,13 @@ function (Fields,
       },
       interpolate: function (index0, index1, weight)
       {
-         try
-         {
-            this .getCoord (this ._keyValue [index0] .getValue (), this .keyValue0);
-            this .getCoord (this ._keyValue [index1] .getValue (), this .keyValue1);
+         this .getCoord (this ._keyValue [index0] .getValue (), this .keyValue0);
+         this .getCoord (this ._keyValue [index1] .getValue (), this .keyValue1);
 
-            var coord = this .geocentric .slerp (this .keyValue0, this .keyValue1, weight);
+         var coord = this .geocentric .slerp (this .keyValue0, this .keyValue1, weight);
 
-            this ._geovalue_changed = this .getGeoCoord (coord, this .geovalue);
-            this ._value_changed    = coord;
-         }
-         catch (error)
-         { }
+         this ._geovalue_changed = this .getGeoCoord (coord, this .geovalue);
+         this ._value_changed    = coord;
       },
    });
 

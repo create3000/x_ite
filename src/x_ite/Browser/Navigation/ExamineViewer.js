@@ -650,17 +650,10 @@ function ($,
 
          return function (rotationChange)
          {
-            try
-            {
-               this .disconnect ();
-               this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+            this .disconnect ();
+            this .getBrowser () .prepareEvents () .addInterest ("spin", this);
 
-               this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (rotationChange, SPIN_FACTOR));
-            }
-            catch (error)
-            {
-               console .error (error);
-            }
+            this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (rotationChange, SPIN_FACTOR));
          };
       })(),
       addMove: (function ()

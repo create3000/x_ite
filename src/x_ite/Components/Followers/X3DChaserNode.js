@@ -170,33 +170,24 @@ function (X3DFollowerNode,
       },
       prepareEvents: function ()
       {
-         try
+         var
+            buffer     = this .getBuffer (),
+            numBuffers = buffer .length,
+            fraction   = this .updateBuffer ();
+
+         this .output = this .interpolate (this .previousValue,
+                                             buffer [numBuffers - 1],
+                                             this .stepResponse ((numBuffers - 1 + fraction) * this .stepTime));
+
+         for (var i = numBuffers - 2; i >= 0; -- i)
          {
-            var
-               buffer     = this .getBuffer (),
-               numBuffers = buffer .length,
-               fraction   = this .updateBuffer ();
-
-            this .output = this .interpolate (this .previousValue,
-                                              buffer [numBuffers - 1],
-                                              this .stepResponse ((numBuffers - 1 + fraction) * this .stepTime));
-
-            for (var i = numBuffers - 2; i >= 0; -- i)
-            {
-               this .step (buffer [i], buffer [i + 1], this .stepResponse ((i + fraction) * this .stepTime));
-            }
-
-            this .setValue (this .output);
-
-            if (this .equals (this .output, this .destination, this .getTolerance ()))
-               this .set_active (false);
+            this .step (buffer [i], buffer [i + 1], this .stepResponse ((i + fraction) * this .stepTime));
          }
-         catch (error)
-         {
-            // Catch error from Rotation4.slerp.
 
-            //console .error (error);
-         }
+         this .setValue (this .output);
+
+         if (this .equals (this .output, this .destination, this .getTolerance ()))
+            this .set_active (false);
       },
       updateBuffer: function ()
       {
@@ -222,15 +213,10 @@ function (X3DFollowerNode,
 
                for (var i = 0; i < seconds; ++ i)
                {
-                  try
-                  {
-                     var alpha = i / seconds;
+                  var alpha = i / seconds;
 
-                     this .assign (buffer, i, this .interpolate (this .destination, buffer [seconds], alpha))
-                  }
-                  catch (error)
-                  { }
-                }
+                  this .assign (buffer, i, this .interpolate (this .destination, buffer [seconds], alpha))
+               }
             }
             else
             {

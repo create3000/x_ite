@@ -117,12 +117,7 @@ function (X3DFollowerNode,
 
             for (var i = 0; i < order; ++ i)
             {
-               try
-               {
-                  this .assign (buffer, i + 1, this .interpolate (buffer [i], buffer [i + 1], alpha));
-               }
-               catch (error)
-               { }
+               this .assign (buffer, i + 1, this .interpolate (buffer [i], buffer [i + 1], alpha));
             }
 
             this .setValue (buffer [order]);

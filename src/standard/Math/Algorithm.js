@@ -96,9 +96,6 @@ define (function ()
       {
          let cosom = source .dot (destination);
 
-         if (cosom <= -1)
-            throw new Error ("slerp is not possible: vectors are inverse collinear.");
-
          if (cosom >= 1) // Both normal vectors are equal.
             return source;
 
@@ -110,9 +107,8 @@ define (function ()
          }
 
          const
-            omega = Math .acos (cosom),
-            sinom = Math .sin  (omega),
-
+            omega  = Math .acos (cosom),
+            sinom  = Math .sin  (omega),
             scale0 = Math .sin ((1 - t) * omega) / sinom,
             scale1 = Math .sin (t * omega) / sinom;
 
@@ -127,16 +123,12 @@ define (function ()
       {
          const cosom = source .dot (destination);
 
-         if (cosom <= -1)
-            throw new Error ("slerp is not possible: vectors are inverse collinear.");
-
          if (cosom >= 1) // Both normal vectors are equal.
             return source;
 
          const
-            omega = Math .acos (cosom),
-            sinom = Math .sin  (omega),
-
+            omega  = Math .acos (cosom),
+            sinom  = Math .sin  (omega),
             scale0 = Math .sin ((1 - t) * omega) / sinom,
             scale1 = Math .sin (t * omega) / sinom;
 
