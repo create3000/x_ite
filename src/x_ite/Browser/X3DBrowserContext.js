@@ -221,7 +221,7 @@ function ($,
 
             $(window) .on (eventsOf (window), function ()
             {
-               window .cancelAnimationFrame (this .request);
+               window .cancelAnimationFrame (this .animationFrameRequest);
                this .requestAnimationFrame ();
             }
             .bind (this));
@@ -279,7 +279,7 @@ function ($,
       },
       requestAnimationFrame: function ()
       {
-         this .request = window .requestAnimationFrame (this [_renderCallback]);
+         this .animationFrameRequest = window .requestAnimationFrame (this [_renderCallback]);
       },
       traverse: function (now)
       {
