@@ -226,10 +226,7 @@ function ($,
                   .join (" ");
             }
 
-            $(window) .on (eventsOf (window, excludes), () =>
-            {
-               setTimeout (this .requestAnimationFrame .bind (this), 0);
-            });
+            $(window) .on (eventsOf (window, excludes), setTimeout .bind (window, this .requestAnimationFrame .bind (this), 0));
          }
       },
       initialized: function ()
