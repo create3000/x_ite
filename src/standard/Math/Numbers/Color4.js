@@ -85,6 +85,13 @@ function (Color3, Algorithm)
    {
       constructor: Color4,
       length: 4,
+      [Symbol .iterator]: function* ()
+      {
+         yield this [_r];
+         yield this [_g];
+         yield this [_b];
+         yield this [_a];
+      },
       copy: function ()
       {
          const copy = Object .create (Color4 .prototype);

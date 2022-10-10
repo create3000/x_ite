@@ -60,6 +60,11 @@ define (function ()
    Complex .prototype =
    {
       constructor: Complex,
+      [Symbol .iterator]: function* ()
+      {
+         yield this .real;
+         yield this .imag;
+      },
       copy: function ()
       {
          const copy = Object .create (Complex .prototype);

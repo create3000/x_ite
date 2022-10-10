@@ -80,6 +80,10 @@ function (Color3,
    SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       constructor: SFColor,
+      [Symbol .iterator]: function* ()
+      {
+         yield* this .getValue ();
+      },
       copy: function ()
       {
          return new SFColor (this .getValue () .copy ());

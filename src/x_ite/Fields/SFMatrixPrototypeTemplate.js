@@ -58,6 +58,10 @@ function (X3DField)
    {
       return Object .assign (Object .create (X3DField .prototype),
       {
+         [Symbol .iterator]: function* ()
+         {
+            yield* this .getValue ();
+         },
          copy: function ()
          {
             return new (this .constructor) (this .getValue () .copy ());

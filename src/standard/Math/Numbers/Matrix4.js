@@ -94,6 +94,11 @@ function (Vector3,
       constructor: Matrix4,
       order: 4,
       length: 16,
+      [Symbol .iterator]: function* ()
+      {
+         for (let i = 0, length = this .length; i < length; ++ i)
+            yield this [i];
+      },
       copy: function ()
       {
          const copy = Object .create (Matrix4 .prototype);

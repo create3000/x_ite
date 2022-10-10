@@ -76,6 +76,11 @@ function (Vector2,
       constructor: Matrix2,
       order: 2,
       length: 4,
+      [Symbol .iterator]: function* ()
+      {
+         for (let i = 0, length = this .length; i < length; ++ i)
+            yield this [i];
+      },
       copy: function ()
       {
          const copy = Object .create (Matrix2 .prototype);

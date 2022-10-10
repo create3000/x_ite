@@ -82,6 +82,10 @@ function (X3DField,
    SFString .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       constructor: SFString,
+      [Symbol .iterator]: function* ()
+      {
+         yield* this .getValue ();
+      },
       copy: function ()
       {
          return new SFString (this .getValue ());

@@ -64,6 +64,11 @@ function (Algorithm)
    {
       constructor: Vector2,
       length: 2,
+      [Symbol .iterator]: function* ()
+      {
+         yield this .x;
+         yield this .y;
+      },
       copy: function ()
       {
          const copy = Object .create (Vector2 .prototype);

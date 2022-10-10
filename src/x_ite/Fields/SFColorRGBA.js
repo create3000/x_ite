@@ -80,6 +80,10 @@ function (X3DField,
    SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       constructor: SFColorRGBA,
+      [Symbol .iterator]: function* ()
+      {
+         yield* this .getValue ();
+      },
       copy: function ()
       {
          return new SFColorRGBA (this .getValue () .copy ());

@@ -117,6 +117,13 @@ function (Quaternion,
    {
       constructor: Rotation4,
       length: 4,
+      [Symbol .iterator]: function* ()
+      {
+         yield this [_x];
+         yield this [_y];
+         yield this [_z];
+         yield this [_angle];
+      },
       update: function ()
       {
          const rotation = this .get ();

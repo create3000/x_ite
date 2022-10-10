@@ -67,6 +67,13 @@ function (Vector3, Algorithm)
    {
       constructor: Quaternion,
       length: 4,
+      [Symbol .iterator]: function* ()
+      {
+         yield this .x;
+         yield this .y;
+         yield this .z;
+         yield this .w;
+      },
       copy: function ()
       {
          const copy = Object .create (Quaternion .prototype);

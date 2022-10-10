@@ -90,6 +90,10 @@ function (SFVec3,
    SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       constructor: SFRotation,
+      [Symbol .iterator]: function* ()
+      {
+         yield* this .getValue ();
+      },
       copy: function ()
       {
          return new SFRotation (this .getValue () .copy ());
