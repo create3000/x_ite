@@ -154,7 +154,7 @@ function ($,
 
          // At least Firefox 105.0.2 sometimes does not call requestAnimationFrame
          // callback when other events occur, but if we trigger it here again, it works.
-         if (navigator .userAgent .match (/Firefox/))
+         if (navigator .userAgent .includes ("Firefox"))
             this .browser .requestAnimationFrame ();
       },
       set_initLoadCount__: function (scene, success, error, field)
