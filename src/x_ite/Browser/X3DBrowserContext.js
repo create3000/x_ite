@@ -215,12 +215,13 @@ function ($,
                "devicemotion",
                "deviceorientation",
                "absolutedeviceorientation",
+               "beforeunload",
             ]);
 
             function eventsOf (element, excludes)
             {
                return Object .keys (element)
-                  .filter (key => key .indexOf ("on") === 0)
+                  .filter (key => key .startsWith ("on"))
                   .map (key => key .slice (2))
                   .filter (event => ! excludes .has (event))
                   .join (" ");
