@@ -291,8 +291,6 @@ function (Vector2,
             rotMatrix             = new Matrix2 (),
             soMatrix              = new Matrix2 (),
             c                     = new Vector2 (0, 0);
-            
-         let m = null;
 
          return function (translation, rotation, scale, scaleOrientation, center)
          {
@@ -342,9 +340,6 @@ function (Vector2,
                }
                case 5:
                {
-                  if (! m)
-                     m = new Matrix3 ();
-
                   m .set (c .assign (center) .negate ());
                   m .multLeft (this);
                   m .translate (center);
@@ -755,6 +750,8 @@ function (Vector2,
          return lhs .copy () .multRight (rhs);
       },
    });
+
+   const m = new Matrix3 ();
 
    return Matrix3;
 });
