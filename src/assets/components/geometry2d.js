@@ -87,6 +87,6 @@ function (Components,
       abstractTypes:
       {
       },
-      browser: X3DGeometry2DContext,
+      context: X3DGeometry2DContext,
    });
 });

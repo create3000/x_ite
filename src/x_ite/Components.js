@@ -95,8 +95,8 @@ function (DEBUG,
                SupportedNodes .addAbstractType (typeName, component .abstractTypes [typeName]);
          }
 
-         if (component .browser)
-            X3DBrowserContext .addContext (component .browser);
+         if (component .context)
+            X3DBrowserContext .addContext (component .context);
 
          if (component .name)
          {
