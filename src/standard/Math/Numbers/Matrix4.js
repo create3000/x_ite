@@ -327,6 +327,8 @@ function (Vector3,
             so                    = new Matrix3 (),
             c                     = new Vector3 (0, 0, 0);
 
+         let m = null;
+
          return function (translation, rotation, scale, scaleOrientation, center)
          {
             if (translation      === null) translation      = dummyTranslation;
@@ -363,7 +365,8 @@ function (Vector3,
                }
                case 5:
                {
-                  const m = new Matrix4 ();
+                  if (! m)
+                     m =  new Matrix4 ();
 
                   m .set (c .assign (center) .negate ());
                   m .multLeft (this);
@@ -762,12 +765,20 @@ function (Vector3,
 
          return this;
       },
-      rotate: function (rotation)
+      rotate: (function ()
       {
-         this .multLeft (rotateMatrix .setQuaternion (rotation .value));
+         let m = null;
 
-         return this;
-      },
+         return function (rotation)
+         {
+            if (! m)
+               m = new Matrix4 ();
+
+            this .multLeft (m .setQuaternion (rotation .value));
+
+            return this;
+         };
+      })(),
       scale: function (scale)
       {
          const
@@ -957,8 +968,6 @@ function (Vector3,
          return lhs .copy () .multRight (rhs);
       },
    });
-
-   const rotateMatrix = new Matrix4 ();
 
    return Matrix4;
 });
