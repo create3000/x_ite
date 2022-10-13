@@ -347,8 +347,6 @@ function ($,
                   .join (" ");
             }
 
-            console .log (eventsOf (window, new Set ()));
-
             $(window) .on (eventsOf (window, excludes), setTimeout .bind (window, this .requestAnimationFrame .bind (this), 0));
          }
       },
