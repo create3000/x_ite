@@ -96,7 +96,9 @@ function (Vector3,
       length: 16,
       [Symbol .iterator]: function* ()
       {
-         for (let i = 0, length = this .length; i < length; ++ i)
+         const length = this .length;
+
+         for (let i = 0; i < length; ++ i)
             yield this [i];
       },
       copy: function ()
@@ -568,6 +570,8 @@ function (Vector3,
             K = g * m01 + j * m05 + x * m09 - ((f * m01) + (o * m05) + (r * m09));
 
          let B = m00 * H + m04 * I + m08 * J + m12 * K;
+
+         // if (B === 0) ... determinant is zero.
 
          B = 1 / B;
 

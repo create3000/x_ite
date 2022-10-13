@@ -207,28 +207,7 @@ function ($,
                context .prototype .initialize .call (this);
          }
 
-         // At least Firefox 105.0.2 sometimes does not call requestAnimationFrame
-         // callback when other events occur, but if we trigger it here again, it works.
-         if (navigator .userAgent .includes ("Firefox"))
-         {
-            const excludes = new Set ([
-               "devicemotion",
-               "deviceorientation",
-               "absolutedeviceorientation",
-               "beforeunload",
-            ]);
-
-            function eventsOf (element, excludes)
-            {
-               return Object .keys (element)
-                  .filter (key => key .startsWith ("on"))
-                  .map (key => key .slice (2))
-                  .filter (event => ! excludes .has (event))
-                  .join (" ");
-            }
-
-            $(window) .on (eventsOf (window, excludes), setTimeout .bind (window, this .requestAnimationFrame .bind (this), 0));
-         }
+         this .fix ();
       },
       initialized: function ()
       {
@@ -345,6 +324,33 @@ function ($,
       getDisplayTime: function ()
       {
          return this [_displayTime];
+      },
+      fix: function ()
+      {
+         // At least Firefox 105.0.2 sometimes does not call requestAnimationFrame
+         // callback when other events occur, but if we trigger it here again, it works.
+         if (navigator .userAgent .includes ("Firefox"))
+         {
+            const excludes = new Set ([
+               "devicemotion",
+               "deviceorientation",
+               "absolutedeviceorientation",
+               "beforeunload",
+            ]);
+
+            function eventsOf (element, excludes)
+            {
+               return Object .keys (element)
+                  .filter (key => key .startsWith ("on"))
+                  .map (key => key .slice (2))
+                  .filter (event => ! excludes .has (event))
+                  .join (" ");
+            }
+
+            console .log (eventsOf (window, new Set ()));
+
+            $(window) .on (eventsOf (window, excludes), setTimeout .bind (window, this .requestAnimationFrame .bind (this), 0));
+         }
       },
    });
 

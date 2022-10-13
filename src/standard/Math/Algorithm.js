@@ -96,6 +96,8 @@ define (function ()
       {
          let cosom = source .dot (destination);
 
+         // if (cosom <= -1) ... vectors are inverse colinear.
+
          if (cosom >= 1) // Both normal vectors are equal.
             return source;
 
@@ -122,6 +124,8 @@ define (function ()
       simpleSlerp: function (source, destination, t)
       {
          const cosom = source .dot (destination);
+
+         // if (cosom <= -1) ... vectors are inverse colinear.
 
          if (cosom >= 1) // Both normal vectors are equal.
             return source;

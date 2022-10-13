@@ -78,7 +78,9 @@ function (Vector2,
       length: 4,
       [Symbol .iterator]: function* ()
       {
-         for (let i = 0, length = this .length; i < length; ++ i)
+         const length = this .length;
+
+         for (let i = 0; i < length; ++ i)
             yield this [i];
       },
       copy: function ()
@@ -158,6 +160,8 @@ function (Vector2,
             C = this [2],
             D = this [3],
             d = A * D - B * C;
+
+         // if (d === 0) ... determinant is zero.
 
          this [0] =  D / d;
          this [1] = -B / d;

@@ -87,7 +87,9 @@ function (Vector2,
       length: 9,
       [Symbol .iterator]: function* ()
       {
-         for (let i = 0, length = this .length; i < length; ++ i)
+         const length = this .length;
+
+         for (let i = 0; i < length; ++ i)
             yield this [i];
       },
       copy: function ()
@@ -438,6 +440,8 @@ function (Vector2,
             t14 = m6 * m4;
 
          let d = (t4 * m8 - t6 * m5 - t8 * m8 + t10 * m2 + t12 * m5 - t14 * m2);
+
+         // if (d === 0) ... determinant is zero.
 
          d = 1 / d;
 
