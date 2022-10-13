@@ -291,9 +291,6 @@ function ($,
          this ._sensorEvents .processInterests ();
          this .processEvents ();
 
-         // XXX: The depth buffer must be cleared here, although it is cleared in each layer, otherwise there is a
-         // XXX: phantom image in the depth buffer at least in Firefox.
-
          const t3 = performance .now ();
          gl .clearColor (0, 0, 0, 0);
          gl .clear (gl .COLOR_BUFFER_BIT);
