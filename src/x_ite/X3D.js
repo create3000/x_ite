@@ -159,7 +159,7 @@ function ($,
 
          browser .setup ();
 
-         setTimeout (function () { callbacks .resolve (); }, 0);
+         setTimeout (function () { callbacks .resolve (); }, 1);
 
          return browser;
       }
