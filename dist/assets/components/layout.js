@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = window [Symbol .for ("X_ITE.X3D-5.0.4")] .define,
-	require = window [Symbol .for ("X_ITE.X3D-5.0.4")] .require;
+	define  = window [Symbol .for ("X_ITE.X3D-6.0.0")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-6.0.0")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -65,24 +65,13 @@ function ($,
 "use strict";
 
    const
-      _pointSize               = Symbol (),
       _screenTextureProperties = Symbol ();
 
-   function X3DLayoutContext () { }
+   function X3DLayoutContext ()
+   { }
 
    X3DLayoutContext .prototype =
    {
-      getPointSize: function ()
-      {
-         if (this [_pointSize] === undefined)
-         {
-            const div = $("<div></div>") .css ("height", "1in") .css ("display", "none");
-            this [_pointSize] = div .appendTo ($("body")) .height () / 72;
-            div .remove ();
-         }
-
-         return this [_pointSize];
-      },
       getScreenTextureProperties: function ()
       {
          this [_screenTextureProperties] = new TextureProperties (this .getPrivateScene ());
@@ -90,8 +79,8 @@ function ($,
          this [_screenTextureProperties] ._boundaryModeS       = "CLAMP";
          this [_screenTextureProperties] ._boundaryModeT       = "CLAMP";
          this [_screenTextureProperties] ._boundaryModeR       = "CLAMP";
-         this [_screenTextureProperties] ._minificationFilter  = "NEAREST";
-         this [_screenTextureProperties] ._magnificationFilter = "NEAREST";
+         this [_screenTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
+         this [_screenTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
          this [_screenTextureProperties] ._generateMipMaps     = false;
 
          this [_screenTextureProperties] .setup ();
@@ -954,15 +943,10 @@ function (Fields,
       },
       getMatrix: function ()
       {
-         try
-         {
-            if (this .layoutNode)
-               this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
-            else
-               this .matrix .identity ();
-         }
-         catch (error)
-         { }
+         if (this .layoutNode)
+            this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
+         else
+            this .matrix .identity ();
 
          return this .matrix;
       },
@@ -1382,6 +1366,10 @@ function ($,
             cx .fillRect (0, 0, canvas .width, canvas .height);
             cx .fillStyle = "rgba(255,255,255,1)";
 
+            cx .save ();
+            cx .translate (0, canvas .height);
+            cx .scale (1, -1);
+
             // Draw glyphs.
 
             if (fontStyle ._horizontal .getValue ())
@@ -1447,13 +1435,16 @@ function ($,
                }
             }
 
+            cx .restore ();
+
             // Transfer texture data.
 
             const imageData = cx .getImageData (0, 0, canvas .width, canvas .height);
 
-            // If the cavas is to large imageData is null.
+            // If the canvas is to large imageData is null.
+
             if (imageData)
-               this .textureNode .setTexture (canvas .width, canvas .height, true, new Uint8Array (imageData .data .buffer), true);
+               this .textureNode .setTexture (canvas .width, canvas .height, true, new Uint8Array (imageData .data .buffer), false);
             else
                this .textureNode .clear ();
          };
@@ -1593,12 +1584,12 @@ function ($,
       },
       transformLine: function (line)
       {
-         // Apply sceen nodes transformation in place here.
+         // Apply screen nodes transformation in place here.
          return line .multLineMatrix (Matrix4 .inverse (this .matrix));
       },
       transformMatrix: function (matrix)
       {
-         // Apply sceen nodes transformation in place here.
+         // Apply screen nodes transformation in place here.
          return matrix .multLeft (this .matrix);
       },
    });
@@ -1712,7 +1703,7 @@ function (Fields,
       },
       getScale: function ()
       {
-         return this ._pointSize .getValue () * this .getBrowser () .getPointSize ();
+         return this ._pointSize .getValue () * this .getBrowser () .getPixelPerPoint ();
       },
    });
 
@@ -1890,31 +1881,26 @@ function (Fields,
       })(),
       traverse: function (type, renderObject)
       {
-         try
+         switch (type)
          {
-            switch (type)
-            {
-               case TraverseType .CAMERA:
-               case TraverseType .PICKING:
-               case TraverseType .SHADOW: // ???
-                  // No clone support for shadow, generated cube map texture and bbox
-                  break;
-               default:
-                  this .scale (renderObject);
-                  break;
-            }
-
-            var modelViewMatrix = renderObject .getModelViewMatrix ();
-
-            modelViewMatrix .push ();
-            modelViewMatrix .multLeft (this .matrix);
-
-            X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-
-            modelViewMatrix .pop ();
+            case TraverseType .CAMERA:
+            case TraverseType .PICKING:
+            case TraverseType .SHADOW: // ???
+               // No clone support for shadow, generated cube map texture and bbox
+               break;
+            default:
+               this .scale (renderObject);
+               break;
          }
-         catch (error)
-         { }
+
+         var modelViewMatrix = renderObject .getModelViewMatrix ();
+
+         modelViewMatrix .push ();
+         modelViewMatrix .multLeft (this .matrix);
+
+         X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+
+         modelViewMatrix .pop ();
       },
    });
 
@@ -2004,7 +1990,7 @@ function (Components,
       {
          X3DLayoutNode: X3DLayoutNode,
       },
-      browser: X3DLayoutContext,
+      context: X3DLayoutContext,
    });
 });
 

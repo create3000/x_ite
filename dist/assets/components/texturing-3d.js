@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = window [Symbol .for ("X_ITE.X3D-5.0.4")] .define,
-	require = window [Symbol .for ("X_ITE.X3D-5.0.4")] .require;
+	define  = window [Symbol .for ("X_ITE.X3D-6.0.0")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-6.0.0")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -142,29 +142,22 @@ function (X3DSingleTextureNode,
       },
       setTexture: function (width, height, depth, transparent, format, data)
       {
-         try
-         {
-            this .width  = width;
-            this .height = height;
-            this .depth  = depth;
-            this .data   = data;
+         this .width  = width;
+         this .height = height;
+         this .depth  = depth;
+         this .data   = data;
 
-            const gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
-            if (gl .getVersion () < 2)
-               return;
+         if (gl .getVersion () < 2)
+            return;
 
-            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
-            gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
-            gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-            gl .texImage3D  (gl .TEXTURE_3D, 0, format, width, height, depth, 0, format, gl .UNSIGNED_BYTE, data);
+         gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+         gl .texImage3D  (gl .TEXTURE_3D, 0, format, width, height, depth, 0, format, gl .UNSIGNED_BYTE, data);
 
-            this .setTransparent (transparent);
-            this .updateTextureProperties ();
-            this .addNodeEvent ();
-         }
-         catch (error)
-         { }
+         this .setTransparent (transparent);
+         this .updateTextureProperties ();
+         this .addNodeEvent ();
       },
       updateTextureProperties: function ()
       {
@@ -7992,8 +7985,8 @@ function (dicomParser,
          this .getTansferSyntax ();
          this .getPixelData ();
 
-         if (DEBUG)
-            console .log (this);
+         // if (DEBUG)
+         //    console .log (this);
 
          return this .dicom;
       },
@@ -9570,12 +9563,12 @@ function (Fields,
       },
       getTexCoord: function (array)
       {
-         const point = this .point;
+         const
+            point  = this .point,
+            length = this .length;
 
-         for (let i = 0, p = 0, length = this .length; i < length; ++ i, p += 3)
-            array [i] = new Vector4 (point [p], point [p + 1], point [p + 2], 1);
-
-         array .length = this .length;
+         for (let i = 0, p = 0; i < length; ++ i, p += 3)
+            array .push (point [p], point [p + 1], point [p + 2], 1);
 
          return array;
       },
@@ -9748,12 +9741,12 @@ function (Fields,
       },
       getTexCoord: function (array)
       {
-         const point = this .point;
+         const
+            point  = this .point,
+            length = this .length;
 
-         for (let i = 0, p = 0, length = this .length; i < length; ++ i, p += 4)
-            array [i] = new Vector4 (point [p], point [p + 1], point [p + 2], point [p + 3]);
-
-         array .length = this .length;
+         for (let i = 0, p = 0; i < length; ++ i, p += 4)
+            array .push (point [p], point [p + 1], point [p + 2], point [p + 3]);
 
          return array;
       },

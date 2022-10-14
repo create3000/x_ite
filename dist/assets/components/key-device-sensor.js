@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = window [Symbol .for ("X_ITE.X3D-5.0.4")] .define,
-	require = window [Symbol .for ("X_ITE.X3D-5.0.4")] .require;
+	define  = window [Symbol .for ("X_ITE.X3D-6.0.0")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-6.0.0")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -842,7 +842,7 @@ function (Components,
       {
          X3DKeyDeviceSensorNode: X3DKeyDeviceSensorNode,
       },
-      browser: X3DKeyDeviceSensorContext,
+      context: X3DKeyDeviceSensorContext,
    });
 });
 

@@ -1,4 +1,4 @@
-/* X_ITE v5.0.4-1149 */
+/* X_ITE v6.0.0-1150 */
 
 (function (global, factory)
 {
@@ -14988,7 +14988,7 @@ function ($,
          const references = this .getReferences ();
 
          if (references .has (reference))
-            return; // throw ???
+            return;
 
          references .add (reference);
 
@@ -15443,7 +15443,7 @@ define ('standard/Math/Algorithm',[],function ()
       },
       fract: function (value)
       {
-         return value > 0 ? value - Math .floor (value) : value - Math .ceil (value);
+         return value % 1;
       },
       clamp: function (value, min, max)
       {
@@ -15469,23 +15469,21 @@ define ('standard/Math/Algorithm',[],function ()
       {
          let cosom = source .dot (destination);
 
-         if (cosom <= -1)
-            throw new Error ("slerp is not possible: vectors are inverse collinear.");
+         // if (cosom <= -1) ... vectors are inverse colinear.
 
-         if (cosom >= 1) // both normal vectors are equal
+         if (cosom >= 1) // Both normal vectors are equal.
             return source;
 
          if (cosom < 0)
          {
-            // Reverse signs so we travel the short way round
+            // Reverse signs so we travel the short way round.
             cosom = -cosom;
             destination .negate ();
          }
 
          const
-            omega = Math .acos (cosom),
-            sinom = Math .sin  (omega),
-
+            omega  = Math .acos (cosom),
+            sinom  = Math .sin  (omega),
             scale0 = Math .sin ((1 - t) * omega) / sinom,
             scale1 = Math .sin (t * omega) / sinom;
 
@@ -15500,16 +15498,14 @@ define ('standard/Math/Algorithm',[],function ()
       {
          const cosom = source .dot (destination);
 
-         if (cosom <= -1)
-            throw new Error ("slerp is not possible: vectors are inverse collinear.");
+         // if (cosom <= -1) ... vectors are inverse colinear.
 
-         if (cosom >= 1) // both normal vectors are equal
+         if (cosom >= 1) // Both normal vectors are equal.
             return source;
 
          const
-            omega = Math .acos (cosom),
-            sinom = Math .sin  (omega),
-
+            omega  = Math .acos (cosom),
+            sinom  = Math .sin  (omega),
             scale0 = Math .sin ((1 - t) * omega) / sinom,
             scale1 = Math .sin (t * omega) / sinom;
 
@@ -15708,6 +15704,12 @@ function (Algorithm)
    {
       constructor: Color3,
       length: 3,
+      [Symbol .iterator]: function* ()
+      {
+         yield this [_r];
+         yield this [_g];
+         yield this [_b];
+      },
       copy: function ()
       {
          const copy = Object .create (Color3 .prototype);
@@ -15983,6 +15985,10 @@ function (Color3,
    SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       constructor: SFColor,
+      [Symbol .iterator]: function* ()
+      {
+         yield* this .getValue ();
+      },
       copy: function ()
       {
          return new SFColor (this .getValue () .copy ());
@@ -16211,6 +16217,13 @@ function (Color3, Algorithm)
    {
       constructor: Color4,
       length: 4,
+      [Symbol .iterator]: function* ()
+      {
+         yield this [_r];
+         yield this [_g];
+         yield this [_b];
+         yield this [_a];
+      },
       copy: function ()
       {
          const copy = Object .create (Color4 .prototype);
@@ -16411,6 +16424,10 @@ function (X3DField,
    SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       constructor: SFColorRGBA,
+      [Symbol .iterator]: function* ()
+      {
+         yield* this .getValue ();
+      },
       copy: function ()
       {
          return new SFColorRGBA (this .getValue () .copy ());
@@ -17231,6 +17248,10 @@ function (X3DField)
    {
       return Object .assign (Object .create (X3DField .prototype),
       {
+         [Symbol .iterator]: function* ()
+         {
+            yield* this .getValue ();
+         },
          copy: function ()
          {
             return new (this .constructor) (this .getValue () .copy ());
@@ -17392,6 +17413,10 @@ function (X3DField,
    {
       return Object .assign (Object .create (X3DField .prototype),
       {
+         [Symbol .iterator]: function* ()
+         {
+            yield* this .getValue ();
+         },
          copy: function ()
          {
             return new (this .constructor) (this .getValue () .copy ());
@@ -17550,6 +17575,11 @@ function (Algorithm)
    {
       constructor: Vector2,
       length: 2,
+      [Symbol .iterator]: function* ()
+      {
+         yield this .x;
+         yield this .y;
+      },
       copy: function ()
       {
          const copy = Object .create (Vector2 .prototype);
@@ -17983,6 +18013,12 @@ function (Algorithm)
    {
       constructor: Vector3,
       length: 3,
+      [Symbol .iterator]: function* ()
+      {
+         yield this .x;
+         yield this .y;
+         yield this .z;
+      },
       copy: function ()
       {
          const copy = Object .create (Vector3 .prototype);
@@ -18349,6 +18385,13 @@ function (Vector2,
       constructor: Matrix2,
       order: 2,
       length: 4,
+      [Symbol .iterator]: function* ()
+      {
+         const length = this .length;
+
+         for (let i = 0; i < length; ++ i)
+            yield this [i];
+      },
       copy: function ()
       {
          const copy = Object .create (Matrix2 .prototype);
@@ -18427,8 +18470,7 @@ function (Vector2,
             D = this [3],
             d = A * D - B * C;
 
-         if (d === 0)
-            throw new Error ("Matrix2 .inverse: determinant is 0.");
+         // if (d === 0) ... determinant is zero.
 
          this [0] =  D / d;
          this [1] = -B / d;
@@ -18488,6 +18530,18 @@ function (Vector2,
          const vector = new Vector2 (0, 0);
 
          return function () { return vector .set (this [0], this [1]); };
+      })(),
+      enumerable: false,
+      configurable: false
+   });
+
+   Object .defineProperty (Matrix2 .prototype, "y",
+   {
+      get: (function ()
+      {
+         const vector = new Vector2 (0, 0);
+
+         return function () { return vector .set (this [2], this [3]); };
       })(),
       enumerable: false,
       configurable: false
@@ -18805,6 +18859,13 @@ function (Vector2,
       constructor: Matrix3,
       order: 3,
       length: 9,
+      [Symbol .iterator]: function* ()
+      {
+         const length = this .length;
+
+         for (let i = 0; i < length; ++ i)
+            yield this [i];
+      },
       copy: function ()
       {
          const copy = Object .create (Matrix3 .prototype);
@@ -18858,136 +18919,141 @@ function (Vector2,
       {
          return this [r * this .order + c];
       },
-      set: function (translation, rotation, scale, scaleOrientation, center)
+      set: (function ()
       {
-         switch (arguments .length)
+         const invCenter = new Vector2 (0, 0);
+
+         return function (translation, rotation, scale, scaleOrientation, center)
          {
-            case 0:
+            switch (arguments .length)
             {
-               this .identity ();
-               break;
-            }
-            case 1:
-            {
-               if (translation === null) translation = Vector2 .Zero;
-
-               this .identity ();
-               this .translate (translation);
-               break;
-            }
-            case 2:
-            {
-               if (translation === null) translation = Vector2 .Zero;
-               if (rotation    === null) rotation    = 0;
-
-               this .identity ();
-               this .translate (translation);
-
-               if (rotation !== 0)
-                  this .rotate (rotation);
-
-               break;
-            }
-            case 3:
-            {
-               if (translation === null) translation = Vector2 .Zero;
-               if (rotation    === null) rotation    = 0;
-               if (scale       === null) scale       = Vector2 .One;
-
-               this .identity ();
-               this .translate (translation);
-
-               if (rotation !== 0)
-                  this .rotate (rotation);
-
-               if (! scale .equals (Vector2 .One))
-                  this .scale  (scale);
-
-               break;
-            }
-            case 4:
-            {
-               if (translation      === null) translation      = Vector2 .Zero;
-               if (rotation         === null) rotation         = 0;
-               if (scale            === null) scale            = Vector2 .One;
-               if (scaleOrientation === null) scaleOrientation = 0;
-
-               this .identity ();
-               this .translate (translation);
-
-               if (rotation !== 0)
-                  this .rotate (rotation);
-
-               if (! scale .equals (Vector2 .One))
+               case 0:
                {
-                  const hasScaleOrientation = scaleOrientation !== 0;
-
-                  if (hasScaleOrientation)
-                  {
-                     this .rotate (scaleOrientation);
-                     this .scale (scale);
-                     this .rotate (-scaleOrientation);
-                  }
-                  else
-                     this .scale (scale);
+                  this .identity ();
+                  break;
                }
-
-               break;
-            }
-            case 5:
-            {
-               if (translation      === null) translation      = Vector2 .Zero;
-               if (rotation         === null) rotation         = 0;
-               if (scale            === null) scale            = Vector2 .One;
-               if (scaleOrientation === null) scaleOrientation = 0;
-               if (center           === null) center           = Vector2 .Zero;
-
-               // P' = T * C * R * SR * S * -SR * -C * P
-               this .identity ();
-               this .translate (translation);
-
-               const hasCenter = ! center .equals (Vector2 .Zero);
-
-               if (hasCenter)
-                  this .translate (center);
-
-               if (rotation !== 0)
-                  this .rotate (rotation);
-
-               if (! scale .equals (Vector2 .One))
+               case 1:
                {
-                  if (scaleOrientation !== 0)
-                  {
-                     this .rotate (scaleOrientation);
-                     this .scale (scale);
-                     this .rotate (-scaleOrientation);
-                  }
-                  else
-                     this .scale (scale);
+                  if (translation === null) translation = Vector2 .Zero;
+
+                  this .identity ();
+                  this .translate (translation);
+                  break;
                }
+               case 2:
+               {
+                  if (translation === null) translation = Vector2 .Zero;
+                  if (rotation    === null) rotation    = 0;
 
-               if (hasCenter)
-                  this .translate (Vector2 .negate (center));
+                  this .identity ();
+                  this .translate (translation);
 
-               break;
+                  if (rotation !== 0)
+                     this .rotate (rotation);
+
+                  break;
+               }
+               case 3:
+               {
+                  if (translation === null) translation = Vector2 .Zero;
+                  if (rotation    === null) rotation    = 0;
+                  if (scale       === null) scale       = Vector2 .One;
+
+                  this .identity ();
+                  this .translate (translation);
+
+                  if (rotation !== 0)
+                     this .rotate (rotation);
+
+                  if (! scale .equals (Vector2 .One))
+                     this .scale  (scale);
+
+                  break;
+               }
+               case 4:
+               {
+                  if (translation      === null) translation      = Vector2 .Zero;
+                  if (rotation         === null) rotation         = 0;
+                  if (scale            === null) scale            = Vector2 .One;
+                  if (scaleOrientation === null) scaleOrientation = 0;
+
+                  this .identity ();
+                  this .translate (translation);
+
+                  if (rotation !== 0)
+                     this .rotate (rotation);
+
+                  if (! scale .equals (Vector2 .One))
+                  {
+                     const hasScaleOrientation = scaleOrientation !== 0;
+
+                     if (hasScaleOrientation)
+                     {
+                        this .rotate (scaleOrientation);
+                        this .scale (scale);
+                        this .rotate (-scaleOrientation);
+                     }
+                     else
+                        this .scale (scale);
+                  }
+
+                  break;
+               }
+               case 5:
+               {
+                  if (translation      === null) translation      = Vector2 .Zero;
+                  if (rotation         === null) rotation         = 0;
+                  if (scale            === null) scale            = Vector2 .One;
+                  if (scaleOrientation === null) scaleOrientation = 0;
+                  if (center           === null) center           = Vector2 .Zero;
+
+                  // P' = T * C * R * SR * S * -SR * -C * P
+                  this .identity ();
+                  this .translate (translation);
+
+                  const hasCenter = ! center .equals (Vector2 .Zero);
+
+                  if (hasCenter)
+                     this .translate (center);
+
+                  if (rotation !== 0)
+                     this .rotate (rotation);
+
+                  if (! scale .equals (Vector2 .One))
+                  {
+                     if (scaleOrientation !== 0)
+                     {
+                        this .rotate (scaleOrientation);
+                        this .scale (scale);
+                        this .rotate (-scaleOrientation);
+                     }
+                     else
+                        this .scale (scale);
+                  }
+
+                  if (hasCenter)
+                     this .translate (invCenter .assign (center) .negate ());
+
+                  break;
+               }
+               case 9:
+               {
+                  this [0] = arguments [0];
+                  this [1] = arguments [1];
+                  this [2] = arguments [2];
+                  this [3] = arguments [3];
+                  this [4] = arguments [4];
+                  this [5] = arguments [5];
+                  this [6] = arguments [6];
+                  this [7] = arguments [7];
+                  this [8] = arguments [8];
+                  break;
+               }
             }
-            case 9:
-            {
-               this [0] = arguments [0];
-               this [1] = arguments [1];
-               this [2] = arguments [2];
-               this [3] = arguments [3];
-               this [4] = arguments [4];
-               this [5] = arguments [5];
-               this [6] = arguments [6];
-               this [7] = arguments [7];
-               this [8] = arguments [8];
-               break;
-            }
-         }
 
-         return this;
-      },
+            return this;
+         };
+      })(),
       get: (function ()
       {
          const
@@ -19048,12 +19114,9 @@ function (Vector2,
                }
                case 5:
                {
-                  const m = new Matrix3 ();
-
                   m .set (c .assign (center) .negate ());
                   m .multLeft (this);
                   m .translate (center);
-
                   m .get (translation, rotation, scale, scaleOrientation);
                   break;
                }
@@ -19080,9 +19143,6 @@ function (Vector2,
             // (3) Compute det A. If negative, set sign = -1, else sign = 1
             const det      = a .determinant ();
             const det_sign = det < 0 ? -1 : 1;
-
-            if (det === 0)
-               throw new Error ("Matrix3 .factor: determinant is 0.");
 
             // (4) B = A * !A  (here !A means A transpose)
             b .assign (a) .transpose () .multLeft (a);
@@ -19152,8 +19212,7 @@ function (Vector2,
 
          let d = (t4 * m8 - t6 * m5 - t8 * m8 + t10 * m2 + t12 * m5 - t14 * m2);
 
-         if (d === 0)
-            throw new Error ("Matrix3 .inverse: determinant is 0.");
+         // if (d === 0) ... determinant is zero.
 
          d = 1 / d;
 
@@ -19364,6 +19423,18 @@ function (Vector2,
       configurable: false
    });
 
+   Object .defineProperty (Matrix3 .prototype, "z",
+   {
+      get: (function ()
+      {
+         const vector = new Vector3 (0, 0, 0);
+
+         return function () { return vector .set (this [6], this [7], this [8]); };
+      })(),
+      enumerable: false,
+      configurable: false
+   });
+
    Object .defineProperty (Matrix3 .prototype, "xAxis",
    {
       get: (function ()
@@ -19453,6 +19524,8 @@ function (Vector2,
          return lhs .copy () .multRight (rhs);
       },
    });
+
+   const m = new Matrix3 ();
 
    return Matrix3;
 });
@@ -19835,6 +19908,13 @@ function (Algorithm)
    {
       constructor: Vector4,
       length: 4,
+      [Symbol .iterator]: function* ()
+      {
+         yield this .x;
+         yield this .y;
+         yield this .z;
+         yield this .w;
+      },
       copy: function ()
       {
          const copy = Object .create (Vector4 .prototype);
@@ -20205,6 +20285,13 @@ function (Vector3, Algorithm)
    {
       constructor: Quaternion,
       length: 4,
+      [Symbol .iterator]: function* ()
+      {
+         yield this .x;
+         yield this .y;
+         yield this .z;
+         yield this .w;
+      },
       copy: function ()
       {
          const copy = Object .create (Quaternion .prototype);
@@ -20810,6 +20897,13 @@ function (Quaternion,
    {
       constructor: Rotation4,
       length: 4,
+      [Symbol .iterator]: function* ()
+      {
+         yield this [_x];
+         yield this [_y];
+         yield this [_z];
+         yield this [_angle];
+      },
       update: function ()
       {
          const rotation = this .get ();
@@ -21268,6 +21362,13 @@ function (Vector3,
       constructor: Matrix4,
       order: 4,
       length: 16,
+      [Symbol .iterator]: function* ()
+      {
+         const length = this .length;
+
+         for (let i = 0; i < length; ++ i)
+            yield this [i];
+      },
       copy: function ()
       {
          const copy = Object .create (Matrix4 .prototype);
@@ -21338,143 +21439,150 @@ function (Vector3,
       {
          return this [r * this .order + c];
       },
-      set: function (translation, rotation, scale, scaleOrientation, center)
+      set: (function ()
       {
-         switch (arguments .length)
+         const
+            invScaleOrientation = new Rotation4 (),
+            invCenter           = new Vector3 (0, 0, 0);
+
+         return function (translation, rotation, scale, scaleOrientation, center)
          {
-            case 0:
+            switch (arguments .length)
             {
-               this .identity ();
-               break;
-            }
-            case 1:
-            {
-               if (translation === null) translation = Vector3 .Zero;
-
-               this .identity ();
-               this .translate (translation);
-               break;
-            }
-            case 2:
-            {
-               if (translation === null) translation = Vector3 .Zero;
-               if (rotation    === null) rotation    = Rotation4 .Identity;
-
-               this .identity ();
-               this .translate (translation);
-
-               if (! rotation .equals (Rotation4 .Identity))
-                  this .rotate (rotation);
-
-               break;
-            }
-            case 3:
-            {
-               if (translation === null) translation = Vector3 .Zero;
-               if (rotation    === null) rotation    = Rotation4 .Identity;
-               if (scale       === null) scale       = Vector3 .One;
-
-               this .identity ();
-               this .translate (translation);
-
-               if (! rotation .equals (Rotation4 .Identity))
-                  this .rotate (rotation);
-
-               if (! scale .equals (Vector3 .One))
-                  this .scale  (scale);
-
-               break;
-            }
-            case 4:
-            {
-               if (translation      === null) translation      = Vector3 .Zero;
-               if (rotation         === null) rotation         = Rotation4 .Identity;
-               if (scale            === null) scale            = Vector3 .One;
-               if (scaleOrientation === null) scaleOrientation = Rotation4 .Identity;
-
-               this .identity ();
-               this .translate (translation);
-
-               if (! rotation .equals (Rotation4 .Identity))
-                  this .rotate (rotation);
-
-               if (! scale .equals (Vector3 .One))
+               case 0:
                {
-                  const hasScaleOrientation = ! scaleOrientation .equals (Rotation4 .Identity);
-
-                  if (hasScaleOrientation)
-                  {
-                     this .rotate (scaleOrientation);
-                     this .scale (scale);
-                     this .rotate (Rotation4 .inverse (scaleOrientation));
-                  }
-                  else
-                     this .scale (scale);
+                  this .identity ();
+                  break;
                }
-
-               break;
-            }
-            case 5:
-            {
-               if (translation      === null) translation      = Vector3 .Zero;
-               if (rotation         === null) rotation         = Rotation4 .Identity;
-               if (scale            === null) scale            = Vector3 .One;
-               if (scaleOrientation === null) scaleOrientation = Rotation4 .Identity;
-               if (center           === null) center           = Vector3 .Zero;
-
-               // P' = T * C * R * SR * S * -SR * -C * P
-               this .identity ();
-               this .translate (translation);
-
-               const hasCenter = ! center .equals (Vector3 .Zero);
-
-               if (hasCenter)
-                  this .translate (center);
-
-               if (! rotation .equals (Rotation4 .Identity))
-                  this .rotate (rotation);
-
-               if (! scale .equals (Vector3 .One))
+               case 1:
                {
-                  if (! scaleOrientation .equals (Rotation4 .Identity))
-                  {
-                     this .rotate (scaleOrientation);
-                     this .scale (scale);
-                     this .rotate (Rotation4 .inverse (scaleOrientation));
-                  }
-                  else
-                     this .scale (scale);
+                  if (translation === null) translation = Vector3 .Zero;
+
+                  this .identity ();
+                  this .translate (translation);
+                  break;
                }
+               case 2:
+               {
+                  if (translation === null) translation = Vector3 .Zero;
+                  if (rotation    === null) rotation    = Rotation4 .Identity;
 
-               if (hasCenter)
-                  this .translate (Vector3 .negate (center));
+                  this .identity ();
+                  this .translate (translation);
 
-               break;
+                  if (! rotation .equals (Rotation4 .Identity))
+                     this .rotate (rotation);
+
+                  break;
+               }
+               case 3:
+               {
+                  if (translation === null) translation = Vector3 .Zero;
+                  if (rotation    === null) rotation    = Rotation4 .Identity;
+                  if (scale       === null) scale       = Vector3 .One;
+
+                  this .identity ();
+                  this .translate (translation);
+
+                  if (! rotation .equals (Rotation4 .Identity))
+                     this .rotate (rotation);
+
+                  if (! scale .equals (Vector3 .One))
+                     this .scale  (scale);
+
+                  break;
+               }
+               case 4:
+               {
+                  if (translation      === null) translation      = Vector3 .Zero;
+                  if (rotation         === null) rotation         = Rotation4 .Identity;
+                  if (scale            === null) scale            = Vector3 .One;
+                  if (scaleOrientation === null) scaleOrientation = Rotation4 .Identity;
+
+                  this .identity ();
+                  this .translate (translation);
+
+                  if (! rotation .equals (Rotation4 .Identity))
+                     this .rotate (rotation);
+
+                  if (! scale .equals (Vector3 .One))
+                  {
+                     const hasScaleOrientation = ! scaleOrientation .equals (Rotation4 .Identity);
+
+                     if (hasScaleOrientation)
+                     {
+                        this .rotate (scaleOrientation);
+                        this .scale (scale);
+                        this .rotate (invScaleOrientation .assign (scaleOrientation) .inverse ());
+                     }
+                     else
+                        this .scale (scale);
+                  }
+
+                  break;
+               }
+               case 5:
+               {
+                  if (translation      === null) translation      = Vector3 .Zero;
+                  if (rotation         === null) rotation         = Rotation4 .Identity;
+                  if (scale            === null) scale            = Vector3 .One;
+                  if (scaleOrientation === null) scaleOrientation = Rotation4 .Identity;
+                  if (center           === null) center           = Vector3 .Zero;
+
+                  // P' = T * C * R * SR * S * -SR * -C * P
+                  this .identity ();
+                  this .translate (translation);
+
+                  const hasCenter = ! center .equals (Vector3 .Zero);
+
+                  if (hasCenter)
+                     this .translate (center);
+
+                  if (! rotation .equals (Rotation4 .Identity))
+                     this .rotate (rotation);
+
+                  if (! scale .equals (Vector3 .One))
+                  {
+                     if (! scaleOrientation .equals (Rotation4 .Identity))
+                     {
+                        this .rotate (scaleOrientation);
+                        this .scale (scale);
+                        this .rotate (invScaleOrientation .assign (scaleOrientation) .inverse ());
+                     }
+                     else
+                        this .scale (scale);
+                  }
+
+                  if (hasCenter)
+                     this .translate (invCenter .assign (center) .negate ());
+
+                  break;
+               }
+               case 16:
+               {
+                  this [ 0] = arguments [ 0];
+                  this [ 1] = arguments [ 1];
+                  this [ 2] = arguments [ 2];
+                  this [ 3] = arguments [ 3];
+                  this [ 4] = arguments [ 4];
+                  this [ 5] = arguments [ 5];
+                  this [ 6] = arguments [ 6];
+                  this [ 7] = arguments [ 7];
+                  this [ 8] = arguments [ 8];
+                  this [ 9] = arguments [ 9];
+                  this [10] = arguments [10];
+                  this [11] = arguments [11];
+                  this [12] = arguments [12];
+                  this [13] = arguments [13];
+                  this [14] = arguments [14];
+                  this [15] = arguments [15];
+                  break;
+               }
             }
-            case 16:
-            {
-               this [ 0] = arguments [ 0];
-               this [ 1] = arguments [ 1];
-               this [ 2] = arguments [ 2];
-               this [ 3] = arguments [ 3];
-               this [ 4] = arguments [ 4];
-               this [ 5] = arguments [ 5];
-               this [ 6] = arguments [ 6];
-               this [ 7] = arguments [ 7];
-               this [ 8] = arguments [ 8];
-               this [ 9] = arguments [ 9];
-               this [10] = arguments [10];
-               this [11] = arguments [11];
-               this [12] = arguments [12];
-               this [13] = arguments [13];
-               this [14] = arguments [14];
-               this [15] = arguments [15];
-               break;
-            }
-         }
 
-         return this;
-      },
+            return this;
+         };
+      })(),
       get: (function ()
       {
          const
@@ -21523,12 +21631,9 @@ function (Vector3,
                }
                case 5:
                {
-                  const m = new Matrix4 ();
-
                   m .set (c .assign (center) .negate ());
                   m .multLeft (this);
                   m .translate (center);
-
                   m .get (translation, rotation, scale, scaleOrientation);
                   break;
                }
@@ -21595,9 +21700,6 @@ function (Vector3,
             // (3) Compute det A. If negative, set sign = -1, else sign = 1
             const det      = a .determinant ();
             const det_sign = det < 0 ? -1 : 1;
-
-            if (det === 0)
-               throw new Error ("Matrix4 .factor: determinant is 0.");
 
             // (4) B = A * !A  (here !A means A transpose)
             b .assign (a) .transpose () .multLeft (a);
@@ -21735,8 +21837,7 @@ function (Vector3,
 
          let B = m00 * H + m04 * I + m08 * J + m12 * K;
 
-         if (B === 0)
-            throw new Error ("Matrix4 .inverse: determinant is 0.");
+         // if (B === 0) ... determinant is zero.
 
          B = 1 / B;
 
@@ -21929,7 +22030,7 @@ function (Vector3,
       },
       rotate: function (rotation)
       {
-         this .multLeft (rotateMatrix .setQuaternion (rotation .value));
+         this .multLeft (m .setQuaternion (rotation .value));
 
          return this;
       },
@@ -22004,6 +22105,18 @@ function (Vector3,
          const vector = new Vector4 (0, 0, 0, 0);
 
          return function () { return vector .set (this [8], this [9], this [10], this [11]); };
+      })(),
+      enumerable: false,
+      configurable: false
+   });
+
+   Object .defineProperty (Matrix4 .prototype, "w",
+   {
+      get: (function ()
+      {
+         const vector = new Vector4 (0, 0, 0, 0);
+
+         return function () { return vector .set (this [12], this [13], this [14], this [15]); };
       })(),
       enumerable: false,
       configurable: false
@@ -22111,7 +22224,7 @@ function (Vector3,
       },
    });
 
-   const rotateMatrix = new Matrix4 ();
+   const m = new Matrix4 ();
 
    return Matrix4;
 });
@@ -22880,6 +22993,10 @@ function (SFVec3,
    SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       constructor: SFRotation,
+      [Symbol .iterator]: function* ()
+      {
+         yield* this .getValue ();
+      },
       copy: function ()
       {
          return new SFRotation (this .getValue () .copy ());
@@ -23111,6 +23228,10 @@ function (X3DField,
    SFString .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       constructor: SFString,
+      [Symbol .iterator]: function* ()
+      {
+         yield* this .getValue ();
+      },
       copy: function ()
       {
          return new SFString (this .getValue ());
@@ -25769,7 +25890,8 @@ function (X3DEventObject,
       {
          X3DEventObject .prototype .setName .call (this, value)
 
-         this ._name_changed = this .getBrowser () .getCurrentTime ();
+         if (this .getExecutionContext () .isLive () .getValue ())
+            this ._name_changed = this .getBrowser () .getCurrentTime ();
       },
       getMainScene: function ()
       {
@@ -25995,7 +26117,8 @@ function (X3DEventObject,
          if (!this .getPrivate ())
             field .addCloneCount (1);
 
-         this ._fields_changed = this .getBrowser () .getCurrentTime ();
+         if (this .getExecutionContext () .isLive () .getValue ())
+            this ._fields_changed = this .getBrowser () .getCurrentTime ();
       },
       getField: (function ()
       {
@@ -26063,7 +26186,8 @@ function (X3DEventObject,
             if (!this .getPrivate ())
                field .removeCloneCount (1);
 
-            this ._fields_changed = this .getBrowser () .getCurrentTime ();
+             if (this .getExecutionContext () .isLive () .getValue ())
+               this ._fields_changed = this .getBrowser () .getCurrentTime ();
          }
       },
       canUserDefinedFields: function ()
@@ -26087,7 +26211,8 @@ function (X3DEventObject,
          if (!this .getPrivate ())
             field .addCloneCount (1);
 
-         this ._fields_changed = this .getBrowser () .getCurrentTime ();
+         if (this .getExecutionContext () .isLive () .getValue ())
+            this ._fields_changed = this .getBrowser () .getCurrentTime ();
       },
       removeUserDefinedField: function (name)
       {
@@ -26104,7 +26229,8 @@ function (X3DEventObject,
             if (!this .getPrivate ())
                field .removeCloneCount (1);
 
-            this ._fields_changed = this .getBrowser () .getCurrentTime ();
+            if (this .getExecutionContext () .isLive () .getValue ())
+               this ._fields_changed = this .getBrowser () .getCurrentTime ();
          }
       },
       getUserDefinedFields: function ()
@@ -26214,7 +26340,8 @@ function (X3DEventObject,
 
          this [_cloneCount] += count;
 
-         this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
+         if (this .getExecutionContext () .isLive () .getValue ())
+            this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
 
          this [_executionContext] ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
       },
@@ -26225,7 +26352,8 @@ function (X3DEventObject,
 
          this [_cloneCount] -= count;
 
-         this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
+         if (this .getExecutionContext () .isLive () .getValue ())
+            this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
 
          this [_executionContext] ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
       },
@@ -26295,7 +26423,7 @@ function (X3DEventObject,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-   return "5.0.4";
+   return "6.0.0";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -26354,6 +26482,187 @@ define ('x_ite/DEBUG',[],function ()
    // Modified during dist build.
 
    return false;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Core/Context',[
+   "x_ite/DEBUG",
+],
+function (DEBUG)
+{
+"use strict";
+
+   const extensions = [
+      "ANGLE_instanced_arrays",
+      "EXT_blend_minmax",
+      "EXT_frag_depth",
+      "EXT_shader_texture_lod",
+      "EXT_texture_filter_anisotropic",
+      "OES_element_index_uint",
+      "OES_standard_derivatives",
+      "OES_texture_float",
+      "OES_texture_float_linear",
+      "OES_texture_half_float",
+      "OES_texture_half_float_linear",
+      "OES_vertex_array_object",
+      "WEBGL_compressed_texture_s3tc",
+      //"WEBGL_debug_renderer_info",
+      "WEBGL_debug_shaders",
+      "WEBGL_depth_texture",
+      "WEBGL_draw_buffers",
+      "WEBGL_lose_context",
+
+      "EXT_color_buffer_float",
+      "EXT_color_buffer_half_float",
+      "EXT_disjoint_timer_query",
+      "EXT_disjoint_timer_query_webgl2",
+      "EXT_sRGB",
+      "WEBGL_color_buffer_float",
+      "WEBGL_compressed_texture_astc",
+      "WEBGL_compressed_texture_atc",
+      "WEBGL_compressed_texture_etc",
+      "WEBGL_compressed_texture_etc1",
+      "WEBGL_compressed_texture_pvrtc",
+      "WEBGL_compressed_texture_s3tc",
+      "WEBGL_compressed_texture_s3tc_srgb",
+
+      "EXT_float_blend",
+      "OES_fbo_render_mipmap",
+      "WEBGL_get_buffer_sub_data_async",
+      "WEBGL_multiview",
+      "WEBGL_security_sensitive_resources",
+      "WEBGL_shared_resources",
+
+      "EXT_clip_cull_distance",
+      "WEBGL_debug",
+      "WEBGL_dynamic_texture",
+      "WEBGL_subarray_uploads",
+      "WEBGL_texture_multisample",
+      "WEBGL_texture_source_iframe",
+      "WEBGL_video_texture",
+
+      "EXT_texture_storage",
+      "OES_depth24",
+      "WEBGL_debug_shader_precision",
+      "WEBGL_draw_elements_no_range_check",
+      "WEBGL_subscribe_uniform",
+      "WEBGL_texture_from_depth_video",
+   ];
+
+   const Context =
+   {
+      create: function (canvas, version, preserveDrawingBuffer)
+      {
+         const options = { preserveDrawingBuffer: preserveDrawingBuffer };
+
+         let gl = null;
+
+         if (version >= 2 && ! gl)
+         {
+            gl = canvas .getContext ("webgl2", options);
+
+            if (gl)
+               gl .getVersion = function () { return 2; };
+         }
+
+         if (version >= 1 && ! gl)
+         {
+            gl = canvas .getContext ("webgl",              options) ||
+                 canvas .getContext ("experimental-webgl", options);
+
+            if (gl)
+            {
+               gl .getVersion = function () { return 1; };
+
+               {
+                  const ext = gl .getExtension ("OES_vertex_array_object");
+
+                  gl .bindVertexArray   =  ext .bindVertexArrayOES   .bind (ext);
+                  gl .createVertexArray =  ext .createVertexArrayOES .bind (ext);
+                  gl .deleteVertexArray =  ext .deleteVertexArrayOES .bind (ext);
+                  gl .isVertexArray     =  ext .isVertexArrayOES     .bind (ext);
+               }
+            }
+          }
+
+         if (! gl)
+            throw new Error ("Couldn't create WebGL context.");
+
+         // Feature detection:
+
+         // If the aliased lineWidth ranges are both 1, gl .lineWidth is probably not possible,
+         // thus we disable it completely to prevent webgl errors.
+
+         const aliasedLineWidthRange = gl .getParameter (gl .ALIASED_LINE_WIDTH_RANGE);
+
+         if (aliasedLineWidthRange [0] === 1 && aliasedLineWidthRange [1] === 1)
+         {
+            gl .lineWidth = Function .prototype;
+
+            if (DEBUG)
+               console .info ("Lines are transformed if necessary to obtain thick lines.");
+         }
+
+         // Load extensions.
+
+         for (const extension of extensions)
+            gl .getExtension (extension);
+
+         // Return context.
+
+         return gl;
+      },
+   }
+
+   return Context;
 });
 
 /**
@@ -27000,7 +27309,7 @@ function ($,
          this .startTime     = 0;
          this .frames        = 0;
 
-         this .element = $("<div></div>") .addClass ("x_ite-private-browser-timings") .appendTo (this .getBrowser () .getSurface ());
+         this .element = $("<div></div>") .hide () .addClass ("x_ite-private-browser-timings") .appendTo (this .getBrowser () .getSurface ());
          this .table   = $("<table></table>") .appendTo (this .element);
          this .header  = $("<thead></thead>") .append ($("<tr></tr>") .append ($("<th colspan='2'></th>"))) .appendTo (this .table);
          this .body    = $("<tbody></tbody>") .appendTo (this .table);
@@ -27681,7 +27990,7 @@ function (Fields,
                this .textureQuality = TextureQuality .MEDIUM;
 
                textureProperties ._magnificationFilter = "NICEST";
-               textureProperties ._minificationFilter  = "AVG_PIXEL_AVG_MIPMAP";
+               textureProperties ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
                textureProperties ._textureCompression  = "NICEST";
                textureProperties ._generateMipMaps     = true;
 
@@ -27737,7 +28046,7 @@ function (Fields,
             browser = this .getBrowser (),
             gl      = browser .getContext ();
 
-         logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && (gl .getVersion () >= 2 || Boolean (browser .getExtension ("EXT_frag_depth")));
+         logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && (gl .getVersion () >= 2 || Boolean (gl .getExtension ("EXT_frag_depth")));
 
          if (logarithmicDepthBuffer === browser .getRenderingProperties () ._LogarithmicDepthBuffer .getValue ())
             return;
@@ -28092,6 +28401,7 @@ function ($,
          X3DBaseNode .prototype .initialize .call (this);
 
          this .element = $("<div></div>")
+            .hide ()
             .addClass ("x_ite-private-notification")
             .appendTo (this .getBrowser () .getSurface ())
             .animate ({ width: 0 });
@@ -28112,2153 +28422,16 @@ function ($,
 
          this .element
             .stop (true, true)
-            .fadeIn (0)
+            .show ()
             .animate ({ width: this .element .textWidth () })
             .animate ({ "delay": 1 }, 5000)
             .animate ({ width: 0 })
-            .fadeOut (0);
+            .hide ();
       },
    });
 
    return Notification;
 });
-
-/**
- * jQuery contextMenu v2.9.2 - Plugin for simple contextMenu handling
- *
- * Version: v2.9.2
- *
- * Authors: Björn Brala (SWIS.nl), Rodney Rehm, Addy Osmani (patches for FF)
- * Web: http://swisnl.github.io/jQuery-contextMenu/
- *
- * Copyright (c) 2011-2020 SWIS BV and contributors
- *
- * Licensed under
- *   MIT License http://www.opensource.org/licenses/mit-license
- *
- * Date: 2020-05-13T13:55:36.983Z
- */
-
-// jscs:disable
-/* jshint ignore:start */
-(function (factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as anonymous module.
-        define('contextMenu/dist/jquery.contextMenu',['jquery'], factory);
-    } else if (typeof exports === 'object') {
-        // Node / CommonJS
-        factory(require('jquery'));
-    } else {
-        // Browser globals.
-        factory(jQuery);
-    }
-})(function ($) {
-
-    'use strict';
-
-    // TODO: -
-    // ARIA stuff: menuitem, menuitemcheckbox und menuitemradio
-    // create <menu> structure if $.support[htmlCommand || htmlMenuitem] and !opt.disableNative
-
-    // determine html5 compatibility
-    $.support.htmlMenuitem = ('HTMLMenuItemElement' in window);
-    $.support.htmlCommand = ('HTMLCommandElement' in window);
-    $.support.eventSelectstart = ('onselectstart' in document.documentElement);
-    /* // should the need arise, test for css user-select
-     $.support.cssUserSelect = (function(){
-     var t = false,
-     e = document.createElement('div');
-
-     $.each('Moz|Webkit|Khtml|O|ms|Icab|'.split('|'), function(i, prefix) {
-     var propCC = prefix + (prefix ? 'U' : 'u') + 'serSelect',
-     prop = (prefix ? ('-' + prefix.toLowerCase() + '-') : '') + 'user-select';
-
-     e.style.cssText = prop + ': text;';
-     if (e.style[propCC] == 'text') {
-     t = true;
-     return false;
-     }
-
-     return true;
-     });
-
-     return t;
-     })();
-     */
-
-
-    if (!$.ui || !$.widget) {
-        // duck punch $.cleanData like jQueryUI does to get that remove event
-        $.cleanData = (function (orig) {
-            return function (elems) {
-                var events, elem, i;
-                for (i = 0; elems[i] != null; i++) {
-                    elem = elems[i];
-                    try {
-                        // Only trigger remove when necessary to save time
-                        events = $._data(elem, 'events');
-                        if (events && events.remove) {
-                            $(elem).triggerHandler('remove');
-                        }
-
-                        // Http://bugs.jquery.com/ticket/8235
-                    } catch (e) {
-                    }
-                }
-                orig(elems);
-            };
-        })($.cleanData);
-    }
-    /* jshint ignore:end */
-    // jscs:enable
-
-    var // currently active contextMenu trigger
-        $currentTrigger = null,
-        // is contextMenu initialized with at least one menu?
-        initialized = false,
-        // window handle
-        $win = $(window),
-        // number of registered menus
-        counter = 0,
-        // mapping selector to namespace
-        namespaces = {},
-        // mapping namespace to options
-        menus = {},
-        // custom command type handlers
-        types = {},
-        // default values
-        defaults = {
-            // selector of contextMenu trigger
-            selector: null,
-            // where to append the menu to
-            appendTo: null,
-            // method to trigger context menu ["right", "left", "hover"]
-            trigger: 'right',
-            // hide menu when mouse leaves trigger / menu elements
-            autoHide: false,
-            // ms to wait before showing a hover-triggered context menu
-            delay: 200,
-            // flag denoting if a second trigger should simply move (true) or rebuild (false) an open menu
-            // as long as the trigger happened on one of the trigger-element's child nodes
-            reposition: true,
-            // Flag denoting if a second trigger should close the menu, as long as
-            // the trigger happened on one of the trigger-element's child nodes.
-            // This overrides the reposition option.
-            hideOnSecondTrigger: false,
-
-            //ability to select submenu
-            selectableSubMenu: false,
-
-            // Default classname configuration to be able avoid conflicts in frameworks
-            classNames: {
-                hover: 'context-menu-hover', // Item hover
-                disabled: 'context-menu-disabled', // Item disabled
-                visible: 'context-menu-visible', // Item visible
-                notSelectable: 'context-menu-not-selectable', // Item not selectable
-
-                icon: 'context-menu-icon',
-                iconEdit: 'context-menu-icon-edit',
-                iconCut: 'context-menu-icon-cut',
-                iconCopy: 'context-menu-icon-copy',
-                iconPaste: 'context-menu-icon-paste',
-                iconDelete: 'context-menu-icon-delete',
-                iconAdd: 'context-menu-icon-add',
-                iconQuit: 'context-menu-icon-quit',
-                iconLoadingClass: 'context-menu-icon-loading'
-            },
-
-            // determine position to show menu at
-            determinePosition: function ($menu) {
-                // position to the lower middle of the trigger element
-                if ($.ui && $.ui.position) {
-                    // .position() is provided as a jQuery UI utility
-                    // (...and it won't work on hidden elements)
-                    $menu.css('display', 'block').position({
-                        my: 'center top',
-                        at: 'center bottom',
-                        of: this,
-                        offset: '0 5',
-                        collision: 'fit'
-                    }).css('display', 'none');
-                } else {
-                    // determine contextMenu position
-                    var offset = this.offset();
-                    offset.top += this.outerHeight();
-                    offset.left += this.outerWidth() / 2 - $menu.outerWidth() / 2;
-                    $menu.css(offset);
-                }
-            },
-            // position menu
-            position: function (opt, x, y) {
-                var offset;
-                // determine contextMenu position
-                if (!x && !y) {
-                    opt.determinePosition.call(this, opt.$menu);
-                    return;
-                } else if (x === 'maintain' && y === 'maintain') {
-                    // x and y must not be changed (after re-show on command click)
-                    offset = opt.$menu.position();
-                } else {
-                    // x and y are given (by mouse event)
-                    var offsetParentOffset = opt.$menu.offsetParent().offset();
-                    offset = {top: y - offsetParentOffset.top, left: x -offsetParentOffset.left};
-                }
-
-                // correct offset if viewport demands it
-                var bottom = $win.scrollTop() + $win.height(),
-                    right = $win.scrollLeft() + $win.width(),
-                    height = opt.$menu.outerHeight(),
-                    width = opt.$menu.outerWidth();
-
-                if (offset.top + height > bottom) {
-                    offset.top -= height;
-                }
-
-                if (offset.top < 0) {
-                    offset.top = 0;
-                }
-
-                if (offset.left + width > right) {
-                    offset.left -= width;
-                }
-
-                if (offset.left < 0) {
-                    offset.left = 0;
-                }
-
-                opt.$menu.css(offset);
-            },
-            // position the sub-menu
-            positionSubmenu: function ($menu) {
-                if (typeof $menu === 'undefined') {
-                    // When user hovers over item (which has sub items) handle.focusItem will call this.
-                    // but the submenu does not exist yet if opt.items is a promise. just return, will
-                    // call positionSubmenu after promise is completed.
-                    return;
-                }
-                if ($.ui && $.ui.position) {
-                    // .position() is provided as a jQuery UI utility
-                    // (...and it won't work on hidden elements)
-                    $menu.css('display', 'block').position({
-                        my: 'left top-5',
-                        at: 'right top',
-                        of: this,
-                        collision: 'flipfit fit'
-                    }).css('display', '');
-                } else {
-                    // determine contextMenu position
-                    var offset = {
-                        top: -9,
-                        left: this.outerWidth() - 5
-                    };
-                    $menu.css(offset);
-                }
-            },
-            // offset to add to zIndex
-            zIndex: 1,
-            // show hide animation settings
-            animation: {
-                duration: 50,
-                show: 'slideDown',
-                hide: 'slideUp'
-            },
-            // events
-            events: {
-                preShow: $.noop,
-                show: $.noop,
-                hide: $.noop,
-                activated: $.noop
-            },
-            // default callback
-            callback: null,
-            // list of contextMenu items
-            items: {}
-        },
-        // mouse position for hover activation
-        hoveract = {
-            timer: null,
-            pageX: null,
-            pageY: null
-        },
-        // determine zIndex
-        zindex = function ($t) {
-            var zin = 0,
-                $tt = $t;
-
-            while (true) {
-                zin = Math.max(zin, parseInt($tt.css('z-index'), 10) || 0);
-                $tt = $tt.parent();
-                if (!$tt || !$tt.length || 'html body'.indexOf($tt.prop('nodeName').toLowerCase()) > -1) {
-                    break;
-                }
-            }
-            return zin;
-        },
-        // event handlers
-        handle = {
-            // abort anything
-            abortevent: function (e) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-            },
-            // contextmenu show dispatcher
-            contextmenu: function (e) {
-                var $this = $(this);
-
-                //Show browser context-menu when preShow returns false
-                if (e.data.events.preShow($this,e) === false) {
-                    return;
-                }
-
-                // disable actual context-menu if we are using the right mouse button as the trigger
-                if (e.data.trigger === 'right') {
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-                }
-
-                // abort native-triggered events unless we're triggering on right click
-                if ((e.data.trigger !== 'right' && e.data.trigger !== 'demand') && e.originalEvent) {
-                    return;
-                }
-
-                // Let the current contextmenu decide if it should show or not based on its own trigger settings
-                if (typeof e.mouseButton !== 'undefined' && e.data) {
-                    if (!(e.data.trigger === 'left' && e.mouseButton === 0) && !(e.data.trigger === 'right' && e.mouseButton === 2)) {
-                        // Mouse click is not valid.
-                        return;
-                    }
-                }
-
-                // abort event if menu is visible for this trigger
-                if ($this.hasClass('context-menu-active')) {
-                    return;
-                }
-
-                if (!$this.hasClass('context-menu-disabled')) {
-                    // theoretically need to fire a show event at <menu>
-                    // http://www.whatwg.org/specs/web-apps/current-work/multipage/interactive-elements.html#context-menus
-                    // var evt = jQuery.Event("show", { data: data, pageX: e.pageX, pageY: e.pageY, relatedTarget: this });
-                    // e.data.$menu.trigger(evt);
-
-                    $currentTrigger = $this;
-                    if (e.data.build) {
-                        var built = e.data.build($currentTrigger, e);
-                        // abort if build() returned false
-                        if (built === false) {
-                            return;
-                        }
-
-                        // dynamically build menu on invocation
-                        e.data = $.extend(true, {}, defaults, e.data, built || {});
-
-                        // abort if there are no items to display
-                        if (!e.data.items || $.isEmptyObject(e.data.items)) {
-                            // Note: jQuery captures and ignores errors from event handlers
-                            if (window.console) {
-                                (console.error || console.log).call(console, 'No items specified to show in contextMenu');
-                            }
-
-                            throw new Error('No Items specified');
-                        }
-
-                        // backreference for custom command type creation
-                        e.data.$trigger = $currentTrigger;
-
-                        op.create(e.data);
-                    }
-                    op.show.call($this, e.data, e.pageX, e.pageY);
-                }
-            },
-            // contextMenu left-click trigger
-            click: function (e) {
-                e.preventDefault();
-                e.stopImmediatePropagation();
-                $(this).trigger($.Event('contextmenu', {data: e.data, pageX: e.pageX, pageY: e.pageY}));
-            },
-            // contextMenu right-click trigger
-            mousedown: function (e) {
-                // register mouse down
-                var $this = $(this);
-
-                // hide any previous menus
-                if ($currentTrigger && $currentTrigger.length && !$currentTrigger.is($this)) {
-                    $currentTrigger.data('contextMenu').$menu.trigger('contextmenu:hide');
-                }
-
-                // activate on right click
-                if (e.button === 2) {
-                    $currentTrigger = $this.data('contextMenuActive', true);
-                }
-            },
-            // contextMenu right-click trigger
-            mouseup: function (e) {
-                // show menu
-                var $this = $(this);
-                if ($this.data('contextMenuActive') && $currentTrigger && $currentTrigger.length && $currentTrigger.is($this) && !$this.hasClass('context-menu-disabled')) {
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-                    $currentTrigger = $this;
-                    $this.trigger($.Event('contextmenu', {data: e.data, pageX: e.pageX, pageY: e.pageY}));
-                }
-
-                $this.removeData('contextMenuActive');
-            },
-            // contextMenu hover trigger
-            mouseenter: function (e) {
-                var $this = $(this),
-                    $related = $(e.relatedTarget),
-                    $document = $(document);
-
-                // abort if we're coming from a menu
-                if ($related.is('.context-menu-list') || $related.closest('.context-menu-list').length) {
-                    return;
-                }
-
-                // abort if a menu is shown
-                if ($currentTrigger && $currentTrigger.length) {
-                    return;
-                }
-
-                hoveract.pageX = e.pageX;
-                hoveract.pageY = e.pageY;
-                hoveract.data = e.data;
-                $document.on('mousemove.contextMenuShow', handle.mousemove);
-                hoveract.timer = setTimeout(function () {
-                    hoveract.timer = null;
-                    $document.off('mousemove.contextMenuShow');
-                    $currentTrigger = $this;
-                    $this.trigger($.Event('contextmenu', {
-                        data: hoveract.data,
-                        pageX: hoveract.pageX,
-                        pageY: hoveract.pageY
-                    }));
-                }, e.data.delay);
-            },
-            // contextMenu hover trigger
-            mousemove: function (e) {
-                hoveract.pageX = e.pageX;
-                hoveract.pageY = e.pageY;
-            },
-            // contextMenu hover trigger
-            mouseleave: function (e) {
-                // abort if we're leaving for a menu
-                var $related = $(e.relatedTarget);
-                if ($related.is('.context-menu-list') || $related.closest('.context-menu-list').length) {
-                    return;
-                }
-
-                try {
-                    clearTimeout(hoveract.timer);
-                } catch (e) {
-                }
-
-                hoveract.timer = null;
-            },
-            // click on layer to hide contextMenu
-            layerClick: function (e) {
-                var $this = $(this),
-                    root = $this.data('contextMenuRoot'),
-                    button = e.button,
-                    x = e.pageX,
-                    y = e.pageY,
-                    fakeClick = x === undefined,
-                    target,
-                    offset;
-
-                e.preventDefault();
-
-                setTimeout(function () {
-                    // If the click is not real, things break: https://github.com/swisnl/jQuery-contextMenu/issues/132
-                    if(fakeClick){
-                        if (root !== null && typeof root !== 'undefined' && root.$menu !== null  && typeof root.$menu !== 'undefined') {
-                            root.$menu.trigger('contextmenu:hide');
-                        }
-                        return;
-                    }
-
-                    var $window;
-                    var triggerAction = ((root.trigger === 'left' && button === 0) || (root.trigger === 'right' && button === 2));
-
-                    // find the element that would've been clicked, wasn't the layer in the way
-                    if (document.elementFromPoint && root.$layer) {
-                        root.$layer.hide();
-                        target = document.elementFromPoint(x - $win.scrollLeft(), y - $win.scrollTop());
-
-                        // also need to try and focus this element if we're in a contenteditable area,
-                        // as the layer will prevent the browser mouse action we want
-                        if (target !== null && target.isContentEditable) {
-                            var range = document.createRange(),
-                                sel = window.getSelection();
-                            range.selectNode(target);
-                            range.collapse(true);
-                            sel.removeAllRanges();
-                            sel.addRange(range);
-                        }
-                        $(target).trigger(e);
-                        root.$layer.show();
-                    }
-
-                    if (root.hideOnSecondTrigger && triggerAction && root.$menu !== null && typeof root.$menu !== 'undefined') {
-                      root.$menu.trigger('contextmenu:hide');
-                      return;
-                    }
-
-                    if (root.reposition && triggerAction) {
-                        if (document.elementFromPoint) {
-                            if (root.$trigger.is(target)) {
-                                root.position.call(root.$trigger, root, x, y);
-                                return;
-                            }
-                        } else {
-                            offset = root.$trigger.offset();
-                            $window = $(window);
-                            // while this looks kinda awful, it's the best way to avoid
-                            // unnecessarily calculating any positions
-                            offset.top += $window.scrollTop();
-                            if (offset.top <= e.pageY) {
-                                offset.left += $window.scrollLeft();
-                                if (offset.left <= e.pageX) {
-                                    offset.bottom = offset.top + root.$trigger.outerHeight();
-                                    if (offset.bottom >= e.pageY) {
-                                        offset.right = offset.left + root.$trigger.outerWidth();
-                                        if (offset.right >= e.pageX) {
-                                            // reposition
-                                            root.position.call(root.$trigger, root, x, y);
-                                            return;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                    if (target && triggerAction) {
-                        root.$trigger.one('contextmenu:hidden', function () {
-                            $(target).contextMenu({x: x, y: y, button: button});
-                        });
-                    }
-
-                    if (root !== null && typeof root !== 'undefined' && root.$menu !== null  && typeof root.$menu !== 'undefined') {
-                        root.$menu.trigger('contextmenu:hide');
-                    }
-                }, 50);
-            },
-            // key handled :hover
-            keyStop: function (e, opt) {
-                if (!opt.isInput) {
-                    e.preventDefault();
-                }
-
-                e.stopPropagation();
-            },
-            key: function (e) {
-
-                var opt = {};
-
-                // Only get the data from $currentTrigger if it exists
-                if ($currentTrigger) {
-                    opt = $currentTrigger.data('contextMenu') || {};
-                }
-                // If the trigger happen on a element that are above the contextmenu do this
-                if (typeof opt.zIndex === 'undefined') {
-                    opt.zIndex = 0;
-                }
-                var targetZIndex = 0;
-                var getZIndexOfTriggerTarget = function (target) {
-                    if (target.style.zIndex !== '') {
-                        targetZIndex = target.style.zIndex;
-                    } else {
-                        if (target.offsetParent !== null && typeof target.offsetParent !== 'undefined') {
-                            getZIndexOfTriggerTarget(target.offsetParent);
-                        }
-                        else if (target.parentElement !== null && typeof target.parentElement !== 'undefined') {
-                            getZIndexOfTriggerTarget(target.parentElement);
-                        }
-                    }
-                };
-                getZIndexOfTriggerTarget(e.target);
-                // If targetZIndex is heigher then opt.zIndex dont progress any futher.
-                // This is used to make sure that if you are using a dialog with a input / textarea / contenteditable div
-                // and its above the contextmenu it wont steal keys events
-                if (opt.$menu && parseInt(targetZIndex,10) > parseInt(opt.$menu.css("zIndex"),10)) {
-                    return;
-                }
-                switch (e.keyCode) {
-                    case 9:
-                    case 38: // up
-                        handle.keyStop(e, opt);
-                        // if keyCode is [38 (up)] or [9 (tab) with shift]
-                        if (opt.isInput) {
-                            if (e.keyCode === 9 && e.shiftKey) {
-                                e.preventDefault();
-                                if (opt.$selected) {
-                                    opt.$selected.find('input, textarea, select').blur();
-                                }
-                                if (opt.$menu !== null && typeof opt.$menu !== 'undefined') {
-                                    opt.$menu.trigger('prevcommand');
-                                }
-                                return;
-                            } else if (e.keyCode === 38 && opt.$selected.find('input, textarea, select').prop('type') === 'checkbox') {
-                                // checkboxes don't capture this key
-                                e.preventDefault();
-                                return;
-                            }
-                        } else if (e.keyCode !== 9 || e.shiftKey) {
-                            if (opt.$menu !== null && typeof opt.$menu !== 'undefined') {
-                                opt.$menu.trigger('prevcommand');
-                            }
-                            return;
-                        }
-                        break;
-                    // omitting break;
-                    // case 9: // tab - reached through omitted break;
-                    case 40: // down
-                        handle.keyStop(e, opt);
-                        if (opt.isInput) {
-                            if (e.keyCode === 9) {
-                                e.preventDefault();
-                                if (opt.$selected) {
-                                    opt.$selected.find('input, textarea, select').blur();
-                                }
-                                if (opt.$menu !== null && typeof opt.$menu !== 'undefined') {
-                                    opt.$menu.trigger('nextcommand');
-                                }
-                                return;
-                            } else if (e.keyCode === 40 && opt.$selected.find('input, textarea, select').prop('type') === 'checkbox') {
-                                // checkboxes don't capture this key
-                                e.preventDefault();
-                                return;
-                            }
-                        } else {
-                            if (opt.$menu !== null && typeof opt.$menu !== 'undefined') {
-                                opt.$menu.trigger('nextcommand');
-                            }
-                            return;
-                        }
-                        break;
-
-                    case 37: // left
-                        handle.keyStop(e, opt);
-                        if (opt.isInput || !opt.$selected || !opt.$selected.length) {
-                            break;
-                        }
-
-                        if (!opt.$selected.parent().hasClass('context-menu-root')) {
-                            var $parent = opt.$selected.parent().parent();
-                            opt.$selected.trigger('contextmenu:blur');
-                            opt.$selected = $parent;
-                            return;
-                        }
-                        break;
-
-                    case 39: // right
-                        handle.keyStop(e, opt);
-                        if (opt.isInput || !opt.$selected || !opt.$selected.length) {
-                            break;
-                        }
-
-                        var itemdata = opt.$selected.data('contextMenu') || {};
-                        if (itemdata.$menu && opt.$selected.hasClass('context-menu-submenu')) {
-                            opt.$selected = null;
-                            itemdata.$selected = null;
-                            itemdata.$menu.trigger('nextcommand');
-                            return;
-                        }
-                        break;
-
-                    case 35: // end
-                    case 36: // home
-                        if (opt.$selected && opt.$selected.find('input, textarea, select').length) {
-                            return;
-                        } else {
-                            (opt.$selected && opt.$selected.parent() || opt.$menu)
-                                .children(':not(.' + opt.classNames.disabled + ', .' + opt.classNames.notSelectable + ')')[e.keyCode === 36 ? 'first' : 'last']()
-                                .trigger('contextmenu:focus');
-                            e.preventDefault();
-                            return;
-                        }
-                        break;
-
-                    case 13: // enter
-                        handle.keyStop(e, opt);
-                        if (opt.isInput) {
-                            if (opt.$selected && !opt.$selected.is('textarea, select')) {
-                                e.preventDefault();
-                                return;
-                            }
-                            break;
-                        }
-                        if (typeof opt.$selected !== 'undefined' && opt.$selected !== null) {
-                            opt.$selected.trigger('mouseup');
-                        }
-                        return;
-
-                    case 32: // space
-                    case 33: // page up
-                    case 34: // page down
-                        // prevent browser from scrolling down while menu is visible
-                        handle.keyStop(e, opt);
-                        return;
-
-                    case 27: // esc
-                        handle.keyStop(e, opt);
-                        if (opt.$menu !== null && typeof opt.$menu !== 'undefined') {
-                            opt.$menu.trigger('contextmenu:hide');
-                        }
-                        return;
-
-                    default: // 0-9, a-z
-                        var k = (String.fromCharCode(e.keyCode)).toUpperCase();
-                        if (opt.accesskeys && opt.accesskeys[k]) {
-                            // according to the specs accesskeys must be invoked immediately
-                            opt.accesskeys[k].$node.trigger(opt.accesskeys[k].$menu ? 'contextmenu:focus' : 'mouseup');
-                            return;
-                        }
-                        break;
-                }
-                // pass event to selected item,
-                // stop propagation to avoid endless recursion
-                e.stopPropagation();
-                if (typeof opt.$selected !== 'undefined' && opt.$selected !== null) {
-                    opt.$selected.trigger(e);
-                }
-            },
-            // select previous possible command in menu
-            prevItem: function (e) {
-                e.stopPropagation();
-                var opt = $(this).data('contextMenu') || {};
-                var root = $(this).data('contextMenuRoot') || {};
-
-                // obtain currently selected menu
-                if (opt.$selected) {
-                    var $s = opt.$selected;
-                    opt = opt.$selected.parent().data('contextMenu') || {};
-                    opt.$selected = $s;
-                }
-
-                var $children = opt.$menu.children(),
-                    $prev = !opt.$selected || !opt.$selected.prev().length ? $children.last() : opt.$selected.prev(),
-                    $round = $prev;
-
-                // skip disabled or hidden elements
-                while ($prev.hasClass(root.classNames.disabled) || $prev.hasClass(root.classNames.notSelectable) || $prev.is(':hidden')) {
-                    if ($prev.prev().length) {
-                        $prev = $prev.prev();
-                    } else {
-                        $prev = $children.last();
-                    }
-                    if ($prev.is($round)) {
-                        // break endless loop
-                        return;
-                    }
-                }
-
-                // leave current
-                if (opt.$selected) {
-                    handle.itemMouseleave.call(opt.$selected.get(0), e);
-                }
-
-                // activate next
-                handle.itemMouseenter.call($prev.get(0), e);
-
-                // focus input
-                var $input = $prev.find('input, textarea, select');
-                if ($input.length) {
-                    $input.focus();
-                }
-            },
-            // select next possible command in menu
-            nextItem: function (e) {
-                e.stopPropagation();
-                var opt = $(this).data('contextMenu') || {};
-                var root = $(this).data('contextMenuRoot') || {};
-
-                // obtain currently selected menu
-                if (opt.$selected) {
-                    var $s = opt.$selected;
-                    opt = opt.$selected.parent().data('contextMenu') || {};
-                    opt.$selected = $s;
-                }
-
-                var $children = opt.$menu.children(),
-                    $next = !opt.$selected || !opt.$selected.next().length ? $children.first() : opt.$selected.next(),
-                    $round = $next;
-
-                // skip disabled
-                while ($next.hasClass(root.classNames.disabled) || $next.hasClass(root.classNames.notSelectable) || $next.is(':hidden')) {
-                    if ($next.next().length) {
-                        $next = $next.next();
-                    } else {
-                        $next = $children.first();
-                    }
-                    if ($next.is($round)) {
-                        // break endless loop
-                        return;
-                    }
-                }
-
-                // leave current
-                if (opt.$selected) {
-                    handle.itemMouseleave.call(opt.$selected.get(0), e);
-                }
-
-                // activate next
-                handle.itemMouseenter.call($next.get(0), e);
-
-                // focus input
-                var $input = $next.find('input, textarea, select');
-                if ($input.length) {
-                    $input.focus();
-                }
-            },
-            // flag that we're inside an input so the key handler can act accordingly
-            focusInput: function () {
-                var $this = $(this).closest('.context-menu-item'),
-                    data = $this.data(),
-                    opt = data.contextMenu,
-                    root = data.contextMenuRoot;
-
-                root.$selected = opt.$selected = $this;
-                root.isInput = opt.isInput = true;
-            },
-            // flag that we're inside an input so the key handler can act accordingly
-            blurInput: function () {
-                var $this = $(this).closest('.context-menu-item'),
-                    data = $this.data(),
-                    opt = data.contextMenu,
-                    root = data.contextMenuRoot;
-
-                root.isInput = opt.isInput = false;
-            },
-            // :hover on menu
-            menuMouseenter: function () {
-                var root = $(this).data().contextMenuRoot;
-                root.hovering = true;
-            },
-            // :hover on menu
-            menuMouseleave: function (e) {
-                var root = $(this).data().contextMenuRoot;
-                if (root.$layer && root.$layer.is(e.relatedTarget)) {
-                    root.hovering = false;
-                }
-            },
-            // :hover done manually so key handling is possible
-            itemMouseenter: function (e) {
-                var $this = $(this),
-                    data = $this.data(),
-                    opt = data.contextMenu,
-                    root = data.contextMenuRoot;
-
-                root.hovering = true;
-
-                // abort if we're re-entering
-                if (e && root.$layer && root.$layer.is(e.relatedTarget)) {
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-                }
-
-                // make sure only one item is selected
-                (opt.$menu ? opt : root).$menu
-                    .children('.' + root.classNames.hover).trigger('contextmenu:blur')
-                    .children('.hover').trigger('contextmenu:blur');
-
-                if ($this.hasClass(root.classNames.disabled) || $this.hasClass(root.classNames.notSelectable)) {
-                    opt.$selected = null;
-                    return;
-                }
-
-
-                $this.trigger('contextmenu:focus');
-            },
-            // :hover done manually so key handling is possible
-            itemMouseleave: function (e) {
-                var $this = $(this),
-                    data = $this.data(),
-                    opt = data.contextMenu,
-                    root = data.contextMenuRoot;
-
-                if (root !== opt && root.$layer && root.$layer.is(e.relatedTarget)) {
-                    if (typeof root.$selected !== 'undefined' && root.$selected !== null) {
-                        root.$selected.trigger('contextmenu:blur');
-                    }
-                    e.preventDefault();
-                    e.stopImmediatePropagation();
-                    root.$selected = opt.$selected = opt.$node;
-                    return;
-                }
-
-                if(opt && opt.$menu && opt.$menu.hasClass('context-menu-visible')){
-                    return;
-                }
-
-                $this.trigger('contextmenu:blur');
-            },
-            // contextMenu item click
-            itemClick: function (e) {
-                var $this = $(this),
-                    data = $this.data(),
-                    opt = data.contextMenu,
-                    root = data.contextMenuRoot,
-                    key = data.contextMenuKey,
-                    callback;
-
-                // abort if the key is unknown or disabled or is a menu
-                if (!opt.items[key] || $this.is('.' + root.classNames.disabled + ', .context-menu-separator, .' + root.classNames.notSelectable) || ($this.is('.context-menu-submenu') && root.selectableSubMenu === false )) {
-                    return;
-                }
-
-                e.preventDefault();
-                e.stopImmediatePropagation();
-
-                if ($.isFunction(opt.callbacks[key]) && Object.prototype.hasOwnProperty.call(opt.callbacks, key)) {
-                    // item-specific callback
-                    callback = opt.callbacks[key];
-                } else if ($.isFunction(root.callback)) {
-                    // default callback
-                    callback = root.callback;
-                } else {
-                    // no callback, no action
-                    return;
-                }
-
-                // hide menu if callback doesn't stop that
-                if (callback.call(root.$trigger, key, root, e) !== false) {
-                    root.$menu.trigger('contextmenu:hide');
-                } else if (root.$menu.parent().length) {
-                    op.update.call(root.$trigger, root);
-                }
-            },
-            // ignore click events on input elements
-            inputClick: function (e) {
-                e.stopImmediatePropagation();
-            },
-            // hide <menu>
-            hideMenu: function (e, data) {
-                var root = $(this).data('contextMenuRoot');
-                op.hide.call(root.$trigger, root, data && data.force);
-            },
-            // focus <command>
-            focusItem: function (e) {
-                e.stopPropagation();
-                var $this = $(this),
-                    data = $this.data(),
-                    opt = data.contextMenu,
-                    root = data.contextMenuRoot;
-
-                if ($this.hasClass(root.classNames.disabled) || $this.hasClass(root.classNames.notSelectable)) {
-                    return;
-                }
-
-                $this
-                    .addClass([root.classNames.hover, root.classNames.visible].join(' '))
-                    // select other items and included items
-                    .parent().find('.context-menu-item').not($this)
-                    .removeClass(root.classNames.visible)
-                    .filter('.' + root.classNames.hover)
-                    .trigger('contextmenu:blur');
-
-                // remember selected
-                opt.$selected = root.$selected = $this;
-
-
-                if(opt && opt.$node && opt.$node.hasClass('context-menu-submenu')){
-                    opt.$node.addClass(root.classNames.hover);
-                }
-
-                // position sub-menu - do after show so dumb $.ui.position can keep up
-                if (opt.$node) {
-                    root.positionSubmenu.call(opt.$node, opt.$menu);
-                }
-            },
-            // blur <command>
-            blurItem: function (e) {
-                e.stopPropagation();
-                var $this = $(this),
-                    data = $this.data(),
-                    opt = data.contextMenu,
-                    root = data.contextMenuRoot;
-
-                if (opt.autoHide) { // for tablets and touch screens this needs to remain
-                    $this.removeClass(root.classNames.visible);
-                }
-                $this.removeClass(root.classNames.hover);
-                opt.$selected = null;
-            }
-        },
-        // operations
-        op = {
-            show: function (opt, x, y) {
-                var $trigger = $(this),
-                    css = {};
-
-                // hide any open menus
-                $('#context-menu-layer').trigger('mousedown');
-
-                // backreference for callbacks
-                opt.$trigger = $trigger;
-
-                // show event
-                if (opt.events.show.call($trigger, opt) === false) {
-                    $currentTrigger = null;
-                    return;
-                }
-
-                // create or update context menu
-                var hasVisibleItems = op.update.call($trigger, opt);
-                if (hasVisibleItems === false) {
-                    $currentTrigger = null;
-                    return;
-                }
-
-                // position menu
-                opt.position.call($trigger, opt, x, y);
-
-                // make sure we're in front
-                if (opt.zIndex) {
-                    var additionalZValue = opt.zIndex;
-                    // If opt.zIndex is a function, call the function to get the right zIndex.
-                    if (typeof opt.zIndex === 'function') {
-                        additionalZValue = opt.zIndex.call($trigger, opt);
-                    }
-                    css.zIndex = zindex($trigger) + additionalZValue;
-                }
-
-                // add layer
-                op.layer.call(opt.$menu, opt, css.zIndex);
-
-                // adjust sub-menu zIndexes
-                opt.$menu.find('ul').css('zIndex', css.zIndex + 1);
-
-                // position and show context menu
-                opt.$menu.css(css)[opt.animation.show](opt.animation.duration, function () {
-                    $trigger.trigger('contextmenu:visible');
-
-                    op.activated(opt);
-                    opt.events.activated(opt);
-                });
-                // make options available and set state
-                $trigger
-                    .data('contextMenu', opt)
-                    .addClass('context-menu-active');
-
-                // register key handler
-                $(document).off('keydown.contextMenu').on('keydown.contextMenu', handle.key);
-                // register autoHide handler
-                if (opt.autoHide) {
-                    // mouse position handler
-                    $(document).on('mousemove.contextMenuAutoHide', function (e) {
-                        // need to capture the offset on mousemove,
-                        // since the page might've been scrolled since activation
-                        var pos = $trigger.offset();
-                        pos.right = pos.left + $trigger.outerWidth();
-                        pos.bottom = pos.top + $trigger.outerHeight();
-
-                        if (opt.$layer && !opt.hovering && (!(e.pageX >= pos.left && e.pageX <= pos.right) || !(e.pageY >= pos.top && e.pageY <= pos.bottom))) {
-                            /* Additional hover check after short time, you might just miss the edge of the menu */
-                            setTimeout(function () {
-                                if (!opt.hovering && opt.$menu !== null && typeof opt.$menu !== 'undefined') {
-                                    opt.$menu.trigger('contextmenu:hide');
-                                }
-                            }, 50);
-                        }
-                    });
-                }
-            },
-            hide: function (opt, force) {
-                var $trigger = $(this);
-                if (!opt) {
-                    opt = $trigger.data('contextMenu') || {};
-                }
-
-                // hide event
-                if (!force && opt.events && opt.events.hide.call($trigger, opt) === false) {
-                    return;
-                }
-
-                // remove options and revert state
-                $trigger
-                    .removeData('contextMenu')
-                    .removeClass('context-menu-active');
-
-                if (opt.$layer) {
-                    // keep layer for a bit so the contextmenu event can be aborted properly by opera
-                    setTimeout((function ($layer) {
-                        return function () {
-                            $layer.remove();
-                        };
-                    })(opt.$layer), 10);
-
-                    try {
-                        delete opt.$layer;
-                    } catch (e) {
-                        opt.$layer = null;
-                    }
-                }
-
-                // remove handle
-                $currentTrigger = null;
-                // remove selected
-                opt.$menu.find('.' + opt.classNames.hover).trigger('contextmenu:blur');
-                opt.$selected = null;
-                // collapse all submenus
-                opt.$menu.find('.' + opt.classNames.visible).removeClass(opt.classNames.visible);
-                // unregister key and mouse handlers
-                // $(document).off('.contextMenuAutoHide keydown.contextMenu'); // http://bugs.jquery.com/ticket/10705
-                $(document).off('.contextMenuAutoHide').off('keydown.contextMenu');
-                // hide menu
-                if (opt.$menu) {
-                    opt.$menu[opt.animation.hide](opt.animation.duration, function () {
-                        // tear down dynamically built menu after animation is completed.
-                        if (opt.build) {
-                            opt.$menu.remove();
-                            $.each(opt, function (key) {
-                                switch (key) {
-                                    case 'ns':
-                                    case 'selector':
-                                    case 'build':
-                                    case 'trigger':
-                                        return true;
-
-                                    default:
-                                        opt[key] = undefined;
-                                        try {
-                                            delete opt[key];
-                                        } catch (e) {
-                                        }
-                                        return true;
-                                }
-                            });
-                        }
-
-                        setTimeout(function () {
-                            $trigger.trigger('contextmenu:hidden');
-                        }, 10);
-                    });
-                }
-            },
-            create: function (opt, root) {
-                if (typeof root === 'undefined') {
-                    root = opt;
-                }
-
-                // create contextMenu
-                opt.$menu = $('<ul class="context-menu-list"></ul>').addClass(opt.className || '').data({
-                    'contextMenu': opt,
-                    'contextMenuRoot': root
-                });
-                if(opt.dataAttr){
-                    $.each(opt.dataAttr, function (key, item) {
-                        opt.$menu.attr('data-' + opt.key, item);
-                    });
-                }
-
-                $.each(['callbacks', 'commands', 'inputs'], function (i, k) {
-                    opt[k] = {};
-                    if (!root[k]) {
-                        root[k] = {};
-                    }
-                });
-
-                if (!root.accesskeys) {
-                    root.accesskeys = {};
-                }
-
-                function createNameNode(item) {
-                    var $name = $('<span></span>');
-                    if (item._accesskey) {
-                        if (item._beforeAccesskey) {
-                            $name.append(document.createTextNode(item._beforeAccesskey));
-                        }
-                        $('<span></span>')
-                            .addClass('context-menu-accesskey')
-                            .text(item._accesskey)
-                            .appendTo($name);
-                        if (item._afterAccesskey) {
-                            $name.append(document.createTextNode(item._afterAccesskey));
-                        }
-                    } else {
-                        if (item.isHtmlName) {
-                            // restrict use with access keys
-                            if (typeof item.accesskey !== 'undefined') {
-                                throw new Error('accesskeys are not compatible with HTML names and cannot be used together in the same item');
-                            }
-                            $name.html(item.name);
-                        } else {
-                            $name.text(item.name);
-                        }
-                    }
-                    return $name;
-                }
-
-                // create contextMenu items
-                $.each(opt.items, function (key, item) {
-                    var $t = $('<li class="context-menu-item"></li>').addClass(item.className || ''),
-                        $label = null,
-                        $input = null;
-
-                    // iOS needs to see a click-event bound to an element to actually
-                    // have the TouchEvents infrastructure trigger the click event
-                    $t.on('click', $.noop);
-
-                    // Make old school string seperator a real item so checks wont be
-                    // akward later.
-                    // And normalize 'cm_separator' into 'cm_seperator'.
-                    if (typeof item === 'string' || item.type === 'cm_separator') {
-                        item = {type: 'cm_seperator'};
-                    }
-
-                    item.$node = $t.data({
-                        'contextMenu': opt,
-                        'contextMenuRoot': root,
-                        'contextMenuKey': key
-                    });
-
-                    // register accesskey
-                    // NOTE: the accesskey attribute should be applicable to any element, but Safari5 and Chrome13 still can't do that
-                    if (typeof item.accesskey !== 'undefined') {
-                        var aks = splitAccesskey(item.accesskey);
-                        for (var i = 0, ak; ak = aks[i]; i++) {
-                            if (!root.accesskeys[ak]) {
-                                root.accesskeys[ak] = item;
-                                var matched = item.name.match(new RegExp('^(.*?)(' + ak + ')(.*)$', 'i'));
-                                if (matched) {
-                                    item._beforeAccesskey = matched[1];
-                                    item._accesskey = matched[2];
-                                    item._afterAccesskey = matched[3];
-                                }
-                                break;
-                            }
-                        }
-                    }
-
-                    if (item.type && types[item.type]) {
-                        // run custom type handler
-                        types[item.type].call($t, item, opt, root);
-                        // register commands
-                        $.each([opt, root], function (i, k) {
-                            k.commands[key] = item;
-                            // Overwrite only if undefined or the item is appended to the root. This so it
-                            // doesn't overwrite callbacks of root elements if the name is the same.
-                            if ($.isFunction(item.callback) && (typeof k.callbacks[key] === 'undefined' || typeof opt.type === 'undefined')) {
-                                k.callbacks[key] = item.callback;
-                            }
-                        });
-                    } else {
-                        // add label for input
-                        if (item.type === 'cm_seperator') {
-                            $t.addClass('context-menu-separator ' + root.classNames.notSelectable);
-                        } else if (item.type === 'html') {
-                            $t.addClass('context-menu-html ' + root.classNames.notSelectable);
-                        } else if (item.type !== 'sub' && item.type) {
-                            $label = $('<label></label>').appendTo($t);
-                            createNameNode(item).appendTo($label);
-
-                            $t.addClass('context-menu-input');
-                            opt.hasTypes = true;
-                            $.each([opt, root], function (i, k) {
-                                k.commands[key] = item;
-                                k.inputs[key] = item;
-                            });
-                        } else if (item.items) {
-                            item.type = 'sub';
-                        }
-
-                        switch (item.type) {
-                            case 'cm_seperator':
-                                break;
-
-                            case 'text':
-                                $input = $('<input type="text" value="1" name="" />')
-                                    .attr('name', 'context-menu-input-' + key)
-                                    .val(item.value || '')
-                                    .appendTo($label);
-                                break;
-
-                            case 'textarea':
-                                $input = $('<textarea name=""></textarea>')
-                                    .attr('name', 'context-menu-input-' + key)
-                                    .val(item.value || '')
-                                    .appendTo($label);
-
-                                if (item.height) {
-                                    $input.height(item.height);
-                                }
-                                break;
-
-                            case 'checkbox':
-                                $input = $('<input type="checkbox" value="1" name="" />')
-                                    .attr('name', 'context-menu-input-' + key)
-                                    .val(item.value || '')
-                                    .prop('checked', !!item.selected)
-                                    .prependTo($label);
-                                break;
-
-                            case 'radio':
-                                $input = $('<input type="radio" value="1" name="" />')
-                                    .attr('name', 'context-menu-input-' + item.radio)
-                                    .val(item.value || '')
-                                    .prop('checked', !!item.selected)
-                                    .prependTo($label);
-                                break;
-
-                            case 'select':
-                                $input = $('<select name=""></select>')
-                                    .attr('name', 'context-menu-input-' + key)
-                                    .appendTo($label);
-                                if (item.options) {
-                                    $.each(item.options, function (value, text) {
-                                        $('<option></option>').val(value).text(text).appendTo($input);
-                                    });
-                                    $input.val(item.selected);
-                                }
-                                break;
-
-                            case 'sub':
-                                createNameNode(item).appendTo($t);
-                                item.appendTo = item.$node;
-                                $t.data('contextMenu', item).addClass('context-menu-submenu');
-                                item.callback = null;
-
-                                // If item contains items, and this is a promise, we should create it later
-                                // check if subitems is of type promise. If it is a promise we need to create
-                                // it later, after promise has been resolved.
-                                if ('function' === typeof item.items.then) {
-                                    // probably a promise, process it, when completed it will create the sub menu's.
-                                    op.processPromises(item, root, item.items);
-                                } else {
-                                    // normal submenu.
-                                    op.create(item, root);
-                                }
-                                break;
-
-                            case 'html':
-                                $(item.html).appendTo($t);
-                                break;
-
-                            default:
-                                $.each([opt, root], function (i, k) {
-                                    k.commands[key] = item;
-                                    // Overwrite only if undefined or the item is appended to the root. This so it
-                                    // doesn't overwrite callbacks of root elements if the name is the same.
-                                    if ($.isFunction(item.callback) && (typeof k.callbacks[key] === 'undefined' || typeof opt.type === 'undefined')) {
-                                        k.callbacks[key] = item.callback;
-                                    }
-                                });
-                                createNameNode(item).appendTo($t);
-                                break;
-                        }
-
-                        // disable key listener in <input>
-                        if (item.type && item.type !== 'sub' && item.type !== 'html' && item.type !== 'cm_seperator') {
-                            $input
-                                .on('focus', handle.focusInput)
-                                .on('blur', handle.blurInput);
-
-                            if (item.events) {
-                                $input.on(item.events, opt);
-                            }
-                        }
-
-                        // add icons
-                        if (item.icon) {
-                            if ($.isFunction(item.icon)) {
-                                item._icon = item.icon.call(this, this, $t, key, item);
-                            } else {
-                                if (typeof(item.icon) === 'string' && (
-                                    item.icon.substring(0, 4) === 'fab '
-                                    || item.icon.substring(0, 4) === 'fas '
-                                    || item.icon.substring(0, 4) === 'fad '
-                                    || item.icon.substring(0, 4) === 'far '
-                                    || item.icon.substring(0, 4) === 'fal ')
-                                ) {
-                                    // to enable font awesome
-                                    $t.addClass(root.classNames.icon + ' ' + root.classNames.icon + '--fa5');
-                                    item._icon = $('<i class="' + item.icon + '"></i>');
-                                } else if (typeof(item.icon) === 'string' && item.icon.substring(0, 3) === 'fa-') {
-                                    item._icon = root.classNames.icon + ' ' + root.classNames.icon + '--fa fa ' + item.icon;
-                                } else {
-                                    item._icon = root.classNames.icon + ' ' + root.classNames.icon + '-' + item.icon;
-                                }
-                            }
-
-                            if(typeof(item._icon) === "string"){
-                                $t.addClass(item._icon);
-                            } else {
-                                $t.prepend(item._icon);
-                            }
-                        }
-                    }
-
-                    // cache contained elements
-                    item.$input = $input;
-                    item.$label = $label;
-
-                    // attach item to menu
-                    $t.appendTo(opt.$menu);
-
-                    // Disable text selection
-                    if (!opt.hasTypes && $.support.eventSelectstart) {
-                        // browsers support user-select: none,
-                        // IE has a special event for text-selection
-                        // browsers supporting neither will not be preventing text-selection
-                        $t.on('selectstart.disableTextSelect', handle.abortevent);
-                    }
-                });
-                // attach contextMenu to <body> (to bypass any possible overflow:hidden issues on parents of the trigger element)
-                if (!opt.$node) {
-                    opt.$menu.css('display', 'none').addClass('context-menu-root');
-                }
-                opt.$menu.appendTo(opt.appendTo || document.body);
-            },
-            resize: function ($menu, nested) {
-                var domMenu;
-                // determine widths of submenus, as CSS won't grow them automatically
-                // position:absolute within position:absolute; min-width:100; max-width:200; results in width: 100;
-                // kinda sucks hard...
-
-                // determine width of absolutely positioned element
-                $menu.css({position: 'absolute', display: 'block'});
-                // don't apply yet, because that would break nested elements' widths
-                $menu.data('width',
-                    (domMenu = $menu.get(0)).getBoundingClientRect ?
-                        Math.ceil(domMenu.getBoundingClientRect().width) :
-                        $menu.outerWidth() + 1); // outerWidth() returns rounded pixels
-                // reset styles so they allow nested elements to grow/shrink naturally
-                $menu.css({
-                    position: 'static',
-                    minWidth: '0px',
-                    maxWidth: '100000px'
-                });
-                // identify width of nested menus
-                $menu.find('> li > ul').each(function () {
-                    op.resize($(this), true);
-                });
-                // reset and apply changes in the end because nested
-                // elements' widths wouldn't be calculatable otherwise
-                if (!nested) {
-                    $menu.find('ul').addBack().css({
-                        position: '',
-                        display: '',
-                        minWidth: '',
-                        maxWidth: ''
-                    }).outerWidth(function () {
-                        return $(this).data('width');
-                    });
-                }
-            },
-            update: function (opt, root) {
-                var $trigger = this;
-                if (typeof root === 'undefined') {
-                    root = opt;
-                    op.resize(opt.$menu);
-                }
-
-                var hasVisibleItems = false;
-
-                // re-check disabled for each item
-                opt.$menu.children().each(function () {
-                    var $item = $(this),
-                        key = $item.data('contextMenuKey'),
-                        item = opt.items[key],
-                        disabled = ($.isFunction(item.disabled) && item.disabled.call($trigger, key, root)) || item.disabled === true,
-                        visible;
-                    if ($.isFunction(item.visible)) {
-                        visible = item.visible.call($trigger, key, root);
-                    } else if (typeof item.visible !== 'undefined') {
-                        visible = item.visible === true;
-                    } else {
-                        visible = true;
-                    }
-
-                    if (visible) {
-                        hasVisibleItems = true;
-                    }
-
-                    $item[visible ? 'show' : 'hide']();
-
-                    // dis- / enable item
-                    $item[disabled ? 'addClass' : 'removeClass'](root.classNames.disabled);
-
-                    if ($.isFunction(item.icon)) {
-                        $item.removeClass(item._icon);
-                        var iconResult = item.icon.call(this, $trigger, $item, key, item);
-                        if(typeof(iconResult) === "string"){
-                            $item.addClass(iconResult);
-                        } else {
-                            $item.prepend(iconResult);
-                        }
-                    }
-
-                    if (item.type) {
-                        // dis- / enable input elements
-                        $item.find('input, select, textarea').prop('disabled', disabled);
-
-                        // update input states
-                        switch (item.type) {
-                            case 'text':
-                            case 'textarea':
-                                item.$input.val(item.value || '');
-                                break;
-
-                            case 'checkbox':
-                            case 'radio':
-                                item.$input.val(item.value || '').prop('checked', !!item.selected);
-                                break;
-
-                            case 'select':
-                                item.$input.val((item.selected === 0 ? "0" : item.selected) || '');
-                                break;
-                        }
-                    }
-
-                    if (item.$menu) {
-                        // update sub-menu
-                        var subMenuHasVisibleItems = op.update.call($trigger, item, root);
-                        if (subMenuHasVisibleItems) {
-                            hasVisibleItems = true;
-                        }
-                    }
-                });
-                return hasVisibleItems;
-            },
-            layer: function (opt, zIndex) {
-                // add transparent layer for click area
-                // filter and background for Internet Explorer, Issue #23
-                var $layer = opt.$layer = $('<div id="context-menu-layer"></div>')
-                    .css({
-                        height: $win.height(),
-                        width: $win.width(),
-                        display: 'block',
-                        position: 'fixed',
-                        'z-index': zIndex - 1,
-                        top: 0,
-                        left: 0,
-                        opacity: 0,
-                        filter: 'alpha(opacity=0)',
-                        'background-color': '#000'
-                    })
-                    .data('contextMenuRoot', opt)
-                    .appendTo(document.body)
-                    .on('contextmenu', handle.abortevent)
-                    .on('mousedown', handle.layerClick);
-
-                // IE6 doesn't know position:fixed;
-                if (typeof document.body.style.maxWidth === 'undefined') { // IE6 doesn't support maxWidth
-                    $layer.css({
-                        'position': 'absolute',
-                        'height': $(document).height()
-                    });
-                }
-
-                return $layer;
-            },
-            processPromises: function (opt, root, promise) {
-                // Start
-                opt.$node.addClass(root.classNames.iconLoadingClass);
-
-                function completedPromise(opt, root, items) {
-                    // Completed promise (dev called promise.resolve). We now have a list of items which can
-                    // be used to create the rest of the context menu.
-                    if (typeof items === 'undefined') {
-                        // Null result, dev should have checked
-                        errorPromise(undefined);//own error object
-                    }
-                    finishPromiseProcess(opt, root, items);
-                }
-
-                function errorPromise(opt, root, errorItem) {
-                    // User called promise.reject() with an error item, if not, provide own error item.
-                    if (typeof errorItem === 'undefined') {
-                        errorItem = {
-                            "error": {
-                                name: "No items and no error item",
-                                icon: "context-menu-icon context-menu-icon-quit"
-                            }
-                        };
-                        if (window.console) {
-                            (console.error || console.log).call(console, 'When you reject a promise, provide an "items" object, equal to normal sub-menu items');
-                        }
-                    } else if (typeof errorItem === 'string') {
-                        errorItem = {"error": {name: errorItem}};
-                    }
-                    finishPromiseProcess(opt, root, errorItem);
-                }
-
-                function finishPromiseProcess(opt, root, items) {
-                    if (typeof root.$menu === 'undefined' || !root.$menu.is(':visible')) {
-                        return;
-                    }
-                    opt.$node.removeClass(root.classNames.iconLoadingClass);
-                    opt.items = items;
-                    op.create(opt, root, true); // Create submenu
-                    op.update(opt, root); // Correctly update position if user is already hovered over menu item
-                    root.positionSubmenu.call(opt.$node, opt.$menu); // positionSubmenu, will only do anything if user already hovered over menu item that just got new subitems.
-                }
-
-                // Wait for promise completion. .then(success, error, notify) (we don't track notify). Bind the opt
-                // and root to avoid scope problems
-                promise.then(completedPromise.bind(this, opt, root), errorPromise.bind(this, opt, root));
-            },
-            // operation that will run after contextMenu showed on screen
-            activated: function(opt){
-                var $menu = opt.$menu;
-                var $menuOffset = $menu.offset();
-                var winHeight = $(window).height();
-                var winScrollTop = $(window).scrollTop();
-                var menuHeight = $menu.height();
-                if(menuHeight > winHeight){
-                    $menu.css({
-                        'height' : winHeight + 'px',
-                        'overflow-x': 'hidden',
-                        'overflow-y': 'auto',
-                        'top': winScrollTop + 'px'
-                    });
-                } else if(($menuOffset.top < winScrollTop) || ($menuOffset.top + menuHeight > winScrollTop + winHeight)){
-                    $menu.css({
-                        'top': winScrollTop + 'px'
-                    });
-                }
-            }
-        };
-
-    // split accesskey according to http://www.whatwg.org/specs/web-apps/current-work/multipage/editing.html#assigned-access-key
-    function splitAccesskey(val) {
-        var t = val.split(/\s+/);
-        var keys = [];
-
-        for (var i = 0, k; k = t[i]; i++) {
-            k = k.charAt(0).toUpperCase(); // first character only
-            // theoretically non-accessible characters should be ignored, but different systems, different keyboard layouts, ... screw it.
-            // a map to look up already used access keys would be nice
-            keys.push(k);
-        }
-
-        return keys;
-    }
-
-// handle contextMenu triggers
-    $.fn.contextMenu = function (operation) {
-        var $t = this, $o = operation;
-        if (this.length > 0) {  // this is not a build on demand menu
-            if (typeof operation === 'undefined') {
-                this.first().trigger('contextmenu');
-            } else if (typeof operation.x !== 'undefined' && typeof operation.y !== 'undefined') {
-                this.first().trigger($.Event('contextmenu', {
-                    pageX: operation.x,
-                    pageY: operation.y,
-                    mouseButton: operation.button
-                }));
-            } else if (operation === 'hide') {
-                var $menu = this.first().data('contextMenu') ? this.first().data('contextMenu').$menu : null;
-                if ($menu) {
-                    $menu.trigger('contextmenu:hide');
-                }
-            } else if (operation === 'destroy') {
-                $.contextMenu('destroy', {context: this});
-            } else if ($.isPlainObject(operation)) {
-                operation.context = this;
-                $.contextMenu('create', operation);
-            } else if (operation) {
-                this.removeClass('context-menu-disabled');
-            } else if (!operation) {
-                this.addClass('context-menu-disabled');
-            }
-        } else {
-            $.each(menus, function () {
-                if (this.selector === $t.selector) {
-                    $o.data = this;
-
-                    $.extend($o.data, {trigger: 'demand'});
-                }
-            });
-
-            handle.contextmenu.call($o.target, $o);
-        }
-
-        return this;
-    };
-
-    // manage contextMenu instances
-    $.contextMenu = function (operation, options) {
-        if (typeof operation !== 'string') {
-            options = operation;
-            operation = 'create';
-        }
-
-        if (typeof options === 'string') {
-            options = {selector: options};
-        } else if (typeof options === 'undefined') {
-            options = {};
-        }
-
-        // merge with default options
-        var o = $.extend(true, {}, defaults, options || {});
-        var $document = $(document);
-        var $context = $document;
-        var _hasContext = false;
-
-        if (!o.context || !o.context.length) {
-            o.context = document;
-        } else {
-            // you never know what they throw at you...
-            $context = $(o.context).first();
-            o.context = $context.get(0);
-            _hasContext = !$(o.context).is(document);
-        }
-
-        switch (operation) {
-
-            case 'update':
-                // Updates visibility and such
-                if(_hasContext){
-                    op.update($context);
-                } else {
-                    for(var menu in menus){
-                        if(menus.hasOwnProperty(menu)){
-                            op.update(menus[menu]);
-                        }
-                    }
-                }
-                break;
-
-            case 'create':
-                // no selector no joy
-                if (!o.selector) {
-                    throw new Error('No selector specified');
-                }
-                // make sure internal classes are not bound to
-                if (o.selector.match(/.context-menu-(list|item|input)($|\s)/)) {
-                    throw new Error('Cannot bind to selector "' + o.selector + '" as it contains a reserved className');
-                }
-                if (!o.build && (!o.items || $.isEmptyObject(o.items))) {
-                    throw new Error('No Items specified');
-                }
-                counter++;
-                o.ns = '.contextMenu' + counter;
-                if (!_hasContext) {
-                    namespaces[o.selector] = o.ns;
-                }
-                menus[o.ns] = o;
-
-                // default to right click
-                if (!o.trigger) {
-                    o.trigger = 'right';
-                }
-
-                if (!initialized) {
-                    var itemClick = o.itemClickEvent === 'click' ? 'click.contextMenu' : 'mouseup.contextMenu';
-                    var contextMenuItemObj = {
-                        // 'mouseup.contextMenu': handle.itemClick,
-                        // 'click.contextMenu': handle.itemClick,
-                        'contextmenu:focus.contextMenu': handle.focusItem,
-                        'contextmenu:blur.contextMenu': handle.blurItem,
-                        'contextmenu.contextMenu': handle.abortevent,
-                        'mouseenter.contextMenu': handle.itemMouseenter,
-                        'mouseleave.contextMenu': handle.itemMouseleave
-                    };
-                    contextMenuItemObj[itemClick] = handle.itemClick;
-                    // make sure item click is registered first
-                    $document
-                        .on({
-                            'contextmenu:hide.contextMenu': handle.hideMenu,
-                            'prevcommand.contextMenu': handle.prevItem,
-                            'nextcommand.contextMenu': handle.nextItem,
-                            'contextmenu.contextMenu': handle.abortevent,
-                            'mouseenter.contextMenu': handle.menuMouseenter,
-                            'mouseleave.contextMenu': handle.menuMouseleave
-                        }, '.context-menu-list')
-                        .on('mouseup.contextMenu', '.context-menu-input', handle.inputClick)
-                        .on(contextMenuItemObj, '.context-menu-item');
-
-                    initialized = true;
-                }
-
-                // engage native contextmenu event
-                $context
-                    .on('contextmenu' + o.ns, o.selector, o, handle.contextmenu);
-
-                if (_hasContext) {
-                    // add remove hook, just in case
-                    $context.on('remove' + o.ns, function () {
-                        $(this).contextMenu('destroy');
-                    });
-                }
-
-                switch (o.trigger) {
-                    case 'hover':
-                        $context
-                            .on('mouseenter' + o.ns, o.selector, o, handle.mouseenter)
-                            .on('mouseleave' + o.ns, o.selector, o, handle.mouseleave);
-                        break;
-
-                    case 'left':
-                        $context.on('click' + o.ns, o.selector, o, handle.click);
-                        break;
-				    case 'touchstart':
-                        $context.on('touchstart' + o.ns, o.selector, o, handle.click);
-                        break;
-                    /*
-                     default:
-                     // http://www.quirksmode.org/dom/events/contextmenu.html
-                     $document
-                     .on('mousedown' + o.ns, o.selector, o, handle.mousedown)
-                     .on('mouseup' + o.ns, o.selector, o, handle.mouseup);
-                     break;
-                     */
-                }
-
-                // create menu
-                if (!o.build) {
-                    op.create(o);
-                }
-                break;
-
-            case 'destroy':
-                var $visibleMenu;
-                if (_hasContext) {
-                    // get proper options
-                    var context = o.context;
-                    $.each(menus, function (ns, o) {
-
-                        if (!o) {
-                            return true;
-                        }
-
-                        // Is this menu equest to the context called from
-                        if (!$(context).is(o.selector)) {
-                            return true;
-                        }
-
-                        $visibleMenu = $('.context-menu-list').filter(':visible');
-                        if ($visibleMenu.length && $visibleMenu.data().contextMenuRoot.$trigger.is($(o.context).find(o.selector))) {
-                            $visibleMenu.trigger('contextmenu:hide', {force: true});
-                        }
-
-                        try {
-                            if (menus[o.ns].$menu) {
-                                menus[o.ns].$menu.remove();
-                            }
-
-                            delete menus[o.ns];
-                        } catch (e) {
-                            menus[o.ns] = null;
-                        }
-
-                        $(o.context).off(o.ns);
-
-                        return true;
-                    });
-                } else if (!o.selector) {
-                    $document.off('.contextMenu .contextMenuAutoHide');
-                    $.each(menus, function (ns, o) {
-                        $(o.context).off(o.ns);
-                    });
-
-                    namespaces = {};
-                    menus = {};
-                    counter = 0;
-                    initialized = false;
-
-                    $('#context-menu-layer, .context-menu-list').remove();
-                } else if (namespaces[o.selector]) {
-                    $visibleMenu = $('.context-menu-list').filter(':visible');
-                    if ($visibleMenu.length && $visibleMenu.data().contextMenuRoot.$trigger.is(o.selector)) {
-                        $visibleMenu.trigger('contextmenu:hide', {force: true});
-                    }
-
-                    try {
-                        if (menus[namespaces[o.selector]].$menu) {
-                            menus[namespaces[o.selector]].$menu.remove();
-                        }
-
-                        delete menus[namespaces[o.selector]];
-                    } catch (e) {
-                        menus[namespaces[o.selector]] = null;
-                    }
-
-                    $document.off(namespaces[o.selector]);
-                }
-                break;
-
-            case 'html5':
-                // if <command> and <menuitem> are not handled by the browser,
-                // or options was a bool true,
-                // initialize $.contextMenu for them
-                if ((!$.support.htmlCommand && !$.support.htmlMenuitem) || (typeof options === 'boolean' && options)) {
-                    $('menu[type="context"]').each(function () {
-                        if (this.id) {
-                            $.contextMenu({
-                                selector: '[contextmenu=' + this.id + ']',
-                                items: $.contextMenu.fromMenu(this)
-                            });
-                        }
-                    }).css('display', 'none');
-                }
-                break;
-
-            default:
-                throw new Error('Unknown operation "' + operation + '"');
-        }
-
-        return this;
-    };
-
-// import values into <input> commands
-    $.contextMenu.setInputValues = function (opt, data) {
-        if (typeof data === 'undefined') {
-            data = {};
-        }
-
-        $.each(opt.inputs, function (key, item) {
-            switch (item.type) {
-                case 'text':
-                case 'textarea':
-                    item.value = data[key] || '';
-                    break;
-
-                case 'checkbox':
-                    item.selected = data[key] ? true : false;
-                    break;
-
-                case 'radio':
-                    item.selected = (data[item.radio] || '') === item.value;
-                    break;
-
-                case 'select':
-                    item.selected = data[key] || '';
-                    break;
-            }
-        });
-    };
-
-// export values from <input> commands
-    $.contextMenu.getInputValues = function (opt, data) {
-        if (typeof data === 'undefined') {
-            data = {};
-        }
-
-        $.each(opt.inputs, function (key, item) {
-            switch (item.type) {
-                case 'text':
-                case 'textarea':
-                case 'select':
-                    data[key] = item.$input.val();
-                    break;
-
-                case 'checkbox':
-                    data[key] = item.$input.prop('checked');
-                    break;
-
-                case 'radio':
-                    if (item.$input.prop('checked')) {
-                        data[item.radio] = item.value;
-                    }
-                    break;
-            }
-        });
-
-        return data;
-    };
-
-// find <label for="xyz">
-    function inputLabel(node) {
-        return (node.id && $('label[for="' + node.id + '"]').val()) || node.name;
-    }
-
-// convert <menu> to items object
-    function menuChildren(items, $children, counter) {
-        if (!counter) {
-            counter = 0;
-        }
-
-        $children.each(function () {
-            var $node = $(this),
-                node = this,
-                nodeName = this.nodeName.toLowerCase(),
-                label,
-                item;
-
-            // extract <label><input>
-            if (nodeName === 'label' && $node.find('input, textarea, select').length) {
-                label = $node.text();
-                $node = $node.children().first();
-                node = $node.get(0);
-                nodeName = node.nodeName.toLowerCase();
-            }
-
-            /*
-             * <menu> accepts flow-content as children. that means <embed>, <canvas> and such are valid menu items.
-             * Not being the sadistic kind, $.contextMenu only accepts:
-             * <command>, <menuitem>, <hr>, <span>, <p> <input [text, radio, checkbox]>, <textarea>, <select> and of course <menu>.
-             * Everything else will be imported as an html node, which is not interfaced with contextMenu.
-             */
-
-            // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#concept-command
-            switch (nodeName) {
-                // http://www.whatwg.org/specs/web-apps/current-work/multipage/interactive-elements.html#the-menu-element
-                case 'menu':
-                    item = {name: $node.attr('label'), items: {}};
-                    counter = menuChildren(item.items, $node.children(), counter);
-                    break;
-
-                // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#using-the-a-element-to-define-a-command
-                case 'a':
-                // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#using-the-button-element-to-define-a-command
-                case 'button':
-                    item = {
-                        name: $node.text(),
-                        disabled: !!$node.attr('disabled'),
-                        callback: (function () {
-                            return function () {
-                                $node.get(0).click();
-                            };
-                        })()
-                    };
-                    break;
-
-                // http://www.whatwg.org/specs/web-apps/current-work/multipage/commands.html#using-the-command-element-to-define-a-command
-                case 'menuitem':
-                case 'command':
-                    switch ($node.attr('type')) {
-                        case undefined:
-                        case 'command':
-                        case 'menuitem':
-                            item = {
-                                name: $node.attr('label'),
-                                disabled: !!$node.attr('disabled'),
-                                icon: $node.attr('icon'),
-                                callback: (function () {
-                                    return function () {
-                                        $node.get(0).click();
-                                    };
-                                })()
-                            };
-                            break;
-
-                        case 'checkbox':
-                            item = {
-                                type: 'checkbox',
-                                disabled: !!$node.attr('disabled'),
-                                name: $node.attr('label'),
-                                selected: !!$node.attr('checked')
-                            };
-                            break;
-                        case 'radio':
-                            item = {
-                                type: 'radio',
-                                disabled: !!$node.attr('disabled'),
-                                name: $node.attr('label'),
-                                radio: $node.attr('radiogroup'),
-                                value: $node.attr('id'),
-                                selected: !!$node.attr('checked')
-                            };
-                            break;
-
-                        default:
-                            item = undefined;
-                    }
-                    break;
-
-                case 'hr':
-                    item = '-------';
-                    break;
-
-                case 'input':
-                    switch ($node.attr('type')) {
-                        case 'text':
-                            item = {
-                                type: 'text',
-                                name: label || inputLabel(node),
-                                disabled: !!$node.attr('disabled'),
-                                value: $node.val()
-                            };
-                            break;
-
-                        case 'checkbox':
-                            item = {
-                                type: 'checkbox',
-                                name: label || inputLabel(node),
-                                disabled: !!$node.attr('disabled'),
-                                selected: !!$node.attr('checked')
-                            };
-                            break;
-
-                        case 'radio':
-                            item = {
-                                type: 'radio',
-                                name: label || inputLabel(node),
-                                disabled: !!$node.attr('disabled'),
-                                radio: !!$node.attr('name'),
-                                value: $node.val(),
-                                selected: !!$node.attr('checked')
-                            };
-                            break;
-
-                        default:
-                            item = undefined;
-                            break;
-                    }
-                    break;
-
-                case 'select':
-                    item = {
-                        type: 'select',
-                        name: label || inputLabel(node),
-                        disabled: !!$node.attr('disabled'),
-                        selected: $node.val(),
-                        options: {}
-                    };
-                    $node.children().each(function () {
-                        item.options[this.value] = $(this).text();
-                    });
-                    break;
-
-                case 'textarea':
-                    item = {
-                        type: 'textarea',
-                        name: label || inputLabel(node),
-                        disabled: !!$node.attr('disabled'),
-                        value: $node.val()
-                    };
-                    break;
-
-                case 'label':
-                    break;
-
-                default:
-                    item = {type: 'html', html: $node.clone(true)};
-                    break;
-            }
-
-            if (item) {
-                counter++;
-                items['key' + counter] = item;
-            }
-        });
-
-        return counter;
-    }
-
-// convert html5 menu
-    $.contextMenu.fromMenu = function (element) {
-        var $this = $(element),
-            items = {};
-
-        menuChildren(items, $this.children());
-
-        return items;
-    };
-
-// make defaults accessible
-    $.contextMenu.defaults = defaults;
-    $.contextMenu.types = types;
-// export internal functions - undocumented, for hacking only!
-    $.contextMenu.handle = handle;
-    $.contextMenu.op = op;
-    $.contextMenu.menus = menus;
-});
-
-define('contextMenu', ['contextMenu/dist/jquery.contextMenu'], function (main) { return main; });
 
 define ('lib/jquery.fullscreen-min',[
    "jquery",
@@ -30331,7 +28504,6 @@ define ('x_ite/Browser/Core/ContextMenu',[
    "jquery",
    "x_ite/Base/X3DBaseNode",
    "locale/gettext",
-   "contextMenu",
    "lib/jquery.fullscreen-min",
 ],
 function ($,
@@ -30369,88 +28541,19 @@ function ($,
 
          const browser = this .getBrowser ();
 
-         if (! browser .getBrowserOptions () .getContextMenu ())
-            return;
-
-         $.contextMenu ({
-            selector: ".x_ite-private-browser-" + browser .getNumber (),
+         this .initializeContextMenu ({
+            element: browser .getElement (),
+            appendTo: browser .getShadow (),
             build: this .build .bind (this),
             animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
-            hideOnSecondTrigger: true,
             events:
             {
-               show: function (options)
+               show: function ()
                {
                   this .active = true;
-
-                  if (browser .getElement () .fullScreen ())
-                  {
-                     browser .getElement () .append (options .$menu);
-
-                     setTimeout (function ()
-                     {
-                        browser .getElement () .append (options .$layer .css ({
-                           position: "absolute",
-                           width: "100%",
-                           height: "100%",
-                        }));
-                     },
-                     1);
-                  }
-               },
-               activated: function (options)
-               {
-                  // Display submenus on left side if there is no space on right side.
-
-                  if (options .$menu .hasClass ("x_ite-private-menu-submenus-left"))
-                  {
-                     options .$menu .find (".context-menu-list") .each (function (i, e)
-                     {
-                        $(e) .css ("right", $(e) .parent () .parent () .css ("width"));
-                     });
-                  }
-                  else
-                  {
-                     options .$menu .find (".context-menu-list") .each (function (i, e)
-                     {
-                        $(e) .css ("left", (parseInt ($(e) .parent () .parent () .css ("width")) - 2) + "px");
-                     });
-                  }
-
-                  // If the submenu is higher than vh, add scrollbars.
-                  options .$menu .find (".context-menu-list") .each (function (i, e)
-                  {
-                     if ($(e) .height () > $(window) .height ())
-                     {
-                        $(e) .css ({
-                           "overflow-y": "scroll",
-                           "max-height": "100vh",
-                        });
-                     }
-                  });
-
-                  // If the submenu is higher than vh, reposition it.
-                  options .$menu .find (".context-menu-item") .on ("mouseenter", function (event)
-                  {
-                     event .stopImmediatePropagation ();
-
-                     const
-                        t = $(event .target),
-                        e = t .children (".context-menu-list");
-
-                     if (!e .length)
-                        return;
-
-                     e .css ("top", "");
-
-                     const bottom = e .offset () .top + e .height () - $(window) .scrollTop () - $(window) .height ();
-
-                     if (bottom > 0)
-                        e .offset ({ "top": e .offset () .top - bottom });
-                  });
                }
                .bind (this),
-               hide: function (options)
+               hide: function ()
                {
                   this .active = false;
                }
@@ -30470,15 +28573,17 @@ function ($,
       {
          return this .active;
       },
-      build: function (trigger, event)
+      build: function (event)
       {
          const
             browser          = this .getBrowser (),
             activeLayer      = browser .getActiveLayer (),
             currentViewpoint = activeLayer ? activeLayer .getViewpoint () : null,
             currentViewer    = browser ._viewer .getValue (),
-            fullscreen       = browser .getElement () .fullScreen (),
-            leftSubMenus     = $(document) .width () - event .pageX < 370;
+            fullscreen       = browser .getElement () .fullScreen ();
+
+         if (! browser .getBrowserOptions () .getContextMenu ())
+            return;
 
          const menu = {
             className: "x_ite-private-menu x_ite-private-menu-title",
@@ -30673,7 +28778,9 @@ function ($,
                },
                "fullscreen": {
                   name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
-                  className: "context-menu-icon " + (fullscreen ? "x_ite-private-icon-leave-fullscreen" : "x_ite-private-icon-fullscreen"),
+                  className: "context-menu-icon " + (fullscreen
+                     ? "x_ite-private-icon-leave-fullscreen"
+                     : "x_ite-private-icon-enter-fullscreen"),
                   callback: function ()
                   {
                      browser .getElement () .toggleFullScreen ();
@@ -30692,11 +28799,11 @@ function ($,
                      {
                         define .hide ();
 
-                        browser .getElement () .find (".x_ite-private-world-info") .remove ();
+                        browser .getShadow () .find (".x_ite-private-world-info") .remove ();
 
                         const
                            converter = new showdown .Converter (),
-                           priv      = browser .getElement () .find (".x_ite-private-browser"),
+                           priv      = browser .getShadow () .find (".x_ite-private-browser"),
                            overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
                            div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
                            worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
@@ -30760,9 +28867,6 @@ function ($,
                   menu .items ["user-" + key] = userMenu [key];
             }
          }
-
-         if (leftSubMenus)
-            menu .className += " x_ite-private-menu-submenus-left";
 
          if ($.isEmptyObject (menu .items .viewpoints .items))
          {
@@ -30878,6 +28982,195 @@ function ($,
             case "NONE":
                return _("None Viewer");
          }
+      },
+      initializeContextMenu: function (options)
+      {
+         options .element .on ("contextmenu", this .showContextMenu .bind (this, options));
+      },
+      showContextMenu: function (options, event)
+      {
+         const
+            menu  = options .build (event),
+            level = 1;
+
+         if (!menu)
+            return;
+
+         // Layer
+
+         const layer = $("<div></div>")
+            .addClass ("context-menu-layer")
+            .addClass (menu .className)
+            .appendTo (options .appendTo);
+
+         const hide = function ()
+         {
+            layer .remove ();
+
+            ul [options .animation .hide] (options .animation .duration, function ()
+            {
+               ul .remove ();
+
+               if (typeof options .events .hide === "function")
+                  options .events .hide ();
+            });
+         };
+
+         // Menu
+
+         const
+            x = event .pageX - options .element .offset () .left,
+            y = event .pageY - options .element .offset () .top;
+
+         const ul = $("<ul></ul>")
+            .addClass ("context-menu-list")
+            .addClass (menu .className)
+            .addClass ("context-menu-root")
+            .css ({ "left": x, "top": y, "z-index": level, "display": "none" })
+            .appendTo (options .appendTo);
+
+         for (const k in menu .items)
+            ul .append (this .buildItem (menu .items [k], "context-menu-root", k, level + 1, hide));
+
+         ul [options .animation .show] (options .animation .duration);
+
+         if (ul .offset () .left - $(document) .scrollLeft () + ul .width () > $(window) .width ())
+            ul .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .width ()) });
+
+         if (ul .offset () .top - $(document) .scrollTop () + ul .height () > $(window) .height ())
+            ul .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .height ()) });
+
+         // If the submenu is higher than vh, add scrollbars.
+
+         ul .find ("ul") .each (function (i, e)
+         {
+            if ($(e) .height () > $(window) .height ())
+            {
+               $(e) .css ({
+                  "overflow-y": "scroll",
+                  "max-height": "100vh",
+                  "width": $(e) .width (),
+               });
+            }
+         });
+
+         // Display submenus on the left or right side.
+
+         const position = $(document) .width () - event .pageX < 370 ? "right" : "left";
+
+         ul .find ("ul") .each (function (i, e)
+         {
+            $(e) .css (position, $(e) .parent () .closest ("ul") .width ());
+         });
+
+         // If the submenu is higher than vh, reposition it.
+
+         ul .find ("li") .on ("mouseenter", function (event)
+         {
+            event .stopImmediatePropagation ();
+
+            const
+               t = $(event .target),
+               e = t .children ("ul");
+
+            if (!e .length)
+               return;
+
+            e .css ("top", "");
+
+            const bottom = e .offset () .top + e .height () - $(window) .scrollTop () - $(window) .height ();
+
+            if (bottom > 0)
+               e .offset ({ "top": e .offset () .top - bottom });
+         });
+
+         // Layer
+
+         layer .on ("click", hide);
+
+         // Show
+
+         if (typeof options .events .show === "function")
+            options .events .show ();
+
+         return false;
+      },
+      buildItem: function (item, parent, key, level, hide)
+      {
+         const li = $("<li></li>") .addClass ("context-menu-item");
+
+         switch (typeof item)
+         {
+            case "string":
+            {
+               if (item .startsWith ("-"))
+                  li .addClass (["context-menu-separator", "context-menu-not-selectable"]);
+
+               break;
+            }
+            case "object":
+            {
+               if (item .className)
+                  li .addClass (item .className);
+
+               switch (item .type)
+               {
+                  case "radio":
+                  case "checkbox":
+                  {
+                     const
+                        label = $("<label></label>") .appendTo (li),
+                        input = $("<input></input>") .appendTo (label);
+
+                     input
+                        .attr ("type", item .type)
+                        .attr ("name", "context-menu-input-" + parent);
+
+                     $("<span></span>") .text (item .name) .appendTo (label);
+
+                     if (item .selected)
+                        input .attr ("checked", "checked");
+
+                     for (const key in item .events)
+                        input .on (key, item .events [key]);
+
+                     li .addClass ("context-menu-input");
+
+                     break;
+                  }
+                  default:
+                  {
+                     if (item .name)
+                        $("<span></span>") .text (item .name) .appendTo (li);
+
+                     if (typeof item .callback === "function")
+                        li .on ("click", item .callback);
+
+                     if (typeof item .callback === "function")
+                        li .on ("click", hide);
+
+                     break;
+                  }
+               }
+
+               break;
+            }
+         }
+
+         if (item .items)
+         {
+            const ul = $("<ul></ul>")
+               .addClass ("context-menu-list")
+               .css ({ "z-index": level })
+               .appendTo (li);
+
+            for (const k in item .items)
+               ul .append (this .buildItem (item .items [k], key, k, level + 1, hide));
+
+            li .addClass ("context-menu-submenu");
+         }
+
+         return li;
       },
    });
 
@@ -41281,6 +39574,9 @@ define ('standard/Utility/DataStorage',[],function ()
    return DataStorage;
 });
 
+
+define('text!x_ite.css',[],function () { return '/* X_ITE CSS StyleSheet */\n\n@charset "utf-8";\n\n@import url("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic");\n\n:host,\nX3DCanvas {\n  position: relative;\n  display: inline-block;\n  outline: none;\n  margin: 0;\n  padding: 0;\n  border: 0;\n  border-radius: 0;\n  width: 300px;\n  height: 150px;\n}\n\n:host(.x_ite-fullscreen) {\n  width: 100vw !important;\n  height: 100vh !important;\n}\n\nX3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {\n  display: none;\n}\n\n.x_ite-private-browser {\n  z-index: 0;\n  overflow: hidden;\n  display: block;\n  position: absolute;\n  inset: 0;\n  margin: 0;\n  padding: 0;\n  border: 0;\n  border-radius: 0;\n}\n\n.x_ite-private-surface {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  border-radius: 0;\n  height: 100%;\n  margin-right: 0;\n}\n\n.x_ite-private-canvas {\n  display: block;\n  outline: none;\n  margin: 0;\n  padding: 0;\n  border: 0;\n  border-radius: 0;\n  width: 100%;\n  height: 100%;\n}\n\n.x_ite-private-notification {\n  padding: 5px;\n  position: absolute;\n  top: 20px;\n  right: -4px;\n  -webkit-backdrop-filter: blur(8px);\n  backdrop-filter: blur(8px);\n  background: rgba(0,0,0,0.61803);\n  background: -moz-linear-gradient(top, rgba(50,50,50,0.61803) 0%, rgba(0,0,0,0.61803) 100%); /* FF3.6-15 */\n  background: -webkit-linear-gradient(top, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* Chrome10-25,Safari5.1-6 */\n  background: linear-gradient(to bottom, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\n  border: 4px solid rgba(60,60,60,0.61803);\n  border-radius: 5px;\n  -webkit-background-clip: padding-box; /* for Safari */\n  background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */\n  color: white;\n  font-family: PT Sans, sans-serif;\n  font-size: 10pt;\n  letter-spacing: unset;\n  line-height: 1;\n  white-space: pre;\n  pointer-events: none;\n}\n\n.x_ite-private-notification span {\n  padding: 0 24px 0 20px;\n  background: url("assets/images/icon.bw.png") no-repeat 0 2px;\n}\n\n.x_ite-private-browser-timings {\n  position: absolute;\n  bottom: -4px;\n  left: -4px;\n  padding: 10px 15px 14px 14px;\n  -webkit-backdrop-filter: blur(8px);\n  backdrop-filter: blur(8px);\n  background: rgba(0,0,0,0.61803);\n  background: -moz-linear-gradient(top, rgba(50,50,50,0.61803) 0%, rgba(0,0,0,0.61803) 100%); /* FF3.6-15 */\n  background: -webkit-linear-gradient(top, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* Chrome10-25,Safari5.1-6 */\n  background: linear-gradient(to bottom, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\n  border-top: 4px solid rgba(60,60,60,0.61803);\n  border-right: 4px solid rgba(60,60,60,0.61803);\n  border-radius: 5px;\n  -webkit-background-clip: padding-box; /* for Safari */\n  background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */\n  color: white;\n  font-family: PT Sans, sans-serif;\n  font-size: 9pt;\n  white-space: pre;\n  pointer-events: none;\n}\n\n.x_ite-private-browser-timings table,\n.x_ite-private-browser-timings thead,\n.x_ite-private-browser-timings tbody,\n.x_ite-private-browser-timings tfoot,\n.x_ite-private-browser-timings tr,\n.x_ite-private-browser-timings th,\n.x_ite-private-browser-timings td {\n  box-sizing: border-box;\n  outline: 0;\n  margin: 0;\n  border: 0;\n  border-radius: 0;\n  padding: 0;\n  background: none;\n  color: white;\n  font-size: inherit;\n  font-weight: normal;\n  font-style: normal;\n  letter-spacing: unset;\n  line-height: 1;\n  text-align: left;\n}\n\n.x_ite-private-browser-timings table {\n  overflow: hidden;\n  background: url("assets/images/Time.png") no-repeat;\n  width: 100%;\n  max-width: 100%;\n  border-collapse: separate;\n  border-spacing: 2px;\n  empty-cells: show;\n}\n\n.x_ite-private-browser-timings thead th {\n  padding-left: 20px;\n  padding-bottom: 5px;\n  font-weight: bold;\n}\n\n.x_ite-private-browser-timings td:first-child {\n  padding-right: 10px;\n}\n\n.x_ite-private-browser-timings tr.x_ite-private-more td {\n  padding-bottom: 5px;\n}\n\n.x_ite-private-browser-timings td {\n  padding-bottom: 2px;\n}\n\n.x_ite-private-browser-timings tfoot td:first-child {\n  padding-right: 0;\n}\n\n.x_ite-private-browser-timings tfoot td {\n  padding-top: 4px;\n}\n\n.x_ite-private-browser-timings button {\n  box-sizing: border-box;\n  border: 0;\n  border-radius: 10px;\n  padding: 2px 2px 4px 2px;\n  width: 100%;\n  background: rgba(0,0,0,0.38196601);\n  color: white;\n  font-family: PT Sans, sans-serif;\n  font-style: italic;\n  font-size: 9pt;\n  letter-spacing: unset;\n  line-height: 1.1;\n  text-align: center;\n  pointer-events: all;\n  cursor: pointer;\n}\n\n.x_ite-private-world-info-overlay {\n  position: absolute;\n  inset: 0;\n}\n\n.x_ite-private-world-info {\n  overflow-y: auto;\n  position: absolute;\n  inset: 0;\n  -webkit-backdrop-filter: blur(8px);\n  backdrop-filter: blur(8px);\n  background: rgba(0,0,0,0.61803);\n  margin: 21pt;\n  border: 4px solid rgba(60,60,60,0.61803);\n  border-radius: 15px;\n  padding: 21pt;\n}\n\n.x_ite-private-world-info .x_ite-private-world-info-top,\n.x_ite-private-world-info .x_ite-private-world-info-title,\n.x_ite-private-world-info .x_ite-private-world-info-info,\n.x_ite-private-world-info p {\n  box-sizing: border-box;\n  outline: 0;\n  margin: 0;\n  border: 0;\n  border-radius: 0;\n  padding: 0;\n  background: none;\n  color: white;\n  font-family: PT Sans, sans-serif;\n  font-size: inherit;\n  font-weight: inherit;\n  font-style: normal;\n  letter-spacing: unset;\n  line-height: 1.2;\n  text-align: left;\n}\n\n.x_ite-private-world-info .x_ite-private-world-info-top {\n  font-weight: bold;\n  font-style: italic;\n  font-size: 9pt;\n}\n\n.x_ite-private-world-info .x_ite-private-world-info-title {\n  margin: 0.3em 0 1em 0;\n  font-weight: bold;\n  font-size: 21pt;\n}\n\n.x_ite-private-world-info .x_ite-private-world-info-info,\n.x_ite-private-world-info .x_ite-private-world-info-info p {\n  margin: 1em 0 1em 0;\n  font-size: 14pt;\n}\n\n.x_ite-private-world-info a {\n  text-decoration: underline;\n  color: #fd9f2e;\n}\n\n/*!\n * jQuery contextMenu - Plugin for simple contextMenu handling\n *\n * Version: v1.8.1\n *\n * Authors: Björn Brala (SWIS.nl), Rodney Rehm, Addy Osmani (patches for FF)\n * Web: http://swisnl.github.io/jQuery-contextMenu/\n *\n * Copyright (c) 2011-2015 SWIS BV and contributors\n *\n * Licensed under\n *   MIT License http://www.opensource.org/licenses/mit-license\n\n * Date: 2015-09-20T18:47:54.927Z\n */\n\n.x_ite-private-menu.context-menu-layer {\n  z-index: 0;\n  position: fixed;\n  inset: 0;\n}\n\n/* menu title */\nul.x_ite-private-menu.x_ite-private-menu-title:before {\n  content: "X_ITE Browser";\n  display: block;\n  padding: 4px 32px 4px 8px;\n  font-weight: bold;\n}\n\n.x_ite-private-menu .context-menu-selected {\n  font-weight: bold;\n  font-style: italic;\n}\n\n.x_ite-private-menu.context-menu-list,\n.x_ite-private-menu .context-menu-list {\n  position: absolute;\n  display: inline-block;\n  min-width: 120px;\n  padding: 0;\n  margin: 0;\n  margin-left: 1px;\n  white-space: pre;\n  font-family: PT Sans, sans-serif;\n  font-size: 10pt;\n  line-height: 1.2;\n  list-style-type: none;\n  background: #222;\n  color: #eee;\n  border: 0 solid #ddd;\n  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .5);\n          box-shadow: 0 2px 5px rgba(0, 0, 0, .5);\n}\n\n.x_ite-private-menu .context-menu-item {\n  position: relative;\n  background-color: #222;\n  margin: 0;\n  border-top: 1px solid #222;\n  border-bottom: 1px solid #222;\n  padding: 3px 24px 3px 24px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  font-size: 10pt;\n  line-height: 1;\n  letter-spacing: unset;\n  text-align: left;\n}\n\n.x_ite-private-menu .context-menu-item > label > input,\n.x_ite-private-menu .context-menu-item > label > textarea {\n  all: revert;\n  -webkit-user-select: text;\n     -moz-user-select: text;\n      -ms-user-select: text;\n          user-select: text;\n}\n\n.x_ite-private-menu .context-menu-input > label > input[type="checkbox"] {\n  -webkit-appearance: checkbox;\n  -moz-appearance: checkbox;\n}\n\n.x_ite-private-menu .context-menu-input > label > input[type="radio"] {\n  -webkit-appearance: radio;\n  -moz-appearance: radio;\n}\n\n.x_ite-private-menu .context-menu-item:hover {\n  cursor: pointer;\n  background-color: #444;\n  border-top: 1px solid #eee;\n  border-bottom: 1px solid #eee;\n}\n\n.x_ite-private-menu .context-menu-item.context-menu-separator {\n  padding-top: 0;\n  padding-bottom: 0;\n  border-top: 0;\n  border-bottom: 1px solid #111;\n}\n\n.x_ite-private-menu .context-menu-separator + .context-menu-separator {\n  display: none !important;\n}\n\n.x_ite-private-menu .context-menu-disabled {\n  color: #666;\n}\n\n.x_ite-private-menu .context-menu-input.context-menu-hover,\n.x_ite-private-menu .context-menu-disabled.context-menu-hover {\n  cursor: default;\n}\n\n.x_ite-private-menu .context-menu-submenu:after {\n  content: "";\n  position: absolute;\n  display: block;\n  right: 0;\n  top: 5px;\n  margin-right: 2px;\n  /* CSS triangle */\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: 4px 0 4px 5px;\n  border-color: transparent transparent transparent #eee;\n}\n\n/* icons\n  #protip:\n  In case you want to use sprites for icons (which I would suggest you do) have a look at\n  http://css-tricks.com/13224-pseudo-spriting/ to get an idea of how to implement\n  .context-menu-item.icon:before {}\n */\n\n.x_ite-private-menu .context-menu-item.context-menu-icon {\n  background-repeat: no-repeat;\n  background-position: 3px 2px;\n}\n\n/* vertically align inside labels */\n.x_ite-private-menu .context-menu-input > label > * {\n  vertical-align: top;\n  font-size: 10pt;\n  font-weight: normal;\n  letter-spacing: unset;\n  line-height: 1;\n}\n\n/* position checkboxes and radios like icons */\n.x_ite-private-menu .context-menu-input > label > input[type="checkbox"],\n.x_ite-private-menu .context-menu-input > label > input[type="radio"] {\n  display: inline;\n  margin: 0;\n  margin-left: -20px;\n  margin-right: 3px;\n  padding: 0;\n}\n\n.x_ite-private-menu .context-menu-input > label > span {\n  margin-left: 2px;\n}\n\n.x_ite-private-menu .context-menu-input > label,\n.x_ite-private-menu .context-menu-input > label > input[type="text"],\n.x_ite-private-menu .context-menu-input > label > textarea,\n.x_ite-private-menu .context-menu-input > label > select {\n  display: block;\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  font-size: 10pt;\n  letter-spacing: unset;\n  line-height: 1;\n}\n\n.x_ite-private-menu .context-menu-input > label > textarea {\n  height: 100px;\n}\n\n.x_ite-private-menu .context-menu-item > .context-menu-list {\n  top: -9px;\n  /* re-positioned by js */\n  right: -5px;\n  display: none;\n}\n\n.x_ite-private-menu .context-menu-item:hover > .context-menu-list {\n  display: block;\n}\n\n.x_ite-private-menu .context-menu-accesskey {\n  text-decoration: underline;\n}\n\n/* Icons */\n\n.x_ite-private-icon-viewpoint {\n  background: url("assets/images/Viewpoint.png");\n}\n\n.x_ite-private-icon-examine-viewer {\n  background: url("assets/images/ExamineViewer.png");\n}\n\n.x_ite-private-icon-walk-viewer {\n  background: url("assets/images/WalkViewer.png");\n}\n\n.x_ite-private-icon-fly-viewer {\n  background: url("assets/images/FlyViewer.png");\n}\n\n.x_ite-private-icon-lookat-viewer {\n  background: url("assets/images/gtk-zoom-in.png");\n}\n\n.x_ite-private-icon-plane-viewer {\n  background: url("assets/images/PlaneViewer.png");\n}\n\n.x_ite-private-icon-none-viewer {\n  background: url("assets/images/NoneViewer.png");\n}\n\n.x_ite-private-icon-zoom-fit {\n  background: url("assets/images/gtk-zoom-fit.png");\n}\n\n.x_ite-private-icon-zoom-in {\n  background: url("assets/images/gtk-zoom-in.png");\n}\n\n.x_ite-private-icon-primitive-quality {\n  background: url("assets/images/PrimitiveQuality.png");\n}\n\n.x_ite-private-icon-texture-quality {\n  background: url("assets/images/TextureQuality.png");\n}\n\n.x_ite-private-icon-enter-fullscreen {\n  background: url("assets/images/gtk-fullscreen.png");\n}\n\n.x_ite-private-icon-leave-fullscreen {\n  background: url("assets/images/gtk-leave-fullscreen.png");\n}\n\n.x_ite-private-icon-world-info {\n  background: url("assets/images/go-next.png");\n}\n\n.x_ite-private-icon-help-about {\n  background: url("assets/images/help-about.png");\n}\n\n/* Spinner */\n\n.x_ite-private-splash-screen {\n  z-index: 100;\n  position: absolute;\n  inset: 0;\n  background: #1b1d21;\n  background: -moz-radial-gradient(center, ellipse cover, #2f3135 0%, #1b1d21 100%);\n  background: -webkit-radial-gradient(center, ellipse cover, #2f3135 0%,#1b1d21 100%);\n  background: radial-gradient(ellipse at center, #2f3135 0%,#1b1d21 100%);\n}\n\n.x_ite-private-spinner {\n  position: absolute;\n  top: calc(50% - (138px / 2));\n  left: calc(50% - (134px / 2));\n  width: 138px;\n  height: 134px;\n  background: url("assets/images/logo.128.png") no-repeat;\n  -webkit-animation: spinner-animation-spin 32s linear infinite;\n  -moz-animation: spinner-animation-spin 32s linear infinite;\n  animation: spinner-animation-spin 32s linear infinite;\n}\n@-moz-keyframes spinner-animation-spin { 100% { -moz-transform: rotate(360deg); } }\n@-webkit-keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); } }\n@keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } }\n\n.x_ite-private-progress {\n  position: absolute;\n  top: calc(50% - 28pt - 11pt);\n  left: calc(50% - 100px);\n  width: 200px;\n}\n\n.x_ite-private-x_ite {\n  color: white;\n  font-size: 28pt;\n  text-align: center;\n  text-shadow: 1px 1px 0 black;\n  font-family: PT Sans, sans-serif;\n}\n\n.x_ite-private-x_ite span.x_ite-private-x3d {\n  font-weight: bold;\n}\n\n.x_ite-private-spinner-text {\n  color: white;\n  font-size: 11pt;\n  text-align: center;\n  text-shadow: 1px 1px 0 black;\n  font-family: PT Sans, sans-serif;\n}\n\n.x_ite-private-progressbar {\n  margin: 8px;\n  border-left:  2px solid rgba(255, 255, 255, 0.5);\n  border-right: 2px solid rgba(255, 255, 255, 0.5);\n  padding: 0 2px;\n  text-align: left;\n}\n\n.x_ite-private-progressbar div {\n  width: 0%;\n  height: 6px;\n  background: rgba(255, 255, 255, 0.5);\n}\n';});
+
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -41333,6 +39629,7 @@ define ('standard/Utility/DataStorage',[],function ()
 define ('x_ite/Browser/Core/X3DCoreContext',[
    "jquery",
    "x_ite/Fields",
+   "x_ite/Browser/Core/Context",
    "x_ite/Browser/Core/BrowserTimings",
    "x_ite/Browser/Core/BrowserOptions",
    "x_ite/Browser/Core/BrowserProperties",
@@ -41343,10 +39640,13 @@ define ('x_ite/Browser/Core/X3DCoreContext',[
    "x_ite/Parser/VRMLParser",
    "standard/Utility/DataStorage",
    "standard/Math/Numbers/Vector3",
+   "text!x_ite.css",
+   "x_ite/Browser/VERSION",
    "locale/gettext",
 ],
 function ($,
           Fields,
+          Context,
           BrowserTimings,
           BrowserOptions,
           BrowserProperties,
@@ -41357,120 +39657,26 @@ function ($,
           VRMLParser,
           DataStorage,
           Vector3,
+          CSS,
+          VERSION,
           _)
 {
 "use strict";
 
+   CSS = CSS
+      .replace (/"assets\//g, '"' + new URL ("assets/", getScriptURL ()) .href)
+      .replace (/content: "X_ITE Browser";/g, "content:\"X_ITE Browser v" + VERSION + "\";");
+
    const WEBGL_LATEST_VERSION = 2;
-
-   const extensions = [
-      "ANGLE_instanced_arrays",
-      "EXT_blend_minmax",
-      "EXT_frag_depth",
-      "EXT_shader_texture_lod",
-      "EXT_texture_filter_anisotropic",
-      "OES_element_index_uint",
-      "OES_standard_derivatives",
-      "OES_texture_float",
-      "OES_texture_float_linear",
-      "OES_texture_half_float",
-      "OES_texture_half_float_linear",
-      "OES_vertex_array_object",
-      "WEBGL_compressed_texture_s3tc",
-      "WEBGL_debug_renderer_info",
-      "WEBGL_debug_shaders",
-      "WEBGL_depth_texture",
-      "WEBGL_draw_buffers",
-      "WEBGL_lose_context",
-
-      "EXT_color_buffer_float",
-      "EXT_color_buffer_half_float",
-      "EXT_disjoint_timer_query",
-      "EXT_disjoint_timer_query_webgl2",
-      "EXT_sRGB",
-      "WEBGL_color_buffer_float",
-      "WEBGL_compressed_texture_astc",
-      "WEBGL_compressed_texture_atc",
-      "WEBGL_compressed_texture_etc",
-      "WEBGL_compressed_texture_etc1",
-      "WEBGL_compressed_texture_pvrtc",
-      "WEBGL_compressed_texture_s3tc",
-      "WEBGL_compressed_texture_s3tc_srgb",
-
-      "EXT_float_blend",
-      "OES_fbo_render_mipmap",
-      "WEBGL_get_buffer_sub_data_async",
-      "WEBGL_multiview",
-      "WEBGL_security_sensitive_resources",
-      "WEBGL_shared_resources",
-
-      "EXT_clip_cull_distance",
-      "WEBGL_debug",
-      "WEBGL_dynamic_texture",
-      "WEBGL_subarray_uploads",
-      "WEBGL_texture_multisample",
-      "WEBGL_texture_source_iframe",
-      "WEBGL_video_texture",
-
-      "EXT_texture_storage",
-      "OES_depth24",
-      "WEBGL_debug_shader_precision",
-      "WEBGL_draw_elements_no_range_check",
-      "WEBGL_subscribe_uniform",
-      "WEBGL_texture_from_depth_video",
-   ];
-
-   function getContext (canvas, version, preserveDrawingBuffer)
-   {
-      const options = { preserveDrawingBuffer: preserveDrawingBuffer };
-
-      let gl = null;
-
-      if (version >= 2 && ! gl)
-      {
-         gl = canvas .getContext ("webgl2", options);
-
-         if (gl)
-            gl .getVersion = function () { return 2; };
-      }
-
-      if (version >= 1 && ! gl)
-      {
-         gl = canvas .getContext ("webgl",              options) ||
-              canvas .getContext ("experimental-webgl", options);
-
-         if (gl)
-            gl .getVersion = function () { return 1; };
-      }
-
-      if (! gl)
-         throw new Error ("Couldn't create WebGL context.");
-
-      // Feature detection:
-
-      // If the aliased lineWidth ranges are both 1, gl.lineWidth is probably not possible,
-      // thus we disable it completely to prevent webgl errors.
-
-      const aliasedLineWidthRange = gl .getParameter (gl .ALIASED_LINE_WIDTH_RANGE);
-
-      if (aliasedLineWidthRange [0] === 1 && aliasedLineWidthRange [1] === 1)
-      {
-         gl .lineWidth = Function .prototype;
-      }
-
-      // Return context.
-
-      return gl;
-   }
 
    const
       _number              = Symbol (),
       _element             = Symbol (),
+      _shadow              = Symbol (),
       _splashScreen        = Symbol (),
       _surface             = Symbol (),
       _canvas              = Symbol (),
       _context             = Symbol (),
-      _extensions          = Symbol (),
       _localStorage        = Symbol (),
       _mobile              = Symbol (),
       _browserTimings      = Symbol (),
@@ -41482,7 +39688,8 @@ function ($,
       _observer            = Symbol (),
       _privateScene        = Symbol (),
       _keydown             = Symbol (),
-      _keyup               = Symbol ();
+      _keyup               = Symbol (),
+      _pixelPerPoint       = Symbol ();
 
    let browserNumber = 0;
 
@@ -41494,11 +39701,25 @@ function ($,
       // Get canvas & context.
 
       const
-          browser      = $("<div></div>") .addClass ("x_ite-private-browser x_ite-private-browser-" + this .getNumber ()) .prependTo (this [_element]),
-         splashScreen = $("<div></div>") .addClass ("x_ite-private-splash-screen") .appendTo (browser),
+         browser      = $("<div></div>") .addClass ("x_ite-private-browser"),
+         splashScreen = $("<div></div>") .hide () .addClass ("x_ite-private-splash-screen") .appendTo (browser),
          spinner      = $("<div></div>") .addClass ("x_ite-private-spinner") .appendTo (splashScreen),
          progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
          surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
+
+      if (this [_element] .prop ("shadowRoot"))
+      {
+         this [_shadow] = $(this [_element] .prop ("shadowRoot"))
+            .append ($("<style></style>") .text (CSS));
+
+         setTimeout (function () { this [_shadow] .append (browser); } .bind (this), 1);
+      }
+      else
+      {
+         this [_shadow] = this [_element];
+
+         browser .prependTo (this [_element]);
+      }
 
       $("<div></div>") .addClass ("x_ite-private-x_ite") .html ("X_ITE<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
       $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
@@ -41507,15 +39728,7 @@ function ($,
       this [_splashScreen] = splashScreen;
       this [_surface]      = surface;
       this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
-      this [_context]      = getContext (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
-      this [_extensions]   = new Map ();
-
-      const gl = this .getContext ();
-
-      for (const extension of extensions)
-      {
-         this [_extensions] .set (extension, gl .getExtension (extension));
-      }
+      this [_context]      = Context .create (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
 
       this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_number] + ").");
       this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
@@ -41526,6 +39739,10 @@ function ($,
       this [_renderingProperties] = new RenderingProperties (this .getPrivateScene ());
       this [_notification]        = new Notification        (this .getPrivateScene ());
       this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
+
+      const inch = $("<div></div>") .css ("height", "10in") .css ("display", "none") .appendTo (element);
+      this [_pixelPerPoint] = inch .height () / 720;
+      inch .remove ();
 
       $(".x_ite-console") .empty ();
 
@@ -41542,8 +39759,8 @@ function ($,
          // Setup browser nodes.
 
          this [_browserTimings]      .setup ();
-         this [_browserOptions]      .setup ()
-         this [_browserProperties]   .setup ()
+         this [_browserOptions]      .setup ();
+         this [_browserProperties]   .setup ();
          this [_renderingProperties] .setup ();
          this [_notification]        .setup ();
          this [_contextMenu]         .setup ();
@@ -41618,6 +39835,10 @@ function ($,
       {
          return this [_element];
       },
+      getShadow: function ()
+      {
+         return this [_shadow];
+      },
       getSurface: function ()
       {
          return this [_surface];
@@ -41633,10 +39854,6 @@ function ($,
       getContext: function ()
       {
          return this [_context];
-      },
-      getExtension: function (name)
-      {
-         return this [_extensions] .get (name);
       },
       getMobile: function ()
       {
@@ -41764,7 +39981,7 @@ function ($,
          else
          {
             if (! this .getLoading ())
-               this .getCanvas () .fadeIn (0);
+               this .getCanvas () .show ();
          }
       },
       setBrowserEventHandler: function (name)
@@ -42085,10 +40302,14 @@ function ($,
       {
          // The textarea must be visible to make copy work.
          const $temp = $("<textarea></textarea>");
-         this .getElement () .find (".x_ite-private-browser") .prepend ($temp);
+         this .getShadow () .find (".x_ite-private-browser") .prepend ($temp);
          $temp .text (text) .select ();
          document .execCommand ("copy");
          $temp .remove ();
+      },
+      getPixelPerPoint: function ()
+      {
+         return this [_pixelPerPoint];
       },
    };
 
@@ -42476,10 +40697,10 @@ function (Fields,
       this [_loading]        = false;
       this [_location]       = getBaseURI (this .getElement () [0]);
 
-      this .getCanvas () .fadeOut (0);
+      this .getCanvas () .hide ();
 
       if (this .getBrowserOptions () .getSplashScreen ())
-         this .getSplashScreen () .fadeIn (0);
+         this .getSplashScreen () .show ();
    }
 
    X3DNetworkingContext .prototype =
@@ -42518,28 +40739,28 @@ function (Fields,
          {
             this .resetLoadCount ();
 
-            this .getElement () .find (".x_ite-private-world-info") .remove ();
+            this .getShadow () .find (".x_ite-private-world-info") .remove ();
 
             if (this .getBrowserOptions () .getSplashScreen ())
             {
-               this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeOut (0);
-               this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeIn (0);
+               this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .hide ();
+               this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .show ();
             }
             else
             {
-               this .getCanvas () .fadeOut (0);
+               this .getCanvas () .hide ();
             }
          }
          else
          {
             if (this .getBrowserOptions () .getSplashScreen ())
             {
-               this .getSplashScreen () .stop (true, true) .fadeIn  (0) .fadeOut (2000);
-               this .getCanvas ()       .stop (true, true) .fadeOut (0) .fadeIn  (2000);
+               this .getSplashScreen () .stop (true, true) .show () .fadeOut (2000);
+               this .getCanvas ()       .stop (true, true) .hide () .fadeIn  (2000);
             }
             else
             {
-               this .getCanvas () .fadeIn (0);
+               this .getCanvas () .show ();
             }
          }
       },
@@ -42834,7 +41055,7 @@ function (Fields,
       {
          this ._isValid = this .valid = value;
       },
-      getValid: function ()
+      isValid: function ()
       {
          return this .valid;
       },
@@ -44255,18 +42476,11 @@ function (Fields,
 
          return function (index0, index1, weight)
          {
-            try
-            {
-               // Both values can change in slerp.
-               keyValue0 .assign (this ._keyValue [index0] .getValue ());
-               keyValue1 .assign (this ._keyValue [index1] .getValue ());
+            // Both values can change in slerp.
+            keyValue0 .assign (this ._keyValue [index0] .getValue ());
+            keyValue1 .assign (this ._keyValue [index1] .getValue ());
 
-               this ._value_changed = keyValue0 .slerp (keyValue1, weight);
-            }
-            catch (error)
-            {
-               //console .error (error);
-            }
+            this ._value_changed = keyValue0 .slerp (keyValue1, weight);
          };
       }) (),
    });
@@ -44502,105 +42716,98 @@ function (Fields,
 
          return function (layerNode, fromViewpointNode, toViewpointNode)
          {
-            try
+            this .to = toViewpointNode;
+
+            if (toViewpointNode ._jump .getValue ())
             {
-               this .to = toViewpointNode;
+               if (! toViewpointNode ._retainUserOffsets .getValue ())
+                  toViewpointNode .resetUserOffsets ();
 
-               if (toViewpointNode ._jump .getValue ())
+               // Copy from toViewpointNode all fields.
+
+               if (this !== toViewpointNode)
                {
-                  if (! toViewpointNode ._retainUserOffsets .getValue ())
-                     toViewpointNode .resetUserOffsets ();
+                  for (const field of toViewpointNode .getFields ())
+                     this .getField (field .getName ()) .assign (field);
+               }
 
-                  // Copy from toViewpointNode all fields.
+               // Respect NavigationInfo.
 
-                  if (this !== toViewpointNode)
-                  {
-                     for (const field of toViewpointNode .getFields ())
-                        this .getField (field .getName ()) .assign (field);
-                  }
+               const
+                  navigationInfoNode = layerNode .getNavigationInfo (),
+                  transitionTime     = navigationInfoNode ._transitionTime .getValue ();
 
-                  // Respect NavigationInfo.
+               let transitionType = navigationInfoNode .getTransitionType ();
 
-                  const
-                     navigationInfoNode = layerNode .getNavigationInfo (),
-                     transitionTime     = navigationInfoNode ._transitionTime .getValue ();
+               // VRML behavior
 
-                  let transitionType = navigationInfoNode .getTransitionType ();
-
-                  // VRML behavior
-
-                  if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
-                  {
-                     if (toViewpointNode .getVRMLTransition ())
-                        transitionType = "LINEAR";
-                     else
-                        transitionType = "TELEPORT";
-                  }
-
-                  toViewpointNode .setVRMLTransition (false);
-
-                  // End VRML behavior
-
-                  if (transitionTime <= 0)
+               if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
+               {
+                  if (toViewpointNode .getVRMLTransition ())
+                     transitionType = "LINEAR";
+                  else
                      transitionType = "TELEPORT";
-
-                  switch (transitionType)
-                  {
-                     case "TELEPORT":
-                     {
-                        navigationInfoNode ._transitionComplete = true;
-                        return;
-                     }
-                     case "ANIMATE":
-                     {
-                        this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-                        break;
-                     }
-                     default:
-                     {
-                        // LINEAR
-                        this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
-                        break;
-                     }
-                  }
-
-                  this .timeSensor ._cycleInterval = transitionTime;
-                  this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-                  this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
-
-                  this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
-
-                  toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-                  this .positionInterpolator         ._keyValue = new Fields .MFVec3f    (relativePosition,         toViewpointNode ._positionOffset);
-                  this .orientationInterpolator      ._keyValue = new Fields .MFRotation (relativeOrientation,      toViewpointNode ._orientationOffset);
-                  this .scaleInterpolator            ._keyValue = new Fields .MFVec3f    (relativeScale,            toViewpointNode ._scaleOffset);
-                  this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (relativeScaleOrientation, toViewpointNode ._scaleOrientationOffset);
-
-                  this ._positionOffset         = relativePosition;
-                  this ._orientationOffset      = relativeOrientation;
-                  this ._scaleOffset            = relativeScale;
-                  this ._scaleOrientationOffset = relativeScaleOrientation;
-
-                  this .setInterpolators (fromViewpointNode, toViewpointNode);
-
-                  this ._transitionActive = true;
                }
-               else
+
+               toViewpointNode .setVRMLTransition (false);
+
+               // End VRML behavior
+
+               if (transitionTime <= 0)
+                  transitionType = "TELEPORT";
+
+               switch (transitionType)
                {
-                  toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-                  toViewpointNode ._positionOffset         = relativePosition;
-                  toViewpointNode ._orientationOffset      = relativeOrientation;
-                  toViewpointNode ._scaleOffset            = relativeScale;
-                  toViewpointNode ._scaleOrientationOffset = relativeScaleOrientation;
-
-                  toViewpointNode .setInterpolators (fromViewpointNode, toViewpointNode);
+                  case "TELEPORT":
+                  {
+                     navigationInfoNode ._transitionComplete = true;
+                     return;
+                  }
+                  case "ANIMATE":
+                  {
+                     this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+                     break;
+                  }
+                  default:
+                  {
+                     // LINEAR
+                     this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+                     break;
+                  }
                }
+
+               this .timeSensor ._cycleInterval = transitionTime;
+               this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+               this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+               this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
+
+               toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+
+               this .positionInterpolator         ._keyValue = new Fields .MFVec3f    (relativePosition,         toViewpointNode ._positionOffset);
+               this .orientationInterpolator      ._keyValue = new Fields .MFRotation (relativeOrientation,      toViewpointNode ._orientationOffset);
+               this .scaleInterpolator            ._keyValue = new Fields .MFVec3f    (relativeScale,            toViewpointNode ._scaleOffset);
+               this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (relativeScaleOrientation, toViewpointNode ._scaleOrientationOffset);
+
+               this ._positionOffset         = relativePosition;
+               this ._orientationOffset      = relativeOrientation;
+               this ._scaleOffset            = relativeScale;
+               this ._scaleOrientationOffset = relativeScaleOrientation;
+
+               this .setInterpolators (fromViewpointNode, toViewpointNode);
+
+               this ._transitionActive = true;
             }
-            catch (error)
+            else
             {
-               console .error (error);
+               toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+
+               toViewpointNode ._positionOffset         = relativePosition;
+               toViewpointNode ._orientationOffset      = relativeOrientation;
+               toViewpointNode ._scaleOffset            = relativeScale;
+               toViewpointNode ._scaleOrientationOffset = relativeScaleOrientation;
+
+               toViewpointNode .setInterpolators (fromViewpointNode, toViewpointNode);
             }
          };
       })(),
@@ -44619,7 +42826,6 @@ function (Fields,
          this ._fieldOfViewScale       = 1;
       },
       getRelativeTransformation: function (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
-      // throw
       {
          const differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpointNode .getViewMatrix ()) .inverse ();
 
@@ -44630,35 +42836,21 @@ function (Fields,
       },
       lookAtPoint: function (layerNode, point, factor, straighten)
       {
-         try
-         {
-            this .getCameraSpaceMatrix () .multVecMatrix (point);
+         this .getCameraSpaceMatrix () .multVecMatrix (point);
 
-            Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
+         Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
 
-            const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+         const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
 
-            this .lookAt (layerNode, point, minDistance, factor, straighten);
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         this .lookAt (layerNode, point, minDistance, factor, straighten);
       },
       lookAtBBox: function (layerNode, bbox, factor, straighten)
       {
-         try
-         {
-            bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
+         bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
 
-            const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+         const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
 
-            this .lookAt (layerNode, bbox .center, minDistance, factor, straighten);
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         this .lookAt (layerNode, bbox .center, minDistance, factor, straighten);
       },
       lookAt: function (layerNode, point, distance, factor, straighten)
       {
@@ -44772,21 +42964,14 @@ function (Fields,
       },
       update: function ()
       {
-         try
-         {
-            this .cameraSpaceMatrix .set (this .getUserPosition (),
-                                          this .getUserOrientation (),
-                                          this ._scaleOffset .getValue (),
-                                          this ._scaleOrientationOffset .getValue ());
+         this .cameraSpaceMatrix .set (this .getUserPosition (),
+                                       this .getUserOrientation (),
+                                       this ._scaleOffset .getValue (),
+                                       this ._scaleOrientationOffset .getValue ());
 
-            this .cameraSpaceMatrix .multRight ((this .to || this) .modelMatrix);
+         this .cameraSpaceMatrix .multRight ((this .to || this) .modelMatrix);
 
-            this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
       }
    });
 
@@ -45423,11 +43608,13 @@ define ('x_ite/Components/Shaders/X3DProgrammableShaderObject',[
    "x_ite/Base/X3DConstants",
    "x_ite/Components/Navigation/OrthoViewpoint",
    "standard/Math/Numbers/Matrix3",
+   "standard/Math/Numbers/Matrix4",
 ],
 function (X3DCast,
           X3DConstants,
           OrthoViewpoint,
-          Matrix3)
+          Matrix3,
+          Matrix4)
 {
 "use strict";
 
@@ -45436,6 +43623,8 @@ function (X3DCast,
    function X3DProgrammableShaderObject (executionContext)
    {
       this .addType (X3DConstants .X3DProgrammableShaderObject);
+
+      this .uniforms = [ ];
 
       this .x3d_ClipPlane                           = [ ];
       this .x3d_LightType                           = [ ];
@@ -45477,7 +43666,7 @@ function (X3DCast,
       this .numProjectiveTextures       = 0;
       this .numGlobalProjectiveTextures = 0;
       this .projectiveTextureNodes      = [ ];
-      this .textures                    = new Map ();
+      this .textures                    = new Set ();
    }
 
    X3DProgrammableShaderObject .prototype =
@@ -45495,18 +43684,26 @@ function (X3DCast,
       {
          return true;
       },
-      bindAttributeLocations: function (gl, program)
+      setUniforms: function (value)
       {
-         gl .bindAttribLocation (program, 0, "x3d_Vertex");
+         this .uniforms = value;
       },
-      getDefaultUniforms: function ()
+      getDefaultUniformsAndAttributes: function (program)
       {
          // Get uniforms and attributes.
 
          const
             browser = this .getBrowser (),
-            gl      = browser .getContext (),
-            program = this .getProgram ();
+            gl      = browser .getContext ();
+
+         gl .useProgram (program);
+
+         for (const name of this .uniforms)
+            this [name] = gl .getUniformLocation (program, name);
+
+         /*
+          * Uniforms.
+          */
 
          this .x3d_LogarithmicFarFactor1_2 = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor1_2");
 
@@ -45604,6 +43801,8 @@ function (X3DCast,
          this .x3d_NumProjectiveTextures = gl .getUniformLocation (program, "x3d_NumProjectiveTextures");
          this .x3d_MultiTextureColor     = gl .getUniformLocation (program, "x3d_MultiTextureColor");
 
+         this .x3d_TexCoord .length = 0;
+
          for (let i = 0; i < this .x3d_MaxTextures; ++ i)
          {
             this .x3d_Textures [i] = {
@@ -45626,8 +43825,16 @@ function (X3DCast,
             this .x3d_ProjectiveTextureLocation [i] = gl .getUniformLocation (program, "x3d_ProjectiveTextureLocation[" + i + "]");
 
             this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
-            this .x3d_TexCoord [i]      = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
+
+            // Attribute
+
+            const x3d_TexCoord = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
+
+            if (x3d_TexCoord !== -1)
+               this .x3d_TexCoord .push ([i, x3d_TexCoord]);
          }
+
+         this .x3d_TexCoordRamp = gl .getUniformLocation (program, "x3d_TexCoordRamp");
 
          this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
          this .x3d_ProjectionMatrix  = gl .getUniformLocation (program, "x3d_ProjectionMatrix");
@@ -45635,14 +43842,51 @@ function (X3DCast,
          this .x3d_NormalMatrix      = gl .getUniformLocation (program, "x3d_NormalMatrix");
          this .x3d_CameraSpaceMatrix = gl .getUniformLocation (program, "x3d_CameraSpaceMatrix");
 
-         this .x3d_FogDepth = gl .getAttribLocation (program, "x3d_FogDepth");
-         this .x3d_Color    = gl .getAttribLocation (program, "x3d_Color");
-         this .x3d_Normal   = gl .getAttribLocation (program, "x3d_Normal");
-         this .x3d_Vertex   = gl .getAttribLocation (program, "x3d_Vertex");
+         /*
+          * Attributes.
+          */
 
-         this .x3d_ParticleId          = gl .getUniformLocation (program, "x3d_Particle.id");
-         this .x3d_ParticleLife        = gl .getUniformLocation (program, "x3d_Particle.life");
-         this .x3d_ParticleElapsedTime = gl .getUniformLocation (program, "x3d_Particle.elapsedTime");
+         const attributes = [
+            "FogDepth",
+            "Color",
+            "Normal",
+            "Vertex",
+            "Particle",
+            "ParticleMatrix",
+         ];
+
+         for (const name of attributes)
+         {
+            const attribute = gl .getAttribLocation (program, `x3d_${name}`);
+
+            this [`x3d_${name}`] = attribute;
+
+            if (attribute < 0)
+            {
+               this [`enable${name}Attribute`]            = Function .prototype;
+               this [`${lcfirst (name)}AttributeDivisor`] = Function .prototype;
+            }
+            else
+            {
+               delete this [`enable${name}Attribute`];
+               delete this [`${lcfirst (name)}AttributeDivisor`];
+            }
+         }
+
+         if (this .x3d_TexCoord .length === 0)
+         {
+            this .enableTexCoordAttribute  = Function .prototype;
+            this .texCoordAttributeDivisor = Function .prototype;
+         }
+         else
+         {
+            delete this .enableTexCoordAttribute;
+            delete this .texCoordAttributeDivisor;
+         }
+
+         /*
+          * Fill uniforms with defaults.
+          */
 
          // Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
@@ -45677,63 +43921,19 @@ function (X3DCast,
                gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
          }
 
-         // Return true if valid, otherwise false.
+         gl .uniform1i  (this .x3d_TexCoordRamp, browser .getDefaultTexture2DUnit ());
 
-         if (this .x3d_FogDepth < 0)
-         {
-            this .enableFogDepthAttribute  = Function .prototype;
-            this .disableFogDepthAttribute = Function .prototype;
-         }
-         else
-         {
-            delete this .enableFogDepthAttribute;
-            delete this .disableFogDepthAttribute;
-         }
+         /*
+          * Check x3d_Vertex.
+          */
 
-         if (this .x3d_Color < 0)
-         {
-            this .enableColorAttribute  = Function .prototype;
-            this .disableColorAttribute = Function .prototype;
-         }
-         else
-         {
-            delete this .enableColorAttribute;
-            delete this .disableColorAttribute;
-         }
-
-         if (this .x3d_TexCoord .some (function (location) { return location >= 0; }))
-         {
-            delete this .enableTexCoordAttribute;
-            delete this .disableTexCoordAttribute;
-         }
-         else
-         {
-            this .enableTexCoordAttribute  = Function .prototype;
-            this .disableTexCoordAttribute = Function .prototype;
-         }
-
-         if (this .x3d_Normal < 0)
-         {
-            this .enableNormalAttribute  = Function .prototype;
-            this .disableNormalAttribute = Function .prototype;
-         }
-         else
-         {
-            delete this .enableNormalAttribute;
-            delete this .disableNormalAttribute;
-         }
-
-         if (this .x3d_Vertex < 0)
-         {
-            if (gl .getVersion () >= 2)
-               console .warn ("Missing »in vec4 x3d_Vertex;«.");
-            else
-               console .warn ("Missing »attribute vec4 x3d_Vertex;«.");
-
-            return false;
-         }
-
-         return true;
+         // if (this .x3d_Vertex < 0)
+         // {
+         //    if (gl .getVersion () >= 2)
+         //      console .warn ("Missing »in vec4 x3d_Vertex;«.");
+         //    else
+         //       console .warn ("Missing »attribute vec4 x3d_Vertex;«.");
+         // }
       },
       getUniformLocation: function (gl, program, name, depreciated)
       {
@@ -45785,11 +43985,11 @@ function (X3DCast,
 
          return -1;
       },
-      addShaderFields: function ()
+      addShaderFields: function (program)
       {
-         const
-            gl      = this .getBrowser () .getContext (),
-            program = this .getProgram ();
+         const gl = this .getBrowser () .getContext ();
+
+         gl .useProgram (program);
 
          this .textures .clear ();
 
@@ -45899,7 +44099,7 @@ function (X3DCast,
 
                field .addInterest ("set_field__", this);
 
-               this .set_field__ (field);
+               this .set_field__ (field, program);
             }
          }
       },
@@ -45912,11 +44112,13 @@ function (X3DCast,
       {
          const matrix3 = new Matrix3 ();
 
-         return function (field)
+         return function (field, program)
          {
             const
                gl       = this .getBrowser () .getContext (),
                location = field [_uniformLocation];
+
+            gl .useProgram (program);
 
             if (location)
             {
@@ -45990,11 +44192,16 @@ function (X3DCast,
 
                      if (texture)
                      {
-                        this .textures .set (location, { name: field .getName (), texture: texture } );
-                        return;
+                        location .name    = field .getName ();
+                        location .texture = texture;
+
+                        this .textures .add (location);
+                     }
+                     else
+                     {
+                        this .textures .delete (location);
                      }
 
-                     this .textures .delete (location);
                      return;
                   }
                   case X3DConstants .SFRotation:
@@ -46160,14 +44367,20 @@ function (X3DCast,
                   {
                      const locations = location .locations;
 
-                     for (const node of field)
+                     for (let i = 0, length = field .length; i < length; ++ i)
                      {
-                        const texture = X3DCast (X3DConstants .X3DTextureNode, node);
+                        const texture = X3DCast (X3DConstants .X3DTextureNode, field [i]);
 
                         if (texture)
                         {
-                           this .textures .set (locations [i], { name: field .getName (), texture: texture } );
-                           continue;
+                           locations [i] .name    = field .getName ();
+                           locations [i] .texture = texture;
+
+                           this .textures .add (locations [i]);
+                        }
+                        else
+                        {
+                           this .textures .delete (locations [i]);
                         }
                      }
 
@@ -46333,9 +44546,11 @@ function (X3DCast,
          gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
          gl .uniform1i (this .x3d_NumProjectiveTextures, Math .min (this .numProjectiveTextures, this .x3d_MaxTextures));
       },
-      setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
+      setGlobalUniforms: function (gl, program, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
       {
          const globalObjects = renderObject .getGlobalObjects ();
+
+         gl .useProgram (program);
 
          // Set viewport
 
@@ -46445,37 +44660,30 @@ function (X3DCast,
 
          return function (modelViewMatrix)
          {
-            try
-            {
-               normalMatrix [0] = modelViewMatrix [0], normalMatrix [3] = modelViewMatrix [1], normalMatrix [6] = modelViewMatrix [ 2],
-               normalMatrix [1] = modelViewMatrix [4], normalMatrix [4] = modelViewMatrix [5], normalMatrix [7] = modelViewMatrix [ 6],
-               normalMatrix [2] = modelViewMatrix [8], normalMatrix [5] = modelViewMatrix [9], normalMatrix [8] = modelViewMatrix [10];
+            normalMatrix [0] = modelViewMatrix [0]; normalMatrix [3] = modelViewMatrix [1]; normalMatrix [6] = modelViewMatrix [ 2];
+            normalMatrix [1] = modelViewMatrix [4]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [7] = modelViewMatrix [ 6];
+            normalMatrix [2] = modelViewMatrix [8]; normalMatrix [5] = modelViewMatrix [9]; normalMatrix [8] = modelViewMatrix [10];
 
-               Matrix3 .prototype .inverse .call (normalMatrix);
+            Matrix3 .prototype .inverse .call (normalMatrix);
 
-               return normalMatrix;
-            }
-            catch (error)
-            {
-               normalMatrix .set (Matrix3 .Identity);
-
-               return normalMatrix;
-            }
+            return normalMatrix;
          };
       })(),
-      enable: function (gl)
+      enable: function (gl, program)
       {
          const browser = this .getBrowser ();
 
-         for (const [location, object] of this .textures)
+         gl .useProgram (program);
+
+         for (const location of this .textures)
          {
             const
-               texture     = object .texture,
+               texture     = location .texture,
                textureUnit = browser .getTextureUnit (texture .getTextureType ());
 
             if (textureUnit === undefined)
             {
-               console .warn ("Not enough combined texture units for uniform variable '" + object .name + "' available.");
+               console .warn ("Not enough combined texture units for uniform variable '" + location .name + "' available.");
                return;
             }
 
@@ -46484,161 +44692,140 @@ function (X3DCast,
             gl .uniform1i (location, textureUnit);
          }
       },
-      enableFloatAttrib: function (gl, name, buffer, components)
+      enableFloatAttrib: function (gl, name, buffer, components, stride, offset)
       {
-         const location = gl. getAttribLocation (this .getProgram (), name);
+         const location = gl .getAttribLocation (this .getProgram (), name);
 
          if (location === -1)
             return;
-
-         gl .enableVertexAttribArray (location);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-         gl .vertexAttribPointer (location, components, gl .FLOAT, false, 0, 0);
-      },
-      disableFloatAttrib: function (gl, name)
-      {
-         const location = gl .getAttribLocation (this .getProgram (), name);
-
-         if (location === -1)
-            return;
-
-         gl .disableVertexAttribArray (location);
-      },
-      enableMatrix3Attrib: function (gl, name, buffer)
-      {
-         const location = gl .getAttribLocation (this .getProgram (), name);
-
-         if (location === -1)
-            return;
-
          gl .enableVertexAttribArray (location);
-         gl .enableVertexAttribArray (location + 1);
-         gl .enableVertexAttribArray (location + 2);
+         gl .vertexAttribPointer (location, components, gl .FLOAT, false, stride, offset);
+      },
+      enableMatrix3Attrib: function (gl, name, buffer, stride, offset)
+      {
+         const location0 = gl .getAttribLocation (this .getProgram (), name);
+
+         if (location0 === -1)
+            return;
+
+         stride = stride || 36;
 
          gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 
-         gl .vertexAttribPointer (location,     3, gl .FLOAT, false, 9 * 4, 3 * 4 * 0);
-         gl .vertexAttribPointer (location + 1, 3, gl .FLOAT, false, 9 * 4, 3 * 4 * 1);
-         gl .vertexAttribPointer (location + 2, 3, gl .FLOAT, false, 9 * 4, 3 * 4 * 2);
-      },
-      disableMatrix3Attrib: function (gl, name)
-      {
-         const location = gl .getAttribLocation (this .getProgram (), name);
-
-         if (location === -1)
-            return;
-
-         gl .disableVertexAttribArray (location);
-         gl .disableVertexAttribArray (location + 1);
-         gl .disableVertexAttribArray (location + 2);
-      },
-      enableMatrix4Attrib: function (gl, name, buffer)
-      {
-         const location = gl .getAttribLocation (this .getProgram (), name);
-
-         if (location === -1)
-            return;
-
-         gl .enableVertexAttribArray (location);
-         gl .enableVertexAttribArray (location + 1);
-         gl .enableVertexAttribArray (location + 2);
-         gl .enableVertexAttribArray (location + 3);
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-
-         gl .vertexAttribPointer (location,     4, gl .FLOAT, false, 16 * 4, 4 * 4 * 0);
-         gl .vertexAttribPointer (location + 1, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 1);
-         gl .vertexAttribPointer (location + 2, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 2);
-         gl .vertexAttribPointer (location + 3, 4, gl .FLOAT, false, 16 * 4, 4 * 4 * 3);
-      },
-      disableMatrix4Attrib: function (gl, name)
-      {
-         const location = gl .getAttribLocation (this .getProgram (), name);
-
-         if (location === -1)
-            return;
-
-         gl .disableVertexAttribArray (location);
-         gl .disableVertexAttribArray (location + 1);
-         gl .disableVertexAttribArray (location + 2);
-         gl .disableVertexAttribArray (location + 3);
-      },
-      enableFogDepthAttribute: function (gl, fogDepthBuffer)
-      {
-         gl .enableVertexAttribArray (this .x3d_FogDepth);
-         gl .bindBuffer (gl .ARRAY_BUFFER, fogDepthBuffer);
-         gl .vertexAttribPointer (this .x3d_FogDepth, 1, gl .FLOAT, false, 0, 0);
-      },
-      disableFogDepthAttribute: function (gl)
-      {
-         gl .disableVertexAttribArray (this .x3d_FogDepth);
-      },
-      enableColorAttribute: function (gl, colorBuffer)
-      {
-         gl .enableVertexAttribArray (this .x3d_Color);
-         gl .bindBuffer (gl .ARRAY_BUFFER, colorBuffer);
-         gl .vertexAttribPointer (this .x3d_Color, 4, gl .FLOAT, false, 0, 0);
-      },
-      disableColorAttribute: function (gl)
-      {
-         gl .disableVertexAttribArray (this .x3d_Color);
-      },
-      enableTexCoordAttribute: function (gl, texCoordBuffers, d)
-      {
-         const length = Math .min (this .x3d_MaxTextures, texCoordBuffers .length);
-
-         for (let i = 0; i < length; ++ i)
+         for (let i = 0; i < 3; ++ i)
          {
-            const x3d_TexCoord = this .x3d_TexCoord [i];
+            const location = location0 + i;
 
-            if (x3d_TexCoord === -1)
-               continue;
-
-            gl .enableVertexAttribArray (x3d_TexCoord);
-            gl .bindBuffer (gl .ARRAY_BUFFER, texCoordBuffers [i]);
-            gl .vertexAttribPointer (x3d_TexCoord, 4, gl .FLOAT, false, 0, 0);
+            gl .enableVertexAttribArray (location);
+            gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset + 12 * i);
          }
       },
-      disableTexCoordAttribute: function (gl)
+      enableMatrix4Attrib: function (gl, name, buffer, stride, offset)
       {
-         for (let i = 0, length = this .x3d_MaxTextures; i < length; ++ i)
+         const location0 = gl .getAttribLocation (this .getProgram (), name);
+
+         if (location0 === -1)
+            return;
+
+         stride = stride || 64;
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+
+         for (let i = 0; i < 4; ++ i)
          {
-            const x3d_TexCoord = this .x3d_TexCoord [i];
+            const location = location0 + i;
 
-            if (x3d_TexCoord === -1)
-               continue;
-
-            gl .disableVertexAttribArray (x3d_TexCoord);
+            gl .enableVertexAttribArray (location);
+            gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset + 16 * i);
          }
       },
-      enableNormalAttribute: function (gl, normalBuffer)
+      enableFogDepthAttribute: function (gl, buffer, stride, offset)
       {
-         gl .enableVertexAttribArray (this .x3d_Normal);
-         gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
-         gl .vertexAttribPointer (this .x3d_Normal, 3, gl .FLOAT, false, 0, 0);
-      },
-      disableNormalAttribute: function (gl)
-      {
-         gl .disableVertexAttribArray (this .x3d_Normal);
-      },
-      enableVertexAttribute: function (gl, vertexBuffer)
-      {
-         gl .enableVertexAttribArray (this .x3d_Vertex);
-         gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
-         gl .vertexAttribPointer (this .x3d_Vertex, 4, gl .FLOAT, false, 0, 0);
-      },
-      disableVertexAttribute: function (gl)
-      {
-         gl .disableVertexAttribArray (this .x3d_Vertex);
-      },
-      setParticle: function (gl, particle, modelViewMatrix)
-      {
-         gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+         const location = this .x3d_FogDepth;
 
-         gl .uniform1i (this .x3d_ParticleId,          particle .id);
-         gl .uniform1i (this .x3d_ParticleLife,        particle .life);
-         gl .uniform1f (this .x3d_ParticleElapsedTime, particle .elapsedTime / particle .lifetime);
+         gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+         gl .enableVertexAttribArray (location);
+         gl .vertexAttribPointer (location, 1, gl .FLOAT, false, stride, offset);
+      },
+      enableColorAttribute: function (gl, buffer, stride, offset)
+      {
+         const location = this .x3d_Color;
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+         gl .enableVertexAttribArray (location);
+         gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
+      },
+      colorAttributeDivisor: function (gl, divisor)
+      {
+         gl .vertexAttribDivisor (this .x3d_Color, divisor);
+      },
+      enableTexCoordAttribute: function (gl, buffers, stride, offset)
+      {
+         for (const [i, location] of this .x3d_TexCoord)
+         {
+            gl .bindBuffer (gl .ARRAY_BUFFER, buffers [i]);
+            gl .enableVertexAttribArray (location);
+            gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
+         }
+      },
+      texCoordAttributeDivisor: function (gl, divisor)
+      {
+         for (const [i, location] of this .x3d_TexCoord)
+         {
+            gl .vertexAttribDivisor (location, divisor);
+         }
+      },
+      enableNormalAttribute: function (gl, buffer, stride, offset)
+      {
+         const location = this .x3d_Normal;
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+         gl .enableVertexAttribArray (location);
+         gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset);
+      },
+      normalAttributeDivisor: function (gl, divisor)
+      {
+         gl .vertexAttribDivisor (this .x3d_Normal, divisor);
+      },
+      enableVertexAttribute: function (gl, buffer, stride, offset)
+      {
+         const location = this .x3d_Vertex;
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+         gl .enableVertexAttribArray (location);
+         gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
+      },
+      vertexAttributeDivisor: function (gl, divisor)
+      {
+         gl .vertexAttribDivisor (this .x3d_Vertex, divisor);
+      },
+      enableParticleAttribute: function (gl, buffer, stride, offset, divisor)
+      {
+         const location = this .x3d_Particle;
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+         gl .enableVertexAttribArray (location);
+         gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
+         gl .vertexAttribDivisor (location, divisor);
+      },
+      enableParticleMatrixAttribute: function (gl, buffer, stride, offset, divisor)
+      {
+         const location0 = this .x3d_ParticleMatrix;
+
+         stride = stride || 64;
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+
+         for (let i = 0; i < 4; ++ i)
+         {
+            const location = location0 + i;
+
+            gl .enableVertexAttribArray (location);
+            gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset + 16 * i);
+            gl .vertexAttribDivisor (location, divisor);
+         }
       },
       getProgramInfo: function ()
       {
@@ -46655,8 +44842,8 @@ function (X3DCast,
                attributeCount: 0,
                uniformCount: 0,
             },
-            activeUniforms   = gl .getProgramParameter (program, gl.ACTIVE_UNIFORMS),
-            activeAttributes = gl .getProgramParameter (program, gl.ACTIVE_ATTRIBUTES);
+            activeUniforms   = gl .getProgramParameter (program, gl .ACTIVE_UNIFORMS),
+            activeAttributes = gl .getProgramParameter (program, gl .ACTIVE_ATTRIBUTES);
 
          // Taken from the WebGl spec:
          // http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.14
@@ -46720,6 +44907,11 @@ function (X3DCast,
          console .log (this .getName (), "uniformCount", programInfo .uniformCount);
       },
    };
+
+   function lcfirst (string)
+   {
+      return string [0] .toLowerCase () + string .slice (1);
+   }
 
    return X3DProgrammableShaderObject;
 });
@@ -47129,7 +45321,8 @@ function (Fields,
 
       this .addType (X3DConstants .ComposedShader);
 
-      this .loadSensor = new LoadSensor (executionContext);
+      this .loadSensor                = new LoadSensor (executionContext);
+      this .transformFeedbackVaryings = [ ];
    }
 
    ComposedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
@@ -47179,39 +45372,27 @@ function (Fields,
       },
       addUserDefinedField: function (accessType, name, field)
       {
-         const gl = this .getBrowser () .getContext ();
-
-         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
-         {
-            this .enable (gl);
+         if (this .isInitialized () && this .isLive () .getValue () && this .isValid ())
             this .removeShaderFields ();
-         }
 
          X3DShaderNode .prototype .addUserDefinedField .call (this, accessType, name, field);
 
-         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
-         {
-            this .enable (gl);
-            this .addShaderFields ();
-         }
+         if (this .isInitialized () && this .isLive () .getValue () && this .isValid ())
+            this .addShaderFields (this .program);
       },
       removeUserDefinedField: function (name)
       {
-         const gl = this .getBrowser () .getContext ();
-
-         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
-         {
-            this .enable (gl);
+         if (this .isInitialized () && this .isLive () .getValue () && this .isValid ())
             this .removeShaderFields ();
-         }
 
          X3DShaderNode .prototype .removeUserDefinedField .call (this, name);
 
-         if (this .isInitialized () && this .isLive () .getValue () && this .getValid ())
-         {
-            this .enable (gl);
-            this .addShaderFields ();
-         }
+         if (this .isInitialized () && this .isLive () .getValue () && this .isValid ())
+            this .addShaderFields (this .program);
+      },
+      setTransformFeedbackVaryings: function (value)
+      {
+         this .transformFeedbackVaryings = value;
       },
       getProgram: function ()
       {
@@ -47219,23 +45400,15 @@ function (Fields,
       },
       set_live__: function ()
       {
-         const gl = this .getBrowser () .getContext ();
-
          if (this .isLive () .getValue ())
          {
-            if (this .getValid ())
-            {
-               this .enable (gl);
-               this .addShaderFields ();
-            }
+            if (this .isValid ())
+               this .addShaderFields (this .program);
          }
          else
          {
-            if (this .getValid ())
-            {
-               this .enable (gl);
+            if (this .isValid ())
                this .removeShaderFields ();
-            }
          }
       },
       set_loaded__: function ()
@@ -47246,10 +45419,10 @@ function (Fields,
                gl      = this .getBrowser () .getContext (),
                program = gl .createProgram ();
 
-            let valid = 0;
-
-            if (this .getValid ())
+            if (this .isValid ())
                this .removeShaderFields ();
+
+            gl .deleteProgram (this .program);
 
             this .program = program;
 
@@ -47258,38 +45431,18 @@ function (Fields,
                const partNode = X3DCast (X3DConstants .ShaderPart, node);
 
                if (partNode)
-               {
-                  valid += partNode .isValid ();
                   gl .attachShader (program, partNode .getShader ());
-               }
             }
 
-            if (valid)
+            if (this .transformFeedbackVaryings .length)
+               gl .transformFeedbackVaryings (program, this .transformFeedbackVaryings, gl .INTERLEAVED_ATTRIBS);
+
+            gl .linkProgram (program);
+
+            if (gl .getProgramParameter (program, gl .LINK_STATUS))
             {
-               this .bindAttributeLocations (gl, program);
-
-               gl .linkProgram (program);
-
-               valid = gl .getProgramParameter (program, gl .LINK_STATUS);
-            }
-
-            if (valid)
-            {
-               gl .useProgram (this .program);
-
-               // Initialize uniform variables and attributes
-               if (this .getDefaultUniforms ())
-               {
-                  // Setup user-defined fields.
-                  this .addShaderFields ();
-               }
-               else
-               {
-                  valid = false;
-               }
-
-               // Debug, print complete shader info and statistics.
-               // this .printProgramInfo ();
+               this .getDefaultUniformsAndAttributes (program);
+               this .setValid (true);
             }
             else
             {
@@ -47297,9 +45450,12 @@ function (Fields,
                {
                   console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
                }
+
+               this .setValid (false);
             }
 
-            this .setValid (!! valid);
+            if (this .isValid ())
+               this .addShaderFields (this .program);
          }
          else
          {
@@ -47308,23 +45464,19 @@ function (Fields,
       },
       set_field__: function (field)
       {
-         const gl = this .getBrowser () .getContext ();
-
-         gl .useProgram (this .program);
-
-         X3DProgrammableShaderObject .prototype .set_field__ .call (this, field);
+         if (this .isValid ())
+            X3DProgrammableShaderObject .prototype .set_field__ .call (this, field, this .program);
       },
       setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
       {
-         gl .useProgram (this .program);
-
-         X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+         if (this .isValid ())
+         {
+            X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, gl, this .program, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+         }
       },
       enable: function (gl)
       {
-         gl .useProgram (this .program);
-
-         X3DProgrammableShaderObject .prototype .enable .call (this, gl);
+         X3DProgrammableShaderObject .prototype .enable .call (this, gl, this .program);
       },
    });
 
@@ -47372,7 +45524,9 @@ function (Fields,
 
 
 
-define('text!assets/shaders/Types.glsl',[],function () { return 'struct x3d_FogParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float visibilityRange;\n   mediump mat3  matrix;\n   bool          fogCoord;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float intensity;\n   mediump float ambientIntensity;\n   mediump vec3  attenuation;\n   mediump vec3  location;\n   mediump vec3  direction;\n   mediump float radius;\n   mediump float beamWidth;\n   mediump float cutOffAngle;\n   mediump mat3  matrix;\n   #ifdef X3D_SHADOWS\n   mediump vec3  shadowColor;\n   mediump float shadowIntensity;\n   mediump float shadowBias;\n   mediump mat4  shadowMatrix;\n   mediump int   shadowMapSize;\n   #endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_PointPropertiesParameters\n{\n   mediump float pointSizeScaleFactor;\n   mediump float pointSizeMinValue;\n   mediump float pointSizeMaxValue;\n   mediump vec3  pointSizeAttenuation;\n};\n\n//uniform x3d_PointPropertiesParameters x3d_PointProperties;\n\nstruct x3d_LinePropertiesParameters\n{\n   bool          applied;\n   mediump float linewidthScaleFactor;\n   sampler2D     linetype;\n};\n\n//uniform x3d_LinePropertiesParameters x3d_LineProperties;\n\nstruct x3d_FillPropertiesParameters\n{\n   bool         filled;\n   bool         hatched;\n   mediump vec3 hatchColor;\n   sampler2D    hatchStyle;\n};\n\n//uniform x3d_FillPropertiesParameters x3d_FillProperties;\n\nstruct x3d_UnlitMaterialParameters\n{\n   mediump vec3  emissiveColor;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_UnlitMaterialParameters x3d_Material;\n\nstruct x3d_MaterialParameters\n{\n   mediump float ambientIntensity;\n   mediump vec3  diffuseColor;\n   mediump vec3  specularColor;\n   mediump vec3  emissiveColor;\n   mediump float shininess;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_Material;\n\nstruct x3d_PhysicalMaterialParameters\n{\n   mediump vec3  baseColor;\n   mediump vec3  emissiveColor;\n   mediump float metallic;\n   mediump float roughness;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_PhysicalMaterialParameters x3d_Material;\n\n#ifdef X3D_MATERIAL_TEXTURES\n\nstruct x3d_AmbientTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_AMBIENT_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_AMBIENT_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_AMBIENT_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_AmbientTextureParameters x3d_AmbientTexture;\n\nstruct x3d_DiffuseTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_DIFFUSE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_DIFFUSE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_DIFFUSE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;\n\nstruct x3d_SpecularTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SPECULAR_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_SPECULAR_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SPECULAR_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_SpecularTextureParameters x3d_SpecularTexture;\n\nstruct x3d_EmissiveTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_EMISSIVE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_EMISSIVE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_EMISSIVE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;\n\nstruct x3d_ShininessTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SHININESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_SHININESS_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SHININESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_ShininessTextureParameters x3d_ShininessTexture;\n\nstruct x3d_BaseTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_BASE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_BASE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_BASE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_BaseTextureParameters x3d_BaseTexture;\n\nstruct x3d_MetallicRoughnessTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;\n\nstruct x3d_OcclusionTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_OCCLUSION_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_OCCLUSION_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_OCCLUSION_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;\n\nstruct x3d_NormalTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_NORMAL_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_NORMAL_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_NORMAL_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_NormalTextureParameters x3d_NormalTexture;\n\n#endif // X3D_MATERIAL_TEXTURES\n\nstruct x3d_MultiTextureParameters\n{\n   mediump int mode;\n   mediump int alphaMode;\n   mediump int source;\n   mediump int function;\n};\n\n//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nstruct x3d_TextureCoordinateGeneratorParameters\n{\n   mediump int   mode;\n   mediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];\n\nstruct x3d_ParticleParameters\n{\n   mediump int   id;\n   mediump int   life;\n   mediump float elapsedTime;\n};\n\n//uniform x3d_ParticleParameters x3d_Particle;\n';});
+
+
+define('text!assets/shaders/Types.glsl',[],function () { return 'struct x3d_FogParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float visibilityRange;\n   mediump mat3  matrix;\n   bool          fogCoord;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float intensity;\n   mediump float ambientIntensity;\n   mediump vec3  attenuation;\n   mediump vec3  location;\n   mediump vec3  direction;\n   mediump float radius;\n   mediump float beamWidth;\n   mediump float cutOffAngle;\n   mediump mat3  matrix;\n   #ifdef X3D_SHADOWS\n   mediump vec3  shadowColor;\n   mediump float shadowIntensity;\n   mediump float shadowBias;\n   mediump mat4  shadowMatrix;\n   mediump int   shadowMapSize;\n   #endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_PointPropertiesParameters\n{\n   mediump float pointSizeScaleFactor;\n   mediump float pointSizeMinValue;\n   mediump float pointSizeMaxValue;\n   mediump vec3  pointSizeAttenuation;\n};\n\n//uniform x3d_PointPropertiesParameters x3d_PointProperties;\n\nstruct x3d_LinePropertiesParameters\n{\n   bool          applied;\n   mediump float linewidthScaleFactor;\n   sampler2D     linetype;\n};\n\n//uniform x3d_LinePropertiesParameters x3d_LineProperties;\n\nstruct x3d_FillPropertiesParameters\n{\n   bool         filled;\n   bool         hatched;\n   mediump vec3 hatchColor;\n   sampler2D    hatchStyle;\n};\n\n//uniform x3d_FillPropertiesParameters x3d_FillProperties;\n\nstruct x3d_UnlitMaterialParameters\n{\n   mediump vec3  emissiveColor;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_UnlitMaterialParameters x3d_Material;\n\nstruct x3d_MaterialParameters\n{\n   mediump float ambientIntensity;\n   mediump vec3  diffuseColor;\n   mediump vec3  specularColor;\n   mediump vec3  emissiveColor;\n   mediump float shininess;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_Material;\n\nstruct x3d_PhysicalMaterialParameters\n{\n   mediump vec3  baseColor;\n   mediump vec3  emissiveColor;\n   mediump float metallic;\n   mediump float roughness;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_PhysicalMaterialParameters x3d_Material;\n\n#ifdef X3D_MATERIAL_TEXTURES\n\nstruct x3d_AmbientTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_AMBIENT_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_AMBIENT_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_AMBIENT_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_AmbientTextureParameters x3d_AmbientTexture;\n\nstruct x3d_DiffuseTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_DIFFUSE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_DIFFUSE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_DIFFUSE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;\n\nstruct x3d_SpecularTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SPECULAR_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_SPECULAR_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SPECULAR_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_SpecularTextureParameters x3d_SpecularTexture;\n\nstruct x3d_EmissiveTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_EMISSIVE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_EMISSIVE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_EMISSIVE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;\n\nstruct x3d_ShininessTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SHININESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_SHININESS_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SHININESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_ShininessTextureParameters x3d_ShininessTexture;\n\nstruct x3d_BaseTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_BASE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_BASE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_BASE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_BaseTextureParameters x3d_BaseTexture;\n\nstruct x3d_MetallicRoughnessTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;\n\nstruct x3d_OcclusionTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_OCCLUSION_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_OCCLUSION_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_OCCLUSION_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;\n\nstruct x3d_NormalTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_NORMAL_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_NORMAL_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_NORMAL_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_NormalTextureParameters x3d_NormalTexture;\n\n#endif // X3D_MATERIAL_TEXTURES\n\nstruct x3d_MultiTextureParameters\n{\n   mediump int mode;\n   mediump int alphaMode;\n   mediump int source;\n   mediump int function;\n};\n\n//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nstruct x3d_TextureCoordinateGeneratorParameters\n{\n   mediump int   mode;\n   mediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -47754,7 +45908,7 @@ function (ShaderSource,
          if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
             constants += "#define X3D_LOGARITHMIC_DEPTH_BUFFER\n";
 
-         if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
+         if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
             constants += "#define X3D_DEPTH_TEXTURE\n";
 
          if (browser .getMultiTexturing ())
@@ -47786,9 +45940,9 @@ function (ShaderSource,
          definitions += "#define x3d_PointLight        2\n";
          definitions += "#define x3d_SpotLight         3\n";
 
-         definitions += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
-         definitions += "#define x3d_TextureType2D              2\n";
-         definitions += "#define x3d_TextureType3D              3\n";
+         definitions += "#define x3d_MaxTextures      " + browser .getMaxTextures () + "\n";
+         definitions += "#define x3d_TextureType2D    2\n";
+         definitions += "#define x3d_TextureType3D    3\n";
          definitions += "#define x3d_TextureTypeCube  4\n";
 
          definitions += "#define x3d_Replace                   " + MultiTextureModeType .REPLACE                   + "\n";
@@ -48740,7 +46894,7 @@ function ($,
                return;
             }
 
-            //console .error (error);
+            console .error (error);
 
             console .error ("XML Parser Error: " + error .message);
          }
@@ -49860,7 +48014,6 @@ function (Vector3,
          return this;
       },
       multRight: function (matrix)
-      //throw
       {
          // Taken from Inventor:
 
@@ -49886,7 +48039,6 @@ function (Vector3,
          return this;
       },
       multLeft: function (matrix)
-      //throw
       {
          // Taken from Inventor:
 
@@ -55184,66 +53336,57 @@ function (Plane3,
 
          return function (projectionMatrix, viewport, scissor)
          {
-            try
-            {
-               this .viewport .assign (viewport);
-               this .scissor  .assign (scissor);
+            this .viewport .assign (viewport);
+            this .scissor  .assign (scissor);
 
-               const points = this .points;
+            const points = this .points;
 
-               const
-                  p0 = points [0],
-                  p1 = points [1],
-                  p2 = points [2],
-                  p3 = points [3],
-                  p4 = points [4],
-                  p5 = points [5],
-                  p6 = points [6],
-                  p7 = points [7];
+            const
+               p0 = points [0],
+               p1 = points [1],
+               p2 = points [2],
+               p3 = points [3],
+               p4 = points [4],
+               p5 = points [5],
+               p6 = points [6],
+               p7 = points [7];
 
-               const
-                  x1 = scissor [0],
-                  x2 = x1 + scissor [2],
-                  y1 = scissor [1],
-                  y2 = y1 + scissor [3];
+            const
+               x1 = scissor [0],
+               x2 = x1 + scissor [2],
+               y1 = scissor [1],
+               y2 = y1 + scissor [3];
 
-               matrix .assign (projectionMatrix) .inverse ();
+            matrix .assign (projectionMatrix) .inverse ();
 
-               ViewVolume .unProjectPointMatrix (x1, y1, 0, matrix, viewport, p0),
-               ViewVolume .unProjectPointMatrix (x2, y1, 0, matrix, viewport, p1),
-               ViewVolume .unProjectPointMatrix (x2, y2, 0, matrix, viewport, p2),
-               ViewVolume .unProjectPointMatrix (x1, y2, 0, matrix, viewport, p3),
-               ViewVolume .unProjectPointMatrix (x1, y1, 1, matrix, viewport, p4),
-               ViewVolume .unProjectPointMatrix (x2, y1, 1, matrix, viewport, p5);
-               ViewVolume .unProjectPointMatrix (x2, y2, 1, matrix, viewport, p6);
-               ViewVolume .unProjectPointMatrix (x1, y2, 1, matrix, viewport, p7);
+            ViewVolume .unProjectPointMatrix (x1, y1, 0, matrix, viewport, p0),
+            ViewVolume .unProjectPointMatrix (x2, y1, 0, matrix, viewport, p1),
+            ViewVolume .unProjectPointMatrix (x2, y2, 0, matrix, viewport, p2),
+            ViewVolume .unProjectPointMatrix (x1, y2, 0, matrix, viewport, p3),
+            ViewVolume .unProjectPointMatrix (x1, y1, 1, matrix, viewport, p4),
+            ViewVolume .unProjectPointMatrix (x2, y1, 1, matrix, viewport, p5);
+            ViewVolume .unProjectPointMatrix (x2, y2, 1, matrix, viewport, p6);
+            ViewVolume .unProjectPointMatrix (x1, y2, 1, matrix, viewport, p7);
 
-               const normals = this .normals;
+            const normals = this .normals;
 
-               Triangle3 .normal (p0, p1, p2, normals [0]); // front
-               Triangle3 .normal (p7, p4, p0, normals [1]); // left
-               Triangle3 .normal (p6, p2, p1, normals [2]); // right
-               Triangle3 .normal (p2, p6, p7, normals [3]); // top
-               Triangle3 .normal (p1, p0, p4, normals [4]); // bottom
-               Triangle3 .normal (p4, p7, p6, normals [5]); // back
+            Triangle3 .normal (p0, p1, p2, normals [0]); // front
+            Triangle3 .normal (p7, p4, p0, normals [1]); // left
+            Triangle3 .normal (p6, p2, p1, normals [2]); // right
+            Triangle3 .normal (p2, p6, p7, normals [3]); // top
+            Triangle3 .normal (p1, p0, p4, normals [4]); // bottom
+            Triangle3 .normal (p4, p7, p6, normals [5]); // back
 
-               const planes = this .planes;
+            const planes = this .planes;
 
-               planes [0] .set (p1, normals [0]); // front
-               planes [1] .set (p4, normals [1]); // left
-               planes [2] .set (p2, normals [2]); // right
-               planes [3] .set (p6, normals [3]); // top
-               planes [4] .set (p0, normals [4]); // bottom
-               planes [5] .set (p7, normals [5]); // back
+            planes [0] .set (p1, normals [0]); // front
+            planes [1] .set (p4, normals [1]); // left
+            planes [2] .set (p2, normals [2]); // right
+            planes [3] .set (p6, normals [3]); // top
+            planes [4] .set (p0, normals [4]); // bottom
+            planes [5] .set (p7, normals [5]); // back
 
-               this .edges .tainted = true;
-               this .valid          = true;
-            }
-            catch (error)
-            {
-               this .valid = false;
-               //console .log (error);
-            }
+            this .edges .tainted = true;
 
             return this;
          };
@@ -55285,28 +53428,25 @@ function (Plane3,
       },
       intersectsSphere: function (radius, center)
       {
-         if (this .valid)
-         {
-            const planes = this .planes;
+         const planes = this .planes;
 
-            if (planes [0] .getDistanceToPoint (center) > radius)
-               return false;
+         if (planes [0] .getDistanceToPoint (center) > radius)
+            return false;
 
-            if (planes [1] .getDistanceToPoint (center) > radius)
-               return false;
+         if (planes [1] .getDistanceToPoint (center) > radius)
+            return false;
 
-            if (planes [2] .getDistanceToPoint (center) > radius)
-               return false;
+         if (planes [2] .getDistanceToPoint (center) > radius)
+            return false;
 
-            if (planes [3] .getDistanceToPoint (center) > radius)
-               return false;
+         if (planes [3] .getDistanceToPoint (center) > radius)
+            return false;
 
-            if (planes [4] .getDistanceToPoint (center) > radius)
-               return false;
+         if (planes [4] .getDistanceToPoint (center) > radius)
+            return false;
 
-            if (planes [5] .getDistanceToPoint (center) > radius)
-               return false;
-         }
+         if (planes [5] .getDistanceToPoint (center) > radius)
+            return false;
 
          return true;
       },
@@ -55409,12 +53549,9 @@ function (Plane3,
             //Objects coordinates
             invModelViewProjection .multVecMatrix (vin);
 
-            if (vin .w === 0)
-               throw new Error ("Couldn't unproject point: divisor is 0.");
-
             const d = 1 / vin .w;
 
-            return point .set (vin .x * d, vin .y * d, vin .z * d);
+            return point .set (vin .x * d, vin .y * d, vin .z * d, 1);
          };
       })(),
       unProjectRay: (function ()
@@ -55440,12 +53577,32 @@ function (Plane3,
 
          return function (point, modelViewMatrix, projectionMatrix, viewport, vout)
          {
-            vin .set (point .x, point .y, point .z, 1);
+            if (point .length === 4)
+               vin .assign (point);
+            else
+               vin .set (point .x, point .y, point .z, 1);
 
             projectionMatrix .multVecMatrix (modelViewMatrix .multVecMatrix (vin));
 
-            if (vin .w === 0)
-               throw new Error ("Couldn't project point: divisor is 0.");
+            const d = 1 / (2 * vin .w);
+
+            return vout .set ((vin .x * d + 0.5) * viewport [2] + viewport [0],
+                              (vin .y * d + 0.5) * viewport [3] + viewport [1],
+                              (vin .z * d + 0.5));
+         };
+      })(),
+      projectPointMatrix: (function ()
+      {
+         const vin = new Vector4 (0, 0, 0, 0);
+
+         return function (point, modelViewProjectionMatrix, viewport, vout)
+         {
+            if (point .length === 4)
+               vin .assign (point);
+            else
+               vin .set (point .x, point .y, point .z, 1);
+
+            modelViewProjectionMatrix .multVecMatrix (vin);
 
             const d = 1 / (2 * vin .w);
 
@@ -55545,14 +53702,14 @@ function (ViewVolume,
       this .height  = height;
       this .array   = new Uint8Array (width * height * 4);
 
-      // The frame buffer.
+      // Create frame buffer.
 
       this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
       this .buffer     = gl .createFramebuffer ();
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .buffer);
 
-      // The depth texture
+      // Create color texture.
 
       this .colorTexture = gl .createTexture ();
 
@@ -55565,9 +53722,9 @@ function (ViewVolume,
 
       gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .colorTexture, 0);
 
-      // The depth buffer
+      // Create depth buffer.
 
-      if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
+      if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
       {
          this .depthTexture = gl .createTexture ();
 
@@ -55581,7 +53738,7 @@ function (ViewVolume,
          const internalFormat = gl .getVersion () >= 2 ? gl .DEPTH_COMPONENT24 : gl .DEPTH_COMPONENT;
 
          gl .texImage2D (gl .TEXTURE_2D, 0, internalFormat, width, height, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
-         gl.framebufferTexture2D (gl .FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, this .depthTexture, 0);
+         gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .TEXTURE_2D, this .depthTexture, 0);
       }
       else
       {
@@ -55592,10 +53749,11 @@ function (ViewVolume,
          gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
       }
 
-      // Always check that our framebuffer is ok
+      // Always check that our framebuffer is ok.
 
       const complete = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
+      gl .bindTexture (gl .TEXTURE_2D, null);
       gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
 
       if (complete)
@@ -55643,46 +53801,39 @@ function (ViewVolume,
 
          return function (projectionMatrix, viewport)
          {
-            try
+            const
+               gl     = this .browser .getContext (),
+               array  = this .array,
+               width  = this .width,
+               height = this .height;
+
+            let
+               winx = 0,
+               winy = 0,
+               winz = Number .POSITIVE_INFINITY;
+
+            invProjectionMatrix .assign (projectionMatrix) .inverse ();
+
+            gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
+
+            for (let wy = 0, i = 0; wy < height; ++ wy)
             {
-               const
-                  gl     = this .browser .getContext (),
-                  array  = this .array,
-                  width  = this .width,
-                  height = this .height;
-
-               let
-                  winx = 0,
-                  winy = 0,
-                  winz = Number .POSITIVE_INFINITY;
-
-               invProjectionMatrix .assign (projectionMatrix) .inverse ();
-
-               gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
-
-               for (let wy = 0, i = 0; wy < height; ++ wy)
+               for (let wx = 0; wx < width; ++ wx, i += 4)
                {
-                  for (let wx = 0; wx < width; ++ wx, i += 4)
-                  {
-                     const wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
+                  const wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
 
-                     if (wz < winz)
-                     {
-                        winx = wx;
-                        winy = wy;
-                        winz = wz;
-                     }
+                  if (wz < winz)
+                  {
+                     winx = wx;
+                     winy = wy;
+                     winz = wz;
                   }
                }
-
-               ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, point);
-
-               return point .z;
             }
-            catch (error)
-            {
-               return 0;
-            }
+
+            ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, point);
+
+            return point .z;
          };
       })(),
       bind: function ()
@@ -55696,8 +53847,21 @@ function (ViewVolume,
       unbind: function ()
       {
          const gl = this .browser .getContext ();
+
          gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
       },
+      delete: function ()
+      {
+         const gl = this .browser .getContext ();
+
+         gl .deleteFramebuffer (this .buffer);
+         gl .deleteTexture (this .colorTexture);
+
+         if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
+            gl .deleteTexture (this .depthTexture);
+         else
+            gl .deleteRenderbuffer (this .depthBuffer);
+       },
    };
 
    for (const key of Reflect .ownKeys (TextureBuffer .prototype))
@@ -56970,57 +55134,50 @@ function (TextureBuffer,
          {
             ///  Returns the distance to the closest object in @a direction.  The maximum determinable value is avatarHeight * 2.
 
-            try
-            {
-               const t0 = performance .now ();
+            const t0 = performance .now ();
 
-               const
-                  viewpoint       = this .getViewpoint (),
-                  navigationInfo  = this .getNavigationInfo (),
-                  collisionRadius = navigationInfo .getCollisionRadius (),
-                  bottom          = navigationInfo .getStepHeight () - navigationInfo .getAvatarHeight (),
-                  nearValue       = navigationInfo .getNearValue (),
-                  avatarHeight    = navigationInfo .getAvatarHeight ();
+            const
+               viewpoint       = this .getViewpoint (),
+               navigationInfo  = this .getNavigationInfo (),
+               collisionRadius = navigationInfo .getCollisionRadius (),
+               bottom          = navigationInfo .getStepHeight () - navigationInfo .getAvatarHeight (),
+               nearValue       = navigationInfo .getNearValue (),
+               avatarHeight    = navigationInfo .getAvatarHeight ();
 
-               // Determine width and height of camera
+            // Determine width and height of camera
 
-               // Reshape camera
+            // Reshape camera
 
-               Camera .ortho (-collisionRadius,
-                              collisionRadius,
-                              Math .min (bottom, -collisionRadius), /// TODO: bottom could be a positive value if stepHeight > avatarHeight.
-                              collisionRadius,
-                              nearValue,
-                              Math .max (collisionRadius * 2, avatarHeight * 2),
-                              projectionMatrix);
+            Camera .ortho (-collisionRadius,
+                           collisionRadius,
+                           Math .min (bottom, -collisionRadius), /// TODO: bottom could be a positive value if stepHeight > avatarHeight.
+                           collisionRadius,
+                           nearValue,
+                           Math .max (collisionRadius * 2, avatarHeight * 2),
+                           projectionMatrix);
 
-               // Translate camera to user position and to look in the direction of the direction.
+            // Translate camera to user position and to look in the direction of the direction.
 
-               localOrientation .assign (viewpoint ._orientation .getValue ()) .inverse () .multRight (viewpoint .getOrientation ());
-               rotation .setFromToVec (Vector3 .zAxis, vector .assign (direction) .negate ()) .multRight (localOrientation);
-               viewpoint .straightenHorizon (rotation);
+            localOrientation .assign (viewpoint ._orientation .getValue ()) .inverse () .multRight (viewpoint .getOrientation ());
+            rotation .setFromToVec (Vector3 .zAxis, vector .assign (direction) .negate ()) .multRight (localOrientation);
+            viewpoint .straightenHorizon (rotation);
 
-               cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
-               cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
-               cameraSpaceProjectionMatrix .rotate (rotation);
-               cameraSpaceProjectionMatrix .inverse ();
+            cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
+            cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
+            cameraSpaceProjectionMatrix .rotate (rotation);
+            cameraSpaceProjectionMatrix .inverse ();
 
-               cameraSpaceProjectionMatrix .multRight (projectionMatrix);
-               cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
+            cameraSpaceProjectionMatrix .multRight (projectionMatrix);
+            cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
 
-               this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
+            this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
 
-               const depth = this .getDepth (projectionMatrix);
+            const depth = this .getDepth (projectionMatrix);
 
-               this .getProjectionMatrix () .pop ();
+            this .getProjectionMatrix () .pop ();
 
-               this .collisionTime += performance .now () - t0;
-               return -depth;
-            }
-            catch (error)
-            {
-               console .error (error);
-            }
+            this .collisionTime += performance .now () - t0;
+            return -depth;
          };
       })(),
       getDepth: (function ()
@@ -57259,27 +55416,20 @@ function (TextureBuffer,
 
             for (let i = 0, length = this .numCollisionShapes; i < length; ++ i)
             {
-               try
-               {
-                  const
-                     context    = this .collisionShapes [i],
-                     collisions = context .collisions;
+               const
+                  context    = this .collisionShapes [i],
+                  collisions = context .collisions;
 
-                  if (collisions .length)
+               if (collisions .length)
+               {
+                  collisionBox .set (collisionSize, Vector3 .Zero);
+                  collisionBox .multRight (invModelViewMatrix .assign (context .modelViewMatrix) .inverse ());
+
+                  if (context .shapeNode .intersectsBox (collisionBox, context .clipPlanes, modelViewMatrix .assign (context .modelViewMatrix)))
                   {
-                     collisionBox .set (collisionSize, Vector3 .Zero);
-                     collisionBox .multRight (invModelViewMatrix .assign (context .modelViewMatrix) .inverse ());
-
-                     if (context .shapeNode .intersectsBox (collisionBox, context .clipPlanes, modelViewMatrix .assign (context .modelViewMatrix)))
-                     {
-                        for (const collision of collisions)
-                           activeCollisions .add (collision);
-                     }
+                     for (const collision of collisions)
+                        activeCollisions .add (collision);
                   }
-               }
-               catch (error)
-               {
-                  console .error (error);
                }
             }
 
@@ -57313,121 +55463,114 @@ function (TextureBuffer,
 
          return function ()
          {
-            try
+            const
+               browser    = this .getBrowser (),
+               shaderNode = browser .getDepthShader ();
+
+            if (shaderNode .isValid ())
             {
-               const
-                  browser    = this .getBrowser (),
-                  shaderNode = browser .getDepthShader ();
+               // Terrain following and gravitation
 
-               if (shaderNode .getValid ())
+               if (browser .getActiveLayer () === this)
                {
-                  // Terrain following and gravitation
-
-                  if (browser .getActiveLayer () === this)
-                  {
-                     if (browser .getCurrentViewer () !== "WALK")
-                        return;
-                  }
-                  else if (this .getNavigationInfo () .getViewer () !== "WALK")
+                  if (browser .getCurrentViewer () !== "WALK")
                      return;
+               }
+               else if (this .getNavigationInfo () .getViewer () !== "WALK")
+                  return;
 
-                  // Get NavigationInfo values
+               // Get NavigationInfo values
 
-                  const
-                     navigationInfo  = this .getNavigationInfo (),
-                     viewpoint       = this .getViewpoint (),
-                     collisionRadius = navigationInfo .getCollisionRadius (),
-                     nearValue       = navigationInfo .getNearValue (),
-                     avatarHeight    = navigationInfo .getAvatarHeight (),
-                     stepHeight      = navigationInfo .getStepHeight ();
+               const
+                  navigationInfo  = this .getNavigationInfo (),
+                  viewpoint       = this .getViewpoint (),
+                  collisionRadius = navigationInfo .getCollisionRadius (),
+                  nearValue       = navigationInfo .getNearValue (),
+                  avatarHeight    = navigationInfo .getAvatarHeight (),
+                  stepHeight      = navigationInfo .getStepHeight ();
 
-                  // Reshape viewpoint for gravite.
+               // Reshape viewpoint for gravite.
 
-                  Camera .ortho (-collisionRadius,
-                                 collisionRadius,
-                                 -collisionRadius,
-                                 collisionRadius,
-                                 nearValue,
-                                 Math .max (collisionRadius * 2, avatarHeight * 2),
-                                 projectionMatrix);
+               Camera .ortho (-collisionRadius,
+                              collisionRadius,
+                              -collisionRadius,
+                              collisionRadius,
+                              nearValue,
+                              Math .max (collisionRadius * 2, avatarHeight * 2),
+                              projectionMatrix);
 
-                  // Transform viewpoint to look down the up vector
+               // Transform viewpoint to look down the up vector
 
-                  const
-                     upVector = viewpoint .getUpVector (),
-                     down     = rotation .setFromToVec (Vector3 .zAxis, upVector);
+               const
+                  upVector = viewpoint .getUpVector (),
+                  down     = rotation .setFromToVec (Vector3 .zAxis, upVector);
 
-                  cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
-                  cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
-                  cameraSpaceProjectionMatrix .rotate (down);
-                  cameraSpaceProjectionMatrix .inverse ();
+               cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
+               cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
+               cameraSpaceProjectionMatrix .rotate (down);
+               cameraSpaceProjectionMatrix .inverse ();
 
-                  cameraSpaceProjectionMatrix .multRight (projectionMatrix);
-                  cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
+               cameraSpaceProjectionMatrix .multRight (projectionMatrix);
+               cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
 
-                  this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
+               this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
 
-                  let distance = -this .getDepth (projectionMatrix);
+               let distance = -this .getDepth (projectionMatrix);
 
-                  this .getProjectionMatrix () .pop ();
+               this .getProjectionMatrix () .pop ();
 
-                  // Gravite or step up
+               // Gravite or step up
 
-                  distance -= avatarHeight;
+               distance -= avatarHeight;
 
-                  const up = rotation .setFromToVec (Vector3 .yAxis, upVector);
+               const up = rotation .setFromToVec (Vector3 .yAxis, upVector);
 
-                  if (distance > 0)
+               if (distance > 0)
+               {
+                  // Gravite and fall down the to the floor
+
+                  const currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
+
+                  this .speed -= browser .getBrowserOptions () ._Gravity .getValue () / currentFrameRate;
+
+                  let y = this .speed / currentFrameRate;
+
+                  if (y < -distance)
                   {
-                     // Gravite and fall down the to the floor
-
-                     const currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
-
-                     this .speed -= browser .getBrowserOptions () ._Gravity .getValue () / currentFrameRate;
-
-                     let y = this .speed / currentFrameRate;
-
-                     if (y < -distance)
-                     {
-                        // The ground is reached.
-                        y = -distance;
-                        this .speed = 0;
-                     }
-
-                     viewpoint ._positionOffset = viewpoint ._positionOffset .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
-                  }
-                  else
-                  {
+                     // The ground is reached.
+                     y = -distance;
                      this .speed = 0;
+                  }
 
-                     distance = -distance;
+                  viewpoint ._positionOffset = viewpoint ._positionOffset .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
+               }
+               else
+               {
+                  this .speed = 0;
 
-                     if (distance > 0.01 && distance < stepHeight)
-                     {
-                        // Step up
-                        this .constrainTranslation (up .multVecRot (translation .set (0, distance, 0)), false);
+                  distance = -distance;
 
-                        //if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
-                        //{
-                        //	float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
-                        //	step = abs (getViewMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
-                        //
-                        //	Vector3f offset = Vector3f (0, step, 0) * up;
-                        //
-                        //	if (math::abs (offset) > math::abs (translation) or getBrowser () -> getCurrentSpeed () == 0)
-                        //		offset = translation;
-                        //
-                        //	getViewpoint () -> positionOffset () += offset;
-                        //}
-                        //else
-                           viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
-                     }
+                  if (distance > 0.01 && distance < stepHeight)
+                  {
+                     // Step up
+                     this .constrainTranslation (up .multVecRot (translation .set (0, distance, 0)), false);
+
+                     //if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
+                     //{
+                     //	float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
+                     //	step = abs (getViewMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
+                     //
+                     //	Vector3f offset = Vector3f (0, step, 0) * up;
+                     //
+                     //	if (math::abs (offset) > math::abs (translation) or getBrowser () -> getCurrentSpeed () == 0)
+                     //		offset = translation;
+                     //
+                     //	getViewpoint () -> positionOffset () += offset;
+                     //}
+                     //else
+                        viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
                   }
                }
-            }
-            catch (error)
-            {
-               console .error (error);
             }
          };
       })(),
@@ -57445,7 +55588,7 @@ function (TextureBuffer,
 
             // Configure depth shader.
 
-            if (shaderNode .getValid ())
+            if (shaderNode .isValid ())
             {
                shaderNode .enable (gl);
 
@@ -59528,15 +57671,8 @@ function (X3DConstants,
       set: function (fogNode, modelViewMatrix)
       {
          this .fogNode = fogNode;
-
-         try
-         {
-            this .fogMatrix .set (modelViewMatrix .submatrix .inverse ());
-         }
-         catch (error)
-         {
-            this .fogMatrix .set (Matrix3 .Identity);
-         }
+         
+         this .fogMatrix .set (modelViewMatrix .submatrix .inverse ());
       },
       setShaderUniforms: function (gl, shaderObject)
       {
@@ -59796,6 +57932,108 @@ function (Fields,
  ******************************************************************************/
 
 
+define ('x_ite/Rendering/VertexArray',[],function ()
+{
+"use strict";
+
+   function VertexArray ()
+   {
+      this .vertexArray = null;
+      this .shaderNode  = null;
+      this .tainted     = true;
+   }
+
+   VertexArray .prototype =
+   {
+      update: function ()
+      {
+         this .tainted = true;
+      },
+      enable: function (gl, shaderNode)
+      {
+         if (this .tainted || this .shaderNode !== shaderNode)
+         {
+            gl .deleteVertexArray (this .vertexArray);
+
+            this .vertexArray = gl .createVertexArray ();
+            this .shaderNode  = shaderNode;
+            this .tainted     = false;
+
+            gl .bindVertexArray (this .vertexArray);
+
+            // console .log ("update vao");
+
+            return true;
+         }
+         else
+         {
+            gl .bindVertexArray (this .vertexArray);
+
+            return false;
+         }
+      },
+      disable: function (gl)
+      {
+         gl .bindVertexArray (null);
+      },
+      delete: function (gl)
+      {
+         gl .deleteVertexArray (this .vertexArray);
+      },
+   };
+
+   return VertexArray;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('standard/Math/Numbers/Complex',[],function ()
 {
 "use strict";
@@ -59809,6 +58047,11 @@ define ('standard/Math/Numbers/Complex',[],function ()
    Complex .prototype =
    {
       constructor: Complex,
+      [Symbol .iterator]: function* ()
+      {
+         yield this .real;
+         yield this .imag;
+      },
       copy: function ()
       {
          const copy = Object .create (Complex .prototype);
@@ -60002,6 +58245,7 @@ define ('standard/Math/Numbers/Complex',[],function ()
 
 define ('x_ite/Components/EnvironmentalEffects/X3DBackgroundNode',[
    "x_ite/Components/Core/X3DBindableNode",
+   "x_ite/Rendering/VertexArray",
    "x_ite/Rendering/TraverseType",
    "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/ViewVolume",
@@ -60012,6 +58256,7 @@ define ('x_ite/Components/EnvironmentalEffects/X3DBackgroundNode',[
    "standard/Math/Algorithm",
 ],
 function (X3DBindableNode,
+          VertexArray,
           TraverseType,
           X3DConstants,
           ViewVolume,
@@ -60127,19 +58372,28 @@ function (X3DBindableNode,
       {
          X3DBindableNode .prototype .initialize .call (this);
 
-         const gl = this .getBrowser () .getContext ();
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
 
-         this .colorBuffer     = gl .createBuffer ();
-         this .sphereBuffer    = gl .createBuffer ();
-         this .texCoordBuffer  = gl .createBuffer ();
-         this .cubeBuffer      = gl .createBuffer ();
-         this .texCoordBuffers = [ gl .createBuffer () ];
-         this .frontBuffer     = gl .createBuffer ();
-         this .backBuffer      = gl .createBuffer ();
-         this .leftBuffer      = gl .createBuffer ();
-         this .rightBuffer     = gl .createBuffer ();
-         this .topBuffer       = gl .createBuffer ();
-         this .bottomBuffer    = gl .createBuffer ();
+         this .colorBuffer       = gl .createBuffer ();
+         this .sphereBuffer      = gl .createBuffer ();
+         this .texCoordBuffer    = gl .createBuffer ();
+         this .cubeBuffer        = gl .createBuffer ();
+         this .texCoordBuffers   = new Array (browser .getMaxTextures ()) .fill (gl .createBuffer ());
+         this .frontBuffer       = gl .createBuffer ();
+         this .backBuffer        = gl .createBuffer ();
+         this .leftBuffer        = gl .createBuffer ();
+         this .rightBuffer       = gl .createBuffer ();
+         this .topBuffer         = gl .createBuffer ();
+         this .bottomBuffer      = gl .createBuffer ();
+         this .sphereArrayObject = new VertexArray ();
+         this .frontArrayObject  = new VertexArray ();
+         this .backArrayObject   = new VertexArray ();
+         this .leftArrayObject   = new VertexArray ();
+         this .rightArrayObject  = new VertexArray ();
+         this .topArrayObject    = new VertexArray ();
+         this .bottomArrayObject = new VertexArray ();
 
          this ._groundAngle  .addInterest ("build", this);
          this ._groundColor  .addInterest ("build", this);
@@ -60384,12 +58638,12 @@ function (X3DBindableNode,
          // Transfer colors.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (this .colors), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (this .colors), gl .DYNAMIC_DRAW);
 
          // Transfer sphere.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .sphereBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (this .sphere), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (this .sphere), gl .DYNAMIC_DRAW);
          this .sphereCount = this .sphere .length / 4;
       },
       transferRectangle: function ()
@@ -60399,27 +58653,27 @@ function (X3DBindableNode,
          // Transfer texCoords.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (texCoords), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (texCoords), gl .DYNAMIC_DRAW);
 
          // Transfer rectangle.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .frontBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (frontVertices), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (frontVertices), gl .DYNAMIC_DRAW);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .backBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (backVertices), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (backVertices), gl .DYNAMIC_DRAW);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .leftBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (leftVertices), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (leftVertices), gl .DYNAMIC_DRAW);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .rightBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (rightVertices), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (rightVertices), gl .DYNAMIC_DRAW);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .topBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (topVertices), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (topVertices), gl .DYNAMIC_DRAW);
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .bottomBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (bottomVertices), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (bottomVertices), gl .DYNAMIC_DRAW);
       },
       traverse: function (type, renderObject)
       {
@@ -60457,48 +58711,41 @@ function (X3DBindableNode,
 
          return function (gl, renderObject, viewport)
          {
-            try
-            {
-               if (this .hidden)
-                  return;
+            if (this .hidden)
+               return;
 
-               // Setup context.
+            // Setup context.
 
-               gl .disable (gl .DEPTH_TEST);
-               gl .depthMask (false);
-               gl .enable (gl .CULL_FACE);
-               gl .frontFace (gl .CCW);
+            gl .disable (gl .DEPTH_TEST);
+            gl .depthMask (false);
+            gl .enable (gl .CULL_FACE);
+            gl .frontFace (gl .CCW);
 
-               // Get background scale.
+            // Get background scale.
 
-               const farValue = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
+            const farValue = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
 
-               // Get projection matrix.
+            // Get projection matrix.
 
-               this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());
+            this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());
 
-               // Rotate and scale background.
+            // Rotate and scale background.
 
-               modelViewMatrix .assign (this .modelMatrix);
-               modelViewMatrix .multRight (renderObject .getViewMatrix () .get ());
-               modelViewMatrix .get (null, rotation);
-               modelViewMatrix .identity ();
-               modelViewMatrix .rotate (rotation);
-               modelViewMatrix .scale (scale .set (farValue, farValue, farValue));
+            modelViewMatrix .assign (this .modelMatrix);
+            modelViewMatrix .multRight (renderObject .getViewMatrix () .get ());
+            modelViewMatrix .get (null, rotation);
+            modelViewMatrix .identity ();
+            modelViewMatrix .rotate (rotation);
+            modelViewMatrix .scale (scale .set (farValue, farValue, farValue));
 
-               this .modelViewMatrixArray .set (modelViewMatrix);
+            this .modelViewMatrixArray .set (modelViewMatrix);
 
-               // Draw background sphere and texture cube.
+            // Draw background sphere and texture cube.
 
-               this .drawSphere (renderObject);
+            this .drawSphere (renderObject);
 
-               if (this .textures)
-                  this .drawCube (renderObject);
-            }
-            catch (error)
-            {
-               console .error (error);
-            }
+            if (this .textures)
+               this .drawCube (renderObject);
          };
       })(),
       drawSphere: function (renderObject)
@@ -60513,7 +58760,7 @@ function (X3DBindableNode,
             gl         = browser .getContext (),
             shaderNode = browser .getBackgroundSphereShader ();
 
-         if (shaderNode .getValid ())
+         if (shaderNode .isValid ())
          {
             shaderNode .enable (gl);
 
@@ -60523,8 +58770,11 @@ function (X3DBindableNode,
 
             // Enable vertex attribute arrays.
 
-            shaderNode .enableColorAttribute  (gl, this .colorBuffer);
-            shaderNode .enableVertexAttribute (gl, this .sphereBuffer);
+            if (this .sphereArrayObject .enable (gl, shaderNode))
+            {
+               shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
+               shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
+            }
 
             // Uniforms
 
@@ -60541,10 +58791,6 @@ function (X3DBindableNode,
             // Draw.
 
             gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
-
-            // Disable vertex attribute arrays.
-
-            shaderNode .disableColorAttribute (gl);
          }
       },
       drawCube: (function ()
@@ -60560,17 +58806,13 @@ function (X3DBindableNode,
                gl         = browser .getContext (),
                shaderNode = browser .getUnlitShader ();
 
-            if (shaderNode .getValid ())
+            if (shaderNode .isValid ())
             {
                shaderNode .enable (gl);
 
                // Clip planes
 
                shaderNode .setLocalObjects (gl, this .localObjects);
-
-               // Enable vertex attribute arrays.
-
-               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
 
                // Uniforms
 
@@ -60591,20 +58833,16 @@ function (X3DBindableNode,
 
                // Draw.
 
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .leftTexture,   this .leftBuffer);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .rightTexture,  this .rightBuffer);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .topTexture,    this .topBuffer);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer);
-
-               // Disable vertex attribute arrays.
-
-               shaderNode .disableTexCoordAttribute (gl);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer,  this .frontArrayObject);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer,   this .backArrayObject);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .leftTexture,   this .leftBuffer,   this .leftArrayObject);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .rightTexture,  this .rightBuffer,  this .rightArrayObject);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .topTexture,    this .topBuffer,    this .topArrayObject);
+               this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer, this .bottomArrayObject);
             }
          };
       })(),
-      drawRectangle: function (gl, browser, shaderNode, renderObject, texture, buffer)
+      drawRectangle: function (gl, browser, shaderNode, renderObject, texture, buffer, vertexArray)
       {
          if (texture && (texture .checkLoadState () === X3DConstants .COMPLETE_STATE || texture .getData ()))
          {
@@ -60615,7 +58853,11 @@ function (X3DBindableNode,
             else
                gl .disable (gl .BLEND);
 
-            shaderNode .enableVertexAttribute (gl, buffer);
+            if (vertexArray .enable (gl, shaderNode))
+            {
+               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+               shaderNode .enableVertexAttribute (gl, buffer, 0, 0);
+            }
 
             // Draw.
 
@@ -60797,15 +59039,15 @@ function (X3DTextureNode,
       {
          X3DTextureNode .prototype .initialize .call (this);
 
-         this ._textureProperties .addInterest ("set_textureProperties__", this);
+         this ._textureProperties .addInterest ("set_textureProperties__", this, true);
 
          const gl = this .getBrowser () .getContext ();
 
          this .texture = gl .createTexture ();
 
-         this .set_textureProperties__ ();
+         this .set_textureProperties__ (false);
       },
-      set_textureProperties__: function ()
+      set_textureProperties__: function (update)
       {
          if (this .texturePropertiesNode)
             this .texturePropertiesNode .removeInterest ("updateTextureProperties", this);
@@ -60817,7 +59059,8 @@ function (X3DTextureNode,
 
          this .texturePropertiesNode .addInterest ("updateTextureProperties", this);
 
-         this .updateTextureProperties ();
+         if (update)
+            this .updateTextureProperties ();
       },
       getTexture: function ()
       {
@@ -61027,46 +59270,37 @@ function (X3DSingleTextureNode,
       },
       setTexture: function (width, height, transparent, data, flipY)
       {
-         try
-         {
-            this .width  = width;
-            this .height = height;
-            this .flipY  = flipY;
-            this .data   = data;
+         this .width  = width;
+         this .height = height;
+         this .flipY  = flipY;
+         this .data   = data;
 
-            const gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
-            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
-            gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
-            gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-            gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+         gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
+         gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
+         gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+         gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
-            this .setTransparent (transparent);
-            this .updateTextureProperties ();
-            this .addNodeEvent ();
-         }
-         catch (error)
-         { }
+         this .setTransparent (transparent);
+         this .updateTextureProperties ();
+         this .addNodeEvent ();
       },
       updateTexture: function (data, flipY)
       {
-         try
-         {
-            this .data = data;
+         this .data = data;
 
-            const gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
-            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
-            gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-            gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+         gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
+         gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
+         gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+         gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
-            if (this .texturePropertiesNode ._generateMipMaps .getValue ())
-               gl .generateMipmap (gl .TEXTURE_2D);
+         if (this .texturePropertiesNode ._generateMipMaps .getValue ())
+            gl .generateMipmap (gl .TEXTURE_2D);
 
-            this .addNodeEvent ();
-         }
-         catch (error)
-         { }
+         this .addNodeEvent ();
       },
       updateTextureProperties: function ()
       {
@@ -66205,6 +64439,11 @@ function ($,
       {
          scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, success, error);
          scene ._initLoadCount .addEvent ();
+
+         // At least Firefox 105.0.2 sometimes does not call requestAnimationFrame
+         // callback when other events occur, but if we trigger it here again, it works.
+         if (navigator .userAgent .includes ("Firefox"))
+            this .browser .requestAnimationFrame ();
       },
       set_initLoadCount__: function (scene, success, error, field)
       {
@@ -66620,7 +64859,6 @@ function (Fields,
 
       this .addType (X3DConstants .ShaderPart);
 
-      this .valid   = false;
       this .options = [ ];
    }
 
@@ -66658,10 +64896,6 @@ function (Fields,
          this .shader = gl .createShader (gl [this .getShaderType ()]);
 
          this .requestImmediateLoad ();
-      },
-      isValid: function ()
-      {
-         return this .valid;
       },
       getShader: function ()
       {
@@ -66707,8 +64941,6 @@ function (Fields,
       },
       loadNow: function ()
       {
-         this .valid = false;
-
          new FileLoader (this) .loadDocument (this ._url,
          function (data)
          {
@@ -66726,9 +64958,7 @@ function (Fields,
                gl .shaderSource (this .shader, source);
                gl .compileShader (this .shader);
 
-               this .valid = gl .getShaderParameter (this .shader, gl .COMPILE_STATUS);
-
-               if (! this .valid)
+               if (!gl .getShaderParameter (this .shader, gl .COMPILE_STATUS))
                   throw new Error (this .getTypeName () + " '" + this .getName () + "': " + gl .getShaderInfoLog (this .shader));
 
                this .setLoadState (X3DConstants .COMPLETE_STATE);
@@ -66791,14 +65021,14 @@ function (Fields,
 
 
 define ('x_ite/Browser/Shaders/ShaderTest',[
+   "x_ite/Rendering/VertexArray",
    "x_ite/Rendering/TextureBuffer",
-   "standard/Math/Numbers/Vector4",
    "standard/Math/Numbers/Matrix3",
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Geometry/Camera",
 ],
-function (TextureBuffer,
-          Vector4,
+function (VertexArray,
+          TextureBuffer,
           Matrix3,
           Matrix4,
           Camera)
@@ -66833,7 +65063,8 @@ function (TextureBuffer,
                gl           = browser .getContext (),
                frameBuffer  = new TextureBuffer (browser, 16, 16),
                normalBuffer = gl .createBuffer (),
-               vertexBuffer = gl .createBuffer ();
+               vertexBuffer = gl .createBuffer (),
+               vertexArrayObject  = new VertexArray ();
 
             frameBuffer .bind ();
 
@@ -66841,9 +65072,9 @@ function (TextureBuffer,
             shaderNode .setLocalObjects (gl, [ ]);
 
             gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .STATIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .DYNAMIC_DRAW);
             gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .STATIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .DYNAMIC_DRAW);
 
             // Matrices
 
@@ -66880,16 +65111,21 @@ function (TextureBuffer,
             gl .enable (gl .CULL_FACE);
             gl .cullFace (gl .BACK);
 
-            shaderNode .enableNormalAttribute (gl, normalBuffer);
-            shaderNode .enableVertexAttribute (gl, vertexBuffer);
+            vertexArrayObject .enable (gl, shaderNode);
+            shaderNode .enableNormalAttribute (gl, normalBuffer, 0, 0);
+            shaderNode .enableVertexAttribute (gl, vertexBuffer, 0, 0);
 
             gl .drawArrays (gl .TRIANGLES, 0, 6);
-
-            shaderNode .disableNormalAttribute (gl, normalBuffer);
 
             const data = frameBuffer .readPixels ();
 
             frameBuffer .unbind ();
+            frameBuffer .delete ();
+
+            gl .deleteBuffer (normalBuffer);
+            gl .deleteBuffer (vertexBuffer);
+
+            vertexArrayObject .delete (gl);
 
             return true || (data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255);
          };
@@ -67685,25 +65921,31 @@ function ($,
       },
       getRenderer: function ()
       {
-         const
-            gl            = this .getContext (),
-            dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
+         const gl = this .getContext ();
 
-         if (dbgRenderInfo)
-            return gl .getParameter (dbgRenderInfo .UNMASKED_RENDERER_WEBGL);
+         if (! navigator .userAgent .match (/Firefox/))
+         {
+            const dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
 
-         return gl .getParameter (this .getContext () .RENDERER);
+            if (dbgRenderInfo)
+               return gl .getParameter (dbgRenderInfo .UNMASKED_RENDERER_WEBGL);
+         }
+
+         return gl .getParameter (gl .RENDERER);
       },
       getVendor: function ()
       {
-         const
-            gl            = this .getContext (),
-            dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
+         const gl = this .getContext ();
 
-         if (dbgRenderInfo)
-            return gl .getParameter (dbgRenderInfo .UNMASKED_VENDOR_WEBGL);
+         if (! navigator .userAgent .match (/Firefox/))
+         {
+            const dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
 
-         return gl .getParameter (this .getContext () .VENDOR);
+            if (dbgRenderInfo)
+               return gl .getParameter (dbgRenderInfo .UNMASKED_VENDOR_WEBGL);
+         }
+
+         return gl .getParameter (gl .VENDOR);
       },
       getWebGLVersion: function ()
       {
@@ -67769,7 +66011,7 @@ function ($,
          const element = this .getElement ();
 
          if (element .fullScreen ())
-            element .addClass  ("x_ite-fullscreen");
+            element .addClass ("x_ite-fullscreen");
          else
             element .removeClass ("x_ite-fullscreen");
       },
@@ -68087,6 +66329,10 @@ function (Fields,
       getAlphaMode: function ()
       {
          return this .alphaMode;
+      },
+      getLineProperties: function ()
+      {
+         return this .stylePropertiesNode [1];
       },
       set_live__: function ()
       {
@@ -68569,18 +66815,50 @@ function (Fields,
          X3DAppearanceChildNode .prototype .initialize .call (this);
 
          this ._applied              .addInterest ("set_applied__",              this);
+         this ._linetype             .addInterest ("set_linetype__",             this);
          this ._linewidthScaleFactor .addInterest ("set_linewidthScaleFactor__", this);
 
          this .set_applied__ ();
+         this .set_linetype__ ();
          this .set_linewidthScaleFactor__ ();
+      },
+      getApplied: function ()
+      {
+         return this .applied;
+      },
+      getLinetype: function ()
+      {
+         return this .linetype;
+      },
+      getLinewidthScaleFactor: function ()
+      {
+         return this .linewidthScaleFactor;
+      },
+      getMustTransformLines: function ()
+      {
+         return this .mustTransformLines;
       },
       set_applied__: function ()
       {
          this .applied = this ._applied .getValue ();
       },
+      set_linetype__: function ()
+      {
+         let linetype = this ._linetype .getValue ();
+
+         if (linetype < 1 || linetype > 15)
+            linetype = 1;
+
+         this .linetype = linetype;
+      },
       set_linewidthScaleFactor__: function ()
       {
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
+
          this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ());
+         this .mustTransformLines   = gl .getVersion () >= 2 && this .linewidthScaleFactor > 1 && gl .lineWidth === Function .prototype;
       },
       setShaderUniforms: function (gl, shaderObject)
       {
@@ -68588,7 +66866,7 @@ function (Fields,
          {
             const
                browser     = shaderObject .getBrowser (),
-               texture     = browser .getLinetype (this ._linetype .getValue ()),
+               texture     = browser .getLinetypeTexture (this .linetype),
                textureUnit = browser .getTexture2DUnit ();
 
             gl .lineWidth (this .linewidthScaleFactor);
@@ -68717,10 +66995,12 @@ function (Fields,
          this ._filled     .addInterest ("set_filled__",     this);
          this ._hatched    .addInterest ("set_hatched__",    this);
          this ._hatchColor .addInterest ("set_hatchColor__", this);
+         this ._hatchStyle .addInterest ("set_hatchStyle__", this);
 
          this .set_filled__ ();
          this .set_hatched__ ();
          this .set_hatchColor__ ();
+         this .set_hatchStyle__ ();
       },
       set_filled__: function ()
       {
@@ -68737,6 +67017,15 @@ function (Fields,
          this .hatchColor [0] = this ._hatchColor [0];
          this .hatchColor [1] = this ._hatchColor [1];
          this .hatchColor [2] = this ._hatchColor [2];
+      },
+      set_hatchStyle__: function ()
+      {
+         let hatchStyle = this ._hatchStyle .getValue ();
+
+         if (hatchStyle < 1 || hatchStyle > 19)
+            hatchStyle = 1;
+
+         this .hatchStyle = hatchStyle;
       },
       setTransparent: function (value)
       {
@@ -68758,7 +67047,7 @@ function (Fields,
          {
             const
                browser     = shaderObject .getBrowser (),
-               texture     = browser .getHatchStyle (this ._hatchStyle .getValue ()),
+               texture     = browser .getHatchStyleTexture (this .hatchStyle),
                textureUnit = browser .getTexture2DUnit ();
 
             gl .uniform3fv (shaderObject .x3d_FillPropertiesHatchColor, this .hatchColor);
@@ -69308,12 +67597,12 @@ function (Fields,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "borderWidth",         new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "anisotropicDegree",   new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "generateMipMaps",     new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "minificationFilter",  new Fields .SFString ("FASTEST")),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "magnificationFilter", new Fields .SFString ("FASTEST")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "minificationFilter",  new Fields .SFString ("DEFAULT")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "magnificationFilter", new Fields .SFString ("DEFAULT")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeS",       new Fields .SFString ("REPEAT")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeT",       new Fields .SFString ("REPEAT")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeR",       new Fields .SFString ("REPEAT")),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "textureCompression",  new Fields .SFString ("FASTEST")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "textureCompression",  new Fields .SFString ("DEFAULT")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "texturePriority",     new Fields .SFFloat ()),
       ]),
       getTypeName: function ()
@@ -69429,7 +67718,7 @@ function (Fields,
             const
                browser            = this .getBrowser (),
                gl                 = browser .getContext (),
-               compressedTexture  = browser .getExtension ("WEBGL_compressed_texture_etc"), // TODO: find suitable compression.
+               compressedTexture  = gl .getExtension ("WEBGL_compressed_texture_etc"), // TODO: find suitable compression.
                textureCompression = compressedTexture ? compressedTexture [textureCompressions .get (this ._textureCompression .getValue ())] : undefined;
 
             if (textureCompression !== undefined)
@@ -69515,6 +67804,7 @@ function (Appearance,
 "use strict";
 
    const
+      _lineStippleScale          = Symbol (),
       _linetypeTextures          = Symbol (),
       _hatchStyleTextures        = Symbol (),
       _defaultAppearance         = Symbol (),
@@ -69522,12 +67812,15 @@ function (Appearance,
       _defaultLineProperties     = Symbol (),
       _defaultFillProperties     = Symbol (),
       _defaultMaterial           = Symbol (),
-      _lineFillTextureProperties = Symbol ();
+      _lineFillTextureProperties = Symbol (),
+      _lineTransformShaderNode   = Symbol (),
+      _lineTransformFeedback     = Symbol ();
 
    function X3DShapeContext ()
    {
       this [_linetypeTextures]   = [ ];
       this [_hatchStyleTextures] = [ ];
+      this [_lineStippleScale]   = 1 / (this .getPixelPerPoint () * 32); // 32px
    }
 
    X3DShapeContext .prototype =
@@ -69555,6 +67848,10 @@ function (Appearance,
          Object .defineProperty (this, "getDefaultPointProperties", { enumerable: false });
 
          return this [_defaultPointProperties];
+      },
+      getLineStippleScale: function ()
+      {
+         return this [_lineStippleScale];
       },
       getDefaultLineProperties: function ()
       {
@@ -69594,11 +67891,8 @@ function (Appearance,
 
          return this [_defaultMaterial];
       },
-      getLinetype: function (index)
+      getLinetypeTexture: function (index)
       {
-         if (index < 1 || index > 15)
-            index = 1;
-
          let linetypeTexture = this [_linetypeTextures] [index];
 
          if (linetypeTexture)
@@ -69612,11 +67906,8 @@ function (Appearance,
 
          return linetypeTexture;
       },
-      getHatchStyle: function (index)
+      getHatchStyleTexture: function (index)
       {
-         if (index < 1 || index > 19)
-            index = 1;
-
          let hatchStyleTexture = this [_hatchStyleTextures] [index];
 
          if (hatchStyleTexture)
@@ -69633,6 +67924,10 @@ function (Appearance,
       getLineFillTextureProperties: function ()
       {
          this [_lineFillTextureProperties] = new TextureProperties (this .getPrivateScene ());
+
+         this [_lineFillTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
+         this [_lineFillTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
+
          this [_lineFillTextureProperties] .setup ();
 
          this .getLineFillTextureProperties = function () { return this [_lineFillTextureProperties]; };
@@ -69640,6 +67935,41 @@ function (Appearance,
          Object .defineProperty (this, "getLineFillTextureProperties", { enumerable: false });
 
          return this [_lineFillTextureProperties];
+      },
+      getLineTransformShader: function ()
+      {
+         this [_lineTransformShaderNode] = this .createShader ("LineTransformShader", "LineTransform");
+
+         this [_lineTransformShaderNode] .setUniforms ([
+            "viewport",
+            "modelViewProjectionMatrix",
+            "invModelViewProjectionMatrix",
+            "scale",
+         ]);
+
+         this [_lineTransformShaderNode] .setTransformFeedbackVaryings ([
+            "fogDepth0", "color0", "texCoord0", "vertex0",
+            "fogDepth1", "color1", "texCoord1", "vertex1",
+            "fogDepth2", "color2", "texCoord2", "vertex2",
+         ]);
+
+         this .getLineTransformShader = function () { return this [_lineTransformShaderNode]; };
+
+         Object .defineProperty (this, "getLineTransformShader", { enumerable: false });
+
+         return this [_lineTransformShaderNode];
+      },
+      getLineTransformFeedback: function ()
+      {
+         const gl = this .getContext ();
+
+         this [_lineTransformFeedback] = gl .createTransformFeedback ();
+
+         this .getLineTransformFeedback = function () { return this [_lineTransformFeedback]; };
+
+         Object .defineProperty (this, "getLineTransformFeedback", { enumerable: false });
+
+         return this [_lineTransformFeedback];
       },
    };
 
@@ -70405,49 +68735,42 @@ function (Fields,
 
          return function (renderObject)
          {
-            try
+            const
+               browser      = renderObject .getBrowser (),
+               geometryNode = this .getGeometry ();
+
+            modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
+            invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+
+            hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
+
+            if (geometryNode .intersectsLine (hitRay, renderObject .getLocalObjects (), modelViewMatrix, intersections))
             {
-               const
-                  browser      = renderObject .getBrowser (),
-                  geometryNode = this .getGeometry ();
+               // Finally we have intersections and must now find the closest hit in front of the camera.
 
-               modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
-               invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+               // Transform hitPoints to absolute space.
+               for (const intersection of intersections)
+                  modelViewMatrix .multVecMatrix (intersection .point);
 
-               hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
+               intersectionSorter .sort (0, intersections .length);
 
-               if (geometryNode .intersectsLine (hitRay, renderObject .getLocalObjects (), modelViewMatrix, intersections))
+               // Find first point that is not greater than near plane;
+               const index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
+               function (lhs, rhs)
                {
-                  // Finally we have intersections and must now find the closest hit in front of the camera.
+                  return lhs .point .z > rhs;
+               });
 
-                  // Transform hitPoints to absolute space.
-                  for (const intersection of intersections)
-                     modelViewMatrix .multVecMatrix (intersection .point);
+               // Are there intersections before the camera?
+               if (index !== intersections .length)
+               {
+                  // Transform hitNormal to absolute space.
+                  invModelViewMatrix .multMatrixDir (intersections [index] .normal) .normalize ();
 
-                  intersectionSorter .sort (0, intersections .length);
-
-                  // Find first point that is not greater than near plane;
-                  const index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
-                  function (lhs, rhs)
-                  {
-                     return lhs .point .z > rhs;
-                  });
-
-                  // Are there intersections before the camera?
-                  if (index !== intersections .length)
-                  {
-                     // Transform hitNormal to absolute space.
-                     invModelViewMatrix .multMatrixDir (intersections [index] .normal) .normalize ();
-
-                     browser .addHit (intersections [index], renderObject .getLayer (), this, modelViewMatrix .multRight (renderObject .getCameraSpaceMatrix () .get ()));
-                  }
-
-                  intersections .length = 0;
+                  browser .addHit (intersections [index], renderObject .getLayer (), this, modelViewMatrix .multRight (renderObject .getCameraSpaceMatrix () .get ()));
                }
-            }
-            catch (error)
-            {
-               console .error (error);
+
+               intersections .length = 0;
             }
          };
       })(),
@@ -70539,6 +68862,7 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/X3DGeometryNode',[
    "x_ite/Fields",
+   "x_ite/Rendering/VertexArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Base/X3DConstants",
    "x_ite/Browser/Core/Shading",
@@ -70551,6 +68875,7 @@ define ('x_ite/Components/Rendering/X3DGeometryNode',[
    "standard/Math/Algorithm",
 ],
 function (Fields,
+          VertexArray,
           X3DNode,
           X3DConstants,
           Shading,
@@ -70598,13 +68923,12 @@ function (Fields,
       this .max                      = new Vector3 (0, 0, 0);
       this .bbox                     = new Box3 (this .min, this .max, true);
       this .solid                    = true;
-      this .geometryType             = 3;
       this .primitiveMode            = browser .getContext () .TRIANGLES;
+      this .geometryType             = 3;
       this .flatShading              = undefined;
       this .colorMaterial            = false;
       this .attribNodes              = [ ];
-      this .attribs                  = [ ];
-      this .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
+      this .attribArrays             = [ ];
       this .textureCoordinateMapping = new Map ();
       this .multiTexCoords           = [ ];
       this .texCoords                = X3DGeometryNode .createArray ();
@@ -70613,12 +68937,12 @@ function (Fields,
       this .normals                  = X3DGeometryNode .createArray ();
       this .flatNormals              = X3DGeometryNode .createArray ();
       this .vertices                 = X3DGeometryNode .createArray ();
+      this .fogCoords                = false;
       this .vertexCount              = 0;
+      this .planes                   = [ ];
 
-      // This methods are configured in transfer.
-      this .depth            = Function .prototype;
-      this .display          = Function .prototype;
-      this .displayParticles = Function .prototype;
+      for (let i = 0; i < 5; ++ i)
+         this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
    }
 
    // Function to select ether Array or MFFloat for color/normal/vertex arrays.
@@ -70648,10 +68972,10 @@ function (Fields,
 
       array .shrinkToFit = function ()
       {
-         if (this .length !== this .typedArray .length)
-            this .typedArray = new Float32Array (this);
-         else
+         if (this .length === this .typedArray .length)
             this .typedArray .set (this);
+         else
+            this .typedArray = new Float32Array (this);
       };
 
       return array;
@@ -70670,24 +68994,25 @@ function (Fields,
       {
          X3DNode .prototype .initialize .call (this);
 
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
+
          this .isLive () .addInterest ("set_live__", this);
 
          this .addInterest ("requestRebuild", this);
          this ._rebuild .addInterest ("rebuild", this);
 
-         const gl = this .getBrowser () .getContext ();
-
-         this .frontFace       = gl .CCW;
-         this .attribBuffers   = [ ];
-         this .texCoordBuffers = [ ];
-         this .fogDepthBuffer  = gl .createBuffer ();
-         this .colorBuffer     = gl .createBuffer ();
-         this .normalBuffer    = gl .createBuffer ();
-         this .vertexBuffer    = gl .createBuffer ();
-         this .planes          = [ ];
-
-         for (let i = 0; i < 5; ++ i)
-            this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
+         this .frontFace             = gl .CCW;
+         this .attribBuffers         = [ ];
+         this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
+         this .texCoordBuffers       = Array .from ({length: browser .getMaxTextures ()}, () => gl .createBuffer ());
+         this .fogDepthBuffer        = gl .createBuffer ();
+         this .colorBuffer           = gl .createBuffer ();
+         this .normalBuffer          = gl .createBuffer ();
+         this .vertexBuffer          = gl .createBuffer ();
+         this .vertexArrayObject           = new VertexArray ();
+         this .shadowArrayObject           = new VertexArray ();
 
          this .set_live__ ();
       },
@@ -70763,7 +69088,7 @@ function (Fields,
       },
       getAttribs: function ()
       {
-         return this .attribs;
+         return this .attribArrays;
       },
       setFogDepths: function (value)
       {
@@ -70835,6 +69160,14 @@ function (Fields,
       {
          return this .vertices;
       },
+      updateVertexArrays: function ()
+      {
+         this .vertexArrayObject .update ();
+         this .shadowArrayObject .update ();
+
+         this .updateParticlesShadow = true;
+         this .updateParticles       = true;
+      },
       buildTexCoords: function ()
       {
          const texCoords = this .texCoords;
@@ -70862,7 +69195,7 @@ function (Fields,
             texCoords .shrinkToFit ();
          }
 
-         return texCoords;
+         this .getMultiTexCoords () .push (texCoords);
       },
       getTexCoordParams: (function ()
       {
@@ -70973,65 +69306,57 @@ function (Fields,
 
          return function (hitRay, clipPlanes, modelViewMatrix_, intersections)
          {
-            try
+            if (this .intersectsBBox (hitRay))
             {
-               if (this .intersectsBBox (hitRay))
+               this .transformLine (hitRay);                                       // Apply screen transformations from screen nodes.
+               this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
+
+               const
+                  texCoords  = this .multiTexCoords [0] .getValue (),
+                  normals    = this .normals .getValue (),
+                  vertices   = this .vertices .getValue ();
+
+               for (let i = 0, length = this .vertexCount; i < length; i += 3)
                {
-                  this .transformLine   (hitRay);                                       // Apply screen transformations from screen nodes.
-                  this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
+                  const i4 = i * 4;
 
-                  const
-                     texCoords  = this .multiTexCoords [0] .getValue (),
-                     normals    = this .normals .getValue (),
-                     vertices   = this .vertices .getValue ();
+                  v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+                  v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
+                  v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
-                  for (let i = 0, length = this .vertexCount; i < length; i += 3)
+                  if (hitRay .intersectsTriangle (v0, v1, v2, uvt))
                   {
-                     const i4 = i * 4;
+                     // Get barycentric coordinates.
 
-                     v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
-                     v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
-                     v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
+                     const
+                        u = uvt .u,
+                        v = uvt .v,
+                        t = uvt .t;
 
-                     if (hitRay .intersectsTriangle (v0, v1, v2, uvt))
-                     {
-                        // Get barycentric coordinates.
+                     // Determine vectors for X3DPointingDeviceSensors.
 
-                        const
-                           u = uvt .u,
-                           v = uvt .v,
-                           t = uvt .t;
+                     const point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
+                                                t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
+                                                t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
-                        // Determine vectors for X3DPointingDeviceSensors.
+                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                        continue;
 
-                        const point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
-                                                   t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
-                                                   t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
+                     const texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
+                                                   t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
 
-                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                           continue;
+                     const i3 = i * 3;
 
-                        const texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
-                                                      t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
+                     const normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
+                                                   t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
+                                                   t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
 
-                        const i3 = i * 3;
-
-                        const normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
-                                                    t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
-                                                    t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
-
-                        intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
-                     }
+                     intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
                   }
                }
+            }
 
-               return intersections .length;
-            }
-            catch (error)
-            {
-               console .log (error);
-               return false;
-            }
+            return intersections .length;
          };
       })(),
       intersectsBBox: (function ()
@@ -71105,50 +69430,42 @@ function (Fields,
 
          return function (box, clipPlanes, modelViewMatrix)
          {
-            try
+            if (box .intersectsBox (this .bbox))
             {
-               if (box .intersectsBox (this .bbox))
+               box .multRight (invMatrix .assign (this .getMatrix ()) .inverse ());
+
+               this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
+
+               const vertices = this .vertices .getValue ();
+
+               for (let i = 0, length = this .vertexCount; i < length; i += 3)
                {
-                  box .multRight (invMatrix .assign (this .getMatrix ()) .inverse ());
+                  const i4 = i * 4;
 
-                  this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
+                  v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+                  v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
+                  v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
-                  const vertices = this .vertices .getValue ();
-
-                  for (let i = 0, length = this .vertexCount; i < length; i += 3)
+                  if (box .intersectsTriangle (v0, v1, v2))
                   {
-                     const i4 = i * 4;
-
-                     v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
-                     v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
-                     v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-
-                     if (box .intersectsTriangle (v0, v1, v2))
+                     if (clipPlanes .length)
                      {
-                        if (clipPlanes .length)
-                        {
-                           if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v0)), clipPlanes))
-                              continue;
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v0)), clipPlanes))
+                           continue;
 
-                           if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v1)), clipPlanes))
-                              continue;
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v1)), clipPlanes))
+                           continue;
 
-                           if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v2)), clipPlanes))
-                              continue;
-                        }
-
-                        return true;
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v2)), clipPlanes))
+                           continue;
                      }
+
+                     return true;
                   }
                }
+            }
 
-               return false;
-            }
-            catch (error)
-            {
-               console .log (error);
-               return false;
-            }
+            return false;
          };
       })(),
       set_live__: function ()
@@ -71213,7 +69530,7 @@ function (Fields,
             // Transfer normals.
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .STATIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .DYNAMIC_DRAW);
          };
       })(),
       requestRebuild: function ()
@@ -71231,8 +69548,8 @@ function (Fields,
 
             // Shrink arrays before transfer to graphics card.
 
-            for (const attrib of this .attribs)
-               attrib .shrinkToFit ();
+            for (const attribArray of this .attribArrays)
+               attribArray .shrinkToFit ();
 
             for (const multiTexCoord of this .multiTexCoords)
                multiTexCoord .shrinkToFit ();
@@ -71276,19 +69593,17 @@ function (Fields,
 
             // Generate texCoord if needed.
 
-            if (this .geometryType > 1)
+            if (this .multiTexCoords .length === 0)
+               this .buildTexCoords ();
+
+            if (this .multiTexCoords .length)
             {
-               if (this .multiTexCoords .length === 0)
-                  this .multiTexCoords .push (this .buildTexCoords ());
+               const maxTextures = this .getBrowser () .getMaxTextures ();
 
-               const
-                  last   = this .multiTexCoords .length - 1,
-                  length = this .getBrowser () .getMaxTextures ();
+               for (let i = this .multiTexCoords .length; i < maxTextures; ++ i)
+                  this .multiTexCoords [i] = this .multiTexCoords .at (-1);
 
-               for (let i = this .multiTexCoords .length; i < length; ++ i)
-                  this .multiTexCoords [i] = this .multiTexCoords [last];
-
-               this .multiTexCoords .length = length;
+               this .multiTexCoords .length = maxTextures;
             }
 
             // Upload normals or flat normals.
@@ -71307,19 +69622,19 @@ function (Fields,
          this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
          this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
 
-         // Create attrib arrays.
+         // Create attribArray arrays.
          {
-            const attribs = this .attribs;
+            const attribArrays = this .attribArrays;
 
-            for (const attrib of attribs)
-               attrib .length = 0;
+            for (const attribArray of attribArrays)
+               attribArray .length = 0;
 
             const length = this .attribNodes .length;
 
-            for (let a = attribs .length; a < length; ++ a)
-               attribs [a] = X3DGeometryNode .createArray ();
+            for (let a = attribArrays .length; a < length; ++ a)
+               attribArrays [a] = X3DGeometryNode .createArray ();
 
-            attribs .length = length;
+            attribArrays .length = length;
          }
 
          // Buffer
@@ -71336,114 +69651,111 @@ function (Fields,
       },
       transfer: function ()
       {
-         const
-            gl    = this .getBrowser () .getContext (),
-            count = this .vertices .length / 4;
+         const gl = this .getBrowser () .getContext ();
 
-         // Transfer attribs.
+         // Transfer attribArrays.
 
-         for (let i = this .attribBuffers .length, length = this .attribs .length; i < length; ++ i)
+         for (let i = this .attribBuffers .length, length = this .attribArrays .length; i < length; ++ i)
             this .attribBuffers .push (gl .createBuffer ());
 
-         for (let i = 0, length = this .attribs .length; i < length; ++ i)
+         for (let i = 0, length = this .attribArrays .length; i < length; ++ i)
          {
             gl .bindBuffer (gl .ARRAY_BUFFER, this .attribBuffers [i]);
-            gl .bufferData (gl .ARRAY_BUFFER, this .attribs [i] .getValue (), gl .STATIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, this .attribArrays [i] .getValue (), gl .DYNAMIC_DRAW);
          }
 
          // Transfer fog depths.
 
+         const lastFogCoords = this .fogCoords;
+
          gl .bindBuffer (gl .ARRAY_BUFFER, this .fogDepthBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .fogDepths .getValue (), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, this .fogDepths .getValue (), gl .DYNAMIC_DRAW);
+
          this .fogCoords = !! (this .fogDepths .length);
+
+         if (this .fogCoords !== lastFogCoords)
+            this .updateVertexArrays ();
+
          // Transfer colors.
 
+         const lastColorMaterial = this .colorMaterial;
+
          gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .DYNAMIC_DRAW);
+
          this .colorMaterial = !! (this .colors .length);
 
-         // Transfer multiTexCoords.
+         if (this .colorMaterial !== lastColorMaterial)
+            this .updateVertexArrays ();
 
-         for (let i = this .texCoordBuffers .length, length = this .multiTexCoords .length; i < length; ++ i)
-            this .texCoordBuffers .push (gl .createBuffer ());
+         // Transfer multiTexCoords.
 
          for (let i = 0, length = this .multiTexCoords .length; i < length; ++ i)
          {
             gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [i]);
-            gl .bufferData (gl .ARRAY_BUFFER, this .multiTexCoords [i] .getValue (), gl .STATIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, this .multiTexCoords [i] .getValue (), gl .DYNAMIC_DRAW);
          }
 
          // Transfer vertices.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .vertices .getValue (), gl .STATIC_DRAW);
-         this .vertexCount = count;
+         gl .bufferData (gl .ARRAY_BUFFER, this .vertices .getValue (), gl .DYNAMIC_DRAW);
+
+         this .vertexCount = this .vertices .length / 4;
 
          // Setup render functions.
 
          if (this .vertexCount)
          {
             // Use default render functions.
+
             delete this .depth;
             delete this .display;
+            delete this .displayParticlesDepth;
             delete this .displayParticles;
          }
          else
          {
             // Use no render function.
-            this .depth            = Function .prototype;
-            this .display          = Function .prototype;
-            this .displayParticles = Function .prototype;
+
+            this .depth                 = Function .prototype;
+            this .display               = Function .prototype;
+            this .displayParticlesDepth = Function .prototype;
+            this .displayParticles      = Function .prototype;
          }
-        },
+      },
       traverse: function (type, renderObject)
       { },
       depth: function (gl, context, shaderNode)
       {
-         // Setup vertex attributes.
-
-         // Attribs in depth rendering are not supported.
-         //for (let i = 0, length = attribNodes .length; i < length; ++ i)
-         //	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-         shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
-
-         //for (let i = 0, length = attribNodes .length; i < length; ++ i)
-         //	attribNodes [i] .disable (gl, shaderNode);
+         if (this .shadowArrayObject .enable (gl, shaderNode))
+            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
          gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
       },
       display: function (gl, context)
       {
-         try
+         const
+            appearanceNode   = context .shapeNode .getAppearance (),
+            materialNode     = appearanceNode .materialNode,
+            backMaterialNode = appearanceNode .backMaterialNode,
+            frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
+
+         if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
          {
-            const
-               appearanceNode   = context .shapeNode .getAppearance (),
-               materialNode     = appearanceNode .materialNode,
-               backMaterialNode = appearanceNode .backMaterialNode,
-               frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
-
-            if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
-            {
-               this .displayGeometry (gl, context, appearanceNode, frontShaderNode, true, true);
-            }
-            else
-            {
-               const backShaderNode = appearanceNode .shaderNode || backMaterialNode .getShader (context .browser, context .shadow)
-
-               this .displayGeometry (gl, context, appearanceNode, backShaderNode,  true,  false);
-               this .displayGeometry (gl, context, appearanceNode, frontShaderNode, false, true);
-            }
+            this .displayGeometry (gl, context, appearanceNode, frontShaderNode, true, true);
          }
-         catch (error)
+         else
          {
-            // Catch error from setLocalUniforms.
-            console .log (error);
+            const backShaderNode = appearanceNode .shaderNode || backMaterialNode .getShader (context .browser, context .shadow)
+
+            this .displayGeometry (gl, context, appearanceNode, backShaderNode,  true,  false);
+            this .displayGeometry (gl, context, appearanceNode, frontShaderNode, false, true);
          }
       },
       displayGeometry: function (gl, context, appearanceNode, shaderNode, back, front)
       {
-         if (shaderNode .getValid ())
+         if (shaderNode .isValid ())
          {
             const
                blendModeNode = appearanceNode .blendModeNode,
@@ -71458,18 +69770,21 @@ function (Fields,
 
             // Setup vertex attributes.
 
-            for (let i = 0, length = attribNodes .length; i < length; ++ i)
-               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+            if (this .vertexArrayObject .enable (gl, shaderNode))
+            {
+               for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-            if (this .fogCoords)
-               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+               if (this .fogCoords)
+                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
-            if (this .colorMaterial)
-               shaderNode .enableColorAttribute (gl, this .colorBuffer);
+               if (this .colorMaterial)
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-            shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
-            shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+               shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
+               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+            }
 
             // Draw depending on wireframe, solid and transparent.
 
@@ -71528,87 +69843,55 @@ function (Fields,
                }
             }
 
-            for (const attribNode of attribNodes)
-               attribNode .disable (gl, shaderNode);
-
-            if (this .fogCoords)
-               shaderNode .disableFogDepthAttribute (gl);
-
-            if (this .colorMaterial)
-               shaderNode .disableColorAttribute (gl);
-
-            shaderNode .disableTexCoordAttribute (gl);
-            shaderNode .disableNormalAttribute   (gl);
-
             if (blendModeNode)
                blendModeNode .disable (gl);
          }
       },
-      displayParticlesDepth: function (gl, context, shaderNode, particles, numParticles)
+      displayParticlesDepth: function (gl, context, shaderNode, particleSystem)
       {
-         // Attribs in depth rendering are not supported:
-         //for (let i = 0, length = attribNodes .length; i < length; ++ i)
-         //	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+         const outputParticles = particleSystem .outputParticles;
 
-         shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+         if (this .updateParticlesShadow)
+         {
+            this .updateParticlesShadow = false;
 
-         // Draw depending on wireframe, solid and transparent.
+            outputParticles .shadowArrayObject .update ();
+         }
 
+         if (outputParticles .shadowArrayObject .enable (gl, shaderNode))
+         {
+            const particleStride = particleSystem .particleStride;
+
+            shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+            shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
+            shaderNode .enableVertexAttribute         (gl, this .vertexBuffer, 0, 0);
+         }
+
+         gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+      },
+      displayParticles: function (gl, context, particleSystem)
+      {
          const
-            modelViewMatrix = context .modelViewMatrix,
-            x               = modelViewMatrix [12],
-            y               = modelViewMatrix [13],
-            z               = modelViewMatrix [14];
+            appearanceNode   = context .shapeNode .getAppearance (),
+            materialNode     = appearanceNode .materialNode,
+            backMaterialNode = appearanceNode .backMaterialNode,
+            frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
 
-         for (let p = 0; p < numParticles; ++ p)
+         if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
          {
-            const particle = particles [p];
-
-            modelViewMatrix [12] = x;
-            modelViewMatrix [13] = y;
-            modelViewMatrix [14] = z;
-
-            Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-
-            shaderNode .setParticle (gl, particle, modelViewMatrix);
-
-            gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+            this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particleSystem);
          }
-
-         //for (let i = 0, length = attribNodes .length; i < length; ++ i)
-         //	attribNodes [i] .disable (gl, shaderNode);
-      },
-      displayParticles: function (gl, context, particles, numParticles)
-      {
-         try
+         else
          {
-            const
-               appearanceNode   = context .shapeNode .getAppearance (),
-               materialNode     = appearanceNode .materialNode,
-               backMaterialNode = appearanceNode .backMaterialNode,
-               frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
+            const backShaderNode = appearanceNode .shaderNode || backMaterialNode .getShader (context .browser, context .shadow);
 
-            if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
-            {
-               this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particles, numParticles);
-            }
-            else
-            {
-               const backShaderNode = appearanceNode .shaderNode || backMaterialNode .getShader (context .browser, context .shadow);
-
-               this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode,  true,  false, particles, numParticles);
-               this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, false, true,  particles, numParticles);
-            }
-         }
-         catch (error)
-         {
-            // Catch error from setLocalUniforms.
-            console .log (error);
+            this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode,  true,  false, particleSystem);
+            this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, false, true,  particleSystem);
          }
       },
-      displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particles, numParticles)
+      displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particleSystem)
       {
-         if (shaderNode .getValid ())
+         if (shaderNode .isValid ())
          {
             const
                blendModeNode = appearanceNode .blendModeNode,
@@ -71625,52 +69908,50 @@ function (Fields,
 
             // Setup vertex attributes.
 
-            for (let i = 0, length = attribNodes .length; i < length; ++ i)
-               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+            const outputParticles = particleSystem .outputParticles;
 
-            if (this .fogCoords)
-               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+            if (this .updateParticles)
+            {
+               this .updateParticles = false;
 
-            if (this .colorMaterial)
-               shaderNode .enableColorAttribute (gl, this .colorBuffer);
+               outputParticles .vertexArrayObject .update ();
+            }
 
-            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-            shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
-            shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+            if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
+            {
+               const particleStride = particleSystem .particleStride;
+
+               shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
+
+               for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+               if (this .fogCoords)
+                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+
+               if (this .colorMaterial)
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+               shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
+               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+            }
 
             // Draw depending on wireframe, solid and transparent.
-
-            const
-               modelViewMatrix = context .modelViewMatrix,
-               x               = modelViewMatrix [12],
-               y               = modelViewMatrix [13],
-               z               = modelViewMatrix [14];
 
             if (shaderNode .wireframe)
             {
                // Points and Wireframes.
 
-               for (let p = 0; p < numParticles; ++ p)
+               if (shaderNode .primitiveMode === gl .POINTS)
                {
-                  const particle = particles [p];
-
-                  modelViewMatrix [12] = x;
-                  modelViewMatrix [13] = y;
-                  modelViewMatrix [14] = z;
-
-                  Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-
-                  shaderNode .setParticle (gl, particle, modelViewMatrix);
-
-                  if (shaderNode .primitiveMode === gl .POINTS)
-                  {
-                     gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-                  }
-                  else
-                  {
-                     for (let i = 0, length = this .vertexCount; i < length; i += 3)
-                        gl .drawArrays (shaderNode .primitiveMode, i, 3);
-                  }
+                  gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+               }
+               else
+               {
+                  for (let i = 0, length = this .vertexCount; i < length; i += 3)
+                     gl .drawArraysInstanced (shaderNode .primitiveMode, i, 3, particleSystem .numParticles);
                }
             }
             else
@@ -71683,31 +69964,18 @@ function (Fields,
                {
                   // Render transparent or back or front.
 
-                  for (let p = 0; p < numParticles; ++ p)
+                  gl .enable (gl .CULL_FACE);
+
+                  if (back && !this .solid)
                   {
-                     const particle = particles [p];
+                     gl .cullFace (gl .FRONT);
+                     gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+                  }
 
-                     modelViewMatrix [12] = x;
-                     modelViewMatrix [13] = y;
-                     modelViewMatrix [14] = z;
-
-                     Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-
-                     shaderNode .setParticle (gl, particle, modelViewMatrix);
-
-                     gl .enable (gl .CULL_FACE);
-
-                     if (back && !this .solid)
-                     {
-                        gl .cullFace (gl .FRONT);
-                        gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-                     }
-
-                     if (front)
-                     {
-                        gl .cullFace (gl .BACK);
-                        gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-                     }
+                  if (front)
+                  {
+                     gl .cullFace (gl .BACK);
+                     gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
                   }
                }
                else
@@ -71719,34 +69987,9 @@ function (Fields,
                   else
                      gl .disable (gl .CULL_FACE);
 
-                  for (let p = 0; p < numParticles; ++ p)
-                  {
-                     const particle = particles [p];
-
-                     modelViewMatrix [12] = x;
-                     modelViewMatrix [13] = y;
-                     modelViewMatrix [14] = z;
-
-                     Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-
-                     shaderNode .setParticle (gl, particle, modelViewMatrix);
-
-                     gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-                  }
+                  gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
                }
             }
-
-            for (const attribNode of attribNodes)
-               attribNode .disable (gl, shaderNode);
-
-            if (this .fogCoords)
-               shaderNode .disableFogDepthAttribute (gl);
-
-            if (this .colorMaterial)
-               shaderNode .disableColorAttribute (gl);
-
-            shaderNode .disableTexCoordAttribute (gl);
-            shaderNode .disableNormalAttribute   (gl);
 
             if (blendModeNode)
                blendModeNode .disable (gl);
@@ -71808,15 +70051,21 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/X3DLineGeometryNode',[
    "x_ite/Components/Rendering/X3DGeometryNode",
+   "x_ite/Rendering/VertexArray",
+   "standard/Math/Geometry/ViewVolume",
    "standard/Math/Geometry/Line3",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Vector4",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
+          VertexArray,
+          ViewVolume,
           Line3,
           Vector2,
           Vector3,
+          Vector4,
           Matrix4)
 {
 "use strict";
@@ -71826,7 +70075,13 @@ function (X3DGeometryNode,
       if (!this .getExecutionContext ())
          X3DGeometryNode .call (this, executionContext);
 
-      const browser = this .getBrowser ();
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      this .transformVertexArrayObject = new VertexArray ();
+      this .trianglesBuffer            = gl .createBuffer ();
+      this .trianglesTexCoordBuffers   = new Array (browser .getMaxTextures ()) .fill (this .trianglesBuffer);
 
       this .setGeometryType (1);
       this .setPrimitiveMode (browser .getContext () .LINES);
@@ -71836,6 +70091,12 @@ function (X3DGeometryNode,
    X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
       constructor: X3DLineGeometryNode,
+      updateVertexArrays: function ()
+      {
+         X3DGeometryNode .prototype .updateVertexArrays .call (this);
+
+         this .transformVertexArrayObject .update ();
+      },
       intersectsLine: (function ()
       {
          const PICK_DISTANCE_FACTOR = 1 / 300;
@@ -71887,48 +70148,224 @@ function (X3DGeometryNode,
       {
          return false;
       },
-      transfer: function ()
+      buildTexCoords: function ()
       {
          // Line stipple support.
 
-         const
-            texCoords = this .getTexCoords (),
-            vertices  = this .getVertices ();
+         const texCoords = this .getTexCoords ();
 
-         this .getMultiTexCoords () .push (texCoords);
-
-         for (let i = 0, length = vertices .length; i < length; i += 8)
-         {
-            texCoords .push (vertices [i],
-                             vertices [i + 1],
-                             vertices [i + 2],
-                             vertices [i + 3],
-                             vertices [i],
-                             vertices [i + 1],
-                             vertices [i + 2],
-                             vertices [i + 3]);
-         }
-
-         texCoords .shrinkToFit ();
-
-         X3DGeometryNode .prototype .transfer .call (this);
-      },
-      display: function (gl, context)
-      {
-         try
+         if (texCoords .getValue () .length !== this .getVertices () .length)
          {
             const
-               browser        = context .browser,
-               appearanceNode = context .shapeNode .getAppearance (),
-               shaderNode     = appearanceNode .shaderNode || browser .getLineShader ();
+               gl       = this .getBrowser () .getContext (),
+               numLines = this .getVertices () .length / 8;
 
-            if (shaderNode .getValid ())
+            texCoords .length = this .getVertices () .length;
+
+            texCoords .fill (0);
+            texCoords .shrinkToFit ();
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (13 * 6 * numLines), gl .DYNAMIC_DRAW);
+         }
+
+         this .getMultiTexCoords () .push (texCoords);
+      },
+      updateLengthSoFar: (function ()
+      {
+         const
+            modelViewProjectionMatrix = new Matrix4 (),
+            point0                    = new Vector4 (0, 0, 0),
+            point1                    = new Vector4 (0, 0, 0),
+            projectedPoint0           = new Vector2 (0, 0),
+            projectedPoint1           = new Vector2 (0, 0);
+
+         return function (gl, context, linePropertiesNode)
+         {
+            if (linePropertiesNode .getApplied ())
             {
-               const
-                  blendModeNode = appearanceNode .blendModeNode,
-                  attribNodes   = this .attribNodes,
-                  attribBuffers = this .attribBuffers;
+               // Calculate length so far for line stipples.
 
+               if (linePropertiesNode .getLinetype () !== 1)
+               {
+                  const
+                     viewport         = context .renderer .getViewVolume () .getViewport (),
+                     projectionMatrix = context .renderer .getProjectionMatrix () .get (),
+                     texCoordArray    = this .getTexCoords () .getValue (),
+                     vertices         = this .getVertices (),
+                     lineStippleScale = context .browser .getLineStippleScale ();
+
+                  modelViewProjectionMatrix .assign (context .modelViewMatrix) .multRight (projectionMatrix);
+
+                  let lengthSoFar = 0;
+
+                  for (let i = 0, length = vertices .length; i < length; i += 8)
+                  {
+                     point0 .set (vertices [i],     vertices [i + 1], vertices [i + 2], vertices [i + 3]);
+                     point1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6], vertices [i + 7]);
+
+                     ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
+                     ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
+
+                     texCoordArray [i + 3] = lengthSoFar;
+
+                     lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs () * lineStippleScale;
+
+                     texCoordArray [i + 7] = lengthSoFar;
+                  }
+
+                  gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
+                  gl .bufferData (gl .ARRAY_BUFFER, texCoordArray, gl .DYNAMIC_DRAW);
+               }
+            }
+         };
+      })(),
+      display: (function ()
+      {
+         const
+            matrix                            = new Matrix4 (),
+            modelViewProjectionMatrixArray    = new Float32Array (16),
+            invModelViewProjectionMatrixArray = new Float32Array (16);
+
+         return function (gl, context)
+         {
+            const
+               browser            = context .browser,
+               appearanceNode     = context .shapeNode .getAppearance (),
+               linePropertiesNode = appearanceNode .getLineProperties (),
+               shaderNode         = appearanceNode .shaderNode || browser .getLineShader (),
+               blendModeNode      = appearanceNode .blendModeNode,
+               attribNodes        = this .attribNodes,
+               attribBuffers      = this .attribBuffers;
+
+            this .updateLengthSoFar (gl, context, linePropertiesNode);
+
+            if (linePropertiesNode .getMustTransformLines ())
+            {
+               const transformShaderNode = browser .getLineTransformShader ();
+
+               if (transformShaderNode .isValid ())
+               {
+                  const
+                     viewport         = context .renderer .getViewVolume () .getViewport (),
+                     projectionMatrix = context .renderer .getProjectionMatrix () .get ();
+
+                  modelViewProjectionMatrixArray .set (matrix .assign (context .modelViewMatrix) .multRight (projectionMatrix));
+                  invModelViewProjectionMatrixArray .set (matrix .inverse ());
+
+                  // Start
+
+                  transformShaderNode .enable (gl);
+
+                  gl .uniform4f (transformShaderNode .viewport, viewport .x, viewport .y, viewport .z, viewport .w);
+                  gl .uniformMatrix4fv (transformShaderNode .modelViewProjectionMatrix,    false, modelViewProjectionMatrixArray);
+                  gl .uniformMatrix4fv (transformShaderNode .invModelViewProjectionMatrix, false, invModelViewProjectionMatrixArray);
+                  gl .uniform1f (transformShaderNode .scale, linePropertiesNode .getLinewidthScaleFactor () / 2);
+
+                  // Setup vertex attributes.
+
+                  if (this .transformVertexArrayObject .enable (gl, shaderNode))
+                  {
+                     const
+                        fogDepthStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
+                        fogDepthOffset0 = 0,
+                        fogDepthOffset1 = 1 * Float32Array .BYTES_PER_ELEMENT,
+                        colorStride     = 8 * Float32Array .BYTES_PER_ELEMENT,
+                        colorOffset0    = 0,
+                        colorOffset1    = 4 * Float32Array .BYTES_PER_ELEMENT,
+                        texCoordStride  = 8 * Float32Array .BYTES_PER_ELEMENT,
+                        texCoordOffset0 = 0,
+                        texCoordOffset1 = 4 * Float32Array .BYTES_PER_ELEMENT,
+                        vertexStride    = 8 * Float32Array .BYTES_PER_ELEMENT,
+                        vertexOffset0   = 0,
+                        vertexOffset1   = 4 * Float32Array .BYTES_PER_ELEMENT;
+
+                     // for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                     //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                     if (this .fogCoords)
+                     {
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth0", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset0);
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth1", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset1);
+                     }
+
+                     if (this .colorMaterial)
+                     {
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
+                     }
+
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord0", this .texCoordBuffers [0], 4, texCoordStride, texCoordOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord1", this .texCoordBuffers [0], 4, texCoordStride, texCoordOffset1);
+
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
+                     transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
+                  }
+
+                  // Transform lines.
+
+                  gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
+                  gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .trianglesBuffer);
+                  gl .enable (gl .RASTERIZER_DISCARD);
+                  gl .beginTransformFeedback (gl .POINTS);
+                  gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount / 2, 2);
+                  gl .endTransformFeedback ();
+                  gl .disable (gl .RASTERIZER_DISCARD);
+                  gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
+
+                  // DEBUG
+
+                  // const data = new Float32Array (13 * 6 * this .vertexCount / 2);
+                  // gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
+                  // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
+                  // console .log (data);
+
+                  // Render triangles.
+
+                  if (blendModeNode)
+                     blendModeNode .enable (gl);
+
+                  // Setup shader.
+
+                  shaderNode .enable (gl);
+                  shaderNode .setLocalUniforms (gl, context);
+
+                  // Setup vertex attributes.
+
+                  if (this .vertexArrayObject .enable (gl, shaderNode))
+                  {
+                     const
+                        stride         = 13 * Float32Array .BYTES_PER_ELEMENT,
+                        fogCoordOffset = 0,
+                        colorOffset    = 1 * Float32Array .BYTES_PER_ELEMENT,
+                        texCoordOffset = 5 * Float32Array .BYTES_PER_ELEMENT,
+                        vertexOffset   = 9 * Float32Array .BYTES_PER_ELEMENT;
+
+                     // for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                     //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                     if (this .fogCoords)
+                        shaderNode .enableFogDepthAttribute (gl, this .trianglesBuffer, stride, fogCoordOffset);
+
+                     if (this .colorMaterial)
+                        shaderNode .enableColorAttribute (gl, this .trianglesBuffer, stride, colorOffset);
+
+                     shaderNode .enableTexCoordAttribute (gl, this .trianglesTexCoordBuffers, stride, texCoordOffset);
+                     shaderNode .enableVertexAttribute   (gl, this .trianglesBuffer,          stride, vertexOffset);
+
+                     gl .bindBuffer (gl .ARRAY_BUFFER, null);
+                  }
+
+                  gl .frontFace (gl .CCW);
+                  gl .enable (gl .CULL_FACE);
+                  gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : gl .TRIANGLES, 0, this .vertexCount * 3);
+
+                  if (blendModeNode)
+                     blendModeNode .disable (gl);
+               }
+            }
+            else if (shaderNode .isValid ())
+            {
                if (blendModeNode)
                   blendModeNode .enable (gl);
 
@@ -71939,129 +70376,87 @@ function (X3DGeometryNode,
 
                // Setup vertex attributes.
 
-               for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+               if (this .vertexArrayObject .enable (gl, shaderNode))
+               {
+                  for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                     attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-               if (this .fogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+                  if (this .fogCoords)
+                     shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
-               if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer);
+                  if (this .colorMaterial)
+                     shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-               if (this .getMultiTexCoords () .length)
-                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, true);
-
-               shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
-
-               // WireFrames are always solid so only one drawing call is needed.
+                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+                  shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+               }
 
                gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
 
-               for (const attribNode of attribNodes)
-                  attribNode .disable (gl, shaderNode);
-
-               if (this .fogCoords)
-                  shaderNode .disableFogDepthAttribute (gl);
-
-               if (this .colorMaterial)
-                  shaderNode .disableColorAttribute (gl);
-
-               if (this .getMultiTexCoords () .length)
-                  shaderNode .disableTexCoordAttribute (gl);
-
                if (blendModeNode)
                   blendModeNode .disable (gl);
             }
-         }
-         catch (error)
-         {
-            // Catch error from setLocalUniforms.
-            console .error (error);
-         }
-      },
-      displayParticles: function (gl, context, particles, numParticles)
+         };
+      })(),
+      displayParticles: function (gl, context, particleSystem)
       {
-         try
+         const
+            browser        = context .browser,
+            appearanceNode = context .shapeNode .getAppearance (),
+            shaderNode     = appearanceNode .shaderNode || browser .getLineShader (),
+            blendModeNode  = appearanceNode .blendModeNode,
+            attribNodes    = this .attribNodes,
+            attribBuffers  = this .attribBuffers;
+
+         if (shaderNode .isValid ())
          {
-            const
-               browser        = context .browser,
-               appearanceNode = context .shapeNode .getAppearance (),
-               shaderNode     = appearanceNode .shaderNode || this .getShader (browser);
+            if (blendModeNode)
+               blendModeNode .enable (gl);
 
-            if (shaderNode .getValid ())
+            // Setup shader.
+
+            shaderNode .enable (gl);
+            shaderNode .setLocalUniforms (gl, context);
+
+            // Setup vertex attributes.
+
+            const outputParticles = particleSystem .outputParticles;
+
+            if (this .updateParticles)
             {
-               const
-                  blendModeNode = appearanceNode .blendModeNode,
-                  attribNodes   = this .attribNodes,
-                  attribBuffers = this .attribBuffers;
+               this .updateParticles = false;
 
-               if (blendModeNode)
-                  blendModeNode .enable (gl);
+               outputParticles .vertexArrayObject .update ();
+            }
 
-               // Setup shader.
+            if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
+            {
+               const particleStride = particleSystem .particleStride;
 
-               shaderNode .enable (gl);
-               shaderNode .setLocalUniforms (gl, context);
-
-               // Setup vertex attributes.
+               shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
 
                for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
                if (this .fogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
                if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer);
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-               if (this .getMultiTexCoords () .length)
-                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-
-               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
-
-               // Wireframes are always solid so only one drawing call is needed.
-
-               const
-                  modelViewMatrix = context .modelViewMatrix,
-                  x               = modelViewMatrix [12],
-                  y               = modelViewMatrix [13],
-                  z               = modelViewMatrix [14],
-                  primitiveMode   = shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode;
-
-               for (let p = 0; p < numParticles; ++ p)
-               {
-                  const particle = particles [p];
-
-                  modelViewMatrix [12] = x;
-                  modelViewMatrix [13] = y;
-                  modelViewMatrix [14] = z;
-
-                  Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-
-                  shaderNode .setParticle (gl, particle, modelViewMatrix);
-
-                  gl .drawArrays (primitiveMode, 0, this .vertexCount);
-               }
-
-               for (const attribNode of attribNodes)
-                  attribNode .disable (gl, shaderNode);
-
-               if (this .fogCoords)
-                  shaderNode .disableFogDepthAttribute (gl);
-
-               if (this .colorMaterial)
-                  shaderNode .disableColorAttribute (gl);
-
-               shaderNode .disableTexCoordAttribute (gl);
-
-               if (blendModeNode)
-                  blendModeNode .disable (gl);
+               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
             }
-         }
-         catch (error)
-         {
-            // Catch error from setLocalUniforms.
-            console .error (error);
+
+            // Wireframes are always solid so only one drawing call is needed.
+
+            const primitiveMode = shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode;
+
+            gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+
+            if (blendModeNode)
+               blendModeNode .disable (gl);
          }
       },
    });
@@ -72194,7 +70589,10 @@ function (Fields,
          const attribNodes = this .getAttrib ();
 
          for (const attribNode of attribNodes)
+         {
             attribNode .removeInterest ("requestRebuild", this);
+            attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
+         }
 
          attribNodes .length = 0;
 
@@ -72207,7 +70605,12 @@ function (Fields,
          }
 
          for (const attribNode of attribNodes)
+         {
             attribNode .addInterest ("requestRebuild", this);
+            attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
+         }
+
+         this .updateVertexArrays ();
       },
       set_fogCoord__: function ()
       {
@@ -72313,8 +70716,8 @@ function (Fields,
             polylines      = this .getPolylineIndices (),
             colorPerVertex = this ._colorPerVertex .getValue (),
             attribNodes    = this .getAttrib (),
-            numAttrib      = attribNodes .length,
-            attribs        = this .getAttribs (),
+            numAttribNodes = attribNodes .length,
+            attribArrays   = this .getAttribs (),
             fogCoordNode   = this .fogCoordNode,
             colorNode      = this .colorNode,
             coordNode      = this .coordNode,
@@ -72340,8 +70743,8 @@ function (Fields,
                         i     = polyline [l],
                         index = coordIndex [i];
 
-                     for (let a = 0; a < numAttrib; ++ a)
-                        attribNodes [a] .addValue (index, attribs [a]);
+                     for (let a = 0; a < numAttribNodes; ++ a)
+                        attribNodes [a] .addValue (index, attribArrays [a]);
 
                      if (fogCoordNode)
                         fogCoordNode .addDepth (index, fogDepthArray);
@@ -72662,37 +71065,27 @@ function (Fields,
          {
             const color = this .color;
 
-            for (var index = 0, length = this .length * 3; index < length; index += 3)
+            for (var index = 0, length = Math .min (min, this .length) * 3; index < length; index += 3)
                array .push (color [index], color [index + 1], color [index + 2], 1);
 
-            var index = (this .length - 1) * 3;
+            if (this .length < min)
+            {
+               var index = (this .length - 1) * 3;
 
-            const
-               r = color [index],
-               g = color [index + 1],
-               b = color [index + 2];
+               const
+                  r = color [index],
+                  g = color [index + 1],
+                  b = color [index + 2];
 
-            for (var index = length, length = min * 3; index < length; index += 3)
-               array .push (r, g, b, 1);
+               for (var index = length, length = min * 3; index < length; index += 3)
+                  array .push (r, g, b, 1);
+            }
          }
          else
          {
             for (let index = 0; index < min; ++ index)
                array .push (1, 1, 1, 1);
          }
-      },
-      getVectors: function (array)
-      {
-         const color = this ._color;
-
-         for (var i = 0, length = color .length; i < length; ++ i)
-         {
-            const c = color [i];
-
-            array [i] = new Vector4 (c .r, c .g, c .b, 1);
-         }
-
-         array .length = length;
 
          return array;
       },
@@ -73215,11 +71608,14 @@ function (X3DGeometryNode,
          const attribNodes = this .getAttrib ();
 
          for (const attribNode of attribNodes)
+         {
             attribNode .removeInterest ("requestRebuild", this);
+            attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
+         }
 
          attribNodes .length = 0;
 
-         for (const node of  this ._attrib)
+         for (const node of this ._attrib)
          {
             const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
 
@@ -73228,7 +71624,12 @@ function (X3DGeometryNode,
          }
 
          for (const attribNode of attribNodes)
+         {
             attribNode .addInterest ("requestRebuild", this);
+            attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
+         }
+
+         this .updateVertexArrays ();
       },
       set_fogCoord__: function ()
       {
@@ -73318,8 +71719,8 @@ function (X3DGeometryNode,
             colorPerVertex     = this ._colorPerVertex .getValue (),
             normalPerVertex    = this ._normalPerVertex .getValue (),
             attribNodes        = this .getAttrib (),
-            numAttrib          = attribNodes .length,
-            attribs            = this .getAttribs (),
+            numAttribNodes     = attribNodes .length,
+            attribArrays       = this .getAttribs (),
             fogCoordNode       = this .getFogCoord (),
             colorNode          = this .getColor (),
             texCoordNode       = this .getTexCoord (),
@@ -73342,8 +71743,8 @@ function (X3DGeometryNode,
                face  = Math .floor (i / verticesPerFace),
                index = this .getPolygonIndex (this .getTriangleIndex (i));
 
-            for (let a = 0; a < numAttrib; ++ a)
-               attribNodes [a] .addValue (index, attribs [a]);
+            for (let a = 0; a < numAttribNodes; ++ a)
+               attribNodes [a] .addValue (index, attribArrays [a]);
 
             if (fogCoordNode)
                fogCoordNode .addDepth (index, fogDepthArray);
@@ -73651,8 +72052,8 @@ function (Fields,
             normalPerVertex    = this ._normalPerVertex .getValue (),
             coordIndex         = this ._coordIndex .getValue (),
             attribNodes        = this .getAttrib (),
-            numAttrib          = attribNodes .length,
-            attribs            = this .getAttribs (),
+            numAttribNodes     = attribNodes .length,
+            attribArrays       = this .getAttribs (),
             fogCoordNode       = this .getFogCoord (),
             colorNode          = this .getColor (),
             texCoordNode       = this .getTexCoord (),
@@ -73677,8 +72078,8 @@ function (Fields,
             {
                const index = coordIndex [i];
 
-               for (let a = 0; a < numAttrib; ++ a)
-                  attribNodes [a] .addValue (index, attribs [a]);
+               for (let a = 0; a < numAttribNodes; ++ a)
+                  attribNodes [a] .addValue (index, attribArrays [a]);
 
                if (fogCoordNode)
                   fogCoordNode .addDepth (index, fogDepthArray);
@@ -74311,12 +72712,12 @@ function (Fields,
       },
       getTexCoord: function (array)
       {
-         const point = this .point;
+         const
+            point  = this .point,
+            length = this .length;
 
-         for (let i = 0, p = 0, length = this .length; i < length; ++ i, p += 2)
-            array [i] = new Vector4 (point [p], point [p + 1], 0, 1);
-
-         array .length = this .length;
+         for (let i = 0, p = 0; i < length; ++ i, p += 2)
+            array .push (point [p], point [p + 1], 0, 1);
 
          return array;
       },
@@ -75475,14 +73876,7 @@ function (PointingDevice,
       },
       setHitRay: function (projectionMatrix, viewport)
       {
-         try
-         {
-            ViewVolume .unProjectRay (this [_pointer] .x, this [_pointer] .y, Matrix4 .Identity, projectionMatrix, viewport, this [_hitRay]);
-         }
-         catch (error)
-         {
-            this [_hitRay] .set (Vector3 .Zero, Vector3 .Zero);
-         }
+         ViewVolume .unProjectRay (this [_pointer] .x, this [_pointer] .y, Matrix4 .Identity, projectionMatrix, viewport, this [_hitRay]);
       },
       getHitRay: function ()
       {
@@ -75768,29 +74162,21 @@ function (X3DBaseNode,
 
          return function (x, y, result)
          {
-            try
-            {
-               const
-                  navigationInfo   = this .getNavigationInfo (),
-                  viewpoint        = this .getActiveViewpoint (),
-                  viewport         = this .getViewport () .getRectangle (this .getBrowser ()),
-                  projectionMatrix = viewpoint .getProjectionMatrixWithLimits (navigationInfo .getNearValue (), navigationInfo .getFarValue (viewpoint), viewport);
+            const
+               navigationInfo   = this .getNavigationInfo (),
+               viewpoint        = this .getActiveViewpoint (),
+               viewport         = this .getViewport () .getRectangle (this .getBrowser ()),
+               projectionMatrix = viewpoint .getProjectionMatrixWithLimits (navigationInfo .getNearValue (), navigationInfo .getFarValue (viewpoint), viewport);
 
-               // Far plane point
-               ViewVolume .unProjectPoint (x, this .getBrowser () .getViewport () [3] - y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
+            // Far plane point
+            ViewVolume .unProjectPoint (x, this .getBrowser () .getViewport () [3] - y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
 
-               if (viewpoint instanceof OrthoViewpoint)
-                  return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .abs ());
+            if (viewpoint instanceof OrthoViewpoint)
+               return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .abs ());
 
-               const direction = far .normalize ();
+            const direction = far .normalize ();
 
-               return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .abs () / direction .dot (axis));
-            }
-            catch (error)
-            {
-               console .error (error);
-               return result .set (0, 0, 0);
-            }
+            return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .abs () / direction .dot (axis));
          };
       })(),
       getDistanceToCenter: function (distance, positionOffset)
@@ -76186,33 +74572,24 @@ function (X3DFollowerNode,
       },
       prepareEvents: function ()
       {
-         try
+         var
+            buffer     = this .getBuffer (),
+            numBuffers = buffer .length,
+            fraction   = this .updateBuffer ();
+
+         this .output = this .interpolate (this .previousValue,
+                                             buffer [numBuffers - 1],
+                                             this .stepResponse ((numBuffers - 1 + fraction) * this .stepTime));
+
+         for (var i = numBuffers - 2; i >= 0; -- i)
          {
-            var
-               buffer     = this .getBuffer (),
-               numBuffers = buffer .length,
-               fraction   = this .updateBuffer ();
-
-            this .output = this .interpolate (this .previousValue,
-                                              buffer [numBuffers - 1],
-                                              this .stepResponse ((numBuffers - 1 + fraction) * this .stepTime));
-
-            for (var i = numBuffers - 2; i >= 0; -- i)
-            {
-               this .step (buffer [i], buffer [i + 1], this .stepResponse ((i + fraction) * this .stepTime));
-            }
-
-            this .setValue (this .output);
-
-            if (this .equals (this .output, this .destination, this .getTolerance ()))
-               this .set_active (false);
+            this .step (buffer [i], buffer [i + 1], this .stepResponse ((i + fraction) * this .stepTime));
          }
-         catch (error)
-         {
-            // Catch error from Rotation4.slerp.
 
-            //console .error (error);
-         }
+         this .setValue (this .output);
+
+         if (this .equals (this .output, this .destination, this .getTolerance ()))
+            this .set_active (false);
       },
       updateBuffer: function ()
       {
@@ -76238,15 +74615,10 @@ function (X3DFollowerNode,
 
                for (var i = 0; i < seconds; ++ i)
                {
-                  try
-                  {
-                     var alpha = i / seconds;
+                  var alpha = i / seconds;
 
-                     this .assign (buffer, i, this .interpolate (this .destination, buffer [seconds], alpha))
-                  }
-                  catch (error)
-                  { }
-                }
+                  this .assign (buffer, i, this .interpolate (this .destination, buffer [seconds], alpha))
+               }
             }
             else
             {
@@ -77382,17 +75754,10 @@ function ($,
 
          return function (rotationChange)
          {
-            try
-            {
-               this .disconnect ();
-               this .getBrowser () .prepareEvents () .addInterest ("spin", this);
+            this .disconnect ();
+            this .getBrowser () .prepareEvents () .addInterest ("spin", this);
 
-               this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (rotationChange, SPIN_FACTOR));
-            }
-            catch (error)
-            {
-               console .error (error);
-            }
+            this .rotation .assign (rotation .assign (Rotation4 .Identity) .slerp (rotationChange, SPIN_FACTOR));
          };
       })(),
       addMove: (function ()
@@ -77603,6 +75968,7 @@ define ('x_ite/Browser/Navigation/X3DFlyViewer',[
    "jquery",
    "x_ite/Browser/Navigation/X3DViewer",
    "x_ite/Components/Followers/OrientationChaser",
+   "x_ite/Rendering/VertexArray",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Matrix4",
@@ -77612,6 +75978,7 @@ define ('x_ite/Browser/Navigation/X3DFlyViewer',[
 function ($,
           X3DViewer,
           OrientationChaser,
+          VertexArray,
           Vector3,
           Rotation4,
           Matrix4,
@@ -77646,10 +76013,11 @@ function ($,
       this .toVector          = new Vector3 (0, 0, 0);
       this .direction         = new Vector3 (0, 0, 0);
       this .startTime         = 0;
-      this .lineBuffer        = gl .createBuffer ();
       this .lineCount         = 2;
       this .lineVertices      = new Array (this .lineCount * 4);
       this .lineArray         = new Float32Array (this .lineVertices);
+      this .lineBuffer        = gl .createBuffer ();
+      this .lineArrayObject   = new VertexArray ();
       this .event             = null;
       this .lookAround        = false;
       this .orientationChaser = new OrientationChaser (executionContext);
@@ -78243,10 +76611,12 @@ function ($,
                shaderNode = browser .getLineShader (),
                lineWidth  = gl .getParameter (gl .LINE_WIDTH);
 
-            if (shaderNode .getValid ())
+            if (shaderNode .isValid ())
             {
                shaderNode .enable (gl);
-               shaderNode .enableVertexAttribute (gl, this .lineBuffer);
+
+               if (this .lineArrayObject .enable (gl, shaderNode))
+                  shaderNode .enableVertexAttribute (gl, this .lineBuffer, 0, 0);
 
                gl .uniform1i (shaderNode .x3d_NumClipPlanes,         0);
                gl .uniform1i (shaderNode .x3d_FogType,               0);
@@ -78296,7 +76666,7 @@ function ($,
          // Transfer line.
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .lineBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .lineArray, gl .STATIC_DRAW);
+         gl .bufferData (gl .ARRAY_BUFFER, this .lineArray, gl .DYNAMIC_DRAW);
       },
       disconnect: function ()
       {
@@ -78314,6 +76684,11 @@ function ($,
       },
       dispose: function ()
       {
+         const gl = this .getBrowser () .getContext ();
+
+         gl .deleteBuffer (this .lineBuffer);
+         this .lineArrayObject .delete (gl);
+
          this .disconnect ();
          this .getBrowser () ._controlKey .removeInterest ("set_controlKey__", this);
          this .getBrowser () .getSurface () .unbind (".X3DFlyViewer");
@@ -79775,51 +78150,43 @@ function (Fields,
       },
       renderShadowMap: function (renderObject)
       {
-         try
-         {
-            if (! this .shadowBuffer)
-               return;
+         if (! this .shadowBuffer)
+            return;
 
-            const
-               lightNode            = this .lightNode,
-               cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
-               modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-               invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+         const
+            lightNode            = this .lightNode,
+            cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
+            modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+            invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
-            invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
-            invLightSpaceMatrix .inverse ();
+         invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
+         invLightSpaceMatrix .inverse ();
 
-            const
-               groupBBox        = this .groupNode .getSubBBox (this .bbox, true), // Group bbox.
-               lightBBox        = groupBBox .multRight (invLightSpaceMatrix),     // Group bbox from the perspective of the light.
-               shadowMapSize    = lightNode .getShadowMapSize (),
-               viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
-               projectionMatrix = Camera .orthoBox (lightBBox, this .projectionMatrix);
+         const
+            groupBBox        = this .groupNode .getSubBBox (this .bbox, true), // Group bbox.
+            lightBBox        = groupBBox .multRight (invLightSpaceMatrix),     // Group bbox from the perspective of the light.
+            shadowMapSize    = lightNode .getShadowMapSize (),
+            viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
+            projectionMatrix = Camera .orthoBox (lightBBox, this .projectionMatrix);
 
-            this .shadowBuffer .bind ();
+         this .shadowBuffer .bind ();
 
-            renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
-            renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
-            renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
+         renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+         renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
+         renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
 
-            renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
+         renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
 
-            renderObject .getModelViewMatrix  () .pop ();
-            renderObject .getProjectionMatrix () .pop ();
-            renderObject .getViewVolumes      () .pop ();
+         renderObject .getModelViewMatrix  () .pop ();
+         renderObject .getProjectionMatrix () .pop ();
+         renderObject .getViewVolumes      () .pop ();
 
-            this .shadowBuffer .unbind ();
+         this .shadowBuffer .unbind ();
 
-            if (! lightNode .getGlobal ())
-               invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
+         if (! lightNode .getGlobal ())
+            invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
-            this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix) .multRight (projectionMatrix) .multRight (lightNode .getBiasMatrix ());
-         }
-         catch (error)
-         {
-            // Catch error from matrix inverse.
-            console .error (error);
-         }
+         this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix) .multRight (projectionMatrix) .multRight (lightNode .getBiasMatrix ());
       },
       setGlobalVariables: function (renderObject)
       {
@@ -79866,7 +78233,7 @@ function (Fields,
             {
                gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
 
-               if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
+               if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
                   gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
                else
                   gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
@@ -97333,7 +95700,7 @@ function ($,
    function X3DTextContext ()
    {
       this [_fontCache]  = new Map ();
-      this [_glyphCache] = new Map (); // [font] [primitveQuality] [glyphIndex]
+      this [_glyphCache] = new Map (); // [font] [primitiveQuality] [glyphIndex]
    }
 
    X3DTextContext .prototype =
@@ -97369,30 +95736,21 @@ function ($,
       setFont: function (deferred, error, font)
       {
          if (error)
-         {
             deferred .reject (error);
-         }
          else
-         {
-//				// Workaround to initialize composite glyphs.
-//				for (let i = 0, length = font .numGlyphs; i < length; ++ i)
-//					font .glyphs .get (i) .getPath (0, 0, 1);
-
-            // Resolve callbacks.
             deferred .resolve (font);
-         }
       },
-      getGlyph: function (font, primitveQuality, glyphIndex)
+      getGlyph: function (font, primitiveQuality, glyphIndex)
       {
          let cachedFont = this [_glyphCache] .get (font);
 
          if (!cachedFont)
             this [_glyphCache] .set (font, cachedFont = [ ]);
 
-         let cachedQuality = cachedFont [primitveQuality];
+         let cachedQuality = cachedFont [primitiveQuality];
 
          if (!cachedQuality)
-            cachedQuality = cachedFont [primitveQuality] = [ ];
+            cachedQuality = cachedFont [primitiveQuality] = [ ];
 
          let cachedGlyph = cachedQuality [glyphIndex];
 
@@ -97805,9 +96163,6 @@ function (TextureProperties,
       _maxCombinedTextureUnits  = Symbol (),
       _textureMemory            = Symbol (),
       _combinedTextureUnits     = Symbol (),
-      _texture2DUnit            = Symbol (),
-      _texture3DUnit            = Symbol (),
-      _textureCubeUnit          = Symbol (),
       _texture2DUnits           = Symbol (),
       _texture3DUnits           = Symbol (),
       _textureCubeUnits         = Symbol (),
@@ -97841,6 +96196,8 @@ function (TextureProperties,
       {
          const gl = this .getContext ();
 
+         gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
+
          this [_maxTextureSize]          = gl .getParameter (gl .MAX_TEXTURE_SIZE);
          this [_maxCombinedTextureUnits] = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
          this [_textureMemory]           = NaN;
@@ -97848,12 +96205,9 @@ function (TextureProperties,
          // Get texture Units
 
          this [_combinedTextureUnits] = [...Array (this [_maxCombinedTextureUnits]) .keys ()];
-         this [_texture2DUnit]        = this [_combinedTextureUnits] .pop ();
-         this [_texture3DUnit]        = this [_combinedTextureUnits] .pop ();
-         this [_textureCubeUnit]      = this [_combinedTextureUnits] .pop ();
-         this [_texture2DUnits]       = [this [_texture2DUnit]];
-         this [_texture3DUnits]       = [this [_texture3DUnit]];
-         this [_textureCubeUnits]     = [this [_textureCubeUnit]];
+         this [_texture2DUnits]       = [this [_combinedTextureUnits] .pop ()];
+         this [_texture3DUnits]       = [this [_combinedTextureUnits] .pop ()];
+         this [_textureCubeUnits]     = [this [_combinedTextureUnits] .pop ()];
 
          // Default Texture 2D Unit
 
@@ -97861,11 +96215,9 @@ function (TextureProperties,
 
          this [_defaultTexture2D] = gl .createTexture ();
 
+         gl .activeTexture (gl .TEXTURE0 + this [_texture2DUnits] [0]);
          gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
-         gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-
-         gl .activeTexture (gl .TEXTURE0 + this [_texture2DUnit]);
-         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
          // Default Texture 3D Unit
 
@@ -97873,27 +96225,23 @@ function (TextureProperties,
          {
             this [_defaultTexture3D] = gl .createTexture ();
 
+            gl .activeTexture (gl .TEXTURE0 + this [_texture3DUnits] [0]);
             gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
-            gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-
-            gl .activeTexture (gl .TEXTURE0 + this [_texture3DUnit]);
-            gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
+            gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          }
 
          // Default Texture Cube Unit
 
          this [_defaultTextureCube] = gl .createTexture ();
 
+         gl .activeTexture (gl .TEXTURE0 + this [_textureCubeUnits] [0]);
          gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
-         gl .texImage2D  (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-         gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-         gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-         gl .texImage2D  (gl .TEXTURE_CUBE_MAP_POSITIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-         gl .texImage2D  (gl .TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-         gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-
-         gl .activeTexture (gl .TEXTURE0 + this [_textureCubeUnit]);
-         gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
+         gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+         gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+         gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+         gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+         gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+         gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
          // Init texture units.
 
@@ -97921,7 +96269,7 @@ function (TextureProperties,
          {
             -- this [_texture2DUnitIndex];
 
-            return this [_texture2DUnits] .shift ();
+            return this [_texture2DUnits] .pop ();
          }
          else
          {
@@ -97933,9 +96281,9 @@ function (TextureProperties,
          if (textureUnit === undefined)
             return;
 
-         this [_texture2DUnitIndex] = Math .max (this [_texture2DUnitIndex] + 1, 1);
+         ++ this [_texture2DUnitIndex];
 
-         this [_texture2DUnits] .unshift (textureUnit);
+         this [_texture2DUnits] .push (textureUnit);
       },
       getTexture2DUnit: function ()
       {
@@ -97990,15 +96338,15 @@ function (TextureProperties,
       },
       getDefaultTexture2DUnit: function ()
       {
-         return this [_texture2DUnit];
+         return this [_texture2DUnits] [0];
       },
       getDefaultTexture3DUnit: function ()
       {
-         return this [_texture3DUnit];
+         return this [_texture3DUnits] [0];
       },
       getDefaultTextureCubeUnit: function ()
       {
-         return this [_textureCubeUnit];
+         return this [_textureCubeUnits] [0];
       },
       getTextureMemory: function ()
       {
@@ -98016,7 +96364,7 @@ function (TextureProperties,
       {
          this [_defaultTextureProperties] = new TextureProperties (this .getPrivateScene ());
          this [_defaultTextureProperties] ._magnificationFilter = "NICEST";
-         this [_defaultTextureProperties] ._minificationFilter  = "AVG_PIXEL_AVG_MIPMAP";
+         this [_defaultTextureProperties] ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
          this [_defaultTextureProperties] ._textureCompression  = "NICEST";
          this [_defaultTextureProperties] ._generateMipMaps     = true;
 
@@ -98382,6 +96730,8 @@ function ($,
             if (context .prototype .initialize)
                context .prototype .initialize .call (this);
          }
+
+         this .fix ();
       },
       initialized: function ()
       {
@@ -98435,7 +96785,9 @@ function ($,
       },
       requestAnimationFrame: function ()
       {
-         window .requestAnimationFrame (this [_renderCallback]);
+         cancelAnimationFrame (this .animationFrameRequest);
+
+         this .animationFrameRequest = requestAnimationFrame (this [_renderCallback]);
       },
       traverse: function (now)
       {
@@ -98462,9 +96814,6 @@ function ($,
 
          this ._sensorEvents .processInterests ();
          this .processEvents ();
-
-         // XXX: The depth buffer must be cleared here, although it is cleared in each layer, otherwise there is a
-         // XXX: phantom image in the depth buffer at least in Firefox.
 
          const t3 = performance .now ();
          gl .clearColor (0, 0, 0, 0);
@@ -98497,6 +96846,31 @@ function ($,
       {
          return this [_displayTime];
       },
+      fix: function ()
+      {
+         // At least Firefox 105.0.2 sometimes does not call requestAnimationFrame
+         // callback when other events occur, but if we trigger it here again, it works.
+         if (navigator .userAgent .includes ("Firefox"))
+         {
+            const excludes = new Set ([
+               "devicemotion",
+               "deviceorientation",
+               "absolutedeviceorientation",
+               "beforeunload",
+            ]);
+
+            function eventsOf (element, excludes)
+            {
+               return Object .keys (element)
+                  .filter (key => key .startsWith ("on"))
+                  .map (key => key .slice (2))
+                  .filter (event => ! excludes .has (event))
+                  .join (" ");
+            }
+
+            $(window) .on (eventsOf (window, excludes), setTimeout .bind (window, this .requestAnimationFrame .bind (this), 0));
+         }
+      },
    });
 
    for (const key of Reflect .ownKeys (X3DBrowserContext .prototype))
@@ -98515,7 +96889,7 @@ function ($,
          for (const key of Reflect .ownKeys (context .prototype))
             Object .defineProperty (X3DBrowserContext .prototype, key, { enumerable: false });
 
-         $("X3DCanvas") .each (function (i, canvas)
+         $("x3d-canvas, X3DCanvas") .each (function (i, canvas)
          {
             const browser = X3D .getBrowser (canvas);
 
@@ -99853,7 +98227,7 @@ function (Fields,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",      new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "skyAngle",      new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "skyColor",      new Fields .MFColor (0, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "skyColor",      new Fields .MFColor (new Fields .SFColor ())),
          new X3DFieldDefinition (X3DConstants .inputOutput, "groundAngle",   new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "groundColor",   new Fields .MFColor ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",  new Fields .SFFloat ()),
@@ -100325,61 +98699,54 @@ function (Fields,
 
          return function ()
          {
-            try
+            if (this .inside && this .getTraversed ())
             {
-               if (this .inside && this .getTraversed ())
+               if (this .viewpointNode)
                {
-                  if (this .viewpointNode)
-                  {
-                     const modelMatrix = this .modelMatrix;
+                  const modelMatrix = this .modelMatrix;
 
-                     centerOfRotationMatrix .assign (this .viewpointNode .getModelMatrix ());
-                     centerOfRotationMatrix .translate (this .viewpointNode .getUserCenterOfRotation ());
-                     centerOfRotationMatrix .multRight (invModelMatrix .assign (modelMatrix) .inverse ());
+                  centerOfRotationMatrix .assign (this .viewpointNode .getModelMatrix ());
+                  centerOfRotationMatrix .translate (this .viewpointNode .getUserCenterOfRotation ());
+                  centerOfRotationMatrix .multRight (invModelMatrix .assign (modelMatrix) .inverse ());
 
-                     modelMatrix .multRight (this .viewpointNode .getViewMatrix ());
-                     modelMatrix .get (null, orientation);
-                     modelMatrix .inverse ();
+                  modelMatrix .multRight (this .viewpointNode .getViewMatrix ());
+                  modelMatrix .get (null, orientation);
+                  modelMatrix .inverse ();
 
-                     position .set (modelMatrix [12], modelMatrix [13], modelMatrix [14]);
+                  position .set (modelMatrix [12], modelMatrix [13], modelMatrix [14]);
 
-                     orientation .inverse ();
+                  orientation .inverse ();
 
-                     centerOfRotation .set (centerOfRotationMatrix [12], centerOfRotationMatrix [13], centerOfRotationMatrix [14]);
+                  centerOfRotation .set (centerOfRotationMatrix [12], centerOfRotationMatrix [13], centerOfRotationMatrix [14]);
 
-                     if (this ._isActive .getValue ())
-                     {
-                        if (! this ._position_changed .getValue () .equals (position))
-                           this ._position_changed = position;
-
-                        if (! this ._orientation_changed .getValue () .equals (orientation))
-                           this ._orientation_changed = orientation;
-
-                        if (! this ._centerOfRotation_changed .getValue () .equals (centerOfRotation))
-                           this ._centerOfRotation_changed = centerOfRotation;
-                     }
-                     else
-                     {
-                        this ._isActive                 = true;
-                        this ._enterTime                = this .getBrowser () .getCurrentTime ();
-                        this ._position_changed         = position;
-                        this ._orientation_changed      = orientation;
-                        this ._centerOfRotation_changed = centerOfRotation;
-                     }
-                  }
-               }
-               else
-               {
                   if (this ._isActive .getValue ())
                   {
-                     this ._isActive = false;
-                     this ._exitTime = this .getBrowser () .getCurrentTime ();
+                     if (! this ._position_changed .getValue () .equals (position))
+                        this ._position_changed = position;
+
+                     if (! this ._orientation_changed .getValue () .equals (orientation))
+                        this ._orientation_changed = orientation;
+
+                     if (! this ._centerOfRotation_changed .getValue () .equals (centerOfRotation))
+                        this ._centerOfRotation_changed = centerOfRotation;
+                  }
+                  else
+                  {
+                     this ._isActive                 = true;
+                     this ._enterTime                = this .getBrowser () .getCurrentTime ();
+                     this ._position_changed         = position;
+                     this ._orientation_changed      = orientation;
+                     this ._centerOfRotation_changed = centerOfRotation;
                   }
                }
             }
-            catch (error)
+            else
             {
-               //console .log (error .message);
+               if (this ._isActive .getValue ())
+               {
+                  this ._isActive = false;
+                  this ._exitTime = this .getBrowser () .getCurrentTime ();
+               }
             }
 
             this .inside        = false;
@@ -100396,41 +98763,34 @@ function (Fields,
 
          return function (type, renderObject)
          {
-            try
+            switch (type)
             {
-               switch (type)
+               case TraverseType .CAMERA:
                {
-                  case TraverseType .CAMERA:
-                  {
-                     this .viewpointNode = renderObject .getViewpoint ();
-                     this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-                     return;
-                  }
-                  case TraverseType .DISPLAY:
-                  {
-                     this .setTraversed (true);
-
-                     if (this .inside)
-                        return;
-
-                     if (this ._size .getValue () .equals (infinity))
-                     {
-                        this .inside = true;
-                     }
-                     else
-                     {
-                        invModelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .inverse ();
-
-                        this .inside = this .containsPoint (invModelViewMatrix .origin);
-                     }
-
-                     return;
-                  }
+                  this .viewpointNode = renderObject .getViewpoint ();
+                  this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+                  return;
                }
-            }
-            catch (error)
-            {
-               console .error (error);
+               case TraverseType .DISPLAY:
+               {
+                  this .setTraversed (true);
+
+                  if (this .inside)
+                     return;
+
+                  if (this ._size .getValue () .equals (infinity))
+                  {
+                     this .inside = true;
+                  }
+                  else
+                  {
+                     invModelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .inverse ();
+
+                     this .inside = this .containsPoint (invModelViewMatrix .origin);
+                  }
+
+                  return;
+               }
             }
          };
       })(),
@@ -101300,12 +99660,7 @@ function (X3DFollowerNode,
 
             for (var i = 0; i < order; ++ i)
             {
-               try
-               {
-                  this .assign (buffer, i + 1, this .interpolate (buffer [i], buffer [i + 1], alpha));
-               }
-               catch (error)
-               { }
+               this .assign (buffer, i + 1, this .interpolate (buffer [i], buffer [i + 1], alpha));
             }
 
             this .setValue (buffer [order]);
@@ -103920,7 +102275,10 @@ function (Fields,
          const attribNodes = this .getAttrib ();
 
          for (const attribNode of attribNodes)
+         {
             attribNode .removeInterest ("requestRebuild", this);
+            attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
+         }
 
          attribNodes .length = 0;
 
@@ -103933,7 +102291,12 @@ function (Fields,
          }
 
          for (const attribNode of attribNodes)
+         {
             attribNode .addInterest ("requestRebuild", this);
+            attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
+         }
+
+         this .updateVertexArrays ();
       },
       set_fogCoord__: function ()
       {
@@ -104126,8 +102489,8 @@ function (Fields,
             normalPerVertex    = this ._normalPerVertex .getValue (),
             coordIndex         = this .createCoordIndex (),
             attribNodes        = this .getAttrib (),
-            numAttrib          = attribNodes .length,
-            attribs            = this .getAttribs (),
+            numAttribNodes     = attribNodes .length,
+            attribArrays       = this .getAttribs (),
             fogCoordNode       = this .fogCoordNode,
             colorNode          = this .getColor (),
             texCoordNode       = this .getTexCoord (),
@@ -104164,8 +102527,8 @@ function (Fields,
                   index = coordIndex [c],
                   point = points [index];
 
-               for (let a = 0; a < numAttrib; ++ a)
-                  attribNodes [a] .addValue (index, attribs [a]);
+               for (let a = 0; a < numAttribNodes; ++ a)
+                  attribNodes [a] .addValue (index, attribArrays [a]);
 
                if (fogCoordNode)
                   fogCoordNode .addDepth (index, fogDepthArray);
@@ -106031,10 +104394,6 @@ function (X3DTransformMatrix3DNode,
       },
       eventsProcessed: function ()
       {
-         this .setHidden (this ._scale .x === 0 ||
-                          this ._scale .y === 0 ||
-                          this ._scale .z === 0);
-
          this .setTransform (this ._translation      .getValue (),
                              this ._rotation         .getValue (),
                              this ._scale            .getValue (),
@@ -108477,14 +106836,7 @@ function (Fields,
          this .lightNode = lightNode;
          this .groupNode = groupNode;
 
-         try
-         {
-            this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
-         }
-         catch (error)
-         {
-            this .matrixArray .set (Matrix3 .Identity);
-         }
+         this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
 
          this .modelViewMatrix .pushMatrix (modelViewMatrix);
 
@@ -108500,55 +106852,47 @@ function (Fields,
       },
       renderShadowMap: function (renderObject)
       {
-         try
-         {
-            if (! this .shadowBuffer)
-               return;
+         if (! this .shadowBuffer)
+            return;
 
+         const
+            lightNode           = this .lightNode,
+            cameraSpaceMatrix   = renderObject .getCameraSpaceMatrix () .get (),
+            modelMatrix         = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+            invLightSpaceMatrix = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+
+         invLightSpaceMatrix .translate (lightNode .getLocation ());
+         invLightSpaceMatrix .inverse ();
+
+         const shadowMapSize  = lightNode .getShadowMapSize ();
+
+         this .shadowBuffer .bind ();
+
+         for (let i = 0; i < 6; ++ i)
+         {
             const
-               lightNode           = this .lightNode,
-               cameraSpaceMatrix   = renderObject .getCameraSpaceMatrix () .get (),
-               modelMatrix         = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-               invLightSpaceMatrix = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+               v                = viewports [i],
+               viewport         = this .viewport .set (v [0] * shadowMapSize, v [1] * shadowMapSize, v [2] * shadowMapSize, v [3] * shadowMapSize),
+               projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
 
-            invLightSpaceMatrix .translate (lightNode .getLocation ());
-            invLightSpaceMatrix .inverse ();
+            renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+            renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
+            renderObject .getModelViewMatrix  () .pushMatrix (orientationMatrices [i]);
+            renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
 
-            const shadowMapSize  = lightNode .getShadowMapSize ();
+            renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
 
-            this .shadowBuffer .bind ();
-
-            for (let i = 0; i < 6; ++ i)
-            {
-               const
-                  v                = viewports [i],
-                  viewport         = this .viewport .set (v [0] * shadowMapSize, v [1] * shadowMapSize, v [2] * shadowMapSize, v [3] * shadowMapSize),
-                  projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
-
-               renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
-               renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
-               renderObject .getModelViewMatrix  () .pushMatrix (orientationMatrices [i]);
-               renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
-
-               renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
-
-               renderObject .getModelViewMatrix  () .pop ();
-               renderObject .getProjectionMatrix () .pop ();
-               renderObject .getViewVolumes () .pop ();
-            }
-
-            this .shadowBuffer .unbind ();
-
-            if (! lightNode .getGlobal ())
-               invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
-
-            this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix);
+            renderObject .getModelViewMatrix  () .pop ();
+            renderObject .getProjectionMatrix () .pop ();
+            renderObject .getViewVolumes () .pop ();
          }
-         catch (error)
-         {
-            // Catch error from matrix inverse.
-            console .error (error);
-         }
+
+         this .shadowBuffer .unbind ();
+
+         if (! lightNode .getGlobal ())
+            invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
+
+         this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix);
       },
       setGlobalVariables: function (renderObject)
       {
@@ -108599,7 +106943,7 @@ function (Fields,
             {
                gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
 
-               if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
+               if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
                   gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
                else
                   gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
@@ -108828,14 +107172,7 @@ function (Fields,
          this .lightNode = lightNode;
          this .groupNode = groupNode;
 
-         try
-         {
-            this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
-         }
-         catch (error)
-         {
-            this .matrixArray .set (Matrix3 .Identity);
-         }
+         this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
 
          this .modelViewMatrix .pushMatrix (modelViewMatrix);
 
@@ -108851,56 +107188,48 @@ function (Fields,
       },
       renderShadowMap: function (renderObject)
       {
-         try
-         {
-            if (! this .shadowBuffer)
-               return;
+         if (! this .shadowBuffer)
+            return;
 
-            const
-               lightNode            = this .lightNode,
-               cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
-               modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-               invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+         const
+            lightNode            = this .lightNode,
+            cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
+            modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+            invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
-            invLightSpaceMatrix .translate (lightNode .getLocation ());
-            invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
-            invLightSpaceMatrix .inverse ();
+         invLightSpaceMatrix .translate (lightNode .getLocation ());
+         invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
+         invLightSpaceMatrix .inverse ();
 
-            const
-               groupBBox        = this .groupNode .getSubBBox (this .bbox, true),                 // Group bbox.
-               lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                     // Group bbox from the perspective of the light.
-               lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax), // Result not used, but arguments.
-               shadowMapSize    = lightNode .getShadowMapSize (),
-               farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
-               viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
-               projectionMatrix = Camera .perspective (lightNode .getCutOffAngle () * 2, 0.125, Math .max (10000, farValue), shadowMapSize, shadowMapSize, this .projectionMatrix); // Use higher far value for better precision.
+         const
+            groupBBox        = this .groupNode .getSubBBox (this .bbox, true),                 // Group bbox.
+            lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                     // Group bbox from the perspective of the light.
+            lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax), // Result not used, but arguments.
+            shadowMapSize    = lightNode .getShadowMapSize (),
+            farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
+            viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
+            projectionMatrix = Camera .perspective (lightNode .getCutOffAngle () * 2, 0.125, Math .max (10000, farValue), shadowMapSize, shadowMapSize, this .projectionMatrix); // Use higher far value for better precision.
 
-            this .renderShadow = farValue > 0;
+         this .renderShadow = farValue > 0;
 
-            this .shadowBuffer .bind ();
+         this .shadowBuffer .bind ();
 
-            renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
-            renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
-            renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
+         renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+         renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
+         renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
 
-            renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
+         renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
 
-            renderObject .getModelViewMatrix  () .pop ();
-            renderObject .getProjectionMatrix () .pop ();
-            renderObject .getViewVolumes      () .pop ();
+         renderObject .getModelViewMatrix  () .pop ();
+         renderObject .getProjectionMatrix () .pop ();
+         renderObject .getViewVolumes      () .pop ();
 
-            this .shadowBuffer .unbind ();
+         this .shadowBuffer .unbind ();
 
-            if (! lightNode .getGlobal ())
-               invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
+         if (! lightNode .getGlobal ())
+            invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
-            this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix) .multRight (projectionMatrix) .multRight (lightNode .getBiasMatrix ());
-         }
-         catch (error)
-         {
-            // Catch error from matrix inverse.
-            console .error (error);
-         }
+         this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix) .multRight (projectionMatrix) .multRight (lightNode .getBiasMatrix ());
       },
       setGlobalVariables: function (renderObject)
       {
@@ -108960,7 +107289,7 @@ function (Fields,
             {
                gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
 
-               if (gl .getVersion () >= 2 || browser .getExtension ("WEBGL_depth_texture"))
+               if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
                   gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
                else
                   gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
@@ -109247,17 +107576,6 @@ function (Fields,
 {
 "use strict";
 
-   const
-      inverseModelViewMatrix = new Matrix4 (),
-      yAxis                  = new Vector3 (0, 1, 0),
-      zAxis                  = new Vector3 (0, 0, 1),
-      viewerYAxis            = new Vector3 (0, 0, 0),
-      x                      = new Vector3 (0, 0, 0),
-      y                      = new Vector3 (0, 0, 0),
-      N1                     = new Vector3 (0, 0, 0),
-      N2                     = new Vector3 (0, 0, 0),
-      rotation               = new Rotation4 (0, 0, 1, 0);
-
    function Billboard (executionContext)
    {
       X3DGroupingNode .call (this, executionContext);
@@ -109301,69 +107619,73 @@ function (Fields,
       {
          return this .matrix;
       },
-      rotate: function (modelViewMatrix)
+      rotate: (function ()
       {
-         // throws domain error
+         const
+            inverseModelViewMatrix = new Matrix4 (),
+            viewerYAxis            = new Vector3 (0, 0, 0),
+            y                      = new Vector3 (0, 0, 0),
+            N1                     = new Vector3 (0, 0, 0),
+            N2                     = new Vector3 (0, 0, 0),
+            rotation               = new Rotation4 (0, 0, 1, 0);
 
-         inverseModelViewMatrix .assign (modelViewMatrix) .inverse ();
-
-         const billboardToViewer = inverseModelViewMatrix .origin .normalize (); // Normalized to get work with Geo
-
-         if (this ._axisOfRotation .getValue () .equals (Vector3 .Zero))
+         return function (modelViewMatrix)
          {
-            inverseModelViewMatrix .multDirMatrix (viewerYAxis .assign (yAxis)) .normalize (); // Normalized to get work with Geo
+            // throws domain error
 
-            x .assign (viewerYAxis) .cross (billboardToViewer);
-            y .assign (billboardToViewer) .cross (x);
-            const z = billboardToViewer;
+            inverseModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-            // Compose rotation
+            const billboardToViewer = inverseModelViewMatrix .origin .normalize (); // Normalized to get work with Geo
 
-            x .normalize ();
-            y .normalize ();
+            if (this ._axisOfRotation .getValue () .equals (Vector3 .Zero))
+            {
+               inverseModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .yAxis)) .normalize (); // Normalized to get work with Geo
 
-            this .matrix .set (x [0], x [1], x [2], 0,
-                               y [0], y [1], y [2], 0,
-                               z [0], z [1], z [2], 0,
-                               0,     0,     0,     1);
-         }
-         else
-         {
-            N1 .assign (this ._axisOfRotation .getValue ()) .cross (billboardToViewer); // Normal vector of plane as in specification
-            N2 .assign (this ._axisOfRotation .getValue ()) .cross (zAxis);             // Normal vector of plane between axisOfRotation and zAxis
+               const x = viewerYAxis .cross (billboardToViewer);
+               y .assign (billboardToViewer) .cross (x);
+               const z = billboardToViewer;
 
-            this .matrix .setRotation (rotation .setFromToVec (N2, N1));                // Rotate zAxis in plane
-         }
+               // Compose rotation
 
-         return this .matrix;
-      },
+               x .normalize ();
+               y .normalize ();
+
+               this .matrix .set (x .x, x .y, x .z, 0,
+                                  y .x, y .y, y .z, 0,
+                                  z .x, z .y, z .z, 0,
+                                  0,    0,    0,    1);
+            }
+            else
+            {
+               N1 .assign (this ._axisOfRotation .getValue ()) .cross (billboardToViewer); // Normal vector of plane as in specification
+               N2 .assign (this ._axisOfRotation .getValue ()) .cross (Vector3 .zAxis);    // Normal vector of plane between axisOfRotation and zAxis
+
+               this .matrix .setRotation (rotation .setFromToVec (N2, N1));                // Rotate zAxis in plane
+            }
+
+            return this .matrix;
+         };
+      })(),
       traverse: function (type, renderObject)
       {
          const modelViewMatrix = renderObject .getModelViewMatrix ();
 
          modelViewMatrix .push ();
 
-         try
+         switch (type)
          {
-            switch (type)
-            {
-               case TraverseType .CAMERA:
-               case TraverseType .PICKING:
-               case TraverseType .SHADOW:
-                  // No clone support for shadow, generated cube map texture, and bbox
-                  modelViewMatrix .multLeft (this .matrix);
-                  break;
-               default:
-                  modelViewMatrix .multLeft (this .rotate (modelViewMatrix .get ()));
-                  break;
-            }
+            case TraverseType .CAMERA:
+            case TraverseType .PICKING:
+            case TraverseType .SHADOW:
+               // No clone support for shadow, generated cube map texture, and bbox
+               modelViewMatrix .multLeft (this .matrix);
+               break;
+            default:
+               modelViewMatrix .multLeft (this .rotate (modelViewMatrix .get ()));
+               break;
+         }
 
-            X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
          modelViewMatrix .pop ();
       },
@@ -110680,24 +109002,17 @@ function (Fields,
       },
       set_over__: function (over, hit, modelViewMatrix, projectionMatrix, viewport)
       {
-         try
+         X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
+
+         if (this ._isOver .getValue ())
          {
-            X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
+            var intersection = hit .intersection;
 
-            if (this ._isOver .getValue ())
-            {
-               var intersection = hit .intersection;
+            invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-               invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-
-               this ._hitTexCoord_changed = intersection .texCoord;
-               this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
-               this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
-            }
-         }
-         catch (error)
-         {
-            console .error (error);
+            this ._hitTexCoord_changed = intersection .texCoord;
+            this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
+            this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
          }
       },
    });
@@ -111645,143 +109960,126 @@ function (Fields,
       {
          X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
 
-         try
+         if (this ._isActive .getValue ())
          {
-            if (this ._isActive .getValue ())
-            {
-               this .modelViewMatrix    .assign (modelViewMatrix);
-               this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+            this .modelViewMatrix    .assign (modelViewMatrix);
+            this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-               const
-                  hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-                  hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
-
-               const
-                  yAxis      = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
-                  cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
-
-               const
-                  axis   = new Line3 (new Vector3 (0, 0, 0), yAxis),
-                  radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .abs ();
-
-               this .cylinder = new Cylinder3 (axis, radius);
-               this .disk     = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this ._diskAngle .getValue ());
-               this .behind   = this .isBehind (hitRay, hitPoint);
-               this .yPlane   = new Plane3 (hitPoint, yAxis);             // Sensor aligned y-plane
-               this .zPlane   = new Plane3 (hitPoint, cameraBack);        // Screen aligned z-plane
-
-               // Compute normal like in Billboard with yAxis as axis of rotation.
-               const
-                  billboardToViewer = this .invModelViewMatrix .origin,
-                  sxNormal          = Vector3 .cross (yAxis, billboardToViewer) .normalize ();
-
-               this .sxPlane  = new Plane3 (new Vector3 (0, 0, 0), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
-               this .szNormal = Vector3 .cross (sxNormal, yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
-
-               const trackPoint = new Vector3 (0, 0, 0);
-
-               if (this .disk)
-                  this .yPlane .intersectsLine (hitRay, trackPoint);
-               else
-                  this .getTrackPoint (hitRay, trackPoint);
-
-               this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate ();
-               this .startOffset = new Rotation4 (yAxis, this ._offset .getValue ());
-
-               this ._trackPoint_changed = trackPoint;
-               this ._rotation_changed   = this .startOffset;
-
-               // For min/max angle.
-
-               this .angle       = this ._offset .getValue ();
-               this .startVector = this ._rotation_changed .getValue () .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1)));
-            }
-            else
-            {
-               if (this ._autoOffset .getValue ())
-                  this ._offset = this .getAngle (this ._rotation_changed .getValue ());
-            }
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
-      },
-      set_motion__: function (hit)
-      {
-         try
-         {
             const
-               hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-               trackPoint = new Vector3 (0, 0, 0);
+               hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+               hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
+
+            const
+               yAxis      = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
+               cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
+
+            const
+               axis   = new Line3 (new Vector3 (0, 0, 0), yAxis),
+               radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .abs ();
+
+            this .cylinder = new Cylinder3 (axis, radius);
+            this .disk     = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this ._diskAngle .getValue ());
+            this .behind   = this .isBehind (hitRay, hitPoint);
+            this .yPlane   = new Plane3 (hitPoint, yAxis);             // Sensor aligned y-plane
+            this .zPlane   = new Plane3 (hitPoint, cameraBack);        // Screen aligned z-plane
+
+            // Compute normal like in Billboard with yAxis as axis of rotation.
+            const
+               billboardToViewer = this .invModelViewMatrix .origin,
+               sxNormal          = Vector3 .cross (yAxis, billboardToViewer) .normalize ();
+
+            this .sxPlane  = new Plane3 (new Vector3 (0, 0, 0), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
+            this .szNormal = Vector3 .cross (sxNormal, yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
+
+            const trackPoint = new Vector3 (0, 0, 0);
 
             if (this .disk)
                this .yPlane .intersectsLine (hitRay, trackPoint);
             else
                this .getTrackPoint (hitRay, trackPoint);
 
+            this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate ();
+            this .startOffset = new Rotation4 (yAxis, this ._offset .getValue ());
+
             this ._trackPoint_changed = trackPoint;
+            this ._rotation_changed   = this .startOffset;
 
-            const
-               toVector = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate (),
-               rotation = new Rotation4 (this .fromVector, toVector);
+            // For min/max angle.
 
-            if (this .disk)
-            {
-               // The trackpoint can swap behind the viewpoint if viewpoint is a Viewpoint node
-               // as the viewing volume is not a cube where the picking ray goes straight up.
-               // This phenomenon is very clear on the viewport corners.
-
-               const trackPoint_ = this .modelViewMatrix .multVecMatrix (trackPoint .copy ());
-
-               if (trackPoint_ .z > 0)
-                  rotation .multRight (new Rotation4 (this .yPlane .normal, Math .PI));
-            }
-            else
-            {
-               if (this .behind)
-                  rotation .inverse ();
-            }
-
-            rotation .multLeft (this .startOffset);
-
-            if (this ._minAngle .getValue () > this ._maxAngle .getValue ())
-            {
-               this ._rotation_changed = rotation;
-            }
-            else
-            {
-               const
-                  endVector     = rotation .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1))),
-                  deltaRotation = new Rotation4 (this .startVector, endVector),
-                  axis          = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
-                  sign          = axis .dot (deltaRotation .getAxis ()) > 0 ? 1 : -1,
-                  min           = this ._minAngle .getValue (),
-                  max           = this ._maxAngle .getValue ();
-
-               this .angle += sign * deltaRotation .angle;
-
-               this .startVector .assign (endVector);
-
-               //console .log (this .angle, min, max);
-
-               if (this .angle < min)
-                  rotation .setAxisAngle (this .cylinder .axis .direction, min);
-               else if (this .angle > max)
-                  rotation .setAxisAngle (this .cylinder .axis .direction, max);
-               else
-                  rotation .setAxisAngle (this .cylinder .axis .direction, this .angle);
-
-               if (! this ._rotation_changed .getValue () .equals (rotation))
-                  this ._rotation_changed = rotation;
-            }
+            this .angle       = this ._offset .getValue ();
+            this .startVector = this ._rotation_changed .getValue () .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1)));
          }
-         catch (error)
+         else
          {
-            console .error (error);
+            if (this ._autoOffset .getValue ())
+               this ._offset = this .getAngle (this ._rotation_changed .getValue ());
+         }
+      },
+      set_motion__: function (hit)
+      {
+         const
+            hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+            trackPoint = new Vector3 (0, 0, 0);
 
-            this ._trackPoint_changed .addEvent ();
-            this ._rotation_changed   .addEvent ();
+         if (this .disk)
+            this .yPlane .intersectsLine (hitRay, trackPoint);
+         else
+            this .getTrackPoint (hitRay, trackPoint);
+
+         this ._trackPoint_changed = trackPoint;
+
+         const
+            toVector = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate (),
+            rotation = new Rotation4 (this .fromVector, toVector);
+
+         if (this .disk)
+         {
+            // The trackpoint can swap behind the viewpoint if viewpoint is a Viewpoint node
+            // as the viewing volume is not a cube where the picking ray goes straight up.
+            // This phenomenon is very clear on the viewport corners.
+
+            const trackPoint_ = this .modelViewMatrix .multVecMatrix (trackPoint .copy ());
+
+            if (trackPoint_ .z > 0)
+               rotation .multRight (new Rotation4 (this .yPlane .normal, Math .PI));
+         }
+         else
+         {
+            if (this .behind)
+               rotation .inverse ();
+         }
+
+         rotation .multLeft (this .startOffset);
+
+         if (this ._minAngle .getValue () > this ._maxAngle .getValue ())
+         {
+            this ._rotation_changed = rotation;
+         }
+         else
+         {
+            const
+               endVector     = rotation .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1))),
+               deltaRotation = new Rotation4 (this .startVector, endVector),
+               axis          = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
+               sign          = axis .dot (deltaRotation .getAxis ()) > 0 ? 1 : -1,
+               min           = this ._minAngle .getValue (),
+               max           = this ._maxAngle .getValue ();
+
+            this .angle += sign * deltaRotation .angle;
+
+            this .startVector .assign (endVector);
+
+            //console .log (this .angle, min, max);
+
+            if (this .angle < min)
+               rotation .setAxisAngle (this .cylinder .axis .direction, min);
+            else if (this .angle > max)
+               rotation .setAxisAngle (this .cylinder .axis .direction, max);
+            else
+               rotation .setAxisAngle (this .cylinder .axis .direction, this .angle);
+
+            if (! this ._rotation_changed .getValue () .equals (rotation))
+               this ._rotation_changed = rotation;
          }
       },
    });
@@ -111942,82 +110240,75 @@ function (Fields,
       {
          X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
 
-         try
+         if (this ._isActive .getValue ())
          {
-            if (this ._isActive .getValue ())
+            this .modelViewMatrix    .assign (modelViewMatrix);
+            this .projectionMatrix   .assign (projectionMatrix);
+            this .viewport           .assign (viewport);
+            this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+
+            var
+               hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+               hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
+
+            var axisRotation = this ._axisRotation .getValue ();
+
+            if (this ._minPosition .x === this ._maxPosition .x)
             {
-               this .modelViewMatrix    .assign (modelViewMatrix);
-               this .projectionMatrix   .assign (projectionMatrix);
-               this .viewport           .assign (viewport);
-               this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+               this .planeSensor = false;
 
-               var
-                  hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-                  hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
+               var direction = axisRotation .multVecRot (new Vector3 (0, Math .abs (this ._maxPosition .y - this ._minPosition .y), 0));
 
-               var axisRotation = this ._axisRotation .getValue ();
+               this .line = new Line3 (hitPoint, direction .normalize ());
+            }
+            else if (this ._minPosition .y === this ._maxPosition .y)
+            {
+               this .planeSensor = false;
 
-               if (this ._minPosition .x === this ._maxPosition .x)
-               {
-                  this .planeSensor = false;
+               var direction = axisRotation .multVecRot (new Vector3 (Math .abs (this ._maxPosition .x - this ._minPosition .x), 0, 0));
 
-                  var direction = axisRotation .multVecRot (new Vector3 (0, Math .abs (this ._maxPosition .y - this ._minPosition .y), 0));
-
-                  this .line = new Line3 (hitPoint, direction .normalize ());
-               }
-               else if (this ._minPosition .y === this ._maxPosition .y)
-               {
-                  this .planeSensor = false;
-
-                  var direction = axisRotation .multVecRot (new Vector3 (Math .abs (this ._maxPosition .x - this ._minPosition .x), 0, 0));
-
-                  this .line = new Line3 (hitPoint, direction .normalize ());
-               }
-               else
-               {
-                  this .planeSensor = true;
-                  this .plane       = new Plane3 (hitPoint, axisRotation .multVecRot (new Vector3 (0, 0, 1)));
-               }
-
-               if (this .planeSensor)
-               {
-                  if (this .plane .intersectsLine (hitRay, this .startPoint))
-                  {
-                     this .trackStart (this .startPoint);
-                  }
-
-//						new Plane3 (new Vector3 (0, 0, 0), this .plane .normal) .intersectsLine (hitRay, trackPoint);
-               }
-               else
-               {
-                  if (this .getLineTrackPoint (hit, this .line, this .startPoint))
-                  {
-                     var trackPoint = new Vector3 (0, 0, 0);
-
-                     try
-                     {
-                        this .getLineTrackPoint (hit, new Line3 (this .line .direction, this .line .direction), trackPoint);
-                     }
-                     catch (error)
-                     {
-                        //console .error (error);
-
-                        trackPoint = this .startPoint;
-                     }
-
-                     this .trackStart (trackPoint);
-                  }
-               }
+               this .line = new Line3 (hitPoint, direction .normalize ());
             }
             else
             {
-               if (this ._autoOffset .getValue ())
-                  this ._offset = this ._translation_changed;
+               this .planeSensor = true;
+               this .plane       = new Plane3 (hitPoint, axisRotation .multVecRot (new Vector3 (0, 0, 1)));
+            }
+
+            if (this .planeSensor)
+            {
+               if (this .plane .intersectsLine (hitRay, this .startPoint))
+               {
+                  this .trackStart (this .startPoint);
+               }
+
+//						new Plane3 (new Vector3 (0, 0, 0), this .plane .normal) .intersectsLine (hitRay, trackPoint);
+            }
+            else
+            {
+               if (this .getLineTrackPoint (hit, this .line, this .startPoint))
+               {
+                  var trackPoint = new Vector3 (0, 0, 0);
+
+                  try
+                  {
+                     this .getLineTrackPoint (hit, new Line3 (this .line .direction, this .line .direction), trackPoint);
+                  }
+                  catch (error)
+                  {
+                     //console .error (error);
+
+                     trackPoint = this .startPoint;
+                  }
+
+                  this .trackStart (trackPoint);
+               }
             }
          }
-         catch (error)
+         else
          {
-            console .error (error);
+            if (this ._autoOffset .getValue ())
+               this ._offset = this ._translation_changed;
          }
       },
       trackStart: function (trackPoint)
@@ -112452,97 +110743,80 @@ function (Fields,
       {
          X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
 
-         try
+         if (this ._isActive .getValue ())
          {
-            if (this ._isActive .getValue ())
-            {
-               this .modelViewMatrix    .assign (modelViewMatrix);
-               this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+            this .modelViewMatrix    .assign (modelViewMatrix);
+            this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-               var
-                  hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ()),
-                  center   = new Vector3 (0, 0, 0);
+            var
+               hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ()),
+               center   = new Vector3 (0, 0, 0);
 
-               this .zPlane = new Plane3 (center, this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ()); // Screen aligned Z-plane
-               this .sphere = new Sphere3 (hitPoint .abs (), center);
-               this .behind = this .zPlane .getDistanceToPoint (hitPoint) < 0;
+            this .zPlane = new Plane3 (center, this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ()); // Screen aligned Z-plane
+            this .sphere = new Sphere3 (hitPoint .abs (), center);
+            this .behind = this .zPlane .getDistanceToPoint (hitPoint) < 0;
 
-               this .fromVector  .assign (hitPoint);
-               this .startPoint  .assign (hitPoint);
-               this .startOffset .assign (this ._offset .getValue ());
+            this .fromVector  .assign (hitPoint);
+            this .startPoint  .assign (hitPoint);
+            this .startOffset .assign (this ._offset .getValue ());
 
-               this ._trackPoint_changed = hitPoint;
-               this ._rotation_changed   = this ._offset .getValue ();
-            }
-            else
-            {
-               if (this ._autoOffset .getValue ())
-                  this ._offset = this ._rotation_changed;
-            }
+            this ._trackPoint_changed = hitPoint;
+            this ._rotation_changed   = this ._offset .getValue ();
          }
-         catch (error)
+         else
          {
-            //console .error (error);
+            if (this ._autoOffset .getValue ())
+               this ._offset = this ._rotation_changed;
          }
       },
       set_motion__: function (hit)
       {
-         try
+         var
+            hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+            trackPoint = new Vector3 (0, 0, 0);
+
+         if (this .getTrackPoint (hitRay, trackPoint, this .behind))
          {
-            var
-               hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-               trackPoint = new Vector3 (0, 0, 0);
+            var zAxis = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize (); // Camera direction
+            this .zPlane = new Plane3 (trackPoint, zAxis);                                             // Screen aligned Z-plane
+         }
+         else
+         {
+            // Find trackPoint on the plane with sphere
 
-            if (this .getTrackPoint (hitRay, trackPoint, this .behind))
-            {
-               var zAxis = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize (); // Camera direction
-               this .zPlane = new Plane3 (trackPoint, zAxis);                                             // Screen aligned Z-plane
-            }
-            else
-            {
-               // Find trackPoint on the plane with sphere
+            var tangentPoint = new Vector3 (0, 0, 0);
+            this .zPlane .intersectsLine (hitRay, tangentPoint);
 
-               var tangentPoint = new Vector3 (0, 0, 0);
-               this .zPlane .intersectsLine (hitRay, tangentPoint);
+            hitRay = new Line3 (tangentPoint, Vector3 .subtract (this .sphere .center, tangentPoint) .normalize ());
 
-               hitRay = new Line3 (tangentPoint, Vector3 .subtract (this .sphere .center, tangentPoint) .normalize ());
+            //console .log (hitRay .toString ());
 
-               //console .log (hitRay .toString ());
+            this .getTrackPoint (hitRay, trackPoint, false);
 
-               this .getTrackPoint (hitRay, trackPoint, false);
-
-               // Find trackPoint behind sphere
-
-               var
-                  triNormal     = Triangle3 .normal (this .sphere .center, trackPoint, this .startPoint, new Vector3 (0, 0, 0)),
-                  dirFromCenter = Vector3 .subtract (trackPoint, this .sphere .center) .normalize (),
-                  normal        = Vector3 .cross (triNormal, dirFromCenter) .normalize ();
-
-               var point1 = Vector3 .subtract (trackPoint, normal .multiply (Vector3 .subtract (tangentPoint, trackPoint) .abs ()));
-
-               hitRay = new Line3 (point1, Vector3 .subtract (this .sphere .center, point1) .normalize ());
-
-               this .getTrackPoint (hitRay, trackPoint, false);
-            }
-
-            this ._trackPoint_changed = trackPoint;
+            // Find trackPoint behind sphere
 
             var
-               toVector = Vector3 .subtract (trackPoint, this .sphere .center),
-               rotation = new Rotation4 (this .fromVector, toVector);
+               triNormal     = Triangle3 .normal (this .sphere .center, trackPoint, this .startPoint, new Vector3 (0, 0, 0)),
+               dirFromCenter = Vector3 .subtract (trackPoint, this .sphere .center) .normalize (),
+               normal        = Vector3 .cross (triNormal, dirFromCenter) .normalize ();
 
-            if (this .behind)
-               rotation .inverse ();
+            var point1 = Vector3 .subtract (trackPoint, normal .multiply (Vector3 .subtract (tangentPoint, trackPoint) .abs ()));
 
-            this ._rotation_changed = Rotation4 .multRight (this .startOffset, rotation);
+            hitRay = new Line3 (point1, Vector3 .subtract (this .sphere .center, point1) .normalize ());
+
+            this .getTrackPoint (hitRay, trackPoint, false);
          }
-         catch (error)
-         {
-            //console .error (error);
 
-            this ._trackPoint_changed .addEvent ();
-            this ._rotation_changed   .addEvent ();
-         }
+         this ._trackPoint_changed = trackPoint;
+
+         var
+            toVector = Vector3 .subtract (trackPoint, this .sphere .center),
+            rotation = new Rotation4 (this .fromVector, toVector);
+
+         if (this .behind)
+            rotation .inverse ();
+
+         this ._rotation_changed = Rotation4 .multRight (this .startOffset, rotation);
       },
    });
 
@@ -112732,18 +111006,10 @@ function (Fields,
             plane      = this .plane,
             localPlane = clipPlane .plane;
 
-         try
-         {
-            plane .normal .assign (localPlane);
-            plane .distanceFromOrigin = -localPlane .w;
+         plane .normal .assign (localPlane);
+         plane .distanceFromOrigin = -localPlane .w;
 
-            plane .multRight (modelViewMatrix);
-         }
-         catch (error)
-         {
-            plane .normal .set (0, 0, 0);
-            plane .distanceFromOrigin = 0;
-         }
+         plane .multRight (modelViewMatrix);
       },
       setShaderUniforms: function (gl, shaderObject)
       {
@@ -112961,38 +111227,28 @@ function (Fields,
          {
             const color = this .color;
 
-            for (var index = 0, length = this .length * 4; index < length; index += 4)
+            for (var index = 0, length = Math .min (min, this .length) * 4; index < length; index += 4)
                array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
 
-            var index = (this .length - 1) * 4;
+            if (this .length < min)
+            {
+               var index = (this .length - 1) * 4;
 
-            const
-               r = color [index],
-               g = color [index + 1],
-               b = color [index + 2],
-               a = color [index + 2];
+               const
+                  r = color [index],
+                  g = color [index + 1],
+                  b = color [index + 2],
+                  a = color [index + 2];
 
-            for (var index = length, length = min * 4; index < length; index += 4)
-               array .push (r, g, b, a);
+               for (var index = length, length = min * 4; index < length; index += 4)
+                  array .push (r, g, b, a);
+            }
          }
          else
          {
             for (let index = 0; index < min; ++ index)
                array .push (1, 1, 1, 1);
          }
-      },
-      getVectors: function (array)
-      {
-         const color = this ._color;
-
-         for (var i = 0, length = color .length; i < length; ++ i)
-         {
-            const c = color [i];
-
-            array [i] = new Vector4 (c .r, c .g, c .b, c .a);
-         }
-
-         array .length = length;
 
          return array;
       },
@@ -113574,7 +111830,10 @@ function (Fields,
          const attribNodes = this .getAttrib ();
 
          for (const attribNode of attribNodes)
+         {
             attribNode .removeInterest ("requestRebuild", this);
+            attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
+         }
 
          attribNodes .length = 0;
 
@@ -113587,7 +111846,12 @@ function (Fields,
          }
 
          for (const attribNode of attribNodes)
+         {
             attribNode .addInterest ("requestRebuild", this);
+            attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
+         }
+
+         this .updateVertexArrays ();
       },
       set_fogCoord__: function ()
       {
@@ -113641,17 +111905,17 @@ function (Fields,
          // Fill GeometryNode
 
          const
-            vertexCount   = this ._vertexCount,
-            attribNodes   = this .getAttrib (),
-            numAttrib     = attribNodes .length,
-            attribs       = this .getAttribs (),
-            fogCoordNode  = this .fogCoordNode,
-            colorNode     = this .colorNode,
-            coordNode     = this .coordNode,
-            fogDepthArray = this .getFogDepths (),
-            colorArray    = this .getColors (),
-            vertexArray   = this .getVertices (),
-            size          = coordNode .getSize ();
+            vertexCount    = this ._vertexCount,
+            attribNodes    = this .getAttrib (),
+            numAttribNodes = attribNodes .length,
+            attribArrays   = this .getAttribs (),
+            fogCoordNode   = this .fogCoordNode,
+            colorNode      = this .colorNode,
+            coordNode      = this .coordNode,
+            fogDepthArray  = this .getFogDepths (),
+            colorArray     = this .getColors (),
+            vertexArray    = this .getVertices (),
+            size           = coordNode .getSize ();
 
          let index = 0;
 
@@ -113666,8 +111930,8 @@ function (Fields,
 
                for (let i = 0; i < count; ++ i, index += i & 1)
                {
-                  for (let a = 0; a < numAttrib; ++ a)
-                     attribNodes [a] .addValue (index, attribs [a]);
+                  for (let a = 0; a < numAttribNodes; ++ a)
+                     attribNodes [a] .addValue (index, attribArrays [a]);
 
                   if (fogCoordNode)
                      fogCoordNode .addDepth (index, fogDepthArray);
@@ -114038,153 +112302,106 @@ function (X3DGeometryNode,
       {
          return false;
       },
+      buildTexCoords: function ()
+      { },
       display: function (gl, context)
       {
-         try
+         const
+            browser        = context .browser,
+            appearanceNode = context .shapeNode .getAppearance (),
+            shaderNode     = appearanceNode .shaderNode || browser .getPointShader (),
+            blendModeNode  = appearanceNode .blendModeNode,
+            attribNodes    = this .attribNodes,
+            attribBuffers  = this .attribBuffers;
+
+         if (shaderNode .isValid ())
          {
-            const
-               browser        = context .browser,
-               appearanceNode = context .shapeNode .getAppearance (),
-               shaderNode     = appearanceNode .shaderNode || browser .getPointShader ();;
+            if (blendModeNode)
+               blendModeNode .enable (gl);
 
-            if (shaderNode .getValid ())
+            // Setup shader.
+
+            shaderNode .enable (gl);
+            shaderNode .setLocalUniforms (gl, context);
+
+            // Setup vertex attributes.
+
+            if (this .vertexArrayObject .enable (gl, shaderNode))
             {
-               const
-                  blendModeNode = appearanceNode .blendModeNode,
-                  attribNodes   = this .attribNodes,
-                  attribBuffers = this .attribBuffers;
-
-               if (blendModeNode)
-                  blendModeNode .enable (gl);
-
-               // Setup shader.
-
-               shaderNode .enable (gl);
-               shaderNode .setLocalUniforms (gl, context);
-
-               // Setup vertex attributes.
-
                for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
                if (this .fogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
                if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer);
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-               if (this .getMultiTexCoords () .length)
-                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, true);
-
-               shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
-
-               gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
-
-               for (const attribNode of attribNodes)
-                  attribNode .disable (gl, shaderNode);
-
-               if (this .fogCoords)
-                  shaderNode .disableFogDepthAttribute (gl);
-
-               if (this .colorMaterial)
-                  shaderNode .disableColorAttribute (gl);
-
-               if (this .getMultiTexCoords () .length)
-                  shaderNode .disableTexCoordAttribute (gl);
-
-               if (blendModeNode)
-                  blendModeNode .disable (gl);
+               shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
             }
-         }
-         catch (error)
-         {
-            // Catch error from setLocalUniforms.
-            console .error (error);
+
+            gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+
+            if (blendModeNode)
+               blendModeNode .disable (gl);
          }
       },
-      displayParticles: function (gl, context, particles, numParticles)
+      displayParticles: function (gl, context, particleSystem)
       {
-         try
+         const
+            browser        = context .browser,
+            appearanceNode = context .shapeNode .getAppearance (),
+            shaderNode     = appearanceNode .shaderNode || browser .getPointShader (),
+            blendModeNode  = appearanceNode .blendModeNode,
+            attribNodes    = this .attribNodes,
+            attribBuffers  = this .attribBuffers;
+
+         if (shaderNode .isValid ())
          {
-            const
-               browser        = context .browser,
-               appearanceNode = context .shapeNode .getAppearance (),
-               shaderNode     = appearanceNode .shaderNode || this .getShader (browser);
+            if (blendModeNode)
+               blendModeNode .enable (gl);
 
-            if (shaderNode .getValid ())
+            // Setup shader.
+
+            shaderNode .enable (gl);
+            shaderNode .setLocalUniforms (gl, context);
+
+            // Setup vertex attributes.
+
+            const outputParticles = particleSystem .outputParticles;
+
+            if (this .updateParticles)
             {
-               const
-                  blendModeNode = appearanceNode .blendModeNode,
-                  attribNodes   = this .attribNodes,
-                  attribBuffers = this .attribBuffers;
+               this .updateParticles = false;
 
-               if (blendModeNode)
-                  blendModeNode .enable (gl);
+               outputParticles .vertexArrayObject .update ();
+            }
 
-               // Setup shader.
+            if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
+            {
+               const particleStride = particleSystem .particleStride;
 
-               shaderNode .enable (gl);
-               shaderNode .setLocalUniforms (gl, context);
-
-               // Setup vertex attributes.
+               shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
 
                for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
                if (this .fogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
                if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer);
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-               if (this .getMultiTexCoords () .length)
-                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-
-               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
-
-               // Wireframes are always solid so only one drawing call is needed.
-
-               const
-                  modelViewMatrix = context .modelViewMatrix,
-                  x               = modelViewMatrix [12],
-                  y               = modelViewMatrix [13],
-                  z               = modelViewMatrix [14],
-                  primitiveMode   = this .primitiveMode;
-
-               for (let p = 0; p < numParticles; ++ p)
-               {
-                  const particle = particles [p];
-
-                  modelViewMatrix [12] = x;
-                  modelViewMatrix [13] = y;
-                  modelViewMatrix [14] = z;
-
-                  Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-
-                  shaderNode .setParticle (gl, particle, modelViewMatrix);
-
-                  gl .drawArrays (primitiveMode, 0, this .vertexCount);
-               }
-
-               for (const attribNode of attribNodes)
-                  attribNode .disable (gl, shaderNode);
-
-               if (this .fogCoords)
-                  shaderNode .disableFogDepthAttribute (gl);
-
-               if (this .colorMaterial)
-                  shaderNode .disableColorAttribute (gl);
-
-               shaderNode .disableTexCoordAttribute (gl);
-
-               if (blendModeNode)
-                  blendModeNode .disable (gl);
+               shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
             }
-         }
-         catch (error)
-         {
-            // Catch error from setLocalUniforms.
-            console .error (error);
+
+            // Wireframes are always solid so only one drawing call is needed.
+
+            gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+
+            if (blendModeNode)
+               blendModeNode .disable (gl);
          }
       },
    });
@@ -114314,7 +112531,10 @@ function (Fields,
          const attribNodes = this .getAttrib ();
 
          for (const attribNode of attribNodes)
+         {
             attribNode .removeInterest ("requestRebuild", this);
+            attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
+         }
 
          attribNodes .length = 0;
 
@@ -114327,7 +112547,12 @@ function (Fields,
          }
 
          for (const attribNode of attribNodes)
+         {
             attribNode .addInterest ("requestRebuild", this);
+            attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
+         }
+
+         this .updateVertexArrays ();
       },
       set_fogCoord__: function ()
       {
@@ -114365,21 +112590,21 @@ function (Fields,
             return;
 
          const
-            attribNodes   = this .getAttrib (),
-            numAttrib     = attribNodes .length,
-            attribs       = this .getAttribs (),
-            fogCoordNode  = this .fogCoordNode,
-            fogDepthArray = this .getFogDepths (),
-            colorNode     = this .colorNode,
-            colorArray    = this .getColors (),
-            coordNode     = this .coordNode,
-            vertexArray   = this .getVertices (),
-            numPoints     = coordNode ._point .length;
+            attribNodes    = this .getAttrib (),
+            numAttribNodes = attribNodes .length,
+            attribArrays   = this .getAttribs (),
+            fogCoordNode   = this .fogCoordNode,
+            fogDepthArray  = this .getFogDepths (),
+            colorNode      = this .colorNode,
+            colorArray     = this .getColors (),
+            coordNode      = this .coordNode,
+            vertexArray    = this .getVertices (),
+            numPoints      = coordNode ._point .length;
 
-         for (let a = 0; a < numAttrib; ++ a)
+         for (let a = 0; a < numAttribNodes; ++ a)
          {
             for (let i = 0; i < numPoints; ++ i)
-               attribNodes [a] .addValue (i, attribs [a]);
+               attribNodes [a] .addValue (i, attribArrays [a]);
          }
 
          if (fogCoordNode)
@@ -114987,10 +113212,12 @@ function (SupportedNodes,
 
 
 define ('x_ite/Components/Shaders/X3DVertexAttributeNode',[
+   "x_ite/Fields",
    "x_ite/Components/Rendering/X3DGeometricPropertyNode",
    "x_ite/Base/X3DConstants",
 ],
-function (X3DGeometricPropertyNode,
+function (Fields,
+          X3DGeometricPropertyNode,
           X3DConstants)
 {
 "use strict";
@@ -115000,11 +113227,23 @@ function (X3DGeometricPropertyNode,
       X3DGeometricPropertyNode .call (this, executionContext);
 
       this .addType (X3DConstants .X3DVertexAttributeNode);
+
+      this .addChildObjects ("attribute_changed", new Fields .SFTime ());
    }
 
    X3DVertexAttributeNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
    {
       constructor: X3DVertexAttributeNode,
+      initialize: function ()
+      {
+         X3DGeometricPropertyNode .prototype .initialize .call (this);
+
+         this ._name .addInterest ("set_attribute__", this);
+      },
+      set_attribute__: function ()
+      {
+         this ._attribute_changed = this .getBrowser () .getCurrentTime ();
+      },
    });
 
    return X3DVertexAttributeNode;
@@ -115108,17 +113347,18 @@ function (Fields,
       {
          X3DVertexAttributeNode .prototype .initialize .call (this);
 
-         this ._numComponents .addInterest ("set_numComponents", this);
-         this ._value         .addInterest ("set_value",         this);
+         this ._numComponents .addInterest ("set_numComponents__", this);
+         this ._numComponents .addInterest ("set_attribute__",     this);
+         this ._value         .addInterest ("set_value__",         this);
 
-         this .set_numComponents ();
-         this .set_value ();
+         this .set_numComponents__ ();
+         this .set_value__ ();
       },
-      set_numComponents: function ()
+      set_numComponents__: function ()
       {
          this .numComponents = Algorithm .clamp (this ._numComponents .getValue (), 1, 4);
       },
-      set_value: function ()
+      set_value__: function ()
       {
          this .value  = this ._value .getValue ();
          this .length = this ._value .length;
@@ -115152,11 +113392,7 @@ function (Fields,
       },
       enable: function (gl, shaderNode, buffer)
       {
-         shaderNode .enableFloatAttrib (gl, this ._name .getValue (), buffer, this .numComponents);
-      },
-      disable: function (gl, shaderNode)
-      {
-         shaderNode .disableFloatAttrib (gl, this ._name .getValue ());
+         shaderNode .enableFloatAttrib (gl, this ._name .getValue (), buffer, this .numComponents, 0, 0);
       },
    });
 
@@ -115260,11 +113496,11 @@ function (Fields,
       {
          X3DVertexAttributeNode .prototype .initialize .call (this);
 
-         this ._value .addInterest ("set_value", this);
+         this ._value .addInterest ("set_value__", this);
 
-         this .set_value ();
+         this .set_value__ ();
       },
-      set_value: function ()
+      set_value__: function ()
       {
          this .value  = this ._value .getValue ();
          this .length = this ._value .length;
@@ -115297,11 +113533,7 @@ function (Fields,
       },
       enable: function (gl, shaderNode, buffer)
       {
-         shaderNode .enableMatrix3Attrib (gl, this ._name .getValue (), buffer);
-      },
-      disable: function (gl, shaderNode)
-      {
-         shaderNode .disableMatrix3Attrib (gl, this ._name .getValue ());
+         shaderNode .enableMatrix3Attrib (gl, this ._name .getValue (), buffer, 0, 0);
       },
    });
 
@@ -115403,11 +113635,11 @@ function (Fields,
       {
          X3DVertexAttributeNode .prototype .initialize .call (this);
 
-         this ._value .addInterest ("set_value", this);
+         this ._value .addInterest ("set_value__", this);
 
-         this .set_value ();
+         this .set_value__ ();
       },
-      set_value: function ()
+      set_value__: function ()
       {
          this .value  = this ._value .getValue ();
          this .length = this ._value .length;
@@ -115440,11 +113672,7 @@ function (Fields,
       },
       enable: function (gl, shaderNode, buffer)
       {
-         shaderNode .enableMatrix4Attrib (gl, this ._name .getValue (), buffer);
-      },
-      disable: function (gl, shaderNode)
-      {
-         shaderNode .disableMatrix4Attrib (gl, this ._name .getValue ());
+         shaderNode .enableMatrix4Attrib (gl, this ._name .getValue (), buffer, 0, 0);
       },
    });
 
@@ -117769,60 +115997,50 @@ function (Fields,
 
          return function (type, renderObject)
          {
-            try
+            if (type !== TraverseType .DISPLAY)
+               return;
+
+            if (! this .sourceNode)
+               return;
+
+            if (! this .sourceNode ._isActive .getValue () || this .sourceNode ._isPaused .getValue ())
+               return;
+
+            this .setTraversed (true);
+
+            const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
+
+            this .getEllipsoidParameter (modelViewMatrix,
+                                          Math .max (this ._maxBack  .getValue (), 0),
+                                          Math .max (this ._maxFront .getValue (), 0),
+                                          max);
+
+            if (max .distance < 1) // Sphere radius is 1
             {
-               if (type !== TraverseType .DISPLAY)
-                  return;
-
-               if (! this .sourceNode)
-                  return;
-
-               if (! this .sourceNode ._isActive .getValue () || this .sourceNode ._isPaused .getValue ())
-                  return;
-
-               this .setTraversed (true);
-
-               const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
-
                this .getEllipsoidParameter (modelViewMatrix,
-                                            Math .max (this ._maxBack  .getValue (), 0),
-                                            Math .max (this ._maxFront .getValue (), 0),
-                                            max);
+                                             Math .max (this ._minBack  .getValue (), 0),
+                                             Math .max (this ._minFront .getValue (), 0),
+                                             min);
 
-               if (max .distance < 1) // Sphere radius is 1
+               if (min .distance < 1) // Sphere radius is 1
                {
-                  this .getEllipsoidParameter (modelViewMatrix,
-                                               Math .max (this ._minBack  .getValue (), 0),
-                                               Math .max (this ._minFront .getValue (), 0),
-                                               min);
-
-                  if (min .distance < 1) // Sphere radius is 1
-                  {
-                     this .sourceNode .setVolume (this ._intensity .getValue ());
-                  }
-                  else
-                  {
-                     const
-                        d1        = max .intersection .abs (), // Viewer is here at (0, 0, 0)
-                        d2        = max .intersection .distance (min .intersection),
-                        d         = Math .min (d1 / d2, 1),
-                        intensity = Algorithm .clamp (this ._intensity .getValue (), 0, 1),
-                        volume    = intensity * d;
-
-                     this .sourceNode .setVolume (volume);
-                  }
+                  this .sourceNode .setVolume (this ._intensity .getValue ());
                }
                else
                {
-                  this .sourceNode .setVolume (0);
+                  const
+                     d1        = max .intersection .abs (), // Viewer is here at (0, 0, 0)
+                     d2        = max .intersection .distance (min .intersection),
+                     d         = Math .min (d1 / d2, 1),
+                     intensity = Algorithm .clamp (this ._intensity .getValue (), 0, 1),
+                     volume    = intensity * d;
+
+                  this .sourceNode .setVolume (volume);
                }
             }
-            catch (error)
+            else
             {
-               //console .error (error);
-
-               if (this .sourceNode)
-                  this .sourceNode .setVolume (0);
+               this .sourceNode .setVolume (0);
             }
          };
       })(),
@@ -118132,29 +116350,15 @@ function (Fields,
       },
       traverse: function (type, renderObject)
       {
-         try
-         {
-            this .textGeometry .traverse (type, renderObject);
+         this .textGeometry .traverse (type, renderObject);
 
-            X3DGeometryNode .prototype .traverse .call (this, type, renderObject);
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         X3DGeometryNode .prototype .traverse .call (this, type, renderObject);
       },
       display: function (gl, context)
       {
-         try
-         {
-            this .textGeometry .display (gl, context);
+         this .textGeometry .display (gl, context);
 
-            X3DGeometryNode .prototype .display .call (this, gl, context);
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
+         X3DGeometryNode .prototype .display .call (this, gl, context);
       },
       transformLine: function (line)
       {
@@ -119887,8 +118091,8 @@ function (DEBUG,
                SupportedNodes .addAbstractType (typeName, component .abstractTypes [typeName]);
          }
 
-         if (component .browser)
-            X3DBrowserContext .addContext (component .browser);
+         if (component .context)
+            X3DBrowserContext .addContext (component .context);
 
          if (component .name)
          {
@@ -121125,7 +119329,7 @@ function ($,
 
          // arguments .length === 1
 
-         if (!(url instanceof Fields .MFString))
+         if (! (url instanceof Fields .MFString))
             throw new Error ("Browser.createX3DFromURL: url must be of type MFString.");
 
          const
@@ -121173,12 +119377,12 @@ function ($,
             {
                if (loader !== this [_loader])
                {
-                  reject ();
+                  reject ("Loading of X3D file aborted.");
                   return;
                }
 
                if (! this .getBrowserOptions () .getSplashScreen ())
-                  this .getCanvas () .fadeIn (0);
+                  this .getCanvas () .show ();
 
                if (scene)
                {
@@ -121194,7 +119398,7 @@ function ($,
 
                   setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
 
-                  reject ();
+                  reject ("Couldn't load X3D file.");
                }
             }
             .bind (this),
@@ -121202,7 +119406,7 @@ function ($,
             {
                if (loader !== this [_loader])
                {
-                  reject ();
+                  reject ("Change viewpoint aborted.");
                   return;
                }
 
@@ -121217,7 +119421,7 @@ function ($,
             {
                if (loader !== this [_loader])
                {
-                  reject ();
+                  reject ("Loading of file aborted.");
                   return;
                }
 
@@ -121479,6 +119683,7 @@ function ($,
          this .setLive (true);
          this .getExecutionContext () .setLive (true);
          this .advanceTime (performance .now ());
+         this .addBrowserEvent ();
       },
       endUpdate: function ()
       {
@@ -121663,7 +119868,7 @@ function ($)
       {
          $(function ()
          {
-            const elements = $("X3DCanvas");
+            const elements = $("x3d-canvas, X3DCanvas");
 
             this .show (elements, error);
 
@@ -121684,10 +119889,16 @@ function ($)
          if (consoleElement .length)
             consoleElement .append (document .createTextNode (error));
 
-         elements .addClass ("x_ite-browser-fallback");
+         // X3DCanvas
          elements .children (".x_ite-private-browser") .hide ();
-         elements .children (":not(.x_ite-private-browser)") .addClass ("x_ite-fallback");
          elements .children (":not(.x_ite-private-browser)") .show ();
+
+         // x3d-canvas
+         elements .each (function (i, e)
+         {
+            if (e .shadowRoot)
+               e .shadowRoot .appendChild (document .createElement ("slot"));
+         });
       },
    };
 
@@ -121904,7 +120115,7 @@ function ($,
 
    function createBrowser (url, parameter)
    {
-      const element = $("<X3DCanvas></X3DCanvas>");
+      const element = $("<x3d-canvas></x3d-canvas>");
 
       if (url instanceof Fields .MFString)
           element .attr ("url", url .toString ())
@@ -121914,25 +120125,35 @@ function ($,
       return element [0];
    }
 
-   function getBrowser (dom)
+   function getBrowser (element)
    {
-      return $(dom || "X3DCanvas") .data ("browser");
+      return $(element || "x3d-canvas, X3DCanvas") .data ("browser");
    }
 
-   function createBrowserFromElement (dom)
+   function createBrowserFromElement (element)
    {
-      dom = $(dom);
+      try
+      {
+         element = $(element);
 
-      if (dom .find (".x_ite-private-browser") .length)
-         return;
+         if (element .find (".x_ite-private-browser") .length)
+            return;
 
-      const browser = new X3DBrowser (dom);
+         const browser = new X3DBrowser (element);
 
-      dom .data ("browser", browser);
+         element .data ("browser", browser);
 
-      browser .setup ();
+         browser .setup ();
 
-      return browser;
+         setTimeout (function () { callbacks .resolve (); }, 0);
+
+         return browser;
+      }
+      catch (error)
+      {
+         Fallback .show ($("x3d-canvas, X3DCanvas"), error);
+         fallbacks .resolve (error);
+      }
    }
 
    const
@@ -121956,20 +120177,7 @@ function ($,
 
       $(function ()
       {
-         const elements = $("X3DCanvas");
-
-         elements .children () .hide ();
-
-         try
-         {
-            $.map (elements, createBrowserFromElement);
-            callbacks .resolve ();
-         }
-         catch (error)
-         {
-            Fallback .show (elements, error);
-            fallbacks .resolve (error);
-         }
+         $.map ($("X3DCanvas"), createBrowserFromElement);
       });
    }
 
@@ -121977,11 +120185,17 @@ function ($,
 
    Object .assign (X3D,
    {
+      hidden: [
+         "hidden",
+         "createBrowserFromElement",
+      ],
+
       require:                     require,
       define:                      define,
 
       getBrowser:                  getBrowser,
       createBrowser:               createBrowser,
+      createBrowserFromElement:    createBrowserFromElement,
 
       X3DConstants:                X3DConstants,
       X3DBrowser:                  X3DBrowser,
@@ -122181,17 +120395,43 @@ const getScriptURL = (function ()
 
    // Now assign our X3D.
    window .X3D                        = X_ITE;
-   window [Symbol .for ("X_ITE.X3D-5.0.4")] = X_ITE;
+   window [Symbol .for ("X_ITE.X3D-6.0.0")] = X_ITE;
 
    if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
       __global_module__ .exports = X_ITE;
 
+   // Define element.
+
    // IE fix.
    document .createElement ("X3DCanvas");
+
+   class X3DCanvas extends HTMLElement
+   {
+      constructor ()
+      {
+         super ();
+
+         this .attachShadow ({ mode: "open" });
+
+         require ([ "x_ite/X3D" ], function (X3D)
+         {
+            X3D .createBrowserFromElement (this);
+         }
+         .bind (this));
+      }
+   }
+
+   customElements .define ("x3d-canvas", X3DCanvas);
+
+   // Assign functions to X_ITE and init.
 
    require (["x_ite/X3D"], function (X3D)
    {
       Object .assign (X_ITE, X3D);
+
+      for (const key of X3D .hidden)
+         delete X_ITE [key];
+
       X3D ();
    });
 })();

@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = window [Symbol .for ("X_ITE.X3D-5.0.4")] .define,
-	require = window [Symbol .for ("X_ITE.X3D-5.0.4")] .require;
+	define  = window [Symbol .for ("X_ITE.X3D-6.0.0")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-6.0.0")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -338,7 +338,6 @@ function (Fields,
          const gl = this .getBrowser () .getContext ();
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
-         gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
          if (this .isComplete ())
          {
@@ -347,14 +346,12 @@ function (Fields,
             for (let i = 0; i < 6; ++ i)
             {
                const
-                  gl      = this .getBrowser () .getContext (),
                   texture = textures [i],
                   width   = texture .getWidth (),
                   height  = texture .getHeight (),
                   data    = texture .getData ();
 
                gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, !texture .getFlipY ());
-               gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
 
                if (data instanceof Uint8Array)
                {
@@ -362,9 +359,11 @@ function (Fields,
                }
                else
                {
-                  gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, data);
+                  gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, data);
                }
             }
+
+            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
             this .updateTextureProperties ();
          }
@@ -767,7 +766,6 @@ function (Fields,
             renderer .getProjectionMatrix () .pushMatrix (projectionMatrix);
 
             gl .bindTexture (this .getTarget (), this .getTexture ());
-            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
             for (let i = 0; i < 6; ++ i)
             {
@@ -779,17 +777,7 @@ function (Fields,
                renderer .getCameraSpaceMatrix () .rotate (rotations [i]);
                renderer .getCameraSpaceMatrix () .scale (scales [i]);
 
-               try
-               {
-                  renderer .getViewMatrix () .pushMatrix (invCameraSpaceMatrix .assign (renderer .getCameraSpaceMatrix () .get ()) .inverse ());
-               }
-               catch (error)
-               {
-                  console .error (error);
-
-                  renderer .getViewMatrix () .pushMatrix (Matrix4 .Identity);
-               }
-
+               renderer .getViewMatrix () .pushMatrix (invCameraSpaceMatrix .assign (renderer .getCameraSpaceMatrix () .get ()) .inverse ());
                renderer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
 
                // Setup headlight if enabled.
@@ -1086,7 +1074,6 @@ function ($,
             let opaque = true;
 
             gl .bindTexture (this .getTarget (), this .getTexture ());
-            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
             for (let i = 0; i < 6; ++ i)
             {

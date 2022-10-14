@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = window [Symbol .for ("X_ITE.X3D-5.0.4")] .define,
-	require = window [Symbol .for ("X_ITE.X3D-5.0.4")] .require;
+	define  = window [Symbol .for ("X_ITE.X3D-6.0.0")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-6.0.0")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -883,58 +883,50 @@ function (Fields,
 
                         for (var t = 0, tLength = targets .size; t < tLength; ++ t)
                         {
-                           try
+                           var
+                              target       = targets [t],
+                              geometryNode = target .geometryNode,
+                              vertices     = this .pickingGeometryNode .getVertices ();
+
+                           targetBBox .assign (geometryNode .getBBox ()) .multRight (target .modelMatrix);
+                           matrix .assign (target .modelMatrix) .inverse () .multLeft (modelMatrix);
+
+                           for (var v = 0, vLength = vertices .length; v < vLength; v += 8)
                            {
-                              var
-                                 target       = targets [t],
-                                 geometryNode = target .geometryNode,
-                                 vertices     = this .pickingGeometryNode .getVertices ();
+                              matrix .multVecMatrix (point1 .set (vertices [v + 0], vertices [v + 1], vertices [v + 2]));
+                              matrix .multVecMatrix (point2 .set (vertices [v + 4], vertices [v + 5], vertices [v + 6]));
+                              line .setPoints (point1, point2);
 
-                              targetBBox .assign (geometryNode .getBBox ()) .multRight (target .modelMatrix);
-                              matrix .assign (target .modelMatrix) .inverse () .multLeft (modelMatrix);
+                              intersections .length = 0;
 
-                              for (var v = 0, vLength = vertices .length; v < vLength; v += 8)
+                              if (geometryNode .intersectsLine (line, clipPlanes, target .modelMatrix, intersections))
                               {
-                                 matrix .multVecMatrix (point1 .set (vertices [v + 0], vertices [v + 1], vertices [v + 2]));
-                                 matrix .multVecMatrix (point2 .set (vertices [v + 4], vertices [v + 5], vertices [v + 6]));
-                                 line .setPoints (point1, point2);
-
-                                 intersections .length = 0;
-
-                                 if (geometryNode .intersectsLine (line, clipPlanes, target .modelMatrix, intersections))
+                                 for (var i = 0, iLength = intersections .length; i < iLength; ++ i)
                                  {
-                                    for (var i = 0, iLength = intersections .length; i < iLength; ++ i)
-                                    {
-                                       // Test if intersection.point is between point1 and point2.
+                                    // Test if intersection.point is between point1 and point2.
 
-                                       var intersection = intersections [i];
+                                    var intersection = intersections [i];
 
-                                       a .assign (intersection .point) .subtract (point1);
-                                       b .assign (intersection .point) .subtract (point2);
+                                    a .assign (intersection .point) .subtract (point1);
+                                    b .assign (intersection .point) .subtract (point2);
 
-                                       var
-                                          c = a .add (b) .abs (),
-                                          s = point1 .distance (point2);
+                                    var
+                                       c = a .add (b) .abs (),
+                                       s = point1 .distance (point2);
 
-                                       if (c <= s)
-                                          target .intersections .push (intersection);
-                                    }
+                                    if (c <= s)
+                                       target .intersections .push (intersection);
                                  }
                               }
-
-                              if (target .intersections .length)
-                              {
-                                 pickingCenter .assign (pickingBBox .center);
-                                 targetCenter  .assign (targetBBox .center);
-
-                                 target .intersected = true;
-                                 target .distance    = pickingCenter .distance (targetCenter);
-                              }
                            }
-                           catch (error)
+
+                           if (target .intersections .length)
                            {
-                              // Catch inverse.
-                              console .error (error);
+                              pickingCenter .assign (pickingBBox .center);
+                              targetCenter  .assign (targetBBox .center);
+
+                              target .intersected = true;
+                              target .distance    = pickingCenter .distance (targetCenter);
                            }
                         }
                      }

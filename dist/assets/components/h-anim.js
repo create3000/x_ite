@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = window [Symbol .for ("X_ITE.X3D-5.0.4")] .define,
-	require = window [Symbol .for ("X_ITE.X3D-5.0.4")] .require;
+	define  = window [Symbol .for ("X_ITE.X3D-6.0.0")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-6.0.0")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -363,102 +363,95 @@ function (Fields,
 
          return function (type, renderObject)
          {
-            try
-            {
-               if (type !== TraverseType .CAMERA)
-                  return;
+            if (type !== TraverseType .CAMERA)
+               return;
 
-               if (! this .skinCoordNode)
-                  return;
+            if (! this .skinCoordNode)
+               return;
+
+            var
+               jointNodes     = this .jointNodes,
+               skinNormalNode = this .skinNormalNode,
+               skinCoordNode  = this .skinCoordNode,
+               restNormalNode = this .restNormalNode,
+               restCoordNode  = this .restCoordNode;
+
+            // Reset skin normals and coords.
+
+            if (skinNormalNode)
+               skinNormalNode ._vector .assign (restNormalNode ._vector);
+
+            skinCoordNode ._point .assign (restCoordNode ._point);
+
+            // Determine inverse model matrix of humanoid.
+
+            invModelMatrix .assign (this .transformNode .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
+
+            // Apply joint transformations.
+
+            for (var j = 0, jointNodesLength = jointNodes .length; j < jointNodesLength; ++ j)
+            {
+               var
+                  jointNode            = jointNodes [j],
+                  skinCoordIndexLength = jointNode ._skinCoordIndex .length;
+
+               if (skinCoordIndexLength === 0)
+                  continue;
 
                var
-                  jointNodes     = this .jointNodes,
-                  skinNormalNode = this .skinNormalNode,
-                  skinCoordNode  = this .skinCoordNode,
-                  restNormalNode = this .restNormalNode,
-                  restCoordNode  = this .restCoordNode;
+                  jointMatrix    = jointNode .getModelMatrix () .multRight (invModelMatrix),
+                  displacerNodes = jointNode .getDisplacers ();
 
-               // Reset skin normals and coords.
-
-               if (skinNormalNode)
-                  skinNormalNode ._vector .assign (restNormalNode ._vector);
-
-               skinCoordNode ._point .assign (restCoordNode ._point);
-
-               // Determine inverse model matrix of humanoid.
-
-               invModelMatrix .assign (this .transformNode .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ()) .inverse ();
-
-               // Apply joint transformations.
-
-               for (var j = 0, jointNodesLength = jointNodes .length; j < jointNodesLength; ++ j)
+               for (var d = 0, displacerNodesLength = displacerNodes .length; d < displacerNodesLength; ++ d)
                {
                   var
-                     jointNode            = jointNodes [j],
-                     skinCoordIndexLength = jointNode ._skinCoordIndex .length;
+                     displacerNode       = displacerNodes [d],
+                     coordIndex          = displacerNode ._coordIndex .getValue (),
+                     coordIndexLength    = displacerNode ._coordIndex .length,
+                     weight              = displacerNode ._weight .getValue (),
+                     displacements       = displacerNode ._displacements .getValue (),
+                     displacementsLength = displacerNode ._displacements .length;
 
-                  if (skinCoordIndexLength === 0)
-                     continue;
-
-                  var
-                     jointMatrix    = jointNode .getModelMatrix () .multRight (invModelMatrix),
-                     displacerNodes = jointNode .getDisplacers ();
-
-                  for (var d = 0, displacerNodesLength = displacerNodes .length; d < displacerNodesLength; ++ d)
+                  for (var i = 0; i < coordIndexLength; ++ i)
                   {
                      var
-                        displacerNode       = displacerNodes [d],
-                        coordIndex          = displacerNode ._coordIndex .getValue (),
-                        coordIndexLength    = displacerNode ._coordIndex .length,
-                        weight              = displacerNode ._weight .getValue (),
-                        displacements       = displacerNode ._displacements .getValue (),
-                        displacementsLength = displacerNode ._displacements .length;
+                        i3           = i * 3,
+                        index        = coordIndex [i],
+                        displacement = i < displacementsLength ? point .set (displacements [i3], displacements [i3 + 1], displacements [i3 + 2]) : point .assign (Vector3 .Zero);
 
-                     for (var i = 0; i < coordIndexLength; ++ i)
-                     {
-                        var
-                           i3           = i * 3,
-                           index        = coordIndex [i],
-                           displacement = i < displacementsLength ? point .set (displacements [i3], displacements [i3 + 1], displacements [i3 + 2]) : point .assign (Vector3 .Zero);
-
-                        skinCoordNode .get1Point (index, skin);
-                        jointMatrix .multDirMatrix (displacement) .multiply (weight) .add (skin);
-                        skinCoordNode .set1Point (index, displacement);
-                     }
-                  }
-
-                  var
-                     normalMatrix          = skinNormalNode ? jointMatrix .submatrix .transpose () .inverse () : null,
-                     skinCoordIndex        = jointNode ._skinCoordIndex .getValue (),
-                     skinCoordWeight       = jointNode ._skinCoordWeight .getValue (),
-                     skinCoordWeightLength = jointNode ._skinCoordWeight .length;
-
-                  for (var i = 0; i < skinCoordIndexLength; ++ i)
-                  {
-                     var
-                        index  = skinCoordIndex [i],
-                        weight = i < skinCoordWeightLength ? skinCoordWeight [i] : 1;
-
-                     if (skinNormalNode)
-                     {
-                        rest .assign (restNormalNode .get1Vector (index, vector));
-                        skinNormalNode .get1Vector (index, skin);
-                        normalMatrix .multVecMatrix (vector) .subtract (rest) .multiply (weight) .add (skin);
-                        skinNormalNode .set1Vector (index, vector);
-                        // Should the normals be normalzed at end, or let it the shader do?
-                     }
-
-                     //skin += (rest * J - rest) * weight
-                     rest .assign (restCoordNode .get1Point (index, point));
                      skinCoordNode .get1Point (index, skin);
-                     jointMatrix .multVecMatrix (point) .subtract (rest) .multiply (weight) .add (skin);
-                     skinCoordNode .set1Point (index, point);
+                     jointMatrix .multDirMatrix (displacement) .multiply (weight) .add (skin);
+                     skinCoordNode .set1Point (index, displacement);
                   }
                }
-            }
-            catch (error)
-            {
-               console .error (error);
+
+               var
+                  normalMatrix          = skinNormalNode ? jointMatrix .submatrix .transpose () .inverse () : null,
+                  skinCoordIndex        = jointNode ._skinCoordIndex .getValue (),
+                  skinCoordWeight       = jointNode ._skinCoordWeight .getValue (),
+                  skinCoordWeightLength = jointNode ._skinCoordWeight .length;
+
+               for (var i = 0; i < skinCoordIndexLength; ++ i)
+               {
+                  var
+                     index  = skinCoordIndex [i],
+                     weight = i < skinCoordWeightLength ? skinCoordWeight [i] : 1;
+
+                  if (skinNormalNode)
+                  {
+                     rest .assign (restNormalNode .get1Vector (index, vector));
+                     skinNormalNode .get1Vector (index, skin);
+                     normalMatrix .multVecMatrix (vector) .subtract (rest) .multiply (weight) .add (skin);
+                     skinNormalNode .set1Vector (index, vector);
+                     // Should the normals be normalized at end, or let it the shader do?
+                  }
+
+                  //skin += (rest * J - rest) * weight
+                  rest .assign (restCoordNode .get1Point (index, point));
+                  skinCoordNode .get1Point (index, skin);
+                  jointMatrix .multVecMatrix (point) .subtract (rest) .multiply (weight) .add (skin);
+                  skinCoordNode .set1Point (index, point);
+               }
             }
          };
       })(),

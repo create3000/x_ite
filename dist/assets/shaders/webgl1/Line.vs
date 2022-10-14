@@ -5,16 +5,13 @@ uniform x3d_UnlitMaterialParameters x3d_Material;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 attribute float x3d_FogDepth;
+attribute vec4 x3d_TexCoord0;
 attribute vec4 x3d_Color;
 attribute vec4 x3d_Vertex;
+varying float lengthSoFar; 
 varying float fogDepth; 
 varying vec4 color; 
 varying vec3 vertex; 
-#ifdef X_ITE
-attribute vec4 x3d_TexCoord0;
-varying vec3 startPosition; 
-varying vec3 vertexPosition; 
-#endif
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 varying float depth;
 #endif
@@ -22,14 +19,10 @@ void
 main ()
 {
 vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
+lengthSoFar = x3d_TexCoord0 .a;
 fogDepth = x3d_FogDepth;
 vertex = position .xyz;
 gl_Position = x3d_ProjectionMatrix * position;
-#ifdef X_ITE
-vec4 start = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_TexCoord0;
-startPosition = start .xyz / start .w;
-vertexPosition = gl_Position .xyz / gl_Position .w;
-#endif
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 depth = 1.0 + gl_Position .w;
 #endif

@@ -4,8 +4,8 @@
 var module = { }, exports, process;
 
 const
-	define  = window [Symbol .for ("X_ITE.X3D-5.0.4")] .define,
-	require = window [Symbol .for ("X_ITE.X3D-5.0.4")] .require;
+	define  = window [Symbol .for ("X_ITE.X3D-6.0.0")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-6.0.0")] .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -1124,42 +1124,35 @@ function (X3DConstants,
       },
       set_originMatrix__: function ()
       {
-         try
+         if (this .geoOriginNode)
          {
-            if (this .geoOriginNode)
-            {
-               // Position
-               var t = this .origin;
+            // Position
+            var t = this .origin;
 
-               // Let's work out the orientation at that location in order
-               // to maintain a view where +Y is in the direction of gravitional
-               // up for that region of the planet's surface. This will be the
-               // value of the rotation matrix for the transform.
+            // Let's work out the orientation at that location in order
+            // to maintain a view where +Y is in the direction of gravitional
+            // up for that region of the planet's surface. This will be the
+            // value of the rotation matrix for the transform.
 
-               this .elevationFrame .normal (t, y);
+            this .elevationFrame .normal (t, y);
 
-               x .set (0, 0, 1) .cross (y);
+            x .set (0, 0, 1) .cross (y);
 
-               // Handle pole cases.
-               if (x .equals (Vector3 .Zero))
-                  x .set (1, 0, 0);
+            // Handle pole cases.
+            if (x .equals (Vector3 .Zero))
+               x .set (1, 0, 0);
 
-               z .assign (x) .cross (y);
+            z .assign (x) .cross (y);
 
-               x .normalize ();
-               z .normalize ();
+            x .normalize ();
+            z .normalize ();
 
-               this .originMatrix .set (x .x, x .y, x .z, 0,
-                                        y .x, y .y, y .z, 0,
-                                        z .x, z .y, z .z, 0,
-                                        t .x, t .y, t .z, 1);
+            this .originMatrix .set (x .x, x .y, x .z, 0,
+                                       y .x, y .y, y .z, 0,
+                                       z .x, z .y, z .z, 0,
+                                       t .x, t .y, t .z, 1);
 
-               this .invOriginMatrix .assign (this .originMatrix) .inverse ();
-            }
-         }
-         catch (error)
-         {
-            /// ???
+            this .invOriginMatrix .assign (this .originMatrix) .inverse ();
          }
       },
       set_rotateYUp__: function ()
@@ -2926,18 +2919,13 @@ function (Fields,
       },
       interpolate: function (index0, index1, weight)
       {
-         try
-         {
-            this .getCoord (this ._keyValue [index0] .getValue (), this .keyValue0);
-            this .getCoord (this ._keyValue [index1] .getValue (), this .keyValue1);
+         this .getCoord (this ._keyValue [index0] .getValue (), this .keyValue0);
+         this .getCoord (this ._keyValue [index1] .getValue (), this .keyValue1);
 
-            var coord = this .geocentric .slerp (this .keyValue0, this .keyValue1, weight);
+         var coord = this .geocentric .slerp (this .keyValue0, this .keyValue1, weight);
 
-            this ._geovalue_changed = this .getGeoCoord (coord, this .geovalue);
-            this ._value_changed    = coord;
-         }
-         catch (error)
-         { }
+         this ._geovalue_changed = this .getGeoCoord (coord, this .geovalue);
+         this ._value_changed    = coord;
       },
    });
 
@@ -3224,25 +3212,18 @@ function (Fields,
       },
       set_over__: function (over, hit, modelViewMatrix, projectionMatrix, viewport)
       {
-         try
+         X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
+
+         if (this ._isOver .getValue ())
          {
-            X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
+            var intersection = hit .intersection;
 
-            if (this ._isOver .getValue ())
-            {
-               var intersection = hit .intersection;
+            invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-               invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-
-               this ._hitTexCoord_changed = intersection .texCoord;
-               this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
-               this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
-               this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
-            }
-         }
-         catch (error)
-         {
-            console .error (error);
+            this ._hitTexCoord_changed = intersection .texCoord;
+            this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
+            this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
+            this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
          }
       },
    });
@@ -3376,26 +3357,14 @@ function (Fields,
       },
       eventsProcessed: function ()
       {
-         try
-         {
-            this .setHidden (this ._scale .x === 0 ||
-                             this ._scale .y === 0 ||
-                             this ._scale .z === 0);
+         this .getLocationMatrix (this ._geoCenter .getValue (), locationMatrix);
 
-            this .getLocationMatrix (this ._geoCenter .getValue (), locationMatrix);
+         matrix .set (this ._translation      .getValue (),
+                        this ._rotation         .getValue (),
+                        this ._scale            .getValue (),
+                        this ._scaleOrientation .getValue ());
 
-            matrix .set (this ._translation      .getValue (),
-                         this ._rotation         .getValue (),
-                         this ._scale            .getValue (),
-                         this ._scaleOrientation .getValue ());
-
-            this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
-         }
-         catch (error)
-         {
-            // Should normally not happen.
-            this .setHidden (true);
-         }
+         this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
       },
    });
 

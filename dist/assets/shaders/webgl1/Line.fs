@@ -6,13 +6,10 @@ precision highp int;
 uniform float x3d_AlphaCutoff;
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
 uniform ivec4 x3d_Viewport;
+varying float lengthSoFar; 
 varying float fogDepth; 
 varying vec4 color; 
 varying vec3 vertex; 
-#ifdef X_ITE
-varying vec3 startPosition; 
-varying vec3 vertexPosition; 
-#endif
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 uniform float x3d_LogarithmicFarFactor1_2;
 varying float depth;
@@ -61,10 +58,8 @@ stipple ()
 {
 if (x3d_LineProperties .applied)
 {
-vec2 direction = (vertexPosition .xy - startPosition .xy) * vec2 (x3d_Viewport .zw) * 0.5;
-float distance = length (direction) / 16.0;
-float color = texture2D (x3d_LineProperties .linetype, vec2 (distance, distance)) .a;
-if (color == 0.0)
+float color = texture2D (x3d_LineProperties .linetype, vec2 (lengthSoFar, 0.5)) .a;
+if (color != 1.0)
 discard;
 }
 }

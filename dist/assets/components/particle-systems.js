@@ -4,8 +4,87 @@
 var module = { }, exports, process;
 
 const
-	define  = window [Symbol .for ("X_ITE.X3D-5.0.4")] .define,
-	require = window [Symbol .for ("X_ITE.X3D-5.0.4")] .require;
+	define  = window [Symbol .for ("X_ITE.X3D-6.0.0")] .define,
+	require = window [Symbol .for ("X_ITE.X3D-6.0.0")] .require;
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+ define ('x_ite/Browser/ParticleSystems/GeometryTypes',[],function ()
+{
+"use strict";
+
+   let i = 0;
+
+   const GeometryTypes = {
+      POINT:    i ++,
+      LINE:     i ++,
+      TRIANGLE: i ++,
+      QUAD:     i ++,
+      SPRITE:   i ++,
+      GEOMETRY: i ++,
+   };
+
+   return GeometryTypes;
+});
+
+
+define('text!x_ite/Browser/ParticleSystems/Line3.glsl',[],function () { return 'struct Line3 {\n   vec3 point;\n   vec3 direction;\n};\n\n// Line3\n// line3 (const in vec3 point1, const in vec3 point2)\n// {\n//    return Line3 (point1, save_normalize (point2 - point1));\n// }\n\n/* Line intersect triangle */\n\nbool\nintersects (const in Line3 line, const in vec3 a, const in vec3 b, const in vec3 c, out vec3 r)\n{\n   // find vectors for two edges sharing vert0\n   vec3 edge1 = b - a;\n   vec3 edge2 = c - a;\n\n   // begin calculating determinant - also used to calculate U parameter\n   vec3 pvec = cross (line .direction, edge2);\n\n   // if determinant is near zero, ray lies in plane of triangle\n   float det = dot (edge1, pvec);\n\n   // Non culling intersection\n\n   if (det == 0.0)\n      return false;\n\n   float inv_det = 1.0 / det;\n\n   // calculate distance from vert0 to ray point\n   vec3 tvec = line .point - a;\n\n   // calculate U parameter and test bounds\n   float u = dot (tvec, pvec) * inv_det;\n\n   if (u < 0.0 || u > 1.0)\n      return false;\n\n   // prepare to test V parameter\n   vec3 qvec = cross (tvec, edge1);\n\n   // calculate V parameter and test bounds\n   float v = dot (line .direction, qvec) * inv_det;\n\n   if (v < 0.0 || u + v > 1.0)\n      return false;\n\n   r = vec3 (u, v, 1.0 - u - v);\n\n   return true;\n}\n';});
+
+
+define('text!x_ite/Browser/ParticleSystems/Plane3.glsl',[],function () { return 'struct Plane3\n{\n   vec3  normal;\n   float distanceFromOrigin;\n};\n\nPlane3\nplane3 (const in vec3 point, const in vec3 normal)\n{\n   return Plane3 (normal, dot (normal, point));\n}\n\nfloat\nplane_distance (const in Plane3 plane, const in vec3 point)\n{\n   return dot (point, plane .normal) - plane .distanceFromOrigin;\n}\n\n/* Plane intersect line */\nbool\nintersects (const in Plane3 plane, const in Line3 line, out vec3 point)\n{\n   // Check if the line is parallel to the plane.\n   float theta = dot (line .direction, plane .normal);\n\n   // Plane and line are parallel.\n   if (theta == 0.0)\n      return false;\n\n   // Plane and line are not parallel. The intersection point can be calculated now.\n   float t = (plane .distanceFromOrigin - dot (plane .normal, line .point)) / theta;\n\n   point = line .point + line .direction * t;\n\n   return true;\n}\n\n/* Find find the first point that is farther to the plane than value. */\n// int\n// upper_bound (const in vec4 points [ARRAY_SIZE], in int count, const in float value, const in Plane3 plane)\n// {\n//    int first = 0;\n//    int step  = 0;\n\n//    while (count > 0)\n//    {\n//       int index = first;\n\n//       step = count >> 1;\n\n//       index += step;\n\n//       if (value < plane_distance (plane, points [index] .xyz))\n//       {\n//          count = step;\n//       }\n//       else\n//       {\n//          first  = ++ index;\n//          count -= step + 1;\n//       }\n//    }\n\n//    return first;\n// }\n\n/* CombSort: sort points in distance to a plane. */\nvoid\nsort (inout vec4 points [ARRAY_SIZE], const in int count, const in Plane3 plane)\n{\n   const float shrink = 1.0 / 1.3;\n\n   int  gap       = count;\n   bool exchanged = true;\n\n   while (exchanged)\n   {\n      gap = int (float (gap) * shrink);\n\n      if (gap <= 1)\n      {\n         exchanged = false;\n         gap       = 1;\n      }\n\n      for (int i = 0, l = count - gap; i < l; ++ i)\n      {\n         int j = gap + i;\n\n         if (plane_distance (plane, points [i] .xyz) > plane_distance (plane, points [j] .xyz))\n         {\n            vec4 tmp1 = points [i];\n            points [i] = points [j];\n            points [j] = tmp1;\n\n            exchanged = true;\n         }\n      }\n   }\n}\n\n\n// /* CombSort: sort points and normals in distance to a plane. */\n// void\n// sort (inout vec4 points [ARRAY_SIZE], inout vec3 normals [ARRAY_SIZE], const in int count, const in Plane3 plane)\n// {\n//    const float shrink = 1.0 / 1.3;\n\n//    int  gap       = count;\n//    bool exchanged = true;\n\n//    while (exchanged)\n//    {\n//       gap = int (float (gap) * shrink);\n\n//       if (gap <= 1)\n//       {\n//          exchanged = false;\n//          gap       = 1;\n//       }\n\n//       for (int i = 0, l = count - gap; i < l; ++ i)\n//       {\n//          int j = gap + i;\n\n//          if (plane_distance (plane, points [i] .xyz) > plane_distance (plane, points [j] .xyz))\n//          {\n//             vec4 tmp1 = points [i];\n//             points [i] = points [j];\n//             points [j] = tmp1;\n\n//             vec3 tmp2   = normals [i];\n//             normals [i] = normals [j];\n//             normals [j] = tmp2;\n\n//             exchanged = true;\n//          }\n//       }\n//    }\n// }\n\nint\nmin_index (const in vec4 points [ARRAY_SIZE], const in int count, const in float value, const in Plane3 plane)\n{\n   int   index = -1;\n   float dist  = 1000000.0;\n\n   for (int i = 0; i < count; ++ i)\n   {\n      float d = plane_distance (plane, points [i] .xyz);\n\n      if (d >= value && d < dist)\n      {\n         dist  = d;\n         index = i;\n      }\n   }\n\n   return index;\n}\n';});
+
+
+define('text!x_ite/Browser/ParticleSystems/Box3.glsl',[],function () { return 'bool\nintersects (const in vec3 min, const in vec3 max, const in Line3 line)\n{\n   vec3 intersection;\n\n   // front\n\n   if (intersects (plane3 (max, vec3 (0.0, 0.0, 1.0)), line, intersection))\n   {\n      if (all (greaterThanEqual (vec4 (intersection .xy, max .xy), vec4 (min .xy, intersection .xy))))\n         return true;\n   }\n\n   // back\n\n   if (intersects (plane3 (min, vec3 (0.0, 0.0, -1.0)), line, intersection))\n   {\n      if (all (greaterThanEqual (vec4 (intersection .xy, max .xy), vec4 (min .xy, intersection .xy))))\n         return true;\n   }\n\n   // top\n\n   if (intersects (plane3 (max, vec3 (0.0, 1.0, 0.0)), line, intersection))\n   {\n      if (all (greaterThanEqual (vec4 (intersection .xz, max .xz), vec4 (min .xz, intersection .xz))))\n         return true;\n   }\n\n   // bottom\n\n   if (intersects (plane3 (min, vec3 (0.0, -1.0, 0.0)), line, intersection))\n   {\n      if (all (greaterThanEqual (vec4 (intersection .xz, max .xz), vec4 (min .xz, intersection .xz))))\n         return true;\n   }\n\n   // right\n\n   if (intersects (plane3 (max, vec3 (1.0, 0.0, 0.0)), line, intersection))\n   {\n      if (all (greaterThanEqual (vec4 (intersection .yz, max .yz), vec4 (min .yz, intersection .yz))))\n         return true;\n   }\n\n   return false;\n}\n';});
+
+
+define('text!x_ite/Browser/ParticleSystems/BVH.glsl',[],function () { return '#define BVH_NODE        0\n#define BVH_TRIANGLE    1\n#define BVH_STACK_SIZE  32\n\nint bvhNodeIndex = 0;\n\nvoid\nsetBVHIndex (const in int index)\n{\n   bvhNodeIndex = index;\n}\n\nint\ngetBVHRoot (const in sampler2D volume, const in int hierarchyIndex, const in int rootIndex)\n{\n   return int (texelFetch (volume, rootIndex, 0) .x) + hierarchyIndex;\n}\n\nint\ngetBVHType (const in sampler2D volume)\n{\n   return int (texelFetch (volume, bvhNodeIndex, 0) .x);\n}\n\nvec3\ngetBVHMin (const in sampler2D volume)\n{\n   return texelFetch (volume, bvhNodeIndex + 1, 0) .xyz;\n}\n\nvec3\ngetBVHMax (const in sampler2D volume)\n{\n   return texelFetch (volume, bvhNodeIndex + 2, 0) .xyz;\n}\n\nint\ngetBVHLeft (const in sampler2D volume, const in int hierarchyIndex)\n{\n   return int (texelFetch (volume, bvhNodeIndex, 0) .y) + hierarchyIndex;\n}\n\nint\ngetBVHRight (const in sampler2D volume, const in int hierarchyIndex)\n{\n   return int (texelFetch (volume, bvhNodeIndex, 0) .z) + hierarchyIndex;\n}\n\nint\ngetBVHTriangle (const in sampler2D volume)\n{\n   return int (texelFetch (volume, bvhNodeIndex, 0) .y);\n}\n\n/* Ray triangle intersection test */\n\nint\ngetIntersections (const in sampler2D volume, const in int verticesIndex, const in int hierarchyIndex, const in int rootIndex, const in Line3 line, out vec4 points [ARRAY_SIZE])\n{\n   int current    = getBVHRoot (volume, hierarchyIndex, rootIndex);\n   int count      = 0;\n   int stackIndex = -1;\n   int stack [BVH_STACK_SIZE];\n\n   while (stackIndex >= 0 || current >= 0)\n   {\n      if (current >= 0)\n      {\n         setBVHIndex (current);\n\n         if (getBVHType (volume) == BVH_NODE)\n         {\n            // Node\n\n            if (intersects (getBVHMin (volume), getBVHMax (volume), line))\n            {\n               stack [++ stackIndex] = current;\n\n               current = getBVHLeft (volume, hierarchyIndex);\n            }\n            else\n            {\n               current = -1;\n            }\n         }\n         else\n         {\n            // Triangle\n\n            int  t = getBVHTriangle (volume);\n            int  v = verticesIndex + t;\n            vec3 r = vec3 (0.0);\n\n            vec3 a = texelFetch (volume, v,     0) .xyz;\n            vec3 b = texelFetch (volume, v + 1, 0) .xyz;\n            vec3 c = texelFetch (volume, v + 2, 0) .xyz;\n\n            if (intersects (line, a, b, c, r))\n               points [count ++] = vec4 (r .z * a + r .x * b + r .y * c, 1.0);\n\n            current = -1;\n         }\n      }\n      else\n      {\n         setBVHIndex (stack [stackIndex --]);\n\n         current = getBVHRight (volume, hierarchyIndex);\n      }\n   }\n\n   return count;\n}\n\nint\ngetIntersections (const in sampler2D volume, const in int verticesIndex, const in int normalsIndex, const in int hierarchyIndex, const in int rootIndex, const in Line3 line, out vec4 points [ARRAY_SIZE], out vec3 normals [ARRAY_SIZE])\n{\n   int current    = getBVHRoot (volume, hierarchyIndex, rootIndex);\n   int count      = 0;\n   int stackIndex = -1;\n   int stack [BVH_STACK_SIZE];\n\n   while (stackIndex >= 0 || current >= 0)\n   {\n      if (current >= 0)\n      {\n         setBVHIndex (current);\n\n         if (getBVHType (volume) == BVH_NODE)\n         {\n            // Node\n\n            if (intersects (getBVHMin (volume), getBVHMax (volume), line))\n            {\n               stack [++ stackIndex] = current;\n\n               current = getBVHLeft (volume, hierarchyIndex);\n            }\n            else\n            {\n               current = -1;\n            }\n         }\n         else\n         {\n            // Triangle\n\n            int  t = getBVHTriangle (volume);\n            int  v = verticesIndex + t;\n            vec3 r = vec3 (0.0);\n\n            vec3 a = texelFetch (volume, v,     0) .xyz;\n            vec3 b = texelFetch (volume, v + 1, 0) .xyz;\n            vec3 c = texelFetch (volume, v + 2, 0) .xyz;\n\n            if (intersects (line, a, b, c, r))\n            {\n               points [count] = vec4 (r .z * a + r .x * b + r .y * c, 1.0);\n\n               int n = normalsIndex + t;\n\n               vec3 n0 = texelFetch (volume, n,     0) .xyz;\n               vec3 n1 = texelFetch (volume, n + 1, 0) .xyz;\n               vec3 n2 = texelFetch (volume, n + 2, 0) .xyz;\n\n               normals [count] = save_normalize (r .z * n0 + r .x * n1 + r .y * n2);\n\n               ++ count;\n            }\n\n            current = -1;\n         }\n      }\n      else\n      {\n         setBVHIndex (stack [stackIndex --]);\n\n         current = getBVHRight (volume, hierarchyIndex);\n      }\n   }\n\n   return count;\n}\n';});
+
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -57,40 +136,22 @@ const
 
 define ('x_ite/Components/ParticleSystems/X3DParticleEmitterNode',[
    "x_ite/Components/Core/X3DNode",
+   "x_ite/Browser/ParticleSystems/GeometryTypes",
    "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Geometry/Line3",
-   "standard/Math/Geometry/Plane3",
-   "standard/Math/Algorithm",
-   "standard/Math/Algorithms/QuickSort",
+   "text!x_ite/Browser/ParticleSystems/Line3.glsl",
+   "text!x_ite/Browser/ParticleSystems/Plane3.glsl",
+   "text!x_ite/Browser/ParticleSystems/Box3.glsl",
+   "text!x_ite/Browser/ParticleSystems/BVH.glsl",
 ],
 function (X3DNode,
+          GeometryTypes,
           X3DConstants,
-          Vector3,
-          Rotation4,
-          Line3,
-          Plane3,
-          Algorithm,
-          QuickSort)
+          Line3Source,
+          Plane3Source,
+          Box3Source,
+          BVHSource)
 {
 "use strict";
-
-   var
-      normal       = new Vector3 (0, 0, 0),
-      fromPosition = new Vector3 (0, 0, 0),
-      line         = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-      plane        = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
-
-   function PlaneCompare (a, b)
-   {
-      return plane .getDistanceToPoint (a) < plane .getDistanceToPoint (b);
-   }
-
-   function PlaneCompareValue (a, b)
-   {
-      return a < plane .getDistanceToPoint (b);
-   }
 
    function X3DParticleEmitterNode (executionContext)
    {
@@ -102,10 +163,23 @@ function (X3DNode,
       this ._mass        .setUnit ("mass");
       this ._surfaceArea .setUnit ("area");
 
-      this .rotations           = [ ];
-      this .intersections       = [ ];
-      this .intersectionNormals = [ ];
-      this .sorter              = new QuickSort (this .intersections, PlaneCompare);
+      this .samplers  = [ ];
+      this .uniforms  = { };
+      this .functions = [ ];
+      this .program   = null;
+
+      this .addSampler ("forces");
+      this .addSampler ("boundedVolume");
+      this .addSampler ("colorRamp");
+      this .addSampler ("texCoordRamp");
+
+      this .addUniform ("speed",     "uniform float speed;");
+      this .addUniform ("variation", "uniform float variation;");
+
+      this .addFunction (Line3Source);
+      this .addFunction (Plane3Source);
+      this .addFunction (Box3Source);
+      this .addFunction (BVHSource);
    }
 
    X3DParticleEmitterNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -115,25 +189,27 @@ function (X3DNode,
       {
          X3DNode .prototype .initialize .call (this);
 
-         this ._speed     .addInterest ("set_speed__", this);
-         this ._variation .addInterest ("set_variation__", this);
-         this ._mass      .addInterest ("set_mass__", this);
+         const gl = this .getBrowser () .getContext ();
 
+         if (gl .getVersion () < 2)
+            return;
+
+         // Create program.
+
+         this .program           = this .createProgram ();
+         this .transformFeedback = gl .createTransformFeedback ();
+
+         // Initialize fields.
+
+         this ._on        .addInterest ("set_on__",        this);
+         this ._speed     .addInterest ("set_speed__",     this);
+         this ._variation .addInterest ("set_variation__", this);
+         this ._mass      .addInterest ("set_mass__",      this);
+
+         this .set_on__ ();
          this .set_speed__ ();
          this .set_variation__ ();
          this .set_mass__ ();
-      },
-      set_speed__: function ()
-      {
-         this .speed = this ._speed .getValue ();
-      },
-      set_variation__: function ()
-      {
-         this .variation = this ._variation .getValue ();
-      },
-      set_mass__: function ()
-      {
-         this .mass = this ._mass .getValue ();
       },
       isExplosive: function ()
       {
@@ -143,28 +219,21 @@ function (X3DNode,
       {
          return this .mass;
       },
-      getRandomLifetime: function (particleLifetime, lifetimeVariation)
+      set_on__: function ()
       {
-         var
-            v   = particleLifetime * lifetimeVariation,
-            min = Math .max (0, particleLifetime - v),
-            max = particleLifetime + v;
-
-         return Math .random () * (max - min) + min;
+         this .on = this ._on .getValue ();
       },
-      getRandomSpeed: function ()
+      set_speed__: function ()
       {
-         var
-            speed = this .speed,
-            v     = speed * this .variation,
-            min   = Math .max (0, speed - v),
-            max   = speed + v;
-
-         return Math .random () * (max - min) + min;
+         this .setUniform ("uniform1f", "speed", this ._speed .getValue ());
       },
-      getSphericalRandomVelocity: function (velocity)
+      set_variation__: function ()
       {
-         return this .getRandomNormal (velocity) .multiply (this .getRandomSpeed ());
+         this .setUniform ("uniform1f", "variation", this ._variation .getValue ());
+      },
+      set_mass__: function ()
+      {
+         this .mass = this ._mass .getValue ();
       },
       getRandomValue: function (min, max)
       {
@@ -172,7 +241,7 @@ function (X3DNode,
       },
       getRandomNormal: function (normal)
       {
-         var
+         const
             theta = this .getRandomValue (-1, 1) * Math .PI,
             cphi  = this .getRandomValue (-1, 1),
             phi   = Math .acos (cphi),
@@ -182,234 +251,834 @@ function (X3DNode,
                              Math .cos (theta) * r,
                              cphi);
       },
-      getRandomNormalWithAngle: function (angle, normal)
-      {
-         var
-            theta = (Math .random () * 2 - 1) * Math .PI,
-            cphi  = this .getRandomValue (Math .cos (angle), 1),
-            phi   = Math .acos (cphi),
-            r     = Math .sin (phi);
-
-         return normal .set (Math .sin (theta) * r,
-                             Math .cos (theta) * r,
-                             cphi);
-      },
-      getRandomNormalWithDirectionAndAngle: function (direction, angle, normal)
-      {
-         rotation .setFromToVec (Vector3 .zAxis, direction);
-
-         return rotation .multVecRot (this .getRandomNormalWithAngle (angle, normal));
-      },
-      getRandomSurfaceNormal: function (normal)
-      {
-         var
-            theta = this .getRandomValue (-1, 1) * Math .PI,
-            cphi  = Math .pow (Math .random (), 1/3),
-            phi   = Math .acos (cphi),
-            r     = Math .sin (phi);
-
-         return normal .set (Math .sin (theta) * r,
-                             Math .cos (theta) * r,
-                             cphi);
-      },
       animate: function (particleSystem, deltaTime)
       {
-         var
-            particles         = particleSystem .particles,
-            numParticles      = particleSystem .numParticles,
-            createParticles   = particleSystem .createParticles,
-            particleLifetime  = particleSystem .particleLifetime,
-            lifetimeVariation = particleSystem .lifetimeVariation,
-            speeds            = particleSystem .speeds,            // speed of velocities
-            velocities        = particleSystem .velocities,        // resulting velocities from forces
-            turbulences       = particleSystem .turbulences,       // turbulences
-            rotations         = this .rotations,                   // rotation to direction of force
-            numForces         = particleSystem .numForces,         // number of forces
-            boundedPhysics    = particleSystem .boundedVertices .length,
-            boundedVolume     = particleSystem .boundedVolume;
+         const
+            browser         = this .getBrowser (),
+            gl              = browser .getContext (),
+            inputParticles  = particleSystem .inputParticles,
+            particleStride  = particleSystem .particleStride,
+            particleOffsets = particleSystem .particleOffsets,
+            program         = this .program;
 
-         for (var i = rotations .length; i < numForces; ++ i)
-            rotations [i] = new Rotation4 (0, 0, 1, 0);
+         // Start
 
-         for (var i = 0; i < numForces; ++ i)
-            rotations [i] .setFromToVec (Vector3 .zAxis, velocities [i]);
+         gl .useProgram (program);
 
-         for (var i = 0; i < numParticles; ++ i)
+         // Uniforms
+
+         gl .uniform1i (program .randomSeed,        Math .random () * 0xffffffff);
+         gl .uniform1i (program .geometryType,      particleSystem .geometryType);
+         gl .uniform1i (program .createParticles,   particleSystem .createParticles && this .on);
+         gl .uniform1f (program .particleLifetime,  particleSystem .particleLifetime);
+         gl .uniform1f (program .lifetimeVariation, particleSystem .lifetimeVariation);
+         gl .uniform1f (program .deltaTime,         deltaTime);
+         gl .uniform2f (program .particleSize,      particleSystem ._particleSize .x, particleSystem ._particleSize .y);
+
+         // Forces
+
+         gl .uniform1i (program .numForces, particleSystem .numForces);
+
+         if (particleSystem .numForces)
          {
-            var
-               particle    = particles [i],
-               elapsedTime = particle .elapsedTime + deltaTime;
+            gl .activeTexture (gl .TEXTURE0 + program .forcesTextureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, particleSystem .forcesTexture);
+         }
 
-            if (elapsedTime > particle .lifetime)
+         // Bounded Physics
+
+         if (particleSystem .boundedHierarchyRoot < 0)
+         {
+            gl .uniform1i (program .boundedHierarchyRoot, -1);
+         }
+         else
+         {
+            gl .uniform1i (program .boundedVerticesIndex,  particleSystem .boundedVerticesIndex);
+            gl .uniform1i (program .boundedNormalsIndex,   particleSystem .boundedNormalsIndex);
+            gl .uniform1i (program .boundedHierarchyIndex, particleSystem .boundedHierarchyIndex);
+            gl .uniform1i (program .boundedHierarchyRoot,  particleSystem .boundedHierarchyRoot);
+
+            gl .activeTexture (gl .TEXTURE0 + program .boundedVolumeTextureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, particleSystem .boundedTexture);
+         }
+
+         // Colors
+
+         gl .uniform1i (program .numColors, particleSystem .numColors);
+
+         if (particleSystem .numColors)
+         {
+            gl .activeTexture (gl .TEXTURE0 + program .colorRampTextureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, particleSystem .colorRampTexture);
+         }
+
+         // TexCoords
+
+         gl .uniform1i (program .numTexCoords, particleSystem .numTexCoords);
+
+         if (particleSystem .numTexCoords)
+         {
+            gl .uniform1i (program .texCoordCount, particleSystem .texCoordCount);
+
+            gl .activeTexture (gl .TEXTURE0 + program .texCoordRampTextureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, particleSystem .texCoordRampTexture);
+         }
+
+         // Other textures
+
+         this .activateTextures (gl, program);
+
+         // Input attributes
+
+         if (inputParticles .emitterArrayObject .enable (gl, program))
+         {
+            for (const [i, attribute] of program .inputs)
             {
-               // Create new particle or hide particle.
+               gl .bindBuffer (gl .ARRAY_BUFFER, inputParticles);
+               gl .enableVertexAttribArray (attribute);
+               gl .vertexAttribPointer (attribute, 4, gl .FLOAT, false, particleStride, particleOffsets [i]);
+            }
 
-               particle .lifetime    = this .getRandomLifetime (particleLifetime, lifetimeVariation);
-               particle .elapsedTime = 0;
+            gl .bindBuffer (gl .ARRAY_BUFFER, null);
+         }
 
-               if (createParticles)
+         // Transform particles.
+
+         gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, this .transformFeedback);
+         gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, particleSystem .outputParticles);
+         gl .enable (gl .RASTERIZER_DISCARD);
+         gl .beginTransformFeedback (gl .POINTS);
+         gl .drawArrays (gl .POINTS, 0, particleSystem .numParticles);
+         gl .endTransformFeedback ();
+         gl .disable (gl .RASTERIZER_DISCARD);
+         gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
+
+         // DEBUG
+
+         // const data = new Float32Array (particleSystem .numParticles * (particleStride / 4));
+         // gl .bindBuffer (gl .ARRAY_BUFFER, particleSystem .outputParticles);
+         // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
+         // console .log (data .slice (0, particleStride / 4));
+      },
+      addSampler: function (name)
+      {
+         this .samplers .push (name);
+      },
+      addUniform: function (name, uniform)
+      {
+         this .uniforms [name] = uniform;
+      },
+      setUniform: function (func, name, value1, value2, value3)
+      {
+         const
+            gl      = this .getBrowser () .getContext (),
+            program = this .program;
+
+         gl .useProgram (program);
+         gl [func] (program [name], value1, value2, value3);
+      },
+      addFunction: function (func)
+      {
+         this .functions .push (func);
+      },
+      createProgram: function ()
+      {
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
+
+         const vertexShaderSource = /* glsl */ `#version 300 es
+
+         precision highp float;
+         precision highp int;
+         precision highp sampler2D;
+
+         uniform int   randomSeed;
+         uniform int   geometryType;
+         uniform bool  createParticles;
+         uniform float particleLifetime;
+         uniform float lifetimeVariation;
+         uniform float deltaTime;
+         uniform vec2  particleSize;
+
+         uniform int       numForces;
+         uniform sampler2D forces;
+
+         uniform int       boundedVerticesIndex;
+         uniform int       boundedNormalsIndex;
+         uniform int       boundedHierarchyIndex;
+         uniform int       boundedHierarchyRoot;
+         uniform sampler2D boundedVolume;
+
+         uniform int       numColors;
+         uniform sampler2D colorRamp;
+
+         uniform int       texCoordCount;
+         uniform int       numTexCoords;
+         uniform sampler2D texCoordRamp;
+
+         ${Object .values (this .uniforms) .join ("\n")}
+
+         in vec4 input0;
+         in vec4 input2;
+         in vec4 input6;
+
+         out vec4 output0;
+         out vec4 output1;
+         out vec4 output2;
+
+         out vec4 output3;
+         out vec4 output4;
+         out vec4 output5;
+         out vec4 output6;
+
+         // Constants
+
+         ${Object .entries (GeometryTypes) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
+
+         const int   ARRAY_SIZE = 32;
+         const float M_PI       = 3.14159265359;
+
+         uniform float NaN;
+
+         // Texture
+
+         vec4
+         texelFetch (const in sampler2D sampler, const in int index, const in int lod)
+         {
+            int   x = textureSize (sampler, lod) .x;
+            ivec2 p = ivec2 (index % x, index / x);
+            vec4  t = texelFetch (sampler, p, lod);
+
+            return t;
+         }
+
+         // Math
+
+         // Save normalize, that will not divide by zero.
+         vec3
+         save_normalize (const in vec3 vector)
+         {
+            float l = length (vector);
+
+            if (l == 0.0)
+               return vec3 (0.0);
+
+            return vector / l;
+         }
+
+         // Quaternion
+
+         vec4
+         Quaternion (const in vec3 fromVector, const in vec3 toVector)
+         {
+            vec3 from = save_normalize (fromVector);
+            vec3 to   = save_normalize (toVector);
+
+            float cos_angle = dot (from, to);
+            vec3  cross_vec = cross (from, to);
+            float cross_len = length (cross_vec);
+
+            if (cross_len == 0.0)
+            {
+               if (cos_angle > 0.0)
                {
-                  ++ particle .life;
-                  this .getRandomPosition (particle .position);
-                  this .getRandomVelocity (particle .velocity);
+                  return vec4 (0.0, 0.0, 0.0, 1.0);
                }
                else
-                  particle .position .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
+               {
+                  vec3 t = cross (from, vec3 (1.0, 0.0, 0.0));
+
+                  if (dot (t, t) == 0.0)
+                     t = cross (from, vec3 (0.0, 1.0, 0.0));
+
+                  t = save_normalize (t);
+
+                  return vec4 (t, 0.0);
+               }
             }
             else
             {
-               // Animate particle.
+               float s = sqrt (abs (1.0 - cos_angle) * 0.5);
 
-               var
-                  position = particle .position,
-                  velocity = particle .velocity;
+               cross_vec = save_normalize (cross_vec);
 
-               for (var f = 0; f < numForces; ++ f)
+               return vec4 (cross_vec * s, sqrt (abs (1.0 + cos_angle) * 0.5));
+            }
+         }
+
+         vec3
+         multVecQuat (const in vec3 v, const in vec4 q)
+         {
+            float a = q .w * q .w - q .x * q .x - q .y * q .y - q .z * q .z;
+            float b = 2.0 * (v .x * q .x + v .y * q .y + v .z * q .z);
+            float c = 2.0 * q .w;
+            vec3  r = a * v .xyz + b * q .xyz + c * (q .yzx * v .zxy - q .zxy * v .yzx);
+
+            return r;
+         }
+
+         mat3
+         Matrix3 (const in vec4 quaternion)
+         {
+            float x = quaternion .x;
+            float y = quaternion .y;
+            float z = quaternion .z;
+            float w = quaternion .w;
+            float A = y * y;
+            float B = z * z;
+            float C = x * y;
+            float D = z * w;
+            float E = z * x;
+            float F = y * w;
+            float G = x * x;
+            float H = y * z;
+            float I = x * w;
+
+            return mat3 (1.0 - 2.0 * (A + B),
+                         2.0 * (C + D),
+                         2.0 * (E - F),
+                         2.0 * (C - D),
+                         1.0 - 2.0 * (B + G),
+                         2.0 * (H + I),
+                         2.0 * (E + F),
+                         2.0 * (H - I),
+                         1.0 - 2.0 * (A + G));
+         }
+
+         /* Random number generation */
+
+         uint seed = 1u;
+
+         void
+         srand (const in int value)
+         {
+            seed = uint (value);
+         }
+
+         // Return a uniform distributed random floating point number in the interval [0, 1].
+         float
+         random ()
+         {
+            seed = seed * 1103515245u + 12345u;
+
+            return float (seed) / 4294967295.0;
+         }
+
+         float
+         getRandomValue (const in float min, const in float max)
+         {
+            return min + random () * (max - min);
+         }
+
+         float
+         getRandomLifetime ()
+         {
+            float v    = particleLifetime * lifetimeVariation;
+            float min_ = max (0.0, particleLifetime - v);
+            float max_ = particleLifetime + v;
+
+            return getRandomValue (min_, max_);
+         }
+
+         float
+         getRandomSpeed ()
+         {
+            float v    = speed * variation;
+            float min_ = max (0.0, speed - v);
+            float max_ = speed + v;
+
+            return getRandomValue (min_, max_);
+         }
+
+         vec3
+         getRandomNormal ()
+         {
+            float theta = getRandomValue (-M_PI, M_PI);
+            float cphi  = getRandomValue (-1.0, 1.0);
+            float r     = sqrt (1.0 - cphi * cphi); // sin (acos (cphi));
+
+            return vec3 (sin (theta) * r, cos (theta) * r, cphi);
+         }
+
+         vec3
+         getRandomNormalWithAngle (const in float angle)
+         {
+            float theta = getRandomValue (-M_PI, M_PI);
+            float cphi  = getRandomValue (cos (angle), 1.0);
+            float r     = sqrt (1.0 - cphi * cphi); // sin (acos (cphi));
+
+            return vec3 (sin (theta) * r, cos (theta) * r, cphi);
+         }
+
+         vec3
+         getRandomNormalWithDirectionAndAngle (const in vec3 direction, const in float angle)
+         {
+            vec4 rotation = Quaternion (vec3 (0.0, 0.0, 1.0), direction);
+            vec3 normal   = getRandomNormalWithAngle (angle);
+
+            return multVecQuat (normal, rotation);
+         }
+
+         vec3
+         getRandomSurfaceNormal (const in vec3 direction)
+         {
+            float theta    = getRandomValue (-M_PI, M_PI);
+            float cphi     = pow (random (), 1.0 / 3.0);
+            float r        = sqrt (1.0 - cphi * cphi); // sin (acos (cphi));
+            vec3  normal   = vec3 (sin (theta) * r, cos (theta) * r, cphi);
+            vec4  rotation = Quaternion (vec3 (0.0, 0.0, 1.0), direction);
+
+            return multVecQuat (normal, rotation);
+         }
+
+         vec3
+         getRandomSphericalVelocity ()
+         {
+            vec3  normal = getRandomNormal ();
+            float speed  = getRandomSpeed ();
+
+            return normal * speed;
+         }
+
+         // Algorithms
+
+         int
+         upperBound (const in sampler2D sampler, in int count, const in float value)
+         {
+            int first = 0;
+            int step  = 0;
+
+            while (count > 0)
+            {
+               int index = first;
+
+               step = count >> 1;
+
+               index += step;
+
+               if (value < texelFetch (sampler, index, 0) .x)
                {
-                  velocity .add (rotations [f] .multVecRot (this .getRandomNormalWithAngle (turbulences [f], normal)) .multiply (speeds [f]));
-               }
-
-               if (boundedPhysics)
-               {
-                  fromPosition .x = position .x;
-                  fromPosition .y = position .y;
-                  fromPosition .z = position .z;
-
-                  position .x += velocity .x * deltaTime;
-                  position .y += velocity .y * deltaTime;
-                  position .z += velocity .z * deltaTime;
-
-                  this .bounce (boundedVolume, fromPosition, position, velocity);
+                  count = step;
                }
                else
                {
-                  position .x += velocity .x * deltaTime;
-                  position .y += velocity .y * deltaTime;
-                  position .z += velocity .z * deltaTime;
-               }
-
-               particle .elapsedTime = elapsedTime;
-            }
-         }
-
-         // Animate color if needed.
-
-         if (particleSystem .geometryContext .colorMaterial)
-            this .getColors (particles, particleSystem .colorKeys, particleSystem .colorRamp, numParticles);
-      },
-      bounce: function (boundedVolume, fromPosition, toPosition, velocity)
-      {
-         normal .assign (velocity) .normalize ();
-
-         line .set (fromPosition, normal);
-
-         var
-            intersections       = this .intersections,
-            intersectionNormals = this .intersectionNormals,
-            numIntersections    = boundedVolume .intersectsLine (line, intersections, intersectionNormals);
-
-         if (numIntersections)
-         {
-            for (var i = 0; i < numIntersections; ++ i)
-               intersections [i] .index = i;
-
-            plane .set (fromPosition, normal);
-
-            this .sorter .sort (0, numIntersections);
-
-            var index = Algorithm .upperBound (intersections, 0, numIntersections, 0, PlaneCompareValue);
-
-            if (index < numIntersections)
-            {
-               var
-                  intersection       = intersections [index],
-                  intersectionNormal = intersectionNormals [intersection .index];
-
-               plane .set (intersection, intersectionNormal);
-
-               if (plane .getDistanceToPoint (fromPosition) * plane .getDistanceToPoint (toPosition) < 0)
-               {
-                  var dot2 = 2 * intersectionNormal .dot (velocity);
-
-                  velocity .x -= intersectionNormal .x * dot2;
-                  velocity .y -= intersectionNormal .y * dot2;
-                  velocity .z -= intersectionNormal .z * dot2;
-
-                  normal .assign (velocity) .normalize ();
-
-                  var distance = intersection .distance (fromPosition);
-
-                  toPosition .x = intersection .x + normal .x * distance;
-                  toPosition .y = intersection .y + normal .y * distance;
-                  toPosition .z = intersection .z + normal .z * distance;
+                  first  = ++ index;
+                  count -= step + 1;
                }
             }
-         }
-      },
-      getColors: function (particles, colorKeys, colorRamp, numParticles)
-      {
-         var
-            length = colorKeys .length,
-            index0 = 0,
-            index1 = 0,
-            weight = 0;
 
-         for (var i = 0; i < numParticles; ++ i)
+            return first;
+         }
+
+         void
+         interpolate (const in sampler2D sampler, const in int count, const in float fraction, out int index0, out int index1, out float weight)
          {
             // Determine index0, index1 and weight.
 
-            var
-               particle = particles [i],
-               fraction = particle .elapsedTime / particle .lifetime,
-               color    = particle .color;
-
-            if (length == 1 || fraction <= colorKeys [0])
+            if (count == 1 || fraction <= texelFetch (sampler, 0, 0) .x)
             {
                index0 = 0;
                index1 = 0;
-               weight = 0;
+               weight = 0.0;
             }
-            else if (fraction >= colorKeys [length - 1])
+            else if (fraction >= texelFetch (sampler, count - 1, 0) .x)
             {
-               index0 = length - 2;
-               index1 = length - 1;
-               weight = 1;
+               index0 = count - 2;
+               index1 = count - 1;
+               weight = 1.0;
             }
             else
             {
-               var index = Algorithm .upperBound (colorKeys, 0, length, fraction, Algorithm .less);
+               int index = upperBound (sampler, count, fraction);
 
-               if (index < length)
+               if (index < count)
                {
                   index1 = index;
                   index0 = index - 1;
 
-                  var
-                     key0 = colorKeys [index0],
-                     key1 = colorKeys [index1];
+                  float key0 = texelFetch (sampler, index0, 0) .x;
+                  float key1 = texelFetch (sampler, index1, 0) .x;
 
-                  weight = Algorithm .clamp ((fraction - key0) / (key1 - key0), 0, 1);
+                  weight = clamp ((fraction - key0) / (key1 - key0), 0.0, 1.0);
                }
                else
                {
                   index0 = 0;
                   index1 = 0;
-                  weight = 0;
+                  weight = 0.0;
                }
             }
-
-            // Interpolate and set color.
-
-            var
-               color0 = colorRamp [index0],
-               color1 = colorRamp [index1];
-
-            // Algorithm .lerp (color0, color1, weight);
-            color .x = color0 .x + weight * (color1 .x - color0 .x);
-            color .y = color0 .y + weight * (color1 .y - color0 .y);
-            color .z = color0 .z + weight * (color1 .z - color0 .z);
-            color .w = color0 .w + weight * (color1 .w - color0 .w);
          }
+
+         void
+         interpolate (const in sampler2D sampler, const in int count, const in float fraction, out int index0)
+         {
+            // Determine index0.
+
+            if (count == 1 || fraction <= texelFetch (sampler, 0, 0) .x)
+            {
+               index0 = 0;
+            }
+            else if (fraction >= texelFetch (sampler, count - 1, 0) .x)
+            {
+               index0 = count - 2;
+            }
+            else
+            {
+               int index = upperBound (sampler, count, fraction);
+
+               if (index < count)
+                  index0 = index - 1;
+               else
+                  index0 = 0;
+            }
+         }
+
+         vec3
+         getRandomBarycentricCoord ()
+         {
+            // Random barycentric coordinates.
+
+            float u = random ();
+            float v = random ();
+
+            if (u + v > 1.0)
+            {
+               u = 1.0 - u;
+               v = 1.0 - v;
+            }
+
+            float t = 1.0 - u - v;
+
+            return vec3 (t, u, v);
+         }
+
+         void
+         getRandomPointOnSurface (const in sampler2D surface, const in int verticesIndex, const in int normalsIndex, out vec4 position, out vec3 normal)
+         {
+            // Determine index0, index1 and weight.
+
+            float lastAreaSoFar = texelFetch (surface, verticesIndex - 1, 0) .x;
+            float fraction      = random () * lastAreaSoFar;
+
+            int   index0;
+            int   index1;
+            int   index2;
+            float weight;
+
+            interpolate (surface, verticesIndex, fraction, index0, index1, weight);
+
+            // Interpolate and return position.
+
+            index0 *= 3;
+            index1  = index0 + 1;
+            index2  = index0 + 2;
+
+            vec4 vertex0 = texelFetch (surface, verticesIndex + index0, 0);
+            vec4 vertex1 = texelFetch (surface, verticesIndex + index1, 0);
+            vec4 vertex2 = texelFetch (surface, verticesIndex + index2, 0);
+
+            vec3 normal0 = texelFetch (surface, normalsIndex + index0, 0) .xyz;
+            vec3 normal1 = texelFetch (surface, normalsIndex + index1, 0) .xyz;
+            vec3 normal2 = texelFetch (surface, normalsIndex + index2, 0) .xyz;
+
+            // Random barycentric coordinates.
+
+            vec3 r = getRandomBarycentricCoord ();
+
+            // Calculate position and direction.
+
+            position = r .z * vertex0 + r .x * vertex1 + r .y * vertex2;
+            normal   = save_normalize (r .z * normal0 + r .x * normal1 + r .y * normal2);
+         }
+
+         // Functions
+
+         ${this .functions .join ("\n")}
+
+         // Current values
+
+         vec4
+         getColor (const in float lifetime, const in float elapsedTime)
+         {
+            if (numColors > 0)
+            {
+               // Determine index0, index1 and weight.
+
+               float fraction = elapsedTime / lifetime;
+
+               int   index0;
+               int   index1;
+               float weight;
+
+               interpolate (colorRamp, numColors, fraction, index0, index1, weight);
+
+               // Interpolate and return color.
+
+               vec4 color0 = texelFetch (colorRamp, numColors + index0, 0);
+               vec4 color1 = texelFetch (colorRamp, numColors + index1, 0);
+
+               return mix (color0, color1, weight);
+            }
+            else
+            {
+               return vec4 (1.0);
+            }
+         }
+
+         void
+         bounce (const in vec4 fromPosition, inout vec4 toPosition, inout vec3 velocity)
+         {
+            if (boundedHierarchyRoot < 0)
+               return;
+
+            Line3 line = Line3 (fromPosition .xyz, save_normalize (velocity));
+
+            vec4 points  [ARRAY_SIZE];
+            vec3 normals [ARRAY_SIZE];
+
+            int numIntersections = getIntersections (boundedVolume, boundedVerticesIndex, boundedNormalsIndex, boundedHierarchyIndex, boundedHierarchyRoot, line, points, normals);
+
+            if (numIntersections == 0)
+               return;
+
+            Plane3 plane1 = plane3 (line .point, line .direction);
+
+            int index = min_index (points, numIntersections, 0.0, plane1);
+
+            if (index == -1)
+               return;
+
+            Plane3 plane2 = plane3 (points [index] .xyz, normals [index]);
+
+            if (sign (plane_distance (plane2, fromPosition .xyz)) == sign (plane_distance (plane2, toPosition .xyz)))
+               return;
+
+            velocity   = reflect (velocity, normals [index]);
+            toPosition = vec4 (points [index] .xyz + reflect (points [index] .xyz - fromPosition .xyz, normals [index]), 1.0);
+         }
+
+         int
+         getTexCoordIndex0 (const in float lifetime, const in float elapsedTime)
+         {
+            if (numTexCoords == 0)
+            {
+               return -1;
+            }
+            else
+            {
+               float fraction = elapsedTime / lifetime;
+               int   index0   = 0;
+
+               interpolate (texCoordRamp, numTexCoords, fraction, index0);
+
+               return numTexCoords + index0 * texCoordCount;
+            }
+         }
+
+         void
+         main ()
+         {
+            int   life        = int (input0 [0]);
+            float lifetime    = input0 [1];
+            float elapsedTime = input0 [2] + deltaTime;
+
+            srand ((gl_VertexID + randomSeed) * randomSeed);
+
+            if (elapsedTime > lifetime)
+            {
+               // Create new particle or hide particle.
+
+               lifetime    = getRandomLifetime ();
+               elapsedTime = 0.0;
+
+               output0 = vec4 (max (life + 1, 1), lifetime, elapsedTime, getTexCoordIndex0 (lifetime, elapsedTime));
+
+               if (createParticles)
+               {
+                  output1 = getColor (lifetime, elapsedTime);
+                  output2 = vec4 (getRandomVelocity (), 0.0);
+                  output6 = getRandomPosition ();
+               }
+               else
+               {
+                  output1 = vec4 (0.0);
+                  output2 = vec4 (0.0);
+                  output6 = vec4 (NaN);
+               }
+            }
+            else
+            {
+               // Animate particle.
+
+               vec3 velocity = input2 .xyz;
+               vec4 position = input6;
+
+               for (int i = 0; i < numForces; ++ i)
+               {
+                  vec4  force      = texelFetch (forces, i, 0);
+                  float turbulence = force .w;
+                  vec3  normal     = getRandomNormalWithDirectionAndAngle (force .xyz, turbulence);
+                  float speed      = length (force .xyz);
+
+                  velocity += normal * speed;
+               }
+
+               position .xyz += velocity * deltaTime;
+
+               bounce (input6, position, velocity);
+
+               output0 = vec4 (life, lifetime, elapsedTime, getTexCoordIndex0 (lifetime, elapsedTime));
+               output1 = getColor (lifetime, elapsedTime);
+               output2 = vec4 (velocity, 0.0);
+               output6 = position;
+            }
+
+            switch (geometryType)
+            {
+               case POINT:
+               case SPRITE:
+               case GEOMETRY:
+               {
+                  output3 = vec4 (1.0, 0.0, 0.0, 0.0);
+                  output4 = vec4 (0.0, 1.0, 0.0, 0.0);
+                  output5 = vec4 (0.0, 0.0, 1.0, 0.0);
+                  break;
+               }
+               case LINE:
+               {
+                  mat3 r = Matrix3 (Quaternion (vec3 (0.0, 0.0, 1.0), output2 .xyz));
+                  mat3 s = mat3 (1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, particleSize .y);
+                  mat3 m = r * s;
+
+                  output3 = vec4 (m [0], 0.0);
+                  output4 = vec4 (m [1], 0.0);
+                  output5 = vec4 (m [2], 0.0);
+                  break;
+               }
+               default: // QUAD, TRIANGLE
+               {
+                  output3 = vec4 (particleSize .x, 0.0, 0.0, 0.0);
+                  output4 = vec4 (0.0, particleSize .y, 0.0, 0.0);
+                  output5 = vec4 (0.0, 0.0, 1.0, 0.0);
+                  break;
+               }
+            }
+         }
+         `;
+
+         const fragmentShaderSource = /* glsl */ `#version 300 es
+
+         precision highp float;
+
+         void
+         main () { }
+         `;
+
+         // Vertex shader
+
+         const vertexShader = gl .createShader (gl .VERTEX_SHADER);
+
+         gl .shaderSource (vertexShader, vertexShaderSource);
+         gl .compileShader (vertexShader);
+
+         // Fragment shader
+
+         const fragmentShader = gl .createShader (gl .FRAGMENT_SHADER);
+
+         gl .shaderSource (fragmentShader, fragmentShaderSource);
+         gl .compileShader (fragmentShader);
+
+         // Program
+
+         const program = gl .createProgram ();
+
+         gl .attachShader (program, vertexShader);
+         gl .attachShader (program, fragmentShader);
+         gl .transformFeedbackVaryings (program, Array .from ({length: 7}, (_, i) => "output" + i), gl .INTERLEAVED_ATTRIBS);
+         gl .linkProgram (program);
+
+         if (!gl .getProgramParameter (program, gl .LINK_STATUS))
+            console .error ("Couldn't initialize particle shader: " + gl .getProgramInfoLog (program));
+
+         program .inputs = [
+            [0, gl .getAttribLocation (program, "input0")],
+            [2, gl .getAttribLocation (program, "input2")],
+            [6, gl .getAttribLocation (program, "input6")],
+         ];
+
+         program .randomSeed        = gl .getUniformLocation (program, "randomSeed");
+         program .geometryType      = gl .getUniformLocation (program, "geometryType");
+         program .createParticles   = gl .getUniformLocation (program, "createParticles");
+         program .particleLifetime  = gl .getUniformLocation (program, "particleLifetime");
+         program .lifetimeVariation = gl .getUniformLocation (program, "lifetimeVariation");
+         program .deltaTime         = gl .getUniformLocation (program, "deltaTime");
+         program .particleSize      = gl .getUniformLocation (program, "particleSize");
+
+         program .numForces = gl .getUniformLocation (program, "numForces");
+         program .forces    = gl .getUniformLocation (program, "forces");
+
+         program .boundedVerticesIndex  = gl .getUniformLocation (program, "boundedVerticesIndex");
+         program .boundedNormalsIndex   = gl .getUniformLocation (program, "boundedNormalsIndex");
+         program .boundedHierarchyIndex = gl .getUniformLocation (program, "boundedHierarchyIndex");
+         program .boundedHierarchyRoot  = gl .getUniformLocation (program, "boundedHierarchyRoot");
+         program .boundedVolume         = gl .getUniformLocation (program, "boundedVolume");
+
+         program .numColors = gl .getUniformLocation (program, "numColors");
+         program .colorRamp = gl .getUniformLocation (program, "colorRamp");
+
+         program .texCoordCount = gl .getUniformLocation (program, "texCoordCount");
+         program .numTexCoords  = gl .getUniformLocation (program, "numTexCoords");
+         program .texCoordRamp  = gl .getUniformLocation (program, "texCoordRamp");
+
+         for (const name of Object .keys (this .uniforms))
+            program [name] = gl .getUniformLocation (program, name);
+
+         program .NaN = gl .getUniformLocation (program, "NaN");
+
+         gl .useProgram (program);
+
+         for (const name of this .samplers)
+         {
+            const location = gl .getUniformLocation (program, name);
+
+            gl .uniform1i (location, program [name + "TextureUnit"] = browser .getTexture2DUnit ());
+         }
+
+         gl .uniform1f (program .NaN, NaN);
+
+         browser .resetTextureUnits ();
+
+         return program;
+      },
+      activateTextures: function ()
+      { },
+      createTexture: function ()
+      {
+         const
+            gl      = this .getBrowser () .getContext (),
+            texture = gl .createTexture ();
+
+         gl .bindTexture (gl .TEXTURE_2D, texture);
+
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, 1, 1, 0, gl .RGBA, gl .FLOAT, new Float32Array (4));
+
+         return texture;
+      },
+      getTexture2DUnit: function (browser, object, property)
+      {
+         const textureUnit = object [property];
+
+         if (textureUnit === undefined)
+            return object [property] = browser .getTexture2DUnit ();
+
+         return textureUnit;
       },
    });
 
@@ -488,25 +1157,38 @@ function (Fields,
 
       this .addType (X3DConstants .PointEmitter);
 
-      this ._position    .setUnit ("length");
-      this ._speed       .setUnit ("speed");
-      this ._mass        .setUnit ("mass");
-      this ._surfaceArea .setUnit ("area");
+      this ._position .setUnit ("length");
 
-      this .direction = new Vector3 (0, 0, 0);
+      this .addUniform ("position",  "uniform vec3 position;");
+      this .addUniform ("direction", "uniform vec3 direction;");
+
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      {
+         if (direction == vec3 (0.0))
+            return getRandomSphericalVelocity ();
+
+         else
+            return direction * getRandomSpeed ();
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         return vec4 (position, 1.0);
+      }`);
    }
 
    PointEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
    {
       constructor: PointEmitter,
       [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "position",    new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",   new Fields .SFVec3f (0, 1, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",        new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "surfaceArea", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",   new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
       ]),
       getTypeName: function ()
       {
@@ -524,7 +1206,10 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this ._position  .addInterest ("set_position__", this);
+         if (this .getBrowser () .getContext () .getVersion () < 2)
+            return;
+
+         this ._position  .addInterest ("set_position__",  this);
          this ._direction .addInterest ("set_direction__", this);
 
          this .set_position__ ();
@@ -532,33 +1217,21 @@ function (Fields,
       },
       set_position__: function ()
       {
-         this .position = this ._position .getValue ()
-      },
-      set_direction__: function ()
-      {
-         this .direction .assign (this ._direction .getValue ()) .normalize ();
+         const position = this ._position .getValue ();
 
-         if (this .direction .equals (Vector3 .Zero))
-            this .getRandomVelocity = this .getSphericalRandomVelocity;
-         else
-            delete this .getRandomVelocity;
+         this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
       },
-      getRandomPosition: function (position)
+      set_direction__: (function ()
       {
-         return position .assign (this .position);
-      },
-      getRandomVelocity: function (velocity)
-      {
-         var
-            direction = this .direction,
-            speed     = this .getRandomSpeed ();
+         const direction = new Vector3 (0, 0, 0);
 
-         velocity .x = direction .x * speed;
-         velocity .y = direction .y * speed;
-         velocity .z = direction .z * speed;
+         return function ()
+         {
+            direction .assign (this ._direction .getValue ()) .normalize ();
 
-         return velocity;
-       },
+            this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
+         };
+      })(),
    });
 
    return PointEmitter;
@@ -830,17 +1503,17 @@ function (Fields,
       },
       addGeometry: function (boundedNormals, boundedVertices)
       {
-         if (this .geometryNode)
+         if (this .geometryNode && this ._enabled .getValue ())
          {
-            var
+            const
                normals  = this .geometryNode .getNormals ()  .getValue (),
                vertices = this .geometryNode .getVertices () .getValue ();
 
-            for (var i = 0, length = normals .length; i < length; ++ i)
-               boundedNormals .push (normals [i]);
+            for (const value of normals)
+               boundedNormals .push (value);
 
-            for (var i = 0, length = vertices .length; i < length; ++ i)
-               boundedVertices .push (vertices [i]);
+            for (const value of vertices)
+               boundedVertices .push (value);
          }
       },
    });
@@ -903,16 +1576,12 @@ define ('x_ite/Components/ParticleSystems/ConeEmitter',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
    "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticleEmitterNode,
-          X3DConstants,
-          Vector3,
-          Rotation4)
+          X3DConstants)
 {
 "use strict";
 
@@ -922,27 +1591,47 @@ function (Fields,
 
       this .addType (X3DConstants .ConeEmitter);
 
-      this ._position    .setUnit ("length");
-      this ._angle       .setUnit ("angle");
-      this ._speed       .setUnit ("speed");
-      this ._mass        .setUnit ("mass");
-      this ._surfaceArea .setUnit ("area");
+      this ._position .setUnit ("length");
+      this ._angle    .setUnit ("angle");
 
-      this .rotation = new Rotation4 (0, 0, 1, 0);
+      this .addUniform ("position",  "uniform vec3  position;");
+      this .addUniform ("direction", "uniform vec3  direction;");
+      this .addUniform ("angle",     "uniform float angle;");
+
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      {
+         if (direction == vec3 (0.0))
+         {
+            return getRandomSphericalVelocity ();
+         }
+         else
+         {
+            vec3  normal = getRandomNormalWithDirectionAndAngle (direction, angle);
+            float speed  = getRandomSpeed ();
+
+            return normal * speed;
+         }
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         return vec4 (position, 1.0);
+      }`);
    }
 
    ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
    {
       constructor: ConeEmitter,
       [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "position",    new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",   new Fields .SFVec3f (0, 1, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "angle",       new Fields .SFFloat (0.7854)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",        new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "surfaceArea", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",   new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "angle",       new Fields .SFFloat (0.7854)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
       ]),
       getTypeName: function ()
       {
@@ -960,6 +1649,9 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
+         if (this .getBrowser () .getContext () .getVersion () < 2)
+            return;
+
          this ._position  .addInterest ("set_position__", this);
          this ._direction .addInterest ("set_direction__", this);
          this ._angle     .addInterest ("set_angle__", this);
@@ -970,31 +1662,20 @@ function (Fields,
       },
       set_position__: function ()
       {
-         this .position = this ._position .getValue ()
+         const position = this ._position .getValue ();
+
+         this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
       },
       set_direction__: function ()
       {
-         var direction = this ._direction .getValue ();
+         const direction = this ._direction .getValue ();
 
-         this .rotation .setFromToVec (Vector3 .zAxis, direction);
-
-         if (direction .equals (Vector3 .Zero))
-            this .getRandomVelocity = this .getSphericalRandomVelocity;
-         else
-            delete this .getRandomVelocity;
+         this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
       },
       set_angle__: function ()
       {
-         this .angle = this ._angle .getValue ()
+         this .setUniform ("uniform1f", "angle", this ._angle .getValue ());
       },
-      getRandomPosition: function (position)
-      {
-         return position .assign (this .position);
-      },
-      getRandomVelocity: function (velocity)
-      {
-         return this .rotation .multVecRot (this .getRandomNormalWithAngle (this .angle, velocity) .multiply (this .getRandomSpeed ()));
-       },
    });
 
    return ConeEmitter;
@@ -1070,24 +1751,32 @@ function (Fields,
 
       this .addType (X3DConstants .ExplosionEmitter);
 
-      this ._position    .setUnit ("length");
-      this ._speed       .setUnit ("speed");
-      this ._mass        .setUnit ("mass");
-      this ._surfaceArea .setUnit ("area");
+      this ._position .setUnit ("length");
 
-      this .getRandomVelocity = this .getSphericalRandomVelocity;
+      this .addUniform ("position", "uniform vec3 position;");
+
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      {
+         return getRandomSphericalVelocity ();
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         return vec4 (position, 1.0);
+      }`);
    }
 
    ExplosionEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
    {
       constructor: ExplosionEmitter,
       [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "position",    new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",        new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "surfaceArea", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
       ]),
       getTypeName: function ()
       {
@@ -1105,21 +1794,22 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
+         if (this .getBrowser () .getContext () .getVersion () < 2)
+            return;
+
          this ._position .addInterest ("set_position__", this);
 
          this .set_position__ ();
-      },
-      set_position__: function ()
-      {
-         this .position = this ._position .getValue ()
       },
       isExplosive: function ()
       {
          return true;
       },
-      getRandomPosition: function (position)
+      set_position__: function ()
       {
-         return position .assign (this .position);
+         const position = this ._position .getValue ();
+
+         this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
       },
    });
 
@@ -1181,12 +1871,14 @@ define ('x_ite/Components/ParticleSystems/ForcePhysicsModel',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
    "x_ite/Base/X3DConstants",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DParticlePhysicsModelNode,
-          X3DConstants)
+          X3DConstants,
+          Vector3)
 {
 "use strict";
 
@@ -1219,14 +1911,25 @@ function (Fields,
       {
          return "physics";
       },
-      addForce: function (i, emitterNode, forces, turbulences)
+      addForce: (function ()
       {
-         if (this ._enabled .getValue ())
+         const force = new Vector3 (0, 0, 0);
+
+         return function (i, emitterNode, timeByMass, forces)
          {
-            forces      [i] .assign (this ._force .getValue ());
-            turbulences [i] = 0;
-         }
-      },
+            if (this ._enabled .getValue ())
+            {
+               forces .set (force .assign (this ._force .getValue ()) .multiply (timeByMass), i * 4);
+               forces [i * 4 + 3] = 0;
+
+               return true;
+            }
+            else
+            {
+               return false;
+            }
+        };
+      })(),
    });
 
    return ForcePhysicsModel;
@@ -1308,28 +2011,24 @@ function (Vector3,
       // left: We do not have to test for left.
    ];
 
+   const
+      NODE     = 0,
+      TRIANGLE = 1;
+
    function SortComparator (vertices, axis)
    {
-      function compare (a, b)
+      return function compare (a, b)
       {
-         const
-            vertices = compare .vertices;
-            axis     = compare .axis;
-
-         return Math .min (vertices [a + axis], vertices [a + 4 + axis], vertices [a + 8 + axis]) <
-                Math .min (vertices [b + axis], vertices [b + 4 + axis], vertices [b + 8 + axis]);
+          return Math .min (vertices [a + axis], vertices [a + 4 + axis], vertices [a + 8 + axis]) <
+                 Math .min (vertices [b + axis], vertices [b + 4 + axis], vertices [b + 8 + axis]);
       }
-
-      compare .vertices = vertices;
-      compare .axis     = axis;
-
-      return compare;
    }
 
    function Triangle (tree, triangle)
    {
       this .vertices = tree .vertices;
       this .normals  = tree .normals;
+      this .triangle = triangle;
       this .i4       = triangle * 12;
       this .i3       = triangle * 9;
    }
@@ -1378,6 +2077,14 @@ function (Vector3,
                                              t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
             }
          }
+      },
+      toArray: function (array)
+      {
+         const index = array .length / 4;
+
+         array .push (TRIANGLE, this .triangle * 3, 0, 0);
+
+         return index;
       },
    };
 
@@ -1537,14 +2244,29 @@ function (Vector3,
             return 0;
          }
       },
+      toArray: function (array)
+      {
+         const
+            left  = this .left .toArray (array),
+            right = this .right .toArray (array),
+            min   = this .min,
+            max   = this .max,
+            index = array .length / 4;
+
+         array .push (NODE, left, right, 0,
+                      min .x, min .y, min .z, 0,
+                      max .x, max .y, max .z, 0);
+
+         return index;
+      },
    };
 
    function BVH (vertices, normals)
    {
+      const numTriangles = vertices .length / 12;
+
       this .vertices = vertices;
       this .normals  = normals;
-
-      const numTriangles = vertices .length / 12;
 
       switch (numTriangles)
       {
@@ -1566,8 +2288,7 @@ function (Vector3,
                triangles .push (i);
 
             this .sorter = new QuickSort (triangles, SortComparator (vertices, 0));
-
-            this .root = new Node (this, triangles, 0, numTriangles);
+            this .root   = new Node (this, triangles, 0, numTriangles);
             break;
          }
       }
@@ -1576,7 +2297,6 @@ function (Vector3,
    BVH .prototype =
    {
       constructor: BVH,
-
       intersectsLine: function (line, intersections, intersectionNormals)
       {
          intersections .size = 0;
@@ -1588,6 +2308,17 @@ function (Vector3,
          }
 
          return 0;
+      },
+      toArray: function (array)
+      {
+         if (this .root)
+         {
+            const root = this .root .toArray (array);
+
+            array .push (root, 0, 0, 0);
+         }
+
+         return array;
       },
    };
 
@@ -1648,69 +2379,70 @@ define ('x_ite/Components/ParticleSystems/ParticleSystem',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DShapeNode",
+   "x_ite/Browser/ParticleSystems/GeometryTypes",
+   "x_ite/Rendering/VertexArray",
    "x_ite/Rendering/TraverseType",
    "x_ite/Base/X3DConstants",
    "x_ite/Base/X3DCast",
    "x_ite/Browser/Shape/AlphaMode",
    "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Vector4",
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Numbers/Matrix3",
-   "standard/Math/Algorithms/QuickSort",
-   "standard/Math/Algorithm",
    "standard/Math/Utility/BVH",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShapeNode,
+          GeometryTypes,
+          VertexArray,
           TraverseType,
           X3DConstants,
           X3DCast,
           AlphaMode,
           Vector3,
-          Vector4,
           Matrix4,
           Matrix3,
-          QuickSort,
-          Algorithm,
           BVH)
 {
 "use strict";
 
-   var i = 0;
+   const PointGeometry = new Float32Array ([0, 0, 0, 1]);
 
-   const
-      POINT    = i ++,
-      LINE     = i ++,
-      TRIANGLE = i ++,
-      QUAD     = i ++,
-      GEOMETRY = i ++,
-      SPRITE   = i ++;
+   const LineGeometry = new Float32Array ([
+      // TexCoords
+      0, 0, 0, 1,
+      1, 0, 0, 1,
+      // Vertices
+      0, 0, -0.5, 1,
+      0, 0,  0.5, 1,
+   ]);
 
-   const GeometryTypes = {
-      POINT:    POINT,
-      LINE:     LINE,
-      TRIANGLE: TRIANGLE,
-      QUAD:     QUAD,
-      GEOMETRY: GEOMETRY,
-      SPRITE:   SPRITE,
-   };
+   // p4 ------ p3
+   // |       / |
+   // |     /   |
+   // |   /     |
+   // | /       |
+   // p1 ------ p2
 
-   const
-      invModelViewMatrix = new Matrix4 (),
-      billboardToScreen  = new Vector3 (0, 0, 0),
-      viewerYAxis        = new Vector3 (0, 0, 0),
-      vector             = new Vector3 (0, 0, 0),
-      normal             = new Vector3 (0, 0, 0),
-      s1                 = new Vector3 (0, 0, 0),
-      s2                 = new Vector3 (0, 0, 0),
-      s3                 = new Vector3 (0, 0, 0),
-      s4                 = new Vector3 (0, 0, 0),
-      x                  = new Vector3 (0, 0, 0),
-      y                  = new Vector3 (0, 0, 0);
-
-   function compareDistance (lhs, rhs) { return lhs .distance < rhs .distance; }
+   const QuadGeometry = new Float32Array ([
+      // TexCoords
+      0, 0, 0, 1,
+      1, 0, 0, 1,
+      1, 1, 0, 1,
+      0, 0, 0, 1,
+      1, 1, 0, 1,
+      0, 1, 0, 1,
+      // Normal
+      0, 0, 1,
+      // Vertices
+      -0.5, -0.5, 0, 1,
+       0.5, -0.5, 0, 1,
+       0.5,  0.5, 0, 1,
+      -0.5, -0.5, 0, 1,
+       0.5,  0.5, 0, 1,
+      -0.5,  0.5, 0, 1,
+   ]);
 
    function ParticleSystem (executionContext)
    {
@@ -1720,39 +2452,25 @@ function (Fields,
 
       this ._particleSize .setUnit ("length");
 
-      this .createParticles          = true;
-      this .particles                = [ ];
-      this .velocities               = [ ];
-      this .speeds                   = [ ];
-      this .turbulences              = [ ];
-      this .geometryType             = POINT;
       this .maxParticles             = 0;
       this .numParticles             = 0;
-      this .particleLifetime         = 0;
-      this .lifetimeVariation        = 0;
-      this .emitterNode              = null;
       this .forcePhysicsModelNodes   = [ ];
+      this .forces                   = new Float32Array (4);
       this .boundedPhysicsModelNodes = [ ];
       this .boundedNormals           = [ ];
       this .boundedVertices          = [ ];
-      this .boundedVolume            = null;
+      this .colorRamp                = new Float32Array ();
+      this .texCoordRamp             = new Float32Array ();
+      this .geometryContext          = { };
       this .creationTime             = 0;
       this .pauseTime                = 0;
       this .deltaTime                = 0;
-      this .numForces                = 0;
-      this .colorKeys                = [ ];
-      this .colorRamppNode           = null;
-      this .colorRamp                = [ ];
-      this .texCoordKeys             = [ ];
-      this .texCoordRampNode         = null;
-      this .texCoordRamp             = [ ];
-      this .texCoordAnim             = false;
-      this .vertexCount              = 0;
-      this .shaderNode               = null;
-      this .rotation                 = new Matrix3 ();
-      this .particleSorter           = new QuickSort (this .particles, compareDistance);
-      this .sortParticles            = false;
-      this .geometryContext          = { };
+      this .particleStride           = Float32Array .BYTES_PER_ELEMENT * 7 * 4; // 7 x vec4
+      this .particleOffsets          = Array .from ({length: 7}, (_, i) => Float32Array .BYTES_PER_ELEMENT * 4 * i); // i x vec4
+      this .particleOffset           = this .particleOffsets [0];
+      this .colorOffset              = this .particleOffsets [1];
+      this .matrixOffset             = this .particleOffsets [3];
+      this .texCoordOffset           = 0;
    }
 
    ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
@@ -1802,6 +2520,9 @@ function (Fields,
             browser = this .getBrowser (),
             gl      = browser .getContext ();
 
+         if (browser .getContext () .getVersion () < 2)
+            return;
+
          this .isLive () .addInterest ("set_live__", this);
 
          browser .getBrowserOptions () ._Shading .addInterest ("set_shader__", this);
@@ -1809,6 +2530,7 @@ function (Fields,
          this ._enabled           .addInterest ("set_enabled__",           this);
          this ._createParticles   .addInterest ("set_createParticles__",   this);
          this ._geometryType      .addInterest ("set_geometryType__",      this);
+         this ._geometryType      .addInterest ("set_texCoord__",          this);
          this ._maxParticles      .addInterest ("set_enabled__",           this);
          this ._particleLifetime  .addInterest ("set_particleLifetime__",  this);
          this ._lifetimeVariation .addInterest ("set_lifetimeVariation__", this);
@@ -1819,38 +2541,42 @@ function (Fields,
          this ._texCoordKey       .addInterest ("set_texCoord__",          this);
          this ._texCoordRamp      .addInterest ("set_texCoordRamp__",      this);
 
-         this .idBuffer           = gl .createBuffer ();
-         this .positionBuffer     = gl .createBuffer ();
-         this .elapsedTimeBuffer  = gl .createBuffer ();
-         this .lifeBuffer         = gl .createBuffer ();
-         this .colorBuffer        = gl .createBuffer ();
-         this .texCoordBuffers    = [ gl .createBuffer () ];
-         this .normalBuffer       = gl .createBuffer ();
-         this .vertexBuffer       = gl .createBuffer ();
+         // Create particles stuff.
 
-         for (var i = 1, channels = this .getBrowser () .getMaxTextures (); i < channels; ++ i)
-            this .texCoordBuffers .push (this .texCoordBuffers [0]);
+         this .inputParticles  = this .createBuffer ();
+         this .outputParticles = this .createBuffer ();
 
-         this .idArray          = new Float32Array ();
-         this .positionArray    = new Float32Array ();
-         this .elapsedTimeArray = new Float32Array ();
-         this .lifeArray        = new Float32Array ();
-         this .colorArray       = new Float32Array ();
-         this .texCoordArray    = new Float32Array ();
-         this .normalArray      = new Float32Array ();
-         this .vertexArray      = new Float32Array ();
+         this .inputParticles . emitterArrayObject = new VertexArray ();
+         this .inputParticles . vertexArrayObject  = new VertexArray ();
+         this .inputParticles  .shadowArrayObject  = new VertexArray ();
+         this .outputParticles .emitterArrayObject = new VertexArray ();
+         this .outputParticles .vertexArrayObject  = new VertexArray ();
+         this .outputParticles .shadowArrayObject  = new VertexArray ();
 
-         this .primitiveMode = gl .TRIANGLES;
+         // Create forces stuff.
+
+         this .forcesTexture       = this .createTexture ();
+         this .boundedTexture      = this .createTexture ();
+         this .colorRampTexture    = this .createTexture ();
+         this .texCoordRampTexture = this .createTexture ();
+
+         // Create GL stuff.
+
+         this .geometryBuffer  = this .createBuffer ();
+         this .texCoordBuffers = new Array (browser .getMaxTextures ()) .fill (this .geometryBuffer);
 
          // Geometry context
 
-         this .geometryContext .fogCoords                 = false;
+         this .geometryContext .fogCoords                = false;
          this .geometryContext .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
          this .geometryContext .textureCoordinateMapping = new Map ();
 
-         // Call order is higly important at startup.
+         // Init fields.
+         // Call order is very important at startup.
+
          this .set_emitter__ ();
          this .set_enabled__ ();
+         this .set_geometryType__ ();
          this .set_createParticles__ ();
          this .set_particleLifetime__ ();
          this .set_lifetimeVariation__ ();
@@ -1874,7 +2600,7 @@ function (Fields,
          {
             switch (this .geometryType)
             {
-               case POINT:
+               case GeometryTypes .POINT:
                {
                   this .setTransparent (true);
                   break;
@@ -1883,7 +2609,7 @@ function (Fields,
                {
                   this .setTransparent (this .getAppearance () .getTransparent () ||
                                         (this .colorRampNode && this .colorRampNode .getTransparent ()) ||
-                                        (this .geometryType === GEOMETRY && this .geometryNode && this .geometryNode .getTransparent ()));
+                                        (this .geometryType === GeometryTypes .GEOMETRY && this .geometryNode && this .geometryNode .getTransparent ()));
                   break;
                }
             }
@@ -1923,7 +2649,7 @@ function (Fields,
       {
          if (this ._enabled .getValue () && this ._maxParticles .getValue ())
          {
-            if (! this ._isActive .getValue ())
+            if (!this ._isActive .getValue ())
             {
                if (this .isLive () .getValue ())
                {
@@ -1935,6 +2661,8 @@ function (Fields,
                   this .pauseTime = performance .now () / 1000;
 
                this ._isActive = true;
+
+               delete this .traverse;
             }
          }
          else
@@ -1949,6 +2677,7 @@ function (Fields,
                this ._isActive = false;
 
                this .numParticles = 0;
+               this .traverse     = Function .prototype;
             }
          }
 
@@ -1960,161 +2689,86 @@ function (Fields,
       },
       set_geometryType__: function ()
       {
-         var
-            gl           = this .getBrowser () .getContext (),
-            maxParticles = this .maxParticles;
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
 
-         // geometryType
+         // Set geometryType.
 
-         this .geometryType = GeometryTypes [this ._geometryType .getValue ()];
+         this .geometryType = GeometryTypes .hasOwnProperty (this ._geometryType .getValue ())
+            ? GeometryTypes [this ._geometryType .getValue ()]
+            : GeometryTypes .QUAD;
 
-         if (! this .geometryType)
-            this .geometryType = POINT;
-
-         // Create buffers
+         // Create buffers.
 
          switch (this .geometryType)
          {
-            case POINT:
+            case GeometryTypes .POINT:
             {
-               this .idArray          = new Float32Array (maxParticles);
-               this .positionArray    = new Float32Array (3 * maxParticles);
-               this .elapsedTimeArray = new Float32Array (maxParticles);
-               this .lifeArray        = new Float32Array (maxParticles);
-               this .colorArray       = new Float32Array (4 * maxParticles);
-               this .texCoordArray    = new Float32Array ();
-               this .normalArray      = new Float32Array ();
-               this .vertexArray      = new Float32Array (4 * maxParticles);
+               this .geometryContext .geometryType = 0;
 
-               for (var i = 0, a = this .idArray, l = a .length; i < l; ++ i)
-                  a [i] = i;
-
-               this .colorArray  .fill (1);
-               this .vertexArray .fill (1);
-
-               this .testWireframe = false;
-               this .primitiveMode = gl .POINTS;
                this .texCoordCount = 0;
                this .vertexCount   = 1;
+               this .hasNormals    = false;
+               this .testWireframe = false;
+               this .primitiveMode = gl .POINTS;
 
-               this .geometryContext .geometryType = 0;
+               this .verticesOffset = 0;
+
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
+               gl .bufferData (gl .ARRAY_BUFFER, PointGeometry, gl .DYNAMIC_DRAW);
+
                break;
             }
-            case LINE:
+            case GeometryTypes .LINE:
             {
-               this .idArray          = new Float32Array (2 * maxParticles);
-               this .positionArray    = new Float32Array (2 * 3 * maxParticles);
-               this .elapsedTimeArray = new Float32Array (2 * maxParticles);
-               this .lifeArray        = new Float32Array (2 * maxParticles);
-               this .colorArray       = new Float32Array (2 * 4 * maxParticles);
-               this .texCoordArray    = new Float32Array ();
-               this .normalArray      = new Float32Array ();
-               this .vertexArray      = new Float32Array (2 * 4 * maxParticles);
+               this .geometryContext .geometryType = 1;
 
-               for (var i = 0, a = this .idArray, l = a .length; i < l; ++ i)
-                  a [i] = Math .floor (i / 2);
-
-               this .colorArray  .fill (1);
-               this .vertexArray .fill (1);
-
-               this .testWireframe = false;
-               this .primitiveMode = gl .LINES;
                this .texCoordCount = 2;
                this .vertexCount   = 2;
+               this .hasNormals    = false;
+               this .testWireframe = false;
+               this .primitiveMode = gl .LINES;
 
-               this .geometryContext .geometryType = 1;
+               this .texCoordsOffset = 0;
+               this .verticesOffset  = Float32Array .BYTES_PER_ELEMENT * 8;
+
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
+               gl .bufferData (gl .ARRAY_BUFFER, LineGeometry, gl .DYNAMIC_DRAW);
+
                break;
             }
-            case TRIANGLE:
-            case QUAD:
-            case SPRITE:
+            case GeometryTypes .TRIANGLE:
+            case GeometryTypes .QUAD:
+            case GeometryTypes .SPRITE:
             {
-               this .idArray          = new Float32Array (6 * maxParticles);
-               this .positionArray    = new Float32Array (6 * 3 * maxParticles);
-               this .elapsedTimeArray = new Float32Array (6 * maxParticles);
-               this .lifeArray        = new Float32Array (6 * maxParticles);
-               this .colorArray       = new Float32Array (6 * 4 * maxParticles);
-               this .texCoordArray    = new Float32Array (6 * 4 * maxParticles);
-               this .normalArray      = new Float32Array (6 * 3 * maxParticles);
-               this .vertexArray      = new Float32Array (6 * 4 * maxParticles);
+               this .geometryContext .geometryType = 2;
 
-               for (var i = 0, a = this .idArray, l = a .length; i < l; ++ i)
-                  a [i] = Math .floor (i / 6);
-
-               this .colorArray  .fill (1);
-               this .vertexArray .fill (1);
-
-               var
-                  texCoordArray = this .texCoordArray,
-                  normalArray   = this .normalArray;
-
-               for (var i = 0, length = 6 * 3 * maxParticles; i < length; i += 3)
-               {
-                  normalArray [i]     = 0;
-                  normalArray [i + 1] = 0;
-                  normalArray [i + 2] = 1;
-               }
-
-               gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-               gl .bufferData (gl .ARRAY_BUFFER, this .normalArray, gl .STATIC_DRAW);
-
-               for (var i = 0; i < maxParticles; ++ i)
-               {
-                  var i24 = i * 24;
-
-                  // p4 ------ p3
-                  // |       / |
-                  // |     /   |
-                  // |   /     |
-                  // | /       |
-                  // p1 ------ p2
-
-                  // p1
-                  texCoordArray [i24]     = texCoordArray [i24 + 12] = 0;
-                  texCoordArray [i24 + 1] = texCoordArray [i24 + 13] = 0;
-                  texCoordArray [i24 + 2] = texCoordArray [i24 + 14] = 0;
-                  texCoordArray [i24 + 3] = texCoordArray [i24 + 15] = 1;
-
-                  // p2
-                  texCoordArray [i24 + 4] = 1;
-                  texCoordArray [i24 + 5] = 0;
-                  texCoordArray [i24 + 6] = 0;
-                  texCoordArray [i24 + 7] = 1;
-
-                  // p3
-                  texCoordArray [i24 + 8]  = texCoordArray [i24 + 16] = 1;
-                  texCoordArray [i24 + 9]  = texCoordArray [i24 + 17] = 1;
-                  texCoordArray [i24 + 10] = texCoordArray [i24 + 18] = 0;
-                  texCoordArray [i24 + 11] = texCoordArray [i24 + 19] = 1;
-
-                  // p4
-                  texCoordArray [i24 + 20] = 0;
-                  texCoordArray [i24 + 21] = 1;
-                  texCoordArray [i24 + 22] = 0;
-                  texCoordArray [i24 + 23] = 1;
-               }
-
-               gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
-               gl .bufferData (gl .ARRAY_BUFFER, this .texCoordArray, gl .STATIC_DRAW);
-
-               this .testWireframe = true;
-               this .primitiveMode = gl .TRIANGLES;
                this .texCoordCount = 4;
                this .vertexCount   = 6;
+               this .hasNormals    = true;
+               this .testWireframe = true;
+               this .primitiveMode = gl .TRIANGLES;
 
-               this .geometryContext .geometryType = 2;
+               this .texCoordsOffset = 0;
+               this .normalOffset    = Float32Array .BYTES_PER_ELEMENT * 24;
+               this .verticesOffset  = Float32Array .BYTES_PER_ELEMENT * 27;
+
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
+               gl .bufferData (gl .ARRAY_BUFFER, QuadGeometry, gl .DYNAMIC_DRAW);
+
                break;
             }
-            case GEOMETRY:
+            case GeometryTypes .GEOMETRY:
             {
                this .texCoordCount = 0;
                this .vertexCount   = 0;
+
                break;
             }
          }
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .idBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .idArray, gl .STATIC_DRAW);
+         this .updateVertexArrays ();
 
          this .set_shader__ ();
          this .set_transparent__ ();
@@ -2123,20 +2777,17 @@ function (Fields,
       {
          switch (this .geometryType)
          {
-            case POINT:
+            case GeometryTypes .POINT:
             {
                this .shaderNode = this .getBrowser () .getPointShader ();
                break;
             }
-            case LINE:
+            case GeometryTypes .LINE:
             {
                this .shaderNode = this .getBrowser () .getLineShader ();
                break;
             }
-            case TRIANGLE:
-            case QUAD:
-            case SPRITE:
-            case GEOMETRY:
+            default:
             {
                this .shaderNode = null;
                break;
@@ -2145,37 +2796,18 @@ function (Fields,
       },
       set_maxParticles__: function ()
       {
-         var
-            particles    = this .particles,
-            maxParticles = Math .max (0, this ._maxParticles .getValue ());
-
-         for (var i = this .numParticles, length = Math .min (particles .length, maxParticles); i < length; ++ i)
-         {
-            particles [i] .life     = 1;
-            particles [i] .lifetime = -1;
-         }
-
-         for (var i = particles .length, length = maxParticles; i < length; ++ i)
-         {
-            particles [i] = {
-               id: i,
-               life: 1,
-               lifetime: -1,
-               elapsedTime: 0,
-               position: new Vector3 (0, 0, 0),
-               velocity: new Vector3 (0, 0, 0),
-               color: new Vector4 (1, 1, 1, 1),
-               distance: 0,
-            };
-         }
+         const
+            lastNumParticles = this .numParticles,
+            maxParticles     = Math .max (0, this ._maxParticles .getValue ());
 
          this .maxParticles = maxParticles;
-         this .numParticles = Math .min (this .numParticles, maxParticles);
+         this .numParticles = Math .min (lastNumParticles, maxParticles);
 
-         if (! this .emitterNode .isExplosive ())
+         if (!this .emitterNode .isExplosive ())
             this .creationTime = performance .now () / 1000;
 
-         this .set_geometryType__ ();
+         this .resizeBuffers (lastNumParticles);
+         this .updateVertexArrays ();
       },
       set_particleLifetime__: function ()
       {
@@ -2189,33 +2821,33 @@ function (Fields,
       {
          this .emitterNode = X3DCast (X3DConstants .X3DParticleEmitterNode, this ._emitter);
 
-         if (! this .emitterNode)
+         if (!this .emitterNode)
             this .emitterNode = this .getBrowser () .getDefaultEmitter ();
 
          this .createParticles = this ._createParticles .getValue ();
       },
       set_physics__: function ()
       {
-         var
+         const
             physics                  = this ._physics .getValue (),
             forcePhysicsModelNodes   = this .forcePhysicsModelNodes,
             boundedPhysicsModelNodes = this .boundedPhysicsModelNodes;
 
-         for (var i = 0, length = boundedPhysicsModelNodes .length; i < length; ++ i)
+         for (let i = 0, length = boundedPhysicsModelNodes .length; i < length; ++ i)
             boundedPhysicsModelNodes [i] .removeInterest ("set_boundedPhysics__", this);
 
          forcePhysicsModelNodes   .length = 0;
          boundedPhysicsModelNodes .length = 0;
 
-         for (var i = 0, length = physics .length; i < length; ++ i)
+         for (let i = 0, length = physics .length; i < length; ++ i)
          {
             try
             {
-               var
+               const
                   innerNode = physics [i] .getValue () .getInnerNode (),
                   type      = innerNode .getType ();
 
-               for (var t = type .length - 1; t >= 0; -- t)
+               for (let t = type .length - 1; t >= 0; -- t)
                {
                   switch (type [t])
                   {
@@ -2246,7 +2878,8 @@ function (Fields,
       },
       set_boundedPhysics__: function ()
       {
-         var
+         const
+            gl                       = this .getBrowser () .getContext (),
             boundedPhysicsModelNodes = this .boundedPhysicsModelNodes,
             boundedNormals           = this .boundedNormals,
             boundedVertices          = this .boundedVertices;
@@ -2254,13 +2887,43 @@ function (Fields,
          boundedNormals  .length = 0;
          boundedVertices .length = 0;
 
-         for (var i = 0, length = boundedPhysicsModelNodes .length; i < length; ++ i)
+         for (let i = 0, length = boundedPhysicsModelNodes .length; i < length; ++ i)
          {
             boundedPhysicsModelNodes [i] .addGeometry (boundedNormals, boundedVertices);
          }
 
-         this .boundedVolume = new BVH (boundedVertices, boundedNormals);
-      },
+         // Texture
+
+         const
+            boundedHierarchy       = new BVH (boundedVertices, boundedNormals) .toArray ([ ]),
+            numBoundedVertices     = boundedVertices .length / 4,
+            numBoundedNormals      = boundedNormals .length / 3,
+            boundedHierarchyLength = boundedHierarchy .length / 4,
+            boundedArraySize       = Math .ceil (Math .sqrt (numBoundedVertices + numBoundedNormals + boundedHierarchyLength)),
+            boundedArray           = new Float32Array (boundedArraySize * boundedArraySize * 4);
+
+         this .boundedVerticesIndex  = 0;
+         this .boundedNormalsIndex   = numBoundedVertices;
+         this .boundedHierarchyIndex = this .boundedNormalsIndex + numBoundedNormals;
+         this .boundedHierarchyRoot  = this .boundedHierarchyIndex + boundedHierarchyLength - 1;
+
+         boundedArray .set (boundedVertices);
+
+         for (let s = this .boundedNormalsIndex * 4, n = 0, l = boundedNormals .length; n < l; s += 4, n += 3)
+         {
+            boundedArray [s + 0] = boundedNormals [n + 0];
+            boundedArray [s + 1] = boundedNormals [n + 1];
+            boundedArray [s + 2] = boundedNormals [n + 2];
+         }
+
+         boundedArray .set (boundedHierarchy, this .boundedHierarchyIndex * 4);
+
+         if (boundedArraySize)
+         {
+            gl .bindTexture (gl .TEXTURE_2D, this .boundedTexture);
+            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, boundedArraySize, boundedArraySize, 0, gl .RGBA, gl .FLOAT, boundedArray);
+         }
+       },
       set_colorRamp__: function ()
       {
          if (this .colorRampNode)
@@ -2276,25 +2939,35 @@ function (Fields,
       },
       set_color__: function ()
       {
-         var
-            colorKey  = this ._colorKey,
-            colorKeys = this .colorKeys,
-            colorRamp = this .colorRamp;
+         const
+            gl           = this .getBrowser () .getContext (),
+            colorKey     = this ._colorKey,
+            numColors    = colorKey .length,
+            textureSize  = Math .ceil (Math .sqrt (numColors * 2));
 
-         for (var i = 0, length = colorKey .length; i < length; ++ i)
-            colorKeys [i] = colorKey [i];
+         let colorRamp = this .colorRamp;
 
-         colorKeys .length = length;
+         if (textureSize * textureSize * 4 > colorRamp .length)
+            colorRamp = this .colorRamp = new Float32Array (textureSize * textureSize * 4);
+
+         for (let i = 0; i < numColors; ++ i)
+            colorRamp [i * 4] = colorKey [i];
 
          if (this .colorRampNode)
-            this .colorRampNode .getVectors (this .colorRamp);
+            colorRamp .set (this .colorRampNode .addColors ([ ], numColors) .slice (0, numColors * 4), numColors * 4);
+         else
+            colorRamp .fill (1, numColors * 4);
 
-         for (var i = colorRamp .length, length = colorKey .length; i < length; ++ i)
-            colorRamp [i] = new Vector4 (1, 1, 1, 1);
+         if (textureSize)
+         {
+            gl .bindTexture (gl .TEXTURE_2D, this .colorRampTexture);
+            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorRamp);
+        }
 
-         colorRamp .length = length;
+         this .numColors                      = numColors;
+         this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
 
-         this .geometryContext .colorMaterial = !! (colorKeys .length && this .colorRampNode);
+         this .updateVertexArrays ();
       },
       set_texCoordRamp__: function ()
       {
@@ -2310,48 +2983,117 @@ function (Fields,
       },
       set_texCoord__: function ()
       {
-         var
+         const
+            gl           = this .getBrowser () .getContext (),
             texCoordKey  = this ._texCoordKey,
-            texCoordKeys = this .texCoordKeys,
-            texCoordRamp = this .texCoordRamp;
+            numTexCoords = texCoordKey .length,
+            textureSize  = Math .ceil (Math .sqrt (numTexCoords + numTexCoords * this .texCoordCount));
 
-         for (var i = 0, length = texCoordKey .length; i < length; ++ i)
-            texCoordKeys [i] = texCoordKey [i];
+         let texCoordRamp = this .texCoordRamp;
 
-         texCoordKeys .length = length;
+         if (textureSize * textureSize * 4 > texCoordRamp .length)
+            texCoordRamp = this .texCoordRamp = new Float32Array (textureSize * textureSize * 4);
+         else
+            texCoordRamp .fill (0);
+
+         for (let i = 0; i < numTexCoords; ++ i)
+            texCoordRamp [i * 4] = texCoordKey [i];
 
          if (this .texCoordRampNode)
-            this .texCoordRampNode .getTexCoord (texCoordRamp);
+            texCoordRamp .set (this .texCoordRampNode .getTexCoord ([ ]) .slice (0, numTexCoords * this .texCoordCount * 4), numTexCoords * 4);
 
-         for (var i = texCoordRamp .length, length = texCoordKey .length * this .texCoordCount; i < length; ++ i)
-            texCoordRamp [i] = new Vector4 (0, 0, 0, 0);
+         if (textureSize)
+         {
+            gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, texCoordRamp);
+         }
 
-         texCoordRamp .length = length;
+         this .numTexCoords = this .texCoordRampNode ? numTexCoords : 0;
 
-         this .texCoordAnim = !! (texCoordKeys .length && this .texCoordRampNode);
+         this .updateVertexArrays ();
       },
-      intersectsBox: function (box, clipPlanes)
+      updateVertexArrays: function ()
       {
-         // TODO: implement me.
+         this .inputParticles  .vertexArrayObject  .update ();
+         this .inputParticles  .shadowArrayObject  .update ();
+         this .inputParticles  .emitterArrayObject .update ();
+         this .outputParticles .vertexArrayObject  .update ();
+         this .outputParticles .shadowArrayObject  .update ();
+         this .outputParticles .emitterArrayObject .update ();
+      },
+      createTexture: function ()
+      {
+         const
+            gl      = this .getBrowser () .getContext (),
+            texture = gl .createTexture ();
+
+         gl .bindTexture (gl .TEXTURE_2D, texture);
+
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, 1, 1, 0, gl .RGBA, gl .FLOAT, new Float32Array (4));
+
+         return texture;
+      },
+      createBuffer: function ()
+      {
+         const
+            gl     = this .getBrowser () .getContext (),
+            buffer = gl .createBuffer ();
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+         gl .bufferData (gl .ARRAY_BUFFER, new Uint32Array (), gl .DYNAMIC_DRAW);
+
+         return buffer;
+      },
+      resizeBuffers: function (lastNumParticles)
+      {
+         const
+            gl              = this .getBrowser () .getContext (),
+            maxParticles    = this .maxParticles,
+            particleStride  = this .particleStride,
+            outputParticles = Object .assign (gl .createBuffer (), this .outputParticles),
+            data            = new Uint8Array (maxParticles * particleStride);
+
+         // Resize input buffer.
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .inputParticles);
+         gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
+
+         // Resize output buffer.
+
+         gl .bindBuffer (gl .COPY_READ_BUFFER, this .outputParticles);
+         gl .bindBuffer (gl .ARRAY_BUFFER, outputParticles);
+         gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
+         gl .copyBufferSubData (gl .COPY_READ_BUFFER, gl .ARRAY_BUFFER, 0, 0, Math .min (maxParticles * particleStride, lastNumParticles * particleStride));
+         gl .deleteBuffer (this .outputParticles);
+
+         this .outputParticles = outputParticles;
       },
       animateParticles: function ()
       {
-         var emitterNode = this .emitterNode;
+         const
+            browser     = this .getBrowser (),
+            gl          = browser .getContext (),
+            emitterNode = this .emitterNode;
 
          // Determine delta time
 
-         var
-            DELAY = 15, // Delay in frames when dt full applys.
+         const
+            DELAY = 15, // Delay in frames when dt fully applies.
             dt    = 1 / Math .max (10, this .getBrowser () .getCurrentFrameRate ());
 
-         // var deltaTime is only for the emitter, this.deltaTime is for the forces.
-         var deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
+         // let deltaTime is only for the emitter, this.deltaTime is for the forces.
+         let deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
 
          // Determine numParticles
 
          if (emitterNode .isExplosive ())
          {
-            var
+            const
                now              = performance .now () / 1000,
                particleLifetime = this .particleLifetime + this .particleLifetime * this .lifetimeVariation;
 
@@ -2370,7 +3112,7 @@ function (Fields,
          {
             if (this .numParticles < this .maxParticles)
             {
-               var
+               const
                   now          = performance .now () / 1000,
                   newParticles = Math .max (0, Math .floor ((now - this .creationTime) * this .maxParticles / this .particleLifetime));
 
@@ -2385,548 +3127,98 @@ function (Fields,
 
          if (emitterNode .getMass ())
          {
-            var
-               forcePhysicsModelNodes = this .forcePhysicsModelNodes,
-               velocities             = this .velocities,
-               speeds                 = this .speeds,
-               turbulences            = this .turbulences,
-               deltaMass              = this .deltaTime / emitterNode .getMass ();
+            const forcePhysicsModelNodes = this .forcePhysicsModelNodes;
+
+            let
+               numForces  = forcePhysicsModelNodes .length,
+               forces     = this .forces,
+               timeByMass = deltaTime / emitterNode .getMass ();
 
             // Collect forces in velocities and collect turbulences.
 
-            for (var i = velocities .length, length = forcePhysicsModelNodes .length; i < length; ++ i)
-               velocities [i] = new Vector3 (0, 0, 0);
+            if (numForces * 4 > forces .length)
+               forces = this .forces = new Float32Array (numForces * 4);
 
-            for (var i = 0, length = forcePhysicsModelNodes .length; i < length; ++ i)
-               forcePhysicsModelNodes [i] .addForce (i, emitterNode, velocities, turbulences);
+            let disabledForces = 0;
 
-            // Determine velocities from forces and determine speed.
-
-            for (var i = 0, length = velocities .length; i < length; ++ i)
+            for (let i = 0; i < numForces; ++ i)
             {
-               velocities [i] .multiply (deltaMass);
-               speeds [i] = velocities [i] .abs ();
+               disabledForces += !forcePhysicsModelNodes [i] .addForce (i - disabledForces, emitterNode, timeByMass, forces);
             }
 
-            this .numForces = length;
+            this .numForces = numForces -= disabledForces;
+
+            if (numForces)
+            {
+               gl .bindTexture (gl .TEXTURE_2D, this .forcesTexture);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numForces, 1, 0, gl .RGBA, gl .FLOAT, forces);
+            }
          }
          else
          {
             this .numForces = 0;
          }
 
-         // Determine particle position, velocity and colors
+         // Swap buffers.
+
+         const inputParticles  = this .outputParticles;
+         this .outputParticles = this .inputParticles;
+         this .inputParticles  = inputParticles;
+
+         // Determine particle position, velocity and colors.
 
          emitterNode .animate (this, deltaTime);
 
-         this .updateGeometry (null);
-
-         this .getBrowser () .addBrowserEvent ();
+         browser .addBrowserEvent ();
       },
-      updateGeometry: function (modelViewMatrix)
+      updateSprite: (function ()
       {
-         switch (this .geometryType)
+         const data = new Float32Array (QuadGeometry);
+
+         const quad = [
+            new Vector3 (-0.5, -0.5, 0),
+            new Vector3 ( 0.5, -0.5, 0),
+            new Vector3 ( 0.5,  0.5, 0),
+            new Vector3 (-0.5, -0.5, 0),
+            new Vector3 ( 0.5,  0.5, 0),
+            new Vector3 (-0.5,  0.5, 0),
+         ];
+
+         const
+            vertex = new Vector3 (0, 0, 0),
+            size   = new Vector3 (0, 0, 0);
+
+         return function (gl, rotation)
          {
-            case POINT:
-               if (! modelViewMatrix)
-                  this .updatePoint ();
-               break;
-            case LINE:
-               if (! modelViewMatrix)
-                  this .updateLine ();
-               break;
-            case TRIANGLE:
-            case QUAD:
-            case SPRITE:
-               this .updateQuad (modelViewMatrix);
-               break;
-            case GEOMETRY:
-               break;
-         }
-      },
-      updatePoint: function ()
-      {
-         var
-            gl               = this .getBrowser () .getContext (),
-            particles        = this .particles,
-            numParticles     = this .numParticles,
-            positionArray    = this .positionArray,
-            elapsedTimeArray = this .elapsedTimeArray,
-            lifeArray        = this .lifeArray,
-            colorArray       = this .colorArray,
-            vertexArray      = this .vertexArray;
+            // Normal
 
-         // Colors
-
-         if (this .geometryContext .colorMaterial)
-         {
-            for (var i = 0; i < numParticles; ++ i)
-            {
-               var
-                  color = particles [i] .color,
-                  i4    = i * 4;
-
-               colorArray [i4]     = color .x;
-               colorArray [i4 + 1] = color .y;
-               colorArray [i4 + 2] = color .z;
-               colorArray [i4 + 3] = color .w;
-            }
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, this .colorArray, gl .STATIC_DRAW);
-         }
-
-         // Vertices
-
-         for (var i = 0; i < numParticles; ++ i)
-         {
-            var
-               position    = particles [i] .position,
-               elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
-               i3          = i * 3,
-               i4          = i * 4;
-
-            positionArray [i3]     = position .x;
-            positionArray [i3 + 1] = position .y;
-            positionArray [i3 + 2] = position .z;
-
-            elapsedTimeArray [i] = elapsedTime;
-            lifeArray [i]        = particles [i] .life;
-
-            vertexArray [i4]     = position .x;
-            vertexArray [i4 + 1] = position .y;
-            vertexArray [i4 + 2] = position .z;
-         }
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .positionBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .positionArray, gl .STATIC_DRAW);
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .elapsedTimeBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .elapsedTimeArray, gl .STATIC_DRAW);
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .lifeBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .lifeArray, gl .STATIC_DRAW);
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
-      },
-      updateLine: function ()
-      {
-         var
-            gl               = this .getBrowser () .getContext (),
-            particles        = this .particles,
-            numParticles     = this .numParticles,
-            positionArray    = this .positionArray,
-            elapsedTimeArray = this .elapsedTimeArray,
-            lifeArray        = this .lifeArray,
-            colorArray       = this .colorArray,
-            vertexArray      = this .vertexArray,
-            sy1_2            = this ._particleSize .y / 2;
-
-         // Colors
-
-         if (this .geometryContext .colorMaterial)
-         {
-            for (var i = 0; i < numParticles; ++ i)
-            {
-               var
-                  color = particles [i] .color,
-                  i8    = i * 8;
-
-               colorArray [i8]     = color .x;
-               colorArray [i8 + 1] = color .y;
-               colorArray [i8 + 2] = color .z;
-               colorArray [i8 + 3] = color .w;
-
-               colorArray [i8 + 4] = color .x;
-               colorArray [i8 + 5] = color .y;
-               colorArray [i8 + 6] = color .z;
-               colorArray [i8 + 7] = color .w;
-            }
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, this .colorArray, gl .STATIC_DRAW);
-         }
-
-         // Vertices
-
-         for (var i = 0; i < numParticles; ++ i)
-         {
-            var
-               particle    = particles [i],
-               position    = particle .position,
-               elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
-               life        = particles [i] .life,
-               x           = position .x,
-               y           = position .y,
-               z           = position .z,
-               i2          = i * 2,
-               i6          = i * 6,
-               i8          = i * 8;
-
-            positionArray [i6]     = x;
-            positionArray [i6 + 1] = y;
-            positionArray [i6 + 2] = z;
-            positionArray [i6 + 3] = x;
-            positionArray [i6 + 4] = y;
-            positionArray [i6 + 5] = z;
-
-            elapsedTimeArray [i2]     = elapsedTime;
-            elapsedTimeArray [i2 + 1] = elapsedTime;
-
-            lifeArray [i2]     = life;
-            lifeArray [i2 + 1] = life;
-
-            // Length of line / 2.
-            normal .assign (particle .velocity) .normalize () .multiply (sy1_2);
-
-            vertexArray [i8]     = x - normal .x;
-            vertexArray [i8 + 1] = y - normal .y;
-            vertexArray [i8 + 2] = z - normal .z;
-
-            vertexArray [i8 + 4] = x + normal .x;
-            vertexArray [i8 + 5] = y + normal .y;
-            vertexArray [i8 + 6] = z + normal .z;
-         }
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .positionBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .positionArray, gl .STATIC_DRAW);
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .elapsedTimeBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .elapsedTimeArray, gl .STATIC_DRAW);
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .lifeBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .lifeArray, gl .STATIC_DRAW);
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
-      },
-      updateQuad: function (modelViewMatrix)
-      {
-         try
-         {
-            var
-               gl               = this .getBrowser () .getContext (),
-               particles        = this .particles,
-               maxParticles     = this .maxParticles,
-               numParticles     = this .numParticles,
-               positionArray    = this .positionArray,
-               elapsedTimeArray = this .elapsedTimeArray,
-               lifeArray        = this .lifeArray,
-               colorArray       = this .colorArray,
-               texCoordArray    = this .texCoordArray,
-               normalArray      = this .normalArray,
-               vertexArray      = this .vertexArray,
-               sx1_2            = this ._particleSize .x / 2,
-               sy1_2            = this ._particleSize .y / 2;
-
-            // Sort particles
-
-//				if (this .sortParticles) // always false
-//				{
-//					for (var i = 0; i < numParticles; ++ i)
-//					{
-//						var particle = particles [i];
-//						particle .distance = modelViewMatrix .getDepth (particle .position);
-//					}
-//
-//					// Expensisive function!!!
-//					this .particleSorter .sort (0, numParticles);
-//				}
-
-            // Colors
-
-            if (! modelViewMatrix) // if called from animateParticles
-            {
-               if (this .geometryContext .colorMaterial)
-               {
-                  for (var i = 0; i < maxParticles; ++ i)
-                  {
-                     var
-                        color = particles [i] .color,
-                        i24   = i * 24;
-
-                     // p4 ------ p3
-                     // |       / |
-                     // |     /   |
-                     // |   /     |
-                     // | /       |
-                     // p1 ------ p2
-
-                     // p1, p2, p3; p1, p3, p4
-                     colorArray [i24]     = colorArray [i24 + 4] = colorArray [i24 + 8]  = colorArray [i24 + 12] = colorArray [i24 + 16] = colorArray [i24 + 20] = color .x;
-                     colorArray [i24 + 1] = colorArray [i24 + 5] = colorArray [i24 + 9]  = colorArray [i24 + 13] = colorArray [i24 + 17] = colorArray [i24 + 21] = color .y;
-                     colorArray [i24 + 2] = colorArray [i24 + 6] = colorArray [i24 + 10] = colorArray [i24 + 14] = colorArray [i24 + 18] = colorArray [i24 + 22] = color .z;
-                     colorArray [i24 + 3] = colorArray [i24 + 7] = colorArray [i24 + 11] = colorArray [i24 + 15] = colorArray [i24 + 19] = colorArray [i24 + 23] = color .w;
-                  }
-
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .colorArray, gl .STATIC_DRAW);
-               }
-
-               if (this .texCoordAnim && this .texCoordArray .length)
-               {
-                  var
-                     texCoordKeys = this .texCoordKeys,
-                     texCoordRamp = this .texCoordRamp;
-
-                  var
-                     length = texCoordKeys .length,
-                     index0 = 0;
-
-                  for (var i = 0; i < maxParticles; ++ i)
-                  {
-                     // Determine index0.
-
-                     var
-                        particle = particles [i],
-                        fraction = particle .elapsedTime / particle .lifetime;
-
-                     if (length == 1 || fraction <= texCoordKeys [0])
-                     {
-                        index0 = 0;
-                     }
-                     else if (fraction >= texCoordKeys .at (-1))
-                     {
-                        index0 = length - 2;
-                     }
-                     else
-                     {
-                        var index = Algorithm .upperBound (texCoordKeys, 0, length, fraction, Algorithm .less);
-
-                        if (index < length)
-                           index0 = index - 1;
-                        else
-                           index0 = 0;
-                     }
-
-                     // Set texCoord.
-
-                     index0 *= this .texCoordCount;
-
-                     var
-                        texCoord1 = texCoordRamp [index0],
-                        texCoord2 = texCoordRamp [index0 + 1],
-                        texCoord3 = texCoordRamp [index0 + 2],
-                        texCoord4 = texCoordRamp [index0 + 3],
-                        i24 = i * 24;
-
-                     // p4 ------ p3
-                     // |       / |
-                     // |     /   |
-                     // |   /     |
-                     // | /       |
-                     // p1 ------ p2
-
-                     // p1
-                     texCoordArray [i24]     = texCoordArray [i24 + 12] = texCoord1 .x;
-                     texCoordArray [i24 + 1] = texCoordArray [i24 + 13] = texCoord1 .y;
-                     texCoordArray [i24 + 2] = texCoordArray [i24 + 14] = texCoord1 .z;
-                     texCoordArray [i24 + 3] = texCoordArray [i24 + 15] = texCoord1 .w;
-
-                     // p2
-                     texCoordArray [i24 + 4] = texCoord2 .x;
-                     texCoordArray [i24 + 5] = texCoord2 .y;
-                     texCoordArray [i24 + 6] = texCoord2 .z;
-                     texCoordArray [i24 + 7] = texCoord2 .w;
-
-                     // p3
-                     texCoordArray [i24 + 8]  = texCoordArray [i24 + 16] = texCoord3 .x;
-                     texCoordArray [i24 + 9]  = texCoordArray [i24 + 17] = texCoord3 .y;
-                     texCoordArray [i24 + 10] = texCoordArray [i24 + 18] = texCoord3 .z;
-                     texCoordArray [i24 + 11] = texCoordArray [i24 + 19] = texCoord3 .w;
-
-                     // p4
-                     texCoordArray [i24 + 20] = texCoord4 .x;
-                     texCoordArray [i24 + 21] = texCoord4 .y;
-                     texCoordArray [i24 + 22] = texCoord4 .z;
-                     texCoordArray [i24 + 23] = texCoord4 .w;
-                  }
-
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .texCoordArray, gl .STATIC_DRAW);
-               }
-            }
+            for (let i = 0; i < 3; ++ i)
+               data [24 + i] = rotation [i + 6];
 
             // Vertices
 
-            if (this .geometryType === SPRITE)
-            {
-               if (modelViewMatrix) // if called from depth or draw
-               {
-                  // Normals
+            size .set (this ._particleSize .x, this ._particleSize .y, 1);
 
-                  var rotation = this .getScreenAlignedRotation (modelViewMatrix);
+            for (let i = 0; i < 6; ++ i)
+               data .set (rotation .multVecMatrix (vertex .assign (quad [i]) .multVec (size)), 27 + i * 4);
 
-                  normal
-                     .set (rotation [0], rotation [1], rotation [2])
-                     .cross (vector .set (rotation [3], rotation [4], rotation [5]))
-                     .normalize ();
-
-                  var
-                     nx = normal .x,
-                     ny = normal .y,
-                     nz = normal .z;
-
-                  for (var i = 0, length = 6 * 3 * maxParticles; i < length; i += 3)
-                  {
-                     normalArray [i]     = nx;
-                     normalArray [i + 1] = ny;
-                     normalArray [i + 2] = nz;
-                  }
-
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .normalArray, gl .STATIC_DRAW);
-
-                  // Vertices
-
-                  s1 .set (-sx1_2, -sy1_2, 0);
-                  s2 .set ( sx1_2, -sy1_2, 0);
-                  s3 .set ( sx1_2,  sy1_2, 0);
-                  s4 .set (-sx1_2,  sy1_2, 0);
-
-                  rotation .multVecMatrix (s1);
-                  rotation .multVecMatrix (s2);
-                  rotation .multVecMatrix (s3);
-                  rotation .multVecMatrix (s4);
-
-                  for (var i = 0; i < numParticles; ++ i)
-                  {
-                     var
-                        position    = particles [i] .position,
-                        elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
-                        x           = position .x,
-                        y           = position .y,
-                        z           = position .z,
-                        i6          = i * 6,
-                        i18         = i * 18,
-                        i24         = i * 24;
-
-                     // p4 ------ p3
-                     // |       / |
-                     // |     /   |
-                     // |   /     |
-                     // | /       |
-                     // p1 ------ p2
-
-
-                     positionArray [i18]     = positionArray [i18 + 3] = positionArray [i18 + 6] = positionArray [i18 +  9] = positionArray [i18 + 12] = positionArray [i18 + 15] = x;
-                     positionArray [i18 + 1] = positionArray [i18 + 4] = positionArray [i18 + 7] = positionArray [i18 + 10] = positionArray [i18 + 13] = positionArray [i18 + 16] = y;
-                     positionArray [i18 + 2] = positionArray [i18 + 5] = positionArray [i18 + 8] = positionArray [i18 + 11] = positionArray [i18 + 14] = positionArray [i18 + 17] = z;
-
-                     elapsedTimeArray [i6] = elapsedTimeArray [i6 + 1] = elapsedTimeArray [i6 + 2] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 4] = elapsedTimeArray [i6 + 5] = elapsedTime;
-                     lifeArray [i6]        = lifeArray [i6 + 1]        = lifeArray [i6 + 2]        = lifeArray [i6 + 3]        = lifeArray [i6 + 4]        = lifeArray [i6 + 5]        = particles [i] .life;
-
-                     // p1
-                     vertexArray [i24]     = vertexArray [i24 + 12] = x + s1 .x;
-                     vertexArray [i24 + 1] = vertexArray [i24 + 13] = y + s1 .y;
-                     vertexArray [i24 + 2] = vertexArray [i24 + 14] = z + s1 .z;
-
-                     // p2
-                     vertexArray [i24 + 4] = x + s2 .x;
-                     vertexArray [i24 + 5] = y + s2 .y;
-                     vertexArray [i24 + 6] = z + s2 .z;
-
-                     // p3
-                     vertexArray [i24 + 8]  = vertexArray [i24 + 16] = x + s3 .x;
-                     vertexArray [i24 + 9]  = vertexArray [i24 + 17] = y + s3 .y;
-                     vertexArray [i24 + 10] = vertexArray [i24 + 18] = z + s3 .z;
-
-                     // p4
-                     vertexArray [i24 + 20] = x + s4 .x;
-                     vertexArray [i24 + 21] = y + s4 .y;
-                     vertexArray [i24 + 22] = z + s4 .z;
-                  }
-
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .positionBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .positionArray, gl .STATIC_DRAW);
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .elapsedTimeBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .elapsedTimeArray, gl .STATIC_DRAW);
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .lifeBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .lifeArray, gl .STATIC_DRAW);
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
-               }
-            }
-            else
-            {
-               if (! modelViewMatrix) // if called from animateParticles
-               {
-                  for (var i = 0; i < numParticles; ++ i)
-                  {
-                     var
-                        position    = particles [i] .position,
-                        elapsedTime = particles [i] .elapsedTime / particles [i] .lifetime,
-                        x           = position .x,
-                        y           = position .y,
-                        z           = position .z,
-                        i6          = i * 6,
-                        i18         = i * 18,
-                        i24         = i * 24;
-
-                     // p4 ------ p3
-                     // |       / |
-                     // |     /   |
-                     // |   /     |
-                     // | /       |
-                     // p1 ------ p2
-
-                     positionArray [i18]     = positionArray [i18 + 3] = positionArray [i18 + 6] = positionArray [i18 +  9] = positionArray [i18 + 12] = positionArray [i18 + 15] = x;
-                     positionArray [i18 + 1] = positionArray [i18 + 4] = positionArray [i18 + 7] = positionArray [i18 + 10] = positionArray [i18 + 13] = positionArray [i18 + 16] = y;
-                     positionArray [i18 + 2] = positionArray [i18 + 5] = positionArray [i18 + 8] = positionArray [i18 + 11] = positionArray [i18 + 14] = positionArray [i18 + 17] = z;
-
-                     elapsedTimeArray [i6] = elapsedTimeArray [i6 + 1] = elapsedTimeArray [i6 + 2] = elapsedTimeArray [i6 + 3] = elapsedTimeArray [i6 + 4] = elapsedTimeArray [i6 + 5] = elapsedTime;
-                     lifeArray [i6]        = lifeArray [i6 + 1]        = lifeArray [i6 + 2]        = lifeArray [i6 + 3]        = lifeArray [i6 + 4]        = lifeArray [i6 + 5]        = particles [i] .life;
-
-                     // p1
-                     vertexArray [i24]     = vertexArray [i24 + 12] = x - sx1_2;
-                     vertexArray [i24 + 1] = vertexArray [i24 + 13] = y - sy1_2;
-                     vertexArray [i24 + 2] = vertexArray [i24 + 14] = z;
-
-                     // p2
-                     vertexArray [i24 + 4] = x + sx1_2;
-                     vertexArray [i24 + 5] = y - sy1_2;
-                     vertexArray [i24 + 6] = z;
-
-                     // p3
-                     vertexArray [i24 + 8]  = vertexArray [i24 + 16] = x + sx1_2;
-                     vertexArray [i24 + 9]  = vertexArray [i24 + 17] = y + sy1_2;
-                     vertexArray [i24 + 10] = vertexArray [i24 + 18] = z;
-
-                     // p4
-                     vertexArray [i24 + 20] = x - sx1_2;
-                     vertexArray [i24 + 21] = y + sy1_2;
-                     vertexArray [i24 + 22] = z;
-                  }
-
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .positionBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .positionArray, gl .STATIC_DRAW);
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .elapsedTimeBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .elapsedTimeArray, gl .STATIC_DRAW);
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .lifeBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .lifeArray, gl .STATIC_DRAW);
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-                  gl .bufferData (gl .ARRAY_BUFFER, this .vertexArray, gl .STATIC_DRAW);
-               }
-            }
-         }
-         catch (error)
-         {
-            console .error (error);
-         }
-      },
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
+         };
+      })(),
+      intersectsBox: function (box, clipPlanes)
+      { },
       traverse: function (type, renderObject)
       {
-         if (! this ._isActive .getValue ())
+         if (this .numParticles === 0)
             return;
 
          switch (type)
          {
             case TraverseType .POINTER:
-            {
-               break;
-            }
             case TraverseType .PICKING:
-            {
-               break;
-            }
             case TraverseType .COLLISION:
             {
-               // TODO: to be implemented.
                break;
             }
             case TraverseType .SHADOW:
@@ -2945,7 +3237,7 @@ function (Fields,
             }
          }
 
-         if (this .geometryType === GEOMETRY)
+         if (this .geometryType === GeometryTypes .GEOMETRY)
          {
             if (this .getGeometry ())
                this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
@@ -2953,64 +3245,75 @@ function (Fields,
       },
       depth: function (gl, context, shaderNode)
       {
-         // Update geometry if SPRITE.
-
-         this .updateGeometry (context .modelViewMatrix);
-
          // Display geometry.
 
-         if (this .geometryType === GEOMETRY)
+         switch (this .geometryType)
          {
-            var geometryNode = this .getGeometry ();
-
-            if (geometryNode)
-               geometryNode .displayParticlesDepth (gl, context, shaderNode, this .particles, this .numParticles);
-         }
-         else
-         {
-            if (this .numParticles <= 0)
-               return;
-
-            if (shaderNode .getValid ())
+            case GeometryTypes .GEOMETRY:
             {
-               // Setup vertex attributes.
+               const geometryNode = this .getGeometry ();
 
-               shaderNode .enableFloatAttrib (gl, "x3d_ParticleId",          this .idBuffer,          1);
-               shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition",    this .positionBuffer,    3);
-               shaderNode .enableFloatAttrib (gl, "x3d_ParticleElapsedTime", this .elapsedTimeBuffer, 1);
-               shaderNode .enableFloatAttrib (gl, "x3d_ParticleLife",        this .lifeBuffer,        1);
-               shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+               if (geometryNode)
+                  geometryNode .displayParticlesDepth (gl, context, shaderNode, this);
 
-               gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
+               break;
+            }
+            case GeometryTypes .SPRITE:
+            {
+               this .updateSprite (gl, this .getScreenAlignedRotation (context .modelViewMatrix));
+               // [fall trough]
+            }
+            default:
+            {
+               const outputParticles = this .outputParticles;
 
-               shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
-               shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");
-               shaderNode .disableFloatAttrib (gl, "x3d_ParticleElapsedTime");
-               shaderNode .disableFloatAttrib (gl, "x3d_ParticleLife");
+               if (outputParticles .shadowArrayObject .enable (gl, shaderNode))
+               {
+                  const particleStride = this .particleStride;
+
+                  shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
+                  shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
+                  shaderNode .enableVertexAttribute         (gl, this .geometryBuffer, 0, this .verticesOffset);
+               }
+
+               gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
+
+               break;
             }
          }
       },
       display: function (gl, context)
       {
-         try
+         // Display geometry.
+
+         switch (this .geometryType)
          {
-            if (this .numParticles <= 0)
-               return;
-
-            // Update geometry if SPRITE.
-
-            this .updateGeometry (context .modelViewMatrix);
-
-            // Display geometry.
-
-            if (this .geometryType === GEOMETRY)
+            case GeometryTypes .GEOMETRY:
             {
                const geometryNode = this .getGeometry ();
 
                if (geometryNode)
-                  geometryNode .displayParticles (gl, context, this .particles, this .numParticles);
+                  geometryNode .displayParticles (gl, context, this);
+
+               break;
             }
-            else
+            case GeometryTypes .SPRITE:
+            {
+               this .updateSprite (gl, this .getScreenAlignedRotation (context .modelViewMatrix));
+               // [fall trough]
+            }
+            case GeometryTypes .QUAD:
+            case GeometryTypes .TRIANGLE:
+            {
+               const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+
+               gl .frontFace (positiveScale ? gl .CCW : gl .CW);
+               gl .enable (gl .CULL_FACE);
+               gl .cullFace (gl .BACK);
+
+               // [fall trough]
+            }
+            default:
             {
                const
                   appearanceNode = this .getAppearance (),
@@ -3018,7 +3321,7 @@ function (Fields,
 
                // Setup shader.
 
-               if (shaderNode .getValid ())
+               if (shaderNode .isValid ())
                {
                   context .geometryContext = this .geometryContext;
 
@@ -3030,85 +3333,98 @@ function (Fields,
                   shaderNode .enable (gl);
                   shaderNode .setLocalUniforms (gl, context);
 
+                  if (this .numTexCoords)
+                  {
+                     const textureUnit = context .browser .getTexture2DUnit ();
+
+                     gl .activeTexture (gl .TEXTURE0 + textureUnit);
+                     gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+                     gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
+                  }
+
                   // Setup vertex attributes.
 
-                  shaderNode .enableFloatAttrib (gl, "x3d_ParticleId",          this .idBuffer,          1);
-                  shaderNode .enableFloatAttrib (gl, "x3d_ParticlePosition",    this .positionBuffer,    3);
-                  shaderNode .enableFloatAttrib (gl, "x3d_ParticleElapsedTime", this .elapsedTimeBuffer, 1);
-                  shaderNode .enableFloatAttrib (gl, "x3d_ParticleLife",        this .lifeBuffer,        1);
+                  const outputParticles = this .outputParticles;
 
-                  if (this .geometryContext .colorMaterial)
-                     shaderNode .enableColorAttribute (gl, this .colorBuffer);
+                  if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
+                  {
+                     const particleStride = this .particleStride;
 
-                  if (this .texCoordArray .length)
-                     shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+                     shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
+                     shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
 
-                  if (this .normalArray .length)
-                     shaderNode .enableNormalAttribute (gl, this .normalBuffer);
+                     if (this .geometryContext .colorMaterial)
+                     {
+                        shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
+                        shaderNode .colorAttributeDivisor (gl, 1);
+                     }
 
-                  shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+                     if (this .texCoordCount)
+                        shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
+
+                     if (this .hasNormals)
+                     {
+                        shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
+                        shaderNode .normalAttributeDivisor (gl, this .maxParticles);
+                     }
+
+                     shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
+                  }
 
                   if (shaderNode .wireframe && this .testWireframe)
                   {
                      // Wireframes are always solid so only one drawing call is needed.
 
-                     for (var i = 0, length = this .numParticles * this .vertexCount; i < length; i += 3)
+                     for (let i = 0, length = this .numParticles * this .vertexCount; i < length; i += 3)
                         gl .drawArrays (shaderNode .primitiveMode, i, 3);
                   }
                   else
                   {
-                     const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
-
-                     gl .frontFace (positiveScale ? gl .CCW : gl .CW);
-                     gl .enable (gl .CULL_FACE);
-                     gl .cullFace (gl .BACK);
-
-                     gl .drawArrays (this .primitiveMode, 0, this .numParticles * this .vertexCount);
+                     gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
                   }
-
-                  shaderNode .disableFloatAttrib (gl, "x3d_ParticleId");
-                  shaderNode .disableFloatAttrib (gl, "x3d_ParticlePosition");
-                  shaderNode .disableFloatAttrib (gl, "x3d_ParticleElapsedTime");
-                  shaderNode .disableFloatAttrib (gl, "x3d_ParticleLife");
-
-                  shaderNode .disableColorAttribute    (gl);
-                  shaderNode .disableTexCoordAttribute (gl);
-                  shaderNode .disableNormalAttribute   (gl);
 
                   if (blendModeNode)
                      blendModeNode .disable (gl);
 
-                  context .geometryContext = null;
+                  delete context .geometryContext;
                }
+
+               break;
             }
          }
-         catch (error)
-         {
-            // Catch error from setLocalUniforms.
-            console .error (error);
-         }
       },
-      getScreenAlignedRotation: function (modelViewMatrix)
+      getScreenAlignedRotation: (function ()
       {
-         invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+         const
+            invModelViewMatrix = new Matrix4 (),
+            billboardToScreen  = new Vector3 (0, 0, 0),
+            viewerYAxis        = new Vector3 (0, 0, 0),
+            y                  = new Vector3 (0, 0, 0),
+            rotation           = new Matrix3 (9);
 
-         invModelViewMatrix .multDirMatrix (billboardToScreen .assign (Vector3 .zAxis));
-         invModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .yAxis));
+         return function (modelViewMatrix)
+         {
+            invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+            invModelViewMatrix .multDirMatrix (billboardToScreen .assign (Vector3 .zAxis));
+            invModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .yAxis));
 
-         x .assign (viewerYAxis) .cross (billboardToScreen);
-         y .assign (billboardToScreen) .cross (x);
-         var z = billboardToScreen;
+            const x = viewerYAxis .cross (billboardToScreen);
+            y .assign (billboardToScreen) .cross (x);
+            const z = billboardToScreen;
 
-         // Compose rotation
+            // Compose rotation matrix.
 
-         x .normalize ();
-         y .normalize ();
-         z .normalize ();
+            x .normalize ();
+            y .normalize ();
+            z .normalize ();
 
-         return this .rotation .set (x .x, x .y, x .z,
-                                     y .x, y .y, y .z,
-                                     z .x, z .y, z .z);
-      },
+            rotation .set (x .x, x .y, x .z,
+                           y .x, y .y, y .z,
+                           z .x, z .y, z .z);
+
+            return rotation;
+         };
+      })(),
    });
 
    return ParticleSystem;
@@ -3171,7 +3487,6 @@ define ('x_ite/Components/ParticleSystems/PolylineEmitter',[
    "x_ite/Components/Rendering/IndexedLineSet",
    "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
-   "standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -3179,8 +3494,7 @@ function (Fields,
           X3DParticleEmitterNode,
           IndexedLineSet,
           X3DConstants,
-          Vector3,
-          Algorithm)
+          Vector3)
 {
 "use strict";
 
@@ -3190,28 +3504,69 @@ function (Fields,
 
       this .addType (X3DConstants .PolylineEmitter);
 
-      this ._speed       .setUnit ("speed");
-      this ._mass        .setUnit ("mass");
-      this ._surfaceArea .setUnit ("area");
+      this .polylinesNode  = new IndexedLineSet (executionContext);
+      this .polylinesArray = new Float32Array ();
 
-      this .direction        = new Vector3 (0, 0, 0);
-      this .polylineNode     = new IndexedLineSet (executionContext);
-      this .polylines        = [ ];
-      this .lengthSoFarArray = [ 0 ];
+      this .addSampler ("polylines");
+
+      this .addUniform ("direction",     "uniform vec3 direction;");
+      this .addUniform ("verticesIndex", "uniform int verticesIndex;");
+      this .addUniform ("polylines",     "uniform sampler2D polylines;");
+
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      {
+         if (direction == vec3 (0.0))
+            return getRandomSphericalVelocity ();
+
+         else
+            return direction * getRandomSpeed ();
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         if (verticesIndex < 0)
+         {
+            return vec4 (NaN);
+         }
+         else
+         {
+            // Determine index0, index1 and weight.
+
+            float lastLengthSoFar = texelFetch (polylines, verticesIndex - 1, 0) .x;
+            float fraction        = random () * lastLengthSoFar;
+
+            int   index0 = 0;
+            int   index1 = 0;
+            float weight = 0.0;
+
+            interpolate (polylines, verticesIndex, fraction, index0, index1, weight);
+
+            // Interpolate and return position.
+
+            index0 *= 2;
+            index1  = index0 + 1;
+
+            vec4 vertex0 = texelFetch (polylines, verticesIndex + index0, 0);
+            vec4 vertex1 = texelFetch (polylines, verticesIndex + index1, 0);
+
+            return mix (vertex0, vertex1, weight);
+         }
+      }`);
    }
 
    PolylineEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
    {
       constructor: PolylineEmitter,
       [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",   new Fields .SFVec3f (0, 1, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",        new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "surfaceArea", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "coordIndex",  new Fields .MFInt32 (-1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",   new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",  new Fields .MFInt32 (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "coord",       new Fields .SFNode ()),
       ]),
       getTypeName: function ()
       {
@@ -3229,147 +3584,92 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
+         const browser = this .getBrowser ();
+
+         if (browser .getContext () .getVersion () < 2)
+            return;
+
+         // Create GL stuff.
+
+         this .polylinesTexture = this .createTexture ();
+
+         // Initialize fields.
+
          this ._direction .addInterest ("set_direction__", this);
 
-         this ._coordIndex .addFieldInterest (this .polylineNode ._coordIndex);
-         this ._coord      .addFieldInterest (this .polylineNode ._coord);
+         this ._coordIndex .addFieldInterest (this .polylinesNode ._coordIndex);
+         this ._coord      .addFieldInterest (this .polylinesNode ._coord);
 
-         this .polylineNode ._coordIndex = this ._coordIndex;
-         this .polylineNode ._coord      = this ._coord;
+         this .polylinesNode ._coordIndex = this ._coordIndex;
+         this .polylinesNode ._coord      = this ._coord;
 
-         this .polylineNode ._rebuild .addInterest ("set_polyline", this);
-         this .polylineNode .setPrivate (true);
-         this .polylineNode .setup ();
+         this .polylinesNode ._rebuild .addInterest ("set_polyline", this);
+         this .polylinesNode .setPrivate (true);
+         this .polylinesNode .setup ();
 
          this .set_direction__ ();
          this .set_polyline ();
       },
-      set_direction__: function ()
+      set_direction__: (function ()
       {
-         this .direction .assign (this ._direction .getValue ()) .normalize ();
+         const direction = new Vector3 (0, 0, 0);
 
-         if (this .direction .equals (Vector3 .Zero))
-            this .getRandomVelocity = this .getSphericalRandomVelocity;
-         else
-            delete this .getRandomVelocity;
-      },
+         return function ()
+         {
+            direction .assign (this ._direction .getValue ()) .normalize ();
+
+            this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
+         };
+      })(),
       set_polyline: (function ()
       {
-         var
+         const
             vertex1 = new Vector3 (0, 0, 0),
             vertex2 = new Vector3 (0, 0, 0);
 
          return function ()
          {
-            var vertices = this .vertices = this .polylineNode .getVertices () .getValue ();
+            const
+               gl                = this .getBrowser () .getContext (),
+               vertices          = this .polylinesNode .getVertices () .getValue (),
+               numVertices       = vertices .length / 4,
+               numLengthSoFar    = numVertices / 2 + 1,
+               polylineArraySize = Math .ceil (Math .sqrt (numLengthSoFar + numVertices));
 
-            if (vertices .length)
+            const verticesIndex = numLengthSoFar;
+
+            let polylinesArray = this .polylinesArray;
+
+            if (polylinesArray .length < polylineArraySize * polylineArraySize * 4)
+               polylinesArray = this .polylinesArray = new Float32Array (polylineArraySize * polylineArraySize * 4);
+
+            let lengthSoFar = 0;
+
+            for (let i = 0, length = vertices .length; i < length; i += 8)
             {
-               delete this .getRandomPosition;
+               vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
+               vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-               var
-                  lengthSoFar      = 0,
-                  lengthSoFarArray = this .lengthSoFarArray;
-
-               lengthSoFarArray .length = 1;
-
-               for (var i = 0, length = vertices .length; i < length; i += 8)
-               {
-                  vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
-                  vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
-
-                  lengthSoFar += vertex2 .subtract (vertex1) .abs ();
-                  lengthSoFarArray .push (lengthSoFar);
-               }
+               polylinesArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .abs ();
             }
-            else
+
+            polylinesArray .set (vertices, verticesIndex * 4);
+
+            this .setUniform ("uniform1i", "verticesIndex", numVertices ? verticesIndex : -1);
+
+            if (polylineArraySize)
             {
-               this .getRandomPosition = getPosition;
+               gl .bindTexture (gl .TEXTURE_2D, this .polylinesTexture);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, polylineArraySize, polylineArraySize, 0, gl .RGBA, gl .FLOAT, polylinesArray);
             }
          };
       })(),
-      getRandomPosition: function (position)
+      activateTextures: function (gl, program)
       {
-         // Determine index0 and weight.
-
-         var
-            lengthSoFarArray = this .lengthSoFarArray,
-            length           = lengthSoFarArray .length,
-            fraction         = Math .random () * lengthSoFarArray .at (-1),
-            index0           = 0,
-            index1           = 0,
-            weight           = 0;
-
-         if (length == 1 || fraction <= lengthSoFarArray [0])
-         {
-            index0 = 0;
-            weight = 0;
-         }
-         else if (fraction >= lengthSoFarArray .at (-1))
-         {
-            index0 = length - 2;
-            weight = 1;
-         }
-         else
-         {
-            var index = Algorithm .upperBound (lengthSoFarArray, 0, length, fraction, Algorithm .less);
-
-            if (index < length)
-            {
-               index1 = index;
-               index0 = index - 1;
-
-               var
-                  key0 = lengthSoFarArray [index0],
-                  key1 = lengthSoFarArray [index1];
-
-               weight = Algorithm .clamp ((fraction - key0) / (key1 - key0), 0, 1);
-            }
-            else
-            {
-               index0 = 0;
-               weight = 0;
-            }
-         }
-
-         // Interpolate and set position.
-
-         index0 *= 8;
-         index1  = index0 + 4;
-
-         var
-            vertices = this .vertices,
-            x1       = vertices [index0],
-            y1       = vertices [index0 + 1],
-            z1       = vertices [index0 + 2],
-            x2       = vertices [index1],
-            y2       = vertices [index1 + 1],
-            z2       = vertices [index1 + 2];
-
-         position .x = x1 + weight * (x2 - x1);
-         position .y = y1 + weight * (y2 - y1);
-         position .z = z1 + weight * (z2 - z1);
-
-         return position;
+         gl .activeTexture (gl .TEXTURE0 + program .polylinesTextureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, this .polylinesTexture);
       },
-      getRandomVelocity: function (velocity)
-      {
-         var
-            direction = this .direction,
-            speed     = this .getRandomSpeed ();
-
-         velocity .x = direction .x * speed;
-         velocity .y = direction .y * speed;
-         velocity .z = direction .z * speed;
-
-         return velocity;
-       },
    });
-
-   function getPosition (position)
-   {
-      return position .set (0, 0, 0);
-   }
 
    return PolylineEmitter;
 });
@@ -3432,7 +3732,6 @@ define ('x_ite/Components/ParticleSystems/SurfaceEmitter',[
    "x_ite/Base/X3DCast",
    "standard/Math/Geometry/Triangle3",
    "standard/Math/Numbers/Vector3",
-   "standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -3441,8 +3740,7 @@ function (Fields,
           X3DConstants,
           X3DCast,
           Triangle3,
-          Vector3,
-          Algorithm)
+          Vector3)
 {
 "use strict";
 
@@ -3452,25 +3750,52 @@ function (Fields,
 
       this .addType (X3DConstants .SurfaceEmitter);
 
-      this ._speed       .setUnit ("speed");
-      this ._mass        .setUnit ("mass");
-      this ._surfaceArea .setUnit ("area");
+      this .surfaceNode  = null;
+      this .surfaceArray = new Float32Array ();
 
-      this .surfaceNode    = null;
-      this .areaSoFarArray = [ 0 ];
-      this .direction      = new Vector3 (0, 0, 0);
+      this .addSampler ("surface");
+
+      this .addUniform ("solid",         "uniform bool solid;");
+      this .addUniform ("verticesIndex", "uniform int verticesIndex;");
+      this .addUniform ("normalsIndex",  "uniform int normalsIndex;");
+      this .addUniform ("surface",       "uniform sampler2D surface;");
+
+      this .addFunction (/* glsl */ `vec4 position; vec3 getRandomVelocity ()
+      {
+         if (verticesIndex < 0)
+         {
+            return vec3 (0.0);
+         }
+         else
+         {
+            vec3 normal;
+
+            getRandomPointOnSurface (surface, verticesIndex, normalsIndex, position, normal);
+
+            if (solid == false && random () > 0.5)
+               normal = -normal;
+
+            return normal * getRandomSpeed ();
+         }
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         return verticesIndex < 0 ? vec4 (NaN) : position;
+      }`);
    }
 
    SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
    {
       constructor: SurfaceEmitter,
       [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",        new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "surfaceArea", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "surface",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surface",     new Fields .SFNode ()),
       ]),
       getTypeName: function ()
       {
@@ -3488,6 +3813,17 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
+         const browser = this .getBrowser ();
+
+         if (browser .getContext () .getVersion () < 2)
+            return;
+
+         // Create GL stuff.
+
+         this .surfaceTexture = this .createTexture ();
+
+         // Initialize fields.
+
          this ._surface .addInterest ("set_surface__", this);
 
          this .set_surface__ ();
@@ -3495,141 +3831,98 @@ function (Fields,
       set_surface__: function ()
       {
          if (this .surfaceNode)
+         {
+            this .surfaceNode ._solid   .removeInterest ("set_solid__",    this);
             this .surfaceNode ._rebuild .removeInterest ("set_geometry__", this);
+         }
 
          this .surfaceNode = X3DCast (X3DConstants .X3DGeometryNode, this ._surface);
 
          if (this .surfaceNode)
+         {
+            this .surfaceNode ._solid   .addInterest ("set_solid__",    this);
             this .surfaceNode ._rebuild .addInterest ("set_geometry__", this);
+         }
 
+         this .set_solid__ ();
          this .set_geometry__ ();
+      },
+      set_solid__: function ()
+      {
+         if (this .surfaceNode)
+            this .setUniform ("uniform1i", "solid", this .surfaceNode ._solid .getValue ());
       },
       set_geometry__: (function ()
       {
-         var
+         const
             vertex1  = new Vector3 (0, 0, 0),
             vertex2  = new Vector3 (0, 0, 0),
             vertex3  = new Vector3 (0, 0, 0);
 
          return function ()
          {
+            const gl = this .getBrowser () .getContext ();
+
             if (this .surfaceNode)
             {
-               delete this .getRandomPosition;
-               delete this .getRandomVelocity;
+               const
+                  vertices         = this .surfaceNode .getVertices () .getValue (),
+                  normals          = this .surfaceNode .getNormals () .getValue (),
+                  numVertices      = vertices .length / 4,
+                  numAreaSoFar     = numVertices / 3 + 1,
+                  surfaceArraySize = Math .ceil (Math .sqrt (numAreaSoFar + numVertices + numVertices));
 
-               var
-                  areaSoFar      = 0,
-                  areaSoFarArray = this .areaSoFarArray,
-                  vertices       = this .surfaceNode .getVertices () .getValue ();
+               const
+                  verticesIndex = numAreaSoFar,
+                  normalsIndex  = verticesIndex + numVertices;
 
-               this .normals  = this .surfaceNode .getNormals () .getValue ();
-               this .vertices = vertices;
+               let surfaceArray = this .surfaceArray;
 
-               areaSoFarArray .length = 1;
+               if (surfaceArray .length < surfaceArraySize * surfaceArraySize * 4)
+                  surfaceArray = this .surfaceArray = new Float32Array (surfaceArraySize * surfaceArraySize * 4);
 
-               for (var i = 0, length = vertices .length; i < length; i += 12)
+               let areaSoFar = 0;
+
+               for (let i = 0, length = vertices .length; i < length; i += 12)
                {
                   vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
                   vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
                   vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
 
-                  areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
-                  areaSoFarArray .push (areaSoFar);
+                  surfaceArray [i / 3 + 4] = areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
+               }
+
+               surfaceArray .set (vertices, verticesIndex * 4);
+
+               for (let s = normalsIndex * 4, n = 0, l = normals .length; n < l; s += 4, n += 3)
+               {
+                  surfaceArray [s + 0] = normals [n + 0];
+                  surfaceArray [s + 1] = normals [n + 1];
+                  surfaceArray [s + 2] = normals [n + 2];
+               }
+
+               this .setUniform ("uniform1i", "verticesIndex", numVertices ? verticesIndex : -1);
+               this .setUniform ("uniform1i", "normalsIndex",  numVertices ? normalsIndex  : -1);
+
+               if (surfaceArraySize)
+               {
+                  gl .bindTexture (gl .TEXTURE_2D, this .surfaceTexture);
+                  gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, surfaceArraySize, surfaceArraySize, 0, gl .RGBA, gl .FLOAT, surfaceArray);
                }
             }
             else
             {
-               this .getRandomPosition = getPosition;
-               this .getRandomVelocity = this .getSphericalRandomVelocity;
+               this .setUniform ("uniform1i", "verticesIndex", -1);
+               this .setUniform ("uniform1i", "normalsIndex",  -1);
             }
          };
       })(),
-      getRandomPosition: function (position)
+      activateTextures: function (gl, program)
       {
-         // Determine index0.
-
-         var
-            areaSoFarArray = this .areaSoFarArray,
-            length         = areaSoFarArray .length,
-            fraction       = Math .random () * areaSoFarArray .at (-1),
-            index0         = 0;
-
-         if (length == 1 || fraction <= areaSoFarArray [0])
-         {
-            index0 = 0;
-         }
-         else if (fraction >= areaSoFarArray .at (-1))
-         {
-            index0 = length - 2;
-         }
-         else
-         {
-            var index = Algorithm .upperBound (areaSoFarArray, 0, length, fraction, Algorithm .less);
-
-            if (index < length)
-            {
-               index0 = index - 1;
-            }
-            else
-            {
-               index0 = 0;
-            }
-         }
-
-         // Random barycentric coordinates.
-
-         var
-            u = Math .random (),
-            v = Math .random ();
-
-         if (u + v > 1)
-         {
-            u = 1 - u;
-            v = 1 - v;
-         }
-
-         var t = 1 - u - v;
-
-         // Interpolate and set position.
-
-         var
-            i        = index0 * 12,
-            vertices = this .vertices;
-
-         position .x = u * vertices [i]     + v * vertices [i + 4] + t * vertices [i + 8];
-         position .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
-         position .z = u * vertices [i + 2] + v * vertices [i + 6] + t * vertices [i + 10];
-
-         var
-            i         = index0 * 9,
-            normals   = this .normals,
-            direction = this .direction;
-
-         direction .x = u * normals [i]     + v * normals [i + 3] + t * normals [i + 6];
-         direction .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
-         direction .z = u * normals [i + 2] + v * normals [i + 5] + t * normals [i + 8];
-
-         return position;
+         gl .activeTexture (gl .TEXTURE0 + program .surfaceTextureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, this .surfaceTexture);
       },
-      getRandomVelocity: function (velocity)
-      {
-         var
-            speed     = this .getRandomSpeed (),
-            direction = this .direction;
-
-         velocity .x = direction .x * speed;
-         velocity .y = direction .y * speed;
-         velocity .z = direction .z * speed;
-
-         return velocity;
-       },
    });
-
-   function getPosition (position)
-   {
-      return position .set (0, 0, 0);
-   }
 
    return SurfaceEmitter;
 });
@@ -3691,13 +3984,8 @@ define ('x_ite/Components/ParticleSystems/VolumeEmitter',[
    "x_ite/Components/Geometry3D/IndexedFaceSet",
    "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Geometry/Line3",
-   "standard/Math/Geometry/Plane3",
    "standard/Math/Geometry/Triangle3",
-   "standard/Math/Algorithm",
    "standard/Math/Utility/BVH",
-   "standard/Math/Algorithms/QuickSort",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -3706,13 +3994,8 @@ function (Fields,
           IndexedFaceSet,
           X3DConstants,
           Vector3,
-          Rotation4,
-          Line3,
-          Plane3,
           Triangle3,
-          Algorithm,
-          BVH,
-          QuickSort)
+          BVH)
 {
 "use strict";
 
@@ -3722,28 +4005,87 @@ function (Fields,
 
       this .addType (X3DConstants .VolumeEmitter);
 
-      this ._speed       .setUnit ("speed");
-      this ._mass        .setUnit ("mass");
-      this ._surfaceArea .setUnit ("area");
+      this .volumeNode  = new IndexedFaceSet (executionContext);
+      this .volumeArray = new Float32Array ();
 
-      this .direction      = new Vector3 (0, 0, 0);
-      this .volumeNode     = new IndexedFaceSet (executionContext);
-      this .areaSoFarArray = [ 0 ];
+      this .addSampler ("volume");
+
+      this .addUniform ("direction",      "uniform vec3 direction;");
+      this .addUniform ("verticesIndex",  "uniform int verticesIndex;");
+      this .addUniform ("normalsIndex",   "uniform int normalsIndex;");
+      this .addUniform ("hierarchyIndex", "uniform int hierarchyIndex;");
+      this .addUniform ("hierarchyRoot",  "uniform int hierarchyRoot;");
+      this .addUniform ("volume",         "uniform sampler2D volume;");
+
+      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      {
+         if (hierarchyRoot < 0)
+         {
+            return vec3 (0.0);
+         }
+         else
+         {
+            if (direction == vec3 (0.0))
+               return getRandomSphericalVelocity ();
+
+            else
+               return direction * getRandomSpeed ();
+         }
+      }`);
+
+      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+      {
+         if (hierarchyRoot < 0)
+         {
+            return vec4 (NaN);
+         }
+         else
+         {
+            vec4 point;
+            vec3 normal;
+
+            getRandomPointOnSurface (volume, verticesIndex, normalsIndex, point, normal);
+
+            Line3 line = Line3 (point .xyz, getRandomSurfaceNormal (normal));
+
+            vec4 points [ARRAY_SIZE];
+
+            int numIntersections = getIntersections (volume, verticesIndex, hierarchyIndex, hierarchyRoot, line, points);
+
+            numIntersections -= numIntersections % 2; // We need an even count of intersections.
+
+            switch (numIntersections)
+            {
+               case 0:
+                  return vec4 (0.0);
+               case 2:
+                  break;
+               default:
+                  sort (points, numIntersections, plane3 (line .point, line .direction));
+                  break;
+            }
+
+            int index = int (fract (random ()) * float (numIntersections / 2)) * 2; // Select random intersection.
+
+            return mix (points [index], points [index + 1], random ());
+         }
+      }`);
    }
 
    VolumeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
    {
       constructor: VolumeEmitter,
       [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "internal",    new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",   new Fields .SFVec3f (0, 1, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",        new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "surfaceArea", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "coordIndex",  new Fields .MFInt32 (-1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "internal",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",   new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",  new Fields .MFInt32 (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "coord",       new Fields .SFNode ()),
       ]),
       getTypeName: function ()
       {
@@ -3760,6 +4102,17 @@ function (Fields,
       initialize: function ()
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
+
+         const browser = this .getBrowser ();
+
+         if (browser .getContext () .getVersion () < 2)
+            return;
+
+         // Create GL stuff.
+
+         this .volumeTexture = this .createTexture ();
+
+         // Initialize fields.
 
          this ._direction .addInterest ("set_direction__", this);
 
@@ -3778,184 +4131,86 @@ function (Fields,
          this .set_direction__ ();
          this .set_geometry__ ();
       },
-      set_direction__: function ()
+      set_direction__: (function ()
       {
-         this .direction .assign (this ._direction .getValue ()) .normalize ();
+         const direction = new Vector3 (0, 0, 0);
 
-         if (this .direction .equals (Vector3 .Zero))
-            this .getRandomVelocity = this .getSphericalRandomVelocity;
-         else
-            delete this .getRandomVelocity;
-      },
+         return function ()
+         {
+            direction .assign (this ._direction .getValue ()) .normalize ();
+
+            this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
+         };
+      })(),
       set_geometry__: (function ()
       {
-         var
+         const
             vertex1 = new Vector3 (0, 0, 0),
             vertex2 = new Vector3 (0, 0, 0),
             vertex3 = new Vector3 (0, 0, 0);
 
          return function ()
          {
-            var
-               areaSoFar      = 0,
-               areaSoFarArray = this .areaSoFarArray,
-               normals        = this .volumeNode .getNormals () .getValue (),
-               vertices       = this .volumeNode .getVertices () .getValue ();
+            const
+               gl              = this .getBrowser () .getContext (),
+               vertices        = this .volumeNode .getVertices () .getValue (),
+               normals         = this .volumeNode .getNormals () .getValue (),
+               hierarchy       = new BVH (vertices, normals) .toArray ([ ]),
+               numVertices     = vertices .length / 4,
+               numNormals      = normals .length / 3,
+               numAreaSoFar    = numVertices / 3 + 1,
+               hierarchyLength = hierarchy .length / 4,
+               volumeArraySize = Math .ceil (Math .sqrt (numAreaSoFar + numVertices + numVertices + hierarchyLength));
 
-            this .normals  = normals;
-            this .vertices = vertices;
+            const
+               verticesIndex  = numAreaSoFar,
+               normalsIndex   = verticesIndex + numVertices,
+               hierarchyIndex = normalsIndex + numNormals;
 
-            areaSoFarArray .length = 1;
+            let volumeArray = this .volumeArray;
 
-            for (var i = 0, length = vertices .length; i < length; i += 12)
+            if (volumeArray .length < volumeArraySize * volumeArraySize * 4)
+               volumeArray = this .volumeArray = new Float32Array (volumeArraySize * volumeArraySize * 4);
+
+            let areaSoFar = 0;
+
+            for (let i = 0, length = vertices .length; i < length; i += 12)
             {
                vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
                vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
                vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
 
-               areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
-               areaSoFarArray .push (areaSoFar);
+               volumeArray [i / 3 + 4] = areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
             }
 
-            this .bvh = new BVH (vertices, normals);
+            volumeArray .set (vertices, verticesIndex * 4);
+
+            for (let s = normalsIndex * 4, n = 0, l = normals .length; n < l; s += 4, n += 3)
+            {
+               volumeArray [s + 0] = normals [n + 0];
+               volumeArray [s + 1] = normals [n + 1];
+               volumeArray [s + 2] = normals [n + 2];
+            }
+
+            volumeArray .set (hierarchy, hierarchyIndex * 4);
+
+            this .setUniform ("uniform1i", "verticesIndex",  verticesIndex);
+            this .setUniform ("uniform1i", "normalsIndex",   normalsIndex);
+            this .setUniform ("uniform1i", "hierarchyIndex", hierarchyIndex);
+            this .setUniform ("uniform1i", "hierarchyRoot",  hierarchyIndex + hierarchyLength - 1);
+
+            if (volumeArraySize)
+            {
+               gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
+               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, volumeArraySize, volumeArraySize, 0, gl .RGBA, gl .FLOAT, volumeArray);
+            }
          };
       })(),
-      getRandomPosition: (function ()
+      activateTextures: function (gl, program)
       {
-         var
-            point         = new Vector3 (0, 0, 0),
-            normal        = new Vector3 (0, 0, 0),
-            rotation      = new Rotation4 (0, 0, 1, 0),
-            line          = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-            plane         = new Plane3 (Vector3 .Zero, Vector3 .zAxis),
-            intersections = [ ],
-            sorter        = new QuickSort (intersections, PlaneCompare);
-
-         function PlaneCompare (a, b)
-         {
-            return plane .getDistanceToPoint (a) < plane .getDistanceToPoint (b);
-         }
-
-         return function (position)
-         {
-            // Get random point on surface
-
-            // Determine index0.
-
-            var
-               areaSoFarArray = this .areaSoFarArray,
-               length         = areaSoFarArray .length,
-               fraction       = Math .random () * areaSoFarArray .at (-1),
-               index0         = 0;
-
-            if (length == 1 || fraction <= areaSoFarArray [0])
-            {
-               index0 = 0;
-            }
-            else if (fraction >= areaSoFarArray .at (-1))
-            {
-               index0 = length - 2;
-            }
-            else
-            {
-               var index = Algorithm .upperBound (areaSoFarArray, 0, length, fraction, Algorithm .less);
-
-               if (index < length)
-               {
-                  index0 = index - 1;
-               }
-               else
-               {
-                  index0 = 0;
-               }
-            }
-
-            // Random barycentric coordinates.
-
-            var
-               u = Math .random (),
-               v = Math .random ();
-
-            if (u + v > 1)
-            {
-               u = 1 - u;
-               v = 1 - v;
-            }
-
-            var t = 1 - u - v;
-
-            // Interpolate and determine random point on surface and normal.
-
-            var
-               i        = index0 * 12,
-               vertices = this .vertices;
-
-            point .x = u * vertices [i]     + v * vertices [i + 4] + t * vertices [i + 8];
-            point .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
-            point .z = u * vertices [i + 2] + v * vertices [i + 6] + t * vertices [i + 10];
-
-            var
-               i       = index0 * 9,
-               normals = this .normals;
-
-            normal .x = u * normals [i]     + v * normals [i + 3] + t * normals [i + 6];
-            normal .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
-            normal .z = u * normals [i + 2] + v * normals [i + 5] + t * normals [i + 8];
-
-            rotation .setFromToVec (Vector3 .zAxis, normal);
-            rotation .multVecRot (this .getRandomSurfaceNormal (normal));
-
-            // Setup random line throu volume for intersection text
-            // and a plane corresponding to the line for intersection sorting.
-
-            line  .set (point, normal);
-            plane .set (point, normal);
-
-            // Find random point in volume.
-
-            var numIntersections = this .bvh .intersectsLine (line, intersections);
-
-            numIntersections -= numIntersections % 2; // We need an even count of intersections.
-
-            if (numIntersections)
-            {
-               // Sort intersections along line with a little help from the plane.
-
-               sorter .sort (0, numIntersections);
-
-               // Select random intersection pair.
-
-               var
-                  index  = Math .round (this .getRandomValue (0, numIntersections / 2 - 1)) * 2,
-                  point0 = intersections [index],
-                  point1 = intersections [index + 1],
-                  t      = Math .random ();
-
-               // lerp
-               position .x = point0 .x + (point1 .x - point0 .x) * t;
-               position .y = point0 .y + (point1 .y - point0 .y) * t;
-               position .z = point0 .z + (point1 .z - point0 .z) * t;
-
-               return position;
-            }
-
-            // Discard point.
-
-            return position .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
-         };
-      })(),
-      getRandomVelocity: function (velocity)
-      {
-         var
-            direction = this .direction,
-            speed     = this .getRandomSpeed ();
-
-         velocity .x = direction .x * speed;
-         velocity .y = direction .y * speed;
-         velocity .z = direction .z * speed;
-
-         return velocity;
-       },
+         gl .activeTexture (gl .TEXTURE0 + program .volumeTextureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
+      },
    });
 
    return VolumeEmitter;
@@ -4063,7 +4318,7 @@ function (Fields,
       },
       getRandomSpeed: function (emitterNode)
       {
-         var
+         const
             speed     = Math .max (0, this ._speed .getValue ()),
             variation = speed * Math .max (0, this ._gustiness .getValue ());
 
@@ -4071,27 +4326,32 @@ function (Fields,
       },
       addForce: (function ()
       {
-         var force = new Vector3 (0, 0, 0);
+         const force = new Vector3 (0, 0, 0);
 
-         return function (i, emitterNode, forces, turbulences)
+         return function (i, emitterNode, timeByMass, forces)
          {
-            var surfaceArea = emitterNode ._surfaceArea .getValue ()
-
             if (this ._enabled .getValue ())
             {
-               var
-                  randomSpeed = this .getRandomSpeed (emitterNode),
-                  pressure    = Math .pow (10, 2 * Math .log (randomSpeed)) * 0.64615;
+               const
+                  surfaceArea = emitterNode ._surfaceArea .getValue (),
+                  speed       = this .getRandomSpeed (emitterNode),
+                  pressure    = Math .pow (10, 2 * Math .log (speed)) * 0.64615;
 
                if (this ._direction .getValue () .equals (Vector3 .Zero))
                   emitterNode .getRandomNormal (force);
                else
                   force .assign (this ._direction .getValue ()) .normalize ();
 
-               forces [i] .assign (force .multiply (surfaceArea * pressure));
-               turbulences [i] = Math .PI * Algorithm .clamp (this ._turbulence .getValue (), 0, 1);
+               forces .set (force .multiply (surfaceArea * pressure * timeByMass), i * 4);
+               forces [i * 4 + 3] = Math .PI * Algorithm .clamp (this ._turbulence .getValue (), 0, 1);
+
+               return true;
             }
-         };
+            else
+            {
+               return false;
+            }
+         }
       })(),
    });
 
@@ -4199,7 +4459,7 @@ function (Components,
          X3DParticleEmitterNode:      X3DParticleEmitterNode,
          X3DParticlePhysicsModelNode: X3DParticlePhysicsModelNode,
       },
-      browser: X3DParticleSystemsContext,
+      context: X3DParticleSystemsContext,
    });
 });
 
