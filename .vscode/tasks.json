@@ -16,6 +16,12 @@
             "problemMatcher": []
         },
         {
+            "label": "Checkout Dist",
+            "type": "shell",
+            "command": "git checkout -- dist",
+            "problemMatcher": [],
+        },
+        {
             "label": "Git List Untracked Files",
             "type": "shell",
             "command": "git ls-files --others --exclude-standard",

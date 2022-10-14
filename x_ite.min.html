@@ -14,12 +14,11 @@
    <script type="text/javascript" src="src/tests.js"></script>
 
    <!-- X_ITE START -->
-   <link rel="stylesheet" type="text/css" href="dist/x_ite.css"/>
    <script type="text/javascript" src="dist/x_ite.min.js"></script>
    <!-- X_ITE END -->
 
    <style>
-@import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
+@import url("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic");
 
 html, body {
    margin: 0px;
@@ -243,6 +242,11 @@ main.color-management .browser {
    display: none;
 }
 
+.x_ite-console {
+  font-family: monospace;
+  white-space: pre;
+}
+
    </style>
 
    <script type="text/javascript">
@@ -293,10 +297,10 @@ X3D (function ()
    const bookmarks = new Bookmarks (Browser, $(".examples-box"));
 
    bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
-   bookmarks .restore ("https://rawgit.com/create3000/Library/main/Tests/Components/Layout/info.x3d");
+   bookmarks .restore ("https://create3000.github.io/media/x_ite/info/info.x3d");
 
    $(".version") .text (Browser .name + " v" + Browser .version);
-   $(".file") .append ($("<a/>") .attr ('href', "tests/d3/ParticlePlot.html") .text ("d3"));
+   $(".file") .append ($("<a></a>") .attr ('href', "tests/d3/ParticlePlot.html") .text ("d3"));
    $(".location-entry") .val (localStorage ["Bookmarks.history"] [index])
    $(".location-go") .click (loadURL);
    $(".print-vrml") .click (toVRMLString);
@@ -337,7 +341,7 @@ function (error)
       <main>
          <div>
             <form action="javascript:alert('form submited')">
-               <X3DCanvas id="browser" class="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false">
+               <x3d-canvas id="browser" class="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false">
                   <p class="fallback">
                      Sorry,<br/>
                      it wasn't me!<br/>
@@ -346,7 +350,7 @@ function (error)
                      or Microsoft Edge, because this is currently the choice of the choice. We will continuously
                      keep you informed on technical developments and as soon as X_ITE is running in other browser too.
                   </p>
-               </X3DCanvas>
+               </x3d-canvas>
             </form>
             <div class="location-bar">
                <input class="location-entry" value="http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"/>

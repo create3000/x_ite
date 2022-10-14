@@ -94,6 +94,7 @@ function ($,
          X3DBaseNode .prototype .initialize .call (this);
 
          this .element = $("<div></div>")
+            .hide ()
             .addClass ("x_ite-private-notification")
             .appendTo (this .getBrowser () .getSurface ())
             .animate ({ width: 0 });
@@ -114,11 +115,11 @@ function ($,
 
          this .element
             .stop (true, true)
-            .fadeIn (0)
+            .show ()
             .animate ({ width: this .element .textWidth () })
             .animate ({ "delay": 1 }, 5000)
             .animate ({ width: 0 })
-            .fadeOut (0);
+            .hide ();
       },
    });
 

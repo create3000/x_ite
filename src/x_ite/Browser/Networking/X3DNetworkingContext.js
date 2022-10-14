@@ -85,10 +85,10 @@ function (Fields,
       this [_loading]        = false;
       this [_location]       = getBaseURI (this .getElement () [0]);
 
-      this .getCanvas () .fadeOut (0);
+      this .getCanvas () .hide ();
 
       if (this .getBrowserOptions () .getSplashScreen ())
-         this .getSplashScreen () .fadeIn (0);
+         this .getSplashScreen () .show ();
    }
 
    X3DNetworkingContext .prototype =
@@ -131,24 +131,24 @@ function (Fields,
 
             if (this .getBrowserOptions () .getSplashScreen ())
             {
-               this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeOut (0);
-               this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeIn (0);
+               this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .hide ();
+               this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .show ();
             }
             else
             {
-               this .getCanvas () .fadeOut (0);
+               this .getCanvas () .hide ();
             }
          }
          else
          {
             if (this .getBrowserOptions () .getSplashScreen ())
             {
-               this .getSplashScreen () .stop (true, true) .fadeIn  (0) .fadeOut (2000);
-               this .getCanvas ()       .stop (true, true) .fadeOut (0) .fadeIn  (2000);
+               this .getSplashScreen () .stop (true, true) .show () .fadeOut (2000);
+               this .getCanvas ()       .stop (true, true) .hide () .fadeIn  (2000);
             }
             else
             {
-               this .getCanvas () .fadeIn (0);
+               this .getCanvas () .show ();
             }
          }
       },

@@ -2,11 +2,10 @@
 
 @charset "utf-8";
 
-@import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
+@import url("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic");
 
 :host,
 X3DCanvas {
-  overflow: show;
   position: relative;
   display: inline-block;
   outline: none;
@@ -18,13 +17,13 @@ X3DCanvas {
   height: 150px;
 }
 
-X3DCanvas > :not(.x_ite-private-browser) {
-  display: none;
-}
-
 :host(.x_ite-fullscreen) {
   width: 100vw !important;
   height: 100vh !important;
+}
+
+X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
+  display: none;
 }
 
 .x_ite-private-browser {
@@ -60,7 +59,6 @@ X3DCanvas > :not(.x_ite-private-browser) {
 }
 
 .x_ite-private-notification {
-  display: none;
   padding: 5px;
   position: absolute;
   top: 20px;
@@ -86,11 +84,10 @@ X3DCanvas > :not(.x_ite-private-browser) {
 
 .x_ite-private-notification span {
   padding: 0 24px 0 20px;
-  background: url(assets/images/icon.bw.png) no-repeat 0 2px;
+  background: url("assets/images/icon.bw.png") no-repeat 0 2px;
 }
 
 .x_ite-private-browser-timings {
-  display: none;
   position: absolute;
   bottom: -4px;
   left: -4px;
@@ -138,7 +135,7 @@ X3DCanvas > :not(.x_ite-private-browser) {
 
 .x_ite-private-browser-timings table {
   overflow: hidden;
-  background: url(assets/images/Time.png) no-repeat;
+  background: url("assets/images/Time.png") no-repeat;
   width: 100%;
   max-width: 100%;
   border-collapse: separate;
@@ -518,7 +515,6 @@ ul.x_ite-private-menu.x_ite-private-menu-title:before {
 /* Spinner */
 
 .x_ite-private-splash-screen {
-  display: none;
   z-index: 100;
   position: absolute;
   inset: 0;
@@ -534,7 +530,7 @@ ul.x_ite-private-menu.x_ite-private-menu-title:before {
   left: calc(50% - (134px / 2));
   width: 138px;
   height: 134px;
-  background: url(assets/images/logo.128.png) no-repeat;
+  background: url("assets/images/logo.128.png") no-repeat;
   -webkit-animation: spinner-animation-spin 32s linear infinite;
   -moz-animation: spinner-animation-spin 32s linear infinite;
   animation: spinner-animation-spin 32s linear infinite;

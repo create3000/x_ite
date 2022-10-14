@@ -117,16 +117,20 @@ function ($,
 
       const
          browser      = $("<div></div>") .addClass ("x_ite-private-browser"),
-         splashScreen = $("<div></div>") .addClass ("x_ite-private-splash-screen") .appendTo (browser),
+         splashScreen = $("<div></div>") .hide () .addClass ("x_ite-private-splash-screen") .appendTo (browser),
          spinner      = $("<div></div>") .addClass ("x_ite-private-spinner") .appendTo (splashScreen),
          progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
          surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
 
       if (this [_element] .prop ("shadowRoot"))
       {
-         this [_shadow] = $(this [_element] .prop ("shadowRoot"))
-            .append ($("<style></style>") .text (CSS))
-            .append (browser);
+         CSS = CSS
+            .replace (/"assets\//g, '"' + new URL ("assets/", getScriptURL ()) .href)
+            .replace (/content: "X_ITE Browser";/g, "content:\"X_ITE Browser v" + this .version + "\";");
+
+         this [_shadow] = $(this [_element] .prop ("shadowRoot")) .append ($("<style></style>") .text (CSS));
+
+         setTimeout (function () { this [_shadow] .append (browser); } .bind (this), 0);
       }
       else
       {
@@ -173,8 +177,8 @@ function ($,
          // Setup browser nodes.
 
          this [_browserTimings]      .setup ();
-         this [_browserOptions]      .setup ()
-         this [_browserProperties]   .setup ()
+         this [_browserOptions]      .setup ();
+         this [_browserProperties]   .setup ();
          this [_renderingProperties] .setup ();
          this [_notification]        .setup ();
          this [_contextMenu]         .setup ();
@@ -395,7 +399,7 @@ function ($,
          else
          {
             if (! this .getLoading ())
-               this .getCanvas () .fadeIn (0);
+               this .getCanvas () .show ();
          }
       },
       setBrowserEventHandler: function (name)

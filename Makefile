@@ -44,7 +44,6 @@ all:
 	perl -pi -e 's|\s*<script type="text/javascript" src="\.\./node_modules/requirejs/require.js"></script>\n||sg' x_ite.min.html
 	perl -pi -e 's|\s*<script type="text/javascript" src=".*?.config.js"></script>\n||sg'                          x_ite.min.html
 
-	perl -pi -e 's|"x_ite.css"|"dist/x_ite.css"|sg'   x_ite.min.html
 	perl -pi -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg' x_ite.min.html
 
 	perl -pi -e 's|\.\./x_ite.min.html|src/x_ite.html|sg'                       x_ite.min.html

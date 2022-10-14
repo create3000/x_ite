@@ -470,7 +470,7 @@ function ($,
                }
 
                if (! this .getBrowserOptions () .getSplashScreen ())
-                  this .getCanvas () .fadeIn (0);
+                  this .getCanvas () .show ();
 
                if (scene)
                {
