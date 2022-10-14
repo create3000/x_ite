@@ -136,25 +136,35 @@ function ($,
       return element [0];
    }
 
-   function getBrowser (dom)
+   function getBrowser (element)
    {
-      return $(dom || "x3d-canvas, X3DCanvas") .data ("browser");
+      return $(element || "x3d-canvas, X3DCanvas") .data ("browser");
    }
 
-   function createBrowserFromElement (dom)
+   function createBrowserFromElement (element)
    {
-      dom = $(dom);
+      try
+      {
+         element = $(element);
 
-      if (dom .find (".x_ite-private-browser") .length)
-         return;
+         if (element .find (".x_ite-private-browser") .length)
+            return;
 
-      const browser = new X3DBrowser (dom);
+         const browser = new X3DBrowser (element);
 
-      dom .data ("browser", browser);
+         element .data ("browser", browser);
 
-      browser .setup ();
+         browser .setup ();
 
-      return browser;
+         setTimeout (function () { callbacks .resolve (); }, 0);
+
+         return browser;
+      }
+      catch (error)
+      {
+         Fallback .show ($("x3d-canvas, X3DCanvas"), error);
+         fallbacks .resolve (error);
+      }
    }
 
    const
@@ -178,20 +188,7 @@ function ($,
 
       $(function ()
       {
-         const elements = $("x3d-canvas, X3DCanvas");
-
-         elements .children () .hide ();
-
-         try
-         {
-            $.map (elements, createBrowserFromElement);
-            callbacks .resolve ();
-         }
-         catch (error)
-         {
-            Fallback .show (elements, error);
-            fallbacks .resolve (error);
-         }
+         $.map ($("X3DCanvas"), createBrowserFromElement);
       });
    }
 
@@ -199,11 +196,16 @@ function ($,
 
    Object .assign (X3D,
    {
+      hidden: [
+         "createBrowserFromElement"
+      ],
+
       require:                     require,
       define:                      define,
 
       getBrowser:                  getBrowser,
       createBrowser:               createBrowser,
+      createBrowserFromElement:    createBrowserFromElement,
 
       X3DConstants:                X3DConstants,
       X3DBrowser:                  X3DBrowser,

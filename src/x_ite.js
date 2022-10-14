@@ -136,9 +136,15 @@ const getScriptURL = (function ()
    {
       constructor ()
       {
-        super ();
+         super ();
 
-        this .attachShadow ({ mode: "open" });
+         this .attachShadow ({ mode: "open" });
+
+         require ([ "x_ite/X3D" ], function (X3D)
+         {
+            X3D .createBrowserFromElement (this);
+         }
+         .bind (this));
       }
    }
 
@@ -147,6 +153,10 @@ const getScriptURL = (function ()
    require (["x_ite/X3D"], function (X3D)
    {
       Object .assign (X_ITE, X3D);
+
+      for (const key of X3D .hidden)
+         delete X_ITE [key];
+
       X3D ();
    });
 })();
