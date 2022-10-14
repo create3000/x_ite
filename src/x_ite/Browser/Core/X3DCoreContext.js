@@ -136,7 +136,7 @@ function ($,
       }
       else
       {
-         this [_shadow] = shadow;
+         this [_shadow] = this [_element];
 
          browser .prependTo (this [_element]);
       }
