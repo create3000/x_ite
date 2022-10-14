@@ -147,11 +147,11 @@ function ($,
       {
          element = $(element);
 
-         if (shadow)
-            shadow = $(shadow);
-
          if (element .find (".x_ite-private-browser") .length)
             return;
+
+         if (shadow)
+            shadow = $(shadow);
 
          const browser = new X3DBrowser (element, shadow);
 
