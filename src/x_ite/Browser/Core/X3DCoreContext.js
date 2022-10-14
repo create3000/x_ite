@@ -122,12 +122,11 @@ function ($,
          progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
          surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
 
-      this [_element] .addClass ("x_ite-" + this .getNumber ());
-
       if (this [_element] .prop ("shadowRoot"))
       {
          this [_shadow] = $(this [_element] .prop ("shadowRoot"))
-            .append ($("<style></style>") .text (CSS), browser);
+            .append ($("<style></style>") .text (CSS))
+            .append (browser);
       }
       else
       {
