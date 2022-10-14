@@ -114,7 +114,7 @@ function ($,
 
    let browserNumber = 0;
 
-   function X3DCoreContext (element)
+   function X3DCoreContext (element, shadow)
    {
       this [_number]  = ++ browserNumber;
       this [_element] = element;
@@ -128,16 +128,15 @@ function ($,
          progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
          surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
 
-      if (this [_element] .prop ("shadowRoot"))
+      if (shadow)
       {
-         this [_shadow] = $(this [_element] .prop ("shadowRoot"))
-            .append ($("<style></style>") .text (CSS));
+         this [_shadow] = shadow .append ($("<style></style>") .text (CSS));
 
-         setTimeout (function () { this [_shadow] .append (browser); } .bind (this), 1);
+         setTimeout (function () { shadow .append (browser); } .bind (this), 1);
       }
       else
       {
-         this [_shadow] = this [_element];
+         this [_shadow] = shadow;
 
          browser .prependTo (this [_element]);
       }

@@ -140,11 +140,11 @@ const getScriptURL = (function ()
       {
          super ();
 
-         this .attachShadow ({ mode: "open" });
+         const shadow = this .attachShadow ({ mode: "closed" });
 
          require ([ "x_ite/X3D" ], function (X3D)
          {
-            X3D .createBrowserFromElement (this);
+            X3D .createBrowserFromElement (this, shadow);
          }
          .bind (this));
       }

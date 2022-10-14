@@ -113,11 +113,11 @@ function ($,
 
    const contexts = [ ];
 
-   function X3DBrowserContext (element)
+   function X3DBrowserContext (element, shadow)
    {
       X3DBaseNode                    .call (this, this);
       X3DRoutingContext              .call (this);
-      X3DCoreContext                 .call (this, element);
+      X3DCoreContext                 .call (this, element, shadow);
       X3DScriptingContext            .call (this);
       X3DNetworkingContext           .call (this);
       X3DShadersContext              .call (this);
