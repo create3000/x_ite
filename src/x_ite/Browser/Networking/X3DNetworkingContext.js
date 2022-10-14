@@ -127,7 +127,7 @@ function (Fields,
          {
             this .resetLoadCount ();
 
-            this .getElement () .find (".x_ite-private-world-info") .remove ();
+            this .getShadow () .find (".x_ite-private-world-info") .remove ();
 
             if (this .getBrowserOptions () .getSplashScreen ())
             {

@@ -132,6 +132,18 @@ const getScriptURL = (function ()
    // IE fix.
    document .createElement ("X3DCanvas");
 
+   class X3DCanvas extends HTMLElement
+   {
+      constructor ()
+      {
+        super ();
+
+        this .attachShadow ({ mode: "open" });
+      }
+   }
+
+   customElements .define ("x3d-canvas", X3DCanvas);
+
    require (["x_ite/X3D"], function (X3D)
    {
       Object .assign (X_ITE, X3D);

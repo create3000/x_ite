@@ -365,7 +365,7 @@ function ($,
          for (const key of Reflect .ownKeys (context .prototype))
             Object .defineProperty (X3DBrowserContext .prototype, key, { enumerable: false });
 
-         $("X3DCanvas") .each (function (i, canvas)
+         $("x3d-canvas, X3DCanvas") .each (function (i, canvas)
          {
             const browser = X3D .getBrowser (canvas);
 

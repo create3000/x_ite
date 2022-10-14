@@ -37,11 +37,6 @@ require .config ({
          "main": "dist/opentype.js"
       },
       {
-         "name": "contextMenu",
-         "location": "../node_modules/jquery-contextmenu",
-         "main": "dist/jquery.contextMenu.js"
-      },
-      {
          "name": "nurbs",
          "location": "lib/nurbs",
          "main": "nurbs.js"

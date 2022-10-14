@@ -51,7 +51,6 @@ define ([
    "jquery",
    "x_ite/Base/X3DBaseNode",
    "locale/gettext",
-   "contextMenu",
    "lib/jquery.fullscreen-min",
 ],
 function ($,
@@ -89,88 +88,19 @@ function ($,
 
          const browser = this .getBrowser ();
 
-         if (! browser .getBrowserOptions () .getContextMenu ())
-            return;
-
-         $.contextMenu ({
-            selector: ".x_ite-private-browser-" + browser .getNumber (),
+         this .initializeContextMenu ({
+            element: browser .getElement (),
+            appendTo: browser .getShadow (),
             build: this .build .bind (this),
             animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
-            hideOnSecondTrigger: true,
             events:
             {
-               show: function (options)
+               show: function ()
                {
                   this .active = true;
-
-                  if (browser .getElement () .fullScreen ())
-                  {
-                     browser .getElement () .append (options .$menu);
-
-                     setTimeout (function ()
-                     {
-                        browser .getElement () .append (options .$layer .css ({
-                           position: "absolute",
-                           width: "100%",
-                           height: "100%",
-                        }));
-                     },
-                     1);
-                  }
-               },
-               activated: function (options)
-               {
-                  // Display submenus on left side if there is no space on right side.
-
-                  if (options .$menu .hasClass ("x_ite-private-menu-submenus-left"))
-                  {
-                     options .$menu .find (".context-menu-list") .each (function (i, e)
-                     {
-                        $(e) .css ("right", $(e) .parent () .parent () .css ("width"));
-                     });
-                  }
-                  else
-                  {
-                     options .$menu .find (".context-menu-list") .each (function (i, e)
-                     {
-                        $(e) .css ("left", (parseInt ($(e) .parent () .parent () .css ("width")) - 2) + "px");
-                     });
-                  }
-
-                  // If the submenu is higher than vh, add scrollbars.
-                  options .$menu .find (".context-menu-list") .each (function (i, e)
-                  {
-                     if ($(e) .height () > $(window) .height ())
-                     {
-                        $(e) .css ({
-                           "overflow-y": "scroll",
-                           "max-height": "100vh",
-                        });
-                     }
-                  });
-
-                  // If the submenu is higher than vh, reposition it.
-                  options .$menu .find (".context-menu-item") .on ("mouseenter", function (event)
-                  {
-                     event .stopImmediatePropagation ();
-
-                     const
-                        t = $(event .target),
-                        e = t .children (".context-menu-list");
-
-                     if (!e .length)
-                        return;
-
-                     e .css ("top", "");
-
-                     const bottom = e .offset () .top + e .height () - $(window) .scrollTop () - $(window) .height ();
-
-                     if (bottom > 0)
-                        e .offset ({ "top": e .offset () .top - bottom });
-                  });
                }
                .bind (this),
-               hide: function (options)
+               hide: function ()
                {
                   this .active = false;
                }
@@ -190,15 +120,17 @@ function ($,
       {
          return this .active;
       },
-      build: function (trigger, event)
+      build: function (event)
       {
          const
             browser          = this .getBrowser (),
             activeLayer      = browser .getActiveLayer (),
             currentViewpoint = activeLayer ? activeLayer .getViewpoint () : null,
             currentViewer    = browser ._viewer .getValue (),
-            fullscreen       = browser .getElement () .fullScreen (),
-            leftSubMenus     = $(document) .width () - event .pageX < 370;
+            fullscreen       = browser .getElement () .fullScreen ();
+
+         if (! browser .getBrowserOptions () .getContextMenu ())
+            return;
 
          const menu = {
             className: "x_ite-private-menu x_ite-private-menu-title",
@@ -393,7 +325,9 @@ function ($,
                },
                "fullscreen": {
                   name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
-                  className: "context-menu-icon " + (fullscreen ? "x_ite-private-icon-leave-fullscreen" : "x_ite-private-icon-fullscreen"),
+                  className: "context-menu-icon " + (fullscreen
+                     ? "x_ite-private-icon-leave-fullscreen"
+                     : "x_ite-private-icon-enter-fullscreen"),
                   callback: function ()
                   {
                      browser .getElement () .toggleFullScreen ();
@@ -412,11 +346,11 @@ function ($,
                      {
                         define .hide ();
 
-                        browser .getElement () .find (".x_ite-private-world-info") .remove ();
+                        browser .getShadow () .find (".x_ite-private-world-info") .remove ();
 
                         const
                            converter = new showdown .Converter (),
-                           priv      = browser .getElement () .find (".x_ite-private-browser"),
+                           priv      = browser .getShadow () .find (".x_ite-private-browser"),
                            overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
                            div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
                            worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
@@ -480,9 +414,6 @@ function ($,
                   menu .items ["user-" + key] = userMenu [key];
             }
          }
-
-         if (leftSubMenus)
-            menu .className += " x_ite-private-menu-submenus-left";
 
          if ($.isEmptyObject (menu .items .viewpoints .items))
          {
@@ -598,6 +529,195 @@ function ($,
             case "NONE":
                return _("None Viewer");
          }
+      },
+      initializeContextMenu: function (options)
+      {
+         options .element .on ("contextmenu", this .showContextMenu .bind (this, options));
+      },
+      showContextMenu: function (options, event)
+      {
+         const
+            menu  = options .build (event),
+            level = 1;
+
+         if (!menu)
+            return;
+
+         // Layer
+
+         const layer = $("<div></div>")
+            .addClass ("context-menu-layer")
+            .addClass (menu .className)
+            .appendTo (options .appendTo);
+
+         const hide = function ()
+         {
+            layer .remove ();
+
+            ul [options .animation .hide] (options .animation .duration, function ()
+            {
+               ul .remove ();
+
+               if (typeof options .events .hide === "function")
+                  options .events .hide ();
+            });
+         };
+
+         // Menu
+
+         const
+            x = event .pageX - options .element .offset () .left,
+            y = event .pageY - options .element .offset () .top;
+
+         const ul = $("<ul></ul>")
+            .addClass ("context-menu-list")
+            .addClass (menu .className)
+            .addClass ("context-menu-root")
+            .css ({ "left": x, "top": y, "z-index": level, "display": "none" })
+            .appendTo (options .appendTo);
+
+         for (const k in menu .items)
+            ul .append (this .buildItem (menu .items [k], "context-menu-root", k, level + 1, hide));
+
+         ul [options .animation .show] (options .animation .duration);
+
+         if (ul .offset () .left - $(document) .scrollLeft () + ul .width () > $(window) .width ())
+            ul .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .width ()) });
+
+         if (ul .offset () .top - $(document) .scrollTop () + ul .height () > $(window) .height ())
+            ul .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .height ()) });
+
+         // If the submenu is higher than vh, add scrollbars.
+
+         ul .find ("ul") .each (function (i, e)
+         {
+            if ($(e) .height () > $(window) .height ())
+            {
+               $(e) .css ({
+                  "overflow-y": "scroll",
+                  "max-height": "100vh",
+                  "width": $(e) .width (),
+               });
+            }
+         });
+
+         // Display submenus on the left or right side.
+
+         const position = $(document) .width () - event .pageX < 370 ? "right" : "left";
+
+         ul .find ("ul") .each (function (i, e)
+         {
+            $(e) .css (position, $(e) .parent () .closest ("ul") .width ());
+         });
+
+         // If the submenu is higher than vh, reposition it.
+
+         ul .find ("li") .on ("mouseenter", function (event)
+         {
+            event .stopImmediatePropagation ();
+
+            const
+               t = $(event .target),
+               e = t .children ("ul");
+
+            if (!e .length)
+               return;
+
+            e .css ("top", "");
+
+            const bottom = e .offset () .top + e .height () - $(window) .scrollTop () - $(window) .height ();
+
+            if (bottom > 0)
+               e .offset ({ "top": e .offset () .top - bottom });
+         });
+
+         // Layer
+
+         layer .on ("click", hide);
+
+         // Show
+
+         if (typeof options .events .show === "function")
+            options .events .show ();
+
+         return false;
+      },
+      buildItem: function (item, parent, key, level, hide)
+      {
+         const li = $("<li></li>") .addClass ("context-menu-item");
+
+         switch (typeof item)
+         {
+            case "string":
+            {
+               if (item .startsWith ("-"))
+                  li .addClass (["context-menu-separator", "context-menu-not-selectable"]);
+
+               break;
+            }
+            case "object":
+            {
+               if (item .className)
+                  li .addClass (item .className);
+
+               switch (item .type)
+               {
+                  case "radio":
+                  case "checkbox":
+                  {
+                     const
+                        label = $("<label></label>") .appendTo (li),
+                        input = $("<input></input>") .appendTo (label);
+
+                     input
+                        .attr ("type", item .type)
+                        .attr ("name", "context-menu-input-" + parent);
+
+                     $("<span></span>") .text (item .name) .appendTo (label);
+
+                     if (item .selected)
+                        input .attr ("checked", "checked");
+
+                     for (const key in item .events)
+                        input .on (key, item .events [key]);
+
+                     li .addClass ("context-menu-input");
+
+                     break;
+                  }
+                  default:
+                  {
+                     if (item .name)
+                        $("<span></span>") .text (item .name) .appendTo (li);
+
+                     if (typeof item .callback === "function")
+                        li .on ("click", item .callback);
+
+                     if (typeof item .callback === "function")
+                        li .on ("click", hide);
+
+                     break;
+                  }
+               }
+
+               break;
+            }
+         }
+
+         if (item .items)
+         {
+            const ul = $("<ul></ul>")
+               .addClass ("context-menu-list")
+               .css ({ "z-index": level })
+               .appendTo (li);
+
+            for (const k in item .items)
+               ul .append (this .buildItem (item .items [k], key, k, level + 1, hide));
+
+            li .addClass ("context-menu-submenu");
+         }
+
+         return li;
       },
    });
 

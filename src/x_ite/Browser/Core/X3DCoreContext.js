@@ -61,6 +61,7 @@ define ([
    "x_ite/Parser/VRMLParser",
    "standard/Utility/DataStorage",
    "standard/Math/Numbers/Vector3",
+   "text!x_ite.css",
    "locale/gettext",
 ],
 function ($,
@@ -76,6 +77,7 @@ function ($,
           VRMLParser,
           DataStorage,
           Vector3,
+          CSS,
           _)
 {
 "use strict";
@@ -85,6 +87,7 @@ function ($,
    const
       _number              = Symbol (),
       _element             = Symbol (),
+      _shadow              = Symbol (),
       _splashScreen        = Symbol (),
       _surface             = Symbol (),
       _canvas              = Symbol (),
@@ -113,11 +116,25 @@ function ($,
       // Get canvas & context.
 
       const
-          browser      = $("<div></div>") .addClass ("x_ite-private-browser x_ite-private-browser-" + this .getNumber ()) .prependTo (this [_element]),
+         browser      = $("<div></div>") .addClass ("x_ite-private-browser"),
          splashScreen = $("<div></div>") .addClass ("x_ite-private-splash-screen") .appendTo (browser),
          spinner      = $("<div></div>") .addClass ("x_ite-private-spinner") .appendTo (splashScreen),
          progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
          surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
+
+      this [_element] .addClass ("x_ite-" + this .getNumber ());
+
+      if (this [_element] .prop ("shadowRoot"))
+      {
+         this [_shadow] = $(this [_element] .prop ("shadowRoot"))
+            .append ($("<style></style>") .text (CSS), browser);
+      }
+      else
+      {
+         this [_shadow] = this [_element];
+
+         browser .prependTo (this [_element]);
+      }
 
       $("<div></div>") .addClass ("x_ite-private-x_ite") .html ("X_ITE<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
       $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
@@ -232,6 +249,10 @@ function ($,
       getElement: function ()
       {
          return this [_element];
+      },
+      getShadow: function ()
+      {
+         return this [_shadow];
       },
       getSurface: function ()
       {
@@ -696,7 +717,7 @@ function ($,
       {
          // The textarea must be visible to make copy work.
          const $temp = $("<textarea></textarea>");
-         this .getElement () .find (".x_ite-private-browser") .prepend ($temp);
+         this .getShadow () .find (".x_ite-private-browser") .prepend ($temp);
          $temp .text (text) .select ();
          document .execCommand ("copy");
          $temp .remove ();

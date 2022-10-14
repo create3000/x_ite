@@ -187,7 +187,7 @@ function ($,
          const element = this .getElement ();
 
          if (element .fullScreen ())
-            element .addClass  ("x_ite-fullscreen");
+            element .addClass ("x_ite-fullscreen");
          else
             element .removeClass ("x_ite-fullscreen");
       },

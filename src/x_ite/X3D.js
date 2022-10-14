@@ -126,7 +126,7 @@ function ($,
 
    function createBrowser (url, parameter)
    {
-      const element = $("<X3DCanvas></X3DCanvas>");
+      const element = $("<x3d-canvas></x3d-canvas>");
 
       if (url instanceof Fields .MFString)
           element .attr ("url", url .toString ())
@@ -138,7 +138,7 @@ function ($,
 
    function getBrowser (dom)
    {
-      return $(dom || "X3DCanvas") .data ("browser");
+      return $(dom || "x3d-canvas, X3DCanvas") .data ("browser");
    }
 
    function createBrowserFromElement (dom)
@@ -178,7 +178,7 @@ function ($,
 
       $(function ()
       {
-         const elements = $("X3DCanvas");
+         const elements = $("x3d-canvas, X3DCanvas");
 
          elements .children () .hide ();
 

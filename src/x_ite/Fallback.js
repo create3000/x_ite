@@ -62,7 +62,7 @@ function ($)
       {
          $(function ()
          {
-            const elements = $("X3DCanvas");
+            const elements = $("x3d-canvas, X3DCanvas");
 
             this .show (elements, error);
 
@@ -83,10 +83,16 @@ function ($)
          if (consoleElement .length)
             consoleElement .append (document .createTextNode (error));
 
-         elements .addClass ("x_ite-browser-fallback");
+         // X3DCanvas
          elements .children (".x_ite-private-browser") .hide ();
-         elements .children (":not(.x_ite-private-browser)") .addClass ("x_ite-fallback");
          elements .children (":not(.x_ite-private-browser)") .show ();
+
+         // x3d-canvas
+         elements .each (function (i, e)
+         {
+            if (e .shadowRoot)
+               e .shadowRoot .appendChild (document .createElement ("slot"));
+         });
       },
    };
 

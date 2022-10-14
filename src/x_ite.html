@@ -14,7 +14,6 @@
    <script type="text/javascript" src="tests.js"></script>
 
    <!-- X_ITE START -->
-   <link rel="stylesheet" type="text/css" href="x_ite.css"/>
    <script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
    <script type="text/javascript" src="x_ite.config.js"></script>
    <script type="text/javascript" src="x_ite.js"></script>
@@ -245,6 +244,11 @@ main.color-management .browser {
    display: none;
 }
 
+.x_ite-console {
+  font-family: monospace;
+  white-space: pre;
+}
+
    </style>
 
    <script type="text/javascript">
@@ -339,7 +343,7 @@ function (error)
       <main>
          <div>
             <form action="javascript:alert('form submited')">
-               <X3DCanvas id="browser" class="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false">
+               <x3d-canvas id="browser" class="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false">
                   <p class="fallback">
                      Sorry,<br/>
                      it wasn't me!<br/>
@@ -348,7 +352,7 @@ function (error)
                      or Microsoft Edge, because this is currently the choice of the choice. We will continuously
                      keep you informed on technical developments and as soon as X_ITE is running in other browser too.
                   </p>
-               </X3DCanvas>
+               </x3d-canvas>
             </form>
             <div class="location-bar">
                <input class="location-entry" value="http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"/>
