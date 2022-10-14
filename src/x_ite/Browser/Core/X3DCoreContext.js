@@ -130,9 +130,8 @@ function ($,
 
       if (this [_element] .prop ("shadowRoot"))
       {
-         this [_shadow] = $(this [_element] .prop ("shadowRoot"));
-
-         this [_shadow] .append ($("<style></style>") .text (CSS));
+         this [_shadow] = $(this [_element] .prop ("shadowRoot"))
+            .append ($("<style></style>") .text (CSS));
 
          setTimeout (function () { this [_shadow] .append (browser); } .bind (this), 1);
       }
