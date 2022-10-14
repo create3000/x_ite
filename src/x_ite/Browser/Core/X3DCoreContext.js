@@ -62,6 +62,7 @@ define ([
    "standard/Utility/DataStorage",
    "standard/Math/Numbers/Vector3",
    "text!x_ite.css",
+   "x_ite/Browser/VERSION",
    "locale/gettext",
 ],
 function ($,
@@ -78,9 +79,14 @@ function ($,
           DataStorage,
           Vector3,
           CSS,
+          VERSION,
           _)
 {
 "use strict";
+
+   CSS = CSS
+      .replace (/"assets\//g, '"' + new URL ("assets/", getScriptURL ()) .href)
+      .replace (/content: "X_ITE Browser";/g, "content:\"X_ITE Browser v" + VERSION + "\";");
 
    const WEBGL_LATEST_VERSION = 2;
 
@@ -124,11 +130,9 @@ function ($,
 
       if (this [_element] .prop ("shadowRoot"))
       {
-         CSS = CSS
-            .replace (/"assets\//g, '"' + new URL ("assets/", getScriptURL ()) .href)
-            .replace (/content: "X_ITE Browser";/g, "content:\"X_ITE Browser v" + this .getVersion () + "\";");
+         this [_shadow] = $(this [_element] .prop ("shadowRoot"));
 
-         this [_shadow] = $(this [_element] .prop ("shadowRoot")) .append ($("<style></style>") .text (CSS));
+         this [_shadow] .append ($("<style></style>") .text (CSS));
 
          setTimeout (function () { this [_shadow] .append (browser); } .bind (this), 0);
       }
