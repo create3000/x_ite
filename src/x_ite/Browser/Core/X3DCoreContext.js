@@ -134,7 +134,7 @@ function ($,
 
          this [_shadow] .append ($("<style></style>") .text (CSS));
 
-         setTimeout (function () { this [_shadow] .append (browser); } .bind (this), 0);
+         setTimeout (function () { this [_shadow] .append (browser); } .bind (this), 1);
       }
       else
       {

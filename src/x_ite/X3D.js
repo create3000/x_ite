@@ -197,7 +197,8 @@ function ($,
    Object .assign (X3D,
    {
       hidden: [
-         "createBrowserFromElement"
+         "hidden",
+         "createBrowserFromElement",
       ],
 
       require:                     require,
