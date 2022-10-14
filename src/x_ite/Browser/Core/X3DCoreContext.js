@@ -126,7 +126,7 @@ function ($,
       {
          CSS = CSS
             .replace (/"assets\//g, '"' + new URL ("assets/", getScriptURL ()) .href)
-            .replace (/content: "X_ITE Browser";/g, "content:\"X_ITE Browser v" + this .version + "\";");
+            .replace (/content: "X_ITE Browser";/g, "content:\"X_ITE Browser v" + this .getVersion () + "\";");
 
          this [_shadow] = $(this [_element] .prop ("shadowRoot")) .append ($("<style></style>") .text (CSS));
 
