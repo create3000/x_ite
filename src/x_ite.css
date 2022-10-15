@@ -332,7 +332,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .context-menu-item:hover:not(.x_ite-private-menu-title) {
-  background-color: #444;
+  background-color: rgb(255, 69, 58);
 }
 
 .x_ite-private-menu .x_ite-private-menu-title {
@@ -426,7 +426,9 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 /* position checkboxes and radios like icons */
 .x_ite-private-menu .context-menu-input > label > input[type="checkbox"],
 .x_ite-private-menu .context-menu-input > label > input[type="radio"] {
+  accent-color: rgb(255, 69, 58);
   display: inline;
+  width: 12px;
   margin: 0;
   margin-left: -20px;
   padding: 0;
