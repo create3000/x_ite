@@ -341,30 +341,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding: 4px 32px 4px 8px;
 }
 
-.x_ite-private-menu label {
-  cursor: pointer;
-}
-
-.x_ite-private-menu .context-menu-item > label > input,
-.x_ite-private-menu .context-menu-item > label > textarea {
-  all: revert;
-  cursor: pointer;
-  -webkit-user-select: text;
-     -moz-user-select: text;
-      -ms-user-select: text;
-          user-select: text;
-}
-
-.x_ite-private-menu .context-menu-input > label > input[type="checkbox"] {
-  -webkit-appearance: checkbox;
-  -moz-appearance: checkbox;
-}
-
-.x_ite-private-menu .context-menu-input > label > input[type="radio"] {
-  -webkit-appearance: radio;
-  -moz-appearance: radio;
-}
-
 .x_ite-private-menu .context-menu-item.context-menu-separator {
   cursor: default;
   margin: 2px 0;
@@ -378,12 +354,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   display: none !important;
 }
 
-.x_ite-private-menu .context-menu-disabled {
-  color: #666;
-}
-
-.x_ite-private-menu .context-menu-input.context-menu-hover,
-.x_ite-private-menu .context-menu-disabled.context-menu-hover {
+.x_ite-private-menu .context-menu-input.context-menu-hover {
   cursor: default;
 }
 
@@ -409,9 +380,16 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   .context-menu-item.icon:before {}
  */
 
-.x_ite-private-menu .context-menu-item.context-menu-icon {
-  background-repeat: no-repeat;
-  background-position: 2px 3px;
+.x_ite-private-menu .context-menu-input > label {
+  cursor: pointer;
+  display: block;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-size: 10pt;
+  letter-spacing: unset;
+  line-height: 1;
 }
 
 /* vertically align inside labels */
@@ -421,6 +399,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   font-weight: normal;
   letter-spacing: unset;
   line-height: 1;
+}
+
+.x_ite-private-menu .context-menu-item > label > input {
+  all: revert;
+  cursor: pointer;
 }
 
 /* position checkboxes and radios like icons */
@@ -438,24 +421,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding-left: 8px;
 }
 
-.x_ite-private-menu .context-menu-input > label,
-.x_ite-private-menu .context-menu-input > label > input[type="text"],
-.x_ite-private-menu .context-menu-input > label > textarea,
-.x_ite-private-menu .context-menu-input > label > select {
-  display: block;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  font-size: 10pt;
-  letter-spacing: unset;
-  line-height: 1;
-}
-
-.x_ite-private-menu .context-menu-input > label > textarea {
-  height: 100px;
-}
-
 .x_ite-private-menu .context-menu-item > .context-menu-list {
   top: -9px;
   /* re-positioned by js */
@@ -467,8 +432,9 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   display: block;
 }
 
-.x_ite-private-menu .context-menu-accesskey {
-  text-decoration: underline;
+.x_ite-private-menu .context-menu-item.context-menu-icon {
+  background-repeat: no-repeat;
+  background-position: 2px 3px;
 }
 
 /* Icons */
