@@ -411,7 +411,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-menu .context-menu-item.context-menu-icon {
   background-repeat: no-repeat;
-  background-position: 3px 2px;
+  background-position: 2px 3px;
 }
 
 /* vertically align inside labels */
@@ -429,12 +429,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   display: inline;
   margin: 0;
   margin-left: -20px;
-  margin-right: 3px;
   padding: 0;
 }
 
 .x_ite-private-menu .context-menu-input > label > span {
-  margin-left: 2px;
+  padding-left: 8px;
 }
 
 .x_ite-private-menu .context-menu-input > label,
