@@ -264,8 +264,6 @@ function ($,
                browser .setCursor (this .cursor);
             }
          }
-
-         console .log (this .isOver);
       },
       onmouseout: function (event)
       {

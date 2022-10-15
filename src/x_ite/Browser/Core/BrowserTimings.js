@@ -97,8 +97,10 @@ function ($,
          this .header  = $("<thead></thead>") .append ($("<tr></tr>") .append ($("<th colspan='2'></th>"))) .appendTo (this .table);
          this .body    = $("<tbody></tbody>") .appendTo (this .table);
          this .footer  = $("<tfoot></tfoot>") .append ($("<tr></tr>") .append ($("<td colspan='2'></td>"))) .appendTo (this .table);
-         this .button  = $("<button></button>") .attr ("type", "button") .click (this .set_type__ .bind (this)) .appendTo (this .footer .find ("td"));
+         this .button  = $("<button></button>") .attr ("type", "button") .appendTo (this .footer .find ("td"));
          this .rows    = [ ];
+
+         this .button .on ("click touchend", this .set_type__ .bind (this));
 
          this .set_button__ ();
       },
