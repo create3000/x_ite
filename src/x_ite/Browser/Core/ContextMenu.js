@@ -632,7 +632,8 @@ function ($,
 
          // Layer
 
-         layer .on ("click", hide);
+         layer .on ("click contextmenu", hide);
+         ul .on ("contextmenu", hide);
 
          // Show
 
