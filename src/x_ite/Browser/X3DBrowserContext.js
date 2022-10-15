@@ -180,8 +180,6 @@ function ($,
       constructor: X3DBrowserContext,
       initialize: function ()
       {
-         console .log ("X3DBrowserContext.initialize");
-
          X3DBaseNode                    .prototype .initialize .call (this);
          X3DRoutingContext              .prototype .initialize .call (this);
          X3DCoreContext                 .prototype .initialize .call (this);

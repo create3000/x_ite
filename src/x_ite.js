@@ -129,7 +129,7 @@ const getScriptURL = (function ()
    if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
       __global_module__ .exports = X_ITE;
 
-   // Define element.
+   // Define custom element.
 
    // IE fix.
    document .createElement ("X3DCanvas");

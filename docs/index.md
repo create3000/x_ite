@@ -822,6 +822,8 @@ It can be used in [Electron](https://www.electronjs.org) apps in the **renderer 
 const X3D = require ("x_ite")
 ```
 
+Make sure that contextIsolation is set to **false** when creating a BrowserWindow instance.
+
 ### Using X\_ITE with a CDN
 
 CDNs can offer a performance benefit by hosting X\_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X\_ITE from the same CDN, it won't have to be re-downloaded. To use the X\_ITE CDN, just reference the CSS and JavaScript file in the script element directly from the GitHub CDN or jsDelivr CDN domain.
