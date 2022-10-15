@@ -653,7 +653,7 @@ function ($,
          {
             case "string":
             {
-               if (item .startsWith ("-"))
+               if (item .match (/^-+$/))
                   li .addClass (["context-menu-separator", "context-menu-not-selectable"]);
 
                break;
