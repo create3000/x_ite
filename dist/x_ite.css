@@ -180,8 +180,14 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   background: rgba(0,0,0,0.61803);
-  margin: 21pt;
+  background: -moz-linear-gradient(top, rgba(50,50,50,0.61803) 0%, rgba(0,0,0,0.61803) 100%); 
+  background: -webkit-linear-gradient(top, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); 
+  background: linear-gradient(to bottom, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); 
   border: 4px solid rgba(60,60,60,0.61803);
+  border-radius: 5px;
+  -webkit-background-clip: padding-box; 
+  background-clip: padding-box; 
+  margin: 21pt;
   border-radius: 15px;
   padding: 21pt;
 }
@@ -251,28 +257,34 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-menu .context-menu-list {
   position: absolute;
   display: inline-block;
+  box-sizing: border-box;
   min-width: 120px;
-  padding: 0;
   margin: 0;
   margin-left: 1px;
-  white-space: pre;
+  padding: 5px 10px 9px 9px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.61803);
+  background: -moz-linear-gradient(top, rgba(50,50,50,0.61803) 0%, rgba(0,0,0,0.61803) 100%); 
+  background: -webkit-linear-gradient(top, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); 
+  background: linear-gradient(to bottom, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); 
+  border: 4px solid rgba(60,60,60,0.61803);
+  border-radius: 5px;
+  -webkit-background-clip: padding-box; 
+  background-clip: padding-box; 
+  color: white;
   font-family: PT Sans, sans-serif;
   font-size: 10pt;
+  white-space: pre;
   line-height: 1.2;
   list-style-type: none;
-  background: #222;
-  color: #eee;
-  border: 0 solid #ddd;
-  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
-          box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
 }
 .x_ite-private-menu .context-menu-item {
+  cursor: pointer;
   position: relative;
-  background-color: #222;
+  border-radius: 5px;
   margin: 0;
-  border-top: 1px solid #222;
-  border-bottom: 1px solid #222;
-  padding: 3px 24px 3px 24px;
+  padding: 5px 24px;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -282,13 +294,21 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   letter-spacing: unset;
   text-align: left;
 }
+.x_ite-private-menu .context-menu-item:hover:not(.x_ite-private-menu-title) {
+  background-color: #444;
+}
 .x_ite-private-menu .x_ite-private-menu-title {
+  cursor: default;
   font-weight: bold;
   padding: 4px 32px 4px 8px;
+}
+.x_ite-private-menu label {
+  cursor: pointer;
 }
 .x_ite-private-menu .context-menu-item > label > input,
 .x_ite-private-menu .context-menu-item > label > textarea {
   all: revert;
+  cursor: pointer;
   -webkit-user-select: text;
      -moz-user-select: text;
       -ms-user-select: text;
@@ -302,13 +322,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   -webkit-appearance: radio;
   -moz-appearance: radio;
 }
-.x_ite-private-menu .context-menu-item:hover:not(.x_ite-private-menu-title) {
-  cursor: pointer;
-  background-color: #444;
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-}
 .x_ite-private-menu .context-menu-item.context-menu-separator {
+  margin: 1px 0;
   padding-top: 0;
   padding-bottom: 0;
   border-top: 0;
@@ -329,7 +344,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: absolute;
   display: block;
   right: 0;
-  top: 5px;
+  top: 8px;
   margin-right: 2px;
   
   width: 0;

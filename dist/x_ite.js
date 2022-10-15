@@ -28422,11 +28422,11 @@ function ($,
 
          this .element
             .stop (true, true)
-            .show ()
+            .fadeIn (0)
             .animate ({ width: this .element .textWidth () })
             .animate ({ "delay": 1 }, 5000)
             .animate ({ width: 0 })
-            .hide ();
+            .fadeOut (0);
       },
    });
 
@@ -28589,7 +28589,7 @@ function ($,
             className: "x_ite-private-menu",
             items: {
                "title": {
-                  name: "X_ITE Browser v" + browser .getVersion (),
+                  name: browser .getName () + " Browser v" + browser .getVersion (),
                   className: "x_ite-private-menu-title",
                },
                "separator0": "--------",
@@ -29038,33 +29038,28 @@ function ($,
 
          ul [options .animation .show] (options .animation .duration);
 
-         if (ul .offset () .left - $(document) .scrollLeft () + ul .width () > $(window) .width ())
-            ul .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .width ()) });
+         // Reposition menu if to right or to low.
 
-         if (ul .offset () .top - $(document) .scrollTop () + ul .height () > $(window) .height ())
-            ul .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .height ()) });
+         if (ul .offset () .left - $(document) .scrollLeft () + ul .outerWidth () > $(window) .width ())
+            ul .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .outerWidth ()) });
 
+         if (ul .offset () .top - $(document) .scrollTop () + ul .outerHeight () > $(window) .height ())
+            ul .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .outerHeight ()) });
+
+         // Display submenus on the left or right side..
          // If the submenu is higher than vh, add scrollbars.
-
-         ul .find ("ul") .each (function (i, e)
-         {
-            if ($(e) .height () > $(window) .height ())
-            {
-               $(e) .css ({
-                  "overflow-y": "scroll",
-                  "max-height": "100vh",
-                  "width": $(e) .width (),
-               });
-            }
-         });
-
-         // Display submenus on the left or right side.
 
          const position = $(document) .width () - event .pageX < 370 ? "right" : "left";
 
          ul .find ("ul") .each (function (i, e)
          {
-            $(e) .css (position, $(e) .parent () .closest ("ul") .width ());
+            e = $(e);
+
+            e .css ("width", e .outerWidth ());
+            e .css (position, e .parent () .closest ("ul") .width ());
+
+            if (e .outerHeight () >= $(window) .height ())
+               e .css ({ "max-height": "100vh", "overflow-y": "scroll" });
          });
 
          // If the submenu is higher than vh, reposition it.
@@ -29077,12 +29072,12 @@ function ($,
                t = $(event .target),
                e = t .children ("ul");
 
-            if (!e .length)
+            if (! e .length)
                return;
 
             e .css ("top", "");
 
-            const bottom = e .offset () .top + e .height () - $(window) .scrollTop () - $(window) .height ();
+            const bottom = e .offset () .top + e .outerHeight () - $(window) .scrollTop () - $(window) .height ();
 
             if (bottom > 0)
                e .offset ({ "top": e .offset () .top - bottom });
@@ -29148,9 +29143,7 @@ function ($,
                         $("<span></span>") .text (item .name) .appendTo (li);
 
                      if (typeof item .callback === "function")
-                     {
                         li .on ("click", item .callback) .on ("click", hide);
-                     }
 
                      break;
                   }
@@ -39696,7 +39689,7 @@ function ($,
          progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
          surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
 
-      $("<div></div>") .addClass ("x_ite-private-x_ite") .html ("X_ITE<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
+      $("<div></div>") .addClass ("x_ite-private-x_ite") .html (this .getName () + "<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
       $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
       $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress);
 
@@ -40721,8 +40714,8 @@ function (Fields,
 
             if (this .getBrowserOptions () .getSplashScreen ())
             {
-               this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .hide ();
-               this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .show ();
+               this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeOut (0);
+               this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeIn (0);
             }
             else
             {
@@ -120167,7 +120160,7 @@ function ($,
          const elements = $("X3DCanvas");
 
          if (elements .length)
-            console .warn ("Use of <X3DCanvas> element is depreciated, use <x3d-canvas> element.");
+            console .warn ("Use of <X3DCanvas> element is depreciated, please use <x3d-canvas> element instead.");
 
          $.map (elements, createBrowserFromElement);
       });
