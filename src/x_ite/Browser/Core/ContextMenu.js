@@ -136,7 +136,7 @@ function ($,
             className: "x_ite-private-menu",
             items: {
                "title": {
-                  name: "X_ITE Browser v" + browser .getVersion (),
+                  name: browser .getName () + " Browser v" + browser .getVersion (),
                   className: "x_ite-private-menu-title",
                },
                "separator0": "--------",
