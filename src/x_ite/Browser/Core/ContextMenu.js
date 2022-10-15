@@ -585,29 +585,28 @@ function ($,
 
          ul [options .animation .show] (options .animation .duration);
 
+         // Reposition menu if to right or to low.
+
          if (ul .offset () .left - $(document) .scrollLeft () + ul .outerWidth () > $(window) .width ())
             ul .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .outerWidth ()) });
 
          if (ul .offset () .top - $(document) .scrollTop () + ul .outerHeight () > $(window) .height ())
             ul .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .outerHeight ()) });
 
+         // Display submenus on the left or right side..
          // If the submenu is higher than vh, add scrollbars.
-
-         ul .find ("ul") .each (function (i, e)
-         {
-            $(e) .css ("width",  $(e) .outerWidth ());
-
-            if ($(e) .outerHeight () >= $(window) .height ())
-               $(e) .css ({ "max-height": "100vh", "overflow-y": "scroll" });
-         });
-
-         // Display submenus on the left or right side.
 
          const position = $(document) .width () - event .pageX < 370 ? "right" : "left";
 
          ul .find ("ul") .each (function (i, e)
          {
-            $(e) .css (position, $(e) .parent () .closest ("ul") .width ());
+            e = $(e);
+
+            e .css ("width", e .outerWidth ());
+            e .css (position, e .parent () .closest ("ul") .width ());
+
+            if (e .outerHeight () >= $(window) .height ())
+               e .css ({ "max-height": "100vh", "overflow-y": "scroll" });
          });
 
          // If the submenu is higher than vh, reposition it.
