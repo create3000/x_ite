@@ -131,9 +131,7 @@ function ($,
       if (url instanceof Fields .MFString)
           element .attr ("url", url .toString ())
 
-      createBrowserFromElement (element);
-
-      return element [0];
+      return element .get (0);
    }
 
    function getBrowser (element)

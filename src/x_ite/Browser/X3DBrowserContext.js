@@ -180,6 +180,8 @@ function ($,
       constructor: X3DBrowserContext,
       initialize: function ()
       {
+         console .log ("X3DBrowserContext.initialize");
+
          X3DBaseNode                    .prototype .initialize .call (this);
          X3DRoutingContext              .prototype .initialize .call (this);
          X3DCoreContext                 .prototype .initialize .call (this);
@@ -360,10 +362,18 @@ function ($,
 
          contexts .push (context);
 
-         Object .assign (X3DBrowserContext .prototype, context .prototype);
+         for (const key of Object .keys (context .prototype) .concat (Object .getOwnPropertySymbols (context .prototype)))
+         {
+            if (X3DBrowserContext .prototype .hasOwnProperty (key))
+               continue;
 
-         for (const key of Reflect .ownKeys (context .prototype))
-            Object .defineProperty (X3DBrowserContext .prototype, key, { enumerable: false });
+            Object .defineProperty (X3DBrowserContext .prototype, key,
+            {
+               value: context .prototype [key],
+               enumerable: false,
+               writable: true,
+            });
+         }
 
          $("x3d-canvas, X3DCanvas") .each (function (i, canvas)
          {
