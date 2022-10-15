@@ -115,11 +115,11 @@ function ($,
 
          this .element
             .stop (true, true)
-            .show ()
+            .fadeIn (0)
             .animate ({ width: this .element .textWidth () })
             .animate ({ "delay": 1 }, 5000)
             .animate ({ width: 0 })
-            .hide ();
+            .fadeOut (0);
       },
    });
 

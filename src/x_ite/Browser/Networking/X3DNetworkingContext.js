@@ -131,8 +131,8 @@ function (Fields,
 
             if (this .getBrowserOptions () .getSplashScreen ())
             {
-               this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .hide ();
-               this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .show ();
+               this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeOut (0);
+               this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeIn (0);
             }
             else
             {
