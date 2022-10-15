@@ -17,6 +17,10 @@ X3DCanvas {
   height: 150px;
 }
 
+:host([hidden]) {
+  display: none;
+}
+
 :host(.x_ite-fullscreen) {
   width: 100vw !important;
   height: 100vh !important;

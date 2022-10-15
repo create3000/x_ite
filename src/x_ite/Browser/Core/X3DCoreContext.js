@@ -61,8 +61,6 @@ define ([
    "x_ite/Parser/VRMLParser",
    "standard/Utility/DataStorage",
    "standard/Math/Numbers/Vector3",
-   "text!x_ite.css",
-   "x_ite/Browser/VERSION",
    "locale/gettext",
 ],
 function ($,
@@ -78,15 +76,9 @@ function ($,
           VRMLParser,
           DataStorage,
           Vector3,
-          CSS,
-          VERSION,
           _)
 {
 "use strict";
-
-   CSS = CSS
-      .replace (/"assets\//g, '"' + new URL ("assets/", getScriptURL ()) .href)
-      .replace (/content: "X_ITE Browser";/g, "content:\"X_ITE Browser v" + VERSION + "\";");
 
    const WEBGL_LATEST_VERSION = 2;
 
@@ -116,9 +108,6 @@ function ($,
 
    function X3DCoreContext (element, shadow)
    {
-      this [_number]  = ++ browserNumber;
-      this [_element] = element;
-
       // Get canvas & context.
 
       const
@@ -128,23 +117,13 @@ function ($,
          progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
          surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
 
-      if (shadow)
-      {
-         this [_shadow] = shadow .append ($("<style></style>") .text (CSS));
-
-         setTimeout (function () { shadow .append (browser); } .bind (this), 1);
-      }
-      else
-      {
-         this [_shadow] = this [_element];
-
-         browser .prependTo (this [_element]);
-      }
-
       $("<div></div>") .addClass ("x_ite-private-x_ite") .html ("X_ITE<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
       $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
       $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress);
 
+      this [_number]       = ++ browserNumber;
+      this [_element]      = element;
+      this [_shadow]       = shadow ? shadow .append (browser) : this [_element] .prepend (browser);
       this [_splashScreen] = splashScreen;
       this [_surface]      = surface;
       this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
@@ -160,9 +139,9 @@ function ($,
       this [_notification]        = new Notification        (this .getPrivateScene ());
       this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
 
-      const inch = $("<div></div>") .css ("height", "10in") .css ("display", "none") .appendTo (element);
-      this [_pixelPerPoint] = inch .height () / 720;
-      inch .remove ();
+      const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo (element);
+      this [_pixelPerPoint] = inches .height () / 720;
+      inches .remove ();
 
       $(".x_ite-console") .empty ();
 

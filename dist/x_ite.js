@@ -39574,9 +39574,6 @@ define ('standard/Utility/DataStorage',[],function ()
    return DataStorage;
 });
 
-
-define('text!x_ite.css',[],function () { return '/* X_ITE CSS StyleSheet */\n\n@charset "utf-8";\n\n@import url("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic");\n\n:host,\nX3DCanvas {\n  position: relative;\n  display: inline-block;\n  outline: none;\n  margin: 0;\n  padding: 0;\n  border: 0;\n  border-radius: 0;\n  width: 300px;\n  height: 150px;\n}\n\n:host(.x_ite-fullscreen) {\n  width: 100vw !important;\n  height: 100vh !important;\n}\n\nX3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {\n  display: none;\n}\n\n.x_ite-private-browser {\n  z-index: 0;\n  overflow: hidden;\n  display: block;\n  position: absolute;\n  inset: 0;\n  margin: 0;\n  padding: 0;\n  border: 0;\n  border-radius: 0;\n}\n\n.x_ite-private-surface {\n  margin: 0;\n  padding: 0;\n  border: 0;\n  border-radius: 0;\n  height: 100%;\n  margin-right: 0;\n}\n\n.x_ite-private-canvas {\n  display: block;\n  outline: none;\n  margin: 0;\n  padding: 0;\n  border: 0;\n  border-radius: 0;\n  width: 100%;\n  height: 100%;\n}\n\n.x_ite-private-notification {\n  padding: 5px;\n  position: absolute;\n  top: 20px;\n  right: -4px;\n  -webkit-backdrop-filter: blur(8px);\n  backdrop-filter: blur(8px);\n  background: rgba(0,0,0,0.61803);\n  background: -moz-linear-gradient(top, rgba(50,50,50,0.61803) 0%, rgba(0,0,0,0.61803) 100%); /* FF3.6-15 */\n  background: -webkit-linear-gradient(top, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* Chrome10-25,Safari5.1-6 */\n  background: linear-gradient(to bottom, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\n  border: 4px solid rgba(60,60,60,0.61803);\n  border-radius: 5px;\n  -webkit-background-clip: padding-box; /* for Safari */\n  background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */\n  color: white;\n  font-family: PT Sans, sans-serif;\n  font-size: 10pt;\n  letter-spacing: unset;\n  line-height: 1;\n  white-space: pre;\n  pointer-events: none;\n}\n\n.x_ite-private-notification span {\n  padding: 0 24px 0 20px;\n  background: url("assets/images/icon.bw.png") no-repeat 0 2px;\n}\n\n.x_ite-private-browser-timings {\n  position: absolute;\n  bottom: -4px;\n  left: -4px;\n  padding: 10px 15px 14px 14px;\n  -webkit-backdrop-filter: blur(8px);\n  backdrop-filter: blur(8px);\n  background: rgba(0,0,0,0.61803);\n  background: -moz-linear-gradient(top, rgba(50,50,50,0.61803) 0%, rgba(0,0,0,0.61803) 100%); /* FF3.6-15 */\n  background: -webkit-linear-gradient(top, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* Chrome10-25,Safari5.1-6 */\n  background: linear-gradient(to bottom, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */\n  border-top: 4px solid rgba(60,60,60,0.61803);\n  border-right: 4px solid rgba(60,60,60,0.61803);\n  border-radius: 5px;\n  -webkit-background-clip: padding-box; /* for Safari */\n  background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */\n  color: white;\n  font-family: PT Sans, sans-serif;\n  font-size: 9pt;\n  white-space: pre;\n  pointer-events: none;\n}\n\n.x_ite-private-browser-timings table,\n.x_ite-private-browser-timings thead,\n.x_ite-private-browser-timings tbody,\n.x_ite-private-browser-timings tfoot,\n.x_ite-private-browser-timings tr,\n.x_ite-private-browser-timings th,\n.x_ite-private-browser-timings td {\n  box-sizing: border-box;\n  outline: 0;\n  margin: 0;\n  border: 0;\n  border-radius: 0;\n  padding: 0;\n  background: none;\n  color: white;\n  font-size: inherit;\n  font-weight: normal;\n  font-style: normal;\n  letter-spacing: unset;\n  line-height: 1;\n  text-align: left;\n}\n\n.x_ite-private-browser-timings table {\n  overflow: hidden;\n  background: url("assets/images/Time.png") no-repeat;\n  width: 100%;\n  max-width: 100%;\n  border-collapse: separate;\n  border-spacing: 2px;\n  empty-cells: show;\n}\n\n.x_ite-private-browser-timings thead th {\n  padding-left: 20px;\n  padding-bottom: 5px;\n  font-weight: bold;\n}\n\n.x_ite-private-browser-timings td:first-child {\n  padding-right: 10px;\n}\n\n.x_ite-private-browser-timings tr.x_ite-private-more td {\n  padding-bottom: 5px;\n}\n\n.x_ite-private-browser-timings td {\n  padding-bottom: 2px;\n}\n\n.x_ite-private-browser-timings tfoot td:first-child {\n  padding-right: 0;\n}\n\n.x_ite-private-browser-timings tfoot td {\n  padding-top: 4px;\n}\n\n.x_ite-private-browser-timings button {\n  box-sizing: border-box;\n  border: 0;\n  border-radius: 10px;\n  padding: 2px 2px 4px 2px;\n  width: 100%;\n  background: rgba(0,0,0,0.38196601);\n  color: white;\n  font-family: PT Sans, sans-serif;\n  font-style: italic;\n  font-size: 9pt;\n  letter-spacing: unset;\n  line-height: 1.1;\n  text-align: center;\n  pointer-events: all;\n  cursor: pointer;\n}\n\n.x_ite-private-world-info-overlay {\n  position: absolute;\n  inset: 0;\n}\n\n.x_ite-private-world-info {\n  overflow-y: auto;\n  position: absolute;\n  inset: 0;\n  -webkit-backdrop-filter: blur(8px);\n  backdrop-filter: blur(8px);\n  background: rgba(0,0,0,0.61803);\n  margin: 21pt;\n  border: 4px solid rgba(60,60,60,0.61803);\n  border-radius: 15px;\n  padding: 21pt;\n}\n\n.x_ite-private-world-info .x_ite-private-world-info-top,\n.x_ite-private-world-info .x_ite-private-world-info-title,\n.x_ite-private-world-info .x_ite-private-world-info-info,\n.x_ite-private-world-info p {\n  box-sizing: border-box;\n  outline: 0;\n  margin: 0;\n  border: 0;\n  border-radius: 0;\n  padding: 0;\n  background: none;\n  color: white;\n  font-family: PT Sans, sans-serif;\n  font-size: inherit;\n  font-weight: inherit;\n  font-style: normal;\n  letter-spacing: unset;\n  line-height: 1.2;\n  text-align: left;\n}\n\n.x_ite-private-world-info .x_ite-private-world-info-top {\n  font-weight: bold;\n  font-style: italic;\n  font-size: 9pt;\n}\n\n.x_ite-private-world-info .x_ite-private-world-info-title {\n  margin: 0.3em 0 1em 0;\n  font-weight: bold;\n  font-size: 21pt;\n}\n\n.x_ite-private-world-info .x_ite-private-world-info-info,\n.x_ite-private-world-info .x_ite-private-world-info-info p {\n  margin: 1em 0 1em 0;\n  font-size: 14pt;\n}\n\n.x_ite-private-world-info a {\n  text-decoration: underline;\n  color: #fd9f2e;\n}\n\n/*!\n * jQuery contextMenu - Plugin for simple contextMenu handling\n *\n * Version: v1.8.1\n *\n * Authors: Björn Brala (SWIS.nl), Rodney Rehm, Addy Osmani (patches for FF)\n * Web: http://swisnl.github.io/jQuery-contextMenu/\n *\n * Copyright (c) 2011-2015 SWIS BV and contributors\n *\n * Licensed under\n *   MIT License http://www.opensource.org/licenses/mit-license\n\n * Date: 2015-09-20T18:47:54.927Z\n */\n\n.x_ite-private-menu.context-menu-layer {\n  z-index: 0;\n  position: fixed;\n  inset: 0;\n}\n\n/* menu title */\nul.x_ite-private-menu.x_ite-private-menu-title:before {\n  content: "X_ITE Browser";\n  display: block;\n  padding: 4px 32px 4px 8px;\n  font-weight: bold;\n}\n\n.x_ite-private-menu .context-menu-selected {\n  font-weight: bold;\n  font-style: italic;\n}\n\n.x_ite-private-menu.context-menu-list,\n.x_ite-private-menu .context-menu-list {\n  position: absolute;\n  display: inline-block;\n  min-width: 120px;\n  padding: 0;\n  margin: 0;\n  margin-left: 1px;\n  white-space: pre;\n  font-family: PT Sans, sans-serif;\n  font-size: 10pt;\n  line-height: 1.2;\n  list-style-type: none;\n  background: #222;\n  color: #eee;\n  border: 0 solid #ddd;\n  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .5);\n          box-shadow: 0 2px 5px rgba(0, 0, 0, .5);\n}\n\n.x_ite-private-menu .context-menu-item {\n  position: relative;\n  background-color: #222;\n  margin: 0;\n  border-top: 1px solid #222;\n  border-bottom: 1px solid #222;\n  padding: 3px 24px 3px 24px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n  font-size: 10pt;\n  line-height: 1;\n  letter-spacing: unset;\n  text-align: left;\n}\n\n.x_ite-private-menu .context-menu-item > label > input,\n.x_ite-private-menu .context-menu-item > label > textarea {\n  all: revert;\n  -webkit-user-select: text;\n     -moz-user-select: text;\n      -ms-user-select: text;\n          user-select: text;\n}\n\n.x_ite-private-menu .context-menu-input > label > input[type="checkbox"] {\n  -webkit-appearance: checkbox;\n  -moz-appearance: checkbox;\n}\n\n.x_ite-private-menu .context-menu-input > label > input[type="radio"] {\n  -webkit-appearance: radio;\n  -moz-appearance: radio;\n}\n\n.x_ite-private-menu .context-menu-item:hover {\n  cursor: pointer;\n  background-color: #444;\n  border-top: 1px solid #eee;\n  border-bottom: 1px solid #eee;\n}\n\n.x_ite-private-menu .context-menu-item.context-menu-separator {\n  padding-top: 0;\n  padding-bottom: 0;\n  border-top: 0;\n  border-bottom: 1px solid #111;\n}\n\n.x_ite-private-menu .context-menu-separator + .context-menu-separator {\n  display: none !important;\n}\n\n.x_ite-private-menu .context-menu-disabled {\n  color: #666;\n}\n\n.x_ite-private-menu .context-menu-input.context-menu-hover,\n.x_ite-private-menu .context-menu-disabled.context-menu-hover {\n  cursor: default;\n}\n\n.x_ite-private-menu .context-menu-submenu:after {\n  content: "";\n  position: absolute;\n  display: block;\n  right: 0;\n  top: 5px;\n  margin-right: 2px;\n  /* CSS triangle */\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: 4px 0 4px 5px;\n  border-color: transparent transparent transparent #eee;\n}\n\n/* icons\n  #protip:\n  In case you want to use sprites for icons (which I would suggest you do) have a look at\n  http://css-tricks.com/13224-pseudo-spriting/ to get an idea of how to implement\n  .context-menu-item.icon:before {}\n */\n\n.x_ite-private-menu .context-menu-item.context-menu-icon {\n  background-repeat: no-repeat;\n  background-position: 3px 2px;\n}\n\n/* vertically align inside labels */\n.x_ite-private-menu .context-menu-input > label > * {\n  vertical-align: top;\n  font-size: 10pt;\n  font-weight: normal;\n  letter-spacing: unset;\n  line-height: 1;\n}\n\n/* position checkboxes and radios like icons */\n.x_ite-private-menu .context-menu-input > label > input[type="checkbox"],\n.x_ite-private-menu .context-menu-input > label > input[type="radio"] {\n  display: inline;\n  margin: 0;\n  margin-left: -20px;\n  margin-right: 3px;\n  padding: 0;\n}\n\n.x_ite-private-menu .context-menu-input > label > span {\n  margin-left: 2px;\n}\n\n.x_ite-private-menu .context-menu-input > label,\n.x_ite-private-menu .context-menu-input > label > input[type="text"],\n.x_ite-private-menu .context-menu-input > label > textarea,\n.x_ite-private-menu .context-menu-input > label > select {\n  display: block;\n  box-sizing: border-box;\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  font-size: 10pt;\n  letter-spacing: unset;\n  line-height: 1;\n}\n\n.x_ite-private-menu .context-menu-input > label > textarea {\n  height: 100px;\n}\n\n.x_ite-private-menu .context-menu-item > .context-menu-list {\n  top: -9px;\n  /* re-positioned by js */\n  right: -5px;\n  display: none;\n}\n\n.x_ite-private-menu .context-menu-item:hover > .context-menu-list {\n  display: block;\n}\n\n.x_ite-private-menu .context-menu-accesskey {\n  text-decoration: underline;\n}\n\n/* Icons */\n\n.x_ite-private-icon-viewpoint {\n  background: url("assets/images/Viewpoint.png");\n}\n\n.x_ite-private-icon-examine-viewer {\n  background: url("assets/images/ExamineViewer.png");\n}\n\n.x_ite-private-icon-walk-viewer {\n  background: url("assets/images/WalkViewer.png");\n}\n\n.x_ite-private-icon-fly-viewer {\n  background: url("assets/images/FlyViewer.png");\n}\n\n.x_ite-private-icon-lookat-viewer {\n  background: url("assets/images/gtk-zoom-in.png");\n}\n\n.x_ite-private-icon-plane-viewer {\n  background: url("assets/images/PlaneViewer.png");\n}\n\n.x_ite-private-icon-none-viewer {\n  background: url("assets/images/NoneViewer.png");\n}\n\n.x_ite-private-icon-zoom-fit {\n  background: url("assets/images/gtk-zoom-fit.png");\n}\n\n.x_ite-private-icon-zoom-in {\n  background: url("assets/images/gtk-zoom-in.png");\n}\n\n.x_ite-private-icon-primitive-quality {\n  background: url("assets/images/PrimitiveQuality.png");\n}\n\n.x_ite-private-icon-texture-quality {\n  background: url("assets/images/TextureQuality.png");\n}\n\n.x_ite-private-icon-enter-fullscreen {\n  background: url("assets/images/gtk-fullscreen.png");\n}\n\n.x_ite-private-icon-leave-fullscreen {\n  background: url("assets/images/gtk-leave-fullscreen.png");\n}\n\n.x_ite-private-icon-world-info {\n  background: url("assets/images/go-next.png");\n}\n\n.x_ite-private-icon-help-about {\n  background: url("assets/images/help-about.png");\n}\n\n/* Spinner */\n\n.x_ite-private-splash-screen {\n  z-index: 100;\n  position: absolute;\n  inset: 0;\n  background: #1b1d21;\n  background: -moz-radial-gradient(center, ellipse cover, #2f3135 0%, #1b1d21 100%);\n  background: -webkit-radial-gradient(center, ellipse cover, #2f3135 0%,#1b1d21 100%);\n  background: radial-gradient(ellipse at center, #2f3135 0%,#1b1d21 100%);\n}\n\n.x_ite-private-spinner {\n  position: absolute;\n  top: calc(50% - (138px / 2));\n  left: calc(50% - (134px / 2));\n  width: 138px;\n  height: 134px;\n  background: url("assets/images/logo.128.png") no-repeat;\n  -webkit-animation: spinner-animation-spin 32s linear infinite;\n  -moz-animation: spinner-animation-spin 32s linear infinite;\n  animation: spinner-animation-spin 32s linear infinite;\n}\n@-moz-keyframes spinner-animation-spin { 100% { -moz-transform: rotate(360deg); } }\n@-webkit-keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); } }\n@keyframes spinner-animation-spin { 100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); } }\n\n.x_ite-private-progress {\n  position: absolute;\n  top: calc(50% - 28pt - 11pt);\n  left: calc(50% - 100px);\n  width: 200px;\n}\n\n.x_ite-private-x_ite {\n  color: white;\n  font-size: 28pt;\n  text-align: center;\n  text-shadow: 1px 1px 0 black;\n  font-family: PT Sans, sans-serif;\n}\n\n.x_ite-private-x_ite span.x_ite-private-x3d {\n  font-weight: bold;\n}\n\n.x_ite-private-spinner-text {\n  color: white;\n  font-size: 11pt;\n  text-align: center;\n  text-shadow: 1px 1px 0 black;\n  font-family: PT Sans, sans-serif;\n}\n\n.x_ite-private-progressbar {\n  margin: 8px;\n  border-left:  2px solid rgba(255, 255, 255, 0.5);\n  border-right: 2px solid rgba(255, 255, 255, 0.5);\n  padding: 0 2px;\n  text-align: left;\n}\n\n.x_ite-private-progressbar div {\n  width: 0%;\n  height: 6px;\n  background: rgba(255, 255, 255, 0.5);\n}\n';});
-
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -39640,8 +39637,6 @@ define ('x_ite/Browser/Core/X3DCoreContext',[
    "x_ite/Parser/VRMLParser",
    "standard/Utility/DataStorage",
    "standard/Math/Numbers/Vector3",
-   "text!x_ite.css",
-   "x_ite/Browser/VERSION",
    "locale/gettext",
 ],
 function ($,
@@ -39657,15 +39652,9 @@ function ($,
           VRMLParser,
           DataStorage,
           Vector3,
-          CSS,
-          VERSION,
           _)
 {
 "use strict";
-
-   CSS = CSS
-      .replace (/"assets\//g, '"' + new URL ("assets/", getScriptURL ()) .href)
-      .replace (/content: "X_ITE Browser";/g, "content:\"X_ITE Browser v" + VERSION + "\";");
 
    const WEBGL_LATEST_VERSION = 2;
 
@@ -39695,9 +39684,6 @@ function ($,
 
    function X3DCoreContext (element, shadow)
    {
-      this [_number]  = ++ browserNumber;
-      this [_element] = element;
-
       // Get canvas & context.
 
       const
@@ -39707,23 +39693,13 @@ function ($,
          progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
          surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
 
-      if (shadow)
-      {
-         this [_shadow] = shadow .append ($("<style></style>") .text (CSS));
-
-         setTimeout (function () { shadow .append (browser); } .bind (this), 1);
-      }
-      else
-      {
-         this [_shadow] = this [_element];
-
-         browser .prependTo (this [_element]);
-      }
-
       $("<div></div>") .addClass ("x_ite-private-x_ite") .html ("X_ITE<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
       $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
       $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress);
 
+      this [_number]       = ++ browserNumber;
+      this [_element]      = element;
+      this [_shadow]       = shadow ? shadow .append (browser) : this [_element] .prepend (browser);
       this [_splashScreen] = splashScreen;
       this [_surface]      = surface;
       this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
@@ -39739,7 +39715,7 @@ function ($,
       this [_notification]        = new Notification        (this .getPrivateScene ());
       this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
 
-      const inch = $("<div></div>") .css ("height", "10in") .css ("display", "none") .appendTo (element);
+      const inch = $("<div></div>") .hide () .css ("height", "10in") .appendTo (element);
       this [_pixelPerPoint] = inch .height () / 720;
       inch .remove ();
 
@@ -120185,7 +120161,12 @@ function ($,
 
       $(function ()
       {
-         $.map ($("X3DCanvas"), createBrowserFromElement);
+         const elements = $("X3DCanvas");
+
+         if (elements .length)
+            console .warn ("Use of <X3DCanvas> element is depreciated, use <x3d-canvas> element.");
+
+         $.map (elements, createBrowserFromElement);
       });
    }
 
@@ -120419,7 +120400,15 @@ const getScriptURL = (function ()
       {
          super ();
 
-         const shadow = this .attachShadow ({ mode: "open" });
+         const
+            shadow = this .attachShadow ({ mode: "open" }),
+            link   = document .createElement ("link");
+
+         link .setAttribute ("rel", "stylesheet");
+         link .setAttribute ("type", "text/css");
+         link .setAttribute ("href", new URL ("x_ite.css", getScriptURL ()) .href);
+
+         shadow .appendChild (link);
 
          require ([ "x_ite/X3D" ], function (X3D)
          {

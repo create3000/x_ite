@@ -189,7 +189,12 @@ function ($,
 
       $(function ()
       {
-         $.map ($("X3DCanvas"), createBrowserFromElement);
+         const elements = $("X3DCanvas");
+
+         if (elements .length)
+            console .warn ("Use of <X3DCanvas> element is depreciated, use <x3d-canvas> element.");
+
+         $.map (elements, createBrowserFromElement);
       });
    }
 
