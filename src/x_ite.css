@@ -301,6 +301,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .context-menu-item {
+  cursor: pointer;
   position: relative;
   background-color: #222;
   margin: 0;
@@ -318,13 +319,19 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .x_ite-private-menu-title {
+  cursor: default;
   font-weight: bold;
   padding: 4px 32px 4px 8px;
+}
+
+.x_ite-private-menu label {
+  cursor: pointer;
 }
 
 .x_ite-private-menu .context-menu-item > label > input,
 .x_ite-private-menu .context-menu-item > label > textarea {
   all: revert;
+  cursor: pointer;
   -webkit-user-select: text;
      -moz-user-select: text;
       -ms-user-select: text;
@@ -342,7 +349,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .context-menu-item:hover:not(.x_ite-private-menu-title) {
-  cursor: pointer;
   background-color: #444;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
