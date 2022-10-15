@@ -140,7 +140,7 @@ const getScriptURL = (function ()
       {
          super ();
 
-         const shadow = this .attachShadow ({ mode: "closed" });
+         const shadow = this .attachShadow ({ mode: "open" });
 
          require ([ "x_ite/X3D" ], function (X3D)
          {
