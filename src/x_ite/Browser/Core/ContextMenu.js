@@ -682,7 +682,10 @@ function ($,
                         input .attr ("checked", "checked");
 
                      for (const key in item .events)
-                        input .on (key, item .events [key]);
+                     {
+                        if (typeof item .events [key] === "function")
+                           input .on (key, item .events [key]);
+                     }
 
                      li .addClass ("context-menu-input");
 
