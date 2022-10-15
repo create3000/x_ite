@@ -117,7 +117,7 @@ function ($,
          progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
          surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
 
-      $("<div></div>") .addClass ("x_ite-private-x_ite") .html ("X_ITE<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
+      $("<div></div>") .addClass ("x_ite-private-x_ite") .html (this .getName () + "<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
       $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
       $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress);
 
