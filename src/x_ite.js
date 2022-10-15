@@ -160,6 +160,8 @@ const getScriptURL = (function ()
 
    customElements .define ("x3d-canvas", X3DCanvas);
 
+   X_ITE .X3DCanvas = X3DCanvas;
+
    // Assign functions to X_ITE and init.
 
    require (["x_ite/X3D"], function (X3D)
