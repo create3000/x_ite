@@ -28586,8 +28586,12 @@ function ($,
             return;
 
          const menu = {
-            className: "x_ite-private-menu x_ite-private-menu-title",
+            className: "x_ite-private-menu",
             items: {
+               "title": {
+                  name: "X_ITE Browser v" + browser .getVersion (),
+                  className: "x_ite-private-menu-title",
+               },
                "separator0": "--------",
                "viewpoints": {
                   name: _("Viewpoints"),
@@ -29144,10 +29148,9 @@ function ($,
                         $("<span></span>") .text (item .name) .appendTo (li);
 
                      if (typeof item .callback === "function")
-                        li .on ("click", item .callback);
-
-                     if (typeof item .callback === "function")
-                        li .on ("click", hide);
+                     {
+                        li .on ("click", item .callback) .on ("click", hide);
+                     }
 
                      break;
                   }
@@ -39715,9 +39718,9 @@ function ($,
       this [_notification]        = new Notification        (this .getPrivateScene ());
       this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
 
-      const inch = $("<div></div>") .hide () .css ("height", "10in") .appendTo (element);
-      this [_pixelPerPoint] = inch .height () / 720;
-      inch .remove ();
+      const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo (element);
+      this [_pixelPerPoint] = inches .height () / 720;
+      inches .remove ();
 
       $(".x_ite-console") .empty ();
 

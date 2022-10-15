@@ -243,12 +243,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: fixed;
   inset: 0;
 }
-ul.x_ite-private-menu.x_ite-private-menu-title:before {
-  content: "X_ITE Browser v6.0.0";
-  display: block;
-  padding: 4px 32px 4px 8px;
-  font-weight: bold;
-}
 .x_ite-private-menu .context-menu-selected {
   font-weight: bold;
   font-style: italic;
@@ -288,6 +282,10 @@ ul.x_ite-private-menu.x_ite-private-menu-title:before {
   letter-spacing: unset;
   text-align: left;
 }
+.x_ite-private-menu .x_ite-private-menu-title {
+  font-weight: bold;
+  padding: 4px 32px 4px 8px;
+}
 .x_ite-private-menu .context-menu-item > label > input,
 .x_ite-private-menu .context-menu-item > label > textarea {
   all: revert;
@@ -304,7 +302,7 @@ ul.x_ite-private-menu.x_ite-private-menu-title:before {
   -webkit-appearance: radio;
   -moz-appearance: radio;
 }
-.x_ite-private-menu .context-menu-item:hover {
+.x_ite-private-menu .context-menu-item:hover:not(.x_ite-private-menu-title) {
   cursor: pointer;
   background-color: #444;
   border-top: 1px solid #eee;

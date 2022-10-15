@@ -97,12 +97,6 @@ sub dist {
 	print JS "/* X_ITE X3D v$VERSION-$REVISION\n * See LICENSE.txt for a detailed listing of used licences. */\n", $js_min;
 	close JS;
 
-	$css = `cat dist/x_ite.css`;
-	open CSS, ">", "dist/x_ite.css";
-	$css =~ s/content: "X_ITE Browser";/content: "X_ITE Browser v$VERSION";/;
-	print CSS $css;
-	close CSS;
-
 	say "Copying files";
 	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/assets/fonts",    "dist/assets/";
 	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/assets/hatching", "dist/assets/";

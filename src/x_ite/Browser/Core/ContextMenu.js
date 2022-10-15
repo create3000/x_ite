@@ -133,8 +133,12 @@ function ($,
             return;
 
          const menu = {
-            className: "x_ite-private-menu x_ite-private-menu-title",
+            className: "x_ite-private-menu",
             items: {
+               "title": {
+                  name: "X_ITE Browser v" + browser .getVersion (),
+                  className: "x_ite-private-menu-title",
+               },
                "separator0": "--------",
                "viewpoints": {
                   name: _("Viewpoints"),
@@ -691,10 +695,7 @@ function ($,
                         $("<span></span>") .text (item .name) .appendTo (li);
 
                      if (typeof item .callback === "function")
-                        li .on ("click", item .callback);
-
-                     if (typeof item .callback === "function")
-                        li .on ("click", hide);
+                        li .on ("click", item .callback) .on ("click", hide);
 
                      break;
                   }
