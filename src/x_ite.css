@@ -370,7 +370,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding-top: 0;
   padding-bottom: 0;
   border-top: 0;
-  border-bottom: 1px solid #777;
+  border-bottom: 1px solid rgb(138, 138, 138);
 }
 
 .x_ite-private-menu .context-menu-separator + .context-menu-separator {

@@ -50,11 +50,13 @@
 define ([
    "jquery",
    "x_ite/Base/X3DBaseNode",
+   "standard/Math/Algorithm",
    "locale/gettext",
    "lib/jquery.fullscreen-min",
 ],
 function ($,
           X3DBaseNode,
+          Algorithm,
           _)
 {
 "use strict";
@@ -95,7 +97,7 @@ function ($,
             animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
             events:
             {
-               show: function ()
+               show: function (menu)
                {
                   this .active = true;
                }
@@ -638,7 +640,7 @@ function ($,
          // Show
 
          if (typeof options .events .show === "function")
-            options .events .show ();
+            options .events .show (ul);
 
          return false;
       },
