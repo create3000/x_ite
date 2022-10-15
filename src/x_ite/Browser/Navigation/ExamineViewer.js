@@ -173,9 +173,6 @@ function ($,
       },
       mousedown: function (event)
       {
-         if (this .getBrowser () .getContextMenu () .getActive ())
-            return;
-
          if (this .button >= 0)
             return;
 
@@ -449,21 +446,24 @@ function ($,
                // End rotate (button 0).
 
                event .button = 0;
+               event .pageX  = this .touch1 .x;
+               event .pageY  = this .touch1 .y;
 
                this .mouseup (event);
 
                // Start dblclick (button 0).
 
-               if (this .getBrowser () .getCurrentTime () - this .tapStart < this .dblTapInterval)
+               if (this .tapedTwice)
                {
-                  event .button = 0;
-                  event .pageX  = this .touch1 .x;
-                  event .pageY  = this .touch1 .y;
-
                   this .dblclick (event);
                }
+               else
+               {
+                  this .tapedTwice = true;
 
-               this .tapStart = this .getBrowser () .getCurrentTime ();
+                  setTimeout (function () { this .tapedTwice = false; } .bind (this), 300);
+               }
+
                break;
             }
             case 1:

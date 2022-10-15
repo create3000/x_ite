@@ -159,9 +159,6 @@ function ($,
       },
       mousedown: function (event)
       {
-         if (this .getBrowser () .getContextMenu () .getActive ())
-            return;
-
          if (this .button >= 0)
             return;
 

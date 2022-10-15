@@ -146,27 +146,11 @@ function ($,
                   name: _("Viewpoints"),
                   className: "context-menu-icon x_ite-private-icon-viewpoint",
                   items: this .getViewpoints (),
-                  callback: function (viewpoint)
-                  {
-                     if (! viewpoint)
-                        return;
-
-                     browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
-                     browser .getSurface () .focus ();
-                  }
-                  .bind (this, currentViewpoint),
                },
                "separator1": "--------",
                "viewer": {
                   name: _(this .getViewerName (currentViewer)),
                   className: "context-menu-icon x_ite-private-icon-" + currentViewer .toLowerCase () + "-viewer",
-                  callback: function (viewer)
-                  {
-                     browser ._viewer = viewer;
-                     browser .getNotification () ._string = _(this .getViewerName (viewer));
-                     browser .getSurface () .focus ();
-                  }
-                  .bind (this, currentViewer),
                },
                "available-viewers": {
                   name: _("Available Viewers"),
@@ -538,8 +522,12 @@ function ($,
       },
       initializeContextMenu: function (options)
       {
-         options .element .on ("contextmenu", this .showContextMenu .bind (this, options));
+         this .triggerContextMenu = this .showContextMenu .bind (this, options);
+
+         options .element .on ("contextmenu", this .triggerContextMenu);
       },
+      triggerContextMenu: function (event)
+      { },
       showContextMenu: function (options, event)
       {
          const

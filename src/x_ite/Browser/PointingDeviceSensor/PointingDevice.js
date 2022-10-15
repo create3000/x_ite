@@ -56,6 +56,8 @@ function ($,
 {
 "use strict";
 
+   const CONTEXT_MENU_TIME = 1200;
+
    function PointingDevice (executionContext)
    {
       X3DBaseNode .call (this, executionContext);
@@ -95,9 +97,6 @@ function ($,
          const browser = this .getBrowser ();
 
          browser .getElement () .focus ();
-
-         if (browser .getContextMenu () .getActive ())
-            return;
 
          if (browser .getShiftKey () && browser .getControlKey ())
             return;
@@ -190,6 +189,18 @@ function ($,
                event .pageY  = touches [0] .pageY;
 
                this .mousedown (event);
+
+               // Show context menu on long tab.
+
+               const nearestHit = this .getBrowser () .getNearestHit ();
+
+               if (! nearestHit || nearestHit .sensors .size === 0)
+               {
+                  this .touchX       = event .pageX;
+                  this .touchY       = event .pageY;
+                  this .touchTimeout = setTimeout (this .showContextMenu .bind (this, event), CONTEXT_MENU_TIME);
+               }
+
                break;
             }
             case 2:
@@ -202,7 +213,10 @@ function ($,
       touchend: function (event)
       {
          event .button = 0;
+
          this .mouseup (event);
+
+         clearTimeout (this .touchTimeout);
       },
       touchmove: function (event)
       {
@@ -219,6 +233,10 @@ function ($,
                event .pageY  = touches [0] .pageY;
 
                this .mousemove (event);
+
+               if (this .touchX - event .pageX > 5 || this .touchY - event .pageY > 5)
+                  clearTimeout (this .touchTimeout);
+
                break;
             }
          }
@@ -233,6 +251,7 @@ function ($,
             {
                this .isOver = true;
                this .cursor = browser .getCursor ();
+
                browser .setCursor ("HAND");
             }
          }
@@ -241,9 +260,12 @@ function ($,
             if (this .isOver)
             {
                this .isOver = false;
+
                browser .setCursor (this .cursor);
             }
          }
+
+         console .log (this .isOver);
       },
       onmouseout: function (event)
       {
@@ -258,6 +280,10 @@ function ($,
          this .getBrowser () .finished () .removeInterest ("onverifymotion", this);
 
          this .onmotion (x, y);
+      },
+      showContextMenu: function (event)
+      {
+         this .getBrowser () .getContextMenu () .triggerContextMenu (event);
       },
    });
 
