@@ -546,8 +546,7 @@ function ($,
             menu  = options .build (event),
             level = 1;
 
-         if (!menu)
-            return;
+         if (! menu) return;
 
          // Layer
 
@@ -567,6 +566,8 @@ function ($,
                if (typeof options .events .hide === "function")
                   options .events .hide ();
             });
+
+            return false;
          };
 
          // Menu
