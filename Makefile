@@ -12,7 +12,8 @@ all:
 	perl -pi -e 's/return (?:true|false);/return false;/sg' src/x_ite/DEBUG.js
 
 	node_modules/requirejs/bin/r.js -o build/x_ite.build.js
-	perl -pi -e "s|define\\s*\\('text/text!assets/shaders/webgl.*?\\n||sg;" dist/x_ite.js
+	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.js
+	perl -pi -e "s|define\\s*\\('text!assets/shaders/webgl.*?\\n||sg;" dist/x_ite.js
 	perl -pi -e "s|\"X_ITE.X3D\"|\"X_ITE.X3D-"$(X_ITE_VERSION)"\"|" dist/x_ite.js
 	node_modules/terser/bin/terser --mangle --compress -- dist/x_ite.js > dist/x_ite.min.js
 	node_modules/requirejs/bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css
@@ -36,9 +37,6 @@ all:
 	$(call generate_component,texturing-3d,$(X_ITE_VERSION),--compress)
 	$(call generate_component,volume-rendering,$(X_ITE_VERSION),--compress)
 	$(call generate_component,x_ite,$(X_ITE_VERSION),--compress)
-
-	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.js
-	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.min.js
 
 	cp src/x_ite.html x_ite.min.html
 	perl -pi -e 's|\s*<script type="text/javascript" src="\.\./node_modules/requirejs/require.js"></script>\n||sg' x_ite.min.html

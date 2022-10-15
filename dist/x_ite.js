@@ -39693,7 +39693,7 @@ function ($,
 
    let browserNumber = 0;
 
-   function X3DCoreContext (element)
+   function X3DCoreContext (element, shadow)
    {
       this [_number]  = ++ browserNumber;
       this [_element] = element;
@@ -39707,12 +39707,11 @@ function ($,
          progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
          surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
 
-      if (this [_element] .prop ("shadowRoot"))
+      if (shadow)
       {
-         this [_shadow] = $(this [_element] .prop ("shadowRoot"))
-            .append ($("<style></style>") .text (CSS));
+         this [_shadow] = shadow .append ($("<style></style>") .text (CSS));
 
-         setTimeout (function () { this [_shadow] .append (browser); } .bind (this), 1);
+         setTimeout (function () { shadow .append (browser); } .bind (this), 1);
       }
       else
       {
@@ -96637,11 +96636,11 @@ function ($,
 
    const contexts = [ ];
 
-   function X3DBrowserContext (element)
+   function X3DBrowserContext (element, shadow)
    {
       X3DBaseNode                    .call (this, this);
       X3DRoutingContext              .call (this);
-      X3DCoreContext                 .call (this, element);
+      X3DCoreContext                 .call (this, element, shadow);
       X3DScriptingContext            .call (this);
       X3DNetworkingContext           .call (this);
       X3DShadersContext              .call (this);
@@ -96884,10 +96883,18 @@ function ($,
 
          contexts .push (context);
 
-         Object .assign (X3DBrowserContext .prototype, context .prototype);
+         for (const key of Object .keys (context .prototype) .concat (Object .getOwnPropertySymbols (context .prototype)))
+         {
+            if (X3DBrowserContext .prototype .hasOwnProperty (key))
+               continue;
 
-         for (const key of Reflect .ownKeys (context .prototype))
-            Object .defineProperty (X3DBrowserContext .prototype, key, { enumerable: false });
+            Object .defineProperty (X3DBrowserContext .prototype, key,
+            {
+               value: context .prototype [key],
+               enumerable: false,
+               writable: true,
+            });
+         }
 
          $("x3d-canvas, X3DCanvas") .each (function (i, canvas)
          {
@@ -119008,9 +119015,9 @@ function ($,
       _loader           = Symbol (),
       _browserCallbacks = Symbol ();
 
-   function X3DBrowser (element)
+   function X3DBrowser (element, shadow)
    {
-      X3DBrowserContext .call (this, element);
+      X3DBrowserContext .call (this, element, shadow);
 
       this [_browserCallbacks] = new Map ();
 
@@ -120120,9 +120127,7 @@ function ($,
       if (url instanceof Fields .MFString)
           element .attr ("url", url .toString ())
 
-      createBrowserFromElement (element);
-
-      return element [0];
+      return element .get (0);
    }
 
    function getBrowser (element)
@@ -120130,7 +120135,7 @@ function ($,
       return $(element || "x3d-canvas, X3DCanvas") .data ("browser");
    }
 
-   function createBrowserFromElement (element)
+   function createBrowserFromElement (element, shadow)
    {
       try
       {
@@ -120139,13 +120144,16 @@ function ($,
          if (element .find (".x_ite-private-browser") .length)
             return;
 
-         const browser = new X3DBrowser (element);
+         if (shadow)
+            shadow = $(shadow);
+
+         const browser = new X3DBrowser (element, shadow);
 
          element .data ("browser", browser);
 
          browser .setup ();
 
-         setTimeout (function () { callbacks .resolve (); }, 0);
+         setTimeout (function () { callbacks .resolve (); }, 1);
 
          return browser;
       }
@@ -120400,7 +120408,7 @@ const getScriptURL = (function ()
    if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
       __global_module__ .exports = X_ITE;
 
-   // Define element.
+   // Define custom element.
 
    // IE fix.
    document .createElement ("X3DCanvas");
@@ -120411,11 +120419,11 @@ const getScriptURL = (function ()
       {
          super ();
 
-         this .attachShadow ({ mode: "open" });
+         const shadow = this .attachShadow ({ mode: "open" });
 
          require ([ "x_ite/X3D" ], function (X3D)
          {
-            X3D .createBrowserFromElement (this);
+            X3D .createBrowserFromElement (this, shadow);
          }
          .bind (this));
       }
