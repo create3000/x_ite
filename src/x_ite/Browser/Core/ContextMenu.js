@@ -707,7 +707,7 @@ function ($,
             }
          }
 
-         if (item .items)
+         if (typeof item .items === "object")
          {
             const ul = $("<ul></ul>")
                .addClass ("context-menu-list")
