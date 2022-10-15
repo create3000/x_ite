@@ -585,24 +585,20 @@ function ($,
 
          ul [options .animation .show] (options .animation .duration);
 
-         if (ul .offset () .left - $(document) .scrollLeft () + ul .width () > $(window) .width ())
-            ul .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .width ()) });
+         if (ul .offset () .left - $(document) .scrollLeft () + ul .outerWidth () > $(window) .width ())
+            ul .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .outerWidth ()) });
 
-         if (ul .offset () .top - $(document) .scrollTop () + ul .height () > $(window) .height ())
-            ul .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .height ()) });
+         if (ul .offset () .top - $(document) .scrollTop () + ul .outerHeight () > $(window) .height ())
+            ul .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .outerHeight ()) });
 
          // If the submenu is higher than vh, add scrollbars.
 
          ul .find ("ul") .each (function (i, e)
          {
-            if ($(e) .height () > $(window) .height ())
-            {
-               $(e) .css ({
-                  "overflow-y": "scroll",
-                  "max-height": "100vh",
-                  "width": $(e) .width (),
-               });
-            }
+            $(e) .css ("width",  $(e) .outerWidth ());
+
+            if ($(e) .outerHeight () >= $(window) .height ())
+               $(e) .css ({ "max-height": "100vh", "overflow-y": "scroll" });
          });
 
          // Display submenus on the left or right side.
@@ -624,12 +620,12 @@ function ($,
                t = $(event .target),
                e = t .children ("ul");
 
-            if (!e .length)
+            if (! e .length)
                return;
 
             e .css ("top", "");
 
-            const bottom = e .offset () .top + e .height () - $(window) .scrollTop () - $(window) .height ();
+            const bottom = e .offset () .top + e .outerHeight () - $(window) .scrollTop () - $(window) .height ();
 
             if (bottom > 0)
                e .offset ({ "top": e .offset () .top - bottom });
