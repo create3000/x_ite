@@ -234,7 +234,7 @@ function ($,
 
                this .mousemove (event);
 
-               if (this .touchX - event .pageX > 5 || this .touchY - event .pageY > 5)
+               if (Math .abs (this .touchX - event .pageX) > 5 || Math .abs (this .touchY - event .pageY) > 5)
                   clearTimeout (this .touchTimeout);
 
                break;
