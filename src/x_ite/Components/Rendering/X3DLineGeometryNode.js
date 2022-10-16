@@ -191,7 +191,8 @@ function (X3DGeometryNode,
                      projectionMatrix = context .renderer .getProjectionMatrix () .get (),
                      texCoordArray    = this .getTexCoords () .getValue (),
                      vertices         = this .getVertices (),
-                     numVertices      = vertices .length;
+                     numVertices      = vertices .length,
+                     gl1              = gl .getVersion () === 1;
 
                   modelViewProjectionMatrix .assign (context .modelViewMatrix) .multRight (projectionMatrix);
 
@@ -205,9 +206,13 @@ function (X3DGeometryNode,
                      ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
                      ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
 
-                     texCoordArray [i]     = projectedPoint0 .x;
-                     texCoordArray [i + 1] = projectedPoint0 .y;
-                     texCoordArray [i + 2] = lengthSoFar;
+                     if (gl1)
+                     {
+                        texCoordArray [i]     = projectedPoint0 .x;
+                        texCoordArray [i + 1] = projectedPoint0 .y;
+                        texCoordArray [i + 2] = lengthSoFar;
+                     }
+
                      texCoordArray [i + 4] = projectedPoint0 .x;
                      texCoordArray [i + 5] = projectedPoint0 .y;
                      texCoordArray [i + 6] = lengthSoFar;
