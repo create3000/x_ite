@@ -585,6 +585,7 @@ function ($,
                e .css ({ "max-height": "100vh", "overflow-y": "scroll" });
 
                // Prevent scrolling of parent element.
+               // TODO: not on mobiles.
 
                e .on ("mousewheel", function (event, d)
                {
