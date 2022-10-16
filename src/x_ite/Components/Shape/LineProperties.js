@@ -122,21 +122,15 @@ function (Fields,
       {
          this .applied = this ._applied .getValue ();
       },
-      set_linetype__: (function ()
+      set_linetype__: function ()
       {
-         /////////////// [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-         const mapping = [1, 1, 2, 3, 4, 5, 1, 1, 1, 9, 10, 11, 12,  1,  1,  1, 1];
+         let linetype = this ._linetype .getValue ();
 
-         return function ()
-         {
-            let linetype = this ._linetype .getValue ();
+         if (linetype < 1 || linetype > 16)
+            linetype = 1;
 
-            if (linetype < 1 || linetype > 16)
-               linetype = 1;
-
-            this .linetype = mapping [linetype];
-         };
-      })(),
+         this .linetype = linetype;
+      },
       set_linewidthScaleFactor__: function ()
       {
          const
