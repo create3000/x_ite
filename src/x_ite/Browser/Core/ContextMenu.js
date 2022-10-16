@@ -566,8 +566,8 @@ function ($,
          if (ul .offset () .top - $(document) .scrollTop () + ul .outerHeight () > $(window) .height ())
             ul .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .outerHeight ()) });
 
-         // Display submenus on the left or right side..
-         // If the submenu is higher than vh, add scrollbars.;
+         // Display submenus on the left or right side.
+         // If the submenu is higher than vh, add scrollbars.
 
          ul .find ("ul") .each (function (i, e)
          {
@@ -615,12 +615,12 @@ function ($,
             if (! e .length)
                return;
 
+            e .css ("top", "");
+
             const bottom = e .offset () .top + e .outerHeight () - $(window) .scrollTop () - $(window) .height ();
 
             if (bottom > 0)
                e .offset ({ "top": e .offset () .top - bottom });
-            else
-               e .css ("top", "");
          });
 
          // Layer
