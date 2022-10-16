@@ -138,7 +138,7 @@ function (Fields,
             gl      = browser .getContext ();
 
          this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ());
-         this .mustTransformLines   = gl .getVersion () >= 2 && this .linewidthScaleFactor > 1 && gl .lineWidth === Function .prototype;
+         this .mustTransformLines   = gl .getVersion () >= 2 && gl .lineWidth === Function .prototype && this .linewidthScaleFactor > 1;
       },
       setShaderUniforms: function (gl, shaderObject)
       {
