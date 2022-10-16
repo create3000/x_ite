@@ -585,13 +585,15 @@ function ($,
             ul .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .outerHeight ()) });
 
          // Display submenus on the left or right side..
-         // If the submenu is higher than vh, add scrollbars.
-
-         const position = $(document) .width () - event .pageX < 370 ? "right" : "left";
+         // If the submenu is higher than vh, add scrollbars.;
 
          ul .find ("ul") .each (function (i, e)
          {
             e = $(e);
+
+            const
+               width    = e .outerWidth () + ul .outerWidth (),
+               position = ul .offset () .left - $(document) .scrollLeft () + width > $(window) .width () ? "right" : "left";
 
             e .css ("width", e .outerWidth ());
             e .css (position, e .parent () .closest ("ul") .width ());
@@ -602,23 +604,20 @@ function ($,
 
          // If the submenu is higher than vh, reposition it.
 
-         ul .find ("li") .on ("mouseenter", function (event)
+         ul .find ("li") .on ("mouseenter touchstart", function (event)
          {
             event .stopImmediatePropagation ();
 
             const
-               t = $(event .target),
+               t = $(event .target) .closest ("li"),
                e = t .children ("ul");
 
             if (! e .length)
                return;
 
-            e .css ("top", "");
-
             const bottom = e .offset () .top + e .outerHeight () - $(window) .scrollTop () - $(window) .height ();
 
-            if (bottom > 0)
-               e .offset ({ "top": e .offset () .top - bottom });
+            e .offset ({ "top": bottom > 0 ? e .offset () .top - bottom : "" });
          });
 
          // Layer
