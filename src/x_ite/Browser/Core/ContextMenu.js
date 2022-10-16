@@ -94,19 +94,6 @@ function ($,
             appendTo: browser .getShadow (),
             build: this .build .bind (this),
             animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
-            events:
-            {
-               show: function (menu)
-               {
-                  this .active = true;
-               }
-               .bind (this),
-               hide: function ()
-               {
-                  this .active = false;
-               }
-               .bind (this),
-            },
          });
       },
       getUserMenu: function ()
@@ -116,10 +103,6 @@ function ($,
       setUserMenu: function (userMenu)
       {
          this .userMenu = userMenu;
-      },
-      getActive: function ()
-      {
-         return this .active;
       },
       build: function (event)
       {
@@ -550,7 +533,7 @@ function ($,
             {
                ul .remove ();
 
-               if (typeof options .events .hide === "function")
+               if (options .events && typeof options .events .hide === "function")
                   options .events .hide ();
             });
 
@@ -634,7 +617,10 @@ function ($,
 
             const bottom = e .offset () .top + e .outerHeight () - $(window) .scrollTop () - $(window) .height ();
 
-            e .offset ({ "top": bottom > 0 ? e .offset () .top - bottom : "" });
+            if (bottom > 0)
+               e .offset ({ "top": e .offset () .top - bottom });
+            else
+               e .css ("top", "");
          });
 
          // Layer
@@ -644,7 +630,7 @@ function ($,
 
          // Show
 
-         if (typeof options .events .show === "function")
+         if (options .events && typeof options .events .show === "function")
             options .events .show (ul);
 
          return false;
