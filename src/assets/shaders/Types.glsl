@@ -45,6 +45,7 @@ struct x3d_LinePropertiesParameters
 {
    bool          applied;
    mediump float linewidthScaleFactor;
+   mediump float lineStippleScale;
    sampler2D     linetype;
 };
 

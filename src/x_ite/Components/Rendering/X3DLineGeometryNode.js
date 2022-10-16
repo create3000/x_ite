@@ -205,11 +205,14 @@ function (X3DGeometryNode,
                      ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
                      ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
 
-                     texCoordArray [i + 3] = lengthSoFar;
+                     texCoordArray [i]     = projectedPoint0 .x;
+                     texCoordArray [i + 1] = projectedPoint0 .y;
+                     texCoordArray [i + 2] = lengthSoFar;
+                     texCoordArray [i + 4] = projectedPoint0 .x;
+                     texCoordArray [i + 5] = projectedPoint0 .y;
+                     texCoordArray [i + 6] = lengthSoFar;
 
                      lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs () * lineStippleScale;
-
-                     texCoordArray [i + 7] = lengthSoFar;
                   }
 
                   gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);

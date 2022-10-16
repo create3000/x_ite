@@ -13,7 +13,8 @@ attribute vec4  x3d_TexCoord0;
 attribute vec4  x3d_Color;
 attribute vec4  x3d_Vertex;
 
-varying float lengthSoFar; // stipple support
+varying vec2  startPoint;  // in px, stipple support
+varying float lengthSoFar; // in px, stipple support
 varying float fogDepth;    // fog depth
 varying vec4  color;       // color
 varying vec3  vertex;      // point on geometry
@@ -27,7 +28,8 @@ main ()
 {
    vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
-   lengthSoFar = x3d_TexCoord0 .a;
+   startPoint  = x3d_TexCoord0 .xy;
+   lengthSoFar = x3d_TexCoord0 .z;
    fogDepth    = x3d_FogDepth;
    vertex      = position .xyz;
 

@@ -10,7 +10,8 @@ uniform float x3d_AlphaCutoff;
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
 uniform ivec4 x3d_Viewport;
 
-varying float lengthSoFar; // stipple support
+varying vec2  startPoint;  // in px, stipple support
+varying float lengthSoFar; // in px, stipple support
 varying float fogDepth;    // fog depth
 varying vec4  color;       // color
 varying vec3  vertex;      // point on geometry
@@ -29,7 +30,8 @@ stipple ()
 {
    if (x3d_LineProperties .applied)
    {
-      float color = texture2D (x3d_LineProperties .linetype, vec2 (lengthSoFar, 0.5)) .a;
+      float s     = lengthSoFar + length (gl_FragCoord .xy - startPoint) * x3d_LineProperties .lineStippleScale;
+      float color = texture2D (x3d_LineProperties .linetype, vec2 (s, 0.5)) .a;
 
       if (color != 1.0)
          discard;

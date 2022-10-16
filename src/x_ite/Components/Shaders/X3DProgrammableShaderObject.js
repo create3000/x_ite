@@ -174,6 +174,7 @@ function (X3DCast,
 
          this .x3d_LinePropertiesApplied              = gl .getUniformLocation (program, "x3d_LineProperties.applied");
          this .x3d_LinePropertiesLinewidthScaleFactor = this .getUniformLocation (gl, program, "x3d_LineProperties.linewidthScaleFactor", "x3d_LinewidthScaleFactor");
+         this .x3d_LineStippleScale                   = gl .getUniformLocation (program, "x3d_LineProperties.lineStippleScale");
          this .x3d_LinePropertiesLinetype             = gl .getUniformLocation (program, "x3d_LineProperties.linetype");
 
          this .x3d_FillPropertiesFilled     = gl .getUniformLocation (program, "x3d_FillProperties.filled");
@@ -331,6 +332,8 @@ function (X3DCast,
          /*
           * Fill uniforms with defaults.
           */
+
+         gl .uniform1f (this .x3d_LineStippleScale, browser .getLineStippleScale ());
 
          // Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 

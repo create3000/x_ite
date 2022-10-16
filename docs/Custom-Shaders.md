@@ -600,6 +600,7 @@ A ComposedShader defines a number of special variables for the various shader st
 |-----------|----------------------|
 | bool      | applied              |
 | float     | linewidthScaleFactor |
+| float     | lineStippleScale     |
 | sampler2D | linetype             |
 
 ### Uniform Struct x3d\_FillPropertiesParameters
