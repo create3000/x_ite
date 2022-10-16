@@ -159,7 +159,8 @@ function (DEBUG)
 
          if (aliasedLineWidthRange [0] === 1 && aliasedLineWidthRange [1] === 1)
          {
-            gl .lineWidth = Function .prototype;
+            gl .lineWidth            = Function .prototype;
+            gl .MUST_TRANSFORM_LINES = gl .getVersion () >= 2;
 
             if (DEBUG)
                console .info ("Lines are transformed if necessary to obtain thick lines.");
