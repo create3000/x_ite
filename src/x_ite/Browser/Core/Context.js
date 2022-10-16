@@ -165,6 +165,10 @@ function (DEBUG)
             if (DEBUG)
                console .info ("Lines are transformed if necessary to obtain thick lines.");
          }
+         else
+         {
+            gl .MUST_TRANSFORM_LINES = false;
+         }
 
          // Load extensions.
 
