@@ -28,7 +28,7 @@ stipple ()
 {
    if (x3d_LineProperties .applied)
    {
-      float s     = lengthSoFar + length (gl_FragCoord .xy - startPoint) * x3d_LineProperties .lineStippleScale;
+      float s     = (lengthSoFar + length (gl_FragCoord .xy - startPoint)) * x3d_LineProperties .lineStippleScale;
       float color = texture (x3d_LineProperties .linetype, vec2 (s, 0.5)) .a;
 
       if (color != 1.0)

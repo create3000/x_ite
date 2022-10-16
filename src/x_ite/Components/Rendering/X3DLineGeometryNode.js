@@ -190,8 +190,7 @@ function (X3DGeometryNode,
                      viewport         = context .renderer .getViewVolume () .getViewport (),
                      projectionMatrix = context .renderer .getProjectionMatrix () .get (),
                      texCoordArray    = this .getTexCoords () .getValue (),
-                     vertices         = this .getVertices (),
-                     lineStippleScale = context .browser .getLineStippleScale ();
+                     vertices         = this .getVertices ();
 
                   modelViewProjectionMatrix .assign (context .modelViewMatrix) .multRight (projectionMatrix);
 
@@ -212,7 +211,7 @@ function (X3DGeometryNode,
                      texCoordArray [i + 5] = projectedPoint0 .y;
                      texCoordArray [i + 6] = lengthSoFar;
 
-                     lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs () * lineStippleScale;
+                     lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs ();
                   }
 
                   gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
