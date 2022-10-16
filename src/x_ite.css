@@ -288,11 +288,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   user-select: none;
 }
 
-.x_ite-private-menu .context-menu-selected {
-  font-weight: bold;
-  font-style: italic;
-}
-
 .x_ite-private-menu.context-menu-list,
 .x_ite-private-menu .context-menu-list {
   position: absolute;
@@ -334,17 +329,15 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   user-select: none;
 }
 
-.x_ite-private-menu .context-menu-item:hover:not(.x_ite-private-menu-title) {
+.x_ite-private-menu .context-menu-item:hover:not(.context-menu-not-selectable) {
   background-color: rgba(255, 69, 58, 0.8);
 }
 
-.x_ite-private-menu .x_ite-private-menu-title {
-  cursor: default;
-  font-weight: bold;
-  padding: 4px 32px 4px 8px;
+.x_ite-private-menu .context-menu-item:hover > .context-menu-list {
+  display: block;
 }
 
-.x_ite-private-menu .context-menu-item.context-menu-separator {
+.x_ite-private-menu .context-menu-separator {
   cursor: default;
   margin: 2px 0;
   padding-top: 0;
@@ -355,10 +348,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-menu .context-menu-separator + .context-menu-separator {
   display: none !important;
-}
-
-.x_ite-private-menu .context-menu-input.context-menu-hover {
-  cursor: default;
 }
 
 .x_ite-private-menu .context-menu-submenu:after {
@@ -432,16 +421,25 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   display: none;
 }
 
-.x_ite-private-menu .context-menu-item:hover > .context-menu-list {
-  display: block;
+/* Item styles */
+
+.x_ite-private-menu .context-menu-title {
+  cursor: default;
+  font-weight: bold;
+  padding: 4px 32px 4px 8px;
 }
 
-.x_ite-private-menu .context-menu-item.context-menu-icon {
-  background-repeat: no-repeat;
-  background-position: 2px 3px;
+.x_ite-private-menu .context-menu-selected {
+  font-weight: bold;
+  font-style: italic;
 }
 
 /* Icons */
+
+.x_ite-private-menu .context-menu-icon {
+  background-repeat: no-repeat;
+  background-position: 2px 3px;
+}
 
 .x_ite-private-icon-viewpoint {
   background: url("assets/images/Viewpoint.png");

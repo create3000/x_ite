@@ -139,7 +139,7 @@ function ($,
             items: {
                "title": {
                   name: browser .getName () + " Browser v" + browser .getVersion (),
-                  className: "x_ite-private-menu-title",
+                  className: "context-menu-title context-menu-not-selectable",
                },
                "separator0": "--------",
                "viewpoints": {
@@ -695,7 +695,7 @@ function ($,
             }
          }
 
-         if (typeof item .items === "object")
+         if (typeof item .items === "object" && level < 3)
          {
             const ul = $("<ul></ul>")
                .addClass ("context-menu-list")
