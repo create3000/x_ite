@@ -50,13 +50,12 @@
 define ([
    "jquery",
    "x_ite/Base/X3DBaseNode",
-   "standard/Math/Algorithm",
    "locale/gettext",
    "lib/jquery.fullscreen-min",
+   "jquery-mousewheel",
 ],
 function ($,
           X3DBaseNode,
-          Algorithm,
           _)
 {
 "use strict";
@@ -599,7 +598,25 @@ function ($,
             e .css (position, e .parent () .closest ("ul") .width ());
 
             if (e .outerHeight () >= $(window) .height ())
+            {
                e .css ({ "max-height": "100vh", "overflow-y": "scroll" });
+
+               // Prevent scrolling of parent element.
+
+               e .on ("mousewheel", function (event, d)
+               {
+                  if (d > 0)
+                  {
+                     if (e .scrollTop () <= 0)
+                        event .preventDefault ();
+                  }
+                  else if (d < 0)
+                  {
+                     if (e .scrollTop () + e .innerHeight () >= e .get (0) .scrollHeight)
+                        event .preventDefault ();
+                  }
+               });
+            }
          });
 
          // If the submenu is higher than vh, reposition it.
