@@ -178,47 +178,39 @@ function (X3DGeometryNode,
             projectedPoint0           = new Vector2 (0, 0),
             projectedPoint1           = new Vector2 (0, 0);
 
-         return function (gl, context, linePropertiesNode)
+         return function (gl, context)
          {
-            if (linePropertiesNode .getApplied ())
+            const
+               viewport         = context .renderer .getViewVolume () .getViewport (),
+               projectionMatrix = context .renderer .getProjectionMatrix () .get (),
+               texCoordArray    = this .getTexCoords () .getValue (),
+               vertices         = this .getVertices (),
+               numVertices      = vertices .length;
+
+            modelViewProjectionMatrix .assign (context .modelViewMatrix) .multRight (projectionMatrix);
+
+            let lengthSoFar = 0;
+
+            for (let i = 0; i < numVertices; i += 8)
             {
-               // Calculate length so far for line stipples.
+               point0 .set (vertices [i],     vertices [i + 1], vertices [i + 2], vertices [i + 3]);
+               point1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6], vertices [i + 7]);
 
-               if (linePropertiesNode .getLinetype () !== 1)
-               {
-                  const
-                     viewport         = context .renderer .getViewVolume () .getViewport (),
-                     projectionMatrix = context .renderer .getProjectionMatrix () .get (),
-                     texCoordArray    = this .getTexCoords () .getValue (),
-                     vertices         = this .getVertices (),
-                     numVertices      = vertices .length;
+               ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
+               ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
 
-                  modelViewProjectionMatrix .assign (context .modelViewMatrix) .multRight (projectionMatrix);
+               texCoordArray [i]     = projectedPoint1 .x;
+               texCoordArray [i + 1] = projectedPoint1 .y;
 
-                  let lengthSoFar = 0;
+               texCoordArray [i + 4] = projectedPoint0 .x;
+               texCoordArray [i + 5] = projectedPoint0 .y;
+               texCoordArray [i + 6] = lengthSoFar;
 
-                  for (let i = 0; i < numVertices; i += 8)
-                  {
-                     point0 .set (vertices [i],     vertices [i + 1], vertices [i + 2], vertices [i + 3]);
-                     point1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6], vertices [i + 7]);
-
-                     ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
-                     ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
-
-                     texCoordArray [i]     = projectedPoint1 .x;
-                     texCoordArray [i + 1] = projectedPoint1 .y;
-
-                     texCoordArray [i + 4] = projectedPoint0 .x;
-                     texCoordArray [i + 5] = projectedPoint0 .y;
-                     texCoordArray [i + 6] = lengthSoFar;
-
-                     lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs ();
-                  }
-
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
-                  gl .bufferData (gl .ARRAY_BUFFER, texCoordArray, gl .DYNAMIC_DRAW);
-               }
+               lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs ();
             }
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
+            gl .bufferData (gl .ARRAY_BUFFER, texCoordArray, gl .DYNAMIC_DRAW);
          };
       })(),
       display: (function ()
@@ -239,7 +231,8 @@ function (X3DGeometryNode,
                attribNodes        = this .attribNodes,
                attribBuffers      = this .attribBuffers;
 
-            this .updateLengthSoFar (gl, context, linePropertiesNode);
+            if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
+               this .updateLengthSoFar (gl, context);
 
             if (linePropertiesNode .getMustTransformLines ())
             {
