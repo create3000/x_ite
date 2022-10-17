@@ -9,6 +9,7 @@ uniform ivec4 x3d_Viewport;
 
 flat in float lengthSoFar; // in px, stipple support
 flat in vec2  startPoint;  // in px, stipple support
+in vec2       midPoint;    // in px, stipple support
 in float      fogDepth;    // fog depth
 in vec4       color;       // color
 in vec3       vertex;      // point on geometry
@@ -22,13 +23,15 @@ out vec4 x3d_FragColor;
 
 #pragma X3D include "include/Fog.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
+#pragma X3D include "include/Line2.glsl"
 
 void
 stipple ()
 {
    if (x3d_LineProperties .applied)
    {
-      float s     = (lengthSoFar + length (gl_FragCoord .xy - startPoint)) * x3d_LineProperties .lineStippleScale;
+      vec2  point = closest_point (line2 (startPoint, midPoint), gl_FragCoord .xy);
+      float s     = (lengthSoFar + length (point - startPoint)) * x3d_LineProperties .lineStippleScale;
       float color = texture (x3d_LineProperties .linetype, vec2 (s, 0.5)) .a;
 
       if (color != 1.0)
@@ -40,10 +43,7 @@ void
 main ()
 {
    clip ();
-
-   #ifdef X_ITE
    stipple ();
-   #endif
 
    vec4 finalColor = vec4 (0.0);
 
