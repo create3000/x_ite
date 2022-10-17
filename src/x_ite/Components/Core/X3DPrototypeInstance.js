@@ -49,14 +49,12 @@
 
 define ([
    "x_ite/Base/X3DChildObject",
-   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Execution/X3DExecutionContext",
    "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DChildObject,
-          FieldDefinitionArray,
           X3DNode,
           X3DExecutionContext,
           X3DConstants,
