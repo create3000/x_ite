@@ -32,9 +32,9 @@ stipple ()
    {
       vec2  point = closest_point (line2 (startPoint, midPoint), gl_FragCoord .xy);
       float s     = (lengthSoFar + length (point - startPoint)) * x3d_LineProperties .lineStippleScale;
-      float color = texture (x3d_LineProperties .linetype, vec2 (s, 0.5)) .a;
+      float alpha = texture (x3d_LineProperties .linetype, vec2 (s, 0.5)) .a;
 
-      if (color != 1.0)
+      if (alpha != 1.0)
          discard;
    }
 }
