@@ -102,27 +102,10 @@ function (Fields,
       {
          X3DCoordinateNode   .prototype .initialize .call (this);
          X3DGeospatialObject .prototype .initialize .call (this);
-
-         this ._point .addInterest ("set_point__", this);
-
-         this .set_point__ ();
-      },
-      set_point__: function ()
-      {
-         this .point  = this ._point .getValue ();
-         this .length = this ._point .length;
-      },
-      isEmpty: function ()
-      {
-         return this .length === 0;
-      },
-      getSize: function ()
-      {
-         return this .length;
       },
       set1Point: (function ()
       {
-         var result = new Vector3 (0, 0, 0);
+         const result = new Vector3 (0, 0, 0);
 
          return function (index, point)
          {
@@ -131,7 +114,7 @@ function (Fields,
       })(),
       get1Point: (function ()
       {
-         var p = new Vector3 (0, 0, 0);
+         const p = new Vector3 (0, 0, 0);
 
          return function (index, result)
          {
@@ -151,7 +134,7 @@ function (Fields,
       })(),
       addPoint: (function ()
       {
-         var
+         const
             p = new Vector3 (0, 0, 0),
             g = new Vector3 (0, 0, 0);
 
@@ -175,7 +158,7 @@ function (Fields,
       })(),
       addPoints: (function ()
       {
-         var
+         const
             p = new Vector3 (0, 0, 0),
             g = new Vector3 (0, 0, 0);
 
@@ -183,20 +166,20 @@ function (Fields,
          {
             const point = this .point;
 
-            for (var index = 0, length = this .length * 3; index < length; index += 3)
+            for (let index = 0, length = this .length * 3; index < length; index += 3)
             {
                this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
 
                array .push (g [0], g [1], g [2], 1);
             }
 
-            for (var index = length, length = min * 3; index < length; index += 3)
+            for (let index = this .length * 3, length = min * 3; index < length; index += 3)
                array .push (0, 0, 0, 1);
          };
       })(),
       getNormal: (function ()
       {
-         var
+         const
             point1 = new Vector3 (0, 0, 0),
             point2 = new Vector3 (0, 0, 0),
             point3 = new Vector3 (0, 0, 0);
@@ -205,7 +188,7 @@ function (Fields,
          {
             // The index[1,2,3] cannot be less than 0.
 
-            var length = this .length;
+            const length = this .length;
 
             if (index1 < length && index2 < length && index3 < length)
             {
@@ -220,7 +203,7 @@ function (Fields,
       })(),
       getQuadNormal: (function ()
       {
-         var
+         const
             point1 = new Vector3 (0, 0, 0),
             point2 = new Vector3 (0, 0, 0),
             point3 = new Vector3 (0, 0, 0),
@@ -230,7 +213,7 @@ function (Fields,
          {
             // The index[1,2,3,4] cannot be less than 0.
 
-            var length = this .length;
+            const length = this .length;
 
             if (index1 < length && index2 < length && index3 < length && index4 < length)
             {

@@ -91,27 +91,6 @@ function (Fields,
       {
          return "texCoord";
       },
-      initialize: function ()
-      {
-         X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
-
-         this ._point .addInterest ("set_point__", this);
-
-         this .set_point__ ();
-      },
-      set_point__: function ()
-      {
-         this .point  = this ._point .getValue ();
-         this .length = this ._point .length;
-      },
-      isEmpty: function ()
-      {
-         return this .length === 0;
-      },
-      getSize: function ()
-      {
-         return this .length;
-      },
       get1Point: function (index, vector)
       {
          if (index >= 0 && index < this .length)
