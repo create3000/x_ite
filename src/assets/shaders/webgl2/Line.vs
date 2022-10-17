@@ -15,8 +15,8 @@ in vec4  x3d_TexCoord0;
 in vec4  x3d_Color;
 in vec4  x3d_Vertex;
 
-flat out vec2  startPoint;  // in px, stipple support
 flat out float lengthSoFar; // in px, stipple support
+flat out vec2  startPoint;  // in px, stipple support
 out float      fogDepth;    // fog depth
 out vec4       color;       // color
 out vec3       vertex;      // point on geometry
@@ -32,8 +32,8 @@ main ()
 {
    vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
 
-   startPoint  = x3d_TexCoord0 .xy;
    lengthSoFar = x3d_TexCoord0 .z;
+   startPoint  = x3d_TexCoord0 .xy;
    fogDepth    = x3d_FogDepth;
    vertex      = position .xyz;
 
