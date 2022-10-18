@@ -65,9 +65,6 @@ function (Fields,
       this .addType (X3DConstants .X3DVertexAttributeNode);
 
       this .addChildObjects ("attribute_changed", new Fields .SFTime ());
-
-      this .value  = this ._value .getValue ();
-      this .length = this ._value .length;
    }
 
    X3DVertexAttributeNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),

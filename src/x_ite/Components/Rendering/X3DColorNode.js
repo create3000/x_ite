@@ -72,6 +72,19 @@ function (Fields,
    X3DColorNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
    {
       constructor: X3DColorNode,
+      initialize: function ()
+      {
+         X3DGeometricPropertyNode .prototype .initialize .call (this);
+
+         this ._color .addInterest ("set_color__", this);
+
+         this .set_color__ ();
+      },
+      set_color__: function ()
+      {
+         this .color  = this ._color .getValue ();
+         this .length = this ._color .length;
+      },
       setTransparent: function (value)
       {
          if (value !== this ._transparent .getValue ())

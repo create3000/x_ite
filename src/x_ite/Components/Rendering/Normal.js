@@ -69,9 +69,6 @@ function (Fields,
       X3DNormalNode .call (this, executionContext);
 
       this .addType (X3DConstants .Normal);
-
-      this .vector = this ._vector .getValue ();
-      this .length = this ._vector .length;
    }
 
    Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),

@@ -64,8 +64,6 @@ function (X3DTextureCoordinateNode,
 
       this .addType (X3DConstants .X3DSingleTextureCoordinateNode);
 
-      this .point         = this ._point .getValue ();
-      this .length        = this ._point .length;
       this .texCoordArray = X3DGeometryNode .createArray ();
    }
 

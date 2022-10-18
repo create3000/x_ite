@@ -65,9 +65,6 @@ function (X3DGeometricPropertyNode,
       X3DGeometricPropertyNode .call (this, executionContext);
 
       this .addType (X3DConstants .X3DCoordinateNode);
-
-      this .point  = this ._point .getValue ();
-      this .length = 0;
    }
 
    X3DCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
