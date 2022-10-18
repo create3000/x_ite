@@ -132,7 +132,7 @@ function ($,
                "separator1": "--------",
                "viewer": {
                   name: _(this .getViewerName (currentViewer)),
-                  className: "context-menu-icon x_ite-private-icon-" + currentViewer .toLowerCase () + "-viewer",
+                  className: "context-menu-icon x_ite-private-icon-" + currentViewer .toLowerCase () + "-viewer context-menu-not-selectable",
                },
                "available-viewers": {
                   name: _("Available Viewers"),
