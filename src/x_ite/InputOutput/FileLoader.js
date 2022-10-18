@@ -151,8 +151,6 @@ function ($,
       {
          scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, success, error);
          scene ._initLoadCount .addEvent ();
-
-         this .browser .requestAnimationFrame ();
       },
       set_initLoadCount__: function (scene, success, error, field)
       {

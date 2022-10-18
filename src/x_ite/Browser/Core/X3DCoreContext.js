@@ -443,15 +443,6 @@ function ($,
                this ._altKey = true;
                break;
             }
-            case 37: // Left
-            case 38: // Up
-            case 39: // Right
-            case 40: // Down
-            {
-               // Prevent bug in Firefox that event loop is broken when pressing these keys.
-               this .requestAnimationFrame ();
-               break;
-            }
             case 49: // 1
             {
                if (this .getDebug ())
@@ -679,15 +670,6 @@ function ($,
             case 18: // Alt
             {
                this ._altKey = false;
-               break;
-            }
-            case 37: // Left
-            case 38: // Up
-            case 39: // Right
-            case 40: // Down
-            {
-               // Prevent bug in Firefox that event loop is broken when pressing these keys.
-               this .requestAnimationFrame ();
                break;
             }
             case 225: // Alt Gr

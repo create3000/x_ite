@@ -93,7 +93,7 @@ function (Vector3)
          return function (now)
          {
             const
-               time     = (now + performance .timeOrigin) / 1000,
+               time     = (performance .timeOrigin + now) / 1000,
                interval = time - this [_currentTime];
 
             this [_currentTime]      = time;
@@ -109,7 +109,9 @@ function (Vector3)
                this [_currentSpeed] = lastPosition .subtract (this [_currentPosition]) .abs () * this [_currentFrameRate];
             }
             else
+            {
                this [_currentSpeed] = 0;
+            }
          };
       })(),
    };

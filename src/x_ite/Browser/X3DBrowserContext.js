@@ -104,6 +104,8 @@ function ($,
       _world           = Symbol (),
       _changedTime     = Symbol (),
       _renderCallback  = Symbol (),
+      _maxFrameRate    = Symbol (),
+      _previousTime    = Symbol (),
       _systemTime      = Symbol (),
       _systemStartTime = Symbol (),
       _browserTime     = Symbol (),
@@ -148,6 +150,7 @@ function ($,
 
       this [_changedTime]     = 0;
       this [_renderCallback]  = this .traverse .bind (this);
+      this [_maxFrameRate]    = 120;
       this [_systemTime]      = 0;
       this [_systemStartTime] = 0;
       this [_browserTime]     = 0;
@@ -206,8 +209,6 @@ function ($,
             if (context .prototype .initialize)
                context .prototype .initialize .call (this);
          }
-
-         this .fix ();
       },
       initialized: function ()
       {
@@ -257,16 +258,34 @@ function ($,
 
          this [_changedTime] = this .getCurrentTime ();
 
-         this .requestAnimationFrame ();
+         requestAnimationFrame (this [_renderCallback]);
       },
-      requestAnimationFrame: function ()
+      limitFrameRate: function (now)
       {
-         cancelAnimationFrame (this .animationFrameRequest);
+         if (this [_maxFrameRate] && 1000 / (now - this [_previousTime]) > this [_maxFrameRate])
+         {
+            requestAnimationFrame (this [_renderCallback]);
 
-         this .animationFrameRequest = requestAnimationFrame (this [_renderCallback]);
+            return true;
+         }
+         else
+         {
+            this [_previousTime] = now;
+
+            return false;
+         }
       },
-      traverse: function (now)
+      traverse: function ()
       {
+         const now = performance .now ();
+
+         // Limit frame rate.
+
+         if (this .limitFrameRate (now))
+            return;
+
+         // Start rendering.
+
          const gl = this .getContext ();
 
          const t0 = performance .now ();
@@ -321,31 +340,6 @@ function ($,
       getDisplayTime: function ()
       {
          return this [_displayTime];
-      },
-      fix: function ()
-      {
-         // At least Firefox 105.0.2 sometimes does not call requestAnimationFrame
-         // callback when other events occur, but if we trigger it here again, it works.
-         if (navigator .userAgent .includes ("Firefox"))
-         {
-            const excludes = new Set ([
-               "devicemotion",
-               "deviceorientation",
-               "absolutedeviceorientation",
-               "beforeunload",
-            ]);
-
-            function eventsOf (element, excludes)
-            {
-               return Object .keys (element)
-                  .filter (key => key .startsWith ("on"))
-                  .map (key => key .slice (2))
-                  .filter (event => ! excludes .has (event))
-                  .join (" ");
-            }
-
-            $(window) .on (eventsOf (window, excludes), setTimeout .bind (window, this .requestAnimationFrame .bind (this), 0));
-         }
       },
    });
 
