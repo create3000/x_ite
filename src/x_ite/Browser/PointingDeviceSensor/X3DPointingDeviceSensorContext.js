@@ -266,7 +266,7 @@ function (PointingDevice,
          this [_hitPointSorter] .sort (0, this [_hits] .length);
          this [_layerSorter]    .sort (0, this [_hits] .length);
 
-         this .addBrowserEvent ();
+         this .requestAnimationFrame ();
          this [_pointerTime] = performance .now () - t0;
       },
       motion: function ()

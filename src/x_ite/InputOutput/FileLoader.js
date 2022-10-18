@@ -152,10 +152,7 @@ function ($,
          scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, success, error);
          scene ._initLoadCount .addEvent ();
 
-         // At least Firefox 105.0.2 sometimes does not call requestAnimationFrame
-         // callback when other events occur, but if we trigger it here again, it works.
-         if (navigator .userAgent .includes ("Firefox"))
-            this .browser .requestAnimationFrame ();
+         this .browser .requestAnimationFrame ();
       },
       set_initLoadCount__: function (scene, success, error, field)
       {
