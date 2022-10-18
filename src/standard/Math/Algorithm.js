@@ -168,7 +168,7 @@ define (function ()
       {
          return lhs > rhs;
       },
-      lowerBound: function (array, first, last, value, comp)
+      lowerBound: function (array, first, last, value, comp = this .less)
       {
          // http://en.cppreference.com/w/cpp/algorithm/lower_bound
 
@@ -193,7 +193,7 @@ define (function ()
 
          return first;
       },
-      upperBound: function (array, first, last, value, comp)
+      upperBound: function (array, first, last, value, comp = this .less)
       {
          // http://en.cppreference.com/w/cpp/algorithm/upper_bound
 

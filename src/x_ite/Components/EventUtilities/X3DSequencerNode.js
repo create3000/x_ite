@@ -99,7 +99,7 @@ function (X3DChildNode,
 
          else
          {
-            const index = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
+            const index = Algorithm .upperBound (key, 0, length, fraction);
 
             i = index - 1;
          }

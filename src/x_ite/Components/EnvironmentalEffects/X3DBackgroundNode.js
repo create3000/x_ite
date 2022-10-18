@@ -294,7 +294,7 @@ function (X3DBindableNode,
       },
       getColor: function (theta, color, angle)
       {
-         const index = Algorithm .upperBound (angle, 0, angle .length, theta, Algorithm .less);
+         const index = Algorithm .upperBound (angle, 0, angle .length, theta);
 
          return color [index];
       },

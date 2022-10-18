@@ -107,7 +107,7 @@ function (X3DChildNode,
                if (fraction <= key [0])
                   return this .interpolate (0, 1, 0);
 
-               const index1 = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
+               const index1 = Algorithm .upperBound (key, 0, length, fraction);
 
                if (index1 !== length)
                {
