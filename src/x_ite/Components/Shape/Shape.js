@@ -182,7 +182,8 @@ function (Fields,
             intersectionSorter = new QuickSort (intersections, function (lhs, rhs)
             {
                return lhs .point .z > rhs .point .z;
-            });
+            }),
+            distanceCompare    = function (lhs, rhs) { return lhs .point .z > rhs; };
 
          return function (renderObject)
          {
@@ -209,11 +210,7 @@ function (Fields,
                intersectionSorter .sort (0, intersections .length);
 
                // Find first point that is not greater than near plane;
-               const index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
-               function (lhs, rhs)
-               {
-                  return lhs .point .z > rhs;
-               });
+               const index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (), distanceCompare);
 
                // Are there intersections before the camera?
                if (index !== intersections .length)
