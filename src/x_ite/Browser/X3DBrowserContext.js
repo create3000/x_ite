@@ -104,7 +104,6 @@ function ($,
       _world           = Symbol (),
       _changedTime     = Symbol (),
       _renderCallback  = Symbol (),
-      _maxFrameRate    = Symbol (),
       _previousTime    = Symbol (),
       _systemTime      = Symbol (),
       _systemStartTime = Symbol (),
@@ -149,8 +148,8 @@ function ($,
                              "finished",      new SFTime ());
 
       this [_changedTime]     = 0;
+      this [_previousTime]    = 0;
       this [_renderCallback]  = this .traverse .bind (this);
-      this [_maxFrameRate]    = 120;
       this [_systemTime]      = 0;
       this [_systemStartTime] = 0;
       this [_browserTime]     = 0;
@@ -262,7 +261,7 @@ function ($,
       },
       limitFrameRate: function (now)
       {
-         if (this [_maxFrameRate] && 1000 / (now - this [_previousTime]) > this [_maxFrameRate])
+         if (now === this [_previousTime])
          {
             requestAnimationFrame (this [_renderCallback]);
 
@@ -275,10 +274,8 @@ function ($,
             return false;
          }
       },
-      traverse: function ()
+      traverse: function (now)
       {
-         const now = performance .now ();
-
          // Limit frame rate.
 
          if (this .limitFrameRate (now))
