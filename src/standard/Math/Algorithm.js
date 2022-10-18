@@ -231,18 +231,6 @@ define (function ()
 
          return result;
       },
-      map_difference: function (lhs, rhs, result)
-      {
-         for (const [key, value] of lhs)
-         {
-            if (rhs .has (key))
-               continue;
-
-            result .set (key, value);
-         }
-
-         return result;
-      },
    };
 
    return new Algorithm ();

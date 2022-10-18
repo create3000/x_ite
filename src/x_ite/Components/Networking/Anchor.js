@@ -183,20 +183,26 @@ function (Fields,
       {
          if (type === TraverseType .POINTER)
          {
-            const sensors = this .sensors;
+            const
+               sensorsStack = renderObject .getBrowser () .getSensors (),
+               sensors      = this .sensors;
 
             sensors .clear ();
 
-            renderObject .getBrowser () .getSensors () .push (sensors);
-
             this .touchSensorNode .push (renderObject, sensors);
 
+            if (sensors .size)
+               sensorsStack .push (sensors);
+
             X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-            renderObject .getBrowser () .getSensors () .pop ();
+            if (sensors .size)
+               sensorsStack .pop ();
          }
          else
+         {
             X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+         }
       },
    });
 
