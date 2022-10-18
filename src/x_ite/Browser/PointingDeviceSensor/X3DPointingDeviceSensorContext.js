@@ -71,19 +71,20 @@ function (PointingDevice,
 "use strict";
 
    const
-      _pointingDevice = Symbol (),
-      _cursorType     = Symbol (),
-      _pointer        = Symbol (),
-      _hitRay         = Symbol (),
-      _hits           = Symbol (),
-      _enabledSensors = Symbol (),
-      _selectedLayer  = Symbol (),
-      _overSensors    = Symbol (),
-      _activeSensors  = Symbol (),
-      _hitPointSorter = Symbol (),
-      _layerNumber    = Symbol (),
-      _layerSorter    = Symbol (),
-      _pointerTime    = Symbol ();
+      _pointingDevice  = Symbol (),
+      _cursorType      = Symbol (),
+      _pointer         = Symbol (),
+      _hitRay          = Symbol (),
+      _hits            = Symbol (),
+      _enabledSensors  = Symbol (),
+      _pickOnlySensors = Symbol (),
+      _selectedLayer   = Symbol (),
+      _overSensors     = Symbol (),
+      _activeSensors   = Symbol (),
+      _hitPointSorter  = Symbol (),
+      _layerNumber     = Symbol (),
+      _layerSorter     = Symbol (),
+      _pointerTime     = Symbol ();
 
    const line = new Line3 (Vector3 .Zero, Vector3 .Zero);
 
@@ -172,6 +173,10 @@ function (PointingDevice,
       {
          return this [_enabledSensors];
       },
+      getPickOnlySensors: function ()
+      {
+         return this [_pickOnlySensors];
+      },
       addHit: function (intersection, layer, shape, modelViewMatrix)
       {
          const sensors = this [_enabledSensors] .at (-1);
@@ -197,7 +202,7 @@ function (PointingDevice,
       },
       buttonPressEvent: function (x, y)
       {
-         this .touch (x, y);
+         this .touch (x, y, true);
 
          if (this [_hits] .length === 0)
             return false;
@@ -227,14 +232,14 @@ function (PointingDevice,
       },
       motionNotifyEvent: function (x, y)
       {
-         this .touch (x, y);
+         this .touch (x, y, true);
          this .motion ();
 
          return !! (this [_hits] .length && this [_hits] .at (-1) .sensors .size);
       },
       leaveNotifyEvent: function ()
       { },
-      touch: function (x, y)
+      touch: function (x, y, pickOnlySensors)
       {
          if (this .getViewer () ._isActive .getValue ())
          {
@@ -243,6 +248,8 @@ function (PointingDevice,
          }
 
          const t0 = performance .now ();
+
+         this [_pickOnlySensors] = pickOnlySensors;
 
          this [_pointer] .set (x, y);
 

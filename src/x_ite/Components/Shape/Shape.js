@@ -186,9 +186,12 @@ function (Fields,
 
          return function (renderObject)
          {
-            const
-               browser      = renderObject .getBrowser (),
-               geometryNode = this .getGeometry ();
+            const browser = renderObject .getBrowser ();
+
+            if (browser .getSensors () .length === 1 && browser .getPickOnlySensors ())
+               return;
+
+            const geometryNode = this .getGeometry ();
 
             modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
             invModelViewMatrix .assign (modelViewMatrix) .inverse ();

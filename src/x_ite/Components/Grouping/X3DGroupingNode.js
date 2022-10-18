@@ -587,18 +587,18 @@ function (X3DChildNode,
             {
                const
                   pointingDeviceSensorNodes = this .pointingDeviceSensorNodes,
-                  clipPlaneNodes            = this .clipPlaneNodes;
+                  clipPlaneNodes            = this .clipPlaneNodes,
+                  sensors                   = this .sensors;
+
+               sensors .clear ();
 
                if (pointingDeviceSensorNodes .length)
                {
-                  const sensors = this .sensors;
-
-                  sensors .clear ();
-
-                  renderObject .getBrowser () .getSensors () .push (sensors);
-
                   for (const pointingDeviceSensorNode of pointingDeviceSensorNodes)
                      pointingDeviceSensorNode .push (renderObject, sensors);
+
+                  if (sensors .size)
+                     renderObject .getBrowser () .getSensors () .push (sensors);
                }
 
                for (const clipPlaneNode of clipPlaneNodes)
@@ -610,7 +610,7 @@ function (X3DChildNode,
                for (const clipPlaneNode of clipPlaneNodes)
                   clipPlaneNode .pop (renderObject);
 
-               if (pointingDeviceSensorNodes .length)
+               if (sensors .size)
                   renderObject .getBrowser () .getSensors () .pop ();
 
                return;

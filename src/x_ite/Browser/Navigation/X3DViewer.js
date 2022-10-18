@@ -186,7 +186,7 @@ function (X3DBaseNode,
       })(),
       touch: function (x, y)
       {
-         this .getBrowser () .touch (x, y);
+         this .getBrowser () .touch (x, y, false);
 
          return this .getBrowser () .getHits () .length;
       },
