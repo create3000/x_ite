@@ -188,7 +188,7 @@ function (Fields,
          {
             const browser = renderObject .getBrowser ();
 
-            if (browser .getSensors () .length === 1 && browser .getPickOnlySensors ())
+            if (browser .getPickOnlySensors () && browser .getSensors () .length === 1)
                return;
 
             const geometryNode = this .getGeometry ();
