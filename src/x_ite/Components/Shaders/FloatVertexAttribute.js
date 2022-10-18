@@ -98,19 +98,12 @@ function (Fields,
 
          this ._numComponents .addInterest ("set_numComponents__", this);
          this ._numComponents .addInterest ("set_attribute__",     this);
-         this ._value         .addInterest ("set_value__",         this);
 
          this .set_numComponents__ ();
-         this .set_value__ ();
       },
       set_numComponents__: function ()
       {
          this .numComponents = Algorithm .clamp (this ._numComponents .getValue (), 1, 4);
-      },
-      set_value__: function ()
-      {
-         this .value  = this ._value .getValue ();
-         this .length = this ._value .length;
       },
       addValue: function (index, array)
       {

@@ -91,42 +91,29 @@ function (Fields,
       {
          return "attrib";
       },
-      initialize: function ()
-      {
-         X3DVertexAttributeNode .prototype .initialize .call (this);
-
-         this ._value .addInterest ("set_value__", this);
-
-         this .set_value__ ();
-      },
-      set_value__: function ()
-      {
-         this .value  = this ._value .getValue ();
-         this .length = this ._value .length;
-      },
       addValue: function (index, array)
       {
          if (index < this .length)
          {
-            var value = this .value;
+            const value = this .value;
 
-            for (var i = index * 9, l = i + 9; i < l; ++ i)
+            for (let i = index * 9, l = i + 9; i < l; ++ i)
                array .push (value [i]);
          }
          else if (this .length)
          {
-            var value = this .value;
+            const value = this .value;
 
             index = this .length - 1;
 
-            for (var i = index * 9, l = i + 9; i < l; ++ i)
+            for (let i = index * 9, l = i + 9; i < l; ++ i)
                array .push (value [i]);
          }
          else
          {
-            var value = Matrix3 .Identity;
+            const value = Matrix3 .Identity;
 
-            for (var i = 0; i < 9; ++ i)
+            for (let i = 0; i < 9; ++ i)
                array .push (value [i]);
          }
       },

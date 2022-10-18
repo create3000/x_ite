@@ -65,6 +65,9 @@ function (Fields,
       this .addType (X3DConstants .X3DVertexAttributeNode);
 
       this .addChildObjects ("attribute_changed", new Fields .SFTime ());
+
+      this .value  = this ._value .getValue ();
+      this .length = this ._value .length;
    }
 
    X3DVertexAttributeNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
@@ -75,6 +78,19 @@ function (Fields,
          X3DGeometricPropertyNode .prototype .initialize .call (this);
 
          this ._name .addInterest ("set_attribute__", this);
+      },
+      initialize: function ()
+      {
+         X3DGeometricPropertyNode .prototype .initialize .call (this);
+
+         this ._value .addInterest ("set_value__", this);
+
+         this .set_value__ ();
+      },
+      set_value__: function ()
+      {
+         this .value  = this ._value .getValue ();
+         this .length = this ._value .length;
       },
       set_attribute__: function ()
       {
