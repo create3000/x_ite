@@ -150,11 +150,13 @@ function (Algorithm)
       },
       cross: function (vector)
       {
-         const x = this .x, y = this .y, z = this .z;
+         const
+            ax = this   .x, ay = this   .y, az = this   .z,
+            bx = vector .x, by = vector .y, bz = vector .z;
 
-         this .x = y * vector .z - z * vector .y;
-         this .y = z * vector .x - x * vector .z;
-         this .z = x * vector .y - y * vector .x;
+         this .x = ay * bz - az * by;
+         this .y = az * bx - ax * bz;
+         this .z = ax * by - ay * bx;
 
          return this;
       },
