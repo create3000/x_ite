@@ -144,6 +144,12 @@ const getScriptURL = (function ()
             shadow = this .attachShadow ({ mode: "open" }),
             link   = document .createElement ("link");
 
+         shadow .loaded = new Promise (function (resolve, reject)
+         {
+            link .onload  = resolve;
+            link .onerror = reject;
+         });
+
          link .setAttribute ("rel", "stylesheet");
          link .setAttribute ("type", "text/css");
          link .setAttribute ("href", new URL ("x_ite.css", getScriptURL ()) .href);
