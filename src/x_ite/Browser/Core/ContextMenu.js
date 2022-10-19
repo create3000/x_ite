@@ -104,13 +104,29 @@ function ($,
       {
          this .userMenu = userMenu;
       },
+      createUserMenu: function ()
+      {
+         const userMenu = { };
+
+         if (typeof this .userMenu === "function")
+         {
+            const menu = this .userMenu ();
+
+            if ($.isPlainObject (menu))
+            {
+               for (const key in menu)
+                  userMenu ["user-" + key] = menu [key];
+            }
+         }
+
+         return userMenu;
+      },
       build: function (event)
       {
          const
             browser          = this .getBrowser (),
             activeLayer      = browser .getActiveLayer (),
             currentViewpoint = activeLayer ? activeLayer .getViewpoint () : null,
-            currentViewer    = browser ._viewer .getValue (),
             fullscreen       = browser .getElement () .fullScreen ();
 
          if (! browser .getBrowserOptions () .getContextMenu ())
@@ -303,85 +319,78 @@ function ($,
                   .bind (this),
                },
                "separator3": "--------",
-               "world-info": {
-                  name: _("Show World Info"),
-                  className: "context-menu-icon x_ite-private-icon-world-info",
-                  callback: function ()
-                  {
-                     define .show ();
-
-                     require (["https://cdn.jsdelivr.net/gh/showdownjs/showdown@1.9.1/dist/showdown.min.js"], function (showdown)
-                     {
-                        define .hide ();
-
-                        browser .getShadow () .find (".x_ite-private-world-info") .remove ();
-
-                        const
-                           converter = new showdown .Converter (),
-                           priv      = browser .getShadow () .find (".x_ite-private-browser"),
-                           overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
-                           div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
-                           worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
-                           title     = worldInfo .title,
-                           info      = worldInfo .info;
-
-                        converter .setOption ("omitExtraWLInCodeBlocks",            true);
-                        converter .setOption ("simplifiedAutoLink",                 true);
-                        converter .setOption ("excludeTrailingPunctuationFromURLs", true);
-                        converter .setOption ("literalMidWordUnderscores",          true);
-                        converter .setOption ("strikethrough",                      true);
-                        converter .setOption ("openLinksInNewWindow",               false);
-
-                        $("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
-
-                        if (title .length)
-                        {
-                           $("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
-                        }
-
-                        for (const line of info)
-                        {
-                           $("<div></div>") .addClass ("x_ite-private-world-info-info") .html (converter .makeHtml (line)) .appendTo (div);
-                        }
-
-                        div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
-
-                        // Open external link in new tab.
-                        div .find ("a[href^=http]") .each (function ()
-                        {
-                           if (this .href .indexOf (location .hostname) !== -1)
-                              return;
-
-                           $(this) .attr ("target", "_blank");
-                        });
-
-                        overlay .on ("click", function () { overlay .remove (); });
-                     })
-                  },
-               },
-               "about": {
-                  name: _("About X_ITE"),
-                  className: "context-menu-icon x_ite-private-icon-help-about",
-                  callback: function ()
-                  {
-                     window .open (browser .getProviderUrl ());
-                  },
-               },
             },
          };
 
-         if (typeof this .userMenu === "function")
-         {
-            const userMenu = this .userMenu ();
+         Object .assign (menu .items, this .createUserMenu ());
 
-            if ($.isPlainObject (userMenu))
-            {
-               Object .assign (menu .items, { "separator4": "--------" });
+         Object .assign (menu .items, {
+            "separator4": "--------",
+            "world-info": {
+               name: _("Show World Info"),
+               className: "context-menu-icon x_ite-private-icon-world-info",
+               callback: function ()
+               {
+                  define .show ();
 
-               for (const key in userMenu)
-                  menu .items ["user-" + key] = userMenu [key];
-            }
-         }
+                  require (["https://cdn.jsdelivr.net/gh/showdownjs/showdown@1.9.1/dist/showdown.min.js"], function (showdown)
+                  {
+                     define .hide ();
+
+                     browser .getShadow () .find (".x_ite-private-world-info") .remove ();
+
+                     const
+                        converter = new showdown .Converter (),
+                        priv      = browser .getShadow () .find (".x_ite-private-browser"),
+                        overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
+                        div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
+                        worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
+                        title     = worldInfo .title,
+                        info      = worldInfo .info;
+
+                     converter .setOption ("omitExtraWLInCodeBlocks",            true);
+                     converter .setOption ("simplifiedAutoLink",                 true);
+                     converter .setOption ("excludeTrailingPunctuationFromURLs", true);
+                     converter .setOption ("literalMidWordUnderscores",          true);
+                     converter .setOption ("strikethrough",                      true);
+                     converter .setOption ("openLinksInNewWindow",               false);
+
+                     $("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
+
+                     if (title .length)
+                     {
+                        $("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
+                     }
+
+                     for (const line of info)
+                     {
+                        $("<div></div>") .addClass ("x_ite-private-world-info-info") .html (converter .makeHtml (line)) .appendTo (div);
+                     }
+
+                     div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
+
+                     // Open external link in new tab.
+                     div .find ("a[href^=http]") .each (function ()
+                     {
+                        if (this .href .indexOf (location .hostname) !== -1)
+                           return;
+
+                        $(this) .attr ("target", "_blank");
+                     });
+
+                     overlay .on ("click", function () { overlay .remove (); });
+                  })
+               },
+            },
+            "about": {
+               name: _("About X_ITE"),
+               className: "context-menu-icon x_ite-private-icon-help-about",
+               callback: function ()
+               {
+                  window .open (browser .getProviderUrl ());
+               },
+            },
+         });
 
          if ($.isEmptyObject (menu .items .viewpoints .items))
             delete menu .items ["viewpoints"];

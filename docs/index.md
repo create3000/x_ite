@@ -1072,7 +1072,7 @@ Browser .getContextMenu () .setUserMenu (function ()
   return {
     "command-1": {
       name: "Command 1",
-      callback: function (key, opt)
+      callback: function (event)
       {
         console .log ("Clicked on " + key);
       },

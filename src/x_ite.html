@@ -324,6 +324,19 @@ X3D (function ()
             return
       }
    });
+
+   Browser .getContextMenu () .setUserMenu (function ()
+   {
+      return {
+         "command-1": {
+            name: "Command 1",
+            callback: function (event)
+            {
+               console .log ("Clicked on Command 1");
+            },
+         },
+      };
+   });
 },
 function (error)
 {
