@@ -881,7 +881,8 @@ x3d-canvas {
     <x3d-canvas src="path/to/your/X3D/world.x3d">
       <p>Your browser may not support all features required by X_ITE.
          For a better experience, keep your browser up to date.
-         <a href="http://outdatedbrowser.com">Check here for latest versions.</a></p>
+         <a href="http://outdatedbrowser.com">Check here for latest versions.</a>
+      </p>
     </x3d-canvas>
   </body>
 </html>
