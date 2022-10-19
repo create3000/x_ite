@@ -124,14 +124,14 @@ function ($,
 
       this [_number]       = ++ browserNumber;
       this [_element]      = element;
-      this [_shadow]       = shadow .length ? shadow : this [_element] .prepend (browser);
+      this [_shadow]       = shadow .length ? shadow .append (browser .hide ()) : this [_element] .prepend (browser);
       this [_splashScreen] = splashScreen;
       this [_surface]      = surface;
       this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
       this [_context]      = Context .create (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
 
       if (shadow .length)
-         shadow .prop ("loaded") .then (function () { shadow .append (browser); });
+         shadow .prop ("loaded") .then (function () { browser .show (); });
 
       this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_number] + ").");
       this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
