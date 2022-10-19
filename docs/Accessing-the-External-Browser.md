@@ -216,7 +216,7 @@ Adding HTML controls to your scene is no rocket science. We have added some HTML
 function init ()
 {
   const
-    Browser = X3D .getBrowser ("x3d-canvas"),              // Get the browser instance.
+    Browser = X3D .getBrowser ("x3d-canvas"),             // Get the browser instance.
     scene   = Browser .currentScene,                      // Get the scene.
     timer   = scene .getNamedNode ("SpinAnimationTimer"); // Get box TouchSensor node.
 
