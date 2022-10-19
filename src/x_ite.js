@@ -158,7 +158,7 @@ const getScriptURL = (function ()
 
          require ([ "x_ite/X3D" ], function (X3D)
          {
-            X3D .createBrowserFromElement (this, shadow);
+            X3D .createBrowserFromElement (this);
          }
          .bind (this));
       }

@@ -106,11 +106,12 @@ function ($,
 
    let browserNumber = 0;
 
-   function X3DCoreContext (element, shadow)
+   function X3DCoreContext (element)
    {
       // Get canvas & context.
 
       const
+         shadow       = $(element .prop ("shadowRoot")),
          browser      = $("<div></div>") .addClass ("x_ite-private-browser"),
          splashScreen = $("<div></div>") .hide () .addClass ("x_ite-private-splash-screen") .appendTo (browser),
          spinner      = $("<div></div>") .addClass ("x_ite-private-spinner") .appendTo (splashScreen),
@@ -123,13 +124,13 @@ function ($,
 
       this [_number]       = ++ browserNumber;
       this [_element]      = element;
-      this [_shadow]       = shadow ? shadow : this [_element] .prepend (browser);
+      this [_shadow]       = shadow .length ? shadow : this [_element] .prepend (browser);
       this [_splashScreen] = splashScreen;
       this [_surface]      = surface;
       this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
       this [_context]      = Context .create (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
 
-      if (shadow)
+      if (shadow .length)
          shadow .prop ("loaded") .then (function () { shadow .append (browser); });
 
       this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_number] + ").");

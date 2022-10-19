@@ -139,7 +139,7 @@ function ($,
       return $(element || "x3d-canvas, X3DCanvas") .data ("browser");
    }
 
-   function createBrowserFromElement (element, shadow)
+   function createBrowserFromElement (element)
    {
       try
       {
@@ -148,10 +148,7 @@ function ($,
          if (element .find (".x_ite-private-browser") .length)
             return;
 
-         if (shadow)
-            shadow = $(shadow);
-
-         const browser = new X3DBrowser (element, shadow);
+         const browser = new X3DBrowser (element);
 
          element .data ("browser", browser);
 

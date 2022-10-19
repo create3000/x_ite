@@ -96,9 +96,9 @@ function ($,
       _loader           = Symbol (),
       _browserCallbacks = Symbol ();
 
-   function X3DBrowser (element, shadow)
+   function X3DBrowser (element)
    {
-      X3DBrowserContext .call (this, element, shadow);
+      X3DBrowserContext .call (this, element);
 
       this [_browserCallbacks] = new Map ();
 
