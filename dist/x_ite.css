@@ -1,15 +1,15 @@
-/* X_ITE v6.0.0-1152 */
+/* X_ITE v6.0.0-1153 */
 @charset "utf-8";
 @import url("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic");
 :host,
 X3DCanvas {
-  position: relative;
   display: inline-block;
+  overflow: hidden;
   outline: none;
   margin: 0;
   padding: 0;
   border: 0;
-  border-radius: inherit;
+  border-radius: 0;
   width: 300px;
   height: 150px;
   user-select: none;
@@ -26,15 +26,15 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   display: none;
 }
 .x_ite-private-browser {
-  z-index: 0;
   overflow: hidden;
   display: block;
-  position: absolute;
-  inset: 0;
+  position: relative;
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
   border: 0;
-  border-radius: inherit;
+  border-radius: 0;
   user-select: none;
   -webkit-user-select: none;
 }
@@ -42,11 +42,9 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   margin: 0;
   padding: 0;
   border: 0;
-  border-radius: inherit;
+  border-radius: 0;
   height: 100%;
   margin-right: 0;
-  user-select: none;
-  -webkit-user-select: none;
 }
 .x_ite-private-canvas {
   display: block;
@@ -54,11 +52,9 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   margin: 0;
   padding: 0;
   border: 0;
-  border-radius: inherit;
+  border-radius: 0;
   width: 100%;
   height: 100%;
-  user-select: none;
-  -webkit-user-select: none;
 }
 .x_ite-private-notification {
   padding: 5px;
@@ -192,6 +188,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background: -webkit-linear-gradient(top, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); 
   background: linear-gradient(to bottom, rgba(50,50,50,0.61803) 0%,rgba(0,0,0,0.61803) 100%); 
   border: 4px solid rgba(60,60,60,0.61803);
+  border-radius: 5px;
   -webkit-background-clip: padding-box; 
   background-clip: padding-box; 
   margin: 21pt;
@@ -237,31 +234,19 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   text-decoration: underline;
   color: #fd9f2e;
 }
-/*!
- * jQuery contextMenu - Plugin for simple contextMenu handling
- *
- * Version: v1.8.1
- *
- * Authors: Björn Brala (SWIS.nl), Rodney Rehm, Addy Osmani (patches for FF)
- * Web: http://swisnl.github.io/jQuery-contextMenu/
- *
- * Copyright (c) 2011-2015 SWIS BV and contributors
- *
- * Licensed under
- *   MIT License http://www.opensource.org/licenses/mit-license
- * Date: 2015-09-20T18:47:54.927Z
- */
 .x_ite-private-menu.context-menu-layer {
-  z-index: 0;
   position: fixed;
   inset: 0;
-  user-select: none;
-  -webkit-user-select: none;
+}
+.x_ite-private-menu.context-menu-list {
+  position: fixed;
+}
+.x_ite-private-menu .context-menu-list {
+  position: absolute;
 }
 .x_ite-private-menu.context-menu-list,
 .x_ite-private-menu .context-menu-list {
-  position: absolute;
-  display: inline-block;
+  display: block;
   box-sizing: border-box;
   min-width: 120px;
   margin: 0;
@@ -283,8 +268,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   white-space: pre;
   line-height: 1.2;
   list-style-type: none;
-  user-select: none;
-  -webkit-user-select: none;
 }
 .x_ite-private-menu .context-menu-item {
   cursor: pointer;
@@ -296,8 +279,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   line-height: 1;
   letter-spacing: unset;
   text-align: left;
-  user-select: none;
-  -webkit-user-select: none;
 }
 .x_ite-private-menu .context-menu-item:hover:not(.context-menu-not-selectable) {
   background-color: rgba(255, 69, 58, 0.8);
@@ -366,8 +347,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 .x_ite-private-menu .context-menu-input > label > span {
   padding-left: 8px;
-  user-select: none;
-  -webkit-user-select: none;
 }
 .x_ite-private-menu .context-menu-item > .context-menu-list {
   top: -9px;

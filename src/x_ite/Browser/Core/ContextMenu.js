@@ -545,8 +545,8 @@ function ($,
          // Menu
 
          const
-            x = event .pageX - options .element .offset () .left,
-            y = event .pageY - options .element .offset () .top;
+            x = event .pageX - $(document) .scrollLeft (),
+            y = event .pageY - $(document) .scrollTop ();
 
          const ul = $("<ul></ul>")
             .addClass ("context-menu-list")
