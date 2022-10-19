@@ -169,16 +169,14 @@ function (Algorithm)
       },
       normalize: function ()
       {
-         let length = Math .hypot (this .x, this .y, this .z, this .w);
+         const length = Math .hypot (this .x, this .y, this .z, this .w);
 
          if (length)
          {
-            length = 1 / length;
-
-            this .x *= length;
-            this .y *= length;
-            this .z *= length;
-            this .w *= length;
+            this .x /= length;
+            this .y /= length;
+            this .z /= length;
+            this .w /= length;
          }
 
          return this;

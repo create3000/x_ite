@@ -137,14 +137,12 @@ function (Algorithm)
       },
       normalize: function ()
       {
-         let length = Math .hypot (this .x, this .y);
+         const length = Math .hypot (this .x, this .y);
 
          if (length)
          {
-            length = 1 / length;
-
-            this .x *= length;
-            this .y *= length;
+            this .x /= length;
+            this .y /= length;
          }
 
          return this;
