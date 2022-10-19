@@ -129,15 +129,11 @@ function ($,
                   className: "context-menu-icon x_ite-private-icon-viewpoint",
                   items: this .getViewpoints (),
                },
-               "separator1": "--------",
-               "viewer": {
-                  name: _(this .getViewerName (currentViewer)),
-                  className: "context-menu-icon x_ite-private-icon-" + currentViewer .toLowerCase () + "-viewer context-menu-not-selectable",
-               },
                "available-viewers": {
                   name: _("Available Viewers"),
                   items: this .getAvailableViewers (),
                },
+               "separator1": "--------",
                "straighten-horizon": {
                   name: _("Straighten Horizon"),
                   type: "checkbox",
@@ -388,10 +384,7 @@ function ($,
          }
 
          if ($.isEmptyObject (menu .items .viewpoints .items))
-         {
-            delete menu .items ["separator0"];
             delete menu .items ["viewpoints"];
-         }
 
          if (Object .keys (menu .items ["available-viewers"] .items) .length < 2)
          {
