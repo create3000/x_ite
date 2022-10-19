@@ -28805,15 +28805,11 @@ function ($,
                   className: "context-menu-icon x_ite-private-icon-viewpoint",
                   items: this .getViewpoints (),
                },
-               "separator1": "--------",
-               "viewer": {
-                  name: _(this .getViewerName (currentViewer)),
-                  className: "context-menu-icon x_ite-private-icon-" + currentViewer .toLowerCase () + "-viewer context-menu-not-selectable",
-               },
                "available-viewers": {
                   name: _("Available Viewers"),
                   items: this .getAvailableViewers (),
                },
+               "separator1": "--------",
                "straighten-horizon": {
                   name: _("Straighten Horizon"),
                   type: "checkbox",
@@ -29064,10 +29060,7 @@ function ($,
          }
 
          if ($.isEmptyObject (menu .items .viewpoints .items))
-         {
-            delete menu .items ["separator0"];
             delete menu .items ["viewpoints"];
-         }
 
          if (Object .keys (menu .items ["available-viewers"] .items) .length < 2)
          {
@@ -39915,14 +39908,14 @@ function ($,
 
       this [_number]       = ++ browserNumber;
       this [_element]      = element;
-      this [_shadow]       = shadow .length ? shadow : this [_element] .prepend (browser);
+      this [_shadow]       = shadow .length ? shadow .append (browser .hide ()) : this [_element] .prepend (browser);
       this [_splashScreen] = splashScreen;
       this [_surface]      = surface;
       this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
       this [_context]      = Context .create (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
 
       if (shadow .length)
-         shadow .prop ("loaded") .then (function () { shadow .append (browser); });
+         shadow .prop ("loaded") .then (function () { browser .show (); });
 
       this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_number] + ").");
       this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
