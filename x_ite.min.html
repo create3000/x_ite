@@ -91,7 +91,7 @@ main.color-management .browser {
 }
 
 .browser:focus {
-   outline: 2px solid black;
+   box-shadow: 0px 2px 6px 3px black;
 }
 
 .fallback {
@@ -326,11 +326,11 @@ X3D (function ()
    Browser .getContextMenu () .setUserMenu (function ()
    {
       return {
-         "command-1": {
-            name: "Command 1",
+         "make-rounded-border": {
+            name: "Make Rounded Border",
             callback: function (event)
             {
-               console .log ("Clicked on Command 1");
+               $("x3d-canvas") .css ("border-radius", "15px");
             },
          },
       };

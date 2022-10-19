@@ -1,4 +1,4 @@
-/* X_ITE v6.0.0-1151 */
+/* X_ITE v6.0.0-1152 */
 
 (function (global, factory)
 {
