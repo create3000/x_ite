@@ -12,7 +12,7 @@ X\_ITE is a fast, small, and feature-rich JavaScript library for displaying and 
 
 X\_ITE is freely downloadable for any usage and licensed under the GPL3. You can use them for commercial and noncommercial purposes.
 
-Runs completely standalone, ie. there are no other library dependencies. You just need to include x\_ite.css and x\_ite.js into your HTML page.
+Runs completely standalone, ie. there are no other library dependencies. You just need to include x\_ite.js into your HTML page.
 
 Competitive performance for most frequently used functions and nodes. All function within X\_ITE are optimized to give your the best performance that JavaScript can offer.
 

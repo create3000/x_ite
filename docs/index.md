@@ -837,7 +837,6 @@ GitCDN serves raw files directly from GitHub with proper Content-Type headers an
 If you are a developer or you always wanna be up to date:
 
 ```html
-<link rel="stylesheet" type="text/css" href="https://create3000.github.io/code/x_ite/latest/dist/x_ite.css"/>
 <script type="text/javascript" src="https://create3000.github.io/code/x_ite/latest/dist/x_ite.min.js"></script>
 ```
 
@@ -846,7 +845,6 @@ If you are a developer or you always wanna be up to date:
 If you are on production and everything works fine, then use a numbered version.
 
 ```html
-<link rel="stylesheet" type="text/css" href="https://create3000.github.io/code/x_ite/6.0.0/dist/x_ite.css"/>
 <script type="text/javascript" src="https://create3000.github.io/code/x_ite/6.0.0/dist/x_ite.min.js"></script>
 ```
 
@@ -857,56 +855,41 @@ Open Source CDN, free, fast, and reliable.
 #### Snipped
 
 ```html
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/create3000/x_ite@latest/dist/x_ite.css"/>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/create3000/x_ite@latest/dist/x_ite.min.js"></script>
 ```
-
-## WordPress Plug-In
-
-WordPress users can use our plug-in to embed X\_ITE into their web page.
-
-[Download WordPress plug-in](https://github.com/create3000/x_ite-wordpress/raw/main/dist/x_ite.zip)
-
-### Installation
-
-1. Unzip package and put it into the *plugins* folder of your WordPress installation.
-2. Install and activate the plugin on the Plugins page.
-3. Add shortcode `[X3DCanvas src="https://cdn.rawgit.com/create3000/Library/main/Examples/X_ITE/info.x3d" class="x_ite-browser"]` to page or post content.
-4. Modify "src" and "class" attribute.
 
 ## Embedding X\_ITE within a Web Page
 
 To display your X3D scene in a HTML5 page first save your scene as X3D XML Encoded file, X3D JSON Encoded file, or as X3D Classic Encoded file, i.e. create a file with the extension .x3d, .x3dj, .x3dv, or .wrl.
 
-The HTML5 page is quite easy to create, the HTML5 code below shows you the minimum requirements. The path to the X3D scene is specified in the src attribute of the &lt;X3DCanvas&gt; element.
+The HTML5 page is quite easy to create, the HTML5 code below shows you the minimum requirements. The path to the X3D scene is specified in the src attribute of the &lt;x3d-canvas&gt; element.
 
 ```html
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" type="text/css" href="https://create3000.github.io/code/x_ite/latest/dist/x_ite.css"/>
     <script type="text/javascript" src="https://create3000.github.io/code/x_ite/latest/dist/x_ite.min.js"></script>
     <style type="text/css">
-X3DCanvas {
+x3d-canvas {
   width: 768px;
   height: 432px;
 }
     </style>
   </head>
   <body>
-    <X3DCanvas src="path/to/your/X3D/world.x3d">
+    <x3d-canvas src="path/to/your/X3D/world.x3d">
       <p>Your browser may not support all features required by X_ITE.
          For a better experience, keep your browser up to date.
          <a href="http://outdatedbrowser.com">Check here for latest versions.</a></p>
-    </X3DCanvas>
+    </x3d-canvas>
   </body>
 </html>
 ```
 
-To get X\_ITE working you must include the CSS file »x\_ite.css« and the JavaScript file »x\_ite.min.js«. After x\_ite is successfully loaded a new HTML element &lt;X3DCanvas&gt; is available on your page.
+To get X\_ITE working you must include the JavaScript file »x\_ite.min.js«. After x\_ite is successfully loaded a new HTML element &lt;x3d-canvas&gt; is available on your page.
 
-**Note:** You can style the &lt;X3DCanvas&gt; element as every HTML element with CSS as well as you can place it everywhere within the DOM tree.
+**Note:** You can style the &lt;x3d-canvas&gt; element as every HTML element with CSS as well as you can place it everywhere within the DOM tree.
 {: .notice--info}
 
 ### Supported File Formats
@@ -926,27 +909,27 @@ For more information see [How to Configure Your Web Server](/x_ite/How-To-Config
 
 ### Fallback Content
 
-The &lt;X3DCanvas&gt; element is equal to the &lt;canvas&gt; element in that, it is easy to define some fallback content, to be displayed in older browsers not supporting it. You should always provide fallback content to be displayed by those browsers.
+The &lt;x3d-canvas&gt; element is equal to the &lt;canvas&gt; element in that, it is easy to define some fallback content, to be displayed in older browsers not supporting it. You should always provide fallback content to be displayed by those browsers.
 
-Providing fallback content is very straightforward: just insert the alternate content inside the &lt;X3DCanvas&gt; element. Browsers that don't support &lt;X3DCanvas&gt; will ignore the container and render the fallback content inside it. Browsers that do support &lt;X3DCanvas&gt; will ignore the content inside the container, and just render the canvas normally.
+Providing fallback content is very straightforward: just insert the alternate content inside the &lt;x3d-canvas&gt; element. Browsers that don't support &lt;x3d-canvas&gt; will ignore the container and render the fallback content inside it. Browsers that do support &lt;x3d-canvas&gt; will ignore the content inside the container, and just render the canvas normally.
 
 For example, we could provide a text description of the X3D element or provide a static image of the dynamically rendered content. This can look something like this:
 
 ```html
-<X3DCanvas src="world.x3d">
+<x3d-canvas src="world.x3d">
   <p>Current stock price: $3.15 +0.15</p>
-</X3DCanvas>
+</x3d-canvas>
 ```
 
 ```html
-<X3DCanvas src="world.x3dv">
+<x3d-canvas src="world.x3dv">
   <img src="images/clock.png"/>
-</X3DCanvas>
+</x3d-canvas>
 ```
 
-## Attributes of the X3DCanvas Tag
+## Attributes of the x3d-canvas Tag
 
-The HTML **&lt;X3DCanvas&gt;** element defines the main content of the X3D document. The &lt;X3DCanvas&gt; element has three attributes that define different behaviours. All of these attributes are optional.
+The HTML **&lt;x3d-canvas&gt;** element defines the main content of the X3D document. The &lt;x3d-canvas&gt; element has three attributes that define different behaviours. All of these attributes are optional.
 
 ### cache
 
@@ -965,17 +948,17 @@ A Boolean value (`true` or `false`) to indicate whether the notification bubble 
 
 ### onerror
 
-Type: script code. This event is sent to an X3DCanvas element when an error occurs loading a scene.
+Type: script code. This event is sent to an x3d-canvas element when an error occurs loading a scene.
 {: .notice}
 
 ### onload
 
-Type: script code. This event handler will be called on the X3DCanvas element when a scene has finished loading. This applies whether the scene is applied via the src attribute or when a scene is loaded or replaced by another world. If you change the scene, the event will fire again when the new scene loads. This event will not bubble up the element tree.
+Type: script code. This event handler will be called on the x3d-canvas element when a scene has finished loading. This applies whether the scene is applied via the src attribute or when a scene is loaded or replaced by another world. If you change the scene, the event will fire again when the new scene loads. This event will not bubble up the element tree.
 {: .notice}
 
 ### onshutdown
 
-Type: script code. This event handler will be called on the X3DCanvas element when a scene is unloaded or replaced by another world.
+Type: script code. This event handler will be called on the x3d-canvas element when a scene is unloaded or replaced by another world.
 {: .notice}
 
 ### preserveDrawingBuffer
@@ -1001,7 +984,7 @@ A MFString value with urls that should be loaded on page load. If no url attribu
 ### Example
 
 ```html
-<X3DCanvas cache="true" src="path/to/your/X3D/world.x3d"></X3DCanvas>
+<x3d-canvas cache="true" src="path/to/your/X3D/world.x3d"></x3d-canvas>
 ```
 
 ### More Options
@@ -1010,7 +993,7 @@ More options can be adjusted using the [Browser Object](/x_ite/reference/Browser
 
 ## Keyboard Shortcuts
 
-If the X3DCanvas element is focused, the following keyboard shortcuts are available.
+If the x3d-canvas element is focused, the following keyboard shortcuts are available.
 
 ### Home (Pos 1)
 
@@ -1034,27 +1017,27 @@ Display browser timings.
 
 ### Ctrl+S
 
-If X3DCanvas attribute *debug* is `true`, toggle begin/end update of browser.
+If x3d-canvas attribute *debug* is `true`, toggle begin/end update of browser.
 
 ### Ctrl+1
 
-If X3DCanvas attribute *debug* is `true`, set shading to POINT.
+If x3d-canvas attribute *debug* is `true`, set shading to POINT.
 
 ### Ctrl+2
 
-If X3DCanvas attribute *debug* is `true`, set shading to WIREFRAME.
+If x3d-canvas attribute *debug* is `true`, set shading to WIREFRAME.
 
 ### Ctrl+3
 
-If X3DCanvas attribute *debug* is `true`, set shading to FLAT.
+If x3d-canvas attribute *debug* is `true`, set shading to FLAT.
 
 ### Ctrl+4
 
-If X3DCanvas attribute *debug* is `true`, set shading to GOURAUD.
+If x3d-canvas attribute *debug* is `true`, set shading to GOURAUD.
 
 ### Ctrl+5
 
-If X3DCanvas attribute *debug* is `true`, set shading to PHONG.
+If x3d-canvas attribute *debug* is `true`, set shading to PHONG.
 
 ### Shift+F8
 
@@ -1074,7 +1057,7 @@ Browser .getContextMenu () .setUserMenu (function ()
       name: "Command 1",
       callback: function (event)
       {
-        console .log ("Clicked on " + key);
+        console .log ("Clicked on Command 1");
       },
     },
   };

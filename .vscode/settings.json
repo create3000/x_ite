@@ -2,10 +2,9 @@
    "files.exclude": {
       "**/*~": true,
       "node_modules": true,
-      "package-lock.json": true
-   },
-   "files.watcherExclude": {
-      "**/.bzr/**": true
+      "package-lock.json": true,
+      "docs/_site": true,
+      "docs/.jekyll-cache": true
    },
    "files.insertFinalNewline": true,
    "files.trimFinalNewlines": true,

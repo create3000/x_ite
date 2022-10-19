@@ -14,7 +14,7 @@ If you want combine DOM access with X3D access in your JavaScript functions then
 
 ## Introduction
 
-There is the X3D object which is always available, it expects one function handler that is called when the browsers (&lt;X3DCanvas&gt; elements) are ready, and a second function handler, that is called if an error occurred. These two arguments are optional. The return value of the X3D function is a Promise, which can be used instead of the arguments.
+There is the X3D object which is always available, it expects one function handler that is called when the browsers (&lt;x3d-canvas&gt; elements) are ready, and a second function handler, that is called if an error occurred. These two arguments are optional. The return value of the X3D function is a Promise, which can be used instead of the arguments.
 
 ```js
 Promise X3D ([callback[, errorCallback]]);
@@ -27,7 +27,7 @@ function callback ()
 function errorCallback (error)
 ```
 
-The external browser can be accessed by calling the `X3D .getBrowser (selector)` function, *selector* can be any CSS selector, if you have only one &lt;X3DCanvas&gt; element on your page, you can omit the selector argument:
+The external browser can be accessed by calling the `X3D .getBrowser (selector)` function, *selector* can be any CSS selector, if you have only one &lt;x3d-canvas&gt; element on your page, you can omit the selector argument:
 
 ```html
 <script type="text/javascript">
@@ -36,7 +36,7 @@ X3D (function ()
 {
   // Now, X3D is ready. We can get access to the browser object.
 
-  const Browser = X3D .getBrowser ("X3DCanvas.browser");
+  const Browser = X3D .getBrowser ("x3d-canvas.browser");
 
   Browser .loadURL (new X3D .MFNode ("/path/to/your/world.x3dv"),
                     new X3D .MFNode ());
@@ -109,20 +109,20 @@ The following services can be used to establish a session and obtain the X3DBrow
 
 #### X3DBrowser **getBrowser** (*\[selector : String\]*)
 
-The *selector* argument must be a string containing a valid CSS selector expression to match elements against. If no selector was given, »X3DCanvas« is used as selector string. The return value is the appropriate X3DBrowser object.
+The *selector* argument must be a string containing a valid CSS selector expression to match elements against. If no selector was given, »x3d-canvas« is used as selector string. The return value is the appropriate X3DBrowser object.
 
 ```js
-// Obtain X3DBrowser object of X3DCanvas element with id »browser«.
-const Browser = X3D .getBrowser ("X3DCanvas#browser");
+// Obtain X3DBrowser object of x3d-canvas element with id »browser«.
+const Browser = X3D .getBrowser ("x3d-canvas#browser");
 ```
 
 #### X3DBrowser **getBrowser** (*element : Object*)
 
-Given a DOM element that represents a X3DCanvas element, the getBrowser function returns the appropriate X3DBrowser object.
+Given a DOM element that represents a x3d-canvas element, the getBrowser function returns the appropriate X3DBrowser object.
 
 ```js
-// Query all X3DCanvas elements within the HTML page.
-const x3dcanvases = document .querySelectorAll ("X3DCanvas");
+// Query all x3d-canvas elements within the HTML page.
+const x3dcanvases = document .querySelectorAll ("x3d-canvas");
 
 for (const x3dcanvas of x3dcanvases)
 {
@@ -134,12 +134,12 @@ for (const x3dcanvas of x3dcanvases)
 
 #### Object **createBrowser** ()
 
-Creates a new X3DCanvas DOM element, initializes it and returns it. Throws an exception if the browser object cannot be created.
+Creates a new x3d-canvas DOM element, initializes it and returns it. Throws an exception if the browser object cannot be created.
 
 ```js
 function addBrowser (parent)
 {
-   // Create a new X3DCanvas element.
+   // Create a new x3d-canvas element.
    const x3dcanvas = X3D .createBrowser ();
 
    x3dcanvas .setAttribute ("src", "/my/world.x3d");
@@ -207,7 +207,7 @@ A complete function reference for the X3DBrowser object and all other X3D JavaSc
 
 [View scene in this window.](https://create3000.github.io/media/x_ite/external-browser/external-browser.html)
 
-Adding HTML controls to your scene is no rocket science. We have added some HTML buttons below the X3DCanvas, which on click call a callback function.
+Adding HTML controls to your scene is no rocket science. We have added some HTML buttons below the x3d-canvas, which on click call a callback function.
 
 ### The JavaScript
 
@@ -216,7 +216,7 @@ Adding HTML controls to your scene is no rocket science. We have added some HTML
 function init ()
 {
   const
-    Browser = X3D .getBrowser ("X3DCanvas"),              // Get the browser instance.
+    Browser = X3D .getBrowser ("x3d-canvas"),              // Get the browser instance.
     scene   = Browser .currentScene,                      // Get the scene.
     timer   = scene .getNamedNode ("SpinAnimationTimer"); // Get box TouchSensor node.
 
@@ -286,7 +286,7 @@ function spin ()
 ### The HTML
 
 ```html
-<X3DCanvas src="external-browser.x3d" onload="init ()"></X3DCanvas>
+<x3d-canvas src="external-browser.x3d" onload="init ()"></x3d-canvas>
 
 <div class="buttons">
   <button id="center" class="button" onclick="center ()">Center</button>

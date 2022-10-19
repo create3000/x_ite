@@ -6,6 +6,31 @@ layout: single
 ---
 # What's New
 
+## X\_ITE v6.0.0 Released
+
+*Leipzig, 19th October 2022*: We finally released the new version 6.0.0.
+
+{% capture notice-text %}
+#### New Features
+
+- Introducing x3d-canvas element, using JavaScript User-Element syntax.
+- New styles for context menu.
+- Full support for LineProperties node.
+- ParticleSystems are now GPU accelerated.
+- Faster picking and other optimizations.
+
+{% endcapture %}
+<div class="notice--success">{{ notice-text | markdownify }}</div>
+
+{% capture notice-text %}
+#### Bug Fixes
+
+- Fixed bug that browser stop working suddenly.
+- Fixed fatal bug when second browser is created programmatically.
+
+{% endcapture %}
+<div class="notice--success">{{ notice-text | markdownify }}</div>
+
 ## X\_ITE v4.7.7 Released
 
 *Leipzig, 30th January 2022*: This release is primarily a bug fix release, but there are also new features.
