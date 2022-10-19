@@ -15541,7 +15541,7 @@ define ('standard/Math/Algorithm',[],function ()
       {
          return lhs > rhs;
       },
-      lowerBound: function (array, first, last, value, comp)
+      lowerBound: function (array, first, last, value, comp = this .less)
       {
          // http://en.cppreference.com/w/cpp/algorithm/lower_bound
 
@@ -15566,7 +15566,7 @@ define ('standard/Math/Algorithm',[],function ()
 
          return first;
       },
-      upperBound: function (array, first, last, value, comp)
+      upperBound: function (array, first, last, value, comp = this .less)
       {
          // http://en.cppreference.com/w/cpp/algorithm/upper_bound
 
@@ -15600,18 +15600,6 @@ define ('standard/Math/Algorithm',[],function ()
                continue;
 
             result .add (key);
-         }
-
-         return result;
-      },
-      map_difference: function (lhs, rhs, result)
-      {
-         for (const [key, value] of lhs)
-         {
-            if (rhs .has (key))
-               continue;
-
-            result .set (key, value);
          }
 
          return result;
@@ -25890,14 +25878,14 @@ function (X3DEventObject,
       {
          X3DEventObject .prototype .setName .call (this, value)
 
-         if (this .getExecutionContext () .isLive () .getValue ())
+         if (this [_initialized])
             this ._name_changed = this .getBrowser () .getCurrentTime ();
       },
       getMainScene: function ()
       {
          let scene = this [_executionContext] .getScene ();
 
-         while (!scene .isMainScene ())
+         while (! scene .isMainScene ())
             scene = scene .getScene ();
 
          return scene;
@@ -25906,7 +25894,7 @@ function (X3DEventObject,
       {
          let executionContext = this [_executionContext];
 
-         while (!executionContext .isScene ())
+         while (! executionContext .isScene ())
             executionContext = executionContext .getExecutionContext ();
 
          return executionContext;
@@ -26117,7 +26105,7 @@ function (X3DEventObject,
          if (!this .getPrivate ())
             field .addCloneCount (1);
 
-         if (this .getExecutionContext () .isLive () .getValue ())
+         if (this [_initialized])
             this ._fields_changed = this .getBrowser () .getCurrentTime ();
       },
       getField: (function ()
@@ -26186,7 +26174,7 @@ function (X3DEventObject,
             if (!this .getPrivate ())
                field .removeCloneCount (1);
 
-             if (this .getExecutionContext () .isLive () .getValue ())
+            if (this [_initialized])
                this ._fields_changed = this .getBrowser () .getCurrentTime ();
          }
       },
@@ -26211,7 +26199,7 @@ function (X3DEventObject,
          if (!this .getPrivate ())
             field .addCloneCount (1);
 
-         if (this .getExecutionContext () .isLive () .getValue ())
+         if (this [_initialized])
             this ._fields_changed = this .getBrowser () .getCurrentTime ();
       },
       removeUserDefinedField: function (name)
@@ -26229,7 +26217,7 @@ function (X3DEventObject,
             if (!this .getPrivate ())
                field .removeCloneCount (1);
 
-            if (this .getExecutionContext () .isLive () .getValue ())
+            if (this [_initialized])
                this ._fields_changed = this .getBrowser () .getCurrentTime ();
          }
       },
@@ -26338,24 +26326,28 @@ function (X3DEventObject,
          if (count === 0)
             return;
 
+         const time = this .getBrowser () .getCurrentTime ();
+
          this [_cloneCount] += count;
 
-         if (this .getExecutionContext () .isLive () .getValue ())
-            this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
+         this [_executionContext] ._sceneGraph_changed = time;
 
-         this [_executionContext] ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+         if (this [_initialized])
+            this ._cloneCount_changed = time;
       },
       removeCloneCount: function (count)
       {
          if (count === 0)
             return;
 
+         const time = this .getBrowser () .getCurrentTime ();
+
          this [_cloneCount] -= count;
 
-         if (this .getExecutionContext () .isLive () .getValue ())
-            this ._cloneCount_changed = this .getBrowser () .getCurrentTime ();
+         this [_executionContext] ._sceneGraph_changed = time;
 
-         this [_executionContext] ._sceneGraph_changed = this .getBrowser () .getCurrentTime ();
+         if (this [_initialized])
+            this ._cloneCount_changed = time;
       },
       dispose: function ()
       {
@@ -26645,10 +26637,15 @@ function (DEBUG)
 
          if (aliasedLineWidthRange [0] === 1 && aliasedLineWidthRange [1] === 1)
          {
-            gl .lineWidth = Function .prototype;
+            gl .lineWidth            = Function .prototype;
+            gl .MUST_TRANSFORM_LINES = gl .getVersion () >= 2;
 
             if (DEBUG)
                console .info ("Lines are transformed if necessary to obtain thick lines.");
+         }
+         else
+         {
+            gl .MUST_TRANSFORM_LINES = false;
          }
 
          // Load extensions.
@@ -27314,8 +27311,10 @@ function ($,
          this .header  = $("<thead></thead>") .append ($("<tr></tr>") .append ($("<th colspan='2'></th>"))) .appendTo (this .table);
          this .body    = $("<tbody></tbody>") .appendTo (this .table);
          this .footer  = $("<tfoot></tfoot>") .append ($("<tr></tr>") .append ($("<td colspan='2'></td>"))) .appendTo (this .table);
-         this .button  = $("<button></button>") .attr ("type", "button") .click (this .set_type__ .bind (this)) .appendTo (this .footer .find ("td"));
+         this .button  = $("<button></button>") .attr ("type", "button") .appendTo (this .footer .find ("td"));
          this .rows    = [ ];
+
+         this .button .on ("click touchend", this .set_type__ .bind (this));
 
          this .set_button__ ();
       },
@@ -28451,6 +28450,230 @@ e.webkitCancelFullScreen?(f="webkitfullscreenchange",g="webkitfullscreenerror"):
 
 });
 
+/*!
+ * jQuery Mousewheel 3.1.13
+ *
+ * Copyright jQuery Foundation and other contributors
+ * Released under the MIT license
+ * http://jquery.org/license
+ */
+
+(function (factory) {
+    if ( typeof define === 'function' && define.amd ) {
+        // AMD. Register as an anonymous module.
+        define('jquery-mousewheel/jquery.mousewheel',['jquery'], factory);
+    } else if (typeof exports === 'object') {
+        // Node/CommonJS style for Browserify
+        module.exports = factory;
+    } else {
+        // Browser globals
+        factory(jQuery);
+    }
+}(function ($) {
+
+    var toFix  = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'],
+        toBind = ( 'onwheel' in document || document.documentMode >= 9 ) ?
+                    ['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'],
+        slice  = Array.prototype.slice,
+        nullLowestDeltaTimeout, lowestDelta;
+
+    if ( $.event.fixHooks ) {
+        for ( var i = toFix.length; i; ) {
+            $.event.fixHooks[ toFix[--i] ] = $.event.mouseHooks;
+        }
+    }
+
+    var special = $.event.special.mousewheel = {
+        version: '3.1.12',
+
+        setup: function() {
+            if ( this.addEventListener ) {
+                for ( var i = toBind.length; i; ) {
+                    this.addEventListener( toBind[--i], handler, false );
+                }
+            } else {
+                this.onmousewheel = handler;
+            }
+            // Store the line height and page height for this particular element
+            $.data(this, 'mousewheel-line-height', special.getLineHeight(this));
+            $.data(this, 'mousewheel-page-height', special.getPageHeight(this));
+        },
+
+        teardown: function() {
+            if ( this.removeEventListener ) {
+                for ( var i = toBind.length; i; ) {
+                    this.removeEventListener( toBind[--i], handler, false );
+                }
+            } else {
+                this.onmousewheel = null;
+            }
+            // Clean up the data we added to the element
+            $.removeData(this, 'mousewheel-line-height');
+            $.removeData(this, 'mousewheel-page-height');
+        },
+
+        getLineHeight: function(elem) {
+            var $elem = $(elem),
+                $parent = $elem['offsetParent' in $.fn ? 'offsetParent' : 'parent']();
+            if (!$parent.length) {
+                $parent = $('body');
+            }
+            return parseInt($parent.css('fontSize'), 10) || parseInt($elem.css('fontSize'), 10) || 16;
+        },
+
+        getPageHeight: function(elem) {
+            return $(elem).height();
+        },
+
+        settings: {
+            adjustOldDeltas: true, // see shouldAdjustOldDeltas() below
+            normalizeOffset: true  // calls getBoundingClientRect for each event
+        }
+    };
+
+    $.fn.extend({
+        mousewheel: function(fn) {
+            return fn ? this.bind('mousewheel', fn) : this.trigger('mousewheel');
+        },
+
+        unmousewheel: function(fn) {
+            return this.unbind('mousewheel', fn);
+        }
+    });
+
+
+    function handler(event) {
+        var orgEvent   = event || window.event,
+            args       = slice.call(arguments, 1),
+            delta      = 0,
+            deltaX     = 0,
+            deltaY     = 0,
+            absDelta   = 0,
+            offsetX    = 0,
+            offsetY    = 0;
+        event = $.event.fix(orgEvent);
+        event.type = 'mousewheel';
+
+        // Old school scrollwheel delta
+        if ( 'detail'      in orgEvent ) { deltaY = orgEvent.detail * -1;      }
+        if ( 'wheelDelta'  in orgEvent ) { deltaY = orgEvent.wheelDelta;       }
+        if ( 'wheelDeltaY' in orgEvent ) { deltaY = orgEvent.wheelDeltaY;      }
+        if ( 'wheelDeltaX' in orgEvent ) { deltaX = orgEvent.wheelDeltaX * -1; }
+
+        // Firefox < 17 horizontal scrolling related to DOMMouseScroll event
+        if ( 'axis' in orgEvent && orgEvent.axis === orgEvent.HORIZONTAL_AXIS ) {
+            deltaX = deltaY * -1;
+            deltaY = 0;
+        }
+
+        // Set delta to be deltaY or deltaX if deltaY is 0 for backwards compatabilitiy
+        delta = deltaY === 0 ? deltaX : deltaY;
+
+        // New school wheel delta (wheel event)
+        if ( 'deltaY' in orgEvent ) {
+            deltaY = orgEvent.deltaY * -1;
+            delta  = deltaY;
+        }
+        if ( 'deltaX' in orgEvent ) {
+            deltaX = orgEvent.deltaX;
+            if ( deltaY === 0 ) { delta  = deltaX * -1; }
+        }
+
+        // No change actually happened, no reason to go any further
+        if ( deltaY === 0 && deltaX === 0 ) { return; }
+
+        // Need to convert lines and pages to pixels if we aren't already in pixels
+        // There are three delta modes:
+        //   * deltaMode 0 is by pixels, nothing to do
+        //   * deltaMode 1 is by lines
+        //   * deltaMode 2 is by pages
+        if ( orgEvent.deltaMode === 1 ) {
+            var lineHeight = $.data(this, 'mousewheel-line-height');
+            delta  *= lineHeight;
+            deltaY *= lineHeight;
+            deltaX *= lineHeight;
+        } else if ( orgEvent.deltaMode === 2 ) {
+            var pageHeight = $.data(this, 'mousewheel-page-height');
+            delta  *= pageHeight;
+            deltaY *= pageHeight;
+            deltaX *= pageHeight;
+        }
+
+        // Store lowest absolute delta to normalize the delta values
+        absDelta = Math.max( Math.abs(deltaY), Math.abs(deltaX) );
+
+        if ( !lowestDelta || absDelta < lowestDelta ) {
+            lowestDelta = absDelta;
+
+            // Adjust older deltas if necessary
+            if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
+                lowestDelta /= 40;
+            }
+        }
+
+        // Adjust older deltas if necessary
+        if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
+            // Divide all the things by 40!
+            delta  /= 40;
+            deltaX /= 40;
+            deltaY /= 40;
+        }
+
+        // Get a whole, normalized value for the deltas
+        delta  = Math[ delta  >= 1 ? 'floor' : 'ceil' ](delta  / lowestDelta);
+        deltaX = Math[ deltaX >= 1 ? 'floor' : 'ceil' ](deltaX / lowestDelta);
+        deltaY = Math[ deltaY >= 1 ? 'floor' : 'ceil' ](deltaY / lowestDelta);
+
+        // Normalise offsetX and offsetY properties
+        if ( special.settings.normalizeOffset && this.getBoundingClientRect ) {
+            var boundingRect = this.getBoundingClientRect();
+            offsetX = event.clientX - boundingRect.left;
+            offsetY = event.clientY - boundingRect.top;
+        }
+
+        // Add information to the event object
+        event.deltaX = deltaX;
+        event.deltaY = deltaY;
+        event.deltaFactor = lowestDelta;
+        event.offsetX = offsetX;
+        event.offsetY = offsetY;
+        // Go ahead and set deltaMode to 0 since we converted to pixels
+        // Although this is a little odd since we overwrite the deltaX/Y
+        // properties with normalized deltas.
+        event.deltaMode = 0;
+
+        // Add event and delta to the front of the arguments
+        args.unshift(event, delta, deltaX, deltaY);
+
+        // Clearout lowestDelta after sometime to better
+        // handle multiple device types that give different
+        // a different lowestDelta
+        // Ex: trackpad = 3 and mouse wheel = 120
+        if (nullLowestDeltaTimeout) { clearTimeout(nullLowestDeltaTimeout); }
+        nullLowestDeltaTimeout = setTimeout(nullLowestDelta, 200);
+
+        return ($.event.dispatch || $.event.handle).apply(this, args);
+    }
+
+    function nullLowestDelta() {
+        lowestDelta = null;
+    }
+
+    function shouldAdjustOldDeltas(orgEvent, absDelta) {
+        // If this is an older event and the delta is divisable by 120,
+        // then we are assuming that the browser is treating this as an
+        // older mouse wheel event and that we should divide the deltas
+        // by 40 to try and get a more usable deltaFactor.
+        // Side note, this actually impacts the reported scroll distance
+        // in older browsers and can cause scrolling to be slower than native.
+        // Turn this off by setting $.event.special.mousewheel.settings.adjustOldDeltas to false.
+        return special.settings.adjustOldDeltas && orgEvent.type === 'mousewheel' && absDelta % 120 === 0;
+    }
+
+}));
+
+define('jquery-mousewheel', ['jquery-mousewheel/jquery.mousewheel'], function (main) { return main; });
+
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -28505,6 +28728,7 @@ define ('x_ite/Browser/Core/ContextMenu',[
    "x_ite/Base/X3DBaseNode",
    "locale/gettext",
    "lib/jquery.fullscreen-min",
+   "jquery-mousewheel",
 ],
 function ($,
           X3DBaseNode,
@@ -28546,19 +28770,6 @@ function ($,
             appendTo: browser .getShadow (),
             build: this .build .bind (this),
             animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
-            events:
-            {
-               show: function ()
-               {
-                  this .active = true;
-               }
-               .bind (this),
-               hide: function ()
-               {
-                  this .active = false;
-               }
-               .bind (this),
-            },
          });
       },
       getUserMenu: function ()
@@ -28568,10 +28779,6 @@ function ($,
       setUserMenu: function (userMenu)
       {
          this .userMenu = userMenu;
-      },
-      getActive: function ()
-      {
-         return this .active;
       },
       build: function (event)
       {
@@ -28590,34 +28797,18 @@ function ($,
             items: {
                "title": {
                   name: browser .getName () + " Browser v" + browser .getVersion (),
-                  className: "x_ite-private-menu-title",
+                  className: "context-menu-title context-menu-not-selectable",
                },
                "separator0": "--------",
                "viewpoints": {
                   name: _("Viewpoints"),
                   className: "context-menu-icon x_ite-private-icon-viewpoint",
                   items: this .getViewpoints (),
-                  callback: function (viewpoint)
-                  {
-                     if (! viewpoint)
-                        return;
-
-                     browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
-                     browser .getSurface () .focus ();
-                  }
-                  .bind (this, currentViewpoint),
                },
                "separator1": "--------",
                "viewer": {
                   name: _(this .getViewerName (currentViewer)),
-                  className: "context-menu-icon x_ite-private-icon-" + currentViewer .toLowerCase () + "-viewer",
-                  callback: function (viewer)
-                  {
-                     browser ._viewer = viewer;
-                     browser .getNotification () ._string = _(this .getViewerName (viewer));
-                     browser .getSurface () .focus ();
-                  }
-                  .bind (this, currentViewer),
+                  className: "context-menu-icon x_ite-private-icon-" + currentViewer .toLowerCase () + "-viewer context-menu-not-selectable",
                },
                "available-viewers": {
                   name: _("Available Viewers"),
@@ -28989,16 +29180,19 @@ function ($,
       },
       initializeContextMenu: function (options)
       {
-         options .element .on ("contextmenu", this .showContextMenu .bind (this, options));
+         this .triggerContextMenu = this .showContextMenu .bind (this, options);
+
+         options .element .on ("contextmenu", this .triggerContextMenu);
       },
+      triggerContextMenu: function (event)
+      { },
       showContextMenu: function (options, event)
       {
          const
             menu  = options .build (event),
             level = 1;
 
-         if (!menu)
-            return;
+         if (! menu) return;
 
          // Layer
 
@@ -29015,9 +29209,11 @@ function ($,
             {
                ul .remove ();
 
-               if (typeof options .events .hide === "function")
+               if (options .events && typeof options .events .hide === "function")
                   options .events .hide ();
             });
+
+            return false;
          };
 
          // Menu
@@ -29046,30 +29242,51 @@ function ($,
          if (ul .offset () .top - $(document) .scrollTop () + ul .outerHeight () > $(window) .height ())
             ul .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .outerHeight ()) });
 
-         // Display submenus on the left or right side..
+         // Display submenus on the left or right side.
          // If the submenu is higher than vh, add scrollbars.
-
-         const position = $(document) .width () - event .pageX < 370 ? "right" : "left";
 
          ul .find ("ul") .each (function (i, e)
          {
             e = $(e);
 
+            const
+               width    = e .outerWidth () + ul .outerWidth (),
+               position = ul .offset () .left - $(document) .scrollLeft () + width > $(window) .width () ? "right" : "left";
+
             e .css ("width", e .outerWidth ());
             e .css (position, e .parent () .closest ("ul") .width ());
 
             if (e .outerHeight () >= $(window) .height ())
+            {
                e .css ({ "max-height": "100vh", "overflow-y": "scroll" });
+
+               // Prevent scrolling of parent element.
+               // TODO: not on mobiles.
+
+               e .on ("mousewheel", function (event, d)
+               {
+                  if (d > 0)
+                  {
+                     if (e .scrollTop () <= 0)
+                        event .preventDefault ();
+                  }
+                  else if (d < 0)
+                  {
+                     if (e .scrollTop () + e .innerHeight () >= e .get (0) .scrollHeight)
+                        event .preventDefault ();
+                  }
+               });
+            }
          });
 
          // If the submenu is higher than vh, reposition it.
 
-         ul .find ("li") .on ("mouseenter", function (event)
+         ul .find ("li") .on ("mouseenter touchstart", function (event)
          {
             event .stopImmediatePropagation ();
 
             const
-               t = $(event .target),
+               t = $(event .target) .closest ("li"),
                e = t .children ("ul");
 
             if (! e .length)
@@ -29085,12 +29302,13 @@ function ($,
 
          // Layer
 
-         layer .on ("click", hide);
+         layer .on ("click contextmenu", hide);
+         ul .on ("contextmenu", hide);
 
          // Show
 
-         if (typeof options .events .show === "function")
-            options .events .show ();
+         if (options .events && typeof options .events .show === "function")
+            options .events .show (ul);
 
          return false;
       },
@@ -29102,7 +29320,7 @@ function ($,
          {
             case "string":
             {
-               if (item .startsWith ("-"))
+               if (item .match (/^-+$/))
                   li .addClass (["context-menu-separator", "context-menu-not-selectable"]);
 
                break;
@@ -29131,7 +29349,10 @@ function ($,
                         input .attr ("checked", "checked");
 
                      for (const key in item .events)
-                        input .on (key, item .events [key]);
+                     {
+                        if (typeof item .events [key] === "function")
+                           input .on (key, item .events [key]);
+                     }
 
                      li .addClass ("context-menu-input");
 
@@ -29153,7 +29374,7 @@ function ($,
             }
          }
 
-         if (item .items)
+         if (typeof item .items === "object" && level < 3)
          {
             const ul = $("<ul></ul>")
                .addClass ("context-menu-list")
@@ -35050,14 +35271,12 @@ function (Fields,
 
 define ('x_ite/Components/Core/X3DPrototypeInstance',[
    "x_ite/Base/X3DChildObject",
-   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Execution/X3DExecutionContext",
    "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DChildObject,
-          FieldDefinitionArray,
           X3DNode,
           X3DExecutionContext,
           X3DConstants,
@@ -39678,11 +39897,12 @@ function ($,
 
    let browserNumber = 0;
 
-   function X3DCoreContext (element, shadow)
+   function X3DCoreContext (element)
    {
       // Get canvas & context.
 
       const
+         shadow       = $(element .prop ("shadowRoot")),
          browser      = $("<div></div>") .addClass ("x_ite-private-browser"),
          splashScreen = $("<div></div>") .hide () .addClass ("x_ite-private-splash-screen") .appendTo (browser),
          spinner      = $("<div></div>") .addClass ("x_ite-private-spinner") .appendTo (splashScreen),
@@ -39695,11 +39915,14 @@ function ($,
 
       this [_number]       = ++ browserNumber;
       this [_element]      = element;
-      this [_shadow]       = shadow ? shadow .append (browser) : this [_element] .prepend (browser);
+      this [_shadow]       = shadow .length ? shadow : this [_element] .prepend (browser);
       this [_splashScreen] = splashScreen;
       this [_surface]      = surface;
       this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
       this [_context]      = Context .create (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
+
+      if (shadow .length)
+         shadow .prop ("loaded") .then (function () { shadow .append (browser); });
 
       this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_number] + ").");
       this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
@@ -39711,7 +39934,7 @@ function ($,
       this [_notification]        = new Notification        (this .getPrivateScene ());
       this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
 
-      const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo (element);
+      const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo (this [_shadow]);
       this [_pixelPerPoint] = inches .height () / 720;
       inches .remove ();
 
@@ -40015,15 +40238,6 @@ function ($,
                this ._altKey = true;
                break;
             }
-            case 37: // Left
-            case 38: // Up
-            case 39: // Right
-            case 40: // Down
-            {
-               // Prevent bug in Firefox that event loop is broken when pressing these keys.
-               this .requestAnimationFrame ();
-               break;
-            }
             case 49: // 1
             {
                if (this .getDebug ())
@@ -40251,15 +40465,6 @@ function ($,
             case 18: // Alt
             {
                this ._altKey = false;
-               break;
-            }
-            case 37: // Left
-            case 38: // Up
-            case 39: // Right
-            case 40: // Down
-            {
-               // Prevent bug in Firefox that event loop is broken when pressing these keys.
-               this .requestAnimationFrame ();
                break;
             }
             case 225: // Alt Gr
@@ -42029,7 +42234,7 @@ function (X3DChildNode,
                if (fraction <= key [0])
                   return this .interpolate (0, 1, 0);
 
-               const index1 = Algorithm .upperBound (key, 0, length, fraction, Algorithm .less);
+               const index1 = Algorithm .upperBound (key, 0, length, fraction);
 
                if (index1 !== length)
                {
@@ -43701,6 +43906,7 @@ function (X3DCast,
 
          this .x3d_LinePropertiesApplied              = gl .getUniformLocation (program, "x3d_LineProperties.applied");
          this .x3d_LinePropertiesLinewidthScaleFactor = this .getUniformLocation (gl, program, "x3d_LineProperties.linewidthScaleFactor", "x3d_LinewidthScaleFactor");
+         this .x3d_LineStippleScale                   = gl .getUniformLocation (program, "x3d_LineProperties.lineStippleScale");
          this .x3d_LinePropertiesLinetype             = gl .getUniformLocation (program, "x3d_LineProperties.linetype");
 
          this .x3d_FillPropertiesFilled     = gl .getUniformLocation (program, "x3d_FillProperties.filled");
@@ -43858,6 +44064,8 @@ function (X3DCast,
          /*
           * Fill uniforms with defaults.
           */
+
+         gl .uniform1f (this .x3d_LineStippleScale, browser .getLineStippleScale ());
 
          // Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
@@ -45497,7 +45705,9 @@ function (Fields,
 
 
 
-define('text!assets/shaders/Types.glsl',[],function () { return 'struct x3d_FogParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float visibilityRange;\n   mediump mat3  matrix;\n   bool          fogCoord;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float intensity;\n   mediump float ambientIntensity;\n   mediump vec3  attenuation;\n   mediump vec3  location;\n   mediump vec3  direction;\n   mediump float radius;\n   mediump float beamWidth;\n   mediump float cutOffAngle;\n   mediump mat3  matrix;\n   #ifdef X3D_SHADOWS\n   mediump vec3  shadowColor;\n   mediump float shadowIntensity;\n   mediump float shadowBias;\n   mediump mat4  shadowMatrix;\n   mediump int   shadowMapSize;\n   #endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_PointPropertiesParameters\n{\n   mediump float pointSizeScaleFactor;\n   mediump float pointSizeMinValue;\n   mediump float pointSizeMaxValue;\n   mediump vec3  pointSizeAttenuation;\n};\n\n//uniform x3d_PointPropertiesParameters x3d_PointProperties;\n\nstruct x3d_LinePropertiesParameters\n{\n   bool          applied;\n   mediump float linewidthScaleFactor;\n   sampler2D     linetype;\n};\n\n//uniform x3d_LinePropertiesParameters x3d_LineProperties;\n\nstruct x3d_FillPropertiesParameters\n{\n   bool         filled;\n   bool         hatched;\n   mediump vec3 hatchColor;\n   sampler2D    hatchStyle;\n};\n\n//uniform x3d_FillPropertiesParameters x3d_FillProperties;\n\nstruct x3d_UnlitMaterialParameters\n{\n   mediump vec3  emissiveColor;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_UnlitMaterialParameters x3d_Material;\n\nstruct x3d_MaterialParameters\n{\n   mediump float ambientIntensity;\n   mediump vec3  diffuseColor;\n   mediump vec3  specularColor;\n   mediump vec3  emissiveColor;\n   mediump float shininess;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_Material;\n\nstruct x3d_PhysicalMaterialParameters\n{\n   mediump vec3  baseColor;\n   mediump vec3  emissiveColor;\n   mediump float metallic;\n   mediump float roughness;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_PhysicalMaterialParameters x3d_Material;\n\n#ifdef X3D_MATERIAL_TEXTURES\n\nstruct x3d_AmbientTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_AMBIENT_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_AMBIENT_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_AMBIENT_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_AmbientTextureParameters x3d_AmbientTexture;\n\nstruct x3d_DiffuseTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_DIFFUSE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_DIFFUSE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_DIFFUSE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;\n\nstruct x3d_SpecularTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SPECULAR_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_SPECULAR_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SPECULAR_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_SpecularTextureParameters x3d_SpecularTexture;\n\nstruct x3d_EmissiveTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_EMISSIVE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_EMISSIVE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_EMISSIVE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;\n\nstruct x3d_ShininessTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SHININESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_SHININESS_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SHININESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_ShininessTextureParameters x3d_ShininessTexture;\n\nstruct x3d_BaseTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_BASE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_BASE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_BASE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_BaseTextureParameters x3d_BaseTexture;\n\nstruct x3d_MetallicRoughnessTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;\n\nstruct x3d_OcclusionTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_OCCLUSION_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_OCCLUSION_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_OCCLUSION_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;\n\nstruct x3d_NormalTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_NORMAL_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_NORMAL_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_NORMAL_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_NormalTextureParameters x3d_NormalTexture;\n\n#endif // X3D_MATERIAL_TEXTURES\n\nstruct x3d_MultiTextureParameters\n{\n   mediump int mode;\n   mediump int alphaMode;\n   mediump int source;\n   mediump int function;\n};\n\n//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nstruct x3d_TextureCoordinateGeneratorParameters\n{\n   mediump int   mode;\n   mediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];\n';});
+
+
+define('text!assets/shaders/Types.glsl',[],function () { return 'struct x3d_FogParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float visibilityRange;\n   mediump mat3  matrix;\n   bool          fogCoord;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float intensity;\n   mediump float ambientIntensity;\n   mediump vec3  attenuation;\n   mediump vec3  location;\n   mediump vec3  direction;\n   mediump float radius;\n   mediump float beamWidth;\n   mediump float cutOffAngle;\n   mediump mat3  matrix;\n   #ifdef X3D_SHADOWS\n   mediump vec3  shadowColor;\n   mediump float shadowIntensity;\n   mediump float shadowBias;\n   mediump mat4  shadowMatrix;\n   mediump int   shadowMapSize;\n   #endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_PointPropertiesParameters\n{\n   mediump float pointSizeScaleFactor;\n   mediump float pointSizeMinValue;\n   mediump float pointSizeMaxValue;\n   mediump vec3  pointSizeAttenuation;\n};\n\n//uniform x3d_PointPropertiesParameters x3d_PointProperties;\n\nstruct x3d_LinePropertiesParameters\n{\n   bool          applied;\n   mediump float linewidthScaleFactor;\n   mediump float lineStippleScale;\n   sampler2D     linetype;\n};\n\n//uniform x3d_LinePropertiesParameters x3d_LineProperties;\n\nstruct x3d_FillPropertiesParameters\n{\n   bool         filled;\n   bool         hatched;\n   mediump vec3 hatchColor;\n   sampler2D    hatchStyle;\n};\n\n//uniform x3d_FillPropertiesParameters x3d_FillProperties;\n\nstruct x3d_UnlitMaterialParameters\n{\n   mediump vec3  emissiveColor;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_UnlitMaterialParameters x3d_Material;\n\nstruct x3d_MaterialParameters\n{\n   mediump float ambientIntensity;\n   mediump vec3  diffuseColor;\n   mediump vec3  specularColor;\n   mediump vec3  emissiveColor;\n   mediump float shininess;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_Material;\n\nstruct x3d_PhysicalMaterialParameters\n{\n   mediump vec3  baseColor;\n   mediump vec3  emissiveColor;\n   mediump float metallic;\n   mediump float roughness;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_PhysicalMaterialParameters x3d_Material;\n\n#ifdef X3D_MATERIAL_TEXTURES\n\nstruct x3d_AmbientTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_AMBIENT_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_AMBIENT_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_AMBIENT_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_AmbientTextureParameters x3d_AmbientTexture;\n\nstruct x3d_DiffuseTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_DIFFUSE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_DIFFUSE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_DIFFUSE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;\n\nstruct x3d_SpecularTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SPECULAR_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_SPECULAR_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SPECULAR_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_SpecularTextureParameters x3d_SpecularTexture;\n\nstruct x3d_EmissiveTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_EMISSIVE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_EMISSIVE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_EMISSIVE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;\n\nstruct x3d_ShininessTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SHININESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_SHININESS_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SHININESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_ShininessTextureParameters x3d_ShininessTexture;\n\nstruct x3d_BaseTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_BASE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_BASE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_BASE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_BaseTextureParameters x3d_BaseTexture;\n\nstruct x3d_MetallicRoughnessTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;\n\nstruct x3d_OcclusionTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_OCCLUSION_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_OCCLUSION_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_OCCLUSION_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;\n\nstruct x3d_NormalTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_NORMAL_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_NORMAL_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_NORMAL_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_NormalTextureParameters x3d_NormalTexture;\n\n#endif // X3D_MATERIAL_TEXTURES\n\nstruct x3d_MultiTextureParameters\n{\n   mediump int mode;\n   mediump int alphaMode;\n   mediump int source;\n   mediump int function;\n};\n\n//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nstruct x3d_TextureCoordinateGeneratorParameters\n{\n   mediump int   mode;\n   mediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -45860,14 +46070,35 @@ function (ShaderSource,
 
          source = ShaderSource .get (gl, source);
 
-         const
-            COMMENTS = "\\s+|/\\*[^]*?\\*/|//.*?\\n",
-            VERSION  = "#version\\s+.*?\\n",
-            ANY      = "[^]*";
+			const
+				COMMENTS     = "\\s+|/\\*[\\s\\S]*?\\*/|//.*?\\n",
+				LINE         = "#line\\s+.*?\\n",
+				IF           = "#if\\s+.*?\\n",
+				ELIF         = "#elif\\s+.*?\\n",
+				IFDEF        = "#ifdef\\s+.*?\\n",
+				IFNDEF       = "#ifndef\\s+.*?\\n",
+				ELSE         = "#else.*?\\n",
+				ENDIF        = "#endif.*?\\n",
+				DEFINE       = "#define\\s+(?:[^\\n\\\\]|\\\\[^\\r\\n]|\\\\\\r?\\n)*\\n",
+				UNDEF        = "#undef\\s+.*?\\n",
+				PRAGMA       = "#pragma\\s+.*?\\n",
+				PREPROCESSOR =  LINE + "|" + IF + "|" + ELIF + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + UNDEF + "|" + PRAGMA,
+				VERSION      = "#version\\s+.*?\\n",
+				EXTENSION    = "#extension\\s+.*?\\n",
+				ANY          = "[\\s\\S]*";
 
-         const
-            GLSL  = new RegExp ("^((?:" + COMMENTS + ")?(?:" + VERSION + ")?)(" + ANY + ")$"),
-            match = source .match (GLSL);
+			const
+				GLSL  = new RegExp ("^((?:" + COMMENTS + "|" + PREPROCESSOR + ")*(?:" + VERSION + ")?(?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)(" + ANY + ")$"),
+				match = source .match (GLSL);
+
+         // const
+         //    COMMENTS = "\\s+|/\\*[^]*?\\*/|//.*?\\n",
+         //    VERSION  = "#version\\s+.*?\\n",
+         //    ANY      = "[^]*";
+
+         // const
+         //    GLSL  = new RegExp ("^((?:" + COMMENTS + ")?(?:" + VERSION + ")?)(" + ANY + ")$"),
+         //    match = source .match (GLSL);
 
          if (! match)
             return source;
@@ -56535,18 +56766,18 @@ function (X3DChildNode,
             {
                const
                   pointingDeviceSensorNodes = this .pointingDeviceSensorNodes,
-                  clipPlaneNodes            = this .clipPlaneNodes;
+                  clipPlaneNodes            = this .clipPlaneNodes,
+                  sensors                   = this .sensors;
+
+               sensors .clear ();
 
                if (pointingDeviceSensorNodes .length)
                {
-                  const sensors = this .sensors;
-
-                  sensors .clear ();
-
-                  renderObject .getBrowser () .getSensors () .push (sensors);
-
                   for (const pointingDeviceSensorNode of pointingDeviceSensorNodes)
                      pointingDeviceSensorNode .push (renderObject, sensors);
+
+                  if (sensors .size)
+                     renderObject .getBrowser () .getSensors () .push (sensors);
                }
 
                for (const clipPlaneNode of clipPlaneNodes)
@@ -56558,7 +56789,7 @@ function (X3DChildNode,
                for (const clipPlaneNode of clipPlaneNodes)
                   clipPlaneNode .pop (renderObject);
 
-               if (pointingDeviceSensorNodes .length)
+               if (sensors .size)
                   renderObject .getBrowser () .getSensors () .pop ();
 
                return;
@@ -58461,7 +58692,7 @@ function (X3DBindableNode,
       },
       getColor: function (theta, color, angle)
       {
-         const index = Algorithm .upperBound (angle, 0, angle .length, theta, Algorithm .less);
+         const index = Algorithm .upperBound (angle, 0, angle .length, theta);
 
          return color [index];
       },
@@ -64410,11 +64641,6 @@ function ($,
       {
          scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, success, error);
          scene ._initLoadCount .addEvent ();
-
-         // At least Firefox 105.0.2 sometimes does not call requestAnimationFrame
-         // callback when other events occur, but if we trigger it here again, it works.
-         if (navigator .userAgent .includes ("Firefox"))
-            this .browser .requestAnimationFrame ();
       },
       set_initLoadCount__: function (scene, success, error, field)
       {
@@ -66817,7 +67043,7 @@ function (Fields,
       {
          let linetype = this ._linetype .getValue ();
 
-         if (linetype < 1 || linetype > 15)
+         if (linetype < 1 || linetype > 16)
             linetype = 1;
 
          this .linetype = linetype;
@@ -66829,7 +67055,7 @@ function (Fields,
             gl      = browser .getContext ();
 
          this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ());
-         this .mustTransformLines   = gl .getVersion () >= 2 && this .linewidthScaleFactor > 1 && gl .lineWidth === Function .prototype;
+         this .mustTransformLines   = gl .MUST_TRANSFORM_LINES && this .linewidthScaleFactor > 1;
       },
       setShaderUniforms: function (gl, shaderObject)
       {
@@ -68702,13 +68928,17 @@ function (Fields,
             intersectionSorter = new QuickSort (intersections, function (lhs, rhs)
             {
                return lhs .point .z > rhs .point .z;
-            });
+            }),
+            distanceCompare    = function (lhs, rhs) { return lhs .point .z > rhs; };
 
          return function (renderObject)
          {
-            const
-               browser      = renderObject .getBrowser (),
-               geometryNode = this .getGeometry ();
+            const browser = renderObject .getBrowser ();
+
+            if (browser .getPickOnlySensors () && browser .getSensors () .length === 1)
+               return;
+
+            const geometryNode = this .getGeometry ();
 
             modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
             invModelViewMatrix .assign (modelViewMatrix) .inverse ();
@@ -68726,11 +68956,7 @@ function (Fields,
                intersectionSorter .sort (0, intersections .length);
 
                // Find first point that is not greater than near plane;
-               const index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
-               function (lhs, rhs)
-               {
-                  return lhs .point .z > rhs;
-               });
+               const index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (), distanceCompare);
 
                // Are there intersections before the camera?
                if (index !== intersections .length)
@@ -70151,44 +70377,39 @@ function (X3DGeometryNode,
             projectedPoint0           = new Vector2 (0, 0),
             projectedPoint1           = new Vector2 (0, 0);
 
-         return function (gl, context, linePropertiesNode)
+         return function (gl, context)
          {
-            if (linePropertiesNode .getApplied ())
+            const
+               viewport         = context .renderer .getViewVolume () .getViewport (),
+               projectionMatrix = context .renderer .getProjectionMatrix () .get (),
+               texCoordArray    = this .getTexCoords () .getValue (),
+               vertices         = this .getVertices (),
+               numVertices      = vertices .length;
+
+            modelViewProjectionMatrix .assign (context .modelViewMatrix) .multRight (projectionMatrix);
+
+            let lengthSoFar = 0;
+
+            for (let i = 0; i < numVertices; i += 8)
             {
-               // Calculate length so far for line stipples.
+               point0 .set (vertices [i],     vertices [i + 1], vertices [i + 2], vertices [i + 3]);
+               point1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6], vertices [i + 7]);
 
-               if (linePropertiesNode .getLinetype () !== 1)
-               {
-                  const
-                     viewport         = context .renderer .getViewVolume () .getViewport (),
-                     projectionMatrix = context .renderer .getProjectionMatrix () .get (),
-                     texCoordArray    = this .getTexCoords () .getValue (),
-                     vertices         = this .getVertices (),
-                     lineStippleScale = context .browser .getLineStippleScale ();
+               ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
+               ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
 
-                  modelViewProjectionMatrix .assign (context .modelViewMatrix) .multRight (projectionMatrix);
+               texCoordArray [i]     = projectedPoint1 .x;
+               texCoordArray [i + 1] = projectedPoint1 .y;
 
-                  let lengthSoFar = 0;
+               texCoordArray [i + 4] = projectedPoint0 .x;
+               texCoordArray [i + 5] = projectedPoint0 .y;
+               texCoordArray [i + 6] = lengthSoFar;
 
-                  for (let i = 0, length = vertices .length; i < length; i += 8)
-                  {
-                     point0 .set (vertices [i],     vertices [i + 1], vertices [i + 2], vertices [i + 3]);
-                     point1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6], vertices [i + 7]);
-
-                     ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
-                     ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
-
-                     texCoordArray [i + 3] = lengthSoFar;
-
-                     lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs () * lineStippleScale;
-
-                     texCoordArray [i + 7] = lengthSoFar;
-                  }
-
-                  gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
-                  gl .bufferData (gl .ARRAY_BUFFER, texCoordArray, gl .DYNAMIC_DRAW);
-               }
+               lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs ();
             }
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
+            gl .bufferData (gl .ARRAY_BUFFER, texCoordArray, gl .DYNAMIC_DRAW);
          };
       })(),
       display: (function ()
@@ -70209,7 +70430,8 @@ function (X3DGeometryNode,
                attribNodes        = this .attribNodes,
                attribBuffers      = this .attribBuffers;
 
-            this .updateLengthSoFar (gl, context, linePropertiesNode);
+            if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
+               this .updateLengthSoFar (gl, context);
 
             if (linePropertiesNode .getMustTransformLines ())
             {
@@ -70888,6 +71110,19 @@ function (Fields,
    X3DColorNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
    {
       constructor: X3DColorNode,
+      initialize: function ()
+      {
+         X3DGeometricPropertyNode .prototype .initialize .call (this);
+
+         this ._color .addInterest ("set_color__", this);
+
+         this .set_color__ ();
+      },
+      set_color__: function ()
+      {
+         this .color  = this ._color .getValue ();
+         this .length = this ._color .length;
+      },
       setTransparent: function (value)
       {
          if (value !== this ._transparent .getValue ())
@@ -70957,14 +71192,12 @@ function (Fields,
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DColorNode",
    "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector4",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DColorNode,
-          X3DConstants,
-          Vector4)
+          X3DConstants)
 {
 "use strict";
 
@@ -70993,19 +71226,6 @@ function (Fields,
       getContainerField: function ()
       {
          return "color";
-      },
-      initialize: function ()
-      {
-         X3DColorNode .prototype .initialize .call (this);
-
-         this ._color .addInterest ("set_color__", this);
-
-         this .set_color__ ();
-      },
-      set_color__: function ()
-      {
-         this .color  = this ._color .getValue ();
-         this .length = this ._color .length;
       },
       addColor: function (index, array)
       {
@@ -72494,6 +72714,27 @@ function (X3DTextureCoordinateNode,
    X3DSingleTextureCoordinateNode .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
    {
       constructor: X3DSingleTextureCoordinateNode,
+      initialize: function ()
+      {
+         X3DTextureCoordinateNode .prototype .initialize .call (this);
+
+         this ._point .addInterest ("set_point__", this);
+
+         this .set_point__ ();
+      },
+      set_point__: function ()
+      {
+         this .point  = this ._point .getValue ();
+         this .length = this ._point .length;
+      },
+      isEmpty: function ()
+      {
+         return this .length === 0;
+      },
+      getSize: function ()
+      {
+         return this .length;
+      },
       init: function (multiArray)
       {
          this .texCoordArray .length = 0;
@@ -72611,27 +72852,6 @@ function (Fields,
       getContainerField: function ()
       {
          return "texCoord";
-      },
-      initialize: function ()
-      {
-         X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
-
-         this ._point .addInterest ("set_point__", this);
-
-         this .set_point__ ();
-      },
-      set_point__: function ()
-      {
-         this .point  = this ._point .getValue ();
-         this .length = this ._point .length;
-      },
-      isEmpty: function ()
-      {
-         return this .length === 0;
-      },
-      getSize: function ()
-      {
-         return this .length;
       },
       get1Point: function (index, vector)
       {
@@ -73475,6 +73695,8 @@ function ($,
 {
 "use strict";
 
+   const CONTEXT_MENU_TIME = 1200;
+
    function PointingDevice (executionContext)
    {
       X3DBaseNode .call (this, executionContext);
@@ -73514,9 +73736,6 @@ function ($,
          const browser = this .getBrowser ();
 
          browser .getElement () .focus ();
-
-         if (browser .getContextMenu () .getActive ())
-            return;
 
          if (browser .getShiftKey () && browser .getControlKey ())
             return;
@@ -73609,6 +73828,18 @@ function ($,
                event .pageY  = touches [0] .pageY;
 
                this .mousedown (event);
+
+               // Show context menu on long tab.
+
+               const nearestHit = this .getBrowser () .getNearestHit ();
+
+               if (! nearestHit || nearestHit .sensors .size === 0)
+               {
+                  this .touchX       = event .pageX;
+                  this .touchY       = event .pageY;
+                  this .touchTimeout = setTimeout (this .showContextMenu .bind (this, event), CONTEXT_MENU_TIME);
+               }
+
                break;
             }
             case 2:
@@ -73621,7 +73852,10 @@ function ($,
       touchend: function (event)
       {
          event .button = 0;
+
          this .mouseup (event);
+
+         clearTimeout (this .touchTimeout);
       },
       touchmove: function (event)
       {
@@ -73638,6 +73872,10 @@ function ($,
                event .pageY  = touches [0] .pageY;
 
                this .mousemove (event);
+
+               if (Math .hypot (this .touchX - event .pageX, this .touchY - event .pageY) > 7)
+                  clearTimeout (this .touchTimeout);
+
                break;
             }
          }
@@ -73652,6 +73890,7 @@ function ($,
             {
                this .isOver = true;
                this .cursor = browser .getCursor ();
+
                browser .setCursor ("HAND");
             }
          }
@@ -73660,6 +73899,7 @@ function ($,
             if (this .isOver)
             {
                this .isOver = false;
+
                browser .setCursor (this .cursor);
             }
          }
@@ -73677,6 +73917,10 @@ function ($,
          this .getBrowser () .finished () .removeInterest ("onverifymotion", this);
 
          this .onmotion (x, y);
+      },
+      showContextMenu: function (event)
+      {
+         this .getBrowser () .getContextMenu () .triggerContextMenu (event);
       },
    });
 
@@ -73756,19 +74000,20 @@ function (PointingDevice,
 "use strict";
 
    const
-      _pointingDevice = Symbol (),
-      _cursorType     = Symbol (),
-      _pointer        = Symbol (),
-      _hitRay         = Symbol (),
-      _hits           = Symbol (),
-      _enabledSensors = Symbol (),
-      _selectedLayer  = Symbol (),
-      _overSensors    = Symbol (),
-      _activeSensors  = Symbol (),
-      _hitPointSorter = Symbol (),
-      _layerNumber    = Symbol (),
-      _layerSorter    = Symbol (),
-      _pointerTime    = Symbol ();
+      _pointingDevice  = Symbol (),
+      _cursorType      = Symbol (),
+      _pointer         = Symbol (),
+      _hitRay          = Symbol (),
+      _hits            = Symbol (),
+      _enabledSensors  = Symbol (),
+      _pickOnlySensors = Symbol (),
+      _selectedLayer   = Symbol (),
+      _overSensors     = Symbol (),
+      _activeSensors   = Symbol (),
+      _hitPointSorter  = Symbol (),
+      _layerNumber     = Symbol (),
+      _layerSorter     = Symbol (),
+      _pointerTime     = Symbol ();
 
    const line = new Line3 (Vector3 .Zero, Vector3 .Zero);
 
@@ -73780,8 +74025,8 @@ function (PointingDevice,
       this [_hits]           = [ ];
       this [_enabledSensors] = [new Map ()];
       this [_selectedLayer]  = null;
-      this [_overSensors]    = new Map ();
-      this [_activeSensors]  = new Map ();
+      this [_overSensors]    = new Set ();
+      this [_activeSensors]  = new Set ();
       this [_hitPointSorter] = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .intersection .point .z < rhs .intersection .point .z; });
       this [_layerSorter]    = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .layerNumber < rhs .layerNumber; });
       this [_pointerTime]    = 0;
@@ -73857,6 +74102,10 @@ function (PointingDevice,
       {
          return this [_enabledSensors];
       },
+      getPickOnlySensors: function ()
+      {
+         return this [_pickOnlySensors];
+      },
       addHit: function (intersection, layer, shape, modelViewMatrix)
       {
          const sensors = this [_enabledSensors] .at (-1);
@@ -73865,7 +74114,7 @@ function (PointingDevice,
             pointer:         this [_pointer],
             hitRay:          this [_hitRay] .copy (),
             intersection:    intersection,
-            sensors:         sensors .size ? new Map (sensors) : sensors,
+            sensors:         new Set (sensors .values ()),
             layer:           layer,
             layerNumber:     this [_layerNumber],
             shape:           shape,
@@ -73882,7 +74131,7 @@ function (PointingDevice,
       },
       buttonPressEvent: function (x, y)
       {
-         this .touch (x, y);
+         this .touch (x, y, true);
 
          if (this [_hits] .length === 0)
             return false;
@@ -73892,7 +74141,7 @@ function (PointingDevice,
          this [_selectedLayer] = nearestHit .layer;
          this [_activeSensors] = nearestHit .sensors;
 
-         for (const sensor of this [_activeSensors] .values ())
+         for (const sensor of this [_activeSensors])
             sensor .set_active__ (true, nearestHit);
 
          return !! nearestHit .sensors .size;
@@ -73901,10 +74150,10 @@ function (PointingDevice,
       {
          this [_selectedLayer] = null;
 
-         for (const sensor of this [_activeSensors] .values ())
+         for (const sensor of this [_activeSensors])
             sensor .set_active__ (false, null);
 
-         this [_activeSensors] = new Map ();
+         this [_activeSensors] = new Set ();
 
          // Selection
 
@@ -73912,14 +74161,14 @@ function (PointingDevice,
       },
       motionNotifyEvent: function (x, y)
       {
-         this .touch (x, y);
+         this .touch (x, y, true);
          this .motion ();
 
          return !! (this [_hits] .length && this [_hits] .at (-1) .sensors .size);
       },
       leaveNotifyEvent: function ()
       { },
-      touch: function (x, y)
+      touch: function (x, y, pickOnlySensors)
       {
          if (this .getViewer () ._isActive .getValue ())
          {
@@ -73928,6 +74177,8 @@ function (PointingDevice,
          }
 
          const t0 = performance .now ();
+
+         this [_pickOnlySensors] = pickOnlySensors;
 
          this [_pointer] .set (x, y);
 
@@ -73960,7 +74211,7 @@ function (PointingDevice,
                modelViewMatrix: new Matrix4 (),
                hitRay:          this [_selectedLayer] ? this [_hitRay] : line,
                intersection:    null,
-               sensors:         new Map (),
+               sensors:         new Set (),
                shape:           null,
                layer:           null,
                layerNumber:     0,
@@ -73971,14 +74222,14 @@ function (PointingDevice,
 
          if (this [_hits] .length)
          {
-            var difference = Algorithm .map_difference (this [_overSensors], nearestHit .sensors, new Map ());
+            var difference = Algorithm .set_difference (this [_overSensors], nearestHit .sensors, new Set ());
          }
          else
          {
-            var difference = new Map (this [_overSensors]);
+            var difference = new Set (this [_overSensors]);
          }
 
-         for (const sensor of difference .values ())
+         for (const sensor of difference)
             sensor .set_over__ (false, nearestHit);
 
          // Set isOver to TRUE for appropriate nodes
@@ -73987,17 +74238,17 @@ function (PointingDevice,
          {
             this [_overSensors] = nearestHit .sensors;
 
-            for (const sensor of this [_overSensors] .values ())
+            for (const sensor of this [_overSensors])
                sensor .set_over__ (true, nearestHit);
          }
          else
          {
-            this [_overSensors] = new Map ();
+            this [_overSensors] = new Set ();
          }
 
          // Forward motion event to active drag sensor nodes
 
-         for (const sensor of this [_activeSensors] .values ())
+         for (const sensor of this [_activeSensors])
             sensor .set_motion__ (nearestHit);
       },
       getPointerTime: function ()
@@ -74197,7 +74448,7 @@ function (X3DBaseNode,
       })(),
       touch: function (x, y)
       {
-         this .getBrowser () .touch (x, y);
+         this .getBrowser () .touch (x, y, false);
 
          return this .getBrowser () .getHits () .length;
       },
@@ -74849,230 +75100,6 @@ function (Fields,
    return OrientationChaser;
 });
 
-/*!
- * jQuery Mousewheel 3.1.13
- *
- * Copyright jQuery Foundation and other contributors
- * Released under the MIT license
- * http://jquery.org/license
- */
-
-(function (factory) {
-    if ( typeof define === 'function' && define.amd ) {
-        // AMD. Register as an anonymous module.
-        define('jquery-mousewheel/jquery.mousewheel',['jquery'], factory);
-    } else if (typeof exports === 'object') {
-        // Node/CommonJS style for Browserify
-        module.exports = factory;
-    } else {
-        // Browser globals
-        factory(jQuery);
-    }
-}(function ($) {
-
-    var toFix  = ['wheel', 'mousewheel', 'DOMMouseScroll', 'MozMousePixelScroll'],
-        toBind = ( 'onwheel' in document || document.documentMode >= 9 ) ?
-                    ['wheel'] : ['mousewheel', 'DomMouseScroll', 'MozMousePixelScroll'],
-        slice  = Array.prototype.slice,
-        nullLowestDeltaTimeout, lowestDelta;
-
-    if ( $.event.fixHooks ) {
-        for ( var i = toFix.length; i; ) {
-            $.event.fixHooks[ toFix[--i] ] = $.event.mouseHooks;
-        }
-    }
-
-    var special = $.event.special.mousewheel = {
-        version: '3.1.12',
-
-        setup: function() {
-            if ( this.addEventListener ) {
-                for ( var i = toBind.length; i; ) {
-                    this.addEventListener( toBind[--i], handler, false );
-                }
-            } else {
-                this.onmousewheel = handler;
-            }
-            // Store the line height and page height for this particular element
-            $.data(this, 'mousewheel-line-height', special.getLineHeight(this));
-            $.data(this, 'mousewheel-page-height', special.getPageHeight(this));
-        },
-
-        teardown: function() {
-            if ( this.removeEventListener ) {
-                for ( var i = toBind.length; i; ) {
-                    this.removeEventListener( toBind[--i], handler, false );
-                }
-            } else {
-                this.onmousewheel = null;
-            }
-            // Clean up the data we added to the element
-            $.removeData(this, 'mousewheel-line-height');
-            $.removeData(this, 'mousewheel-page-height');
-        },
-
-        getLineHeight: function(elem) {
-            var $elem = $(elem),
-                $parent = $elem['offsetParent' in $.fn ? 'offsetParent' : 'parent']();
-            if (!$parent.length) {
-                $parent = $('body');
-            }
-            return parseInt($parent.css('fontSize'), 10) || parseInt($elem.css('fontSize'), 10) || 16;
-        },
-
-        getPageHeight: function(elem) {
-            return $(elem).height();
-        },
-
-        settings: {
-            adjustOldDeltas: true, // see shouldAdjustOldDeltas() below
-            normalizeOffset: true  // calls getBoundingClientRect for each event
-        }
-    };
-
-    $.fn.extend({
-        mousewheel: function(fn) {
-            return fn ? this.bind('mousewheel', fn) : this.trigger('mousewheel');
-        },
-
-        unmousewheel: function(fn) {
-            return this.unbind('mousewheel', fn);
-        }
-    });
-
-
-    function handler(event) {
-        var orgEvent   = event || window.event,
-            args       = slice.call(arguments, 1),
-            delta      = 0,
-            deltaX     = 0,
-            deltaY     = 0,
-            absDelta   = 0,
-            offsetX    = 0,
-            offsetY    = 0;
-        event = $.event.fix(orgEvent);
-        event.type = 'mousewheel';
-
-        // Old school scrollwheel delta
-        if ( 'detail'      in orgEvent ) { deltaY = orgEvent.detail * -1;      }
-        if ( 'wheelDelta'  in orgEvent ) { deltaY = orgEvent.wheelDelta;       }
-        if ( 'wheelDeltaY' in orgEvent ) { deltaY = orgEvent.wheelDeltaY;      }
-        if ( 'wheelDeltaX' in orgEvent ) { deltaX = orgEvent.wheelDeltaX * -1; }
-
-        // Firefox < 17 horizontal scrolling related to DOMMouseScroll event
-        if ( 'axis' in orgEvent && orgEvent.axis === orgEvent.HORIZONTAL_AXIS ) {
-            deltaX = deltaY * -1;
-            deltaY = 0;
-        }
-
-        // Set delta to be deltaY or deltaX if deltaY is 0 for backwards compatabilitiy
-        delta = deltaY === 0 ? deltaX : deltaY;
-
-        // New school wheel delta (wheel event)
-        if ( 'deltaY' in orgEvent ) {
-            deltaY = orgEvent.deltaY * -1;
-            delta  = deltaY;
-        }
-        if ( 'deltaX' in orgEvent ) {
-            deltaX = orgEvent.deltaX;
-            if ( deltaY === 0 ) { delta  = deltaX * -1; }
-        }
-
-        // No change actually happened, no reason to go any further
-        if ( deltaY === 0 && deltaX === 0 ) { return; }
-
-        // Need to convert lines and pages to pixels if we aren't already in pixels
-        // There are three delta modes:
-        //   * deltaMode 0 is by pixels, nothing to do
-        //   * deltaMode 1 is by lines
-        //   * deltaMode 2 is by pages
-        if ( orgEvent.deltaMode === 1 ) {
-            var lineHeight = $.data(this, 'mousewheel-line-height');
-            delta  *= lineHeight;
-            deltaY *= lineHeight;
-            deltaX *= lineHeight;
-        } else if ( orgEvent.deltaMode === 2 ) {
-            var pageHeight = $.data(this, 'mousewheel-page-height');
-            delta  *= pageHeight;
-            deltaY *= pageHeight;
-            deltaX *= pageHeight;
-        }
-
-        // Store lowest absolute delta to normalize the delta values
-        absDelta = Math.max( Math.abs(deltaY), Math.abs(deltaX) );
-
-        if ( !lowestDelta || absDelta < lowestDelta ) {
-            lowestDelta = absDelta;
-
-            // Adjust older deltas if necessary
-            if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
-                lowestDelta /= 40;
-            }
-        }
-
-        // Adjust older deltas if necessary
-        if ( shouldAdjustOldDeltas(orgEvent, absDelta) ) {
-            // Divide all the things by 40!
-            delta  /= 40;
-            deltaX /= 40;
-            deltaY /= 40;
-        }
-
-        // Get a whole, normalized value for the deltas
-        delta  = Math[ delta  >= 1 ? 'floor' : 'ceil' ](delta  / lowestDelta);
-        deltaX = Math[ deltaX >= 1 ? 'floor' : 'ceil' ](deltaX / lowestDelta);
-        deltaY = Math[ deltaY >= 1 ? 'floor' : 'ceil' ](deltaY / lowestDelta);
-
-        // Normalise offsetX and offsetY properties
-        if ( special.settings.normalizeOffset && this.getBoundingClientRect ) {
-            var boundingRect = this.getBoundingClientRect();
-            offsetX = event.clientX - boundingRect.left;
-            offsetY = event.clientY - boundingRect.top;
-        }
-
-        // Add information to the event object
-        event.deltaX = deltaX;
-        event.deltaY = deltaY;
-        event.deltaFactor = lowestDelta;
-        event.offsetX = offsetX;
-        event.offsetY = offsetY;
-        // Go ahead and set deltaMode to 0 since we converted to pixels
-        // Although this is a little odd since we overwrite the deltaX/Y
-        // properties with normalized deltas.
-        event.deltaMode = 0;
-
-        // Add event and delta to the front of the arguments
-        args.unshift(event, delta, deltaX, deltaY);
-
-        // Clearout lowestDelta after sometime to better
-        // handle multiple device types that give different
-        // a different lowestDelta
-        // Ex: trackpad = 3 and mouse wheel = 120
-        if (nullLowestDeltaTimeout) { clearTimeout(nullLowestDeltaTimeout); }
-        nullLowestDeltaTimeout = setTimeout(nullLowestDelta, 200);
-
-        return ($.event.dispatch || $.event.handle).apply(this, args);
-    }
-
-    function nullLowestDelta() {
-        lowestDelta = null;
-    }
-
-    function shouldAdjustOldDeltas(orgEvent, absDelta) {
-        // If this is an older event and the delta is divisable by 120,
-        // then we are assuming that the browser is treating this as an
-        // older mouse wheel event and that we should divide the deltas
-        // by 40 to try and get a more usable deltaFactor.
-        // Side note, this actually impacts the reported scroll distance
-        // in older browsers and can cause scrolling to be slower than native.
-        // Turn this off by setting $.event.special.mousewheel.settings.adjustOldDeltas to false.
-        return special.settings.adjustOldDeltas && orgEvent.type === 'mousewheel' && absDelta % 120 === 0;
-    }
-
-}));
-
-define('jquery-mousewheel', ['jquery-mousewheel/jquery.mousewheel'], function (main) { return main; });
-
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -75248,9 +75275,6 @@ function ($,
       },
       mousedown: function (event)
       {
-         if (this .getBrowser () .getContextMenu () .getActive ())
-            return;
-
          if (this .button >= 0)
             return;
 
@@ -75524,21 +75548,24 @@ function ($,
                // End rotate (button 0).
 
                event .button = 0;
+               event .pageX  = this .touch1 .x;
+               event .pageY  = this .touch1 .y;
 
                this .mouseup (event);
 
                // Start dblclick (button 0).
 
-               if (this .getBrowser () .getCurrentTime () - this .tapStart < this .dblTapInterval)
+               if (this .tapedTwice)
                {
-                  event .button = 0;
-                  event .pageX  = this .touch1 .x;
-                  event .pageY  = this .touch1 .y;
-
                   this .dblclick (event);
                }
+               else
+               {
+                  this .tapedTwice = true;
 
-               this .tapStart = this .getBrowser () .getCurrentTime ();
+                  setTimeout (function () { this .tapedTwice = false; } .bind (this), 300);
+               }
+
                break;
             }
             case 1:
@@ -76047,9 +76074,6 @@ function ($,
       },
       mousedown: function (event)
       {
-         if (this .getBrowser () .getContextMenu () .getActive ())
-            return;
-
          if (this .button >= 0)
             return;
 
@@ -77017,9 +77041,6 @@ function ($,
       },
       mousedown: function (event)
       {
-         if (this .getBrowser () .getContextMenu () .getActive ())
-            return;
-
          if (this .button >= 0)
             return;
 
@@ -77385,9 +77406,6 @@ function ($,
       },
       mousedown: function (event)
       {
-         if (this .getBrowser () .getContextMenu () .getActive ())
-            return;
-
          if (this .button >= 0)
             return;
 
@@ -96469,7 +96487,7 @@ function (Vector3)
          return function (now)
          {
             const
-               time     = (now + performance .timeOrigin) / 1000,
+               time     = (performance .timeOrigin + now) / 1000,
                interval = time - this [_currentTime];
 
             this [_currentTime]      = time;
@@ -96485,7 +96503,9 @@ function (Vector3)
                this [_currentSpeed] = lastPosition .subtract (this [_currentPosition]) .abs () * this [_currentFrameRate];
             }
             else
+            {
                this [_currentSpeed] = 0;
+            }
          };
       })(),
    };
@@ -96599,6 +96619,7 @@ function ($,
       _world           = Symbol (),
       _changedTime     = Symbol (),
       _renderCallback  = Symbol (),
+      _previousTime    = Symbol (),
       _systemTime      = Symbol (),
       _systemStartTime = Symbol (),
       _browserTime     = Symbol (),
@@ -96608,11 +96629,11 @@ function ($,
 
    const contexts = [ ];
 
-   function X3DBrowserContext (element, shadow)
+   function X3DBrowserContext (element)
    {
       X3DBaseNode                    .call (this, this);
       X3DRoutingContext              .call (this);
-      X3DCoreContext                 .call (this, element, shadow);
+      X3DCoreContext                 .call (this, element);
       X3DScriptingContext            .call (this);
       X3DNetworkingContext           .call (this);
       X3DShadersContext              .call (this);
@@ -96642,6 +96663,7 @@ function ($,
                              "finished",      new SFTime ());
 
       this [_changedTime]     = 0;
+      this [_previousTime]    = 0;
       this [_renderCallback]  = this .traverse .bind (this);
       this [_systemTime]      = 0;
       this [_systemStartTime] = 0;
@@ -96701,8 +96723,6 @@ function ($,
             if (context .prototype .initialize)
                context .prototype .initialize .call (this);
          }
-
-         this .fix ();
       },
       initialized: function ()
       {
@@ -96752,16 +96772,32 @@ function ($,
 
          this [_changedTime] = this .getCurrentTime ();
 
-         this .requestAnimationFrame ();
+         requestAnimationFrame (this [_renderCallback]);
       },
-      requestAnimationFrame: function ()
+      limitFrameRate: function (now)
       {
-         cancelAnimationFrame (this .animationFrameRequest);
+         if (now === this [_previousTime])
+         {
+            requestAnimationFrame (this [_renderCallback]);
 
-         this .animationFrameRequest = requestAnimationFrame (this [_renderCallback]);
+            return true;
+         }
+         else
+         {
+            this [_previousTime] = now;
+
+            return false;
+         }
       },
       traverse: function (now)
       {
+         // Limit frame rate.
+
+         if (this .limitFrameRate (now))
+            return;
+
+         // Start rendering.
+
          const gl = this .getContext ();
 
          const t0 = performance .now ();
@@ -96816,31 +96852,6 @@ function ($,
       getDisplayTime: function ()
       {
          return this [_displayTime];
-      },
-      fix: function ()
-      {
-         // At least Firefox 105.0.2 sometimes does not call requestAnimationFrame
-         // callback when other events occur, but if we trigger it here again, it works.
-         if (navigator .userAgent .includes ("Firefox"))
-         {
-            const excludes = new Set ([
-               "devicemotion",
-               "deviceorientation",
-               "absolutedeviceorientation",
-               "beforeunload",
-            ]);
-
-            function eventsOf (element, excludes)
-            {
-               return Object .keys (element)
-                  .filter (key => key .startsWith ("on"))
-                  .map (key => key .slice (2))
-                  .filter (event => ! excludes .has (event))
-                  .join (" ");
-            }
-
-            $(window) .on (eventsOf (window, excludes), setTimeout .bind (window, this .requestAnimationFrame .bind (this), 0));
-         }
       },
    });
 
@@ -108123,7 +108134,7 @@ function (Fields,
 
             const distance = modelViewMatrix .translate (this ._center .getValue ()) .origin .abs ();
 
-            return Algorithm .upperBound (this ._range, 0, this ._range .length, distance, Algorithm .less);
+            return Algorithm .upperBound (this ._range, 0, this ._range .length, distance);
          };
       })(),
       traverse: (function ()
@@ -109184,20 +109195,26 @@ function (Fields,
       {
          if (type === TraverseType .POINTER)
          {
-            const sensors = this .sensors;
+            const
+               sensorsStack = renderObject .getBrowser () .getSensors (),
+               sensors      = this .sensors;
 
             sensors .clear ();
 
-            renderObject .getBrowser () .getSensors () .push (sensors);
-
             this .touchSensorNode .push (renderObject, sensors);
 
+            if (sensors .size)
+               sensorsStack .push (sensors);
+
             X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-            renderObject .getBrowser () .getSensors () .pop ();
+            if (sensors .size)
+               sensorsStack .pop ();
          }
          else
+         {
             X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+         }
       },
    });
 
@@ -111125,14 +111142,12 @@ define ('x_ite/Components/Rendering/ColorRGBA',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DColorNode",
    "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector4",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DColorNode,
-          X3DConstants,
-          Vector4)
+          X3DConstants)
 {
 "use strict";
 
@@ -111163,19 +111178,6 @@ function (Fields,
       getContainerField: function ()
       {
          return "color";
-      },
-      initialize: function ()
-      {
-         X3DColorNode .prototype .initialize .call (this);
-
-         this ._color .addInterest ("set_color__", this);
-
-         this .set_color__ ();
-      },
-      set_color__: function ()
-      {
-         this .color  = this ._color .getValue ();
-         this .length = this ._color .length;
       },
       addColor: function (index, array)
       {
@@ -113217,11 +113219,19 @@ function (Fields,
       {
          X3DGeometricPropertyNode .prototype .initialize .call (this);
 
-         this ._name .addInterest ("set_attribute__", this);
+         this ._name  .addInterest ("set_attribute__", this);
+         this ._value .addInterest ("set_value__",     this);
+
+         this .set_value__ ();
       },
       set_attribute__: function ()
       {
          this ._attribute_changed = this .getBrowser () .getCurrentTime ();
+      },
+      set_value__: function ()
+      {
+         this .value  = this ._value .getValue ();
+         this .length = this ._value .length;
       },
    });
 
@@ -113328,19 +113338,12 @@ function (Fields,
 
          this ._numComponents .addInterest ("set_numComponents__", this);
          this ._numComponents .addInterest ("set_attribute__",     this);
-         this ._value         .addInterest ("set_value__",         this);
 
          this .set_numComponents__ ();
-         this .set_value__ ();
       },
       set_numComponents__: function ()
       {
          this .numComponents = Algorithm .clamp (this ._numComponents .getValue (), 1, 4);
-      },
-      set_value__: function ()
-      {
-         this .value  = this ._value .getValue ();
-         this .length = this ._value .length;
       },
       addValue: function (index, array)
       {
@@ -113471,42 +113474,29 @@ function (Fields,
       {
          return "attrib";
       },
-      initialize: function ()
-      {
-         X3DVertexAttributeNode .prototype .initialize .call (this);
-
-         this ._value .addInterest ("set_value__", this);
-
-         this .set_value__ ();
-      },
-      set_value__: function ()
-      {
-         this .value  = this ._value .getValue ();
-         this .length = this ._value .length;
-      },
       addValue: function (index, array)
       {
          if (index < this .length)
          {
-            var value = this .value;
+            const value = this .value;
 
-            for (var i = index * 9, l = i + 9; i < l; ++ i)
+            for (let i = index * 9, l = i + 9; i < l; ++ i)
                array .push (value [i]);
          }
          else if (this .length)
          {
-            var value = this .value;
+            const value = this .value;
 
             index = this .length - 1;
 
-            for (var i = index * 9, l = i + 9; i < l; ++ i)
+            for (let i = index * 9, l = i + 9; i < l; ++ i)
                array .push (value [i]);
          }
          else
          {
-            var value = Matrix3 .Identity;
+            const value = Matrix3 .Identity;
 
-            for (var i = 0; i < 9; ++ i)
+            for (let i = 0; i < 9; ++ i)
                array .push (value [i]);
          }
       },
@@ -113610,42 +113600,29 @@ function (Fields,
       {
          return "attrib";
       },
-      initialize: function ()
-      {
-         X3DVertexAttributeNode .prototype .initialize .call (this);
-
-         this ._value .addInterest ("set_value__", this);
-
-         this .set_value__ ();
-      },
-      set_value__: function ()
-      {
-         this .value  = this ._value .getValue ();
-         this .length = this ._value .length;
-      },
       addValue: function (index, array)
       {
          if (index < this .length)
          {
-            var value = this .value;
+            const value = this .value;
 
-            for (var i = index * 16, l = i + 16; i < l; ++ i)
+            for (let i = index * 16, l = i + 16; i < l; ++ i)
                array .push (value [i]);
          }
          else if (this .length)
          {
-            var value = this .value;
+            const value = this .value;
 
             index = this .length - 1;
 
-            for (var i = index * 16, l = i + 16; i < l; ++ i)
+            for (let i = index * 16, l = i + 16; i < l; ++ i)
                array .push (value [i]);
          }
          else
          {
-            var value = Matrix4 .Identity;
+            const value = Matrix4 .Identity;
 
-            for (var i = 0; i < 16; ++ i)
+            for (let i = 0; i < 16; ++ i)
                array .push (value [i]);
          }
       },
@@ -118987,9 +118964,9 @@ function ($,
       _loader           = Symbol (),
       _browserCallbacks = Symbol ();
 
-   function X3DBrowser (element, shadow)
+   function X3DBrowser (element)
    {
-      X3DBrowserContext .call (this, element, shadow);
+      X3DBrowserContext .call (this, element);
 
       this [_browserCallbacks] = new Map ();
 
@@ -120107,7 +120084,7 @@ function ($,
       return $(element || "x3d-canvas, X3DCanvas") .data ("browser");
    }
 
-   function createBrowserFromElement (element, shadow)
+   function createBrowserFromElement (element)
    {
       try
       {
@@ -120116,10 +120093,7 @@ function ($,
          if (element .find (".x_ite-private-browser") .length)
             return;
 
-         if (shadow)
-            shadow = $(shadow);
-
-         const browser = new X3DBrowser (element, shadow);
+         const browser = new X3DBrowser (element);
 
          element .data ("browser", browser);
 
@@ -120400,6 +120374,12 @@ const getScriptURL = (function ()
             shadow = this .attachShadow ({ mode: "open" }),
             link   = document .createElement ("link");
 
+         shadow .loaded = new Promise (function (resolve, reject)
+         {
+            link .onload  = resolve;
+            link .onerror = reject;
+         });
+
          link .setAttribute ("rel", "stylesheet");
          link .setAttribute ("type", "text/css");
          link .setAttribute ("href", new URL ("x_ite.css", getScriptURL ()) .href);
@@ -120408,13 +120388,15 @@ const getScriptURL = (function ()
 
          require ([ "x_ite/X3D" ], function (X3D)
          {
-            X3D .createBrowserFromElement (this, shadow);
+            X3D .createBrowserFromElement (this);
          }
          .bind (this));
       }
    }
 
    customElements .define ("x3d-canvas", X3DCanvas);
+
+   X_ITE .X3DCanvas = X3DCanvas;
 
    // Assign functions to X_ITE and init.
 

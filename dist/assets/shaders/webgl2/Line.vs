@@ -10,7 +10,9 @@ in float x3d_FogDepth;
 in vec4 x3d_TexCoord0;
 in vec4 x3d_Color;
 in vec4 x3d_Vertex;
-out float lengthSoFar; 
+flat out float lengthSoFar; 
+flat out vec2 startPoint; 
+out vec2 midPoint; 
 out float fogDepth; 
 out vec4 color; 
 out vec3 vertex; 
@@ -48,7 +50,9 @@ void
 main ()
 {
 vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
-lengthSoFar = x3d_TexCoord0 .a;
+lengthSoFar = x3d_TexCoord0 .z;
+startPoint = x3d_TexCoord0 .xy;
+midPoint = x3d_TexCoord0 .xy;
 fogDepth = x3d_FogDepth;
 vertex = position .xyz;
 gl_Position = x3d_ProjectionMatrix * position;

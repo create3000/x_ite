@@ -5,10 +5,8 @@ uniform x3d_UnlitMaterialParameters x3d_Material;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 attribute float x3d_FogDepth;
-attribute vec4 x3d_TexCoord0;
 attribute vec4 x3d_Color;
 attribute vec4 x3d_Vertex;
-varying float lengthSoFar; 
 varying float fogDepth; 
 varying vec4 color; 
 varying vec3 vertex; 
@@ -19,7 +17,6 @@ void
 main ()
 {
 vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
-lengthSoFar = x3d_TexCoord0 .a;
 fogDepth = x3d_FogDepth;
 vertex = position .xyz;
 gl_Position = x3d_ProjectionMatrix * position;

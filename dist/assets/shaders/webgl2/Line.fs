@@ -4,7 +4,9 @@ precision highp int;
 uniform float x3d_AlphaCutoff;
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
 uniform ivec4 x3d_Viewport;
-in float lengthSoFar; 
+flat in float lengthSoFar; 
+flat in vec2 startPoint; 
+in vec2 midPoint; 
 in float fogDepth; 
 in vec4 color; 
 in vec3 vertex; 
@@ -61,13 +63,32 @@ if (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)
 discard;
 }
 }
+struct Line2
+{
+vec2 point;
+vec2 direction;
+};
+Line2
+line2 (const in vec2 point1, const in vec2 point2)
+{
+return Line2 (point1, normalize (point2 - point1));
+}
+vec2
+closest_point (const in Line2 line, const in vec2 point)
+{
+vec2 r = point - line .point;
+float d = dot (r, line .direction);
+return line .direction * d + line .point;
+}
 void
 stipple ()
 {
 if (x3d_LineProperties .applied)
 {
-float color = texture (x3d_LineProperties .linetype, vec2 (lengthSoFar, 0.5)) .a;
-if (color != 1.0)
+vec2 point = closest_point (line2 (startPoint, midPoint), gl_FragCoord .xy);
+float s = (lengthSoFar + length (point - startPoint)) * x3d_LineProperties .lineStippleScale;
+float alpha = texture (x3d_LineProperties .linetype, vec2 (s, 0.5)) .a;
+if (alpha != 1.0)
 discard;
 }
 }
@@ -75,9 +96,7 @@ void
 main ()
 {
 clip ();
-#ifdef X_ITE
 stipple ();
-#endif
 vec4 finalColor = vec4 (0.0);
 finalColor .rgb = getFogColor (color .rgb);
 finalColor .a = color .a;

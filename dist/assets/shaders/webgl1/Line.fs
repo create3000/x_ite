@@ -6,7 +6,6 @@ precision highp int;
 uniform float x3d_AlphaCutoff;
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
 uniform ivec4 x3d_Viewport;
-varying float lengthSoFar; 
 varying float fogDepth; 
 varying vec4 color; 
 varying vec3 vertex; 
@@ -52,25 +51,10 @@ if (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)
 discard;
 }
 }
-#ifdef X_ITE
-void
-stipple ()
-{
-if (x3d_LineProperties .applied)
-{
-float color = texture2D (x3d_LineProperties .linetype, vec2 (lengthSoFar, 0.5)) .a;
-if (color != 1.0)
-discard;
-}
-}
-#endif
 void
 main ()
 {
 clip ();
-#ifdef X_ITE
-stipple ();
-#endif
 vec4 finalColor = vec4 (0.0);
 finalColor .rgb = getFogColor (color .rgb);
 finalColor .a = color .a;

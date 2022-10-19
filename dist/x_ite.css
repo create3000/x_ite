@@ -12,6 +12,8 @@ X3DCanvas {
   border-radius: 0;
   width: 300px;
   height: 150px;
+  user-select: none;
+  -webkit-user-select: none;
 }
 :host([hidden]) {
   display: none;
@@ -33,6 +35,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding: 0;
   border: 0;
   border-radius: 0;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .x_ite-private-surface {
   margin: 0;
@@ -41,6 +45,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-radius: 0;
   height: 100%;
   margin-right: 0;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .x_ite-private-canvas {
   display: block;
@@ -51,6 +57,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-radius: 0;
   width: 100%;
   height: 100%;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .x_ite-private-notification {
   padding: 5px;
@@ -248,10 +256,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   z-index: 0;
   position: fixed;
   inset: 0;
-}
-.x_ite-private-menu .context-menu-selected {
-  font-weight: bold;
-  font-style: italic;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .x_ite-private-menu.context-menu-list,
 .x_ite-private-menu .context-menu-list {
@@ -278,6 +284,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   white-space: pre;
   line-height: 1.2;
   list-style-type: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .x_ite-private-menu .context-menu-item {
   cursor: pointer;
@@ -285,59 +293,32 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-radius: 5px;
   margin: 0;
   padding: 5px 24px;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
   font-size: 10pt;
   line-height: 1;
   letter-spacing: unset;
   text-align: left;
+  user-select: none;
+  -webkit-user-select: none;
 }
-.x_ite-private-menu .context-menu-item:hover:not(.x_ite-private-menu-title) {
-  background-color: #444;
+.x_ite-private-menu .context-menu-item:hover:not(.context-menu-not-selectable) {
+  background-color: rgba(255, 69, 58, 0.8);
 }
-.x_ite-private-menu .x_ite-private-menu-title {
+.x_ite-private-menu .context-menu-item:hover > .context-menu-list {
+  display: block;
+}
+.x_ite-private-menu .context-menu-not-selectable {
   cursor: default;
-  font-weight: bold;
-  padding: 4px 32px 4px 8px;
 }
-.x_ite-private-menu label {
-  cursor: pointer;
-}
-.x_ite-private-menu .context-menu-item > label > input,
-.x_ite-private-menu .context-menu-item > label > textarea {
-  all: revert;
-  cursor: pointer;
-  -webkit-user-select: text;
-     -moz-user-select: text;
-      -ms-user-select: text;
-          user-select: text;
-}
-.x_ite-private-menu .context-menu-input > label > input[type="checkbox"] {
-  -webkit-appearance: checkbox;
-  -moz-appearance: checkbox;
-}
-.x_ite-private-menu .context-menu-input > label > input[type="radio"] {
-  -webkit-appearance: radio;
-  -moz-appearance: radio;
-}
-.x_ite-private-menu .context-menu-item.context-menu-separator {
-  margin: 1px 0;
+.x_ite-private-menu .context-menu-separator {
+  cursor: default;
+  margin: 2px 0;
   padding-top: 0;
   padding-bottom: 0;
   border-top: 0;
-  border-bottom: 1px solid #111;
+  border-bottom: 1px solid rgb(138, 138, 138);
 }
 .x_ite-private-menu .context-menu-separator + .context-menu-separator {
   display: none !important;
-}
-.x_ite-private-menu .context-menu-disabled {
-  color: #666;
-}
-.x_ite-private-menu .context-menu-input.context-menu-hover,
-.x_ite-private-menu .context-menu-disabled.context-menu-hover {
-  cursor: default;
 }
 .x_ite-private-menu .context-menu-submenu:after {
   content: "";
@@ -353,32 +334,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-width: 4px 0 4px 5px;
   border-color: transparent transparent transparent #eee;
 }
-.x_ite-private-menu .context-menu-item.context-menu-icon {
-  background-repeat: no-repeat;
-  background-position: 3px 2px;
-}
-.x_ite-private-menu .context-menu-input > label > * {
-  vertical-align: top;
-  font-size: 10pt;
-  font-weight: normal;
-  letter-spacing: unset;
-  line-height: 1;
-}
-.x_ite-private-menu .context-menu-input > label > input[type="checkbox"],
-.x_ite-private-menu .context-menu-input > label > input[type="radio"] {
-  display: inline;
-  margin: 0;
-  margin-left: -20px;
-  margin-right: 3px;
-  padding: 0;
-}
-.x_ite-private-menu .context-menu-input > label > span {
-  margin-left: 2px;
-}
-.x_ite-private-menu .context-menu-input > label,
-.x_ite-private-menu .context-menu-input > label > input[type="text"],
-.x_ite-private-menu .context-menu-input > label > textarea,
-.x_ite-private-menu .context-menu-input > label > select {
+.x_ite-private-menu .context-menu-input > label {
+  cursor: pointer;
   display: block;
   box-sizing: border-box;
   margin: 0;
@@ -388,8 +345,30 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   letter-spacing: unset;
   line-height: 1;
 }
-.x_ite-private-menu .context-menu-input > label > textarea {
-  height: 100px;
+.x_ite-private-menu .context-menu-input > label > * {
+  vertical-align: top;
+  font-size: 10pt;
+  font-weight: normal;
+  letter-spacing: unset;
+  line-height: 1;
+}
+.x_ite-private-menu .context-menu-item > label > input {
+  all: revert;
+  cursor: pointer;
+}
+.x_ite-private-menu .context-menu-input > label > input[type="checkbox"],
+.x_ite-private-menu .context-menu-input > label > input[type="radio"] {
+  accent-color: rgb(255, 69, 58);
+  display: inline;
+  width: 12px;
+  margin: 0;
+  margin-left: -20px;
+  padding: 0;
+}
+.x_ite-private-menu .context-menu-input > label > span {
+  padding-left: 8px;
+  user-select: none;
+  -webkit-user-select: none;
 }
 .x_ite-private-menu .context-menu-item > .context-menu-list {
   top: -9px;
@@ -397,11 +376,17 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   right: -5px;
   display: none;
 }
-.x_ite-private-menu .context-menu-item:hover > .context-menu-list {
-  display: block;
+.x_ite-private-menu .context-menu-title {
+  font-weight: bold;
+  padding: 4px 32px 4px 8px;
 }
-.x_ite-private-menu .context-menu-accesskey {
-  text-decoration: underline;
+.x_ite-private-menu .context-menu-selected {
+  font-weight: bold;
+  font-style: italic;
+}
+.x_ite-private-menu .context-menu-icon {
+  background-repeat: no-repeat;
+  background-position: 2px 3px;
 }
 .x_ite-private-icon-viewpoint {
   background: url("assets/images/Viewpoint.png");
