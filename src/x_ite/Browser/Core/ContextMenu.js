@@ -607,7 +607,7 @@ function ($,
                   }
                   else if (d < 0)
                   {
-                     if (e .scrollTop () + e .innerHeight () >= e .get (0) .scrollHeight)
+                     if (e .scrollTop () + e .innerHeight () >= e .prop ("scrollHeight"))
                         event .preventDefault ();
                   }
                });
