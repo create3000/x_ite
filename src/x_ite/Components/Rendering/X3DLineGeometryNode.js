@@ -78,6 +78,7 @@ function (X3DGeometryNode,
          gl      = browser .getContext ();
 
       this .transformVertexArrayObject = new VertexArray ();
+      this .thickVertexArrayObject     = new VertexArray ();
       this .trianglesBuffer            = gl .createBuffer ();
       this .trianglesTexCoordBuffers   = new Array (browser .getMaxTextures ()) .fill (this .trianglesBuffer);
 
@@ -94,6 +95,7 @@ function (X3DGeometryNode,
          X3DGeometryNode .prototype .updateVertexArrays .call (this);
 
          this .transformVertexArrayObject .update ();
+         this .thickVertexArrayObject     .update ();
       },
       intersectsLine: (function ()
       {
@@ -326,7 +328,7 @@ function (X3DGeometryNode,
 
                   // Setup vertex attributes.
 
-                  if (this .vertexArrayObject .enable (gl, shaderNode))
+                  if (this .thickVertexArrayObject .enable (gl, shaderNode))
                   {
                      const
                         stride         = 13 * Float32Array .BYTES_PER_ELEMENT,
