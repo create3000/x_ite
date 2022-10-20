@@ -466,13 +466,6 @@ function (Fields,
 
          return normals_;
       },
-      isClipped: function (point, clipPlanes)
-      {
-         return clipPlanes .some (function (clipPlane)
-         {
-            return clipPlane .isClipped (point);
-         });
-      },
       transformLine: function (hitRay)
       {
          // Apply sceen nodes transformation in place here.
@@ -480,6 +473,13 @@ function (Fields,
       transformMatrix: function (hitRay)
       {
          // Apply sceen nodes transformation in place here.
+      },
+      isClipped: function (point, clipPlanes)
+      {
+         return clipPlanes .some (function (clipPlane)
+         {
+            return clipPlane .isClipped (point);
+         });
       },
       intersectsLine: (function ()
       {
@@ -546,6 +546,27 @@ function (Fields,
             }
 
             return intersections .length;
+         };
+      })(),
+      getPlanesWithOffset: (function ()
+      {
+         const
+            min    = new Vector3 (0, 0, 0),
+            max    = new Vector3 (0, 0, 0),
+            planes = [ ];
+
+         for (let i = 0; i < 5; ++ i)
+            planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
+
+         return function (minX, minY, minZ, maxX, maxY, maxZ)
+         {
+            min .set (minX, minY, minZ);
+            max .set (maxX, maxY, maxZ);
+
+            for (let i = 0; i < 5; ++ i)
+               planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+
+            return planes;
          };
       })(),
       intersectsBBox: (function ()
@@ -657,27 +678,6 @@ function (Fields,
             return false;
          };
       })(),
-      getPlanesWithOffset: (function ()
-      {
-         const
-            min    = new Vector3 (0, 0, 0),
-            max    = new Vector3 (0, 0, 0),
-            planes = [ ];
-
-         for (let i = 0; i < 5; ++ i)
-            planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
-
-         return function (minX, minY, minZ, maxX, maxY, maxZ)
-         {
-            min .set (minX, minY, minZ);
-            max .set (maxX, maxY, maxZ);
-
-            for (let i = 0; i < 5; ++ i)
-               planes [i] .set (i % 2 ? min : max, boxNormals [i]);
-
-            return planes;
-         };
-      })(),
       set_live__: function ()
       {
          if (this .isLive () .getValue ())
@@ -698,7 +698,9 @@ function (Fields,
             if (this .geometryType < 2)
                return;
 
-            const flatShading = this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
+            const
+               browser     = this .getBrowser (),
+               flatShading = browser .getBrowserOptions () .getShading () === Shading .FLAT;
 
             if (flatShading === this .flatShading)
                return;
@@ -707,7 +709,7 @@ function (Fields,
 
             // Generate flat normals if needed.
 
-            const gl = this .getBrowser () .getContext ();
+            const gl = browser .getContext ();
 
             if (flatShading)
             {
