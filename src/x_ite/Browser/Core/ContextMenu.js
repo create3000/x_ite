@@ -562,7 +562,7 @@ function ($,
             .addClass (menu .className)
             .addClass ("context-menu-root")
             .css ({ "left": x, "top": y })
-            .appendTo (options .appendTo);
+            .appendTo (layer);
 
          for (const k in menu .items)
             ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1, hide));
@@ -592,26 +592,7 @@ function ($,
             e .css (position, e .parent () .closest ("ul") .width ());
 
             if (e .outerHeight () >= $(window) .height ())
-            {
                e .css ({ "max-height": "100vh", "overflow-y": "scroll" });
-
-               // Prevent scrolling of parent element.
-               // TODO: not on mobiles.
-
-               e .on ("mousewheel", function (event, d)
-               {
-                  if (d > 0)
-                  {
-                     if (e .scrollTop () <= 0)
-                        event .preventDefault ();
-                  }
-                  else if (d < 0)
-                  {
-                     if (e .scrollTop () + e .innerHeight () >= e .prop ("scrollHeight"))
-                        event .preventDefault ();
-                  }
-               });
-            }
          });
 
          // If the submenu is higher than vh, reposition it.
