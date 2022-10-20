@@ -126,7 +126,7 @@ function (X3DGeometryNode,
             ViewVolume .projectPointMatrix (point .assign (this .getMin ()), modelViewProjectionMatrix, viewport, win);
             ViewVolume .unProjectPointMatrix (win .x + lineWidth1_2, win .y + lineWidth1_2, win .z, invModelViewProjectionMatrix, viewport, radius);
 
-            if (this .intersectsBBox (hitRay, point .distance (radius) * Math .SQRT2))
+            if (this .intersectsBBox (hitRay, point .distance (radius)))
             {
                const
                   clipPlanes  = renderObject .getLocalObjects (),

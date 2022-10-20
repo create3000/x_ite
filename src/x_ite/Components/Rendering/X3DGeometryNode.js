@@ -555,7 +555,6 @@ function (Fields,
          return function (hitRay, offset = 0)
          {
             const
-               planes = this .planes,
                min    = this .min,
                max    = this .max,
                minX   = min .x - offset,
@@ -563,7 +562,8 @@ function (Fields,
                minY   = min .y - offset,
                maxY   = max .y + offset,
                minZ   = min .z - offset,
-               maxZ   = max .z + offset;
+               maxZ   = max .z + offset,
+               planes = offset === 0 ? this .planes : this .getPlanesWithOffset (minX, minY, minZ, maxX, maxY, maxZ);
 
             // front
             if (planes [0] .intersectsLine (hitRay, intersection))
@@ -655,6 +655,27 @@ function (Fields,
             }
 
             return false;
+         };
+      })(),
+      getPlanesWithOffset: (function ()
+      {
+         const
+            min    = new Vector3 (0, 0, 0),
+            max    = new Vector3 (0, 0, 0),
+            planes = [ ];
+
+         for (let i = 0; i < 5; ++ i)
+            planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
+
+         return function (minX, minY, minZ, maxX, maxY, maxZ)
+         {
+            min .set (minX, minY, minZ);
+            max .set (maxX, maxY, maxZ);
+
+            for (let i = 0; i < 5; ++ i)
+               planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+
+            return planes;
          };
       })(),
       set_live__: function ()
