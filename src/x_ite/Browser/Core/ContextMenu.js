@@ -50,22 +50,28 @@
 define ([
    "jquery",
    "x_ite/Base/X3DBaseNode",
+   "x_ite/Components/Geospatial/GeoViewpoint",
    "locale/gettext",
    "lib/jquery.fullscreen-min",
    "jquery-mousewheel",
 ],
 function ($,
           X3DBaseNode,
+          GeoViewpoint,
           _)
 {
 "use strict";
+
+   const
+      _zIndex   = Symbol (),
+      _userMenu = Symbol ();
 
    function ContextMenu (executionContext)
    {
       X3DBaseNode .call (this, executionContext);
 
-      this .userMenu = null;
-      this .active   = false;
+      this [_zIndex]   = 10000;
+      this [_userMenu] = null;
    }
 
    ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -89,28 +95,36 @@ function ($,
 
          const browser = this .getBrowser ();
 
-         this .initializeContextMenu ({
+         this .init ({
             element: browser .getElement (),
             appendTo: browser .getShadow (),
             build: this .build .bind (this),
             animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
          });
       },
+      getZIndex: function ()
+      {
+         return this [_zIndex];
+      },
+      setZIndex: function (value)
+      {
+         this [_zIndex] = value;
+      },
       getUserMenu: function ()
       {
-         return this .userMenu;
+         return this [_userMenu];
       },
       setUserMenu: function (userMenu)
       {
-         this .userMenu = userMenu;
+         this [_userMenu] = userMenu;
       },
       createUserMenu: function ()
       {
          const userMenu = { };
 
-         if (typeof this .userMenu === "function")
+         if (typeof this [_userMenu] === "function")
          {
-            const menu = this .userMenu ();
+            const menu = this [_userMenu] ();
 
             if ($.isPlainObject (menu))
             {
@@ -400,14 +414,14 @@ function ($,
             delete menu .items ["available-viewers"];
          }
 
-         if (!browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/) || (currentViewpoint && currentViewpoint .getTypeName () === "GeoViewpoint"))
+         if (! browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/) || (currentViewpoint instanceof GeoViewpoint))
          {
             delete menu .items ["straighten-horizon"];
          }
 
          const worldInfo = browser .getExecutionContext () .getWorldInfos () [0];
 
-         if (!worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0))
+         if (! worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0))
          {
             delete menu .items ["world-info"];
          }
@@ -504,15 +518,17 @@ function ($,
                return _("None Viewer");
          }
       },
-      initializeContextMenu: function (options)
+      init: function (options)
       {
-         this .triggerContextMenu = this .showContextMenu .bind (this, options);
+         this .show = this .createRoot .bind (this, options);
 
-         options .element .on ("contextmenu", this .triggerContextMenu);
+         options .element .on ("contextmenu", this .show);
       },
-      triggerContextMenu: function (event)
+      show: function (event)
       { },
-      showContextMenu: function (options, event)
+      hide: function (event)
+      { },
+      createRoot: function (options, event)
       {
          const
             menu  = options .build (event),
@@ -525,10 +541,13 @@ function ($,
          const layer = $("<div></div>")
             .addClass ("context-menu-layer")
             .addClass (menu .className)
+            .css ("z-index", this [_zIndex])
             .appendTo (options .appendTo);
 
-         const hide = function ()
+         const hide = this .hide = function ()
          {
+            delete this .hide;
+
             layer .remove ();
 
             ul [options .animation .hide] (options .animation .duration, function ()
@@ -540,7 +559,8 @@ function ($,
             });
 
             return false;
-         };
+         }
+         .bind (this);
 
          // Menu
 
@@ -552,11 +572,11 @@ function ($,
             .addClass ("context-menu-list")
             .addClass (menu .className)
             .addClass ("context-menu-root")
-            .css ({ "left": x, "top": y, "z-index": level, "display": "none" })
+            .css ({ "left": x, "top": y, "z-index": this [_zIndex] + level, "display": "none" })
             .appendTo (options .appendTo);
 
          for (const k in menu .items)
-            ul .append (this .buildItem (menu .items [k], "context-menu-root", k, level + 1, hide));
+            ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1, hide));
 
          ul [options .animation .show] (options .animation .duration);
 
@@ -638,7 +658,7 @@ function ($,
 
          return false;
       },
-      buildItem: function (item, parent, key, level, hide)
+      createItem: function (item, parent, key, level, hide)
       {
          const li = $("<li></li>") .addClass ("context-menu-item");
 
@@ -704,11 +724,11 @@ function ($,
          {
             const ul = $("<ul></ul>")
                .addClass ("context-menu-list")
-               .css ({ "z-index": level })
+               .css ({ "z-index": this [_zIndex] + level })
                .appendTo (li);
 
             for (const k in item .items)
-               ul .append (this .buildItem (item .items [k], key, k, level + 1, hide));
+               ul .append (this .createItem (item .items [k], key, k, level + 1, hide));
 
             li .addClass ("context-menu-submenu");
          }

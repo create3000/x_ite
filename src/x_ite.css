@@ -495,7 +495,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 /* Spinner */
 
 .x_ite-private-splash-screen {
-  z-index: 100;
   position: absolute;
   inset: 0;
   background: #1b1d21;

@@ -113,10 +113,10 @@ function ($,
       const
          shadow       = $(element .prop ("shadowRoot")),
          browser      = $("<div></div>") .addClass ("x_ite-private-browser"),
+         surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser),
          splashScreen = $("<div></div>") .hide () .addClass ("x_ite-private-splash-screen") .appendTo (browser),
          spinner      = $("<div></div>") .addClass ("x_ite-private-spinner") .appendTo (splashScreen),
-         progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
-         surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
+         progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen);
 
       $("<div></div>") .addClass ("x_ite-private-x_ite") .html (this .getName () + "<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
       $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
@@ -125,10 +125,10 @@ function ($,
       this [_number]       = ++ browserNumber;
       this [_element]      = element;
       this [_shadow]       = shadow .length ? shadow .append (browser .hide ()) : this [_element] .prepend (browser);
-      this [_splashScreen] = splashScreen;
       this [_surface]      = surface;
       this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
       this [_context]      = Context .create (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
+      this [_splashScreen] = splashScreen;
 
       if (shadow .length)
          shadow .prop ("loaded") .then (function () { browser .show (); });

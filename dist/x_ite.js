@@ -1,4 +1,4 @@
-/* X_ITE v6.0.0-1153 */
+/* X_ITE v6.0.0-1154 */
 
 (function (global, factory)
 {
@@ -17636,14 +17636,12 @@ function (Algorithm)
       },
       normalize: function ()
       {
-         let length = Math .hypot (this .x, this .y);
+         const length = Math .hypot (this .x, this .y);
 
          if (length)
          {
-            length = 1 / length;
-
-            this .x *= length;
-            this .y *= length;
+            this .x /= length;
+            this .y /= length;
          }
 
          return this;
@@ -18086,25 +18084,25 @@ function (Algorithm)
       },
       cross: function (vector)
       {
-         const x = this .x, y = this .y, z = this .z;
+         const
+            ax = this   .x, ay = this   .y, az = this   .z,
+            bx = vector .x, by = vector .y, bz = vector .z;
 
-         this .x = y * vector .z - z * vector .y;
-         this .y = z * vector .x - x * vector .z;
-         this .z = x * vector .y - y * vector .x;
+         this .x = ay * bz - az * by;
+         this .y = az * bx - ax * bz;
+         this .z = ax * by - ay * bx;
 
          return this;
       },
       normalize: function ()
       {
-         let length = Math .hypot (this .x, this .y, this .z);
+         const length = Math .hypot (this .x, this .y, this .z);
 
          if (length)
          {
-            length = 1 / length;
-
-            this .x *= length;
-            this .y *= length;
-            this .z *= length;
+            this .x /= length;
+            this .y /= length;
+            this .z /= length;
          }
 
          return this;
@@ -19999,16 +19997,14 @@ function (Algorithm)
       },
       normalize: function ()
       {
-         let length = Math .hypot (this .x, this .y, this .z, this .w);
+         const length = Math .hypot (this .x, this .y, this .z, this .w);
 
          if (length)
          {
-            length = 1 / length;
-
-            this .x *= length;
-            this .y *= length;
-            this .z *= length;
-            this .w *= length;
+            this .x /= length;
+            this .y /= length;
+            this .z /= length;
+            this .w /= length;
          }
 
          return this;
@@ -28432,6 +28428,5073 @@ function ($,
    return Notification;
 });
 
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Core/X3DNode',[
+   "x_ite/Fields",
+   "x_ite/Base/X3DBaseNode",
+   "x_ite/Base/X3DConstants",
+   "x_ite/InputOutput/Generator",
+],
+function (Fields,
+          X3DBaseNode,
+          X3DConstants,
+          Generator)
+{
+"use strict";
+
+   function X3DNode (executionContext)
+   {
+      X3DBaseNode .call (this, executionContext);
+
+      this .addType (X3DConstants .X3DNode);
+   }
+
+   X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   {
+      constructor: X3DNode,
+      copy: function (instance)
+      {
+         if (!instance || instance .getType () .includes (X3DConstants .X3DExecutionContext))
+         {
+            return X3DBaseNode .prototype .copy .call (this, instance);
+         }
+         else
+         {
+            const executionContext = instance .getBody ();
+
+            // First try to get a named node with the node's name.
+
+            if (this .getName () .length)
+            {
+               const namedNode = executionContext .getNamedNodes () .get (this .getName ());
+
+               if (namedNode)
+                  return namedNode;
+            }
+
+            // Create copy.
+
+            const copy = this .create (executionContext);
+
+            if (this .getNeedsName ())
+               this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (), this);
+
+            if (this .getName () .length)
+               executionContext .updateNamedNode (this .getName (), copy);
+
+            // Default fields
+
+            for (const sourceField of this .getPredefinedFields ())
+            {
+               try
+               {
+                  const destinationField = copy .getField (sourceField .getName ());
+
+                  if (sourceField .hasReferences ())
+                  {
+                     // IS relationship
+
+                     for (const originalReference of sourceField .getReferences ())
+                     {
+                        try
+                        {
+                           destinationField .addReference (instance .getField (originalReference .getName ()));
+                        }
+                        catch (error)
+                        {
+                           console .error (error .message);
+                        }
+                     }
+                  }
+                  else
+                  {
+                     if (sourceField .getAccessType () & X3DConstants .initializeOnly)
+                     {
+                        switch (sourceField .getType ())
+                        {
+                           case X3DConstants .SFNode:
+                           case X3DConstants .MFNode:
+                              destinationField .assign (sourceField .copy (instance));
+                              break;
+                           default:
+                              destinationField .assign (sourceField);
+                              break;
+                        }
+                     }
+                  }
+
+                  destinationField .setModificationTime (sourceField .getModificationTime ());
+               }
+               catch (error)
+               {
+                  console .log (error .message);
+               }
+            }
+
+            // User-defined fields
+
+            for (const sourceField of this .getUserDefinedFields ())
+            {
+               const destinationField = sourceField .copy (instance);
+
+               copy .addUserDefinedField (sourceField .getAccessType (),
+                                          sourceField .getName (),
+                                          destinationField);
+
+               if (sourceField .hasReferences ())
+               {
+                  // IS relationship
+
+                  for (const originalReference of sourceField .getReferences ())
+                  {
+                     try
+                     {
+                        destinationField .addReference (instance .getField (originalReference .getName ()));
+                     }
+                     catch (error)
+                     {
+                        console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
+                     }
+                  }
+               }
+
+               destinationField .setModificationTime (sourceField .getModificationTime ());
+            }
+
+            copy .setup ();
+
+            return copy;
+         }
+      },
+      getDisplayName: (function ()
+      {
+         const _TrailingNumber = /_\d+$/;
+
+         return function ()
+         {
+            return this .getName () .replace (_TrailingNumber, "");
+         };
+      })(),
+      getNeedsName: function ()
+      {
+         if (this .getName () .length)
+            return false;
+
+         if (this .getCloneCount () > 1)
+            return true;
+
+         if (this .hasRoutes ())
+            return true;
+
+         const executionContext = this .getExecutionContext ()
+
+         for (const importedNode of executionContext .getImportedNodes ())
+         {
+            if (importedNode .getInlineNode () === this)
+               return true;
+         }
+
+         if (executionContext .isScene ())
+         {
+            for (const exportedNode of executionContext .getExportedNodes ())
+            {
+               if (exportedNode .getLocalNode () === this)
+                  return true;
+            }
+         }
+
+         return false;
+      },
+      getFieldsAreEnumerable: function ()
+      {
+         return true;
+      },
+      traverse: function () { },
+      toStream: function (stream)
+      {
+         stream .string += this .getTypeName () + " { }";
+      },
+      toVRMLStream: function (stream)
+      {
+         const generator = Generator .Get (stream);
+
+         generator .EnterScope ();
+
+         const name = generator .Name (this);
+
+         if (name .length)
+         {
+            if (generator .ExistsNode (this))
+            {
+               stream .string += "USE";
+               stream .string += " ";
+               stream .string += name;
+
+               generator .LeaveScope ();
+               return;
+            }
+         }
+
+         if (name .length)
+         {
+            generator .AddNode (this);
+
+            stream .string += "DEF";
+            stream .string += " ";
+            stream .string += name;
+            stream .string += " ";
+         }
+
+         stream .string += this .getTypeName ();
+         stream .string += " ";
+         stream .string += "{";
+
+         const
+            fields            = this .getChangedFields (),
+            userDefinedFields = this .getUserDefinedFields ();
+
+         let
+            fieldTypeLength  = 0,
+            accessTypeLength = 0;
+
+         if (this .canUserDefinedFields ())
+         {
+            for (const field of userDefinedFields)
+            {
+               fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
+               accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
+            }
+
+            if (userDefinedFields .length)
+            {
+               stream .string += "\n";
+               generator .IncIndent ();
+
+               for (const field of userDefinedFields)
+               {
+                  this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
+
+                  stream .string += "\n";
+               }
+
+               generator .DecIndent ();
+
+               if (fields .length !== 0)
+                  stream .string += "\n";
+            }
+         }
+
+         if (fields .length === 0)
+         {
+            if (userDefinedFields .length)
+               stream .string += generator .Indent ();
+            else
+               stream .string += " ";
+         }
+         else
+         {
+            if (userDefinedFields .length === 0)
+               stream .string += "\n";
+
+            generator .IncIndent ();
+
+            fields .forEach (function (field)
+            {
+               this .toVRMLStreamField (stream, field, fieldTypeLength, accessTypeLength);
+
+               stream .string += "\n";
+            },
+            this);
+
+            generator .DecIndent ();
+            stream .string += generator .Indent ();
+         }
+
+         stream .string += "}";
+
+         generator .LeaveScope ();
+      },
+      toVRMLStreamField: function (stream, field, fieldTypeLength, accessTypeLength)
+      {
+         const
+            generator  = Generator .Get (stream),
+            sharedNode = generator .IsSharedNode (this);
+
+         if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
+         {
+            if (field .isInitializable ())
+            {
+               stream .string += generator .Indent ();
+               stream .string += field .getName ();
+               stream .string += " ";
+
+               field .toVRMLStream (stream);
+            }
+         }
+         else
+         {
+            let
+               index                  = 0,
+               initializableReference = false;
+
+            field .getReferences () .forEach (function (reference)
+            {
+               initializableReference = initializableReference || reference .isInitializable ();
+
+               // Output build in reference field
+
+               stream .string += generator .Indent ();
+               stream .string += field .getName ();
+               stream .string += " ";
+               stream .string += "IS";
+               stream .string += " ";
+               stream .string += reference .getName ();
+
+               ++ index;
+
+               if (index !== field .getReferences () .size)
+                  stream .string += "\n";
+            });
+
+            if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !this .isDefaultValue (field))
+            {
+               // Output build in field
+
+               stream .string += "\n";
+               stream .string += generator .Indent ();
+               stream .string += field .getName ();
+               stream .string += " ";
+
+               field .toVRMLStream (stream);
+            }
+         }
+      },
+      toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
+      {
+         const
+            generator  = Generator .Get (stream),
+            sharedNode = generator .IsSharedNode (this);
+
+         if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
+         {
+            stream .string += generator .Indent ();
+            stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+            stream .string += " ";
+            stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+            stream .string += " ";
+            stream .string += field .getName ();
+
+            if (field .isInitializable ())
+            {
+               stream .string += " ";
+
+               field .toVRMLStream (stream);
+            }
+         }
+         else
+         {
+            let
+               index                  = 0,
+               initializableReference = false;
+
+            field .getReferences () .forEach (function (reference)
+            {
+               initializableReference = initializableReference || reference .isInitializable ();
+
+               // Output user defined reference field
+
+               stream .string += generator .Indent ();
+               stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+               stream .string += " ";
+               stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+               stream .string += " ";
+               stream .string += field .getName ();
+               stream .string += " ";
+               stream .string += "IS";
+               stream .string += " ";
+               stream .string += reference .getName ();
+
+               ++ index;
+
+               if (index !== field .getReferences () .size)
+                  stream .string += "\n";
+            });
+
+            if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !field .isDefaultValue ())
+            {
+               stream .string += "\n";
+               stream .string += generator .Indent ();
+               stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+               stream .string += " ";
+               stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+               stream .string += " ";
+               stream .string += field .getName ();
+
+               if (field .isInitializable ())
+               {
+                  stream .string += " ";
+
+                  field .toVRMLStream (stream);
+               }
+            }
+         }
+      },
+      toXMLStream: function (stream)
+      {
+         const
+            generator  = Generator .Get (stream),
+            sharedNode = generator .IsSharedNode (this);
+
+         generator .EnterScope ();
+
+         const name = generator .Name (this);
+
+         if (name .length)
+         {
+            if (generator .ExistsNode (this))
+            {
+               stream .string += generator .Indent ();
+               stream .string += "<";
+               stream .string += this .getTypeName ();
+               stream .string += " ";
+               stream .string += "USE='";
+               stream .string += generator .XMLEncode (name);
+               stream .string += "'";
+
+               const containerField = generator .ContainerField ();
+
+               if (containerField)
+               {
+                  if (containerField .getName () !== this .getContainerField ())
+                  {
+                     stream .string += " ";
+                     stream .string += "containerField='";
+                     stream .string += generator .XMLEncode (containerField .getName ());
+                     stream .string += "'";
+                  }
+               }
+
+               stream .string += "/>";
+
+               generator .LeaveScope ();
+               return;
+            }
+         }
+
+         stream .string += generator .Indent ();
+         stream .string += "<";
+         stream .string += this .getTypeName ();
+
+         if (name .length)
+         {
+            generator .AddNode (this);
+
+            stream .string += " ";
+            stream .string += "DEF='";
+            stream .string += generator .XMLEncode (name);
+            stream .string += "'";
+         }
+
+         const containerField = generator .ContainerField ();
+
+         if (containerField)
+         {
+            if (containerField .getName () !== this .getContainerField ())
+            {
+               stream .string += " ";
+               stream .string += "containerField='";
+               stream .string += generator .XMLEncode (containerField .getName ());
+               stream .string += "'";
+            }
+         }
+
+         const
+            fields            = this .getChangedFields (),
+            userDefinedFields = this .getUserDefinedFields ();
+
+         const
+            references = [ ],
+            childNodes = [ ];
+
+         let cdata = this .getSourceText ();
+
+         if (cdata && cdata .length === 0)
+            cdata = null;
+
+         generator .IncIndent ();
+         generator .IncIndent ();
+
+         for (const field of fields)
+         {
+            // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+            // for this field.
+
+            let mustOutputValue = false;
+
+            if (generator .ExecutionContext ())
+            {
+               if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
+               {
+                  let initializableReference = false;
+
+                  field .getReferences () .forEach (function (fieldReference)
+                  {
+                     initializableReference = initializableReference || fieldReference .isInitializable ();
+                  });
+
+                  if (!initializableReference)
+                     mustOutputValue = !this .isDefaultValue (field);
+               }
+            }
+
+            // If we have no execution context we are not in a proto and must not generate IS references the same is true
+            // if the node is a shared node as the node does not belong to the execution context.
+
+            if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode || mustOutputValue)
+            {
+               if (mustOutputValue)
+                  references .push (field);
+
+               if (field .isInitializable ())
+               {
+                  switch (field .getType ())
+                  {
+                     case X3DConstants .SFNode:
+                     case X3DConstants .MFNode:
+                     {
+                        childNodes .push (field);
+                        break;
+                     }
+                     default:
+                     {
+                        if (field === cdata)
+                           break;
+
+                        stream .string += "\n";
+                        stream .string += generator .Indent ();
+                        stream .string += field .getName ();
+                        stream .string += "='";
+
+                        field .toXMLStream (stream);
+
+                        stream .string += "'";
+                        break;
+                     }
+                  }
+               }
+            }
+            else
+            {
+               references .push (field);
+            }
+         }
+
+         generator .DecIndent ();
+         generator .DecIndent ();
+
+         if ((!this .canUserDefinedFields () || !userDefinedFields .length) && (!references .length || sharedNode) && !childNodes .length && !cdata)
+         {
+            stream .string += "/>";
+         }
+         else
+         {
+            stream .string += ">\n";
+
+            generator .IncIndent ();
+
+            if (this .canUserDefinedFields ())
+            {
+               for (const field of userDefinedFields)
+               {
+                  stream .string += generator .Indent ();
+                  stream .string += "<field";
+                  stream .string += " ";
+                  stream .string += "accessType='";
+                  stream .string += generator .AccessType (field .getAccessType ());
+                  stream .string += "'";
+                  stream .string += " ";
+                  stream .string += "type='";
+                  stream .string += field .getTypeName ();
+                  stream .string += "'";
+                  stream .string += " ";
+                  stream .string += "name='";
+                  stream .string += generator .XMLEncode (field .getName ());
+                  stream .string += "'";
+
+                  // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+                  // for this field.
+
+                  let mustOutputValue = false;
+
+                  if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
+                  {
+                     let initializableReference = false;
+
+                     field .getReferences () .forEach (function (fieldReference)
+                     {
+                        initializableReference = initializableReference || fieldReference .isInitializable ();
+                     });
+
+                     if (!initializableReference)
+                        mustOutputValue = true;
+                  }
+
+                  if ((field .getReferences () .size === 0 || !generator .ExecutionContext ()) || sharedNode || mustOutputValue)
+                  {
+                     if (mustOutputValue && generator .ExecutionContext ())
+                        references .push (field);
+
+                     if (!field .isInitializable () || field .isDefaultValue ())
+                     {
+                        stream .string += "/>\n";
+                     }
+                     else
+                     {
+                        // Output value
+
+                        switch (field .getType ())
+                        {
+                           case X3DConstants .SFNode:
+                           case X3DConstants .MFNode:
+                           {
+                              generator .PushContainerField (field);
+
+                              stream .string += ">\n";
+
+                              generator .IncIndent ();
+
+                              field .toXMLStream (stream);
+
+                              stream .string += "\n";
+
+                              generator .DecIndent ();
+
+                              stream .string += generator .Indent ();
+                              stream .string += "</field>\n";
+
+                              generator .PopContainerField ();
+                              break;
+                           }
+                           default:
+                           {
+                              stream .string += " ";
+                              stream .string += "value='";
+
+                              field .toXMLStream (stream);
+
+                              stream .string += "'";
+                              stream .string += "/>\n";
+                              break;
+                           }
+                        }
+                     }
+                  }
+                  else
+                  {
+                     if (generator .ExecutionContext ())
+                        references .push (field);
+
+                     stream .string += "/>\n";
+                  }
+               }
+            }
+
+            if (references .length && !sharedNode)
+            {
+               stream .string += generator .Indent ();
+               stream .string += "<IS>";
+               stream .string += "\n";
+
+               generator .IncIndent ();
+
+               for (const field of references)
+               {
+                  const protoFields = field .getReferences ();
+
+                  protoFields .forEach (function (protoField)
+                  {
+                     stream .string += generator .Indent ();
+                     stream .string += "<connect";
+                     stream .string += " ";
+                     stream .string += "nodeField='";
+                     stream .string += generator .XMLEncode (field .getName ());
+                     stream .string += "'";
+                     stream .string += " ";
+                     stream .string += "protoField='";
+                     stream .string += generator .XMLEncode (protoField .getName ());
+                     stream .string += "'";
+                     stream .string += "/>\n";
+                  });
+               }
+
+               generator .DecIndent ();
+
+               stream .string += generator .Indent ();
+               stream .string += "</IS>\n";
+            }
+
+            for (const field of childNodes)
+            {
+               generator .PushContainerField (field);
+
+               field .toXMLStream (stream);
+
+               stream .string += "\n";
+
+               generator .PopContainerField ();
+            }
+
+            if (cdata)
+            {
+               for (const value of cdata)
+               {
+                  stream .string += "<![CDATA[";
+                  stream .string += generator .escapeCDATA (value);
+                  stream .string += "]]>\n";
+               }
+            }
+
+            generator .DecIndent ();
+
+            stream .string += generator .Indent ();
+            stream .string += "</";
+            stream .string += this .getTypeName ();
+            stream .string += ">";
+         }
+
+         generator .LeaveScope ();
+      },
+      dispose: function ()
+      {
+         const executionContext = this .getExecutionContext ();
+
+         // Remove named node if any.
+
+         if (this .getName ())
+            executionContext .removeNamedNode (this .getName ())
+
+         // Remove imported node if any.
+
+         if (!executionContext .isMainScene ())
+         {
+            const parentContext = executionContext .getExecutionContext ();
+
+            for (const importedNode of parentContext .getImportedNodes ())
+            {
+               try
+               {
+                  if (importedNode .getExportedNode () === this)
+                     parentContext .removeImportedNode (importedNode .getImportedName ());
+               }
+               catch (error)
+               {
+                  //console .error (error);
+               }
+            }
+         }
+
+         // Remove exported node if any.
+
+         if (executionContext .isScene ())
+         {
+            for (const exportedNode of executionContext .getExportedNodes ())
+            {
+               if (exportedNode .getLocalNode () === this)
+                  executionContext .removeExportedNode (exportedNode .getExportedName ());
+            }
+         }
+
+         // Remove routes from and to node if any, and dispose values of fields.
+
+         for (const field of this .getFields ())
+            field .dispose ();
+
+         // Remove node from entire scene graph.
+
+         for (const firstParent of new Set (this .getParents ()))
+         {
+            if (firstParent instanceof Fields .SFNode)
+            {
+               for (const secondParent of new Set (firstParent .getParents ()))
+               {
+                  if (secondParent instanceof Fields .MFNode)
+                  {
+                     const length = secondParent .length;
+
+                     secondParent .erase (secondParent .remove (0, length, firstParent), length);
+                  }
+               }
+
+               firstParent .setValue (null);
+            }
+         }
+
+         // Call super.dispose, where fields get disposed.
+
+         X3DBaseNode .prototype .dispose .call (this);
+      },
+   });
+
+   return X3DNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Core/X3DChildNode',[
+   "x_ite/Fields",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Base/X3DConstants",
+],
+function (Fields,
+          X3DNode,
+          X3DConstants)
+{
+"use strict";
+
+   function X3DChildNode (executionContext)
+   {
+      if (this .getExecutionContext ())
+         return;
+
+      X3DNode .call (this, executionContext);
+
+      this .addType (X3DConstants .X3DChildNode);
+
+      this .addChildObjects ("isCameraObject",   new Fields .SFBool ());
+      this .addChildObjects ("isPickableObject", new Fields .SFBool ());
+
+      this ._isCameraObject   .setAccessType (X3DConstants .outputOnly);
+      this ._isPickableObject .setAccessType (X3DConstants .outputOnly);
+   }
+
+   X3DChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+   {
+      constructor: X3DChildNode,
+      setCameraObject: function (value)
+      {
+         if (value !== this ._isCameraObject .getValue ())
+            this ._isCameraObject = value;
+      },
+      getCameraObject: function ()
+      {
+         return this ._isCameraObject .getValue ();
+      },
+      setPickableObject: function (value)
+      {
+         if (value !== this ._isPickableObject .getValue ())
+            this ._isPickableObject = value;
+      },
+      getPickableObject: function ()
+      {
+         return this ._isPickableObject .getValue ();
+      },
+   });
+
+   return X3DChildNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Core/X3DBindableNode',[
+   "x_ite/Fields",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Base/X3DConstants",
+],
+function (Fields,
+          X3DChildNode,
+          X3DConstants)
+{
+"use strict";
+
+   function X3DBindableNode (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
+
+      this .addType (X3DConstants .X3DBindableNode);
+
+      this .addChildObjects ("transitionActive", new Fields .SFBool ());
+   }
+
+   X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: X3DBindableNode,
+      getCameraObject: function ()
+      {
+         return true;
+      },
+      transitionStart: function ()
+      { },
+   });
+
+   return X3DBindableNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Core/X3DSensorNode',[
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Base/X3DConstants",
+],
+function (X3DChildNode,
+          X3DConstants)
+{
+"use strict";
+
+   function X3DSensorNode (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
+
+      this .addType (X3DConstants .X3DSensorNode);
+   }
+
+   X3DSensorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: X3DSensorNode,
+   });
+
+   return X3DSensorNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Time/X3DTimeDependentNode',[
+   "x_ite/Fields",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Base/X3DConstants",
+],
+function (Fields,
+          X3DChildNode,
+          X3DConstants)
+{
+"use strict";
+
+   function X3DTimeDependentNode (executionContext)
+   {
+      this .addType (X3DConstants .X3DTimeDependentNode);
+
+      this .addChildObjects ("initialized", new Fields .SFTime (),
+                             "isEvenLive",  new Fields .SFBool ());
+
+      this .startTimeValue  = 0;
+      this .pauseTimeValue  = 0;
+      this .resumeTimeValue = 0;
+      this .stopTimeValue   = 0;
+      this .start           = 0;
+      this .pause           = 0;
+      this .pauseInterval   = 0;
+      this .startTimeout    = null;
+      this .pauseTimeout    = null;
+      this .resumeTimeout   = null;
+      this .stopTimeout     = null;
+      this .disabled        = false;
+   }
+
+   X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: X3DTimeDependentNode,
+      initialize: function ()
+      {
+         this .isLive ()   .addInterest ("set_live__", this);
+         this ._isEvenLive .addInterest ("set_live__", this);
+
+         this ._initialized .addInterest ("set_loop__",       this);
+         this ._enabled     .addInterest ("set_enabled__",    this);
+         this ._loop        .addInterest ("set_loop__",       this);
+         this ._startTime   .addInterest ("set_startTime__",  this);
+         this ._pauseTime   .addInterest ("set_pauseTime__",  this);
+         this ._resumeTime  .addInterest ("set_resumeTime__", this);
+         this ._stopTime    .addInterest ("set_stopTime__",   this);
+
+         this .startTimeValue  = this ._startTime  .getValue ();
+         this .pauseTimeValue  = this ._pauseTime  .getValue ();
+         this .resumeTimeValue = this ._resumeTime .getValue ();
+         this .stopTimeValue   = this ._stopTime   .getValue ();
+
+         this ._initialized = this .getBrowser () .getCurrentTime ();
+      },
+      getDisabled: function ()
+      {
+         return this .disabled;
+      },
+      getLiveState: function ()
+      {
+         ///  Determines the live state of this node.
+
+         return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this ._isEvenLive .getValue ());
+      },
+      getElapsedTime: function ()
+      {
+         return this .getBrowser () .getCurrentTime () - this .start - this .pauseInterval;
+      },
+      resetElapsedTime: function ()
+      {
+         this .start         = this .getBrowser () .getCurrentTime ();
+         this .pause         = this .getBrowser () .getCurrentTime ();
+         this .pauseInterval = 0;
+      },
+      set_live__: function ()
+      {
+         if (this .isLive () .getValue () || this ._isEvenLive .getValue ())
+         {
+            if (this .disabled)
+            {
+               this .disabled = false;
+
+               if (this ._isActive .getValue () && !this ._isPaused .getValue ())
+                  this .real_resume ();
+            }
+         }
+         else
+         {
+            if (!this .disabled && this ._isActive .getValue () && !this ._isPaused .getValue ())
+            {
+               // Only disable if needed, ie. if running!
+               this .disabled = true;
+               this .real_pause ();
+            }
+         }
+      },
+      set_enabled__: function ()
+      {
+         if (this ._enabled .getValue ())
+            this .set_loop__ ();
+
+         else
+            this .stop ();
+      },
+      set_loop__: function ()
+      {
+         if (this ._enabled .getValue ())
+         {
+            if (this ._loop .getValue ())
+            {
+               if (this .stopTimeValue <= this .startTimeValue)
+               {
+                  if (this .startTimeValue <= this .getBrowser () .getCurrentTime ())
+                     this .do_start ();
+               }
+            }
+         }
+      },
+      set_startTime__: function ()
+      {
+         this .startTimeValue = this ._startTime .getValue ();
+
+         if (this ._enabled .getValue ())
+         {
+            this .removeTimeout ("startTimeout");
+
+            if (this .startTimeValue <= this .getBrowser () .getCurrentTime ())
+               this .do_start ();
+
+            else
+               this .addTimeout ("startTimeout", "do_start", this .startTimeValue);
+         }
+      },
+      set_pauseTime__: function ()
+      {
+         this .pauseTimeValue = this ._pauseTime .getValue ();
+
+         if (this ._enabled .getValue ())
+         {
+            this .removeTimeout ("pauseTimeout");
+
+            if (this .pauseTimeValue <= this .resumeTimeValue)
+               return;
+
+            if (this .pauseTimeValue <= this .getBrowser () .getCurrentTime ())
+               this .do_pause ();
+
+            else
+               this .addTimeout ("pauseTimeout", "do_pause", this .pauseTimeValue);
+         }
+      },
+      set_resumeTime__: function ()
+      {
+         this .resumeTimeValue = this ._resumeTime .getValue ();
+
+         if (this ._enabled .getValue ())
+         {
+            this .removeTimeout ("resumeTimeout");
+
+            if (this .resumeTimeValue <= this .pauseTimeValue)
+               return;
+
+            if (this .resumeTimeValue <= this .getBrowser () .getCurrentTime ())
+               this .do_resume ();
+
+            else
+               this .addTimeout ("resumeTimeout", "do_resume", this .resumeTimeValue);
+         }
+      },
+      set_stopTime__: function ()
+      {
+         this .stopTimeValue = this ._stopTime .getValue ();
+
+         if (this ._enabled .getValue ())
+         {
+            this .removeTimeout ("stopTimeout");
+
+            if (this .stopTimeValue <= this .startTimeValue)
+               return;
+
+            if (this .stopTimeValue <= this .getBrowser () .getCurrentTime ())
+               this .do_stop ();
+
+            else
+               this .addTimeout ("stopTimeout","do_stop", this .stopTimeValue);
+         }
+      },
+      do_start: function ()
+      {
+         if (!this ._isActive .getValue ())
+         {
+            this .resetElapsedTime ();
+
+            // The event order below is very important.
+
+            this ._isActive = true;
+
+            this .set_start ();
+
+            if (this .isLive () .getValue ())
+            {
+               this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
+            }
+            else
+            {
+               this .disabled = true;
+               this .real_pause ();
+            }
+
+            this ._elapsedTime = 0;
+         }
+      },
+      do_pause: function ()
+      {
+         if (this ._isActive .getValue () && !this ._isPaused .getValue ())
+         {
+            this ._isPaused = true;
+
+            if (this .pauseTimeValue !== this .getBrowser () .getCurrentTime ())
+               this .pauseTimeValue = this .getBrowser () .getCurrentTime ();
+
+            if (this .isLive () .getValue ())
+               this .real_pause ();
+         }
+      },
+      real_pause: function ()
+      {
+         this .pause = performance .now ();
+
+         this .set_pause ();
+
+         this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
+      },
+      do_resume: function ()
+      {
+         if (this ._isActive .getValue () && this ._isPaused .getValue ())
+         {
+            this ._isPaused = false;
+
+            if (this .resumeTimeValue !== this .getBrowser () .getCurrentTime ())
+               this .resumeTimeValue = this .getBrowser () .getCurrentTime ();
+
+            if (this .isLive () .getValue ())
+               this .real_resume ();
+         }
+      },
+      real_resume: function ()
+      {
+         const interval = (performance .now () - this .pause) / 1000;
+
+         this .pauseInterval += interval;
+
+         this .set_resume (interval);
+
+         this .getBrowser () .timeEvents () .addInterest ("set_time", this);
+         this .getBrowser () .addBrowserEvent ();
+      },
+      do_stop: function ()
+      {
+         this .stop ();
+      },
+      stop: function ()
+      {
+         if (this ._isActive .getValue ())
+         {
+            // The event order below is very important.
+
+            this .set_stop ();
+
+            this ._elapsedTime = this .getElapsedTime ();
+
+            if (this ._isPaused .getValue ())
+               this ._isPaused = false;
+
+            this ._isActive = false;
+
+            this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
+         }
+      },
+      timeout: function (callback)
+      {
+         if (this ._enabled .getValue ())
+         {
+            this .getBrowser () .advanceTime (performance .now ());
+
+            this [callback] ();
+         }
+      },
+      addTimeout: function (name, callback, time)
+      {
+         this .removeTimeout (name);
+         this [name] = setTimeout (this .timeout .bind (this, callback), (time - this .getBrowser () .getCurrentTime ()) * 1000);
+      },
+      removeTimeout: function (name)
+      {
+         clearTimeout (this [name]);
+         this [name] = null;
+      },
+      set_start: function () { },
+      set_pause: function () { },
+      set_resume: function () { },
+      set_stop: function () { },
+      set_time: function () { },
+   });
+
+   return X3DTimeDependentNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Time/TimeSensor',[
+   "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DSensorNode",
+   "x_ite/Components/Time/X3DTimeDependentNode",
+   "x_ite/Base/X3DConstants",
+   "standard/Math/Algorithm",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DSensorNode,
+          X3DTimeDependentNode,
+          X3DConstants,
+          Algorithm)
+{
+"use strict";
+
+   function TimeSensor (executionContext)
+   {
+      X3DSensorNode        .call (this, executionContext);
+      X3DTimeDependentNode .call (this, executionContext);
+
+      this .addType (X3DConstants .TimeSensor);
+
+      this .addChildObjects ("range", new Fields .MFFloat (0, 0, 1)); // current, first, last (in fractions) - play range starting at current
+
+      this .cycle    = 0;
+      this .interval = 0;
+      this .fraction = 0;
+      this .first    = 0;
+      this .last     = 1;
+      this .scale    = 1;
+   }
+
+   TimeSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+      X3DTimeDependentNode .prototype,
+   {
+      constructor: TimeSensor,
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "cycleInterval",    new Fields .SFTime (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "loop",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",        new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",       new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",        new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",         new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",         new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleTime",        new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",      new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "fraction_changed", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "time",             new Fields .SFTime ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "TimeSensor";
+      },
+      getComponentName: function ()
+      {
+         return "Time";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DSensorNode        .prototype .initialize .call (this);
+         X3DTimeDependentNode .prototype .initialize .call (this);
+
+         this ._cycleInterval .addInterest ("set_cycleInterval__", this);
+         this ._range         .addInterest ("set_range__",         this);
+      },
+      setRange: function (currentFraction, firstFraction, lastFraction)
+      {
+         const
+            currentTime   = this .getBrowser () .getCurrentTime (),
+            startTime     = this ._startTime .getValue (),
+            cycleInterval = this ._cycleInterval .getValue ();
+
+         this .first    = firstFraction;
+         this .last     = lastFraction;
+         this .scale    = this .last - this .first;
+         this .interval = cycleInterval * this .scale;
+         this .fraction = Algorithm .fract ((currentFraction >= 1 ? 0 : currentFraction) + (this .interval ? (currentTime - startTime) / this .interval : 0));
+         this .cycle    = currentTime - (this .fraction -  this .first) * cycleInterval;
+      },
+      set_cycleInterval__: function ()
+      {
+         if (this ._isActive .getValue ())
+            this .setRange (this .fraction, this ._range [1], this ._range [2]);
+      },
+      set_range__: function ()
+      {
+         if (this ._isActive .getValue ())
+         {
+            this .setRange (this ._range [0], this ._range [1], this ._range [2]);
+
+            if (!this ._isPaused .getValue ())
+               this .set_fraction (this .getBrowser () .getCurrentTime ());
+         }
+      },
+      set_start: function ()
+      {
+         this .setRange (this ._range [0], this ._range [1], this ._range [2]);
+
+         if (this .isLive () .getValue ())
+         {
+            this ._fraction_changed = this .fraction;
+            this ._time             = this .getBrowser () .getCurrentTime ();
+         }
+      },
+      set_resume: function (pauseInterval)
+      {
+         const
+            currentTime   = this .getBrowser () .getCurrentTime (),
+            startTime     = this ._startTime .getValue ();
+
+         this .setRange (this .interval ? Algorithm .fract (this .fraction - (currentTime - startTime) / this .interval) : 0, this ._range [1], this ._range [2]);
+      },
+      set_fraction: function (time)
+      {
+         this ._fraction_changed = this .fraction = this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
+      },
+      set_time: function ()
+      {
+         // The event order below is very important.
+
+         const time = this .getBrowser () .getCurrentTime ();
+
+         if (time - this .cycle >= this .interval)
+         {
+            if (this ._loop .getValue ())
+            {
+               if (this .interval)
+               {
+                  this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
+
+                  this ._elapsedTime = this .getElapsedTime ();
+                  this ._cycleTime   = time;
+
+                  this .set_fraction (time);
+               }
+            }
+            else
+            {
+               this ._fraction_changed = this .fraction = this .last;
+               this .stop ();
+            }
+         }
+         else
+         {
+            this ._elapsedTime = this .getElapsedTime ();
+
+            this .set_fraction (time);
+         }
+
+         this ._time = time;
+      },
+   });
+
+   return TimeSensor;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Interpolation/X3DInterpolatorNode',[
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Base/X3DConstants",
+   "standard/Math/Algorithm",
+],
+function (X3DChildNode,
+          X3DConstants,
+          Algorithm)
+{
+"use strict";
+
+   function X3DInterpolatorNode (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
+
+      this .addType (X3DConstants .X3DInterpolatorNode);
+   }
+
+   X3DInterpolatorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: X3DInterpolatorNode,
+      setup: function ()
+      {
+         // If an X3DInterpolatorNode value_changed outputOnly field is read before it receives any inputs,
+         // keyValue[0] is returned if keyValue is not empty. If keyValue is empty (i.e., [ ]), the initial
+         // value for the respective field type is returned (EXAMPLE  (0, 0, 0) for Fields .SFVec3f);
+
+         this .set_key__ ();
+
+         if (this ._key .length)
+            this .interpolate (0, 0, 0);
+
+         X3DChildNode .prototype .setup .call (this);
+      },
+      initialize: function ()
+      {
+         X3DChildNode .prototype .initialize .call (this);
+
+         this ._set_fraction .addInterest ("set_fraction__", this);
+         this ._key          .addInterest ("set_key__", this);
+      },
+      set_fraction__: function ()
+      {
+         const
+            key      = this ._key,
+            length   = key .length,
+            fraction = this ._set_fraction .getValue ();
+
+         switch (length)
+         {
+            case 0:
+               // Interpolator nodes containing no keys in the key field shall not produce any events.
+               return;
+            case 1:
+               return this .interpolate (0, 0, 0);
+            default:
+            {
+               if (fraction <= key [0])
+                  return this .interpolate (0, 1, 0);
+
+               const index1 = Algorithm .upperBound (key, 0, length, fraction);
+
+               if (index1 !== length)
+               {
+                  const
+                     index0 = index1 - 1,
+                     weight = (fraction - key [index0]) / (key [index1] - key [index0]);
+
+                  this .interpolate (index0, index1, Algorithm .clamp (weight, 0, 1));
+               }
+               else
+                  this .interpolate (length - 2, length - 1, 1);
+            }
+         }
+      },
+      set_key__: function ()
+      {
+         this .set_keyValue__ ();
+      },
+      set_keyValue__: function () { },
+      interpolate: function () { },
+   });
+
+   return X3DInterpolatorNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Interpolation/EaseInEaseOut',[
+   "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Components/Interpolation/X3DInterpolatorNode",
+   "x_ite/Base/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DInterpolatorNode,
+          X3DConstants)
+{
+"use strict";
+
+   function EaseInEaseOut (executionContext)
+   {
+      X3DInterpolatorNode .call (this, executionContext);
+
+      this .addType (X3DConstants .EaseInEaseOut);
+   }
+
+   EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+   {
+      constructor: EaseInEaseOut,
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",             new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",                      new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "easeInEaseOut",            new Fields .MFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "modifiedFraction_changed", new Fields .SFFloat ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "EaseInEaseOut";
+      },
+      getComponentName: function ()
+      {
+         return "Interpolation";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DInterpolatorNode .prototype .initialize .call (this);
+
+         this ._easeInEaseOut .addInterest ("set_keyValue__", this);
+      },
+      set_keyValue__: function ()
+      {
+         if (this ._easeInEaseOut .length < this ._key .length)
+            this ._easeInEaseOut .resize (this ._key .length, this ._easeInEaseOut .length ? this ._easeInEaseOut [this ._easeInEaseOut .length - 1] : new Fields .SFVec2f ());
+      },
+      interpolate: function (index0, index1, weight)
+      {
+         let
+            easeOut = this ._easeInEaseOut [index0] .y,
+            easeIn  = this ._easeInEaseOut [index1] .x;
+         
+         const sum = easeOut + easeIn;
+
+         if (sum < 0)
+         {
+            this ._modifiedFraction_changed = weight;
+         }
+         else
+         {
+            if (sum > 1)
+            {
+               easeIn  /= sum;
+               easeOut /= sum;
+            }
+
+            const t = 1 / (2 - easeOut - easeIn);
+
+            if (weight < easeOut)
+            {
+               this ._modifiedFraction_changed = (t / easeOut) * weight * weight;
+            }
+            else if (weight <= 1 - easeIn) // Spec says (weight < 1 - easeIn), but then we get a NaN below if easeIn == 0.
+            {
+               this ._modifiedFraction_changed = t * (2 * weight - easeOut);
+            }
+            else
+            {
+               const w = 1 - weight;
+
+               this ._modifiedFraction_changed = 1 - ((t * w * w) / easeIn);
+            }
+         }
+      },
+   });
+
+   return EaseInEaseOut;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Interpolation/PositionInterpolator',[
+   "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Components/Interpolation/X3DInterpolatorNode",
+   "x_ite/Base/X3DConstants",
+   "standard/Math/Numbers/Vector3",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DInterpolatorNode,
+          X3DConstants,
+          Vector3)
+{
+"use strict";
+
+   function PositionInterpolator (executionContext)
+   {
+      X3DInterpolatorNode .call (this, executionContext);
+
+      this .addType (X3DConstants .PositionInterpolator);
+   }
+
+   PositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+   {
+      constructor: PositionInterpolator,
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec3f ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "PositionInterpolator";
+      },
+      getComponentName: function ()
+      {
+         return "Interpolation";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DInterpolatorNode .prototype .initialize .call (this);
+
+         this ._keyValue .addInterest ("set_keyValue__", this);
+      },
+      set_keyValue__: function ()
+      {
+         const
+            key      = this ._key,
+            keyValue = this ._keyValue;
+
+         if (keyValue .length < key .length)
+            keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
+      },
+      interpolate: (function ()
+      {
+         const keyValue = new Vector3 (0, 0, 0);
+
+         return function (index0, index1, weight)
+         {
+            this ._value_changed = keyValue .assign (this ._keyValue [index0] .getValue ()) .lerp (this ._keyValue [index1] .getValue (), weight);
+         };
+      })(),
+   });
+
+   return PositionInterpolator;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Interpolation/OrientationInterpolator',[
+   "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Components/Interpolation/X3DInterpolatorNode",
+   "x_ite/Base/X3DConstants",
+   "standard/Math/Numbers/Rotation4"
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DInterpolatorNode,
+          X3DConstants,
+          Rotation4)
+{
+"use strict";
+
+   function OrientationInterpolator (executionContext)
+   {
+      X3DInterpolatorNode .call (this, executionContext);
+
+      this .addType (X3DConstants .OrientationInterpolator);
+
+      this ._keyValue      .setUnit ("angle");
+      this ._value_changed .setUnit ("angle");
+   }
+
+   OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+   {
+      constructor: OrientationInterpolator,
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFRotation ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "OrientationInterpolator";
+      },
+      getComponentName: function ()
+      {
+         return "Interpolation";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DInterpolatorNode .prototype .initialize .call (this);
+
+         this ._keyValue .addInterest ("set_keyValue__", this);
+      },
+      set_keyValue__: function ()
+      {
+         const
+            key      = this ._key,
+            keyValue = this ._keyValue;
+
+         if (keyValue .length < key .length)
+            keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
+      },
+      interpolate: (function ()
+      {
+         const
+            keyValue0 = new Rotation4 (0, 0, 1, 0),
+            keyValue1 = new Rotation4 (0, 0, 1, 0);
+
+         return function (index0, index1, weight)
+         {
+            // Both values can change in slerp.
+            keyValue0 .assign (this ._keyValue [index0] .getValue ());
+            keyValue1 .assign (this ._keyValue [index1] .getValue ());
+
+            this ._value_changed = keyValue0 .slerp (keyValue1, weight);
+         };
+      }) (),
+   });
+
+   return OrientationInterpolator;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Rendering/TraverseType',[],function ()
+{
+"use strict";
+
+   let i = 0;
+
+   const TraverseType =
+   {
+      POINTER:   i ++,
+      CAMERA:    i ++,
+      PICKING:   i ++,
+      COLLISION: i ++,
+      SHADOW:    i ++,
+      DISPLAY:   i ++,
+   };
+
+   return TraverseType;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Navigation/X3DViewpointNode',[
+   "x_ite/Fields",
+   "x_ite/Components/Core/X3DBindableNode",
+   "x_ite/Components/Time/TimeSensor",
+   "x_ite/Components/Interpolation/EaseInEaseOut",
+   "x_ite/Components/Interpolation/PositionInterpolator",
+   "x_ite/Components/Interpolation/OrientationInterpolator",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Rotation4",
+   "standard/Math/Numbers/Matrix4",
+],
+function (Fields,
+          X3DBindableNode,
+          TimeSensor,
+          EaseInEaseOut,
+          PositionInterpolator,
+          OrientationInterpolator,
+          TraverseType,
+          X3DConstants,
+          Vector3,
+          Rotation4,
+          Matrix4)
+{
+"use strict";
+
+   function X3DViewpointNode (executionContext)
+   {
+      X3DBindableNode .call (this, executionContext);
+
+      this .addType (X3DConstants .X3DViewpointNode);
+
+      this .addChildObjects ("positionOffset",         new Fields .SFVec3f (),
+                             "orientationOffset",      new Fields .SFRotation (),
+                             "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
+                             "scaleOrientationOffset", new Fields .SFRotation (),
+                             "centerOfRotationOffset", new Fields .SFVec3f (),
+                             "fieldOfViewScale",       new Fields .SFFloat (1));
+
+      this .userPosition         = new Vector3 (0, 1, 0);
+      this .userOrientation      = new Rotation4 (0, 0, 1, 0);
+      this .userCenterOfRotation = new Vector3 (0, 0, 0);
+      this .modelMatrix          = new Matrix4 ();
+      this .cameraSpaceMatrix    = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
+      this .viewMatrix           = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
+
+      const browser = this .getBrowser ();
+
+      this .timeSensor                   = new TimeSensor              (browser .getPrivateScene ());
+      this .easeInEaseOut                = new EaseInEaseOut           (browser .getPrivateScene ());
+      this .positionInterpolator         = new PositionInterpolator    (browser .getPrivateScene ());
+      this .orientationInterpolator      = new OrientationInterpolator (browser .getPrivateScene ());
+      this .scaleInterpolator            = new PositionInterpolator    (browser .getPrivateScene ());
+      this .scaleOrientationInterpolator = new OrientationInterpolator (browser .getPrivateScene ());
+   }
+
+   X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
+   {
+      constructor: X3DViewpointNode,
+      initialize: function ()
+      {
+         X3DBindableNode .prototype .initialize .call (this);
+
+         this .timeSensor ._stopTime = 1;
+         this .timeSensor .setup ();
+
+         this .easeInEaseOut ._key           = new Fields .MFFloat (0, 1);
+         this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+         this .easeInEaseOut .setup ();
+
+         this .positionInterpolator         ._key = new Fields .MFFloat (0, 1);
+         this .orientationInterpolator      ._key = new Fields .MFFloat (0, 1);
+         this .scaleInterpolator            ._key = new Fields .MFFloat (0, 1);
+         this .scaleOrientationInterpolator ._key = new Fields .MFFloat (0, 1);
+
+         this .positionInterpolator         .setup ();
+         this .orientationInterpolator      .setup ();
+         this .scaleInterpolator            .setup ();
+         this .scaleOrientationInterpolator .setup ();
+
+         this .timeSensor ._isActive         .addFieldInterest (this ._transitionActive);
+         this .timeSensor ._fraction_changed .addFieldInterest (this .easeInEaseOut ._set_fraction);
+
+         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .positionInterpolator         ._set_fraction);
+         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .orientationInterpolator      ._set_fraction);
+         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleInterpolator            ._set_fraction);
+         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleOrientationInterpolator ._set_fraction);
+
+         this .positionInterpolator         ._value_changed .addFieldInterest (this ._positionOffset);
+         this .orientationInterpolator      ._value_changed .addFieldInterest (this ._orientationOffset);
+         this .scaleInterpolator            ._value_changed .addFieldInterest (this ._scaleOffset);
+         this .scaleOrientationInterpolator ._value_changed .addFieldInterest (this ._scaleOrientationOffset);
+
+         this ._isBound .addInterest ("set_bound__", this);
+      },
+      getEaseInEaseOut: function ()
+      {
+         return this .easeInEaseOut;
+      },
+      setInterpolators: function () { },
+      getPosition: function ()
+      {
+         return this ._position .getValue ();
+      },
+      getUserPosition: function ()
+      {
+         return this .userPosition .assign (this .getPosition ()) .add (this ._positionOffset .getValue ());
+      },
+      getOrientation: function ()
+      {
+         return this ._orientation .getValue ();
+      },
+      getUserOrientation: function ()
+      {
+         return this .userOrientation .assign (this .getOrientation ()) .multRight (this ._orientationOffset .getValue ());
+      },
+      getCenterOfRotation: function ()
+      {
+         return this ._centerOfRotation .getValue ();
+      },
+      getUserCenterOfRotation: function ()
+      {
+         return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this ._centerOfRotationOffset .getValue ());
+      },
+      getProjectionMatrix: function (renderObject)
+      {
+         const navigationInfo = renderObject .getNavigationInfo ();
+
+         return this .getProjectionMatrixWithLimits (navigationInfo .getNearValue (),
+                                                     navigationInfo .getFarValue (this),
+                                                     renderObject .getLayer () .getViewport () .getRectangle (renderObject .getBrowser ()));
+      },
+      getCameraSpaceMatrix: function ()
+      {
+         return this .cameraSpaceMatrix;
+      },
+      getViewMatrix: function ()
+      {
+         return this .viewMatrix;
+      },
+      getModelMatrix: function ()
+      {
+         return this .modelMatrix;
+      },
+      getMaxFarValue: function ()
+      {
+         return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e5;
+      },
+      getUpVector: function ()
+      {
+         // Local y-axis,
+         // see http://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
+         return Vector3 .yAxis;
+      },
+      getSpeedFactor: function ()
+      {
+         return 1;
+      },
+      setVRMLTransition: function (value)
+      {
+         // VRML behaviour support.
+         this .VRMLTransition = value;
+      },
+      getVRMLTransition: function ()
+      {
+         // VRML behaviour support.
+         return this .VRMLTransition;
+      },
+      transitionStart: (function ()
+      {
+         const
+            relativePosition         = new Vector3 (0, 0, 0),
+            relativeOrientation      = new Rotation4 (0, 0, 1, 0),
+            relativeScale            = new Vector3 (0, 0, 0),
+            relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
+
+         return function (layerNode, fromViewpointNode, toViewpointNode)
+         {
+            this .to = toViewpointNode;
+
+            if (toViewpointNode ._jump .getValue ())
+            {
+               if (! toViewpointNode ._retainUserOffsets .getValue ())
+                  toViewpointNode .resetUserOffsets ();
+
+               // Copy from toViewpointNode all fields.
+
+               if (this !== toViewpointNode)
+               {
+                  for (const field of toViewpointNode .getFields ())
+                     this .getField (field .getName ()) .assign (field);
+               }
+
+               // Respect NavigationInfo.
+
+               const
+                  navigationInfoNode = layerNode .getNavigationInfo (),
+                  transitionTime     = navigationInfoNode ._transitionTime .getValue ();
+
+               let transitionType = navigationInfoNode .getTransitionType ();
+
+               // VRML behavior
+
+               if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
+               {
+                  if (toViewpointNode .getVRMLTransition ())
+                     transitionType = "LINEAR";
+                  else
+                     transitionType = "TELEPORT";
+               }
+
+               toViewpointNode .setVRMLTransition (false);
+
+               // End VRML behavior
+
+               if (transitionTime <= 0)
+                  transitionType = "TELEPORT";
+
+               switch (transitionType)
+               {
+                  case "TELEPORT":
+                  {
+                     navigationInfoNode ._transitionComplete = true;
+                     return;
+                  }
+                  case "ANIMATE":
+                  {
+                     this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+                     break;
+                  }
+                  default:
+                  {
+                     // LINEAR
+                     this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+                     break;
+                  }
+               }
+
+               this .timeSensor ._cycleInterval = transitionTime;
+               this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+               this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+               this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
+
+               toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+
+               this .positionInterpolator         ._keyValue = new Fields .MFVec3f    (relativePosition,         toViewpointNode ._positionOffset);
+               this .orientationInterpolator      ._keyValue = new Fields .MFRotation (relativeOrientation,      toViewpointNode ._orientationOffset);
+               this .scaleInterpolator            ._keyValue = new Fields .MFVec3f    (relativeScale,            toViewpointNode ._scaleOffset);
+               this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (relativeScaleOrientation, toViewpointNode ._scaleOrientationOffset);
+
+               this ._positionOffset         = relativePosition;
+               this ._orientationOffset      = relativeOrientation;
+               this ._scaleOffset            = relativeScale;
+               this ._scaleOrientationOffset = relativeScaleOrientation;
+
+               this .setInterpolators (fromViewpointNode, toViewpointNode);
+
+               this ._transitionActive = true;
+            }
+            else
+            {
+               toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+
+               toViewpointNode ._positionOffset         = relativePosition;
+               toViewpointNode ._orientationOffset      = relativeOrientation;
+               toViewpointNode ._scaleOffset            = relativeScale;
+               toViewpointNode ._scaleOrientationOffset = relativeScaleOrientation;
+
+               toViewpointNode .setInterpolators (fromViewpointNode, toViewpointNode);
+            }
+         };
+      })(),
+      transitionStop: function ()
+      {
+         this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._isActive .removeInterest ("set_active__", this);
+      },
+      resetUserOffsets: function ()
+      {
+         this ._positionOffset         = Vector3   .Zero;
+         this ._orientationOffset      = Rotation4 .Identity;
+         this ._scaleOffset            = Vector3   .One;
+         this ._scaleOrientationOffset = Rotation4 .Identity;
+         this ._centerOfRotationOffset = Vector3   .Zero;
+         this ._fieldOfViewScale       = 1;
+      },
+      getRelativeTransformation: function (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
+      {
+         const differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpointNode .getViewMatrix ()) .inverse ();
+
+         differenceMatrix .get (relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+
+         relativePosition .subtract (this .getPosition ());
+         relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
+      },
+      lookAtPoint: function (layerNode, point, factor, straighten)
+      {
+         this .getCameraSpaceMatrix () .multVecMatrix (point);
+
+         Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
+
+         const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+
+         this .lookAt (layerNode, point, minDistance, factor, straighten);
+      },
+      lookAtBBox: function (layerNode, bbox, factor, straighten)
+      {
+         bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
+
+         const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+
+         this .lookAt (layerNode, bbox .center, minDistance, factor, straighten);
+      },
+      lookAt: function (layerNode, point, distance, factor, straighten)
+      {
+         const
+            offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
+
+         layerNode .getNavigationInfo () ._transitionStart = true;
+
+         this .timeSensor ._cycleInterval = 0.2;
+         this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+         this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
+
+         this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+
+         const
+            translation = Vector3 .lerp (this ._positionOffset .getValue (), offset, factor),
+            direction   = Vector3 .add (this .getPosition (), translation) .subtract (point);
+
+         let rotation = Rotation4 .multRight (this ._orientationOffset .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
+
+         if (straighten)
+         {
+            rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
+         }
+
+         this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, translation);
+         this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
+         this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
+         this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
+
+         this .setInterpolators (this, this);
+
+         this ._centerOfRotationOffset = Vector3 .subtract (point, this .getCenterOfRotation ());
+         this ._set_bind               = true;
+      },
+      straighten: function (layerNode, horizon)
+      {
+         layerNode .getNavigationInfo () ._transitionStart = true;
+
+         this .timeSensor ._cycleInterval = 0.4;
+         this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+         this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
+
+         this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+
+         const rotation = Rotation4 .multRight (Rotation4 .inverse (this .getOrientation ()), this .straightenHorizon (this .getUserOrientation ()));
+
+         this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, this ._positionOffset);
+         this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
+         this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
+         this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
+
+         this .setInterpolators (this, this);
+
+         this ._set_bind = true;
+      },
+      straightenHorizon: (function ()
+      {
+         const
+            localXAxis  = new Vector3 (0, 0, 0),
+            localZAxis  = new Vector3 (0, 0, 0),
+            rotation    = new Rotation4 (0, 0, 1, 0);
+
+         return function (orientation)
+         {
+            orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
+            orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
+
+            const
+                upVector = this .getUpVector (),
+               vector   = localZAxis .cross (upVector);
+
+            // If viewer looks along the up vector.
+            if (Math .abs (localZAxis .dot (upVector)) >= 1)
+               return orientation;
+
+            if (Math .abs (vector .dot (localXAxis)) >= 1)
+               return orientation;
+
+            rotation .setFromToVec (localXAxis, vector);
+
+            return orientation .multRight (rotation);
+         };
+      })(),
+      set_active__: function (navigationInfoNode, active)
+      {
+         if (this ._isBound .getValue () && ! active .getValue () && this .timeSensor ._fraction_changed .getValue () === 1)
+         {
+            navigationInfoNode ._transitionComplete = true;
+         }
+      },
+      set_bound__: function ()
+      {
+         if (this ._isBound .getValue ())
+            this .getBrowser () .getNotification () ._string = this ._description;
+         else
+            this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
+      },
+      traverse: function (type, renderObject)
+      {
+         if (type !== TraverseType .CAMERA)
+            return;
+
+         renderObject .getLayer () .getViewpoints () .push (this);
+
+         this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+      },
+      update: function ()
+      {
+         this .cameraSpaceMatrix .set (this .getUserPosition (),
+                                       this .getUserOrientation (),
+                                       this ._scaleOffset .getValue (),
+                                       this ._scaleOrientationOffset .getValue ());
+
+         this .cameraSpaceMatrix .multRight ((this .to || this) .modelMatrix);
+
+         this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
+      }
+   });
+
+   return X3DViewpointNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('standard/Math/Geometry/Spheroid3',[],function ()
+{
+"use strict";
+
+   function Spheroid3 (semiMajorAxis, semiMinorAxis)
+   {
+      switch (arguments .length)
+      {
+         case 0:
+            this .semiMajorAxis = 0; // a
+            this .semiMinorAxis = 0; // c
+            break;
+         case 2:
+            this .semiMajorAxis = semiMajorAxis; // a
+            this .semiMinorAxis = semiMinorAxis; // c
+            break;
+         case 3:
+            const f_1 = arguments [1];
+            this .semiMajorAxis = semiMajorAxis;                 // a
+            this .semiMinorAxis = semiMajorAxis * (1 - 1 / f_1); // c
+            break;
+      }
+   }
+
+   Spheroid3 .prototype =
+   {
+      constructor: Spheroid3,
+      getSemiMajorAxis: function ()
+      {
+         // Returns the semi-major axis (a)
+         return this .semiMajorAxis; // a
+      },
+      getSemiMinorAxis: function ()
+      {
+         // Returns the semi-minor axis (c)
+         return this .semiMinorAxis; // c
+      },
+      toString: function ()
+      {
+         return this .semiMajorAxis + " " + this .semiMinorAxis;
+      },
+   };
+
+   return Spheroid3;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('standard/Geospatial/ReferenceEllipsoids',[
+   "standard/Math/Geometry/Spheroid3",
+],
+function (Spheroid3)
+{
+"use strict";
+
+   const ReferenceEllipsoids =
+   {
+      // Earth
+      // X3D Specification
+      AA: new Spheroid3 (6377563.396, 299.3249646,   true), // Airy 1830
+      AM: new Spheroid3 (6377340.189, 299.3249646,   true), // Modified Airy
+      AN: new Spheroid3 (6378160,     298.25,        true), // Australian National
+      BN: new Spheroid3 (6377483.865, 299.1528128,   true), // Bessel 1841 (Namibia)
+      BR: new Spheroid3 (6377397.155, 299.1528128,   true), // Bessel 1841 (Ethiopia Indonesia...)
+      CC: new Spheroid3 (6378206.4,   294.9786982,   true), // Clarke 1866
+      CD: new Spheroid3 (6378249.145, 293.465,       true), // Clarke 1880
+      EA: new Spheroid3 (6377276.345, 300.8017,      true), // Everest (India 1830)
+      EB: new Spheroid3 (6377298.556, 300.8017,      true), // Everest (Sabah & Sarawak)
+      EC: new Spheroid3 (6377301.243, 300.8017,      true), // Everest (India 1956)
+      ED: new Spheroid3 (6377295.664, 300.8017,      true), // Everest (W. Malaysia 1969)
+      EE: new Spheroid3 (6377304.063, 300.8017,      true), // Everest (W. Malaysia & Singapore 1948)
+      EF: new Spheroid3 (6377309.613, 300.8017,      true), // Everest (Pakistan)
+      FA: new Spheroid3 (6378155,     298.3,         true), // Modified Fischer 1960
+      HE: new Spheroid3 (6378200,     298.3,         true), // Helmert 1906
+      HO: new Spheroid3 (6378270,     297,           true), // Hough 1960
+      ID: new Spheroid3 (6378160,     298.247,       true), // Indonesian 1974
+      IN: new Spheroid3 (6378388,     297,           true), // International 1924
+      KA: new Spheroid3 (6378245,     298.3,         true), // Krassovsky 1940
+      RF: new Spheroid3 (6378137,     298.257222101, true), // Geodetic Reference System 1980 (GRS 80)
+      SA: new Spheroid3 (6378160,     298.25,        true), // South American 1969
+      WD: new Spheroid3 (6378135,     298.26,        true), // WGS 72
+      WE: new Spheroid3 (6378137,     298.257223563, true), // WGS 84
+      // Solar System
+      // http://en.wikipedia.de
+      // Can someone give me more accurate parameters.
+      SUN:     new Spheroid3 (696342000, 1 / 9e-6, true),
+      MERCURY: new Spheroid3 (2439700,  2439700),
+      VENUS:   new Spheroid3 (6051800,  6051800),
+      MOON:    new Spheroid3 (1738140,  1735970),
+      MARS:    new Spheroid3 (3395428,  3377678), // http://adsabs.harvard.edu/abs/2010EM%26P..106....1A
+      JUPITER: new Spheroid3 (71492000, 66854000),
+      SATURN:  new Spheroid3 (60268000, 54364000),
+      URANUS:  new Spheroid3 (2555000,  24973000),
+      NEPTUNE: new Spheroid3 (24764000, 24341000),
+      PLUTO:   new Spheroid3 (1153000,  1153000),
+   };
+
+   return ReferenceEllipsoids;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('standard/Geospatial/Geodetic',[
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Algorithm",
+],
+function (Vector3,
+          Algorithm)
+{
+"use strict";
+
+   const
+      EPS_H = 1e-3,
+      EPS_P = 1e-10,
+      IMAX  = 30;
+
+   function Geodetic (spheroid, latitudeFirst, radians)
+   {
+      this .longitudeFirst = ! latitudeFirst;
+      this .degrees        = ! radians;
+      this .a              = spheroid .getSemiMajorAxis ();
+      this .c              = spheroid .getSemiMinorAxis ();
+      this .c2a2           = Math .pow (spheroid .getSemiMinorAxis () / this .a, 2);
+      this .ecc2           = 1 - this .c2a2;
+   }
+
+   Geodetic .prototype =
+   {
+      constructor: Geodetic,
+      convert: function (geodetic, result)
+      {
+         const elevation = geodetic .z;
+
+         if (this .longitudeFirst)
+         {
+            var
+               latitude  = geodetic .y,
+               longitude = geodetic .x;
+         }
+         else
+         {
+            var
+               latitude  = geodetic .x,
+               longitude = geodetic .y;
+         }
+
+         if (this .degrees)
+         {
+            latitude  *= Math .PI / 180;
+            longitude *= Math .PI / 180;
+         }
+
+         return this .convertRadians (latitude, longitude, elevation, result);
+      },
+      convertRadians: function (latitude, longitude, elevation, result)
+      {
+         const
+            slat  = Math .sin (latitude),
+            slat2 = Math .pow (slat, 2),
+            clat  = Math .cos (latitude),
+            N     = this .a / Math .sqrt (1 - this .ecc2 * slat2),
+            Nhl   = (N + elevation) * clat;
+
+         return result .set (Nhl * Math .cos (longitude),
+                             Nhl * Math .sin (longitude),
+                             (N * this .c2a2 + elevation) * slat);
+      },
+      apply: function (geocentric, result)
+      {
+         this .applyRadians (geocentric, result);
+
+         if (this .degrees)
+         {
+            result .x *= 180 / Math .PI; // latitude
+            result .y *= 180 / Math .PI; // longitude
+         }
+
+         if (this .longitudeFirst)
+         {
+            const tmp = result .x;
+
+            result .x = result .y; // latitude
+            result .y = tmp;       // longitude
+         }
+
+         return result;
+      },
+      applyRadians: function (geocentric, result)
+      {
+         const
+            x = geocentric .x,
+            y = geocentric .y,
+            z = geocentric .z;
+
+         const P = Math .sqrt (x * x + y * y);
+
+         // Handle pole case.
+         if (P == 0)
+            return result .set (Math .PI, 0, z - this .c);
+
+         let
+            latitude  = 0,
+            longitude = Math .atan2 (y, x),
+            elevation = 0;
+
+         let
+            a    = this .a,
+            N    = a,
+            ecc2 = this .ecc2;
+
+         for (let i = 0; i < IMAX; ++ i)
+         {
+            const
+               h0 = elevation,
+               b0 = latitude;
+
+            latitude = Math .atan (z / P / (1 - ecc2 * N / (N + elevation)));
+
+            const sin_p = Math .sin (latitude);
+
+            N         = a / Math .sqrt (1 - ecc2 * sin_p * sin_p);
+            elevation = P / Math .cos (latitude) - N;
+
+            if (Math .abs (elevation - h0) < EPS_H && Math .abs (latitude - b0) < EPS_P)
+               break;
+         }
+
+         return result .set (latitude, longitude, elevation);
+      },
+      normal: function (geocentric, result)
+      {
+         const geodetic = this .applyRadians (geocentric, result);
+
+         const
+            latitude  = geodetic .x,
+            longitude = geodetic .y;
+
+         const clat = Math .cos (latitude);
+
+         const
+            nx = Math .cos (longitude) * clat,
+            ny = Math .sin (longitude) * clat,
+            nz = Math .sin (latitude);
+
+         return result .set (nx, ny, nz);
+      },
+      /*
+      lerp: function (s, d, t)
+      {
+         var
+            source     =  this .source      .assign (s),
+            destination = this .destination .assign (d);
+
+         var
+            RANGE    = this .degrees ? 180 : M_PI,
+            RANGE1_2 = RANGE / 2,
+            RANGE2   = RANGE * 2;
+
+         var range = 0;
+
+         if (this .longitudeFirst)
+         {
+            source .x = Algorithm .interval (source .x, -RANGE,    RANGE);
+            source .y = Algorithm .interval (source .y, -RANGE1_2, RANGE1_2);
+
+            destination .x = Algorithm .interval (destination .x, -RANGE,    RANGE);
+            destination .y = Algorithm .interval (destination .y, -RANGE1_2, RANGE1_2);
+
+            range = Math .abs (destination .x - source .x);
+         }
+         else
+         {
+            source .x = Algorithm .interval (source .x, -RANGE1_2, RANGE1_2);
+            source .y = Algorithm .interval (source .y, -RANGE,    RANGE);
+
+            destination .x = Algorithm .interval (destination .x, -RANGE1_2, RANGE1_2);
+            destination .y = Algorithm .interval (destination .y, -RANGE,    RANGE);
+
+            range = Math .abs (destination .y - source .y);
+         }
+
+         if (range <= RANGE)
+            return source .lerp (destination, t);
+
+         var step = (RANGE2 - range) * t;
+
+         if (this .longitudeFirst)
+         {
+            var longitude = source .x < destination .x ? source .x - step : source .x + step;
+
+            if (longitude < -RANGE)
+               longitude += RANGE2;
+
+            else if (longitude > RANGE)
+               longitude -= RANGE2;
+
+            return source .set (longitude,
+                                source .y + t * (destination .y - source .y),
+                                source .z + t * (destination .z - source .z));
+         }
+
+         var longitude = source .y < destination .y ? source .y - step : source .y + step;
+
+         if (longitude < -RANGE)
+            longitude += RANGE2;
+
+         else if (longitude > RANGE)
+            longitude -= RANGE2;
+
+         return source .set (source .x + t * (destination .x - source .x),
+                             longitude,
+                             source .z + t * (destination .z - source .z));
+      },
+      source: new Vector3 (0, 0, 0),
+      destination: new Vector3 (0, 0, 0),
+      */
+   };
+
+   return Geodetic;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('standard/Geospatial/UniversalTransverseMercator',[
+   "standard/Geospatial/Geodetic",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Algorithm",
+],
+function (Geodetic,
+          Vector3,
+          Algorithm)
+{
+"use strict";
+
+   const
+      N0 = 1.0e7,
+      E0 = 5.0e5,
+      k0 = 0.9996;
+
+   function UniversalTransverseMercator (spheroid, zone, northernHemisphere, northingFirst)
+   {
+      const
+         a    = spheroid .getSemiMajorAxis (),
+         ecc2 = 1 - Math .pow (spheroid .getSemiMinorAxis () / a, 2),
+         EE   = ecc2 / (1 - ecc2),
+         e1   = (1 - Math .sqrt (1 - ecc2)) / (1 + Math .sqrt (1 - ecc2));
+
+      this .southernHemisphere = ! northernHemisphere;
+      this .eastingFirst       = ! northingFirst;
+      this .a                  = a;
+      this .ecc2               = ecc2;
+      this .EE                 = EE;
+      this .E8                 = 8 * EE;
+      this .E9                 = 9 * EE;
+      this .E252               = 252 * EE;
+      this .e1                 = e1;
+      this .A                  = k0 * (a * (1 - ecc2 / 4 - 3 * ecc2 * ecc2 / 64 - 5 * ecc2 * ecc2 * ecc2 / 256));
+      this .B                  = 3 * e1 / 2 - 7 * e1 * e1 * e1 / 32;
+      this .C                  = 21 * e1 * e1 / 16 - 55 * e1 * e1 * e1 * e1 / 32;
+      this .D                  = 151 * e1 * e1 * e1 / 96;
+      this .E                  = a * (1 - ecc2);
+      this .W                  = 1 - ecc2 / 4 - 3 * ecc2 * ecc2 / 64 - 5 * ecc2 * ecc2 * ecc2 / 256;
+      this .X                  = 3 * ecc2 / 8 + 3 * ecc2 * ecc2 / 32 + 45 * ecc2 * ecc2 * ecc2 / 1024;
+      this .Y                  = 15 * ecc2 * ecc2 / 256 + 45 * ecc2 * ecc2 * ecc2 / 1024;
+      this .Z                  = 35 * ecc2 * ecc2 * ecc2 / 3072;
+      this .longitude0         = Algorithm .radians (zone * 6 - 183);
+      this .geodeticConverter  = new Geodetic (spheroid, true, true);
+   }
+
+   UniversalTransverseMercator .prototype =
+   {
+      constructor: UniversalTransverseMercator,
+      convert: function (utm, result)
+      {
+         // https://gist.github.com/duedal/840476
+
+         if (this .eastingFirst)
+         {
+            var
+               northing = utm .y,
+               easting  = utm .x;
+         }
+         else
+         {
+            var
+               northing = utm .x,
+               easting  = utm .y;
+         }
+
+         // Check for southern hemisphere and remove offset from easting.
+
+         let S = this .southernHemisphere;
+
+         if (northing < 0)
+         {
+            S        = ! this .southernHemisphere;
+            northing = -northing;
+         }
+
+         if (S)
+            northing -= N0;
+
+         easting -= E0;
+
+         // Begin calculation.
+
+         const
+            mu   = northing / this .A,
+            phi1 = mu + this .B * Math .sin (2 * mu) + this .C * Math .sin (4 * mu) + this .D * Math .sin (6 * mu);
+
+         const
+            sinphi1 = Math .pow (Math .sin (phi1), 2),
+            cosphi1 = Math .cos (phi1),
+            tanphi1 = Math .tan (phi1);
+
+         const
+            N1 = this .a / Math .sqrt (1 - this .ecc2 * sinphi1),
+            T2 = Math .pow (tanphi1, 2),
+            T8 = Math .pow (tanphi1, 8),
+            C1 = this .EE * T2,
+            C2 = C1 * C1,
+            R1 = this .E / Math .pow (1 - this .ecc2 * sinphi1, 1.5),
+            I  = easting / (N1 * k0);
+
+         const
+            J = (5 + 3 * T2 + 10 * C1 - 4 * C2 - this .E9) * Math .pow (I, 4) / 24,
+            K = (61 + 90 * T2 + 298 * C1 + 45 * T8 - this .E252 - 3 * C2) * Math .pow (I, 6) / 720,
+            L = (5 - 2 * C1 + 28 * T2 - 3 * C2 + this .E8 + 24 * T8) * Math .pow (I, 5) / 120;
+
+         const
+            latitude  = phi1 - (N1 * tanphi1 / R1) * (I * I / 2 - J + K),
+            longitude = this .longitude0 + (I - (1 + 2 * T2 + C1) * Math .pow (I, 3) / 6 + L) / cosphi1;
+
+         return this .geodeticConverter .convertRadians (latitude, longitude, utm .z, result);
+      },
+      apply: function (geocentric, result)
+      {
+         // https://gist.github.com/duedal/840476
+
+         const
+            geodetic  = this .geodeticConverter .applyRadians (geocentric, result),
+            latitude  = geodetic .x,
+            longitude = geodetic .y;
+
+         const
+            tanlat = Math .tan (latitude),
+            coslat = Math .cos (latitude);
+
+         const
+            EE = this .EE,
+            N  = this .a / Math .sqrt (1 - this .ecc2 * Math .pow (Math .sin (latitude), 2)),
+            T  = tanlat * tanlat,
+            T6 = T * T * T,
+            C  = EE * coslat * coslat,
+            A  = coslat * (longitude - this .longitude0);
+
+         const M = this .a * (this .W * latitude
+                              - this .X * Math .sin (2 * latitude)
+                              + this .Y * Math .sin (4 * latitude)
+                              - this .Z * Math .sin (6 * latitude));
+
+         const easting = k0 * N * (A + (1 - T + C) * Math .pow (A, 3) / 6
+                                   + (5 - 18 * T6 + 72 * C - 58 * EE) * Math .pow (A, 5) / 120)
+                         + E0;
+
+         let northing = k0 * (M + N * tanlat * (A * A / 2 + (5 - T + 9 * C + 4 * C * C) * Math .pow (A, 4) / 24
+                                                + (61 - 58 * T6 + 600 * C - 330 * EE) * Math .pow (A, 6) / 720));
+
+         if (latitude < 0)
+         {
+            northing += N0;
+
+            if (! this .southernHemisphere)
+               northing = -northing;
+         }
+         else
+         {
+            if (this .southernHemisphere)
+               northing = -northing;
+         }
+
+         if (this .eastingFirst)
+            return result .set (easting, northing, geodetic .z);
+
+         return result .set (northing, easting, geodetic .z);
+      },
+      //lerp: Vector3 .lerp,
+   };
+
+   return UniversalTransverseMercator;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Geospatial/Geocentric',[
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Algorithm",
+],
+function (Vector3,
+          Algorithm)
+{
+"use strict";
+
+   function Geocentric () { }
+
+   Geocentric .prototype =
+   {
+      constructor: Geocentric,
+      convert: function (geocentric, result)
+      {
+         return result .assign (geocentric);
+      },
+      apply: function (geocentric, result)
+      {
+         return result .assign (geocentric);
+      },
+      slerp: function (source, destination, t)
+      {
+         const
+            sourceLength      = source      .abs (),
+            destinationLength = destination .abs ();
+
+         source      .normalize ();
+         destination .normalize ();
+
+         return Algorithm .simpleSlerp (source, destination, t) .multiply (Algorithm .lerp (sourceLength, destinationLength, t));
+      },
+   };
+
+   return Geocentric;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Geospatial/Geospatial',[
+   "standard/Geospatial/ReferenceEllipsoids",
+   "standard/Geospatial/Geodetic",
+   "standard/Geospatial/UniversalTransverseMercator",
+   "x_ite/Browser/Geospatial/Geocentric",
+],
+function (ReferenceEllipsoids,
+          Geodetic,
+          UniversalTransverseMercator,
+          Geocentric)
+{
+"use strict";
+
+   let i = 0;
+
+   const
+      GD  = i ++,
+      UTM = i ++,
+      GC  = i ++;
+
+   const CoordinateSystems = {
+      GD:  GD,
+      GDC: GD,
+      UTM: UTM,
+      GC:  GC,
+      GCC: GC,
+      GS:  GC,
+   };
+
+   const Zone = /^Z(\d+)$/;
+
+   const Geospatial =
+   {
+      GD: GD,
+      UTM: UTM,
+      GC: GC,
+      getReferenceFrame: function (geoSystem, radians)
+      {
+         switch (this .getCoordinateSystem (geoSystem))
+         {
+            case GD:
+            {
+               return new Geodetic (this .getEllipsoid (geoSystem),
+                                    this .getLatitudeFirst (geoSystem),
+                                    radians);
+            }
+            case UTM:
+            {
+               return new UniversalTransverseMercator (this .getEllipsoid (geoSystem),
+                                                       this .getZone (geoSystem),
+                                                       this .getNorthernHemisphere (geoSystem),
+                                                       this .getNorthingFirst (geoSystem));
+            }
+            case GC:
+            {
+               return new Geocentric ();
+            }
+         }
+
+         return new Geodetic (ReferenceEllipsoids .WE, true, radians);
+      },
+      getElevationFrame: function (geoSystem, radians)
+      {
+         return new Geodetic (this .getEllipsoid (geoSystem), true, radians);
+      },
+      getCoordinateSystem: function (geoSystem)
+      {
+         for (const gs of geoSystem)
+         {
+            const coordinateSystem = CoordinateSystems [gs];
+
+            if (coordinateSystem !== undefined)
+               return coordinateSystem;
+         }
+
+         return GD;
+      },
+      getEllipsoid: function (geoSystem)
+      {
+         for (const gs of geoSystem)
+         {
+            const ellipsoid = ReferenceEllipsoids [gs];
+
+            if (ellipsoid !== undefined)
+               return ellipsoid;
+         }
+
+         return ReferenceEllipsoids .WE;
+      },
+      getEllipsoidString: function (geoSystem)
+      {
+         for (const gs of geoSystem)
+         {
+            const ellipsoid = ReferenceEllipsoids [gs];
+
+            if (ellipsoid !== undefined)
+               return gs;
+         }
+
+         return "WE";
+      },
+      isStandardOrder: function (geoSystem)
+      {
+         switch (this .getCoordinateSystem (geoSystem))
+         {
+            case GD:
+            {
+               return this .getLatitudeFirst (geoSystem);
+            }
+            case UTM:
+            {
+               return this .getNorthingFirst (geoSystem);
+            }
+            case GC:
+            {
+               return true;
+            }
+         }
+
+         return this .getLatitudeFirst (geoSystem);
+      },
+      getLatitudeFirst: function (geoSystem)
+      {
+         for (const gs of geoSystem)
+         {
+            if (gs === "longitude_first")
+               return false;
+         }
+
+         return true;
+      },
+      getNorthingFirst: function (geoSystem)
+      {
+         for (const gs of geoSystem)
+         {
+            if (gs === "easting_first")
+               return false;
+         }
+
+         return true;
+      },
+      getZone: function (geoSystem)
+      {
+         for (const gs of geoSystem)
+         {
+            const match = gs .match (Zone);
+
+            if (match)
+               return parseInt (match [1]);
+         }
+
+         return 1;
+      },
+      getNorthernHemisphere: function (geoSystem)
+      {
+         for (const gs of geoSystem)
+         {
+            if (gs === "S")
+               return false;
+         }
+
+         return true;
+      },
+   };
+
+   return Geospatial;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Base/X3DCast',[
+   "x_ite/Fields",
+],
+function (Fields)
+{
+"use strict";
+
+   return function (type, node, innerNode = true)
+   {
+      try
+      {
+         if (node)
+         {
+            if (node instanceof Fields .SFNode)
+               node = node .getValue ();
+
+            if (node)
+            {
+               if (innerNode)
+                  node = node .getInnerNode ();
+
+               if (node .getType () .indexOf (type) !== -1)
+                  return node;
+            }
+         }
+      }
+      catch (error)
+      { }
+
+      return null;
+   };
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Geospatial/X3DGeospatialObject',[
+   "x_ite/Base/X3DConstants",
+   "x_ite/Browser/Geospatial/Geospatial",
+   "x_ite/Base/X3DCast",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Matrix4",
+],
+function (X3DConstants,
+          Geospatial,
+          X3DCast,
+          Vector3,
+          Matrix4)
+{
+"use strict";
+
+   var
+      vector = new Vector3 (0, 0, 0),
+      result = new Vector3 (0, 0, 0),
+      t      = new Vector3 (0, 0, 0),
+      x      = new Vector3 (0, 0, 0),
+      y      = new Vector3 (0, 0, 0),
+      z      = new Vector3 (0, 0, 0);
+
+   function X3DGeospatialObject (executionContext)
+   {
+      this .addType (X3DConstants .X3DGeospatialObject);
+
+      this .radians         = false;
+      this .origin          = new Vector3 (0, 0, 0);
+      this .originMatrix    = new Matrix4 ();
+      this .invOriginMatrix = new Matrix4 ();
+   }
+
+   X3DGeospatialObject .prototype =
+   {
+      constructor: X3DGeospatialObject,
+      initialize: function ()
+      {
+         this ._geoSystem .addInterest ("set_geoSystem__", this);
+         this ._geoOrigin .addInterest ("set_geoOrigin__", this);
+
+         this .set_geoSystem__ ();
+         this .set_geoOrigin__ ();
+      },
+      set_geoSystem__: function ()
+      {
+         this .coordinateSystem = Geospatial .getCoordinateSystem (this ._geoSystem);
+         this .referenceFrame   = Geospatial .getReferenceFrame   (this ._geoSystem, this .radians);
+         this .elevationFrame   = Geospatial .getElevationFrame   (this ._geoSystem, this .radians);
+         this .standardOrder    = Geospatial .isStandardOrder     (this ._geoSystem);
+      },
+      set_geoOrigin__: function ()
+      {
+         if (this .geoOriginNode)
+         {
+            this .geoOriginNode .removeInterest ("set_origin__",    this);
+            this .geoOriginNode .removeInterest ("set_rotateYUp__", this);
+            this .geoOriginNode .removeInterest ("addNodeEvent",    this);
+         }
+
+         this .geoOriginNode = X3DCast (X3DConstants .GeoOrigin, this ._geoOrigin);
+
+         if (this .geoOriginNode)
+         {
+            this .geoOriginNode .addInterest ("set_origin__",    this);
+            this .geoOriginNode .addInterest ("set_rotateYUp__", this);
+            this .geoOriginNode .addInterest ("addNodeEvent",    this);
+         }
+
+         this .set_origin__ ();
+         this .set_rotateYUp__ ();
+      },
+      set_origin__: function ()
+      {
+         if (this .geoOriginNode)
+            this .geoOriginNode .getOrigin (this .origin);
+         else
+            this .origin .set (0, 0, 0);
+
+         this .set_originMatrix__ ();
+      },
+      set_originMatrix__: function ()
+      {
+         if (this .geoOriginNode)
+         {
+            // Position
+            var t = this .origin;
+
+            // Let's work out the orientation at that location in order
+            // to maintain a view where +Y is in the direction of gravitional
+            // up for that region of the planet's surface. This will be the
+            // value of the rotation matrix for the transform.
+
+            this .elevationFrame .normal (t, y);
+
+            x .set (0, 0, 1) .cross (y);
+
+            // Handle pole cases.
+            if (x .equals (Vector3 .Zero))
+               x .set (1, 0, 0);
+
+            z .assign (x) .cross (y);
+
+            x .normalize ();
+            z .normalize ();
+
+            this .originMatrix .set (x .x, x .y, x .z, 0,
+                                       y .x, y .y, y .z, 0,
+                                       z .x, z .y, z .z, 0,
+                                       t .x, t .y, t .z, 1);
+
+            this .invOriginMatrix .assign (this .originMatrix) .inverse ();
+         }
+      },
+      set_rotateYUp__: function ()
+      {
+         if (this .geoOriginNode && this .geoOriginNode ._rotateYUp .getValue ())
+         {
+            this .getCoord          = getCoordRotateYUp;
+            this .getGeoCoord       = getGeoCoordRotateYUp;
+            this .getGeoUpVector    = getGeoUpVectorRotateYUp;
+            this .getLocationMatrix = getLocationMatrixRotateYUp;
+         }
+         else
+         {
+            delete this .getCoord;
+            delete this .getGeoCoord;
+            delete this .getGeoUpVector;
+            delete this .getLocationMatrix;
+         }
+      },
+      getReferenceFrame: function ()
+      {
+         return this .referenceFrame;
+      },
+      getStandardOrder: function ()
+      {
+         return this .standardOrder;
+      },
+      getCoord: function (geoPoint, result)
+      {
+         return this .referenceFrame .convert (geoPoint, result) .subtract (this .origin);
+      },
+      getGeoCoord: function (point, result)
+      {
+         return this .referenceFrame .apply (vector .assign (point) .add (this .origin), result);
+      },
+      getGeoElevation: function (point)
+      {
+         return this .getGeoCoord (point, result) .z;
+      },
+      getGeoUpVector: function (point, result)
+      {
+         return this .elevationFrame .normal (vector .assign (point) .add (this .origin), result);
+      },
+      getLocationMatrix: function (geoPoint, result)
+      {
+         var
+            origin         = this .origin,
+            locationMatrix = getStandardLocationMatrix .call (this, geoPoint, result);
+
+         // translateRight (-origin)
+         locationMatrix [12] -= origin .x;
+         locationMatrix [13] -= origin .y;
+         locationMatrix [14] -= origin .z;
+
+         return locationMatrix;
+      },
+   };
+
+   function getCoordRotateYUp (geoPoint, result)
+   {
+      return this .invOriginMatrix .multVecMatrix (this .referenceFrame .convert (geoPoint, result));
+   }
+
+   function getGeoCoordRotateYUp (point, result)
+   {
+      return this .referenceFrame .apply (this .originMatrix .multVecMatrix (vector .assign (point)), result);
+   }
+
+   function getGeoUpVectorRotateYUp (point, result)
+   {
+      return this .invOriginMatrix .multDirMatrix (this .elevationFrame .normal (this .originMatrix .multVecMatrix (vector .assign (point)), result));
+   }
+
+   function getLocationMatrixRotateYUp (geoPoint, result)
+   {
+      return getStandardLocationMatrix .call (this, geoPoint, result) .multRight (this .invOriginMatrix);
+   }
+
+   function getStandardLocationMatrix (geoPoint, result)
+   {
+      // Position
+      this .referenceFrame .convert (geoPoint, t);
+
+      // Let's work out the orientation at that location in order
+      // to maintain a view where +Y is in the direction of gravitional
+      // up for that region of the planet's surface. This will be the
+      // value of the rotation matrix for the transform.
+
+      this .elevationFrame .normal (t, y);
+
+      x .set (0, 0, 1) .cross (y);
+
+      // Handle pole cases.
+      if (x .equals (Vector3 .Zero))
+         x .set (1, 0, 0);
+
+      z .assign (x) .cross (y);
+
+      x .normalize ();
+      z .normalize ();
+
+      return result .set (x .x, x .y, x .z, 0,
+                          y .x, y .y, y .z, 0,
+                          z .x, z .y, z .z, 0,
+                          t .x, t .y, t .z, 1);
+   }
+
+   return X3DGeospatialObject;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Interpolation/ScalarInterpolator',[
+   "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Components/Interpolation/X3DInterpolatorNode",
+   "x_ite/Base/X3DConstants",
+   "standard/Math/Algorithm",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DInterpolatorNode,
+          X3DConstants,
+          Algorithm)
+{
+"use strict";
+
+   function ScalarInterpolator (executionContext)
+   {
+      X3DInterpolatorNode .call (this, executionContext);
+
+      this .addType (X3DConstants .ScalarInterpolator);
+   }
+
+   ScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+   {
+      constructor: ScalarInterpolator,
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFFloat ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "ScalarInterpolator";
+      },
+      getComponentName: function ()
+      {
+         return "Interpolation";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DInterpolatorNode .prototype .initialize .call (this);
+
+         this ._keyValue .addInterest ("set_keyValue__", this);
+      },
+      set_keyValue__: function ()
+      {
+         const
+            key      = this ._key,
+            keyValue = this ._keyValue;
+
+         if (keyValue .length < key .length)
+            keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : 0);
+      },
+      interpolate: function (index0, index1, weight)
+      {
+         this ._value_changed = Algorithm .lerp (this ._keyValue [index0], this ._keyValue [index1], weight);
+      },
+   });
+
+   return ScalarInterpolator;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Navigation/NavigationInfo',[
+   "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DBindableNode",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DBindableNode,
+          TraverseType,
+          X3DConstants)
+{
+"use strict";
+
+   const TransitionType =
+   {
+      TELEPORT: true,
+      LINEAR:   true,
+      ANIMATE:  true,
+   };
+
+   function NavigationInfo (executionContext)
+   {
+      X3DBindableNode .call (this, executionContext);
+
+      this .addType (X3DConstants .NavigationInfo);
+
+      this .addChildObjects ("transitionStart",  new Fields .SFBool (),
+                             "availableViewers", new Fields .MFString (),
+                             "viewer",           new Fields .SFString ("EXAMINE"));
+
+      this ._avatarSize      .setUnit ("length");
+      this ._speed           .setUnit ("speed");
+      this ._visibilityLimit .setUnit ("speed");
+   }
+
+   NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
+   {
+      constructor: NavigationInfo,
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "type",               new Fields .MFString ("EXAMINE", "ANY")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "avatarSize",         new Fields .MFFloat (0.25, 1.6, 0.75)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",              new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "headlight",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "visibilityLimit",    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transitionType",     new Fields .MFString ("LINEAR")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transitionTime",     new Fields .SFTime (1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "transitionComplete", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",            new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",           new Fields .SFTime ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NavigationInfo";
+      },
+      getComponentName: function ()
+      {
+         return "Navigation";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DBindableNode .prototype .initialize .call (this);
+
+         this ._type               .addInterest ("set_type__",               this);
+         this ._headlight          .addInterest ("set_headlight__",          this);
+         this ._transitionStart    .addInterest ("set_transitionStart__",    this);
+         this ._transitionComplete .addInterest ("set_transitionComplete__", this);
+         this ._isBound            .addInterest ("set_isBound__",            this);
+
+         this .set_type__ ();
+         this .set_headlight__ ();
+      },
+      getViewer: function ()
+      {
+         return this ._viewer .getValue ();
+      },
+      getCollisionRadius: function ()
+      {
+         if (this ._avatarSize .length > 0)
+         {
+            if (this ._avatarSize [0] > 0)
+               return this ._avatarSize [0];
+         }
+
+         return 0.25;
+      },
+      getAvatarHeight: function ()
+      {
+         if (this ._avatarSize .length > 1)
+            return this ._avatarSize [1];
+
+         return 1.6;
+      },
+      getStepHeight: function ()
+      {
+         if (this ._avatarSize .length > 2)
+            return this ._avatarSize [2];
+
+         return 0.75;
+      },
+      getNearValue: function ()
+      {
+         const nearValue = this .getCollisionRadius ();
+
+         if (nearValue === 0)
+            return 1e-5;
+
+         else
+            return nearValue / 2;
+      },
+      getFarValue: function (viewpoint)
+      {
+         return this ._visibilityLimit .getValue ()
+                ? this ._visibilityLimit .getValue ()
+                : viewpoint .getMaxFarValue ();
+      },
+      getTransitionType: function ()
+      {
+         for (const value of this ._transitionType)
+         {
+            const transitionType = TransitionType [value];
+
+            if (transitionType)
+               return value;
+         }
+
+         return "LINEAR";
+      },
+      set_type__: function ()
+      {
+         // Determine active viewer.
+
+         this ._viewer = "EXAMINE";
+
+         for (const string of this ._type)
+         {
+            switch (string)
+            {
+               case "EXAMINE":
+               case "WALK":
+               case "FLY":
+               case "LOOKAT":
+               case "PLANE":
+               case "NONE":
+                  this ._viewer = string;
+                  break;
+               case "PLANE_create3000.de":
+                  this ._viewer = "PLANE";
+                  break;
+               default:
+                  continue;
+            }
+
+            // Leave for loop.
+            break;
+         }
+
+         // Determine available viewers.
+
+         let
+            examineViewer = false,
+            walkViewer    = false,
+            flyViewer     = false,
+            planeViewer   = false,
+            noneViewer    = false,
+            lookAt        = false;
+
+         if (! this ._type .length)
+         {
+            examineViewer = true;
+            walkViewer    = true;
+            flyViewer     = true;
+            planeViewer   = true;
+            noneViewer    = true;
+            lookAt        = true;
+         }
+         else
+         {
+            for (const string of this ._type)
+            {
+               switch (string)
+               {
+                  case "EXAMINE":
+                     examineViewer = true;
+                     continue;
+                  case "WALK":
+                     walkViewer = true;
+                     continue;
+                  case "FLY":
+                     flyViewer = true;
+                     continue;
+                  case "LOOKAT":
+                     lookAt = true;
+                     continue;
+                  case "PLANE":
+                     planeViewer = true;
+                     continue;
+                  case "NONE":
+                     noneViewer = true;
+                     continue;
+                  case "ANY":
+                     examineViewer = true;
+                     walkViewer    = true;
+                     flyViewer     = true;
+                     planeViewer   = true;
+                     noneViewer    = true;
+                     lookAt        = true;
+                     break;
+                  default:
+                     // Some string defaults to EXAMINE.
+                     examineViewer = true;
+                     continue;
+               }
+
+               break;
+            }
+         }
+
+         this ._availableViewers .length = 0;
+
+         if (examineViewer)
+            this ._availableViewers .push ("EXAMINE");
+
+         if (walkViewer)
+            this ._availableViewers .push ("WALK");
+
+         if (flyViewer)
+            this ._availableViewers .push ("FLY");
+
+         if (planeViewer)
+            this ._availableViewers .push ("PLANE");
+
+         if (lookAt)
+            this ._availableViewers .push ("LOOKAT");
+
+         if (noneViewer)
+            this ._availableViewers .push ("NONE");
+      },
+      set_headlight__: function ()
+      {
+         if (this ._headlight .getValue ())
+            delete this .enable;
+         else
+            this .enable = Function .prototype;
+      },
+      set_transitionStart__: function ()
+      {
+         if (! this ._transitionActive .getValue ())
+            this ._transitionActive = true;
+      },
+      set_transitionComplete__: function ()
+      {
+         if (this ._transitionActive .getValue ())
+            this ._transitionActive = false;
+      },
+      set_isBound__: function ()
+      {
+         if (this ._isBound .getValue ())
+            return;
+
+         if (this ._transitionActive .getValue ())
+            this ._transitionActive = false;
+      },
+      enable: function (type, renderObject)
+      {
+         if (type !== TraverseType .DISPLAY)
+            return;
+
+         if (this ._headlight .getValue ())
+            renderObject .getGlobalObjects () .push (renderObject .getBrowser () .getHeadlight ());
+      },
+      traverse: function (type, renderObject)
+      {
+         if (type !== TraverseType .CAMERA)
+            return;
+
+         renderObject .getLayer () .getNavigationInfos () .push (this);
+      }
+   });
+
+   return NavigationInfo;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('standard/Math/Geometry/Camera',[
+   "standard/Math/Numbers/Vector3",
+],
+function (Vector3)
+{
+"use strict";
+
+   return {
+      frustum: function (l, r, b, t, n, f, matrix)
+      {
+         const
+            r_l = r - l,
+            t_b = t - b,
+            f_n = f - n,
+            n_2 = 2 * n,
+
+            A = (r + l) / r_l,
+            B = (t + b) / t_b,
+            C = -(f + n) / f_n,
+            D = -(n_2 * f) / f_n,
+            E = n_2 / r_l,
+            F = n_2 / t_b;
+
+         return matrix .set (E, 0, 0, 0,
+                             0, F, 0, 0,
+                             A, B, C, -1,
+                             0, 0, D, 0);
+      },
+      perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
+      {
+         const ratio = Math .tan (fieldOfView / 2) * zNear;
+
+         if (width > height)
+         {
+            const aspect = width * ratio / height;
+            return this .frustum (-aspect, aspect, -ratio, ratio, zNear, zFar, matrix);
+         }
+         else
+         {
+            const aspect = height * ratio / width;
+            return this .frustum (-ratio, ratio, -aspect, aspect, zNear, zFar, matrix);
+         }
+      },
+      perspective2: function (fieldOfView, zNear, zFar, width, height, matrix)
+      {
+         const ratio = Math .tan (fieldOfView / 2) * zNear;
+
+         return this .frustum (-ratio, ratio, -ratio, ratio, zNear, zFar, matrix);
+      },
+      ortho: function (l, r, b, t, n, f, matrix)
+      {
+         const
+            r_l = r - l,
+            t_b = t - b,
+            f_n = f - n,
+
+            A =  2 / r_l,
+            B =  2 / t_b,
+            C = -2 / f_n,
+            D = -(r + l) / r_l,
+            E = -(t + b) / t_b,
+            F = -(f + n) / f_n;
+
+         return matrix .set (A, 0, 0, 0,
+                             0, B, 0, 0,
+                             0, 0, C, 0,
+                             D, E, F, 1);
+      },
+      orthoBox: (function ()
+      {
+         const
+            min = new Vector3 (0, 0, 0),
+            max = new Vector3 (0, 0, 0);
+
+         return function (box, matrix)
+         {
+            box .getExtents (min, max);
+
+            return this .ortho (min .x, max .x, min .y, max .y, -max .z, -min .z, matrix);
+         };
+      })(),
+   };
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Geospatial/GeoViewpoint',[
+   "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Components/Navigation/X3DViewpointNode",
+   "x_ite/Components/Geospatial/X3DGeospatialObject",
+   "x_ite/Components/Interpolation/ScalarInterpolator",
+   "x_ite/Components/Navigation/NavigationInfo",
+   "x_ite/Base/X3DConstants",
+   "standard/Math/Geometry/Camera",
+   "standard/Math/Numbers/Vector2",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Rotation4",
+   "standard/Math/Numbers/Matrix4",
+   "standard/Math/Algorithm",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DViewpointNode,
+          X3DGeospatialObject,
+          ScalarInterpolator,
+          NavigationInfo,
+          X3DConstants,
+          Camera,
+          Vector2,
+          Vector3,
+          Rotation4,
+          Matrix4,
+          Algorithm)
+{
+"use strict";
+
+   function traverse (type, renderObject)
+   {
+      X3DViewpointNode .prototype .traverse .call (this, type, renderObject);
+
+      this .navigationInfoNode .traverse (type, renderObject);
+   }
+
+   function GeoViewpoint (executionContext)
+   {
+      X3DViewpointNode    .call (this, executionContext);
+      X3DGeospatialObject .call (this, executionContext);
+
+      this .addType (X3DConstants .GeoViewpoint);
+
+      this ._centerOfRotation .setUnit ("length");
+      this ._fieldOfView      .setUnit ("angle");
+
+      this .navigationInfoNode      = new NavigationInfo (executionContext);
+      this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
+      this .projectionMatrix        = new Matrix4 ();
+      this .elevation               = 0;
+
+      switch (executionContext .specificationVersion)
+      {
+         case "2.0":
+         case "3.0":
+         case "3.1":
+         case "3.2":
+            this .traverse = traverse;
+            break;
+      }
+   }
+
+   GeoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
+      X3DGeospatialObject .prototype,
+   {
+      constructor: GeoViewpoint,
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",         new Fields .MFString ("GD", "WE")),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_bind",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "position",          new Fields .SFVec3d (0, 0, 100000)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "orientation",       new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "centerOfRotation",  new Fields .SFVec3d ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fieldOfView",       new Fields .SFFloat (0.7854)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "jump",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "retainUserOffsets", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "navType",           new Fields .MFString ("EXAMINE", "ANY")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "headlight",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "speedFactor",       new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isBound",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "bindTime",          new Fields .SFTime ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "GeoViewpoint";
+      },
+      getComponentName: function ()
+      {
+         return "Geospatial";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DViewpointNode    .prototype .initialize .call (this);
+         X3DGeospatialObject .prototype .initialize .call (this);
+
+         this ._position       .addInterest ("set_position__", this);
+         this ._positionOffset .addInterest ("set_position__", this);
+         this ._navType        .addFieldInterest (this .navigationInfoNode ._type);
+         this ._headlight      .addFieldInterest (this .navigationInfoNode ._headlight);
+
+         this .navigationInfoNode .setup ();
+
+         this .set_position__ ();
+
+         // Setup interpolators
+
+         this .fieldOfViewInterpolator ._key = [ 0, 1 ];
+         this .fieldOfViewInterpolator .setup ();
+
+         this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewInterpolator ._set_fraction);
+         this .fieldOfViewInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
+      },
+      setInterpolators: function (fromViewpointNode, toViewpointNode)
+      {
+         if (fromViewpointNode .getType () .indexOf (X3DConstants .Viewpoint) >= 0)
+         {
+            const scale = fromViewpointNode .getFieldOfView () / toViewpointNode .getFieldOfView ();
+
+            this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
+
+            this ._fieldOfViewScale = scale;
+         }
+         else
+         {
+            this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
+
+            this ._fieldOfViewScale = toViewpointNode ._fieldOfViewScale .getValue ();
+         }
+      },
+      setPosition: (function ()
+      {
+         var geoPosition = new Vector3 (0, 0, 0);
+
+         return function (value)
+         {
+            this ._position .setValue (this .getGeoCoord (value, geoPosition));
+         };
+      })(),
+      getPosition: (function ()
+      {
+         var position = new Vector3 (0, 0, 0);
+
+         return function ()
+         {
+            return this .getCoord (this ._position .getValue (), position);
+         };
+      })(),
+      set_position__: (function ()
+      {
+         var position = new Vector3 (0, 0, 0);
+
+         return function ()
+         {
+            this .getCoord (this ._position .getValue (), position);
+
+            this .elevation = this .getGeoElevation (position .add (this ._positionOffset .getValue ()));
+         };
+      })(),
+      setOrientation: (function ()
+      {
+         var
+            locationMatrix = new Matrix4 (),
+            geoOrientation = new Rotation4 (0, 0, 1, 0);
+
+         return function (value)
+         {
+            ///  Returns the resulting orientation for this viewpoint.
+
+            var rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
+
+            geoOrientation .setMatrix (rotationMatrix);
+
+            this ._orientation .setValue (geoOrientation .inverse () .multLeft (value));
+         };
+      })(),
+      getOrientation: (function ()
+      {
+         var
+            locationMatrix = new Matrix4 (),
+            orientation    = new Rotation4 (0, 0, 1, 0);
+
+         return function ()
+         {
+            ///  Returns the resulting orientation for this viewpoint.
+
+            var rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
+
+            orientation .setMatrix (rotationMatrix);
+
+            return orientation .multLeft (this ._orientation .getValue ());
+         };
+      })(),
+      getCenterOfRotation: (function ()
+      {
+         var centerOfRotation = new Vector3 (0, 0, 0);
+
+         return function ()
+         {
+            return this .getCoord (this ._centerOfRotation .getValue (), centerOfRotation);
+         };
+      })(),
+      getFieldOfView: function ()
+      {
+         var fov = this ._fieldOfView * this ._fieldOfViewScale;
+
+         return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
+      },
+      getMaxFarValue: function ()
+      {
+         return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e9;
+      },
+      getUpVector: (function ()
+      {
+         var
+            position = new Vector3 (0, 0, 0),
+            upVector = new Vector3 (0, 0, 0);
+
+         return function ()
+         {
+            this .getCoord (this ._position .getValue (), position);
+
+            return this .getGeoUpVector .call (this, position .add (this ._positionOffset .getValue ()), upVector);
+         };
+      })(),
+      getSpeedFactor: function ()
+      {
+         return (Math .max (this .elevation, 0.0) + 10) / 10 * this ._speedFactor .getValue ();
+      },
+      getScreenScale: (function ()
+      {
+         var screenScale = new Vector3 (0, 0, 0);
+
+         return function (point, viewport)
+         {
+            // Returns the screen scale in meter/pixel for on pixel.
+
+            var
+               width  = viewport [2],
+               height = viewport [3],
+               size   = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
+
+            if (width > height)
+               size /= height;
+            else
+               size /= width;
+
+            return screenScale .set (size, size, size);
+         };
+      })(),
+      getViewportSize: (function ()
+      {
+         var viewportSize = new Vector2 (0, 0);
+
+         return function (viewport, nearValue)
+         {
+            var
+               width  = viewport [2],
+               height = viewport [3],
+               size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
+               aspect = width / height;
+
+            if (aspect > 1)
+               return viewportSize .set (size * aspect, size);
+
+            return viewportSize .set (size, size / aspect);
+         };
+      })(),
+      getLookAtDistance: function (bbox)
+      {
+         return (bbox .size .abs () / 2) / Math .tan (this .getFieldOfView () / 2);
+      },
+      getProjectionMatrixWithLimits: function (nearValue, farValue, viewport, limit)
+      {
+         if (limit || this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer"))
+            return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
+
+         // Linear interpolate nearValue and farValue
+
+         var
+            geoZNear = Math .max (Algorithm .lerp (Math .min (nearValue, 1e4), 1e4, this .elevation / 1e7), 1),
+            geoZFar  = Math .max (Algorithm .lerp (1e6, Math .max (farValue, 1e6),  this .elevation / 1e7), 1e6);
+
+         return Camera .perspective (this .getFieldOfView (), geoZNear, geoZFar, viewport [2], viewport [3], this .projectionMatrix);
+      },
+   });
+
+   return GeoViewpoint;
+});
+
 define ('lib/jquery.fullscreen-min',[
    "jquery",
 ],
@@ -28726,22 +33789,28 @@ define('jquery-mousewheel', ['jquery-mousewheel/jquery.mousewheel'], function (m
 define ('x_ite/Browser/Core/ContextMenu',[
    "jquery",
    "x_ite/Base/X3DBaseNode",
+   "x_ite/Components/Geospatial/GeoViewpoint",
    "locale/gettext",
    "lib/jquery.fullscreen-min",
    "jquery-mousewheel",
 ],
 function ($,
           X3DBaseNode,
+          GeoViewpoint,
           _)
 {
 "use strict";
+
+   const
+      _zIndex   = Symbol (),
+      _userMenu = Symbol ();
 
    function ContextMenu (executionContext)
    {
       X3DBaseNode .call (this, executionContext);
 
-      this .userMenu = null;
-      this .active   = false;
+      this [_zIndex]   = 10000;
+      this [_userMenu] = null;
    }
 
    ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -28765,28 +33834,36 @@ function ($,
 
          const browser = this .getBrowser ();
 
-         this .initializeContextMenu ({
+         this .init ({
             element: browser .getElement (),
             appendTo: browser .getShadow (),
             build: this .build .bind (this),
             animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
          });
       },
+      getZIndex: function ()
+      {
+         return this [_zIndex];
+      },
+      setZIndex: function (value)
+      {
+         this [_zIndex] = value;
+      },
       getUserMenu: function ()
       {
-         return this .userMenu;
+         return this [_userMenu];
       },
       setUserMenu: function (userMenu)
       {
-         this .userMenu = userMenu;
+         this [_userMenu] = userMenu;
       },
       createUserMenu: function ()
       {
          const userMenu = { };
 
-         if (typeof this .userMenu === "function")
+         if (typeof this [_userMenu] === "function")
          {
-            const menu = this .userMenu ();
+            const menu = this [_userMenu] ();
 
             if ($.isPlainObject (menu))
             {
@@ -29076,14 +34153,14 @@ function ($,
             delete menu .items ["available-viewers"];
          }
 
-         if (!browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/) || (currentViewpoint && currentViewpoint .getTypeName () === "GeoViewpoint"))
+         if (! browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/) || (currentViewpoint instanceof GeoViewpoint))
          {
             delete menu .items ["straighten-horizon"];
          }
 
          const worldInfo = browser .getExecutionContext () .getWorldInfos () [0];
 
-         if (!worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0))
+         if (! worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0))
          {
             delete menu .items ["world-info"];
          }
@@ -29180,15 +34257,17 @@ function ($,
                return _("None Viewer");
          }
       },
-      initializeContextMenu: function (options)
+      init: function (options)
       {
-         this .triggerContextMenu = this .showContextMenu .bind (this, options);
+         this .show = this .createRoot .bind (this, options);
 
-         options .element .on ("contextmenu", this .triggerContextMenu);
+         options .element .on ("contextmenu", this .show);
       },
-      triggerContextMenu: function (event)
+      show: function (event)
       { },
-      showContextMenu: function (options, event)
+      hide: function (event)
+      { },
+      createRoot: function (options, event)
       {
          const
             menu  = options .build (event),
@@ -29201,10 +34280,13 @@ function ($,
          const layer = $("<div></div>")
             .addClass ("context-menu-layer")
             .addClass (menu .className)
+            .css ("z-index", this [_zIndex])
             .appendTo (options .appendTo);
 
-         const hide = function ()
+         const hide = this .hide = function ()
          {
+            delete this .hide;
+
             layer .remove ();
 
             ul [options .animation .hide] (options .animation .duration, function ()
@@ -29216,7 +34298,8 @@ function ($,
             });
 
             return false;
-         };
+         }
+         .bind (this);
 
          // Menu
 
@@ -29228,11 +34311,11 @@ function ($,
             .addClass ("context-menu-list")
             .addClass (menu .className)
             .addClass ("context-menu-root")
-            .css ({ "left": x, "top": y, "z-index": level, "display": "none" })
+            .css ({ "left": x, "top": y, "z-index": this [_zIndex] + level, "display": "none" })
             .appendTo (options .appendTo);
 
          for (const k in menu .items)
-            ul .append (this .buildItem (menu .items [k], "context-menu-root", k, level + 1, hide));
+            ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1, hide));
 
          ul [options .animation .show] (options .animation .duration);
 
@@ -29314,7 +34397,7 @@ function ($,
 
          return false;
       },
-      buildItem: function (item, parent, key, level, hide)
+      createItem: function (item, parent, key, level, hide)
       {
          const li = $("<li></li>") .addClass ("context-menu-item");
 
@@ -29380,11 +34463,11 @@ function ($,
          {
             const ul = $("<ul></ul>")
                .addClass ("context-menu-list")
-               .css ({ "z-index": level })
+               .css ({ "z-index": this [_zIndex] + level })
                .appendTo (li);
 
             for (const k in item .items)
-               ul .append (this .buildItem (item .items [k], key, k, level + 1, hide));
+               ul .append (this .createItem (item .items [k], key, k, level + 1, hide));
 
             li .addClass ("context-menu-submenu");
          }
@@ -31456,88 +36539,6 @@ function (X3DObject,
    });
 
    return X3DRoute;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Base/X3DCast',[
-   "x_ite/Fields",
-],
-function (Fields)
-{
-"use strict";
-
-   return function (type, node, innerNode = true)
-   {
-      try
-      {
-         if (node)
-         {
-            if (node instanceof Fields .SFNode)
-               node = node .getValue ();
-
-            if (node)
-            {
-               if (innerNode)
-                  node = node .getInnerNode ();
-
-               if (node .getType () .indexOf (type) !== -1)
-                  return node;
-            }
-         }
-      }
-      catch (error)
-      { }
-
-      return null;
-   };
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -34362,864 +39363,6 @@ function (Fields,
    };
 
    return X3DUrlObject;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Core/X3DNode',[
-   "x_ite/Fields",
-   "x_ite/Base/X3DBaseNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/InputOutput/Generator",
-],
-function (Fields,
-          X3DBaseNode,
-          X3DConstants,
-          Generator)
-{
-"use strict";
-
-   function X3DNode (executionContext)
-   {
-      X3DBaseNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DNode);
-   }
-
-   X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-   {
-      constructor: X3DNode,
-      copy: function (instance)
-      {
-         if (!instance || instance .getType () .includes (X3DConstants .X3DExecutionContext))
-         {
-            return X3DBaseNode .prototype .copy .call (this, instance);
-         }
-         else
-         {
-            const executionContext = instance .getBody ();
-
-            // First try to get a named node with the node's name.
-
-            if (this .getName () .length)
-            {
-               const namedNode = executionContext .getNamedNodes () .get (this .getName ());
-
-               if (namedNode)
-                  return namedNode;
-            }
-
-            // Create copy.
-
-            const copy = this .create (executionContext);
-
-            if (this .getNeedsName ())
-               this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (), this);
-
-            if (this .getName () .length)
-               executionContext .updateNamedNode (this .getName (), copy);
-
-            // Default fields
-
-            for (const sourceField of this .getPredefinedFields ())
-            {
-               try
-               {
-                  const destinationField = copy .getField (sourceField .getName ());
-
-                  if (sourceField .hasReferences ())
-                  {
-                     // IS relationship
-
-                     for (const originalReference of sourceField .getReferences ())
-                     {
-                        try
-                        {
-                           destinationField .addReference (instance .getField (originalReference .getName ()));
-                        }
-                        catch (error)
-                        {
-                           console .error (error .message);
-                        }
-                     }
-                  }
-                  else
-                  {
-                     if (sourceField .getAccessType () & X3DConstants .initializeOnly)
-                     {
-                        switch (sourceField .getType ())
-                        {
-                           case X3DConstants .SFNode:
-                           case X3DConstants .MFNode:
-                              destinationField .assign (sourceField .copy (instance));
-                              break;
-                           default:
-                              destinationField .assign (sourceField);
-                              break;
-                        }
-                     }
-                  }
-
-                  destinationField .setModificationTime (sourceField .getModificationTime ());
-               }
-               catch (error)
-               {
-                  console .log (error .message);
-               }
-            }
-
-            // User-defined fields
-
-            for (const sourceField of this .getUserDefinedFields ())
-            {
-               const destinationField = sourceField .copy (instance);
-
-               copy .addUserDefinedField (sourceField .getAccessType (),
-                                          sourceField .getName (),
-                                          destinationField);
-
-               if (sourceField .hasReferences ())
-               {
-                  // IS relationship
-
-                  for (const originalReference of sourceField .getReferences ())
-                  {
-                     try
-                     {
-                        destinationField .addReference (instance .getField (originalReference .getName ()));
-                     }
-                     catch (error)
-                     {
-                        console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
-                     }
-                  }
-               }
-
-               destinationField .setModificationTime (sourceField .getModificationTime ());
-            }
-
-            copy .setup ();
-
-            return copy;
-         }
-      },
-      getDisplayName: (function ()
-      {
-         const _TrailingNumber = /_\d+$/;
-
-         return function ()
-         {
-            return this .getName () .replace (_TrailingNumber, "");
-         };
-      })(),
-      getNeedsName: function ()
-      {
-         if (this .getName () .length)
-            return false;
-
-         if (this .getCloneCount () > 1)
-            return true;
-
-         if (this .hasRoutes ())
-            return true;
-
-         const executionContext = this .getExecutionContext ()
-
-         for (const importedNode of executionContext .getImportedNodes ())
-         {
-            if (importedNode .getInlineNode () === this)
-               return true;
-         }
-
-         if (executionContext .isScene ())
-         {
-            for (const exportedNode of executionContext .getExportedNodes ())
-            {
-               if (exportedNode .getLocalNode () === this)
-                  return true;
-            }
-         }
-
-         return false;
-      },
-      getFieldsAreEnumerable: function ()
-      {
-         return true;
-      },
-      traverse: function () { },
-      toStream: function (stream)
-      {
-         stream .string += this .getTypeName () + " { }";
-      },
-      toVRMLStream: function (stream)
-      {
-         const generator = Generator .Get (stream);
-
-         generator .EnterScope ();
-
-         const name = generator .Name (this);
-
-         if (name .length)
-         {
-            if (generator .ExistsNode (this))
-            {
-               stream .string += "USE";
-               stream .string += " ";
-               stream .string += name;
-
-               generator .LeaveScope ();
-               return;
-            }
-         }
-
-         if (name .length)
-         {
-            generator .AddNode (this);
-
-            stream .string += "DEF";
-            stream .string += " ";
-            stream .string += name;
-            stream .string += " ";
-         }
-
-         stream .string += this .getTypeName ();
-         stream .string += " ";
-         stream .string += "{";
-
-         const
-            fields            = this .getChangedFields (),
-            userDefinedFields = this .getUserDefinedFields ();
-
-         let
-            fieldTypeLength  = 0,
-            accessTypeLength = 0;
-
-         if (this .canUserDefinedFields ())
-         {
-            for (const field of userDefinedFields)
-            {
-               fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
-               accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
-            }
-
-            if (userDefinedFields .length)
-            {
-               stream .string += "\n";
-               generator .IncIndent ();
-
-               for (const field of userDefinedFields)
-               {
-                  this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
-
-                  stream .string += "\n";
-               }
-
-               generator .DecIndent ();
-
-               if (fields .length !== 0)
-                  stream .string += "\n";
-            }
-         }
-
-         if (fields .length === 0)
-         {
-            if (userDefinedFields .length)
-               stream .string += generator .Indent ();
-            else
-               stream .string += " ";
-         }
-         else
-         {
-            if (userDefinedFields .length === 0)
-               stream .string += "\n";
-
-            generator .IncIndent ();
-
-            fields .forEach (function (field)
-            {
-               this .toVRMLStreamField (stream, field, fieldTypeLength, accessTypeLength);
-
-               stream .string += "\n";
-            },
-            this);
-
-            generator .DecIndent ();
-            stream .string += generator .Indent ();
-         }
-
-         stream .string += "}";
-
-         generator .LeaveScope ();
-      },
-      toVRMLStreamField: function (stream, field, fieldTypeLength, accessTypeLength)
-      {
-         const
-            generator  = Generator .Get (stream),
-            sharedNode = generator .IsSharedNode (this);
-
-         if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
-         {
-            if (field .isInitializable ())
-            {
-               stream .string += generator .Indent ();
-               stream .string += field .getName ();
-               stream .string += " ";
-
-               field .toVRMLStream (stream);
-            }
-         }
-         else
-         {
-            let
-               index                  = 0,
-               initializableReference = false;
-
-            field .getReferences () .forEach (function (reference)
-            {
-               initializableReference = initializableReference || reference .isInitializable ();
-
-               // Output build in reference field
-
-               stream .string += generator .Indent ();
-               stream .string += field .getName ();
-               stream .string += " ";
-               stream .string += "IS";
-               stream .string += " ";
-               stream .string += reference .getName ();
-
-               ++ index;
-
-               if (index !== field .getReferences () .size)
-                  stream .string += "\n";
-            });
-
-            if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !this .isDefaultValue (field))
-            {
-               // Output build in field
-
-               stream .string += "\n";
-               stream .string += generator .Indent ();
-               stream .string += field .getName ();
-               stream .string += " ";
-
-               field .toVRMLStream (stream);
-            }
-         }
-      },
-      toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
-      {
-         const
-            generator  = Generator .Get (stream),
-            sharedNode = generator .IsSharedNode (this);
-
-         if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
-         {
-            stream .string += generator .Indent ();
-            stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-            stream .string += " ";
-            stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-            stream .string += " ";
-            stream .string += field .getName ();
-
-            if (field .isInitializable ())
-            {
-               stream .string += " ";
-
-               field .toVRMLStream (stream);
-            }
-         }
-         else
-         {
-            let
-               index                  = 0,
-               initializableReference = false;
-
-            field .getReferences () .forEach (function (reference)
-            {
-               initializableReference = initializableReference || reference .isInitializable ();
-
-               // Output user defined reference field
-
-               stream .string += generator .Indent ();
-               stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-               stream .string += " ";
-               stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-               stream .string += " ";
-               stream .string += field .getName ();
-               stream .string += " ";
-               stream .string += "IS";
-               stream .string += " ";
-               stream .string += reference .getName ();
-
-               ++ index;
-
-               if (index !== field .getReferences () .size)
-                  stream .string += "\n";
-            });
-
-            if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !field .isDefaultValue ())
-            {
-               stream .string += "\n";
-               stream .string += generator .Indent ();
-               stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-               stream .string += " ";
-               stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-               stream .string += " ";
-               stream .string += field .getName ();
-
-               if (field .isInitializable ())
-               {
-                  stream .string += " ";
-
-                  field .toVRMLStream (stream);
-               }
-            }
-         }
-      },
-      toXMLStream: function (stream)
-      {
-         const
-            generator  = Generator .Get (stream),
-            sharedNode = generator .IsSharedNode (this);
-
-         generator .EnterScope ();
-
-         const name = generator .Name (this);
-
-         if (name .length)
-         {
-            if (generator .ExistsNode (this))
-            {
-               stream .string += generator .Indent ();
-               stream .string += "<";
-               stream .string += this .getTypeName ();
-               stream .string += " ";
-               stream .string += "USE='";
-               stream .string += generator .XMLEncode (name);
-               stream .string += "'";
-
-               const containerField = generator .ContainerField ();
-
-               if (containerField)
-               {
-                  if (containerField .getName () !== this .getContainerField ())
-                  {
-                     stream .string += " ";
-                     stream .string += "containerField='";
-                     stream .string += generator .XMLEncode (containerField .getName ());
-                     stream .string += "'";
-                  }
-               }
-
-               stream .string += "/>";
-
-               generator .LeaveScope ();
-               return;
-            }
-         }
-
-         stream .string += generator .Indent ();
-         stream .string += "<";
-         stream .string += this .getTypeName ();
-
-         if (name .length)
-         {
-            generator .AddNode (this);
-
-            stream .string += " ";
-            stream .string += "DEF='";
-            stream .string += generator .XMLEncode (name);
-            stream .string += "'";
-         }
-
-         const containerField = generator .ContainerField ();
-
-         if (containerField)
-         {
-            if (containerField .getName () !== this .getContainerField ())
-            {
-               stream .string += " ";
-               stream .string += "containerField='";
-               stream .string += generator .XMLEncode (containerField .getName ());
-               stream .string += "'";
-            }
-         }
-
-         const
-            fields            = this .getChangedFields (),
-            userDefinedFields = this .getUserDefinedFields ();
-
-         const
-            references = [ ],
-            childNodes = [ ];
-
-         let cdata = this .getSourceText ();
-
-         if (cdata && cdata .length === 0)
-            cdata = null;
-
-         generator .IncIndent ();
-         generator .IncIndent ();
-
-         for (const field of fields)
-         {
-            // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
-            // for this field.
-
-            let mustOutputValue = false;
-
-            if (generator .ExecutionContext ())
-            {
-               if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
-               {
-                  let initializableReference = false;
-
-                  field .getReferences () .forEach (function (fieldReference)
-                  {
-                     initializableReference = initializableReference || fieldReference .isInitializable ();
-                  });
-
-                  if (!initializableReference)
-                     mustOutputValue = !this .isDefaultValue (field);
-               }
-            }
-
-            // If we have no execution context we are not in a proto and must not generate IS references the same is true
-            // if the node is a shared node as the node does not belong to the execution context.
-
-            if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode || mustOutputValue)
-            {
-               if (mustOutputValue)
-                  references .push (field);
-
-               if (field .isInitializable ())
-               {
-                  switch (field .getType ())
-                  {
-                     case X3DConstants .SFNode:
-                     case X3DConstants .MFNode:
-                     {
-                        childNodes .push (field);
-                        break;
-                     }
-                     default:
-                     {
-                        if (field === cdata)
-                           break;
-
-                        stream .string += "\n";
-                        stream .string += generator .Indent ();
-                        stream .string += field .getName ();
-                        stream .string += "='";
-
-                        field .toXMLStream (stream);
-
-                        stream .string += "'";
-                        break;
-                     }
-                  }
-               }
-            }
-            else
-            {
-               references .push (field);
-            }
-         }
-
-         generator .DecIndent ();
-         generator .DecIndent ();
-
-         if ((!this .canUserDefinedFields () || !userDefinedFields .length) && (!references .length || sharedNode) && !childNodes .length && !cdata)
-         {
-            stream .string += "/>";
-         }
-         else
-         {
-            stream .string += ">\n";
-
-            generator .IncIndent ();
-
-            if (this .canUserDefinedFields ())
-            {
-               for (const field of userDefinedFields)
-               {
-                  stream .string += generator .Indent ();
-                  stream .string += "<field";
-                  stream .string += " ";
-                  stream .string += "accessType='";
-                  stream .string += generator .AccessType (field .getAccessType ());
-                  stream .string += "'";
-                  stream .string += " ";
-                  stream .string += "type='";
-                  stream .string += field .getTypeName ();
-                  stream .string += "'";
-                  stream .string += " ";
-                  stream .string += "name='";
-                  stream .string += generator .XMLEncode (field .getName ());
-                  stream .string += "'";
-
-                  // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
-                  // for this field.
-
-                  let mustOutputValue = false;
-
-                  if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
-                  {
-                     let initializableReference = false;
-
-                     field .getReferences () .forEach (function (fieldReference)
-                     {
-                        initializableReference = initializableReference || fieldReference .isInitializable ();
-                     });
-
-                     if (!initializableReference)
-                        mustOutputValue = true;
-                  }
-
-                  if ((field .getReferences () .size === 0 || !generator .ExecutionContext ()) || sharedNode || mustOutputValue)
-                  {
-                     if (mustOutputValue && generator .ExecutionContext ())
-                        references .push (field);
-
-                     if (!field .isInitializable () || field .isDefaultValue ())
-                     {
-                        stream .string += "/>\n";
-                     }
-                     else
-                     {
-                        // Output value
-
-                        switch (field .getType ())
-                        {
-                           case X3DConstants .SFNode:
-                           case X3DConstants .MFNode:
-                           {
-                              generator .PushContainerField (field);
-
-                              stream .string += ">\n";
-
-                              generator .IncIndent ();
-
-                              field .toXMLStream (stream);
-
-                              stream .string += "\n";
-
-                              generator .DecIndent ();
-
-                              stream .string += generator .Indent ();
-                              stream .string += "</field>\n";
-
-                              generator .PopContainerField ();
-                              break;
-                           }
-                           default:
-                           {
-                              stream .string += " ";
-                              stream .string += "value='";
-
-                              field .toXMLStream (stream);
-
-                              stream .string += "'";
-                              stream .string += "/>\n";
-                              break;
-                           }
-                        }
-                     }
-                  }
-                  else
-                  {
-                     if (generator .ExecutionContext ())
-                        references .push (field);
-
-                     stream .string += "/>\n";
-                  }
-               }
-            }
-
-            if (references .length && !sharedNode)
-            {
-               stream .string += generator .Indent ();
-               stream .string += "<IS>";
-               stream .string += "\n";
-
-               generator .IncIndent ();
-
-               for (const field of references)
-               {
-                  const protoFields = field .getReferences ();
-
-                  protoFields .forEach (function (protoField)
-                  {
-                     stream .string += generator .Indent ();
-                     stream .string += "<connect";
-                     stream .string += " ";
-                     stream .string += "nodeField='";
-                     stream .string += generator .XMLEncode (field .getName ());
-                     stream .string += "'";
-                     stream .string += " ";
-                     stream .string += "protoField='";
-                     stream .string += generator .XMLEncode (protoField .getName ());
-                     stream .string += "'";
-                     stream .string += "/>\n";
-                  });
-               }
-
-               generator .DecIndent ();
-
-               stream .string += generator .Indent ();
-               stream .string += "</IS>\n";
-            }
-
-            for (const field of childNodes)
-            {
-               generator .PushContainerField (field);
-
-               field .toXMLStream (stream);
-
-               stream .string += "\n";
-
-               generator .PopContainerField ();
-            }
-
-            if (cdata)
-            {
-               for (const value of cdata)
-               {
-                  stream .string += "<![CDATA[";
-                  stream .string += generator .escapeCDATA (value);
-                  stream .string += "]]>\n";
-               }
-            }
-
-            generator .DecIndent ();
-
-            stream .string += generator .Indent ();
-            stream .string += "</";
-            stream .string += this .getTypeName ();
-            stream .string += ">";
-         }
-
-         generator .LeaveScope ();
-      },
-      dispose: function ()
-      {
-         const executionContext = this .getExecutionContext ();
-
-         // Remove named node if any.
-
-         if (this .getName ())
-            executionContext .removeNamedNode (this .getName ())
-
-         // Remove imported node if any.
-
-         if (!executionContext .isMainScene ())
-         {
-            const parentContext = executionContext .getExecutionContext ();
-
-            for (const importedNode of parentContext .getImportedNodes ())
-            {
-               try
-               {
-                  if (importedNode .getExportedNode () === this)
-                     parentContext .removeImportedNode (importedNode .getImportedName ());
-               }
-               catch (error)
-               {
-                  //console .error (error);
-               }
-            }
-         }
-
-         // Remove exported node if any.
-
-         if (executionContext .isScene ())
-         {
-            for (const exportedNode of executionContext .getExportedNodes ())
-            {
-               if (exportedNode .getLocalNode () === this)
-                  executionContext .removeExportedNode (exportedNode .getExportedName ());
-            }
-         }
-
-         // Remove routes from and to node if any, and dispose values of fields.
-
-         for (const field of this .getFields ())
-            field .dispose ();
-
-         // Remove node from entire scene graph.
-
-         for (const firstParent of new Set (this .getParents ()))
-         {
-            if (firstParent instanceof Fields .SFNode)
-            {
-               for (const secondParent of new Set (firstParent .getParents ()))
-               {
-                  if (secondParent instanceof Fields .MFNode)
-                  {
-                     const length = secondParent .length;
-
-                     secondParent .erase (secondParent .remove (0, length, firstParent), length);
-                  }
-               }
-
-               firstParent .setValue (null);
-            }
-         }
-
-         // Call super.dispose, where fields get disposed.
-
-         X3DBaseNode .prototype .dispose .call (this);
-      },
-   });
-
-   return X3DNode;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -39906,10 +44049,10 @@ function ($,
       const
          shadow       = $(element .prop ("shadowRoot")),
          browser      = $("<div></div>") .addClass ("x_ite-private-browser"),
+         surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser),
          splashScreen = $("<div></div>") .hide () .addClass ("x_ite-private-splash-screen") .appendTo (browser),
          spinner      = $("<div></div>") .addClass ("x_ite-private-spinner") .appendTo (splashScreen),
-         progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
-         surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
+         progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen);
 
       $("<div></div>") .addClass ("x_ite-private-x_ite") .html (this .getName () + "<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
       $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
@@ -39918,10 +44061,10 @@ function ($,
       this [_number]       = ++ browserNumber;
       this [_element]      = element;
       this [_shadow]       = shadow .length ? shadow .append (browser .hide ()) : this [_element] .prepend (browser);
-      this [_splashScreen] = splashScreen;
       this [_surface]      = surface;
       this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
       this [_context]      = Context .create (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
+      this [_splashScreen] = splashScreen;
 
       if (shadow .length)
          shadow .prop ("loaded") .then (function () { browser .show (); });
@@ -40878,7 +45021,10 @@ function (Fields,
       this .getCanvas () .hide ();
 
       if (this .getBrowserOptions () .getSplashScreen ())
+      {
+         this .getContextMenu () .hide ();
          this .getSplashScreen () .show ();
+      }
    }
 
    X3DNetworkingContext .prototype =
@@ -40921,6 +45067,7 @@ function (Fields,
 
             if (this .getBrowserOptions () .getSplashScreen ())
             {
+               this .getContextMenu ()  .hide ();
                this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeOut (0);
                this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeIn (0);
             }
@@ -41121,74 +45268,6 @@ function (X3DNode,
  ******************************************************************************/
 
 
-define ('x_ite/Rendering/TraverseType',[],function ()
-{
-"use strict";
-
-   let i = 0;
-
-   const TraverseType =
-   {
-      POINTER:   i ++,
-      CAMERA:    i ++,
-      PICKING:   i ++,
-      COLLISION: i ++,
-      SHADOW:    i ++,
-      DISPLAY:   i ++,
-   };
-
-   return TraverseType;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Components/Shaders/X3DShaderNode',[
    "x_ite/Fields",
    "x_ite/Browser/Core/Shading",
@@ -41293,2119 +45372,6 @@ function (Fields,
    });
 
    return X3DShaderNode;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Core/X3DChildNode',[
-   "x_ite/Fields",
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DNode,
-          X3DConstants)
-{
-"use strict";
-
-   function X3DChildNode (executionContext)
-   {
-      if (this .getExecutionContext ())
-         return;
-
-      X3DNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DChildNode);
-
-      this .addChildObjects ("isCameraObject",   new Fields .SFBool ());
-      this .addChildObjects ("isPickableObject", new Fields .SFBool ());
-
-      this ._isCameraObject   .setAccessType (X3DConstants .outputOnly);
-      this ._isPickableObject .setAccessType (X3DConstants .outputOnly);
-   }
-
-   X3DChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-   {
-      constructor: X3DChildNode,
-      setCameraObject: function (value)
-      {
-         if (value !== this ._isCameraObject .getValue ())
-            this ._isCameraObject = value;
-      },
-      getCameraObject: function ()
-      {
-         return this ._isCameraObject .getValue ();
-      },
-      setPickableObject: function (value)
-      {
-         if (value !== this ._isPickableObject .getValue ())
-            this ._isPickableObject = value;
-      },
-      getPickableObject: function ()
-      {
-         return this ._isPickableObject .getValue ();
-      },
-   });
-
-   return X3DChildNode;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Core/X3DBindableNode',[
-   "x_ite/Fields",
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DChildNode,
-          X3DConstants)
-{
-"use strict";
-
-   function X3DBindableNode (executionContext)
-   {
-      X3DChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DBindableNode);
-
-      this .addChildObjects ("transitionActive", new Fields .SFBool ());
-   }
-
-   X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-   {
-      constructor: X3DBindableNode,
-      getCameraObject: function ()
-      {
-         return true;
-      },
-      transitionStart: function ()
-      { },
-   });
-
-   return X3DBindableNode;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Core/X3DSensorNode',[
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DChildNode,
-          X3DConstants)
-{
-"use strict";
-
-   function X3DSensorNode (executionContext)
-   {
-      X3DChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DSensorNode);
-   }
-
-   X3DSensorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-   {
-      constructor: X3DSensorNode,
-   });
-
-   return X3DSensorNode;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Time/X3DTimeDependentNode',[
-   "x_ite/Fields",
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DChildNode,
-          X3DConstants)
-{
-"use strict";
-
-   function X3DTimeDependentNode (executionContext)
-   {
-      this .addType (X3DConstants .X3DTimeDependentNode);
-
-      this .addChildObjects ("initialized", new Fields .SFTime (),
-                             "isEvenLive",  new Fields .SFBool ());
-
-      this .startTimeValue  = 0;
-      this .pauseTimeValue  = 0;
-      this .resumeTimeValue = 0;
-      this .stopTimeValue   = 0;
-      this .start           = 0;
-      this .pause           = 0;
-      this .pauseInterval   = 0;
-      this .startTimeout    = null;
-      this .pauseTimeout    = null;
-      this .resumeTimeout   = null;
-      this .stopTimeout     = null;
-      this .disabled        = false;
-   }
-
-   X3DTimeDependentNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-   {
-      constructor: X3DTimeDependentNode,
-      initialize: function ()
-      {
-         this .isLive ()   .addInterest ("set_live__", this);
-         this ._isEvenLive .addInterest ("set_live__", this);
-
-         this ._initialized .addInterest ("set_loop__",       this);
-         this ._enabled     .addInterest ("set_enabled__",    this);
-         this ._loop        .addInterest ("set_loop__",       this);
-         this ._startTime   .addInterest ("set_startTime__",  this);
-         this ._pauseTime   .addInterest ("set_pauseTime__",  this);
-         this ._resumeTime  .addInterest ("set_resumeTime__", this);
-         this ._stopTime    .addInterest ("set_stopTime__",   this);
-
-         this .startTimeValue  = this ._startTime  .getValue ();
-         this .pauseTimeValue  = this ._pauseTime  .getValue ();
-         this .resumeTimeValue = this ._resumeTime .getValue ();
-         this .stopTimeValue   = this ._stopTime   .getValue ();
-
-         this ._initialized = this .getBrowser () .getCurrentTime ();
-      },
-      getDisabled: function ()
-      {
-         return this .disabled;
-      },
-      getLiveState: function ()
-      {
-         ///  Determines the live state of this node.
-
-         return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this ._isEvenLive .getValue ());
-      },
-      getElapsedTime: function ()
-      {
-         return this .getBrowser () .getCurrentTime () - this .start - this .pauseInterval;
-      },
-      resetElapsedTime: function ()
-      {
-         this .start         = this .getBrowser () .getCurrentTime ();
-         this .pause         = this .getBrowser () .getCurrentTime ();
-         this .pauseInterval = 0;
-      },
-      set_live__: function ()
-      {
-         if (this .isLive () .getValue () || this ._isEvenLive .getValue ())
-         {
-            if (this .disabled)
-            {
-               this .disabled = false;
-
-               if (this ._isActive .getValue () && !this ._isPaused .getValue ())
-                  this .real_resume ();
-            }
-         }
-         else
-         {
-            if (!this .disabled && this ._isActive .getValue () && !this ._isPaused .getValue ())
-            {
-               // Only disable if needed, ie. if running!
-               this .disabled = true;
-               this .real_pause ();
-            }
-         }
-      },
-      set_enabled__: function ()
-      {
-         if (this ._enabled .getValue ())
-            this .set_loop__ ();
-
-         else
-            this .stop ();
-      },
-      set_loop__: function ()
-      {
-         if (this ._enabled .getValue ())
-         {
-            if (this ._loop .getValue ())
-            {
-               if (this .stopTimeValue <= this .startTimeValue)
-               {
-                  if (this .startTimeValue <= this .getBrowser () .getCurrentTime ())
-                     this .do_start ();
-               }
-            }
-         }
-      },
-      set_startTime__: function ()
-      {
-         this .startTimeValue = this ._startTime .getValue ();
-
-         if (this ._enabled .getValue ())
-         {
-            this .removeTimeout ("startTimeout");
-
-            if (this .startTimeValue <= this .getBrowser () .getCurrentTime ())
-               this .do_start ();
-
-            else
-               this .addTimeout ("startTimeout", "do_start", this .startTimeValue);
-         }
-      },
-      set_pauseTime__: function ()
-      {
-         this .pauseTimeValue = this ._pauseTime .getValue ();
-
-         if (this ._enabled .getValue ())
-         {
-            this .removeTimeout ("pauseTimeout");
-
-            if (this .pauseTimeValue <= this .resumeTimeValue)
-               return;
-
-            if (this .pauseTimeValue <= this .getBrowser () .getCurrentTime ())
-               this .do_pause ();
-
-            else
-               this .addTimeout ("pauseTimeout", "do_pause", this .pauseTimeValue);
-         }
-      },
-      set_resumeTime__: function ()
-      {
-         this .resumeTimeValue = this ._resumeTime .getValue ();
-
-         if (this ._enabled .getValue ())
-         {
-            this .removeTimeout ("resumeTimeout");
-
-            if (this .resumeTimeValue <= this .pauseTimeValue)
-               return;
-
-            if (this .resumeTimeValue <= this .getBrowser () .getCurrentTime ())
-               this .do_resume ();
-
-            else
-               this .addTimeout ("resumeTimeout", "do_resume", this .resumeTimeValue);
-         }
-      },
-      set_stopTime__: function ()
-      {
-         this .stopTimeValue = this ._stopTime .getValue ();
-
-         if (this ._enabled .getValue ())
-         {
-            this .removeTimeout ("stopTimeout");
-
-            if (this .stopTimeValue <= this .startTimeValue)
-               return;
-
-            if (this .stopTimeValue <= this .getBrowser () .getCurrentTime ())
-               this .do_stop ();
-
-            else
-               this .addTimeout ("stopTimeout","do_stop", this .stopTimeValue);
-         }
-      },
-      do_start: function ()
-      {
-         if (!this ._isActive .getValue ())
-         {
-            this .resetElapsedTime ();
-
-            // The event order below is very important.
-
-            this ._isActive = true;
-
-            this .set_start ();
-
-            if (this .isLive () .getValue ())
-            {
-               this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
-            }
-            else
-            {
-               this .disabled = true;
-               this .real_pause ();
-            }
-
-            this ._elapsedTime = 0;
-         }
-      },
-      do_pause: function ()
-      {
-         if (this ._isActive .getValue () && !this ._isPaused .getValue ())
-         {
-            this ._isPaused = true;
-
-            if (this .pauseTimeValue !== this .getBrowser () .getCurrentTime ())
-               this .pauseTimeValue = this .getBrowser () .getCurrentTime ();
-
-            if (this .isLive () .getValue ())
-               this .real_pause ();
-         }
-      },
-      real_pause: function ()
-      {
-         this .pause = performance .now ();
-
-         this .set_pause ();
-
-         this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
-      },
-      do_resume: function ()
-      {
-         if (this ._isActive .getValue () && this ._isPaused .getValue ())
-         {
-            this ._isPaused = false;
-
-            if (this .resumeTimeValue !== this .getBrowser () .getCurrentTime ())
-               this .resumeTimeValue = this .getBrowser () .getCurrentTime ();
-
-            if (this .isLive () .getValue ())
-               this .real_resume ();
-         }
-      },
-      real_resume: function ()
-      {
-         const interval = (performance .now () - this .pause) / 1000;
-
-         this .pauseInterval += interval;
-
-         this .set_resume (interval);
-
-         this .getBrowser () .timeEvents () .addInterest ("set_time", this);
-         this .getBrowser () .addBrowserEvent ();
-      },
-      do_stop: function ()
-      {
-         this .stop ();
-      },
-      stop: function ()
-      {
-         if (this ._isActive .getValue ())
-         {
-            // The event order below is very important.
-
-            this .set_stop ();
-
-            this ._elapsedTime = this .getElapsedTime ();
-
-            if (this ._isPaused .getValue ())
-               this ._isPaused = false;
-
-            this ._isActive = false;
-
-            this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
-         }
-      },
-      timeout: function (callback)
-      {
-         if (this ._enabled .getValue ())
-         {
-            this .getBrowser () .advanceTime (performance .now ());
-
-            this [callback] ();
-         }
-      },
-      addTimeout: function (name, callback, time)
-      {
-         this .removeTimeout (name);
-         this [name] = setTimeout (this .timeout .bind (this, callback), (time - this .getBrowser () .getCurrentTime ()) * 1000);
-      },
-      removeTimeout: function (name)
-      {
-         clearTimeout (this [name]);
-         this [name] = null;
-      },
-      set_start: function () { },
-      set_pause: function () { },
-      set_resume: function () { },
-      set_stop: function () { },
-      set_time: function () { },
-   });
-
-   return X3DTimeDependentNode;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Time/TimeSensor',[
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DSensorNode",
-   "x_ite/Components/Time/X3DTimeDependentNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Algorithm",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DSensorNode,
-          X3DTimeDependentNode,
-          X3DConstants,
-          Algorithm)
-{
-"use strict";
-
-   function TimeSensor (executionContext)
-   {
-      X3DSensorNode        .call (this, executionContext);
-      X3DTimeDependentNode .call (this, executionContext);
-
-      this .addType (X3DConstants .TimeSensor);
-
-      this .addChildObjects ("range", new Fields .MFFloat (0, 0, 1)); // current, first, last (in fractions) - play range starting at current
-
-      this .cycle    = 0;
-      this .interval = 0;
-      this .fraction = 0;
-      this .first    = 0;
-      this .last     = 1;
-      this .scale    = 1;
-   }
-
-   TimeSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
-      X3DTimeDependentNode .prototype,
-   {
-      constructor: TimeSensor,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "cycleInterval",    new Fields .SFTime (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "loop",             new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",        new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",       new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",        new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",         new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",         new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleTime",        new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",      new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "fraction_changed", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "time",             new Fields .SFTime ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "TimeSensor";
-      },
-      getComponentName: function ()
-      {
-         return "Time";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DSensorNode        .prototype .initialize .call (this);
-         X3DTimeDependentNode .prototype .initialize .call (this);
-
-         this ._cycleInterval .addInterest ("set_cycleInterval__", this);
-         this ._range         .addInterest ("set_range__",         this);
-      },
-      setRange: function (currentFraction, firstFraction, lastFraction)
-      {
-         const
-            currentTime   = this .getBrowser () .getCurrentTime (),
-            startTime     = this ._startTime .getValue (),
-            cycleInterval = this ._cycleInterval .getValue ();
-
-         this .first    = firstFraction;
-         this .last     = lastFraction;
-         this .scale    = this .last - this .first;
-         this .interval = cycleInterval * this .scale;
-         this .fraction = Algorithm .fract ((currentFraction >= 1 ? 0 : currentFraction) + (this .interval ? (currentTime - startTime) / this .interval : 0));
-         this .cycle    = currentTime - (this .fraction -  this .first) * cycleInterval;
-      },
-      set_cycleInterval__: function ()
-      {
-         if (this ._isActive .getValue ())
-            this .setRange (this .fraction, this ._range [1], this ._range [2]);
-      },
-      set_range__: function ()
-      {
-         if (this ._isActive .getValue ())
-         {
-            this .setRange (this ._range [0], this ._range [1], this ._range [2]);
-
-            if (!this ._isPaused .getValue ())
-               this .set_fraction (this .getBrowser () .getCurrentTime ());
-         }
-      },
-      set_start: function ()
-      {
-         this .setRange (this ._range [0], this ._range [1], this ._range [2]);
-
-         if (this .isLive () .getValue ())
-         {
-            this ._fraction_changed = this .fraction;
-            this ._time             = this .getBrowser () .getCurrentTime ();
-         }
-      },
-      set_resume: function (pauseInterval)
-      {
-         const
-            currentTime   = this .getBrowser () .getCurrentTime (),
-            startTime     = this ._startTime .getValue ();
-
-         this .setRange (this .interval ? Algorithm .fract (this .fraction - (currentTime - startTime) / this .interval) : 0, this ._range [1], this ._range [2]);
-      },
-      set_fraction: function (time)
-      {
-         this ._fraction_changed = this .fraction = this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
-      },
-      set_time: function ()
-      {
-         // The event order below is very important.
-
-         const time = this .getBrowser () .getCurrentTime ();
-
-         if (time - this .cycle >= this .interval)
-         {
-            if (this ._loop .getValue ())
-            {
-               if (this .interval)
-               {
-                  this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
-
-                  this ._elapsedTime = this .getElapsedTime ();
-                  this ._cycleTime   = time;
-
-                  this .set_fraction (time);
-               }
-            }
-            else
-            {
-               this ._fraction_changed = this .fraction = this .last;
-               this .stop ();
-            }
-         }
-         else
-         {
-            this ._elapsedTime = this .getElapsedTime ();
-
-            this .set_fraction (time);
-         }
-
-         this ._time = time;
-      },
-   });
-
-   return TimeSensor;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Interpolation/X3DInterpolatorNode',[
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Algorithm",
-],
-function (X3DChildNode,
-          X3DConstants,
-          Algorithm)
-{
-"use strict";
-
-   function X3DInterpolatorNode (executionContext)
-   {
-      X3DChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DInterpolatorNode);
-   }
-
-   X3DInterpolatorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-   {
-      constructor: X3DInterpolatorNode,
-      setup: function ()
-      {
-         // If an X3DInterpolatorNode value_changed outputOnly field is read before it receives any inputs,
-         // keyValue[0] is returned if keyValue is not empty. If keyValue is empty (i.e., [ ]), the initial
-         // value for the respective field type is returned (EXAMPLE  (0, 0, 0) for Fields .SFVec3f);
-
-         this .set_key__ ();
-
-         if (this ._key .length)
-            this .interpolate (0, 0, 0);
-
-         X3DChildNode .prototype .setup .call (this);
-      },
-      initialize: function ()
-      {
-         X3DChildNode .prototype .initialize .call (this);
-
-         this ._set_fraction .addInterest ("set_fraction__", this);
-         this ._key          .addInterest ("set_key__", this);
-      },
-      set_fraction__: function ()
-      {
-         const
-            key      = this ._key,
-            length   = key .length,
-            fraction = this ._set_fraction .getValue ();
-
-         switch (length)
-         {
-            case 0:
-               // Interpolator nodes containing no keys in the key field shall not produce any events.
-               return;
-            case 1:
-               return this .interpolate (0, 0, 0);
-            default:
-            {
-               if (fraction <= key [0])
-                  return this .interpolate (0, 1, 0);
-
-               const index1 = Algorithm .upperBound (key, 0, length, fraction);
-
-               if (index1 !== length)
-               {
-                  const
-                     index0 = index1 - 1,
-                     weight = (fraction - key [index0]) / (key [index1] - key [index0]);
-
-                  this .interpolate (index0, index1, Algorithm .clamp (weight, 0, 1));
-               }
-               else
-                  this .interpolate (length - 2, length - 1, 1);
-            }
-         }
-      },
-      set_key__: function ()
-      {
-         this .set_keyValue__ ();
-      },
-      set_keyValue__: function () { },
-      interpolate: function () { },
-   });
-
-   return X3DInterpolatorNode;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Interpolation/EaseInEaseOut',[
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode,
-          X3DConstants)
-{
-"use strict";
-
-   function EaseInEaseOut (executionContext)
-   {
-      X3DInterpolatorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .EaseInEaseOut);
-   }
-
-   EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
-   {
-      constructor: EaseInEaseOut,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",             new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "key",                      new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "easeInEaseOut",            new Fields .MFVec2f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "modifiedFraction_changed", new Fields .SFFloat ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "EaseInEaseOut";
-      },
-      getComponentName: function ()
-      {
-         return "Interpolation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DInterpolatorNode .prototype .initialize .call (this);
-
-         this ._easeInEaseOut .addInterest ("set_keyValue__", this);
-      },
-      set_keyValue__: function ()
-      {
-         if (this ._easeInEaseOut .length < this ._key .length)
-            this ._easeInEaseOut .resize (this ._key .length, this ._easeInEaseOut .length ? this ._easeInEaseOut [this ._easeInEaseOut .length - 1] : new Fields .SFVec2f ());
-      },
-      interpolate: function (index0, index1, weight)
-      {
-         let
-            easeOut = this ._easeInEaseOut [index0] .y,
-            easeIn  = this ._easeInEaseOut [index1] .x;
-         
-         const sum = easeOut + easeIn;
-
-         if (sum < 0)
-         {
-            this ._modifiedFraction_changed = weight;
-         }
-         else
-         {
-            if (sum > 1)
-            {
-               easeIn  /= sum;
-               easeOut /= sum;
-            }
-
-            const t = 1 / (2 - easeOut - easeIn);
-
-            if (weight < easeOut)
-            {
-               this ._modifiedFraction_changed = (t / easeOut) * weight * weight;
-            }
-            else if (weight <= 1 - easeIn) // Spec says (weight < 1 - easeIn), but then we get a NaN below if easeIn == 0.
-            {
-               this ._modifiedFraction_changed = t * (2 * weight - easeOut);
-            }
-            else
-            {
-               const w = 1 - weight;
-
-               this ._modifiedFraction_changed = 1 - ((t * w * w) / easeIn);
-            }
-         }
-      },
-   });
-
-   return EaseInEaseOut;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Interpolation/PositionInterpolator',[
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode,
-          X3DConstants,
-          Vector3)
-{
-"use strict";
-
-   function PositionInterpolator (executionContext)
-   {
-      X3DInterpolatorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .PositionInterpolator);
-   }
-
-   PositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
-   {
-      constructor: PositionInterpolator,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec3f ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "PositionInterpolator";
-      },
-      getComponentName: function ()
-      {
-         return "Interpolation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DInterpolatorNode .prototype .initialize .call (this);
-
-         this ._keyValue .addInterest ("set_keyValue__", this);
-      },
-      set_keyValue__: function ()
-      {
-         const
-            key      = this ._key,
-            keyValue = this ._keyValue;
-
-         if (keyValue .length < key .length)
-            keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
-      },
-      interpolate: (function ()
-      {
-         const keyValue = new Vector3 (0, 0, 0);
-
-         return function (index0, index1, weight)
-         {
-            this ._value_changed = keyValue .assign (this ._keyValue [index0] .getValue ()) .lerp (this ._keyValue [index1] .getValue (), weight);
-         };
-      })(),
-   });
-
-   return PositionInterpolator;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Interpolation/OrientationInterpolator',[
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Rotation4"
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode,
-          X3DConstants,
-          Rotation4)
-{
-"use strict";
-
-   function OrientationInterpolator (executionContext)
-   {
-      X3DInterpolatorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .OrientationInterpolator);
-
-      this ._keyValue      .setUnit ("angle");
-      this ._value_changed .setUnit ("angle");
-   }
-
-   OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
-   {
-      constructor: OrientationInterpolator,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFRotation ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "OrientationInterpolator";
-      },
-      getComponentName: function ()
-      {
-         return "Interpolation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DInterpolatorNode .prototype .initialize .call (this);
-
-         this ._keyValue .addInterest ("set_keyValue__", this);
-      },
-      set_keyValue__: function ()
-      {
-         const
-            key      = this ._key,
-            keyValue = this ._keyValue;
-
-         if (keyValue .length < key .length)
-            keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
-      },
-      interpolate: (function ()
-      {
-         const
-            keyValue0 = new Rotation4 (0, 0, 1, 0),
-            keyValue1 = new Rotation4 (0, 0, 1, 0);
-
-         return function (index0, index1, weight)
-         {
-            // Both values can change in slerp.
-            keyValue0 .assign (this ._keyValue [index0] .getValue ());
-            keyValue1 .assign (this ._keyValue [index1] .getValue ());
-
-            this ._value_changed = keyValue0 .slerp (keyValue1, weight);
-         };
-      }) (),
-   });
-
-   return OrientationInterpolator;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Navigation/X3DViewpointNode',[
-   "x_ite/Fields",
-   "x_ite/Components/Core/X3DBindableNode",
-   "x_ite/Components/Time/TimeSensor",
-   "x_ite/Components/Interpolation/EaseInEaseOut",
-   "x_ite/Components/Interpolation/PositionInterpolator",
-   "x_ite/Components/Interpolation/OrientationInterpolator",
-   "x_ite/Rendering/TraverseType",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DBindableNode,
-          TimeSensor,
-          EaseInEaseOut,
-          PositionInterpolator,
-          OrientationInterpolator,
-          TraverseType,
-          X3DConstants,
-          Vector3,
-          Rotation4,
-          Matrix4)
-{
-"use strict";
-
-   function X3DViewpointNode (executionContext)
-   {
-      X3DBindableNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DViewpointNode);
-
-      this .addChildObjects ("positionOffset",         new Fields .SFVec3f (),
-                             "orientationOffset",      new Fields .SFRotation (),
-                             "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
-                             "scaleOrientationOffset", new Fields .SFRotation (),
-                             "centerOfRotationOffset", new Fields .SFVec3f (),
-                             "fieldOfViewScale",       new Fields .SFFloat (1));
-
-      this .userPosition         = new Vector3 (0, 1, 0);
-      this .userOrientation      = new Rotation4 (0, 0, 1, 0);
-      this .userCenterOfRotation = new Vector3 (0, 0, 0);
-      this .modelMatrix          = new Matrix4 ();
-      this .cameraSpaceMatrix    = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
-      this .viewMatrix           = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
-
-      const browser = this .getBrowser ();
-
-      this .timeSensor                   = new TimeSensor              (browser .getPrivateScene ());
-      this .easeInEaseOut                = new EaseInEaseOut           (browser .getPrivateScene ());
-      this .positionInterpolator         = new PositionInterpolator    (browser .getPrivateScene ());
-      this .orientationInterpolator      = new OrientationInterpolator (browser .getPrivateScene ());
-      this .scaleInterpolator            = new PositionInterpolator    (browser .getPrivateScene ());
-      this .scaleOrientationInterpolator = new OrientationInterpolator (browser .getPrivateScene ());
-   }
-
-   X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
-   {
-      constructor: X3DViewpointNode,
-      initialize: function ()
-      {
-         X3DBindableNode .prototype .initialize .call (this);
-
-         this .timeSensor ._stopTime = 1;
-         this .timeSensor .setup ();
-
-         this .easeInEaseOut ._key           = new Fields .MFFloat (0, 1);
-         this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
-         this .easeInEaseOut .setup ();
-
-         this .positionInterpolator         ._key = new Fields .MFFloat (0, 1);
-         this .orientationInterpolator      ._key = new Fields .MFFloat (0, 1);
-         this .scaleInterpolator            ._key = new Fields .MFFloat (0, 1);
-         this .scaleOrientationInterpolator ._key = new Fields .MFFloat (0, 1);
-
-         this .positionInterpolator         .setup ();
-         this .orientationInterpolator      .setup ();
-         this .scaleInterpolator            .setup ();
-         this .scaleOrientationInterpolator .setup ();
-
-         this .timeSensor ._isActive         .addFieldInterest (this ._transitionActive);
-         this .timeSensor ._fraction_changed .addFieldInterest (this .easeInEaseOut ._set_fraction);
-
-         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .positionInterpolator         ._set_fraction);
-         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .orientationInterpolator      ._set_fraction);
-         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleInterpolator            ._set_fraction);
-         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleOrientationInterpolator ._set_fraction);
-
-         this .positionInterpolator         ._value_changed .addFieldInterest (this ._positionOffset);
-         this .orientationInterpolator      ._value_changed .addFieldInterest (this ._orientationOffset);
-         this .scaleInterpolator            ._value_changed .addFieldInterest (this ._scaleOffset);
-         this .scaleOrientationInterpolator ._value_changed .addFieldInterest (this ._scaleOrientationOffset);
-
-         this ._isBound .addInterest ("set_bound__", this);
-      },
-      getEaseInEaseOut: function ()
-      {
-         return this .easeInEaseOut;
-      },
-      setInterpolators: function () { },
-      getPosition: function ()
-      {
-         return this ._position .getValue ();
-      },
-      getUserPosition: function ()
-      {
-         return this .userPosition .assign (this .getPosition ()) .add (this ._positionOffset .getValue ());
-      },
-      getOrientation: function ()
-      {
-         return this ._orientation .getValue ();
-      },
-      getUserOrientation: function ()
-      {
-         return this .userOrientation .assign (this .getOrientation ()) .multRight (this ._orientationOffset .getValue ());
-      },
-      getCenterOfRotation: function ()
-      {
-         return this ._centerOfRotation .getValue ();
-      },
-      getUserCenterOfRotation: function ()
-      {
-         return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this ._centerOfRotationOffset .getValue ());
-      },
-      getProjectionMatrix: function (renderObject)
-      {
-         const navigationInfo = renderObject .getNavigationInfo ();
-
-         return this .getProjectionMatrixWithLimits (navigationInfo .getNearValue (),
-                                                     navigationInfo .getFarValue (this),
-                                                     renderObject .getLayer () .getViewport () .getRectangle (renderObject .getBrowser ()));
-      },
-      getCameraSpaceMatrix: function ()
-      {
-         return this .cameraSpaceMatrix;
-      },
-      getViewMatrix: function ()
-      {
-         return this .viewMatrix;
-      },
-      getModelMatrix: function ()
-      {
-         return this .modelMatrix;
-      },
-      getMaxFarValue: function ()
-      {
-         return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e5;
-      },
-      getUpVector: function ()
-      {
-         // Local y-axis,
-         // see http://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
-         return Vector3 .yAxis;
-      },
-      getSpeedFactor: function ()
-      {
-         return 1;
-      },
-      setVRMLTransition: function (value)
-      {
-         // VRML behaviour support.
-         this .VRMLTransition = value;
-      },
-      getVRMLTransition: function ()
-      {
-         // VRML behaviour support.
-         return this .VRMLTransition;
-      },
-      transitionStart: (function ()
-      {
-         const
-            relativePosition         = new Vector3 (0, 0, 0),
-            relativeOrientation      = new Rotation4 (0, 0, 1, 0),
-            relativeScale            = new Vector3 (0, 0, 0),
-            relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
-
-         return function (layerNode, fromViewpointNode, toViewpointNode)
-         {
-            this .to = toViewpointNode;
-
-            if (toViewpointNode ._jump .getValue ())
-            {
-               if (! toViewpointNode ._retainUserOffsets .getValue ())
-                  toViewpointNode .resetUserOffsets ();
-
-               // Copy from toViewpointNode all fields.
-
-               if (this !== toViewpointNode)
-               {
-                  for (const field of toViewpointNode .getFields ())
-                     this .getField (field .getName ()) .assign (field);
-               }
-
-               // Respect NavigationInfo.
-
-               const
-                  navigationInfoNode = layerNode .getNavigationInfo (),
-                  transitionTime     = navigationInfoNode ._transitionTime .getValue ();
-
-               let transitionType = navigationInfoNode .getTransitionType ();
-
-               // VRML behavior
-
-               if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
-               {
-                  if (toViewpointNode .getVRMLTransition ())
-                     transitionType = "LINEAR";
-                  else
-                     transitionType = "TELEPORT";
-               }
-
-               toViewpointNode .setVRMLTransition (false);
-
-               // End VRML behavior
-
-               if (transitionTime <= 0)
-                  transitionType = "TELEPORT";
-
-               switch (transitionType)
-               {
-                  case "TELEPORT":
-                  {
-                     navigationInfoNode ._transitionComplete = true;
-                     return;
-                  }
-                  case "ANIMATE":
-                  {
-                     this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-                     break;
-                  }
-                  default:
-                  {
-                     // LINEAR
-                     this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
-                     break;
-                  }
-               }
-
-               this .timeSensor ._cycleInterval = transitionTime;
-               this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-               this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
-
-               this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
-
-               toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-               this .positionInterpolator         ._keyValue = new Fields .MFVec3f    (relativePosition,         toViewpointNode ._positionOffset);
-               this .orientationInterpolator      ._keyValue = new Fields .MFRotation (relativeOrientation,      toViewpointNode ._orientationOffset);
-               this .scaleInterpolator            ._keyValue = new Fields .MFVec3f    (relativeScale,            toViewpointNode ._scaleOffset);
-               this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (relativeScaleOrientation, toViewpointNode ._scaleOrientationOffset);
-
-               this ._positionOffset         = relativePosition;
-               this ._orientationOffset      = relativeOrientation;
-               this ._scaleOffset            = relativeScale;
-               this ._scaleOrientationOffset = relativeScaleOrientation;
-
-               this .setInterpolators (fromViewpointNode, toViewpointNode);
-
-               this ._transitionActive = true;
-            }
-            else
-            {
-               toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-               toViewpointNode ._positionOffset         = relativePosition;
-               toViewpointNode ._orientationOffset      = relativeOrientation;
-               toViewpointNode ._scaleOffset            = relativeScale;
-               toViewpointNode ._scaleOrientationOffset = relativeScaleOrientation;
-
-               toViewpointNode .setInterpolators (fromViewpointNode, toViewpointNode);
-            }
-         };
-      })(),
-      transitionStop: function ()
-      {
-         this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
-         this .timeSensor ._isActive .removeInterest ("set_active__", this);
-      },
-      resetUserOffsets: function ()
-      {
-         this ._positionOffset         = Vector3   .Zero;
-         this ._orientationOffset      = Rotation4 .Identity;
-         this ._scaleOffset            = Vector3   .One;
-         this ._scaleOrientationOffset = Rotation4 .Identity;
-         this ._centerOfRotationOffset = Vector3   .Zero;
-         this ._fieldOfViewScale       = 1;
-      },
-      getRelativeTransformation: function (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
-      {
-         const differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpointNode .getViewMatrix ()) .inverse ();
-
-         differenceMatrix .get (relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-         relativePosition .subtract (this .getPosition ());
-         relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
-      },
-      lookAtPoint: function (layerNode, point, factor, straighten)
-      {
-         this .getCameraSpaceMatrix () .multVecMatrix (point);
-
-         Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
-
-         const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
-
-         this .lookAt (layerNode, point, minDistance, factor, straighten);
-      },
-      lookAtBBox: function (layerNode, bbox, factor, straighten)
-      {
-         bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
-
-         const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
-
-         this .lookAt (layerNode, bbox .center, minDistance, factor, straighten);
-      },
-      lookAt: function (layerNode, point, distance, factor, straighten)
-      {
-         const
-            offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
-
-         layerNode .getNavigationInfo () ._transitionStart = true;
-
-         this .timeSensor ._cycleInterval = 0.2;
-         this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
-
-         this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
-
-         this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-
-         const
-            translation = Vector3 .lerp (this ._positionOffset .getValue (), offset, factor),
-            direction   = Vector3 .add (this .getPosition (), translation) .subtract (point);
-
-         let rotation = Rotation4 .multRight (this ._orientationOffset .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
-
-         if (straighten)
-         {
-            rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
-         }
-
-         this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, translation);
-         this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
-         this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
-         this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
-
-         this .setInterpolators (this, this);
-
-         this ._centerOfRotationOffset = Vector3 .subtract (point, this .getCenterOfRotation ());
-         this ._set_bind               = true;
-      },
-      straighten: function (layerNode, horizon)
-      {
-         layerNode .getNavigationInfo () ._transitionStart = true;
-
-         this .timeSensor ._cycleInterval = 0.4;
-         this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
-
-         this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
-
-         this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-
-         const rotation = Rotation4 .multRight (Rotation4 .inverse (this .getOrientation ()), this .straightenHorizon (this .getUserOrientation ()));
-
-         this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, this ._positionOffset);
-         this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
-         this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
-         this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
-
-         this .setInterpolators (this, this);
-
-         this ._set_bind = true;
-      },
-      straightenHorizon: (function ()
-      {
-         const
-            localXAxis  = new Vector3 (0, 0, 0),
-            localZAxis  = new Vector3 (0, 0, 0),
-            rotation    = new Rotation4 (0, 0, 1, 0);
-
-         return function (orientation)
-         {
-            orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
-            orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
-
-            const
-                upVector = this .getUpVector (),
-               vector   = localZAxis .cross (upVector);
-
-            // If viewer looks along the up vector.
-            if (Math .abs (localZAxis .dot (upVector)) >= 1)
-               return orientation;
-
-            if (Math .abs (vector .dot (localXAxis)) >= 1)
-               return orientation;
-
-            rotation .setFromToVec (localXAxis, vector);
-
-            return orientation .multRight (rotation);
-         };
-      })(),
-      set_active__: function (navigationInfoNode, active)
-      {
-         if (this ._isBound .getValue () && ! active .getValue () && this .timeSensor ._fraction_changed .getValue () === 1)
-         {
-            navigationInfoNode ._transitionComplete = true;
-         }
-      },
-      set_bound__: function ()
-      {
-         if (this ._isBound .getValue ())
-            this .getBrowser () .getNotification () ._string = this ._description;
-         else
-            this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
-      },
-      traverse: function (type, renderObject)
-      {
-         if (type !== TraverseType .CAMERA)
-            return;
-
-         renderObject .getLayer () .getViewpoints () .push (this);
-
-         this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-      },
-      update: function ()
-      {
-         this .cameraSpaceMatrix .set (this .getUserPosition (),
-                                       this .getUserOrientation (),
-                                       this ._scaleOffset .getValue (),
-                                       this ._scaleOrientationOffset .getValue ());
-
-         this .cameraSpaceMatrix .multRight ((this .to || this) .modelMatrix);
-
-         this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
-      }
-   });
-
-   return X3DViewpointNode;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Interpolation/ScalarInterpolator',[
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Algorithm",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode,
-          X3DConstants,
-          Algorithm)
-{
-"use strict";
-
-   function ScalarInterpolator (executionContext)
-   {
-      X3DInterpolatorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .ScalarInterpolator);
-   }
-
-   ScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
-   {
-      constructor: ScalarInterpolator,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFFloat ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "ScalarInterpolator";
-      },
-      getComponentName: function ()
-      {
-         return "Interpolation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DInterpolatorNode .prototype .initialize .call (this);
-
-         this ._keyValue .addInterest ("set_keyValue__", this);
-      },
-      set_keyValue__: function ()
-      {
-         const
-            key      = this ._key,
-            keyValue = this ._keyValue;
-
-         if (keyValue .length < key .length)
-            keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : 0);
-      },
-      interpolate: function (index0, index1, weight)
-      {
-         this ._value_changed = Algorithm .lerp (this ._keyValue [index0], this ._keyValue [index1], weight);
-      },
-   });
-
-   return ScalarInterpolator;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('standard/Math/Geometry/Camera',[
-   "standard/Math/Numbers/Vector3",
-],
-function (Vector3)
-{
-"use strict";
-
-   return {
-      frustum: function (l, r, b, t, n, f, matrix)
-      {
-         const
-            r_l = r - l,
-            t_b = t - b,
-            f_n = f - n,
-            n_2 = 2 * n,
-
-            A = (r + l) / r_l,
-            B = (t + b) / t_b,
-            C = -(f + n) / f_n,
-            D = -(n_2 * f) / f_n,
-            E = n_2 / r_l,
-            F = n_2 / t_b;
-
-         return matrix .set (E, 0, 0, 0,
-                             0, F, 0, 0,
-                             A, B, C, -1,
-                             0, 0, D, 0);
-      },
-      perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
-      {
-         const ratio = Math .tan (fieldOfView / 2) * zNear;
-
-         if (width > height)
-         {
-            const aspect = width * ratio / height;
-            return this .frustum (-aspect, aspect, -ratio, ratio, zNear, zFar, matrix);
-         }
-         else
-         {
-            const aspect = height * ratio / width;
-            return this .frustum (-ratio, ratio, -aspect, aspect, zNear, zFar, matrix);
-         }
-      },
-      perspective2: function (fieldOfView, zNear, zFar, width, height, matrix)
-      {
-         const ratio = Math .tan (fieldOfView / 2) * zNear;
-
-         return this .frustum (-ratio, ratio, -ratio, ratio, zNear, zFar, matrix);
-      },
-      ortho: function (l, r, b, t, n, f, matrix)
-      {
-         const
-            r_l = r - l,
-            t_b = t - b,
-            f_n = f - n,
-
-            A =  2 / r_l,
-            B =  2 / t_b,
-            C = -2 / f_n,
-            D = -(r + l) / r_l,
-            E = -(t + b) / t_b,
-            F = -(f + n) / f_n;
-
-         return matrix .set (A, 0, 0, 0,
-                             0, B, 0, 0,
-                             0, 0, C, 0,
-                             D, E, F, 1);
-      },
-      orthoBox: (function ()
-      {
-         const
-            min = new Vector3 (0, 0, 0),
-            max = new Vector3 (0, 0, 0);
-
-         return function (box, matrix)
-         {
-            box .getExtents (min, max);
-
-            return this .ortho (min .x, max .x, min .y, max .y, -max .z, -min .z, matrix);
-         };
-      })(),
-   };
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -57374,347 +59340,6 @@ function (X3DBaseNode,
    }
 
    return BindableList;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Navigation/NavigationInfo',[
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DBindableNode",
-   "x_ite/Rendering/TraverseType",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DBindableNode,
-          TraverseType,
-          X3DConstants)
-{
-"use strict";
-
-   const TransitionType =
-   {
-      TELEPORT: true,
-      LINEAR:   true,
-      ANIMATE:  true,
-   };
-
-   function NavigationInfo (executionContext)
-   {
-      X3DBindableNode .call (this, executionContext);
-
-      this .addType (X3DConstants .NavigationInfo);
-
-      this .addChildObjects ("transitionStart",  new Fields .SFBool (),
-                             "availableViewers", new Fields .MFString (),
-                             "viewer",           new Fields .SFString ("EXAMINE"));
-
-      this ._avatarSize      .setUnit ("length");
-      this ._speed           .setUnit ("speed");
-      this ._visibilityLimit .setUnit ("speed");
-   }
-
-   NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
-   {
-      constructor: NavigationInfo,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",           new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "type",               new Fields .MFString ("EXAMINE", "ANY")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "avatarSize",         new Fields .MFFloat (0.25, 1.6, 0.75)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",              new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "headlight",          new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "visibilityLimit",    new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "transitionType",     new Fields .MFString ("LINEAR")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "transitionTime",     new Fields .SFTime (1)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "transitionComplete", new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",            new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",           new Fields .SFTime ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "NavigationInfo";
-      },
-      getComponentName: function ()
-      {
-         return "Navigation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DBindableNode .prototype .initialize .call (this);
-
-         this ._type               .addInterest ("set_type__",               this);
-         this ._headlight          .addInterest ("set_headlight__",          this);
-         this ._transitionStart    .addInterest ("set_transitionStart__",    this);
-         this ._transitionComplete .addInterest ("set_transitionComplete__", this);
-         this ._isBound            .addInterest ("set_isBound__",            this);
-
-         this .set_type__ ();
-         this .set_headlight__ ();
-      },
-      getViewer: function ()
-      {
-         return this ._viewer .getValue ();
-      },
-      getCollisionRadius: function ()
-      {
-         if (this ._avatarSize .length > 0)
-         {
-            if (this ._avatarSize [0] > 0)
-               return this ._avatarSize [0];
-         }
-
-         return 0.25;
-      },
-      getAvatarHeight: function ()
-      {
-         if (this ._avatarSize .length > 1)
-            return this ._avatarSize [1];
-
-         return 1.6;
-      },
-      getStepHeight: function ()
-      {
-         if (this ._avatarSize .length > 2)
-            return this ._avatarSize [2];
-
-         return 0.75;
-      },
-      getNearValue: function ()
-      {
-         const nearValue = this .getCollisionRadius ();
-
-         if (nearValue === 0)
-            return 1e-5;
-
-         else
-            return nearValue / 2;
-      },
-      getFarValue: function (viewpoint)
-      {
-         return this ._visibilityLimit .getValue ()
-                ? this ._visibilityLimit .getValue ()
-                : viewpoint .getMaxFarValue ();
-      },
-      getTransitionType: function ()
-      {
-         for (const value of this ._transitionType)
-         {
-            const transitionType = TransitionType [value];
-
-            if (transitionType)
-               return value;
-         }
-
-         return "LINEAR";
-      },
-      set_type__: function ()
-      {
-         // Determine active viewer.
-
-         this ._viewer = "EXAMINE";
-
-         for (const string of this ._type)
-         {
-            switch (string)
-            {
-               case "EXAMINE":
-               case "WALK":
-               case "FLY":
-               case "LOOKAT":
-               case "PLANE":
-               case "NONE":
-                  this ._viewer = string;
-                  break;
-               case "PLANE_create3000.de":
-                  this ._viewer = "PLANE";
-                  break;
-               default:
-                  continue;
-            }
-
-            // Leave for loop.
-            break;
-         }
-
-         // Determine available viewers.
-
-         let
-            examineViewer = false,
-            walkViewer    = false,
-            flyViewer     = false,
-            planeViewer   = false,
-            noneViewer    = false,
-            lookAt        = false;
-
-         if (! this ._type .length)
-         {
-            examineViewer = true;
-            walkViewer    = true;
-            flyViewer     = true;
-            planeViewer   = true;
-            noneViewer    = true;
-            lookAt        = true;
-         }
-         else
-         {
-            for (const string of this ._type)
-            {
-               switch (string)
-               {
-                  case "EXAMINE":
-                     examineViewer = true;
-                     continue;
-                  case "WALK":
-                     walkViewer = true;
-                     continue;
-                  case "FLY":
-                     flyViewer = true;
-                     continue;
-                  case "LOOKAT":
-                     lookAt = true;
-                     continue;
-                  case "PLANE":
-                     planeViewer = true;
-                     continue;
-                  case "NONE":
-                     noneViewer = true;
-                     continue;
-                  case "ANY":
-                     examineViewer = true;
-                     walkViewer    = true;
-                     flyViewer     = true;
-                     planeViewer   = true;
-                     noneViewer    = true;
-                     lookAt        = true;
-                     break;
-                  default:
-                     // Some string defaults to EXAMINE.
-                     examineViewer = true;
-                     continue;
-               }
-
-               break;
-            }
-         }
-
-         this ._availableViewers .length = 0;
-
-         if (examineViewer)
-            this ._availableViewers .push ("EXAMINE");
-
-         if (walkViewer)
-            this ._availableViewers .push ("WALK");
-
-         if (flyViewer)
-            this ._availableViewers .push ("FLY");
-
-         if (planeViewer)
-            this ._availableViewers .push ("PLANE");
-
-         if (lookAt)
-            this ._availableViewers .push ("LOOKAT");
-
-         if (noneViewer)
-            this ._availableViewers .push ("NONE");
-      },
-      set_headlight__: function ()
-      {
-         if (this ._headlight .getValue ())
-            delete this .enable;
-         else
-            this .enable = Function .prototype;
-      },
-      set_transitionStart__: function ()
-      {
-         if (! this ._transitionActive .getValue ())
-            this ._transitionActive = true;
-      },
-      set_transitionComplete__: function ()
-      {
-         if (this ._transitionActive .getValue ())
-            this ._transitionActive = false;
-      },
-      set_isBound__: function ()
-      {
-         if (this ._isBound .getValue ())
-            return;
-
-         if (this ._transitionActive .getValue ())
-            this ._transitionActive = false;
-      },
-      enable: function (type, renderObject)
-      {
-         if (type !== TraverseType .DISPLAY)
-            return;
-
-         if (this ._headlight .getValue ())
-            renderObject .getGlobalObjects () .push (renderObject .getBrowser () .getHeadlight ());
-      },
-      traverse: function (type, renderObject)
-      {
-         if (type !== TraverseType .CAMERA)
-            return;
-
-         renderObject .getLayer () .getNavigationInfos () .push (this);
-      }
-   });
-
-   return NavigationInfo;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -73922,7 +75547,7 @@ function ($,
       },
       showContextMenu: function (event)
       {
-         this .getBrowser () .getContextMenu () .triggerContextMenu (event);
+         this .getBrowser () .getContextMenu () .show (event);
       },
    });
 

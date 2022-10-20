@@ -88,7 +88,10 @@ function (Fields,
       this .getCanvas () .hide ();
 
       if (this .getBrowserOptions () .getSplashScreen ())
+      {
+         this .getContextMenu () .hide ();
          this .getSplashScreen () .show ();
+      }
    }
 
    X3DNetworkingContext .prototype =
@@ -131,6 +134,7 @@ function (Fields,
 
             if (this .getBrowserOptions () .getSplashScreen ())
             {
+               this .getContextMenu ()  .hide ();
                this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeOut (0);
                this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeIn (0);
             }

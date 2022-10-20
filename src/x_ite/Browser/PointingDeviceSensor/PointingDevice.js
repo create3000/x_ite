@@ -281,7 +281,7 @@ function ($,
       },
       showContextMenu: function (event)
       {
-         this .getBrowser () .getContextMenu () .triggerContextMenu (event);
+         this .getBrowser () .getContextMenu () .show (event);
       },
    });
 
