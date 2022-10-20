@@ -98,6 +98,7 @@ function (X3DGeometryNode,
                   projectionMatrix    = renderObject .getProjectionMatrix () .get (),
                   viewport            = renderObject .getViewVolume () .getViewport (),
                   pointPropertiesNode = appearanceNode .getPointProperties (),
+                  pointSizeFactor     = 1 / (2 * Math .SQRT2),
                   vertices            = this .getVertices (),
                   numVertices         = vertices .length;
 
@@ -108,7 +109,7 @@ function (X3DGeometryNode,
                {
                   point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
 
-                  const pointSize1_2 = Math .max (1, pointPropertiesNode .getPointSize (point, modelViewMatrix) / (2 * Math .SQRT2));
+                  const pointSize1_2 = Math .max (1, pointPropertiesNode .getPointSize (point, modelViewMatrix) * pointSizeFactor);
 
                   ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, win);
                   ViewVolume .unProjectPointMatrix (win .x + pointSize1_2, win .y + pointSize1_2, win .z, invModelViewProjectionMatrix, viewport, radius);
