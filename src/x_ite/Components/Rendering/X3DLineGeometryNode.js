@@ -120,13 +120,14 @@ function (X3DGeometryNode,
                   projectionMatrix   = renderObject .getProjectionMatrix () .get (),
                   viewport           = renderObject .getViewVolume () .getViewport (),
                   linePropertiesNode = appearanceNode .getLineProperties (),
-                  lineWidth1_2       = linePropertiesNode .getApplied () ? Math .max (1, linePropertiesNode .getLinewidthScaleFactor () / (2 * Math.SQRT2)) : 1,
-                  vertices           = this .getVertices ();
+                  lineWidth1_2       = linePropertiesNode .getApplied () ? Math .max (1, linePropertiesNode .getLinewidthScaleFactor () / (2 * Math .SQRT2)) : 1,
+                  vertices           = this .getVertices (),
+                  numVertices        = vertices .length;
 
                modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
                invModelViewProjectionMatrix .assign (modelViewProjectionMatrix) .inverse ();
 
-               for (let i = 0, length = vertices .length; i < length; i += 8)
+               for (let i = 0; i < numVertices; i += 8)
                {
                   point1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
                   point2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);

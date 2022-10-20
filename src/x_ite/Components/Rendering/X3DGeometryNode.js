@@ -499,11 +499,12 @@ function (Fields,
                this .transformMatrix (modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())); // Apply screen transformations from screen nodes.
 
                const
-                  texCoords  = this .multiTexCoords [0] .getValue (),
-                  normals    = this .normals .getValue (),
-                  vertices   = this .vertices .getValue ();
+                  texCoords   = this .multiTexCoords [0] .getValue (),
+                  normals     = this .normals .getValue (),
+                  vertices    = this .vertices .getValue (),
+                  vertexCount = this .vertexCount;
 
-               for (let i = 0, length = this .vertexCount; i < length; i += 3)
+               for (let i = 0; i < vertexCount; i += 3)
                {
                   const i4 = i * 4;
 
@@ -537,8 +538,8 @@ function (Fields,
                      const i3 = i * 3;
 
                      const normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
-                                                   t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
-                                                   t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
+                                                 t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
+                                                 t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
 
                      intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
                   }

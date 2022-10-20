@@ -97,16 +97,17 @@ function (X3DGeometryNode,
                   projectionMatrix    = renderObject .getProjectionMatrix () .get (),
                   viewport            = renderObject .getViewVolume () .getViewport (),
                   pointPropertiesNode = appearanceNode .getPointProperties (),
-                  vertices            = this .getVertices ();
+                  vertices            = this .getVertices (),
+                  numVertices         = vertices .length;
 
                modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
                invModelViewProjectionMatrix .assign (modelViewProjectionMatrix) .inverse ();
 
-               for (let i = 0, length = vertices .length; i < length; i += 4)
+               for (let i = 0; i < numVertices; i += 4)
                {
                   point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
 
-                  const pointSize1_2 = Math .max (1, pointPropertiesNode .getPointSize (point, modelViewMatrix) / (2 * Math.SQRT2));
+                  const pointSize1_2 = Math .max (1, pointPropertiesNode .getPointSize (point, modelViewMatrix) / (2 * Math .SQRT2));
 
                   ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, win);
 
