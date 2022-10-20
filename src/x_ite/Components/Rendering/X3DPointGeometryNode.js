@@ -93,6 +93,7 @@ function (X3DGeometryNode,
             if (this .intersectsBBox (hitRay, 1))
             {
                const
+                  clipPlanes          = renderObject .getLocalObjects (),
                   modelViewMatrix     = renderObject .getModelViewMatrix () .get (),
                   projectionMatrix    = renderObject .getProjectionMatrix () .get (),
                   viewport            = renderObject .getViewVolume () .getViewport (),
@@ -114,10 +115,8 @@ function (X3DGeometryNode,
 
                   if (hitRay .getPerpendicularVectorToPoint (point, vector) .abs () < point .distance (radius))
                   {
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), renderObject .getLocalObjects ()))
-                     {
+                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
                         continue;
-                     }
 
                      intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
                      return true;

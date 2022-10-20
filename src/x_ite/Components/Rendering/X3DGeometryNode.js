@@ -499,6 +499,7 @@ function (Fields,
                this .transformMatrix (modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())); // Apply screen transformations from screen nodes.
 
                const
+                  clipPlanes  = renderObject .getLocalObjects (),
                   texCoords   = this .multiTexCoords [0] .getValue (),
                   normals     = this .normals .getValue (),
                   vertices    = this .vertices .getValue (),
@@ -527,10 +528,8 @@ function (Fields,
                                                 t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
                                                 t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), renderObject .getLocalObjects ()))
-                     {
+                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
                         continue;
-                     }
 
                      const texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
                                                    t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
