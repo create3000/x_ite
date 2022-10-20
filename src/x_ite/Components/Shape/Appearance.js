@@ -154,9 +154,17 @@ function (Fields,
       {
          return this .alphaMode;
       },
+      getPointProperties: function ()
+      {
+         return this .stylePropertiesNode [0];
+      },
       getLineProperties: function ()
       {
          return this .stylePropertiesNode [1];
+      },
+      getFillProperties: function ()
+      {
+         return this .stylePropertiesNode [2];
       },
       set_live__: function ()
       {

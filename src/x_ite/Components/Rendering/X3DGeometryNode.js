@@ -491,12 +491,12 @@ function (Fields,
             v2              = new Vector3 (0, 0, 0),
             clipPoint       = new Vector3 (0, 0, 0);
 
-         return function (hitRay, clipPlanes, modelViewMatrix_, intersections)
+         return function (hitRay, renderObject, appearanceNode, intersections)
          {
             if (this .intersectsBBox (hitRay))
             {
-               this .transformLine (hitRay);                                       // Apply screen transformations from screen nodes.
-               this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
+               this .transformLine (hitRay); // Apply screen transformations from screen nodes.
+               this .transformMatrix (modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())); // Apply screen transformations from screen nodes.
 
                const
                   texCoords  = this .multiTexCoords [0] .getValue (),
@@ -526,8 +526,10 @@ function (Fields,
                                                 t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
                                                 t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), renderObject .getLocalObjects ()))
+                     {
                         continue;
+                     }
 
                      const texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
                                                    t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);

@@ -77,27 +77,43 @@ function (X3DGeometryNode,
       constructor: X3DLineGeometryNode,
       intersectsLine: (function ()
       {
-         const PICK_DISTANCE_FACTOR = 1 / 300;
-
          const
             point     = new Vector3 (0, 0, 0),
             vector    = new Vector3 (0, 0, 0),
             clipPoint = new Vector3 (0, 0, 0);
 
-         return function (hitRay, clipPlanes, modelViewMatrix, intersections)
+         return function (hitRay, renderObject, appearanceNode, intersections)
          {
             if (this .intersectsBBox (hitRay, 1))
             {
-               const vertices = this .getVertices ();
+               const
+                  modelViewMatrix     = renderObject .getModelViewMatrix () .get (),
+                  projectionMatrix    = renderObject .getProjectionMatrix () .get (),
+                  viewport            = renderObject .getViewVolume () .getViewport (),
+                  pointPropertiesNode = appearanceNode .getPointProperties (),
+                  lineWidth1_2        = pointPropertiesNode .getApplied () ? Math .max (1, linePropertiesNode .getLinewidthScaleFactor () / (2 * Math.SQRT2)) : 1,
+                  vertices            = this .getVertices ();
+
+               modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
+               invModelViewProjectionMatrix .assign (modelViewProjectionMatrix) .inverse ();
 
                for (let i = 0, length = vertices .length; i < length; i += 4)
                {
                   point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
 
-                  if (hitRay .getPerpendicularVectorToPoint (point, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
+                  ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, win);
+
+                  win .x += lineWidth1_2;
+                  win .y += lineWidth1_2;
+
+                  ViewVolume .unProjectPointMatrix (win .x, win .y, win .z, invModelViewProjectionMatrix, viewport, pointX);
+
+                  if (hitRay .getPerpendicularVectorToPoint (point, vector) .abs () < point .distance (pointX))
                   {
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), renderObject .getLocalObjects ()))
+                     {
                         continue;
+                     }
 
                      intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
                      return true;
