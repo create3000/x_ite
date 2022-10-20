@@ -126,7 +126,11 @@ function (X3DGeometryNode,
                      if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
                         continue;
 
-                     intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
+                     const
+                        normal   = modelViewMatrix .submatrix .inverse () .z .normalize () .copy (),
+                        texCoord = new Vector2 (0, 0);
+
+                     intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
                      return true;
                   }
                }

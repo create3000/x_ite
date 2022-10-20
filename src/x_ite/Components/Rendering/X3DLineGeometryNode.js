@@ -142,9 +142,12 @@ function (X3DGeometryNode,
 
                   if (line .getClosestPointToLine (hitRay, point))
                   {
-                     const distance = point1 .distance (point2);
+                     const
+                        distance  = point1 .distance (point2),
+                        distance1 = point1 .distance (point),
+                        distance2 = point2 .distance (point);
 
-                     if (point1 .distance (point) <= distance && point2 .distance (point) <= distance)
+                     if (distance1 <= distance && distance2 <= distance)
                      {
                         ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, win);
                         ViewVolume .unProjectPointMatrix (win .x + lineWidth1_2, win .y + lineWidth1_2, win .z, invModelViewProjectionMatrix, viewport, radius);
@@ -154,7 +157,11 @@ function (X3DGeometryNode,
                            if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
                               continue;
 
-                           intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
+                           const
+                              normal   = point2 .subtract (point1) .normalize () .copy (),
+                              texCoord = new Vector2 (distance1 / distance, 0);
+
+                           intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
                            return true;
                         }
                      }
