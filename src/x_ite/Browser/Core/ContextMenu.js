@@ -62,15 +62,12 @@ function ($,
 {
 "use strict";
 
-   const
-      _zIndex   = Symbol (),
-      _userMenu = Symbol ();
+   const _userMenu = Symbol ();
 
    function ContextMenu (executionContext)
    {
       X3DBaseNode .call (this, executionContext);
 
-      this [_zIndex]   = 10000;
       this [_userMenu] = null;
    }
 
@@ -101,14 +98,6 @@ function ($,
             build: this .build .bind (this),
             animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
          });
-      },
-      getZIndex: function ()
-      {
-         return this [_zIndex];
-      },
-      setZIndex: function (value)
-      {
-         this [_zIndex] = value;
       },
       getUserMenu: function ()
       {
@@ -541,7 +530,6 @@ function ($,
          const layer = $("<div></div>")
             .addClass ("context-menu-layer")
             .addClass (menu .className)
-            .css ("z-index", this [_zIndex])
             .appendTo (options .appendTo);
 
          const hide = this .hide = function ()
@@ -569,10 +557,11 @@ function ($,
             y = event .pageY - $(document) .scrollTop ();
 
          const ul = $("<ul></ul>")
+            .hide ()
             .addClass ("context-menu-list")
             .addClass (menu .className)
             .addClass ("context-menu-root")
-            .css ({ "left": x, "top": y, "z-index": this [_zIndex] + level, "display": "none" })
+            .css ({ "left": x, "top": y })
             .appendTo (options .appendTo);
 
          for (const k in menu .items)
@@ -724,7 +713,7 @@ function ($,
          {
             const ul = $("<ul></ul>")
                .addClass ("context-menu-list")
-               .css ({ "z-index": this [_zIndex] + level })
+               .css ({ "z-index": level })
                .appendTo (li);
 
             for (const k in item .items)
