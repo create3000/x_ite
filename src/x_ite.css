@@ -19,6 +19,9 @@ X3DCanvas {
   height: 150px;
   user-select: none;
   -webkit-user-select: none;
+  /* https://stackoverflow.com/a/69740845/1818915 */
+  -position: relative;
+  -z-index: 1;
 }
 
 :host([hidden]) {
