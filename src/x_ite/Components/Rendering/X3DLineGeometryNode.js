@@ -113,20 +113,25 @@ function (X3DGeometryNode,
 
          return function (hitRay, renderObject, appearanceNode, intersections)
          {
-            if (this .intersectsBBox (hitRay, 1))
+            const
+               modelViewMatrix    = renderObject .getModelViewMatrix () .get (),
+               projectionMatrix   = renderObject .getProjectionMatrix () .get (),
+               viewport           = renderObject .getViewVolume () .getViewport (),
+               linePropertiesNode = appearanceNode .getLineProperties (),
+               lineWidth1_2       = linePropertiesNode .getApplied () ? Math .max (1, linePropertiesNode .getLinewidthScaleFactor () / (2 * Math .SQRT2)) : 1;
+
+            modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
+            invModelViewProjectionMatrix .assign (modelViewProjectionMatrix) .inverse ();
+
+            ViewVolume .projectPointMatrix (point .assign (this .getMin ()), modelViewProjectionMatrix, viewport, win);
+            ViewVolume .unProjectPointMatrix (win .x + lineWidth1_2, win .y + lineWidth1_2, win .z, invModelViewProjectionMatrix, viewport, radius);
+
+            if (this .intersectsBBox (hitRay, point .distance (radius)))
             {
                const
-                  clipPlanes         = renderObject .getLocalObjects (),
-                  modelViewMatrix    = renderObject .getModelViewMatrix () .get (),
-                  projectionMatrix   = renderObject .getProjectionMatrix () .get (),
-                  viewport           = renderObject .getViewVolume () .getViewport (),
-                  linePropertiesNode = appearanceNode .getLineProperties (),
-                  lineWidth1_2       = linePropertiesNode .getApplied () ? Math .max (1, linePropertiesNode .getLinewidthScaleFactor () / (2 * Math .SQRT2)) : 1,
-                  vertices           = this .getVertices (),
-                  numVertices        = vertices .length;
-
-               modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
-               invModelViewProjectionMatrix .assign (modelViewProjectionMatrix) .inverse ();
+                  clipPlanes  = renderObject .getLocalObjects (),
+                  vertices    = this .getVertices (),
+                  numVertices = vertices .length;
 
                for (let i = 0; i < numVertices; i += 8)
                {
