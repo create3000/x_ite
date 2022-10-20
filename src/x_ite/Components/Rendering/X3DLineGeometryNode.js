@@ -141,11 +141,7 @@ function (X3DGeometryNode,
                      if (point1 .distance (point) <= distance && point2 .distance (point) <= distance)
                      {
                         ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, win);
-
-                        win .x += lineWidth1_2;
-                        win .y += lineWidth1_2;
-
-                        ViewVolume .unProjectPointMatrix (win .x, win .y, win .z, invModelViewProjectionMatrix, viewport, radius);
+                        ViewVolume .unProjectPointMatrix (win .x + lineWidth1_2, win .y + lineWidth1_2, win .z, invModelViewProjectionMatrix, viewport, radius);
 
                         if (line .getPerpendicularVectorToLine (hitRay, vector) .abs () < point .distance (radius))
                         {

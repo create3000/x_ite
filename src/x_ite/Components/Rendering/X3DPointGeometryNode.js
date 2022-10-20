@@ -110,11 +110,7 @@ function (X3DGeometryNode,
                   const pointSize1_2 = Math .max (1, pointPropertiesNode .getPointSize (point, modelViewMatrix) / (2 * Math .SQRT2));
 
                   ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, win);
-
-                  win .x += pointSize1_2;
-                  win .y += pointSize1_2;
-
-                  ViewVolume .unProjectPointMatrix (win .x, win .y, win .z, invModelViewProjectionMatrix, viewport, radius);
+                  ViewVolume .unProjectPointMatrix (win .x + pointSize1_2, win .y + pointSize1_2, win .z, invModelViewProjectionMatrix, viewport, radius);
 
                   if (hitRay .getPerpendicularVectorToPoint (point, vector) .abs () < point .distance (radius))
                   {
