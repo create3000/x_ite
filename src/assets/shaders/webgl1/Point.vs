@@ -6,7 +6,6 @@ uniform x3d_PointPropertiesParameters x3d_PointProperties;
 
 uniform bool x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false
 uniform x3d_UnlitMaterialParameters x3d_Material;
-uniform int x3d_NumTextures;
 
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
@@ -48,10 +47,10 @@ main ()
    float dL                   = length (vertex);
 
    pointSize  = x3d_PointProperties .pointSizeScaleFactor;
-   pointSize *= 1.0 / (pointSizeAttenuation [0] + pointSizeAttenuation [1] * dL + pointSizeAttenuation [2] * (dL * dL));
+   pointSize /= pointSizeAttenuation [0] + pointSizeAttenuation [1] * dL + pointSizeAttenuation [2] * (dL * dL);
    pointSize  = clamp (pointSize, pointSizeMinValue, pointSizeMaxValue);
 
-   gl_PointSize = pointSize > 1.0 && x3d_NumTextures == 0 ? pointSize + 1.0 : pointSize;
+   gl_PointSize = pointSize > 1.0 ? pointSize + 1.0 : pointSize;
 
    // Determine color.
 

@@ -49,11 +49,13 @@
 
 define ([
    "x_ite/Components/Rendering/X3DGeometryNode",
+   "standard/Math/Geometry/ViewVolume",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
+          ViewVolume,
           Vector2,
           Vector3,
           Matrix4)
@@ -78,9 +80,13 @@ function (X3DGeometryNode,
       intersectsLine: (function ()
       {
          const
-            point     = new Vector3 (0, 0, 0),
-            vector    = new Vector3 (0, 0, 0),
-            clipPoint = new Vector3 (0, 0, 0);
+            modelViewProjectionMatrix    = new Matrix4 (),
+            invModelViewProjectionMatrix = new Matrix4 (),
+            point                        = new Vector3 (0, 0, 0),
+            vector                       = new Vector3 (0, 0, 0),
+            win                          = new Vector3 (0, 0, 0),
+            radius                       = new Vector3 (0, 0, 0),
+            clipPoint                    = new Vector3 (0, 0, 0);
 
          return function (hitRay, renderObject, appearanceNode, intersections)
          {
@@ -91,7 +97,6 @@ function (X3DGeometryNode,
                   projectionMatrix    = renderObject .getProjectionMatrix () .get (),
                   viewport            = renderObject .getViewVolume () .getViewport (),
                   pointPropertiesNode = appearanceNode .getPointProperties (),
-                  lineWidth1_2        = pointPropertiesNode .getApplied () ? Math .max (1, linePropertiesNode .getLinewidthScaleFactor () / (2 * Math.SQRT2)) : 1,
                   vertices            = this .getVertices ();
 
                modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
@@ -101,14 +106,16 @@ function (X3DGeometryNode,
                {
                   point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
 
+                  const pointSize1_2 = Math .max (1, pointPropertiesNode .getPointSize (point, modelViewMatrix) / (2 * Math.SQRT2));
+
                   ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, win);
 
-                  win .x += lineWidth1_2;
-                  win .y += lineWidth1_2;
+                  win .x += pointSize1_2;
+                  win .y += pointSize1_2;
 
-                  ViewVolume .unProjectPointMatrix (win .x, win .y, win .z, invModelViewProjectionMatrix, viewport, pointX);
+                  ViewVolume .unProjectPointMatrix (win .x, win .y, win .z, invModelViewProjectionMatrix, viewport, radius);
 
-                  if (hitRay .getPerpendicularVectorToPoint (point, vector) .abs () < point .distance (pointX))
+                  if (hitRay .getPerpendicularVectorToPoint (point, vector) .abs () < point .distance (radius))
                   {
                      if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), renderObject .getLocalObjects ()))
                      {

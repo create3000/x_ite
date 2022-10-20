@@ -53,12 +53,16 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
    "x_ite/Base/X3DConstants",
+   "standard/Math/Algorithm",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DAppearanceChildNode,
-          X3DConstants)
+          X3DConstants,
+          Algorithm,
+          Vector3)
 {
 "use strict";
 
@@ -110,6 +114,24 @@ function (Fields,
          this .set_pointSizeAttenuation__ ();
          this .set_markerType__ ();
       },
+      getPointSize: (function ()
+      {
+         const p = new Vector3 (0, 0, 0);
+
+         return function (point, modelViewMatrix)
+         {
+            const
+               pointSizeAttenuation = this .pointSizeAttenuation,
+               dL                   = modelViewMatrix .multVecMatrix (p .assign (point)) .abs ();
+
+            let pointSize = this .pointSizeScaleFactor;
+
+            pointSize /= pointSizeAttenuation [0] + pointSizeAttenuation [1] * dL + pointSizeAttenuation [2] * (dL * dL);
+            pointSize  = Algorithm .clamp (pointSize, this .pointSizeMinValue, this .pointSizeMaxValue);
+
+            return pointSize;
+         };
+      })(),
       set_pointSizeScaleFactor__: function ()
       {
          this .pointSizeScaleFactor = Math .max (1, this ._pointSizeScaleFactor .getValue ());

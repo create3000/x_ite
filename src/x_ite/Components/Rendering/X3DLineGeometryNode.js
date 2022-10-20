@@ -106,9 +106,9 @@ function (X3DGeometryNode,
             point2                       = new Vector3 (0, 0, 0),
             line                         = new Line3 (Vector3 .Zero, Vector3 .zAxis),
             point                        = new Vector3 (0, 0, 0),
-            pointX                       = new Vector3 (0, 0, 0),
             vector                       = new Vector3 (0, 0, 0),
             win                          = new Vector3 (0, 0, 0),
+            radius                       = new Vector3 (0, 0, 0),
             clipPoint                    = new Vector3 (0, 0, 0);
 
          return function (hitRay, renderObject, appearanceNode, intersections)
@@ -144,9 +144,9 @@ function (X3DGeometryNode,
                         win .x += lineWidth1_2;
                         win .y += lineWidth1_2;
 
-                        ViewVolume .unProjectPointMatrix (win .x, win .y, win .z, invModelViewProjectionMatrix, viewport, pointX);
+                        ViewVolume .unProjectPointMatrix (win .x, win .y, win .z, invModelViewProjectionMatrix, viewport, radius);
 
-                        if (line .getPerpendicularVectorToLine (hitRay, vector) .abs () < point .distance (pointX))
+                        if (line .getPerpendicularVectorToLine (hitRay, vector) .abs () < point .distance (radius))
                         {
                            if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), renderObject .getLocalObjects ()))
                            {
