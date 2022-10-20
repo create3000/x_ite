@@ -74,9 +74,12 @@ function (X3DTextureCoordinateNode,
       {
          X3DTextureCoordinateNode .prototype .initialize .call (this);
 
-         this ._point .addInterest ("set_point__", this);
+         if (this ._point)
+         {
+            this ._point .addInterest ("set_point__", this);
 
-         this .set_point__ ();
+            this .set_point__ ();
+         }
       },
       set_point__: function ()
       {

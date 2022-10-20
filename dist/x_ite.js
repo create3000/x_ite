@@ -1,4 +1,4 @@
-/* X_ITE v6.0.0-1154 */
+/* X_ITE v6.0.0-1155 */
 
 (function (global, factory)
 {
@@ -33801,15 +33801,12 @@ function ($,
 {
 "use strict";
 
-   const
-      _zIndex   = Symbol (),
-      _userMenu = Symbol ();
+   const _userMenu = Symbol ();
 
    function ContextMenu (executionContext)
    {
       X3DBaseNode .call (this, executionContext);
 
-      this [_zIndex]   = 10000;
       this [_userMenu] = null;
    }
 
@@ -33840,14 +33837,6 @@ function ($,
             build: this .build .bind (this),
             animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
          });
-      },
-      getZIndex: function ()
-      {
-         return this [_zIndex];
-      },
-      setZIndex: function (value)
-      {
-         this [_zIndex] = value;
       },
       getUserMenu: function ()
       {
@@ -34280,7 +34269,6 @@ function ($,
          const layer = $("<div></div>")
             .addClass ("context-menu-layer")
             .addClass (menu .className)
-            .css ("z-index", this [_zIndex])
             .appendTo (options .appendTo);
 
          const hide = this .hide = function ()
@@ -34308,11 +34296,12 @@ function ($,
             y = event .pageY - $(document) .scrollTop ();
 
          const ul = $("<ul></ul>")
+            .hide ()
             .addClass ("context-menu-list")
             .addClass (menu .className)
             .addClass ("context-menu-root")
-            .css ({ "left": x, "top": y, "z-index": this [_zIndex] + level, "display": "none" })
-            .appendTo (options .appendTo);
+            .css ({ "left": x, "top": y })
+            .appendTo (layer);
 
          for (const k in menu .items)
             ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1, hide));
@@ -34342,26 +34331,7 @@ function ($,
             e .css (position, e .parent () .closest ("ul") .width ());
 
             if (e .outerHeight () >= $(window) .height ())
-            {
                e .css ({ "max-height": "100vh", "overflow-y": "scroll" });
-
-               // Prevent scrolling of parent element.
-               // TODO: not on mobiles.
-
-               e .on ("mousewheel", function (event, d)
-               {
-                  if (d > 0)
-                  {
-                     if (e .scrollTop () <= 0)
-                        event .preventDefault ();
-                  }
-                  else if (d < 0)
-                  {
-                     if (e .scrollTop () + e .innerHeight () >= e .get (0) .scrollHeight)
-                        event .preventDefault ();
-                  }
-               });
-            }
          });
 
          // If the submenu is higher than vh, reposition it.
@@ -34463,7 +34433,7 @@ function ($,
          {
             const ul = $("<ul></ul>")
                .addClass ("context-menu-list")
-               .css ({ "z-index": this [_zIndex] + level })
+               .css ({ "z-index": level })
                .appendTo (li);
 
             for (const k in item .items)
@@ -44022,10 +43992,10 @@ function ($,
       _number              = Symbol (),
       _element             = Symbol (),
       _shadow              = Symbol (),
-      _splashScreen        = Symbol (),
       _surface             = Symbol (),
       _canvas              = Symbol (),
       _context             = Symbol (),
+      _splashScreen        = Symbol (),
       _localStorage        = Symbol (),
       _mobile              = Symbol (),
       _browserTimings      = Symbol (),
@@ -71904,6 +71874,7 @@ function (X3DGeometryNode,
          gl      = browser .getContext ();
 
       this .transformVertexArrayObject = new VertexArray ();
+      this .thickVertexArrayObject     = new VertexArray ();
       this .trianglesBuffer            = gl .createBuffer ();
       this .trianglesTexCoordBuffers   = new Array (browser .getMaxTextures ()) .fill (this .trianglesBuffer);
 
@@ -71920,6 +71891,7 @@ function (X3DGeometryNode,
          X3DGeometryNode .prototype .updateVertexArrays .call (this);
 
          this .transformVertexArrayObject .update ();
+         this .thickVertexArrayObject     .update ();
       },
       intersectsLine: (function ()
       {
@@ -72152,7 +72124,7 @@ function (X3DGeometryNode,
 
                   // Setup vertex attributes.
 
-                  if (this .vertexArrayObject .enable (gl, shaderNode))
+                  if (this .thickVertexArrayObject .enable (gl, shaderNode))
                   {
                      const
                         stride         = 13 * Float32Array .BYTES_PER_ELEMENT,
@@ -74345,9 +74317,12 @@ function (X3DTextureCoordinateNode,
       {
          X3DTextureCoordinateNode .prototype .initialize .call (this);
 
-         this ._point .addInterest ("set_point__", this);
+         if (this ._point)
+         {
+            this ._point .addInterest ("set_point__", this);
 
-         this .set_point__ ();
+            this .set_point__ ();
+         }
       },
       set_point__: function ()
       {

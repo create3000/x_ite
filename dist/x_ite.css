@@ -1,4 +1,4 @@
-/* X_ITE v6.0.0-1154 */
+/* X_ITE v6.0.0-1155 */
 @charset "utf-8";
 @import url("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic");
 :host,
@@ -29,22 +29,22 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   overflow: hidden;
   display: block;
   position: relative;
-  width: 100%;
-  height: 100%;
   margin: 0;
   padding: 0;
   border: 0;
   border-radius: 0;
+  width: 100%;
+  height: 100%;
   user-select: none;
   -webkit-user-select: none;
 }
 .x_ite-private-surface {
+  position: absolute;
   margin: 0;
   padding: 0;
   border: 0;
   border-radius: 0;
-  height: 100%;
-  margin-right: 0;
+  inset: 0;
 }
 .x_ite-private-canvas {
   display: block;
@@ -57,10 +57,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   height: 100%;
 }
 .x_ite-private-notification {
-  padding: 5px;
   position: absolute;
   top: 20px;
   right: -4px;
+  padding: 5px;
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   background: rgba(0,0,0,0.61803);
@@ -236,10 +236,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 .x_ite-private-menu.context-menu-layer {
   position: fixed;
+  z-index: 10000;
   inset: 0;
 }
 .x_ite-private-menu.context-menu-list {
-  position: fixed;
+  isolation: isolate;
 }
 .x_ite-private-menu .context-menu-list {
   position: absolute;
