@@ -328,11 +328,11 @@ X3D (function ()
    Browser .getContextMenu () .setUserMenu (function ()
    {
       return {
-         "make-rounded-border": {
-            name: "Make Rounded Border",
+         "item-1": {
+            name: "Item 1",
             callback: function (event)
             {
-               $("x3d-canvas") .css ("border-radius", "15px");
+               console .log ("Item 1");
             },
          },
       };
