@@ -127,8 +127,9 @@ function (X3DGeometryNode,
                         continue;
 
                      const
-                        normal   = modelViewMatrix .submatrix .inverse () .z .normalize () .copy (),
-                        texCoord = new Vector2 (0, 0);
+                        submatrix = modelViewMatrix .submatrix,
+                        texCoord  = new Vector2 (0, 0) .assign (submatrix .multVecMatrix (vector)) .normalize () .add (Vector2 .One) .divide (2),
+                        normal    = submatrix .inverse () .z .normalize () .copy ();
 
                      intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
                      return true;
