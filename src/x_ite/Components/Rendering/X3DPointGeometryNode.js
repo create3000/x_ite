@@ -89,14 +89,11 @@ function (X3DGeometryNode,
          return function (hitRay, renderObject, appearanceNode, intersections)
          {
             const
-               pointer             = renderObject .getBrowser () .getPointer (),
                modelViewMatrix     = renderObject .getModelViewMatrix () .get (),
-               projectionMatrix    = renderObject .getProjectionMatrix () .get (),
                viewport            = renderObject .getViewVolume () .getViewport (),
                pointPropertiesNode = appearanceNode .getPointProperties ();
 
-            invModelViewMatrix .assign (modelViewMatrix) .inverse  ();
-            modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
+            invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
             const
                viewpointNode = renderObject .getViewpoint (),
@@ -107,9 +104,13 @@ function (X3DGeometryNode,
             if (this .intersectsBBox (hitRay, offsets .abs ()))
             {
                const
-                  clipPlanes  = renderObject .getLocalObjects (),
-                  vertices    = this .getVertices (),
-                  numVertices = vertices .length;
+                  projectionMatrix = renderObject .getProjectionMatrix () .get (),
+                  pointer          = renderObject .getBrowser () .getPointer (),
+                  clipPlanes       = renderObject .getLocalObjects (),
+                  vertices         = this .getVertices (),
+                  numVertices      = vertices .length;
+
+               modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
 
                for (let i = 0; i < numVertices; i += 4)
                {
