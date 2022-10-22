@@ -83,10 +83,10 @@ define (function ()
          return this .real === complex .real &&
                 this .imag === complex .imag;
       },
-      polar: function (magnitude, argument)
+      polar: function (magnitude, angle)
       {
-         this .real = magnitude * Math .cos (argument);
-         this .imag = magnitude * Math .sin (argument);
+         this .real = magnitude * Math .cos (angle);
+         this .imag = magnitude * Math .sin (angle);
          return this;
       },
       conjugate: function ()
@@ -177,21 +177,21 @@ define (function ()
       },
       set: function (magnitude)
       {
-         this .polar (magnitude, this .argument);
+         this .polar (magnitude, this .angle);
       },
       enumerable: false,
       configurable: false
    });
 
-   Object .defineProperty (Complex .prototype, "argument",
+   Object .defineProperty (Complex .prototype, "angle",
    {
       get: function ()
       {
          return Math .atan2 (this .imag, this .real);
       },
-      set: function (argument)
+      set: function (angle)
       {
-         this .polar (this .magnitude, argument);
+         this .polar (this .magnitude, angle);
       },
       enumerable: false,
       configurable: false
@@ -199,11 +199,11 @@ define (function ()
 
    Object .assign (Complex,
    {
-      Polar: function (magnitude, argument)
+      Polar: function (magnitude, angle)
       {
          const complex = Object .create (Complex .prototype);
-         complex .real = magnitude * Math .cos (argument);
-         complex .imag = magnitude * Math .sin (argument);
+         complex .real = magnitude * Math .cos (angle);
+         complex .imag = magnitude * Math .sin (angle);
          return complex;
       },
       multiply: function (lhs, rhs)
