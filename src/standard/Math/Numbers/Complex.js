@@ -53,7 +53,7 @@ define (function ()
 
    function Complex (real, imag)
    {
-      this .real = real
+      this .real = real;
       this .imag = imag;
    }
 
@@ -157,7 +157,7 @@ define (function ()
          if (this .imag)
             return this .real + " " + this .imag + "i";
 
-         return "" + this .real;
+         return String (this .real);
       },
    };
 
@@ -201,10 +201,7 @@ define (function ()
    {
       Polar: function (magnitude, angle)
       {
-         const complex = Object .create (Complex .prototype);
-         complex .real = magnitude * Math .cos (angle);
-         complex .imag = magnitude * Math .sin (angle);
-         return complex;
+         return Object .create (Complex .prototype) .polar (magnitude, angle);
       },
       multiply: function (lhs, rhs)
       {
