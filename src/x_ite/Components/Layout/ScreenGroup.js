@@ -127,7 +127,7 @@ function (Fields,
          {
             // throws domain error
 
-            var
+            const
                modelViewMatrix  = renderObject .getModelViewMatrix () .get (),
                projectionMatrix = renderObject .getProjectionMatrix () .get (),
                viewport         = renderObject .getViewVolume () .getViewport ();
@@ -135,7 +135,7 @@ function (Fields,
             // Determine screenMatrix.
             // Same as in ScreenText.
 
-            var screenScale = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport); // in meter/pixel
+            const screenScale = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport); // in meter/pixel
 
             x .set (modelViewMatrix [ 0], modelViewMatrix [ 1], modelViewMatrix [ 2], modelViewMatrix [ 3]);
             y .set (modelViewMatrix [ 4], modelViewMatrix [ 5], modelViewMatrix [ 6], modelViewMatrix [ 7]);
@@ -181,7 +181,7 @@ function (Fields,
                break;
          }
 
-         var modelViewMatrix = renderObject .getModelViewMatrix ();
+         const modelViewMatrix = renderObject .getModelViewMatrix ();
 
          modelViewMatrix .push ();
          modelViewMatrix .multLeft (this .matrix);

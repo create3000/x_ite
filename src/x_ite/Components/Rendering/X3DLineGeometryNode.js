@@ -154,8 +154,11 @@ function (X3DGeometryNode,
 
                         if (line .getPerpendicularVectorToLine (hitRay, vector) .abs () < point .distance (radius))
                         {
-                           if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                              continue;
+                           if (clipPlanes .length)
+                           {
+                              if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                                 continue;
+                           }
 
                            const
                               normal   = point2 .subtract (point1) .normalize () .copy (),

@@ -146,6 +146,10 @@ function (PointingDevice,
       {
          return this [_cursorType];
       },
+      getPointer: function ()
+      {
+         return this [_pointer];
+      },
       isPointerInRectangle: function (rectangle)
       {
          return this [_pointer] .x > rectangle .x &&

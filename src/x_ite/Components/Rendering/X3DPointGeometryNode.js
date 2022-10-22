@@ -81,31 +81,28 @@ function (X3DGeometryNode,
       {
          const
             modelViewProjectionMatrix    = new Matrix4 (),
-            invModelViewProjectionMatrix = new Matrix4 (),
             point                        = new Vector3 (0, 0, 0),
-            vector                       = new Vector3 (0, 0, 0),
-            win                          = new Vector3 (0, 0, 0),
-            radius                       = new Vector3 (0, 0, 0),
+            projected                    = new Vector2 (0, 0),
             clipPoint                    = new Vector3 (0, 0, 0);
 
          return function (hitRay, renderObject, appearanceNode, intersections)
          {
             const
+               pointer             = renderObject .getBrowser () .getPointer (),
                modelViewMatrix     = renderObject .getModelViewMatrix () .get (),
                projectionMatrix    = renderObject .getProjectionMatrix () .get (),
                viewport            = renderObject .getViewVolume () .getViewport (),
-               pointPropertiesNode = appearanceNode .getPointProperties (),
-               pointSizeFactor     = 1 / (2 * Math .SQRT2)
+               pointPropertiesNode = appearanceNode .getPointProperties ();
 
             modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
-            invModelViewProjectionMatrix .assign (modelViewProjectionMatrix) .inverse ();
 
-            const pointSize1_2 = Math .max (1, pointPropertiesNode .getPointSize (point, modelViewMatrix) * pointSizeFactor);
+            const
+               viewpointNode = renderObject .getViewpoint (),
+               screenScale   = viewpointNode .getScreenScale (modelViewMatrix .origin, viewport), // in meter/pixel
+               pointSize1_2  = Math .max (1.5, pointPropertiesNode .getPointSize (this .getMin (), modelViewMatrix) / 2),
+               offset        = screenScale .abs () * pointSize1_2;
 
-            ViewVolume .projectPointMatrix (point .assign (this .getMin ()), modelViewProjectionMatrix, viewport, win);
-            ViewVolume .unProjectPointMatrix (win .x + pointSize1_2, win .y + pointSize1_2, win .z, invModelViewProjectionMatrix, viewport, radius);
-
-            if (this .intersectsBBox (hitRay, point .distance (radius)))
+            if (this .intersectsBBox (hitRay, offset))
             {
                const
                   clipPlanes  = renderObject .getLocalObjects (),
@@ -116,19 +113,21 @@ function (X3DGeometryNode,
                {
                   point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
 
-                  const pointSize1_2 = Math .max (1, pointPropertiesNode .getPointSize (point, modelViewMatrix) * pointSizeFactor);
+                  ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, projected);
 
-                  ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, win);
-                  ViewVolume .unProjectPointMatrix (win .x + pointSize1_2, win .y + pointSize1_2, win .z, invModelViewProjectionMatrix, viewport, radius);
+                  const pointSize1_2 = Math .max (1.5, pointPropertiesNode .getPointSize (point, modelViewMatrix) / 2);
 
-                  if (hitRay .getPerpendicularVectorToPoint (point, vector) .abs () < point .distance (radius))
+                  if (projected .distance (pointer) <= pointSize1_2)
                   {
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                        continue;
+                     if (clipPlanes .length)
+                     {
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                           continue;
+                     }
 
                      const
                         submatrix = modelViewMatrix .submatrix,
-                        texCoord  = new Vector2 (0, 0) .assign (submatrix .multVecMatrix (vector)) .normalize () .add (Vector2 .One) .divide (2),
+                        texCoord  = new Vector2 (0, 0),
                         normal    = submatrix .inverse () .z .normalize () .copy ();
 
                      intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
