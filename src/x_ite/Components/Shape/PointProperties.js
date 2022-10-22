@@ -102,6 +102,10 @@ function (Fields,
       {
          X3DAppearanceChildNode .prototype .initialize .call (this);
 
+         const gl = this .getBrowser () .getContext ();
+
+         this .pointSizeRange = gl .getParameter (gl .ALIASED_POINT_SIZE_RANGE);
+
          this ._pointSizeScaleFactor .addInterest ("set_pointSizeScaleFactor__", this);
          this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
          this ._pointSizeMaxValue    .addInterest ("set_pointSizeMaxValue__",    this);
@@ -138,11 +142,11 @@ function (Fields,
       },
       set_pointSizeMinValue__: function ()
       {
-         this .pointSizeMinValue = Math .max (0, this ._pointSizeMinValue .getValue ());
+         this .pointSizeMinValue = Algorithm .clamp (this ._pointSizeMinValue .getValue (), this .pointSizeRange [0], this .pointSizeRange [1]);
       },
       set_pointSizeMaxValue__: function ()
       {
-         this .pointSizeMaxValue = Math .max (0, this ._pointSizeMaxValue .getValue ());
+         this .pointSizeMaxValue = Algorithm .clamp (this ._pointSizeMaxValue .getValue (), this .pointSizeRange [0], this .pointSizeRange [1]);
       },
       set_pointSizeAttenuation__: function ()
       {
