@@ -503,6 +503,10 @@ Returns an SFVec2f whose value is the passed SFVec2f divided, componentwise, by 
 
 Returns the dot product of this vector and SFVec2f *vec*.
 
+#### SFVec2f **inverse** ()
+
+Returns an SFVec2f whose value is the componentwise inverse of the object.
+
 #### Number **length** ()
 
 Returns the geometric length of this vector.
@@ -581,6 +585,10 @@ Returns an SFVec3f whose value is the passed SFVec3f divided, componentwise, by 
 
 Returns the dot product of this vector and SFVec3f *vec*.
 
+#### SFVec3f **inverse** ()
+
+Returns an SFVec3f whose value is the componentwise inverse of the object.
+
 #### Number **length** ()
 
 Returns the geometric length of this vector.
@@ -658,6 +666,10 @@ Returns an SFVec4f whose value is the passed SFVec4f divided, componentwise, by 
 #### Number **dot** (*vec*)
 
 Returns the dot product of this vector and SFVec4f *vec*.
+
+#### SFVec4f **inverse** ()
+
+Returns an SFVec4f whose value is the componentwise inverse of the object.
 
 #### Number **length** ()
 

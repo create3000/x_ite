@@ -100,6 +100,10 @@ function (X3DField,
          {
             return this .getValue () .dot (vector .getValue ());
          },
+         inverse: function ()
+         {
+            return new (this .constructor) (Type .inverse (this .getValue ()));
+         },
          length: function ()
          {
             return this .getValue () .abs ();
@@ -118,7 +122,7 @@ function (X3DField,
          },
          negate: function ()
          {
-            return new (this .constructor) (Type .negate (this .getValue () .copy ()));
+            return new (this .constructor) (Type .negate (this .getValue ()));
          },
          normalize: function (vector)
          {

@@ -106,6 +106,13 @@ function (Algorithm)
          this .z = -this .z;
          return this;
       },
+      inverse: function ()
+      {
+         this .x = 1 / this .x;
+         this .y = 1 / this .y;
+         this .z = 1 / this .z;
+         return this;
+      },
       add: function (vector)
       {
          this .x += vector .x;
@@ -301,6 +308,10 @@ function (Algorithm)
       negate: function (vector)
       {
          return vector .copy () .negate ();
+      },
+      inverse: function (vector)
+      {
+         return vector .copy () .inverse ();
       },
       add: function (lhs, rhs)
       {
