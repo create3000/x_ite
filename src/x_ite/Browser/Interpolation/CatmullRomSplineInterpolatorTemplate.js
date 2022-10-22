@@ -93,7 +93,7 @@ function (CatmullRomSplineInterpolator)
          },
          abs: function (value)
          {
-            return value .abs ();
+            return value .magnitude ();
          },
          dot: function (SH, C0, C1, C2, C3)
          {

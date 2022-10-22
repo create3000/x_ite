@@ -185,7 +185,7 @@ function (Fields,
       {
          var
             NUM_PLANES = this .getNumPlanes (),
-            size       = this ._dimensions .getValue () .abs (),
+            size       = this ._dimensions .getValue () .magnitude (),
             size1_2    = size / 2,
             points     = [ ];
 

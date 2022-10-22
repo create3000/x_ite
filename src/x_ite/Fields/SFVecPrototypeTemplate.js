@@ -106,7 +106,7 @@ function (X3DField,
          },
          length: function ()
          {
-            return this .getValue () .abs ();
+            return this .getValue () .magnitude ();
          },
          lerp: function (destination, t)
          {

@@ -260,7 +260,7 @@ function ($,
             viewpoint .transitionStop ();
 
             step        = this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR),
-            translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .abs ()));
+            translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .magnitude ()));
 
             if (event .deltaY > 0)
                this .addMove (translation .negate (), Vector3 .Zero);

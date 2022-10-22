@@ -197,7 +197,7 @@ function (Algorithm)
                 y * y +
                 z * z;
       },
-      abs: function ()
+      magnitude: function ()
       {
          return Math .hypot (this .x, this .y, this .z);
       },
@@ -228,6 +228,13 @@ function (Algorithm)
             return Algorithm .simpleSlerp (this, tmp .assign (destination), t);
          };
       })(),
+      abs: function ()
+      {
+         this .x = Math .abs (this .x);
+         this .y = Math .abs (this .y);
+         this .z = Math .abs (this .z);
+         return this;
+      },
       min: function (vector)
       {
          let
@@ -356,6 +363,10 @@ function (Algorithm)
       slerp: function (source, destination, t)
       {
          return source .copy () .slerp (destination, t);
+      },
+      abs: function (vector)
+      {
+         return vector .copy () .abs ();
       },
       min: function (lhs, rhs)
       {

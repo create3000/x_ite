@@ -222,7 +222,7 @@ function (Fields,
                else
                {
                   const
-                     d1        = max .intersection .abs (), // Viewer is here at (0, 0, 0)
+                     d1        = max .intersection .magnitude (), // Viewer is here at (0, 0, 0)
                      d2        = max .intersection .distance (min .intersection),
                      d         = Math .min (d1 / d2, 1),
                      intensity = Algorithm .clamp (this ._intensity .getValue (), 0, 1),
@@ -295,7 +295,7 @@ function (Fields,
             sphere .intersectsLine (line, enterPoint, exitPoint);
 
             value .intersection .assign (sphereMatrix .multVecMatrix (enterPoint));
-            value .distance = viewer .abs ();
+            value .distance = viewer .magnitude ();
          };
       })(),
    });

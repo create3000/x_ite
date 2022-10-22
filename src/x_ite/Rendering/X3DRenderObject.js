@@ -290,7 +290,7 @@ function (TextureBuffer,
          {
             // Move.
 
-            const length = translation .abs ();
+            const length = translation .magnitude ();
 
             if (length > distance)
             {
@@ -445,7 +445,7 @@ function (TextureBuffer,
             modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
             const
-               radius     = bboxSize .abs () / 2,
+               radius     = bboxSize .magnitude () / 2,
                viewVolume = this .viewVolumes .at (-1);
 
             if (viewVolume .intersectsSphere (radius, bboxCenter))
@@ -491,7 +491,7 @@ function (TextureBuffer,
             modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
             const
-               radius     = bboxSize .abs () / 2,
+               radius     = bboxSize .magnitude () / 2,
                viewVolume = this .viewVolumes .at (-1);
 
             if (viewVolume .intersectsSphere (radius, bboxCenter))
@@ -533,7 +533,7 @@ function (TextureBuffer,
             modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
             const
-               radius     = bboxSize .abs () / 2,
+               radius     = bboxSize .magnitude () / 2,
                viewVolume = this .viewVolumes .at (-1);
 
             if (viewVolume .intersectsSphere (radius, bboxCenter))

@@ -293,7 +293,7 @@ function (Fields,
       })(),
       getLookAtDistance: function (bbox)
       {
-         return bbox .size .abs () / 2 + 10;
+         return bbox .size .magnitude () / 2 + 10;
       },
       getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
       {

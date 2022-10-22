@@ -82,7 +82,6 @@ function (X3DGeometryNode,
          const
             invModelViewMatrix        = new Matrix4 (),
             modelViewProjectionMatrix = new Matrix4 (),
-            n                         = new Vector3 (0, 0, 0),
             point                     = new Vector3 (0, 0, 0),
             projected                 = new Vector2 (0, 0),
             clipPoint                 = new Vector3 (0, 0, 0);
@@ -105,7 +104,7 @@ function (X3DGeometryNode,
                pointSize     = Math .max (1.5, pointPropertiesNode .getPointSize (Vector3 .Zero, modelViewMatrix) / 2),
                offsets       = invModelViewMatrix .multDirMatrix (screenScale .multiply (pointSize));
 
-            if (this .intersectsBBox (hitRay, offsets .max (n .assign (offsets) .negate ())))
+            if (this .intersectsBBox (hitRay, offsets .abs ()))
             {
                const
                   clipPlanes  = renderObject .getLocalObjects (),

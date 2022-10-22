@@ -167,7 +167,7 @@ function (Algorithm)
          return x * x +
                 y * y;
       },
-      abs: function ()
+      magnitude: function ()
       {
          return Math .hypot (this .x, this .y);
       },
@@ -184,6 +184,12 @@ function (Algorithm)
 
          this .x = x + t * (destination .x - x);
          this .y = y + t * (destination .y - y);
+         return this;
+      },
+      abs: function ()
+      {
+         this .x = Math .abs (this .x);
+         this .y = Math .abs (this .y);
          return this;
       },
       min: function (vector)
@@ -288,6 +294,10 @@ function (Algorithm)
       lerp: function (source, destination, t)
       {
          return source .copy () .lerp (destination, t);
+      },
+      abs: function (vector)
+      {
+         return vector .copy () .abs ();
       },
       min: function (lhs, rhs)
       {

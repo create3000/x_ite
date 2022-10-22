@@ -209,7 +209,7 @@ function (Algorithm)
                 z * z +
                 w * w;
       },
-      abs: function ()
+      magnitude: function ()
       {
          return Math .hypot (this .x, this .y, this .z, this .w);
       },
@@ -232,6 +232,14 @@ function (Algorithm)
          this .y = y + t * (destination .y - y);
          this .z = z + t * (destination .z - z);
          this .w = w + t * (destination .w - w);
+         return this;
+      },
+      abs: function ()
+      {
+         this .x = Math .abs (this .x);
+         this .y = Math .abs (this .y);
+         this .z = Math .abs (this .z);
+         this .w = Math .abs (this .w);
          return this;
       },
       min: function (vector)
@@ -370,6 +378,10 @@ function (Algorithm)
       lerp: function (source, destination, t)
       {
          return source .copy () .lerp (destination, t);
+      },
+      abs: function (vector)
+      {
+         return vector .copy () .abs ();
       },
       min: function (lhs, rhs)
       {

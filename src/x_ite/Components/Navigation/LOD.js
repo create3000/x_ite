@@ -266,7 +266,7 @@ function (Fields,
                }
             }
 
-            const distance = modelViewMatrix .translate (this ._center .getValue ()) .origin .abs ();
+            const distance = modelViewMatrix .translate (this ._center .getValue ()) .origin .magnitude ();
 
             return Algorithm .upperBound (this ._range, 0, this ._range .length, distance);
          };

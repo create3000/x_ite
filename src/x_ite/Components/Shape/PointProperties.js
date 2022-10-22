@@ -122,7 +122,7 @@ function (Fields,
          {
             const
                pointSizeAttenuation = this .pointSizeAttenuation,
-               dL                   = modelViewMatrix .multVecMatrix (p .assign (point)) .abs ();
+               dL                   = modelViewMatrix .multVecMatrix (p .assign (point)) .magnitude ();
 
             let pointSize = this .pointSizeScaleFactor;
 

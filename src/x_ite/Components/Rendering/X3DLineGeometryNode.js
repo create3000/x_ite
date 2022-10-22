@@ -152,7 +152,7 @@ function (X3DGeometryNode,
                         ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, win);
                         ViewVolume .unProjectPointMatrix (win .x + lineWidth1_2, win .y + lineWidth1_2, win .z, invModelViewProjectionMatrix, viewport, radius);
 
-                        if (line .getPerpendicularVectorToLine (hitRay, vector) .abs () < point .distance (radius))
+                        if (line .getPerpendicularVectorToLine (hitRay, vector) .magnitude () < point .distance (radius))
                         {
                            if (clipPlanes .length)
                            {
@@ -239,7 +239,7 @@ function (X3DGeometryNode,
                texCoordArray [i + 5] = projectedPoint0 .y;
                texCoordArray [i + 6] = lengthSoFar;
 
-               lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs ();
+               lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .magnitude ();
             }
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);

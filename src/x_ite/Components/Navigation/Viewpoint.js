@@ -191,7 +191,7 @@ function (Fields,
       })(),
       getLookAtDistance: function (bbox)
       {
-         return (bbox .size .abs () / 2) / Math .tan (this .getFieldOfView () / 2);
+         return (bbox .size .magnitude () / 2) / Math .tan (this .getFieldOfView () / 2);
       },
       getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
       {

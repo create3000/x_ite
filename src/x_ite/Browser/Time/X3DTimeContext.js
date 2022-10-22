@@ -106,7 +106,7 @@ function (Vector3)
                lastPosition .assign (this [_currentPosition]);
                this [_currentPosition] .set (cameraSpaceMatrix [12], cameraSpaceMatrix [13], cameraSpaceMatrix [14]);
 
-               this [_currentSpeed] = lastPosition .subtract (this [_currentPosition]) .abs () * this [_currentFrameRate];
+               this [_currentSpeed] = lastPosition .subtract (this [_currentPosition]) .magnitude () * this [_currentFrameRate];
             }
             else
             {

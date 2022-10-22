@@ -325,7 +325,7 @@ function (Vector3, Algorithm)
                 this .z * this .z +
                 this .w * this .w;
       },
-      abs: function ()
+      magnitude: function ()
       {
          return Math .hypot (this .x, this .y, this .z, this .w);
       },
@@ -338,9 +338,9 @@ function (Vector3, Algorithm)
             return this .set (0, 0, 0, Math .pow (this .w, exponent));
 
          const
-            l     = this .abs (),
+            l     = this .magnitude (),
             theta = Math .acos (this .w / l),
-            li    = this .imag .abs (),
+            li    = this .imag .magnitude (),
             ltoe  = Math .pow (l, exponent),
             et    = exponent * theta,
             scale = ltoe / li * Math .sin (et);
@@ -363,7 +363,7 @@ function (Vector3, Algorithm)
          }
 
          const
-            l = this .abs (),
+            l = this .magnitude (),
             v = this .imag .normalize () .multiply (Math .acos (this .w / l)),
             w = Math .log (l);
 
@@ -380,7 +380,7 @@ function (Vector3, Algorithm)
 
          const
             i  = this .imag,
-            li = i .abs (),
+            li = i .magnitude (),
             ew = Math .exp (this .w),
             w  = ew * Math .cos (li),
             v  = i .multiply (ew * Math .sin (li) / li);
