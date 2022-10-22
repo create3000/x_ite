@@ -576,18 +576,34 @@ function (Fields,
       {
          const intersection = new Vector3 (0, 0, 0);
 
-         return function (hitRay, offset = 0)
+         return function (hitRay, offsets)
          {
-            const
-               min    = this .min,
-               max    = this .max,
-               minX   = min .x - offset,
-               maxX   = max .x + offset,
-               minY   = min .y - offset,
-               maxY   = max .y + offset,
-               minZ   = min .z - offset,
-               maxZ   = max .z + offset,
-               planes = offset === 0 ? this .planes : this .getPlanesWithOffset (minX, minY, minZ, maxX, maxY, maxZ);
+            if (offsets)
+            {
+               var
+                  min    = this .min,
+                  max    = this .max,
+                  minX   = min .x - offsets .x,
+                  maxX   = max .x + offsets .x,
+                  minY   = min .y - offsets .y,
+                  maxY   = max .y + offsets .y,
+                  minZ   = min .z - offsets .z,
+                  maxZ   = max .z + offsets .z,
+                  planes = this .getPlanesWithOffset (minX, minY, minZ, maxX, maxY, maxZ);
+            }
+            else
+            {
+               var
+                  min    = this .min,
+                  max    = this .max,
+                  minX   = min .x,
+                  maxX   = max .x,
+                  minY   = min .y,
+                  maxY   = max .y,
+                  minZ   = min .z,
+                  maxZ   = max .z,
+                  planes = this .planes;
+            }
 
             // front
             if (planes [0] .intersectsLine (hitRay, intersection))

@@ -54,7 +54,6 @@ define ([
    "x_ite/Components/Texturing/PixelTexture",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Vector4",
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Geometry/Box3",
    "standard/Math/Geometry/ViewVolume",
@@ -66,7 +65,6 @@ function ($,
           PixelTexture,
           X3DGeometryNode,
           Vector3,
-          Vector4,
           Matrix4,
           Box3,
           ViewVolume,
@@ -395,9 +393,6 @@ function ($,
       transform: (function ()
       {
          const
-            x            = new Vector4 (0, 0, 0, 0),
-            y            = new Vector4 (0, 0, 0, 0),
-            z            = new Vector4 (0, 0, 0, 0),
             screenPoint  = new Vector3 (0, 0, 0),
             screenMatrix = new Matrix4 (),
             bbox         = new Box3 ();
@@ -417,18 +412,15 @@ function ($,
 
             const screenScale = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport); // in meter/pixel
 
-            x .set (modelViewMatrix [ 0], modelViewMatrix [ 1], modelViewMatrix [ 2], modelViewMatrix [ 3]);
-            y .set (modelViewMatrix [ 4], modelViewMatrix [ 5], modelViewMatrix [ 6], modelViewMatrix [ 7]);
-            z .set (modelViewMatrix [ 8], modelViewMatrix [ 9], modelViewMatrix [10], modelViewMatrix [11]);
+            const
+               x = modelViewMatrix .xAxis .normalize () .multiply (screenScale .x),
+               y = modelViewMatrix .yAxis .normalize () .multiply (screenScale .y),
+               z = modelViewMatrix .zAxis .normalize () .multiply (screenScale .x);
 
-            x .normalize () .multiply (screenScale .x);
-            y .normalize () .multiply (screenScale .y);
-            z .normalize () .multiply (screenScale .z);
-
-            screenMatrix .set (x .x, x .y, x .z, x .w,
-                               y .x, y .y, y .z, y .w,
-                               z .x, z .y, z .z, z .w,
-                               modelViewMatrix [12], modelViewMatrix [13], modelViewMatrix [14], modelViewMatrix [15]);
+            screenMatrix .set (x .x, x .y, x .z, 0,
+                               y .x, y .y, y .z, 0,
+                               z .x, z .y, z .z, 0,
+                               modelViewMatrix [12], modelViewMatrix [13], modelViewMatrix [14], 1);
 
             // Snap to whole pixel.
 

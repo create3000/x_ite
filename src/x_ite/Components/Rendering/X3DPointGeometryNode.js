@@ -80,10 +80,10 @@ function (X3DGeometryNode,
       intersectsLine: (function ()
       {
          const
-            modelViewProjectionMatrix    = new Matrix4 (),
-            point                        = new Vector3 (0, 0, 0),
-            projected                    = new Vector2 (0, 0),
-            clipPoint                    = new Vector3 (0, 0, 0);
+            modelViewProjectionMatrix = new Matrix4 (),
+            point                     = new Vector3 (0, 0, 0),
+            projected                 = new Vector2 (0, 0),
+            clipPoint                 = new Vector3 (0, 0, 0);
 
          return function (hitRay, renderObject, appearanceNode, intersections)
          {
@@ -100,9 +100,15 @@ function (X3DGeometryNode,
                viewpointNode = renderObject .getViewpoint (),
                screenScale   = viewpointNode .getScreenScale (modelViewMatrix .origin, viewport), // in meter/pixel
                pointSize1_2  = Math .max (1.5, pointPropertiesNode .getPointSize (this .getMin (), modelViewMatrix) / 2),
-               offset        = screenScale .abs () * pointSize1_2;
+               offsets       = screenScale .multiply (pointSize1_2);
 
-            if (this .intersectsBBox (hitRay, offset))
+            if (this .getName () == "PL")
+            {
+               console .log (modelViewProjectionMatrix .toString ())
+               console .log (viewpointNode .getScreenScale (modelViewMatrix .origin, viewport) .toString ())
+            }
+
+            if (this .intersectsBBox (hitRay, offsets))
             {
                const
                   clipPlanes  = renderObject .getLocalObjects (),
@@ -116,6 +122,9 @@ function (X3DGeometryNode,
                   ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, projected);
 
                   const pointSize1_2 = Math .max (1.5, pointPropertiesNode .getPointSize (point, modelViewMatrix) / 2);
+
+                  if (this .getName () == "PL")
+                     console .log (projected .distance (pointer), pointSize1_2)
 
                   if (projected .distance (pointer) <= pointSize1_2)
                   {

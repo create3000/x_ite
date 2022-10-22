@@ -157,7 +157,7 @@ function (Fields,
       },
       set_fieldOfView__: function ()
       {
-         var
+         const
             length           = this ._fieldOfView .length,
             fieldOfViewScale = this ._fieldOfViewScale .getValue ();
 
@@ -247,11 +247,11 @@ function (Fields,
       },
       getScreenScale: (function ()
       {
-         var screenScale = new Vector3 (0, 0, 0);
+         const screenScale = new Vector3 (0, 0, 0);
 
          return function (point, viewport)
          {
-            var
+            const
                width  = viewport [2],
                height = viewport [3],
                sizeX  = this .sizeX,
@@ -260,23 +260,25 @@ function (Fields,
 
             if (aspect > sizeX / sizeY)
             {
-               var s = sizeY / height;
+               const s = sizeY / height;
 
                return screenScale .set (s, s, s);
             }
+            else
+            {
+               const s = sizeX / width;
 
-            var s = sizeX / width;
-
-            return screenScale .set (s, s, s);
+               return screenScale .set (s, s, s);
+            }
          };
       })(),
       getViewportSize: (function ()
       {
-         var viewportSize = new Vector2 (0, 0);
+         const viewportSize = new Vector2 (0, 0);
 
          return function (viewport, nearValue)
          {
-            var
+            const
                width  = viewport [2],
                height = viewport [3],
                sizeX  = this .sizeX,
@@ -295,7 +297,7 @@ function (Fields,
       },
       getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
       {
-         var
+         const
             width  = viewport [2],
             height = viewport [3],
             aspect = width / height,
@@ -304,18 +306,20 @@ function (Fields,
 
          if (aspect > sizeX / sizeY)
          {
-            var
+            const
                center  = (this .minimumX + this .maximumX) / 2,
                size1_2 = (sizeY * aspect) / 2;
 
             return Camera .ortho (center - size1_2, center + size1_2, this .minimumY, this .maximumY, nearValue, farValue, this .projectionMatrix);
          }
+         else
+         {
+            const
+               center  = (this .minimumY + this .maximumY) / 2,
+               size1_2 = (sizeX / aspect) / 2;
 
-         var
-            center  = (this .minimumY + this .maximumY) / 2,
-            size1_2 = (sizeX / aspect) / 2;
-
-         return Camera .ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
+            return Camera .ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
+         }
       },
    });
 
