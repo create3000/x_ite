@@ -80,7 +80,9 @@ function (X3DGeometryNode,
       intersectsLine: (function ()
       {
          const
+            invModelViewMatrix        = new Matrix4 (),
             modelViewProjectionMatrix = new Matrix4 (),
+            n                         = new Vector3 (0, 0, 0),
             point                     = new Vector3 (0, 0, 0),
             projected                 = new Vector2 (0, 0),
             clipPoint                 = new Vector3 (0, 0, 0);
@@ -94,21 +96,16 @@ function (X3DGeometryNode,
                viewport            = renderObject .getViewVolume () .getViewport (),
                pointPropertiesNode = appearanceNode .getPointProperties ();
 
+            invModelViewMatrix .assign (modelViewMatrix) .inverse  ();
             modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
 
             const
                viewpointNode = renderObject .getViewpoint (),
                screenScale   = viewpointNode .getScreenScale (modelViewMatrix .origin, viewport), // in meter/pixel
-               pointSize1_2  = Math .max (1.5, pointPropertiesNode .getPointSize (this .getMin (), modelViewMatrix) / 2),
-               offsets       = screenScale .multiply (pointSize1_2);
+               pointSize     = Math .max (1.5, pointPropertiesNode .getPointSize (Vector3 .Zero, modelViewMatrix) / 2),
+               offsets       = invModelViewMatrix .multDirMatrix (screenScale .multiply (pointSize));
 
-            if (this .getName () == "PL")
-            {
-               console .log (modelViewProjectionMatrix .toString ())
-               console .log (viewpointNode .getScreenScale (modelViewMatrix .origin, viewport) .toString ())
-            }
-
-            if (this .intersectsBBox (hitRay, offsets))
+            if (this .intersectsBBox (hitRay, offsets .max (n .assign (offsets) .negate ())))
             {
                const
                   clipPlanes  = renderObject .getLocalObjects (),
@@ -122,9 +119,6 @@ function (X3DGeometryNode,
                   ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, projected);
 
                   const pointSize1_2 = Math .max (1.5, pointPropertiesNode .getPointSize (point, modelViewMatrix) / 2);
-
-                  if (this .getName () == "PL")
-                     console .log (projected .distance (pointer), pointSize1_2)
 
                   if (projected .distance (pointer) <= pointSize1_2)
                   {
