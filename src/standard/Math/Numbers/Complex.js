@@ -83,34 +83,10 @@ define (function ()
          return this .real === complex .real &&
                 this .imag === complex .imag;
       },
-      setRadius: function (radius)
+      polar: function (magnitude, angle)
       {
-         return this .setPolar (radius, this .getAngle ());
-      },
-      getRadius: function ()
-      {
-         if (this .real)
-         {
-            if (this .imag)
-               return Math .hypot (this .real, this .imag);
-
-            return Math .abs (this .real);
-         }
-
-         return Math .abs (this .imag);
-      },
-      setAngle: function (angle)
-      {
-         return this .setPolar (this .getRadius (), angle);
-      },
-      getAngle: function ()
-      {
-         return Math .atan2 (this .imag, this .real);
-      },
-      setPolar: function (radius, angle)
-      {
-         this .real = radius * Math .cos (angle);
-         this .imag = radius * Math .sin (angle);
+         this .real = magnitude * Math .cos (angle);
+         this .imag = magnitude * Math .sin (angle);
          return this;
       },
       conjugate: function ()
@@ -185,13 +161,49 @@ define (function ()
       },
    };
 
+   Object .defineProperty (Complex .prototype, "magnitude",
+   {
+      get: function ()
+      {
+         if (this .real)
+         {
+            if (this .imag)
+               return Math .hypot (this .real, this .imag);
+
+            return Math .abs (this .real);
+         }
+
+         return Math .abs (this .imag);
+      },
+      set: function (magnitude)
+      {
+         this .polar (magnitude, this .angle);
+      },
+      enumerable: false,
+      configurable: false
+   });
+
+   Object .defineProperty (Complex .prototype, "angle",
+   {
+      get: function ()
+      {
+         return Math .atan2 (this .imag, this .real);
+      },
+      set: function (angle)
+      {
+         this .polar (this .magnitude, angle);
+      },
+      enumerable: false,
+      configurable: false
+   });
+
    Object .assign (Complex,
    {
-      Polar: function (radius, angle)
+      Polar: function (magnitude, angle)
       {
          const complex = Object .create (Complex .prototype);
-         complex .real = radius * Math .cos (angle);
-         complex .imag = radius * Math .sin (angle);
+         complex .real = magnitude * Math .cos (angle);
+         complex .imag = magnitude * Math .sin (angle);
          return complex;
       },
       multiply: function (lhs, rhs)
