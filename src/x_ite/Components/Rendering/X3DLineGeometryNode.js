@@ -111,7 +111,7 @@ function (X3DGeometryNode,
             radius                       = new Vector3 (0, 0, 0),
             clipPoint                    = new Vector3 (0, 0, 0);
 
-         return function (hitRay, renderObject, appearanceNode, intersections)
+         return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
          {
             const
                modelViewMatrix    = renderObject .getModelViewMatrix () .get (),

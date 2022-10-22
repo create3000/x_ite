@@ -199,7 +199,7 @@ function (Fields,
 
             hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
 
-            if (geometryNode .intersectsLine (hitRay, renderObject, this .getAppearance (), intersections))
+            if (geometryNode .intersectsLine (hitRay, renderObject, invModelViewMatrix, this .getAppearance (), intersections))
             {
                // Finally we have intersections and must now find the closest hit in front of the camera.
 

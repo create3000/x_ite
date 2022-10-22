@@ -80,26 +80,20 @@ function (X3DGeometryNode,
       intersectsLine: (function ()
       {
          const
-            invModelViewMatrix        = new Matrix4 (),
             modelViewProjectionMatrix = new Matrix4 (),
             point                     = new Vector3 (0, 0, 0),
             projected                 = new Vector2 (0, 0),
             clipPoint                 = new Vector3 (0, 0, 0);
 
-         return function (hitRay, renderObject, appearanceNode, intersections)
+         return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
          {
             const
                modelViewMatrix     = renderObject .getModelViewMatrix () .get (),
                viewport            = renderObject .getViewVolume () .getViewport (),
-               pointPropertiesNode = appearanceNode .getPointProperties ();
-
-            invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-
-            const
-               viewpointNode = renderObject .getViewpoint (),
-               screenScale   = viewpointNode .getScreenScale (modelViewMatrix .origin, viewport), // in meter/pixel
-               pointSize     = Math .max (1.5, pointPropertiesNode .getPointSize (Vector3 .Zero, modelViewMatrix) / 2),
-               offsets       = invModelViewMatrix .multDirMatrix (screenScale .multiply (pointSize));
+               pointPropertiesNode = appearanceNode .getPointProperties (),
+               screenScale         = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport), // in m/px
+               pointSize1_2        = Math .max (1.5, pointPropertiesNode .getPointSize (Vector3 .Zero, modelViewMatrix) / 2),
+               offsets             = invModelViewMatrix .multDirMatrix (screenScale .multiply (pointSize1_2));
 
             if (this .intersectsBBox (hitRay, offsets .abs ()))
             {
