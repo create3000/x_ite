@@ -140,7 +140,7 @@ function (Fields,
       },
       configure: function ()
       {
-         if (!this .isInitialized ())
+         if (! this .isInitialized ())
             return;
 
          const localStorage = this .localStorage;
@@ -152,7 +152,7 @@ function (Fields,
             if (localStorage [fieldDefinition .name] !== undefined)
                continue;
 
-            if (!field .equals (fieldDefinition .value))
+            if (! field .equals (fieldDefinition .value))
                field .assign (fieldDefinition .value);
          }
 

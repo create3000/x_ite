@@ -73,7 +73,7 @@ function (Fields,
       this ._innerRadius .setUnit ("length");
       this ._outerRadius .setUnit ("length");
 
-      this .super = X3DGeometryNode .prototype;
+      this .setBase (X3DGeometryNode);
    }
 
    Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -150,7 +150,7 @@ function (Fields,
 
             this .setGeometryType (1);
 
-            this .super = X3DLineGeometryNode .prototype;
+            this .setBase (X3DLineGeometryNode);
             return;
          }
 
@@ -181,7 +181,7 @@ function (Fields,
             this .setGeometryType (2);
             this .setSolid (this ._solid .getValue ());
 
-            this .super = X3DGeometryNode .prototype;
+            this .setBase (X3DGeometryNode);
             return;
          }
 
@@ -226,24 +226,15 @@ function (Fields,
          this .setGeometryType (2);
          this .setSolid (this ._solid .getValue ());
 
-         this .super = X3DGeometryNode .prototype;
+         this .setBase (X3DGeometryNode);
       },
-      intersectsLine: function ()
+      setBase: function (base)
       {
-         this .super .intersectsLine .apply (this, arguments);
+         this .intersectsLine   = base .prototype .intersectsLine;
+         this .intersectsBox    = base .prototype .intersectsBox;
+         this .display          = base .prototype .display;
+         this .displayParticles = base .prototype .displayParticles;
       },
-      intersectsBox: function ()
-      {
-         this .super .intersectsBox .apply (this, arguments);
-      },
-      display: function ()
-      {
-         this .super .display .apply (this, arguments);
-      },
-      displayParticles: function ()
-      {
-         this .super .displayParticles .apply (this, arguments);
-      }
    });
 
    return Disk2D;
