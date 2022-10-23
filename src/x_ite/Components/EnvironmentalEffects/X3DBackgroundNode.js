@@ -388,8 +388,8 @@ function (X3DBindableNode,
                theta2 = Math .PI - theta2;
             }
 
-            z1 .polar (radius, theta1);
-            z2 .polar (radius, theta2);
+            z1 .setPolar (radius, theta1);
+            z2 .setPolar (radius, theta2);
 
             const
                c1 = this .getColor (vAngle [v],     color, angle),
@@ -407,13 +407,13 @@ function (X3DBindableNode,
 
                // p1, p2
                let phi = 2 * Math .PI * (u / U_DIMENSION);
-               y1 .polar (-z1 .imag, phi);
-               y2 .polar (-z2 .imag, phi);
+               y1 .setPolar (-z1 .imag, phi);
+               y2 .setPolar (-z2 .imag, phi);
 
                // p3, p4
                phi = 2 * Math .PI * (u1 / U_DIMENSION);
-               y3 .polar (-z2 .imag, phi);
-               y4 .polar (-z1 .imag, phi);
+               y3 .setPolar (-z2 .imag, phi);
+               y4 .setPolar (-z1 .imag, phi);
 
                // Triangle 1 and 2
 

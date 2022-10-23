@@ -83,7 +83,7 @@ define (function ()
          return this .real === complex .real &&
                 this .imag === complex .imag;
       },
-      polar: function (magnitude, angle)
+      setPolar: function (magnitude, angle)
       {
          this .real = magnitude * Math .cos (angle);
          this .imag = magnitude * Math .sin (angle);
@@ -177,7 +177,7 @@ define (function ()
       },
       set: function (magnitude)
       {
-         this .polar (magnitude, this .angle);
+         this .setPolar (magnitude, this .angle);
       },
       enumerable: false,
       configurable: false
@@ -191,7 +191,7 @@ define (function ()
       },
       set: function (angle)
       {
-         this .polar (this .magnitude, angle);
+         this .setPolar (this .magnitude, angle);
       },
       enumerable: false,
       configurable: false
@@ -201,7 +201,7 @@ define (function ()
    {
       Polar: function (magnitude, angle)
       {
-         return Object .create (Complex .prototype) .polar (magnitude, angle);
+         return Object .create (Complex .prototype) .setPolar (magnitude, angle);
       },
       multiply: function (lhs, rhs)
       {

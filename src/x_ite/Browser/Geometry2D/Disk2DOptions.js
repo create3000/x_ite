@@ -141,10 +141,10 @@ function (X3DBaseNode,
                   theta1 = angle * n,
                   theta2 = angle * (n + 1);
 
-               texCoord1 .polar (0.5, theta1) .add (half);
-               texCoord2 .polar (0.5, theta2) .add (half);
-               point1    .polar (1, theta1);
-               point2    .polar (1, theta2);
+               texCoord1 .setPolar (0.5, theta1) .add (half);
+               texCoord2 .setPolar (0.5, theta2) .add (half);
+               point1    .setPolar (1, theta1);
+               point2    .setPolar (1, theta2);
 
                // Circle
 
