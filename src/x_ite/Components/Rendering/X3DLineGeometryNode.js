@@ -175,16 +175,15 @@ function (X3DGeometryNode,
                                  continue;
                            }
 
+                           const
+                              direction = projected .direction,
+                              texCoordY = rotation .set (direction .x, direction .y, -direction .y, direction .x) .inverse () .multVecMatrix (pointer .copy () .subtract (closest)),
+                              texCoord  = texCoordY .set (distance1 / distance, (texCoordY .y / lineWidth1_2 + 1) / 2),
+                              normal    = point2 .copy () .subtract (point1) .normalize ();
+
                            ViewVolume .unProjectRay (closest .x, closest .y, modelViewMatrix, projectionMatrix, viewport, ray);
 
                            line .setPoints (point1, point2) .getClosestPointToLine (ray, point);
-
-                           const
-                              direction = projected .direction,
-                              texCoord  = rotation .set (direction .x, direction .y, -direction .y, direction .x) .inverse () .multVecMatrix (pointer .copy () .subtract (closest)),
-                              normal    = modelViewMatrix .submatrix .inverse () .z .normalize () .copy ();
-
-                           texCoord .set (distance1 / distance, (texCoord .y / lineWidth1_2 + 1) / 2);
 
                            intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
                            return true;
