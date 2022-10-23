@@ -139,12 +139,11 @@ function (X3DGeometryNode,
                         normal   = modelViewMatrix .submatrix .transpose () .z .copy () .normalize ();
 
                      intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
-                     return true;
                   }
                }
             }
 
-            return false;
+            return intersections .length;
          };
       })(),
       intersectsBox: function (box, clipPlanes, modelViewMatrix)

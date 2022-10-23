@@ -186,14 +186,13 @@ function (X3DGeometryNode,
                            line .setPoints (point1, point2) .getClosestPointToLine (ray, point);
 
                            intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
-                           return true;
                         }
                      }
                   }
                }
             }
 
-            return false;
+            return intersections .length;
          };
       })(),
       intersectsBox: function (box, clipPlanes, modelViewMatrix)
