@@ -198,8 +198,8 @@ function (Fields,
          this .colorBuffer           = gl .createBuffer ();
          this .normalBuffer          = gl .createBuffer ();
          this .vertexBuffer          = gl .createBuffer ();
-         this .vertexArrayObject           = new VertexArray ();
-         this .shadowArrayObject           = new VertexArray ();
+         this .vertexArrayObject     = new VertexArray ();
+         this .shadowArrayObject     = new VertexArray ();
 
          this .set_live__ ();
       },

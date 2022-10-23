@@ -53,6 +53,7 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
+   "x_ite/Components/Rendering/X3DPointGeometryNode",
    "x_ite/Base/X3DConstants",
 ],
 function (Fields,
@@ -60,6 +61,7 @@ function (Fields,
           FieldDefinitionArray,
           X3DGeometryNode,
           X3DLineGeometryNode,
+          X3DPointGeometryNode,
           X3DConstants)
 {
 "use strict";
@@ -114,7 +116,9 @@ function (Fields,
       build: function ()
       {
          const
-            options     = this .getBrowser () .getDisk2DOptions (),
+            browser     = this .getBrowser (),
+            gl          = browser .getContext (),
+            options     = browser .getDisk2DOptions (),
             innerRadius = Math .min (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ())),
             outerRadius = Math .max (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ()));
 
@@ -126,8 +130,14 @@ function (Fields,
 
             if (outerRadius === 0)
             {
-               // vertexArray .push (0, 0, 0, 1);
-               // this .setGeometryType (0);
+               vertexArray .push (0, 0, 0, 1);
+
+               this .getMin () .set (0, 0, 0);
+               this .getMax () .set (0, 0, 0);
+
+               this .setGeometryType (0);
+               this .setPrimitiveMode (gl .POINTS);
+               this .setBase (X3DPointGeometryNode);
                return;
             }
 
@@ -143,13 +153,13 @@ function (Fields,
 
                for (let i = 0, length = defaultVertices .length; i < length; i += 4)
                   vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
-           }
+            }
 
             this .getMin () .set (-outerRadius, -outerRadius, 0);
             this .getMax () .set ( outerRadius,  outerRadius, 0);
 
             this .setGeometryType (1);
-
+            this .setPrimitiveMode (gl .LINES);
             this .setBase (X3DLineGeometryNode);
             return;
          }
@@ -179,8 +189,8 @@ function (Fields,
             this .getMax () .set ( outerRadius,  outerRadius, 0);
 
             this .setGeometryType (2);
+            this .setPrimitiveMode (gl .TRIANGLES);
             this .setSolid (this ._solid .getValue ());
-
             this .setBase (X3DGeometryNode);
             return;
          }
