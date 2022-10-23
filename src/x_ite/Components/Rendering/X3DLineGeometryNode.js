@@ -110,6 +110,7 @@ function (X3DGeometryNode,
             min                       = new Vector3 (0, 0, 0),
             max                       = new Vector3 (0, 0, 0),
             screenScale1_             = new Vector3 (0, 0, 0),
+            screenScale2_             = new Vector3 (0, 0, 0),
             modelViewProjectionMatrix = new Matrix4 (),
             point1                    = new Vector3 (0, 0, 0),
             point2                    = new Vector3 (0, 0, 0),
@@ -132,9 +133,11 @@ function (X3DGeometryNode,
                linePropertiesNode = appearanceNode .getLineProperties (),
                lineWidth1_2       = Math .max (1.5, linePropertiesNode .getApplied () ? linePropertiesNode .getLinewidthScaleFactor () / 2 : 0),
                screenScale1       = renderObject .getViewpoint () .getScreenScale (min, viewport, screenScale1_), // in m/px
-               offsets1           = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (lineWidth1_2));
+               offsets1           = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (lineWidth1_2)),
+               screenScale2       = renderObject .getViewpoint () .getScreenScale (max, viewport, screenScale2_), // in m/px
+               offsets2           = invModelViewMatrix .multDirMatrix (screenScale2 .multiply (lineWidth1_2));
 
-            if (this .intersectsBBox (hitRay, offsets1))
+            if (this .intersectsBBox (hitRay, offsets1 .abs () .max (offsets2 .abs ())))
             {
                const
                   pointer          = renderObject .getBrowser () .getPointer (),
