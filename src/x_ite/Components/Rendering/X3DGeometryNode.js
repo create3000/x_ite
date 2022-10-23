@@ -939,17 +939,17 @@ function (Fields,
 
          // Setup render functions.
 
+         this .setRenderFunctions ();
+      },
+      setRenderFunctions: function ()
+      {
          if (this .vertexCount)
          {
             // Use default render functions.
-
-            if (this .getType () .at (-1) !== X3DConstants .Disk2D)
-            {
-               delete this .depth;
-               delete this .display;
-               delete this .displayParticlesDepth;
-               delete this .displayParticles;
-            }
+            delete this .depth;
+            delete this .display;
+            delete this .displayParticlesDepth;
+            delete this .displayParticles;
          }
          else
          {
