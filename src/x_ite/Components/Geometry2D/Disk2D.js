@@ -222,13 +222,21 @@ function (Fields,
       },
       intersectsLine: function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
       {
-         if (this .getGeometryType () < 2)
+         switch (this .getGeometryType ())
          {
-            return X3DLineGeometryNode .prototype .intersectsLine .call (this, hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections);
-         }
-         else
-         {
-            return X3DGeometryNode .prototype .intersectsLine .call (this, hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections);
+            case 0:
+            {
+               // Not implemented.
+               return;
+            }
+            case 1:
+            {
+               return X3DLineGeometryNode .prototype .intersectsLine .call (this, hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections);
+            }
+            default:
+            {
+               return X3DGeometryNode .prototype .intersectsLine .call (this, hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections);
+            }
          }
       },
       intersectsBox: function (box, clipPlanes, modelViewMatrix)
