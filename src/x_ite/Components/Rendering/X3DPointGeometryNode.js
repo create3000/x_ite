@@ -50,12 +50,14 @@
 define ([
    "x_ite/Components/Rendering/X3DGeometryNode",
    "standard/Math/Geometry/ViewVolume",
+   "standard/Math/Geometry/Box3",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
           ViewVolume,
+          Box3,
           Vector2,
           Vector3,
           Matrix4)
@@ -80,12 +82,14 @@ function (X3DGeometryNode,
       intersectsLine: (function ()
       {
          const
-            modelViewProjectionMatrix = new Matrix4 (),
-            screenScale1_             = new Vector3 (0, 0, 0),
-            screenScale2_             = new Vector3 (0, 0, 0),
+            bbox                      = new Box3 (),
             min                       = new Vector3 (0, 0, 0),
             max                       = new Vector3 (0, 0, 0),
+            screenScale1_             = new Vector3 (0, 0, 0),
+            screenScale2_             = new Vector3 (0, 0, 0),
             point                     = new Vector3 (0, 0, 0),
+            pointSizePoint            = new Vector3 (0, 0, 0),
+            modelViewProjectionMatrix = new Matrix4 (),
             projected                 = new Vector2 (0, 0),
             clipPoint                 = new Vector3 (0, 0, 0);
 
@@ -94,12 +98,13 @@ function (X3DGeometryNode,
             const
                modelViewMatrix     = renderObject .getModelViewMatrix () .get (),
                viewport            = renderObject .getViewVolume () .getViewport (),
+               extents             = bbox .assign (this .getBBox ()) .multRight (modelViewMatrix) .getExtents (min, max),
                pointPropertiesNode = appearanceNode .getPointProperties (),
-               pointSize1          = Math .max (1.5, pointPropertiesNode .getPointSize (this .getMin (), modelViewMatrix) / 2),
-               screenScale1        = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .multVecMatrix (min .assign (this .getMin ())), viewport, screenScale1_), // in m/px
+               pointSize1          = Math .max (1.5, pointPropertiesNode .getPointSize (min) / 2),
+               screenScale1        = renderObject .getViewpoint () .getScreenScale (min, viewport, screenScale1_), // in m/px
                offsets1            = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (pointSize1)),
-               pointSize2          = Math .max (1.5, pointPropertiesNode .getPointSize (this .getMax (), modelViewMatrix) / 2),
-               screenScale2        = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .multVecMatrix (max .assign (this .getMax ())), viewport, screenScale2_), // in m/px
+               pointSize2          = Math .max (1.5, pointPropertiesNode .getPointSize (max) / 2),
+               screenScale2        = renderObject .getViewpoint () .getScreenScale (max, viewport, screenScale2_), // in m/px
                offsets2            = invModelViewMatrix .multDirMatrix (screenScale2 .multiply (pointSize2));
 
             if (this .intersectsBBox (hitRay, offsets1 .abs () .max (offsets2 .abs ())))
@@ -119,7 +124,7 @@ function (X3DGeometryNode,
 
                   ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, projected);
 
-                  const pointSize1_2 = Math .max (1.5, pointPropertiesNode .getPointSize (point, modelViewMatrix) / 2);
+                  const pointSize1_2 = Math .max (1.5, pointPropertiesNode .getPointSize (modelViewMatrix .multVecMatrix (pointSizePoint .assign (point))) / 2);
 
                   if (projected .distance (pointer) <= pointSize1_2)
                   {

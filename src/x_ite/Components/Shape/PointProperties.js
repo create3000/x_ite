@@ -118,24 +118,19 @@ function (Fields,
          this .set_pointSizeAttenuation__ ();
          this .set_markerType__ ();
       },
-      getPointSize: (function ()
+      getPointSize: function (point)
       {
-         const p = new Vector3 (0, 0, 0);
+         const
+            pointSizeAttenuation = this .pointSizeAttenuation,
+            dL                   = point .magnitude ();
 
-         return function (point, modelViewMatrix)
-         {
-            const
-               pointSizeAttenuation = this .pointSizeAttenuation,
-               dL                   = modelViewMatrix .multVecMatrix (p .assign (point)) .magnitude ();
+         let pointSize = this .pointSizeScaleFactor;
 
-            let pointSize = this .pointSizeScaleFactor;
+         pointSize /= pointSizeAttenuation [0] + pointSizeAttenuation [1] * dL + pointSizeAttenuation [2] * (dL * dL);
+         pointSize  = Algorithm .clamp (pointSize, this .pointSizeMinValue, this .pointSizeMaxValue);
 
-            pointSize /= pointSizeAttenuation [0] + pointSizeAttenuation [1] * dL + pointSizeAttenuation [2] * (dL * dL);
-            pointSize  = Algorithm .clamp (pointSize, this .pointSizeMinValue, this .pointSizeMaxValue);
-
-            return pointSize;
-         };
-      })(),
+         return pointSize;
+      },
       set_pointSizeScaleFactor__: function ()
       {
          this .pointSizeScaleFactor = Math .max (1, this ._pointSizeScaleFactor .getValue ());
