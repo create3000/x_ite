@@ -70,30 +70,6 @@ function (X3DTextureCoordinateNode,
    X3DSingleTextureCoordinateNode .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
    {
       constructor: X3DSingleTextureCoordinateNode,
-      initialize: function ()
-      {
-         X3DTextureCoordinateNode .prototype .initialize .call (this);
-
-         if (this ._point)
-         {
-            this ._point .addInterest ("set_point__", this);
-
-            this .set_point__ ();
-         }
-      },
-      set_point__: function ()
-      {
-         this .point  = this ._point .getValue ();
-         this .length = this ._point .length;
-      },
-      isEmpty: function ()
-      {
-         return this .length === 0;
-      },
-      getSize: function ()
-      {
-         return this .length;
-      },
       init: function (multiArray)
       {
          this .texCoordArray .length = 0;

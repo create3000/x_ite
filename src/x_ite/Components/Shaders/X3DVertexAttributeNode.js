@@ -74,19 +74,11 @@ function (Fields,
       {
          X3DGeometricPropertyNode .prototype .initialize .call (this);
 
-         this ._name  .addInterest ("set_attribute__", this);
-         this ._value .addInterest ("set_value__",     this);
-
-         this .set_value__ ();
+         this ._name .addInterest ("set_attribute__", this);
       },
       set_attribute__: function ()
       {
          this ._attribute_changed = this .getBrowser () .getCurrentTime ();
-      },
-      set_value__: function ()
-      {
-         this .value  = this ._value .getValue ();
-         this .length = this ._value .length;
       },
    });
 

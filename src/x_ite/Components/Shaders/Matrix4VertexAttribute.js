@@ -89,6 +89,19 @@ function (Fields,
       {
          return "attrib";
       },
+      initialize: function ()
+      {
+         X3DVertexAttributeNode .prototype .initialize .call (this);
+
+         this ._value .addInterest ("set_value__", this);
+
+         this .set_value__ ();
+      },
+      set_value__: function ()
+      {
+         this .value  = this ._value .getValue ();
+         this .length = this ._value .length;
+      },
       addValue: function (index, array)
       {
          if (index < this .length)

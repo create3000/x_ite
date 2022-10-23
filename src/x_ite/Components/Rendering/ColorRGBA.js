@@ -90,6 +90,19 @@ function (Fields,
       {
          return "color";
       },
+      initialize: function ()
+      {
+         X3DColorNode .prototype .initialize .call (this);
+
+         this ._color .addInterest ("set_color__", this);
+
+         this .set_color__ ();
+      },
+      set_color__: function ()
+      {
+         this .color  = this ._color .getValue ();
+         this .length = this ._color .length;
+      },
       addColor: function (index, array)
       {
          if (index >= 0 && index < this .length)
