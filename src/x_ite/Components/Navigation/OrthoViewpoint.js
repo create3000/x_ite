@@ -245,33 +245,28 @@ function (Fields,
       {
          return 1e5;
       },
-      getScreenScale: (function ()
+      getScreenScale: function (point, viewport, screenScale)
       {
-         const screenScale = new Vector3 (0, 0, 0);
+         const
+            width  = viewport [2],
+            height = viewport [3],
+            sizeX  = this .sizeX,
+            sizeY  = this .sizeY,
+            aspect = width / height;
 
-         return function (point, viewport)
+         if (aspect > sizeX / sizeY)
          {
-            const
-               width  = viewport [2],
-               height = viewport [3],
-               sizeX  = this .sizeX,
-               sizeY  = this .sizeY,
-               aspect = width / height;
+            const s = sizeY / height;
 
-            if (aspect > sizeX / sizeY)
-            {
-               const s = sizeY / height;
+            return screenScale .set (s, s, s);
+         }
+         else
+         {
+            const s = sizeX / width;
 
-               return screenScale .set (s, s, s);
-            }
-            else
-            {
-               const s = sizeX / width;
-
-               return screenScale .set (s, s, s);
-            }
-         };
-      })(),
+            return screenScale .set (s, s, s);
+         }
+      },
       getViewportSize: (function ()
       {
          const viewportSize = new Vector2 (0, 0);

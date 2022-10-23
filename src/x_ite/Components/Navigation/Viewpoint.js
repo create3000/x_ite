@@ -147,28 +147,23 @@ function (Fields,
 
          return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
       },
-      getScreenScale: (function ()
+      getScreenScale: function (point, viewport, screenScale)
       {
-         const screenScale = new Vector3 (0, 0, 0);
+         // Returns the screen scale in meter/pixel for on pixel.
 
-         return function (point, viewport)
-         {
-            // Returns the screen scale in meter/pixel for on pixel.
+         const
+            width  = viewport [2],
+            height = viewport [3];
 
-            const
-               width  = viewport [2],
-               height = viewport [3];
+         let size = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
 
-            let size = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
+         if (width > height)
+            size /= height;
+         else
+            size /= width;
 
-            if (width > height)
-               size /= height;
-            else
-               size /= width;
-
-            return screenScale .set (size, size, size);
-         };
-      })(),
+         return screenScale .set (size, size, size);
+      },
       getViewportSize: (function ()
       {
          const viewportSize = new Vector2 (0, 0);

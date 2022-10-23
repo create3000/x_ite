@@ -188,7 +188,7 @@ function (Fields,
       },
       setPosition: (function ()
       {
-         var geoPosition = new Vector3 (0, 0, 0);
+         const geoPosition = new Vector3 (0, 0, 0);
 
          return function (value)
          {
@@ -197,7 +197,7 @@ function (Fields,
       })(),
       getPosition: (function ()
       {
-         var position = new Vector3 (0, 0, 0);
+         const position = new Vector3 (0, 0, 0);
 
          return function ()
          {
@@ -206,7 +206,7 @@ function (Fields,
       })(),
       set_position__: (function ()
       {
-         var position = new Vector3 (0, 0, 0);
+         const position = new Vector3 (0, 0, 0);
 
          return function ()
          {
@@ -217,7 +217,7 @@ function (Fields,
       })(),
       setOrientation: (function ()
       {
-         var
+         const
             locationMatrix = new Matrix4 (),
             geoOrientation = new Rotation4 (0, 0, 1, 0);
 
@@ -225,7 +225,7 @@ function (Fields,
          {
             ///  Returns the resulting orientation for this viewpoint.
 
-            var rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
+            const rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
 
             geoOrientation .setMatrix (rotationMatrix);
 
@@ -234,7 +234,7 @@ function (Fields,
       })(),
       getOrientation: (function ()
       {
-         var
+         const
             locationMatrix = new Matrix4 (),
             orientation    = new Rotation4 (0, 0, 1, 0);
 
@@ -242,7 +242,7 @@ function (Fields,
          {
             ///  Returns the resulting orientation for this viewpoint.
 
-            var rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
+            const rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
 
             orientation .setMatrix (rotationMatrix);
 
@@ -251,7 +251,7 @@ function (Fields,
       })(),
       getCenterOfRotation: (function ()
       {
-         var centerOfRotation = new Vector3 (0, 0, 0);
+         const centerOfRotation = new Vector3 (0, 0, 0);
 
          return function ()
          {
@@ -260,7 +260,7 @@ function (Fields,
       })(),
       getFieldOfView: function ()
       {
-         var fov = this ._fieldOfView * this ._fieldOfViewScale;
+         const fov = this ._fieldOfView * this ._fieldOfViewScale;
 
          return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
       },
@@ -270,7 +270,7 @@ function (Fields,
       },
       getUpVector: (function ()
       {
-         var
+         const
             position = new Vector3 (0, 0, 0),
             upVector = new Vector3 (0, 0, 0);
 
@@ -285,34 +285,30 @@ function (Fields,
       {
          return (Math .max (this .elevation, 0.0) + 10) / 10 * this ._speedFactor .getValue ();
       },
-      getScreenScale: (function ()
+      getScreenScale: function (point, viewport, screenScale)
       {
-         var screenScale = new Vector3 (0, 0, 0);
+         // Returns the screen scale in meter/pixel for on pixel.
 
-         return function (point, viewport)
-         {
-            // Returns the screen scale in meter/pixel for on pixel.
+         const
+            width  = viewport [2],
+            height = viewport [3];
 
-            var
-               width  = viewport [2],
-               height = viewport [3],
-               size   = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
+         let size = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
 
-            if (width > height)
-               size /= height;
-            else
-               size /= width;
+         if (width > height)
+            size /= height;
+         else
+            size /= width;
 
-            return screenScale .set (size, size, size);
-         };
-      })(),
+         return screenScale .set (size, size, size);
+      },
       getViewportSize: (function ()
       {
-         var viewportSize = new Vector2 (0, 0);
+         const viewportSize = new Vector2 (0, 0);
 
          return function (viewport, nearValue)
          {
-            var
+            const
                width  = viewport [2],
                height = viewport [3],
                size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
@@ -335,7 +331,7 @@ function (Fields,
 
          // Linear interpolate nearValue and farValue
 
-         var
+         const
             geoZNear = Math .max (Algorithm .lerp (Math .min (nearValue, 1e4), 1e4, this .elevation / 1e7), 1),
             geoZFar  = Math .max (Algorithm .lerp (1e6, Math .max (farValue, 1e6),  this .elevation / 1e7), 1e6);
 

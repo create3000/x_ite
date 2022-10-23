@@ -105,6 +105,10 @@ function (X3DGeometryNode,
       {
          const
             modelViewProjectionMatrix = new Matrix4 (),
+            screenScale1_             = new Vector3 (0, 0, 0),
+            screenScale2_             = new Vector3 (0, 0, 0),
+            min                       = new Vector3 (0, 0, 0),
+            max                       = new Vector3 (0, 0, 0),
             point1                    = new Vector3 (0, 0, 0),
             point2                    = new Vector3 (0, 0, 0),
             projected1                = new Vector2 (0, 0),
@@ -123,11 +127,13 @@ function (X3DGeometryNode,
                modelViewMatrix    = renderObject .getModelViewMatrix () .get (),
                viewport           = renderObject .getViewVolume () .getViewport (),
                linePropertiesNode = appearanceNode .getLineProperties (),
-               screenScale        = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport), // in m/px
                lineWidth1_2       = Math .max (1.5, linePropertiesNode .getApplied () ? linePropertiesNode .getLinewidthScaleFactor () / 2 : 0),
-               offsets            = invModelViewMatrix .multDirMatrix (screenScale .multiply (lineWidth1_2));
+               screenScale1       = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .multVecMatrix (min .assign (this .getMin ())), viewport, screenScale1_), // in m/px
+               offsets1           = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (lineWidth1_2)),
+               screenScale2       = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .multVecMatrix (max .assign (this .getMax ())), viewport, screenScale2_), // in m/px
+               offsets2           = invModelViewMatrix .multDirMatrix (screenScale2 .multiply (lineWidth1_2));
 
-            if (this .intersectsBBox (hitRay, offsets .abs ()))
+            if (this .intersectsBBox (hitRay, offsets1 .abs () .max (offsets2 .abs ())))
             {
                const
                   pointer          = renderObject .getBrowser () .getPointer (),

@@ -115,6 +115,7 @@ function (Fields,
       scale: (function ()
       {
          const
+            screenScale  = new Vector3 (0, 0, 0),
             screenPoint  = new Vector3 (0, 0, 0),
             screenMatrix = new Matrix4 ();
 
@@ -130,7 +131,7 @@ function (Fields,
             // Determine screenMatrix.
             // Same as in ScreenText.
 
-            const screenScale = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport); // in meter/pixel
+            renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport, screenScale); // in meter/pixel
 
             const
                x = modelViewMatrix .xAxis .normalize () .multiply (screenScale .x),

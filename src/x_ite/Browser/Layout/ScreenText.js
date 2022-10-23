@@ -393,6 +393,7 @@ function ($,
       transform: (function ()
       {
          const
+            screenScale  = new Vector3 (0, 0, 0),
             screenPoint  = new Vector3 (0, 0, 0),
             screenMatrix = new Matrix4 (),
             bbox         = new Box3 ();
@@ -410,7 +411,7 @@ function ($,
             // Determine screenMatrix.
             // Same as in ScreenGroup.
 
-            const screenScale = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport); // in meter/pixel
+            renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport, screenScale); // in meter/pixel
 
             const
                x = modelViewMatrix .xAxis .normalize () .multiply (screenScale .x),
