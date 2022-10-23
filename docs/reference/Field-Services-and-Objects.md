@@ -6,6 +6,36 @@ layout: single
 ---
 # Field Services and Objects
 
+* [X3DFieldDefinition](#x3dfielddefinition)
+* [FieldDefinitionArray](#fielddefinitionarray)
+* [Field Hierarchy](#field-hierarchy)
+* [X3DField](#x3dfield)
+* [SFColor](#sfcolor-object)
+* [SFColorRGBA](#sfcolorrgba-object)
+* [SFImage](#sfimage-object)
+* [SFMatrix3d/f](#sfmatrix3dsfmatrix3f-object)
+* [SFMatrix4d/f](#sfmatrix4dsfmatrix4f-object)
+* [SFNode](#sfnode-object)
+* [SFRotation](#sfrotation-object)
+* [SFVec2d/f](#sfvec2dsfvec2f-object)
+* [SFVec3d/f](#sfvec3dsfvec3f-object)
+* [SFVec4d/f](#sfvec4dsfvec4f-object)
+* [X3DArrayField](#x3darrayfield)
+* [MFBool](#mfbool-object)
+* [MFColor/MFColorRGBA](#mfcolormfcolorrgba-object)
+* [MFDouble/MFFloat](#mfdoublemffloat-object)
+* [MFImage](#mfimage-object)
+* [MFInt32](#mfint32-object)
+* [MFMatrix3d/f](#mfmatrix3dmfmatrix3f-object)
+* [MFMatrix3d/f](#mfmatrix4dmfmatrix4f-object)
+* [MFNode](#mfnode-object)
+* [MFRotation](#mfrotation-object)
+* [MFString](#mfstring-object)
+* [MFTime](#mftime-object)
+* [MFVec2d/f](#mfvec2dmfvec2f-object)
+* [MFVec3d/f](#mfvec3dmfvec3f-object)
+* [MFVec4d/f](#mfvec4dmfvec4f-object)
+
 ## X3DFieldDefinition
 
 The X3DFieldDefinition object represents all of the descriptive properties of a single field of a node.
@@ -735,7 +765,7 @@ Returns an SFVec4f of object converted to unit length.
 
 Returns an SFVec4f whose value is the passed SFVec4f subtracted, componentwise, from the object.
 
-## X3DArrayField Object
+## X3DArrayField
 
 The X3DArrayField object is the base object of all MF\* objects. It is used to store a one-dimensional array of the corresponding SF\* objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. X3D*ArrayFieldObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to 0.0.
 
@@ -986,6 +1016,26 @@ The MFString object corresponds to a X3D MFString field. It is used to store a o
 ### Instance Creation Method\(s\)
 
 #### *mfStringObjectName =* **new MFString** (*\[string, string, ...\])*
+
+The creation method can be passed 0 or more string-valued expressions to initialize the elements of the array.
+
+### Properties
+
+#### **length**
+
+An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
+
+### Methods
+
+None
+
+## MFTime Object
+
+The MFTime object corresponds to a X3D MFTime field. It is used to store a one-dimensional array of SFTime objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfTimeObjectName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array). Assigning to an element with *index* &gt; length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to the empty string.
+
+### Instance Creation Method\(s\)
+
+#### *mfTimeObjectName =* **new MFTime** (*\[string, string, ...\])*
 
 The creation method can be passed 0 or more string-valued expressions to initialize the elements of the array.
 

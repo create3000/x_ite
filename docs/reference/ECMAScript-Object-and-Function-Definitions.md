@@ -10,12 +10,12 @@ layout: single
 
 There are a fixed set of objects in ECMAScript, each of which have a fixed set of properties (i.e. values) and methods (i.e. functions). For all object types except Math, there are functions to create an instance of the object. The supported set of objects are:
 
-* [Browser Services](/x_ite/reference/Browser-Services.html)
-* [Scene Services](/x_ite/reference/Scene-Services.html)
-* [Field Services and Objects](/x_ite/reference/Field-Services-and-Objects.html)
-* [Route Services](/x_ite/reference/Route-Services.html)
-* [Prototype Services](/x_ite/reference/Prototype-Services.html)
-* [Constants Services](/x_ite/reference/Constants-Services.html)
+* [Browser Services](Browser-Services.html)
+* [Scene Services](Scene-Services.html)
+* [Field Services and Objects](Field-Services-and-Objects.html)
+* [Route Services](Route-Services.html)
+* [Prototype Services](Prototype-Services.html)
+* [Constants Services](Constants-Services.html)
 
 ### parseInt and parseFloat Functions
 
