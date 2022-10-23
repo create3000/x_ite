@@ -220,15 +220,15 @@ function (Fields,
          this .setGeometryType (2);
          this .setSolid (this ._solid .getValue ());
       },
-      intersectsLine: function (line, clipPlanes, modelViewMatrix, intersections)
+      intersectsLine: function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
       {
          if (this .getGeometryType () < 2)
          {
-            return X3DLineGeometryNode .prototype .intersectsLine .call (this, line, clipPlanes, modelViewMatrix, intersections);
+            return X3DLineGeometryNode .prototype .intersectsLine .call (this, hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections);
          }
          else
          {
-            return X3DGeometryNode .prototype .intersectsLine .call (this, line, clipPlanes, modelViewMatrix, intersections);
+            return X3DGeometryNode .prototype .intersectsLine .call (this, hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections);
          }
       },
       intersectsBox: function (box, clipPlanes, modelViewMatrix)

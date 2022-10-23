@@ -481,7 +481,11 @@ function (Fields,
             return clipPlane .isClipped (point);
          });
       },
-      intersectsLine: (function ()
+      intersectsLine: function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
+      {
+         return this .intersectsLineWithGeometry (hitRay, renderObject .getModelViewMatrix () .get (), renderObject .getLocalObjects (), intersections);
+      },
+      intersectsLineWithGeometry: (function ()
       {
          const
             modelViewMatrix = new Matrix4 (),
@@ -491,15 +495,14 @@ function (Fields,
             v2              = new Vector3 (0, 0, 0),
             clipPoint       = new Vector3 (0, 0, 0);
 
-         return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
+         return function (hitRay, matrix, clipPlanes, intersections)
          {
             if (this .intersectsBBox (hitRay))
             {
                this .transformLine (hitRay); // Apply screen transformations from screen nodes.
-               this .transformMatrix (modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())); // Apply screen transformations from screen nodes.
+               this .transformMatrix (modelViewMatrix .assign (matrix)); // Apply screen transformations from screen nodes.
 
                const
-                  clipPlanes  = renderObject .getLocalObjects (),
                   texCoords   = this .multiTexCoords [0] .getValue (),
                   normals     = this .normals .getValue (),
                   vertices    = this .vertices .getValue (),

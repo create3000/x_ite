@@ -248,7 +248,7 @@ function (Fields,
 
                               intersections .length = 0;
 
-                              if (geometryNode .intersectsLine (line, clipPlanes, target .modelMatrix, intersections))
+                              if (geometryNode .intersectsLineWithGeometry (line, target .modelMatrix, clipPlanes, intersections))
                               {
                                  for (var i = 0, iLength = intersections .length; i < iLength; ++ i)
                                  {
