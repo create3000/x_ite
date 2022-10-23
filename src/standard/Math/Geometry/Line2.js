@@ -148,7 +148,7 @@ function (Vector2)
       })(),
       intersectsLine: (function ()
       {
-         const u = Vector2 (0, 0);
+         const u = new Vector2 (0, 0);
 
          return function (line, point)
          {
