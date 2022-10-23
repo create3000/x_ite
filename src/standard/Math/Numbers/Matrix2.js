@@ -133,6 +133,8 @@ function (Vector2,
                break;
             }
          }
+
+         return this;
       },
       determinant1: function ()
       {
@@ -199,6 +201,46 @@ function (Vector2,
          this [3] = b1 * a2 + b3 * a3;
 
          return this;
+      },
+      multVecMatrix: function (vector)
+      {
+         if (typeof vector === "number")
+         {
+            const
+               x = vector,
+               w = x * this [2] + this [3];
+
+            return (x * this [0] + this [1]) / w;
+         }
+
+         const
+            x = vector .x,
+            y = vector .y;
+
+         vector .x = x * this [0] + y * this [2];
+         vector .y = x * this [1] + y * this [3];
+
+         return vector;
+      },
+      multMatrixVec: function (vector)
+      {
+         if (typeof vector === "number")
+         {
+            const
+               x = vector,
+               w = x * this [2] + this [3];
+
+            return (x * this [0] + this [1]) / w;
+         }
+
+         const
+            x = vector .x,
+            y = vector .y;
+
+         vector .x = x * this [0] + y * this [1];
+         vector .y = x * this [2] + y * this [3];
+
+         return vector;
       },
       identity: function ()
       {

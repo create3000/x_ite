@@ -56,6 +56,7 @@ define ([
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Vector4",
+   "standard/Math/Numbers/Matrix2",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
@@ -66,6 +67,7 @@ function (X3DGeometryNode,
           Vector2,
           Vector3,
           Vector4,
+          Matrix2,
           Matrix4)
 {
 "use strict";
@@ -112,6 +114,7 @@ function (X3DGeometryNode,
             projected                 = new Line2 (Vector2 .Zero, Vector2 .yAxis),
             closest                   = new Vector2 (0, 0),
             point                     = new Vector3 (0, 0, 0),
+            rotation                  = new Matrix2 (),
             clipPoint                 = new Vector3 (0, 0, 0);
 
          return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
@@ -167,8 +170,11 @@ function (X3DGeometryNode,
                            line .setPoints (point1, point2) .getClosestPointToLine (ray, point);
 
                            const
-                              texCoord = new Vector2 (distance1 / distance, 0),
-                              normal   = point2 .subtract (point1) .normalize () .copy ();
+                              direction = projected .direction,
+                              texCoord  = rotation .set (direction .x, direction .y, -direction .y, direction .x) .inverse () .multVecMatrix (pointer .copy () .subtract (closest)),
+                              normal    = point2 .subtract (point1) .normalize () .copy ();
+
+                           texCoord .set (distance1 / distance, (texCoord .y / lineWidth1_2 + 1) / 2);
 
                            intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
                            return true;
