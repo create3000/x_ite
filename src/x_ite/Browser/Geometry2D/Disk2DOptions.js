@@ -149,6 +149,7 @@ function (X3DBaseNode,
                // Circle
 
                circleVertices .push (point1 .real, point1 .imag, 0, 1);
+               circleVertices .push (point2 .real, point2 .imag, 0, 1);
 
                // Disk
 

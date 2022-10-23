@@ -72,6 +72,8 @@ function (Fields,
 
       this ._innerRadius .setUnit ("length");
       this ._outerRadius .setUnit ("length");
+
+      this .super = X3DGeometryNode .prototype;
    }
 
    Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -141,12 +143,14 @@ function (Fields,
 
                for (let i = 0, length = defaultVertices .length; i < length; i += 4)
                   vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
-            }
+           }
 
             this .getMin () .set (-outerRadius, -outerRadius, 0);
             this .getMax () .set ( outerRadius,  outerRadius, 0);
 
             this .setGeometryType (1);
+
+            this .super = X3DLineGeometryNode .prototype;
             return;
          }
 
@@ -176,6 +180,8 @@ function (Fields,
 
             this .setGeometryType (2);
             this .setSolid (this ._solid .getValue ());
+
+            this .super = X3DGeometryNode .prototype;
             return;
          }
 
@@ -219,58 +225,24 @@ function (Fields,
 
          this .setGeometryType (2);
          this .setSolid (this ._solid .getValue ());
+
+         this .super = X3DGeometryNode .prototype;
       },
-      intersectsLine: function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
+      intersectsLine: function ()
       {
-         switch (this .getGeometryType ())
-         {
-            case 0:
-            {
-               // Not implemented.
-               return;
-            }
-            case 1:
-            {
-               return X3DLineGeometryNode .prototype .intersectsLine .call (this, hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections);
-            }
-            default:
-            {
-               return X3DGeometryNode .prototype .intersectsLine .call (this, hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections);
-            }
-         }
+         this .super .intersectsLine .apply (this, arguments);
       },
-      intersectsBox: function (box, clipPlanes, modelViewMatrix)
+      intersectsBox: function ()
       {
-         if (this .getGeometryType () < 2)
-         {
-            return X3DLineGeometryNode .prototype .intersectsBox .call (this, box, clipPlanes, modelViewMatrix);
-         }
-         else
-         {
-            return X3DGeometryNode .prototype .intersectsBox .call (this, box, clipPlanes, modelViewMatrix);
-         }
+         this .super .intersectsBox .apply (this, arguments);
       },
-      display: function (gl, context)
+      display: function ()
       {
-         if (this .getGeometryType () < 2)
-         {
-            return X3DLineGeometryNode .prototype .display .call (this, gl, context);
-         }
-         else
-         {
-            return X3DGeometryNode .prototype .display .call (this, gl, context);
-         }
+         this .super .display .apply (this, arguments);
       },
-      displayParticles: function (gl, context, particles, numParticles)
+      displayParticles: function ()
       {
-         if (this .getGeometryType () < 2)
-         {
-            return X3DLineGeometryNode .prototype .displayParticles .call (this, gl, context, particles, numParticles);
-         }
-         else
-         {
-            return X3DGeometryNode .prototype .displayParticles .call (this, gl, context, particles, numParticles);
-         }
+         this .super .displayParticles .apply (this, arguments);
       }
    });
 
