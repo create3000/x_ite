@@ -6,6 +6,15 @@ layout: single
 ---
 # Scene Services
 
+* [X3DExecutionContext](#x3dexecutioncontext)
+* [X3DScene](#x3dscene)
+* [ProfileInfo](#profileinfo)
+* [ComponentInfo](#componentinfo)
+* [UnitInfo](#unitinfo)
+* [ProfileInfoArray](#profileinfoarray)
+* [ComponentInfoArray](#componentinfoarray)
+* [UnitInfoArray](#unitinfoarray)
+
 ## X3DExecutionContext
 
 This section lists the methods available in the X3DExecutionContext object, which allows scripts to get access to the scene graph.
