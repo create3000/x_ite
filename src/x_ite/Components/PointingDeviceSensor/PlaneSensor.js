@@ -54,9 +54,11 @@ define ([
    "x_ite/Components/PointingDeviceSensor/X3DDragSensorNode",
    "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Rotation4",
+   "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Vector4",
    "standard/Math/Numbers/Matrix4",
+   "standard/Math/Geometry/Line2",
    "standard/Math/Geometry/Line3",
    "standard/Math/Geometry/Plane3",
    "standard/Math/Geometry/ViewVolume",
@@ -68,9 +70,11 @@ function (Fields,
           X3DDragSensorNode,
           X3DConstants,
           Rotation4,
+          Vector2,
           Vector3,
           Vector4,
           Matrix4,
+          Line2,
           Line3,
           Plane3,
           ViewVolume,
@@ -78,9 +82,9 @@ function (Fields,
 {
 "use strict";
 
-   var
-      screenLine     = new Line3 (Vector3 .Zero, Vector3 .Zero),
-      trackPoint1    = new Vector3 (0, 0, 0),
+   const
+      screenLine     = new Line2 (Vector2 .Zero, Vector2 .Zero),
+      trackPoint1    = new Vector2 (0, 0, 0),
       trackPointLine = new Line3 (Vector3 .Zero, Vector3 .Zero);
 
    function PlaneSensor (executionContext)
@@ -142,7 +146,7 @@ function (Fields,
       getLineTrackPoint: function (hit, line, trackPoint)
       {
          ViewVolume .projectLine (line, this .modelViewMatrix, this .projectionMatrix, this .viewport, screenLine);
-         screenLine .getClosestPointToPoint (new Vector3 (hit .pointer .x, hit .pointer .y, 0), trackPoint1);
+         screenLine .getClosestPointToPoint (hit .pointer, trackPoint1);
          ViewVolume .unProjectRay (trackPoint1 .x, trackPoint1 .y, this .modelViewMatrix, this .projectionMatrix, this .viewport, trackPointLine);
 
          return line .getClosestPointToLine (trackPointLine, trackPoint);

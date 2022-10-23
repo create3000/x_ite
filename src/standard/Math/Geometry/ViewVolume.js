@@ -50,6 +50,7 @@
 define ([
    "standard/Math/Geometry/Plane3",
    "standard/Math/Geometry/Triangle3",
+   "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Vector4",
    "standard/Math/Numbers/Matrix4",
@@ -57,6 +58,7 @@ define ([
 ],
 function (Plane3,
           Triangle3,
+          Vector2,
           Vector3,
           Vector4,
           Matrix4,
@@ -413,17 +415,23 @@ function (Plane3,
       })(),
       projectLine: (function ()
       {
-         const
-            near = new Vector3 (0, 0, 0),
-            far  = new Vector3 (0, 0, 0);
+         const modelViewProjectionMatrix = new Matrix4 ();
 
          return function (line, modelViewMatrix, projectionMatrix, viewport, result)
          {
-            ViewVolume .projectPoint (line .point, modelViewMatrix, projectionMatrix, viewport, near);
-            ViewVolume .projectPoint (Vector3 .multiply (line .direction, 1e9) .add (line .point), modelViewMatrix, projectionMatrix, viewport, far);
+            return this .projectLineMatrix (line, modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix), viewport, result);
+         };
+      })(),
+      projectLineMatrix: (function ()
+      {
+         const
+            near = new Vector2 (0, 0),
+            far  = new Vector2 (0, 0);
 
-            near .z = 0;
-            far  .z = 0;
+         return function (line, modelViewProjectionMatrix, viewport, result)
+         {
+            ViewVolume .projectPointMatrix (line .point, modelViewProjectionMatrix, viewport, near);
+            ViewVolume .projectPointMatrix (Vector3 .multiply (line .direction, 1e9) .add (line .point), modelViewProjectionMatrix, viewport, far);
 
             return result .setPoints (near, far);
          };

@@ -98,8 +98,8 @@ function (X3DGeometryNode,
             if (this .intersectsBBox (hitRay, offsets .abs ()))
             {
                const
-                  projectionMatrix = renderObject .getProjectionMatrix () .get (),
                   pointer          = renderObject .getBrowser () .getPointer (),
+                  projectionMatrix = renderObject .getProjectionMatrix () .get (),
                   clipPlanes       = renderObject .getLocalObjects (),
                   vertices         = this .getVertices (),
                   numVertices      = vertices .length;

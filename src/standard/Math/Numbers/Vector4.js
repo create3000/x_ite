@@ -373,7 +373,15 @@ function (Algorithm)
       },
       dot: function (lhs, rhs)
       {
-         return lhs .copy () .dot (rhs);
+         return lhs .dot (rhs);
+      },
+      magnitude: function (vector)
+      {
+         return vector .magnitude ();
+      },
+      distance: function (lhs, rhs)
+      {
+         return lhs .distance (rhs);
       },
       lerp: function (source, destination, t)
       {
@@ -385,11 +393,11 @@ function (Algorithm)
       },
       min: function (lhs, rhs)
       {
-         return Vector4 .prototype .min .apply (lhs .copy (), arguments);
+         return this .prototype .min .apply (lhs .copy (), arguments);
       },
       max: function (lhs, rhs)
       {
-         return Vector4 .prototype .max .apply (lhs .copy (), arguments);
+         return this .prototype .max .apply (lhs .copy (), arguments);
       },
    });
 

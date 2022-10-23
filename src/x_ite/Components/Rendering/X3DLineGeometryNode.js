@@ -100,38 +100,34 @@ function (X3DGeometryNode,
       intersectsLine: (function ()
       {
          const
-            modelViewProjectionMatrix    = new Matrix4 (),
-            invModelViewProjectionMatrix = new Matrix4 (),
-            point1                       = new Vector3 (0, 0, 0),
-            point2                       = new Vector3 (0, 0, 0),
-            line                         = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-            point                        = new Vector3 (0, 0, 0),
-            vector                       = new Vector3 (0, 0, 0),
-            win                          = new Vector3 (0, 0, 0),
-            radius                       = new Vector3 (0, 0, 0),
-            clipPoint                    = new Vector3 (0, 0, 0);
+            modelViewProjectionMatrix = new Matrix4 (),
+            point1                    = new Vector3 (0, 0, 0),
+            point2                    = new Vector3 (0, 0, 0),
+            line                      = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+            point                     = new Vector3 (0, 0, 0),
+            projected                 = new Vector2 (0, 0),
+            clipPoint                 = new Vector3 (0, 0, 0);
 
          return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
          {
             const
                modelViewMatrix    = renderObject .getModelViewMatrix () .get (),
-               projectionMatrix   = renderObject .getProjectionMatrix () .get (),
                viewport           = renderObject .getViewVolume () .getViewport (),
                linePropertiesNode = appearanceNode .getLineProperties (),
-               lineWidth1_2       = linePropertiesNode .getApplied () ? Math .max (1, linePropertiesNode .getLinewidthScaleFactor () / (2 * Math .SQRT2)) : 1;
+               screenScale        = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport), // in m/px
+               lineWidth1_2       = Math .max (1.5, linePropertiesNode .getApplied () ? linePropertiesNode .getLinewidthScaleFactor () / 2 : 0),
+               offsets            = invModelViewMatrix .multDirMatrix (screenScale .multiply (lineWidth1_2));
 
-            modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
-            invModelViewProjectionMatrix .assign (modelViewProjectionMatrix) .inverse ();
-
-            ViewVolume .projectPointMatrix (point .assign (this .getMin ()), modelViewProjectionMatrix, viewport, win);
-            ViewVolume .unProjectPointMatrix (win .x + lineWidth1_2, win .y + lineWidth1_2, win .z, invModelViewProjectionMatrix, viewport, radius);
-
-            if (this .intersectsBBox (hitRay, point .distance (radius)))
+            if (this .intersectsBBox (hitRay, offsets .abs ()))
             {
                const
-                  clipPlanes  = renderObject .getLocalObjects (),
-                  vertices    = this .getVertices (),
-                  numVertices = vertices .length;
+                  pointer          = renderObject .getBrowser () .getPointer (),
+                  projectionMatrix = renderObject .getProjectionMatrix () .get (),
+                  clipPlanes       = renderObject .getLocalObjects (),
+                  vertices         = this .getVertices (),
+                  numVertices      = vertices .length;
+
+               modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
 
                for (let i = 0; i < numVertices; i += 8)
                {
@@ -149,10 +145,9 @@ function (X3DGeometryNode,
 
                      if (distance1 <= distance && distance2 <= distance)
                      {
-                        ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, win);
-                        ViewVolume .unProjectPointMatrix (win .x + lineWidth1_2, win .y + lineWidth1_2, win .z, invModelViewProjectionMatrix, viewport, radius);
+                        ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, projected);
 
-                        if (line .getPerpendicularVectorToLine (hitRay, vector) .magnitude () < point .distance (radius))
+                        if (projected .distance (pointer) <= lineWidth1_2)
                         {
                            if (clipPlanes .length)
                            {

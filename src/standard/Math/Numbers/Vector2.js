@@ -251,6 +251,8 @@ function (Algorithm)
    {
       Zero: new Vector2 (0, 0),
       One: new Vector2 (1, 1),
+      xAxis: new Vector2 (1, 0),
+      yAxis: new Vector2 (0, 1),
       negate: function (vector)
       {
          return vector .copy () .negate ();
@@ -289,7 +291,15 @@ function (Algorithm)
       },
       dot: function (lhs, rhs)
       {
-         return lhs .copy () .dot (rhs);
+         return lhs .dot (rhs);
+      },
+      magnitude: function (vector)
+      {
+         return vector .magnitude ();
+      },
+      distance: function (lhs, rhs)
+      {
+         return lhs .distance (rhs);
       },
       lerp: function (source, destination, t)
       {
@@ -301,11 +311,11 @@ function (Algorithm)
       },
       min: function (lhs, rhs)
       {
-         return Vector2 .prototype .min .apply (lhs .copy (), arguments);
+         return this .prototype .min .apply (lhs .copy (), arguments);
       },
       max: function (lhs, rhs)
       {
-         return Vector2 .prototype .max .apply (lhs .copy (), arguments);
+         return this .prototype .max .apply (lhs .copy (), arguments);
       },
    });
 
