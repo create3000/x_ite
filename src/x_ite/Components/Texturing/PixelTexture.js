@@ -247,8 +247,8 @@ function ($,
                const
                   canvas1   = this .canvas1 [0],
                   canvas2   = this .canvas2 [0],
-                  cx1       = canvas1 .getContext("2d"),
-                  cx2       = canvas2 .getContext("2d"),
+                  cx1       = canvas1 .getContext ("2d", { willReadFrequently: true }),
+                  cx2       = canvas2 .getContext ("2d", { willReadFrequently: true }),
                   imageData = cx1 .createImageData (width, height);
 
                canvas1 .width  = width;
