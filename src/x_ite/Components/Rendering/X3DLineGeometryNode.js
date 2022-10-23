@@ -51,6 +51,7 @@ define ([
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Rendering/VertexArray",
    "standard/Math/Geometry/ViewVolume",
+   "standard/Math/Geometry/Line2",
    "standard/Math/Geometry/Line3",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
@@ -60,6 +61,7 @@ define ([
 function (X3DGeometryNode,
           VertexArray,
           ViewVolume,
+          Line2,
           Line3,
           Vector2,
           Vector3,
@@ -103,9 +105,13 @@ function (X3DGeometryNode,
             modelViewProjectionMatrix = new Matrix4 (),
             point1                    = new Vector3 (0, 0, 0),
             point2                    = new Vector3 (0, 0, 0),
+            projected1                = new Vector2 (0, 0),
+            projected2                = new Vector2 (0, 0),
             line                      = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+            ray                       = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+            projected                 = new Line2 (Vector2 .Zero, Vector2 .yAxis),
+            closest                   = new Vector2 (0, 0),
             point                     = new Vector3 (0, 0, 0),
-            projected                 = new Vector2 (0, 0),
             clipPoint                 = new Vector3 (0, 0, 0);
 
          return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
@@ -134,30 +140,35 @@ function (X3DGeometryNode,
                   point1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
                   point2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-                  line .setPoints (point1, point2);
+                  ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projected1);
+                  ViewVolume .projectPointMatrix (point2, modelViewProjectionMatrix, viewport, projected2);
 
-                  if (line .getClosestPointToLine (hitRay, point))
+                  projected .setPoints (projected1, projected2);
+
+                  if (projected .getClosestPointToPoint (pointer, closest))
                   {
                      const
-                        distance  = point1 .distance (point2),
-                        distance1 = point1 .distance (point),
-                        distance2 = point2 .distance (point);
+                        distance  = projected1 .distance (projected2),
+                        distance1 = projected1 .distance (closest),
+                        distance2 = projected2 .distance (closest);
 
                      if (distance1 <= distance && distance2 <= distance)
                      {
-                        ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, projected);
-
-                        if (projected .distance (pointer) <= lineWidth1_2)
+                        if (closest .distance (pointer) <= lineWidth1_2)
                         {
                            if (clipPlanes .length)
                            {
-                              if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                              if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (closest)), clipPlanes))
                                  continue;
                            }
 
                            const
-                              normal   = point2 .subtract (point1) .normalize () .copy (),
-                              texCoord = new Vector2 (distance1 / distance, 0);
+                              texCoord = new Vector2 (distance1 / distance, 0),
+                              normal   = point2 .subtract (point1) .normalize () .copy ();
+
+                           ViewVolume .unProjectRay (closest .x, closest .y, modelViewMatrix, projectionMatrix, viewport, ray);
+
+                           line .setPoints (point1, point2) .getClosestPointToLine (ray, point);
 
                            intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
                            return true;

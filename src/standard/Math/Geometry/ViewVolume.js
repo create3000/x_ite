@@ -358,17 +358,23 @@ function (Plane3,
       })(),
       unProjectRay: (function ()
       {
-         const
-            near   = new Vector3 (0, 0, 0),
-            far    = new Vector3 (0, 0, 0),
-            matrix = new Matrix4 ();
+         const invModelViewProjectionMatrix = new Matrix4 ();
 
          return function (winx, winy, modelViewMatrix, projectionMatrix, viewport, result)
          {
-            matrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse ();
+            return this .unProjectRayMatrix (winx, winy, invModelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse (), viewport, result);
+         };
+      })(),
+      unProjectRayMatrix: (function ()
+      {
+         const
+            near = new Vector3 (0, 0, 0),
+            far  = new Vector3 (0, 0, 0);
 
-            ViewVolume .unProjectPointMatrix (winx, winy, 0.0, matrix, viewport, near);
-            ViewVolume .unProjectPointMatrix (winx, winy, 0.9, matrix, viewport, far);
+         return function (winx, winy, invModelViewProjectionMatrix, viewport, result)
+         {
+            ViewVolume .unProjectPointMatrix (winx, winy, 0.0, invModelViewProjectionMatrix, viewport, near);
+            ViewVolume .unProjectPointMatrix (winx, winy, 0.9, invModelViewProjectionMatrix, viewport, far);
 
             return result .setPoints (near, far);
          };
