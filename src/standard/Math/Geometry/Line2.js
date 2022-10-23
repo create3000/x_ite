@@ -146,6 +146,32 @@ function (Vector2)
             return d .subtract (t .assign (this .direction) .multiply (d .dot (this .direction)));
          };
       })(),
+      intersectsLine: (function ()
+      {
+         const u = Vector2 (0, 0);
+
+         return function (line, point)
+         {
+            const
+               p1 = this .point,
+               p2 = line .point,
+               d1 = this .direction,
+               d2 = line .direction;
+
+            const theta = d1 .dot (d2); // angle between both lines
+
+            if (Math .abs (theta) >= 1)
+               return false; // lines are parallel
+
+            u .assign (p2) .subtract (p1);
+
+            const t = (u .dot (d1) - theta * u .dot (d2)) / (1 - theta * theta);
+
+            point .assign (d1) .multiply (t) .add (p1);
+
+            return true;
+         };
+      })(),
       toString: function ()
       {
          return this .point + ", " + this .direction;
