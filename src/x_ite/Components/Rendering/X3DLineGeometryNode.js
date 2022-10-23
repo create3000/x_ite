@@ -162,13 +162,13 @@ function (X3DGeometryNode,
                                  continue;
                            }
 
-                           const
-                              texCoord = new Vector2 (distance1 / distance, 0),
-                              normal   = point2 .subtract (point1) .normalize () .copy ();
-
                            ViewVolume .unProjectRay (closest .x, closest .y, modelViewMatrix, projectionMatrix, viewport, ray);
 
                            line .setPoints (point1, point2) .getClosestPointToLine (ray, point);
+
+                           const
+                              texCoord = new Vector2 (distance1 / distance, 0),
+                              normal   = point2 .subtract (point1) .normalize () .copy ();
 
                            intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
                            return true;

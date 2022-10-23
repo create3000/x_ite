@@ -327,20 +327,18 @@ function (Plane3,
    {
       unProjectPoint: (function ()
       {
-         const matrix = new Matrix4 ();
+         const invModelViewProjectionMatrix = new Matrix4 ();
 
          return function (winx, winy, winz, modelViewMatrix, projectionMatrix, viewport, point)
          {
-            matrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse ();
-
-            return this .unProjectPointMatrix (winx, winy, winz, matrix, viewport, point);
+            return this .unProjectPointMatrix (winx, winy, winz, invModelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse (), viewport, point);
          };
       })(),
       unProjectPointMatrix: (function ()
       {
          const vin = new Vector4 (0, 0, 0, 0);
 
-         return function (winx, winy, winz, invModelViewProjection, viewport, point)
+         return function (winx, winy, winz, invModelViewProjectionMatrix, viewport, point)
          {
             // Transformation of normalized coordinates between -1 and 1
             vin .set ((winx - viewport [0]) / viewport [2] * 2 - 1,
@@ -349,7 +347,7 @@ function (Plane3,
                       1);
 
             //Objects coordinates
-            invModelViewProjection .multVecMatrix (vin);
+            invModelViewProjectionMatrix .multVecMatrix (vin);
 
             const d = 1 / vin .w;
 
@@ -431,13 +429,14 @@ function (Plane3,
       projectLineMatrix: (function ()
       {
          const
-            near = new Vector2 (0, 0),
-            far  = new Vector2 (0, 0);
+            near      = new Vector2 (0, 0),
+            far       = new Vector2 (0, 0),
+            direction = new Vector3 (0, 0, 0);
 
          return function (line, modelViewProjectionMatrix, viewport, result)
          {
             ViewVolume .projectPointMatrix (line .point, modelViewProjectionMatrix, viewport, near);
-            ViewVolume .projectPointMatrix (Vector3 .multiply (line .direction, 1e9) .add (line .point), modelViewProjectionMatrix, viewport, far);
+            ViewVolume .projectPointMatrix (direction .assign (line .direction) .multiply (1e9) .add (line .point), modelViewProjectionMatrix, viewport, far);
 
             return result .setPoints (near, far);
          };
