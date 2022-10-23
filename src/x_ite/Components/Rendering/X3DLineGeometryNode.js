@@ -195,6 +195,10 @@ function (X3DGeometryNode,
             return intersections .length;
          };
       })(),
+      intersectsLineWithGeometry: function ()
+      {
+         return false;
+      },
       intersectsBox: function (box, clipPlanes, modelViewMatrix)
       {
          return false;
