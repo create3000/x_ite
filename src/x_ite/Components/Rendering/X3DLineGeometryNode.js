@@ -172,7 +172,7 @@ function (X3DGeometryNode,
                            const
                               direction = projected .direction,
                               texCoord  = rotation .set (direction .x, direction .y, -direction .y, direction .x) .inverse () .multVecMatrix (pointer .copy () .subtract (closest)),
-                              normal    = point2 .subtract (point1) .normalize () .copy ();
+                              normal    = modelViewMatrix .submatrix .inverse () .z .normalize () .copy ();
 
                            texCoord .set (distance1 / distance, (texCoord .y / lineWidth1_2 + 1) / 2);
 
