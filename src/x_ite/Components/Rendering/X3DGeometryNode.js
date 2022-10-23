@@ -943,10 +943,13 @@ function (Fields,
          {
             // Use default render functions.
 
-            if (this .depth                 === Function .prototype) delete this .depth;
-            if (this .display               === Function .prototype) delete this .display;
-            if (this .displayParticlesDepth === Function .prototype) delete this .displayParticlesDepth;
-            if (this .displayParticles      === Function .prototype) delete this .displayParticles;
+            if (this .getType () .at (-1) !== X3DConstants .Disk2D)
+            {
+               delete this .depth;
+               delete this .display;
+               delete this .displayParticlesDepth;
+               delete this .displayParticles;
+            }
          }
          else
          {
