@@ -139,11 +139,9 @@ function (Vector3)
 
          return function (point, result)
          {
-            const d = result;
+            result .assign (this .point) .subtract (point);
 
-            d .assign (this .point) .subtract (point);
-
-            return d .subtract (t .assign (this .direction) .multiply (d .dot (this .direction)));
+            return result .subtract (t .assign (this .direction) .multiply (result .dot (this .direction)));
          };
       })(),
       getPerpendicularVectorToLine: (function ()

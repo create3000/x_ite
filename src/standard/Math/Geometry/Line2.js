@@ -108,42 +108,15 @@ function (Vector2)
 
          return result .assign (this .direction) .multiply (d) .add (this .point);
       },
-      getClosestPointToLine: (function ()
-      {
-         const u = new Vector2 (0, 0);
-
-         return function (line, point)
-         {
-            const
-               p1 = this .point,
-               p2 = line .point,
-               d1 = this .direction,
-               d2 = line .direction;
-
-            let t = d1 .dot (d2);
-
-            if (Math .abs (t) >= 1)
-               return false;  // lines are parallel
-
-            u .assign (p2) .subtract (p1);
-
-            t = (u .dot (d1) - t * u .dot (d2)) / (1 - t * t);
-
-            point .assign (d1) .multiply (t) .add (p1);
-            return true;
-         };
-      })(),
       getPerpendicularVectorToPoint: (function ()
       {
          const t = new Vector2 (0, 0);
 
          return function (point, result)
          {
-            const d = result;
+            result .assign (this .point) .subtract (point);
 
-            d .assign (this .point) .subtract (point);
-
-            return d .subtract (t .assign (this .direction) .multiply (d .dot (this .direction)));
+            return result .subtract (t .assign (this .direction) .multiply (result .dot (this .direction)));
          };
       })(),
       intersectsLine: (function ()
