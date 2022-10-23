@@ -80,6 +80,10 @@ function (X3DField,
          {
             this .getValue () .assign (value);
          },
+         abs: function ()
+         {
+            return new (this .constructor) (Type .abs (this .getValue ()));
+         },
          add: function (vector)
          {
             return new (this .constructor) (Type .add (this .getValue (), vector .getValue ()));
@@ -111,6 +115,14 @@ function (X3DField,
          lerp: function (destination, t)
          {
             return new (this .constructor) (Type .lerp (this .getValue (), destination, t));
+         },
+         max: function (vector)
+         {
+            return new (this .constructor) (Type .max (this .getValue (), vector .getValue ()));
+         },
+         min: function (vector)
+         {
+            return new (this .constructor) (Type .min (this .getValue (), vector .getValue ()));
          },
          multiply: function (value)
          {

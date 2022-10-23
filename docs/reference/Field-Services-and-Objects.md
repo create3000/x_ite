@@ -483,6 +483,10 @@ Returns the second value of the vector.
 
 ### Methods
 
+#### SFVec2f **abs** ()
+
+Returns an SFVec2f whose value is the absolute value of the object.
+
 #### SFVec2f **add** (*vec*)
 
 Returns an SFVec2f whose value is the passed SFVec2f added, componentwise, to the object.
@@ -514,6 +518,14 @@ Returns the geometric length of this vector.
 #### SFVec2f **lerp** (*destVector, t*)
 
 Returns a SFVec2f whose value is the linear interpolation between this object's vector and *destVector* at value 0 &lt;= *t* &lt;= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+
+#### SFVec2f **min** (*vec*)
+
+Returns an SFVec2f whose value is the minimum of the passed SFVec2f and the object.
+
+#### SFVec2f **max** (*vec*)
+
+Returns an SFVec2f whose value is the maximum of the passed SFVec2f and the object.
 
 #### SFVec2f **multiply** (*number*)
 
@@ -561,6 +573,10 @@ Returns the third value of the vector.
 
 ### Methods
 
+#### SFVec3f **abs** ()
+
+Returns an SFVec3f whose value is the absolute value of the object.
+
 #### SFVec3f **add** (*vec*)
 
 Returns an SFVec3f whose value is the passed SFVec3f added, componentwise, to the object.
@@ -596,6 +612,14 @@ Returns the geometric length of this vector.
 #### SFVec3f **lerp** (*destVector, t*)
 
 Returns a SFVec3f whose value is the linear interpolation between this object's vector and *destVector* at value 0 &lt;= *t* &lt;= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+
+#### SFVec3f **min** (*vec*)
+
+Returns an SFVec3f whose value is the minimum of the passed SFVec3f and the object.
+
+#### SFVec3f **max** (*vec*)
+
+Returns an SFVec3f whose value is the maximum of the passed SFVec3f and the object.
 
 #### SFVec3f **multiply** (*number*)
 
@@ -647,6 +671,10 @@ Returns the fourth value of the vector.
 
 ### Methods
 
+#### SFVec4f **abs** ()
+
+Returns an SFVec4f whose value is the absolute value of the object.
+
 #### SFVec4f **add** (*vec*)
 
 Returns an SFVec4f whose value is the passed SFVec4f added, componentwise, to the object.
@@ -678,6 +706,14 @@ Returns the geometric length of this vector.
 #### SFVec4f **lerp** (*destVector, t*)
 
 Returns a SFVec4f whose value is the linear interpolation between this object's vector and *destVector* at value 0 &lt;= *t* &lt;= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+
+#### SFVec4f **min** (*vec*)
+
+Returns an SFVec4f whose value is the minimum of the passed SFVec4f and the object.
+
+#### SFVec4f **max** (*vec*)
+
+Returns an SFVec4f whose value is the maximum of the passed SFVec4f and the object.
 
 #### SFVec4f **multiply** (*number*)
 
