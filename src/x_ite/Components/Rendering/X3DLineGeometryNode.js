@@ -51,19 +51,25 @@ define ([
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Rendering/VertexArray",
    "standard/Math/Geometry/ViewVolume",
+   "standard/Math/Geometry/Box3",
+   "standard/Math/Geometry/Line2",
    "standard/Math/Geometry/Line3",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Vector4",
+   "standard/Math/Numbers/Matrix2",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
           VertexArray,
           ViewVolume,
+          Box3,
+          Line2,
           Line3,
           Vector2,
           Vector3,
           Vector4,
+          Matrix2,
           Matrix4)
 {
 "use strict";
@@ -99,49 +105,94 @@ function (X3DGeometryNode,
       },
       intersectsLine: (function ()
       {
-         const PICK_DISTANCE_FACTOR = 1 / 300;
-
          const
-            point1    = new Vector3 (0, 0, 0),
-            point2    = new Vector3 (0, 0, 0),
-            line      = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-            point     = new Vector3 (0, 0, 0),
-            vector    = new Vector3 (0, 0, 0),
-            clipPoint = new Vector3 (0, 0, 0);
+            bbox                      = new Box3 (),
+            min                       = new Vector3 (0, 0, 0),
+            max                       = new Vector3 (0, 0, 0),
+            screenScale1_             = new Vector3 (0, 0, 0),
+            screenScale2_             = new Vector3 (0, 0, 0),
+            modelViewProjectionMatrix = new Matrix4 (),
+            point1                    = new Vector3 (0, 0, 0),
+            point2                    = new Vector3 (0, 0, 0),
+            projected1                = new Vector2 (0, 0),
+            projected2                = new Vector2 (0, 0),
+            projected                 = new Line2 (Vector2 .Zero, Vector2 .yAxis),
+            closest                   = new Vector2 (0, 0),
+            ray                       = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+            line                      = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+            point                     = new Vector3 (0, 0, 0),
+            rotation                  = new Matrix2 (),
+            clipPoint                 = new Vector3 (0, 0, 0);
 
-         return function (hitRay, clipPlanes, modelViewMatrix, intersections)
+         return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
          {
-            if (this .intersectsBBox (hitRay, 1))
-            {
-               const vertices = this .getVertices ();
+            const
+               modelViewMatrix    = renderObject .getModelViewMatrix () .get (),
+               viewport           = renderObject .getViewVolume () .getViewport (),
+               extents            = bbox .assign (this .getBBox ()) .multRight (modelViewMatrix) .getExtents (min, max),
+               linePropertiesNode = appearanceNode .getLineProperties (),
+               lineWidth1_2       = Math .max (1.5, linePropertiesNode .getApplied () ? linePropertiesNode .getLinewidthScaleFactor () / 2 : 0),
+               screenScale1       = renderObject .getViewpoint () .getScreenScale (min, viewport, screenScale1_), // in m/px
+               offsets1           = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (lineWidth1_2)),
+               screenScale2       = renderObject .getViewpoint () .getScreenScale (max, viewport, screenScale2_), // in m/px
+               offsets2           = invModelViewMatrix .multDirMatrix (screenScale2 .multiply (lineWidth1_2));
 
-               for (let i = 0, length = vertices .length; i < length; i += 8)
+            if (this .intersectsBBox (hitRay, offsets1 .abs () .max (offsets2 .abs ())))
+            {
+               const
+                  pointer          = renderObject .getBrowser () .getPointer (),
+                  projectionMatrix = renderObject .getProjectionMatrix () .get (),
+                  clipPlanes       = renderObject .getLocalObjects (),
+                  vertices         = this .getVertices (),
+                  numVertices      = vertices .length;
+
+               modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
+
+               for (let i = 0; i < numVertices; i += 8)
                {
                   point1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
                   point2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-                  line .setPoints (point1, point2);
+                  ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projected1);
+                  ViewVolume .projectPointMatrix (point2, modelViewProjectionMatrix, viewport, projected2);
 
-                  if (line .getClosestPointToLine (hitRay, point))
+                  projected .setPoints (projected1, projected2);
+
+                  if (projected .getClosestPointToPoint (pointer, closest))
                   {
-                     if (line .getPerpendicularVectorToLine (hitRay, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
+                     const
+                        distance  = projected1 .distance (projected2),
+                        distance1 = projected1 .distance (closest),
+                        distance2 = projected2 .distance (closest);
+
+                     if (distance1 <= distance && distance2 <= distance)
                      {
-                        const distance = point1 .distance (point2);
-
-                        if (point1 .distance (point) <= distance && point2 .distance (point) <= distance)
+                        if (closest .distance (pointer) <= lineWidth1_2)
                         {
-                           if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                              continue;
+                           if (clipPlanes .length)
+                           {
+                              if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (closest)), clipPlanes))
+                                 continue;
+                           }
 
-                           intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
-                           return true;
+                           const
+                              direction = projected .direction,
+                              texCoordY = rotation .set (direction .x, direction .y, -direction .y, direction .x) .inverse () .multVecMatrix (pointer .copy () .subtract (closest)),
+                              texCoord  = texCoordY .set (distance1 / distance, (texCoordY .y / lineWidth1_2 + 1) / 2),
+                              normal    = point2 .copy () .subtract (point1) .normalize ();
+
+                           ViewVolume .unProjectRay (closest .x, closest .y, modelViewMatrix, projectionMatrix, viewport, ray);
+
+                           line .setPoints (point1, point2) .getClosestPointToLine (ray, point);
+
+                           intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
                         }
                      }
                   }
                }
             }
 
-            return false;
+            return intersections .length;
          };
       })(),
       intersectsBox: function (box, clipPlanes, modelViewMatrix)
@@ -208,7 +259,7 @@ function (X3DGeometryNode,
                texCoordArray [i + 5] = projectedPoint0 .y;
                texCoordArray [i + 6] = lengthSoFar;
 
-               lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs ();
+               lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .magnitude ();
             }
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);

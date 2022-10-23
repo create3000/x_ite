@@ -260,7 +260,7 @@ function (Fields,
                                     b .assign (intersection .point) .subtract (point2);
 
                                     var
-                                       c = a .add (b) .abs (),
+                                       c = a .add (b) .magnitude (),
                                        s = point1 .distance (point2);
 
                                     if (c <= s)

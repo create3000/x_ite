@@ -308,7 +308,7 @@ function (Fields,
       {
          modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
 
-         return modelViewMatrix .origin .abs ();
+         return modelViewMatrix .origin .magnitude ();
       },
       traverse: function (type, renderObject)
       {

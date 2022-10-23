@@ -143,7 +143,7 @@ function (Fields,
 
          this .cylinder .intersectsLine (hitRay, enter, exit);
 
-         return Vector3 .subtract (hitPoint, enter) .abs () > Vector3 .subtract (hitPoint, exit) .abs ();
+         return Vector3 .subtract (hitPoint, enter) .magnitude () > Vector3 .subtract (hitPoint, exit) .magnitude ();
       },
       getTrackPoint: function (hitRay, trackPoint)
       {
@@ -194,7 +194,7 @@ function (Fields,
 
             const
                axis   = new Line3 (new Vector3 (0, 0, 0), yAxis),
-               radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .abs ();
+               radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .magnitude ();
 
             this .cylinder = new Cylinder3 (axis, radius);
             this .disk     = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this ._diskAngle .getValue ());

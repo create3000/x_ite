@@ -143,40 +143,36 @@ function (Fields,
       },
       getFieldOfView: function ()
       {
-         var fov = this ._fieldOfView .getValue () * this ._fieldOfViewScale .getValue ();
+         const fov = this ._fieldOfView .getValue () * this ._fieldOfViewScale .getValue ();
 
          return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
       },
-      getScreenScale: (function ()
+      getScreenScale: function (point, viewport, screenScale)
       {
-         var screenScale = new Vector3 (0, 0, 0);
+         // Returns the screen scale in meter/pixel for on pixel.
 
-         return function (point, viewport)
-         {
-            // Returns the screen scale in meter/pixel for on pixel.
+         const
+            width  = viewport [2],
+            height = viewport [3];
 
-            var
-               width  = viewport [2],
-               height = viewport [3],
-               size   = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
+         let size = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
 
-            if (width > height)
-               size /= height;
-            else
-               size /= width;
+         if (width > height)
+            size /= height;
+         else
+            size /= width;
 
-            return screenScale .set (size, size, size);
-         };
-      })(),
+         return screenScale .set (size, size, size);
+      },
       getViewportSize: (function ()
       {
-         var viewportSize = new Vector2 (0, 0);
+         const viewportSize = new Vector2 (0, 0);
 
          return function (viewport, nearValue)
          {
             // Returns viewport size in meters.
 
-            var
+            const
                width  = viewport [2],
                height = viewport [3],
                size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
@@ -190,7 +186,7 @@ function (Fields,
       })(),
       getLookAtDistance: function (bbox)
       {
-         return (bbox .size .abs () / 2) / Math .tan (this .getFieldOfView () / 2);
+         return (bbox .size .magnitude () / 2) / Math .tan (this .getFieldOfView () / 2);
       },
       getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
       {

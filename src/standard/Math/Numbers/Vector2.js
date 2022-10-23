@@ -99,6 +99,12 @@ function (Algorithm)
          this .y = -this .y;
          return this;
       },
+      inverse: function ()
+      {
+         this .x = 1 / this .x;
+         this .y = 1 / this .y;
+         return this;
+      },
       add: function (vector)
       {
          this .x += vector .x;
@@ -161,7 +167,7 @@ function (Algorithm)
          return x * x +
                 y * y;
       },
-      abs: function ()
+      magnitude: function ()
       {
          return Math .hypot (this .x, this .y);
       },
@@ -178,6 +184,12 @@ function (Algorithm)
 
          this .x = x + t * (destination .x - x);
          this .y = y + t * (destination .y - y);
+         return this;
+      },
+      abs: function ()
+      {
+         this .x = Math .abs (this .x);
+         this .y = Math .abs (this .y);
          return this;
       },
       min: function (vector)
@@ -239,9 +251,15 @@ function (Algorithm)
    {
       Zero: new Vector2 (0, 0),
       One: new Vector2 (1, 1),
+      xAxis: new Vector2 (1, 0),
+      yAxis: new Vector2 (0, 1),
       negate: function (vector)
       {
          return vector .copy () .negate ();
+      },
+      inverse: function (vector)
+      {
+         return vector .copy () .inverse ();
       },
       add: function (lhs, rhs)
       {
@@ -273,19 +291,31 @@ function (Algorithm)
       },
       dot: function (lhs, rhs)
       {
-         return lhs .copy () .dot (rhs);
+         return lhs .dot (rhs);
+      },
+      magnitude: function (vector)
+      {
+         return vector .magnitude ();
+      },
+      distance: function (lhs, rhs)
+      {
+         return lhs .distance (rhs);
       },
       lerp: function (source, destination, t)
       {
          return source .copy () .lerp (destination, t);
       },
+      abs: function (vector)
+      {
+         return vector .copy () .abs ();
+      },
       min: function (lhs, rhs)
       {
-         return Vector2 .prototype .min .apply (lhs .copy (), arguments);
+         return this .prototype .min .apply (lhs .copy (), arguments);
       },
       max: function (lhs, rhs)
       {
-         return Vector2 .prototype .max .apply (lhs .copy (), arguments);
+         return this .prototype .max .apply (lhs .copy (), arguments);
       },
    });
 

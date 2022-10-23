@@ -106,6 +106,13 @@ function (Algorithm)
          this .z = -this .z;
          return this;
       },
+      inverse: function ()
+      {
+         this .x = 1 / this .x;
+         this .y = 1 / this .y;
+         this .z = 1 / this .z;
+         return this;
+      },
       add: function (vector)
       {
          this .x += vector .x;
@@ -190,7 +197,7 @@ function (Algorithm)
                 y * y +
                 z * z;
       },
-      abs: function ()
+      magnitude: function ()
       {
          return Math .hypot (this .x, this .y, this .z);
       },
@@ -221,6 +228,13 @@ function (Algorithm)
             return Algorithm .simpleSlerp (this, tmp .assign (destination), t);
          };
       })(),
+      abs: function ()
+      {
+         this .x = Math .abs (this .x);
+         this .y = Math .abs (this .y);
+         this .z = Math .abs (this .z);
+         return this;
+      },
       min: function (vector)
       {
          let
@@ -302,6 +316,10 @@ function (Algorithm)
       {
          return vector .copy () .negate ();
       },
+      inverse: function (vector)
+      {
+         return vector .copy () .inverse ();
+      },
       add: function (lhs, rhs)
       {
          return lhs .copy () .add (rhs);
@@ -336,7 +354,15 @@ function (Algorithm)
       },
       dot: function (lhs, rhs)
       {
-         return lhs .copy () .dot (rhs);
+         return lhs .dot (rhs);
+      },
+      magnitude: function (vector)
+      {
+         return vector .magnitude ();
+      },
+      distance: function (lhs, rhs)
+      {
+         return lhs .distance (rhs);
       },
       lerp: function (source, destination, t)
       {
@@ -346,13 +372,17 @@ function (Algorithm)
       {
          return source .copy () .slerp (destination, t);
       },
+      abs: function (vector)
+      {
+         return vector .copy () .abs ();
+      },
       min: function (lhs, rhs)
       {
-         return Vector3 .prototype .min .apply (lhs .copy (), arguments);
+         return this .prototype .min .apply (lhs .copy (), arguments);
       },
       max: function (lhs, rhs)
       {
-         return Vector3 .prototype .max .apply (lhs .copy (), arguments);
+         return this .prototype .max .apply (lhs .copy (), arguments);
       },
    });
 

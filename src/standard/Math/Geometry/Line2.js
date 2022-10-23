@@ -48,24 +48,24 @@
 
 
 define ([
-   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Vector2",
 ],
-function (Vector3)
+function (Vector2)
 {
 "use strict";
 
-   function Line3 (point, direction)
+   function Line2 (point, direction)
    {
       this .point     = point     .copy ();
       this .direction = direction .copy ();
    }
 
-   Line3 .prototype =
+   Line2 .prototype =
    {
-      constructor: Line3,
+      constructor: Line2,
       copy: function ()
       {
-         const copy = Object .create (Line3 .prototype);
+         const copy = Object .create (Line2 .prototype);
          copy .point     = this .point .copy ();
          copy .direction = this .direction .copy ();
          return copy;
@@ -108,9 +108,20 @@ function (Vector3)
 
          return result .assign (this .direction) .multiply (d) .add (this .point);
       },
-      getClosestPointToLine: (function ()
+      getPerpendicularVectorToPoint: (function ()
       {
-         const u = new Vector3 (0, 0, 0);
+         const t = new Vector2 (0, 0);
+
+         return function (point, result)
+         {
+            result .assign (this .point) .subtract (point);
+
+            return result .subtract (t .assign (this .direction) .multiply (result .dot (this .direction)));
+         };
+      })(),
+      intersectsLine: (function ()
+      {
+         const u = new Vector2 (0, 0);
 
          return function (line, point)
          {
@@ -120,107 +131,16 @@ function (Vector3)
                d1 = this .direction,
                d2 = line .direction;
 
-            let t = d1 .dot (d2);
+            const theta = d1 .dot (d2); // angle between both lines
 
-            if (Math .abs (t) >= 1)
-               return false;  // lines are parallel
+            if (Math .abs (theta) >= 1)
+               return false; // lines are parallel
 
             u .assign (p2) .subtract (p1);
 
-            t = (u .dot (d1) - t * u .dot (d2)) / (1 - t * t);
+            const t = (u .dot (d1) - theta * u .dot (d2)) / (1 - theta * theta);
 
             point .assign (d1) .multiply (t) .add (p1);
-            return true;
-         };
-      })(),
-      getPerpendicularVectorToPoint: (function ()
-      {
-         const t = new Vector3 (0, 0, 0);
-
-         return function (point, result)
-         {
-            result .assign (this .point) .subtract (point);
-
-            return result .subtract (t .assign (this .direction) .multiply (result .dot (this .direction)));
-         };
-      })(),
-      getPerpendicularVectorToLine: (function ()
-      {
-         const
-            d  = new Vector3 (0, 0, 0),
-            ad = new Vector3 (0, 0, 0);
-
-         return function (line, result)
-         {
-            const bd = result;
-
-            d .assign (this .point) .subtract (line .point);
-
-            const
-               re1 = d .dot (this .direction),
-               re2 = d .dot (line .direction),
-               e12 = this .direction .dot (line .direction),
-               E12 = e12 * e12;
-
-            const
-               a =  (re1 - re2 * e12) / (1 - E12),
-               b = -(re2 - re1 * e12) / (1 - E12);
-
-            ad .assign (this .direction) .multiply (a);
-            bd .assign (line .direction) .multiply (b);
-
-            return bd .subtract (ad) .add (d);
-         };
-      })(),
-      intersectsTriangle: (function ()
-      {
-         const
-            pvec = new Vector3 (0, 0, 0),
-            tvec = new Vector3 (0, 0, 0);
-
-         return function (A, B, C, uvt)
-         {
-            // Find vectors for two edges sharing vert0.
-            const
-               edge1 = B .subtract (A),
-               edge2 = C .subtract (A);
-
-            // Begin calculating determinant - also used to calculate U parameter.
-            pvec .assign (this .direction) .cross (edge2);
-
-            // If determinant is near zero, ray lies in plane of triangle.
-            const det = edge1 .dot (pvec);
-
-            // Non culling intersection.
-
-            if (det === 0)
-               return false;
-
-               const inv_det = 1 / det;
-
-            // Calculate distance from vert0 to ray point.
-            tvec .assign (this .point) .subtract (A);
-
-            // Calculate U parameter and test bounds.
-            const u = tvec .dot (pvec) * inv_det;
-
-            if (u < 0 || u > 1)
-               return false;
-
-            // Prepare to test V parameter.
-            const qvec = tvec .cross (edge1);
-
-            // Calculate V parameter and test bounds.
-            const v = this .direction .dot (qvec) * inv_det;
-
-            if (v < 0 || u + v > 1)
-               return false;
-
-            //let t = edge2 .dot (qvec) * inv_det;
-
-            uvt .u = u;
-            uvt .v = v;
-            uvt .t = 1 - u - v;
 
             return true;
          };
@@ -231,13 +151,13 @@ function (Vector3)
       },
    };
 
-   Line3 .Points = function (point1, point2)
+   Line2 .Points = function (point1, point2)
    {
-      const line = Object .create (Line3 .prototype);
+      const line = Object .create (Line2 .prototype);
       line .point     = point1 .copy ();
-      line .direction = Vector3 .subtract (point2, point1) .normalize ();
+      line .direction = Vector2 .subtract (point2, point1) .normalize ();
       return line;
    };
 
-   return Line3;
+   return Line2;
 });

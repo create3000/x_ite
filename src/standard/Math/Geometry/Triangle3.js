@@ -66,7 +66,7 @@ function (Vector3,
 
          return function (a, b, c)
          {
-            return B .assign (b) .subtract (a) .cross (C .assign (c) .subtract (a)) .abs () / 2;
+            return B .assign (b) .subtract (a) .cross (C .assign (c) .subtract (a)) .magnitude () / 2;
          };
       })(),
       normal: function (v1, v2, v3, normal)

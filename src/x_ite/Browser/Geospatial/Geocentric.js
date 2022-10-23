@@ -72,8 +72,8 @@ function (Vector3,
       slerp: function (source, destination, t)
       {
          const
-            sourceLength      = source      .abs (),
-            destinationLength = destination .abs ();
+            sourceLength      = source      .magnitude (),
+            destinationLength = destination .magnitude ();
 
          source      .normalize ();
          destination .normalize ();

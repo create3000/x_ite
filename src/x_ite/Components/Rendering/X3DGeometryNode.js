@@ -466,13 +466,6 @@ function (Fields,
 
          return normals_;
       },
-      isClipped: function (point, clipPlanes)
-      {
-         return clipPlanes .some (function (clipPlane)
-         {
-            return clipPlane .isClipped (point);
-         });
-      },
       transformLine: function (hitRay)
       {
          // Apply sceen nodes transformation in place here.
@@ -480,6 +473,13 @@ function (Fields,
       transformMatrix: function (hitRay)
       {
          // Apply sceen nodes transformation in place here.
+      },
+      isClipped: function (point, clipPlanes)
+      {
+         return clipPlanes .some (function (clipPlane)
+         {
+            return clipPlane .isClipped (point);
+         });
       },
       intersectsLine: (function ()
       {
@@ -491,19 +491,21 @@ function (Fields,
             v2              = new Vector3 (0, 0, 0),
             clipPoint       = new Vector3 (0, 0, 0);
 
-         return function (hitRay, clipPlanes, modelViewMatrix_, intersections)
+         return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
          {
             if (this .intersectsBBox (hitRay))
             {
-               this .transformLine (hitRay);                                       // Apply screen transformations from screen nodes.
-               this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
+               this .transformLine (hitRay); // Apply screen transformations from screen nodes.
+               this .transformMatrix (modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())); // Apply screen transformations from screen nodes.
 
                const
-                  texCoords  = this .multiTexCoords [0] .getValue (),
-                  normals    = this .normals .getValue (),
-                  vertices   = this .vertices .getValue ();
+                  clipPlanes  = renderObject .getLocalObjects (),
+                  texCoords   = this .multiTexCoords [0] .getValue (),
+                  normals     = this .normals .getValue (),
+                  vertices    = this .vertices .getValue (),
+                  vertexCount = this .vertexCount;
 
-               for (let i = 0, length = this .vertexCount; i < length; i += 3)
+               for (let i = 0; i < vertexCount; i += 3)
                {
                   const i4 = i * 4;
 
@@ -526,8 +528,11 @@ function (Fields,
                                                 t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
                                                 t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                        continue;
+                     if (clipPlanes .length)
+                     {
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                           continue;
+                     }
 
                      const texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
                                                    t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
@@ -535,8 +540,8 @@ function (Fields,
                      const i3 = i * 3;
 
                      const normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
-                                                   t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
-                                                   t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
+                                                 t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
+                                                 t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
 
                      intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
                   }
@@ -546,22 +551,59 @@ function (Fields,
             return intersections .length;
          };
       })(),
+      getPlanesWithOffset: (function ()
+      {
+         const
+            min    = new Vector3 (0, 0, 0),
+            max    = new Vector3 (0, 0, 0),
+            planes = [ ];
+
+         for (let i = 0; i < 5; ++ i)
+            planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
+
+         return function (minX, minY, minZ, maxX, maxY, maxZ)
+         {
+            min .set (minX, minY, minZ);
+            max .set (maxX, maxY, maxZ);
+
+            for (let i = 0; i < 5; ++ i)
+               planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+
+            return planes;
+         };
+      })(),
       intersectsBBox: (function ()
       {
          const intersection = new Vector3 (0, 0, 0);
 
-         return function (hitRay, offset = 0)
+         return function (hitRay, offsets)
          {
-            const
-               planes = this .planes,
-               min    = this .min,
-               max    = this .max,
-               minX   = min .x - offset,
-               maxX   = max .x + offset,
-               minY   = min .y - offset,
-               maxY   = max .y + offset,
-               minZ   = min .z - offset,
-               maxZ   = max .z + offset;
+            if (offsets)
+            {
+               var
+                  min    = this .min,
+                  max    = this .max,
+                  minX   = min .x - offsets .x,
+                  maxX   = max .x + offsets .x,
+                  minY   = min .y - offsets .y,
+                  maxY   = max .y + offsets .y,
+                  minZ   = min .z - offsets .z,
+                  maxZ   = max .z + offsets .z,
+                  planes = this .getPlanesWithOffset (minX, minY, minZ, maxX, maxY, maxZ);
+            }
+            else
+            {
+               var
+                  min    = this .min,
+                  max    = this .max,
+                  minX   = min .x,
+                  maxX   = max .x,
+                  minY   = min .y,
+                  maxY   = max .y,
+                  minZ   = min .z,
+                  maxZ   = max .z,
+                  planes = this .planes;
+            }
 
             // front
             if (planes [0] .intersectsLine (hitRay, intersection))
@@ -675,7 +717,9 @@ function (Fields,
             if (this .geometryType < 2)
                return;
 
-            const flatShading = this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
+            const
+               browser     = this .getBrowser (),
+               flatShading = browser .getBrowserOptions () .getShading () === Shading .FLAT;
 
             if (flatShading === this .flatShading)
                return;
@@ -684,7 +728,7 @@ function (Fields,
 
             // Generate flat normals if needed.
 
-            const gl = this .getBrowser () .getContext ();
+            const gl = browser .getContext ();
 
             if (flatShading)
             {

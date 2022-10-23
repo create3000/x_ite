@@ -230,7 +230,7 @@ getMaterialColor ()
          float specularFactor = shininessFactor > 0.0 ? pow (max (dot (N, H), 0.0), shininessFactor) : 1.0;
          vec3  specularTerm   = specularColor * specularFactor;
 
-         float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
+         float attenuationFactor     = di ? 1.0 : 1.0 / max (dot (c, vec3 (1.0, dL, dL * dL)), 1.0);
          float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
          float attenuationSpotFactor = attenuationFactor * spotFactor;
          vec3  ambientTerm           = light .ambientIntensity * ambientColor;

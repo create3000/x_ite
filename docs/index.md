@@ -906,7 +906,7 @@ Additionally files can be compressed using GZip compression.
 | Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml |
 | VRML         | .wrl, .wrz     | model/vrml     |
 
-For more information see [How to Configure Your Web Server](/x_ite/How-To-Configure-Your-Web-Server.html).
+For more information see [How to Configure Your Web Server](w-To-Configure-Your-Web-Server.html).
 
 ### Fallback Content
 
@@ -990,7 +990,7 @@ A MFString value with urls that should be loaded on page load. If no url attribu
 
 ### More Options
 
-More options can be adjusted using the [Browser Object](/x_ite/reference/Browser-Services.html#browser-object) and [Browser Options](/x_ite/reference/Browser-Services.html#browser-options) for scene specific adjustments.
+More options can be adjusted using the [Browser Object](reference/Browser-Services.html#browser-object) and [Browser Options](reference/Browser-Services.html#browser-options) for scene specific adjustments.
 
 ## Keyboard Shortcuts
 
@@ -1069,13 +1069,13 @@ Browser .getContextMenu () .setUserMenu (function ()
 
 X\_ITE is designed to provide access to a browser and its contained scene graph via JavaScript, either within an internal X3D Script node or an external HTML script.
 
-[Learn more how to access the external browser.](/x_ite/Accessing-the-External-Browser.html)
+[Learn more how to access the external browser.](Accessing-the-External-Browser.html)
 
 ## XHTML DOM Integration
 
 XHTML DOM integration allows you to integrate 3D content seamlessly into your webpage, with just a JavaScript file included the scene can be written directly into the XHTML markup. There are no further plug-ins needed anymore.
 
-[Learn more about how XHTML and X3D can operate together.](/x_ite/XHTML-DOM-Integration.html)
+[Learn more about how XHTML and X3D can operate together.](XHTML-DOM-Integration.html)
 
 We show you a simple example how you can manipulate the X3D DOM in JavaScript like you would do it with any HTML.
 

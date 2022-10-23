@@ -6,6 +6,11 @@ layout: single
 ---
 # Prototype Services
 
+* [X3DProtoDeclaration](#x3dprotodeclaration)
+* [X3DExternProtoDeclaration](#x3dexternprotodeclaration)
+* [ProtoDeclarationArray](#protodeclarationarray)
+* [ExternProtoDeclarationArray](#externprotodeclarationarray)
+
 ## X3DProtoDeclaration
 
 A PROTO declaration is represented by the X3DProtoDeclaration object. This object can only be fetched using the X3DExecutionContext object.

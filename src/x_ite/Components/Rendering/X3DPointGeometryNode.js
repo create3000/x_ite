@@ -49,11 +49,15 @@
 
 define ([
    "x_ite/Components/Rendering/X3DGeometryNode",
+   "standard/Math/Geometry/ViewVolume",
+   "standard/Math/Geometry/Box3",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
+          ViewVolume,
+          Box3,
           Vector2,
           Vector3,
           Matrix4)
@@ -77,35 +81,69 @@ function (X3DGeometryNode,
       constructor: X3DLineGeometryNode,
       intersectsLine: (function ()
       {
-         const PICK_DISTANCE_FACTOR = 1 / 300;
-
          const
-            point     = new Vector3 (0, 0, 0),
-            vector    = new Vector3 (0, 0, 0),
-            clipPoint = new Vector3 (0, 0, 0);
+            bbox                      = new Box3 (),
+            min                       = new Vector3 (0, 0, 0),
+            max                       = new Vector3 (0, 0, 0),
+            screenScale1_             = new Vector3 (0, 0, 0),
+            screenScale2_             = new Vector3 (0, 0, 0),
+            point                     = new Vector3 (0, 0, 0),
+            pointSizePoint            = new Vector3 (0, 0, 0),
+            modelViewProjectionMatrix = new Matrix4 (),
+            projected                 = new Vector2 (0, 0),
+            clipPoint                 = new Vector3 (0, 0, 0);
 
-         return function (hitRay, clipPlanes, modelViewMatrix, intersections)
+         return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
          {
-            if (this .intersectsBBox (hitRay, 1))
-            {
-               const vertices = this .getVertices ();
+            const
+               modelViewMatrix     = renderObject .getModelViewMatrix () .get (),
+               viewport            = renderObject .getViewVolume () .getViewport (),
+               extents             = bbox .assign (this .getBBox ()) .multRight (modelViewMatrix) .getExtents (min, max),
+               pointPropertiesNode = appearanceNode .getPointProperties (),
+               pointSize1          = Math .max (1.5, pointPropertiesNode .getPointSize (min) / 2),
+               screenScale1        = renderObject .getViewpoint () .getScreenScale (min, viewport, screenScale1_), // in m/px
+               offsets1            = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (pointSize1)),
+               pointSize2          = Math .max (1.5, pointPropertiesNode .getPointSize (max) / 2),
+               screenScale2        = renderObject .getViewpoint () .getScreenScale (max, viewport, screenScale2_), // in m/px
+               offsets2            = invModelViewMatrix .multDirMatrix (screenScale2 .multiply (pointSize2));
 
-               for (let i = 0, length = vertices .length; i < length; i += 4)
+            if (this .intersectsBBox (hitRay, offsets1 .abs () .max (offsets2 .abs ())))
+            {
+               const
+                  pointer          = renderObject .getBrowser () .getPointer (),
+                  projectionMatrix = renderObject .getProjectionMatrix () .get (),
+                  clipPlanes       = renderObject .getLocalObjects (),
+                  vertices         = this .getVertices (),
+                  numVertices      = vertices .length;
+
+               modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
+
+               for (let i = 0; i < numVertices; i += 4)
                {
                   point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
 
-                  if (hitRay .getPerpendicularVectorToPoint (point, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
-                  {
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                        continue;
+                  ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, projected);
 
-                     intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
-                     return true;
+                  const pointSize1_2 = Math .max (1.5, pointPropertiesNode .getPointSize (modelViewMatrix .multVecMatrix (pointSizePoint .assign (point))) / 2);
+
+                  if (projected .distance (pointer) <= pointSize1_2)
+                  {
+                     if (clipPlanes .length)
+                     {
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                           continue;
+                     }
+
+                     const
+                        texCoord = pointer .copy () .subtract (projected) .divide (pointSize1_2) .add (Vector2 .One) .divide (2),
+                        normal   = modelViewMatrix .submatrix .transpose () .z .copy () .normalize ();
+
+                     intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
                   }
                }
             }
 
-            return false;
+            return intersections .length;
          };
       })(),
       intersectsBox: function (box, clipPlanes, modelViewMatrix)

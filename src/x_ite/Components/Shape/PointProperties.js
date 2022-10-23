@@ -53,12 +53,16 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
    "x_ite/Base/X3DConstants",
+   "standard/Math/Algorithm",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DAppearanceChildNode,
-          X3DConstants)
+          X3DConstants,
+          Algorithm,
+          Vector3)
 {
 "use strict";
 
@@ -98,6 +102,10 @@ function (Fields,
       {
          X3DAppearanceChildNode .prototype .initialize .call (this);
 
+         const gl = this .getBrowser () .getContext ();
+
+         this .pointSizeRange = gl .getParameter (gl .ALIASED_POINT_SIZE_RANGE);
+
          this ._pointSizeScaleFactor .addInterest ("set_pointSizeScaleFactor__", this);
          this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
          this ._pointSizeMaxValue    .addInterest ("set_pointSizeMaxValue__",    this);
@@ -110,17 +118,30 @@ function (Fields,
          this .set_pointSizeAttenuation__ ();
          this .set_markerType__ ();
       },
+      getPointSize: function (point)
+      {
+         const
+            pointSizeAttenuation = this .pointSizeAttenuation,
+            dL                   = point .magnitude ();
+
+         let pointSize = this .pointSizeScaleFactor;
+
+         pointSize /= pointSizeAttenuation [0] + pointSizeAttenuation [1] * dL + pointSizeAttenuation [2] * (dL * dL);
+         pointSize  = Algorithm .clamp (pointSize, this .pointSizeMinValue, this .pointSizeMaxValue);
+
+         return pointSize;
+      },
       set_pointSizeScaleFactor__: function ()
       {
          this .pointSizeScaleFactor = Math .max (1, this ._pointSizeScaleFactor .getValue ());
       },
       set_pointSizeMinValue__: function ()
       {
-         this .pointSizeMinValue = Math .max (0, this ._pointSizeMinValue .getValue ());
+         this .pointSizeMinValue = Algorithm .clamp (this ._pointSizeMinValue .getValue (), this .pointSizeRange [0], this .pointSizeRange [1]);
       },
       set_pointSizeMaxValue__: function ()
       {
-         this .pointSizeMaxValue = Math .max (0, this ._pointSizeMaxValue .getValue ());
+         this .pointSizeMaxValue = Algorithm .clamp (this ._pointSizeMaxValue .getValue (), this .pointSizeRange [0], this .pointSizeRange [1]);
       },
       set_pointSizeAttenuation__: function ()
       {

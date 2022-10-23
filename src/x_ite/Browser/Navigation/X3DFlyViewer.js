@@ -453,7 +453,7 @@ function ($,
             else
                rubberBandRotation .setFromToVec (up .multVecRot (axis .set (0, 0, -1)), up .multVecRot (direction .assign (this .direction)));
 
-            var rubberBandLength = this .direction .abs ();
+            var rubberBandLength = this .direction .magnitude ();
 
             // Determine positionOffset.
 

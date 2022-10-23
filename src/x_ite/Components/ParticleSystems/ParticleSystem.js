@@ -866,14 +866,22 @@ function (Fields,
             // Normal
 
             for (let i = 0; i < 3; ++ i)
-               data [24 + i] = rotation [i + 6];
+               data [24 + i] = rotation [6 + i];
 
             // Vertices
 
             size .set (this ._particleSize .x, this ._particleSize .y, 1);
 
             for (let i = 0; i < 6; ++ i)
-               data .set (rotation .multVecMatrix (vertex .assign (quad [i]) .multVec (size)), 27 + i * 4);
+            {
+               const index = 27 + i * 4;
+
+               rotation .multVecMatrix (vertex .assign (quad [i]) .multVec (size))
+
+               data [index + 0] = vertex .x;
+               data [index + 1] = vertex .y;
+               data [index + 2] = vertex .z;
+            }
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
             gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);

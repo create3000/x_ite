@@ -157,7 +157,7 @@ function (Fields,
       },
       set_fieldOfView__: function ()
       {
-         var
+         const
             length           = this ._fieldOfView .length,
             fieldOfViewScale = this ._fieldOfViewScale .getValue ();
 
@@ -245,38 +245,35 @@ function (Fields,
       {
          return 1e5;
       },
-      getScreenScale: (function ()
+      getScreenScale: function (point, viewport, screenScale)
       {
-         var screenScale = new Vector3 (0, 0, 0);
+         const
+            width  = viewport [2],
+            height = viewport [3],
+            sizeX  = this .sizeX,
+            sizeY  = this .sizeY,
+            aspect = width / height;
 
-         return function (point, viewport)
+         if (aspect > sizeX / sizeY)
          {
-            var
-               width  = viewport [2],
-               height = viewport [3],
-               sizeX  = this .sizeX,
-               sizeY  = this .sizeY,
-               aspect = width / height;
-
-            if (aspect > sizeX / sizeY)
-            {
-               var s = sizeY / height;
-
-               return screenScale .set (s, s, s);
-            }
-
-            var s = sizeX / width;
+            const s = sizeY / height;
 
             return screenScale .set (s, s, s);
-         };
-      })(),
+         }
+         else
+         {
+            const s = sizeX / width;
+
+            return screenScale .set (s, s, s);
+         }
+      },
       getViewportSize: (function ()
       {
-         var viewportSize = new Vector2 (0, 0);
+         const viewportSize = new Vector2 (0, 0);
 
          return function (viewport, nearValue)
          {
-            var
+            const
                width  = viewport [2],
                height = viewport [3],
                sizeX  = this .sizeX,
@@ -291,11 +288,11 @@ function (Fields,
       })(),
       getLookAtDistance: function (bbox)
       {
-         return bbox .size .abs () / 2 + 10;
+         return bbox .size .magnitude () / 2 + 10;
       },
       getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
       {
-         var
+         const
             width  = viewport [2],
             height = viewport [3],
             aspect = width / height,
@@ -304,18 +301,20 @@ function (Fields,
 
          if (aspect > sizeX / sizeY)
          {
-            var
+            const
                center  = (this .minimumX + this .maximumX) / 2,
                size1_2 = (sizeY * aspect) / 2;
 
             return Camera .ortho (center - size1_2, center + size1_2, this .minimumY, this .maximumY, nearValue, farValue, this .projectionMatrix);
          }
+         else
+         {
+            const
+               center  = (this .minimumY + this .maximumY) / 2,
+               size1_2 = (sizeX / aspect) / 2;
 
-         var
-            center  = (this .minimumY + this .maximumY) / 2,
-            size1_2 = (sizeX / aspect) / 2;
-
-         return Camera .ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
+            return Camera .ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
+         }
       },
    });
 

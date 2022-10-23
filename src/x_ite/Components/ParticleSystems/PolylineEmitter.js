@@ -218,7 +218,7 @@ function (Fields,
                vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
                vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-               polylinesArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .abs ();
+               polylinesArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .magnitude ();
             }
 
             polylinesArray .set (vertices, verticesIndex * 4);

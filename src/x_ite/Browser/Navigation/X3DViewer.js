@@ -132,11 +132,11 @@ function (X3DBaseNode,
             ViewVolume .unProjectPoint (x, this .getBrowser () .getViewport () [3] - y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
 
             if (viewpoint instanceof OrthoViewpoint)
-               return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .abs ());
+               return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .magnitude ());
 
             const direction = far .normalize ();
 
-            return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .abs () / direction .dot (axis));
+            return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .magnitude () / direction .dot (axis));
          };
       })(),
       getDistanceToCenter: function (distance, positionOffset)

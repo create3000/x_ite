@@ -661,7 +661,7 @@ Some built-in variables are enumerated and have special values and meanings. The
          <td></td>
          <td></td>
          <td></td>
-         <td>defined if logarithmic depth buffer is enabled in <a href="https://create3000.github.io/x_ite/reference/Browser-Services.html#string-getbrowseroption-string-name">browser options</a>.</td>
+         <td>defined if logarithmic depth buffer is enabled in <a href="reference/Browser-Services.html#string-getbrowseroption-string-name">browser options</a>.</td>
       </tr>
       <tr>
          <td colspan="5"><hr/>

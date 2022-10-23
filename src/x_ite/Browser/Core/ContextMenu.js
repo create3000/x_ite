@@ -562,7 +562,7 @@ function ($,
             .addClass (menu .className)
             .addClass ("context-menu-root")
             .css ({ "left": x, "top": y })
-            .appendTo (layer);
+            .appendTo (options .appendTo);
 
          for (const k in menu .items)
             ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1, hide));
@@ -664,10 +664,10 @@ function ($,
                      if (item .selected)
                         input .attr ("checked", "checked");
 
-                     for (const key in item .events)
+                     for (const k in item .events)
                      {
-                        if (typeof item .events [key] === "function")
-                           input .on (key, item .events [key]);
+                        if (typeof item .events [k] === "function")
+                           input .on (k, item .events [k]);
                      }
 
                      li .addClass ("context-menu-input");

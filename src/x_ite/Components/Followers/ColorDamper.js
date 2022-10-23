@@ -132,7 +132,7 @@ function (Fields,
       },
       equals: function (lhs, rhs, tolerance)
       {
-         return a .assign (lhs) .subtract (rhs) .abs () < tolerance;
+         return a .assign (lhs) .subtract (rhs) .magnitude () < tolerance;
       },
       interpolate: function (source, destination, weight)
       {

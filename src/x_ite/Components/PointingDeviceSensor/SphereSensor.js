@@ -129,7 +129,7 @@ function (Fields,
 
          if (this .sphere .intersectsLine (hitRay, trackPoint, exit))
          {
-            if ((Vector3 .subtract (hitRay .point, exit) .abs () < Vector3 .subtract (hitRay .point, trackPoint) .abs ()) - behind)
+            if ((Vector3 .subtract (hitRay .point, exit) .magnitude () < Vector3 .subtract (hitRay .point, trackPoint) .magnitude ()) - behind)
                trackPoint .assign (exit);
 
             return true;
@@ -151,7 +151,7 @@ function (Fields,
                center   = new Vector3 (0, 0, 0);
 
             this .zPlane = new Plane3 (center, this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ()); // Screen aligned Z-plane
-            this .sphere = new Sphere3 (hitPoint .abs (), center);
+            this .sphere = new Sphere3 (hitPoint .magnitude (), center);
             this .behind = this .zPlane .getDistanceToPoint (hitPoint) < 0;
 
             this .fromVector  .assign (hitPoint);
@@ -198,7 +198,7 @@ function (Fields,
                dirFromCenter = Vector3 .subtract (trackPoint, this .sphere .center) .normalize (),
                normal        = Vector3 .cross (triNormal, dirFromCenter) .normalize ();
 
-            var point1 = Vector3 .subtract (trackPoint, normal .multiply (Vector3 .subtract (tangentPoint, trackPoint) .abs ()));
+            var point1 = Vector3 .subtract (trackPoint, normal .multiply (Vector3 .subtract (tangentPoint, trackPoint) .magnitude ()));
 
             hitRay = new Line3 (point1, Vector3 .subtract (this .sphere .center, point1) .normalize ());
 

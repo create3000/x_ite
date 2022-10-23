@@ -242,7 +242,7 @@ function (Quaternion,
             const
                cos_angle = Algorithm .clamp (from .dot (to), -1, 1),
                crossvec  = cv .assign (from) .cross (to) .normalize (),
-               crosslen  = crossvec .abs ();
+               crosslen  = crossvec .magnitude ();
 
             if (crosslen === 0)
             {

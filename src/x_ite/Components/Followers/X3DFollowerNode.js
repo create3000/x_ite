@@ -116,7 +116,7 @@ function (X3DChildNode,
       },
       equals: function (lhs, rhs, tolerance)
       {
-         return this .a .assign (lhs) .subtract (rhs) .abs () < tolerance;
+         return this .a .assign (lhs) .subtract (rhs) .magnitude () < tolerance;
       },
       interpolate: function (source, destination, weight)
       {

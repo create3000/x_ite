@@ -39,8 +39,8 @@ main ()
 {
    vec3 projected0 = projectPoint (x3d_Vertex0, modelViewProjectionMatrix, viewport);
    vec3 projected1 = projectPoint (x3d_Vertex1, modelViewProjectionMatrix, viewport);
-   vec2 normal     = normalize (projected1 .xy - projected0 .xy);
-   vec2 offset     = vec2 (-normal .y, normal .x) * scale;
+   vec2 direction  = normalize (projected1 .xy - projected0 .xy);
+   vec2 offset     = vec2 (-direction .y, direction .x) * scale;
 
    // 0 - 3
    // | \ |
