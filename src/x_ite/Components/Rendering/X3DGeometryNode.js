@@ -946,6 +946,7 @@ function (Fields,
          if (this .vertexCount)
          {
             // Use default render functions.
+
             delete this .depth;
             delete this .display;
             delete this .displayParticlesDepth;
