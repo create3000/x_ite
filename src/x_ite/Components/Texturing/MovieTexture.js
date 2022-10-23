@@ -208,7 +208,7 @@ function ($,
                width  = video .videoWidth,
                height = video .videoHeight,
                canvas = this .canvas [0],
-               cx     = canvas .getContext ("2d");
+               cx     = canvas .getContext ("2d", { willReadFrequently: true });
 
             if (! Algorithm .isPowerOfTwo (width) || ! Algorithm .isPowerOfTwo (height))
                throw new Error ("The movie texture is a non power-of-two texture.");

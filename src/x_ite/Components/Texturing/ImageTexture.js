@@ -174,7 +174,7 @@ function ($,
                gl     = this .getBrowser () .getContext (),
                image  = this .image [0],
                canvas = this .canvas [0],
-               cx     = canvas .getContext ("2d");
+               cx     = canvas .getContext ("2d", { willReadFrequently: true });
 
             let
                width  = image .width,

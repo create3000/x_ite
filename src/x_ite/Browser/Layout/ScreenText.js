@@ -81,7 +81,7 @@ function ($,
       this .texCoordArray = X3DGeometryNode .createArray ();
       this .textureNode   = new PixelTexture (text .getExecutionContext ());
       this .canvas        = $("<canvas></canvas>");
-      this .context       = this .canvas [0] .getContext ("2d");
+      this .context       = this .canvas [0] .getContext ("2d", { willReadFrequently: true });
       this .matrix        = new Matrix4 ();
 
       this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
