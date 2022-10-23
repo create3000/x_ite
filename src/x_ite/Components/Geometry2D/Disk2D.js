@@ -74,8 +74,6 @@ function (Fields,
 
       this ._innerRadius .setUnit ("length");
       this ._outerRadius .setUnit ("length");
-
-      this .setBase (X3DGeometryNode);
    }
 
    Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -235,7 +233,6 @@ function (Fields,
 
          this .setGeometryType (2);
          this .setSolid (this ._solid .getValue ());
-
          this .setBase (X3DGeometryNode);
       },
       setBase: function (base)

@@ -208,6 +208,8 @@ function ($,
             if (context .prototype .initialize)
                context .prototype .initialize .call (this);
          }
+
+         this .processEvents ();
       },
       initialized: function ()
       {
@@ -372,6 +374,8 @@ function ($,
 
             if (context .prototype .initialize)
                context .prototype .initialize .call (browser);
+
+            browser .processEvents ();
          });
       },
    });
