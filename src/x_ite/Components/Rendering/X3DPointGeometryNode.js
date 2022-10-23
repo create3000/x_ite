@@ -136,7 +136,7 @@ function (X3DGeometryNode,
 
                      const
                         texCoord = pointer .copy () .subtract (projected) .divide (pointSize1_2) .add (Vector2 .One) .divide (2),
-                        normal   = modelViewMatrix .submatrix .inverse () .z .normalize () .copy ();
+                        normal   = modelViewMatrix .submatrix .transpose () .z .copy () .normalize ();
 
                      intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
                      return true;
