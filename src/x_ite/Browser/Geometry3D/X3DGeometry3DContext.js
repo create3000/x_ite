@@ -86,7 +86,6 @@ function (BoxOptions,
       {
          return getOptionNode .call (this, "getSphereOptions", QuadSphereOptions);
       },
-
       setPrimitiveQuality3D: function (primitiveQuality)
       {
          const
@@ -106,18 +105,18 @@ function (BoxOptions,
             }
             case PrimitiveQuality .MEDIUM:
             {
-               cone     ._xDimension = 32;
-               cylinder ._xDimension = 32;
-               sphere   ._xDimension = 64;
-               sphere   ._yDimension = 31;
-               break;
-            }
-            case PrimitiveQuality .HIGH:
-            {
                cone     ._xDimension = 20;
                cylinder ._xDimension = 20;
                sphere   ._xDimension = 32;
                sphere   ._yDimension = 15;
+               break;
+            }
+            case PrimitiveQuality .HIGH:
+            {
+               cone     ._xDimension = 32;
+               cylinder ._xDimension = 32;
+               sphere   ._xDimension = 64;
+               sphere   ._yDimension = 31;
                break;
             }
          }
