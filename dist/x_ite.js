@@ -1,4 +1,4 @@
-/* X_ITE v6.1.0-1156 */
+/* X_ITE v6.1.0-1157 */
 
 (function (global, factory)
 {
@@ -17079,19 +17079,10 @@ function (X3DField,
       },
       toStream: function (stream)
       {
-         const
-            array = this .array,
-            int   = new SFInt32 ();
-
          stream .string += this .width + " " + this .height + " " + this .comp;
 
-         for (let i = 0, length = this .width * this .height; i < length; ++ i)
-         {
-            stream .string += " 0x";
-
-            int .set (array [i]);
-            int .toXMLStream (stream);
-         }
+         for (const value of this .array)
+            stream .string += " 0x" + value .toString (16);
       },
       toVRMLStream: function (stream)
       {
