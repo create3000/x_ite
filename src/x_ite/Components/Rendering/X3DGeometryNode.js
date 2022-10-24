@@ -191,6 +191,7 @@ function (Fields,
          this ._rebuild .addInterest ("rebuild", this);
 
          this .frontFace             = gl .CCW;
+         this .backFace              = new Map ([[gl .CCW, gl .CW], [gl .CW, gl .CCW]]);
          this .attribBuffers         = [ ];
          this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
          this .texCoordBuffers       = Array .from ({length: browser .getMaxTextures ()}, () => gl .createBuffer ());
@@ -267,7 +268,9 @@ function (Fields,
       },
       setCCW: function (value)
       {
-         this .frontFace = value ? this .getBrowser () .getContext () .CCW : this .getBrowser () .getContext () .CW;
+         const gl = this .getBrowser () .getContext ();
+
+         this .frontFace = value ? gl .CCW : gl .CW;
       },
       getAttrib: function ()
       {
@@ -1036,7 +1039,7 @@ function (Fields,
             {
                const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
 
-               gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
+               gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
 
                if (context .transparent || back !== front)
                {
@@ -1175,7 +1178,7 @@ function (Fields,
 
             const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
 
-            gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
+            gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
 
             if (context .transparent || back !== front)
             {
