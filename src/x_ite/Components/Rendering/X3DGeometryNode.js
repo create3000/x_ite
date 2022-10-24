@@ -912,7 +912,7 @@ function (Fields,
          gl .bindBuffer (gl .ARRAY_BUFFER, this .fogDepthBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .fogDepths .getValue (), gl .DYNAMIC_DRAW);
 
-         this .fogCoords = !! (this .fogDepths .length);
+         this .fogCoords = !! this .fogDepths .length;
 
          if (this .fogCoords !== lastFogCoords)
             this .updateVertexArrays ();
@@ -924,7 +924,7 @@ function (Fields,
          gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .DYNAMIC_DRAW);
 
-         this .colorMaterial = !! (this .colors .length);
+         this .colorMaterial = !! this .colors .length;
 
          if (this .colorMaterial !== lastColorMaterial)
             this .updateVertexArrays ();
@@ -982,7 +982,7 @@ function (Fields,
             backMaterialNode = appearanceNode .backMaterialNode,
             frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
 
-         if (this .solid || !backMaterialNode || frontShaderNode .getWireframe ())
+         if (this .solid || ! backMaterialNode || frontShaderNode .getWireframe ())
          {
             this .displayGeometry (gl, context, appearanceNode, frontShaderNode, true, true);
          }
@@ -1049,7 +1049,7 @@ function (Fields,
 
                   // Render back.
 
-                  if (back && !this .solid)
+                  if (back && ! this .solid)
                   {
                      gl .cullFace (gl .FRONT);
                      gl .drawArrays (primitiveMode, 0, this .vertexCount);
@@ -1112,7 +1112,7 @@ function (Fields,
             backMaterialNode = appearanceNode .backMaterialNode,
             frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
 
-         if (this .solid || !backMaterialNode || frontShaderNode .getWireframe ())
+         if (this .solid || ! backMaterialNode || frontShaderNode .getWireframe ())
          {
             this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particleSystem);
          }
@@ -1186,7 +1186,7 @@ function (Fields,
 
                gl .enable (gl .CULL_FACE);
 
-               if (back && !this .solid)
+               if (back && ! this .solid)
                {
                   gl .cullFace (gl .FRONT);
                   gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
