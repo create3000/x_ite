@@ -222,14 +222,7 @@ function (X3DGeometryNode,
 
             const outputParticles = particleSystem .outputParticles;
 
-            if (this .updateParticles)
-            {
-               this .updateParticles = false;
-
-               outputParticles .vertexArrayObject .update ();
-            }
-
-            if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
+            if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
             {
                const particleStride = particleSystem .particleStride;
 
@@ -246,6 +239,8 @@ function (X3DGeometryNode,
                   shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
                shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+
+               this .updateParticles = false;
             }
 
             // Wireframes are always solid so only one drawing call is needed.

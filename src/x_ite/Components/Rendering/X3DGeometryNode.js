@@ -1084,20 +1084,15 @@ function (Fields,
       {
          const outputParticles = particleSystem .outputParticles;
 
-         if (this .updateParticlesShadow)
-         {
-            this .updateParticlesShadow = false;
-
-            outputParticles .shadowArrayObject .update ();
-         }
-
-         if (outputParticles .shadowArrayObject .enable (gl, shaderNode))
+         if (outputParticles .shadowArrayObject .update (this .updateParticlesShadow) .enable (gl, shaderNode))
          {
             const particleStride = particleSystem .particleStride;
 
             shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
             shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
             shaderNode .enableVertexAttribute         (gl, this .vertexBuffer, 0, 0);
+
+            this .updateParticlesShadow = false;
          }
 
          gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
@@ -1144,14 +1139,7 @@ function (Fields,
 
             const outputParticles = particleSystem .outputParticles;
 
-            if (this .updateParticles)
-            {
-               this .updateParticles = false;
-
-               outputParticles .vertexArrayObject .update ();
-            }
-
-            if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
+            if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
             {
                const particleStride = particleSystem .particleStride;
 
@@ -1170,6 +1158,8 @@ function (Fields,
                shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
                shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
                shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+
+               this .updateParticles = false;
             }
 
             // Draw depending on wireframe, solid and transparent.

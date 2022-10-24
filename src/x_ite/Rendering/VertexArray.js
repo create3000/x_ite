@@ -60,9 +60,11 @@ define (function ()
 
    VertexArray .prototype =
    {
-      update: function ()
+      update: function (value = true)
       {
-         this .tainted = true;
+         this .tainted = this .tainted || value;
+
+         return this;
       },
       enable: function (gl, shaderNode)
       {
