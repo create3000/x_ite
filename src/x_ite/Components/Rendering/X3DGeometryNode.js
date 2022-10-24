@@ -1173,41 +1173,38 @@ function (Fields,
 
             // Draw depending on wireframe, solid and transparent.
 
-            if (! shaderNode .getWireframe ())
+            const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+
+            gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
+
+            if (context .transparent || back !== front)
             {
-               const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+               // Render transparent or back or front.
 
-               gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
+               gl .enable (gl .CULL_FACE);
 
-               if (context .transparent || back !== front)
+               if (back && !this .solid)
                {
-                  // Render transparent or back or front.
-
-                  gl .enable (gl .CULL_FACE);
-
-                  if (back && !this .solid)
-                  {
-                     gl .cullFace (gl .FRONT);
-                     gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-                  }
-
-                  if (front)
-                  {
-                     gl .cullFace (gl .BACK);
-                     gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-                  }
-               }
-               else
-               {
-                  // Render solid or both sides.
-
-                  if (this .solid)
-                     gl .enable (gl .CULL_FACE);
-                  else
-                     gl .disable (gl .CULL_FACE);
-
+                  gl .cullFace (gl .FRONT);
                   gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
                }
+
+               if (front)
+               {
+                  gl .cullFace (gl .BACK);
+                  gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+               }
+            }
+            else
+            {
+               // Render solid or both sides.
+
+               if (this .solid)
+                  gl .enable (gl .CULL_FACE);
+               else
+                  gl .disable (gl .CULL_FACE);
+
+               gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
             }
 
             if (blendModeNode)

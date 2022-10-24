@@ -383,7 +383,6 @@ function (Fields,
                this .texCoordCount = 0;
                this .vertexCount   = 1;
                this .hasNormals    = false;
-               this .testWireframe = false;
                this .primitiveMode = gl .POINTS;
 
                this .verticesOffset = 0;
@@ -400,7 +399,6 @@ function (Fields,
                this .texCoordCount = 2;
                this .vertexCount   = 2;
                this .hasNormals    = false;
-               this .testWireframe = false;
                this .primitiveMode = gl .LINES;
 
                this .texCoordsOffset = 0;
@@ -420,7 +418,6 @@ function (Fields,
                this .texCoordCount = 4;
                this .vertexCount   = 6;
                this .hasNormals    = true;
-               this .testWireframe = true;
                this .primitiveMode = gl .TRIANGLES;
 
                this .texCoordsOffset = 0;
@@ -998,7 +995,8 @@ function (Fields,
             {
                const
                   appearanceNode = this .getAppearance (),
-                  shaderNode     = appearanceNode .shaderNode || this .shaderNode || appearanceNode .materialNode .getShader (context .browser, context .shadow);
+                  shaderNode     = appearanceNode .shaderNode || this .shaderNode || appearanceNode .materialNode .getShader (context .browser, context .shadow),
+                  primitiveMode  = shaderNode .getPrimitiveMode (this .primitiveMode);
 
                // Setup shader.
 
@@ -1052,17 +1050,7 @@ function (Fields,
                      shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
                   }
 
-                  if (shaderNode .getWireframe () && this .testWireframe)
-                  {
-                     // Wireframes are always solid so only one drawing call is needed.
-
-                     for (let i = 0, length = this .numParticles * this .vertexCount; i < length; i += 3)
-                        gl .drawArrays (shaderNode .primitiveMode, i, 3);
-                  }
-                  else
-                  {
-                     gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
-                  }
+                  gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, this .numParticles);
 
                   if (blendModeNode)
                      blendModeNode .disable (gl);
