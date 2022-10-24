@@ -227,10 +227,10 @@ function (Fields,
       })(),
       picking: function (renderObject)
       {
+         const modelMatrix = renderObject .getModelViewMatrix () .get ();
+
          if (this .getTransformSensors () .size)
          {
-            const modelMatrix = renderObject .getModelViewMatrix () .get ();
-
             for (const transformSensorNode of this .getTransformSensors ())
                transformSensorNode .collect (modelMatrix);
          }
@@ -244,7 +244,7 @@ function (Fields,
 
          for (const pickSensor of pickSensorStack .at (-1))
          {
-            pickSensor .collect (this .getGeometry (), renderObject .getModelViewMatrix () .get (), browser .getPickingHierarchy ());
+            pickSensor .collect (this .getGeometry (), modelMatrix, pickingHierarchy);
          }
 
          pickingHierarchy .pop ();
