@@ -234,7 +234,6 @@ function (Fields,
          this .setGeometryType (2);
          this .setSolid (this ._solid .getValue ());
          this .setBase (X3DGeometryNode);
-
       },
       setBase: function (base)
       {
