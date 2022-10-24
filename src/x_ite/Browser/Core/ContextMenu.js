@@ -180,6 +180,25 @@ function ($,
                      .bind (this),
                   },
                },
+               "display-rubberband": {
+                  name: _("Display Rubberband"),
+                  type: "checkbox",
+                  selected: browser .getBrowserOption ("Rubberband"),
+                  events: {
+                     click: function (event)
+                     {
+                        const rubberband = $(event .target) .is (":checked");
+
+                        browser .setBrowserOption ("Rubberband", rubberband);
+
+                        if (rubberband)
+                           browser .getNotification () ._string = _("Rubberband") + ": " + _("on");
+                        else
+                           browser .getNotification () ._string = _("Rubberband") + ": " + _("off");
+                     }
+                     .bind (this),
+                  },
+               },
                "separator1": "--------",
                "primitive-quality": {
                   name: _("Primitive Quality"),
@@ -354,25 +373,6 @@ function ($,
                   },
                },
                "separator2": "--------",
-               "display-rubberband": {
-                  name: _("Display Rubberband"),
-                  type: "checkbox",
-                  selected: browser .getBrowserOption ("Rubberband"),
-                  events: {
-                     click: function (event)
-                     {
-                        const rubberband = $(event .target) .is (":checked");
-
-                        browser .setBrowserOption ("Rubberband", rubberband);
-
-                        if (rubberband)
-                           browser .getNotification () ._string = _("Rubberband") + ": " + _("on");
-                        else
-                           browser .getNotification () ._string = _("Rubberband") + ": " + _("off");
-                     }
-                     .bind (this),
-                  },
-               },
                "browser-timings": {
                   name: _("Browser Timings"),
                   type: "checkbox",
