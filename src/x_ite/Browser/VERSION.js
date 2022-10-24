@@ -49,5 +49,5 @@
 
 define (function ()
 {
-   return "6.0.0";
+   return "6.1.0";
 });

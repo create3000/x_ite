@@ -93,6 +93,8 @@ function ($,
 
          this [_resizer] = new ResizeSensor (this .getSurface (), this .reshape .bind (this));
 
+			this .getSurface () .css ("position", ""); // Reset position, set from ResizeSensor.
+
          this .reshape ();
       },
       getRenderer: function ()
