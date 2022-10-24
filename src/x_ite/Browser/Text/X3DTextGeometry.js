@@ -84,6 +84,7 @@ function (TextAlignment,
 
    function X3DTextGeometry (text, fontStyle)
    {
+      this .browser        = text .getBrowser ();
       this .text           = text;
       this .fontStyle      = fontStyle;
       this .glyphs         = [ ];
@@ -100,7 +101,7 @@ function (TextAlignment,
       constructor: X3DTextGeometry,
       getBrowser: function ()
       {
-         return this .text .getBrowser ();
+         return this .browser;
       },
       getText: function ()
       {

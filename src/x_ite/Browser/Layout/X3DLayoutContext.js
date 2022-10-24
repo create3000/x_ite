@@ -50,9 +50,15 @@
 define ([
    "jquery",
    "x_ite/Components/Texturing/TextureProperties",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Matrix4",
+   "standard/Math/Geometry/ViewVolume",
 ],
 function ($,
-          TextureProperties)
+          TextureProperties,
+          Vector3,
+          Matrix4,
+          ViewVolume)
 {
 "use strict";
 
@@ -83,6 +89,54 @@ function ($,
 
          return this [_screenTextureProperties];
       },
+      getScreenScaleMatrix: (function ()
+      {
+         const
+            screenScale  = new Vector3 (0, 0, 0),
+            screenPoint  = new Vector3 (0, 0, 0),
+            screenMatrix = new Matrix4 ();
+
+         return function (renderObject, matrix)
+         {
+            // throws domain error
+
+            const
+               modelViewMatrix  = renderObject .getModelViewMatrix () .get (),
+               projectionMatrix = renderObject .getProjectionMatrix () .get (),
+               viewport         = renderObject .getViewVolume () .getViewport ();
+
+            // Determine screenMatrix.
+            // Same as in ScreenText.
+
+            renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport, screenScale); // in meter/pixel
+
+            const
+               x = modelViewMatrix .xAxis .normalize () .multiply (screenScale .x),
+               y = modelViewMatrix .yAxis .normalize () .multiply (screenScale .y),
+               z = modelViewMatrix .zAxis .normalize () .multiply (screenScale .x);
+
+            screenMatrix .set (x .x, x .y, x .z, 0,
+                               y .x, y .y, y .z, 0,
+                               z .x, z .y, z .z, 0,
+                               modelViewMatrix [12], modelViewMatrix [13], modelViewMatrix [14], 1);
+
+            // Snap to whole pixel.
+
+            ViewVolume .projectPoint (Vector3 .Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
+
+            screenPoint .x = Math .round (screenPoint .x);
+            screenPoint .y = Math .round (screenPoint .y);
+
+            ViewVolume .unProjectPoint (screenPoint .x, screenPoint .y, screenPoint .z, screenMatrix, projectionMatrix, viewport, screenPoint);
+
+            screenPoint .z = 0;
+            screenMatrix .translate (screenPoint);
+
+            // Assign relative matrix.
+
+            matrix .assign (modelViewMatrix) .inverse () .multLeft (screenMatrix);
+         };
+      })(),
    };
 
    return X3DLayoutContext;

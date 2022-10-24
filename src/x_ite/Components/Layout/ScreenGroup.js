@@ -54,9 +54,7 @@ define ([
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Base/X3DConstants",
    "x_ite/Rendering/TraverseType",
-   "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
-   "standard/Math/Geometry/ViewVolume",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,9 +62,7 @@ function (Fields,
           X3DGroupingNode,
           X3DConstants,
           TraverseType,
-          Vector3,
-          Matrix4,
-          ViewVolume)
+          Matrix4,)
 {
 "use strict";
 
@@ -112,54 +108,6 @@ function (Fields,
       {
          return this .matrix;
       },
-      scale: (function ()
-      {
-         const
-            screenScale  = new Vector3 (0, 0, 0),
-            screenPoint  = new Vector3 (0, 0, 0),
-            screenMatrix = new Matrix4 ();
-
-         return function (renderObject)
-         {
-            // throws domain error
-
-            const
-               modelViewMatrix  = renderObject .getModelViewMatrix () .get (),
-               projectionMatrix = renderObject .getProjectionMatrix () .get (),
-               viewport         = renderObject .getViewVolume () .getViewport ();
-
-            // Determine screenMatrix.
-            // Same as in ScreenText.
-
-            renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport, screenScale); // in meter/pixel
-
-            const
-               x = modelViewMatrix .xAxis .normalize () .multiply (screenScale .x),
-               y = modelViewMatrix .yAxis .normalize () .multiply (screenScale .y),
-               z = modelViewMatrix .zAxis .normalize () .multiply (screenScale .x);
-
-            screenMatrix .set (x .x, x .y, x .z, 0,
-                               y .x, y .y, y .z, 0,
-                               z .x, z .y, z .z, 0,
-                               modelViewMatrix [12], modelViewMatrix [13], modelViewMatrix [14], 1);
-
-            // Snap to whole pixel.
-
-            ViewVolume .projectPoint (Vector3 .Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
-
-            screenPoint .x = Math .round (screenPoint .x);
-            screenPoint .y = Math .round (screenPoint .y);
-
-            ViewVolume .unProjectPoint (screenPoint .x, screenPoint .y, screenPoint .z, screenMatrix, projectionMatrix, viewport, screenPoint);
-
-            screenPoint .z = 0;
-            screenMatrix .translate (screenPoint);
-
-            // Assign relative matrix.
-
-            this .matrix .assign (modelViewMatrix) .inverse () .multLeft (screenMatrix);
-         };
-      })(),
       traverse: function (type, renderObject)
       {
          switch (type)
@@ -170,7 +118,7 @@ function (Fields,
                // No clone support for shadow, generated cube map texture and bbox
                break;
             default:
-               this .scale (renderObject);
+               this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix);
                break;
          }
 
