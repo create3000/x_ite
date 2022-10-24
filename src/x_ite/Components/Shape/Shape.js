@@ -57,7 +57,6 @@ define ([
    "standard/Math/Algorithm",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
-   "standard/Math/Geometry/Box3",
    "standard/Math/Geometry/Line3",
    "standard/Math/Algorithms/QuickSort",
 ],
@@ -70,7 +69,6 @@ function (Fields,
           Algorithm,
           Vector3,
           Matrix4,
-          Box3,
           Line3,
           QuickSort)
 {
