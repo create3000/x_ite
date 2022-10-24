@@ -758,7 +758,7 @@ specularColor
 vec3 F = specularReflection (pbrInputs);
 float G = geometricOcclusion (pbrInputs);
 float D = microfacetDistribution (pbrInputs);
-float attenuationFactor = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
+float attenuationFactor = di ? 1.0 : 1.0 / max (dot (c, vec3 (1.0, dL, dL * dL)), 1.0);
 float spotFactor = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
 float attenuationSpotFactor = attenuationFactor * spotFactor;
 vec3 diffuseContrib = (1.0 - F) * diffuse (pbrInputs);

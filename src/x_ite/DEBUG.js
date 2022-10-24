@@ -53,5 +53,5 @@ define (function ()
 
    // Modified during dist build.
 
-   return false;
+   return true;
 });

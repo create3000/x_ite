@@ -4,8 +4,9 @@
 var module = { }, exports, process;
 
 const
-	define  = window [Symbol .for ("X_ITE.X3D-6.0.0")] .define,
-	require = window [Symbol .for ("X_ITE.X3D-6.0.0")] .require;
+	X3D     = window [Symbol .for ("X_ITE.X3D-6.1.0")],
+	define  = X3D .define,
+	require = X3D .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -2710,7 +2711,6 @@ function (Fields,
                this .texCoordCount = 0;
                this .vertexCount   = 1;
                this .hasNormals    = false;
-               this .testWireframe = false;
                this .primitiveMode = gl .POINTS;
 
                this .verticesOffset = 0;
@@ -2727,7 +2727,6 @@ function (Fields,
                this .texCoordCount = 2;
                this .vertexCount   = 2;
                this .hasNormals    = false;
-               this .testWireframe = false;
                this .primitiveMode = gl .LINES;
 
                this .texCoordsOffset = 0;
@@ -2747,7 +2746,6 @@ function (Fields,
                this .texCoordCount = 4;
                this .vertexCount   = 6;
                this .hasNormals    = true;
-               this .testWireframe = true;
                this .primitiveMode = gl .TRIANGLES;
 
                this .texCoordsOffset = 0;
@@ -3193,14 +3191,22 @@ function (Fields,
             // Normal
 
             for (let i = 0; i < 3; ++ i)
-               data [24 + i] = rotation [i + 6];
+               data [24 + i] = rotation [6 + i];
 
             // Vertices
 
             size .set (this ._particleSize .x, this ._particleSize .y, 1);
 
             for (let i = 0; i < 6; ++ i)
-               data .set (rotation .multVecMatrix (vertex .assign (quad [i]) .multVec (size)), 27 + i * 4);
+            {
+               const index = 27 + i * 4;
+
+               rotation .multVecMatrix (vertex .assign (quad [i]) .multVec (size))
+
+               data [index + 0] = vertex .x;
+               data [index + 1] = vertex .y;
+               data [index + 2] = vertex .z;
+            }
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
             gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
@@ -3317,7 +3323,8 @@ function (Fields,
             {
                const
                   appearanceNode = this .getAppearance (),
-                  shaderNode     = appearanceNode .shaderNode || this .shaderNode || appearanceNode .materialNode .getShader (context .browser, context .shadow);
+                  shaderNode     = appearanceNode .shaderNode || this .shaderNode || appearanceNode .materialNode .getShader (context .browser, context .shadow),
+                  primitiveMode  = shaderNode .getPrimitiveMode (this .primitiveMode);
 
                // Setup shader.
 
@@ -3371,17 +3378,7 @@ function (Fields,
                      shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
                   }
 
-                  if (shaderNode .wireframe && this .testWireframe)
-                  {
-                     // Wireframes are always solid so only one drawing call is needed.
-
-                     for (let i = 0, length = this .numParticles * this .vertexCount; i < length; i += 3)
-                        gl .drawArrays (shaderNode .primitiveMode, i, 3);
-                  }
-                  else
-                  {
-                     gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
-                  }
+                  gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, this .numParticles);
 
                   if (blendModeNode)
                      blendModeNode .disable (gl);
@@ -3650,7 +3647,7 @@ function (Fields,
                vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
                vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-               polylinesArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .abs ();
+               polylinesArray [i / 2 + 4] = lengthSoFar += vertex2 .subtract (vertex1) .magnitude ();
             }
 
             polylinesArray .set (vertices, verticesIndex * 4);

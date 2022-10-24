@@ -4,8 +4,9 @@
 var module = { }, exports, process;
 
 const
-	define  = window [Symbol .for ("X_ITE.X3D-6.0.0")] .define,
-	require = window [Symbol .for ("X_ITE.X3D-6.0.0")] .require;
+	X3D     = window [Symbol .for ("X_ITE.X3D-6.1.0")],
+	define  = X3D .define,
+	require = X3D .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -1037,7 +1038,7 @@ function ($,
             const
                image  = this .image [0],
                canvas = this .canvas [0],
-               cx     = canvas .getContext ("2d");
+               cx     = canvas .getContext ("2d", { willReadFrequently: true });
 
             let
                width     = image .width,

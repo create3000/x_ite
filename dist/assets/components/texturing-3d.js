@@ -4,8 +4,9 @@
 var module = { }, exports, process;
 
 const
-	define  = window [Symbol .for ("X_ITE.X3D-6.0.0")] .define,
-	require = window [Symbol .for ("X_ITE.X3D-6.0.0")] .require;
+	X3D     = window [Symbol .for ("X_ITE.X3D-6.1.0")],
+	define  = X3D .define,
+	require = X3D .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -9492,6 +9493,27 @@ function (Fields,
       {
          return "texCoord";
       },
+      initialize: function ()
+      {
+         X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
+
+         this ._point .addInterest ("set_point__", this);
+
+         this .set_point__ ();
+      },
+      set_point__: function ()
+      {
+         this .point  = this ._point .getValue ();
+         this .length = this ._point .length;
+      },
+      isEmpty: function ()
+      {
+         return this .length === 0;
+      },
+      getSize: function ()
+      {
+         return this .length;
+      },
       get1Point: function (index, vector)
       {
          if (index >= 0 && index < this .length)
@@ -9648,6 +9670,27 @@ function (Fields,
       getContainerField: function ()
       {
          return "texCoord";
+      },
+      initialize: function ()
+      {
+         X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
+
+         this ._point .addInterest ("set_point__", this);
+
+         this .set_point__ ();
+      },
+      set_point__: function ()
+      {
+         this .point  = this ._point .getValue ();
+         this .length = this ._point .length;
+      },
+      isEmpty: function ()
+      {
+         return this .length === 0;
+      },
+      getSize: function ()
+      {
+         return this .length;
       },
       get1Point: function (index, vector)
       {

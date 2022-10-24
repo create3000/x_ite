@@ -60,7 +60,7 @@ float pointSizeMaxValue = x3d_PointProperties .pointSizeMaxValue;
 vec3 pointSizeAttenuation = x3d_PointProperties .pointSizeAttenuation;
 float dL = length (vertex);
 pointSize = x3d_PointProperties .pointSizeScaleFactor;
-pointSize *= 1.0 / (pointSizeAttenuation [0] + pointSizeAttenuation [1] * dL + pointSizeAttenuation [2] * (dL * dL));
+pointSize /= dot (pointSizeAttenuation, vec3 (1.0, dL, dL * dL));
 pointSize = clamp (pointSize, pointSizeMinValue, pointSizeMaxValue);
 gl_PointSize = pointSize > 1.0 && x3d_NumTextures == 0 ? pointSize + 1.0 : pointSize;
 float alpha = 1.0 - x3d_Material .transparency;

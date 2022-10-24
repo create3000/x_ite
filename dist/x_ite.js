@@ -1,4 +1,4 @@
-/* X_ITE v6.0.0-1155 */
+/* X_ITE v6.1.0-1156 */
 
 (function (global, factory)
 {
@@ -17421,6 +17421,10 @@ function (X3DField,
          {
             this .getValue () .assign (value);
          },
+         abs: function ()
+         {
+            return new (this .constructor) (Type .abs (this .getValue ()));
+         },
          add: function (vector)
          {
             return new (this .constructor) (Type .add (this .getValue (), vector .getValue ()));
@@ -17441,13 +17445,25 @@ function (X3DField,
          {
             return this .getValue () .dot (vector .getValue ());
          },
+         inverse: function ()
+         {
+            return new (this .constructor) (Type .inverse (this .getValue ()));
+         },
          length: function ()
          {
-            return this .getValue () .abs ();
+            return this .getValue () .magnitude ();
          },
          lerp: function (destination, t)
          {
             return new (this .constructor) (Type .lerp (this .getValue (), destination, t));
+         },
+         max: function (vector)
+         {
+            return new (this .constructor) (Type .max (this .getValue (), vector .getValue ()));
+         },
+         min: function (vector)
+         {
+            return new (this .constructor) (Type .min (this .getValue (), vector .getValue ()));
          },
          multiply: function (value)
          {
@@ -17459,7 +17475,7 @@ function (X3DField,
          },
          negate: function ()
          {
-            return new (this .constructor) (Type .negate (this .getValue () .copy ()));
+            return new (this .constructor) (Type .negate (this .getValue ()));
          },
          normalize: function (vector)
          {
@@ -17598,6 +17614,12 @@ function (Algorithm)
          this .y = -this .y;
          return this;
       },
+      inverse: function ()
+      {
+         this .x = 1 / this .x;
+         this .y = 1 / this .y;
+         return this;
+      },
       add: function (vector)
       {
          this .x += vector .x;
@@ -17660,7 +17682,7 @@ function (Algorithm)
          return x * x +
                 y * y;
       },
-      abs: function ()
+      magnitude: function ()
       {
          return Math .hypot (this .x, this .y);
       },
@@ -17677,6 +17699,12 @@ function (Algorithm)
 
          this .x = x + t * (destination .x - x);
          this .y = y + t * (destination .y - y);
+         return this;
+      },
+      abs: function ()
+      {
+         this .x = Math .abs (this .x);
+         this .y = Math .abs (this .y);
          return this;
       },
       min: function (vector)
@@ -17738,9 +17766,15 @@ function (Algorithm)
    {
       Zero: new Vector2 (0, 0),
       One: new Vector2 (1, 1),
+      xAxis: new Vector2 (1, 0),
+      yAxis: new Vector2 (0, 1),
       negate: function (vector)
       {
          return vector .copy () .negate ();
+      },
+      inverse: function (vector)
+      {
+         return vector .copy () .inverse ();
       },
       add: function (lhs, rhs)
       {
@@ -17772,19 +17806,31 @@ function (Algorithm)
       },
       dot: function (lhs, rhs)
       {
-         return lhs .copy () .dot (rhs);
+         return lhs .dot (rhs);
+      },
+      magnitude: function (vector)
+      {
+         return vector .magnitude ();
+      },
+      distance: function (lhs, rhs)
+      {
+         return lhs .distance (rhs);
       },
       lerp: function (source, destination, t)
       {
          return source .copy () .lerp (destination, t);
       },
+      abs: function (vector)
+      {
+         return vector .copy () .abs ();
+      },
       min: function (lhs, rhs)
       {
-         return Vector2 .prototype .min .apply (lhs .copy (), arguments);
+         return this .prototype .min .apply (lhs .copy (), arguments);
       },
       max: function (lhs, rhs)
       {
-         return Vector2 .prototype .max .apply (lhs .copy (), arguments);
+         return this .prototype .max .apply (lhs .copy (), arguments);
       },
    });
 
@@ -18040,6 +18086,13 @@ function (Algorithm)
          this .z = -this .z;
          return this;
       },
+      inverse: function ()
+      {
+         this .x = 1 / this .x;
+         this .y = 1 / this .y;
+         this .z = 1 / this .z;
+         return this;
+      },
       add: function (vector)
       {
          this .x += vector .x;
@@ -18124,7 +18177,7 @@ function (Algorithm)
                 y * y +
                 z * z;
       },
-      abs: function ()
+      magnitude: function ()
       {
          return Math .hypot (this .x, this .y, this .z);
       },
@@ -18155,6 +18208,13 @@ function (Algorithm)
             return Algorithm .simpleSlerp (this, tmp .assign (destination), t);
          };
       })(),
+      abs: function ()
+      {
+         this .x = Math .abs (this .x);
+         this .y = Math .abs (this .y);
+         this .z = Math .abs (this .z);
+         return this;
+      },
       min: function (vector)
       {
          let
@@ -18236,6 +18296,10 @@ function (Algorithm)
       {
          return vector .copy () .negate ();
       },
+      inverse: function (vector)
+      {
+         return vector .copy () .inverse ();
+      },
       add: function (lhs, rhs)
       {
          return lhs .copy () .add (rhs);
@@ -18270,7 +18334,15 @@ function (Algorithm)
       },
       dot: function (lhs, rhs)
       {
-         return lhs .copy () .dot (rhs);
+         return lhs .dot (rhs);
+      },
+      magnitude: function (vector)
+      {
+         return vector .magnitude ();
+      },
+      distance: function (lhs, rhs)
+      {
+         return lhs .distance (rhs);
       },
       lerp: function (source, destination, t)
       {
@@ -18280,13 +18352,17 @@ function (Algorithm)
       {
          return source .copy () .slerp (destination, t);
       },
+      abs: function (vector)
+      {
+         return vector .copy () .abs ();
+      },
       min: function (lhs, rhs)
       {
-         return Vector3 .prototype .min .apply (lhs .copy (), arguments);
+         return this .prototype .min .apply (lhs .copy (), arguments);
       },
       max: function (lhs, rhs)
       {
-         return Vector3 .prototype .max .apply (lhs .copy (), arguments);
+         return this .prototype .max .apply (lhs .copy (), arguments);
       },
    });
 
@@ -18428,6 +18504,8 @@ function (Vector2,
                break;
             }
          }
+
+         return this;
       },
       determinant1: function ()
       {
@@ -18494,6 +18572,46 @@ function (Vector2,
          this [3] = b1 * a2 + b3 * a3;
 
          return this;
+      },
+      multVecMatrix: function (vector)
+      {
+         if (typeof vector === "number")
+         {
+            const
+               x = vector,
+               w = x * this [2] + this [3];
+
+            return (x * this [0] + this [1]) / w;
+         }
+
+         const
+            x = vector .x,
+            y = vector .y;
+
+         vector .x = x * this [0] + y * this [2];
+         vector .y = x * this [1] + y * this [3];
+
+         return vector;
+      },
+      multMatrixVec: function (vector)
+      {
+         if (typeof vector === "number")
+         {
+            const
+               x = vector,
+               w = x * this [2] + this [3];
+
+            return (x * this [0] + this [1]) / w;
+         }
+
+         const
+            x = vector .x,
+            y = vector .y;
+
+         vector .x = x * this [0] + y * this [1];
+         vector .y = x * this [2] + y * this [3];
+
+         return vector;
       },
       identity: function ()
       {
@@ -19947,6 +20065,14 @@ function (Algorithm)
          this .w = -this .w;
          return this;
       },
+      inverse: function ()
+      {
+         this .x = 1 / this .x;
+         this .y = 1 / this .y;
+         this .z = 1 / this .z;
+         this .w = 1 / this .w;
+         return this;
+      },
       add: function (vector)
       {
          this .x += vector .x;
@@ -20029,7 +20155,7 @@ function (Algorithm)
                 z * z +
                 w * w;
       },
-      abs: function ()
+      magnitude: function ()
       {
          return Math .hypot (this .x, this .y, this .z, this .w);
       },
@@ -20052,6 +20178,14 @@ function (Algorithm)
          this .y = y + t * (destination .y - y);
          this .z = z + t * (destination .z - z);
          this .w = w + t * (destination .w - w);
+         return this;
+      },
+      abs: function ()
+      {
+         this .x = Math .abs (this .x);
+         this .y = Math .abs (this .y);
+         this .z = Math .abs (this .z);
+         this .w = Math .abs (this .w);
          return this;
       },
       min: function (vector)
@@ -20151,6 +20285,10 @@ function (Algorithm)
       {
          return vector .copy () .negate ();
       },
+      inverse: function (vector)
+      {
+         return vector .copy () .inverse ();
+      },
       add: function (lhs, rhs)
       {
          return lhs .copy () .add (rhs);
@@ -20181,19 +20319,31 @@ function (Algorithm)
       },
       dot: function (lhs, rhs)
       {
-         return lhs .copy () .dot (rhs);
+         return lhs .dot (rhs);
+      },
+      magnitude: function (vector)
+      {
+         return vector .magnitude ();
+      },
+      distance: function (lhs, rhs)
+      {
+         return lhs .distance (rhs);
       },
       lerp: function (source, destination, t)
       {
          return source .copy () .lerp (destination, t);
       },
+      abs: function (vector)
+      {
+         return vector .copy () .abs ();
+      },
       min: function (lhs, rhs)
       {
-         return Vector4 .prototype .min .apply (lhs .copy (), arguments);
+         return this .prototype .min .apply (lhs .copy (), arguments);
       },
       max: function (lhs, rhs)
       {
-         return Vector4 .prototype .max .apply (lhs .copy (), arguments);
+         return this .prototype .max .apply (lhs .copy (), arguments);
       },
    });
 
@@ -20527,7 +20677,7 @@ function (Vector3, Algorithm)
                 this .z * this .z +
                 this .w * this .w;
       },
-      abs: function ()
+      magnitude: function ()
       {
          return Math .hypot (this .x, this .y, this .z, this .w);
       },
@@ -20540,9 +20690,9 @@ function (Vector3, Algorithm)
             return this .set (0, 0, 0, Math .pow (this .w, exponent));
 
          const
-            l     = this .abs (),
+            l     = this .magnitude (),
             theta = Math .acos (this .w / l),
-            li    = this .imag .abs (),
+            li    = this .imag .magnitude (),
             ltoe  = Math .pow (l, exponent),
             et    = exponent * theta,
             scale = ltoe / li * Math .sin (et);
@@ -20565,7 +20715,7 @@ function (Vector3, Algorithm)
          }
 
          const
-            l = this .abs (),
+            l = this .magnitude (),
             v = this .imag .normalize () .multiply (Math .acos (this .w / l)),
             w = Math .log (l);
 
@@ -20582,7 +20732,7 @@ function (Vector3, Algorithm)
 
          const
             i  = this .imag,
-            li = i .abs (),
+            li = i .magnitude (),
             ew = Math .exp (this .w),
             w  = ew * Math .cos (li),
             v  = i .multiply (ew * Math .sin (li) / li);
@@ -21006,7 +21156,7 @@ function (Quaternion,
             const
                cos_angle = Algorithm .clamp (from .dot (to), -1, 1),
                crossvec  = cv .assign (from) .cross (to) .normalize (),
-               crosslen  = crossvec .abs ();
+               crosslen  = crossvec .magnitude ();
 
             if (crosslen === 0)
             {
@@ -26411,7 +26561,7 @@ function (X3DEventObject,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-   return "6.0.0";
+   return "6.1.0";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -27327,13 +27477,13 @@ function ($,
 
          if (enabled)
          {
-            this .element .fadeIn ();
+            this .element .stop (true, true) .fadeIn ();
             this .getBrowser () .prepareEvents () .addInterest ("update", this);
             this .update ();
          }
          else
          {
-            this .element .fadeOut ();
+            this .element .stop (true, true) .fadeOut ();
             this .getBrowser () .prepareEvents () .removeInterest ("update", this);
          }
       },
@@ -27782,7 +27932,7 @@ function (Fields,
       },
       configure: function ()
       {
-         if (!this .isInitialized ())
+         if (! this .isInitialized ())
             return;
 
          const localStorage = this .localStorage;
@@ -27794,7 +27944,7 @@ function (Fields,
             if (localStorage [fieldDefinition .name] !== undefined)
                continue;
 
-            if (!field .equals (fieldDefinition .value))
+            if (! field .equals (fieldDefinition .value))
                field .assign (fieldDefinition .value);
          }
 
@@ -27876,62 +28026,15 @@ function (Fields,
 
          this .localStorage .PrimitiveQuality = primitiveQuality;
 
-         const
-            cone     = browser .getConeOptions (),
-            cylinder = browser .getCylinderOptions (),
-            sphere   = browser .getSphereOptions ();
+         this .primitiveQuality = PrimitiveQuality .hasOwnProperty (primitiveQuality)
+            ? PrimitiveQuality [primitiveQuality]
+            : PrimitiveQuality .MEDIUM;
 
-         switch (primitiveQuality)
-         {
-            case "LOW":
-            {
-               if (this .primitiveQuality === PrimitiveQuality .LOW)
-                  break;
+         if (typeof browser .setPrimitiveQuality2D === "function")
+            browser .setPrimitiveQuality2D (this .primitiveQuality);
 
-               this .primitiveQuality = PrimitiveQuality .LOW;
-
-               if (browser .setGeometry2DPrimitiveQuality)
-                  browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
-
-               cone     ._xDimension = 16;
-               cylinder ._xDimension = 16;
-               sphere   ._xDimension = 20;
-               sphere   ._yDimension = 9;
-               break;
-            }
-            case "HIGH":
-            {
-               if (this .primitiveQuality === PrimitiveQuality .HIGH)
-                  break;
-
-               this .primitiveQuality = PrimitiveQuality .HIGH;
-
-               if (browser .setGeometry2DPrimitiveQuality)
-                  browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
-
-               cone     ._xDimension = 32;
-               cylinder ._xDimension = 32;
-               sphere   ._xDimension = 64;
-               sphere   ._yDimension = 31;
-               break;
-            }
-            default:
-            {
-               if (this .primitiveQuality === PrimitiveQuality .MEDIUM)
-                  break;
-
-               this .primitiveQuality = PrimitiveQuality .MEDIUM;
-
-               if (browser .setGeometry2DPrimitiveQuality)
-                  browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
-
-               cone     ._xDimension = 20;
-               cylinder ._xDimension = 20;
-               sphere   ._xDimension = 32;
-               sphere   ._yDimension = 15;
-               break;
-            }
-         }
+         if (typeof browser .setPrimitiveQuality3D === "function")
+            browser .setPrimitiveQuality3D (this .primitiveQuality);
       },
       set_textureQuality__: function (value)
       {
@@ -27941,93 +28044,20 @@ function (Fields,
 
          this .localStorage .TextureQuality = textureQuality;
 
-         const textureProperties = browser .getDefaultTextureProperties ();
+         this .textureQuality = TextureQuality .hasOwnProperty (textureQuality)
+            ? TextureQuality [textureQuality]
+            : TextureQuality .MEDIUM;
 
-         switch (textureQuality)
-         {
-            case "LOW":
-            {
-               if (this .textureQuality === TextureQuality .LOW)
-                  break;
-
-               this .textureQuality = TextureQuality .LOW;
-
-               textureProperties ._magnificationFilter = "AVG_PIXEL";
-               textureProperties ._minificationFilter  = "AVG_PIXEL";
-               textureProperties ._textureCompression  = "FASTEST";
-               textureProperties ._generateMipMaps     = true;
-
-               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
-               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-               break;
-            }
-            case "HIGH":
-            {
-               if (this .textureQuality === TextureQuality .HIGH)
-                  break;
-
-               this .textureQuality = TextureQuality .HIGH;
-
-               textureProperties ._magnificationFilter = "NICEST";
-               textureProperties ._minificationFilter  = "NICEST";
-               textureProperties ._textureCompression  = "NICEST";
-               textureProperties ._generateMipMaps     = true;
-
-               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_NICEST);
-               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-               break;
-            }
-            default:
-            {
-               if (this .textureQuality === TextureQuality .MEDIUM)
-                  break;
-
-               this .textureQuality = TextureQuality .MEDIUM;
-
-               textureProperties ._magnificationFilter = "NICEST";
-               textureProperties ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
-               textureProperties ._textureCompression  = "NICEST";
-               textureProperties ._generateMipMaps     = true;
-
-               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
-               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-               break;
-            }
-         }
+         if (typeof browser .setTextureQuality === "function")
+            browser .setTextureQuality (this .textureQuality);
       },
       set_shading__: function (value)
       {
-         const shading = value .getValue () .toUpperCase ();
+         const shading = value .getValue () .toUpperCase () .replace ("POINTSET", "POINT");
 
-         switch (shading)
-         {
-            case "POINT":
-            case "POINTSET":
-            {
-               this .shading = Shading .POINT;
-               break;
-            }
-            case "WIREFRAME":
-            {
-               this .shading = Shading .WIREFRAME;
-               break;
-            }
-            case "FLAT":
-            {
-               this .shading = Shading .FLAT;
-               break;
-            }
-            case "PHONG":
-            {
-               this .shading = Shading .PHONG;
-               break;
-            }
-            default:
-            {
-               this .shading = Shading .GOURAUD;
-               break;
-            }
-         }
+         this .shading = Shading .hasOwnProperty (shading)
+            ? Shading [shading]
+            : Shading .GOURAUD;
 
          this .getBrowser () .setShading (this .shading);
       },
@@ -28049,7 +28079,6 @@ function (Fields,
          browser .getRenderingProperties () ._LogarithmicDepthBuffer = logarithmicDepthBuffer;
 
          // Recompile shaders.
-
          // There's no need to update background shader.
 
          for (const shader of browser .getStandardShaders ())
@@ -28068,10 +28097,12 @@ function (Fields,
 
    function toBoolean (value, defaultValue)
    {
-      if (value === "true" || value === "TRUE")
+      value = String (value) .toUpperCase ();
+
+      if (value === "TRUE")
          return true;
 
-      if (value === "false" || value === "FALSE")
+      if (value === "FALSE")
          return false;
 
       return defaultValue;
@@ -31971,8 +32002,8 @@ function (Vector3,
       slerp: function (source, destination, t)
       {
          const
-            sourceLength      = source      .abs (),
-            destinationLength = destination .abs ();
+            sourceLength      = source      .magnitude (),
+            destinationLength = destination .magnitude ();
 
          source      .normalize ();
          destination .normalize ();
@@ -33337,7 +33368,7 @@ function (Fields,
       },
       setPosition: (function ()
       {
-         var geoPosition = new Vector3 (0, 0, 0);
+         const geoPosition = new Vector3 (0, 0, 0);
 
          return function (value)
          {
@@ -33346,7 +33377,7 @@ function (Fields,
       })(),
       getPosition: (function ()
       {
-         var position = new Vector3 (0, 0, 0);
+         const position = new Vector3 (0, 0, 0);
 
          return function ()
          {
@@ -33355,7 +33386,7 @@ function (Fields,
       })(),
       set_position__: (function ()
       {
-         var position = new Vector3 (0, 0, 0);
+         const position = new Vector3 (0, 0, 0);
 
          return function ()
          {
@@ -33366,7 +33397,7 @@ function (Fields,
       })(),
       setOrientation: (function ()
       {
-         var
+         const
             locationMatrix = new Matrix4 (),
             geoOrientation = new Rotation4 (0, 0, 1, 0);
 
@@ -33374,7 +33405,7 @@ function (Fields,
          {
             ///  Returns the resulting orientation for this viewpoint.
 
-            var rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
+            const rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
 
             geoOrientation .setMatrix (rotationMatrix);
 
@@ -33383,7 +33414,7 @@ function (Fields,
       })(),
       getOrientation: (function ()
       {
-         var
+         const
             locationMatrix = new Matrix4 (),
             orientation    = new Rotation4 (0, 0, 1, 0);
 
@@ -33391,7 +33422,7 @@ function (Fields,
          {
             ///  Returns the resulting orientation for this viewpoint.
 
-            var rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
+            const rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
 
             orientation .setMatrix (rotationMatrix);
 
@@ -33400,7 +33431,7 @@ function (Fields,
       })(),
       getCenterOfRotation: (function ()
       {
-         var centerOfRotation = new Vector3 (0, 0, 0);
+         const centerOfRotation = new Vector3 (0, 0, 0);
 
          return function ()
          {
@@ -33409,7 +33440,7 @@ function (Fields,
       })(),
       getFieldOfView: function ()
       {
-         var fov = this ._fieldOfView * this ._fieldOfViewScale;
+         const fov = this ._fieldOfView * this ._fieldOfViewScale;
 
          return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
       },
@@ -33419,7 +33450,7 @@ function (Fields,
       },
       getUpVector: (function ()
       {
-         var
+         const
             position = new Vector3 (0, 0, 0),
             upVector = new Vector3 (0, 0, 0);
 
@@ -33434,34 +33465,30 @@ function (Fields,
       {
          return (Math .max (this .elevation, 0.0) + 10) / 10 * this ._speedFactor .getValue ();
       },
-      getScreenScale: (function ()
+      getScreenScale: function (point, viewport, screenScale)
       {
-         var screenScale = new Vector3 (0, 0, 0);
+         // Returns the screen scale in meter/pixel for on pixel.
 
-         return function (point, viewport)
-         {
-            // Returns the screen scale in meter/pixel for on pixel.
+         const
+            width  = viewport [2],
+            height = viewport [3];
 
-            var
-               width  = viewport [2],
-               height = viewport [3],
-               size   = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
+         let size = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
 
-            if (width > height)
-               size /= height;
-            else
-               size /= width;
+         if (width > height)
+            size /= height;
+         else
+            size /= width;
 
-            return screenScale .set (size, size, size);
-         };
-      })(),
+         return screenScale .set (size, size, size);
+      },
       getViewportSize: (function ()
       {
-         var viewportSize = new Vector2 (0, 0);
+         const viewportSize = new Vector2 (0, 0);
 
          return function (viewport, nearValue)
          {
-            var
+            const
                width  = viewport [2],
                height = viewport [3],
                size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
@@ -33475,7 +33502,7 @@ function (Fields,
       })(),
       getLookAtDistance: function (bbox)
       {
-         return (bbox .size .abs () / 2) / Math .tan (this .getFieldOfView () / 2);
+         return (bbox .size .magnitude () / 2) / Math .tan (this .getFieldOfView () / 2);
       },
       getProjectionMatrixWithLimits: function (nearValue, farValue, viewport, limit)
       {
@@ -33484,7 +33511,7 @@ function (Fields,
 
          // Linear interpolate nearValue and farValue
 
-         var
+         const
             geoZNear = Math .max (Algorithm .lerp (Math .min (nearValue, 1e4), 1e4, this .elevation / 1e7), 1),
             geoZFar  = Math .max (Algorithm .lerp (1e6, Math .max (farValue, 1e6),  this .elevation / 1e7), 1e6);
 
@@ -33891,7 +33918,6 @@ function ($,
                   name: _("Available Viewers"),
                   items: this .getAvailableViewers (),
                },
-               "separator1": "--------",
                "straighten-horizon": {
                   name: _("Straighten Horizon"),
                   type: "checkbox",
@@ -33920,7 +33946,26 @@ function ($,
                      .bind (this),
                   },
                },
-               "separator2": "--------",
+               "display-rubberband": {
+                  name: _("Display Rubberband"),
+                  type: "checkbox",
+                  selected: browser .getBrowserOption ("Rubberband"),
+                  events: {
+                     click: function (event)
+                     {
+                        const rubberband = $(event .target) .is (":checked");
+
+                        browser .setBrowserOption ("Rubberband", rubberband);
+
+                        if (rubberband)
+                           browser .getNotification () ._string = _("Rubberband") + ": " + _("on");
+                        else
+                           browser .getNotification () ._string = _("Rubberband") + ": " + _("off");
+                     }
+                     .bind (this),
+                  },
+               },
+               "separator1": "--------",
                "primitive-quality": {
                   name: _("Primitive Quality"),
                   className: "context-menu-icon x_ite-private-icon-primitive-quality",
@@ -34017,25 +34062,83 @@ function ($,
                      },
                   },
                },
-               "display-rubberband": {
-                  name: _("Display Rubberband"),
-                  type: "checkbox",
-                  selected: browser .getBrowserOption ("Rubberband"),
-                  events: {
-                     click: function (event)
-                     {
-                        const rubberband = $(event .target) .is (":checked");
-
-                        browser .setBrowserOption ("Rubberband", rubberband);
-
-                        if (rubberband)
-                           browser .getNotification () ._string = _("Rubberband") + ": " + _("on");
-                        else
-                           browser .getNotification () ._string = _("Rubberband") + ": " + _("off");
-                     }
-                     .bind (this),
+               "shading": {
+                  name: _("Shading"),
+                  className: "context-menu-icon x_ite-private-icon-shading",
+                  items: {
+                     "point": {
+                        name: _("Point"),
+                        type: "radio",
+                        radio: "shading",
+                        selected: browser .getBrowserOption ("Shading") === "POINT",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("Shading", "POINT");
+                              browser .getNotification () ._string = _("Shading") + ": " + _("Point");
+                           }
+                           .bind (this),
+                        },
+                     },
+                     "wireframe": {
+                        name: _("Wireframe"),
+                        type: "radio",
+                        radio: "shading",
+                        selected: browser .getBrowserOption ("Shading") === "WIREFRAME",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("Shading", "WIREFRAME");
+                              browser .getNotification () ._string = _("Shading") + ": " + _("Wireframe");
+                           }
+                           .bind (this),
+                        },
+                     },
+                     "flat": {
+                        name: _("Flat"),
+                        type: "radio",
+                        radio: "shading",
+                        selected: browser .getBrowserOption ("Shading") === "FLAT",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("Shading", "FLAT");
+                              browser .getNotification () ._string = _("Shading") + ": " + _("Flat");
+                           }
+                           .bind (this),
+                        },
+                     },
+                     "gouraud": {
+                        name: _("Gouraud"),
+                        type: "radio",
+                        radio: "shading",
+                        selected: browser .getBrowserOption ("Shading") === "GOURAUD",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("Shading", "GOURAUD");
+                              browser .getNotification () ._string = _("Shading") + ": " + _("Gouraud");
+                           }
+                           .bind (this),
+                        },
+                     },
+                     "phong": {
+                        name: _("Phong"),
+                        type: "radio",
+                        radio: "shading",
+                        selected: browser .getBrowserOption ("Shading") === "PHONG",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("Shading", "PHONG");
+                              browser .getNotification () ._string = _("Shading") + ": " + _("Phong");
+                           }
+                           .bind (this),
+                        },
+                     },
                   },
                },
+               "separator2": "--------",
                "browser-timings": {
                   name: _("Browser Timings"),
                   type: "checkbox",
@@ -34145,6 +34248,11 @@ function ($,
          if (! browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/) || (currentViewpoint instanceof GeoViewpoint))
          {
             delete menu .items ["straighten-horizon"];
+         }
+
+         if (! browser .getDebug ())
+         {
+            delete menu .items ["shading"];
          }
 
          const worldInfo = browser .getExecutionContext () .getWorldInfos () [0];
@@ -34301,7 +34409,7 @@ function ($,
             .addClass (menu .className)
             .addClass ("context-menu-root")
             .css ({ "left": x, "top": y })
-            .appendTo (layer);
+            .appendTo (options .appendTo);
 
          for (const k in menu .items)
             ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1, hide));
@@ -34396,17 +34504,17 @@ function ($,
 
                      input
                         .attr ("type", item .type)
-                        .attr ("name", "context-menu-input-" + parent);
+                        .attr ("name", "context-menu-input-" + (item .radio || parent));
 
                      $("<span></span>") .text (item .name) .appendTo (label);
 
                      if (item .selected)
                         input .attr ("checked", "checked");
 
-                     for (const key in item .events)
+                     for (const k in item .events)
                      {
-                        if (typeof item .events [key] === "function")
-                           input .on (key, item .events [key]);
+                        if (typeof item .events [k] === "function")
+                           input .on (k, item .events [k]);
                      }
 
                      li .addClass ("context-menu-input");
@@ -45261,8 +45369,9 @@ function (Fields,
 
       this .addChildObjects ("activationTime", new Fields .SFTime ());
 
-      this .valid    = false;
-      this .selected = 0;
+      this .valid          = false;
+      this .selected       = 0;
+      this .primitiveModes = new Map ();
    }
 
    X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -45288,20 +45397,26 @@ function (Fields,
       },
       setShading: function (shading)
       {
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          switch (shading)
          {
             case Shading .POINT:
             {
-               this .primitiveMode = gl .POINTS;
-               this .wireframe     = true;
+               this .wireframe = false;
+
+               this .primitiveModes .set (gl .POINTS,    gl .POINTS);
+               this .primitiveModes .set (gl .LINES,     gl .POINTS);
+               this .primitiveModes .set (gl .TRIANGLES, gl .POINTS);
                break;
             }
             case Shading .WIREFRAME:
             {
-               this .primitiveMode = gl .LINE_LOOP;
-               this .wireframe     = true;
+               this .wireframe = true;
+
+               this .primitiveModes .set (gl .POINTS,    gl .POINTS);
+               this .primitiveModes .set (gl .LINES,     gl .LINES);
+               this .primitiveModes .set (gl .TRIANGLES, gl .LINE_LOOP);
                break;
             }
             default:
@@ -45310,11 +45425,22 @@ function (Fields,
                // case Shading .GOURAUD:
                // case Shading .PHONG:
 
-               this .primitiveMode = gl .TRIANGLES;
-               this .wireframe     = false;
+               this .wireframe = false;
+
+               this .primitiveModes .set (gl .POINTS,    gl .POINTS);
+               this .primitiveModes .set (gl .LINES,     gl .LINES);
+               this .primitiveModes .set (gl .TRIANGLES, gl .TRIANGLES);
                break;
             }
          }
+      },
+      getWireframe: function ()
+      {
+         return this .wireframe;
+      },
+      getPrimitiveMode: function (primitiveMode)
+      {
+         return this .primitiveModes .get (primitiveMode);
       },
       select: function ()
       {
@@ -45503,7 +45629,7 @@ function (Fields,
       },
       set_fieldOfView__: function ()
       {
-         var
+         const
             length           = this ._fieldOfView .length,
             fieldOfViewScale = this ._fieldOfViewScale .getValue ();
 
@@ -45591,38 +45717,35 @@ function (Fields,
       {
          return 1e5;
       },
-      getScreenScale: (function ()
+      getScreenScale: function (point, viewport, screenScale)
       {
-         var screenScale = new Vector3 (0, 0, 0);
+         const
+            width  = viewport [2],
+            height = viewport [3],
+            sizeX  = this .sizeX,
+            sizeY  = this .sizeY,
+            aspect = width / height;
 
-         return function (point, viewport)
+         if (aspect > sizeX / sizeY)
          {
-            var
-               width  = viewport [2],
-               height = viewport [3],
-               sizeX  = this .sizeX,
-               sizeY  = this .sizeY,
-               aspect = width / height;
-
-            if (aspect > sizeX / sizeY)
-            {
-               var s = sizeY / height;
-
-               return screenScale .set (s, s, s);
-            }
-
-            var s = sizeX / width;
+            const s = sizeY / height;
 
             return screenScale .set (s, s, s);
-         };
-      })(),
+         }
+         else
+         {
+            const s = sizeX / width;
+
+            return screenScale .set (s, s, s);
+         }
+      },
       getViewportSize: (function ()
       {
-         var viewportSize = new Vector2 (0, 0);
+         const viewportSize = new Vector2 (0, 0);
 
          return function (viewport, nearValue)
          {
-            var
+            const
                width  = viewport [2],
                height = viewport [3],
                sizeX  = this .sizeX,
@@ -45637,11 +45760,11 @@ function (Fields,
       })(),
       getLookAtDistance: function (bbox)
       {
-         return bbox .size .abs () / 2 + 10;
+         return bbox .size .magnitude () / 2 + 10;
       },
       getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
       {
-         var
+         const
             width  = viewport [2],
             height = viewport [3],
             aspect = width / height,
@@ -45650,18 +45773,20 @@ function (Fields,
 
          if (aspect > sizeX / sizeY)
          {
-            var
+            const
                center  = (this .minimumX + this .maximumX) / 2,
                size1_2 = (sizeY * aspect) / 2;
 
             return Camera .ortho (center - size1_2, center + size1_2, this .minimumY, this .maximumY, nearValue, farValue, this .projectionMatrix);
          }
+         else
+         {
+            const
+               center  = (this .minimumY + this .maximumY) / 2,
+               size1_2 = (sizeX / aspect) / 2;
 
-         var
-            center  = (this .minimumY + this .maximumY) / 2,
-            size1_2 = (sizeX / aspect) / 2;
-
-         return Camera .ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
+            return Camera .ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
+         }
       },
    });
 
@@ -55083,7 +55208,7 @@ function (Vector3,
 
          return function (a, b, c)
          {
-            return B .assign (b) .subtract (a) .cross (C .assign (c) .subtract (a)) .abs () / 2;
+            return B .assign (b) .subtract (a) .cross (C .assign (c) .subtract (a)) .magnitude () / 2;
          };
       })(),
       normal: function (v1, v2, v3, normal)
@@ -55390,6 +55515,7 @@ define ('standard/Math/Algorithms/SAT',[],function ()
 define ('standard/Math/Geometry/ViewVolume',[
    "standard/Math/Geometry/Plane3",
    "standard/Math/Geometry/Triangle3",
+   "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Vector4",
    "standard/Math/Numbers/Matrix4",
@@ -55397,6 +55523,7 @@ define ('standard/Math/Geometry/ViewVolume',[
 ],
 function (Plane3,
           Triangle3,
+          Vector2,
           Vector3,
           Vector4,
           Matrix4,
@@ -55665,20 +55792,18 @@ function (Plane3,
    {
       unProjectPoint: (function ()
       {
-         const matrix = new Matrix4 ();
+         const invModelViewProjectionMatrix = new Matrix4 ();
 
          return function (winx, winy, winz, modelViewMatrix, projectionMatrix, viewport, point)
          {
-            matrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse ();
-
-            return this .unProjectPointMatrix (winx, winy, winz, matrix, viewport, point);
+            return this .unProjectPointMatrix (winx, winy, winz, invModelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse (), viewport, point);
          };
       })(),
       unProjectPointMatrix: (function ()
       {
          const vin = new Vector4 (0, 0, 0, 0);
 
-         return function (winx, winy, winz, invModelViewProjection, viewport, point)
+         return function (winx, winy, winz, invModelViewProjectionMatrix, viewport, point)
          {
             // Transformation of normalized coordinates between -1 and 1
             vin .set ((winx - viewport [0]) / viewport [2] * 2 - 1,
@@ -55687,7 +55812,7 @@ function (Plane3,
                       1);
 
             //Objects coordinates
-            invModelViewProjection .multVecMatrix (vin);
+            invModelViewProjectionMatrix .multVecMatrix (vin);
 
             const d = 1 / vin .w;
 
@@ -55696,17 +55821,23 @@ function (Plane3,
       })(),
       unProjectRay: (function ()
       {
-         const
-            near   = new Vector3 (0, 0, 0),
-            far    = new Vector3 (0, 0, 0),
-            matrix = new Matrix4 ();
+         const invModelViewProjectionMatrix = new Matrix4 ();
 
          return function (winx, winy, modelViewMatrix, projectionMatrix, viewport, result)
          {
-            matrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse ();
+            return this .unProjectRayMatrix (winx, winy, invModelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse (), viewport, result);
+         };
+      })(),
+      unProjectRayMatrix: (function ()
+      {
+         const
+            near = new Vector3 (0, 0, 0),
+            far  = new Vector3 (0, 0, 0);
 
-            ViewVolume .unProjectPointMatrix (winx, winy, 0.0, matrix, viewport, near);
-            ViewVolume .unProjectPointMatrix (winx, winy, 0.9, matrix, viewport, far);
+         return function (winx, winy, invModelViewProjectionMatrix, viewport, result)
+         {
+            ViewVolume .unProjectPointMatrix (winx, winy, 0.0, invModelViewProjectionMatrix, viewport, near);
+            ViewVolume .unProjectPointMatrix (winx, winy, 0.9, invModelViewProjectionMatrix, viewport, far);
 
             return result .setPoints (near, far);
          };
@@ -55753,17 +55884,24 @@ function (Plane3,
       })(),
       projectLine: (function ()
       {
-         const
-            near = new Vector3 (0, 0, 0),
-            far  = new Vector3 (0, 0, 0);
+         const modelViewProjectionMatrix = new Matrix4 ();
 
          return function (line, modelViewMatrix, projectionMatrix, viewport, result)
          {
-            ViewVolume .projectPoint (line .point, modelViewMatrix, projectionMatrix, viewport, near);
-            ViewVolume .projectPoint (Vector3 .multiply (line .direction, 1e9) .add (line .point), modelViewMatrix, projectionMatrix, viewport, far);
+            return this .projectLineMatrix (line, modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix), viewport, result);
+         };
+      })(),
+      projectLineMatrix: (function ()
+      {
+         const
+            near      = new Vector2 (0, 0),
+            far       = new Vector2 (0, 0),
+            direction = new Vector3 (0, 0, 0);
 
-            near .z = 0;
-            far  .z = 0;
+         return function (line, modelViewProjectionMatrix, viewport, result)
+         {
+            ViewVolume .projectPointMatrix (line .point, modelViewProjectionMatrix, viewport, near);
+            ViewVolume .projectPointMatrix (direction .assign (line .direction) .multiply (1e9) .add (line .point), modelViewProjectionMatrix, viewport, far);
 
             return result .setPoints (near, far);
          };
@@ -57240,7 +57378,7 @@ function (TextureBuffer,
          {
             // Move.
 
-            const length = translation .abs ();
+            const length = translation .magnitude ();
 
             if (length > distance)
             {
@@ -57395,7 +57533,7 @@ function (TextureBuffer,
             modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
             const
-               radius     = bboxSize .abs () / 2,
+               radius     = bboxSize .magnitude () / 2,
                viewVolume = this .viewVolumes .at (-1);
 
             if (viewVolume .intersectsSphere (radius, bboxCenter))
@@ -57441,7 +57579,7 @@ function (TextureBuffer,
             modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
             const
-               radius     = bboxSize .abs () / 2,
+               radius     = bboxSize .magnitude () / 2,
                viewVolume = this .viewVolumes .at (-1);
 
             if (viewVolume .intersectsSphere (radius, bboxCenter))
@@ -57483,7 +57621,7 @@ function (TextureBuffer,
             modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
             const
-               radius     = bboxSize .abs () / 2,
+               radius     = bboxSize .magnitude () / 2,
                viewVolume = this .viewVolumes .at (-1);
 
             if (viewVolume .intersectsSphere (radius, bboxCenter))
@@ -59744,9 +59882,11 @@ define ('x_ite/Rendering/VertexArray',[],function ()
 
    VertexArray .prototype =
    {
-      update: function ()
+      update: function (value = true)
       {
-         this .tainted = true;
+         this .tainted = this .tainted || value;
+
+         return this;
       },
       enable: function (gl, shaderNode)
       {
@@ -59839,7 +59979,7 @@ define ('standard/Math/Numbers/Complex',[],function ()
 
    function Complex (real, imag)
    {
-      this .real = real
+      this .real = real;
       this .imag = imag;
    }
 
@@ -59869,34 +60009,10 @@ define ('standard/Math/Numbers/Complex',[],function ()
          return this .real === complex .real &&
                 this .imag === complex .imag;
       },
-      setRadius: function (radius)
+      setPolar: function (magnitude, angle)
       {
-         return this .setPolar (radius, this .getAngle ());
-      },
-      getRadius: function ()
-      {
-         if (this .real)
-         {
-            if (this .imag)
-               return Math .hypot (this .real, this .imag);
-
-            return Math .abs (this .real);
-         }
-
-         return Math .abs (this .imag);
-      },
-      setAngle: function (angle)
-      {
-         return this .setPolar (this .getRadius (), angle);
-      },
-      getAngle: function ()
-      {
-         return Math .atan2 (this .imag, this .real);
-      },
-      setPolar: function (radius, angle)
-      {
-         this .real = radius * Math .cos (angle);
-         this .imag = radius * Math .sin (angle);
+         this .real = magnitude * Math .cos (angle);
+         this .imag = magnitude * Math .sin (angle);
          return this;
       },
       conjugate: function ()
@@ -59967,18 +60083,51 @@ define ('standard/Math/Numbers/Complex',[],function ()
          if (this .imag)
             return this .real + " " + this .imag + "i";
 
-         return "" + this .real;
+         return String (this .real);
       },
    };
 
+   Object .defineProperty (Complex .prototype, "magnitude",
+   {
+      get: function ()
+      {
+         if (this .real)
+         {
+            if (this .imag)
+               return Math .hypot (this .real, this .imag);
+
+            return Math .abs (this .real);
+         }
+
+         return Math .abs (this .imag);
+      },
+      set: function (magnitude)
+      {
+         this .setPolar (magnitude, this .angle);
+      },
+      enumerable: false,
+      configurable: false
+   });
+
+   Object .defineProperty (Complex .prototype, "angle",
+   {
+      get: function ()
+      {
+         return Math .atan2 (this .imag, this .real);
+      },
+      set: function (angle)
+      {
+         this .setPolar (this .magnitude, angle);
+      },
+      enumerable: false,
+      configurable: false
+   });
+
    Object .assign (Complex,
    {
-      Polar: function (radius, angle)
+      Polar: function (magnitude, angle)
       {
-         const complex = Object .create (Complex .prototype);
-         complex .real = radius * Math .cos (angle);
-         complex .imag = radius * Math .sin (angle);
-         return complex;
+         return Object .create (Complex .prototype) .setPolar (magnitude, angle);
       },
       multiply: function (lhs, rhs)
       {
@@ -61303,7 +61452,7 @@ function ($,
                gl     = this .getBrowser () .getContext (),
                image  = this .image [0],
                canvas = this .canvas [0],
-               cx     = canvas .getContext ("2d");
+               cx     = canvas .getContext ("2d", { willReadFrequently: true });
 
             let
                width  = image .width,
@@ -62069,40 +62218,36 @@ function (Fields,
       },
       getFieldOfView: function ()
       {
-         var fov = this ._fieldOfView .getValue () * this ._fieldOfViewScale .getValue ();
+         const fov = this ._fieldOfView .getValue () * this ._fieldOfViewScale .getValue ();
 
          return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
       },
-      getScreenScale: (function ()
+      getScreenScale: function (point, viewport, screenScale)
       {
-         var screenScale = new Vector3 (0, 0, 0);
+         // Returns the screen scale in meter/pixel for on pixel.
 
-         return function (point, viewport)
-         {
-            // Returns the screen scale in meter/pixel for on pixel.
+         const
+            width  = viewport [2],
+            height = viewport [3];
 
-            var
-               width  = viewport [2],
-               height = viewport [3],
-               size   = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
+         let size = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
 
-            if (width > height)
-               size /= height;
-            else
-               size /= width;
+         if (width > height)
+            size /= height;
+         else
+            size /= width;
 
-            return screenScale .set (size, size, size);
-         };
-      })(),
+         return screenScale .set (size, size, size);
+      },
       getViewportSize: (function ()
       {
-         var viewportSize = new Vector2 (0, 0);
+         const viewportSize = new Vector2 (0, 0);
 
          return function (viewport, nearValue)
          {
             // Returns viewport size in meters.
 
-            var
+            const
                width  = viewport [2],
                height = viewport [3],
                size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
@@ -62116,7 +62261,7 @@ function (Fields,
       })(),
       getLookAtDistance: function (bbox)
       {
-         return (bbox .size .abs () / 2) / Math .tan (this .getFieldOfView () / 2);
+         return (bbox .size .magnitude () / 2) / Math .tan (this .getFieldOfView () / 2);
       },
       getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
       {
@@ -67711,6 +67856,8 @@ function ($,
 
          this [_resizer] = new ResizeSensor (this .getSurface (), this .reshape .bind (this));
 
+			this .getSurface () .css ("position", ""); // Reset position, set from ResizeSensor.
+
          this .reshape ();
       },
       getRenderer: function ()
@@ -68124,9 +68271,17 @@ function (Fields,
       {
          return this .alphaMode;
       },
+      getPointProperties: function ()
+      {
+         return this .stylePropertiesNode [0];
+      },
       getLineProperties: function ()
       {
          return this .stylePropertiesNode [1];
+      },
+      getFillProperties: function ()
+      {
+         return this .stylePropertiesNode [2];
       },
       set_live__: function ()
       {
@@ -68420,12 +68575,16 @@ define ('x_ite/Components/Shape/PointProperties',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
    "x_ite/Base/X3DConstants",
+   "standard/Math/Algorithm",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DAppearanceChildNode,
-          X3DConstants)
+          X3DConstants,
+          Algorithm,
+          Vector3)
 {
 "use strict";
 
@@ -68465,6 +68624,10 @@ function (Fields,
       {
          X3DAppearanceChildNode .prototype .initialize .call (this);
 
+         const gl = this .getBrowser () .getContext ();
+
+         this .pointSizeRange = gl .getParameter (gl .ALIASED_POINT_SIZE_RANGE);
+
          this ._pointSizeScaleFactor .addInterest ("set_pointSizeScaleFactor__", this);
          this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
          this ._pointSizeMaxValue    .addInterest ("set_pointSizeMaxValue__",    this);
@@ -68477,17 +68640,30 @@ function (Fields,
          this .set_pointSizeAttenuation__ ();
          this .set_markerType__ ();
       },
+      getPointSize: function (point)
+      {
+         const
+            pointSizeAttenuation = this .pointSizeAttenuation,
+            dL                   = point .magnitude ();
+
+         let pointSize = this .pointSizeScaleFactor;
+
+         pointSize /= pointSizeAttenuation [0] + pointSizeAttenuation [1] * dL + pointSizeAttenuation [2] * (dL * dL);
+         pointSize  = Algorithm .clamp (pointSize, this .pointSizeMinValue, this .pointSizeMaxValue);
+
+         return pointSize;
+      },
       set_pointSizeScaleFactor__: function ()
       {
          this .pointSizeScaleFactor = Math .max (1, this ._pointSizeScaleFactor .getValue ());
       },
       set_pointSizeMinValue__: function ()
       {
-         this .pointSizeMinValue = Math .max (0, this ._pointSizeMinValue .getValue ());
+         this .pointSizeMinValue = Algorithm .clamp (this ._pointSizeMinValue .getValue (), this .pointSizeRange [0], this .pointSizeRange [1]);
       },
       set_pointSizeMaxValue__: function ()
       {
-         this .pointSizeMaxValue = Math .max (0, this ._pointSizeMaxValue .getValue ());
+         this .pointSizeMaxValue = Algorithm .clamp (this ._pointSizeMaxValue .getValue (), this .pointSizeRange [0], this .pointSizeRange [1]);
       },
       set_pointSizeAttenuation__: function ()
       {
@@ -70101,7 +70277,7 @@ function (Vector3)
                d1 = this .direction,
                d2 = line .direction;
 
-            let t = Vector3 .dot (d1, d2);
+            let t = d1 .dot (d2);
 
             if (Math .abs (t) >= 1)
                return false;  // lines are parallel
@@ -70120,11 +70296,9 @@ function (Vector3)
 
          return function (point, result)
          {
-            const d = result;
+            result .assign (this .point) .subtract (point);
 
-            d .assign (this .point) .subtract (point);
-
-            return d .subtract (t .assign (this .direction) .multiply (d .dot (this .direction)));
+            return result .subtract (t .assign (this .direction) .multiply (result .dot (this .direction)));
          };
       })(),
       getPerpendicularVectorToLine: (function ()
@@ -70542,7 +70716,7 @@ function (Fields,
 
             hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
 
-            if (geometryNode .intersectsLine (hitRay, renderObject .getLocalObjects (), modelViewMatrix, intersections))
+            if (geometryNode .intersectsLine (hitRay, renderObject, invModelViewMatrix, this .getAppearance (), intersections))
             {
                // Finally we have intersections and must now find the closest hit in front of the camera.
 
@@ -70570,10 +70744,10 @@ function (Fields,
       })(),
       picking: function (renderObject)
       {
+         const modelMatrix = renderObject .getModelViewMatrix () .get ();
+
          if (this .getTransformSensors () .size)
          {
-            const modelMatrix = renderObject .getModelViewMatrix () .get ();
-
             for (const transformSensorNode of this .getTransformSensors ())
                transformSensorNode .collect (modelMatrix);
          }
@@ -70587,7 +70761,7 @@ function (Fields,
 
          for (const pickSensor of pickSensorStack .at (-1))
          {
-            pickSensor .collect (this .getGeometry (), renderObject .getModelViewMatrix () .get (), browser .getPickingHierarchy ());
+            pickSensor .collect (this .getGeometry (), modelMatrix, pickingHierarchy);
          }
 
          pickingHierarchy .pop ();
@@ -70798,6 +70972,7 @@ function (Fields,
          this ._rebuild .addInterest ("rebuild", this);
 
          this .frontFace             = gl .CCW;
+         this .backFace              = new Map ([[gl .CCW, gl .CW], [gl .CW, gl .CCW]]);
          this .attribBuffers         = [ ];
          this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
          this .texCoordBuffers       = Array .from ({length: browser .getMaxTextures ()}, () => gl .createBuffer ());
@@ -70805,8 +70980,8 @@ function (Fields,
          this .colorBuffer           = gl .createBuffer ();
          this .normalBuffer          = gl .createBuffer ();
          this .vertexBuffer          = gl .createBuffer ();
-         this .vertexArrayObject           = new VertexArray ();
-         this .shadowArrayObject           = new VertexArray ();
+         this .vertexArrayObject     = new VertexArray ();
+         this .shadowArrayObject     = new VertexArray ();
 
          this .set_live__ ();
       },
@@ -70874,7 +71049,9 @@ function (Fields,
       },
       setCCW: function (value)
       {
-         this .frontFace = value ? this .getBrowser () .getContext () .CCW : this .getBrowser () .getContext () .CW;
+         const gl = this .getBrowser () .getContext ();
+
+         this .frontFace = value ? gl .CCW : gl .CW;
       },
       getAttrib: function ()
       {
@@ -71073,13 +71250,6 @@ function (Fields,
 
          return normals_;
       },
-      isClipped: function (point, clipPlanes)
-      {
-         return clipPlanes .some (function (clipPlane)
-         {
-            return clipPlane .isClipped (point);
-         });
-      },
       transformLine: function (hitRay)
       {
          // Apply sceen nodes transformation in place here.
@@ -71088,7 +71258,18 @@ function (Fields,
       {
          // Apply sceen nodes transformation in place here.
       },
-      intersectsLine: (function ()
+      isClipped: function (point, clipPlanes)
+      {
+         return clipPlanes .some (function (clipPlane)
+         {
+            return clipPlane .isClipped (point);
+         });
+      },
+      intersectsLine: function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
+      {
+         return this .intersectsLineWithGeometry (hitRay, renderObject .getModelViewMatrix () .get (), renderObject .getLocalObjects (), intersections);
+      },
+      intersectsLineWithGeometry: (function ()
       {
          const
             modelViewMatrix = new Matrix4 (),
@@ -71098,19 +71279,20 @@ function (Fields,
             v2              = new Vector3 (0, 0, 0),
             clipPoint       = new Vector3 (0, 0, 0);
 
-         return function (hitRay, clipPlanes, modelViewMatrix_, intersections)
+         return function (hitRay, matrix, clipPlanes, intersections)
          {
             if (this .intersectsBBox (hitRay))
             {
-               this .transformLine (hitRay);                                       // Apply screen transformations from screen nodes.
-               this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
+               this .transformLine (hitRay); // Apply screen transformations from screen nodes.
+               this .transformMatrix (modelViewMatrix .assign (matrix)); // Apply screen transformations from screen nodes.
 
                const
-                  texCoords  = this .multiTexCoords [0] .getValue (),
-                  normals    = this .normals .getValue (),
-                  vertices   = this .vertices .getValue ();
+                  texCoords   = this .multiTexCoords [0] .getValue (),
+                  normals     = this .normals .getValue (),
+                  vertices    = this .vertices .getValue (),
+                  vertexCount = this .vertexCount;
 
-               for (let i = 0, length = this .vertexCount; i < length; i += 3)
+               for (let i = 0; i < vertexCount; i += 3)
                {
                   const i4 = i * 4;
 
@@ -71133,8 +71315,11 @@ function (Fields,
                                                 t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
                                                 t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                        continue;
+                     if (clipPlanes .length)
+                     {
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                           continue;
+                     }
 
                      const texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
                                                    t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
@@ -71142,8 +71327,8 @@ function (Fields,
                      const i3 = i * 3;
 
                      const normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
-                                                   t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
-                                                   t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
+                                                 t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
+                                                 t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
 
                      intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
                   }
@@ -71153,22 +71338,59 @@ function (Fields,
             return intersections .length;
          };
       })(),
+      getPlanesWithOffset: (function ()
+      {
+         const
+            min    = new Vector3 (0, 0, 0),
+            max    = new Vector3 (0, 0, 0),
+            planes = [ ];
+
+         for (let i = 0; i < 5; ++ i)
+            planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
+
+         return function (minX, minY, minZ, maxX, maxY, maxZ)
+         {
+            min .set (minX, minY, minZ);
+            max .set (maxX, maxY, maxZ);
+
+            for (let i = 0; i < 5; ++ i)
+               planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+
+            return planes;
+         };
+      })(),
       intersectsBBox: (function ()
       {
          const intersection = new Vector3 (0, 0, 0);
 
-         return function (hitRay, offset = 0)
+         return function (hitRay, offsets)
          {
-            const
-               planes = this .planes,
-               min    = this .min,
-               max    = this .max,
-               minX   = min .x - offset,
-               maxX   = max .x + offset,
-               minY   = min .y - offset,
-               maxY   = max .y + offset,
-               minZ   = min .z - offset,
-               maxZ   = max .z + offset;
+            if (offsets)
+            {
+               var
+                  min    = this .min,
+                  max    = this .max,
+                  minX   = min .x - offsets .x,
+                  maxX   = max .x + offsets .x,
+                  minY   = min .y - offsets .y,
+                  maxY   = max .y + offsets .y,
+                  minZ   = min .z - offsets .z,
+                  maxZ   = max .z + offsets .z,
+                  planes = this .getPlanesWithOffset (minX, minY, minZ, maxX, maxY, maxZ);
+            }
+            else
+            {
+               var
+                  min    = this .min,
+                  max    = this .max,
+                  minX   = min .x,
+                  maxX   = max .x,
+                  minY   = min .y,
+                  maxY   = max .y,
+                  minZ   = min .z,
+                  maxZ   = max .z,
+                  planes = this .planes;
+            }
 
             // front
             if (planes [0] .intersectsLine (hitRay, intersection))
@@ -71282,7 +71504,9 @@ function (Fields,
             if (this .geometryType < 2)
                return;
 
-            const flatShading = this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
+            const
+               browser     = this .getBrowser (),
+               flatShading = browser .getBrowserOptions () .getShading () === Shading .FLAT;
 
             if (flatShading === this .flatShading)
                return;
@@ -71291,7 +71515,7 @@ function (Fields,
 
             // Generate flat normals if needed.
 
-            const gl = this .getBrowser () .getContext ();
+            const gl = browser .getContext ();
 
             if (flatShading)
             {
@@ -71407,6 +71631,10 @@ function (Fields,
             // Upload arrays.
 
             this .transfer ();
+
+            // Setup render functions.
+
+            this .setRenderFunctions ();
          };
       })(),
       clear: function ()
@@ -71465,7 +71693,7 @@ function (Fields,
          gl .bindBuffer (gl .ARRAY_BUFFER, this .fogDepthBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .fogDepths .getValue (), gl .DYNAMIC_DRAW);
 
-         this .fogCoords = !! (this .fogDepths .length);
+         this .fogCoords = !! this .fogDepths .length;
 
          if (this .fogCoords !== lastFogCoords)
             this .updateVertexArrays ();
@@ -71477,7 +71705,7 @@ function (Fields,
          gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .DYNAMIC_DRAW);
 
-         this .colorMaterial = !! (this .colors .length);
+         this .colorMaterial = !! this .colors .length;
 
          if (this .colorMaterial !== lastColorMaterial)
             this .updateVertexArrays ();
@@ -71496,9 +71724,9 @@ function (Fields,
          gl .bufferData (gl .ARRAY_BUFFER, this .vertices .getValue (), gl .DYNAMIC_DRAW);
 
          this .vertexCount = this .vertices .length / 4;
-
-         // Setup render functions.
-
+      },
+      setRenderFunctions: function ()
+      {
          if (this .vertexCount)
          {
             // Use default render functions.
@@ -71535,7 +71763,7 @@ function (Fields,
             backMaterialNode = appearanceNode .backMaterialNode,
             frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
 
-         if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
+         if (this .solid || ! backMaterialNode || frontShaderNode .getWireframe ())
          {
             this .displayGeometry (gl, context, appearanceNode, frontShaderNode, true, true);
          }
@@ -71554,7 +71782,8 @@ function (Fields,
             const
                blendModeNode = appearanceNode .blendModeNode,
                attribNodes   = this .attribNodes,
-               attribBuffers = this .attribBuffers;
+               attribBuffers = this .attribBuffers,
+               primitiveMode = shaderNode .getPrimitiveMode (this .primitiveMode);
 
             if (blendModeNode)
                blendModeNode .enable (gl);
@@ -71582,25 +71811,16 @@ function (Fields,
 
             // Draw depending on wireframe, solid and transparent.
 
-            if (shaderNode .wireframe)
+            if (shaderNode .getWireframe ())
             {
-               // Points and Wireframes.
-
-               if (shaderNode .primitiveMode === gl .POINTS)
-               {
-                  gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-               }
-               else
-               {
-                  for (let i = 0, length = this .vertexCount; i < length; i += 3)
-                     gl .drawArrays (shaderNode .primitiveMode, i, 3);
-               }
+               for (let i = 0, length = this .vertexCount; i < length; i += 3)
+                  gl .drawArrays (primitiveMode, i, 3);
             }
             else
             {
                const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
 
-               gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
+               gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
 
                if (context .transparent || back !== front)
                {
@@ -71610,10 +71830,10 @@ function (Fields,
 
                   // Render back.
 
-                  if (back && !this .solid)
+                  if (back && ! this .solid)
                   {
                      gl .cullFace (gl .FRONT);
-                     gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+                     gl .drawArrays (primitiveMode, 0, this .vertexCount);
                   }
 
                   // Render front.
@@ -71621,7 +71841,7 @@ function (Fields,
                   if (front)
                   {
                      gl .cullFace (gl .BACK);
-                     gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+                     gl .drawArrays (primitiveMode, 0, this .vertexCount);
                   }
                }
                else
@@ -71633,7 +71853,7 @@ function (Fields,
                   else
                      gl .disable (gl .CULL_FACE);
 
-                  gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+                  gl .drawArrays (primitiveMode, 0, this .vertexCount);
                }
             }
 
@@ -71645,23 +71865,18 @@ function (Fields,
       {
          const outputParticles = particleSystem .outputParticles;
 
-         if (this .updateParticlesShadow)
-         {
-            this .updateParticlesShadow = false;
-
-            outputParticles .shadowArrayObject .update ();
-         }
-
-         if (outputParticles .shadowArrayObject .enable (gl, shaderNode))
+         if (outputParticles .shadowArrayObject .update (this .updateParticlesShadow) .enable (gl, shaderNode))
          {
             const particleStride = particleSystem .particleStride;
 
             shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
             shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
             shaderNode .enableVertexAttribute         (gl, this .vertexBuffer, 0, 0);
+
+            this .updateParticlesShadow = false;
          }
 
-         gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+         gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
       },
       displayParticles: function (gl, context, particleSystem)
       {
@@ -71671,7 +71886,7 @@ function (Fields,
             backMaterialNode = appearanceNode .backMaterialNode,
             frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
 
-         if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
+         if (this .solid || ! backMaterialNode || frontShaderNode .getWireframe ())
          {
             this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particleSystem);
          }
@@ -71690,7 +71905,8 @@ function (Fields,
             const
                blendModeNode = appearanceNode .blendModeNode,
                attribNodes   = this .attribNodes,
-               attribBuffers = this .attribBuffers;
+               attribBuffers = this .attribBuffers,
+               primitiveMode = shaderNode .getPrimitiveMode (this .primitiveMode);
 
             if (blendModeNode)
                blendModeNode .enable (gl);
@@ -71704,14 +71920,7 @@ function (Fields,
 
             const outputParticles = particleSystem .outputParticles;
 
-            if (this .updateParticles)
-            {
-               this .updateParticles = false;
-
-               outputParticles .vertexArrayObject .update ();
-            }
-
-            if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
+            if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
             {
                const particleStride = particleSystem .particleStride;
 
@@ -71730,59 +71939,44 @@ function (Fields,
                shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
                shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
                shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+
+               this .updateParticles = false;
             }
 
             // Draw depending on wireframe, solid and transparent.
 
-            if (shaderNode .wireframe)
-            {
-               // Points and Wireframes.
+            const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
 
-               if (shaderNode .primitiveMode === gl .POINTS)
+            gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
+
+            if (context .transparent || back !== front)
+            {
+               // Render transparent or back or front.
+
+               gl .enable (gl .CULL_FACE);
+
+               if (back && ! this .solid)
                {
-                  gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+                  gl .cullFace (gl .FRONT);
+                  gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
                }
-               else
+
+               if (front)
                {
-                  for (let i = 0, length = this .vertexCount; i < length; i += 3)
-                     gl .drawArraysInstanced (shaderNode .primitiveMode, i, 3, particleSystem .numParticles);
+                  gl .cullFace (gl .BACK);
+                  gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
                }
             }
             else
             {
-               const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+               // Render solid or both sides.
 
-               gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
-
-               if (context .transparent || back !== front)
-               {
-                  // Render transparent or back or front.
-
+               if (this .solid)
                   gl .enable (gl .CULL_FACE);
-
-                  if (back && !this .solid)
-                  {
-                     gl .cullFace (gl .FRONT);
-                     gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-                  }
-
-                  if (front)
-                  {
-                     gl .cullFace (gl .BACK);
-                     gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-                  }
-               }
                else
-               {
-                  // Render solid or both sides.
+                  gl .disable (gl .CULL_FACE);
 
-                  if (this .solid)
-                     gl .enable (gl .CULL_FACE);
-                  else
-                     gl .disable (gl .CULL_FACE);
-
-                  gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-               }
+               gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
             }
 
             if (blendModeNode)
@@ -71843,23 +72037,193 @@ function (Fields,
  ******************************************************************************/
 
 
+define ('standard/Math/Geometry/Line2',[
+   "standard/Math/Numbers/Vector2",
+],
+function (Vector2)
+{
+"use strict";
+
+   function Line2 (point, direction)
+   {
+      this .point     = point     .copy ();
+      this .direction = direction .copy ();
+   }
+
+   Line2 .prototype =
+   {
+      constructor: Line2,
+      copy: function ()
+      {
+         const copy = Object .create (Line2 .prototype);
+         copy .point     = this .point .copy ();
+         copy .direction = this .direction .copy ();
+         return copy;
+      },
+      assign: function (line)
+      {
+         this .point     .assign (line .point);
+         this .direction .assign (line .direction);
+         return this;
+      },
+      set: function (point, direction)
+      {
+         this .point     .assign (point);
+         this .direction .assign (direction);
+         return this;
+      },
+      setPoints: function (point1, point2)
+      {
+         this .point .assign (point1);
+         this .direction .assign (point2) .subtract (point1) .normalize ();
+         return this;
+      },
+      multMatrixLine: function (matrix)
+      {
+         matrix .multMatrixVec (this .point);
+         matrix .multMatrixDir (this .direction) .normalize ();
+         return this;
+      },
+      multLineMatrix: function (matrix)
+      {
+         matrix .multVecMatrix (this .point);
+         matrix .multDirMatrix (this .direction) .normalize ();
+         return this;
+      },
+      getClosestPointToPoint: function (point, result)
+      {
+         const
+            r = result .assign (point) .subtract (this .point),
+            d = r .dot (this .direction);
+
+         return result .assign (this .direction) .multiply (d) .add (this .point);
+      },
+      getPerpendicularVectorToPoint: (function ()
+      {
+         const t = new Vector2 (0, 0);
+
+         return function (point, result)
+         {
+            result .assign (this .point) .subtract (point);
+
+            return result .subtract (t .assign (this .direction) .multiply (result .dot (this .direction)));
+         };
+      })(),
+      intersectsLine: (function ()
+      {
+         const u = new Vector2 (0, 0);
+
+         return function (line, point)
+         {
+            const
+               p1 = this .point,
+               p2 = line .point,
+               d1 = this .direction,
+               d2 = line .direction;
+
+            const theta = d1 .dot (d2); // angle between both lines
+
+            if (Math .abs (theta) >= 1)
+               return false; // lines are parallel
+
+            u .assign (p2) .subtract (p1);
+
+            const t = (u .dot (d1) - theta * u .dot (d2)) / (1 - theta * theta);
+
+            point .assign (d1) .multiply (t) .add (p1);
+
+            return true;
+         };
+      })(),
+      toString: function ()
+      {
+         return this .point + ", " + this .direction;
+      },
+   };
+
+   Line2 .Points = function (point1, point2)
+   {
+      const line = Object .create (Line2 .prototype);
+      line .point     = point1 .copy ();
+      line .direction = Vector2 .subtract (point2, point1) .normalize ();
+      return line;
+   };
+
+   return Line2;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Rendering/X3DLineGeometryNode',[
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Rendering/VertexArray",
    "standard/Math/Geometry/ViewVolume",
+   "standard/Math/Geometry/Box3",
+   "standard/Math/Geometry/Line2",
    "standard/Math/Geometry/Line3",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Vector4",
+   "standard/Math/Numbers/Matrix2",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
           VertexArray,
           ViewVolume,
+          Box3,
+          Line2,
           Line3,
           Vector2,
           Vector3,
           Vector4,
+          Matrix2,
           Matrix4)
 {
 "use strict";
@@ -71879,7 +72243,7 @@ function (X3DGeometryNode,
       this .trianglesTexCoordBuffers   = new Array (browser .getMaxTextures ()) .fill (this .trianglesBuffer);
 
       this .setGeometryType (1);
-      this .setPrimitiveMode (browser .getContext () .LINES);
+      this .setPrimitiveMode (gl .LINES);
       this .setSolid (false);
    }
 
@@ -71895,51 +72259,100 @@ function (X3DGeometryNode,
       },
       intersectsLine: (function ()
       {
-         const PICK_DISTANCE_FACTOR = 1 / 300;
-
          const
-            point1    = new Vector3 (0, 0, 0),
-            point2    = new Vector3 (0, 0, 0),
-            line      = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-            point     = new Vector3 (0, 0, 0),
-            vector    = new Vector3 (0, 0, 0),
-            clipPoint = new Vector3 (0, 0, 0);
+            bbox                      = new Box3 (),
+            min                       = new Vector3 (0, 0, 0),
+            max                       = new Vector3 (0, 0, 0),
+            screenScale1_             = new Vector3 (0, 0, 0),
+            screenScale2_             = new Vector3 (0, 0, 0),
+            modelViewProjectionMatrix = new Matrix4 (),
+            point1                    = new Vector3 (0, 0, 0),
+            point2                    = new Vector3 (0, 0, 0),
+            projected1                = new Vector2 (0, 0),
+            projected2                = new Vector2 (0, 0),
+            projected                 = new Line2 (Vector2 .Zero, Vector2 .yAxis),
+            closest                   = new Vector2 (0, 0),
+            ray                       = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+            line                      = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+            point                     = new Vector3 (0, 0, 0),
+            rotation                  = new Matrix2 (),
+            clipPoint                 = new Vector3 (0, 0, 0);
 
-         return function (hitRay, clipPlanes, modelViewMatrix, intersections)
+         return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
          {
-            if (this .intersectsBBox (hitRay, 1))
-            {
-               const vertices = this .getVertices ();
+            const
+               modelViewMatrix    = renderObject .getModelViewMatrix () .get (),
+               viewport           = renderObject .getViewVolume () .getViewport (),
+               extents            = bbox .assign (this .getBBox ()) .multRight (modelViewMatrix) .getExtents (min, max),
+               linePropertiesNode = appearanceNode .getLineProperties (),
+               lineWidth1_2       = Math .max (1.5, linePropertiesNode .getApplied () ? linePropertiesNode .getLinewidthScaleFactor () / 2 : 0),
+               screenScale1       = renderObject .getViewpoint () .getScreenScale (min, viewport, screenScale1_), // in m/px
+               offsets1           = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (lineWidth1_2)),
+               screenScale2       = renderObject .getViewpoint () .getScreenScale (max, viewport, screenScale2_), // in m/px
+               offsets2           = invModelViewMatrix .multDirMatrix (screenScale2 .multiply (lineWidth1_2));
 
-               for (let i = 0, length = vertices .length; i < length; i += 8)
+            if (this .intersectsBBox (hitRay, offsets1 .abs () .max (offsets2 .abs ())))
+            {
+               const
+                  pointer          = renderObject .getBrowser () .getPointer (),
+                  projectionMatrix = renderObject .getProjectionMatrix () .get (),
+                  clipPlanes       = renderObject .getLocalObjects (),
+                  vertices         = this .getVertices (),
+                  numVertices      = vertices .length;
+
+               modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
+
+               for (let i = 0; i < numVertices; i += 8)
                {
                   point1 .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
                   point2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-                  line .setPoints (point1, point2);
+                  ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projected1);
+                  ViewVolume .projectPointMatrix (point2, modelViewProjectionMatrix, viewport, projected2);
 
-                  if (line .getClosestPointToLine (hitRay, point))
+                  projected .setPoints (projected1, projected2);
+
+                  if (projected .getClosestPointToPoint (pointer, closest))
                   {
-                     if (line .getPerpendicularVectorToLine (hitRay, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
+                     const
+                        distance  = projected1 .distance (projected2),
+                        distance1 = projected1 .distance (closest),
+                        distance2 = projected2 .distance (closest);
+
+                     if (distance1 <= distance && distance2 <= distance)
                      {
-                        const distance = point1 .distance (point2);
-
-                        if (point1 .distance (point) <= distance && point2 .distance (point) <= distance)
+                        if (closest .distance (pointer) <= lineWidth1_2)
                         {
-                           if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                              continue;
+                           if (clipPlanes .length)
+                           {
+                              if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (closest)), clipPlanes))
+                                 continue;
+                           }
 
-                           intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
-                           return true;
+                           const
+                              direction = projected .direction,
+                              texCoordY = rotation .set (direction .x, direction .y, -direction .y, direction .x) .inverse () .multVecMatrix (pointer .copy () .subtract (closest)),
+                              texCoord  = texCoordY .set (distance1 / distance, (texCoordY .y / lineWidth1_2 + 1) / 2),
+                              normal    = point2 .copy () .subtract (point1) .normalize ();
+
+                           ViewVolume .unProjectRay (closest .x, closest .y, modelViewMatrix, projectionMatrix, viewport, ray);
+
+                           line .setPoints (point1, point2) .getClosestPointToLine (ray, point);
+
+                           intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
                         }
                      }
                   }
                }
             }
 
-            return false;
+            return intersections .length;
          };
       })(),
+      intersectsLineWithGeometry: function ()
+      {
+         return false;
+      },
       intersectsBox: function (box, clipPlanes, modelViewMatrix)
       {
          return false;
@@ -72004,7 +72417,7 @@ function (X3DGeometryNode,
                texCoordArray [i + 5] = projectedPoint0 .y;
                texCoordArray [i + 6] = lengthSoFar;
 
-               lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .abs ();
+               lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .magnitude ();
             }
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
@@ -72040,7 +72453,8 @@ function (X3DGeometryNode,
                {
                   const
                      viewport         = context .renderer .getViewVolume () .getViewport (),
-                     projectionMatrix = context .renderer .getProjectionMatrix () .get ();
+                     projectionMatrix = context .renderer .getProjectionMatrix () .get (),
+                     primitiveMode    = shaderNode .getPrimitiveMode (gl .TRIANGLES);
 
                   modelViewProjectionMatrixArray .set (matrix .assign (context .modelViewMatrix) .multRight (projectionMatrix));
                   invModelViewProjectionMatrixArray .set (matrix .inverse ());
@@ -72148,9 +72562,17 @@ function (X3DGeometryNode,
                      gl .bindBuffer (gl .ARRAY_BUFFER, null);
                   }
 
-                  gl .frontFace (gl .CCW);
-                  gl .enable (gl .CULL_FACE);
-                  gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : gl .TRIANGLES, 0, this .vertexCount * 3);
+                  if (shaderNode .getWireframe ())
+                  {
+                     for (let i = 0, length = this .vertexCount * 3; i < length; i += 3)
+                        gl .drawArrays (primitiveMode, i, 3);
+                  }
+                  else
+                  {
+                     gl .frontFace (gl .CCW);
+                     gl .enable (gl .CULL_FACE);
+                     gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
+                  }
 
                   if (blendModeNode)
                      blendModeNode .disable (gl);
@@ -72158,6 +72580,8 @@ function (X3DGeometryNode,
             }
             else if (shaderNode .isValid ())
             {
+               const primitiveMode = shaderNode .getPrimitiveMode (this .primitiveMode);
+
                if (blendModeNode)
                   blendModeNode .enable (gl);
 
@@ -72183,7 +72607,7 @@ function (X3DGeometryNode,
                   shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
                }
 
-               gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
+               gl .drawArrays (primitiveMode, 0, this .vertexCount);
 
                if (blendModeNode)
                   blendModeNode .disable (gl);
@@ -72198,7 +72622,8 @@ function (X3DGeometryNode,
             shaderNode     = appearanceNode .shaderNode || browser .getLineShader (),
             blendModeNode  = appearanceNode .blendModeNode,
             attribNodes    = this .attribNodes,
-            attribBuffers  = this .attribBuffers;
+            attribBuffers  = this .attribBuffers,
+            primitiveMode  = shaderNode .getPrimitiveMode (this .primitiveMode);
 
          if (shaderNode .isValid ())
          {
@@ -72214,14 +72639,7 @@ function (X3DGeometryNode,
 
             const outputParticles = particleSystem .outputParticles;
 
-            if (this .updateParticles)
-            {
-               this .updateParticles = false;
-
-               outputParticles .vertexArrayObject .update ();
-            }
-
-            if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
+            if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
             {
                const particleStride = particleSystem .particleStride;
 
@@ -72239,11 +72657,11 @@ function (X3DGeometryNode,
 
                shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
                shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+
+               this .updateParticles = false;
             }
 
             // Wireframes are always solid so only one drawing call is needed.
-
-            const primitiveMode = shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode;
 
             gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 
@@ -72709,19 +73127,6 @@ function (Fields,
    X3DColorNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
    {
       constructor: X3DColorNode,
-      initialize: function ()
-      {
-         X3DGeometricPropertyNode .prototype .initialize .call (this);
-
-         this ._color .addInterest ("set_color__", this);
-
-         this .set_color__ ();
-      },
-      set_color__: function ()
-      {
-         this .color  = this ._color .getValue ();
-         this .length = this ._color .length;
-      },
       setTransparent: function (value)
       {
          if (value !== this ._transparent .getValue ())
@@ -72825,6 +73230,19 @@ function (Fields,
       getContainerField: function ()
       {
          return "color";
+      },
+      initialize: function ()
+      {
+         X3DColorNode .prototype .initialize .call (this);
+
+         this ._color .addInterest ("set_color__", this);
+
+         this .set_color__ ();
+      },
+      set_color__: function ()
+      {
+         this .color  = this ._color .getValue ();
+         this .length = this ._color .length;
       },
       addColor: function (index, array)
       {
@@ -74313,30 +74731,6 @@ function (X3DTextureCoordinateNode,
    X3DSingleTextureCoordinateNode .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
    {
       constructor: X3DSingleTextureCoordinateNode,
-      initialize: function ()
-      {
-         X3DTextureCoordinateNode .prototype .initialize .call (this);
-
-         if (this ._point)
-         {
-            this ._point .addInterest ("set_point__", this);
-
-            this .set_point__ ();
-         }
-      },
-      set_point__: function ()
-      {
-         this .point  = this ._point .getValue ();
-         this .length = this ._point .length;
-      },
-      isEmpty: function ()
-      {
-         return this .length === 0;
-      },
-      getSize: function ()
-      {
-         return this .length;
-      },
       init: function (multiArray)
       {
          this .texCoordArray .length = 0;
@@ -74454,6 +74848,27 @@ function (Fields,
       getContainerField: function ()
       {
          return "texCoord";
+      },
+      initialize: function ()
+      {
+         X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
+
+         this ._point .addInterest ("set_point__", this);
+
+         this .set_point__ ();
+      },
+      set_point__: function ()
+      {
+         this .point  = this ._point .getValue ();
+         this .length = this ._point .length;
+      },
+      isEmpty: function ()
+      {
+         return this .length === 0;
+      },
+      getSize: function ()
+      {
+         return this .length;
       },
       get1Point: function (index, vector)
       {
@@ -75191,11 +75606,13 @@ define ('x_ite/Browser/Geometry3D/X3DGeometry3DContext',[
    "x_ite/Browser/Geometry3D/ConeOptions",
    "x_ite/Browser/Geometry3D/CylinderOptions",
    "x_ite/Browser/Geometry3D/QuadSphereOptions",
+   "x_ite/Browser/Core/PrimitiveQuality",
 ],
 function (BoxOptions,
           ConeOptions,
           CylinderOptions,
-          QuadSphereOptions)
+          QuadSphereOptions,
+          PrimitiveQuality)
 {
 "use strict";
 
@@ -75204,7 +75621,9 @@ function (BoxOptions,
    X3DGeometry3DContext .prototype =
    {
       initialize: function ()
-      { },
+      {
+         this .setPrimitiveQuality3D (this .getBrowserOptions () .getPrimitiveQuality ());
+      },
       getBoxOptions: function ()
       {
          return getOptionNode .call (this, "getBoxOptions", BoxOptions);
@@ -75220,6 +75639,41 @@ function (BoxOptions,
       getSphereOptions: function ()
       {
          return getOptionNode .call (this, "getSphereOptions", QuadSphereOptions);
+      },
+      setPrimitiveQuality3D: function (primitiveQuality)
+      {
+         const
+            cone     = this .getConeOptions (),
+            cylinder = this .getCylinderOptions (),
+            sphere   = this .getSphereOptions ();
+
+         switch (primitiveQuality)
+         {
+            case PrimitiveQuality .LOW:
+            {
+               cone     ._xDimension = 16;
+               cylinder ._xDimension = 16;
+               sphere   ._xDimension = 20;
+               sphere   ._yDimension = 9;
+               break;
+            }
+            case PrimitiveQuality .MEDIUM:
+            {
+               cone     ._xDimension = 20;
+               cylinder ._xDimension = 20;
+               sphere   ._xDimension = 32;
+               sphere   ._yDimension = 15;
+               break;
+            }
+            case PrimitiveQuality .HIGH:
+            {
+               cone     ._xDimension = 32;
+               cylinder ._xDimension = 32;
+               sphere   ._xDimension = 64;
+               sphere   ._yDimension = 31;
+               break;
+            }
+         }
       },
    };
 
@@ -75677,6 +76131,10 @@ function (PointingDevice,
       {
          return this [_cursorType];
       },
+      getPointer: function ()
+      {
+         return this [_pointer];
+      },
       isPointerInRectangle: function (rectangle)
       {
          return this [_pointer] .x > rectangle .x &&
@@ -75996,11 +76454,11 @@ function (X3DBaseNode,
             ViewVolume .unProjectPoint (x, this .getBrowser () .getViewport () [3] - y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
 
             if (viewpoint instanceof OrthoViewpoint)
-               return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .abs ());
+               return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .magnitude ());
 
             const direction = far .normalize ();
 
-            return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .abs () / direction .dot (axis));
+            return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .magnitude () / direction .dot (axis));
          };
       })(),
       getDistanceToCenter: function (distance, positionOffset)
@@ -76194,7 +76652,7 @@ function (X3DChildNode,
       },
       equals: function (lhs, rhs, tolerance)
       {
-         return this .a .assign (lhs) .subtract (rhs) .abs () < tolerance;
+         return this .a .assign (lhs) .subtract (rhs) .magnitude () < tolerance;
       },
       interpolate: function (source, destination, weight)
       {
@@ -77083,7 +77541,7 @@ function ($,
             viewpoint .transitionStop ();
 
             step        = this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR),
-            translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .abs ()));
+            translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .magnitude ()));
 
             if (event .deltaY > 0)
                this .addMove (translation .negate (), Vector3 .Zero);
@@ -77970,7 +78428,7 @@ function ($,
             else
                rubberBandRotation .setFromToVec (up .multVecRot (axis .set (0, 0, -1)), up .multVecRot (direction .assign (this .direction)));
 
-            var rubberBandLength = this .direction .abs ();
+            var rubberBandLength = this .direction .magnitude ();
 
             // Determine positionOffset.
 
@@ -79129,7 +79587,7 @@ function ($,
             viewpoint .transitionStop ();
 
             step        = this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR),
-            translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .abs ()));
+            translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .magnitude ()));
 
             if (event .deltaY > 0)
                this .addMove (translation .negate (), Vector3 .Zero);
@@ -81556,6 +82014,7 @@ function (TextAlignment,
 
    function X3DTextGeometry (text, fontStyle)
    {
+      this .browser        = text .getBrowser ();
       this .text           = text;
       this .fontStyle      = fontStyle;
       this .glyphs         = [ ];
@@ -81572,7 +82031,7 @@ function (TextAlignment,
       constructor: X3DTextGeometry,
       getBrowser: function ()
       {
-         return this .text .getBrowser ();
+         return this .browser;
       },
       getText: function ()
       {
@@ -97739,10 +98198,12 @@ define ('x_ite/Browser/Texturing/X3DTexturingContext',[
    "x_ite/Components/Texturing/TextureProperties",
    "x_ite/Components/Texturing/TextureTransform",
    "x_ite/Components/Texturing/TextureCoordinate",
+   "x_ite/Browser/Core/TextureQuality",
 ],
 function (TextureProperties,
           TextureTransform,
-          TextureCoordinate)
+          TextureCoordinate,
+          TextureQuality)
 {
 "use strict";
 
@@ -97837,6 +98298,10 @@ function (TextureProperties,
          // Init texture units.
 
          this .resetTextureUnits ();
+
+         // Set texture quality.
+
+         this .setTextureQuality (this .getBrowserOptions () .getTextureQuality ());
       },
       getMaxTextures: function ()
       {
@@ -97989,6 +98454,47 @@ function (TextureProperties,
 
          return this [_defaultTextureCoordinate];
       },
+      setTextureQuality: function (textureQuality)
+      {
+         const textureProperties = this .getDefaultTextureProperties ();
+
+         switch (textureQuality)
+         {
+            case TextureQuality .LOW:
+            {
+               textureProperties ._magnificationFilter = "AVG_PIXEL";
+               textureProperties ._minificationFilter  = "AVG_PIXEL";
+               textureProperties ._textureCompression  = "FASTEST";
+               textureProperties ._generateMipMaps     = true;
+
+               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
+               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+               break;
+            }
+            case TextureQuality .MEDIUM:
+            {
+               textureProperties ._magnificationFilter = "NICEST";
+               textureProperties ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
+               textureProperties ._textureCompression  = "NICEST";
+               textureProperties ._generateMipMaps     = true;
+
+               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
+               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+               break;
+            }
+            case TextureQuality .HIGH:
+            {
+               textureProperties ._magnificationFilter = "NICEST";
+               textureProperties ._minificationFilter  = "NICEST";
+               textureProperties ._textureCompression  = "NICEST";
+               textureProperties ._generateMipMaps     = true;
+
+               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_NICEST);
+               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+               break;
+            }
+         }
+      },
    };
 
    return X3DTexturingContext;
@@ -98102,7 +98608,7 @@ function (Vector3)
                lastPosition .assign (this [_currentPosition]);
                this [_currentPosition] .set (cameraSpaceMatrix [12], cameraSpaceMatrix [13], cameraSpaceMatrix [14]);
 
-               this [_currentSpeed] = lastPosition .subtract (this [_currentPosition]) .abs () * this [_currentFrameRate];
+               this [_currentSpeed] = lastPosition .subtract (this [_currentPosition]) .magnitude () * this [_currentFrameRate];
             }
             else
             {
@@ -98325,6 +98831,10 @@ function ($,
             if (context .prototype .initialize)
                context .prototype .initialize .call (this);
          }
+
+         // Process events from context creation. This will setup nodes like
+         // geometry option nodes before any node is created.
+         this .processEvents ();
       },
       initialized: function ()
       {
@@ -98489,6 +98999,10 @@ function ($,
 
             if (context .prototype .initialize)
                context .prototype .initialize .call (browser);
+
+            // Process events from context creation. This will setup nodes like
+            // geometry option nodes before any node is created.
+            browser .processEvents ();
          });
       },
    });
@@ -101441,7 +101955,7 @@ function (Fields,
       },
       equals: function (lhs, rhs, tolerance)
       {
-         return a .assign (lhs) .subtract (rhs) .abs () < tolerance;
+         return a .assign (lhs) .subtract (rhs) .magnitude () < tolerance;
       },
       interpolate: function (source, destination, weight)
       {
@@ -101595,7 +102109,7 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
             let distance = 0;
 
             for (let i = 0, length = lhs .length; i < length; ++ i)
-              distance = Math .max (a .assign (lhs [i]) .subtract (rhs [i]) .abs ());
+              distance = Math .max (a .assign (lhs [i]) .subtract (rhs [i]) .magnitude ());
 
             return distance < tolerance;
          },
@@ -107155,7 +107669,7 @@ function (CatmullRomSplineInterpolator)
          },
          abs: function (value)
          {
-            return value .abs ();
+            return value .magnitude ();
          },
          dot: function (SH, C0, C1, C2, C3)
          {
@@ -109734,7 +110248,7 @@ function (Fields,
                }
             }
 
-            const distance = modelViewMatrix .translate (this ._center .getValue ()) .origin .abs ();
+            const distance = modelViewMatrix .translate (this ._center .getValue ()) .origin .magnitude ();
 
             return Algorithm .upperBound (this ._range, 0, this ._range .length, distance);
          };
@@ -111522,7 +112036,7 @@ function (Fields,
 
          this .cylinder .intersectsLine (hitRay, enter, exit);
 
-         return Vector3 .subtract (hitPoint, enter) .abs () > Vector3 .subtract (hitPoint, exit) .abs ();
+         return Vector3 .subtract (hitPoint, enter) .magnitude () > Vector3 .subtract (hitPoint, exit) .magnitude ();
       },
       getTrackPoint: function (hitRay, trackPoint)
       {
@@ -111573,7 +112087,7 @@ function (Fields,
 
             const
                axis   = new Line3 (new Vector3 (0, 0, 0), yAxis),
-               radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .abs ();
+               radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .magnitude ();
 
             this .cylinder = new Cylinder3 (axis, radius);
             this .disk     = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this ._diskAngle .getValue ());
@@ -111741,9 +112255,11 @@ define ('x_ite/Components/PointingDeviceSensor/PlaneSensor',[
    "x_ite/Components/PointingDeviceSensor/X3DDragSensorNode",
    "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Rotation4",
+   "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Vector4",
    "standard/Math/Numbers/Matrix4",
+   "standard/Math/Geometry/Line2",
    "standard/Math/Geometry/Line3",
    "standard/Math/Geometry/Plane3",
    "standard/Math/Geometry/ViewVolume",
@@ -111755,9 +112271,11 @@ function (Fields,
           X3DDragSensorNode,
           X3DConstants,
           Rotation4,
+          Vector2,
           Vector3,
           Vector4,
           Matrix4,
+          Line2,
           Line3,
           Plane3,
           ViewVolume,
@@ -111765,9 +112283,9 @@ function (Fields,
 {
 "use strict";
 
-   var
-      screenLine     = new Line3 (Vector3 .Zero, Vector3 .Zero),
-      trackPoint1    = new Vector3 (0, 0, 0),
+   const
+      screenLine     = new Line2 (Vector2 .Zero, Vector2 .Zero),
+      trackPoint1    = new Vector2 (0, 0, 0),
       trackPointLine = new Line3 (Vector3 .Zero, Vector3 .Zero);
 
    function PlaneSensor (executionContext)
@@ -111829,7 +112347,7 @@ function (Fields,
       getLineTrackPoint: function (hit, line, trackPoint)
       {
          ViewVolume .projectLine (line, this .modelViewMatrix, this .projectionMatrix, this .viewport, screenLine);
-         screenLine .getClosestPointToPoint (new Vector3 (hit .pointer .x, hit .pointer .y, 0), trackPoint1);
+         screenLine .getClosestPointToPoint (hit .pointer, trackPoint1);
          ViewVolume .unProjectRay (trackPoint1 .x, trackPoint1 .y, this .modelViewMatrix, this .projectionMatrix, this .viewport, trackPointLine);
 
          return line .getClosestPointToLine (trackPointLine, trackPoint);
@@ -112329,7 +112847,7 @@ function (Fields,
 
          if (this .sphere .intersectsLine (hitRay, trackPoint, exit))
          {
-            if ((Vector3 .subtract (hitRay .point, exit) .abs () < Vector3 .subtract (hitRay .point, trackPoint) .abs ()) - behind)
+            if ((Vector3 .subtract (hitRay .point, exit) .magnitude () < Vector3 .subtract (hitRay .point, trackPoint) .magnitude ()) - behind)
                trackPoint .assign (exit);
 
             return true;
@@ -112351,7 +112869,7 @@ function (Fields,
                center   = new Vector3 (0, 0, 0);
 
             this .zPlane = new Plane3 (center, this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ()); // Screen aligned Z-plane
-            this .sphere = new Sphere3 (hitPoint .abs (), center);
+            this .sphere = new Sphere3 (hitPoint .magnitude (), center);
             this .behind = this .zPlane .getDistanceToPoint (hitPoint) < 0;
 
             this .fromVector  .assign (hitPoint);
@@ -112398,7 +112916,7 @@ function (Fields,
                dirFromCenter = Vector3 .subtract (trackPoint, this .sphere .center) .normalize (),
                normal        = Vector3 .cross (triNormal, dirFromCenter) .normalize ();
 
-            var point1 = Vector3 .subtract (trackPoint, normal .multiply (Vector3 .subtract (tangentPoint, trackPoint) .abs ()));
+            var point1 = Vector3 .subtract (trackPoint, normal .multiply (Vector3 .subtract (tangentPoint, trackPoint) .magnitude ()));
 
             hitRay = new Line3 (point1, Vector3 .subtract (this .sphere .center, point1) .normalize ());
 
@@ -112780,6 +113298,19 @@ function (Fields,
       getContainerField: function ()
       {
          return "color";
+      },
+      initialize: function ()
+      {
+         X3DColorNode .prototype .initialize .call (this);
+
+         this ._color .addInterest ("set_color__", this);
+
+         this .set_color__ ();
+      },
+      set_color__: function ()
+      {
+         this .color  = this ._color .getValue ();
+         this .length = this ._color .length;
       },
       addColor: function (index, array)
       {
@@ -113822,11 +114353,15 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/X3DPointGeometryNode',[
    "x_ite/Components/Rendering/X3DGeometryNode",
+   "standard/Math/Geometry/ViewVolume",
+   "standard/Math/Geometry/Box3",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
+          ViewVolume,
+          Box3,
           Vector2,
           Vector3,
           Matrix4)
@@ -113850,37 +114385,75 @@ function (X3DGeometryNode,
       constructor: X3DLineGeometryNode,
       intersectsLine: (function ()
       {
-         const PICK_DISTANCE_FACTOR = 1 / 300;
-
          const
-            point     = new Vector3 (0, 0, 0),
-            vector    = new Vector3 (0, 0, 0),
-            clipPoint = new Vector3 (0, 0, 0);
+            bbox                      = new Box3 (),
+            min                       = new Vector3 (0, 0, 0),
+            max                       = new Vector3 (0, 0, 0),
+            screenScale1_             = new Vector3 (0, 0, 0),
+            screenScale2_             = new Vector3 (0, 0, 0),
+            point                     = new Vector3 (0, 0, 0),
+            pointSizePoint            = new Vector3 (0, 0, 0),
+            modelViewProjectionMatrix = new Matrix4 (),
+            projected                 = new Vector2 (0, 0),
+            clipPoint                 = new Vector3 (0, 0, 0);
 
-         return function (hitRay, clipPlanes, modelViewMatrix, intersections)
+         return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
          {
-            if (this .intersectsBBox (hitRay, 1))
-            {
-               const vertices = this .getVertices ();
+            const
+               modelViewMatrix     = renderObject .getModelViewMatrix () .get (),
+               viewport            = renderObject .getViewVolume () .getViewport (),
+               extents             = bbox .assign (this .getBBox ()) .multRight (modelViewMatrix) .getExtents (min, max),
+               pointPropertiesNode = appearanceNode .getPointProperties (),
+               pointSize1          = Math .max (1.5, pointPropertiesNode .getPointSize (min) / 2),
+               screenScale1        = renderObject .getViewpoint () .getScreenScale (min, viewport, screenScale1_), // in m/px
+               offsets1            = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (pointSize1)),
+               pointSize2          = Math .max (1.5, pointPropertiesNode .getPointSize (max) / 2),
+               screenScale2        = renderObject .getViewpoint () .getScreenScale (max, viewport, screenScale2_), // in m/px
+               offsets2            = invModelViewMatrix .multDirMatrix (screenScale2 .multiply (pointSize2));
 
-               for (let i = 0, length = vertices .length; i < length; i += 4)
+            if (this .intersectsBBox (hitRay, offsets1 .abs () .max (offsets2 .abs ())))
+            {
+               const
+                  pointer          = renderObject .getBrowser () .getPointer (),
+                  projectionMatrix = renderObject .getProjectionMatrix () .get (),
+                  clipPlanes       = renderObject .getLocalObjects (),
+                  vertices         = this .getVertices (),
+                  numVertices      = vertices .length;
+
+               modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
+
+               for (let i = 0; i < numVertices; i += 4)
                {
                   point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
 
-                  if (hitRay .getPerpendicularVectorToPoint (point, vector) .abs () < hitRay .point .distance (point) * PICK_DISTANCE_FACTOR)
-                  {
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                        continue;
+                  ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, projected);
 
-                     intersections .push ({ texCoord: new Vector2 (0, 0), normal: new Vector3 (0, 0, 0), point: point .copy () });
-                     return true;
+                  const pointSize1_2 = Math .max (1.5, pointPropertiesNode .getPointSize (modelViewMatrix .multVecMatrix (pointSizePoint .assign (point))) / 2);
+
+                  if (projected .distance (pointer) <= pointSize1_2)
+                  {
+                     if (clipPlanes .length)
+                     {
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                           continue;
+                     }
+
+                     const
+                        texCoord = pointer .copy () .subtract (projected) .divide (pointSize1_2) .add (Vector2 .One) .divide (2),
+                        normal   = modelViewMatrix .submatrix .transpose () .z .copy () .normalize ();
+
+                     intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
                   }
                }
             }
 
-            return false;
+            return intersections .length;
          };
       })(),
+      intersectsLineWithGeometry: function ()
+      {
+         return false;
+      },
       intersectsBox: function (box, clipPlanes, modelViewMatrix)
       {
          return false;
@@ -113953,14 +114526,7 @@ function (X3DGeometryNode,
 
             const outputParticles = particleSystem .outputParticles;
 
-            if (this .updateParticles)
-            {
-               this .updateParticles = false;
-
-               outputParticles .vertexArrayObject .update ();
-            }
-
-            if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
+            if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
             {
                const particleStride = particleSystem .particleStride;
 
@@ -113977,6 +114543,8 @@ function (X3DGeometryNode,
                   shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
                shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+
+               this .updateParticles = false;
             }
 
             // Wireframes are always solid so only one drawing call is needed.
@@ -114821,19 +115389,11 @@ function (Fields,
       {
          X3DGeometricPropertyNode .prototype .initialize .call (this);
 
-         this ._name  .addInterest ("set_attribute__", this);
-         this ._value .addInterest ("set_value__",     this);
-
-         this .set_value__ ();
+         this ._name .addInterest ("set_attribute__", this);
       },
       set_attribute__: function ()
       {
          this ._attribute_changed = this .getBrowser () .getCurrentTime ();
-      },
-      set_value__: function ()
-      {
-         this .value  = this ._value .getValue ();
-         this .length = this ._value .length;
       },
    });
 
@@ -114940,12 +115500,19 @@ function (Fields,
 
          this ._numComponents .addInterest ("set_numComponents__", this);
          this ._numComponents .addInterest ("set_attribute__",     this);
+         this ._value         .addInterest ("set_value__",         this);
 
          this .set_numComponents__ ();
+         this .set_value__ ();
       },
       set_numComponents__: function ()
       {
          this .numComponents = Algorithm .clamp (this ._numComponents .getValue (), 1, 4);
+      },
+      set_value__: function ()
+      {
+         this .value  = this ._value .getValue ();
+         this .length = this ._value .length;
       },
       addValue: function (index, array)
       {
@@ -115076,6 +115643,19 @@ function (Fields,
       {
          return "attrib";
       },
+      initialize: function ()
+      {
+         X3DVertexAttributeNode .prototype .initialize .call (this);
+
+         this ._value .addInterest ("set_value__", this);
+
+         this .set_value__ ();
+      },
+      set_value__: function ()
+      {
+         this .value  = this ._value .getValue ();
+         this .length = this ._value .length;
+      },
       addValue: function (index, array)
       {
          if (index < this .length)
@@ -115201,6 +115781,19 @@ function (Fields,
       getContainerField: function ()
       {
          return "attrib";
+      },
+      initialize: function ()
+      {
+         X3DVertexAttributeNode .prototype .initialize .call (this);
+
+         this ._value .addInterest ("set_value__", this);
+
+         this .set_value__ ();
+      },
+      set_value__: function ()
+      {
+         this .value  = this ._value .getValue ();
+         this .length = this ._value .length;
       },
       addValue: function (index, array)
       {
@@ -117587,7 +118180,7 @@ function (Fields,
                else
                {
                   const
-                     d1        = max .intersection .abs (), // Viewer is here at (0, 0, 0)
+                     d1        = max .intersection .magnitude (), // Viewer is here at (0, 0, 0)
                      d2        = max .intersection .distance (min .intersection),
                      d         = Math .min (d1 / d2, 1),
                      intensity = Algorithm .clamp (this ._intensity .getValue (), 0, 1),
@@ -117660,7 +118253,7 @@ function (Fields,
             sphere .intersectsLine (line, enterPoint, exitPoint);
 
             value .intersection .assign (sphereMatrix .multVecMatrix (enterPoint));
-            value .distance = viewer .abs ();
+            value .distance = viewer .magnitude ();
          };
       })(),
    });
@@ -118222,7 +118815,7 @@ function ($,
                width  = video .videoWidth,
                height = video .videoHeight,
                canvas = this .canvas [0],
-               cx     = canvas .getContext ("2d");
+               cx     = canvas .getContext ("2d", { willReadFrequently: true });
 
             if (! Algorithm .isPowerOfTwo (width) || ! Algorithm .isPowerOfTwo (height))
                throw new Error ("The movie texture is a non power-of-two texture.");
@@ -119157,8 +119750,8 @@ function ($,
                const
                   canvas1   = this .canvas1 [0],
                   canvas2   = this .canvas2 [0],
-                  cx1       = canvas1 .getContext("2d"),
-                  cx2       = canvas2 .getContext("2d"),
+                  cx1       = canvas1 .getContext ("2d", { willReadFrequently: true }),
+                  cx2       = canvas2 .getContext ("2d", { willReadFrequently: true }),
                   imageData = cx1 .createImageData (width, height);
 
                canvas1 .width  = width;
@@ -121930,7 +122523,13 @@ const getScriptURL = (function ()
             X3D (callback, fallback);
             X3D (resolve, reject);
          },
-         function () { if (typeof fallback === "function") fallback (); reject (); });
+         function (error)
+         {
+            if (typeof fallback === "function")
+               fallback (error);
+
+            reject (error);
+         });
       });
    }
 
@@ -121956,7 +122555,7 @@ const getScriptURL = (function ()
 
    // Now assign our X3D.
    window .X3D                        = X_ITE;
-   window [Symbol .for ("X_ITE.X3D-6.0.0")] = X_ITE;
+   window [Symbol .for ("X_ITE.X3D-6.1.0")] = X_ITE;
 
    if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
       __global_module__ .exports = X_ITE;

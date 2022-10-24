@@ -4,8 +4,9 @@
 var module = { }, exports, process;
 
 const
-	define  = window [Symbol .for ("X_ITE.X3D-6.0.0")] .define,
-	require = window [Symbol .for ("X_ITE.X3D-6.0.0")] .require;
+	X3D     = window [Symbol .for ("X_ITE.X3D-6.1.0")],
+	define  = X3D .define,
+	require = X3D .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -449,6 +450,7 @@ function (X3DBaseNode,
                // Circle
 
                circleVertices .push (point1 .real, point1 .imag, 0, 1);
+               circleVertices .push (point2 .real, point2 .imag, 0, 1);
 
                // Disk
 
@@ -675,7 +677,7 @@ function (Arc2DOptions,
    {
       initialize: function ()
       {
-         this .setGeometry2DPrimitiveQuality (this .getBrowserOptions () .getPrimitiveQuality ());
+         this .setPrimitiveQuality2D (this .getBrowserOptions () .getPrimitiveQuality ());
       },
       getArc2DOptions: function ()
       {
@@ -697,7 +699,7 @@ function (Arc2DOptions,
       {
          return getOptionNode .call (this, "getRectangle2DOptions", Rectangle2DOptions);
       },
-      setGeometry2DPrimitiveQuality: function (primitiveQuality)
+      setPrimitiveQuality2D: function (primitiveQuality)
       {
          const
             arc      = this .getArc2DOptions (),
@@ -1323,6 +1325,7 @@ define ('x_ite/Components/Geometry2D/Disk2D',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
+   "x_ite/Components/Rendering/X3DPointGeometryNode",
    "x_ite/Base/X3DConstants",
 ],
 function (Fields,
@@ -1330,6 +1333,7 @@ function (Fields,
           FieldDefinitionArray,
           X3DGeometryNode,
           X3DLineGeometryNode,
+          X3DPointGeometryNode,
           X3DConstants)
 {
 "use strict";
@@ -1345,7 +1349,6 @@ function (Fields,
    }
 
    Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
-      //X3DLineGeometryNode .prototype, // Considered X3DLineGeometryNode.
    {
       constructor: Disk2D,
       [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
@@ -1382,7 +1385,9 @@ function (Fields,
       build: function ()
       {
          const
-            options     = this .getBrowser () .getDisk2DOptions (),
+            browser     = this .getBrowser (),
+            gl          = browser .getContext (),
+            options     = browser .getDisk2DOptions (),
             innerRadius = Math .min (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ())),
             outerRadius = Math .max (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ()));
 
@@ -1394,8 +1399,15 @@ function (Fields,
 
             if (outerRadius === 0)
             {
-               // vertexArray .push (0, 0, 0, 1);
-               // this .setGeometryType (0);
+               vertexArray .push (0, 0, 0, 1);
+
+               this .getMin () .set (0, 0, 0);
+               this .getMax () .set (0, 0, 0);
+
+               this .setGeometryType (0);
+               this .setPrimitiveMode (gl .POINTS);
+               this .setTransparent (true);
+               this .setBase (X3DPointGeometryNode);
                return;
             }
 
@@ -1417,6 +1429,9 @@ function (Fields,
             this .getMax () .set ( outerRadius,  outerRadius, 0);
 
             this .setGeometryType (1);
+            this .setPrimitiveMode (gl .LINES);
+            this .setTransparent (false);
+            this .setBase (X3DLineGeometryNode);
             return;
          }
 
@@ -1445,7 +1460,10 @@ function (Fields,
             this .getMax () .set ( outerRadius,  outerRadius, 0);
 
             this .setGeometryType (2);
+            this .setPrimitiveMode (gl .TRIANGLES);
+            this .setTransparent (false);
             this .setSolid (this ._solid .getValue ());
+            this .setBase (X3DGeometryNode);
             return;
          }
 
@@ -1488,52 +1506,20 @@ function (Fields,
          this .getMax () .set ( outerRadius,  outerRadius, 0);
 
          this .setGeometryType (2);
+         this .setPrimitiveMode (gl .TRIANGLES);
+         this .setTransparent (false);
          this .setSolid (this ._solid .getValue ());
+         this .setBase (X3DGeometryNode);
       },
-      intersectsLine: function (line, clipPlanes, modelViewMatrix, intersections)
+      setBase: function (base)
       {
-         if (this .getGeometryType () < 2)
-         {
-            return X3DLineGeometryNode .prototype .intersectsLine .call (this, line, clipPlanes, modelViewMatrix, intersections);
-         }
-         else
-         {
-            return X3DGeometryNode .prototype .intersectsLine .call (this, line, clipPlanes, modelViewMatrix, intersections);
-         }
+         this .intersectsLine   = base .prototype .intersectsLine;
+         this .intersectsBox    = base .prototype .intersectsBox;
+         this .display          = base .prototype .display;
+         this .displayParticles = base .prototype .displayParticles;
       },
-      intersectsBox: function (box, clipPlanes, modelViewMatrix)
-      {
-         if (this .getGeometryType () < 2)
-         {
-            return X3DLineGeometryNode .prototype .intersectsBox .call (this, box, clipPlanes, modelViewMatrix);
-         }
-         else
-         {
-            return X3DGeometryNode .prototype .intersectsBox .call (this, box, clipPlanes, modelViewMatrix);
-         }
-      },
-      display: function (gl, context)
-      {
-         if (this .getGeometryType () < 2)
-         {
-            return X3DLineGeometryNode .prototype .display .call (this, gl, context);
-         }
-         else
-         {
-            return X3DGeometryNode .prototype .display .call (this, gl, context);
-         }
-      },
-      displayParticles: function (gl, context, particles, numParticles)
-      {
-         if (this .getGeometryType () < 2)
-         {
-            return X3DLineGeometryNode .prototype .displayParticles .call (this, gl, context, particles, numParticles);
-         }
-         else
-         {
-            return X3DGeometryNode .prototype .displayParticles .call (this, gl, context, particles, numParticles);
-         }
-      }
+      setRenderFunctions: function ()
+      { },
    });
 
    return Disk2D;

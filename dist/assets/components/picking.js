@@ -4,8 +4,9 @@
 var module = { }, exports, process;
 
 const
-	define  = window [Symbol .for ("X_ITE.X3D-6.0.0")] .define,
-	require = window [Symbol .for ("X_ITE.X3D-6.0.0")] .require;
+	X3D     = window [Symbol .for ("X_ITE.X3D-6.1.0")],
+	define  = X3D .define,
+	require = X3D .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -899,7 +900,7 @@ function (Fields,
 
                               intersections .length = 0;
 
-                              if (geometryNode .intersectsLine (line, clipPlanes, target .modelMatrix, intersections))
+                              if (geometryNode .intersectsLineWithGeometry (line, target .modelMatrix, clipPlanes, intersections))
                               {
                                  for (var i = 0, iLength = intersections .length; i < iLength; ++ i)
                                  {
@@ -911,7 +912,7 @@ function (Fields,
                                     b .assign (intersection .point) .subtract (point2);
 
                                     var
-                                       c = a .add (b) .abs (),
+                                       c = a .add (b) .magnitude (),
                                        s = point1 .distance (point2);
 
                                     if (c <= s)
