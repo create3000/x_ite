@@ -232,6 +232,7 @@ function (Fields,
          this .getMax () .set ( outerRadius,  outerRadius, 0);
 
          this .setGeometryType (2);
+         this .setPrimitiveMode (gl .TRIANGLES);
          this .setSolid (this ._solid .getValue ());
          this .setBase (X3DGeometryNode);
       },

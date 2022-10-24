@@ -1052,7 +1052,7 @@ function (Fields,
                      shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
                   }
 
-                  if (shaderNode .wireframe && this .testWireframe)
+                  if (shaderNode .getWireframe () && this .testWireframe)
                   {
                      // Wireframes are always solid so only one drawing call is needed.
 

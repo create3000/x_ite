@@ -89,7 +89,7 @@ function (X3DGeometryNode,
       this .trianglesTexCoordBuffers   = new Array (browser .getMaxTextures ()) .fill (this .trianglesBuffer);
 
       this .setGeometryType (1);
-      this .setPrimitiveMode (browser .getContext () .LINES);
+      this .setPrimitiveMode (gl .LINES);
       this .setSolid (false);
    }
 
@@ -299,7 +299,8 @@ function (X3DGeometryNode,
                {
                   const
                      viewport         = context .renderer .getViewVolume () .getViewport (),
-                     projectionMatrix = context .renderer .getProjectionMatrix () .get ();
+                     projectionMatrix = context .renderer .getProjectionMatrix () .get (),
+                     primitiveMode    = shaderNode .getPrimitiveMode (gl .TRIANGLES);
 
                   modelViewProjectionMatrixArray .set (matrix .assign (context .modelViewMatrix) .multRight (projectionMatrix));
                   invModelViewProjectionMatrixArray .set (matrix .inverse ());
@@ -407,9 +408,17 @@ function (X3DGeometryNode,
                      gl .bindBuffer (gl .ARRAY_BUFFER, null);
                   }
 
-                  gl .frontFace (gl .CCW);
-                  gl .enable (gl .CULL_FACE);
-                  gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : gl .TRIANGLES, 0, this .vertexCount * 3);
+                  if (shaderNode .getWireframe ())
+                  {
+                     for (let i = 0, length = this .vertexCount * 3; i < length; i += 3)
+                        gl .drawArrays (primitiveMode, i, 3);
+                  }
+                  else
+                  {
+                     gl .frontFace (gl .CCW);
+                     gl .enable (gl .CULL_FACE);
+                     gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
+                  }
 
                   if (blendModeNode)
                      blendModeNode .disable (gl);
@@ -417,6 +426,8 @@ function (X3DGeometryNode,
             }
             else if (shaderNode .isValid ())
             {
+               const primitiveMode = shaderNode .getPrimitiveMode (this .primitiveMode);
+
                if (blendModeNode)
                   blendModeNode .enable (gl);
 
@@ -442,7 +453,7 @@ function (X3DGeometryNode,
                   shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
                }
 
-               gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
+               gl .drawArrays (primitiveMode, 0, this .vertexCount);
 
                if (blendModeNode)
                   blendModeNode .disable (gl);
@@ -457,7 +468,8 @@ function (X3DGeometryNode,
             shaderNode     = appearanceNode .shaderNode || browser .getLineShader (),
             blendModeNode  = appearanceNode .blendModeNode,
             attribNodes    = this .attribNodes,
-            attribBuffers  = this .attribBuffers;
+            attribBuffers  = this .attribBuffers,
+            primitiveMode  = shaderNode .getPrimitiveMode (this .primitiveMode);
 
          if (shaderNode .isValid ())
          {
@@ -501,8 +513,6 @@ function (X3DGeometryNode,
             }
 
             // Wireframes are always solid so only one drawing call is needed.
-
-            const primitiveMode = shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode;
 
             gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
 

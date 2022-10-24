@@ -969,7 +969,7 @@ function (Fields,
          if (this .shadowArrayObject .enable (gl, shaderNode))
             shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
-         gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+         gl .drawArrays (shaderNode .getPrimitiveMode (this .primitiveMode), 0, this .vertexCount);
       },
       display: function (gl, context)
       {
@@ -979,7 +979,7 @@ function (Fields,
             backMaterialNode = appearanceNode .backMaterialNode,
             frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
 
-         if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
+         if (this .solid || !backMaterialNode || frontShaderNode .getWireframe ())
          {
             this .displayGeometry (gl, context, appearanceNode, frontShaderNode, true, true);
          }
@@ -998,7 +998,8 @@ function (Fields,
             const
                blendModeNode = appearanceNode .blendModeNode,
                attribNodes   = this .attribNodes,
-               attribBuffers = this .attribBuffers;
+               attribBuffers = this .attribBuffers,
+               primitiveMode = shaderNode .getPrimitiveMode (this .primitiveMode);
 
             if (blendModeNode)
                blendModeNode .enable (gl);
@@ -1026,19 +1027,10 @@ function (Fields,
 
             // Draw depending on wireframe, solid and transparent.
 
-            if (shaderNode .wireframe)
+            if (shaderNode .getWireframe ())
             {
-               // Points and Wireframes.
-
-               if (shaderNode .primitiveMode === gl .POINTS)
-               {
-                  gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-               }
-               else
-               {
-                  for (let i = 0, length = this .vertexCount; i < length; i += 3)
-                     gl .drawArrays (shaderNode .primitiveMode, i, 3);
-               }
+               for (let i = 0, length = this .vertexCount; i < length; i += 3)
+                  gl .drawArrays (primitiveMode, i, 3);
             }
             else
             {
@@ -1057,7 +1049,7 @@ function (Fields,
                   if (back && !this .solid)
                   {
                      gl .cullFace (gl .FRONT);
-                     gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+                     gl .drawArrays (primitiveMode, 0, this .vertexCount);
                   }
 
                   // Render front.
@@ -1065,7 +1057,7 @@ function (Fields,
                   if (front)
                   {
                      gl .cullFace (gl .BACK);
-                     gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+                     gl .drawArrays (primitiveMode, 0, this .vertexCount);
                   }
                }
                else
@@ -1077,7 +1069,7 @@ function (Fields,
                   else
                      gl .disable (gl .CULL_FACE);
 
-                  gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+                  gl .drawArrays (primitiveMode, 0, this .vertexCount);
                }
             }
 
@@ -1087,7 +1079,9 @@ function (Fields,
       },
       displayParticlesDepth: function (gl, context, shaderNode, particleSystem)
       {
-         const outputParticles = particleSystem .outputParticles;
+         const
+            outputParticles = particleSystem .outputParticles,
+            primitiveMode   = shaderNode .getPrimitiveMode (this .primitiveMode);
 
          if (this .updateParticlesShadow)
          {
@@ -1105,7 +1099,7 @@ function (Fields,
             shaderNode .enableVertexAttribute         (gl, this .vertexBuffer, 0, 0);
          }
 
-         gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+         gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
       },
       displayParticles: function (gl, context, particleSystem)
       {
@@ -1115,7 +1109,7 @@ function (Fields,
             backMaterialNode = appearanceNode .backMaterialNode,
             frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
 
-         if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
+         if (this .solid || !backMaterialNode || frontShaderNode .getWireframe ())
          {
             this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particleSystem);
          }
@@ -1134,7 +1128,8 @@ function (Fields,
             const
                blendModeNode = appearanceNode .blendModeNode,
                attribNodes   = this .attribNodes,
-               attribBuffers = this .attribBuffers;
+               attribBuffers = this .attribBuffers,
+               primitiveMode = shaderNode .getPrimitiveMode (this .primitiveMode);
 
             if (blendModeNode)
                blendModeNode .enable (gl);
@@ -1178,21 +1173,7 @@ function (Fields,
 
             // Draw depending on wireframe, solid and transparent.
 
-            if (shaderNode .wireframe)
-            {
-               // Points and Wireframes.
-
-               if (shaderNode .primitiveMode === gl .POINTS)
-               {
-                  gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-               }
-               else
-               {
-                  for (let i = 0, length = this .vertexCount; i < length; i += 3)
-                     gl .drawArraysInstanced (shaderNode .primitiveMode, i, 3, particleSystem .numParticles);
-               }
-            }
-            else
+            if (! shaderNode .getWireframe ())
             {
                const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
 
@@ -1207,13 +1188,13 @@ function (Fields,
                   if (back && !this .solid)
                   {
                      gl .cullFace (gl .FRONT);
-                     gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+                     gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
                   }
 
                   if (front)
                   {
                      gl .cullFace (gl .BACK);
-                     gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+                     gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
                   }
                }
                else
@@ -1225,7 +1206,7 @@ function (Fields,
                   else
                      gl .disable (gl .CULL_FACE);
 
-                  gl .drawArraysInstanced (shaderNode .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+                  gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
                }
             }
 

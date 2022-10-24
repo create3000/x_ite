@@ -70,8 +70,9 @@ function (Fields,
 
       this .addChildObjects ("activationTime", new Fields .SFTime ());
 
-      this .valid    = false;
-      this .selected = 0;
+      this .valid          = false;
+      this .selected       = 0;
+      this .primitiveModes = new Map ();
    }
 
    X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -97,20 +98,26 @@ function (Fields,
       },
       setShading: function (shading)
       {
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          switch (shading)
          {
             case Shading .POINT:
             {
-               this .primitiveMode = gl .POINTS;
-               this .wireframe     = true;
+               this .wireframe = false;
+
+               this .primitiveModes .set (gl .POINTS,    gl .POINTS);
+               this .primitiveModes .set (gl .LINES,     gl .POINTS);
+               this .primitiveModes .set (gl .TRIANGLES, gl .POINTS);
                break;
             }
             case Shading .WIREFRAME:
             {
-               this .primitiveMode = gl .LINE_LOOP;
-               this .wireframe     = true;
+               this .wireframe = true;
+
+               this .primitiveModes .set (gl .POINTS,    gl .POINTS);
+               this .primitiveModes .set (gl .LINES,     gl .LINES);
+               this .primitiveModes .set (gl .TRIANGLES, gl .LINE_LOOP);
                break;
             }
             default:
@@ -119,11 +126,22 @@ function (Fields,
                // case Shading .GOURAUD:
                // case Shading .PHONG:
 
-               this .primitiveMode = gl .TRIANGLES;
-               this .wireframe     = false;
+               this .wireframe = false;
+
+               this .primitiveModes .set (gl .POINTS,    gl .POINTS);
+               this .primitiveModes .set (gl .LINES,     gl .LINES);
+               this .primitiveModes .set (gl .TRIANGLES, gl .TRIANGLES);
                break;
             }
          }
+      },
+      getWireframe: function ()
+      {
+         return this .wireframe;
+      },
+      getPrimitiveMode: function (primitiveMode)
+      {
+         return this .primitiveModes .get (primitiveMode);
       },
       select: function ()
       {
