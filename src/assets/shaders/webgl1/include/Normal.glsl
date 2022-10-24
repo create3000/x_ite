@@ -27,7 +27,7 @@ getNormalVector ()
    // Get normal vector.
 
    #if defined(X3D_NORMAL_TEXTURE) && !defined(X3D_NORMAL_TEXTURE_3D)
-      vec4 texCoord    = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
+      vec3 texCoord    = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
       vec3 normalScale = vec3 (vec2 (x3d_Material .normalScale), 1.0);
       mat3 tbn         = getTBNMatrix (texCoord .st);
 

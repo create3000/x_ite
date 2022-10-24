@@ -57,7 +57,7 @@ getBaseColor ()
    // Get texture color.
 
    #if defined(X3D_BASE_TEXTURE)
-      vec4 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
+      vec3 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
       #if defined(X3D_BASE_TEXTURE_2D)
          return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .texture2D, texCoord .st));
       #elif defined(X3D_BASE_TEXTURE_3D)
@@ -80,7 +80,7 @@ getEmissiveColor ()
    // Get texture color.
 
    #if defined(X3D_EMISSIVE_TEXTURE)
-      vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+      vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
       #if defined(X3D_EMISSIVE_TEXTURE_2D)
          return emissiveParameter * SRGBtoLINEAR (texture (x3d_EmissiveTexture .texture2D, texCoord .st)) .rgb;
@@ -106,7 +106,7 @@ getMetallicRoughness ()
    // Get texture color.
 
    #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE)
-      vec4 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
+      vec3 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
       // Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
       // This layout intentionally reserves the 'r' channel for (optional) occlusion map data
       #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
@@ -131,7 +131,7 @@ getOcclusionFactor ()
    // Get texture color.
 
    #if defined(X3D_OCCLUSION_TEXTURE)
-      vec4 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
+      vec3 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
 
       #if defined(X3D_OCCLUSION_TEXTURE_2D)
          return texture (x3d_OcclusionTexture .texture2D, texCoord .st) .r;

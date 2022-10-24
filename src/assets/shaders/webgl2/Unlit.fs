@@ -52,14 +52,14 @@ getEmissiveColor ()
    // Get texture color.
 
    #if defined(X3D_EMISSIVE_TEXTURE)
-      vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+      vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
       #if defined(X3D_EMISSIVE_TEXTURE_2D)
-         return emissiveParameter * texture (x3d_EmissiveTexture .texture2D, texCoord .st) .rgba;
+         return emissiveParameter * texture (x3d_EmissiveTexture .texture2D, texCoord .st);
       #elif defined(X3D_EMISSIVE_TEXTURE_3D)
-         return emissiveParameter * texture (x3d_EmissiveTexture .texture3D, texCoord .stp) .rgba;
+         return emissiveParameter * texture (x3d_EmissiveTexture .texture3D, texCoord .stp);
       #elif defined(X3D_EMISSIVE_TEXTURE_CUBE)
-         return emissiveParameter * texture (x3d_EmissiveTexture .textureCube, texCoord .stp) .rgba;
+         return emissiveParameter * texture (x3d_EmissiveTexture .textureCube, texCoord .stp);
       #endif
    #else
       return getTextureColor (emissiveParameter, vec4 (vec3 (1.0), alpha));
