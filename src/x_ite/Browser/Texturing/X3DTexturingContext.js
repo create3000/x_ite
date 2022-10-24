@@ -51,10 +51,12 @@ define ([
    "x_ite/Components/Texturing/TextureProperties",
    "x_ite/Components/Texturing/TextureTransform",
    "x_ite/Components/Texturing/TextureCoordinate",
+   "x_ite/Browser/Core/TextureQuality",
 ],
 function (TextureProperties,
           TextureTransform,
-          TextureCoordinate)
+          TextureCoordinate,
+          TextureQuality)
 {
 "use strict";
 
@@ -149,6 +151,10 @@ function (TextureProperties,
          // Init texture units.
 
          this .resetTextureUnits ();
+
+         // Set texture quality.
+
+         this .setTextureQuality (this .getBrowserOptions () .getTextureQuality ());
       },
       getMaxTextures: function ()
       {
@@ -300,6 +306,47 @@ function (TextureProperties,
          Object .defineProperty (this, "getDefaultTextureCoordinate", { enumerable: false });
 
          return this [_defaultTextureCoordinate];
+      },
+      setTextureQuality: function (textureQuality)
+      {
+         const textureProperties = this .getDefaultTextureProperties ();
+
+         switch (textureQuality)
+         {
+            case TextureQuality .LOW:
+            {
+               textureProperties ._magnificationFilter = "AVG_PIXEL";
+               textureProperties ._minificationFilter  = "AVG_PIXEL";
+               textureProperties ._textureCompression  = "FASTEST";
+               textureProperties ._generateMipMaps     = true;
+
+               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
+               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+               break;
+            }
+            case TextureQuality .MEDIUM:
+            {
+               textureProperties ._magnificationFilter = "NICEST";
+               textureProperties ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
+               textureProperties ._textureCompression  = "NICEST";
+               textureProperties ._generateMipMaps     = true;
+
+               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
+               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+               break;
+            }
+            case TextureQuality .HIGH:
+            {
+               textureProperties ._magnificationFilter = "NICEST";
+               textureProperties ._minificationFilter  = "NICEST";
+               textureProperties ._textureCompression  = "NICEST";
+               textureProperties ._generateMipMaps     = true;
+
+               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_NICEST);
+               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+               break;
+            }
+         }
       },
    };
 

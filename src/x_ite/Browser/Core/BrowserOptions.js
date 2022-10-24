@@ -234,62 +234,15 @@ function (Fields,
 
          this .localStorage .PrimitiveQuality = primitiveQuality;
 
-         const
-            cone     = browser .getConeOptions (),
-            cylinder = browser .getCylinderOptions (),
-            sphere   = browser .getSphereOptions ();
+         this .primitiveQuality = PrimitiveQuality .hasOwnProperty (primitiveQuality)
+            ? PrimitiveQuality [primitiveQuality]
+            : PrimitiveQuality .MEDIUM;
 
-         switch (primitiveQuality)
-         {
-            case "LOW":
-            {
-               if (this .primitiveQuality === PrimitiveQuality .LOW)
-                  break;
+         if (typeof browser .setPrimitiveQuality2D === "function")
+            browser .setPrimitiveQuality2D (this .primitiveQuality);
 
-               this .primitiveQuality = PrimitiveQuality .LOW;
-
-               if (browser .setGeometry2DPrimitiveQuality)
-                  browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
-
-               cone     ._xDimension = 16;
-               cylinder ._xDimension = 16;
-               sphere   ._xDimension = 20;
-               sphere   ._yDimension = 9;
-               break;
-            }
-            case "HIGH":
-            {
-               if (this .primitiveQuality === PrimitiveQuality .HIGH)
-                  break;
-
-               this .primitiveQuality = PrimitiveQuality .HIGH;
-
-               if (browser .setGeometry2DPrimitiveQuality)
-                  browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
-
-               cone     ._xDimension = 32;
-               cylinder ._xDimension = 32;
-               sphere   ._xDimension = 64;
-               sphere   ._yDimension = 31;
-               break;
-            }
-            default:
-            {
-               if (this .primitiveQuality === PrimitiveQuality .MEDIUM)
-                  break;
-
-               this .primitiveQuality = PrimitiveQuality .MEDIUM;
-
-               if (browser .setGeometry2DPrimitiveQuality)
-                  browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
-
-               cone     ._xDimension = 20;
-               cylinder ._xDimension = 20;
-               sphere   ._xDimension = 32;
-               sphere   ._yDimension = 15;
-               break;
-            }
-         }
+         if (typeof browser .setPrimitiveQuality3D === "function")
+            browser .setPrimitiveQuality3D (this .primitiveQuality);
       },
       set_textureQuality__: function (value)
       {
@@ -299,93 +252,20 @@ function (Fields,
 
          this .localStorage .TextureQuality = textureQuality;
 
-         const textureProperties = browser .getDefaultTextureProperties ();
+         this .textureQuality = TextureQuality .hasOwnProperty (textureQuality)
+            ? TextureQuality [textureQuality]
+            : TextureQuality .MEDIUM;
 
-         switch (textureQuality)
-         {
-            case "LOW":
-            {
-               if (this .textureQuality === TextureQuality .LOW)
-                  break;
-
-               this .textureQuality = TextureQuality .LOW;
-
-               textureProperties ._magnificationFilter = "AVG_PIXEL";
-               textureProperties ._minificationFilter  = "AVG_PIXEL";
-               textureProperties ._textureCompression  = "FASTEST";
-               textureProperties ._generateMipMaps     = true;
-
-               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
-               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-               break;
-            }
-            case "HIGH":
-            {
-               if (this .textureQuality === TextureQuality .HIGH)
-                  break;
-
-               this .textureQuality = TextureQuality .HIGH;
-
-               textureProperties ._magnificationFilter = "NICEST";
-               textureProperties ._minificationFilter  = "NICEST";
-               textureProperties ._textureCompression  = "NICEST";
-               textureProperties ._generateMipMaps     = true;
-
-               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_NICEST);
-               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-               break;
-            }
-            default:
-            {
-               if (this .textureQuality === TextureQuality .MEDIUM)
-                  break;
-
-               this .textureQuality = TextureQuality .MEDIUM;
-
-               textureProperties ._magnificationFilter = "NICEST";
-               textureProperties ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
-               textureProperties ._textureCompression  = "NICEST";
-               textureProperties ._generateMipMaps     = true;
-
-               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
-               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-               break;
-            }
-         }
+         if (typeof browser .setTextureQuality === "function")
+            browser .setTextureQuality (this .textureQuality);
       },
       set_shading__: function (value)
       {
-         const shading = value .getValue () .toUpperCase ();
+         const shading = value .getValue () .toUpperCase () .replace ("POINTSET", "POINT");
 
-         switch (shading)
-         {
-            case "POINT":
-            case "POINTSET":
-            {
-               this .shading = Shading .POINT;
-               break;
-            }
-            case "WIREFRAME":
-            {
-               this .shading = Shading .WIREFRAME;
-               break;
-            }
-            case "FLAT":
-            {
-               this .shading = Shading .FLAT;
-               break;
-            }
-            case "PHONG":
-            {
-               this .shading = Shading .PHONG;
-               break;
-            }
-            default:
-            {
-               this .shading = Shading .GOURAUD;
-               break;
-            }
-         }
+         this .shading = Shading .hasOwnProperty (shading)
+            ? Shading [shading]
+            : Shading .GOURAUD;
 
          this .getBrowser () .setShading (this .shading);
       },
@@ -426,10 +306,12 @@ function (Fields,
 
    function toBoolean (value, defaultValue)
    {
-      if (value === "true" || value === "TRUE")
+      value = String (value) .toUpperCase ();
+
+      if (value === "TRUE")
          return true;
 
-      if (value === "false" || value === "FALSE")
+      if (value === "FALSE")
          return false;
 
       return defaultValue;

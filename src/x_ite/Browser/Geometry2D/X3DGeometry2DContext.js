@@ -70,7 +70,7 @@ function (Arc2DOptions,
    {
       initialize: function ()
       {
-         this .setGeometry2DPrimitiveQuality (this .getBrowserOptions () .getPrimitiveQuality ());
+         this .setPrimitiveQuality2D (this .getBrowserOptions () .getPrimitiveQuality ());
       },
       getArc2DOptions: function ()
       {
@@ -92,7 +92,7 @@ function (Arc2DOptions,
       {
          return getOptionNode .call (this, "getRectangle2DOptions", Rectangle2DOptions);
       },
-      setGeometry2DPrimitiveQuality: function (primitiveQuality)
+      setPrimitiveQuality2D: function (primitiveQuality)
       {
          const
             arc      = this .getArc2DOptions (),

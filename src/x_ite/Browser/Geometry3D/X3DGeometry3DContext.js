@@ -52,11 +52,13 @@ define ([
    "x_ite/Browser/Geometry3D/ConeOptions",
    "x_ite/Browser/Geometry3D/CylinderOptions",
    "x_ite/Browser/Geometry3D/QuadSphereOptions",
+   "x_ite/Browser/Core/PrimitiveQuality",
 ],
 function (BoxOptions,
           ConeOptions,
           CylinderOptions,
-          QuadSphereOptions)
+          QuadSphereOptions,
+          PrimitiveQuality)
 {
 "use strict";
 
@@ -65,7 +67,9 @@ function (BoxOptions,
    X3DGeometry3DContext .prototype =
    {
       initialize: function ()
-      { },
+      {
+         this .setPrimitiveQuality3D (this .getBrowserOptions () .getPrimitiveQuality ());
+      },
       getBoxOptions: function ()
       {
          return getOptionNode .call (this, "getBoxOptions", BoxOptions);
@@ -81,6 +85,42 @@ function (BoxOptions,
       getSphereOptions: function ()
       {
          return getOptionNode .call (this, "getSphereOptions", QuadSphereOptions);
+      },
+
+      setPrimitiveQuality3D: function (primitiveQuality)
+      {
+         const
+            cone     = this .getConeOptions (),
+            cylinder = this .getCylinderOptions (),
+            sphere   = this .getSphereOptions ();
+
+         switch (primitiveQuality)
+         {
+            case PrimitiveQuality .LOW:
+            {
+               cone     ._xDimension = 16;
+               cylinder ._xDimension = 16;
+               sphere   ._xDimension = 20;
+               sphere   ._yDimension = 9;
+               break;
+            }
+            case PrimitiveQuality .MEDIUM:
+            {
+               cone     ._xDimension = 32;
+               cylinder ._xDimension = 32;
+               sphere   ._xDimension = 64;
+               sphere   ._yDimension = 31;
+               break;
+            }
+            case PrimitiveQuality .HIGH:
+            {
+               cone     ._xDimension = 20;
+               cylinder ._xDimension = 20;
+               sphere   ._xDimension = 32;
+               sphere   ._yDimension = 15;
+               break;
+            }
+         }
       },
    };
 

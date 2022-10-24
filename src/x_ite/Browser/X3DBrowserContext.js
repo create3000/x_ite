@@ -209,6 +209,8 @@ function ($,
                context .prototype .initialize .call (this);
          }
 
+         // Process events from context creation. This will setup nodes like
+         // geometry option nodes before any node is created.
          this .processEvents ();
       },
       initialized: function ()
@@ -375,6 +377,8 @@ function ($,
             if (context .prototype .initialize)
                context .prototype .initialize .call (browser);
 
+            // Process events from context creation. This will setup nodes like
+            // geometry option nodes before any node is created.
             browser .processEvents ();
          });
       },
