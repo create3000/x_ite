@@ -4,9 +4,9 @@ precision highp int;
 
 uniform x3d_PointPropertiesParameters x3d_PointProperties;
 
-uniform bool x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false
 uniform x3d_UnlitMaterialParameters x3d_Material;
 uniform int x3d_NumTextures;
+uniform bool x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false
 
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;

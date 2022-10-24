@@ -8,11 +8,11 @@ uniform mat3 x3d_NormalMatrix;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
-uniform bool x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
-
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform x3d_MaterialParameters x3d_Material;
+
+uniform bool x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 
 in float x3d_FogDepth;
 in vec4  x3d_Color;

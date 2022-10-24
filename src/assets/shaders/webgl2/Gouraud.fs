@@ -4,8 +4,8 @@ precision highp float;
 precision highp int;
 
 uniform int   x3d_GeometryType;  // true if a X3DMaterialNode is attached, otherwise false
-uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 uniform float x3d_AlphaCutoff;
+uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 
 in float fogDepth;    // fog depth
 in vec4  frontColor;  // color
