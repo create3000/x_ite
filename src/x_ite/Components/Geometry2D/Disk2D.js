@@ -77,7 +77,6 @@ function (Fields,
    }
 
    Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
-      //X3DLineGeometryNode .prototype, // Considered X3DLineGeometryNode.
    {
       constructor: Disk2D,
       [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
@@ -135,6 +134,7 @@ function (Fields,
 
                this .setGeometryType (0);
                this .setPrimitiveMode (gl .POINTS);
+               this .setTransparent (true);
                this .setBase (X3DPointGeometryNode);
                return;
             }
@@ -158,6 +158,7 @@ function (Fields,
 
             this .setGeometryType (1);
             this .setPrimitiveMode (gl .LINES);
+            this .setTransparent (false);
             this .setBase (X3DLineGeometryNode);
             return;
          }
@@ -188,6 +189,7 @@ function (Fields,
 
             this .setGeometryType (2);
             this .setPrimitiveMode (gl .TRIANGLES);
+            this .setTransparent (false);
             this .setSolid (this ._solid .getValue ());
             this .setBase (X3DGeometryNode);
             return;
@@ -233,6 +235,7 @@ function (Fields,
 
          this .setGeometryType (2);
          this .setPrimitiveMode (gl .TRIANGLES);
+         this .setTransparent (false);
          this .setSolid (this ._solid .getValue ());
          this .setBase (X3DGeometryNode);
       },
