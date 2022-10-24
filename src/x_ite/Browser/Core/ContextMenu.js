@@ -152,7 +152,6 @@ function ($,
                   name: _("Available Viewers"),
                   items: this .getAvailableViewers (),
                },
-               "separator1": "--------",
                "straighten-horizon": {
                   name: _("Straighten Horizon"),
                   type: "checkbox",
@@ -181,7 +180,7 @@ function ($,
                      .bind (this),
                   },
                },
-               "separator2": "--------",
+               "separator1": "--------",
                "primitive-quality": {
                   name: _("Primitive Quality"),
                   className: "context-menu-icon x_ite-private-icon-primitive-quality",
@@ -278,6 +277,83 @@ function ($,
                      },
                   },
                },
+               "shading": {
+                  name: _("Shading"),
+                  className: "context-menu-icon x_ite-private-icon-shading",
+                  items: {
+                     "point": {
+                        name: _("Point"),
+                        type: "radio",
+                        radio: "shading",
+                        selected: browser .getBrowserOption ("Shading") === "POINT",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("Shading", "POINT");
+                              browser .getNotification () ._string = _("Shading") + ": " + _("Point");
+                           }
+                           .bind (this),
+                        },
+                     },
+                     "wireframe": {
+                        name: _("Wireframe"),
+                        type: "radio",
+                        radio: "shading",
+                        selected: browser .getBrowserOption ("Shading") === "WIREFRAME",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("Shading", "WIREFRAME");
+                              browser .getNotification () ._string = _("Shading") + ": " + _("Wireframe");
+                           }
+                           .bind (this),
+                        },
+                     },
+                     "flat": {
+                        name: _("Flat"),
+                        type: "radio",
+                        radio: "shading",
+                        selected: browser .getBrowserOption ("Shading") === "FLAT",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("Shading", "FLAT");
+                              browser .getNotification () ._string = _("Shading") + ": " + _("Flat");
+                           }
+                           .bind (this),
+                        },
+                     },
+                     "gouraud": {
+                        name: _("Gouraud"),
+                        type: "radio",
+                        radio: "shading",
+                        selected: browser .getBrowserOption ("Shading") === "GOURAUD",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("Shading", "GOURAUD");
+                              browser .getNotification () ._string = _("Shading") + ": " + _("Gouraud");
+                           }
+                           .bind (this),
+                        },
+                     },
+                     "phong": {
+                        name: _("Phong"),
+                        type: "radio",
+                        radio: "shading",
+                        selected: browser .getBrowserOption ("Shading") === "PHONG",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("Shading", "PHONG");
+                              browser .getNotification () ._string = _("Shading") + ": " + _("Phong");
+                           }
+                           .bind (this),
+                        },
+                     },
+                  },
+               },
+               "separator2": "--------",
                "display-rubberband": {
                   name: _("Display Rubberband"),
                   type: "checkbox",
@@ -406,6 +482,11 @@ function ($,
          if (! browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/) || (currentViewpoint instanceof GeoViewpoint))
          {
             delete menu .items ["straighten-horizon"];
+         }
+
+         if (! browser .getDebug ())
+         {
+            delete menu .items ["shading"];
          }
 
          const worldInfo = browser .getExecutionContext () .getWorldInfos () [0];
@@ -657,7 +738,7 @@ function ($,
 
                      input
                         .attr ("type", item .type)
-                        .attr ("name", "context-menu-input-" + parent);
+                        .attr ("name", "context-menu-input-" + (item .radio || parent));
 
                      $("<span></span>") .text (item .name) .appendTo (label);
 

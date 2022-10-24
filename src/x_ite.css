@@ -479,6 +479,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background: url("assets/images/TextureQuality.png");
 }
 
+.x_ite-private-icon-shading {
+  background: url("assets/images/Shading.png");
+}
+
 .x_ite-private-icon-enter-fullscreen {
   background: url("assets/images/gtk-fullscreen.png");
 }
