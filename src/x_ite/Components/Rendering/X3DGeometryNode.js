@@ -972,7 +972,7 @@ function (Fields,
          if (this .shadowArrayObject .enable (gl, shaderNode))
             shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
-         gl .drawArrays (shaderNode .getPrimitiveMode (this .primitiveMode), 0, this .vertexCount);
+         gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
       },
       display: function (gl, context)
       {
@@ -1082,9 +1082,7 @@ function (Fields,
       },
       displayParticlesDepth: function (gl, context, shaderNode, particleSystem)
       {
-         const
-            outputParticles = particleSystem .outputParticles,
-            primitiveMode   = shaderNode .getPrimitiveMode (this .primitiveMode);
+         const outputParticles = particleSystem .outputParticles;
 
          if (this .updateParticlesShadow)
          {
@@ -1102,7 +1100,7 @@ function (Fields,
             shaderNode .enableVertexAttribute         (gl, this .vertexBuffer, 0, 0);
          }
 
-         gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+         gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
       },
       displayParticles: function (gl, context, particleSystem)
       {
