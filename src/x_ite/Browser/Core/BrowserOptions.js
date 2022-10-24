@@ -287,7 +287,6 @@ function (Fields,
          browser .getRenderingProperties () ._LogarithmicDepthBuffer = logarithmicDepthBuffer;
 
          // Recompile shaders.
-
          // There's no need to update background shader.
 
          for (const shader of browser .getStandardShaders ())
