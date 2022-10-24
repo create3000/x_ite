@@ -192,13 +192,18 @@ function (Fields,
             this .touchSensorNode .push (renderObject, sensors);
 
             if (sensors .size)
+            {
                sensorsStack .push (sensors);
 
-            X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+               X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-            if (sensors .size)
                sensorsStack .pop ();
-         }
+            }
+            else
+            {
+               X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+            }
+          }
          else
          {
             X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
