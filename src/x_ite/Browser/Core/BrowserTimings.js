@@ -117,13 +117,13 @@ function ($,
 
          if (enabled)
          {
-            this .element .fadeIn ();
+            this .element .stop (true, true) .fadeIn ();
             this .getBrowser () .prepareEvents () .addInterest ("update", this);
             this .update ();
          }
          else
          {
-            this .element .fadeOut ();
+            this .element .stop (true, true) .fadeOut ();
             this .getBrowser () .prepareEvents () .removeInterest ("update", this);
          }
       },
