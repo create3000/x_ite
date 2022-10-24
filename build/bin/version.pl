@@ -123,3 +123,9 @@ if ($result == 0)
 
 	upload;
 }
+
+__END__
+
+# https://github.com/desktop/desktop/issues/14331#issuecomment-1286747195
+# Set post buffer to 150 MiB
+git config --global http.postBuffer 157286400
