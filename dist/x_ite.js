@@ -70574,7 +70574,6 @@ define ('x_ite/Components/Shape/Shape',[
    "standard/Math/Algorithm",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
-   "standard/Math/Geometry/Box3",
    "standard/Math/Geometry/Line3",
    "standard/Math/Algorithms/QuickSort",
 ],
@@ -70587,7 +70586,6 @@ function (Fields,
           Algorithm,
           Vector3,
           Matrix4,
-          Box3,
           Line3,
           QuickSort)
 {
@@ -111206,7 +111204,7 @@ function (Fields,
       this .addType (X3DConstants .Anchor);
 
       this .touchSensorNode = new TouchSensor (executionContext);
-      this .sensors         = new Map ();
+      this .anchorSensors   = new Map ();
    }
 
    Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -111313,20 +111311,25 @@ function (Fields,
          {
             const
                sensorsStack = renderObject .getBrowser () .getSensors (),
-               sensors      = this .sensors;
+               sensors      = this .anchorSensors;
 
             sensors .clear ();
 
             this .touchSensorNode .push (renderObject, sensors);
 
             if (sensors .size)
+            {
                sensorsStack .push (sensors);
 
-            X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+               X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-            if (sensors .size)
                sensorsStack .pop ();
-         }
+            }
+            else
+            {
+               X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+            }
+          }
          else
          {
             X3DGroupingNode .prototype .traverse .call (this, type, renderObject);

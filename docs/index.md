@@ -845,7 +845,7 @@ If you are a developer or you always wanna be up to date:
 If you are on production and everything works fine, then use a numbered version.
 
 ```html
-<script type="text/javascript" src="https://create3000.github.io/code/x_ite/6.0.0/dist/x_ite.min.js"></script>
+<script type="text/javascript" src="https://create3000.github.io/code/x_ite/6.1.0/dist/x_ite.min.js"></script>
 ```
 
 ### jsDelivr CDN
