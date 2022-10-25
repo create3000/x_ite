@@ -18,5 +18,4 @@ Quick Links
 
 License
 -------
-X_ITE is free software: you can redistribute it and/or modify it under the terms of
-the [GNU General Public License version 3](LICENSE.md) only, as published by the Free Software Foundation.
+X_ITE is free software: you can redistribute it and/or modify it under the terms of the [GNU General Public License version 3](LICENSE.md) only, as published by the Free Software Foundation.
