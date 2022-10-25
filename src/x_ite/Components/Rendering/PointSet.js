@@ -72,6 +72,7 @@ function (Fields,
 
       this .fogCoordNode = null;
       this .colorNode    = null;
+      this .normalNode   = null;
       this .coordNode    = null;
    }
 
@@ -83,6 +84,7 @@ function (Fields,
          new X3DFieldDefinition (X3DConstants .inputOutput, "attrib",   new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "fogCoord", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normal",   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "coord",    new Fields .SFNode ()),
       ]),
       getTypeName: function ()
@@ -104,11 +106,13 @@ function (Fields,
          this ._attrib   .addInterest ("set_attrib__",   this);
          this ._fogCoord .addInterest ("set_fogCoord__", this);
          this ._color    .addInterest ("set_color__",    this);
+         this ._normal   .addInterest ("set_normal__",   this);
          this ._coord    .addInterest ("set_coord__",    this);
 
          this .set_attrib__ ();
          this .set_fogCoord__ ();
          this .set_color__ ();
+         this .set_normal__ ();
          this .set_coord__ ();
       },
       getCoord: function ()
@@ -162,6 +166,16 @@ function (Fields,
 
          if (this .colorNode)
             this .colorNode .addInterest ("requestRebuild", this);
+      },
+      set_normal__: function ()
+      {
+         if (this .normalNode)
+            this .normalNode .removeInterest ("requestRebuild", this);
+
+         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
+
+         if (this .normalNode)
+            this .normalNode .addInterest ("requestRebuild", this);
       },
       set_coord__: function ()
       {
