@@ -83,3 +83,6 @@ open-docs-in-browser:
 
 tests-menu:
 	perl build/bin/tests-menu.pl
+
+examples-and-tests:
+	perl build/bin/examples-and-tests.pl

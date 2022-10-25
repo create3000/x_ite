@@ -52,9 +52,6 @@ const X_ITE_EXAMPLES = [
    { component: "Lighting", test: "PointLight" },
    { component: "Lighting", test: "Shadows" },
    { component: "Lighting", test: "SpotLight" },
-   { component: "NURBS", test: "NurbsCurve" },
-   { component: "NURBS", test: "NurbsPatchSurface" },
-   { component: "NURBS", test: "NurbsSweptSurface" },
    { component: "Navigation", test: "Billboard" },
    { component: "Navigation", test: "Collision" },
    { component: "Navigation", test: "LogarithmicDepthBuffer" },
@@ -64,6 +61,9 @@ const X_ITE_EXAMPLES = [
    { component: "Networking", test: "Anchor" },
    { component: "Networking", test: "Inline" },
    { component: "Networking", test: "LoadSensor" },
+   { component: "NURBS", test: "NurbsCurve" },
+   { component: "NURBS", test: "NurbsPatchSurface" },
+   { component: "NURBS", test: "NurbsSweptSurface" },
    { component: "ParticleSystems", test: "ConeEmitter" },
    { component: "ParticleSystems", test: "ExplosionEmitter" },
    { component: "ParticleSystems", test: "ForcePhysicsModel" },
@@ -122,8 +122,8 @@ const X_ITE_EXAMPLES = [
    { component: "X3D", test: "Approach" },
    { component: "X3D", test: "Arcadia" },
    { component: "X3D", test: "Astronomy" },
-   { component: "X3D", test: "BIC" },
    { component: "X3D", test: "BeyondGermany" },
+   { component: "X3D", test: "BIC" },
    { component: "X3D", test: "Chomp" },
    { component: "X3D", test: "Circles" },
    { component: "X3D", test: "CrazySpiral" },
@@ -148,3 +148,4 @@ const X_ITE_EXAMPLES = [
    { component: "X_ITE", test: "BlendMode" },
 ];
 X_ITE_EXAMPLES .server = "https://create3000.github.io/media/examples";
+

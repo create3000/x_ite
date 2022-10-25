@@ -44,6 +44,12 @@
             "type": "shell",
             "command": "make tests-menu",
             "problemMatcher": []
+        },
+        {
+            "label": "Make Examples And Tests Strip",
+            "type": "shell",
+            "command": "make examples-and-tests",
+            "problemMatcher": []
         }
     ]
 }
