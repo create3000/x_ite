@@ -53,12 +53,14 @@
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DOneSidedMaterialNode",
    "x_ite/Base/X3DConstants",
+   "standard/Utility/BitSet",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DOneSidedMaterialNode,
-          X3DConstants)
+          X3DConstants,
+          BitSet)
 {
 "use strict";
 
