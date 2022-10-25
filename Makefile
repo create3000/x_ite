@@ -1,6 +1,7 @@
 configure:
 	sudo npm install
 
+.PHONY: dist
 dist: all
 	echo
 
@@ -58,9 +59,18 @@ all:
 
 	perl -pi -e 's/return (?:true|false);/return true;/sg' src/x_ite/DEBUG.js
 
+checkout-dist:
+	git checkout -- dist
 
 version: all
 	perl build/bin/version.pl
+
+.PHONY: docs
+docs:
+	cd docs && bundle exec jekyll serve
+
+open-docs-in-browser:
+	open http://localhost:4000
 
 tests-menu:
 	perl build/bin/tests-menu.pl

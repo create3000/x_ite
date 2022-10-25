@@ -18,7 +18,7 @@
         {
             "label": "Checkout Dist",
             "type": "shell",
-            "command": "git checkout -- dist",
+            "command": "make checkout-dist",
             "problemMatcher": [],
         },
         {
@@ -30,16 +30,19 @@
         {
             "label": "Make Docs",
             "type": "shell",
-            "options": {
-                "cwd": "${workspaceFolder}/docs"
-            },
-            "command": "bundle exec jekyll serve",
+            "command": "make docs",
             "problemMatcher": []
         },
         {
             "label": "Open Docs in Browser",
             "type": "shell",
-            "command": "open http://localhost:4000",
+            "command": "make open-docs-in-browser",
+            "problemMatcher": []
+        },
+        {
+            "label": "Make Tests Menu",
+            "type": "shell",
+            "command": "make tests-menu",
             "problemMatcher": []
         }
     ]
