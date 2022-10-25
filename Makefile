@@ -1,9 +1,8 @@
+configure:
+	sudo npm install
 
 dist: all
 	echo
-
-configure:
-	sudo npm install
 
 all:
 	$(eval X_ITE_VERSION=$(shell perl build/bin/version-number.pl))
@@ -63,11 +62,8 @@ all:
 version: all
 	perl build/bin/version.pl
 
-
-clean:
-	rm x_ite.min.html
-	rm x_ite.uncompressed.js
-	rm x_ite.min.js
+tests-menu:
+	perl build/bin/tests-menu.pl
 
 define generate_component
 	node_modules/requirejs/bin/r.js -o build/components/$(1).build.js

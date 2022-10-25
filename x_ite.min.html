@@ -322,19 +322,6 @@ X3D (function ()
             return
       }
    });
-
-   Browser .getContextMenu () .setUserMenu (function ()
-   {
-      return {
-         "item-1": {
-            name: "Item 1",
-            callback: function (event)
-            {
-               console .log ("Item 1");
-            },
-         },
-      };
-   });
 },
 function (error)
 {
@@ -342,6 +329,7 @@ function (error)
    console .error (error);
 });
    </script>
+   <script type="text/javascript" src="tests/menu.js"></script>
 </head>
 <body>
    <div class="page">
