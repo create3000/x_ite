@@ -238,10 +238,7 @@ function (Fields,
          // Depreciated TwoSidedMaterial handling.
 
          if (this .materialNode .getTypeName () === "TwoSidedMaterial")
-         {
-            console .warn ("TwoSidedMaterial is depreciated, please use Appearance backMaterial.");
             this .set_backMaterial__ ();
-         }
       },
       set_backMaterial__: function ()
       {
@@ -255,7 +252,7 @@ function (Fields,
 
          // Depreciated TwoSidedMaterial handling.
 
-         if (!this .backMaterialNode && this .materialNode .getTypeName () === "TwoSidedMaterial")
+         if (! this .backMaterialNode && this .materialNode .getTypeName () === "TwoSidedMaterial")
             this .backMaterialNode = this .materialNode;
       },
       set_texture__: function ()

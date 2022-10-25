@@ -66,6 +66,8 @@ function (Fields,
 
    function TwoSidedMaterial (executionContext)
    {
+      console .warn ("TwoSidedMaterial is depreciated, please use Appearance backMaterial field.");
+
       X3DMaterialNode .call (this, executionContext);
 
       this .addType (X3DConstants .TwoSidedMaterial);
@@ -263,7 +265,7 @@ function (Fields,
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, front)
       {
-         if (!front && this ._separateBackColor .getValue ())
+         if (! front && this ._separateBackColor .getValue ())
          {
             gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .backAmbientIntensity);
             gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .backDiffuseColor);
