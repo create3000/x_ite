@@ -3,10 +3,16 @@
 	"version": "6.1.0",
 	"revision": "1157",
 	"description": "X_ITE X3D Browser, a framework for integrating and manipulating X3D and VRML scenes in HTML.",
+	"homepage": "https://create3000.github.io/x_ite/",
+	"author": "Holger Seelig <holger.seelig@gmail.com>",
+	"license": "GPL-3.0",
 	"main": "dist/x_ite.js",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/create3000/x_ite.git"
+	},
+	"bugs": {
+		"url": "https://github.com/create3000/x_ite/issues"
 	},
 	"keywords": [
 		"X3D",
@@ -21,9 +27,6 @@
 		"node",
 		"electron"
 	],
-	"author": "Holger Seelig <holger.seelig@gmail.com>",
-	"license": "GPL-3.0",
-	"homepage": "https://create3000.github.io/x_ite/",
 	"contributors": [
 		{
 			"name": "Holger Seelig",
@@ -45,9 +48,6 @@
 			"url": "https://github.com/splace"
 		}
 	],
-	"bugs": {
-		"url": "https://github.com/create3000/x_ite/issues"
-	},
 	"devDependencies": {
 		"ammojs": "^0.0.2",
 		"CharLS.js": "^2.0.1",
