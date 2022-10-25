@@ -1,11 +1,11 @@
+all: dist
+	echo
+
 configure:
 	sudo npm install
 
 .PHONY: dist
-dist: all
-	echo
-
-all:
+dist:
 	$(eval X_ITE_VERSION=$(shell perl build/bin/version-number.pl))
 	echo "Making Version:" $(X_ITE_VERSION)
 
@@ -59,10 +59,19 @@ all:
 
 	perl -pi -e 's/return (?:true|false);/return true;/sg' src/x_ite/DEBUG.js
 
+define generate_component
+	node_modules/requirejs/bin/r.js -o build/components/$(1).build.js
+	perl -pi -e "s|\"X_ITE.X3D\"|\"X_ITE.X3D-"$(2)"\"|" dist/assets/components/$(1).js
+	perl -pi -e "s|'assets/components/$(1)',||" dist/assets/components/$(1).js
+	perl -pi -e "s|text/text!|text!|" dist/assets/components/$(1).js
+	perl -pi -e "s|define\\s*\\(\\[|define (require .getComponentUrl (\"$(1)\"), [|" dist/assets/components/$(1).js
+	node_modules/terser/bin/terser --mangle $(3) -- dist/assets/components/$(1).js > dist/assets/components/$(1).min.js
+endef
+
 checkout-dist:
 	git checkout -- dist
 
-version: all
+version: dist
 	perl build/bin/version.pl
 
 .PHONY: docs
@@ -74,12 +83,3 @@ open-docs-in-browser:
 
 tests-menu:
 	perl build/bin/tests-menu.pl
-
-define generate_component
-	node_modules/requirejs/bin/r.js -o build/components/$(1).build.js
-	perl -pi -e "s|\"X_ITE.X3D\"|\"X_ITE.X3D-"$(2)"\"|" dist/assets/components/$(1).js
-	perl -pi -e "s|'assets/components/$(1)',||" dist/assets/components/$(1).js
-	perl -pi -e "s|text/text!|text!|" dist/assets/components/$(1).js
-	perl -pi -e "s|define\\s*\\(\\[|define (require .getComponentUrl (\"$(1)\"), [|" dist/assets/components/$(1).js
-	node_modules/terser/bin/terser --mangle $(3) -- dist/assets/components/$(1).js > dist/assets/components/$(1).min.js
-endef
