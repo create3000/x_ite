@@ -163,8 +163,8 @@ function (X3DGeometryNode,
             appearanceNode = context .shapeNode .getAppearance (),
             shaderNode     = appearanceNode .getShader () || browser .getPointShader (),
             blendModeNode  = appearanceNode .getBlendMode (),
-            attribNodes    = this .attribNodes,
-            attribBuffers  = this .attribBuffers;
+            attribNodes    = this .getAttrib (),
+            attribBuffers  = this .getAttribBuffers ();
 
          if (shaderNode .isValid ())
          {
@@ -205,8 +205,8 @@ function (X3DGeometryNode,
             appearanceNode = context .shapeNode .getAppearance (),
             shaderNode     = appearanceNode .getShader () || browser .getPointShader (),
             blendModeNode  = appearanceNode .getBlendMode (),
-            attribNodes    = this .attribNodes,
-            attribBuffers  = this .attribBuffers;
+            attribNodes    = this .getAttrib (),
+            attribBuffers  = this .getAttribBuffers ();
 
          if (shaderNode .isValid ())
          {

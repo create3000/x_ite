@@ -285,8 +285,8 @@ function (X3DGeometryNode,
                linePropertiesNode = appearanceNode .getLineProperties (),
                shaderNode         = appearanceNode .getShader () || browser .getLineShader (),
                blendModeNode      = appearanceNode .getBlendMode (),
-               attribNodes        = this .attribNodes,
-               attribBuffers      = this .attribBuffers;
+               attribNodes        = this .getAttrib (),
+               attribBuffers      = this .getAttribBuffers ();
 
             if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
                this .updateLengthSoFar (gl, context);
@@ -467,8 +467,8 @@ function (X3DGeometryNode,
             appearanceNode = context .shapeNode .getAppearance (),
             shaderNode     = appearanceNode .getShader () || browser .getLineShader (),
             blendModeNode  = appearanceNode .getBlendMode (),
-            attribNodes    = this .attribNodes,
-            attribBuffers  = this .attribBuffers,
+            attribNodes    = this .getAttrib (),
+            attribBuffers  = this .getAttribBuffers (),
             primitiveMode  = shaderNode .getPrimitiveMode (this .primitiveMode);
 
          if (shaderNode .isValid ())

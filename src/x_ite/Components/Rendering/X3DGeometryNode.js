@@ -280,6 +280,10 @@ function (Fields,
       {
          return this .attribArrays;
       },
+      getAttribBuffers: function ()
+      {
+         return this .attribBuffers;
+      },
       setFogDepths: function (value)
       {
          this .fogDepths .assign (value);
