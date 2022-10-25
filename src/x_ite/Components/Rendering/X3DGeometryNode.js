@@ -978,9 +978,9 @@ function (Fields,
       {
          const
             appearanceNode   = context .shapeNode .getAppearance (),
-            materialNode     = appearanceNode .materialNode,
-            backMaterialNode = appearanceNode .backMaterialNode,
-            frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
+            materialNode     = appearanceNode .getMaterial (),
+            backMaterialNode = appearanceNode .getBackMaterial (),
+            frontShaderNode  = appearanceNode .getShader () || materialNode .getShader (context .browser, context .shadow);
 
          if (this .solid || ! backMaterialNode || frontShaderNode .getWireframe ())
          {
@@ -988,7 +988,7 @@ function (Fields,
          }
          else
          {
-            const backShaderNode = appearanceNode .shaderNode || backMaterialNode .getShader (context .browser, context .shadow)
+            const backShaderNode = appearanceNode .getShader () || backMaterialNode .getShader (context .browser, context .shadow)
 
             this .displayGeometry (gl, context, appearanceNode, backShaderNode,  true,  false);
             this .displayGeometry (gl, context, appearanceNode, frontShaderNode, false, true);
@@ -999,7 +999,7 @@ function (Fields,
          if (shaderNode .isValid ())
          {
             const
-               blendModeNode = appearanceNode .blendModeNode,
+               blendModeNode = appearanceNode .getBlendMode (),
                attribNodes   = this .attribNodes,
                attribBuffers = this .attribBuffers,
                primitiveMode = shaderNode .getPrimitiveMode (this .primitiveMode);
@@ -1101,9 +1101,9 @@ function (Fields,
       {
          const
             appearanceNode   = context .shapeNode .getAppearance (),
-            materialNode     = appearanceNode .materialNode,
-            backMaterialNode = appearanceNode .backMaterialNode,
-            frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
+            materialNode     = appearanceNode .getMaterial (),
+            backMaterialNode = appearanceNode .getBackMaterial (),
+            frontShaderNode  = appearanceNode .getShader () || materialNode .getShader (context .browser, context .shadow);
 
          if (this .solid || ! backMaterialNode || frontShaderNode .getWireframe ())
          {
@@ -1111,7 +1111,7 @@ function (Fields,
          }
          else
          {
-            const backShaderNode = appearanceNode .shaderNode || backMaterialNode .getShader (context .browser, context .shadow);
+            const backShaderNode = appearanceNode .getShader () || backMaterialNode .getShader (context .browser, context .shadow);
 
             this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode,  true,  false, particleSystem);
             this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, false, true,  particleSystem);
@@ -1122,7 +1122,7 @@ function (Fields,
          if (shaderNode .isValid ())
          {
             const
-               blendModeNode = appearanceNode .blendModeNode,
+               blendModeNode = appearanceNode .getBlendMode (),
                attribNodes   = this .attribNodes,
                attribBuffers = this .attribBuffers,
                primitiveMode = shaderNode .getPrimitiveMode (this .primitiveMode);

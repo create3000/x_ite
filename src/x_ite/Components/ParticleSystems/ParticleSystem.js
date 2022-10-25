@@ -995,7 +995,7 @@ function (Fields,
             {
                const
                   appearanceNode = this .getAppearance (),
-                  shaderNode     = appearanceNode .shaderNode || this .shaderNode || appearanceNode .materialNode .getShader (context .browser, context .shadow),
+                  shaderNode     = appearanceNode .getShader () || this .shaderNode || appearanceNode .getMaterial () .getShader (context .browser, context .shadow),
                   primitiveMode  = shaderNode .getPrimitiveMode (this .primitiveMode);
 
                // Setup shader.
@@ -1004,7 +1004,7 @@ function (Fields,
                {
                   context .geometryContext = this .geometryContext;
 
-                  const blendModeNode = appearanceNode .blendModeNode;
+                  const blendModeNode = appearanceNode .getBlendMode ();
 
                   if (blendModeNode)
                      blendModeNode .enable (gl);

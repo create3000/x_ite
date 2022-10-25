@@ -1044,7 +1044,7 @@ function (X3DCast,
             geometryNode    = context .geometryContext || shapeNode .getGeometry (),
             geometryType    = geometryNode .geometryType,
             appearanceNode  = shapeNode .getAppearance (),
-            materialNode    = front ? appearanceNode .materialNode : appearanceNode .backMaterialNode,
+            materialNode    = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
             textureNode     = context .textureNode || appearanceNode .textureNode,
             modelViewMatrix = context .modelViewMatrix;
 

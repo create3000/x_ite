@@ -283,8 +283,8 @@ function (X3DGeometryNode,
                browser            = context .browser,
                appearanceNode     = context .shapeNode .getAppearance (),
                linePropertiesNode = appearanceNode .getLineProperties (),
-               shaderNode         = appearanceNode .shaderNode || browser .getLineShader (),
-               blendModeNode      = appearanceNode .blendModeNode,
+               shaderNode         = appearanceNode .getShader () || browser .getLineShader (),
+               blendModeNode      = appearanceNode .getBlendMode (),
                attribNodes        = this .attribNodes,
                attribBuffers      = this .attribBuffers;
 
@@ -465,8 +465,8 @@ function (X3DGeometryNode,
          const
             browser        = context .browser,
             appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .shaderNode || browser .getLineShader (),
-            blendModeNode  = appearanceNode .blendModeNode,
+            shaderNode     = appearanceNode .getShader () || browser .getLineShader (),
+            blendModeNode  = appearanceNode .getBlendMode (),
             attribNodes    = this .attribNodes,
             attribBuffers  = this .attribBuffers,
             primitiveMode  = shaderNode .getPrimitiveMode (this .primitiveMode);

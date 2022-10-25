@@ -166,6 +166,30 @@ function (Fields,
       {
          return this .stylePropertiesNode [2];
       },
+      getMaterial: function ()
+      {
+         return this .materialNode;
+      },
+      getBackMaterial: function ()
+      {
+         return this .backMaterialNode;
+      },
+      getTexture: function ()
+      {
+         return this .textureNode;
+      },
+      getTextureTransform: function ()
+      {
+         return this .textureTransformNode;
+      },
+      getShader: function ()
+      {
+         return this .shaderNode;
+      },
+      getBlendMode: function ()
+      {
+         return this .blendModeNode;
+      },
       set_live__: function ()
       {
          if (this .isLive () .getValue ())
