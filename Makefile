@@ -81,6 +81,10 @@ docs:
 open-docs-in-browser:
 	open http://localhost:4000
 
+.PHONY: tests
+tests: tests-menu examples-and-tests
+	echo
+
 tests-menu:
 	perl build/bin/tests-menu.pl
 

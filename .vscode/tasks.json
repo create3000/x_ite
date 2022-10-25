@@ -40,16 +40,10 @@
             "problemMatcher": []
         },
         {
-            "label": "Make Tests Menu",
+            "label": "Make Tests",
             "type": "shell",
-            "command": "make tests-menu",
+            "command": "make tests",
             "problemMatcher": []
         },
-        {
-            "label": "Make Examples And Tests Strip",
-            "type": "shell",
-            "command": "make examples-and-tests",
-            "problemMatcher": []
-        }
     ]
 }
