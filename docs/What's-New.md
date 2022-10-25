@@ -6,6 +6,29 @@ layout: single
 ---
 # What's New
 
+## X\_ITE v6.1.0 Released
+
+*Leipzig, 24th October 2022*: We finally released the new version 6.1.0.
+
+{% capture notice-text %}
+#### New Features
+
+- Implemented picking of thick lines and large points with X3DPointingDeviceSensorNode nodes like TouchSensor.
+- Added Shading menu if debug attribute is 'true'.
+
+{% endcapture %}
+<div class="notice--info">{{ notice-text | markdownify }}</div>
+
+{% capture notice-text %}
+#### Bug Fixes
+
+- Fixed Disk2D line case rendering.
+- Fixed SFImage.toString.
+- Fixed CSS.
+
+{% endcapture %}
+<div class="notice--success">{{ notice-text | markdownify }}</div>
+
 ## X\_ITE v6.0.0 Released
 
 *Leipzig, 19th October 2022*: We finally released the new version 6.0.0.
@@ -20,7 +43,7 @@ layout: single
 - Faster picking and other optimizations.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -43,7 +66,7 @@ layout: single
 - Return promise from X3D function.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -73,7 +96,7 @@ layout: single
 - Implemented Appearance *backMaterial* field.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -97,7 +120,7 @@ layout: single
 - Use JavaScript URL objects internally now.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## X\_ITE v4.7.2 Released
 
@@ -110,7 +133,7 @@ layout: single
 - Added particle uniforms to line geometry.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -136,7 +159,7 @@ layout: single
 - Improved X3DBindableNode handling when cloned in multiple layers.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -172,7 +195,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Add context menu "Show World Info" menu item, if an WorldInfo node exists.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -372,7 +395,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Implemented TextureProjectorPerspective.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -392,7 +415,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Implemented PointProperties node.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## X\_ITE v4.6.6 Released
 
@@ -420,7 +443,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Implemented Script node *shutdown* function.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -441,7 +464,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Implemented NRRD ASCII, RAW, HEX, and GZIP encoding.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -465,7 +488,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Full support for Texturing3D component.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -552,7 +575,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Updated splash screen.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -575,7 +598,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Optimized CoordinateChaser/Damper and TexCoordChaser2D/Damper2D.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -595,7 +618,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Added MFNode.toVRML/XMLString.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -624,7 +647,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Better transitions with OrthoViewpoint.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -649,7 +672,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - More precise VisibilitySensor.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## X\_ITE v4.4.6 Released
 
@@ -661,7 +684,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Implemented Picking component.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## X\_ITE v4.4.5 Released
 
@@ -684,7 +707,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - New X3DCanvas attribute preserveDrawingBuffer.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -723,7 +746,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Small improvements.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -758,7 +781,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Implemented FogCoordinate.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -779,7 +802,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Implemented »H-Anim« component.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## X\_ITE v4.2.16 Released
 
@@ -791,7 +814,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Implemented »NURBS« component.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## X\_ITE v4.2.15 Released
 
@@ -820,7 +843,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Implemented StringSensor
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -850,7 +873,7 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 - Added new vector functions to SFVec2f/d, SFVec3f/d, SFVec4f/d.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -873,7 +896,7 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 - Fixed wrong initialization of BrowserOptions.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## X\_ITE v4.2.11 Released
 
@@ -885,7 +908,7 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 - Small optimizations
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -943,7 +966,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 - X\_ITE now respects the tabindex setting from the X3DCanvas element.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -981,7 +1004,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 - »Straighten Horizon« is now the default for EXAMINE viewer.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -1008,7 +1031,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 - New and optimized resize handling of X3DCanvas element.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -1065,7 +1088,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 - code.create3000.de is now accessible via https
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## X\_ITE v4.2.1 Released
 
@@ -1133,7 +1156,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 - RigidBodyPhysics component
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## X\_ITE v4.1.5 Released
 
@@ -1152,7 +1175,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 - Better rendering of Text in some cases
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -1185,7 +1208,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 - Fixed fatal bug in MFImage.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## X\_ITE v4.1.1 Released
 
@@ -1197,7 +1220,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 - Fixed a bug in load count handling of the splash screen
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## X\_ITE v4.1.0 Released
 
@@ -1211,7 +1234,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 - Implemented units handling
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## Cobweb is now X\_ITE
 
@@ -1246,7 +1269,7 @@ Additionally X\_ITE is now available via GitHub CDN and jsDelivr CDN.
 - NPM is now the package management system.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## Cobweb 3.3 Released
 
@@ -1276,7 +1299,7 @@ If you still use an old stable version from Cobweb you must changed the URL for 
 - SFBool.valueOf return now a native JavaScript value.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## Cobweb 3.2 Released
 
@@ -1293,7 +1316,7 @@ If you still use an old stable version from Cobweb you must changed the URL for 
 - Use *uniform mat3* in custom shaders for SF/MFRotation fields.
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## Cobweb 3.1 Released
 
@@ -1319,7 +1342,7 @@ If you still use an old stable version from Cobweb you must changed the URL for 
 - Fixed an issue of X3DPrototypeInstance in toXMLString
 
 {% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
+<div class="notice--info">{{ notice-text | markdownify }}</div>
 
 ## First Version
 
