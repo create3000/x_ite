@@ -234,105 +234,117 @@ microfacetDistribution (const in PBRInfo pbrInputs)
 vec4
 getMaterialColor ()
 {
-   // Metallic and Roughness material properties are packed together
-   // In glTF, these factors can be specified by fixed scalar values
-   // or from a metallic-roughness map.
+   #if defined (X3D_NORMALS)
+      // Metallic and Roughness material properties are packed together
+      // In glTF, these factors can be specified by fixed scalar values
+      // or from a metallic-roughness map.
 
-   vec2  metallicRoughness   = getMetallicRoughness ();
-   float perceptualRoughness = clamp (metallicRoughness [1], c_MinRoughness, 1.0);
-   float metallic            = clamp (metallicRoughness [0], 0.0, 1.0);
+      vec2  metallicRoughness   = getMetallicRoughness ();
+      float perceptualRoughness = clamp (metallicRoughness [1], c_MinRoughness, 1.0);
+      float metallic            = clamp (metallicRoughness [0], 0.0, 1.0);
 
-   // Roughness is authored as perceptual roughness; as is convention,
-   // convert to material roughness by squaring the perceptual roughness [2].
-   float alphaRoughness = perceptualRoughness * perceptualRoughness;
+      // Roughness is authored as perceptual roughness; as is convention,
+      // convert to material roughness by squaring the perceptual roughness [2].
+      float alphaRoughness = perceptualRoughness * perceptualRoughness;
 
-   // The albedo may be defined from a base texture or a flat color.
-   vec4 baseColor    = getBaseColor ();
-   vec3 f0           = vec3 (0.04);
-   vec3 diffuseColor = baseColor .rgb * (vec3 (1.0) - f0);
-   diffuseColor *= 1.0 - metallic;
+      // The albedo may be defined from a base texture or a flat color.
+      vec4  baseColor    = getBaseColor ();
+      float alpha        = baseColor .a;
+      vec3  f0           = vec3 (0.04);
+      vec3  diffuseColor = baseColor .rgb * (vec3 (1.0) - f0);
+      diffuseColor *= 1.0 - metallic;
 
-   vec3 specularColor = mix (f0, baseColor .rgb, metallic);
+      vec3 specularColor = mix (f0, baseColor .rgb, metallic);
 
-   // Compute reflectance.
-   float reflectance = max (max (specularColor .r, specularColor .g), specularColor .b);
+      // Compute reflectance.
+      float reflectance = max (max (specularColor .r, specularColor .g), specularColor .b);
 
-   // For typical incident reflectance range (between 4% to 100%) set the grazing reflectance to 100% for typical fresnel effect.
-   // For very low reflectance range on highly diffuse objects (below 4%), incrementally reduce grazing reflecance to 0%.
-   float reflectance90          = clamp (reflectance * 25.0, 0.0, 1.0);
-   vec3  specularEnvironmentR0  = specularColor .rgb;
-   vec3  specularEnvironmentR90 = vec3 (1.0, 1.0, 1.0) * reflectance90;
+      // For typical incident reflectance range (between 4% to 100%) set the grazing reflectance to 100% for typical fresnel effect.
+      // For very low reflectance range on highly diffuse objects (below 4%), incrementally reduce grazing reflecance to 0%.
+      float reflectance90          = clamp (reflectance * 25.0, 0.0, 1.0);
+      vec3  specularEnvironmentR0  = specularColor .rgb;
+      vec3  specularEnvironmentR90 = vec3 (1.0, 1.0, 1.0) * reflectance90;
 
-   // Apply light sources
+      // Apply light sources
 
-   vec3 n = getNormalVector ();  // normal at surface point
-   vec3 v = normalize (-vertex); // Vector from surface point to camera
+      vec3 n = getNormalVector ();  // normal at surface point
+      vec3 v = normalize (-vertex); // Vector from surface point to camera
 
-   vec3 finalColor = vec3 (0.0);
+      vec3 finalColor = vec3 (0.0);
 
-   for (int i = 0; i < x3d_MaxLights; i ++)
-   {
-      if (i == x3d_NumLights)
-         break;
-
-      x3d_LightSourceParameters light = x3d_LightSource [i];
-
-      vec3  vL = light .location - vertex; // Light to fragment
-      float dL = length (light .matrix * vL);
-      bool  di = light .type == x3d_DirectionalLight;
-
-      if (di || dL <= light .radius)
+      for (int i = 0; i < x3d_MaxLights; i ++)
       {
-         vec3 d = light .direction;
-         vec3 c = light .attenuation;
-         vec3 L = di ? -d : normalize (vL); // Normalized vector from point on geometry to light source i position.
+         if (i == x3d_NumLights)
+            break;
 
-         vec3 l = normalize (L);       // Vector from surface point to light
-         vec3 h = normalize (l + v);   // Half vector between both l and v
+         x3d_LightSourceParameters light = x3d_LightSource [i];
 
-         float NdotL = clamp (dot (n, l), 0.001, 1.0);
-         float NdotV = abs (dot (n, v)) + 0.001;
-         float NdotH = clamp (dot (n, h), 0.0, 1.0);
-         float LdotH = clamp (dot (l, h), 0.0, 1.0);
-         float VdotH = clamp (dot (v, h), 0.0, 1.0);
+         vec3  vL = light .location - vertex; // Light to fragment
+         float dL = length (light .matrix * vL);
+         bool  di = light .type == x3d_DirectionalLight;
 
-         PBRInfo pbrInputs = PBRInfo (
-            NdotL,
-            NdotV,
-            NdotH,
-            LdotH,
-            VdotH,
-            perceptualRoughness,
-            metallic,
-            specularEnvironmentR0,
-            specularEnvironmentR90,
-            alphaRoughness,
-            diffuseColor,
-            specularColor
-         );
+         if (di || dL <= light .radius)
+         {
+            vec3 d = light .direction;
+            vec3 c = light .attenuation;
+            vec3 L = di ? -d : normalize (vL); // Normalized vector from point on geometry to light source i position.
 
-         // Calculate the shading terms for the microfacet specular shading model.
-         vec3  F = specularReflection (pbrInputs);
-         float G = geometricOcclusion (pbrInputs);
-         float D = microfacetDistribution (pbrInputs);
+            vec3 l = normalize (L);       // Vector from surface point to light
+            vec3 h = normalize (l + v);   // Half vector between both l and v
 
-         float attenuationFactor     = di ? 1.0 : 1.0 / max (dot (c, vec3 (1.0, dL, dL * dL)), 1.0);
-         float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
-         float attenuationSpotFactor = attenuationFactor * spotFactor;
+            float NdotL = clamp (dot (n, l), 0.001, 1.0);
+            float NdotV = abs (dot (n, v)) + 0.001;
+            float NdotH = clamp (dot (n, h), 0.0, 1.0);
+            float LdotH = clamp (dot (l, h), 0.0, 1.0);
+            float VdotH = clamp (dot (v, h), 0.0, 1.0);
 
-         // Calculation of analytical lighting contribution
-         vec3 diffuseContrib = (1.0 - F) * diffuse (pbrInputs);
-         vec3 specContrib    = F * G * D / (4.0 * NdotL * NdotV);
-         vec3 color          = NdotL * attenuationSpotFactor * light .color * light .intensity * (diffuseContrib + specContrib);
+            PBRInfo pbrInputs = PBRInfo (
+               NdotL,
+               NdotV,
+               NdotH,
+               LdotH,
+               VdotH,
+               perceptualRoughness,
+               metallic,
+               specularEnvironmentR0,
+               specularEnvironmentR90,
+               alphaRoughness,
+               diffuseColor,
+               specularColor
+            );
 
-         finalColor += color;
+            // Calculate the shading terms for the microfacet specular shading model.
+            vec3  F = specularReflection (pbrInputs);
+            float G = geometricOcclusion (pbrInputs);
+            float D = microfacetDistribution (pbrInputs);
+
+            float attenuationFactor     = di ? 1.0 : 1.0 / max (dot (c, vec3 (1.0, dL, dL * dL)), 1.0);
+            float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
+            float attenuationSpotFactor = attenuationFactor * spotFactor;
+
+            // Calculation of analytical lighting contribution
+            vec3 diffuseContrib = (1.0 - F) * diffuse (pbrInputs);
+            vec3 specContrib    = F * G * D / (4.0 * NdotL * NdotV);
+            vec3 color          = NdotL * attenuationSpotFactor * light .color * light .intensity * (diffuseContrib + specContrib);
+
+            finalColor += color;
+         }
       }
-   }
 
-   // Calculate lighting contribution from image based lighting source (IBL).
-   #if defined (USE_IBL)
-   vec3 reflection = -normalize (reflect (v, n));
-   finalColor += getIBLContribution (pbrInputs, n, reflection);
+      // Calculate lighting contribution from image based lighting source (IBL).
+      #if defined (USE_IBL)
+      vec3 reflection = -normalize (reflect (v, n));
+      finalColor += getIBLContribution (pbrInputs, n, reflection);
+      #endif
+   #else
+      float alpha      = 1.0 - x3d_Material .transparency;
+      vec3  finalColor = vec3 (0.0);
+
+      if (x3d_ColorMaterial)
+      {
+         alpha      *= color .a;
+         finalColor  = color .rgb;
+      }
    #endif
 
    // Apply optional PBR terms for additional (optional) shading.
@@ -343,7 +355,7 @@ getMaterialColor ()
    finalColor += getEmissiveColor ();
 
    // Combine with alpha and do gamma correction.
-   return Gamma (vec4 (finalColor, baseColor .a));
+   return Gamma (vec4 (finalColor, alpha));
 }
 
 void
