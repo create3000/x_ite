@@ -163,7 +163,7 @@ function (Shading,
             }
          }
       },
-      createShader: function (name, file, options = [ ])
+      createShader: function (name, vs, fs = vs, options = [ ])
       {
          if (this .getDebug ())
             console .info ("Initializing " + name);
@@ -174,14 +174,14 @@ function (Shading,
 
          const vertexShader = new ShaderPart (this .getPrivateScene ());
          vertexShader .setName (name + "Vertex");
-         vertexShader ._url .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".vs"));
+         vertexShader ._url .push (urls .getShaderUrl ("webgl" + version + "/" + vs + ".vs"));
          vertexShader .setOptions (options);
          vertexShader .setup ();
 
          const fragmentShader = new ShaderPart (this .getPrivateScene ());
          fragmentShader .setName (name + "Fragment");
          fragmentShader ._type  = "FRAGMENT";
-         fragmentShader ._url .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".fs"));
+         fragmentShader ._url .push (urls .getShaderUrl ("webgl" + version + "/" + fs + ".fs"));
          fragmentShader .setOptions (options);
          fragmentShader .setup ();
 

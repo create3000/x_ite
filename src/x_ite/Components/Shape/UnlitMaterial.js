@@ -142,7 +142,7 @@ function (Fields,
          if (this .getNormalTexture ())
             options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
 
-         const shaderNode = browser .createShader ("UnlitShader", "Unlit", options);
+         const shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
 
          browser .setShader (shaderKey, shaderNode);
 

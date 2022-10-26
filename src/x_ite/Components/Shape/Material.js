@@ -293,13 +293,13 @@ function (Fields,
          {
             case 1:
             {
-               var shaderNode = browser .createShader ("GouraudShader", "Gouraud", options);
+               var shaderNode = browser .createShader ("GouraudShader", "Gouraud", "Gouraud", options);
 
                break
             }
             case 2:
             {
-               var shaderNode = browser .createShader ("PhongShader", "Phong", options);
+               var shaderNode = browser .createShader ("PhongShader", "Default", "Phong", options);
 
                break;
             }
