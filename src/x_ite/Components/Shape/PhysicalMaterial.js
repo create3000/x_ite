@@ -204,7 +204,7 @@ function (Fields,
       {
          return 3;
       },
-      createShader: function (shaderKey, geometryType, shadow)
+      createShader: function (shaderKey, geometryType, shadow, normals)
       {
          const
             browser = this .getBrowser (),
@@ -215,9 +215,12 @@ function (Fields,
          if (shadow)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
+         if (normals)
+            options .push ("X3D_NORMALS");
+
          if (this .getTextureBits () .valueOf ())
             options .push ("X3D_MATERIAL_TEXTURES");
-            
+
          if (this .baseTextureNode)
             options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
 

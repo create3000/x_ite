@@ -983,7 +983,7 @@ function (Fields,
          const
             appearanceNode   = context .shapeNode .getAppearance (),
             backMaterialNode = appearanceNode .getBackMaterial (),
-            frontShaderNode  = appearanceNode .getFrontShader (this .geometryType, context .shadow);
+            frontShaderNode  = appearanceNode .getFrontShader (this .geometryType, context .shadow, true);
 
          if (this .solid || ! backMaterialNode || this .getBrowser () .getWireframe ())
          {
@@ -991,7 +991,7 @@ function (Fields,
          }
          else
          {
-            const backShaderNode = appearanceNode .getBackShader (this .geometryType, context .shadow)
+            const backShaderNode = appearanceNode .getBackShader (this .geometryType, context .shadow, true)
 
             this .displayGeometry (gl, context, appearanceNode, backShaderNode,  true,  false);
             this .displayGeometry (gl, context, appearanceNode, frontShaderNode, false, true);
@@ -1106,7 +1106,7 @@ function (Fields,
          const
             appearanceNode   = context .shapeNode .getAppearance (),
             backMaterialNode = appearanceNode .getBackMaterial (),
-            frontShaderNode  = appearanceNode .getFrontShader (this .geometryType, context .shadow);
+            frontShaderNode  = appearanceNode .getFrontShader (this .geometryType, context .shadow, true);
 
          if (this .solid || ! backMaterialNode || this .getBrowser () .getWireframe ())
          {
@@ -1114,7 +1114,7 @@ function (Fields,
          }
          else
          {
-            const backShaderNode = appearanceNode .getBackShader (this .geometryType, context .shadow);
+            const backShaderNode = appearanceNode .getBackShader (this .geometryType, context .shadow, false);
 
             this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode,  true,  false, particleSystem);
             this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, false, true,  particleSystem);

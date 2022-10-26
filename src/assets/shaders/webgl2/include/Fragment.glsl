@@ -1,11 +1,9 @@
 uniform float x3d_AlphaCutoff;
-uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
+uniform bool  x3d_ColorMaterial;
 
 in float fogDepth;    // fog depth
 in vec4  color;       // color
-in vec3  normal;      // normal vector at this point on geometry
 in vec3  vertex;      // point on geometry
-in vec3  localNormal; // normal vector at this point on geometry in local coordinates
 in vec3  localVertex; // point on geometry in local coordinates
 
 #if ! defined (X3D_GEOMETRY_0D)
@@ -16,6 +14,14 @@ in vec3  localVertex; // point on geometry in local coordinates
    #if x3d_MaxTextures > 1
    in vec4 texCoord1;
    #endif
+#endif
+
+#if defined (X3D_NORMALS)
+   in vec3 normal;
+   in vec3 localNormal;
+#else
+   vec3 normal      = vec3 (0.0, 0.0, 1.0);
+   vec3 localNormal = vec3 (0.0, 0.0, 1.0);
 #endif
 
 #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)

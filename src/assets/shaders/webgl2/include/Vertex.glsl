@@ -4,27 +4,23 @@ precision highp sampler2D;
 
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
-uniform mat3 x3d_NormalMatrix;
 
 in float x3d_FogDepth;
 in vec4  x3d_Color;
-in vec3  x3d_Normal;
 in vec4  x3d_Vertex;
 
 #if x3d_MaxTextures > 0
-in vec4 x3d_TexCoord0;
+   in vec4 x3d_TexCoord0;
 #endif
 
 #if x3d_MaxTextures > 1
-in vec4 x3d_TexCoord1;
+   in vec4 x3d_TexCoord1;
 #endif
 
-out float fogDepth;    // fog depth
-out vec4  color;       // color
-out vec3  normal;      // normalized normal vector at this point on geometry
-out vec3  vertex;      // point on geometry
-out vec3  localNormal; // normal vector at this point on geometry in local coordinates
-out vec3  localVertex; // point on geometry in local coordinates
+out float fogDepth;
+out vec4  color;
+out vec3  vertex;
+out vec3  localVertex;
 
 #if ! defined (X3D_GEOMETRY_0D)
    #if x3d_MaxTextures > 0
@@ -36,14 +32,22 @@ out vec3  localVertex; // point on geometry in local coordinates
    #endif
 #endif
 
+#if defined (X3D_NORMALS)
+   uniform mat3 x3d_NormalMatrix;
+
+   in  vec3 x3d_Normal;
+   out vec3 normal;
+   out vec3 localNormal;
+#endif
+
 #if defined (X3D_GEOMETRY_1D)
-flat out float lengthSoFar; // in px, stipple support
-flat out vec2  startPoint;  // in px, stipple support
-out vec2       midPoint;    // in px, stipple support
+   flat out float lengthSoFar;
+   flat out vec2  startPoint;
+   out vec2       midPoint;
 #endif
 
 #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-out float depth;
+   out float depth;
 #endif
 
 #pragma X3D include "Particle.glsl"
@@ -56,9 +60,7 @@ main ()
 
    fogDepth    = x3d_FogDepth;
    color       = x3d_Color;
-   normal      = x3d_NormalMatrix * x3d_Normal;
    vertex      = position .xyz;
-   localNormal = x3d_Normal;
    localVertex = x3d_Vertex .xyz;
 
    #if ! defined (X3D_GEOMETRY_0D)
@@ -69,6 +71,11 @@ main ()
       #if x3d_MaxTextures > 1
       texCoord1 = getTexCoord (x3d_TexCoord1);
       #endif
+   #endif
+
+   #if defined (X3D_NORMALS)
+   normal      = x3d_NormalMatrix * x3d_Normal;
+   localNormal = x3d_Normal;
    #endif
 
    gl_Position = x3d_ProjectionMatrix * position;
