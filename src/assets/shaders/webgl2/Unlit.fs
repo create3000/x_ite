@@ -71,13 +71,15 @@ getEmissiveColor ()
 vec4
 getMaterialColor ()
 {
-   #if defined (X3D_GEOMETRY_0D) && ! defined (X3D_EMISSIVE_TEXTURE)
+   #if defined (X3D_GEOMETRY_0D)
       setTexCoords ();
 
+      #if ! defined (X3D_EMISSIVE_TEXTURE)
       if (x3d_NumTextures == 0)
          return getPointColor (getEmissiveColor ());
-      else
-         return getEmissiveColor ();
+      #endif
+
+      return getEmissiveColor ();
    #else
       return getEmissiveColor ();
    #endif
