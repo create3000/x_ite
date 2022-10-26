@@ -224,7 +224,7 @@ function (Fields,
       {
          this .localStorage .Rubberband = rubberband .getValue ();
 
-         this .getBrowser () .getViewer () .initShaders ();
+         this .getBrowser () .getViewer () .loadShaders ();
       },
       set_primitiveQuality__: function (value)
       {

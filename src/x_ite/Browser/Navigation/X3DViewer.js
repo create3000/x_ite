@@ -78,7 +78,7 @@ function (X3DBaseNode,
       },
       initialize: function ()
       { },
-      initShaders: function ()
+      loadShaders: function ()
       { },
       getActiveLayer: function ()
       {
