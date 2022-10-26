@@ -103,7 +103,7 @@ function (Fields,
          this .set_linewidthScaleFactor__ ();
 
          if (this .mustTransformLines)
-            browser .getLineTransformShader ();
+            this .getBrowser () .getLineTransformShader ();
       },
       getApplied: function ()
       {
