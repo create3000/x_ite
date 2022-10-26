@@ -155,6 +155,10 @@ function (Fields,
       {
          this .textureBits .set (index, value);
       },
+      getTextureBits: function ()
+      {
+         return this .textureBits;
+      },
       getShaderType: function ()
       { },
       getShader: function (browser, geometryType, shadow)

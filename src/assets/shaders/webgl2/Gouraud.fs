@@ -14,12 +14,14 @@ in vec3  vertex;      // point on geometry
 in vec3  localNormal; // normal vector at this point on geometry in local coordinates
 in vec3  localVertex; // point on geometry in local coordinates
 
-#if x3d_MaxTextures > 0
-in vec4 texCoord0;
-#endif
+#if ! defined (X3D_GEOMETRY_0D)
+   #if x3d_MaxTextures > 0
+   in vec4 texCoord0;
+   #endif
 
-#if x3d_MaxTextures > 1
-in vec4 texCoord1;
+   #if x3d_MaxTextures > 1
+   in vec4 texCoord1;
+   #endif
 #endif
 
 #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
@@ -29,21 +31,50 @@ in float depth;
 
 out vec4 x3d_FragColor;
 
-#pragma X3D include "include/Texture.glsl"
+#pragma X3D include "include/Point.glsl"
+#pragma X3D include "include/Stipple.glsl"
 #pragma X3D include "include/Hatch.glsl"
+#pragma X3D include "include/Texture.glsl"
 #pragma X3D include "include/Fog.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
+
+vec4
+getMaterialColor ()
+{
+   vec4 materialColor = gl_FrontFacing ? frontColor : backColor;
+
+   #if defined (X3D_GEOMETRY_0D)
+      setTexCoords ();
+
+      #if ! defined (X3D_EMISSIVE_TEXTURE)
+      if (x3d_NumTextures == 0)
+         return getPointColor (materialColor);
+      #endif
+
+      return materialColor;
+   #else
+      return materialColor;
+   #endif
+}
 
 void
 main ()
 {
    clip ();
 
-   vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
+   #if defined (X3D_GEOMETRY_1D)
+      stipple ();
+   #endif
 
-   finalColor      = getTextureColor (finalColor, vec4 (1.0));
-   finalColor      = getProjectiveTextureColor (finalColor);
-   finalColor      = getHatchColor (finalColor);
+   vec4 finalColor = getMaterialColor ();
+
+   finalColor = getTextureColor (finalColor, vec4 (1.0));
+   finalColor = getProjectiveTextureColor (finalColor);
+
+   #if defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)
+      finalColor = getHatchColor (finalColor);
+   #endif
+
    finalColor .rgb = getFogColor (finalColor .rgb);
 
    if (finalColor .a < x3d_AlphaCutoff)

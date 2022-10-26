@@ -256,7 +256,7 @@ function (Fields,
          gl .uniform1f  (shaderObject .x3d_Metallic,  this .metallic);
          gl .uniform1f  (shaderObject .x3d_Roughness, this .roughness);
 
-         if (this .getTextures ())
+         if (this .getTextureBits () .valueOf ())
          {
             const
                baseTexture              = shaderObject .x3d_BaseTexture,

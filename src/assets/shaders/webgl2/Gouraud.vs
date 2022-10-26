@@ -43,11 +43,18 @@ out vec4  texCoord0;   // texCoord0
 out vec4  texCoord1;   // texCoord1
 #endif
 
+#if defined (X3D_GEOMETRY_1D)
+flat out float lengthSoFar; // in px, stipple support
+flat out vec2  startPoint;  // in px, stipple support
+out vec2       midPoint;    // in px, stipple support
+#endif
+
 #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
 out float depth;
 #endif
 
 #pragma X3D include "include/Particle.glsl"
+#pragma X3D include "include/PointSize.glsl"
 #pragma X3D include "include/SpotFactor.glsl"
 
 vec4
@@ -125,6 +132,16 @@ main ()
    #endif
 
    gl_Position = x3d_ProjectionMatrix * position;
+
+   #if defined (X3D_GEOMETRY_0D)
+   gl_PointSize = pointSize = getPointSize (vertex);
+   #endif
+
+   #if defined (X3D_GEOMETRY_1D)
+   lengthSoFar = x3d_TexCoord0 .z;
+   startPoint  = x3d_TexCoord0 .xy;
+   midPoint    = x3d_TexCoord0 .xy;
+   #endif
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
    depth = 1.0 + gl_Position .w;
