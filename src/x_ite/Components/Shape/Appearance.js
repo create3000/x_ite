@@ -117,8 +117,6 @@ function (Fields,
       {
          X3DAppearanceNode .prototype .initialize .call (this);
 
-         this .isLive () .addInterest ("set_live__", this);
-
          this ._alphaMode  		.addInterest ("set_alphaMode__",        this);
          this ._alphaCutoff  		.addInterest ("set_alphaCutoff__",      this);
          this ._pointProperties  .addInterest ("set_pointProperties__",  this);
@@ -137,7 +135,6 @@ function (Fields,
          this ._texture        .addInterest ("set_transparent__", this);
          this ._blendMode      .addInterest ("set_transparent__", this);
 
-         this .set_live__ ();
          this .set_alphaMode__ ();
          this .set_pointProperties__ ();
          this .set_lineProperties__ ();
@@ -197,17 +194,6 @@ function (Fields,
       getBlendMode: function ()
       {
          return this .blendModeNode;
-      },
-      set_live__: function ()
-      {
-         if (this .isLive () .getValue ())
-         {
-            this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
-         }
-         else
-         {
-            this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
-         }
       },
       set_alphaMode__: function ()
       {
@@ -373,10 +359,6 @@ function (Fields,
 
          if (this .shaderNode)
             this .shaderNode .select ();
-      },
-      set_shading__: function ()
-      {
-         this .set_shader__ ();
       },
       set_blendMode__: function ()
       {

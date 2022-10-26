@@ -4,6 +4,9 @@ precision highp float;
 precision highp int;
 precision highp sampler2D;
 
+#pragma X3D include "include/Vertex.glsl"
+#pragma X3D include "include/SpotFactor.glsl"
+
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform x3d_MaterialParameters x3d_Material;
@@ -11,9 +14,6 @@ uniform bool x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise
 
 out vec4 frontColor;
 out vec4 backColor;
-
-#pragma X3D include "include/Vertex.glsl"
-#pragma X3D include "include/SpotFactor.glsl"
 
 vec4
 getMaterialColor (const in vec3 N,

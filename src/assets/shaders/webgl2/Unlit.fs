@@ -2,6 +2,7 @@
 
 precision highp float;
 precision highp int;
+precision highp sampler3D;
 
 #pragma X3D include "include/Fragment.glsl"
 

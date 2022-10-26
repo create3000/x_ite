@@ -1,6 +1,4 @@
 
-precision highp sampler3D;
-
 uniform mat4        x3d_TextureMatrix [x3d_MaxTextures];
 uniform int         x3d_NumTextures;
 uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_TextureType2D, x3d_TextureType3D, x3d_TextureTypeCube
