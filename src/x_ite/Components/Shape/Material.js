@@ -52,6 +52,7 @@ define ([
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DOneSidedMaterialNode",
+   "x_ite/Browser/Core/Shading",
    "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
@@ -60,6 +61,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DOneSidedMaterialNode,
+          Shading,
           X3DCast,
           X3DConstants,
           Algorithm)
@@ -234,6 +236,16 @@ function (Fields,
       {
          this .setTransparent (Boolean (this .getTransparency () ||
                                (this .diffuseTextureNode && this .diffuseTextureNode .getTransparent ())));
+      },
+      getShaderType: function ()
+      {
+         switch (this .getBrowser () .getBrowserOptions () .getShading ())
+         {
+            default:
+               return 1;
+            case Shading .PHONG:
+               return 2;
+         }
       },
       set_textures__: function ()
       {

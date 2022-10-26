@@ -155,18 +155,22 @@ function (Fields,
       {
          this .textureBits .set (index, value);
       },
+      getShaderType: function ()
+      { },
       getShaderKey: function (geometryType, shadow)
       {
          // Bit Schema of Shader Key
          //
-         // 0 - 6 -> textures
-         // 7 - 8 -> geometry type
-         // 9     -> shadow
+         // 0 - 6  -> textures
+         // 7 - 8  -> shader type
+         // 9 - 10 -> geometry type
+         // 11     -> shadow
 
          let shaderKey = this .textureBits .valueOf ();
 
-         shaderKey |= geometryType << 7;
-         shaderKey |= shadow       << 9;
+         shaderKey |= this .getShaderType () << 7;
+         shaderKey |= geometryType           << 9;
+         shaderKey |= shadow                 << 11;
 
          return shaderKey;
       },

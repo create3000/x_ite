@@ -115,6 +115,10 @@ function (Fields,
          this .setTransparent (Boolean (this .getTransparency () ||
                                (this .getEmissiveTexture () && this .getEmissiveTexture () .getTransparent ())));
       },
+      getShaderType: function ()
+      {
+         return 0;
+      },
       createShader: function (browser, shaderKey, geometryType, shadow)
       {
          const options = [ ];

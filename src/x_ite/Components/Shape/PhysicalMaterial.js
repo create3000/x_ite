@@ -187,6 +187,10 @@ function (Fields,
          this .setTransparent (Boolean (this .getTransparency () ||
                                (this .baseTextureNode && this .baseTextureNode .getTransparent ())));
       },
+      getShaderType: function ()
+      {
+         return 3;
+      },
       set_textures__: function ()
       {
          const browser = this .getBrowser ();
