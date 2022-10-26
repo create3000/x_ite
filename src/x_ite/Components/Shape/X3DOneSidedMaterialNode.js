@@ -185,7 +185,7 @@ function (Fields,
       { },
       getGeometryTypes: (function ()
       {
-         const GeometryTypes = [
+         const geometryTypes = [
             "X3D_GEOMETRY_0D",
             "X3D_GEOMETRY_1D",
             "X3D_GEOMETRY_2D",
@@ -194,7 +194,7 @@ function (Fields,
 
          return function ()
          {
-            return GeometryTypes;
+            return geometryTypes;
          }
       })(),
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
