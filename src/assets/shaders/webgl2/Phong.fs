@@ -285,19 +285,17 @@ getPhongColor ()
 vec4
 getMaterialColor ()
 {
-   vec4 materialColor = getPhongColor ();
-
    #if defined (X3D_GEOMETRY_0D)
       setTexCoords ();
 
-      #if ! defined (X3D_EMISSIVE_TEXTURE)
+      #if ! defined (X3D_DIFFUSE_TEXTURE)
       if (x3d_NumTextures == 0)
-         return getPointColor (materialColor);
+         return getPointColor (getPhongColor ());
       #endif
 
-      return materialColor;
+      return getPhongColor ();
    #else
-      return materialColor;
+      return getPhongColor ();
    #endif
 }
 

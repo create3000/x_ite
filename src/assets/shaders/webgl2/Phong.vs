@@ -74,7 +74,7 @@ main ()
    #if defined (X3D_GEOMETRY_0D)
    gl_PointSize = pointSize = getPointSize (vertex);
    #endif
-   
+
    #if defined (X3D_GEOMETRY_1D)
    lengthSoFar = x3d_TexCoord0 .z;
    startPoint  = x3d_TexCoord0 .xy;
