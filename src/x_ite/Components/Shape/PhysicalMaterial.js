@@ -114,8 +114,6 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
-         this .shaderNode = this .getBrowser () .getPhysicalMaterialShader ();
-
          this ._baseColor                .addInterest ("set_baseColor__",                this);
          this ._baseTexture              .addInterest ("set_baseTexture__",              this);
          this ._metallic                 .addInterest ("set_metallic__",                 this);
@@ -187,48 +185,6 @@ function (Fields,
          this .setTransparent (Boolean (this .getTransparency () ||
                                (this .baseTextureNode && this .baseTextureNode .getTransparent ())));
       },
-      getShaderType: function ()
-      {
-         return 3;
-      },
-      set_textures__: function ()
-      {
-         const browser = this .getBrowser ();
-
-         if (this .getTextures ())
-         {
-            const options = [ ];
-
-            if (this .baseTextureNode)
-               options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
-
-            if (this .getEmissiveTexture ())
-               options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
-
-            if (this .metallicRoughnessTextureNode)
-               options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", "X3D_METALLIC_ROUGHNESS_TEXTURE_" + this .metallicRoughnessTextureNode .getTextureTypeString ());
-
-            if (this .occlusionTextureNode)
-               options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
-
-            if (this .getNormalTexture ())
-               options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
-
-            const shaderNode = browser .createShader ("PhysicalMaterialTexturesShader", "PBR", options);
-
-            shaderNode._isValid .addInterest ("set_shader__", this, shaderNode);
-         }
-         else
-         {
-            this .shaderNode = browser .getPhysicalMaterialShader ();
-         }
-      },
-      set_shader__: function (shaderNode)
-      {
-         shaderNode ._isValid .removeInterest ("set_shader__", this);
-
-         this .shaderNode = shaderNode;
-      },
       getTextureIndices: (function ()
       {
          const textureIndices = {
@@ -244,9 +200,41 @@ function (Fields,
             return textureIndices;
          };
       })(),
-      getShader: function (browser, shadow)
+      getShaderType: function ()
       {
-         return this .shaderNode;
+         return 3;
+      },
+      createShader: function (shaderKey, geometryType, shadow)
+      {
+         const
+            browser = this .getBrowser (),
+            options = [ ];
+
+         options .push (this .getGeometryTypes () [geometryType])
+
+         if (shadow)
+            options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
+
+         if (this .baseTextureNode)
+            options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
+
+         if (this .getEmissiveTexture ())
+            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+
+         if (this .metallicRoughnessTextureNode)
+            options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", "X3D_METALLIC_ROUGHNESS_TEXTURE_" + this .metallicRoughnessTextureNode .getTextureTypeString ());
+
+         if (this .occlusionTextureNode)
+            options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
+
+         if (this .getNormalTexture ())
+            options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+
+         const shaderNode = browser .createShader ("PhysicalMaterialShader", "PBR", options);
+
+         browser .setShader (shaderKey, shaderNode);
+
+         return shaderNode;
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {

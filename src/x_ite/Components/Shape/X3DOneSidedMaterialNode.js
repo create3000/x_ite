@@ -151,9 +151,12 @@ function (Fields,
             return textureIndices;
          };
       })(),
-      setTexture: function (index, value)
+      setTexture: function (index, textureNode)
       {
-         this .textureBits .set (index, value);
+         const textureType = textureNode ? textureNode .getTextureType () - 1 : 0;
+
+         this .textureBits .set (index * 2 + 0, textureType & 0b01);
+         this .textureBits .set (index * 2 + 1, textureType & 0b10);
       },
       getTextureBits: function ()
       {
@@ -165,16 +168,16 @@ function (Fields,
       {
          // Bit Schema of Shader Key
          //
-         // 0 - 6  -> textures
-         // 7 - 8  -> shader type
-         // 9 - 10 -> geometry type
-         // 11     -> shadow
+         // 0  - 13 -> textures
+         // 14 - 15 -> shader type
+         // 16 - 17 -> geometry type
+         // 18      -> shadow
 
          let shaderKey = this .textureBits .valueOf ();
 
-         shaderKey |= this .getShaderType () << 7;
-         shaderKey |= geometryType           << 9;
-         shaderKey |= shadow                 << 11;
+         shaderKey |= this .getShaderType () << 14;
+         shaderKey |= geometryType           << 16;
+         shaderKey |= shadow                 << 18;
 
          return this .getBrowser () .getShader (shaderKey) || this .createShader (shaderKey, geometryType, shadow);
       },
