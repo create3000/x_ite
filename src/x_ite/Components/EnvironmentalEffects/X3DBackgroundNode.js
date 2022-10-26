@@ -601,14 +601,15 @@ function (X3DBindableNode,
       {
          const
             textureMatrixArray = new Float32Array (Matrix4 .Identity),
-            white              = new Float32Array ([1, 1, 1]);
+            white              = new Float32Array ([1, 1, 1]),
+            geometryContext    = { geometryType: 3, colorMaterial: false, hasNormals: false };
 
          return function (renderObject)
          {
             const
                browser    = this .getBrowser (),
                gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (3, false);
+               shaderNode = browser .getDefaultMaterial () .getShader (geometryContext, false);
 
             if (shaderNode .isValid ())
             {

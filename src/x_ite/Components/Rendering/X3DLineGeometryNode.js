@@ -283,7 +283,7 @@ function (X3DGeometryNode,
                browser            = this .getBrowser (),
                appearanceNode     = context .shapeNode .getAppearance (),
                linePropertiesNode = appearanceNode .getLineProperties (),
-               shaderNode         = appearanceNode .getFrontShader (1, context .shadow, false),
+               shaderNode         = appearanceNode .getFrontShader (this, context .shadow),
                blendModeNode      = appearanceNode .getBlendMode (),
                attribNodes        = this .getAttrib (),
                attribBuffers      = this .getAttribBuffers ();
@@ -338,7 +338,7 @@ function (X3DGeometryNode,
                         // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                         //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-                        if (this .fogCoords)
+                        if (this .hasFogCoords)
                         {
                            transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth0", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset0);
                            transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth1", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset1);
@@ -399,7 +399,7 @@ function (X3DGeometryNode,
                         // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                         //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-                        if (this .fogCoords)
+                        if (this .hasFogCoords)
                            shaderNode .enableFogDepthAttribute (gl, this .trianglesBuffer, stride, fogCoordOffset);
 
                         if (this .colorMaterial)
@@ -446,7 +446,7 @@ function (X3DGeometryNode,
                      for (let i = 0, length = attribNodes .length; i < length; ++ i)
                         attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-                     if (this .fogCoords)
+                     if (this .hasFogCoords)
                         shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
                      if (this .colorMaterial)
@@ -469,7 +469,7 @@ function (X3DGeometryNode,
          const
             browser        = this .getBrowser (),
             appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .getFrontShader (1, context .shadow, false),
+            shaderNode     = appearanceNode .getFrontShader (this, context .shadow),
             blendModeNode  = appearanceNode .getBlendMode (),
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers (),
@@ -499,7 +499,7 @@ function (X3DGeometryNode,
                for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-               if (this .fogCoords)
+               if (this .hasFogCoords)
                   shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
                if (this .colorMaterial)

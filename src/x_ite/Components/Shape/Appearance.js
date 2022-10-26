@@ -183,13 +183,13 @@ function (Fields,
       {
          return this .shaderNode;
       },
-      getFrontShader: function (browser, geometryType, shadow, normals)
+      getFrontShader: function (geometryContext, shadow)
       {
-         return this .shaderNode || this .materialNode .getShader (browser, geometryType, shadow, normals);
+         return this .shaderNode || this .materialNode .getShader (geometryContext, shadow);
       },
-      getBackShader: function (browser, geometryType, shadow, normals)
+      getBackShader: function (geometryContext, shadow)
       {
-         return this .shaderNode || this .backMaterialNode .getShader (browser, geometryType, shadow, normals);
+         return this .shaderNode || this .backMaterialNode .getShader (geometryContext, shadow);
       },
       getBlendMode: function ()
       {

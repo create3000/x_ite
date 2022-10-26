@@ -164,7 +164,7 @@ function (Fields,
       },
       getShaderType: function ()
       { },
-      getShader: function (geometryType, shadow, normals)
+      getShader: function (geometryContext, shadow)
       {
          // Bit Schema of Shader Key
          //
@@ -176,14 +176,14 @@ function (Fields,
 
          let shaderKey = this .textureBits .valueOf ();
 
-         shaderKey |= this .getShaderType () << 14;
-         shaderKey |= geometryType           << 16;
-         shaderKey |= shadow                 << 18;
-         shaderKey |= normals                << 19;
+         shaderKey |= this .getShaderType ()        << 14;
+         shaderKey |= geometryContext .geometryType << 16;
+         shaderKey |= shadow                        << 18;
+         shaderKey |= geometryContext .hasNormals   << 19;
 
-         return this .getBrowser () .getShader (shaderKey) || this .createShader (shaderKey, geometryType, shadow, normals);
+         return this .getBrowser () .getShader (shaderKey) || this .createShader (shaderKey, geometryContext, shadow);
       },
-      createShader: function (browser, shaderKey, geometryType, shadow, normals)
+      createShader: function (shaderKey, geometryContext, shadow)
       { },
       getGeometryTypes: (function ()
       {

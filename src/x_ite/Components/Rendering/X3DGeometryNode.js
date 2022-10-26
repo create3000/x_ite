@@ -124,7 +124,8 @@ function (Fields,
       this .normals                  = X3DGeometryNode .createArray ();
       this .flatNormals              = X3DGeometryNode .createArray ();
       this .vertices                 = X3DGeometryNode .createArray ();
-      this .fogCoords                = false;
+      this .hasFogCoords             = false;
+      this .hasNormals               = false;
       this .vertexCount              = 0;
       this .planes                   = [ ];
 
@@ -911,14 +912,14 @@ function (Fields,
 
          // Transfer fog depths.
 
-         const lastFogCoords = this .fogCoords;
+         const lastFogCoords = this .hasFogCoords;
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .fogDepthBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .fogDepths .getValue (), gl .DYNAMIC_DRAW);
 
-         this .fogCoords = !! this .fogDepths .length;
+         this .hasFogCoords = !! this .fogDepths .length;
 
-         if (this .fogCoords !== lastFogCoords)
+         if (this .hasFogCoords !== lastFogCoords)
             this .updateVertexArrays ();
 
          // Transfer colors.
@@ -940,6 +941,10 @@ function (Fields,
             gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [i]);
             gl .bufferData (gl .ARRAY_BUFFER, this .multiTexCoords [i] .getValue (), gl .DYNAMIC_DRAW);
          }
+
+         // Normals
+
+         this .hasNormals = !! this .normals .getValue () .length;
 
          // Transfer vertices.
 
@@ -983,7 +988,7 @@ function (Fields,
          const
             appearanceNode   = context .shapeNode .getAppearance (),
             backMaterialNode = appearanceNode .getBackMaterial (),
-            frontShaderNode  = appearanceNode .getFrontShader (this .geometryType, context .shadow, true);
+            frontShaderNode  = appearanceNode .getFrontShader (this, context .shadow);
 
          if (this .solid || ! backMaterialNode || this .getBrowser () .getWireframe ())
          {
@@ -991,7 +996,7 @@ function (Fields,
          }
          else
          {
-            const backShaderNode = appearanceNode .getBackShader (this .geometryType, context .shadow, true)
+            const backShaderNode = appearanceNode .getBackShader (this, context .shadow)
 
             this .displayGeometry (gl, context, appearanceNode, backShaderNode,  true,  false);
             this .displayGeometry (gl, context, appearanceNode, frontShaderNode, false, true);
@@ -1021,7 +1026,7 @@ function (Fields,
                for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-               if (this .fogCoords)
+               if (this .hasFogCoords)
                   shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
                if (this .colorMaterial)
@@ -1106,7 +1111,7 @@ function (Fields,
          const
             appearanceNode   = context .shapeNode .getAppearance (),
             backMaterialNode = appearanceNode .getBackMaterial (),
-            frontShaderNode  = appearanceNode .getFrontShader (this .geometryType, context .shadow, true);
+            frontShaderNode  = appearanceNode .getFrontShader (this, context .shadow);
 
          if (this .solid || ! backMaterialNode || this .getBrowser () .getWireframe ())
          {
@@ -1114,7 +1119,7 @@ function (Fields,
          }
          else
          {
-            const backShaderNode = appearanceNode .getBackShader (this .geometryType, context .shadow, false);
+            const backShaderNode = appearanceNode .getBackShader (this, context .shadow);
 
             this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode,  true,  false, particleSystem);
             this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, false, true,  particleSystem);
@@ -1153,7 +1158,7 @@ function (Fields,
                for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-               if (this .fogCoords)
+               if (this .hasFogCoords)
                   shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
                if (this .colorMaterial)

@@ -85,6 +85,8 @@ function ($,
       MOVE = 0,
       PAN  = 1;
 
+   const geometryContext = { geometryType: 1, colorMaterial: false, hasNormals: false };
+
    function X3DFlyViewer (executionContext)
    {
       X3DViewer .call (this, executionContext);
@@ -143,7 +145,7 @@ function ($,
          if (! browser .getBrowserOption ("Rubberband"))
             return;
 
-         browser .getDefaultMaterial () .getShader (1, false, false);
+         browser .getDefaultMaterial () .getShader (geometryContext, false);
          browser .getDepthShader ();
       },
       addCollision: function () { },
@@ -687,7 +689,7 @@ function ($,
 
             const
                gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (1, false, false),
+               shaderNode = browser .getDefaultMaterial () .getShader (geometryContext, false),
                lineWidth  = gl .getParameter (gl .LINE_WIDTH);
 
             if (shaderNode .isValid ())

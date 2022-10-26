@@ -160,7 +160,7 @@ function (X3DGeometryNode,
       {
          const
             appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .getFrontShader (0, context .shadow, false),
+            shaderNode     = appearanceNode .getFrontShader (this, context .shadow),
             blendModeNode  = appearanceNode .getBlendMode (),
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers ();
@@ -182,7 +182,7 @@ function (X3DGeometryNode,
                for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-               if (this .fogCoords)
+               if (this .hasFogCoords)
                   shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
                if (this .colorMaterial)
@@ -201,7 +201,7 @@ function (X3DGeometryNode,
       {
          const
             appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .getFrontShader (0, context .shadow, false),
+            shaderNode     = appearanceNode .getFrontShader (this, context .shadow),
             blendModeNode  = appearanceNode .getBlendMode (),
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers ();
@@ -230,7 +230,7 @@ function (X3DGeometryNode,
                for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-               if (this .fogCoords)
+               if (this .hasFogCoords)
                   shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
                if (this .colorMaterial)

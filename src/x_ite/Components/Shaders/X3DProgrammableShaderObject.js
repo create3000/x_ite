@@ -1040,8 +1040,8 @@ function (X3DCast,
          const
             renderObject    = context .renderer,
             shapeNode       = context .shapeNode,
-            geometryNode    = context .geometryContext || shapeNode .getGeometry (),
-            geometryType    = geometryNode .geometryType,
+            geometryContext = context .geometryContext || shapeNode .getGeometry (),
+            geometryType    = geometryContext .geometryType,
             appearanceNode  = shapeNode .getAppearance (),
             materialNode    = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
             textureNode     = context .textureNode || appearanceNode .textureNode,
@@ -1067,7 +1067,7 @@ function (X3DCast,
          // Fog, there is always one
 
          context .fogNode .setShaderUniforms (gl, this);
-         gl .uniform1i (this .x3d_FogCoord, geometryNode .fogCoords);
+         gl .uniform1i (this .x3d_FogCoord, geometryContext .hasFogCoords);
 
          // Alpha
 
@@ -1079,8 +1079,8 @@ function (X3DCast,
 
          // Material
 
-         gl .uniform1i (this .x3d_ColorMaterial, geometryNode .colorMaterial);
-         materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .textureTransformMapping, geometryNode .textureCoordinateMapping, front);
+         gl .uniform1i (this .x3d_ColorMaterial, geometryContext .colorMaterial);
+         materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .textureTransformMapping, geometryContext .textureCoordinateMapping, front);
 
          // Normal matrix
 
@@ -1094,7 +1094,7 @@ function (X3DCast,
             gl .uniform1i (this .x3d_NumTextures, 0);
 
          appearanceNode .textureTransformNode .setShaderUniforms (gl, this);
-         geometryNode .textureCoordinateNode .setShaderUniforms (gl, this);
+         geometryContext .textureCoordinateNode .setShaderUniforms (gl, this);
       },
       getNormalMatrix: (function ()
       {

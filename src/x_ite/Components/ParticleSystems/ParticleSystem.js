@@ -238,7 +238,7 @@ function (Fields,
 
          // Geometry context
 
-         this .geometryContext .fogCoords                = false;
+         this .geometryContext .hasFogCoords                = false;
          this .geometryContext .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
          this .geometryContext .textureCoordinateMapping = new Map ();
 
@@ -972,7 +972,7 @@ function (Fields,
                const
                   browser        = this .getBrowser (),
                   appearanceNode = this .getAppearance (),
-                  shaderNode     = appearanceNode .getFrontShader (this .geometryContext .geometryType, context .shadow, this .hasNormals),
+                  shaderNode     = appearanceNode .getFrontShader (this .geometryContext, context .shadow),
                   primitiveMode  = browser .getPrimitiveMode (this .primitiveMode);
 
                // Setup shader.
