@@ -198,7 +198,7 @@ function (Fields,
             case TraverseType .PICKING:
             {
                const
-                  browser          = renderObject .getBrowser (),
+                  browser          = this .getBrowser (),
                   pickingHierarchy = browser .getPickingHierarchy ();
 
                pickingHierarchy .push (this);

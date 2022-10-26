@@ -305,7 +305,7 @@ function (Fields,
                   if (childNode)
                   {
                      const
-                        browser          = renderObject .getBrowser (),
+                        browser          = this .getBrowser (),
                         pickingHierarchy = browser .getPickingHierarchy ();
 
                      pickingHierarchy .push (this);
@@ -331,7 +331,7 @@ function (Fields,
                   if (! this .keepCurrentLevel)
                   {
                      let
-                        level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
+                        level        = this .getLevel (this .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
                         currentLevel = this ._level_changed .getValue ();
 
                      if (this ._forceTransitions .getValue ())

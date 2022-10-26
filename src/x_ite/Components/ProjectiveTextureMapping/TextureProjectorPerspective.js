@@ -147,7 +147,7 @@ function (Fields,
 
          const
             texture     = this .textureProjectorNode .getTexture (),
-            textureUnit = renderObject .getBrowser () .getTexture2DUnit ();
+            textureUnit = this .getBrowser () .getTexture2DUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());

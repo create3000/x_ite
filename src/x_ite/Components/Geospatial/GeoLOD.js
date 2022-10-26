@@ -317,7 +317,7 @@ function (Fields,
             case TraverseType .PICKING:
             {
                var
-                  browser          = renderObject .getBrowser (),
+                  browser          = this .getBrowser (),
                   pickingHierarchy = browser .getPickingHierarchy ();
 
                pickingHierarchy .push (this);

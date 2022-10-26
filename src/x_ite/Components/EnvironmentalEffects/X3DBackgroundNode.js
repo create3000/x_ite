@@ -560,7 +560,7 @@ function (X3DBindableNode,
             return;
 
          const
-            browser    = renderObject .getBrowser (),
+            browser    = this .getBrowser (),
             gl         = browser .getContext (),
             shaderNode = browser .getBackgroundSphereShader ();
 
@@ -606,9 +606,9 @@ function (X3DBindableNode,
          return function (renderObject)
          {
             const
-               browser    = renderObject .getBrowser (),
+               browser    = this .getBrowser (),
                gl         = browser .getContext (),
-               shaderNode = browser .getUnlitShader ();
+               shaderNode = browser .getDefaultMaterial () .getShader (3, false);
 
             if (shaderNode .isValid ())
             {

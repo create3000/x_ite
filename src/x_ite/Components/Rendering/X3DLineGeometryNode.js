@@ -140,7 +140,7 @@ function (X3DGeometryNode,
             if (this .intersectsBBox (hitRay, offsets1 .abs () .max (offsets2 .abs ())))
             {
                const
-                  pointer          = renderObject .getBrowser () .getPointer (),
+                  pointer          = this .getBrowser () .getPointer (),
                   projectionMatrix = renderObject .getProjectionMatrix () .get (),
                   clipPlanes       = renderObject .getLocalObjects (),
                   vertices         = this .getVertices (),
@@ -280,10 +280,10 @@ function (X3DGeometryNode,
          return function (gl, context)
          {
             const
-               browser            = context .browser,
+               browser            = this .getBrowser (),
                appearanceNode     = context .shapeNode .getAppearance (),
                linePropertiesNode = appearanceNode .getLineProperties (),
-               shaderNode         = appearanceNode .getFrontShader (browser, 1, context .shadow),
+               shaderNode         = appearanceNode .getFrontShader (1, context .shadow),
                blendModeNode      = appearanceNode .getBlendMode (),
                attribNodes        = this .getAttrib (),
                attribBuffers      = this .getAttribBuffers ();
@@ -467,9 +467,9 @@ function (X3DGeometryNode,
       displayParticles: function (gl, context, particleSystem)
       {
          const
-            browser        = context .browser,
+            browser        = this .getBrowser (),
             appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .getFrontShader (context .browser, 1, context .shadow),
+            shaderNode     = appearanceNode .getFrontShader (1, context .shadow),
             blendModeNode  = appearanceNode .getBlendMode (),
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers (),

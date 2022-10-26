@@ -598,7 +598,7 @@ function (X3DChildNode,
                      pointingDeviceSensorNode .push (renderObject, sensors);
 
                   if (sensors .size)
-                     renderObject .getBrowser () .getSensors () .push (sensors);
+                     this .getBrowser () .getSensors () .push (sensors);
                }
 
                for (const clipPlaneNode of clipPlaneNodes)
@@ -611,7 +611,7 @@ function (X3DChildNode,
                   clipPlaneNode .pop (renderObject);
 
                if (sensors .size)
-                  renderObject .getBrowser () .getSensors () .pop ();
+                  this .getBrowser () .getSensors () .pop ();
 
                return;
             }
@@ -636,7 +636,7 @@ function (X3DChildNode,
                   pickableSensorNode .traverse (type, renderObject);
 
                const
-                  browser          = renderObject .getBrowser (),
+                  browser          = this .getBrowser (),
                   pickingHierarchy = browser .getPickingHierarchy ();
 
                pickingHierarchy .push (this);

@@ -168,7 +168,7 @@ function (Fields,
       pop: function (renderObject)
       {
          if (this .enabled)
-            renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
+            this .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
       },
    });
 

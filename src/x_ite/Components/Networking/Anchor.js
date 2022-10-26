@@ -184,7 +184,7 @@ function (Fields,
          if (type === TraverseType .POINTER)
          {
             const
-               sensorsStack = renderObject .getBrowser () .getSensors (),
+               sensorsStack = this .getBrowser () .getSensors (),
                sensors      = this .anchorSensors;
 
             sensors .clear ();

@@ -148,7 +148,7 @@ function (Fields,
          {
             case TraverseType .POINTER:
             {
-               if (renderObject .getBrowser () .isPointerInRectangle (this .rectangle))
+               if (this .getBrowser () .isPointerInRectangle (this .rectangle))
                   X3DViewportNode .prototype .traverse .call (this, type, renderObject);
 
                break;
@@ -164,7 +164,7 @@ function (Fields,
       {
          const
             viewVolumes = renderObject .getViewVolumes (),
-            rectangle   = this .getRectangle (renderObject .getBrowser ()),
+            rectangle   = this .getRectangle (this .getBrowser ()),
             viewport    = viewVolumes .length ? viewVolumes .at (-1) .getViewport () : rectangle,
             viewVolume  = ViewVolumes .pop ();
 

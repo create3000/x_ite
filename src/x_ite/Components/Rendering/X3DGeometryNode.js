@@ -981,28 +981,28 @@ function (Fields,
       display: function (gl, context)
       {
          const
-            browser          = context .browser,
             appearanceNode   = context .shapeNode .getAppearance (),
             backMaterialNode = appearanceNode .getBackMaterial (),
-            frontShaderNode  = appearanceNode .getFrontShader (browser, this .geometryType, context .shadow);
+            frontShaderNode  = appearanceNode .getFrontShader (this .geometryType, context .shadow);
 
-         if (this .solid || ! backMaterialNode || browser .getWireframe ())
+         if (this .solid || ! backMaterialNode || this .getBrowser () .getWireframe ())
          {
-            this .displayGeometry (gl, browser, context, appearanceNode, frontShaderNode, true, true);
+            this .displayGeometry (gl, context, appearanceNode, frontShaderNode, true, true);
          }
          else
          {
-            const backShaderNode = appearanceNode .getBackShader (browser, this .geometryType, context .shadow)
+            const backShaderNode = appearanceNode .getBackShader (this .geometryType, context .shadow)
 
-            this .displayGeometry (gl, browser, context, appearanceNode, backShaderNode,  true,  false);
-            this .displayGeometry (gl, browser, context, appearanceNode, frontShaderNode, false, true);
+            this .displayGeometry (gl, context, appearanceNode, backShaderNode,  true,  false);
+            this .displayGeometry (gl, context, appearanceNode, frontShaderNode, false, true);
          }
       },
-      displayGeometry: function (gl, browser, context, appearanceNode, shaderNode, back, front)
+      displayGeometry: function (gl, context, appearanceNode, shaderNode, back, front)
       {
          if (shaderNode .isValid ())
          {
             const
+               browser       = this .getBrowser (),
                blendModeNode = appearanceNode .getBlendMode (),
                attribNodes   = this .attribNodes,
                attribBuffers = this .attribBuffers,
@@ -1104,28 +1104,28 @@ function (Fields,
       displayParticles: function (gl, context, particleSystem)
       {
          const
-            browser          = context .browser,
             appearanceNode   = context .shapeNode .getAppearance (),
             backMaterialNode = appearanceNode .getBackMaterial (),
-            frontShaderNode  = appearanceNode .getShader (browser, this .geometryType, context .shadow);
+            frontShaderNode  = appearanceNode .getFrontShader (this .geometryType, context .shadow);
 
-         if (this .solid || ! backMaterialNode || browser .getWireframe ())
+         if (this .solid || ! backMaterialNode || this .getBrowser () .getWireframe ())
          {
-            this .displayParticlesGeometry (gl, browser, context, appearanceNode, frontShaderNode, true, true, particleSystem);
+            this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particleSystem);
          }
          else
          {
-            const backShaderNode = appearanceNode .getShader (browser, this .geometryType, context .shadow);
+            const backShaderNode = appearanceNode .getBackShader (this .geometryType, context .shadow);
 
-            this .displayParticlesGeometry (gl, browser, context, appearanceNode, backShaderNode,  true,  false, particleSystem);
-            this .displayParticlesGeometry (gl, browser, context, appearanceNode, frontShaderNode, false, true,  particleSystem);
+            this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode,  true,  false, particleSystem);
+            this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, false, true,  particleSystem);
          }
       },
-      displayParticlesGeometry: function (gl, browser, context, appearanceNode, shaderNode, back, front, particleSystem)
+      displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particleSystem)
       {
          if (shaderNode .isValid ())
          {
             const
+               browser       = this .getBrowser (),
                blendModeNode = appearanceNode .getBlendMode (),
                attribNodes   = this .attribNodes,
                attribBuffers = this .attribBuffers,

@@ -135,7 +135,7 @@ function (Fields,
                      return;
 
                   const
-                     browser       = renderObject .getBrowser (),
+                     browser       = this .getBrowser (),
                      pickableStack = browser .getPickable ();
 
                   if (this .getObjectType () .has ("ALL"))

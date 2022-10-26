@@ -251,9 +251,11 @@ function (Fields,
                return 2;
          }
       },
-      createShader: function (browser, shaderKey, geometryType, shadow)
+      createShader: function (shaderKey, geometryType, shadow)
       {
-         const options = [ ];
+         const
+            browser = this .getBrowser (),
+            options = [ ];
 
          options .push (this .getGeometryTypes () [geometryType])
 
@@ -285,21 +287,21 @@ function (Fields,
          {
             case 1:
             {
-               const shaderNode = browser .createShader ("GouraudShader", "Gouraud", options);
+               var shaderNode = browser .createShader ("GouraudShader", "Gouraud", options);
 
-               browser .setShader (shaderKey, shaderNode);
-
-               return shaderNode;
+               break
             }
             case 2:
             {
-               const shaderNode = browser .createShader ("PhongShader", "Phong", options);
+               var shaderNode = browser .createShader ("PhongShader", "Phong", options);
 
-               browser .setShader (shaderKey, shaderNode);
-
-               return shaderNode;
+               break;
             }
          }
+
+         browser .setShader (shaderKey, shaderNode);
+
+         return shaderNode;
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {

@@ -167,7 +167,7 @@ function (X3DSingleTextureNode,
       {
          if (gl .getVersion () >= 2)
          {
-            const textureUnit = renderObject .getBrowser () .getTexture3DUnit ();
+            const textureUnit = this .getBrowser () .getTexture3DUnit ();
 
             gl .activeTexture (gl .TEXTURE0 + textureUnit);
             gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());

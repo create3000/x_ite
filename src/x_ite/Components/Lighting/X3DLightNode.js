@@ -153,7 +153,7 @@ function (X3DChildNode,
 
             if (this ._global .getValue ())
             {
-               lightContainer .set (renderObject .getBrowser (),
+               lightContainer .set (this .getBrowser (),
                                     this,
                                     renderObject .getLayer () .getGroup (),
                                     renderObject .getModelViewMatrix () .get ());
@@ -163,7 +163,7 @@ function (X3DChildNode,
             }
             else
             {
-               lightContainer .set (renderObject .getBrowser (),
+               lightContainer .set (this .getBrowser (),
                                     this,
                                     group,
                                     renderObject .getModelViewMatrix () .get ());
@@ -200,7 +200,7 @@ function (X3DChildNode,
             return;
 
          if (renderObject .isIndependent ())
-            renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
+            this .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
          else
             renderObject .getLocalObjects () .pop ();
 

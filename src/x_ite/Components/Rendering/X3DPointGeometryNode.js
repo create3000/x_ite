@@ -110,7 +110,7 @@ function (X3DGeometryNode,
             if (this .intersectsBBox (hitRay, offsets1 .abs () .max (offsets2 .abs ())))
             {
                const
-                  pointer          = renderObject .getBrowser () .getPointer (),
+                  pointer          = this .getBrowser () .getPointer (),
                   projectionMatrix = renderObject .getProjectionMatrix () .get (),
                   clipPlanes       = renderObject .getLocalObjects (),
                   vertices         = this .getVertices (),
@@ -160,7 +160,7 @@ function (X3DGeometryNode,
       {
          const
             appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .getFrontShader (context .browser, 0, context .shadow),
+            shaderNode     = appearanceNode .getFrontShader (0, context .shadow),
             blendModeNode  = appearanceNode .getBlendMode (),
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers ();
@@ -201,7 +201,7 @@ function (X3DGeometryNode,
       {
          const
             appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .getFrontShader (context .browser, 0, context .shadow),
+            shaderNode     = appearanceNode .getFrontShader (0, context .shadow),
             blendModeNode  = appearanceNode .getBlendMode (),
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers ();

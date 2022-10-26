@@ -253,7 +253,7 @@ function (Fields,
                if (childNode)
                {
                   const
-                     browser          = renderObject .getBrowser (),
+                     browser          = this .getBrowser (),
                      pickingHierarchy = browser .getPickingHierarchy ();
 
                   pickingHierarchy .push (this);

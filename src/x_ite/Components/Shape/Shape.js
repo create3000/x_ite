@@ -185,7 +185,7 @@ function (Fields,
 
          return function (renderObject)
          {
-            const browser = renderObject .getBrowser ();
+            const browser = this .getBrowser ();
 
             if (browser .getPickOnlySensors () && browser .getSensors () .length === 1)
                return;
@@ -234,7 +234,7 @@ function (Fields,
          }
 
          const
-            browser          = renderObject .getBrowser (),
+            browser          = this .getBrowser (),
             pickSensorStack  = browser .getPickSensors (),
             pickingHierarchy = browser .getPickingHierarchy ();
 

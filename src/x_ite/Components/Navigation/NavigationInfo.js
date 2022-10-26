@@ -325,7 +325,7 @@ function (Fields,
             return;
 
          if (this ._headlight .getValue ())
-            renderObject .getGlobalObjects () .push (renderObject .getBrowser () .getHeadlight ());
+            renderObject .getGlobalObjects () .push (this .getBrowser () .getHeadlight ());
       },
       traverse: function (type, renderObject)
       {

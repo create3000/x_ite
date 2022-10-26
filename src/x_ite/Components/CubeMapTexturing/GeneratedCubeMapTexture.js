@@ -157,7 +157,7 @@ function (Fields,
          if (!this .frameBuffer)
             return;
 
-         //if (renderObject .getBrowser () !== this .getBrowser ())
+         //if (this .getBrowser () !== this .getBrowser ())
          //	return; // Could be interesting for four-side-view
 
          if (!renderObject .isIndependent ())
@@ -199,7 +199,7 @@ function (Fields,
 
             const
                renderer           = this .renderer,
-               browser            = renderObject .getBrowser (),
+               browser            = this .getBrowser (),
                layer              = renderObject .getLayer (),
                gl                 = browser .getContext (),
                background         = renderer .getBackground (),

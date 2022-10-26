@@ -119,9 +119,11 @@ function (Fields,
       {
          return 0;
       },
-      createShader: function (browser, shaderKey, geometryType, shadow)
+      createShader: function (shaderKey, geometryType, shadow)
       {
-         const options = [ ];
+         const
+            browser = this .getBrowser (),
+            options = [ ];
 
          options .push (this .getGeometryTypes () [geometryType])
 

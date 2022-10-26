@@ -198,8 +198,6 @@ function (Fields,
 
          this .isLive () .addInterest ("set_live__", this);
 
-         browser .getBrowserOptions () ._Shading .addInterest ("set_shader__", this);
-
          this ._enabled           .addInterest ("set_enabled__",           this);
          this ._createParticles   .addInterest ("set_createParticles__",   this);
          this ._geometryType      .addInterest ("set_geometryType__",      this);
@@ -440,29 +438,7 @@ function (Fields,
 
          this .updateVertexArrays ();
 
-         this .set_shader__ ();
          this .set_transparent__ ();
-      },
-      set_shader__: function ()
-      {
-         switch (this .geometryType)
-         {
-            case GeometryTypes .POINT:
-            {
-               this .shaderNode = this .getBrowser () .getPointShader ();
-               break;
-            }
-            case GeometryTypes .LINE:
-            {
-               this .shaderNode = this .getBrowser () .getLineShader ();
-               break;
-            }
-            default:
-            {
-               this .shaderNode = null;
-               break;
-            }
-         }
       },
       set_maxParticles__: function ()
       {
@@ -994,9 +970,10 @@ function (Fields,
             default:
             {
                const
+                  browser        = this .getBrowser (),
                   appearanceNode = this .getAppearance (),
-                  shaderNode     = appearanceNode .getShader () || this .shaderNode || appearanceNode .getMaterial () .getShader (context .browser, context .shadow),
-                  primitiveMode  = shaderNode .getPrimitiveMode (this .primitiveMode);
+                  shaderNode     = appearanceNode .getFrontShader (this .geometryContext .geometryType, context .shadow),
+                  primitiveMode  = browser .getPrimitiveMode (this .primitiveMode);
 
                // Setup shader.
 
@@ -1014,7 +991,7 @@ function (Fields,
 
                   if (this .numTexCoords)
                   {
-                     const textureUnit = context .browser .getTexture2DUnit ();
+                     const textureUnit = browser .getTexture2DUnit ();
 
                      gl .activeTexture (gl .TEXTURE0 + textureUnit);
                      gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);

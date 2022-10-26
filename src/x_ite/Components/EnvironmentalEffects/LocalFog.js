@@ -114,7 +114,7 @@ function (Fields,
       pop: function (renderObject)
       {
          if (this ._enabled .getValue ())
-            renderObject .getBrowser () .getLocalObjects () .push (renderObject .popLocalFog ());
+            this .getBrowser () .getLocalObjects () .push (renderObject .popLocalFog ());
       },
    });
 

@@ -178,7 +178,7 @@ function (Fields,
 
          return this .getProjectionMatrixWithLimits (navigationInfo .getNearValue (),
                                                      navigationInfo .getFarValue (this),
-                                                     renderObject .getLayer () .getViewport () .getRectangle (renderObject .getBrowser ()));
+                                                     renderObject .getLayer () .getViewport () .getRectangle (this .getBrowser ()));
       },
       getCameraSpaceMatrix: function ()
       {
