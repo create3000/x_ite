@@ -20,18 +20,16 @@ getMaterialColor (const in vec3 N,
                   const in vec3 vertex,
                   const in x3d_MaterialParameters material)
 {
-   vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
-
-   // Calculate diffuseColor & alpha
-
-   float alpha      = (1.0 - material .transparency) * (x3d_ColorMaterial ? x3d_Color .a : 1.0);
-
    #if defined (X3D_NORMALS)
-      vec3 finalColor   = vec3 (0.0);
-      vec3 diffuseColor = x3d_ColorMaterial ? x3d_Color .rgb : material .diffuseColor;
-      vec3 ambientColor = diffuseColor * material .ambientIntensity;
+      float alpha        = (1.0 - material .transparency) * (x3d_ColorMaterial ? x3d_Color .a : 1.0);
+      vec3  diffuseColor = x3d_ColorMaterial ? x3d_Color .rgb : material .diffuseColor;
+      vec3  ambientColor = diffuseColor * material .ambientIntensity;
 
       // Apply light sources
+
+      vec3 V = normalize (-vertex);
+
+      vec3 finalColor = vec3 (0.0);
 
       for (int i = 0; i < x3d_MaxLights; ++ i)
       {
@@ -66,7 +64,14 @@ getMaterialColor (const in vec3 N,
          }
       }
    #else
-      vec3 finalColor = x3d_ColorMaterial ? x3d_Color .rgb : vec3 (0.0);
+      float alpha      = 1.0 - x3d_Material .transparency;
+      vec3  finalColor = vec3 (0.0);
+
+      if (x3d_ColorMaterial)
+      {
+         alpha      *= color .a;
+         finalColor  = color .rgb;
+      }
    #endif
 
    finalColor += material .emissiveColor;
@@ -79,6 +84,7 @@ main ()
 {
    vertex_main ();
 
+   normal     = normalize (normal);
    frontColor = getMaterialColor ( normal, vertex, x3d_Material);
    backColor  = getMaterialColor (-normal, vertex, x3d_Material);
 }

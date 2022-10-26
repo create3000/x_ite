@@ -182,8 +182,6 @@ vec4
 getMaterialColor ()
 {
    #if defined (X3D_NORMALS)
-      vec3 N = getNormalVector ();
-      vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
 
       // Calculate diffuseColor & alpha
 
@@ -202,6 +200,9 @@ getMaterialColor ()
       alpha        *= P .a;
 
       // Apply light sources
+
+      vec3 N = getNormalVector ();
+      vec3 V = normalize (-vertex);
 
       vec3 finalColor = vec3 (0.0);
 
