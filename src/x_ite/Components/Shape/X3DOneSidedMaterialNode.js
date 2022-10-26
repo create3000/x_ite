@@ -157,7 +157,7 @@ function (Fields,
       },
       getShaderType: function ()
       { },
-      getShaderKey: function (geometryType, shadow)
+      getShader: function (browser, geometryType, shadow)
       {
          // Bit Schema of Shader Key
          //
@@ -171,12 +171,6 @@ function (Fields,
          shaderKey |= this .getShaderType () << 7;
          shaderKey |= geometryType           << 9;
          shaderKey |= shadow                 << 11;
-
-         return shaderKey;
-      },
-      getShader: function (browser, geometryType, shadow)
-      {
-         const shaderKey = this .getShaderKey (geometryType, shadow);
 
          return browser .getShader (shaderKey) || this .createShader (browser, shaderKey, geometryType, shadow);
       },
