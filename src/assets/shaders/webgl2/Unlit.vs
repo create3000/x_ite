@@ -67,6 +67,12 @@ getPointSize (const in vec3 vertex)
 }
 #endif
 
+#if defined (X3D_GEOMETRY_1D)
+flat out float lengthSoFar; // in px, stipple support
+flat out vec2  startPoint;  // in px, stipple support
+out vec2       midPoint;    // in px, stipple support
+#endif
+
 void
 main ()
 {
@@ -91,6 +97,12 @@ main ()
 
    #if defined (X3D_GEOMETRY_0D)
    gl_PointSize = pointSize = getPointSize (vertex);
+   #endif
+
+   #if defined (X3D_GEOMETRY_1D)
+   lengthSoFar = x3d_TexCoord0 .z;
+   startPoint  = x3d_TexCoord0 .xy;
+   midPoint    = x3d_TexCoord0 .xy;
    #endif
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)

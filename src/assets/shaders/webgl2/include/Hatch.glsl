@@ -1,4 +1,5 @@
 
+#if defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)
 uniform x3d_FillPropertiesParameters x3d_FillProperties;
 
 vec4
@@ -16,3 +17,4 @@ getHatchColor (vec4 color)
 
    return finalColor;
 }
+#endif

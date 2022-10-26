@@ -11,11 +11,7 @@ in vec3  vertex;      // point on geometry
 in vec3  localNormal; // normal vector at this point on geometry in local coordinates
 in vec3  localVertex; // point on geometry in local coordinates
 
-#if defined (X3D_GEOMETRY_0D)
-   // Text coords, later initialized.
-   vec4 texCoord0 = vec4 (0.0);
-   vec4 texCoord1 = vec4 (0.0);
-#else
+#if ! defined (X3D_GEOMETRY_0D)
    #if x3d_MaxTextures > 0
    in vec4 texCoord0;
    #endif
@@ -32,8 +28,10 @@ in float depth;
 
 out vec4 x3d_FragColor;
 
-#pragma X3D include "include/Texture.glsl"
+#pragma X3D include "include/Point.glsl"
+#pragma X3D include "include/Stipple.glsl"
 #pragma X3D include "include/Hatch.glsl"
+#pragma X3D include "include/Texture.glsl"
 #pragma X3D include "include/Fog.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
 
@@ -70,49 +68,29 @@ getEmissiveColor ()
    #endif
 }
 
-#if defined (X3D_GEOMETRY_0D)
-in float pointSize;
-
 vec4
 getMaterialColor ()
 {
-   vec4 texCoord  = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
+   #if defined (X3D_GEOMETRY_0D) && ! defined (X3D_EMISSIVE_TEXTURE)
+      setTexCoords ();
 
-   texCoord0 = texCoord;
-   texCoord1 = texCoord;
-
-   vec4 finalColor = getEmissiveColor ();
-
-   #if ! defined (X3D_EMISSIVE_TEXTURE)
-   if (x3d_NumTextures == 0)
-   {
-      if (pointSize > 1.0)
-      {
-         float t = max (distance (vec2 (0.5), gl_PointCoord) * pointSize - max (pointSize / 2.0 - 1.0, 0.0), 0.0);
-
-         finalColor .a = mix (finalColor .a, 0.0, t);
-      }
+      if (x3d_NumTextures == 0)
+         return getPointColor (getEmissiveColor ());
       else
-      {
-         finalColor .a *= pointSize;
-      }
-   }
+         return getEmissiveColor ();
+   #else
+      return getEmissiveColor ();
    #endif
-
-   return finalColor;
 }
-#else
-vec4
-getMaterialColor ()
-{
-   return getEmissiveColor ();
-}
-#endif
 
 void
 main ()
 {
    clip ();
+
+   #if defined (X3D_GEOMETRY_1D)
+      stipple ();
+   #endif
 
    vec4 finalColor = getMaterialColor ();
 
