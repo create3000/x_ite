@@ -53,12 +53,14 @@
    "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
+   "standard/Utility/BitSet",
 ],
 function (Fields,
           X3DMaterialNode,
           X3DCast,
           X3DConstants,
-          Algorithm)
+          Algorithm,
+          BitSet)
 {
 "use strict";
 
@@ -71,7 +73,7 @@ function (Fields,
       this .addChildObjects ("textures", new Fields .SFTime ());
 
       this .emissiveColor = new Float32Array (3);
-      this .textures      = 0;
+      this .textureBits   = new BitSet ();
    }
 
    X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
@@ -83,12 +85,9 @@ function (Fields,
 
          this ._emissiveColor   .addInterest ("set_emissiveColor__",   this);
          this ._emissiveTexture .addInterest ("set_emissiveTexture__", this);
-         this ._emissiveTexture .addInterest ("set_textures__",        this);
          this ._normalTexture   .addInterest ("set_normalTexture__",   this);
-         this ._normalTexture   .addInterest ("set_textures__",        this);
          this ._transparency    .addInterest ("set_transparency__",    this);
          this ._transparency    .addInterest ("set_transparent__",     this);
-         this ._textures        .addInterest ("set_textures__",        this);
 
          this .set_emissiveColor__ ();
          this .set_emissiveTexture__ ();
@@ -124,8 +123,6 @@ function (Fields,
       {
          this .transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
       },
-      set_textures__: function ()
-      { },
       set_transparent__: function ()
       {
          this .setTransparent (Boolean (this .transparency));
@@ -142,10 +139,6 @@ function (Fields,
       {
          return this .transparency;
       },
-      getTextures: function ()
-      {
-         return this .textures;
-      },
       getTextureIndices: (function ()
       {
          const textureIndices = {
@@ -158,30 +151,41 @@ function (Fields,
             return textureIndices;
          };
       })(),
+      getTextures: function ()
+      {
+         return this .textureBits;
+      },
       setTexture: function (index, value)
       {
-         if (value)
-            this .textures |= 1 << index;
-         else
-            this .textures &= ~(1 << index);
-
-         this ._textures = this .getBrowser () .getCurrentTime ();
+         this .textureBits .set (index, value);
       },
+      getGeometryTypes: (function ()
+      {
+         const GeometryTypes = [
+            "X3D_GEOMETRY_0D",
+            "X3D_GEOMETRY_1D",
+            "X3D_GEOMETRY_2D",
+            "X3D_GEOMETRY_3D",
+         ];
+
+         return function ()
+         {
+            return GeometryTypes;
+         }
+      })(),
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
          gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
          gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
 
-         if (this .textures)
+         if (this .textureBits .valueOf ())
          {
-            const
-               emissiveTexture = shaderObject .x3d_EmissiveTexture,
-               normalTexture   = shaderObject .x3d_NormalTexture;
-
             // Emissive parameters
 
             if (this .emissiveTextureNode)
             {
+               const emissiveTexture = shaderObject .x3d_EmissiveTexture;
+
                this .emissiveTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, emissiveTexture);
 
                gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (this ._emissiveTextureMapping .getValue ()) || 0);
@@ -192,12 +196,14 @@ function (Fields,
 
             if (this .normalTextureNode)
             {
-               gl .uniform1f (shaderObject .x3d_NormalScale, this ._normalScale .getValue ());
+               const normalTexture = shaderObject .x3d_NormalTexture;
 
                this .normalTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, normalTexture);
 
                gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (this ._normalTextureMapping .getValue ()) || 0);
                gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._normalTextureMapping .getValue ()) || 0);
+
+               gl .uniform1f (shaderObject .x3d_NormalScale, this ._normalScale .getValue ());
             }
          }
       },

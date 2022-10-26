@@ -1,5 +1,5 @@
 
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
 #extension GL_EXT_frag_depth : enable
 #endif
 
@@ -27,7 +27,7 @@ varying vec4 texCoord0; // texCoord0
 varying vec4 texCoord1; // texCoord1
 #endif
 
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
 uniform float x3d_LogarithmicFarFactor1_2;
 varying float depth;
 #endif
@@ -50,13 +50,11 @@ main ()
    finalColor .rgb = getFogColor (finalColor .rgb);
 
    if (finalColor .a < x3d_AlphaCutoff)
-   {
       discard;
-   }
 
    gl_FragColor = finalColor;
 
-   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
    //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
    if (x3d_LogarithmicFarFactor1_2 > 0.0)
       gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;

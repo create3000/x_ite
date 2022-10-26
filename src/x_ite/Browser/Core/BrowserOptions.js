@@ -281,19 +281,9 @@ function (Fields,
 
          logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && (gl .getVersion () >= 2 || Boolean (gl .getExtension ("EXT_frag_depth")));
 
-         if (logarithmicDepthBuffer === browser .getRenderingProperties () ._LogarithmicDepthBuffer .getValue ())
-            return;
-
          browser .getRenderingProperties () ._LogarithmicDepthBuffer = logarithmicDepthBuffer;
 
-         // Recompile shaders.
-         // There's no need to update background shader.
-
-         for (const shader of browser .getStandardShaders ())
-         {
-            shader ._parts [0] .getValue () ._url .addEvent ();
-            shader ._parts [1] .getValue () ._url .addEvent ();
-         }
+         // TODO: rework logarithmic depth buffer handling.
       },
       set_timings__: function (timings)
       {

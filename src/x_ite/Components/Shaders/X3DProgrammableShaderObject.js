@@ -151,7 +151,6 @@ function (X3DCast,
 
          this .x3d_LogarithmicFarFactor1_2 = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor1_2");
 
-         this .x3d_GeometryType  = gl .getUniformLocation (program, "x3d_GeometryType");
          this .x3d_NumClipPlanes = gl .getUniformLocation (program, "x3d_NumClipPlanes");
 
          this .x3d_ClipPlanes = gl .getUniformLocation (program, "x3d_ClipPlane");
@@ -1051,10 +1050,6 @@ function (X3DCast,
          // Model view matrix
 
          gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
-
-         // Geometry type
-
-         gl .uniform1i (this .x3d_GeometryType, geometryType);
 
          // Clip planes and local lights
 

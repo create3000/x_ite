@@ -283,7 +283,7 @@ function (X3DGeometryNode,
                browser            = context .browser,
                appearanceNode     = context .shapeNode .getAppearance (),
                linePropertiesNode = appearanceNode .getLineProperties (),
-               shaderNode         = appearanceNode .getShader () || browser .getLineShader (),
+               shaderNode         = appearanceNode .getFrontShader (browser, 1, context .shadow),
                blendModeNode      = appearanceNode .getBlendMode (),
                attribNodes        = this .getAttrib (),
                attribBuffers      = this .getAttribBuffers ();
@@ -291,88 +291,145 @@ function (X3DGeometryNode,
             if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
                this .updateLengthSoFar (gl, context);
 
-            if (linePropertiesNode .getMustTransformLines ())
+            if (shaderNode .isValid ())
             {
-               const transformShaderNode = browser .getLineTransformShader ();
-
-               if (transformShaderNode .isValid ())
+               if (linePropertiesNode .getMustTransformLines ())
                {
-                  const
-                     viewport         = context .renderer .getViewVolume () .getViewport (),
-                     projectionMatrix = context .renderer .getProjectionMatrix () .get (),
-                     primitiveMode    = shaderNode .getPrimitiveMode (gl .TRIANGLES);
+                  const transformShaderNode = browser .getLineTransformShader ();
 
-                  modelViewProjectionMatrixArray .set (matrix .assign (context .modelViewMatrix) .multRight (projectionMatrix));
-                  invModelViewProjectionMatrixArray .set (matrix .inverse ());
-
-                  // Start
-
-                  transformShaderNode .enable (gl);
-
-                  gl .uniform4f (transformShaderNode .viewport, viewport .x, viewport .y, viewport .z, viewport .w);
-                  gl .uniformMatrix4fv (transformShaderNode .modelViewProjectionMatrix,    false, modelViewProjectionMatrixArray);
-                  gl .uniformMatrix4fv (transformShaderNode .invModelViewProjectionMatrix, false, invModelViewProjectionMatrixArray);
-                  gl .uniform1f (transformShaderNode .scale, linePropertiesNode .getLinewidthScaleFactor () / 2);
-
-                  // Setup vertex attributes.
-
-                  if (this .transformVertexArrayObject .enable (gl, shaderNode))
+                  if (transformShaderNode .isValid ())
                   {
                      const
-                        fogDepthStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
-                        fogDepthOffset0 = 0,
-                        fogDepthOffset1 = 1 * Float32Array .BYTES_PER_ELEMENT,
-                        colorStride     = 8 * Float32Array .BYTES_PER_ELEMENT,
-                        colorOffset0    = 0,
-                        colorOffset1    = 4 * Float32Array .BYTES_PER_ELEMENT,
-                        texCoordStride  = 8 * Float32Array .BYTES_PER_ELEMENT,
-                        texCoordOffset0 = 0,
-                        texCoordOffset1 = 4 * Float32Array .BYTES_PER_ELEMENT,
-                        vertexStride    = 8 * Float32Array .BYTES_PER_ELEMENT,
-                        vertexOffset0   = 0,
-                        vertexOffset1   = 4 * Float32Array .BYTES_PER_ELEMENT;
+                        renderer         = context .renderer,
+                        viewport         = renderer .getViewVolume () .getViewport (),
+                        projectionMatrix = renderer .getProjectionMatrix () .get (),
+                        primitiveMode    = browser .getPrimitiveMode (gl .TRIANGLES);
 
-                     // for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                     //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+                     modelViewProjectionMatrixArray .set (matrix .assign (context .modelViewMatrix) .multRight (projectionMatrix));
+                     invModelViewProjectionMatrixArray .set (matrix .inverse ());
 
-                     if (this .fogCoords)
+                     // Start
+
+                     transformShaderNode .enable (gl);
+
+                     gl .uniform4f (transformShaderNode .viewport, viewport .x, viewport .y, viewport .z, viewport .w);
+                     gl .uniformMatrix4fv (transformShaderNode .modelViewProjectionMatrix,    false, modelViewProjectionMatrixArray);
+                     gl .uniformMatrix4fv (transformShaderNode .invModelViewProjectionMatrix, false, invModelViewProjectionMatrixArray);
+                     gl .uniform1f (transformShaderNode .scale, linePropertiesNode .getLinewidthScaleFactor () / 2);
+
+                     // Setup vertex attributes.
+
+                     if (this .transformVertexArrayObject .enable (gl, shaderNode))
                      {
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth0", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset0);
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth1", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset1);
+                        const
+                           fogDepthStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
+                           fogDepthOffset0 = 0,
+                           fogDepthOffset1 = 1 * Float32Array .BYTES_PER_ELEMENT,
+                           colorStride     = 8 * Float32Array .BYTES_PER_ELEMENT,
+                           colorOffset0    = 0,
+                           colorOffset1    = 4 * Float32Array .BYTES_PER_ELEMENT,
+                           texCoordStride  = 8 * Float32Array .BYTES_PER_ELEMENT,
+                           texCoordOffset0 = 0,
+                           texCoordOffset1 = 4 * Float32Array .BYTES_PER_ELEMENT,
+                           vertexStride    = 8 * Float32Array .BYTES_PER_ELEMENT,
+                           vertexOffset0   = 0,
+                           vertexOffset1   = 4 * Float32Array .BYTES_PER_ELEMENT;
+
+                        // for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                        //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                        if (this .fogCoords)
+                        {
+                           transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth0", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset0);
+                           transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth1", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset1);
+                        }
+
+                        if (this .colorMaterial)
+                        {
+                           transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
+                           transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
+                        }
+
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord0", this .texCoordBuffers [0], 4, texCoordStride, texCoordOffset0);
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord1", this .texCoordBuffers [0], 4, texCoordStride, texCoordOffset1);
+
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
                      }
 
-                     if (this .colorMaterial)
+                     // Transform lines.
+
+                     gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
+                     gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .trianglesBuffer);
+                     gl .enable (gl .RASTERIZER_DISCARD);
+                     gl .beginTransformFeedback (gl .POINTS);
+                     gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount / 2, 2);
+                     gl .endTransformFeedback ();
+                     gl .disable (gl .RASTERIZER_DISCARD);
+                     gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
+
+                     // DEBUG
+
+                     // const data = new Float32Array (13 * 6 * this .vertexCount / 2);
+                     // gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
+                     // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
+                     // console .log (data);
+
+                     // Render triangles.
+
+                     if (blendModeNode)
+                        blendModeNode .enable (gl);
+
+                     // Setup shader.
+
+                     shaderNode .enable (gl);
+                     shaderNode .setLocalUniforms (gl, context);
+
+                     // Setup vertex attributes.
+
+                     if (this .thickVertexArrayObject .enable (gl, shaderNode))
                      {
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
+                        const
+                           stride         = 13 * Float32Array .BYTES_PER_ELEMENT,
+                           fogCoordOffset = 0,
+                           colorOffset    = 1 * Float32Array .BYTES_PER_ELEMENT,
+                           texCoordOffset = 5 * Float32Array .BYTES_PER_ELEMENT,
+                           vertexOffset   = 9 * Float32Array .BYTES_PER_ELEMENT;
+
+                        // for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                        //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                        if (this .fogCoords)
+                           shaderNode .enableFogDepthAttribute (gl, this .trianglesBuffer, stride, fogCoordOffset);
+
+                        if (this .colorMaterial)
+                           shaderNode .enableColorAttribute (gl, this .trianglesBuffer, stride, colorOffset);
+
+                        shaderNode .enableTexCoordAttribute (gl, this .trianglesTexCoordBuffers, stride, texCoordOffset);
+                        shaderNode .enableVertexAttribute   (gl, this .trianglesBuffer,          stride, vertexOffset);
+
+                        gl .bindBuffer (gl .ARRAY_BUFFER, null);
                      }
 
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord0", this .texCoordBuffers [0], 4, texCoordStride, texCoordOffset0);
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord1", this .texCoordBuffers [0], 4, texCoordStride, texCoordOffset1);
+                     if (browser .getWireframe ())
+                     {
+                        for (let i = 0, length = this .vertexCount * 3; i < length; i += 3)
+                           gl .drawArrays (primitiveMode, i, 3);
+                     }
+                     else
+                     {
+                        gl .frontFace (gl .CCW);
+                        gl .enable (gl .CULL_FACE);
+                        gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
+                     }
 
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
+                     if (blendModeNode)
+                        blendModeNode .disable (gl);
                   }
-
-                  // Transform lines.
-
-                  gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
-                  gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .trianglesBuffer);
-                  gl .enable (gl .RASTERIZER_DISCARD);
-                  gl .beginTransformFeedback (gl .POINTS);
-                  gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount / 2, 2);
-                  gl .endTransformFeedback ();
-                  gl .disable (gl .RASTERIZER_DISCARD);
-                  gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
-
-                  // DEBUG
-
-                  // const data = new Float32Array (13 * 6 * this .vertexCount / 2);
-                  // gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
-                  // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
-                  // console .log (data);
-
-                  // Render triangles.
+               }
+               else
+               {
+                  const primitiveMode = browser .getPrimitiveMode (this .getPrimitiveMode ());
 
                   if (blendModeNode)
                      blendModeNode .enable (gl);
@@ -384,79 +441,26 @@ function (X3DGeometryNode,
 
                   // Setup vertex attributes.
 
-                  if (this .thickVertexArrayObject .enable (gl, shaderNode))
+                  if (this .vertexArrayObject .enable (gl, shaderNode))
                   {
-                     const
-                        stride         = 13 * Float32Array .BYTES_PER_ELEMENT,
-                        fogCoordOffset = 0,
-                        colorOffset    = 1 * Float32Array .BYTES_PER_ELEMENT,
-                        texCoordOffset = 5 * Float32Array .BYTES_PER_ELEMENT,
-                        vertexOffset   = 9 * Float32Array .BYTES_PER_ELEMENT;
-
-                     // for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                     //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+                     for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                        attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
                      if (this .fogCoords)
-                        shaderNode .enableFogDepthAttribute (gl, this .trianglesBuffer, stride, fogCoordOffset);
+                        shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
                      if (this .colorMaterial)
-                        shaderNode .enableColorAttribute (gl, this .trianglesBuffer, stride, colorOffset);
+                        shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-                     shaderNode .enableTexCoordAttribute (gl, this .trianglesTexCoordBuffers, stride, texCoordOffset);
-                     shaderNode .enableVertexAttribute   (gl, this .trianglesBuffer,          stride, vertexOffset);
-
-                     gl .bindBuffer (gl .ARRAY_BUFFER, null);
+                     shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+                     shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
                   }
 
-                  if (shaderNode .getWireframe ())
-                  {
-                     for (let i = 0, length = this .vertexCount * 3; i < length; i += 3)
-                        gl .drawArrays (primitiveMode, i, 3);
-                  }
-                  else
-                  {
-                     gl .frontFace (gl .CCW);
-                     gl .enable (gl .CULL_FACE);
-                     gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
-                  }
+                  gl .drawArrays (primitiveMode, 0, this .vertexCount);
 
                   if (blendModeNode)
                      blendModeNode .disable (gl);
                }
-            }
-            else if (shaderNode .isValid ())
-            {
-               const primitiveMode = shaderNode .getPrimitiveMode (this .primitiveMode);
-
-               if (blendModeNode)
-                  blendModeNode .enable (gl);
-
-               // Setup shader.
-
-               shaderNode .enable (gl);
-               shaderNode .setLocalUniforms (gl, context);
-
-               // Setup vertex attributes.
-
-               if (this .vertexArrayObject .enable (gl, shaderNode))
-               {
-                  for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                     attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-                  if (this .fogCoords)
-                     shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
-
-                  if (this .colorMaterial)
-                     shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
-
-                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-                  shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
-               }
-
-               gl .drawArrays (primitiveMode, 0, this .vertexCount);
-
-               if (blendModeNode)
-                  blendModeNode .disable (gl);
             }
          };
       })(),
@@ -465,11 +469,11 @@ function (X3DGeometryNode,
          const
             browser        = context .browser,
             appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .getShader () || browser .getLineShader (),
+            shaderNode     = appearanceNode .getFrontShader (context .browser, 1, context .shadow),
             blendModeNode  = appearanceNode .getBlendMode (),
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers (),
-            primitiveMode  = shaderNode .getPrimitiveMode (this .primitiveMode);
+            primitiveMode  = browser .getPrimitiveMode (this .getPrimitiveMode ());
 
          if (shaderNode .isValid ())
          {

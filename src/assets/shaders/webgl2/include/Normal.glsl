@@ -1,4 +1,4 @@
-#ifdef X3D_MATERIAL_TEXTURES
+#if defined (X3D_NORMAL_TEXTURE)
 uniform x3d_NormalTextureParameters x3d_NormalTexture;
 
 // Tangent-Bitangent-Normal-Matrix
@@ -26,16 +26,16 @@ getNormalVector ()
 
    // Get normal vector.
 
-   #if defined(X3D_NORMAL_TEXTURE)
+   #if defined (X3D_NORMAL_TEXTURE)
       vec3 texCoord    = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
       vec3 normalScale = vec3 (vec2 (x3d_Material .normalScale), 1.0);
       mat3 tbn         = getTBNMatrix (texCoord .st);
 
-      #if defined(X3D_NORMAL_TEXTURE_2D)
+      #if defined (X3D_NORMAL_TEXTURE_2D)
          vec3 n = texture (x3d_NormalTexture .texture2D, texCoord .st) .rgb;
-      #elif defined(X3D_NORMAL_TEXTURE_3D)
+      #elif defined (X3D_NORMAL_TEXTURE_3D)
          vec3 n = texture (x3d_NormalTexture .texture3D, texCoord .stp) .rgb;
-      #elif defined(X3D_NORMAL_TEXTURE_CUBE)
+      #elif defined (X3D_NORMAL_TEXTURE_CUBE)
          vec3 n = texture (x3d_NormalTexture .textureCube, texCoord .stp) .rgb;
       #endif
 

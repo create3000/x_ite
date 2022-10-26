@@ -186,6 +186,14 @@ function (Fields,
       {
          return this .shaderNode;
       },
+      getFrontShader: function (browser, geometryType, shadow)
+      {
+         return this .shaderNode || this .materialNode .getShader (browser, geometryType, shadow);
+      },
+      getBackShader: function (browser, geometryType, shadow)
+      {
+         return this .shaderNode || this .backMaterialNode .getShader (browser, geometryType, shadow);
+      },
       getBlendMode: function ()
       {
          return this .blendModeNode;
@@ -195,16 +203,10 @@ function (Fields,
          if (this .isLive () .getValue ())
          {
             this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
-
-            if (this .shaderNode)
-               this .getBrowser () .addShader (this .shaderNode);
          }
          else
          {
             this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
-
-            if (this .shaderNode)
-               this .getBrowser () .removeShader (this .shaderNode);
          }
       },
       set_alphaMode__: function ()
@@ -296,7 +298,7 @@ function (Fields,
 
          this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this ._textureTransform);
 
-         if (!this .textureTransformNode)
+         if (! this .textureTransformNode)
             this .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
 
          this .textureTransformNode .addInterest ("updateTextureTransformMapping", this);
@@ -341,10 +343,7 @@ function (Fields,
          const shaderNodes = this .shaderNodes;
 
          if (this .shaderNode)
-         {
-            this .getBrowser () .removeShader (this .shaderNode);
             this .shaderNode .deselect ();
-         }
 
          this .shaderNode = null;
 
@@ -360,7 +359,7 @@ function (Fields,
             }
          }
 
-         if (!this .shaderNode)
+         if (! this .shaderNode)
          {
             for (const shaderNode of shaderNodes)
             {
@@ -372,14 +371,8 @@ function (Fields,
             }
          }
 
-         if (this .isLive () .getValue ())
-         {
-            if (this .shaderNode)
-            {
-               this .getBrowser () .addShader (this .shaderNode);
-               this .shaderNode .select ();
-            }
-         }
+         if (this .shaderNode)
+            this .shaderNode .select ();
       },
       set_shading__: function ()
       {

@@ -7,7 +7,6 @@ precision highp int;
 
 out vec4 x3d_FragColor;
 
-uniform int   x3d_GeometryType;
 uniform float x3d_AlphaCutoff;
 uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 
@@ -15,7 +14,7 @@ uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform x3d_PhysicalMaterialParameters x3d_Material;
 
-#ifdef USE_IBL
+#if defined (USE_IBL)
    uniform samplerCube diffuseEnvironmentTexture;
    uniform samplerCube specularEnvironmentTexture;
    uniform sampler2D brdfLUT;
@@ -29,7 +28,7 @@ in vec3 normal;
 in vec3 localNormal;
 in vec3 localVertex;
 
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
 uniform float x3d_LogarithmicFarFactor1_2;
 in float depth;
 #endif
@@ -39,11 +38,8 @@ in float depth;
 #pragma X3D include "include/Normal.glsl"
 #pragma X3D include "include/SpotFactor.glsl"
 
-#ifdef X3D_MATERIAL_TEXTURES
-uniform x3d_BaseTextureParameters              x3d_BaseTexture;
-uniform x3d_EmissiveTextureParameters          x3d_EmissiveTexture;
-uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
-uniform x3d_OcclusionTextureParameters         x3d_OcclusionTexture;
+#if defined (X3D_BASE_TEXTURE)
+uniform x3d_BaseTextureParameters x3d_BaseTexture;
 #endif
 
 vec4
@@ -56,19 +52,23 @@ getBaseColor ()
 
    // Get texture color.
 
-   #if defined(X3D_BASE_TEXTURE)
+   #if defined (X3D_BASE_TEXTURE)
       vec3 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
-      #if defined(X3D_BASE_TEXTURE_2D)
+      #if defined (X3D_BASE_TEXTURE_2D)
          return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .texture2D, texCoord .st));
-      #elif defined(X3D_BASE_TEXTURE_3D)
+      #elif defined (X3D_BASE_TEXTURE_3D)
          return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .texture3D, texCoord .stp));
-      #elif defined(X3D_BASE_TEXTURE_CUBE)
+      #elif defined (X3D_BASE_TEXTURE_CUBE)
          return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .textureCube, texCoord .stp));
       #endif
    #else
       return getTextureColor (baseParameter, vec4 (vec3 (1.0), alpha));
    #endif
 }
+
+#if defined (X3D_EMISSIVE_TEXTURE)
+uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
+#endif
 
 vec3
 getEmissiveColor ()
@@ -79,20 +79,24 @@ getEmissiveColor ()
 
    // Get texture color.
 
-   #if defined(X3D_EMISSIVE_TEXTURE)
+   #if defined (X3D_EMISSIVE_TEXTURE)
       vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
-      #if defined(X3D_EMISSIVE_TEXTURE_2D)
+      #if defined (X3D_EMISSIVE_TEXTURE_2D)
          return emissiveParameter * SRGBtoLINEAR (texture (x3d_EmissiveTexture .texture2D, texCoord .st)) .rgb;
-      #elif defined(X3D_EMISSIVE_TEXTURE_3D)
+      #elif defined (X3D_EMISSIVE_TEXTURE_3D)
          return emissiveParameter * SRGBtoLINEAR (texture (x3d_EmissiveTexture .texture3D, texCoord .stp)) .rgb;
-      #elif defined(X3D_EMISSIVE_TEXTURE_CUBE)
+      #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
          return emissiveParameter * SRGBtoLINEAR (texture (x3d_EmissiveTexture .textureCube, texCoord .stp)) .rgb;
       #endif
    #else
       return emissiveParameter .rgb;
    #endif
 }
+
+#if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
+uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
+#endif
 
 vec2
 getMetallicRoughness ()
@@ -105,15 +109,15 @@ getMetallicRoughness ()
 
    // Get texture color.
 
-   #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE)
+   #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
       vec3 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
       // Roughness is stored in the 'g' channel, metallic is stored in the 'b' channel.
       // This layout intentionally reserves the 'r' channel for (optional) occlusion map data
-      #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
+      #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
          vec4 mrSample = texture (x3d_MetallicRoughnessTexture .texture2D, texCoord .st);
-      #elif defined(X3D_METALLIC_ROUGHNESS_TEXTURE_3D)
+      #elif defined (X3D_METALLIC_ROUGHNESS_TEXTURE_3D)
          vec4 mrSample = texture (x3d_MetallicRoughnessTexture .texture3D, texCoord .stp);
-      #elif defined(X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)
+      #elif defined (X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)
          vec4 mrSample = texture (x3d_MetallicRoughnessTexture .textureCube, texCoord .stp);
       #endif
       metallic            *= mrSample .b;
@@ -125,19 +129,23 @@ getMetallicRoughness ()
    #endif
 }
 
+#if defined (X3D_OCCLUSION_TEXTURE)
+uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
+#endif
+
 float
 getOcclusionFactor ()
 {
    // Get texture color.
 
-   #if defined(X3D_OCCLUSION_TEXTURE)
+   #if defined (X3D_OCCLUSION_TEXTURE)
       vec3 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
 
-      #if defined(X3D_OCCLUSION_TEXTURE_2D)
+      #if defined (X3D_OCCLUSION_TEXTURE_2D)
          return texture (x3d_OcclusionTexture .texture2D, texCoord .st) .r;
-      #elif defined(X3D_OCCLUSION_TEXTURE_3D)
+      #elif defined (X3D_OCCLUSION_TEXTURE_3D)
          return texture (x3d_OcclusionTexture .texture3D, texCoord .stp) .r;
-      #elif defined(X3D_OCCLUSION_TEXTURE_CUBE)
+      #elif defined (X3D_OCCLUSION_TEXTURE_CUBE)
          return texture (x3d_OcclusionTexture .textureCube, texCoord .stp) .r;
       #endif
    #else
@@ -167,7 +175,7 @@ struct PBRInfo
 const float M_PI           = 3.141592653589793;
 const float c_MinRoughness = 0.04;
 
-#ifdef USE_IBL
+#if defined (USE_IBL)
 // Calculation of the lighting contribution from an optional Image Based Light source.
 // Precomputed Environment Maps are required uniform inputs and are computed as outlined in [1].
 // See our README.md on Environment Maps [3] for additional discussion.
@@ -181,7 +189,7 @@ getIBLContribution (const in PBRInfo pbrInputs, vec3 n, const in vec3 reflection
    vec3 brdf         = SRGBtoLINEAR (texture (brdfLUT, vec2 (pbrInputs .NdotV, 1.0 - pbrInputs .perceptualRoughness))) .rgb;
    vec3 diffuseLight = SRGBtoLINEAR (textureCube (diffuseEnvironmentTexture, n)) .rgb;
 
-   #ifdef USE_TEX_LOD
+   #if defined (USE_TEX_LOD)
       vec3 specularLight = SRGBtoLINEAR (textureCubeLodEXT (specularEnvironmentTexture, reflection, lod)) .rgb;
    #else
       vec3 specularLight = SRGBtoLINEAR (textureCube (specularEnvironmentTexture, reflection)) .rgb;
@@ -345,13 +353,13 @@ main ()
    }
 
    // Calculate lighting contribution from image based lighting source (IBL).
-   #ifdef USE_IBL
+   #if defined (USE_IBL)
    vec3 reflection = -normalize (reflect (v, n));
    finalColor += getIBLContribution (pbrInputs, n, reflection);
    #endif
 
    // Apply optional PBR terms for additional (optional) shading.
-   #ifdef X3D_OCCLUSION_TEXTURE
+   #if defined (X3D_OCCLUSION_TEXTURE)
    finalColor = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
    #endif
 
@@ -360,7 +368,7 @@ main ()
    // Combine with alpha and do gamma correction.
    x3d_FragColor = Gamma (vec4 (finalColor, baseColor .a));
 
-   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
    //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
    if (x3d_LogarithmicFarFactor1_2 > 0.0)
       gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;

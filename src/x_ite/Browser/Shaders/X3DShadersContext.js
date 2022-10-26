@@ -51,37 +51,25 @@ define ([
    "x_ite/Browser/Core/Shading",
    "x_ite/Components/Shaders/ComposedShader",
    "x_ite/Components/Shaders/ShaderPart",
-   "x_ite/Browser/Shaders/ShaderTest",
    "x_ite/Browser/Networking/urls",
 ],
 function (Shading,
           ComposedShader,
           ShaderPart,
-          ShaderTest,
           urls)
 {
 "use strict";
 
    const
-      _shaders                        = Symbol (),
-      _defaultShader                  = Symbol (),
-      _standardShaders                = Symbol (),
-      _pointShader                    = Symbol (),
-      _lineShader                     = Symbol (),
-      _unlitShader                    = Symbol (),
-      _unlitTexturesShader            = Symbol (),
-      _gouraudShader                  = Symbol (),
-      _phongShader                    = Symbol (),
-      _materialTexturesShader         = Symbol (),
-      _physicalMaterialShader         = Symbol (),
-      _physicalMaterialTexturesShader = Symbol (),
-      _shadowShader                   = Symbol (),
-      _depthShader                    = Symbol ();
+      _wireframe      = Symbol (),
+      _primitiveModes = Symbol (),
+      _shaders        = Symbol ();
 
    function X3DShadersContext ()
    {
-      this [_shaders]         = new Set ();
-      this [_standardShaders] = [ ];
+      this [_wireframe]      = false;
+      this [_primitiveModes] = new Map ();
+      this [_shaders]        = new Map ();
    }
 
    X3DShadersContext .prototype =
@@ -114,98 +102,66 @@ function (Shading,
 
          return gl .getParameter (gl .MAX_VERTEX_ATTRIBS);
       },
-      addShader: function (shader)
+      getWireframe: function ()
       {
-         this [_shaders] .add (shader);
-
-         shader .setShading (this .getBrowserOptions () .getShading ());
+         return this [_wireframe];
       },
-      removeShader: function (shader)
+      getPrimitiveMode: function (primitiveMode)
       {
-         this [_shaders] .delete (shader);
+         return this [_primitiveModes] .get (primitiveMode);
+      },
+      setShader: function (key, shaderNode)
+      {
+         this [_shaders] .set (key, shaderNode);
+      },
+      getShader: function (key)
+      {
+         return this [_shaders] .get (key);
       },
       getShaders: function ()
       {
-         return this [_shaders];
-      },
-      getDefaultShader: function ()
-      {
-         return this [_defaultShader];
-      },
-      getStandardShaders: function ()
-      {
-         return this [_standardShaders];
-      },
-      getPointShader: function ()
-      {
-         return this .getStandardShader ("getPointShader", _pointShader, "PointShader", "Point", [ ], "set_point_shader_valid__");
-      },
-      getLineShader: function ()
-      {
-         return this .getStandardShader ("getLineShader", _lineShader, "LineShader", "Line", [ ], "set_line_shader_valid__");
-      },
-      getUnlitShader: function ()
-      {
-         return this .getStandardShader ("getUnlitShader", _unlitShader, "UnlitShader", "Unlit", [ ], "set_unlit_shader_valid__");
-      },
-      getGouraudShader: function ()
-      {
-         return this .getStandardShader ("getGouraudShader", _gouraudShader, "GouraudShader", "Gouraud", [ ], "set_gouraud_shader_valid__");
-      },
-      getPhongShader: function ()
-      {
-         return this .getStandardShader ("getPhongShader", _phongShader, "PhongShader", "Phong", [ ], "set_phong_shader_valid__");
-      },
-      getShadowShader: function ()
-      {
-         return this .getStandardShader ("getShadowShader", _shadowShader, "ShadowShader", "Phong",["X3D_SHADOWS", "X3D_PCF_FILTERING"], "set_shadow_shader_valid__");
-      },
-      getPhysicalMaterialShader: function ()
-      {
-         return this .getStandardShader ("getPhysicalMaterialShader", _physicalMaterialShader, "PhysicalMaterialShader", "PBR", [ ], "set_physical_material_shader_valid__");
-      },
-      getDepthShader: function ()
-      {
-         this [_depthShader] = this .createShader ("DepthShader", "Depth");
-
-         this .getDepthShader = function () { return this [_depthShader]; };
-
-         Object .defineProperty (this, "getDepthShader", { enumerable: false });
-
-         return this [_depthShader];
+         return this [_shaders] .values ();
       },
       setShading: function (type)
       {
+         // Configure shaders.
+
+         const gl = this .getContext ();
+
          switch (type)
          {
-            case Shading .PHONG:
+            case Shading .POINT:
             {
-               this [_defaultShader] = this .getPhongShader ();
+               this [_wireframe] = false;
+
+               this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
+               this [_primitiveModes] .set (gl .LINES,     gl .POINTS);
+               this [_primitiveModes] .set (gl .TRIANGLES, gl .POINTS);
+               break;
+            }
+            case Shading .WIREFRAME:
+            {
+               this [_wireframe] = true;
+
+               this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
+               this [_primitiveModes] .set (gl .LINES,     gl .LINES);
+               this [_primitiveModes] .set (gl .TRIANGLES, gl .LINE_LOOP);
                break;
             }
             default:
             {
-               this [_defaultShader] = this .getGouraudShader ();
+               // case Shading .FLAT:
+               // case Shading .GOURAUD:
+               // case Shading .PHONG:
+
+               this [_wireframe] = false;
+
+               this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
+               this [_primitiveModes] .set (gl .LINES,     gl .LINES);
+               this [_primitiveModes] .set (gl .TRIANGLES, gl .TRIANGLES);
                break;
             }
          }
-
-         // Configure shaders.
-
-         for (const shader of this .getShaders ())
-            shader .setShading (type);
-      },
-      getStandardShader: function (func, property, name, shader, options, valid)
-      {
-         this [property] = this .createShader (name, shader, options);
-
-         this [property] ._isValid .addInterest (valid, this);
-
-         this [func] = function () { return this [property]; };
-
-         Object .defineProperty (this, func, { enumerable: false });
-
-         return this [property];
       },
       createShader: function (name, file, options = [ ])
       {
@@ -234,81 +190,9 @@ function (Shading,
          shader ._language = "GLSL";
          shader ._parts .push (vertexShader);
          shader ._parts .push (fragmentShader);
-         shader .setShading (this .getBrowserOptions () .getShading ());
          shader .setup ();
 
-         this [_standardShaders] .push (shader);
-
-         this .addShader (shader);
-
          return shader;
-      },
-      set_point_shader_valid__: function ()
-      { },
-      set_line_shader_valid__: function ()
-      { },
-      set_unlit_shader_valid__: function (valid)
-      {
-         this [_unlitShader] ._isValid .removeInterest ("set_unlit_shader_valid__", this);
-
-         if (valid .getValue () && ShaderTest .verify (this, this [_unlitShader]))
-            return;
-
-         console .error ("X_ITE: Unlit shading is not available, using fallback VRML shader.");
-
-         // Recompile shader.
-         this [_unlitShader] ._parts [0] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.vs") ];
-         this [_unlitShader] ._parts [1] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.fs") ];
-      },
-      set_gouraud_shader_valid__: function (valid)
-      {
-         this [_gouraudShader] ._isValid .removeInterest ("set_gouraud_shader_valid__", this);
-
-         if (valid .getValue () && ShaderTest .verify (this, this [_gouraudShader]))
-            return;
-
-         console .warn ("X_ITE: All else fails, using fallback VRML shader.");
-
-         // Recompile shader.
-         this [_gouraudShader] ._parts [0] .url = [ urls .getShaderUrl ("webgl1/Fallback.vs") ];
-         this [_gouraudShader] ._parts [1] .url = [ urls .getShaderUrl ("webgl1/Fallback.fs") ];
-      },
-      set_phong_shader_valid__: function (valid)
-      {
-         this [_phongShader] ._isValid .removeInterest ("set_phong_shader_valid__", this);
-
-         if (valid .getValue () && ShaderTest .verify (this, this [_phongShader]))
-            return;
-
-         console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
-
-         this [_phongShader] = this .getGouraudShader ();
-
-         this .setShading (this .getBrowserOptions () .getShading ());
-      },
-      set_physical_material_shader_valid__: function (valid)
-      {
-         this [_physicalMaterialShader] ._isValid .removeInterest ("set_physical_material_shader_valid__", this);
-
-         if (valid .getValue () && ShaderTest .verify (this, this [_physicalMaterialShader]))
-            return;
-
-         console .warn ("X_ITE: Physical material shading is not available, using Gouraud shading.");
-
-         this [_physicalMaterialShader] = this .getGouraudShader ();
-
-         this .setShading (this .getBrowserOptions () .getShading ());
-      },
-      set_shadow_shader_valid__: function (valid)
-      {
-         this [_shadowShader] ._isValid .removeInterest ("set_shadow_shader_valid__", this);
-
-         if (valid .getValue () && ShaderTest .verify (this, this [_shadowShader]))
-            return;
-
-         console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
-
-         this [_shadowShader] = this .getGouraudShader ();
       },
    };
 

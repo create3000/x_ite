@@ -53,14 +53,12 @@
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DOneSidedMaterialNode",
    "x_ite/Base/X3DConstants",
-   "standard/Utility/BitSet",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DOneSidedMaterialNode,
-          X3DConstants,
-          BitSet)
+          X3DConstants)
 {
 "use strict";
 
@@ -100,8 +98,6 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
-         this .shaderNode = this .getBrowser () .getUnlitShader ();
-
          this .set_transparent__ ();
       },
       set_emissiveTexture__: function ()
@@ -119,38 +115,39 @@ function (Fields,
          this .setTransparent (Boolean (this .getTransparency () ||
                                (this .getEmissiveTexture () && this .getEmissiveTexture () .getTransparent ())));
       },
-      set_textures__: function ()
+      getShader: function (browser, geometryType, shadow)
       {
-         const browser = this .getBrowser ();
+         // 0 - 6 -> textures
+         // 7 - 8 -> geometry type
+         // 9     -> shadow
 
-         if (this .getTextures ())
-         {
-            const options = ["X3D_MATERIAL_TEXTURES"];
+         let shaderKey = this .getTextures () .valueOf ();
 
-            if (this .getEmissiveTexture ())
-               options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+         shaderKey |= geometryType << 7;
+         shaderKey |= shadow       << 9;
 
-            if (this .getNormalTexture ())
-               options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
-
-            const shaderNode = browser .createShader ("UnlitTexturesShader", "Unlit", options);
-
-            shaderNode ._isValid .addInterest ("set_shader__", this, shaderNode);
-         }
-         else
-         {
-            this .shaderNode = browser .getUnlitShader ();
-         }
+         return browser .getShader (shaderKey) || this .createShader (browser, shaderKey, geometryType, shadow);
       },
-      set_shader__: function (shaderNode)
+      createShader: function (browser, shaderKey, geometryType, shadow)
       {
-         shaderNode ._isValid .removeInterest ("set_shader__", this);
+         const options = [ ];
 
-         this .shaderNode = shaderNode;
-      },
-      getShader: function (browser, shadow)
-      {
-         return this .shaderNode;
+         options .push (this .getGeometryTypes () [geometryType])
+
+         if (shadow)
+            options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
+
+         if (this .getEmissiveTexture ())
+            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+
+         if (this .getNormalTexture ())
+            options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+
+         const shaderNode = browser .createShader ("UnlitShader", "Unlit", options);
+
+         browser .setShader (shaderKey, shaderNode);
+
+         return shaderNode;
       },
    });
 

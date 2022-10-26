@@ -37,7 +37,7 @@ for my $file (@files)
    "name": "$basename",
    "callback": function (event)
    {
-      X3D .getBrowser () .loadURL (new X3D .MFString ("$file"));
+      window .loadURL ("$file");
    },
 },
 EOT

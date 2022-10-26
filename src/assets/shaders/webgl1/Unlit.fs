@@ -1,5 +1,5 @@
 
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
 #extension GL_EXT_frag_depth : enable
 #endif
 
@@ -27,7 +27,7 @@ varying vec4 texCoord0; // texCoord0
 varying vec4 texCoord1; // texCoord1
 #endif
 
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
 uniform float x3d_LogarithmicFarFactor1_2;
 varying float depth;
 #endif
@@ -37,7 +37,7 @@ varying float depth;
 #pragma X3D include "include/Fog.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
 
-#ifdef X3D_MATERIAL_TEXTURES
+#if defined (X3D_EMISSIVE_TEXTURE)
 uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
 #endif
 
@@ -51,12 +51,12 @@ getEmissiveColor ()
 
    // Get texture color.
 
-   #if defined(X3D_EMISSIVE_TEXTURE) && !defined(X3D_EMISSIVE_TEXTURE_3D)
+   #if defined (X3D_EMISSIVE_TEXTURE) && ! defined (X3D_EMISSIVE_TEXTURE_3D)
       vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
-      #if defined(X3D_EMISSIVE_TEXTURE_2D)
+      #if defined (X3D_EMISSIVE_TEXTURE_2D)
          return emissiveParameter * texture2D (x3d_EmissiveTexture .texture2D, texCoord .st);
-      #elif defined(X3D_EMISSIVE_TEXTURE_CUBE)
+      #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
          return emissiveParameter * textureCube (x3d_EmissiveTexture .textureCube, texCoord .stp);
       #endif
    #else
@@ -85,13 +85,11 @@ main ()
    finalColor .rgb = getFogColor (finalColor .rgb);
 
    if (finalColor .a < x3d_AlphaCutoff)
-   {
       discard;
-   }
 
    gl_FragColor = finalColor;
 
-   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
    //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
    if (x3d_LogarithmicFarFactor1_2 > 0.0)
       gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
@@ -100,12 +98,12 @@ main ()
    #endif
 
    // DEBUG
-   #ifdef X3D_SHADOWS
+   #if defined (X3D_SHADOWS)
    //gl_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;
    //gl_FragColor .rgb = mix (tex .rgb, gl_FragColor .rgb, 0.5);
    #endif
 
-   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
    //gl_FragColor .rgb = mix (vec3 (1.0, 0.0, 0.0), gl_FragColor .rgb, 0.5);
    #endif
 }

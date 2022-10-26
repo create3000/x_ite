@@ -1,5 +1,5 @@
 
-#ifdef TITANIA
+#if defined (TITANIA)
 
 vec4
 pack (const in float value)
@@ -15,7 +15,7 @@ unpack (const in vec4 color)
 
 #endif
 
-#ifdef X_ITE
+#if defined (X_ITE)
 
 vec4
 pack (const in float value)
@@ -27,7 +27,7 @@ pack (const in float value)
    return vec4 (value, fract (value * bitShifts));
 }
 
-#ifdef X3D_DEPTH_TEXTURE
+#if defined (X3D_DEPTH_TEXTURE)
 
 float
 unpack (const in vec4 color)

@@ -376,11 +376,6 @@ A ComposedShader defines a number of special variables for the various shader st
          <td>this is a uniform value for logarithmic depth buffer computed as 1.0 / log2 (farplane + 1.0).</td>
       </tr>
       <tr>
-         <td>uniform int</td>
-         <td>x3d_GeometryType</td>
-         <td>x3d_Points, x3d_Lines, x3d_Geometry2D, x3d_Geometry3D</td>
-      </tr>
-      <tr>
          <td colspan="3"><hr/></td>
       </tr>
       <tr>
@@ -662,38 +657,6 @@ Some built-in variables are enumerated and have special values and meanings. The
          <td></td>
          <td></td>
          <td>defined if logarithmic depth buffer is enabled in <a href="reference/Browser-Services.html#string-getbrowseroption-string-name">browser options</a>.</td>
-      </tr>
-      <tr>
-         <td colspan="5"><hr/>
-         </td>
-      </tr>
-      <tr>
-         <td>x3d_GeometryType</td>
-         <td>int</td>
-         <td>x3d_Points</td>
-         <td>0</td>
-         <td>appears on PointSet and Polypoint2D</td>
-      </tr>
-      <tr>
-         <td></td>
-         <td>int</td>
-         <td>x3d_Lines</td>
-         <td>1</td>
-         <td>appears on IndexedLineSet, LineSet and Polyline2D</td>
-      </tr>
-      <tr>
-         <td></td>
-         <td>int</td>
-         <td>x3d_Geometry2D</td>
-         <td>2</td>
-         <td>appears on Geometry2D nodes</td>
-      </tr>
-      <tr>
-         <td></td>
-         <td>int</td>
-         <td>x3d_Geometry3D</td>
-         <td>3</td>
-         <td>appears on Geometry3D nodes and other 3D nodes</td>
       </tr>
       <tr>
          <td colspan="5"><hr/>

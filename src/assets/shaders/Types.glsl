@@ -20,7 +20,7 @@ struct x3d_LightSourceParameters {
    mediump float beamWidth;
    mediump float cutOffAngle;
    mediump mat3  matrix;
-   #ifdef X3D_SHADOWS
+   #if defined (X3D_SHADOWS)
    mediump vec3  shadowColor;
    mediump float shadowIntensity;
    mediump float shadowBias;
@@ -97,162 +97,167 @@ struct x3d_PhysicalMaterialParameters
 
 //uniform x3d_PhysicalMaterialParameters x3d_Material;
 
-#ifdef X3D_MATERIAL_TEXTURES
-
+#if defined (X3D_AMBIENT_TEXTURE)
 struct x3d_AmbientTextureParameters
 {
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
-   #ifdef X3D_AMBIENT_TEXTURE_2D
+   #if defined (X3D_AMBIENT_TEXTURE_2D)
    mediump sampler2D   texture2D;
    #endif
-   #if defined(X3D_AMBIENT_TEXTURE_3D) && __VERSION__ != 100
+   #if defined (X3D_AMBIENT_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
-   #ifdef X3D_AMBIENT_TEXTURE_CUBE
+   #if defined (X3D_AMBIENT_TEXTURE_CUBE)
    mediump samplerCube textureCube;
    #endif
 };
-
 //uniform x3d_AmbientTextureParameters x3d_AmbientTexture;
+#endif
 
+#if defined (X3D_DIFFUSE_TEXTURE)
 struct x3d_DiffuseTextureParameters
 {
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
-   #ifdef X3D_DIFFUSE_TEXTURE_2D
+   #if defined (X3D_DIFFUSE_TEXTURE_2D)
    mediump sampler2D   texture2D;
    #endif
-   #if defined(X3D_DIFFUSE_TEXTURE_3D) && __VERSION__ != 100
+   #if defined (X3D_DIFFUSE_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
-   #ifdef X3D_DIFFUSE_TEXTURE_CUBE
+   #if defined (X3D_DIFFUSE_TEXTURE_CUBE)
    mediump samplerCube textureCube;
    #endif
 };
-
 //uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
+#endif
 
+#if defined (X3D_SPECULAR_TEXTURE)
 struct x3d_SpecularTextureParameters
 {
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
-   #ifdef X3D_SPECULAR_TEXTURE_2D
+   #if defined (X3D_SPECULAR_TEXTURE_2D)
    mediump sampler2D   texture2D;
    #endif
-   #if defined(X3D_SPECULAR_TEXTURE_3D) && __VERSION__ != 100
+   #if defined (X3D_SPECULAR_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
-   #ifdef X3D_SPECULAR_TEXTURE_CUBE
+   #if defined (X3D_SPECULAR_TEXTURE_CUBE)
    mediump samplerCube textureCube;
    #endif
 };
-
 //uniform x3d_SpecularTextureParameters x3d_SpecularTexture;
+#endif
 
+#if defined (X3D_EMISSIVE_TEXTURE)
 struct x3d_EmissiveTextureParameters
 {
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
-   #ifdef X3D_EMISSIVE_TEXTURE_2D
+   #if defined (X3D_EMISSIVE_TEXTURE_2D)
    mediump sampler2D   texture2D;
    #endif
-   #if defined(X3D_EMISSIVE_TEXTURE_3D) && __VERSION__ != 100
+   #if defined (X3D_EMISSIVE_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
-   #ifdef X3D_EMISSIVE_TEXTURE_CUBE
+   #if defined (X3D_EMISSIVE_TEXTURE_CUBE)
    mediump samplerCube textureCube;
    #endif
 };
-
 //uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
+#endif
 
+#if defined (X3D_SHININESS_TEXTURE)
 struct x3d_ShininessTextureParameters
 {
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
-   #ifdef X3D_SHININESS_TEXTURE_2D
+   #if defined (X3D_SHININESS_TEXTURE_2D)
    mediump sampler2D   texture2D;
    #endif
-   #if defined(X3D_SHININESS_TEXTURE_3D) && __VERSION__ != 100
+   #if defined (X3D_SHININESS_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
-   #ifdef X3D_SHININESS_TEXTURE_CUBE
+   #if defined (X3D_SHININESS_TEXTURE_CUBE)
    mediump samplerCube textureCube;
    #endif
 };
-
 //uniform x3d_ShininessTextureParameters x3d_ShininessTexture;
+#endif
 
+#if defined (X3D_BASE_TEXTURE)
 struct x3d_BaseTextureParameters
 {
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
-   #ifdef X3D_BASE_TEXTURE_2D
+   #if defined (X3D_BASE_TEXTURE_2D)
    mediump sampler2D   texture2D;
    #endif
-   #if defined(X3D_BASE_TEXTURE_3D) && __VERSION__ != 100
+   #if defined (X3D_BASE_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
-   #ifdef X3D_BASE_TEXTURE_CUBE
+   #if defined (X3D_BASE_TEXTURE_CUBE)
    mediump samplerCube textureCube;
    #endif
 };
-
 //uniform x3d_BaseTextureParameters x3d_BaseTexture;
+#endif
 
+#if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
 struct x3d_MetallicRoughnessTextureParameters
 {
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
-   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_2D
+   #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
    mediump sampler2D   texture2D;
    #endif
-   #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_3D) && __VERSION__ != 100
+   #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
-   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE
+   #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)
    mediump samplerCube textureCube;
    #endif
 };
-
 //uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
+#endif
 
+#if defined (X3D_OCCLUSION_TEXTURE)
 struct x3d_OcclusionTextureParameters
 {
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
-   #ifdef X3D_OCCLUSION_TEXTURE_2D
+   #if defined (X3D_OCCLUSION_TEXTURE_2D)
    mediump sampler2D   texture2D;
    #endif
-   #if defined(X3D_OCCLUSION_TEXTURE_3D) && __VERSION__ != 100
+   #if defined (X3D_OCCLUSION_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
-   #ifdef X3D_OCCLUSION_TEXTURE_CUBE
+   #if defined (X3D_OCCLUSION_TEXTURE_CUBE)
    mediump samplerCube textureCube;
    #endif
 };
-
 //uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
+#endif
 
+#if defined (X3D_NORMAL_TEXTURE)
 struct x3d_NormalTextureParameters
 {
    mediump int         textureTransformMapping;
    mediump int         textureCoordinateMapping;
-   #ifdef X3D_NORMAL_TEXTURE_2D
+   #if defined (X3D_NORMAL_TEXTURE_2D)
    mediump sampler2D   texture2D;
    #endif
-   #if defined(X3D_NORMAL_TEXTURE_3D) && __VERSION__ != 100
+   #if defined (X3D_NORMAL_TEXTURE_3D) && __VERSION__ != 100
    mediump sampler3D   texture3D;
    #endif
-   #ifdef X3D_NORMAL_TEXTURE_CUBE
+   #if defined (X3D_NORMAL_TEXTURE_CUBE)
    mediump samplerCube textureCube;
    #endif
 };
-
 //uniform x3d_NormalTextureParameters x3d_NormalTexture;
-
-#endif // X3D_MATERIAL_TEXTURES
+#endif
 
 struct x3d_MultiTextureParameters
 {

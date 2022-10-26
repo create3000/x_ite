@@ -3,8 +3,8 @@
 vec4
 SRGBtoLINEAR (const in vec4 srgbIn)
 {
-   #ifdef MANUAL_SRGB
-      #ifdef SRGB_FAST_APPROXIMATION
+   #if defined (MANUAL_SRGB)
+      #if defined (SRGB_FAST_APPROXIMATION)
          vec3 linOut = pow (srgbIn .xyz, vec3 (2.2));
       #else //SRGB_FAST_APPROXIMATION
          vec3 bLess  = step (vec3 (0.04045), srgbIn .xyz);
@@ -19,7 +19,7 @@ SRGBtoLINEAR (const in vec4 srgbIn)
 vec4
 Gamma (const in vec4 color)
 {
-   #ifdef MANUAL_SRGB
+   #if defined (MANUAL_SRGB)
    return vec4 (pow (color .rgb, vec3 (1.0 / 2.2)), color .a);
    #else
    return color;

@@ -263,11 +263,9 @@ X3D (function ()
 
    let index = localStorage ["Bookmarks.history"] .length - 1;
 
-   function loadURL ()
+   function loadURL (url)
    {
-      const
-         url     = $(".location-entry") .val (),
-         history = localStorage ["Bookmarks.history"];
+      const history = localStorage ["Bookmarks.history"];
 
       if (url !== history .at (-1))
       {
@@ -279,6 +277,8 @@ X3D (function ()
 
       bookmarks .loadURL (url);
    }
+
+   window .loadURL = loadURL;
 
    function toVRMLString ()
    {
@@ -303,7 +303,7 @@ X3D (function ()
    $(".version") .text (Browser .name + " v" + Browser .version);
    $(".file") .append ($("<a></a>") .attr ('href', "tests/d3/ParticlePlot.html") .text ("d3"));
    $(".location-entry") .val (localStorage ["Bookmarks.history"] [index])
-   $(".location-go") .click (loadURL);
+   $(".location-go") .click (() => loadURL ($(".location-entry") .val ()));
    $(".print-vrml") .click (toVRMLString);
    $(".print-xml") .click (toXMLString);
    $(".print-json") .click (toJSONString);
@@ -313,7 +313,7 @@ X3D (function ()
       switch (event .key)
       {
          case "Enter":
-            return loadURL ()
+            return loadURL ($(".location-entry") .val ())
          case "ArrowUp":
             if (index > 0)
                $(".location-entry") .val (localStorage ["Bookmarks.history"] [--index])

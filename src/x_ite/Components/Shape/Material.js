@@ -241,7 +241,7 @@ function (Fields,
          {
             const
                browser = this .getBrowser (),
-               options = ["X3D_MATERIAL_TEXTURES"];
+               options = [ ];
 
             if (this .ambientTextureNode)
                options .push ("X3D_AMBIENT_TEXTURE", "X3D_AMBIENT_TEXTURE_" + this .ambientTextureNode .getTextureTypeString ());

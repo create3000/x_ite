@@ -22,7 +22,7 @@ out float      fogDepth;    // fog depth
 out vec4       color;       // color
 out vec3       vertex;      // point on geometry
 
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
 out float depth;
 #endif
 
@@ -41,7 +41,7 @@ main ()
 
    gl_Position = x3d_ProjectionMatrix * position;
 
-   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
    depth = 1.0 + gl_Position .w;
    #endif
 

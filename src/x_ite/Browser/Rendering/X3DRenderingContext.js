@@ -61,6 +61,7 @@ function ($,
    const
       _viewport     = Symbol (),
       _localObjects = Symbol (),
+      _depthShader  = Symbol (),
       _resizer      = Symbol ();
 
    function X3DRenderingContext ()
@@ -163,6 +164,16 @@ function ($,
       getLocalObjects: function ()
       {
          return this [_localObjects];
+      },
+      getDepthShader: function ()
+      {
+         this [_depthShader] = this .createShader ("DepthShader", "Depth");
+
+         this .getDepthShader = function () { return this [_depthShader]; };
+
+         Object .defineProperty (this, "getDepthShader", { enumerable: false });
+
+         return this [_depthShader];
       },
       reshape: function ()
       {

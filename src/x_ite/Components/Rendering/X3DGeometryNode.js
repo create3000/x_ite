@@ -981,24 +981,24 @@ function (Fields,
       display: function (gl, context)
       {
          const
+            browser          = context .browser,
             appearanceNode   = context .shapeNode .getAppearance (),
-            materialNode     = appearanceNode .getMaterial (),
             backMaterialNode = appearanceNode .getBackMaterial (),
-            frontShaderNode  = appearanceNode .getShader () || materialNode .getShader (context .browser, context .shadow);
+            frontShaderNode  = appearanceNode .getFrontShader (browser, this .geometryType, context .shadow);
 
-         if (this .solid || ! backMaterialNode || frontShaderNode .getWireframe ())
+         if (this .solid || ! backMaterialNode || browser .getWireframe ())
          {
-            this .displayGeometry (gl, context, appearanceNode, frontShaderNode, true, true);
+            this .displayGeometry (gl, browser, context, appearanceNode, frontShaderNode, true, true);
          }
          else
          {
-            const backShaderNode = appearanceNode .getShader () || backMaterialNode .getShader (context .browser, context .shadow)
+            const backShaderNode = appearanceNode .getBackShader (browser, this .geometryType, context .shadow)
 
-            this .displayGeometry (gl, context, appearanceNode, backShaderNode,  true,  false);
-            this .displayGeometry (gl, context, appearanceNode, frontShaderNode, false, true);
+            this .displayGeometry (gl, browser, context, appearanceNode, backShaderNode,  true,  false);
+            this .displayGeometry (gl, browser, context, appearanceNode, frontShaderNode, false, true);
          }
       },
-      displayGeometry: function (gl, context, appearanceNode, shaderNode, back, front)
+      displayGeometry: function (gl, browser, context, appearanceNode, shaderNode, back, front)
       {
          if (shaderNode .isValid ())
          {
@@ -1006,7 +1006,7 @@ function (Fields,
                blendModeNode = appearanceNode .getBlendMode (),
                attribNodes   = this .attribNodes,
                attribBuffers = this .attribBuffers,
-               primitiveMode = shaderNode .getPrimitiveMode (this .primitiveMode);
+               primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
 
             if (blendModeNode)
                blendModeNode .enable (gl);
@@ -1034,7 +1034,7 @@ function (Fields,
 
             // Draw depending on wireframe, solid and transparent.
 
-            if (shaderNode .getWireframe ())
+            if (browser .getWireframe ())
             {
                for (let i = 0, length = this .vertexCount; i < length; i += 3)
                   gl .drawArrays (primitiveMode, i, 3);
@@ -1104,24 +1104,24 @@ function (Fields,
       displayParticles: function (gl, context, particleSystem)
       {
          const
+            browser          = context .browser,
             appearanceNode   = context .shapeNode .getAppearance (),
-            materialNode     = appearanceNode .getMaterial (),
             backMaterialNode = appearanceNode .getBackMaterial (),
-            frontShaderNode  = appearanceNode .getShader () || materialNode .getShader (context .browser, context .shadow);
+            frontShaderNode  = appearanceNode .getShader (browser, this .geometryType, context .shadow);
 
-         if (this .solid || ! backMaterialNode || frontShaderNode .getWireframe ())
+         if (this .solid || ! backMaterialNode || browser .getWireframe ())
          {
-            this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particleSystem);
+            this .displayParticlesGeometry (gl, browser, context, appearanceNode, frontShaderNode, true, true, particleSystem);
          }
          else
          {
-            const backShaderNode = appearanceNode .getShader () || backMaterialNode .getShader (context .browser, context .shadow);
+            const backShaderNode = appearanceNode .getShader (browser, this .geometryType, context .shadow);
 
-            this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode,  true,  false, particleSystem);
-            this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, false, true,  particleSystem);
+            this .displayParticlesGeometry (gl, browser, context, appearanceNode, backShaderNode,  true,  false, particleSystem);
+            this .displayParticlesGeometry (gl, browser, context, appearanceNode, frontShaderNode, false, true,  particleSystem);
          }
       },
-      displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particleSystem)
+      displayParticlesGeometry: function (gl, browser, context, appearanceNode, shaderNode, back, front, particleSystem)
       {
          if (shaderNode .isValid ())
          {
@@ -1129,7 +1129,7 @@ function (Fields,
                blendModeNode = appearanceNode .getBlendMode (),
                attribNodes   = this .attribNodes,
                attribBuffers = this .attribBuffers,
-               primitiveMode = shaderNode .getPrimitiveMode (this .primitiveMode);
+               primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
 
             if (blendModeNode)
                blendModeNode .enable (gl);

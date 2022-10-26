@@ -159,9 +159,8 @@ function (X3DGeometryNode,
       display: function (gl, context)
       {
          const
-            browser        = context .browser,
             appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .getShader () || browser .getPointShader (),
+            shaderNode     = appearanceNode .getFrontShader (context .browser, 0, context .shadow),
             blendModeNode  = appearanceNode .getBlendMode (),
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers ();
@@ -201,9 +200,8 @@ function (X3DGeometryNode,
       displayParticles: function (gl, context, particleSystem)
       {
          const
-            browser        = context .browser,
             appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .getShader () || browser .getPointShader (),
+            shaderNode     = appearanceNode .getFrontShader (context .browser, 0, context .shadow),
             blendModeNode  = appearanceNode .getBlendMode (),
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers ();

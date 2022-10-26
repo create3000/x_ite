@@ -21,7 +21,7 @@ varying vec4 color;       // color from Color node
 varying vec3 localNormal; // normal vector at this point on geometry in local coordinates
 varying vec3 localVertex; // point on geometry in local coordinates
 
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
 varying float depth;
 #endif
 
@@ -40,7 +40,7 @@ main ()
 
    gl_Position = x3d_ProjectionMatrix * position;
 
-   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
    depth = 1.0 + gl_Position .w;
    #endif
 }

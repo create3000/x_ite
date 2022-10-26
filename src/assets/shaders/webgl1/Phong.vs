@@ -34,7 +34,7 @@ varying vec4 texCoord0; // texCoord0
 varying vec4 texCoord1; // texCoord1
 #endif
 
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
 varying float depth;
 #endif
 
@@ -60,7 +60,7 @@ main ()
 
    gl_Position = x3d_ProjectionMatrix * position;
 
-   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
    depth = 1.0 + gl_Position .w;
    #endif
 }

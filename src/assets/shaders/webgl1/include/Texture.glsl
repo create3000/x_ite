@@ -4,11 +4,11 @@ uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureT
 uniform sampler2D   x3d_Texture2D [x3d_MaxTextures];
 uniform samplerCube x3d_TextureCube [x3d_MaxTextures];
 
-#ifdef X3D_MULTI_TEXTURING
+#if defined (X3D_MULTI_TEXTURING)
 
 #pragma X3D include "Perlin.glsl"
 
-#ifdef X3D_PROJECTIVE_TEXTURE_MAPPING
+#if defined (X3D_PROJECTIVE_TEXTURE_MAPPING)
 uniform int       x3d_NumProjectiveTextures;
 uniform sampler2D x3d_ProjectiveTexture [x3d_MaxTextures];
 uniform mat4      x3d_ProjectiveTextureMatrix [x3d_MaxTextures];
@@ -425,7 +425,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
    return currentColor;
 }
 
-#ifdef X3D_PROJECTIVE_TEXTURE_MAPPING
+#if defined (X3D_PROJECTIVE_TEXTURE_MAPPING)
 vec4
 getProjectiveTexture (const in int i, const in vec2 texCoord)
 {

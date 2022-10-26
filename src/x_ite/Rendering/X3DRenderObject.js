@@ -908,8 +908,8 @@ function (TextureBuffer,
             cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
             projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 
-            for (const shader of browser .getStandardShaders ())
-               shaders .add (shader);
+            for (const shader of browser .getShaders ())
+               shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 
             for (const shader of shaders)
                shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);

@@ -193,7 +193,7 @@ function (Fields,
 
          if (this .getTextures ())
          {
-            const options = ["X3D_MATERIAL_TEXTURES"];
+            const options = [ ];
 
             if (this .baseTextureNode)
                options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
