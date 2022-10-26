@@ -117,6 +117,7 @@ function (Fields,
       },
       getShader: function (browser, geometryType, shadow)
       {
+         // Bit Schema of Shader Key
          // 0 - 6 -> textures
          // 7 - 8 -> geometry type
          // 9     -> shadow
