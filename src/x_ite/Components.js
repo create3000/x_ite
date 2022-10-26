@@ -101,7 +101,7 @@ function (DEBUG,
          if (component .name)
          {
             if (DEBUG)
-               console .log ("Done loading external component '" + component .name + "'.");
+               console .info ("Done loading external component '" + component .name + "'.");
          }
       },
    };

@@ -166,7 +166,7 @@ function (Shading,
       createShader: function (name, file, options = [ ])
       {
          if (this .getDebug ())
-            console .log ("Initializing " + name);
+            console .info ("Initializing " + name);
 
          const
             gl      = this .getContext (),
