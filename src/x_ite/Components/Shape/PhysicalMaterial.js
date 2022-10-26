@@ -215,6 +215,9 @@ function (Fields,
          if (shadow)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
+         if (this .getTextureBits () .valueOf ())
+            options .push ("X3D_MATERIAL_TEXTURES");
+            
          if (this .baseTextureNode)
             options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
 

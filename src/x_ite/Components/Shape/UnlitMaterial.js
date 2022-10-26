@@ -130,8 +130,11 @@ function (Fields,
          if (shadow)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
+         if (this .getTextureBits () .valueOf ())
+            options .push ("X3D_MATERIAL_TEXTURES");
+
          if (this .getEmissiveTexture ())
-            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
 
          if (this .getNormalTexture ())
             options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());

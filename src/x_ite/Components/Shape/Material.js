@@ -262,6 +262,9 @@ function (Fields,
          if (shadow)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
+         if (this .getTextureBits () .valueOf ())
+            options .push ("X3D_MATERIAL_TEXTURES");
+
          if (this .ambientTextureNode)
             options .push ("X3D_AMBIENT_TEXTURE", "X3D_AMBIENT_TEXTURE_" + this .ambientTextureNode .getTextureTypeString ());
 
