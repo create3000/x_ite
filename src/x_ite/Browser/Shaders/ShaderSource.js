@@ -61,6 +61,7 @@ define ([
    "text!assets/shaders/webgl2/include/ClipPlanes.glsl",
    "text!assets/shaders/webgl2/include/Colors.glsl",
    "text!assets/shaders/webgl2/include/Fog.glsl",
+   "text!assets/shaders/webgl2/include/Fragment.glsl",
    "text!assets/shaders/webgl2/include/Hatch.glsl",
    "text!assets/shaders/webgl2/include/Line2.glsl",
    "text!assets/shaders/webgl2/include/Normal.glsl",
@@ -73,6 +74,7 @@ define ([
    "text!assets/shaders/webgl2/include/Stipple.glsl",
    "text!assets/shaders/webgl2/include/SpotFactor.glsl",
    "text!assets/shaders/webgl2/include/Texture.glsl",
+   "text!assets/shaders/webgl2/include/Vertex.glsl",
 ],
 function (ClipPlanes1,
           Colors1,
@@ -87,6 +89,7 @@ function (ClipPlanes1,
           ClipPlanes2,
           Colors2,
           Fog2,
+          Fragment2,
           Hatch2,
           Line22,
           Normal2,
@@ -98,7 +101,8 @@ function (ClipPlanes1,
           Shadow2,
           Stipple2,
           SpotFactor2,
-          Texture2)
+          Texture2,
+          Vertex2)
 {
 "use strict";
 
@@ -121,6 +125,7 @@ function (ClipPlanes1,
       ClipPlanes: ClipPlanes2,
       Colors: Colors2,
       Fog: Fog2,
+      Fragment: Fragment2,
       Hatch: Hatch2,
       Line2: Line22,
       Normal: Normal2,
@@ -133,6 +138,7 @@ function (ClipPlanes1,
       Stipple: Stipple2,
       SpotFactor: SpotFactor2,
       Texture: Texture2,
+      Vertex: Vertex2,
    };
 
    const ShaderSource =

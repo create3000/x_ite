@@ -35,12 +35,14 @@ out vec3  vertex;      // point on geometry
 out vec3  localNormal; // normal vector at this point on geometry in local coordinates
 out vec3  localVertex; // point on geometry in local coordinates
 
-#if x3d_MaxTextures > 0
-out vec4  texCoord0;   // texCoord0
-#endif
+#if ! defined (X3D_GEOMETRY_0D)
+   #if x3d_MaxTextures > 0
+   out vec4  texCoord0;
+   #endif
 
-#if x3d_MaxTextures > 1
-out vec4  texCoord1;   // texCoord1
+   #if x3d_MaxTextures > 1
+   out vec4  texCoord1;
+   #endif
 #endif
 
 #if defined (X3D_GEOMETRY_1D)
@@ -123,12 +125,14 @@ main ()
    localNormal = x3d_Normal;
    localVertex = x3d_Vertex .xyz;
 
-   #if x3d_MaxTextures > 0
-   texCoord0 = getTexCoord (x3d_TexCoord0);
-   #endif
+   #if ! defined (X3D_GEOMETRY_0D)
+      #if x3d_MaxTextures > 0
+      texCoord0 = getTexCoord (x3d_TexCoord0);
+      #endif
 
-   #if x3d_MaxTextures > 1
-   texCoord1 = getTexCoord (x3d_TexCoord1);
+      #if x3d_MaxTextures > 1
+      texCoord1 = getTexCoord (x3d_TexCoord1);
+      #endif
    #endif
 
    gl_Position = x3d_ProjectionMatrix * position;

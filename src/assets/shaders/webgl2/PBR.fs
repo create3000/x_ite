@@ -5,10 +5,10 @@
 precision highp float;
 precision highp int;
 
-out vec4 x3d_FragColor;
-
-uniform float x3d_AlphaCutoff;
-uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
+#pragma X3D include "include/Fragment.glsl"
+#pragma X3D include "include/Colors.glsl"
+#pragma X3D include "include/Normal.glsl"
+#pragma X3D include "include/SpotFactor.glsl"
 
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
@@ -19,24 +19,6 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
    uniform samplerCube specularEnvironmentTexture;
    uniform sampler2D brdfLUT;
 #endif
-
-in vec3 vertex;
-in vec4 texCoord0;
-in vec4 texCoord1;
-in vec4 color;
-in vec3 normal;
-in vec3 localNormal;
-in vec3 localVertex;
-
-#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-uniform float x3d_LogarithmicFarFactor1_2;
-in float depth;
-#endif
-
-#pragma X3D include "include/Colors.glsl"
-#pragma X3D include "include/Texture.glsl"
-#pragma X3D include "include/Normal.glsl"
-#pragma X3D include "include/SpotFactor.glsl"
 
 #if defined (X3D_BASE_TEXTURE)
 uniform x3d_BaseTextureParameters x3d_BaseTexture;
@@ -248,8 +230,8 @@ microfacetDistribution (const in PBRInfo pbrInputs)
    return roughnessSq / (M_PI * f * f);
 }
 
-void
-main ()
+vec4
+getMaterialColor ()
 {
    // Metallic and Roughness material properties are packed together
    // In glTF, these factors can be specified by fixed scalar values
@@ -264,13 +246,7 @@ main ()
    float alphaRoughness = perceptualRoughness * perceptualRoughness;
 
    // The albedo may be defined from a base texture or a flat color.
-   vec4 baseColor = getBaseColor ();
-
-   if (baseColor .a < x3d_AlphaCutoff)
-   {
-      discard;
-   }
-
+   vec4 baseColor    = getBaseColor ();
    vec3 f0           = vec3 (0.04);
    vec3 diffuseColor = baseColor .rgb * (vec3 (1.0) - f0);
    diffuseColor *= 1.0 - metallic;
@@ -366,13 +342,11 @@ main ()
    finalColor += getEmissiveColor ();
 
    // Combine with alpha and do gamma correction.
-   x3d_FragColor = Gamma (vec4 (finalColor, baseColor .a));
+   return Gamma (vec4 (finalColor, baseColor .a));
+}
 
-   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-   //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-   if (x3d_LogarithmicFarFactor1_2 > 0.0)
-      gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
-   else
-      gl_FragDepth = gl_FragCoord .z;
-   #endif
+void
+main ()
+{
+   fragment ();
 }

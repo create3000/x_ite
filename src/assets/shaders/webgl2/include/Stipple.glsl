@@ -1,5 +1,5 @@
 #if defined (X3D_GEOMETRY_1D)
-#pragma X3D include "include/Line2.glsl"
+#pragma X3D include "Line2.glsl"
 
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
 
