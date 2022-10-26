@@ -21,6 +21,12 @@ in vec4 x3d_TexCoord0;
 in vec4 x3d_TexCoord1;
 #endif
 
+#if defined (X3D_GEOMETRY_1D)
+flat out float lengthSoFar; // in px, stipple support
+flat out vec2  startPoint;  // in px, stipple support
+out vec2       midPoint;    // in px, stipple support
+#endif
+
 out float fogDepth;    // fog depth
 out vec4  color;       // color
 out vec3  normal;      // normalized normal vector at this point on geometry
@@ -41,6 +47,7 @@ out float depth;
 #endif
 
 #pragma X3D include "include/Particle.glsl"
+#pragma X3D include "include/PointSize.glsl"
 
 void
 main ()
@@ -63,6 +70,16 @@ main ()
    #endif
 
    gl_Position = x3d_ProjectionMatrix * position;
+
+   #if defined (X3D_GEOMETRY_0D)
+   gl_PointSize = pointSize = getPointSize (vertex);
+   #endif
+   
+   #if defined (X3D_GEOMETRY_1D)
+   lengthSoFar = x3d_TexCoord0 .z;
+   startPoint  = x3d_TexCoord0 .xy;
+   midPoint    = x3d_TexCoord0 .xy;
+   #endif
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
    depth = 1.0 + gl_Position .w;

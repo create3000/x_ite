@@ -17,12 +17,14 @@ in vec3  vertex;      // point on geometry
 in vec3  localNormal; // normal vector at this point on geometry in local coordinates
 in vec3  localVertex; // point on geometry in local coordinates
 
-#if x3d_MaxTextures > 0
-in vec4 texCoord0;
-#endif
+#if ! defined (X3D_GEOMETRY_0D)
+   #if x3d_MaxTextures > 0
+   in vec4 texCoord0;
+   #endif
 
-#if x3d_MaxTextures > 1
-in vec4 texCoord1;
+   #if x3d_MaxTextures > 1
+   in vec4 texCoord1;
+   #endif
 #endif
 
 #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
@@ -32,10 +34,12 @@ in float depth;
 
 out vec4 x3d_FragColor;
 
+#pragma X3D include "include/Point.glsl"
+#pragma X3D include "include/Stipple.glsl"
+#pragma X3D include "include/Hatch.glsl"
 #pragma X3D include "include/Shadow.glsl"
 #pragma X3D include "include/Texture.glsl"
 #pragma X3D include "include/Normal.glsl"
-#pragma X3D include "include/Hatch.glsl"
 #pragma X3D include "include/Fog.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
 #pragma X3D include "include/SpotFactor.glsl"
@@ -206,7 +210,7 @@ getOcclusionFactor ()
 }
 
 vec4
-getMaterialColor ()
+getPhongColor ()
 {
    vec3 N = getNormalVector ();
    vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
@@ -278,18 +282,40 @@ getMaterialColor ()
    return vec4 (finalColor, alpha);
 }
 
-// DEBUG
-//uniform ivec4 x3d_Viewport;
+vec4
+getMaterialColor ()
+{
+   vec4 materialColor = getPhongColor ();
+
+   #if defined (X3D_GEOMETRY_0D)
+      setTexCoords ();
+
+      #if ! defined (X3D_EMISSIVE_TEXTURE)
+      if (x3d_NumTextures == 0)
+         return getPointColor (materialColor);
+      #endif
+
+      return materialColor;
+   #else
+      return materialColor;
+   #endif
+}
 
 void
 main ()
 {
    clip ();
 
-   vec4 finalColor = vec4 (0.0);
+   #if defined (X3D_GEOMETRY_1D)
+      stipple ();
+   #endif
 
-   finalColor      = getMaterialColor ();
-   finalColor      = getHatchColor (finalColor);
+   vec4 finalColor = getMaterialColor ();
+
+   #if defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)
+      finalColor = getHatchColor (finalColor);
+   #endif
+
    finalColor .rgb = getFogColor (finalColor .rgb);
 
    if (finalColor .a < x3d_AlphaCutoff)
@@ -303,15 +329,5 @@ main ()
       gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
    else
       gl_FragDepth = gl_FragCoord .z;
-   #endif
-
-   // DEBUG
-   #if defined (X3D_SHADOWS)
-   //x3d_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;
-   //x3d_FragColor .rgb = mix (tex .rgb, x3d_FragColor .rgb, 0.5);
-   #endif
-
-   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-   //x3d_FragColor .rgb = mix (vec3 (1.0, 0.0, 0.0), x3d_FragColor .rgb, 0.5);
    #endif
 }
