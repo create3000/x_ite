@@ -151,14 +151,33 @@ function (Fields,
             return textureIndices;
          };
       })(),
-      getTextures: function ()
-      {
-         return this .textureBits;
-      },
       setTexture: function (index, value)
       {
          this .textureBits .set (index, value);
       },
+      getShaderKey: function (geometryType, shadow)
+      {
+         // Bit Schema of Shader Key
+         //
+         // 0 - 6 -> textures
+         // 7 - 8 -> geometry type
+         // 9     -> shadow
+
+         let shaderKey = this .textureBits .valueOf ();
+
+         shaderKey |= geometryType << 7;
+         shaderKey |= shadow       << 9;
+
+         return shaderKey;
+      },
+      getShader: function (browser, geometryType, shadow)
+      {
+         const shaderKey = this .getShaderKey (geometryType, shadow);
+
+         return browser .getShader (shaderKey) || this .createShader (browser, shaderKey, geometryType, shadow);
+      },
+      createShader: function (browser, shaderKey, geometryType, shadow)
+      { },
       getGeometryTypes: (function ()
       {
          const GeometryTypes = [
