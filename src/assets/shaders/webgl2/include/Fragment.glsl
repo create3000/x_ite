@@ -59,7 +59,7 @@ getFinalMaterialColor ()
 }
 
 void
-fragment ()
+fragment_main ()
 {
    clip ();
 

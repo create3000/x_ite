@@ -4,59 +4,15 @@ precision highp float;
 precision highp int;
 precision highp sampler2D;
 
-uniform mat3 x3d_NormalMatrix;
-uniform mat4 x3d_ProjectionMatrix;
-uniform mat4 x3d_ModelViewMatrix;
-
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform x3d_MaterialParameters x3d_Material;
-
 uniform bool x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 
-in float x3d_FogDepth;
-in vec4  x3d_Color;
-in vec3  x3d_Normal;
-in vec4  x3d_Vertex;
+out vec4 frontColor;
+out vec4 backColor;
 
-#if x3d_MaxTextures > 0
-in vec4 x3d_TexCoord0;
-#endif
-
-#if x3d_MaxTextures > 1
-in vec4 x3d_TexCoord1;
-#endif
-
-out float fogDepth;    // fog depth
-out vec4  frontColor;  // color
-out vec4  backColor;   // color
-out vec3  normal;      // normal vector at this point on geometry
-out vec3  vertex;      // point on geometry
-out vec3  localNormal; // normal vector at this point on geometry in local coordinates
-out vec3  localVertex; // point on geometry in local coordinates
-
-#if ! defined (X3D_GEOMETRY_0D)
-   #if x3d_MaxTextures > 0
-   out vec4  texCoord0;
-   #endif
-
-   #if x3d_MaxTextures > 1
-   out vec4  texCoord1;
-   #endif
-#endif
-
-#if defined (X3D_GEOMETRY_1D)
-flat out float lengthSoFar; // in px, stipple support
-flat out vec2  startPoint;  // in px, stipple support
-out vec2       midPoint;    // in px, stipple support
-#endif
-
-#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-out float depth;
-#endif
-
-#pragma X3D include "include/Particle.glsl"
-#pragma X3D include "include/PointSize.glsl"
+#pragma X3D include "include/Vertex.glsl"
 #pragma X3D include "include/SpotFactor.glsl"
 
 vec4
@@ -117,39 +73,7 @@ getMaterialColor (const in vec3 N,
 void
 main ()
 {
-   vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
-
-   fogDepth    = x3d_FogDepth;
-   vertex      = position .xyz;
-   normal      = normalize (x3d_NormalMatrix * x3d_Normal);
-   localNormal = x3d_Normal;
-   localVertex = x3d_Vertex .xyz;
-
-   #if ! defined (X3D_GEOMETRY_0D)
-      #if x3d_MaxTextures > 0
-      texCoord0 = getTexCoord (x3d_TexCoord0);
-      #endif
-
-      #if x3d_MaxTextures > 1
-      texCoord1 = getTexCoord (x3d_TexCoord1);
-      #endif
-   #endif
-
-   gl_Position = x3d_ProjectionMatrix * position;
-
-   #if defined (X3D_GEOMETRY_0D)
-   gl_PointSize = pointSize = getPointSize (vertex);
-   #endif
-
-   #if defined (X3D_GEOMETRY_1D)
-   lengthSoFar = x3d_TexCoord0 .z;
-   startPoint  = x3d_TexCoord0 .xy;
-   midPoint    = x3d_TexCoord0 .xy;
-   #endif
-
-   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-   depth = 1.0 + gl_Position .w;
-   #endif
+   vertex_main ();
 
    frontColor = getMaterialColor ( normal, vertex, x3d_Material);
    backColor  = getMaterialColor (-normal, vertex, x3d_Material);

@@ -1,7 +1,3 @@
-precision highp float;
-precision highp int;
-precision highp sampler2D;
-
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
@@ -38,6 +34,8 @@ out vec3  localVertex;
    in  vec3 x3d_Normal;
    out vec3 normal;
    out vec3 localNormal;
+#else
+   vec3 normal = vec3 (0.0, 0.0, 1.0);
 #endif
 
 #if defined (X3D_GEOMETRY_1D)
@@ -54,7 +52,7 @@ out vec3  localVertex;
 #pragma X3D include "PointSize.glsl"
 
 void
-main ()
+vertex_main ()
 {
    vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
 

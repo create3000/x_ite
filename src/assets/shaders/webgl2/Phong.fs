@@ -253,5 +253,5 @@ getMaterialColor ()
 void
 main ()
 {
-   fragment ();
+   fragment_main ();
 }

@@ -5,8 +5,11 @@ precision highp int;
 
 #pragma X3D include "include/Fragment.glsl"
 
+in vec4 frontColor;
+in vec4 backColor;
+
 vec4
-getGouraudColor ()
+getMaterialColor ()
 {
    vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
 
@@ -16,25 +19,8 @@ getGouraudColor ()
    return finalColor;
 }
 
-vec4
-getMaterialColor ()
-{
-   #if defined (X3D_GEOMETRY_0D)
-      setTexCoords ();
-
-      #if ! defined (X3D_DIFFUSE_TEXTURE)
-      if (x3d_NumTextures == 0)
-         return getPointColor (getGouraudColor ());
-      #endif
-
-      return getGouraudColor ();
-   #else
-      return getGouraudColor ();
-   #endif
-}
-
 void
 main ()
 {
-   fragment ();
+   fragment_main ();
 }
