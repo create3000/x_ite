@@ -134,17 +134,16 @@ function ($,
          this .orientationChaser .setPrivate (true);
          this .orientationChaser .setup ();
 
-         // Preload line shader.
-         this .initShaders ()
+         this .loadShaders ()
       },
-      initShaders: function ()
+      loadShaders: function ()
       {
          const browser = this .getBrowser ();
 
-         if (!browser .getBrowserOption ("Rubberband"))
+         if (! browser .getBrowserOption ("Rubberband"))
             return;
 
-         browser .getLineShader ();
+         browser .getDefaultMaterial () .getShader (1, false, false);
          browser .getDepthShader ();
       },
       addCollision: function () { },
@@ -688,7 +687,7 @@ function ($,
 
             const
                gl         = browser .getContext (),
-               shaderNode = browser .getLineShader (),
+               shaderNode = browser .getDefaultMaterial () .getShader (1, false, false),
                lineWidth  = gl .getParameter (gl .LINE_WIDTH);
 
             if (shaderNode .isValid ())
