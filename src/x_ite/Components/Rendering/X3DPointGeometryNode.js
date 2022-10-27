@@ -165,37 +165,34 @@ function (X3DGeometryNode,
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers ();
 
-         if (shaderNode .isValid ())
+         if (blendModeNode)
+            blendModeNode .enable (gl);
+
+         // Setup shader.
+
+         shaderNode .enable (gl);
+         shaderNode .setLocalUniforms (gl, context);
+
+         // Setup vertex attributes.
+
+         if (this .vertexArrayObject .enable (gl, shaderNode))
          {
-            if (blendModeNode)
-               blendModeNode .enable (gl);
+            for (let i = 0, length = attribNodes .length; i < length; ++ i)
+               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-            // Setup shader.
+            if (this .hasFogCoords)
+               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
-            shaderNode .enable (gl);
-            shaderNode .setLocalUniforms (gl, context);
+            if (this .colorMaterial)
+               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-            // Setup vertex attributes.
-
-            if (this .vertexArrayObject .enable (gl, shaderNode))
-            {
-               for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-               if (this .hasFogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
-
-               if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
-
-               shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
-            }
-
-            gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
-
-            if (blendModeNode)
-               blendModeNode .disable (gl);
+            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
          }
+
+         gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+
+         if (blendModeNode)
+            blendModeNode .disable (gl);
       },
       displayParticles: function (gl, context, particleSystem)
       {
@@ -206,48 +203,45 @@ function (X3DGeometryNode,
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers ();
 
-         if (shaderNode .isValid ())
+         if (blendModeNode)
+            blendModeNode .enable (gl);
+
+         // Setup shader.
+
+         shaderNode .enable (gl);
+         shaderNode .setLocalUniforms (gl, context);
+
+         // Setup vertex attributes.
+
+         const outputParticles = particleSystem .outputParticles;
+
+         if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
          {
-            if (blendModeNode)
-               blendModeNode .enable (gl);
+            const particleStride = particleSystem .particleStride;
 
-            // Setup shader.
+            shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+            shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
 
-            shaderNode .enable (gl);
-            shaderNode .setLocalUniforms (gl, context);
+            for (let i = 0, length = attribNodes .length; i < length; ++ i)
+               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-            // Setup vertex attributes.
+            if (this .hasFogCoords)
+               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
-            const outputParticles = particleSystem .outputParticles;
+            if (this .colorMaterial)
+               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-            if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
-            {
-               const particleStride = particleSystem .particleStride;
+            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
-               shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
-               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
-
-               for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-               if (this .hasFogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
-
-               if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
-
-               shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
-
-               this .updateParticles = false;
-            }
-
-            // Wireframes are always solid so only one drawing call is needed.
-
-            gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-
-            if (blendModeNode)
-               blendModeNode .disable (gl);
+            this .updateParticles = false;
          }
+
+         // Wireframes are always solid so only one drawing call is needed.
+
+         gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+
+         if (blendModeNode)
+            blendModeNode .disable (gl);
       },
    });
 

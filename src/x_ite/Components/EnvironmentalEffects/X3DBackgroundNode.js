@@ -611,40 +611,37 @@ function (X3DBindableNode,
                gl         = browser .getContext (),
                shaderNode = browser .getDefaultMaterial () .getShader (geometryContext, false);
 
-            if (shaderNode .isValid ())
-            {
-               shaderNode .enable (gl);
+            shaderNode .enable (gl);
 
-               // Clip planes
+            // Clip planes
 
-               shaderNode .setLocalObjects (gl, this .localObjects);
+            shaderNode .setLocalObjects (gl, this .localObjects);
 
-               // Uniforms
+            // Uniforms
 
-               gl .uniform1i  (shaderNode .x3d_FogType,                            0);
-               gl .uniform1i  (shaderNode .x3d_FillPropertiesFilled,               true);
-               gl .uniform1i  (shaderNode .x3d_FillPropertiesHatched,              false);
-               gl .uniform1i  (shaderNode .x3d_ColorMaterial,                      false);
-               gl .uniform3fv (shaderNode .x3d_EmissiveColor,                      white)
-               gl .uniform1i  (shaderNode .x3d_EmissiveTexture .textureType,       0)
-               gl .uniform1f  (shaderNode .x3d_Transparency,                       0)
-               gl .uniform1i  (shaderNode .x3d_NumTextures,                        1);
-               gl .uniform1i  (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-               gl .uniform1i  (shaderNode .x3d_NumProjectiveTextures,              0);
+            gl .uniform1i  (shaderNode .x3d_FogType,                            0);
+            gl .uniform1i  (shaderNode .x3d_FillPropertiesFilled,               true);
+            gl .uniform1i  (shaderNode .x3d_FillPropertiesHatched,              false);
+            gl .uniform1i  (shaderNode .x3d_ColorMaterial,                      false);
+            gl .uniform3fv (shaderNode .x3d_EmissiveColor,                      white)
+            gl .uniform1i  (shaderNode .x3d_EmissiveTexture .textureType,       0)
+            gl .uniform1f  (shaderNode .x3d_Transparency,                       0)
+            gl .uniform1i  (shaderNode .x3d_NumTextures,                        1);
+            gl .uniform1i  (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
+            gl .uniform1i  (shaderNode .x3d_NumProjectiveTextures,              0);
 
-               gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
-               gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
-               gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
 
-               // Draw.
+            // Draw.
 
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer,  this .frontArrayObject);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer,   this .backArrayObject);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .leftTexture,   this .leftBuffer,   this .leftArrayObject);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .rightTexture,  this .rightBuffer,  this .rightArrayObject);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .topTexture,    this .topBuffer,    this .topArrayObject);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer, this .bottomArrayObject);
-            }
+            this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer,  this .frontArrayObject);
+            this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer,   this .backArrayObject);
+            this .drawRectangle (gl, browser, shaderNode, renderObject, this .leftTexture,   this .leftBuffer,   this .leftArrayObject);
+            this .drawRectangle (gl, browser, shaderNode, renderObject, this .rightTexture,  this .rightBuffer,  this .rightArrayObject);
+            this .drawRectangle (gl, browser, shaderNode, renderObject, this .topTexture,    this .topBuffer,    this .topArrayObject);
+            this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer, this .bottomArrayObject);
          };
       })(),
       drawRectangle: function (gl, browser, shaderNode, renderObject, texture, buffer, vertexArray)

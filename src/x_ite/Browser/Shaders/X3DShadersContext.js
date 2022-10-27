@@ -63,6 +63,7 @@ function (Shading,
    const
       _wireframe      = Symbol (),
       _primitiveModes = Symbol (),
+      _defaultShader  = Symbol (),
       _shaders        = Symbol ();
 
    function X3DShadersContext ()
@@ -76,6 +77,7 @@ function (Shading,
    {
       initialize: function ()
       {
+         this .getDefaultShader ();
          this .setShading (this .getBrowserOptions () .getShading ());
       },
       getShadingLanguageVersion: function ()
@@ -109,6 +111,43 @@ function (Shading,
       getPrimitiveMode: function (primitiveMode)
       {
          return this [_primitiveModes] .get (primitiveMode);
+      },
+      getDefaultShader: function ()
+      {
+         const vs = /* glsl */ `data:x-shader/x-vertex,
+         precision highp float;
+
+         uniform mat4 x3d_ProjectionMatrix;
+         uniform mat4 x3d_ModelViewMatrix;
+
+         attribute vec4 x3d_Vertex;
+
+         void
+         main ()
+         {
+            gl_Position = x3d_ProjectionMatrix * (x3d_ModelViewMatrix * x3d_Vertex);
+         }
+         `;
+
+         const fs = /* glsl */ `data:x-shader/x-fragment,
+         precision highp float;
+
+         void
+         main ()
+         {
+            gl_FragColor = vec4 (vec3 (0.5), 1.0);
+         }
+         `;
+
+         this [_defaultShader] = this .createShader ("DefaultShader", vs, fs);
+
+         this .setShader (0xffffffff, this [_defaultShader]);
+
+         this .getDefaultShader = function () { return this [_defaultShader]; };
+
+         Object .defineProperty (this, "getDefaultShader", { enumerable: false });
+
+         return this [_defaultShader];
       },
       setShader: function (key, shaderNode)
       {
@@ -174,14 +213,14 @@ function (Shading,
 
          const vertexShader = new ShaderPart (this .getPrivateScene ());
          vertexShader .setName (name + "Vertex");
-         vertexShader ._url .push (urls .getShaderUrl ("webgl" + version + "/" + vs + ".vs"));
+         vertexShader ._url .push (vs .startsWith ("data:") ? vs : urls .getShaderUrl ("webgl" + version + "/" + vs + ".vs"));
          vertexShader .setOptions (options);
          vertexShader .setup ();
 
          const fragmentShader = new ShaderPart (this .getPrivateScene ());
          fragmentShader .setName (name + "Fragment");
          fragmentShader ._type  = "FRAGMENT";
-         fragmentShader ._url .push (urls .getShaderUrl ("webgl" + version + "/" + fs + ".fs"));
+         fragmentShader ._url .push (fs .startsWith ("data:") ? fs : urls .getShaderUrl ("webgl" + version + "/" + fs + ".fs"));
          fragmentShader .setOptions (options);
          fragmentShader .setup ();
 

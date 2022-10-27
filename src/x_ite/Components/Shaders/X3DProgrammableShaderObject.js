@@ -368,18 +368,6 @@ function (X3DCast,
          }
 
          gl .uniform1i  (this .x3d_TexCoordRamp, browser .getDefaultTexture2DUnit ());
-
-         /*
-          * Check x3d_Vertex.
-          */
-
-         // if (this .x3d_Vertex < 0)
-         // {
-         //    if (gl .getVersion () >= 2)
-         //      console .warn ("Missing »in vec4 x3d_Vertex;«.");
-         //    else
-         //       console .warn ("Missing »attribute vec4 x3d_Vertex;«.");
-         // }
       },
       getUniformLocation: function (gl, program, name, depreciated)
       {

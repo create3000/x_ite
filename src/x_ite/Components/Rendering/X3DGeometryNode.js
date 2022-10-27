@@ -1004,90 +1004,87 @@ function (Fields,
       },
       displayGeometry: function (gl, context, appearanceNode, shaderNode, back, front)
       {
-         if (shaderNode .isValid ())
+         const
+            browser       = this .getBrowser (),
+            blendModeNode = appearanceNode .getBlendMode (),
+            attribNodes   = this .attribNodes,
+            attribBuffers = this .attribBuffers,
+            primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
+
+         if (blendModeNode)
+            blendModeNode .enable (gl);
+
+         shaderNode .enable (gl);
+         shaderNode .setLocalUniforms (gl, context, front);
+
+         // Setup vertex attributes.
+
+         if (this .vertexArrayObject .enable (gl, shaderNode))
          {
-            const
-               browser       = this .getBrowser (),
-               blendModeNode = appearanceNode .getBlendMode (),
-               attribNodes   = this .attribNodes,
-               attribBuffers = this .attribBuffers,
-               primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
+            for (let i = 0, length = attribNodes .length; i < length; ++ i)
+               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-            if (blendModeNode)
-               blendModeNode .enable (gl);
+            if (this .hasFogCoords)
+               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
-            shaderNode .enable (gl);
-            shaderNode .setLocalUniforms (gl, context, front);
+            if (this .colorMaterial)
+               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-            // Setup vertex attributes.
+            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+            shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
+            shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+         }
 
-            if (this .vertexArrayObject .enable (gl, shaderNode))
+         // Draw depending on wireframe, solid and transparent.
+
+         if (browser .getWireframe ())
+         {
+            for (let i = 0, length = this .vertexCount; i < length; i += 3)
+               gl .drawArrays (primitiveMode, i, 3);
+         }
+         else
+         {
+            const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+
+            gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
+
+            if (context .transparent || back !== front)
             {
-               for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+               // Render transparent or back or front.
 
-               if (this .hasFogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+               gl .enable (gl .CULL_FACE);
 
-               if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+               // Render back.
 
-               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-               shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
-               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
-            }
-
-            // Draw depending on wireframe, solid and transparent.
-
-            if (browser .getWireframe ())
-            {
-               for (let i = 0, length = this .vertexCount; i < length; i += 3)
-                  gl .drawArrays (primitiveMode, i, 3);
-            }
-            else
-            {
-               const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
-
-               gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
-
-               if (context .transparent || back !== front)
+               if (back && ! this .solid)
                {
-                  // Render transparent or back or front.
-
-                  gl .enable (gl .CULL_FACE);
-
-                  // Render back.
-
-                  if (back && ! this .solid)
-                  {
-                     gl .cullFace (gl .FRONT);
-                     gl .drawArrays (primitiveMode, 0, this .vertexCount);
-                  }
-
-                  // Render front.
-
-                  if (front)
-                  {
-                     gl .cullFace (gl .BACK);
-                     gl .drawArrays (primitiveMode, 0, this .vertexCount);
-                  }
+                  gl .cullFace (gl .FRONT);
+                  gl .drawArrays (primitiveMode, 0, this .vertexCount);
                }
-               else
+
+               // Render front.
+
+               if (front)
                {
-                  // Render solid or both sides.
-
-                  if (this .solid)
-                     gl .enable (gl .CULL_FACE);
-                  else
-                     gl .disable (gl .CULL_FACE);
-
+                  gl .cullFace (gl .BACK);
                   gl .drawArrays (primitiveMode, 0, this .vertexCount);
                }
             }
+            else
+            {
+               // Render solid or both sides.
 
-            if (blendModeNode)
-               blendModeNode .disable (gl);
+               if (this .solid)
+                  gl .enable (gl .CULL_FACE);
+               else
+                  gl .disable (gl .CULL_FACE);
+
+               gl .drawArrays (primitiveMode, 0, this .vertexCount);
+            }
          }
+
+         if (blendModeNode)
+            blendModeNode .disable (gl);
       },
       displayParticlesDepth: function (gl, context, shaderNode, particleSystem)
       {
@@ -1127,89 +1124,86 @@ function (Fields,
       },
       displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particleSystem)
       {
-         if (shaderNode .isValid ())
+         const
+            browser       = this .getBrowser (),
+            blendModeNode = appearanceNode .getBlendMode (),
+            attribNodes   = this .attribNodes,
+            attribBuffers = this .attribBuffers,
+            primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
+
+         if (blendModeNode)
+            blendModeNode .enable (gl);
+
+         // Setup shader.
+
+         shaderNode .enable (gl);
+         shaderNode .setLocalUniforms (gl, context, front);
+
+         // Setup vertex attributes.
+
+         const outputParticles = particleSystem .outputParticles;
+
+         if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
          {
-            const
-               browser       = this .getBrowser (),
-               blendModeNode = appearanceNode .getBlendMode (),
-               attribNodes   = this .attribNodes,
-               attribBuffers = this .attribBuffers,
-               primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
+            const particleStride = particleSystem .particleStride;
 
-            if (blendModeNode)
-               blendModeNode .enable (gl);
+            shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+            shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
 
-            // Setup shader.
+            for (let i = 0, length = attribNodes .length; i < length; ++ i)
+               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-            shaderNode .enable (gl);
-            shaderNode .setLocalUniforms (gl, context, front);
+            if (this .hasFogCoords)
+               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
-            // Setup vertex attributes.
+            if (this .colorMaterial)
+               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-            const outputParticles = particleSystem .outputParticles;
+            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+            shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
+            shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
 
-            if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
+            this .updateParticles = false;
+         }
+
+         // Draw depending on wireframe, solid and transparent.
+
+         const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+
+         gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
+
+         if (context .transparent || back !== front)
+         {
+            // Render transparent or back or front.
+
+            gl .enable (gl .CULL_FACE);
+
+            if (back && ! this .solid)
             {
-               const particleStride = particleSystem .particleStride;
-
-               shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
-               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
-
-               for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-               if (this .hasFogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
-
-               if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
-
-               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-               shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
-               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
-
-               this .updateParticles = false;
-            }
-
-            // Draw depending on wireframe, solid and transparent.
-
-            const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
-
-            gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
-
-            if (context .transparent || back !== front)
-            {
-               // Render transparent or back or front.
-
-               gl .enable (gl .CULL_FACE);
-
-               if (back && ! this .solid)
-               {
-                  gl .cullFace (gl .FRONT);
-                  gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-               }
-
-               if (front)
-               {
-                  gl .cullFace (gl .BACK);
-                  gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-               }
-            }
-            else
-            {
-               // Render solid or both sides.
-
-               if (this .solid)
-                  gl .enable (gl .CULL_FACE);
-               else
-                  gl .disable (gl .CULL_FACE);
-
+               gl .cullFace (gl .FRONT);
                gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
             }
 
-            if (blendModeNode)
-               blendModeNode .disable (gl);
+            if (front)
+            {
+               gl .cullFace (gl .BACK);
+               gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+            }
          }
+         else
+         {
+            // Render solid or both sides.
+
+            if (this .solid)
+               gl .enable (gl .CULL_FACE);
+            else
+               gl .disable (gl .CULL_FACE);
+
+            gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+         }
+
+         if (blendModeNode)
+            blendModeNode .disable (gl);
       },
    });
 

@@ -977,64 +977,60 @@ function (Fields,
 
                // Setup shader.
 
-               if (shaderNode .isValid ())
+               context .geometryContext = this .geometryContext;
+
+               const blendModeNode = appearanceNode .getBlendMode ();
+
+               if (blendModeNode)
+                  blendModeNode .enable (gl);
+
+               shaderNode .enable (gl);
+               shaderNode .setLocalUniforms (gl, context);
+
+               if (this .numTexCoords)
                {
-                  context .geometryContext = this .geometryContext;
+                  const textureUnit = browser .getTexture2DUnit ();
 
-                  const blendModeNode = appearanceNode .getBlendMode ();
-
-                  if (blendModeNode)
-                     blendModeNode .enable (gl);
-
-                  shaderNode .enable (gl);
-                  shaderNode .setLocalUniforms (gl, context);
-
-                  if (this .numTexCoords)
-                  {
-                     const textureUnit = browser .getTexture2DUnit ();
-
-                     gl .activeTexture (gl .TEXTURE0 + textureUnit);
-                     gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
-                     gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
-                  }
-
-                  // Setup vertex attributes.
-
-                  const outputParticles = this .outputParticles;
-
-                  if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
-                  {
-                     const particleStride = this .particleStride;
-
-                     shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
-                     shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
-
-                     if (this .geometryContext .colorMaterial)
-                     {
-                        shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
-                        shaderNode .colorAttributeDivisor (gl, 1);
-                     }
-
-                     if (this .texCoordCount)
-                        shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
-
-                     if (this .hasNormals)
-                     {
-                        shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
-                        shaderNode .normalAttributeDivisor (gl, this .maxParticles);
-                     }
-
-                     shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
-                  }
-
-                  gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, this .numParticles);
-
-                  if (blendModeNode)
-                     blendModeNode .disable (gl);
-
-                  delete context .geometryContext;
+                  gl .activeTexture (gl .TEXTURE0 + textureUnit);
+                  gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+                  gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
                }
 
+               // Setup vertex attributes.
+
+               const outputParticles = this .outputParticles;
+
+               if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
+               {
+                  const particleStride = this .particleStride;
+
+                  shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
+                  shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
+
+                  if (this .geometryContext .colorMaterial)
+                  {
+                     shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
+                     shaderNode .colorAttributeDivisor (gl, 1);
+                  }
+
+                  if (this .texCoordCount)
+                     shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
+
+                  if (this .hasNormals)
+                  {
+                     shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
+                     shaderNode .normalAttributeDivisor (gl, this .maxParticles);
+                  }
+
+                  shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
+               }
+
+               gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, this .numParticles);
+
+               if (blendModeNode)
+                  blendModeNode .disable (gl);
+
+               delete context .geometryContext;
                break;
             }
          }

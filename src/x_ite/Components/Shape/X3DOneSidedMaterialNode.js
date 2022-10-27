@@ -181,7 +181,20 @@ function (Fields,
          shaderKey |= shadow                        << 18;
          shaderKey |= geometryContext .hasNormals   << 19;
 
-         return this .getBrowser () .getShader (shaderKey) || this .createShader (shaderKey, geometryContext, shadow);
+         const
+            browser    = this .getBrowser (),
+            shaderNode = browser .getShader (shaderKey) || this .createShader (shaderKey, geometryContext, shadow);
+
+         if (shaderNode .isValid ())
+         {
+            geometryContext .shaderNode = shaderNode;
+            return shaderNode;
+         }
+
+         if (geometryContext .shaderNode && geometryContext .shaderNode .isValid ())
+            return geometryContext .shaderNode;
+
+         return browser .getDefaultShader ();
       },
       createShader: function (shaderKey, geometryContext, shadow)
       { },
