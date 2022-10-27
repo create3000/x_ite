@@ -204,7 +204,7 @@ function (Fields,
       {
          return 3;
       },
-      createShader: function (shaderKey, geometryContext, shadow)
+      createShader: function (key, geometryContext, shadow)
       {
          const
             browser = this .getBrowser (),
@@ -238,7 +238,7 @@ function (Fields,
 
          const shaderNode = browser .createShader ("PhysicalMaterialShader", "Default", "PBR", options);
 
-         browser .setShader (shaderKey, shaderNode);
+         browser .setShader (key, shaderNode);
 
          return shaderNode;
       },

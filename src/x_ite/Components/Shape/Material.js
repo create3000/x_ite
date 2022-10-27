@@ -251,7 +251,7 @@ function (Fields,
                return 2;
          }
       },
-      createShader: function (shaderKey, geometryContext, shadow)
+      createShader: function (key, geometryContext, shadow)
       {
          const
             browser = this .getBrowser (),
@@ -305,7 +305,7 @@ function (Fields,
             }
          }
 
-         browser .setShader (shaderKey, shaderNode);
+         browser .setShader (key, shaderNode);
 
          return shaderNode;
       },

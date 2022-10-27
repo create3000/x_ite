@@ -119,7 +119,7 @@ function (Fields,
       {
          return 0;
       },
-      createShader: function (shaderKey, geometryContext, shadow)
+      createShader: function (key, geometryContext, shadow)
       {
          const
             browser = this .getBrowser (),
@@ -144,7 +144,7 @@ function (Fields,
 
          const shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
 
-         browser .setShader (shaderKey, shaderNode);
+         browser .setShader (key, shaderNode);
 
          return shaderNode;
       },

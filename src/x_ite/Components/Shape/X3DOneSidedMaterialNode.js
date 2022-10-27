@@ -170,20 +170,20 @@ function (Fields,
          //
          // 0  - 13 -> textures
          // 14 - 15 -> shader type
-         // 16 - 17 -> geometry type
-         // 18      -> shadow
+         // 16      -> shadow
+         // 17 - 18 -> geometry type
          // 19      -> normals
 
-         let shaderKey = this .textureBits .valueOf ();
+         let key = this .textureBits .valueOf ();
 
-         shaderKey |= this .getShaderType ()        << 14;
-         shaderKey |= geometryContext .geometryType << 16;
-         shaderKey |= shadow                        << 18;
-         shaderKey |= geometryContext .hasNormals   << 19;
+         key |= this .getShaderType ()        << 14;
+         key |= shadow                        << 16;
+         key |= geometryContext .geometryType << 17;
+         key |= geometryContext .hasNormals   << 19;
 
          const
             browser    = this .getBrowser (),
-            shaderNode = browser .getShader (shaderKey) || this .createShader (shaderKey, geometryContext, shadow);
+            shaderNode = browser .getShader (key) || this .createShader (key, geometryContext, shadow);
 
          if (shaderNode .isValid ())
          {
@@ -201,7 +201,7 @@ function (Fields,
             return browser .getDefaultShader ();
          }
       },
-      createShader: function (shaderKey, geometryContext, shadow)
+      createShader: function (key, geometryContext, shadow)
       { },
       getGeometryTypes: (function ()
       {
