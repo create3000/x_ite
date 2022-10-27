@@ -55,7 +55,6 @@ define ([
    "x_ite/Components/Shape/Material",
    "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
-   "standard/Utility/BitSet",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -63,8 +62,7 @@ function (Fields,
           X3DMaterialNode,
           Material,
           X3DConstants,
-          Algorithm,
-          BitSet)
+          Algorithm)
 {
 "use strict";
 
@@ -263,11 +261,7 @@ function (Fields,
       {
          this .setTransparent (Boolean (this ._transparency .getValue () || (this ._separateBackColor .getValue () && this ._backTransparency .getValue ())));
       },
-      textureBits: new BitSet (),
-      getTextureBits: Material .prototype .getTextureBits,
       getMaterialType: Material .prototype .getMaterialType,
-      getGeometryTypes: Material .prototype .getGeometryTypes,
-      getShader: Material .prototype .getShader,
       createShader: Material .prototype .createShader,
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, front)
       {

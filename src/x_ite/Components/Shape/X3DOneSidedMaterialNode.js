@@ -53,14 +53,12 @@
    "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
-   "standard/Utility/BitSet",
 ],
 function (Fields,
           X3DMaterialNode,
           X3DCast,
           X3DConstants,
-          Algorithm,
-          BitSet)
+          Algorithm)
 {
 "use strict";
 
@@ -73,7 +71,6 @@ function (Fields,
       this .addChildObjects ("textures", new Fields .SFTime ());
 
       this .emissiveColor = new Float32Array (3);
-      this .textureBits   = new BitSet ();
    }
 
    X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
@@ -151,55 +148,12 @@ function (Fields,
             return textureIndices;
          };
       })(),
-      setTexture: function (index, textureNode)
-      {
-         const textureType = textureNode ? textureNode .getTextureType () - 1 : 0;
-
-         this .textureBits .set (index * 2 + 0, textureType & 0b01);
-         this .textureBits .set (index * 2 + 1, textureType & 0b10);
-      },
-      getTextureBits: function ()
-      {
-         return this .textureBits;
-      },
-      getShader: function (geometryContext, shadow)
-      {
-         // Bit Schema of Shader Key
-         //
-         // 0  - 13 -> textures
-         // 14 - 15 -> shader type
-         // 16      -> shadow
-         // 17 - 18 -> geometry type
-         // 19      -> normals
-
-         let key = this .textureBits .valueOf ();
-
-         key |= this .getMaterialType ()      << 14;
-         key |= shadow                        << 16;
-         key |= geometryContext .geometryMask << 17;
-
-         return this .getBrowser () .getShader (key) || this .createShader (key, geometryContext, shadow);
-      },
-      getGeometryTypes: (function ()
-      {
-         const geometryTypes = [
-            "X3D_GEOMETRY_0D",
-            "X3D_GEOMETRY_1D",
-            "X3D_GEOMETRY_2D",
-            "X3D_GEOMETRY_3D",
-         ];
-
-         return function ()
-         {
-            return geometryTypes;
-         }
-      })(),
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
          gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
          gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
 
-         if (this .textureBits .valueOf ())
+         if (this .getTextureBits () .valueOf ())
          {
             // Emissive parameters
 

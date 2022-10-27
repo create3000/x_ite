@@ -51,10 +51,12 @@ define ([
    "x_ite/Fields",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
    "x_ite/Base/X3DConstants",
+   "standard/Utility/BitSet",
 ],
 function (Fields,
           X3DAppearanceChildNode,
-          X3DConstants)
+          X3DConstants,
+          BitSet)
 {
 "use strict";
 
@@ -67,6 +69,8 @@ function (Fields,
       this .addChildObjects ("transparent", new Fields .SFBool ());
 
       this ._transparent .setAccessType (X3DConstants .outputOnly);
+
+      this .textureBits = new BitSet ();
    }
 
    X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -81,6 +85,49 @@ function (Fields,
       {
          return this ._transparent .getValue ();
       },
+      setTexture: function (index, textureNode)
+      {
+         const textureType = textureNode ? textureNode .getTextureType () - 1 : 0;
+
+         this .textureBits .set (index * 2 + 0, textureType & 0b01);
+         this .textureBits .set (index * 2 + 1, textureType & 0b10);
+      },
+      getTextureBits: function ()
+      {
+         return this .textureBits;
+      },
+      getShader: function (geometryContext, shadow)
+      {
+         // Bit Schema of Shader Key
+         //
+         // 0  - 13 -> textures
+         // 14 - 15 -> shader type
+         // 16      -> shadow
+         // 17 - 18 -> geometry type
+         // 19      -> normals
+
+         let key = this .textureBits .valueOf ();
+
+         key |= this .getMaterialType ()      << 14;
+         key |= shadow                        << 16;
+         key |= geometryContext .geometryMask << 17;
+
+         return this .getBrowser () .getShader (key) || this .createShader (key, geometryContext, shadow);
+      },
+      getGeometryTypes: (function ()
+      {
+         const geometryTypes = [
+            "X3D_GEOMETRY_0D",
+            "X3D_GEOMETRY_1D",
+            "X3D_GEOMETRY_2D",
+            "X3D_GEOMETRY_3D",
+         ];
+
+         return function ()
+         {
+            return geometryTypes;
+         }
+      })(),
    });
 
    return X3DMaterialNode;
