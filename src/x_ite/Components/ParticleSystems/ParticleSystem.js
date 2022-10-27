@@ -52,6 +52,7 @@ define ([
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DShapeNode",
+   "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Browser/ParticleSystems/GeometryTypes",
    "x_ite/Rendering/VertexArray",
    "x_ite/Rendering/TraverseType",
@@ -67,6 +68,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShapeNode,
+          X3DGeometryNode,
           GeometryTypes,
           VertexArray,
           TraverseType,
@@ -189,9 +191,7 @@ function (Fields,
       {
          X3DShapeNode .prototype .initialize .call (this);
 
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
+         const browser = this .getBrowser ();
 
          if (browser .getContext () .getVersion () < 2)
             return;
@@ -238,7 +238,7 @@ function (Fields,
 
          // Geometry context
 
-         this .geometryContext .hasFogCoords                = false;
+         this .geometryContext .hasFogCoords             = false;
          this .geometryContext .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
          this .geometryContext .textureCoordinateMapping = new Map ();
 
@@ -436,6 +436,7 @@ function (Fields,
             }
          }
 
+         this .updateGeometryMask ();
          this .updateVertexArrays ();
 
          this .set_transparent__ ();
@@ -613,6 +614,7 @@ function (Fields,
          this .numColors                      = numColors;
          this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
 
+         this .updateGeometryMask ();
          this .updateVertexArrays ();
       },
       set_texCoordRamp__: function ()
@@ -657,6 +659,10 @@ function (Fields,
          this .numTexCoords = this .texCoordRampNode ? numTexCoords : 0;
 
          this .updateVertexArrays ();
+      },
+      updateGeometryMask: function ()
+      {
+         X3DGeometryNode .prototype .updateGeometryMask .call (this .geometryContext);
       },
       updateVertexArrays: function ()
       {

@@ -859,7 +859,8 @@ function (Fields,
 
             // Setup render functions.
 
-            this .setRenderFunctions ();
+            this .updateGeometryMask ();
+            this .updateRenderFunctions ();
          };
       })(),
       clear: function ()
@@ -953,7 +954,9 @@ function (Fields,
          gl .bufferData (gl .ARRAY_BUFFER, this .vertices .getValue (), gl .DYNAMIC_DRAW);
 
          this .vertexCount = this .vertices .length / 4;
-
+      },
+      updateGeometryMask: function ()
+      {
          // Mask
          // 0 - 1 -> geometry type
          // 2     -> normals
@@ -961,7 +964,7 @@ function (Fields,
          this .geometryMask  = this .geometryType;
          this .geometryMask |= this .hasNormals << 2;
       },
-      setRenderFunctions: function ()
+      updateRenderFunctions: function ()
       {
          if (this .vertexCount)
          {

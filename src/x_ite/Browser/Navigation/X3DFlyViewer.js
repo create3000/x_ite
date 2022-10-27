@@ -51,6 +51,7 @@ define ([
    "jquery",
    "x_ite/Browser/Navigation/X3DViewer",
    "x_ite/Components/Followers/OrientationChaser",
+   "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Rendering/VertexArray",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
@@ -61,6 +62,7 @@ define ([
 function ($,
           X3DViewer,
           OrientationChaser,
+          X3DGeometryNode,
           VertexArray,
           Vector3,
           Rotation4,
@@ -86,6 +88,8 @@ function ($,
       PAN  = 1;
 
    const geometryContext = { geometryType: 1, colorMaterial: false, hasNormals: false };
+
+   X3DGeometryNode .prototype .updateGeometryMask .call (geometryContext);
 
    function X3DFlyViewer (executionContext)
    {

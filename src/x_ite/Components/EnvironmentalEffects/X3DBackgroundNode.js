@@ -49,6 +49,7 @@
 
 define ([
    "x_ite/Components/Core/X3DBindableNode",
+   "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Rendering/VertexArray",
    "x_ite/Rendering/TraverseType",
    "x_ite/Base/X3DConstants",
@@ -60,6 +61,7 @@ define ([
    "standard/Math/Algorithm",
 ],
 function (X3DBindableNode,
+          X3DGeometryNode,
           VertexArray,
           TraverseType,
           X3DConstants,
@@ -603,6 +605,8 @@ function (X3DBindableNode,
             textureMatrixArray = new Float32Array (Matrix4 .Identity),
             white              = new Float32Array ([1, 1, 1]),
             geometryContext    = { geometryType: 3, colorMaterial: false, hasNormals: false };
+
+         X3DGeometryNode .prototype .updateGeometryMask .call (geometryContext);
 
          return function (renderObject)
          {
