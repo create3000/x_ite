@@ -24,7 +24,7 @@ getMaterialColor ()
    finalColor = getProjectiveTextureColor (finalColor);
 
    #if defined (X3D_SHADOWS)
-      vec3  N = normalize (normal);
+      vec3 N = normalize (normal);
 
       for (int i = 0; i < x3d_MaxLights; ++ i)
       {

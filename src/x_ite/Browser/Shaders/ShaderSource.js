@@ -108,7 +108,7 @@ function (ClipPlanes1,
 {
 "use strict";
 
-   const include = /^#pragma\s+X3D\s+include\s+".*?([^\/]+)\.glsl"\s*$/;
+   const include = /^\s*#pragma\s+X3D\s+include\s+".*?([^\/]+)\.glsl"\s*$/;
 
    const includes1 = {
       ClipPlanes: ClipPlanes1,
