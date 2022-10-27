@@ -902,11 +902,6 @@ function (Fields,
                   this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
             }
          }
-         else
-         {
-            if (this .geometryType !== GeometryTypes .GEOMETRY)
-               this .getAppearance () .getFrontShader (this .geometryContext, renderObject .getShadow ());
-         }
       },
       depth: function (gl, context, shaderNode)
       {
