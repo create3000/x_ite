@@ -311,8 +311,6 @@ function (Fields,
 
          browser .setShader (key, shaderNode);
 
-         console .log (shaderNode .getName (), key .toString (2))
-
          return shaderNode;
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)

@@ -907,14 +907,14 @@ function (Fields,
 
          // Transfer fog depths.
 
-         const lastFogCoords = this .hasFogCoords;
+         const lastHasFogCoords = this .hasFogCoords;
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .fogDepthBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, this .fogDepths .getValue (), gl .DYNAMIC_DRAW);
 
          this .hasFogCoords = !! this .fogDepths .length;
 
-         if (this .hasFogCoords !== lastFogCoords)
+         if (this .hasFogCoords !== lastHasFogCoords)
             this .updateVertexArrays ();
 
          // Transfer colors.
@@ -939,9 +939,14 @@ function (Fields,
 
          // Transfer normals or flat normals.
 
+         const lastHasNormals = this .hasNormals;
+
          this .set_shading__ (this .getBrowser () .getBrowserOptions () ._Shading);
 
          this .hasNormals = !! this .normals .getValue () .length;
+
+         if (this .hasNormals !== lastHasNormals)
+            this .updateVertexArrays ();
 
          // Transfer vertices.
 
