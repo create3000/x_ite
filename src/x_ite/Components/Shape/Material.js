@@ -257,13 +257,21 @@ function (Fields,
             browser = this .getBrowser (),
             options = [ ];
 
+         if (! geometryContext .hasNormals)
+         {
+            const shaderNode = browser .getDefaultMaterial () .getShader (geometryContext, shadow);
+
+            browser .setShader (key, shaderNode);
+
+            return shaderNode;
+         }
+
          options .push (this .getGeometryTypes () [geometryContext .geometryType])
 
          if (shadow)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
-         if (geometryContext .hasNormals)
-            options .push ("X3D_NORMALS");
+         options .push ("X3D_NORMALS");
 
          if (this .getTextureBits () .valueOf ())
          {
