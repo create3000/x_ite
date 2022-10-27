@@ -125,9 +125,7 @@ function (Fields,
             browser = this .getBrowser (),
             options = [ ];
 
-         options .push ("X3D_UNLIT");
-
-         options .push (this .getGeometryTypes () [geometryContext .geometryType])
+         options .push ("X3D_UNLIT", this .getGeometryTypes () [geometryContext .geometryType])
 
          if (shadow)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
@@ -136,15 +134,19 @@ function (Fields,
             options .push ("X3D_NORMALS");
 
          if (this .getTextureBits () .valueOf ())
+         {
             options .push ("X3D_MATERIAL_TEXTURES");
 
-         if (this .getEmissiveTexture ())
-            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+            if (this .getEmissiveTexture ())
+               options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
 
-         if (this .getNormalTexture ())
-            options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+            if (this .getNormalTexture ())
+               options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+         }
 
          const shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
+
+         browser .setShader (key, shaderNode);
 
          return shaderNode;
       },

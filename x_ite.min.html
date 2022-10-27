@@ -265,6 +265,8 @@ X3D (function ()
    {
       const history = localStorage ["Bookmarks.history"];
 
+      localStorage ["Bookmarks.url"] = url;
+
       if (url !== history .at (-1))
       {
          history .push (url);
@@ -272,6 +274,9 @@ X3D (function ()
          localStorage ["Bookmarks.history"] = history;
          index = history .length - 1;
       }
+
+      if (location .href .includes (".min.html") && url .startsWith ("tests/"))
+         url = "src/" + url;
 
       bookmarks .loadURL (url);
    }
@@ -296,7 +301,7 @@ X3D (function ()
    const bookmarks = new Bookmarks (Browser, $(".examples-box"));
 
    bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
-   bookmarks .restore ("https://create3000.github.io/media/x_ite/info/info.x3d");
+   loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
 
    $(".version") .text (Browser .name + " v" + Browser .version);
    $(".file") .append ($("<a></a>") .attr ('href', "tests/d3/ParticlePlot.html") .text ("d3"));
@@ -329,7 +334,7 @@ function (error)
    console .error (error);
 });
    </script>
-   <script type="text/javascript" src="tests/menu.js"></script>
+   <script type="text/javascript" src="src/tests/menu.js"></script>
 </head>
 <body>
    <div class="page">

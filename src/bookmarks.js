@@ -121,15 +121,6 @@ const Bookmarks = (function ()
          }
          .bind (this));
       },
-      restore: function (first)
-      {
-         const url = this .browser .getLocalStorage () ["Bookmarks.url"];
-
-         if (url)
-            this .loadURL (url);
-         else
-            this .loadURL (first);
-      },
       loadURL: function (url)
       {
          const base = url .replace (/\.[^\.]+$/, "");
@@ -148,7 +139,6 @@ const Bookmarks = (function ()
             .on ("click", this .loadURL .bind (this, base + ".x3dj"))
             .text (".x3dj"));
 
-         this .browser .getLocalStorage () ["Bookmarks.url"] = url;
          this .browser .loadURL (new X3D .MFString (url), new X3D .MFString ());
          return false;
       },
