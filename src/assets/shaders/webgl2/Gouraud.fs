@@ -24,9 +24,7 @@ getMaterialColor ()
    finalColor = getProjectiveTextureColor (finalColor);
 
    #if defined (X3D_SHADOWS)
-      vec3  N               = normalize (normal);
-      vec3  shadowColor     = vec3 (0.0);
-      float shadowIntensity = 0.0;
+      vec3  N = normalize (normal);
 
       for (int i = 0; i < x3d_MaxLights; ++ i)
       {
@@ -47,14 +45,9 @@ getMaterialColor ()
             float lightAngle = dot (N, L); // Angle between normal and light ray.
 
             if (lightAngle > 0.0)
-            {
-               shadowColor     += light .shadowColor;
-               shadowIntensity += getShadowIntensity (i, light);
-            }
+               finalColor .rgb = mix (finalColor .rgb, light .shadowColor, getShadowIntensity (i, light) * 0.8);
          }
       }
-
-      finalColor .rgb = mix (finalColor .rgb, shadowColor, shadowIntensity);
    #endif
 
    return finalColor;

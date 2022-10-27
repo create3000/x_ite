@@ -257,12 +257,7 @@ function ($,
       },
       replaceWorld: function (scene)
       {
-         // Cancel any loading.
-
-         this ._loadCount       .removeInterest ("set_loadCount__", this);
-         this .prepareEvents () .removeInterest ("bind", this);
-
-         if (this [_loader])
+          if (this [_loader])
             this [_loader] .abort ();
 
          // Remove world.
@@ -301,12 +296,11 @@ function ($,
 
          // Replace.
 
-         this .description = "";
-
+         this .setDescription ("");
          this .getBrowserOptions () .configure ();
          this .setBrowserLoading (true);
-         this ._loadCount .addInterest ("set_loadCount__", this);
          this .prepareEvents () .removeInterest ("bind", this);
+         this ._loadCount .addInterest ("set_loadCount__", this);
 
          for (const object of scene .getLoadingObjects ())
             this .addLoadCount (object);
