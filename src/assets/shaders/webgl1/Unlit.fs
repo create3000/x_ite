@@ -1,41 +1,12 @@
-
-#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-#extension GL_EXT_frag_depth : enable
-#endif
-
 precision highp float;
 precision highp int;
+precision highp sampler2D;
+precision highp samplerCube;
 
-uniform int   x3d_GeometryType;
-uniform float x3d_AlphaCutoff;
-uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
+#pragma X3D include "include/Fragment.glsl"
+#pragma X3D include "include/ShadowColor.glsl"
 
 uniform x3d_UnlitMaterialParameters x3d_Material;
-
-varying float fogDepth;    // fog depth
-varying vec4  color;       // color
-varying vec3  normal;      // normal vector at this point on geometry
-varying vec3  vertex;      // point on geometry
-varying vec3  localNormal; // normal vector at this point on geometry in local coordinates
-varying vec3  localVertex; // point on geometry in local coordinates
-
-#if x3d_MaxTextures > 0
-varying vec4 texCoord0; // texCoord0
-#endif
-
-#if x3d_MaxTextures > 1
-varying vec4 texCoord1; // texCoord1
-#endif
-
-#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-uniform float x3d_LogarithmicFarFactor1_2;
-varying float depth;
-#endif
-
-#pragma X3D include "include/Texture.glsl"
-#pragma X3D include "include/Hatch.glsl"
-#pragma X3D include "include/Fog.glsl"
-#pragma X3D include "include/ClipPlanes.glsl"
 
 #if defined (X3D_EMISSIVE_TEXTURE)
 uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
@@ -51,7 +22,7 @@ getEmissiveColor ()
 
    // Get texture color.
 
-   #if defined (X3D_EMISSIVE_TEXTURE) && ! defined (X3D_EMISSIVE_TEXTURE_3D)
+   #if defined (X3D_EMISSIVE_TEXTURE)
       vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
 
       #if defined (X3D_EMISSIVE_TEXTURE_2D)
@@ -67,43 +38,17 @@ getEmissiveColor ()
 vec4
 getMaterialColor ()
 {
-   return getEmissiveColor ();
-}
+   vec4 finalColor = getEmissiveColor ();
 
-// DEBUG
-//uniform ivec4 x3d_Viewport;
+   #if defined (X3D_SHADOWS)
+   finalColor .rgb = getShadowColor (normal, finalColor .rgb);
+   #endif
+
+   return finalColor;
+}
 
 void
 main ()
 {
-   clip ();
-
-   vec4 finalColor = vec4 (0.0);
-
-   finalColor      = getMaterialColor ();
-   finalColor      = getHatchColor (finalColor);
-   finalColor .rgb = getFogColor (finalColor .rgb);
-
-   if (finalColor .a < x3d_AlphaCutoff)
-      discard;
-
-   gl_FragColor = finalColor;
-
-   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-   //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-   if (x3d_LogarithmicFarFactor1_2 > 0.0)
-      gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
-   else
-      gl_FragDepthEXT = gl_FragCoord .z;
-   #endif
-
-   // DEBUG
-   #if defined (X3D_SHADOWS)
-   //gl_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;
-   //gl_FragColor .rgb = mix (tex .rgb, gl_FragColor .rgb, 0.5);
-   #endif
-
-   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-   //gl_FragColor .rgb = mix (vec3 (1.0, 0.0, 0.0), gl_FragColor .rgb, 0.5);
-   #endif
+   fragment_main ();
 }

@@ -151,8 +151,10 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
 
    texCoord .stp /= texCoord .q;
 
-   if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
+   #if defined (X3D_GEOMETRY_2D)
+   if (gl_FrontFacing == false)
       texCoord .s = 1.0 - texCoord .s;
+   #endif
 
    return texCoord .stp;
 }
@@ -510,8 +512,10 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 
    texCoord .stp /= texCoord .q;
 
-   if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing ? false : true))
+   #if defined (X3D_GEOMETRY_2D)
+   if (gl_FrontFacing == false)
       texCoord .s = 1.0 - texCoord .s;
+   #endif
 
    if (x3d_TextureType [0] == x3d_TextureType2D)
    {

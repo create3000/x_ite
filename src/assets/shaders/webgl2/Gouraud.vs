@@ -3,11 +3,13 @@
 precision highp float;
 precision highp int;
 precision highp sampler2D;
+precision highp sampler3D;
+precision highp samplerCube;
 
 #pragma X3D include "include/Vertex.glsl"
 #pragma X3D include "include/Material.glsl"
 
-uniform bool x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
+uniform bool x3d_ColorMaterial;
 
 out vec4 frontColor;
 out vec4 backColor;

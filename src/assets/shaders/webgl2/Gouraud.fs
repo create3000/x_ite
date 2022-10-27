@@ -2,7 +2,9 @@
 
 precision highp float;
 precision highp int;
+precision highp sampler2D;
 precision highp sampler3D;
+precision highp samplerCube;
 
 #pragma X3D include "include/Fragment.glsl"
 #pragma X3D include "include/ShadowColor.glsl"
