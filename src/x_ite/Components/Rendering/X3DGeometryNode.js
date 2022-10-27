@@ -849,16 +849,9 @@ function (Fields,
                this .multiTexCoords .length = maxTextures;
             }
 
-            // Upload normals or flat normals.
-
-            this .set_shading__ (this .getBrowser () .getBrowserOptions () ._Shading);
-
-            // Upload arrays.
+            // Transfer arrays and update.
 
             this .transfer ();
-
-            // Setup render functions.
-
             this .updateGeometryMask ();
             this .updateRenderFunctions ();
          };
@@ -944,7 +937,9 @@ function (Fields,
             gl .bufferData (gl .ARRAY_BUFFER, this .multiTexCoords [i] .getValue (), gl .DYNAMIC_DRAW);
          }
 
-         // Normals
+         // Transfer normals or flat normals.
+
+         this .set_shading__ (this .getBrowser () .getBrowserOptions () ._Shading);
 
          this .hasNormals = !! this .normals .getValue () .length;
 
