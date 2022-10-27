@@ -10,7 +10,10 @@ precision highp samplerCube;
 #pragma X3D include "include/ShadowColor.glsl"
 
 in vec4 frontColor;
-in vec4 backColor;
+
+#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+   in vec4 backColor;
+#endif
 
 vec4
 getMaterialColor ()
@@ -25,7 +28,7 @@ getMaterialColor ()
    finalColor = getProjectiveTextureColor (finalColor);
 
    #if defined (X3D_SHADOWS)
-   finalColor .rgb = getShadowColor (normal, finalColor .rgb);
+      finalColor .rgb = getShadowColor (normal, finalColor .rgb);
    #endif
 
    return finalColor;

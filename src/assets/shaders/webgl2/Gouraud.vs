@@ -12,7 +12,10 @@ precision highp samplerCube;
 uniform bool x3d_ColorMaterial;
 
 out vec4 frontColor;
-out vec4 backColor;
+
+#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+   out vec4 backColor;
+#endif
 
 vec4
 getMaterialColor (const in vec3 N,
@@ -46,12 +49,10 @@ main ()
 {
    vertex_main ();
 
-   normal = normalize (normal);
+   normal     = normalize (normal);
+   frontColor = getMaterialColor (normal, vertex, x3d_Material);
 
-   #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
-      frontColor = getMaterialColor ( normal, vertex, x3d_Material);
-   #else
-      frontColor = getMaterialColor ( normal, vertex, x3d_Material);
-      backColor  = getMaterialColor (-normal, vertex, x3d_Material);
+   #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+      backColor = getMaterialColor (-normal, vertex, x3d_Material);
    #endif
 }

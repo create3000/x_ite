@@ -140,7 +140,6 @@ const Bookmarks = (function ()
             .text (".x3dj"));
 
          this .browser .loadURL (new X3D .MFString (url), new X3D .MFString ());
-         return false;
       },
    };
 
