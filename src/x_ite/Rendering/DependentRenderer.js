@@ -83,10 +83,6 @@ function (X3DBaseNode,
       {
          this .renderObject = value;
       },
-      getBrowser: function ()
-      {
-         return this .this .getBrowser ();
-      },
       getLayer: function ()
       {
          return this .renderObject .getLayer ();
