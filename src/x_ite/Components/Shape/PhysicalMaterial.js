@@ -211,13 +211,7 @@ function (Fields,
             options = [ ];
 
          if (! geometryContext .hasNormals)
-         {
-            const shaderNode = browser .getDefaultMaterial () .getShader (geometryContext, shadow);
-
-            browser .setShader (key, shaderNode);
-
-            return shaderNode;
-         }
+            return browser .getDefaultMaterial () .createShader (key, geometryContext, shadow);
 
          options .push ("X3D_PHYSICAL", this .getGeometryTypes () [geometryContext .geometryType]);
 
