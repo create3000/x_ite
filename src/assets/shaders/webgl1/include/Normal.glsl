@@ -36,7 +36,7 @@ getNormalVector (const in float normalScale)
       #if defined (X3D_NORMAL_TEXTURE_2D)
          vec3 n = texture2D (x3d_NormalTexture .texture2D, texCoord .st) .rgb;
       #elif defined (X3D_NORMAL_TEXTURE_CUBE)
-         vec3 n = textureCube (x3d_NormalTexture .textureCube, texCoord .stp) .rgb;
+         vec3 n = textureCube (x3d_NormalTexture .textureCube, texCoord) .rgb;
       #endif
 
       return normalize (tbn * ((n * 2.0 - 1.0) * s)) * facing;

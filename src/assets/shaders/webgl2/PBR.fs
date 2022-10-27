@@ -42,9 +42,9 @@ getBaseColor ()
       #if defined (X3D_BASE_TEXTURE_2D)
          return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .texture2D, texCoord .st));
       #elif defined (X3D_BASE_TEXTURE_3D)
-         return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .texture3D, texCoord .stp));
+         return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .texture3D, texCoord));
       #elif defined (X3D_BASE_TEXTURE_CUBE)
-         return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .textureCube, texCoord .stp));
+         return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .textureCube, texCoord));
       #endif
    #else
       return getTextureColor (baseParameter, vec4 (vec3 (1.0), alpha));
@@ -70,9 +70,9 @@ getEmissiveColor ()
       #if defined (X3D_EMISSIVE_TEXTURE_2D)
          return emissiveParameter * SRGBtoLINEAR (texture (x3d_EmissiveTexture .texture2D, texCoord .st)) .rgb;
       #elif defined (X3D_EMISSIVE_TEXTURE_3D)
-         return emissiveParameter * SRGBtoLINEAR (texture (x3d_EmissiveTexture .texture3D, texCoord .stp)) .rgb;
+         return emissiveParameter * SRGBtoLINEAR (texture (x3d_EmissiveTexture .texture3D, texCoord)) .rgb;
       #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
-         return emissiveParameter * SRGBtoLINEAR (texture (x3d_EmissiveTexture .textureCube, texCoord .stp)) .rgb;
+         return emissiveParameter * SRGBtoLINEAR (texture (x3d_EmissiveTexture .textureCube, texCoord)) .rgb;
       #endif
    #else
       return emissiveParameter .rgb;
@@ -101,9 +101,9 @@ getMetallicRoughness ()
       #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
          vec4 mrSample = texture (x3d_MetallicRoughnessTexture .texture2D, texCoord .st);
       #elif defined (X3D_METALLIC_ROUGHNESS_TEXTURE_3D)
-         vec4 mrSample = texture (x3d_MetallicRoughnessTexture .texture3D, texCoord .stp);
+         vec4 mrSample = texture (x3d_MetallicRoughnessTexture .texture3D, texCoord);
       #elif defined (X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)
-         vec4 mrSample = texture (x3d_MetallicRoughnessTexture .textureCube, texCoord .stp);
+         vec4 mrSample = texture (x3d_MetallicRoughnessTexture .textureCube, texCoord);
       #endif
       metallic            *= mrSample .b;
       perceptualRoughness *= mrSample .g;
@@ -129,9 +129,9 @@ getOcclusionFactor ()
       #if defined (X3D_OCCLUSION_TEXTURE_2D)
          return texture (x3d_OcclusionTexture .texture2D, texCoord .st) .r;
       #elif defined (X3D_OCCLUSION_TEXTURE_3D)
-         return texture (x3d_OcclusionTexture .texture3D, texCoord .stp) .r;
+         return texture (x3d_OcclusionTexture .texture3D, texCoord) .r;
       #elif defined (X3D_OCCLUSION_TEXTURE_CUBE)
-         return texture (x3d_OcclusionTexture .textureCube, texCoord .stp) .r;
+         return texture (x3d_OcclusionTexture .textureCube, texCoord) .r;
       #endif
    #else
       return 1.0;

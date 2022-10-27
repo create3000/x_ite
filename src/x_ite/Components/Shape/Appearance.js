@@ -185,11 +185,43 @@ function (Fields,
       },
       getFrontShader: function (geometryContext, shadow)
       {
-         return this .shaderNode || this .materialNode .getShader (geometryContext, shadow);
+         const shaderNode = this .shaderNode || this .materialNode .getShader (geometryContext, shadow);
+
+         if (shaderNode .isValid ())
+         {
+            geometryContext .shaderNode = shaderNode;
+
+            return shaderNode;
+         }
+         else
+         {
+            const shaderNode = geometryContext .shaderNode;
+
+            if (shaderNode && shaderNode .isValid ())
+               return shaderNode;
+
+            return this .getBrowser () .getDefaultShader ();
+         }
       },
       getBackShader: function (geometryContext, shadow)
       {
-         return this .shaderNode || this .backMaterialNode .getShader (geometryContext, shadow);
+         const shaderNode = this .shaderNode || this .backMaterialNode .getShader (geometryContext, shadow);
+
+         if (shaderNode .isValid ())
+         {
+            geometryContext .shaderNode = shaderNode;
+
+            return shaderNode;
+         }
+         else
+         {
+            const shaderNode = geometryContext .shaderNode;
+
+            if (shaderNode && shaderNode .isValid ())
+               return shaderNode;
+
+            return this .getBrowser () .getDefaultShader ();
+         }
       },
       getBlendMode: function ()
       {
