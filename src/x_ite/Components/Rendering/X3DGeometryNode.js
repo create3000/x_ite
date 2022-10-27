@@ -126,6 +126,7 @@ function (Fields,
       this .vertices                 = X3DGeometryNode .createArray ();
       this .hasFogCoords             = false;
       this .hasNormals               = false;
+      this .geometryMask             = 0;
       this .vertexCount              = 0;
       this .planes                   = [ ];
 
@@ -952,6 +953,13 @@ function (Fields,
          gl .bufferData (gl .ARRAY_BUFFER, this .vertices .getValue (), gl .DYNAMIC_DRAW);
 
          this .vertexCount = this .vertices .length / 4;
+
+         // Mask
+         // 0 - 1 -> geometry type
+         // 2     -> normals
+
+         this .geometryMask  = this .geometryType;
+         this .geometryMask |= this .hasNormals << 2;
       },
       setRenderFunctions: function ()
       {

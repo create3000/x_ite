@@ -178,8 +178,7 @@ function (Fields,
 
          key |= this .getShaderType ()        << 14;
          key |= shadow                        << 16;
-         key |= geometryContext .geometryType << 17;
-         key |= geometryContext .hasNormals   << 19;
+         key |= geometryContext .geometryMask << 17;
 
          const
             browser    = this .getBrowser (),
