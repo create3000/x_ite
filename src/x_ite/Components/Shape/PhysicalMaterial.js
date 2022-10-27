@@ -210,6 +210,8 @@ function (Fields,
             browser = this .getBrowser (),
             options = [ ];
 
+         options .push ("X3D_PHYSICAL");
+
          options .push (this .getGeometryTypes () [geometryContext .geometryType])
 
          if (shadow)
