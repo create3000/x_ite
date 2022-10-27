@@ -188,13 +188,18 @@ function (Fields,
          if (shaderNode .isValid ())
          {
             geometryContext .shaderNode = shaderNode;
+
             return shaderNode;
          }
+         else
+         {
+            const shaderNode = geometryContext .shaderNode;
 
-         if (geometryContext .shaderNode && geometryContext .shaderNode .isValid ())
-            return geometryContext .shaderNode;
+            if (shaderNode && shaderNode .isValid ())
+               return shaderNode;
 
-         return browser .getDefaultShader ();
+            return browser .getDefaultShader ();
+         }
       },
       createShader: function (shaderKey, geometryContext, shadow)
       { },
