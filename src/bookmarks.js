@@ -81,7 +81,7 @@ const Bookmarks = (function ()
                         .addClass ('display-example')
                         .attr ('href', server + '/' + component + '/' + test + '/' + test + '.x3d')
                         .attr ('style', 'background-image:url(' + server + '/' + component + '/' + test + '/screenshot-small.png)')
-                        .click (this .loadURL .bind (this, server + '/' + component + '/' + test + '/' + test + '.x3d')));
+                        .on ("click", window .loadURL .bind (null, server + '/' + component + '/' + test + '/' + test + '.x3d')));
                }
                else if (path)
                {
@@ -97,7 +97,7 @@ const Bookmarks = (function ()
                      .append ($("<a/>")
                         .addClass ('display-example')
                         .attr ('href', server + '/' + path)
-                        .click (this .loadURL .bind (this, server + '/' + path))
+                        .on ("click", window .loadURL .bind (null, server + '/' + path))
                         .text (name));
                }
                else if (component)
@@ -128,15 +128,15 @@ const Bookmarks = (function ()
          $(".file") .text (url)
             .append ($("<a/>")
             .attr ('href', base + ".x3d")
-            .on ("click", this .loadURL .bind (this, base + ".x3d"))
+            .on ("click", window .loadURL .bind (null, base + ".x3d"))
             .text (".x3d"))
             .append ($("<a/>")
             .attr ('href', base + ".x3dv")
-            .on ("click", this .loadURL .bind (this, base + ".x3dv"))
+            .on ("click", window .loadURL .bind (null, base + ".x3dv"))
             .text (".x3dv"))
             .append ($("<a/>")
             .attr ('href', base + ".x3dj")
-            .on ("click", this .loadURL .bind (this, base + ".x3dj"))
+            .on ("click", window .loadURL .bind (null, base + ".x3dj"))
             .text (".x3dj"));
 
          this .browser .loadURL (new X3D .MFString (url), new X3D .MFString ());

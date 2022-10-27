@@ -15,7 +15,11 @@ in vec4 backColor;
 vec4
 getMaterialColor ()
 {
-   vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
+   #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
+      vec4 finalColor = frontColor;
+   #else
+      vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
+   #endif
 
    finalColor = getTextureColor (finalColor, vec4 (1.0));
    finalColor = getProjectiveTextureColor (finalColor);

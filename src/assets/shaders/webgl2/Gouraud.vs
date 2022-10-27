@@ -46,7 +46,12 @@ main ()
 {
    vertex_main ();
 
-   normal     = normalize (normal);
-   frontColor = getMaterialColor ( normal, vertex, x3d_Material);
-   backColor  = getMaterialColor (-normal, vertex, x3d_Material);
+   normal = normalize (normal);
+
+   #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
+      frontColor = getMaterialColor ( normal, vertex, x3d_Material);
+   #else
+      frontColor = getMaterialColor ( normal, vertex, x3d_Material);
+      backColor  = getMaterialColor (-normal, vertex, x3d_Material);
+   #endif
 }
