@@ -15,7 +15,7 @@ uniform x3d_AmbientTextureParameters x3d_AmbientTexture;
 #endif
 
 vec3
-getAmbientColor (in vec3 diffuseColor)
+getAmbientColor (const in vec3 diffuseColor)
 {
    // Get ambient parameter.
 

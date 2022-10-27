@@ -160,7 +160,7 @@ getIBLContribution (const in PBRInfo pbrInputs, vec3 n, const in vec3 reflection
    float lod      = pbrInputs .perceptualRoughness * mipCount;
 
    // retrieve a scale and bias to F0. See [1], Figure 3
-   vec3 brdf         = SRGBtoLINEAR (texture (brdfLUT, vec2 (pbrInputs .NdotV, 1.0 - pbrInputs .perceptualRoughness))) .rgb;
+   vec3 brdf         = SRGBtoLINEAR (texture2D (brdfLUT, vec2 (pbrInputs .NdotV, 1.0 - pbrInputs .perceptualRoughness))) .rgb;
    vec3 diffuseLight = SRGBtoLINEAR (textureCube (diffuseEnvironmentTexture, n)) .rgb;
 
    #if defined (USE_TEX_LOD)
