@@ -172,7 +172,7 @@ getMaterialColor ()
       vec3  diffuseColor      = diffuseColorAlpha .rgb;
       vec3  ambientColor      = getAmbientColor (diffuseColor);
       vec3  specularColor     = getSpecularColor ();
-      float shininessFactor   = getShininessFactor ();
+      float shininess         = getShininessFactor ();
 
       // Projective texture
 
@@ -181,7 +181,7 @@ getMaterialColor ()
       diffuseColor *= P .rgb;
       alpha        *= P .a;
 
-      vec3 finalColor = getMaterialColor (vertex, getNormalVector (), ambientColor, diffuseColor, specularColor, shininessFactor);
+      vec3 finalColor = getMaterialColor (vertex, getNormalVector (), ambientColor, diffuseColor, specularColor, shininess);
    #else
       float alpha      = 1.0 - x3d_Material .transparency;
       vec3  finalColor = vec3 (0.0);
