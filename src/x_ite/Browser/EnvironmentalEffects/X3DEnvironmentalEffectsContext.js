@@ -54,25 +54,13 @@ function (TextureProperties)
 {
 "use strict";
 
-   const
-      _backgroundSphereShader      = Symbol (),
-      _backgroundTextureProperties = Symbol ();
+   const _backgroundTextureProperties = Symbol ();
 
    function X3DEnvironmentalEffectsContext () { }
 
    X3DEnvironmentalEffectsContext .prototype =
    {
       initialize: function () { },
-      getBackgroundSphereShader: function ()
-      {
-         this [_backgroundSphereShader] = this .createShader ("BackgroundSphereShader", "Background");
-
-         this .getBackgroundSphereShader = function () { return this [_backgroundSphereShader]; };
-
-         Object .defineProperty (this, "getBackgroundSphereShader", { enumerable: false });
-
-         return this [_backgroundSphereShader];
-      },
       getBackgroundTextureProperties: function ()
       {
          this [_backgroundTextureProperties] = new TextureProperties (this .getPrivateScene ());

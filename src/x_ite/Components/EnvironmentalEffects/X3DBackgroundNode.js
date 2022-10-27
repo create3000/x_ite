@@ -131,7 +131,6 @@ function (X3DBindableNode,
          this ._groundColor  .addInterest ("build", this);
          this ._skyAngle     .addInterest ("build", this);
          this ._skyColor     .addInterest ("build", this);
-         this ._transparency .addInterest ("build", this);
 
          this .build ();
          this .transferRectangle ();
@@ -233,11 +232,6 @@ function (X3DBindableNode,
          this .colors .length = 0;
          this .sphere .length = 0;
 
-         if (this ._transparency .getValue () >= 1)
-            return;
-
-         const alpha = 1 - Algorithm .clamp (this ._transparency .getValue (), 0, 1);
-
          if (this ._groundColor .length === 0 && this ._skyColor .length == 1)
          {
             // Build cube
@@ -260,7 +254,7 @@ function (X3DBindableNode,
             const c = this ._skyColor [0];
 
             for (let i = 0, vertices = this .sphere .vertices; i < vertices; ++ i)
-               this .colors .push (c .r, c .g, c .b, alpha);
+               this .colors .push (c .r, c .g, c .b, 1);
          }
          else
          {
@@ -279,7 +273,7 @@ function (X3DBindableNode,
                if (vAngle .length === 2)
 						vAngle .splice (1, 0, (vAngle [0] + vAngle [1]) / 2)
 
-               this .buildSphere (RADIUS, vAngle, this ._skyAngle, this ._skyColor, alpha, false);
+               this .buildSphere (RADIUS, vAngle, this ._skyAngle, this ._skyColor, false);
             }
 
             if (this ._groundColor .length > this ._groundAngle .length)
@@ -292,7 +286,7 @@ function (X3DBindableNode,
                if (vAngle .at (-1) > 0)
                   vAngle .push (0);
 
-               this .buildSphere (RADIUS, vAngle, this ._groundAngle, this ._groundColor, alpha, true);
+               this .buildSphere (RADIUS, vAngle, this ._groundAngle, this ._groundColor, true);
             }
          }
 
@@ -310,7 +304,7 @@ function (X3DBindableNode,
             y3 = new Complex (0, 0),
             y4 = new Complex (0, 0);
 
-         return function (radius, vAngle, angle, color, alpha, bottom)
+         return function (radius, vAngle, angle, color, bottom)
          {
             const
                vAngleMax   = bottom ? Math .PI / 2 : Math .PI,
@@ -357,13 +351,13 @@ function (X3DBindableNode,
 
                   // Triangle 1 and 2
 
-                  this .colors .push (c1 .r, c1 .g, c1 .b, alpha,
-                                      c2 .r, c2 .g, c2 .b, alpha,
-                                      c2 .r, c2 .g, c2 .b, alpha,
+                  this .colors .push (c1 .r, c1 .g, c1 .b, 1,
+                                      c2 .r, c2 .g, c2 .b, 1,
+                                      c2 .r, c2 .g, c2 .b, 1,
                                       // Triangle 2
-                                      c1 .r, c1 .g, c1 .b, alpha,
-                                      c1 .r, c1 .g, c1 .b, alpha,
-                                      c2 .r, c2 .g, c2 .b, alpha);
+                                      c1 .r, c1 .g, c1 .b, 1,
+                                      c1 .r, c1 .g, c1 .b, 1,
+                                      c2 .r, c2 .g, c2 .b, 1);
 
                   this .sphere .push (y1 .imag, z1 .real, y1 .real, 1,
                                       y3 .imag, z2 .real, y3 .real, 1,
@@ -389,6 +383,7 @@ function (X3DBindableNode,
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .sphereBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (this .sphere), gl .DYNAMIC_DRAW);
+
          this .sphereCount = this .sphere .length / 4;
       },
       transferRectangle: (function ()
@@ -561,25 +556,46 @@ function (X3DBindableNode,
                this .drawCube (renderObject);
          };
       })(),
-      drawSphere: function (renderObject)
+      drawSphere: (function ()
       {
-         const transparency = this ._transparency .getValue ();
-
-         if (transparency >= 1)
-            return;
-
          const
-            browser    = this .getBrowser (),
-            gl         = browser .getContext (),
-            shaderNode = browser .getBackgroundSphereShader ();
+            black           = new Float32Array ([0, 0, 0]),
+            geometryContext = { geometryType: 3, colorMaterial: true, hasNormals: false };
 
-         if (shaderNode .isValid ())
+         X3DGeometryNode .prototype .updateGeometryMask .call (geometryContext);
+
+         return function (renderObject)
          {
+            const transparency = this ._transparency .getValue ();
+
+            if (transparency >= 1)
+               return;
+
+            const
+               browser    = this .getBrowser (),
+               gl         = browser .getContext (),
+               shaderNode = browser .getDefaultMaterial () .getShader (geometryContext, false);
+
             shaderNode .enable (gl);
 
             // Clip planes
 
             shaderNode .setLocalObjects (gl, this .localObjects);
+
+            // Uniforms
+
+            gl .uniform1i  (shaderNode .x3d_FogType,                            0);
+            gl .uniform1i  (shaderNode .x3d_FillPropertiesFilled,               true);
+            gl .uniform1i  (shaderNode .x3d_FillPropertiesHatched,              false);
+            gl .uniform3fv (shaderNode .x3d_EmissiveColor,                      black)
+            gl .uniform1f  (shaderNode .x3d_Transparency,                       transparency)
+            gl .uniform1i  (shaderNode .x3d_NumTextures,                        0);
+            gl .uniform1i  (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
+            gl .uniform1i  (shaderNode .x3d_NumProjectiveTextures,              0);
+            gl .uniform1i  (shaderNode .x3d_ColorMaterial,                      true);
+
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
 
             // Enable vertex attribute arrays.
 
@@ -588,11 +604,6 @@ function (X3DBindableNode,
                shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
                shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
             }
-
-            // Uniforms
-
-            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
-            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
 
             // Setup context.
 
@@ -604,8 +615,8 @@ function (X3DBindableNode,
             // Draw.
 
             gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
-         }
-      },
+         };
+      })(),
       drawCube: (function ()
       {
          const
@@ -633,13 +644,12 @@ function (X3DBindableNode,
             gl .uniform1i  (shaderNode .x3d_FogType,                            0);
             gl .uniform1i  (shaderNode .x3d_FillPropertiesFilled,               true);
             gl .uniform1i  (shaderNode .x3d_FillPropertiesHatched,              false);
-            gl .uniform1i  (shaderNode .x3d_ColorMaterial,                      false);
             gl .uniform3fv (shaderNode .x3d_EmissiveColor,                      white)
-            gl .uniform1i  (shaderNode .x3d_EmissiveTexture .textureType,       0)
             gl .uniform1f  (shaderNode .x3d_Transparency,                       0)
             gl .uniform1i  (shaderNode .x3d_NumTextures,                        1);
             gl .uniform1i  (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
             gl .uniform1i  (shaderNode .x3d_NumProjectiveTextures,              0);
+            gl .uniform1i  (shaderNode .x3d_ColorMaterial,                      false);
 
             gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
