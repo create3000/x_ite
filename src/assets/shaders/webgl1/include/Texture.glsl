@@ -521,7 +521,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
    {
       textureColor = texture2D (x3d_Texture2D [0], texCoord .st);
    }
-    else if (x3d_TextureType [0] == x3d_TextureTypeCube)
+   else if (x3d_TextureType [0] == x3d_TextureTypeCube)
    {
       textureColor = textureCube (x3d_TextureCube [0], texCoord .stp);
    }
