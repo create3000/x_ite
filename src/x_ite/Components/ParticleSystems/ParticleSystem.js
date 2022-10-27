@@ -795,7 +795,7 @@ function (Fields,
 
             for (let i = 0; i < numForces; ++ i)
             {
-               disabledForces += !forcePhysicsModelNodes [i] .addForce (i - disabledForces, emitterNode, timeByMass, forces);
+               disabledForces += ! forcePhysicsModelNodes [i] .addForce (i - disabledForces, emitterNode, timeByMass, forces);
             }
 
             this .numForces = numForces -= disabledForces;
@@ -870,37 +870,42 @@ function (Fields,
       { },
       traverse: function (type, renderObject)
       {
-         if (this .numParticles === 0)
-            return;
-
-         switch (type)
+         if (this .numParticles)
          {
-            case TraverseType .POINTER:
-            case TraverseType .PICKING:
-            case TraverseType .COLLISION:
+            switch (type)
             {
-               break;
-            }
-            case TraverseType .SHADOW:
-            {
-               if (this ._castShadow .getValue ())
-                  renderObject .addDepthShape (this);
+               case TraverseType .POINTER:
+               case TraverseType .PICKING:
+               case TraverseType .COLLISION:
+               {
+                  break;
+               }
+               case TraverseType .SHADOW:
+               {
+                  if (this ._castShadow .getValue ())
+                     renderObject .addDepthShape (this);
 
-               break;
-            }
-            case TraverseType .DISPLAY:
-            {
-               if (renderObject .addDisplayShape (this))
-                  this .getAppearance () .traverse (type, renderObject); // Currently used for GeneratedCubeMapTexture.
+                  break;
+               }
+               case TraverseType .DISPLAY:
+               {
+                  if (renderObject .addDisplayShape (this))
+                     this .getAppearance () .traverse (type, renderObject); // Currently used for GeneratedCubeMapTexture.
 
-               break;
+                  break;
+               }
+            }
+
+            if (this .geometryType === GeometryTypes .GEOMETRY)
+            {
+               if (this .getGeometry ())
+                  this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
             }
          }
-
-         if (this .geometryType === GeometryTypes .GEOMETRY)
+         else
          {
-            if (this .getGeometry ())
-               this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
+            if (this .geometryType !== GeometryTypes .GEOMETRY)
+               this .getAppearance () .getFrontShader (this .geometryContext, renderObject .getShadow ());
          }
       },
       depth: function (gl, context, shaderNode)

@@ -176,6 +176,10 @@ function (TextureBuffer,
       {
          this .shadow .pop ();
       },
+      getShadow: function ()
+      {
+         return this .shadow .at (-1);
+      },
       setGlobalFog: (function ()
       {
          const modelViewMatrix = new Matrix4 ();

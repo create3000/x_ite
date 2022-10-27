@@ -10,8 +10,10 @@ precision highp sampler3D;
 in vec4 frontColor;
 in vec4 backColor;
 
-uniform int x3d_NumLights;
-uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
+#if defined (X3D_SHADOWS)
+   uniform int x3d_NumLights;
+   uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
+#endif
 
 vec4
 getMaterialColor ()
