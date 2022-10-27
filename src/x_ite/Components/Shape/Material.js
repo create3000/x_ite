@@ -293,12 +293,16 @@ function (Fields,
          {
             case 1:
             {
+               options .push ("X3D_GOURAUD");
+
                var shaderNode = browser .createShader ("GouraudShader", "Gouraud", "Gouraud", options);
 
                break
             }
             case 2:
             {
+               options .push ("X3D_PHONG");
+
                var shaderNode = browser .createShader ("PhongShader", "Default", "Phong", options);
 
                break;

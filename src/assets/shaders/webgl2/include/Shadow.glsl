@@ -1,7 +1,6 @@
+#if defined (X3D_SHADOWS)
 
 #pragma X3D include "Pack.glsl"
-
-#if defined (X3D_SHADOWS)
 
 uniform sampler2D x3d_ShadowMap [x3d_MaxLights];
 
