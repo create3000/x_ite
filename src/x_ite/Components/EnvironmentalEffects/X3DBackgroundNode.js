@@ -59,6 +59,7 @@ define ([
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Algorithm",
+   "standard/Utility/BitSet",
 ],
 function (X3DBindableNode,
           X3DGeometryNode,
@@ -70,7 +71,8 @@ function (X3DBindableNode,
           Vector3,
           Rotation4,
           Matrix4,
-          Algorithm)
+          Algorithm,
+          BitSet)
 {
 "use strict";
 
@@ -94,7 +96,7 @@ function (X3DBindableNode,
       this .localObjects          = [ ];
       this .colors                = [ ];
       this .sphere                = [ ];
-      this .textures              = 0;
+      this .textures              = new BitSet ();
    }
 
    X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
@@ -172,14 +174,13 @@ function (X3DBindableNode,
             this .setTextureBit (texture, bit, texture ._loadState);
          }
          else
-            this .textures &= ~(1 << bit);
+         {
+            this .textures .set (bit, false);
+         }
       },
       setTextureBit: function (texture, bit, loadState)
       {
-         if (loadState .getValue () === X3DConstants .COMPLETE_STATE || (texture && texture .getData ()))
-            this .textures |= 1 << bit;
-         else
-            this .textures &= ~(1 << bit);
+         this .textures .set (bit, loadState .getValue () === X3DConstants .COMPLETE_STATE || (texture && texture .getData ()));
       },
       setHidden: function (value)
       {
@@ -552,7 +553,7 @@ function (X3DBindableNode,
 
             this .drawSphere (renderObject);
 
-            if (this .textures)
+            if (this .textures .valueOf ())
                this .drawCube (renderObject);
          };
       })(),

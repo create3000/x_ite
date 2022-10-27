@@ -54,13 +54,15 @@ define ([
    "x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
    "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
+   "standard/Utility/BitSet",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DEnvironmentTextureNode,
           X3DCast,
-          X3DConstants)
+          X3DConstants,
+          BitSet)
 {
 "use strict";
 
@@ -79,7 +81,7 @@ function (Fields,
 
       this .textures   = [null, null, null, null, null, null];
       this .symbols    = [Symbol (), Symbol (), Symbol (), Symbol (), Symbol (), Symbol ()];
-      this .loadStates = 0;
+      this .loadStates = new BitSet ();
    }
 
    ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
@@ -163,14 +165,11 @@ function (Fields,
       },
       setLoadStateBit: function (loadState, data, bit)
       {
-         if (loadState === X3DConstants .COMPLETE_STATE || data)
-            this .loadStates |= 1 << bit;
-         else
-            this .loadStates &= ~(1 << bit);
+         this .loadStates .set (bit, loadState === X3DConstants .COMPLETE_STATE || data);
       },
       isComplete: function ()
       {
-         if (this .loadStates !== 0b111111)
+         if (this .loadStates .valueOf () !== 0b111111)
             return false;
 
          const
