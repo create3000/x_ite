@@ -258,7 +258,7 @@ getMaterialColor ()
 
       // Apply light sources
 
-      vec3 n = getNormalVector ();  // normal at surface point
+      vec3 n = getNormalVector (x3d_Material .normalScale);  // normal at surface point
       vec3 v = normalize (-vertex); // Vector from surface point to camera
 
       vec3 finalColor = vec3 (0.0);
@@ -327,26 +327,32 @@ getMaterialColor ()
       vec3 reflection = -normalize (reflect (v, n));
       finalColor += getIBLContribution (pbrInputs, n, reflection);
       #endif
+
+      // Apply optional PBR terms for additional (optional) shading.
+      #if defined (X3D_OCCLUSION_TEXTURE)
+      finalColor = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
+      #endif
+
+      finalColor += getEmissiveColor ();
+
+      // Combine with alpha and do gamma correction.
+      return Gamma (vec4 (finalColor, alpha));
    #else
       float alpha      = 1.0 - x3d_Material .transparency;
       vec3  finalColor = vec3 (0.0);
 
       if (x3d_ColorMaterial)
       {
-         alpha      *= color .a;
          finalColor  = color .rgb;
+         alpha      *= color .a;
       }
+      else
+      {
+         finalColor = getEmissiveColor ();
+      }
+
+      return Gamma (vec4 (finalColor, alpha));
    #endif
-
-   // Apply optional PBR terms for additional (optional) shading.
-   #if defined (X3D_OCCLUSION_TEXTURE)
-   finalColor = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
-   #endif
-
-   finalColor += getEmissiveColor ();
-
-   // Combine with alpha and do gamma correction.
-   return Gamma (vec4 (finalColor, alpha));
 }
 
 void

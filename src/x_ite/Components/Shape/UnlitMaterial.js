@@ -115,7 +115,7 @@ function (Fields,
          this .setTransparent (Boolean (this .getTransparency () ||
                                (this .getEmissiveTexture () && this .getEmissiveTexture () .getTransparent ())));
       },
-      getShaderType: function ()
+      getMaterialType: function ()
       {
          return 0;
       },

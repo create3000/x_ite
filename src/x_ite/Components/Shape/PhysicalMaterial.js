@@ -200,7 +200,7 @@ function (Fields,
             return textureIndices;
          };
       })(),
-      getShaderType: function ()
+      getMaterialType: function ()
       {
          return 3;
       },

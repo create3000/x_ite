@@ -39,7 +39,7 @@ vec4
 getMaterialColor ();
 
 vec4
-getFinalMaterialColor ()
+getFinalColor ()
 {
    #if defined (X3D_GEOMETRY_0D)
       setTexCoords ();
@@ -60,7 +60,7 @@ fragment_main ()
 {
    clip ();
 
-   vec4 finalColor = getFinalMaterialColor ();
+   vec4 finalColor = getFinalColor ();
 
    #if defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)
       finalColor = getHatchColor (finalColor);

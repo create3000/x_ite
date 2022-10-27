@@ -56,7 +56,6 @@ define ([
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/InputOutput/FileLoader",
    "x_ite/Base/X3DConstants",
-   "x_ite/DEBUG",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -65,8 +64,7 @@ function (Fields,
           X3DNode,
           X3DUrlObject,
           FileLoader,
-          X3DConstants,
-          DEBUG)
+          X3DConstants)
 {
 "use strict";
 
@@ -121,24 +119,18 @@ function (Fields,
       },
       getShaderType: (function ()
       {
-         const shaderTypes =
-         {
-            VERTEX:          "VERTEX_SHADER",
-            TESS_CONTROL:    "TESS_CONTROL_SHADER",
-            TESS_EVALUATION: "TESS_EVALUATION_SHADER",
-            GEOMETRY:        "GEOMETRY_SHADER",
-            FRAGMENT:        "FRAGMENT_SHADER",
-            COMPUTE:         "COMPUTE_SHADER",
-         };
+         const shaderTypes = new Map ([
+            ["VERTEX",          "VERTEX_SHADER"],
+            ["TESS_CONTROL",    "TESS_CONTROL_SHADER"],
+            ["TESS_EVALUATION", "TESS_EVALUATION_SHADER"],
+            ["GEOMETRY",        "GEOMETRY_SHADER"],
+            ["FRAGMENT",        "FRAGMENT_SHADER"],
+            ["COMPUTE",         "COMPUTE_SHADER"],
+         ]);
 
          return function ()
          {
-            const type = shaderTypes [this ._type .getValue ()];
-
-            if (type)
-               return type;
-
-            return "VERTEX_SHADER";
+            return shaderTypes .get (this ._type .getValue ()) || "VERTEX_SHADER";
          };
       })(),
       getSourceText: function ()

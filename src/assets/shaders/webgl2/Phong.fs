@@ -179,7 +179,6 @@ vec4
 getMaterialColor ()
 {
    #if defined (X3D_NORMALS)
-
       // Calculate diffuseColor & alpha
 
       vec4  diffuseColorAlpha = getDiffuseColor ();
@@ -188,6 +187,7 @@ getMaterialColor ()
       vec3  ambientColor      = getAmbientColor (diffuseColor);
       vec3  specularColor     = getSpecularColor ();
       float shininess         = getShininessFactor ();
+      float normalScale       = x3d_Material .normalScale;
 
       // Projective texture
 
@@ -196,25 +196,31 @@ getMaterialColor ()
       diffuseColor *= P .rgb;
       alpha        *= P .a;
 
-      vec3 finalColor = getMaterialColor (vertex, getNormalVector (), ambientColor, diffuseColor, specularColor, shininess);
+      vec3 finalColor = getMaterialColor (vertex, getNormalVector (normalScale), ambientColor, diffuseColor, specularColor, shininess);
+
+      #if defined (X3D_OCCLUSION_TEXTURE)
+      finalColor = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
+      #endif
+
+      finalColor += getEmissiveColor ();
+
+      return vec4 (finalColor, alpha);
    #else
       float alpha      = 1.0 - x3d_Material .transparency;
       vec3  finalColor = vec3 (0.0);
 
       if (x3d_ColorMaterial)
       {
-         alpha      *= color .a;
          finalColor  = color .rgb;
+         alpha      *= color .a;
       }
+      else
+      {
+         finalColor = getEmissiveColor ();
+      }
+
+      return vec4 (finalColor, alpha);
    #endif
-
-   #if defined (X3D_OCCLUSION_TEXTURE)
-	finalColor = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
-   #endif
-
-   finalColor += getEmissiveColor ();
-
-   return vec4 (finalColor, alpha);
 }
 
 void

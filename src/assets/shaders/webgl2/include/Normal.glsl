@@ -1,6 +1,4 @@
 #if defined (X3D_NORMAL_TEXTURE)
-uniform x3d_NormalTextureParameters x3d_NormalTexture;
-
 // Tangent-Bitangent-Normal-Matrix
 mat3
 getTBNMatrix (const in vec2 texCoord)
@@ -19,17 +17,21 @@ getTBNMatrix (const in vec2 texCoord)
 }
 #endif
 
+#if defined (X3D_NORMAL_TEXTURE)
+uniform x3d_NormalTextureParameters x3d_NormalTexture;
+#endif
+
 vec3
-getNormalVector ()
+getNormalVector (const in float normalScale)
 {
    float facing = gl_FrontFacing ? 1.0 : -1.0;
 
    // Get normal vector.
 
    #if defined (X3D_NORMAL_TEXTURE)
-      vec3 texCoord    = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
-      vec3 normalScale = vec3 (vec2 (x3d_Material .normalScale), 1.0);
-      mat3 tbn         = getTBNMatrix (texCoord .st);
+      vec3 texCoord = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
+      vec3 s        = vec3 (vec2 (normalScale), 1.0);
+      mat3 tbn      = getTBNMatrix (texCoord .st);
 
       #if defined (X3D_NORMAL_TEXTURE_2D)
          vec3 n = texture (x3d_NormalTexture .texture2D, texCoord .st) .rgb;
@@ -39,7 +41,7 @@ getNormalVector ()
          vec3 n = texture (x3d_NormalTexture .textureCube, texCoord .stp) .rgb;
       #endif
 
-      return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
+      return normalize (tbn * ((n * 2.0 - 1.0) * s)) * facing;
    #else
    return normalize (normal) * facing;
    #endif

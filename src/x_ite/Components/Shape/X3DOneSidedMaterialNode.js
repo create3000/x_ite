@@ -162,8 +162,6 @@ function (Fields,
       {
          return this .textureBits;
       },
-      getShaderType: function ()
-      { },
       getShader: function (geometryContext, shadow)
       {
          // Bit Schema of Shader Key
@@ -176,7 +174,7 @@ function (Fields,
 
          let key = this .textureBits .valueOf ();
 
-         key |= this .getShaderType ()        << 14;
+         key |= this .getMaterialType ()      << 14;
          key |= shadow                        << 16;
          key |= geometryContext .geometryMask << 17;
 

@@ -241,7 +241,7 @@ function (Fields,
             return textureIndices;
          };
       })(),
-      getShaderType: function ()
+      getMaterialType: function ()
       {
          switch (this .getBrowser () .getBrowserOptions () .getShading ())
          {
@@ -291,7 +291,7 @@ function (Fields,
                options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
          }
 
-         switch (this .getShaderType (browser))
+         switch (this .getMaterialType (browser))
          {
             case 1:
             {
