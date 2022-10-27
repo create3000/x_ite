@@ -35,7 +35,7 @@ uniform float x3d_LogarithmicFarFactor1_2;
 varying float depth;
 #endif
 
-#pragma X3D include "include/Shadow.glsl"
+#pragma X3D include "include/ShadowIntensity.glsl"
 #pragma X3D include "include/Texture.glsl"
 #pragma X3D include "include/Normal.glsl"
 #pragma X3D include "include/Hatch.glsl"

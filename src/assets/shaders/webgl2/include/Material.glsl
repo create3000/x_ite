@@ -1,7 +1,7 @@
 #pragma X3D include "SpotFactor.glsl"
 
 #if defined (X3D_PHONG)
-   #pragma X3D include "Shadow.glsl"
+   #pragma X3D include "ShadowIntensity.glsl"
 #endif
 
 uniform int x3d_NumLights;

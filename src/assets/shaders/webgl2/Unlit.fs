@@ -5,6 +5,7 @@ precision highp int;
 precision highp sampler3D;
 
 #pragma X3D include "include/Fragment.glsl"
+#pragma X3D include "include/ShadowColor.glsl"
 
 uniform x3d_UnlitMaterialParameters x3d_Material;
 
@@ -40,7 +41,13 @@ getEmissiveColor ()
 vec4
 getMaterialColor ()
 {
-   return getEmissiveColor ();
+   vec4 finalColor = getEmissiveColor ();
+
+   #if defined (X3D_SHADOWS)
+   finalColor .rgb = getShadowColor (normal, finalColor .rgb);
+   #endif
+
+   return finalColor;
 }
 
 void
