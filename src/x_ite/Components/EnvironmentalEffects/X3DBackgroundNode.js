@@ -75,82 +75,8 @@ function (X3DBindableNode,
 "use strict";
 
    const
-      RADIUS      = 1,
-      SIZE        = Math .sqrt (RADIUS * RADIUS / 2),
-      U_DIMENSION = 20;
-
-   const s = SIZE;
-
-   const texCoords = [
-      1, 1, 0, 1,
-      0, 1, 0, 1,
-      0, 0, 0, 1,
-      1, 1, 0, 1,
-      0, 0, 0, 1,
-      1, 0, 0, 1,
-   ];
-
-   const frontVertices = [
-       s,  s, -s, 1,
-      -s,  s, -s, 1,
-      -s, -s, -s, 1,
-       s,  s, -s, 1,
-      -s, -s, -s, 1,
-       s, -s, -s, 1,
-   ];
-
-   const backVertices = [
-      -s,  s,  s, 1,
-       s,  s,  s, 1,
-       s, -s,  s, 1,
-      -s,  s,  s, 1,
-       s, -s,  s, 1,
-      -s, -s,  s, 1,
-   ];
-
-   const leftVertices = [
-      -s,  s, -s, 1,
-      -s,  s,  s, 1,
-      -s, -s,  s, 1,
-      -s,  s, -s, 1,
-      -s, -s,  s, 1,
-      -s, -s, -s, 1,
-   ];
-
-   const rightVertices = [
-      s,  s,  s, 1,
-      s,  s, -s, 1,
-      s, -s, -s, 1,
-      s,  s,  s, 1,
-      s, -s, -s, 1,
-      s, -s,  s, 1,
-   ];
-
-   const topVertices = [
-       s, s,  s, 1,
-      -s, s,  s, 1,
-      -s, s, -s, 1,
-       s, s,  s, 1,
-      -s, s, -s, 1,
-       s, s, -s, 1,
-   ];
-
-   const bottomVertices = [
-       s, -s, -s, 1,
-      -s, -s, -s, 1,
-      -s, -s,  s, 1,
-       s, -s, -s, 1,
-      -s, -s,  s, 1,
-       s, -s,  s, 1,
-   ];
-
-   const
-      z1 = new Complex (0, 0),
-      z2 = new Complex (0, 0),
-      y1 = new Complex (0, 0),
-      y2 = new Complex (0, 0),
-      y3 = new Complex (0, 0),
-      y4 = new Complex (0, 0);
+      RADIUS = 1,
+      SIZE   = Math .SQRT2 / 2;
 
    function X3DBackgroundNode (executionContext)
    {
@@ -302,6 +228,8 @@ function (X3DBindableNode,
       },
       build: function ()
       {
+         const s = SIZE;
+
          this .colors .length = 0;
          this .sphere .length = 0;
 
@@ -312,8 +240,6 @@ function (X3DBindableNode,
 
          if (this ._groundColor .length === 0 && this ._skyColor .length == 1)
          {
-            const s = SIZE;
-
             // Build cube
 
             this .sphere .vertices = 36;
@@ -324,9 +250,9 @@ function (X3DBindableNode,
                                 -s, -s,  s, 1,  s,  s,  s, 1,  s, -s,  s, 1,
                                 -s,  s, -s, 1, -s,  s,  s, 1, -s, -s,  s, 1, // Left
                                 -s,  s, -s, 1, -s, -s,  s, 1, -s, -s, -s, 1,
-                                   s,  s,  s, 1,  s,  s, -s, 1,  s, -s,  s, 1, // Right
+                                 s,  s,  s, 1,  s,  s, -s, 1,  s, -s,  s, 1, // Right
                                  s, -s,  s, 1,  s,  s, -s, 1,  s, -s, -s, 1,
-                                   s,  s,  s, 1, -s,  s,  s, 1, -s,  s, -s, 1, // Top
+                                 s,  s,  s, 1, -s,  s,  s, 1, -s,  s, -s, 1, // Top
                                  s,  s,  s, 1, -s,  s, -s, 1,  s,  s, -s, 1,
                                 -s, -s,  s, 1,  s, -s,  s, 1, -s, -s, -s, 1, // Bottom
                                 -s, -s, -s, 1,  s, -s,  s, 1,  s, -s, -s, 1);
@@ -372,71 +298,84 @@ function (X3DBindableNode,
 
          this .transferSphere ();
       },
-      buildSphere: function (radius, vAngle, angle, color, alpha, bottom)
+      buildSphere: (function ()
       {
+         const U_DIMENSION = 20;
+
          const
-            vAngleMax   = bottom ? Math .PI / 2 : Math .PI,
-            V_DIMENSION = vAngle .length - 1;
+            z1 = new Complex (0, 0),
+            z2 = new Complex (0, 0),
+            y1 = new Complex (0, 0),
+            y2 = new Complex (0, 0),
+            y3 = new Complex (0, 0),
+            y4 = new Complex (0, 0);
 
-         for (let v = 0; v < V_DIMENSION; ++ v)
+         return function (radius, vAngle, angle, color, alpha, bottom)
          {
-            let
-               theta1 = Algorithm .clamp (vAngle [v],     0, vAngleMax),
-               theta2 = Algorithm .clamp (vAngle [v + 1], 0, vAngleMax);
-
-            if (bottom)
-            {
-               theta1 = Math .PI - theta1;
-               theta2 = Math .PI - theta2;
-            }
-
-            z1 .setPolar (radius, theta1);
-            z2 .setPolar (radius, theta2);
-
             const
-               c1 = this .getColor (vAngle [v],     color, angle),
-               c2 = this .getColor (vAngle [v + 1], color, angle);
+               vAngleMax   = bottom ? Math .PI / 2 : Math .PI,
+               V_DIMENSION = vAngle .length - 1;
 
-            for (let u = 0; u < U_DIMENSION; ++ u)
+            for (let v = 0; v < V_DIMENSION; ++ v)
             {
-               // p4 --- p1
-               //  |   / |
-               //  | /   |
-               // p3 --- p2
+               let
+                  theta1 = Algorithm .clamp (vAngle [v],     0, vAngleMax),
+                  theta2 = Algorithm .clamp (vAngle [v + 1], 0, vAngleMax);
 
-               // The last point is the first one.
-               const u1 = u < U_DIMENSION - 1 ? u + 1 : 0;
+               if (bottom)
+               {
+                  theta1 = Math .PI - theta1;
+                  theta2 = Math .PI - theta2;
+               }
 
-               // p1, p2
-               let phi = 2 * Math .PI * (u / U_DIMENSION);
-               y1 .setPolar (-z1 .imag, phi);
-               y2 .setPolar (-z2 .imag, phi);
+               z1 .setPolar (radius, theta1);
+               z2 .setPolar (radius, theta2);
 
-               // p3, p4
-               phi = 2 * Math .PI * (u1 / U_DIMENSION);
-               y3 .setPolar (-z2 .imag, phi);
-               y4 .setPolar (-z1 .imag, phi);
+               const
+                  c1 = this .getColor (vAngle [v],     color, angle),
+                  c2 = this .getColor (vAngle [v + 1], color, angle);
 
-               // Triangle 1 and 2
+               for (let u = 0; u < U_DIMENSION; ++ u)
+               {
+                  // p4 --- p1
+                  //  |   / |
+                  //  | /   |
+                  // p3 --- p2
 
-               this .colors .push (c1 .r, c1 .g, c1 .b, alpha,
-                                   c2 .r, c2 .g, c2 .b, alpha,
-                                   c2 .r, c2 .g, c2 .b, alpha,
-                                   // Triangle 2
-                                   c1 .r, c1 .g, c1 .b, alpha,
-                                   c1 .r, c1 .g, c1 .b, alpha,
-                                   c2 .r, c2 .g, c2 .b, alpha);
+                  // The last point is the first one.
+                  const u1 = u < U_DIMENSION - 1 ? u + 1 : 0;
 
-               this .sphere .push (y1 .imag, z1 .real, y1 .real, 1,
-                                   y3 .imag, z2 .real, y3 .real, 1,
-                                   y2 .imag, z2 .real, y2 .real, 1,
-                                   // Triangle 2
-                                   y1 .imag, z1 .real, y1 .real, 1,
-                                   y4 .imag, z1 .real, y4 .real, 1,
-                                   y3 .imag, z2 .real, y3 .real, 1);
+                  // p1, p2
+                  let phi = 2 * Math .PI * (u / U_DIMENSION);
+                  y1 .setPolar (-z1 .imag, phi);
+                  y2 .setPolar (-z2 .imag, phi);
+
+                  // p3, p4
+                  phi = 2 * Math .PI * (u1 / U_DIMENSION);
+                  y3 .setPolar (-z2 .imag, phi);
+                  y4 .setPolar (-z1 .imag, phi);
+
+                  // Triangle 1 and 2
+
+                  this .colors .push (c1 .r, c1 .g, c1 .b, alpha,
+                                      c2 .r, c2 .g, c2 .b, alpha,
+                                      c2 .r, c2 .g, c2 .b, alpha,
+                                      // Triangle 2
+                                      c1 .r, c1 .g, c1 .b, alpha,
+                                      c1 .r, c1 .g, c1 .b, alpha,
+                                      c2 .r, c2 .g, c2 .b, alpha);
+
+                  this .sphere .push (y1 .imag, z1 .real, y1 .real, 1,
+                                      y3 .imag, z2 .real, y3 .real, 1,
+                                      y2 .imag, z2 .real, y2 .real, 1,
+                                      // Triangle 2
+                                      y1 .imag, z1 .real, y1 .real, 1,
+                                      y4 .imag, z1 .real, y4 .real, 1,
+                                      y3 .imag, z2 .real, y3 .real, 1);
+               }
             }
-         }
-      },
+         };
+      })(),
       transferSphere: function ()
       {
          const gl = this .getBrowser () .getContext ();
@@ -452,35 +391,103 @@ function (X3DBindableNode,
          gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (this .sphere), gl .DYNAMIC_DRAW);
          this .sphereCount = this .sphere .length / 4;
       },
-      transferRectangle: function ()
+      transferRectangle: (function ()
       {
-         const gl = this .getBrowser () .getContext ();
+         const s = SIZE;
 
-         // Transfer texCoords.
+         const texCoords = [
+            1, 1, 0, 1,
+            0, 1, 0, 1,
+            0, 0, 0, 1,
+            1, 1, 0, 1,
+            0, 0, 0, 1,
+            1, 0, 0, 1,
+         ];
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (texCoords), gl .DYNAMIC_DRAW);
+         const frontVertices = [
+            s,  s, -s, 1,
+           -s,  s, -s, 1,
+           -s, -s, -s, 1,
+            s,  s, -s, 1,
+           -s, -s, -s, 1,
+            s, -s, -s, 1,
+         ];
 
-         // Transfer rectangle.
+         const backVertices = [
+            -s,  s,  s, 1,
+             s,  s,  s, 1,
+             s, -s,  s, 1,
+            -s,  s,  s, 1,
+             s, -s,  s, 1,
+            -s, -s,  s, 1,
+         ];
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .frontBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (frontVertices), gl .DYNAMIC_DRAW);
+         const leftVertices = [
+            -s,  s, -s, 1,
+            -s,  s,  s, 1,
+            -s, -s,  s, 1,
+            -s,  s, -s, 1,
+            -s, -s,  s, 1,
+            -s, -s, -s, 1,
+         ];
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .backBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (backVertices), gl .DYNAMIC_DRAW);
+         const rightVertices = [
+            s,  s,  s, 1,
+            s,  s, -s, 1,
+            s, -s, -s, 1,
+            s,  s,  s, 1,
+            s, -s, -s, 1,
+            s, -s,  s, 1,
+         ];
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .leftBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (leftVertices), gl .DYNAMIC_DRAW);
+         const topVertices = [
+             s, s,  s, 1,
+            -s, s,  s, 1,
+            -s, s, -s, 1,
+             s, s,  s, 1,
+            -s, s, -s, 1,
+             s, s, -s, 1,
+         ];
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .rightBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (rightVertices), gl .DYNAMIC_DRAW);
+         const bottomVertices = [
+             s, -s, -s, 1,
+            -s, -s, -s, 1,
+            -s, -s,  s, 1,
+             s, -s, -s, 1,
+            -s, -s,  s, 1,
+             s, -s,  s, 1,
+         ];
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .topBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (topVertices), gl .DYNAMIC_DRAW);
+         return function ()
+         {
+            const gl = this .getBrowser () .getContext ();
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .bottomBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (bottomVertices), gl .DYNAMIC_DRAW);
-      },
+            // Transfer texCoords.
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (texCoords), gl .DYNAMIC_DRAW);
+
+            // Transfer rectangle.
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .frontBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (frontVertices), gl .DYNAMIC_DRAW);
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .backBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (backVertices), gl .DYNAMIC_DRAW);
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .leftBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (leftVertices), gl .DYNAMIC_DRAW);
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .rightBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (rightVertices), gl .DYNAMIC_DRAW);
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .topBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (topVertices), gl .DYNAMIC_DRAW);
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .bottomBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (bottomVertices), gl .DYNAMIC_DRAW);
+         };
+      })(),
       traverse: function (type, renderObject)
       {
          switch (type)
