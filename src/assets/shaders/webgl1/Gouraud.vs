@@ -35,7 +35,7 @@ getMaterialColor (const in vec3 N,
 
    finalColor += material .emissiveColor;
 
-   return vec4 (clamp (finalColor, 0.0, 1.0), alpha);
+   return vec4 (finalColor, alpha);
 }
 
 void

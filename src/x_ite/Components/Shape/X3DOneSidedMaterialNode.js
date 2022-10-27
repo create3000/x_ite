@@ -174,6 +174,10 @@ function (Fields,
          // 17 - 18 -> geometry type
          // 19      -> normals
 
+         //   11 0 00 0000000 0000000
+         // 1 11 0 01 0000000 0000000
+         //    1 0 01 0000000 0000000
+
          let key = this .textureBits .valueOf ();
 
          key |= this .getShaderType ()        << 14;
