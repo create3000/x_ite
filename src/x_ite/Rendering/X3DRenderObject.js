@@ -899,6 +899,7 @@ function (TextureBuffer,
          this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
          this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 
+
          // DRAW
 
 
