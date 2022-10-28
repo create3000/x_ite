@@ -1001,11 +1001,11 @@ function (X3DCast,
             {
                this .renderTime = renderObject .getRenderTime ();
 
-               // Set viewport
+               // Set viewport.
 
                gl .uniform4iv (this .x3d_Viewport, renderObject .getViewportArray ());
 
-               // Set projection matrix
+               // Set projection matrix.
 
                gl .uniformMatrix4fv (this .x3d_ProjectionMatrix,  false, renderObject .getProjectionMatrixArray ());
                gl .uniformMatrix4fv (this .x3d_CameraSpaceMatrix, false, renderObject .getCameraSpaceMatrixArray ());
@@ -1014,7 +1014,7 @@ function (X3DCast,
 
                this .fogNode = null;
 
-               // Set global lights and global texture projectors
+               // Set global lights and global texture projectors.
 
                this .numLights                      = 0;
                this .numProjectiveTextures          = 0;
@@ -1029,7 +1029,7 @@ function (X3DCast,
                this .numGlobalLights             = this .numLights;
                this .numGlobalProjectiveTextures = this .numProjectiveTextures;
 
-               // Logarithmic depth buffer support.
+               // Logarithmic depth buffer support
 
                const
                   viewpoint      = renderObject .getViewpoint (),
