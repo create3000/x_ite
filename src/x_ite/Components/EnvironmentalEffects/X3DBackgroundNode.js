@@ -117,8 +117,6 @@ function (X3DBindableNode,
 
          this .colorBuffer       = gl .createBuffer ();
          this .sphereBuffer      = gl .createBuffer ();
-         this .texCoordBuffer    = gl .createBuffer ();
-         this .cubeBuffer        = gl .createBuffer ();
          this .texCoordBuffers   = new Array (browser .getMaxTextures ()) .fill (gl .createBuffer ());
          this .frontBuffer       = gl .createBuffer ();
          this .backBuffer        = gl .createBuffer ();
