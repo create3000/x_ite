@@ -243,7 +243,7 @@ function (Fields,
       })(),
       getMaterialType: function (shadows)
       {
-         if (shadows || this .getTextureBits () .valueOf ())
+         if (shadows || +this .getTextureBits ())
          {
             return 2;
          }
@@ -274,7 +274,7 @@ function (Fields,
 
          options .push ("X3D_NORMALS");
 
-         if (this .getTextureBits () .valueOf ())
+         if (+this .getTextureBits ())
          {
             options .push ("X3D_MATERIAL_TEXTURES");
 
@@ -333,7 +333,7 @@ function (Fields,
          gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColor);
          gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
 
-         if (this .getTextureBits () .valueOf ())
+         if (+this .getTextureBits ())
          {
             const
                ambientTexture   = shaderObject .x3d_AmbientTexture,

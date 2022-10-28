@@ -153,7 +153,7 @@ function (Fields,
          gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
          gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
 
-         if (this .getTextureBits () .valueOf ())
+         if (+this .getTextureBits ())
          {
             // Emissive parameters
 

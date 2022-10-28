@@ -96,7 +96,7 @@ function (X3DBindableNode,
       this .localObjects          = [ ];
       this .colors                = [ ];
       this .sphere                = [ ];
-      this .textures              = new BitSet ();
+      this .textureBits           = new BitSet ();
       this .sphereContext         = { geometryType: 3, colorMaterial: true, hasNormals: true };
       this .texturesContext       = { geometryType: 3, colorMaterial: true, hasNormals: false };
 
@@ -178,12 +178,12 @@ function (X3DBindableNode,
          }
          else
          {
-            this .textures .set (bit, false);
+            this .textureBits .set (bit, false);
          }
       },
       setTextureBit: function (texture, bit, loadState)
       {
-         this .textures .set (bit, loadState .getValue () === X3DConstants .COMPLETE_STATE || (texture && texture .getData ()));
+         this .textureBits .set (bit, loadState .getValue () === X3DConstants .COMPLETE_STATE || (texture && texture .getData ()));
       },
       setHidden: function (value)
       {
@@ -556,7 +556,7 @@ function (X3DBindableNode,
 
             this .drawSphere (renderObject);
 
-            if (this .textures .valueOf ())
+            if (+this .textureBits)
                this .drawCube (renderObject);
          };
       })(),

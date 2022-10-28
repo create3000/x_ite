@@ -79,9 +79,9 @@ function (Fields,
       this .addAlias ("bottom", this ._bottomTexture);
       this .addAlias ("top",    this ._topTexture);
 
-      this .textures   = [null, null, null, null, null, null];
-      this .symbols    = [Symbol (), Symbol (), Symbol (), Symbol (), Symbol (), Symbol ()];
-      this .loadStates = new BitSet ();
+      this .textures      = [null, null, null, null, null, null];
+      this .symbols       = [Symbol (), Symbol (), Symbol (), Symbol (), Symbol (), Symbol ()];
+      this .loadStateBits = new BitSet ();
    }
 
    ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
@@ -165,11 +165,11 @@ function (Fields,
       },
       setLoadStateBit: function (loadState, data, bit)
       {
-         this .loadStates .set (bit, loadState === X3DConstants .COMPLETE_STATE || data);
+         this .loadStateBits .set (bit, loadState === X3DConstants .COMPLETE_STATE || data);
       },
       isComplete: function ()
       {
-         if (this .loadStates .valueOf () !== 0b111111)
+         if (+this .loadStateBits !== 0b111111)
             return false;
 
          const

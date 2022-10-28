@@ -133,7 +133,7 @@ function (Fields,
          if (geometryContext .hasNormals)
             options .push ("X3D_NORMALS");
 
-         if (this .getTextureBits () .valueOf ())
+         if (+this .getTextureBits ())
          {
             options .push ("X3D_MATERIAL_TEXTURES");
 

@@ -220,7 +220,7 @@ function (Fields,
 
          options .push ("X3D_NORMALS");
 
-         if (this .getTextureBits () .valueOf ())
+         if (+this .getTextureBits ())
          {
             options .push ("X3D_MATERIAL_TEXTURES");
 
@@ -254,7 +254,7 @@ function (Fields,
          gl .uniform1f  (shaderObject .x3d_Metallic,  this .metallic);
          gl .uniform1f  (shaderObject .x3d_Roughness, this .roughness);
 
-         if (this .getTextureBits () .valueOf ())
+         if (+this .getTextureBits ())
          {
             const
                baseTexture              = shaderObject .x3d_BaseTexture,

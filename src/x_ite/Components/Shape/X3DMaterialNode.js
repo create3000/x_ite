@@ -119,7 +119,7 @@ function (Fields,
          // 18 - 19 -> geometry type
          // 20      -> normals
 
-         let key = this .textureBits .valueOf ();
+         let key = +this .textureBits;
 
          key |= this .getMaterialType (shadows) << 14;
          key |= shadows                         << 16;
