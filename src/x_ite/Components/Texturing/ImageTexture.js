@@ -77,6 +77,8 @@ function ($,
 
       this .addType (X3DConstants .ImageTexture);
 
+      this .image    = $("<img></img>");
+      this .canvas   = $("<canvas></canvas>");
       this .urlStack = new Fields .MFString ();
    }
 
@@ -112,12 +114,8 @@ function ($,
          X3DTexture2DNode .prototype .initialize .call (this);
          X3DUrlObject     .prototype .initialize .call (this);
 
-         this .canvas = $("<canvas></canvas>");
-
-         this .image = $("<img></img>");
-         this .image .on ("load", this .setImage .bind (this));
-         this .image .on ("error", this .setError .bind (this));
-         this .image .bind ("abort", this .setError .bind (this));
+         this .image .on ("load",        this .setImage .bind (this));
+         this .image .on ("abort error", this .setError .bind (this));
 
          this .image [0] .crossOrigin = "Anonymous";
 
@@ -153,10 +151,10 @@ function ($,
 
          this .image .attr ("src", this .URL .href);
       },
-      setError: function ()
+      setError: function (event)
       {
          if (this .URL .protocol !== "data:")
-            console .warn ("Error loading image:", decodeURI (this .URL .href));
+            console .warn ("Error loading image:", decodeURI (this .URL .href), event .type);
 
          this .loadNext ();
       },
