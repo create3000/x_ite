@@ -182,7 +182,7 @@ function (Fields,
             if (this ._speed .getValue ())
             {
                this .media [0] .currentTime = 0;
-               this .media [0] .play ();
+               this .media [0] .play () .catch (Function .prototype);
             }
          }
       },
@@ -196,7 +196,7 @@ function (Fields,
          if (this .media)
          {
             if (this ._speed .getValue ())
-               this .media [0] .play ();
+               this .media [0] .play () .catch (Function .prototype);
          }
       },
       set_stop: function ()
