@@ -320,7 +320,7 @@ function (Fields,
             }
          }
 
-         browser .setShader (key, shaderNode);
+         browser .getShaders () .set (key, shaderNode);
 
          return shaderNode;
       },

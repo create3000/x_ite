@@ -64,13 +64,13 @@ function (Shading,
       _wireframe      = Symbol (),
       _primitiveModes = Symbol (),
       _defaultShader  = Symbol (),
-      _shaders        = Symbol ();
+      _shaderNodes    = Symbol ();
 
    function X3DShadersContext ()
    {
       this [_wireframe]      = false;
       this [_primitiveModes] = new Map ();
-      this [_shaders]        = new Map ();
+      this [_shaderNodes]    = new Map ();
    }
 
    X3DShadersContext .prototype =
@@ -137,7 +137,7 @@ function (Shading,
 
          this [_defaultShader] = this .createShader ("DefaultShader", vs, fs);
 
-         this .setShader (_defaultShader, this [_defaultShader]);
+         this [_shaderNodes] .set (_defaultShader, this [_defaultShader]);
 
          this .getDefaultShader = function () { return this [_defaultShader]; };
 
@@ -145,13 +145,9 @@ function (Shading,
 
          return this [_defaultShader];
       },
-      setShader: function (key, shaderNode)
+      getShaders: function ()
       {
-         this [_shaders] .set (key, shaderNode);
-      },
-      getShader: function (key)
-      {
-         return this [_shaders] .get (key);
+         return this [_shaderNodes];
       },
       setShading: function (type)
       {

@@ -71,6 +71,7 @@ function (Fields,
       this ._transparent .setAccessType (X3DConstants .outputOnly);
 
       this .textureBits = new BitSet ();
+      this .shaderNodes = this .getBrowser () .getShaders ();
    }
 
    X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -126,7 +127,7 @@ function (Fields,
          key |= this .logarithmicDepthBuffer    << 17;
          key |= geometryContext .geometryMask   << 18;
 
-         const shaderNode = this .getBrowser () .getShader (key) || this .createShader (key, geometryContext, shadows);
+         const shaderNode = this .shaderNodes .get (key) || this .createShader (key, geometryContext, shadows);
 
          if (shaderNode .isValid ())
          {

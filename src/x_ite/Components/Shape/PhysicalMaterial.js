@@ -242,7 +242,7 @@ function (Fields,
 
          const shaderNode = browser .createShader ("PhysicalMaterialShader", "Default", "PBR", options);
 
-         browser .setShader (key, shaderNode);
+         browser .getShaders () .set (key, shaderNode);
 
          return shaderNode;
       },

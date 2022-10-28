@@ -146,7 +146,7 @@ function (Fields,
 
          const shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
 
-         browser .setShader (key, shaderNode);
+         browser .getShaders () .set (key, shaderNode);
 
          return shaderNode;
       },
