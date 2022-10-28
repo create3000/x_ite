@@ -129,7 +129,7 @@ function (Fields,
 
             return this .getBrowser () .getDefaultShader ();
          }
-     },
+      },
       getGeometryTypes: (function ()
       {
          const geometryTypes = [

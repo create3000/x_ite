@@ -97,6 +97,11 @@ function (X3DBindableNode,
       this .colors                = [ ];
       this .sphere                = [ ];
       this .textures              = new BitSet ();
+      this .sphereContext         = { geometryType: 3, colorMaterial: true, hasNormals: true };
+      this .texturesContext       = { geometryType: 3, colorMaterial: true, hasNormals: false };
+
+      X3DGeometryNode .prototype .updateGeometryMask .call (this .sphereContext);
+      X3DGeometryNode .prototype .updateGeometryMask .call (this .texturesContext);
    }
 
    X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
@@ -559,11 +564,7 @@ function (X3DBindableNode,
       })(),
       drawSphere: (function ()
       {
-         const
-            black           = new Float32Array ([0, 0, 0]),
-            geometryContext = { geometryType: 3, colorMaterial: true, hasNormals: false };
-
-         X3DGeometryNode .prototype .updateGeometryMask .call (geometryContext);
+         const black = new Float32Array ([0, 0, 0]);
 
          return function (renderObject)
          {
@@ -575,7 +576,7 @@ function (X3DBindableNode,
             const
                browser    = this .getBrowser (),
                gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (geometryContext, false);
+               shaderNode = browser .getDefaultMaterial () .getShader (this .sphereContext, false);
 
             shaderNode .enable (gl);
 
@@ -622,17 +623,14 @@ function (X3DBindableNode,
       {
          const
             textureMatrixArray = new Float32Array (Matrix4 .Identity),
-            white              = new Float32Array ([1, 1, 1]),
-            geometryContext    = { geometryType: 3, colorMaterial: false, hasNormals: false };
-
-         X3DGeometryNode .prototype .updateGeometryMask .call (geometryContext);
+            white              = new Float32Array ([1, 1, 1]);
 
          return function (renderObject)
          {
             const
                browser    = this .getBrowser (),
                gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (geometryContext, false);
+               shaderNode = browser .getDefaultMaterial () .getShader (this .texturesContext, false);
 
             shaderNode .enable (gl);
 

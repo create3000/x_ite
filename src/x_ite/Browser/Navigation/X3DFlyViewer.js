@@ -87,10 +87,6 @@ function ($,
       MOVE = 0,
       PAN  = 1;
 
-   const geometryContext = { geometryType: 1, colorMaterial: false, hasNormals: false };
-
-   X3DGeometryNode .prototype .updateGeometryMask .call (geometryContext);
-
    function X3DFlyViewer (executionContext)
    {
       X3DViewer .call (this, executionContext);
@@ -110,6 +106,9 @@ function ($,
       this .event             = null;
       this .lookAround        = false;
       this .orientationChaser = new OrientationChaser (executionContext);
+      this .geometryContext   = { geometryType: 1, colorMaterial: false, hasNormals: false };
+
+      X3DGeometryNode .prototype .updateGeometryMask .call (this .geometryContext);
    }
 
    X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
@@ -149,7 +148,7 @@ function ($,
          if (! browser .getBrowserOption ("Rubberband"))
             return;
 
-         browser .getDefaultMaterial () .getShader (geometryContext, false);
+         browser .getDefaultMaterial () .getShader (this .geometryContext, false);
          browser .getDepthShader ();
       },
       addCollision: function () { },
@@ -693,7 +692,7 @@ function ($,
 
             const
                gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (geometryContext, false),
+               shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext, false),
                lineWidth  = gl .getParameter (gl .LINE_WIDTH);
 
             shaderNode .enable (gl);
