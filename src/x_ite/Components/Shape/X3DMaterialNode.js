@@ -76,6 +76,18 @@ function (Fields,
    X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
    {
       constructor: X3DMaterialNode,
+      initialize: function ()
+      {
+         X3DAppearanceChildNode .prototype .initialize .call (this);
+
+         this .getBrowser () .getRenderingProperties () ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
+
+         this .set_logarithmicDepthBuffer__ ();
+      },
+      set_logarithmicDepthBuffer__: function ()
+      {
+         this .logarithmicDepthBuffer = this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer");
+      },
       setTransparent: function (value)
       {
          if (value !== this ._transparent .getValue ())
@@ -103,14 +115,16 @@ function (Fields,
          // 0  - 13 -> textures
          // 14 - 15 -> shader type
          // 16      -> shadows
-         // 17 - 18 -> geometry type
-         // 19      -> normals
+         // 17      -> logarithmic depth buffer
+         // 18 - 19 -> geometry type
+         // 20      -> normals
 
          let key = this .textureBits .valueOf ();
 
          key |= this .getMaterialType (shadows) << 14;
          key |= shadows                         << 16;
-         key |= geometryContext .geometryMask   << 17;
+         key |= this .logarithmicDepthBuffer    << 17;
+         key |= geometryContext .geometryMask   << 18;
 
          const shaderNode = this .getBrowser () .getShader (key) || this .createShader (key, geometryContext, shadows);
 

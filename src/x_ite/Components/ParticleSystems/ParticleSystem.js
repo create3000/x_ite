@@ -364,7 +364,7 @@ function (Fields,
             browser = this .getBrowser (),
             gl      = browser .getContext ();
 
-         // Set geometryType.
+         // Get geometryType.
 
          this .geometryType = this .getEnum (GeometryTypes, this ._geometryType .getValue ()) || GeometryTypes .QUAD;
 
