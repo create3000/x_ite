@@ -274,7 +274,7 @@ function (Fields,
 
          if (context .fogNode)
             options .push ("X3D_FOG");
-            
+
          if (geometryContext .hasFogCoords)
             options .push ("X3D_FOG_COORDS");
 
