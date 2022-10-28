@@ -1008,8 +1008,8 @@ function (Fields,
          {
             const backShaderNode = appearanceNode .getBackShader (this, context .shadows)
 
-            this .displayGeometry (gl, context, appearanceNode, backShaderNode,  true,  false);
-            this .displayGeometry (gl, context, appearanceNode, shaderNode, false, true);
+            this .displayGeometry (gl, context, appearanceNode, backShaderNode, true,  false);
+            this .displayGeometry (gl, context, appearanceNode, shaderNode,     false, true);
          }
       },
       displayGeometry: function (gl, context, appearanceNode, shaderNode, back, front)
