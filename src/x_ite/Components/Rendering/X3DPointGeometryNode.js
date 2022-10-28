@@ -160,7 +160,7 @@ function (X3DGeometryNode,
       {
          const
             appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .getShader (this, context .shadows),
+            shaderNode     = appearanceNode .getShader (this, context),
             blendModeNode  = appearanceNode .getBlendMode (),
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers ();
@@ -198,7 +198,7 @@ function (X3DGeometryNode,
       {
          const
             appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .getShader (this, context .shadows),
+            shaderNode     = appearanceNode .getShader (this, context),
             blendModeNode  = appearanceNode .getBlendMode (),
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers ();

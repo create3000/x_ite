@@ -976,7 +976,7 @@ function (Fields,
                const
                   browser        = this .getBrowser (),
                   appearanceNode = this .getAppearance (),
-                  shaderNode     = appearanceNode .getShader (this .geometryContext, context .shadows),
+                  shaderNode     = appearanceNode .getShader (this .geometryContext, context),
                   primitiveMode  = browser .getPrimitiveMode (this .primitiveMode);
 
                // Setup shader.

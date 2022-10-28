@@ -119,7 +119,7 @@ function (Fields,
       {
          return 0;
       },
-      createShader: function (key, geometryContext, shadows)
+      createShader: function (key, geometryContext, context)
       {
          const
             browser = this .getBrowser (),
@@ -127,7 +127,7 @@ function (Fields,
 
          options .push ("X3D_UNLIT", this .getGeometryTypes () [geometryContext .geometryType])
 
-         if (shadows)
+         if (context .shadows)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
          if (geometryContext .hasFogCoords)

@@ -258,23 +258,23 @@ function (Fields,
             }
          }
       },
-      createShader: function (key, geometryContext, shadows)
+      createShader: function (key, geometryContext, context)
       {
          const
             browser = this .getBrowser (),
             options = [ ];
 
          if (! geometryContext .hasNormals)
-            return browser .getDefaultMaterial () .createShader (key, geometryContext, shadows);
+            return browser .getDefaultMaterial () .createShader (key, geometryContext, context);
 
          options .push (this .getGeometryTypes () [geometryContext .geometryType])
 
-         if (shadows)
+         if (context .shadows)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
          if (geometryContext .hasFogCoords)
             options .push ("X3D_FOG_COORDS");
-            
+
          if (geometryContext .colorMaterial)
             options .push ("X3D_COLOR_MATERIAL");
 
@@ -306,7 +306,7 @@ function (Fields,
                options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
          }
 
-         switch (this .getMaterialType (shadows))
+         switch (this .getMaterialType (context .shadows))
          {
             case 1:
             {

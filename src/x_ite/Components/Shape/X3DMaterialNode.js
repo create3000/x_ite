@@ -109,7 +109,7 @@ function (Fields,
       {
          return this .textureBits;
       },
-      getShader: function (geometryContext, shadows)
+      getShader: function (geometryContext, context)
       {
          // Bit Schema of Shader Key
          //
@@ -124,12 +124,12 @@ function (Fields,
 
          let key = +this .textureBits;
 
-         key |= this .getMaterialType (shadows) << 14;
-         key |= shadows                         << 16;
-         key |= this .logarithmicDepthBuffer    << 17;
-         key |= geometryContext .geometryMask   << 18;
+         key |= this .getMaterialType (context .shadows) << 14;
+         key |= context .shadows                         << 16;
+         key |= this .logarithmicDepthBuffer             << 17;
+         key |= geometryContext .geometryMask            << 18;
 
-         const shaderNode = this .shaderNodes .get (key) || this .createShader (key, geometryContext, shadows);
+         const shaderNode = this .shaderNodes .get (key) || this .createShader (key, geometryContext, context);
 
          if (shaderNode .isValid ())
          {
