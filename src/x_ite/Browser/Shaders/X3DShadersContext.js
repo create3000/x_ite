@@ -137,8 +137,6 @@ function (Shading,
 
          this [_defaultShader] = this .createShader ("DefaultShader", vs, fs);
 
-         this [_shaderNodes] .set (0xffffffff, this [_defaultShader]);
-
          this .getDefaultShader = function () { return this [_defaultShader]; };
 
          Object .defineProperty (this, "getDefaultShader", { enumerable: false });
