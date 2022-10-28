@@ -116,12 +116,9 @@ function (Shading,
       {
          const vs = /* glsl */ `data:x-shader/x-vertex,
          precision highp float;
-
          uniform mat4 x3d_ProjectionMatrix;
          uniform mat4 x3d_ModelViewMatrix;
-
          attribute vec4 x3d_Vertex;
-
          void
          main ()
          {
@@ -131,7 +128,6 @@ function (Shading,
 
          const fs = /* glsl */ `data:x-shader/x-fragment,
          precision highp float;
-
          void
          main ()
          {
