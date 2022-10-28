@@ -864,6 +864,7 @@ function (TextureBuffer,
             textureProjectors        = this .textureProjectors,
             generatedCubeMapTextures = this .generatedCubeMapTextures;
 
+
          this .renderTime = performance .now ();
 
 
