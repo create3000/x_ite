@@ -96,7 +96,7 @@ function (TextureBuffer,
       this .localObjects             = [ ];
       this .lights                   = [ ];
       this .shadows                  = [ false ];
-      this .localFogs                = [ ];
+      this .localFogs                = [ null ];
       this .layouts                  = [ ];
       this .textureProjectors        = [ ];
       this .generatedCubeMapTextures = [ ];
@@ -198,29 +198,26 @@ function (TextureBuffer,
       {
          const modelViewMatrix = new Matrix4 ();
 
-         return function (fog)
+         return function (fogNode)
          {
-            const fogContainer = this .localFogs [0] || fog .getFogs () .pop ();
+            if (fogNode .getFogType ())
+            {
+               const fogContainer = this .localFogs [0] || fogNode .getFogs () .pop ();
 
-            modelViewMatrix .assign (fog .getModelMatrix ()) .multRight (this .getViewMatrix () .get ());
-            fogContainer .set (fog, modelViewMatrix);
+               modelViewMatrix .assign (fogNode .getModelMatrix ()) .multRight (this .getViewMatrix () .get ());
+               fogContainer .set (fogNode, modelViewMatrix);
 
-            this .localFog = this .localFogs [0] = fogContainer;
+               this .localFogs [0] = fogContainer;
+            }
+            else
+            {
+               this .localFogs [0] = null;
+            }
          };
       })(),
-      pushLocalFog: function (localFog)
+      getLocalFogs: function ()
       {
-         this .localFogs .push (localFog);
-
-         this .localFog = localFog;
-      },
-      popLocalFog: function ()
-      {
-         const localFog = this .localFogs .pop ();
-
-         this .localFog = this .localFogs .at (-1);
-
-         return localFog;
+         return this .localFogs;
       },
       getLayouts: function ()
       {
@@ -576,7 +573,7 @@ function (TextureBuffer,
                context .shapeNode   = shapeNode;
                context .textureNode = null;
                context .distance    = bboxCenter .z;
-               context .fogNode     = this .localFog;
+               context .fogNode     = this .localFogs .at (-1);
                context .shadows     = this .shadows .at (-1);
 
                // Clip planes and local lights

@@ -5,8 +5,10 @@ uniform mat4 x3d_ModelViewMatrix;
 
 // Attributes
 
-#if defined (X3D_FOG_COORDS)
-   attribute float x3d_FogDepth;
+#if defined (X3D_FOG)
+   #if defined (X3D_FOG_COORDS)
+      attribute float x3d_FogDepth;
+   #endif
 #endif
 
 #if defined (X3D_COLOR_MATERIAL)
@@ -72,8 +74,10 @@ vertex_main ()
       gl_PointSize = pointSize = getPointSize (vertex);
    #endif
 
-   #if defined (X3D_FOG_COORDS)
-      fogDepth = x3d_FogDepth;
+   #if defined (X3D_FOG)
+      #if defined (X3D_FOG_COORDS)
+         fogDepth = x3d_FogDepth;
+      #endif
    #endif
 
    #if defined (X3D_COLOR_MATERIAL)

@@ -71,7 +71,7 @@ function (X3DConstants,
       set: function (fogNode, modelViewMatrix)
       {
          this .fogNode = fogNode;
-         
+
          this .fogMatrix .set (modelViewMatrix .submatrix .inverse ());
       },
       setShaderUniforms: function (gl, shaderObject)
@@ -79,23 +79,12 @@ function (X3DConstants,
          if (shaderObject .hasFog (this))
             return;
 
-         const
-            fogNode         = this .fogNode,
-            visibilityRange = Math .max (0, fogNode ._visibilityRange .getValue ());
+         const fogNode = this .fogNode;
 
-         if (fogNode .getHidden () || visibilityRange === 0)
-         {
-            gl .uniform1i (shaderObject .x3d_FogType, 0); // NO_FOG
-         }
-         else
-         {
-            const color = fogNode ._color .getValue ();
-
-            gl .uniform1i        (shaderObject .x3d_FogType,            fogNode .fogType);
-            gl .uniform3f        (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
-            gl .uniform1f        (shaderObject .x3d_FogVisibilityRange, visibilityRange);
-            gl .uniformMatrix3fv (shaderObject .x3d_FogMatrix, false,   this .fogMatrix);
-         }
+         gl .uniform1i        (shaderObject .x3d_FogType,            fogNode .fogType);
+         gl .uniform3fv       (shaderObject .x3d_FogColor,           fogNode .colorArray);
+         gl .uniform1f        (shaderObject .x3d_FogVisibilityRange, fogNode .visibilityRange);
+         gl .uniformMatrix3fv (shaderObject .x3d_FogMatrix, false,   this .fogMatrix);
       },
       dispose: function ()
       {
@@ -109,7 +98,8 @@ function (X3DConstants,
 
       this ._visibilityRange .setUnit ("length");
 
-      this .hidden = false;
+      this .hidden     = false;
+      this .colorArray = new Float32Array (3);
    }
 
    X3DFogObject .prototype =
@@ -117,28 +107,20 @@ function (X3DConstants,
       constructor: X3DFogObject,
       initialize: function ()
       {
-         this ._fogType .addInterest ("set_fogType__", this);
+         this ._fogType         .addInterest ("set_fogType__",         this);
+         this ._color           .addInterest ("set_color__",           this);
+         this ._visibilityRange .addInterest ("set_visibilityRange__", this);
+         this ._visibilityRange .addInterest ("set_fogType__",         this);
 
          this .set_fogType__ ();
-      },
-      set_fogType__: function ()
-      {
-         switch (this ._fogType .getValue ())
-         {
-            case "EXPONENTIAL":
-               this .fogType = 2;
-               break;
-            //case "EXPONENTIAL2":
-            //	this .fogType = 3;
-            //	break;
-            default:
-               this .fogType = 1;
-               break;
-         }
+         this .set_color__ ();
+         this .set_visibilityRange__ ();
       },
       setHidden: function (value)
       {
          this .hidden = value;
+
+         this .set_fogType__ ();
 
          this .getBrowser () .addBrowserEvent ();
       },
@@ -146,9 +128,42 @@ function (X3DConstants,
       {
          return this .hidden;
       },
+      getFogType: function ()
+      {
+         return this .fogType;
+      },
       getFogs: function ()
       {
          return Fogs;
+      },
+      set_fogType__: (function ()
+      {
+         const fogTypes = new Map ([
+            ["LINEAR",      1],
+            ["EXPONENTIAL", 2],
+         ]);
+
+         return function ()
+         {
+            if (this .hidden || this .visibilityRange === 0)
+               this .fogType = 0;
+            else
+               this .fogType = fogTypes .get (this ._fogType .getValue ()) || 1;
+         };
+      })(),
+      set_color__: function ()
+      {
+         const
+            color      = this ._color .getValue (),
+            colorArray = this .colorArray;
+
+         colorArray [0] = color .r;
+         colorArray [1] = color .g;
+         colorArray [2] = color .b;
+      },
+      set_visibilityRange__: function ()
+      {
+         this .visibilityRange = Math .max (0, this ._visibilityRange .getValue ());
       },
    };
 

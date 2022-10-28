@@ -41,6 +41,6 @@ getNormalVector (const in float normalScale)
 
       return normalize (tbn * ((n * 2.0 - 1.0) * scale)) * facing;
    #else
-   return normalize (normal) * facing;
+      return normalize (normal) * facing;
    #endif
 }

@@ -140,7 +140,7 @@ function (X3DNode,
          this .backgrounds     .setup ();
          this .fogs            .setup ();
 
-         this ._viewport       .addInterest ("set_viewport__", this);
+         this ._viewport .addInterest ("set_viewport__", this);
 
          this .set_viewport__ ();
       },

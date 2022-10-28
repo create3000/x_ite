@@ -272,6 +272,9 @@ function (Fields,
          if (context .shadows)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
+         if (context .fogNode)
+            options .push ("X3D_FOG");
+            
          if (geometryContext .hasFogCoords)
             options .push ("X3D_FOG_COORDS");
 

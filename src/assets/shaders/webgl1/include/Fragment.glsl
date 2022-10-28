@@ -3,8 +3,10 @@ uniform float x3d_AlphaCutoff;
 varying vec3 vertex;      // point on geometry
 varying vec3 localVertex; // point on geometry in local coordinates
 
-#if defined (X3D_FOG_COORDS)
-   varying float fogDepth;
+#if defined (X3D_FOG)
+   #if defined (X3D_FOG_COORDS)
+      varying float fogDepth;
+   #endif
 #endif
 
 #if defined (X3D_COLOR_MATERIAL)
@@ -71,7 +73,9 @@ fragment_main ()
       finalColor = getHatchColor (finalColor);
    #endif
 
-   finalColor .rgb = getFogColor (finalColor .rgb);
+   #if defined (X3D_FOG)
+      finalColor .rgb = getFogColor (finalColor .rgb);
+   #endif
 
    if (finalColor .a < x3d_AlphaCutoff)
       discard;

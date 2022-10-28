@@ -102,19 +102,19 @@ function (Fields,
       },
       push: function (renderObject)
       {
-         if (this ._enabled .getValue ())
+         if (this ._enabled .getValue () && this .getFogType ())
          {
             const fogContainer = this .getFogs () .pop ();
 
             fogContainer .set (this, renderObject .getModelViewMatrix () .get ());
 
-            renderObject .pushLocalFog (fogContainer);
+            renderObject .getLocalFogs () .push (fogContainer);
          }
       },
       pop: function (renderObject)
       {
-         if (this ._enabled .getValue ())
-            this .getBrowser () .getLocalObjects () .push (renderObject .popLocalFog ());
+         if (this ._enabled .getValue () && this .getFogType ())
+            this .getBrowser () .getLocalObjects () .push (renderObject .getLocalFogs () .pop ());
       },
    });
 

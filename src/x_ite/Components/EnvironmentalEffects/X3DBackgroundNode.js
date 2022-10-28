@@ -560,66 +560,73 @@ function (X3DBindableNode,
                this .drawCube (renderObject);
          };
       })(),
-      drawSphere: function (renderObject)
+      drawSphere: (function ()
       {
-         const transparency = this ._transparency .getValue ();
+         const context = { shadows: false, fogNode: null };
 
-         if (transparency >= 1)
-            return;
-
-         const
-            browser    = this .getBrowser (),
-            gl         = browser .getContext (),
-            shaderNode = browser .getDefaultMaterial () .getShader (this .sphereContext, false);
-
-         shaderNode .enable (gl);
-
-         // Clip planes
-
-         shaderNode .setLocalObjects (gl, this .localObjects);
-
-         // Uniforms
-
-         gl .uniform1i (shaderNode .x3d_FogType,                            0);
-         gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,               true);
-         gl .uniform1i (shaderNode .x3d_FillPropertiesHatched,              false);
-         gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
-         gl .uniform1i (shaderNode .x3d_NumTextures,                        0);
-         gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-         gl .uniform1i (shaderNode .x3d_NumProjectiveTextures,              0);
-
-         gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
-         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
-
-         // Enable vertex attribute arrays.
-
-         if (this .sphereArrayObject .enable (gl, shaderNode))
+         return function (renderObject)
          {
-            shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
-            shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
-         }
+            const transparency = this ._transparency .getValue ();
 
-         // Setup context.
+            if (transparency >= 1)
+               return;
 
-         if (transparency)
-            gl .enable (gl .BLEND);
-         else
-            gl .disable (gl .BLEND);
+            const
+               browser    = this .getBrowser (),
+               gl         = browser .getContext (),
+               shaderNode = browser .getDefaultMaterial () .getShader (this .sphereContext, context);
 
-         // Draw.
+            shaderNode .enable (gl);
 
-         gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
-      },
+            // Clip planes
+
+            shaderNode .setLocalObjects (gl, this .localObjects);
+
+            // Uniforms
+
+            gl .uniform1i (shaderNode .x3d_FogType,                            0);
+            gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,               true);
+            gl .uniform1i (shaderNode .x3d_FillPropertiesHatched,              false);
+            gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
+            gl .uniform1i (shaderNode .x3d_NumTextures,                        0);
+            gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
+            gl .uniform1i (shaderNode .x3d_NumProjectiveTextures,              0);
+
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
+
+            // Enable vertex attribute arrays.
+
+            if (this .sphereArrayObject .enable (gl, shaderNode))
+            {
+               shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
+               shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
+            }
+
+            // Setup context.
+
+            if (transparency)
+               gl .enable (gl .BLEND);
+            else
+               gl .disable (gl .BLEND);
+
+            // Draw.
+
+            gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
+         };
+      })(),
       drawCube: (function ()
       {
-         const textureMatrixArray = new Float32Array (Matrix4 .Identity);
+         const
+            textureMatrixArray = new Float32Array (Matrix4 .Identity),
+            context            = { shadows: false, fogNode: null };
 
          return function (renderObject)
          {
             const
                browser    = this .getBrowser (),
                gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (this .texturesContext, false);
+               shaderNode = browser .getDefaultMaterial () .getShader (this .texturesContext, context);
 
             shaderNode .enable (gl);
 

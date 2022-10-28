@@ -162,7 +162,6 @@ function (X3DCast,
          this .x3d_FogColor           = this .getUniformLocation (gl, program, "x3d_Fog.color",           "x3d_FogColor");
          this .x3d_FogVisibilityRange = this .getUniformLocation (gl, program, "x3d_Fog.visibilityRange", "x3d_FogVisibilityRange");
          this .x3d_FogMatrix          = this .getUniformLocation (gl, program, "x3d_Fog.matrix",          "x3d_FogMatrix");
-         this .x3d_FogCoord           = this .getUniformLocation (gl, program, "x3d_Fog.fogCoord",        "x3d_FogCoord");
 
          this .x3d_AlphaCutoff = gl .getUniformLocation (program, "x3d_AlphaCutoff");
 
@@ -987,6 +986,7 @@ function (X3DCast,
          {
             const
                renderObject    = context .renderer,
+               fogNode         = context .fogNode,
                shapeNode       = context .shapeNode,
                geometryContext = context .geometryContext || shapeNode .getGeometry (),
                geometryType    = geometryContext .geometryType,
@@ -1068,10 +1068,10 @@ function (X3DCast,
             gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
             gl .uniform1i (this .x3d_NumProjectiveTextures, Math .min (this .numProjectiveTextures, this .x3d_MaxTextures));
 
-            // Fog, there is always one
+            // Fog
 
-            context .fogNode .setShaderUniforms (gl, this);
-            gl .uniform1i (this .x3d_FogCoord, geometryContext .hasFogCoords);
+            if (fogNode)
+               fogNode .setShaderUniforms (gl, this);
 
             // Alpha
 

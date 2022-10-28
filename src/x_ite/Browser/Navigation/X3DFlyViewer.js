@@ -659,7 +659,8 @@ function ($,
             toPoint               = new Vector3 (0, 0, 0),
             projectionMatrix      = new Matrix4 (),
             projectionMatrixArray = new Float32Array (Matrix4 .Identity),
-            modelViewMatrixArray  = new Float32Array (Matrix4 .Identity);
+            modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
+            context               = { shadows: false, fogNode: null };
 
          return function (type)
          {
@@ -692,7 +693,7 @@ function ($,
 
             const
                gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext, false),
+               shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext, context),
                lineWidth  = gl .getParameter (gl .LINE_WIDTH);
 
             shaderNode .enable (gl);

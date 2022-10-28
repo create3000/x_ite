@@ -115,19 +115,21 @@ function (Fields,
          //
          // 0  - 13 -> textures
          // 14 - 15 -> shader type
-         // 16      -> shadows
-         // 17      -> logarithmic depth buffer
-         // 18 - 19 -> geometry type
-         // 20      -> fog coords
-         // 21      -> color material
-         // 22      -> normals
+         // 16      -> logarithmic depth buffer
+         // 17      -> shadows
+         // 18      -> fog
+         // 19 - 20 -> geometry type
+         // 21      -> fog coords
+         // 22      -> color material
+         // 23      -> normals
 
          let key = +this .textureBits;
 
          key |= this .getMaterialType (context .shadows) << 14;
-         key |= context .shadows                         << 16;
-         key |= this .logarithmicDepthBuffer             << 17;
-         key |= geometryContext .geometryMask            << 18;
+         key |= this .logarithmicDepthBuffer             << 16;
+         key |= context .shadows                         << 17;
+         key |= (context .fogNode ? 1 : 0)               << 18;
+         key |= geometryContext .geometryMask            << 19;
 
          const shaderNode = this .shaderNodes .get (key) || this .createShader (key, geometryContext, context);
 
