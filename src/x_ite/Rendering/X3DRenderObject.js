@@ -84,11 +84,14 @@ function (TextureBuffer,
 
    function X3DRenderObject (executionContext)
    {
+      this .viewVolumes              = [ ];
       this .cameraSpaceMatrix        = new MatrixStack (Matrix4);
       this .viewMatrix               = new MatrixStack (Matrix4);
       this .projectionMatrix         = new MatrixStack (Matrix4);
       this .modelViewMatrix          = new MatrixStack (Matrix4);
-      this .viewVolumes              = [ ];
+      this .viewportArray            = new Int32Array (4);
+      this .projectionMatrixArray    = new Float32Array (16);
+      this .cameraSpaceMatrixArray   = new Float32Array (16);
       this .globalObjects            = [ ];
       this .localObjects             = [ ];
       this .lights                   = [ ];
@@ -132,6 +135,18 @@ function (TextureBuffer,
       {
          return true;
       },
+      getRenderTime: function ()
+      {
+         return this .renderTime;
+      },
+      getViewVolumes: function ()
+      {
+         return this .viewVolumes;
+      },
+      getViewVolume: function ()
+      {
+         return this .viewVolumes .at (-1);
+      },
       getCameraSpaceMatrix: function ()
       {
          return this .cameraSpaceMatrix;
@@ -148,13 +163,17 @@ function (TextureBuffer,
       {
          return this .modelViewMatrix;
       },
-      getViewVolumes: function ()
+      getViewportArray: function ()
       {
-         return this .viewVolumes;
+         return this .viewportArray;
       },
-      getViewVolume: function ()
+      getProjectionMatrixArray: function ()
       {
-         return this .viewVolumes .at (-1);
+         return this .projectionMatrixArray;
+      },
+      getCameraSpaceMatrixArray: function ()
+      {
+         return this .cameraSpaceMatrixArray;
       },
       getGlobalObjects: function ()
       {
@@ -834,169 +853,156 @@ function (TextureBuffer,
             }
          };
       })(),
-      draw: (function ()
+      draw: function ()
       {
          const
-            viewportArray          = new Int32Array (4),
-            projectionMatrixArray  = new Float32Array (16),
-            cameraSpaceMatrixArray = new Float32Array (16);
+            browser                  = this .getBrowser (),
+            gl                       = browser .getContext (),
+            viewport                 = this .getViewVolume () .getViewport (),
+            shaders                  = this .shaders,
+            lights                   = this .lights,
+            textureProjectors        = this .textureProjectors,
+            generatedCubeMapTextures = this .generatedCubeMapTextures;
 
-         return function ()
+         this .renderTime = performance .now ();
+
+
+         // PREPARATIONS
+
+
+         if (this .isIndependent ())
          {
-            const
-               browser                  = this .getBrowser (),
-               gl                       = browser .getContext (),
-               viewport                 = this .getViewVolume () .getViewport (),
-               shaders                  = this .shaders,
-               lights                   = this .lights,
-               textureProjectors        = this .textureProjectors,
-               generatedCubeMapTextures = this .generatedCubeMapTextures;
-
-
-            // PREPARATIONS
-
-
-            if (this .isIndependent ())
-            {
-               // Render shadow maps.
-
-               for (const light of lights)
-                  light .renderShadowMap (this);
-
-               // Render GeneratedCubeMapTextures.
-
-               for (const generatedCubeMapTexture of generatedCubeMapTextures)
-                  generatedCubeMapTexture .renderTexture (this);
-            }
-
-            // Set up shadow matrix for all lights, and matrix for all projective textures.
-
-            browser .getHeadlight () .setGlobalVariables (this);
+            // Render shadow maps.
 
             for (const light of lights)
-               light .setGlobalVariables (this);
+               light .renderShadowMap (this);
 
-            for (const textureProjector of textureProjectors)
-               textureProjector .setGlobalVariables (this);
+            // Render GeneratedCubeMapTextures.
 
-            // Set global uniforms.
+            for (const generatedCubeMapTexture of generatedCubeMapTextures)
+               generatedCubeMapTexture .renderTexture (this);
+         }
 
-            viewportArray          .set (viewport);
-            cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-            projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
+         // Set up shadow matrix for all lights, and matrix for all projective textures.
 
-            for (const shader of browser .getShaders ())
-               shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+         browser .getHeadlight () .setGlobalVariables (this);
 
-            for (const shader of shaders)
-               shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+         for (const light of lights)
+            light .setGlobalVariables (this);
 
+         for (const textureProjector of textureProjectors)
+            textureProjector .setGlobalVariables (this);
 
-            // DRAW
+         // Set global uniforms.
 
+         this .viewportArray          .set (viewport);
+         this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+         this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 
-            // Configure viewport and background
-
-            gl .viewport (viewport [0],
-                          viewport [1],
-                          viewport [2],
-                          viewport [3]);
-
-            gl .scissor (viewport [0],
-                         viewport [1],
-                         viewport [2],
-                         viewport [3]);
-
-            // Draw background.
-
-            gl .clear (gl .DEPTH_BUFFER_BIT);
-
-            this .getBackground () .display (gl, this, viewport);
-
-            // Sorted blend
-
-            // Render opaque objects first
-
-            gl .enable (gl .DEPTH_TEST);
-            gl .depthMask (true);
-            gl .disable (gl .BLEND);
-
-            const opaqueShapes = this .opaqueShapes;
-
-            for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
-            {
-               const
-                  context = opaqueShapes [i],
-                  scissor = context .scissor;
-
-               gl .scissor (scissor .x,
-                            scissor .y,
-                            scissor .z,
-                            scissor .w);
-
-               context .shapeNode .display (gl, context);
-               browser .resetTextureUnits ();
-            }
-
-            // Render transparent objects
-
-            gl .depthMask (false);
-            gl .enable (gl .BLEND);
-
-            const transparentShapes = this .transparentShapes;
-
-            this .transparencySorter .sort (0, this .numTransparentShapes);
-
-            for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
-            {
-               const
-                  context = transparentShapes [i],
-                  scissor = context .scissor;
-
-               gl .scissor (scissor .x,
-                            scissor .y,
-                            scissor .z,
-                            scissor .w);
-
-               context .shapeNode .display (gl, context);
-               browser .resetTextureUnits ();
-            }
-
-            gl .depthMask (true);
-            gl .disable (gl .BLEND);
+         // DRAW
 
 
-            // POST DRAW
+         // Configure viewport and background
 
-            const globalObjects = this .globalObjects;
+         gl .viewport (viewport [0],
+                        viewport [1],
+                        viewport [2],
+                        viewport [3]);
 
-            if (this .isIndependent ())
-            {
-               // Recycle clip planes, local fogs, local lights, and local projective textures.
+         gl .scissor (viewport [0],
+                        viewport [1],
+                        viewport [2],
+                        viewport [3]);
 
-               const localObjects = browser .getLocalObjects ();
+         // Draw background.
 
-               for (const localObject of localObjects)
-                  localObject .dispose ();
+         gl .clear (gl .DEPTH_BUFFER_BIT);
 
-               localObjects .length = 0;
+         this .getBackground () .display (gl, this, viewport);
 
-               // Recycle global lights and global projective textures.
+         // Sorted blend
 
-               for (const globalObject of globalObjects)
-                  globalObject .dispose ();
-            }
+         // Render opaque objects first
 
-            // Reset containers.
+         gl .enable (gl .DEPTH_TEST);
+         gl .depthMask (true);
+         gl .disable (gl .BLEND);
 
-            shaders .clear ();
+         const opaqueShapes = this .opaqueShapes;
 
-            globalObjects            .length = 0;
-            lights                   .length = 0;
-            textureProjectors        .length = 0;
-            generatedCubeMapTextures .length = 0;
-         };
-      })(),
+         for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
+         {
+            const
+               context = opaqueShapes [i],
+               scissor = context .scissor;
+
+            gl .scissor (scissor .x,
+                           scissor .y,
+                           scissor .z,
+                           scissor .w);
+
+            context .shapeNode .display (gl, context);
+            browser .resetTextureUnits ();
+         }
+
+         // Render transparent objects
+
+         gl .depthMask (false);
+         gl .enable (gl .BLEND);
+
+         const transparentShapes = this .transparentShapes;
+
+         this .transparencySorter .sort (0, this .numTransparentShapes);
+
+         for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
+         {
+            const
+               context = transparentShapes [i],
+               scissor = context .scissor;
+
+            gl .scissor (scissor .x,
+                           scissor .y,
+                           scissor .z,
+                           scissor .w);
+
+            context .shapeNode .display (gl, context);
+            browser .resetTextureUnits ();
+         }
+
+         gl .depthMask (true);
+         gl .disable (gl .BLEND);
+
+
+         // POST DRAW
+
+         const globalObjects = this .globalObjects;
+
+         if (this .isIndependent ())
+         {
+            // Recycle clip planes, local fogs, local lights, and local projective textures.
+
+            const localObjects = browser .getLocalObjects ();
+
+            for (const localObject of localObjects)
+               localObject .dispose ();
+
+            localObjects .length = 0;
+
+            // Recycle global lights and global projective textures.
+
+            for (const globalObject of globalObjects)
+               globalObject .dispose ();
+         }
+
+         // Reset containers.
+
+         shaders .clear ();
+
+         globalObjects            .length = 0;
+         lights                   .length = 0;
+         textureProjectors        .length = 0;
+         generatedCubeMapTextures .length = 0;
+      },
    };
 
    function assign (lhs, rhs)

@@ -215,13 +215,6 @@ function (Fields,
          if (this .isValid ())
             X3DProgrammableShaderObject .prototype .set_field__ .call (this, field, this .program);
       },
-      setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
-      {
-         if (this .isValid ())
-         {
-            X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, gl, this .program, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-         }
-      },
       enable: function (gl)
       {
          X3DProgrammableShaderObject .prototype .enable .call (this, gl, this .program);

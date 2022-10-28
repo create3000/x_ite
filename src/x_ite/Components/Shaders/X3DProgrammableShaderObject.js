@@ -980,49 +980,6 @@ function (X3DCast,
          gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
          gl .uniform1i (this .x3d_NumProjectiveTextures, Math .min (this .numProjectiveTextures, this .x3d_MaxTextures));
       },
-      setGlobalUniforms: function (gl, program, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
-      {
-         const globalObjects = renderObject .getGlobalObjects ();
-
-         gl .useProgram (program);
-
-         // Set viewport
-
-         gl .uniform4iv (this .x3d_Viewport, viewportArray);
-
-         // Set projection matrix
-
-         gl .uniformMatrix4fv (this .x3d_ProjectionMatrix,  false, projectionMatrixArray);
-         gl .uniformMatrix4fv (this .x3d_CameraSpaceMatrix, false, cameraSpaceMatrixArray);
-
-         // Fog
-
-         this .fogNode = null;
-
-         // Set global lights and global texture projectors
-
-         this .numLights                      = 0;
-         this .numProjectiveTextures          = 0;
-         this .lightNodes .length             = 0;
-         this .projectiveTextureNodes .length = 0;
-
-         for (const globalObject of globalObjects)
-            globalObject .setShaderUniforms (gl, this, renderObject);
-
-         this .numGlobalLights             = this .numLights;
-         this .numGlobalProjectiveTextures = this .numProjectiveTextures;
-
-         // Logarithmic depth buffer support.
-
-         const
-            viewpoint      = renderObject .getViewpoint (),
-            navigationInfo = renderObject .getNavigationInfo ();
-
-         if (viewpoint instanceof OrthoViewpoint)
-            gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, -1);
-         else
-            gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
-      },
       setLocalUniforms: function (gl, context, front = true)
       {
          const
@@ -1034,6 +991,52 @@ function (X3DCast,
             materialNode    = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
             textureNode     = context .textureNode || appearanceNode .textureNode,
             modelViewMatrix = context .modelViewMatrix;
+
+         // Set global uniforms.
+
+         if (this .renderTime !== renderObject .getRenderTime ())
+         {
+            this .renderTime = renderObject .getRenderTime ();
+
+            // Set viewport
+
+            gl .uniform4iv (this .x3d_Viewport, renderObject .getViewportArray ());
+
+            // Set projection matrix
+
+            gl .uniformMatrix4fv (this .x3d_ProjectionMatrix,  false, renderObject .getProjectionMatrixArray ());
+            gl .uniformMatrix4fv (this .x3d_CameraSpaceMatrix, false, renderObject .getCameraSpaceMatrixArray ());
+
+            // Fog
+
+            this .fogNode = null;
+
+            // Set global lights and global texture projectors
+
+            this .numLights                      = 0;
+            this .numProjectiveTextures          = 0;
+            this .lightNodes .length             = 0;
+            this .projectiveTextureNodes .length = 0;
+
+            const globalObjects = renderObject .getGlobalObjects ();
+
+            for (const globalObject of globalObjects)
+               globalObject .setShaderUniforms (gl, this, renderObject);
+
+            this .numGlobalLights             = this .numLights;
+            this .numGlobalProjectiveTextures = this .numProjectiveTextures;
+
+            // Logarithmic depth buffer support.
+
+            const
+               viewpoint      = renderObject .getViewpoint (),
+               navigationInfo = renderObject .getNavigationInfo ();
+
+            if (viewpoint instanceof OrthoViewpoint)
+               gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, -1);
+            else
+               gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
+         }
 
          // Model view matrix
 
