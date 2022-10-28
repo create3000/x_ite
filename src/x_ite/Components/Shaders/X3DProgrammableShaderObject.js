@@ -992,7 +992,7 @@ function (X3DCast,
                geometryType    = geometryContext .geometryType,
                appearanceNode  = shapeNode .getAppearance (),
                materialNode    = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
-               textureNode     = context .textureNode || appearanceNode .textureNode,
+               textureNode     = context .textureNode || appearanceNode .getTexture (),
                modelViewMatrix = context .modelViewMatrix;
 
             // Set global uniforms.
@@ -1075,15 +1075,15 @@ function (X3DCast,
 
             // Alpha
 
-            gl .uniform1f (this .x3d_AlphaCutoff, appearanceNode .alphaCutoff);
+            gl .uniform1f (this .x3d_AlphaCutoff, appearanceNode .getAlphaCutoff ());
 
             // Style
 
-            appearanceNode .stylePropertiesNode [geometryType] .setShaderUniforms (gl, this);
+            appearanceNode .getStyleProperties (geometryType) .setShaderUniforms (gl, this);
 
             // Material
 
-            materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .textureTransformMapping, geometryContext .textureCoordinateMapping, front);
+            materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .getTextureTransformMapping (), geometryContext .textureCoordinateMapping, front);
 
             // Texture
 
@@ -1092,7 +1092,7 @@ function (X3DCast,
             else
                gl .uniform1i (this .x3d_NumTextures, 0);
 
-            appearanceNode  .textureTransformNode  .setShaderUniforms (gl, this);
+            appearanceNode .getTextureTransform () .setShaderUniforms (gl, this);
             geometryContext .textureCoordinateNode .setShaderUniforms (gl, this);
          };
       })(),

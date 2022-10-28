@@ -151,6 +151,14 @@ function (Fields,
       {
          return this .alphaMode;
       },
+      getAlphaCutoff: function ()
+      {
+         return this .alphaCutoff;
+      },
+      getStyleProperties: function (geometryType)
+      {
+         return this .stylePropertiesNode [geometryType];
+      },
       getPointProperties: function ()
       {
          return this .stylePropertiesNode [0];
@@ -178,6 +186,10 @@ function (Fields,
       getTextureTransform: function ()
       {
          return this .textureTransformNode;
+      },
+      getTextureTransformMapping: function ()
+      {
+         return this .textureTransformMapping;
       },
       getShader: function (geometryContext, shadows)
       {
