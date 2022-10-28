@@ -12,6 +12,7 @@ precision highp samplerCube;
 #pragma X3D include "include/Colors.glsl"
 #pragma X3D include "include/Normal.glsl"
 #pragma X3D include "include/SpotFactor.glsl"
+#pragma X3D include "Shadow.glsl"
 
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
@@ -324,9 +325,16 @@ getMaterialColor ()
          float attenuationSpotFactor = attenuationFactor * spotFactor;
 
          // Calculation of analytical lighting contribution
-         vec3 diffuseContrib = (1.0 - F) * diffuse (pbrInputs);
-         vec3 specContrib    = F * G * D / (4.0 * NdotL * NdotV);
-         vec3 color          = NdotL * attenuationSpotFactor * light .color * light .intensity * (diffuseContrib + specContrib);
+         vec3 diffuseContrib     = (1.0 - F) * diffuse (pbrInputs);
+         vec3 specContrib        = F * G * D / (4.0 * NdotL * NdotV);
+         vec3 diffuseSpecContrib = light .intensity * (diffuseContrib + specContrib);
+
+         #if defined (X3D_SHADOWS)
+            if (NdotL > 0.001)
+               diffuseSpecContrib = mix (diffuseSpecContrib, light .shadowColor, getShadowIntensity (i, light));
+         #endif
+
+         vec3 color = NdotL * attenuationSpotFactor * light .color * diffuseSpecContrib;
 
          finalColor += color;
       }
