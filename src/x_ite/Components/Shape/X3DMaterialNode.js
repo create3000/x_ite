@@ -114,7 +114,7 @@ function (Fields,
          // Bit Schema of Shader Key
          //
          // 0  - 13 -> textures
-         // 14 - 15 -> shader type
+         // 14 - 15 -> material type
          // 16      -> logarithmic depth buffer
          // 17      -> shadows
          // 18      -> fog
