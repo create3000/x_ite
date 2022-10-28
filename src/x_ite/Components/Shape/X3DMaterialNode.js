@@ -108,9 +108,9 @@ function (Fields,
 
          let key = this .textureBits .valueOf ();
 
-         key |= this .getMaterialType ()      << 14;
-         key |= shadow                        << 16;
-         key |= geometryContext .geometryMask << 17;
+         key |= this .getMaterialType (shadow) << 14;
+         key |= shadow                         << 16;
+         key |= geometryContext .geometryMask  << 17;
 
          const shaderNode = this .getBrowser () .getShader (key) || this .createShader (key, geometryContext, shadow);
 

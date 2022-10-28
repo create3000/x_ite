@@ -241,14 +241,21 @@ function (Fields,
             return textureIndices;
          };
       })(),
-      getMaterialType: function ()
+      getMaterialType: function (shadow)
       {
-         switch (this .getBrowser () .getBrowserOptions () .getShading ())
+         if (shadow || this .getTextureBits () .valueOf ())
          {
-            default:
-               return 1;
-            case Shading .PHONG:
-               return 2;
+            return 2;
+         }
+         else
+         {
+            switch (this .getBrowser () .getBrowserOptions () .getShading ())
+            {
+               default:
+                  return 1;
+               case Shading .PHONG:
+                  return 2;
+            }
          }
       },
       createShader: function (key, geometryContext, shadow)
@@ -293,7 +300,7 @@ function (Fields,
                options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
          }
 
-         switch (this .getMaterialType (browser))
+         switch (this .getMaterialType (shadow))
          {
             case 1:
             {
