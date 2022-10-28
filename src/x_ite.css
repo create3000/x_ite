@@ -312,7 +312,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: relative;
   border-radius: 5px;
   margin: 0;
-  padding: 5px 24px;
   font-size: 10pt;
   line-height: 1;
   letter-spacing: unset;
@@ -359,19 +358,18 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   height: 0;
 }
 
-/* icons
-  #protip:
-  In case you want to use sprites for icons (which I would suggest you do) have a look at
-  http://css-tricks.com/13224-pseudo-spriting/ to get an idea of how to implement
-  .context-menu-item.icon:before {}
- */
+.x_ite-private-menu .context-menu-item > span {
+  display: block;
+  width: 100%;
+  padding: 5px 24px;
+}
 
 .x_ite-private-menu .context-menu-input > label {
   cursor: pointer;
   display: block;
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
+  padding: 5px 24px;
   width: 100%;
   font-size: 10pt;
   letter-spacing: unset;
@@ -418,7 +416,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-menu .context-menu-title {
   font-weight: bold;
-  padding: 4px 32px 4px 8px;
 }
 
 .x_ite-private-menu .context-menu-selected {
