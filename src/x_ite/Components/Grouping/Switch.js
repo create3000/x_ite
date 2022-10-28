@@ -115,14 +115,14 @@ function (Fields,
 
          this .set_child__ ();
       },
-      getSubBBox: function (bbox, shadow)
+      getSubBBox: function (bbox, shadows)
       {
          if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
             const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .visibleNode);
 
             if (boundedObject)
-               return boundedObject .getBBox (bbox, shadow);
+               return boundedObject .getBBox (bbox, shadows);
 
             return bbox .set ();
          }

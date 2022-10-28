@@ -90,7 +90,7 @@ function (Fields,
             return defaultBBoxSize;
          };
       })(),
-      getBBox: function (nodes, bbox, shadow)
+      getBBox: function (nodes, bbox, shadows)
       {
          // Must be unique for each X3DBoundedObject.
          const childBBox = this .childBBox;
@@ -104,7 +104,7 @@ function (Fields,
             const node = nodes [i];
 
             if (node .getBBox)
-               bbox .add (node .getBBox (childBBox, shadow));
+               bbox .add (node .getBBox (childBBox, shadows));
          }
 
          return bbox;

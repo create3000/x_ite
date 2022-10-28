@@ -181,7 +181,7 @@ function (Fields,
          this .child3Inline .setup ();
          this .child4Inline .setup ();
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
          if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
@@ -190,9 +190,9 @@ function (Fields,
                case 0:
                {
                   if (this ._rootNode .length)
-                     return this .rootGroup .getBBox (bbox, shadow);
+                     return this .rootGroup .getBBox (bbox, shadows);
 
-                  return this .rootInline .getBBox (bbox, shadow);
+                  return this .rootInline .getBBox (bbox, shadows);
                }
                case 1:
                {
@@ -201,10 +201,10 @@ function (Fields,
 
                   bbox .set ();
 
-                  bbox .add (this .child1Inline .getBBox (childBBox, shadow));
-                  bbox .add (this .child2Inline .getBBox (childBBox, shadow));
-                  bbox .add (this .child3Inline .getBBox (childBBox, shadow));
-                  bbox .add (this .child4Inline .getBBox (childBBox, shadow));
+                  bbox .add (this .child1Inline .getBBox (childBBox, shadows));
+                  bbox .add (this .child2Inline .getBBox (childBBox, shadows));
+                  bbox .add (this .child3Inline .getBBox (childBBox, shadows));
+                  bbox .add (this .child4Inline .getBBox (childBBox, shadows));
 
                   return bbox;
                }

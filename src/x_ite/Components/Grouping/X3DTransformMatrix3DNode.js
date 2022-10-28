@@ -116,9 +116,9 @@ function (X3DGroupingNode,
       },
       getGetBBox: (function ()
       {
-         function getBBox (bbox, shadow)
+         function getBBox (bbox, shadows)
          {
-            return this .getSubBBox (bbox, shadow) .multRight (this .matrix);
+            return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
          }
 
          return function ()

@@ -110,14 +110,14 @@ function (Fields,
 
          this .set_collidable__ ();
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
          if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
             const boundedObject = this .visibleNode;
 
             if (boundedObject)
-               return boundedObject .getBBox (bbox, shadow);
+               return boundedObject .getBBox (bbox, shadows);
 
             return bbox .set ();
          }

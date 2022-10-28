@@ -96,23 +96,23 @@ function (Fields,
       {
          return this .textureBits;
       },
-      getShader: function (geometryContext, shadow)
+      getShader: function (geometryContext, shadows)
       {
          // Bit Schema of Shader Key
          //
          // 0  - 13 -> textures
          // 14 - 15 -> shader type
-         // 16      -> shadow
+         // 16      -> shadows
          // 17 - 18 -> geometry type
          // 19      -> normals
 
          let key = this .textureBits .valueOf ();
 
-         key |= this .getMaterialType (shadow) << 14;
-         key |= shadow                         << 16;
-         key |= geometryContext .geometryMask  << 17;
+         key |= this .getMaterialType (shadows) << 14;
+         key |= shadows                         << 16;
+         key |= geometryContext .geometryMask   << 17;
 
-         const shaderNode = this .getBrowser () .getShader (key) || this .createShader (key, geometryContext, shadow);
+         const shaderNode = this .getBrowser () .getShader (key) || this .createShader (key, geometryContext, shadows);
 
          if (shaderNode .isValid ())
          {

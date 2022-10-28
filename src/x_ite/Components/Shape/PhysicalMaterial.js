@@ -204,18 +204,18 @@ function (Fields,
       {
          return 3;
       },
-      createShader: function (key, geometryContext, shadow)
+      createShader: function (key, geometryContext, shadows)
       {
          const
             browser = this .getBrowser (),
             options = [ ];
 
          if (! geometryContext .hasNormals)
-            return browser .getDefaultMaterial () .createShader (key, geometryContext, shadow);
+            return browser .getDefaultMaterial () .createShader (key, geometryContext, shadows);
 
          options .push ("X3D_PHYSICAL", this .getGeometryTypes () [geometryContext .geometryType]);
 
-         if (shadow)
+         if (shadows)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
          options .push ("X3D_NORMALS");

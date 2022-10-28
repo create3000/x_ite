@@ -99,18 +99,14 @@ function (X3DChildNode,
          this .set_geometry__ ();
          this .set_transparent__ ();
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
-         if (shadow)
+         if (shadows)
          {
             if (this ._castShadow .getValue ())
-            {
                return bbox .assign (this .bbox);
-            }
             else
-            {
                return bbox .set ();
-            }
          }
          else
          {

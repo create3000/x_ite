@@ -92,7 +92,7 @@ function (TextureBuffer,
       this .globalObjects            = [ ];
       this .localObjects             = [ ];
       this .lights                   = [ ];
-      this .shadow                   = [ false ];
+      this .shadows                  = [ false ];
       this .localFogs                = [ ];
       this .layouts                  = [ ];
       this .textureProjectors        = [ ];
@@ -168,17 +168,13 @@ function (TextureBuffer,
       {
          return this .lights;
       },
-      pushShadow: function (value)
+      pushShadows: function (value)
       {
-         this .shadow .push (value || this .shadow .at (-1));
+         this .shadows .push (value || this .shadows .at (-1));
       },
-      popShadow: function ()
+      popShadows: function ()
       {
-         this .shadow .pop ();
-      },
-      getShadow: function ()
-      {
-         return this .shadow .at (-1);
+         this .shadows .pop ();
       },
       setGlobalFog: (function ()
       {
@@ -567,7 +563,7 @@ function (TextureBuffer,
                context .textureNode = null;
                context .distance    = bboxCenter .z;
                context .fogNode     = this .localFog;
-               context .shadow      = this .shadow .at (-1);
+               context .shadows     = this .shadows .at (-1);
 
                // Clip planes and local lights
 

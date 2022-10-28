@@ -179,13 +179,13 @@ function (Fields,
       {
          return this .textureTransformNode;
       },
-      getShader: function (geometryContext, shadow)
+      getShader: function (geometryContext, shadows)
       {
-         return this .materialNode .getShader (geometryContext, shadow);
+         return this .materialNode .getShader (geometryContext, shadows);
       },
-      getBackShader: function (geometryContext, shadow)
+      getBackShader: function (geometryContext, shadows)
       {
-         return this .backMaterialNode .getShader (geometryContext, shadow);
+         return this .backMaterialNode .getShader (geometryContext, shadows);
       },
       getBlendMode: function ()
       {

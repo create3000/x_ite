@@ -192,7 +192,7 @@ function (X3DChildNode,
             }
          }
 
-         renderObject .pushShadow (!! this .getShadowIntensity ());
+         renderObject .pushShadows (!! this .getShadowIntensity ());
       },
       pop: function (renderObject)
       {
@@ -204,7 +204,7 @@ function (X3DChildNode,
          else
             renderObject .getLocalObjects () .pop ();
 
-         renderObject .popShadow ();
+         renderObject .popShadows ();
       },
    });
 

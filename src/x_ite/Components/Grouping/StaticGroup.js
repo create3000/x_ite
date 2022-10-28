@@ -139,9 +139,9 @@ function (Fields,
 
          this .set_children__ ();
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
-         return bbox .assign (shadow ? this .shadowBBox : this .bbox);
+         return bbox .assign (shadows ? this .shadowBBox : this .bbox);
       },
       set_children__: function ()
       {

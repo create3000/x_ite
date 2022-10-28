@@ -241,9 +241,9 @@ function (Fields,
             return textureIndices;
          };
       })(),
-      getMaterialType: function (shadow)
+      getMaterialType: function (shadows)
       {
-         if (shadow || this .getTextureBits () .valueOf ())
+         if (shadows || this .getTextureBits () .valueOf ())
          {
             return 2;
          }
@@ -258,18 +258,18 @@ function (Fields,
             }
          }
       },
-      createShader: function (key, geometryContext, shadow)
+      createShader: function (key, geometryContext, shadows)
       {
          const
             browser = this .getBrowser (),
             options = [ ];
 
          if (! geometryContext .hasNormals)
-            return browser .getDefaultMaterial () .createShader (key, geometryContext, shadow);
+            return browser .getDefaultMaterial () .createShader (key, geometryContext, shadows);
 
          options .push (this .getGeometryTypes () [geometryContext .geometryType])
 
-         if (shadow)
+         if (shadows)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
          options .push ("X3D_NORMALS");
@@ -300,7 +300,7 @@ function (Fields,
                options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
          }
 
-         switch (this .getMaterialType (shadow))
+         switch (this .getMaterialType (shadows))
          {
             case 1:
             {

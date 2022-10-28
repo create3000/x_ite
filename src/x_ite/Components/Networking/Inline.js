@@ -128,10 +128,10 @@ function (Fields,
 
          this .requestImmediateLoad ();
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
          if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-            return this .group .getBBox (bbox, shadow);
+            return this .group .getBBox (bbox, shadows);
 
          return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },

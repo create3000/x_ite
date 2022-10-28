@@ -105,14 +105,14 @@ function (X3DChildNode,
 
          this .set_children__ ();
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
-         return this .getSubBBox (bbox, shadow);
+         return this .getSubBBox (bbox, shadows);
       },
-      getSubBBox: function (bbox, shadow)
+      getSubBBox: function (bbox, shadows)
       {
          if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-            return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadow);
+            return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadows);
 
          return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },

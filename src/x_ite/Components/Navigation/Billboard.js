@@ -105,9 +105,9 @@ function (Fields,
       {
          return "children";
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
-         return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadow) .multRight (this .matrix);
+         return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .matrix);
       },
       getMatrix: function ()
       {
@@ -171,7 +171,7 @@ function (Fields,
             case TraverseType .CAMERA:
             case TraverseType .PICKING:
             case TraverseType .SHADOW:
-               // No clone support for shadow, generated cube map texture, and bbox
+               // No clone support for shadows, generated cube map texture, and bbox
                modelViewMatrix .multLeft (this .matrix);
                break;
             default:
