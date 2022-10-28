@@ -108,12 +108,6 @@ function (Fields,
                this ._isSelected = false;
          }
       },
-      traverse: function (type, renderObject)
-      {
-         // TraverseType .DISPLAY
-
-         renderObject .getShaders () .add (this);
-      },
    });
 
    return X3DShaderNode;

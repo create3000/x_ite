@@ -100,7 +100,6 @@ function (TextureBuffer,
       this .layouts                  = [ ];
       this .textureProjectors        = [ ];
       this .generatedCubeMapTextures = [ ];
-      this .shaders                  = new Set ();
       this .collisions               = [ ];
       this .numOpaqueShapes          = 0;
       this .numTransparentShapes     = 0;
@@ -238,10 +237,6 @@ function (TextureBuffer,
       getGeneratedCubeMapTextures: function ()
       {
          return this .generatedCubeMapTextures;
-      },
-      getShaders: function ()
-      {
-         return this .shaders;
       },
       getCollisions: function ()
       {
@@ -859,7 +854,6 @@ function (TextureBuffer,
             browser                  = this .getBrowser (),
             gl                       = browser .getContext (),
             viewport                 = this .getViewVolume () .getViewport (),
-            shaders                  = this .shaders,
             lights                   = this .lights,
             textureProjectors        = this .textureProjectors,
             generatedCubeMapTextures = this .generatedCubeMapTextures;
@@ -906,15 +900,15 @@ function (TextureBuffer,
 
          // Configure viewport and background
 
-         gl .viewport (viewport [0],
-                        viewport [1],
-                        viewport [2],
-                        viewport [3]);
+         gl .viewport (viewport .x,
+                       viewport .y,
+                       viewport .z,
+                       viewport .w);
 
-         gl .scissor (viewport [0],
-                        viewport [1],
-                        viewport [2],
-                        viewport [3]);
+         gl .scissor (viewport .x,
+                      viewport .y,
+                      viewport .z,
+                      viewport .w);
 
          // Draw background.
 
@@ -926,8 +920,8 @@ function (TextureBuffer,
 
          // Render opaque objects first
 
-         gl .enable (gl .DEPTH_TEST);
          gl .depthMask (true);
+         gl .enable (gl .DEPTH_TEST);
          gl .disable (gl .BLEND);
 
          const opaqueShapes = this .opaqueShapes;
@@ -939,9 +933,9 @@ function (TextureBuffer,
                scissor = context .scissor;
 
             gl .scissor (scissor .x,
-                           scissor .y,
-                           scissor .z,
-                           scissor .w);
+                         scissor .y,
+                         scissor .z,
+                         scissor .w);
 
             context .shapeNode .display (gl, context);
             browser .resetTextureUnits ();
@@ -963,9 +957,9 @@ function (TextureBuffer,
                scissor = context .scissor;
 
             gl .scissor (scissor .x,
-                           scissor .y,
-                           scissor .z,
-                           scissor .w);
+                         scissor .y,
+                         scissor .z,
+                         scissor .w);
 
             context .shapeNode .display (gl, context);
             browser .resetTextureUnits ();
@@ -997,8 +991,6 @@ function (TextureBuffer,
          }
 
          // Reset containers.
-
-         shaders .clear ();
 
          globalObjects            .length = 0;
          lights                   .length = 0;

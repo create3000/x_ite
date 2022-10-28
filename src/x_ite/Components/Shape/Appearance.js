@@ -405,9 +405,6 @@ function (Fields,
       {
          if (this .textureNode)
             this .textureNode .traverse (type, renderObject);
-
-         if (this .shaderNode)
-            this .shaderNode .traverse (type, renderObject);
       },
    });
 

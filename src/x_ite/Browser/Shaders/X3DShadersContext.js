@@ -153,10 +153,6 @@ function (Shading,
       {
          return this [_shaders] .get (key);
       },
-      getShaders: function ()
-      {
-         return this [_shaders] .values ();
-      },
       setShading: function (type)
       {
          const gl = this .getContext ();
