@@ -102,8 +102,10 @@ function (Fields,
       {
          if (this .media)
          {
-            this .media [0] .volume = 0;
-            this .media [0] .pause ();
+            const media = this .media [0];
+
+            media .muted = true;
+            media .pause ();
          }
 
          this .media = value;
@@ -112,7 +114,9 @@ function (Fields,
          {
             const media = value [0];
 
-            media .loop = this ._loop .getValue ();
+            media .muted  = false;
+            media .volume = 0;
+            media .loop   = this ._loop .getValue ();
 
             this .setVolume (0);
             this ._duration_changed = media .duration;

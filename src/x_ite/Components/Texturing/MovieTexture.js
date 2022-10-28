@@ -132,11 +132,12 @@ function ($,
          X3DSoundSourceNode .prototype .initialize .call (this);
          X3DUrlObject       .prototype .initialize .call (this);
 
-         this .video .on ("error", this .setError .bind (this));
+         this .video .on ("abort error",     this .setError   .bind (this));
+         this .video .on ("suspend stalled", this .setTimeout .bind (this));
 
-         this .video [0] .preload     = "auto";
-         this .video [0] .volume      = 0;
          this .video [0] .crossOrigin = "Anonymous";
+         this .video [0] .preload     = "auto";
+         this .video [0] .muted       = true;
 
          this .requestImmediateLoad ();
       },
@@ -157,14 +158,14 @@ function ($,
       {
          this .setMedia (null);
          this .urlStack .setValue (this ._url);
-         this .video .bind ("canplaythrough", this .setVideo .bind (this));
+         this .video .on ("canplaythrough", this .setVideo .bind (this));
          this .loadNext ();
       },
       loadNext: function ()
       {
          if (this .urlStack .length === 0)
          {
-            this .video .unbind ("canplaythrough");
+            this .video .off ("canplaythrough");
             this ._duration_changed = -1;
             this .clearTexture ();
             this .setLoadState (X3DConstants .FAILED_STATE);
@@ -184,10 +185,19 @@ function ($,
          this .video .attr ("src", this .URL .href);
          this .video .get (0) .load ();
       },
-      setError: function ()
+      setTimeout: function (event)
+      {
+         setTimeout (function ()
+         {
+            if (this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
+               this .setError (event);
+         }
+         .bind (this), 3000);
+      },
+      setError: function (event)
       {
          if (this .URL .protocol !== "data:")
-            console .warn ("Error loading movie:", decodeURI (this .URL .href));
+            console .warn ("Error loading movie:", decodeURI (this .URL .href), event .type);
 
          this .loadNext ();
       },

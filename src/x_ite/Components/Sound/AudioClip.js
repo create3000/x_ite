@@ -122,11 +122,12 @@ function ($,
          X3DSoundSourceNode .prototype .initialize .call (this);
          X3DUrlObject       .prototype .initialize .call (this);
 
-         this .audio .on ("error", this .setError .bind (this));
+         this .audio .on ("abort error",     this .setError   .bind (this));
+         this .audio .on ("suspend stalled", this .setTimeout .bind (this));
 
-         this .audio [0] .preload     = "auto";
-         this .audio [0] .volume      = 0;
          this .audio [0] .crossOrigin = "Anonymous";
+         this .audio [0] .preload     = "auto";
+         this .audio [0] .muted       = true;
 
          this .requestImmediateLoad ();
       },
@@ -147,14 +148,14 @@ function ($,
       {
          this .setMedia (null);
          this .urlStack .setValue (this ._url);
-         this .audio .bind ("canplaythrough", this .setAudio .bind (this));
+         this .audio .on ("canplaythrough", this .setAudio .bind (this));
          this .loadNext ();
       },
       loadNext: function ()
       {
          if (this .urlStack .length === 0)
          {
-            this .audio .unbind ("canplaythrough");
+            this .audio .off ("canplaythrough");
             this ._duration_changed = -1;
             this .setLoadState (X3DConstants .FAILED_STATE);
             return;
@@ -173,10 +174,19 @@ function ($,
          this .audio .attr ("src", this .URL .href);
          this .audio .get (0) .load ();
       },
-      setError: function ()
+      setTimeout: function (event)
+      {
+         setTimeout (function ()
+         {
+            if (this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
+               this .setError (event);
+         }
+         .bind (this), 3000);
+      },
+      setError: function (event)
       {
          if (this .URL .protocol !== "data:")
-            console .warn ("Error loading audio:", decodeURI (this .URL .href));
+            console .warn ("Error loading audio:", decodeURI (this .URL .href), event .type);
 
          this .loadNext ();
       },
