@@ -30,7 +30,7 @@ getNormalVector (const in float normalScale)
 
    #if defined (X3D_NORMAL_TEXTURE) && ! defined (X3D_NORMAL_TEXTURE_3D)
       vec3 texCoord = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
-      vec3 s        = vec3 (vec2 (normalScale), 1.0);
+      vec3 scale    = vec3 (vec2 (normalScale), 1.0);
       mat3 tbn      = getTBNMatrix (texCoord .st);
 
       #if defined (X3D_NORMAL_TEXTURE_2D)
@@ -39,7 +39,7 @@ getNormalVector (const in float normalScale)
          vec3 n = textureCube (x3d_NormalTexture .textureCube, texCoord) .rgb;
       #endif
 
-      return normalize (tbn * ((n * 2.0 - 1.0) * s)) * facing;
+      return normalize (tbn * ((n * 2.0 - 1.0) * scale)) * facing;
    #else
    return normalize (normal) * facing;
    #endif
