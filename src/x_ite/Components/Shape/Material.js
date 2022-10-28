@@ -272,6 +272,9 @@ function (Fields,
          if (shadows)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
+         if (geometryContext .hasFogCoords)
+            options .push ("X3D_FOG_COORDS");
+            
          if (geometryContext .colorMaterial)
             options .push ("X3D_COLOR_MATERIAL");
 

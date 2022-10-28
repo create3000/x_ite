@@ -1,8 +1,11 @@
 uniform float x3d_AlphaCutoff;
 
-varying float fogDepth;    // fog depth
-varying vec3  vertex;      // point on geometry
-varying vec3  localVertex; // point on geometry varying local coordinates
+varying vec3 vertex;      // point on geometry
+varying vec3 localVertex; // point on geometry in local coordinates
+
+#if defined (X3D_FOG_COORDS)
+   varying float fogDepth;
+#endif
 
 #if defined (X3D_COLOR_MATERIAL)
    varying vec4 color;

@@ -1,8 +1,13 @@
+// Uniforms
+
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
-in float x3d_FogDepth;
-in vec4  x3d_Vertex;
+// Attributes
+
+#if defined (X3D_FOG_COORDS)
+   in float x3d_FogDepth;
+#endif
 
 #if defined (X3D_COLOR_MATERIAL)
    in vec4  x3d_Color;
@@ -18,9 +23,13 @@ in vec4  x3d_Vertex;
    #endif
 #endif
 
-out float fogDepth;
-out vec3  vertex;
-out vec3  localVertex;
+in vec4 x3d_Vertex;
+
+// Varyings
+
+#if defined (X3D_FOG_COORDS)
+   out float fogDepth;
+#endif
 
 #if defined (X3D_COLOR_MATERIAL)
    out vec4 color;
@@ -51,9 +60,14 @@ out vec3  localVertex;
    out vec2       midPoint;
 #endif
 
+out vec3 vertex;
+out vec3 localVertex;
+
 #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
    out float depth;
 #endif
+
+// Main
 
 #pragma X3D include "Particle.glsl"
 #pragma X3D include "PointSize.glsl"
@@ -61,11 +75,19 @@ out vec3  localVertex;
 void
 vertex_main ()
 {
-   vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
+   #if defined (X3D_GEOMETRY_0D)
+      gl_PointSize = pointSize = getPointSize (vertex);
+   #endif
 
-   fogDepth    = x3d_FogDepth;
-   vertex      = position .xyz;
-   localVertex = x3d_Vertex .xyz;
+   #if defined (X3D_GEOMETRY_1D)
+      lengthSoFar = x3d_TexCoord0 .z;
+      startPoint  = x3d_TexCoord0 .xy;
+      midPoint    = x3d_TexCoord0 .xy;
+   #endif
+
+   #if defined (X3D_FOG_COORDS)
+      fogDepth = x3d_FogDepth;
+   #endif
 
    #if defined (X3D_COLOR_MATERIAL)
       color = x3d_Color;
@@ -86,17 +108,12 @@ vertex_main ()
       localNormal = x3d_Normal;
    #endif
 
+   vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
+
+   vertex      = position .xyz;
+   localVertex = x3d_Vertex .xyz;
+
    gl_Position = x3d_ProjectionMatrix * position;
-
-   #if defined (X3D_GEOMETRY_0D)
-      gl_PointSize = pointSize = getPointSize (vertex);
-   #endif
-
-   #if defined (X3D_GEOMETRY_1D)
-      lengthSoFar = x3d_TexCoord0 .z;
-      startPoint  = x3d_TexCoord0 .xy;
-      midPoint    = x3d_TexCoord0 .xy;
-   #endif
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
       depth = 1.0 + gl_Position .w;

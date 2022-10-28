@@ -9,8 +9,9 @@ getFogInterpolant ()
    if (x3d_Fog .type == x3d_None)
       return 1.0;
 
-   if (x3d_Fog .fogCoord)
+   #if defined (X3D_FOG_COORDS)
       return clamp (1.0 - fogDepth, 0.0, 1.0);
+   #endif
 
    float visibilityRange = x3d_Fog .visibilityRange;
 

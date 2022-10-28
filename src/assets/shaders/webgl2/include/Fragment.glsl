@@ -1,8 +1,11 @@
 uniform float x3d_AlphaCutoff;
 
-in float fogDepth;    // fog depth
-in vec3  vertex;      // point on geometry
-in vec3  localVertex; // point on geometry in local coordinates
+in vec3 vertex;      // point on geometry
+in vec3 localVertex; // point on geometry in local coordinates
+
+#if defined (X3D_FOG_COORDS)
+   in float fogDepth;
+#endif
 
 #if defined (X3D_COLOR_MATERIAL)
    in vec4 color;

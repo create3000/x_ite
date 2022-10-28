@@ -1,8 +1,13 @@
+// Uniforms
+
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
-attribute float x3d_FogDepth;
-attribute vec4  x3d_Vertex;
+// Attributes
+
+#if defined (X3D_FOG_COORDS)
+   attribute float x3d_FogDepth;
+#endif
 
 #if defined (X3D_COLOR_MATERIAL)
    attribute vec4 x3d_Color;
@@ -18,9 +23,13 @@ attribute vec4  x3d_Vertex;
    #endif
 #endif
 
-varying float fogDepth;
-varying vec3  vertex;
-varying vec3  localVertex;
+attribute vec4 x3d_Vertex;
+
+// Varyings
+
+#if defined (X3D_FOG_COORDS)
+   varying float fogDepth;
+#endif
 
 #if defined (X3D_COLOR_MATERIAL)
    varying vec4 color;
@@ -45,20 +54,27 @@ varying vec3  localVertex;
    vec3 normal = vec3 (0.0, 0.0, 1.0);
 #endif
 
+varying vec3 vertex;
+varying vec3 localVertex;
+
 #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
    varying float depth;
 #endif
+
+// Main
 
 #pragma X3D include "PointSize.glsl"
 
 void
 vertex_main ()
 {
-   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
+   #if defined (X3D_GEOMETRY_0D)
+      gl_PointSize = pointSize = getPointSize (vertex);
+   #endif
 
-   fogDepth    = x3d_FogDepth;
-   vertex      = position .xyz;
-   localVertex = x3d_Vertex .xyz;
+   #if defined (X3D_FOG_COORDS)
+      fogDepth = x3d_FogDepth;
+   #endif
 
    #if defined (X3D_COLOR_MATERIAL)
       color = x3d_Color;
@@ -79,11 +95,12 @@ vertex_main ()
       localNormal = x3d_Normal;
    #endif
 
-   gl_Position = x3d_ProjectionMatrix * position;
+   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
-   #if defined (X3D_GEOMETRY_0D)
-      gl_PointSize = pointSize = getPointSize (vertex);
-   #endif
+   vertex      = position .xyz;
+   localVertex = x3d_Vertex .xyz;
+
+   gl_Position = x3d_ProjectionMatrix * position;
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
       depth = 1.0 + gl_Position .w;

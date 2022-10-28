@@ -542,7 +542,6 @@ A ComposedShader defines a number of special variables for the various shader st
 | vec3  | color           |                                                         |
 | float | visibilityRange |                                                         |
 | mat3  | matrix          | inverse fog space matrix, rotation and scale components |
-| bool  | fogCoord        | true if FogCoordinate is attached, otherwise false      |
 
 ### Uniform Struct x3d\_LightSourceParameters
 
