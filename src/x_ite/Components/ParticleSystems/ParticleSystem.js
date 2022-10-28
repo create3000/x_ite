@@ -366,9 +366,7 @@ function (Fields,
 
          // Set geometryType.
 
-         this .geometryType = GeometryTypes .hasOwnProperty (this ._geometryType .getValue ())
-            ? GeometryTypes [this ._geometryType .getValue ()]
-            : GeometryTypes .QUAD;
+         this .geometryType = this .getEnum (GeometryTypes, this ._geometryType .getValue ()) || GeometryTypes .QUAD;
 
          // Create buffers.
 

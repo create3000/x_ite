@@ -193,7 +193,7 @@ function (Fields,
       },
       set_alphaMode__: function ()
       {
-         this .alphaMode = AlphaMode [this ._alphaMode .getValue ()] || AlphaMode .AUTO;
+         this .alphaMode = this .getEnum (AlphaMode, this ._alphaMode .getValue ()) || AlphaMode .AUTO;
 
          this .set_alphaCutoff__ ();
       },
@@ -393,6 +393,7 @@ function (Fields,
                this .setTransparent (false);
                break;
             case AlphaMode .MASK:
+               // Alpha testing using alphaCutoff.
                this .setTransparent (false);
                break;
             case AlphaMode .BLEND:

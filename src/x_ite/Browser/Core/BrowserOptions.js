@@ -74,7 +74,7 @@ function (Fields,
 
       this .addAlias ("AntiAliased", this ._Antialiased);
 
-      const browser = executionContext .getBrowser ();
+      const browser = this .getBrowser ();
 
       this .localStorage     = browser .getLocalStorage () .addNameSpace ("BrowserOptions.");
       this .textureQuality   = TextureQuality .MEDIUM
@@ -233,10 +233,7 @@ function (Fields,
             primitiveQuality = value .getValue () .toUpperCase ();
 
          this .localStorage .PrimitiveQuality = primitiveQuality;
-
-         this .primitiveQuality = PrimitiveQuality .hasOwnProperty (primitiveQuality)
-            ? PrimitiveQuality [primitiveQuality]
-            : PrimitiveQuality .MEDIUM;
+         this .primitiveQuality               = this .getEnum (PrimitiveQuality, primitiveQuality) || PrimitiveQuality .MEDIUM;
 
          if (typeof browser .setPrimitiveQuality2D === "function")
             browser .setPrimitiveQuality2D (this .primitiveQuality);
@@ -251,10 +248,7 @@ function (Fields,
             textureQuality = value .getValue () .toUpperCase ();
 
          this .localStorage .TextureQuality = textureQuality;
-
-         this .textureQuality = TextureQuality .hasOwnProperty (textureQuality)
-            ? TextureQuality [textureQuality]
-            : TextureQuality .MEDIUM;
+         this .textureQuality               = this .getEnum (TextureQuality, textureQuality) || TextureQuality .MEDIUM;
 
          if (typeof browser .setTextureQuality === "function")
             browser .setTextureQuality (this .textureQuality);
@@ -263,9 +257,7 @@ function (Fields,
       {
          const shading = value .getValue () .toUpperCase () .replace ("POINTSET", "POINT");
 
-         this .shading = Shading .hasOwnProperty (shading)
-            ? Shading [shading]
-            : Shading .GOURAUD;
+         this .shading = this .getEnum (Shading, shading) || Shading .GOURAUD;
 
          this .getBrowser () .setShading (this .shading);
       },
