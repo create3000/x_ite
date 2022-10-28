@@ -97,11 +97,9 @@ function (X3DBindableNode,
       this .colors                = [ ];
       this .sphere                = [ ];
       this .textureBits           = new BitSet ();
-      this .sphereContext         = { geometryType: 3, colorMaterial: true, hasNormals: true };
-      this .texturesContext       = { geometryType: 3, colorMaterial: true, hasNormals: false };
+      this .geometryContext       = { geometryType: 3, colorMaterial: true, hasNormals: false };
 
-      X3DGeometryNode .prototype .updateGeometryMask .call (this .sphereContext);
-      X3DGeometryNode .prototype .updateGeometryMask .call (this .texturesContext);
+      X3DGeometryNode .prototype .updateGeometryMask .call (this .geometryContext);
    }
 
    X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
@@ -574,7 +572,7 @@ function (X3DBindableNode,
             const
                browser    = this .getBrowser (),
                gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (this .sphereContext, false);
+               shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext, false);
 
             shaderNode .enable (gl);
 
@@ -628,7 +626,7 @@ function (X3DBindableNode,
             const
                browser    = this .getBrowser (),
                gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (this .texturesContext, false);
+               shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext, false);
 
             shaderNode .enable (gl);
 
