@@ -114,34 +114,13 @@ function (Shading,
       },
       getDefaultShader: function ()
       {
-         const vs = /* glsl */ `data:x-shader/x-vertex,
-         precision highp float;
-
-         uniform mat4 x3d_ProjectionMatrix;
-         uniform mat4 x3d_ModelViewMatrix;
-
-         attribute vec4 x3d_Vertex;
-
-         void
-         main ()
-         {
-            gl_Position = x3d_ProjectionMatrix * (x3d_ModelViewMatrix * x3d_Vertex);
-         }
-         `;
-
-         const fs = /* glsl */ `data:x-shader/x-fragment,
-         precision highp float;
-
-         void
-         main ()
-         {
-            gl_FragColor = vec4 (0.0);
-         }
-         `;
+         const
+            vs = "data:x-shader/x-vertex,  void main () { gl_Position  = vec4 (0.0); }",
+            fs = "data:x-shader/x-fragment,void main () { gl_FragColor = vec4 (0.0); }";
 
          this [_defaultShader] = this .createShader ("DefaultShader", vs, fs);
 
-         this .setShader (_defaultShader, this [_defaultShader]);
+         this .setShader (0xffffffff, this [_defaultShader]);
 
          this .getDefaultShader = function () { return this [_defaultShader]; };
 

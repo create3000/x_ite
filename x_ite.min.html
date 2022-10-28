@@ -270,7 +270,7 @@ X3D (function ()
       if (url !== history .at (-1))
       {
          history .push (url);
-         history .splice (0, history .length - 1000);
+         history .splice (0, history .length - 100);
          localStorage ["Bookmarks.history"] = history;
          index = history .length - 1;
       }
