@@ -179,49 +179,13 @@ function (Fields,
       {
          return this .textureTransformNode;
       },
-      getShader: function ()
+      getShader: function (geometryContext, shadow)
       {
-         return this .shaderNode;
-      },
-      getFrontShader: function (geometryContext, shadow)
-      {
-         const shaderNode = this .shaderNode || this .materialNode .getShader (geometryContext, shadow);
-
-         if (shaderNode .isValid ())
-         {
-            geometryContext .shaderNode = shaderNode;
-
-            return shaderNode;
-         }
-         else
-         {
-            const shaderNode = geometryContext .shaderNode;
-
-            if (shaderNode && shaderNode .isValid ())
-               return shaderNode;
-
-            return this .getBrowser () .getDefaultShader ();
-         }
+         return this .materialNode .getShader (geometryContext, shadow);
       },
       getBackShader: function (geometryContext, shadow)
       {
-         const shaderNode = this .shaderNode || this .backMaterialNode .getShader (geometryContext, shadow);
-
-         if (shaderNode .isValid ())
-         {
-            geometryContext .shaderNode = shaderNode;
-
-            return shaderNode;
-         }
-         else
-         {
-            const shaderNode = geometryContext .shaderNode;
-
-            if (shaderNode && shaderNode .isValid ())
-               return shaderNode;
-
-            return this .getBrowser () .getDefaultShader ();
-         }
+         return this .backMaterialNode .getShader (geometryContext, shadow);
       },
       getBlendMode: function ()
       {
@@ -356,42 +320,60 @@ function (Fields,
 
          this .set_shader__ ();
       },
-      set_shader__: function ()
+      set_shader__: (function ()
       {
-         const shaderNodes = this .shaderNodes;
-
-         if (this .shaderNode)
-            this .shaderNode .deselect ();
-
-         this .shaderNode = null;
-
-         for (const shaderNode of shaderNodes)
+         function getShader ()
          {
-            if (shaderNode ._isValid .getValue ())
-            {
-               if (shaderNode ._activationTime .getValue () === this .getBrowser () .getCurrentTime ())
-               {
-                  this .shaderNode = shaderNode;
-                  break;
-               }
-            }
+            return this .shaderNode;
          }
 
-         if (! this .shaderNode)
+         return function ()
          {
+            const shaderNodes = this .shaderNodes;
+
+            if (this .shaderNode)
+               this .shaderNode .deselect ();
+
+            this .shaderNode = null;
+
             for (const shaderNode of shaderNodes)
             {
                if (shaderNode ._isValid .getValue ())
                {
-                  this .shaderNode = shaderNode;
-                  break;
+                  if (shaderNode ._activationTime .getValue () === this .getBrowser () .getCurrentTime ())
+                  {
+                     this .shaderNode = shaderNode;
+                     break;
+                  }
                }
             }
-         }
 
-         if (this .shaderNode)
-            this .shaderNode .select ();
-      },
+            if (! this .shaderNode)
+            {
+               for (const shaderNode of shaderNodes)
+               {
+                  if (shaderNode ._isValid .getValue ())
+                  {
+                     this .shaderNode = shaderNode;
+                     break;
+                  }
+               }
+            }
+
+            if (this .shaderNode)
+            {
+               this .shaderNode .select ();
+
+               this .getShader     = getShader;
+               this .getBackShader = getShader;
+            }
+            else
+            {
+               delete this .getShader;
+               delete this .getBackShader;
+            }
+         };
+      })(),
       set_blendMode__: function ()
       {
          this .blendModeNode = X3DCast (X3DConstants .BlendMode, this ._blendMode);

@@ -112,8 +112,24 @@ function (Fields,
          key |= shadow                        << 16;
          key |= geometryContext .geometryMask << 17;
 
-         return this .getBrowser () .getShader (key) || this .createShader (key, geometryContext, shadow);
-      },
+         const shaderNode = this .getBrowser () .getShader (key) || this .createShader (key, geometryContext, shadow);
+
+         if (shaderNode .isValid ())
+         {
+            geometryContext .shaderNode = shaderNode;
+
+            return shaderNode;
+         }
+         else
+         {
+            const shaderNode = geometryContext .shaderNode;
+
+            if (shaderNode && shaderNode .isValid ())
+               return shaderNode;
+
+            return this .getBrowser () .getDefaultShader ();
+         }
+     },
       getGeometryTypes: (function ()
       {
          const geometryTypes = [

@@ -997,20 +997,19 @@ function (Fields,
       display: function (gl, context)
       {
          const
-            appearanceNode   = context .shapeNode .getAppearance (),
-            backMaterialNode = appearanceNode .getBackMaterial (),
-            frontShaderNode  = appearanceNode .getFrontShader (this, context .shadow);
+            appearanceNode = context .shapeNode .getAppearance (),
+            shaderNode     = appearanceNode .getShader (this, context .shadow);
 
-         if (this .solid || ! backMaterialNode || this .getBrowser () .getWireframe ())
+         if (this .solid || ! appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())
          {
-            this .displayGeometry (gl, context, appearanceNode, frontShaderNode, true, true);
+            this .displayGeometry (gl, context, appearanceNode, shaderNode, true, true);
          }
          else
          {
             const backShaderNode = appearanceNode .getBackShader (this, context .shadow)
 
             this .displayGeometry (gl, context, appearanceNode, backShaderNode,  true,  false);
-            this .displayGeometry (gl, context, appearanceNode, frontShaderNode, false, true);
+            this .displayGeometry (gl, context, appearanceNode, shaderNode, false, true);
          }
       },
       displayGeometry: function (gl, context, appearanceNode, shaderNode, back, front)
@@ -1117,11 +1116,10 @@ function (Fields,
       displayParticles: function (gl, context, particleSystem)
       {
          const
-            appearanceNode   = context .shapeNode .getAppearance (),
-            backMaterialNode = appearanceNode .getBackMaterial (),
-            frontShaderNode  = appearanceNode .getFrontShader (this, context .shadow);
+            appearanceNode = context .shapeNode .getAppearance (),
+            shaderNode     = appearanceNode .getShader (this, context .shadow);
 
-         if (this .solid || ! backMaterialNode || this .getBrowser () .getWireframe ())
+         if (this .solid || ! appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())
          {
             this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particleSystem);
          }
