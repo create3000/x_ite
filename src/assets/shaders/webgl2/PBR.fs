@@ -33,8 +33,13 @@ getBaseColor ()
 {
    // Get base parameter.
 
-   float alpha         = 1.0 - x3d_Material .transparency;
-   vec4  baseParameter = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .baseColor, alpha);
+   float alpha = 1.0 - x3d_Material .transparency;
+
+   #if defined (X3D_COLOR_MATERIAL)
+      vec4 baseParameter = vec4 (color .rgb, color .a * alpha);
+   #else
+      vec4 baseParameter = vec4 (x3d_Material .baseColor, alpha);
+   #endif
 
    // Get texture color.
 

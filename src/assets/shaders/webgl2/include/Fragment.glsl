@@ -1,18 +1,20 @@
 uniform float x3d_AlphaCutoff;
-uniform bool  x3d_ColorMaterial;
 
 in float fogDepth;    // fog depth
-in vec4  color;       // color
 in vec3  vertex;      // point on geometry
 in vec3  localVertex; // point on geometry in local coordinates
 
+#if defined (X3D_COLOR_MATERIAL)
+   in vec4 color;
+#endif
+
 #if ! defined (X3D_GEOMETRY_0D)
    #if x3d_MaxTextures > 0
-   in vec4 texCoord0;
+      in vec4 texCoord0;
    #endif
 
    #if x3d_MaxTextures > 1
-   in vec4 texCoord1;
+      in vec4 texCoord1;
    #endif
 #endif
 
@@ -25,8 +27,8 @@ in vec3  localVertex; // point on geometry in local coordinates
 #endif
 
 #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-uniform float x3d_LogarithmicFarFactor1_2;
-in float depth;
+   uniform float x3d_LogarithmicFarFactor1_2;
+   in float depth;
 #endif
 
 out vec4 x3d_FragColor;

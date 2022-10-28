@@ -1,18 +1,20 @@
 uniform float x3d_AlphaCutoff;
-uniform bool  x3d_ColorMaterial;
 
 varying float fogDepth;    // fog depth
-varying vec4  color;       // color
 varying vec3  vertex;      // point on geometry
 varying vec3  localVertex; // point on geometry varying local coordinates
 
+#if defined (X3D_COLOR_MATERIAL)
+   varying vec4 color;
+#endif
+
 #if ! defined (X3D_GEOMETRY_0D)
    #if x3d_MaxTextures > 0
-   varying vec4 texCoord0;
+      varying vec4 texCoord0;
    #endif
 
    #if x3d_MaxTextures > 1
-   varying vec4 texCoord1;
+      varying vec4 texCoord1;
    #endif
 #endif
 
@@ -25,8 +27,8 @@ varying vec3  localVertex; // point on geometry varying local coordinates
 #endif
 
 #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-uniform float x3d_LogarithmicFarFactor1_2;
-varying float depth;
+   uniform float x3d_LogarithmicFarFactor1_2;
+   varying float depth;
 #endif
 
 #pragma X3D include "Point.glsl"

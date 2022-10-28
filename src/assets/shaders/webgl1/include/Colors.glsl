@@ -20,8 +20,8 @@ vec4
 Gamma (const in vec4 color)
 {
    #if defined (MANUAL_SRGB)
-   return vec4 (pow (color .rgb, vec3 (1.0 / 2.2)), color .a);
+      return vec4 (pow (color .rgb, vec3 (1.0 / 2.2)), color .a);
    #else
-   return color;
+      return color;
    #endif
 }

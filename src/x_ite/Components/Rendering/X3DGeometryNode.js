@@ -959,10 +959,12 @@ function (Fields,
       {
          // Mask
          // 0 - 1 -> geometry type
-         // 2     -> normals
+         // 2     -> color material
+         // 3     -> normals
 
          this .geometryMask  = this .geometryType;
-         this .geometryMask |= this .hasNormals << 2;
+         this .geometryMask |= this .colorMaterial << 2;
+         this .geometryMask |= this .hasNormals    << 3;
       },
       updateRenderFunctions: function ()
       {

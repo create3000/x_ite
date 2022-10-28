@@ -118,7 +118,8 @@ function (Fields,
          // 16      -> shadows
          // 17      -> logarithmic depth buffer
          // 18 - 19 -> geometry type
-         // 20      -> normals
+         // 20      -> color material
+         // 21      -> normals
 
          let key = +this .textureBits;
 

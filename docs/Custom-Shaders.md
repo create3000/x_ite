@@ -433,14 +433,6 @@ A ComposedShader defines a number of special variables for the various shader st
          <td colspan="3"><hr/></td>
       </tr>
       <tr>
-         <td>uniform bool</td>
-         <td>x3d_ColorMaterial</td>
-         <td>true if X3DColorNode attached</td>
-      </tr>
-      <tr>
-         <td colspan="3"><hr/></td>
-      </tr>
-      <tr>
          <td>uniform x3d_MaterialParameters</td>
          <td>x3d_Material</td>
          <td>see table »Uniform Struct x3d_MaterialParameters«</td>

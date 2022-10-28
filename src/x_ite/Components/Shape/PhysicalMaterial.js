@@ -218,6 +218,9 @@ function (Fields,
          if (shadows)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
+         if (geometryContext .colorMaterial)
+            options .push ("X3D_COLOR_MATERIAL");
+
          options .push ("X3D_NORMALS");
 
          if (+this .getTextureBits ())

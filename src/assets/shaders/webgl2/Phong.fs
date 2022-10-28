@@ -47,8 +47,13 @@ getDiffuseColor ()
 {
    // Get diffuse parameter.
 
-   float alpha            = 1.0 - x3d_Material .transparency;
-   vec4  diffuseParameter = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .diffuseColor, alpha);
+   float alpha = 1.0 - x3d_Material .transparency;
+
+   #if defined (X3D_COLOR_MATERIAL)
+      vec4 diffuseParameter = vec4 (color .rgb, color .a * alpha);
+   #else
+      vec4 diffuseParameter = vec4 (x3d_Material .diffuseColor, alpha);
+   #endif
 
    // Get texture color.
 

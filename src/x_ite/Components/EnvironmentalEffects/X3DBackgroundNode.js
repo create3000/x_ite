@@ -97,9 +97,11 @@ function (X3DBindableNode,
       this .colors                = [ ];
       this .sphere                = [ ];
       this .textureBits           = new BitSet ();
-      this .geometryContext       = { geometryType: 3, colorMaterial: true, hasNormals: false };
+      this .sphereContext         = { geometryType: 3, colorMaterial: true,  hasNormals: false };
+      this .texturesContext       = { geometryType: 3, colorMaterial: false, hasNormals: false };
 
-      X3DGeometryNode .prototype .updateGeometryMask .call (this .geometryContext);
+      X3DGeometryNode .prototype .updateGeometryMask .call (this .sphereContext);
+      X3DGeometryNode .prototype .updateGeometryMask .call (this .texturesContext);
    }
 
    X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
@@ -558,75 +560,66 @@ function (X3DBindableNode,
                this .drawCube (renderObject);
          };
       })(),
-      drawSphere: (function ()
+      drawSphere: function (renderObject)
       {
-         const black = new Float32Array ([0, 0, 0]);
+         const transparency = this ._transparency .getValue ();
 
-         return function (renderObject)
+         if (transparency >= 1)
+            return;
+
+         const
+            browser    = this .getBrowser (),
+            gl         = browser .getContext (),
+            shaderNode = browser .getDefaultMaterial () .getShader (this .sphereContext, false);
+
+         shaderNode .enable (gl);
+
+         // Clip planes
+
+         shaderNode .setLocalObjects (gl, this .localObjects);
+
+         // Uniforms
+
+         gl .uniform1i (shaderNode .x3d_FogType,                            0);
+         gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,               true);
+         gl .uniform1i (shaderNode .x3d_FillPropertiesHatched,              false);
+         gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
+         gl .uniform1i (shaderNode .x3d_NumTextures,                        0);
+         gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
+         gl .uniform1i (shaderNode .x3d_NumProjectiveTextures,              0);
+
+         gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
+         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
+
+         // Enable vertex attribute arrays.
+
+         if (this .sphereArrayObject .enable (gl, shaderNode))
          {
-            const transparency = this ._transparency .getValue ();
+            shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
+            shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
+         }
 
-            if (transparency >= 1)
-               return;
+         // Setup context.
 
-            const
-               browser    = this .getBrowser (),
-               gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext, false);
+         if (transparency)
+            gl .enable (gl .BLEND);
+         else
+            gl .disable (gl .BLEND);
 
-            shaderNode .enable (gl);
+         // Draw.
 
-            // Clip planes
-
-            shaderNode .setLocalObjects (gl, this .localObjects);
-
-            // Uniforms
-
-            gl .uniform1i  (shaderNode .x3d_FogType,                            0);
-            gl .uniform1i  (shaderNode .x3d_FillPropertiesFilled,               true);
-            gl .uniform1i  (shaderNode .x3d_FillPropertiesHatched,              false);
-            gl .uniform3fv (shaderNode .x3d_EmissiveColor,                      black)
-            gl .uniform1f  (shaderNode .x3d_Transparency,                       transparency)
-            gl .uniform1i  (shaderNode .x3d_NumTextures,                        0);
-            gl .uniform1i  (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-            gl .uniform1i  (shaderNode .x3d_NumProjectiveTextures,              0);
-            gl .uniform1i  (shaderNode .x3d_ColorMaterial,                      true);
-
-            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
-            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
-
-            // Enable vertex attribute arrays.
-
-            if (this .sphereArrayObject .enable (gl, shaderNode))
-            {
-               shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
-               shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
-            }
-
-            // Setup context.
-
-            if (transparency)
-               gl .enable (gl .BLEND);
-            else
-               gl .disable (gl .BLEND);
-
-            // Draw.
-
-            gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
-         };
-      })(),
+         gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
+      },
       drawCube: (function ()
       {
-         const
-            textureMatrixArray = new Float32Array (Matrix4 .Identity),
-            white              = new Float32Array ([1, 1, 1]);
+         const textureMatrixArray = new Float32Array (Matrix4 .Identity);
 
          return function (renderObject)
          {
             const
                browser    = this .getBrowser (),
                gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext, false);
+               shaderNode = browser .getDefaultMaterial () .getShader (this .texturesContext, false);
 
             shaderNode .enable (gl);
 
@@ -636,15 +629,14 @@ function (X3DBindableNode,
 
             // Uniforms
 
-            gl .uniform1i  (shaderNode .x3d_FogType,                            0);
-            gl .uniform1i  (shaderNode .x3d_FillPropertiesFilled,               true);
-            gl .uniform1i  (shaderNode .x3d_FillPropertiesHatched,              false);
-            gl .uniform3fv (shaderNode .x3d_EmissiveColor,                      white)
-            gl .uniform1f  (shaderNode .x3d_Transparency,                       0)
-            gl .uniform1i  (shaderNode .x3d_NumTextures,                        1);
-            gl .uniform1i  (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-            gl .uniform1i  (shaderNode .x3d_NumProjectiveTextures,              0);
-            gl .uniform1i  (shaderNode .x3d_ColorMaterial,                      false);
+            gl .uniform1i (shaderNode .x3d_FogType,                            0);
+            gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,               true);
+            gl .uniform1i (shaderNode .x3d_FillPropertiesHatched,              false);
+            gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1)
+            gl .uniform1f (shaderNode .x3d_Transparency,                       0)
+            gl .uniform1i (shaderNode .x3d_NumTextures,                        1);
+            gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
+            gl .uniform1i (shaderNode .x3d_NumProjectiveTextures,              0);
 
             gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);

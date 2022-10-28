@@ -2,35 +2,42 @@ uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
 in float x3d_FogDepth;
-in vec4  x3d_Color;
 in vec4  x3d_Vertex;
 
-#if x3d_MaxTextures > 0
-   in vec4 x3d_TexCoord0;
+#if defined (X3D_COLOR_MATERIAL)
+   in vec4  x3d_Color;
 #endif
-
-#if x3d_MaxTextures > 1
-   in vec4 x3d_TexCoord1;
-#endif
-
-out float fogDepth;
-out vec4  color;
-out vec3  vertex;
-out vec3  localVertex;
 
 #if ! defined (X3D_GEOMETRY_0D)
    #if x3d_MaxTextures > 0
-   out vec4  texCoord0;
+      in vec4 x3d_TexCoord0;
    #endif
 
    #if x3d_MaxTextures > 1
-   out vec4  texCoord1;
+      in vec4 x3d_TexCoord1;
+   #endif
+#endif
+
+out float fogDepth;
+out vec3  vertex;
+out vec3  localVertex;
+
+#if defined (X3D_COLOR_MATERIAL)
+   out vec4 color;
+#endif
+
+#if ! defined (X3D_GEOMETRY_0D)
+   #if x3d_MaxTextures > 0
+      out vec4 texCoord0;
+   #endif
+
+   #if x3d_MaxTextures > 1
+      out vec4 texCoord1;
    #endif
 #endif
 
 #if defined (X3D_NORMALS)
    uniform mat3 x3d_NormalMatrix;
-
    in  vec3 x3d_Normal;
    out vec3 normal;
    out vec3 localNormal;
@@ -57,38 +64,41 @@ vertex_main ()
    vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
 
    fogDepth    = x3d_FogDepth;
-   color       = x3d_Color;
    vertex      = position .xyz;
    localVertex = x3d_Vertex .xyz;
 
+   #if defined (X3D_COLOR_MATERIAL)
+      color = x3d_Color;
+   #endif
+
    #if ! defined (X3D_GEOMETRY_0D)
       #if x3d_MaxTextures > 0
-      texCoord0 = getTexCoord (x3d_TexCoord0);
+         texCoord0 = getTexCoord (x3d_TexCoord0);
       #endif
 
       #if x3d_MaxTextures > 1
-      texCoord1 = getTexCoord (x3d_TexCoord1);
+         texCoord1 = getTexCoord (x3d_TexCoord1);
       #endif
    #endif
 
    #if defined (X3D_NORMALS)
-   normal      = x3d_NormalMatrix * x3d_Normal;
-   localNormal = x3d_Normal;
+      normal      = x3d_NormalMatrix * x3d_Normal;
+      localNormal = x3d_Normal;
    #endif
 
    gl_Position = x3d_ProjectionMatrix * position;
 
    #if defined (X3D_GEOMETRY_0D)
-   gl_PointSize = pointSize = getPointSize (vertex);
+      gl_PointSize = pointSize = getPointSize (vertex);
    #endif
 
    #if defined (X3D_GEOMETRY_1D)
-   lengthSoFar = x3d_TexCoord0 .z;
-   startPoint  = x3d_TexCoord0 .xy;
-   midPoint    = x3d_TexCoord0 .xy;
+      lengthSoFar = x3d_TexCoord0 .z;
+      startPoint  = x3d_TexCoord0 .xy;
+      midPoint    = x3d_TexCoord0 .xy;
    #endif
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-   depth = 1.0 + gl_Position .w;
+      depth = 1.0 + gl_Position .w;
    #endif
 }
