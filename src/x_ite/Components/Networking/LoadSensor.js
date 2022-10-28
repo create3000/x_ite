@@ -104,11 +104,11 @@ function (Fields,
       {
          X3DNetworkSensorNode .prototype .initialize .call (this);
 
-         this ._enabled   .addInterest ("set_enabled__", this);
-         this ._timeOut   .addInterest ("set_timeOut__", this);
+         this ._enabled   .addInterest ("set_enabled__",   this);
+         this ._timeOut   .addInterest ("set_timeOut__",   this);
          this ._watchList .addInterest ("set_watchList__", this);
 
-         this ._watchList .addEvent ();
+         this .set_watchList__ ();
       },
       set_enabled__: function ()
       {
@@ -154,20 +154,19 @@ function (Fields,
       },
       count: function ()
       {
-         var
-            complete   = 0,
-            failed     = 0,
-            urlObjects = this .urlObjects;
+         const urlObjects = this .urlObjects;
 
-         for (var i = 0, length = urlObjects .length; i < length; ++ i)
+         let
+            complete = 0,
+            failed   = 0;
+
+         for (const urlObject of urlObjects)
          {
-            var urlObject = urlObjects [i];
-
             complete += urlObject .checkLoadState () == X3DConstants .COMPLETE_STATE;
             failed   += urlObject .checkLoadState () == X3DConstants .FAILED_STATE;
          }
 
-         var
+         const
             loaded   = complete == urlObjects .length,
             progress = complete / urlObjects .length;
 
@@ -191,7 +190,6 @@ function (Fields,
             else
             {
                this ._isActive = true;
-
                this ._progress = progress;
 
                this .set_timeOut__ ();
@@ -213,13 +211,11 @@ function (Fields,
 
          if (this ._enabled .getValue ())
          {
-            var
-               watchList  = this ._watchList .getValue (),
-               urlObjects = this .urlObjects;
+            const urlObjects = this .urlObjects;
 
-            for (var i = 0, length = watchList .length; i < length; ++ i)
+            for (const node of this ._watchList)
             {
-               var urlObject = X3DCast (X3DConstants .X3DUrlObject, watchList [i]);
+               const urlObject = X3DCast (X3DConstants .X3DUrlObject, node);
 
                if (urlObject)
                {
@@ -236,16 +232,17 @@ function (Fields,
       {
          this .clearTimeout ();
 
-         var urlObjects = this .urlObjects;
+         const urlObjects = this .urlObjects;
 
-         for (var i = 0, length = urlObjects .length; i < length; ++ i)
-            urlObjects [i] ._loadState .removeInterest ("set_loadState__", this);
+         for (const urlObject of urlObjects)
+            urlObject ._loadState .removeInterest ("set_loadState__", this);
 
          urlObjects .length = 0;
       },
       clearTimeout: function ()
       {
          clearTimeout (this .timeOutId);
+
          this .timeOutId = undefined;
       },
    });

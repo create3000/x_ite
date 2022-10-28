@@ -168,7 +168,7 @@ function (Fields,
                gl .shaderSource (this .shader, source);
                gl .compileShader (this .shader);
 
-               if (!gl .getShaderParameter (this .shader, gl .COMPILE_STATUS))
+               if (! gl .getShaderParameter (this .shader, gl .COMPILE_STATUS))
                   throw new Error (this .getTypeName () + " '" + this .getName () + "': " + gl .getShaderInfoLog (this .shader));
 
                this .setLoadState (X3DConstants .COMPLETE_STATE);

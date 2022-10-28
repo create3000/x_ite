@@ -114,13 +114,34 @@ function (Shading,
       },
       getDefaultShader: function ()
       {
-         const
-            vs = "data:x-shader/x-vertex,  void main () { gl_Position  = vec4 (0.0); }",
-            fs = "data:x-shader/x-fragment,void main () { gl_FragColor = vec4 (0.0); }";
+         const vs = /* glsl */ `data:x-shader/x-vertex,
+         precision highp float;
+
+         uniform mat4 x3d_ProjectionMatrix;
+         uniform mat4 x3d_ModelViewMatrix;
+
+         attribute vec4 x3d_Vertex;
+
+         void
+         main ()
+         {
+            gl_Position = x3d_ProjectionMatrix * (x3d_ModelViewMatrix * x3d_Vertex);
+         }
+         `;
+
+         const fs = /* glsl */ `data:x-shader/x-fragment,
+         precision highp float;
+
+         void
+         main ()
+         {
+            gl_FragColor = vec4 (vec3 (0.2), 1.0);
+         }
+         `;
 
          this [_defaultShader] = this .createShader ("DefaultShader", vs, fs);
 
-         this .setShader (0xffffffff, this [_defaultShader]);
+         this .setShader (_defaultShader, this [_defaultShader]);
 
          this .getDefaultShader = function () { return this [_defaultShader]; };
 
@@ -192,15 +213,15 @@ function (Shading,
 
          const vertexShader = new ShaderPart (this .getPrivateScene ());
          vertexShader .setName (name + "Vertex");
-         vertexShader ._url .push (vs .startsWith ("data:") ? vs : urls .getShaderUrl ("webgl" + version + "/" + vs + ".vs"));
          vertexShader .setOptions (options);
+         vertexShader ._url .push (vs .startsWith ("data:") ? vs : urls .getShaderUrl ("webgl" + version + "/" + vs + ".vs"));
          vertexShader .setup ();
 
          const fragmentShader = new ShaderPart (this .getPrivateScene ());
          fragmentShader .setName (name + "Fragment");
+         fragmentShader .setOptions (options);
          fragmentShader ._type  = "FRAGMENT";
          fragmentShader ._url .push (fs .startsWith ("data:") ? fs : urls .getShaderUrl ("webgl" + version + "/" + fs + ".fs"));
-         fragmentShader .setOptions (options);
          fragmentShader .setup ();
 
          const shader = new ComposedShader (this .getPrivateScene ());

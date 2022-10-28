@@ -109,10 +109,6 @@ function (Fields,
          X3DShaderNode               .prototype .initialize .call (this);
          X3DProgrammableShaderObject .prototype .initialize .call (this);
 
-         const gl = this .getBrowser () .getContext ();
-
-         this .primitiveMode = gl .TRIANGLES;
-
          this .isLive () .addInterest ("set_live__", this);
 
          this ._parts .addFieldInterest (this .loadSensor ._watchList);
@@ -121,8 +117,6 @@ function (Fields,
          this .loadSensor ._watchList = this ._parts;
          this .loadSensor .setPrivate (true);
          this .loadSensor .setup ();
-
-         //Must not call set_live__.
       },
       addUserDefinedField: function (accessType, name, field)
       {
