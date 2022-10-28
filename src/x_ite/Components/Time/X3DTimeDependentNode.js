@@ -130,13 +130,13 @@ function (Fields,
             {
                this .disabled = false;
 
-               if (this ._isActive .getValue () && !this ._isPaused .getValue ())
+               if (this ._isActive .getValue () && ! this ._isPaused .getValue ())
                   this .real_resume ();
             }
          }
          else
          {
-            if (!this .disabled && this ._isActive .getValue () && !this ._isPaused .getValue ())
+            if (! this .disabled && this ._isActive .getValue () && ! this ._isPaused .getValue ())
             {
                // Only disable if needed, ie. if running!
                this .disabled = true;

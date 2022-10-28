@@ -95,6 +95,7 @@ function (Fields,
          {
             this .getBrowser () ._volume .addInterest ("set_volume__", this);
             this .getBrowser () ._mute   .addInterest ("set_volume__", this);
+
             this .set_volume__ ();
          }
       },
