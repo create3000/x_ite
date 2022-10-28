@@ -205,7 +205,7 @@ function (Appearance,
       {
          this [_lineTransformShaderNode] = this .createShader ("LineTransformShader", "LineTransform");
 
-         this [_lineTransformShaderNode] .setUniforms ([
+         this [_lineTransformShaderNode] .setUniformNames ([
             "viewport",
             "modelViewProjectionMatrix",
             "invModelViewProjectionMatrix",

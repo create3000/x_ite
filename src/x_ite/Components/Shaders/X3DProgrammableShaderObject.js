@@ -68,7 +68,7 @@ function (X3DCast,
    {
       this .addType (X3DConstants .X3DProgrammableShaderObject);
 
-      this .uniforms = [ ];
+      this .uniformNames = [ ];
 
       this .x3d_ClipPlane                           = [ ];
       this .x3d_LightType                           = [ ];
@@ -128,9 +128,9 @@ function (X3DCast,
       {
          return true;
       },
-      setUniforms: function (value)
+      setUniformNames: function (value)
       {
-         this .uniforms = value;
+         this .uniformNames = value;
       },
       getDefaultUniformsAndAttributes: function (program)
       {
@@ -142,7 +142,7 @@ function (X3DCast,
 
          gl .useProgram (program);
 
-         for (const name of this .uniforms)
+         for (const name of this .uniformNames)
             this [name] = gl .getUniformLocation (program, name);
 
          /*
@@ -980,7 +980,7 @@ function (X3DCast,
          gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
          gl .uniform1i (this .x3d_NumProjectiveTextures, Math .min (this .numProjectiveTextures, this .x3d_MaxTextures));
       },
-      setLocalUniforms: function (gl, context, front = true)
+      setUniforms: function (gl, context, front = true)
       {
          const
             renderObject    = context .renderer,

@@ -989,7 +989,7 @@ function (Fields,
                   blendModeNode .enable (gl);
 
                shaderNode .enable (gl);
-               shaderNode .setLocalUniforms (gl, context);
+               shaderNode .setUniforms (gl, context);
 
                if (this .numTexCoords)
                {
