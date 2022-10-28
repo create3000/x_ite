@@ -159,8 +159,6 @@ function (Shading,
       },
       setShading: function (type)
       {
-         // Configure shaders.
-
          const gl = this .getContext ();
 
          switch (type)

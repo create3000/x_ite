@@ -869,10 +869,6 @@ function (TextureBuffer,
                   generatedCubeMapTexture .renderTexture (this);
             }
 
-
-            // DRAW
-
-
             // Set up shadow matrix for all lights, and matrix for all projective textures.
 
             browser .getHeadlight () .setGlobalVariables (this);
@@ -882,6 +878,22 @@ function (TextureBuffer,
 
             for (const textureProjector of textureProjectors)
                textureProjector .setGlobalVariables (this);
+
+            // Set global uniforms.
+
+            viewportArray          .set (viewport);
+            cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+            projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
+
+            for (const shader of browser .getShaders ())
+               shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+
+            for (const shader of shaders)
+               shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
+
+
+            // DRAW
+
 
             // Configure viewport and background
 
@@ -900,18 +912,6 @@ function (TextureBuffer,
             gl .clear (gl .DEPTH_BUFFER_BIT);
 
             this .getBackground () .display (gl, this, viewport);
-
-            // Set global uniforms.
-
-            viewportArray          .set (viewport);
-            cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-            projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
-
-            for (const shader of browser .getShaders ())
-               shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-
-            for (const shader of shaders)
-               shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 
             // Sorted blend
 
