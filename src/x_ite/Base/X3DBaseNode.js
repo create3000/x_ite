@@ -589,9 +589,9 @@ function (X3DEventObject,
          if (this [_initialized])
             this ._cloneCount_changed = time;
       },
-      getEnum: function (object, property)
+      getEnum: function (object, property, defaultValue)
       {
-         return object .hasOwnProperty (property) ? object [property] : undefined;
+         return object .hasOwnProperty (property) ? object [property] : defaultValue;
       },
       dispose: function ()
       {

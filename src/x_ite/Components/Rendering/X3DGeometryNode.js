@@ -1121,14 +1121,14 @@ function (Fields,
 
          if (this .solid || ! appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())
          {
-            this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particleSystem);
+            this .displayParticlesGeometry (gl, context, appearanceNode, shaderNode, true, true, particleSystem);
          }
          else
          {
             const backShaderNode = appearanceNode .getBackShader (this, context .shadows);
 
-            this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode,  true,  false, particleSystem);
-            this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, false, true,  particleSystem);
+            this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode, true,  false, particleSystem);
+            this .displayParticlesGeometry (gl, context, appearanceNode, shaderNode,     false, true,  particleSystem);
          }
       },
       displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particleSystem)

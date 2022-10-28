@@ -366,7 +366,7 @@ function (Fields,
 
          // Get geometryType.
 
-         this .geometryType = this .getEnum (GeometryTypes, this ._geometryType .getValue ()) || GeometryTypes .QUAD;
+         this .geometryType = this .getEnum (GeometryTypes, this ._geometryType .getValue (), GeometryTypes .QUAD);
 
          // Create buffers.
 
