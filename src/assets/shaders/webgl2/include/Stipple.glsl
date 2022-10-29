@@ -4,9 +4,9 @@
 
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
 
-flat in float lengthSoFar; // in px, stipple support
-flat in vec2  startPoint;  // in px, stipple support
-in vec2       midPoint;    // in px, stipple support
+flat in float lengthSoFar; // in px
+flat in vec2  startPoint;  // in px
+in vec2       midPoint;    // in px
 
 void
 stipple ()
