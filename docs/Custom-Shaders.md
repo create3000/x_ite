@@ -596,7 +596,7 @@ A ComposedShader defines a number of special variables for the various shader st
 | bool      | filled     |
 | bool      | hatched    |
 | vec3      | hatchColor |
-| sampler2D | hatchStyle |
+| sampler2D | texture    |
 
 ### Uniform Struct x3d\_TextureCoordinateGeneratorParameters
 

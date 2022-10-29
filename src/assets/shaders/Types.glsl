@@ -55,7 +55,7 @@ struct x3d_FillPropertiesParameters
    bool         filled;
    bool         hatched;
    mediump vec3 hatchColor;
-   sampler2D    hatchStyle;
+   sampler2D    texture;
 };
 
 //uniform x3d_FillPropertiesParameters x3d_FillProperties;

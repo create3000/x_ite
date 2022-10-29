@@ -163,7 +163,7 @@ function (Fields,
 
             gl .activeTexture (gl .TEXTURE0 + textureUnit);
             gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
-            gl .uniform1i (shaderObject .x3d_FillPropertiesHatchStyle, textureUnit);
+            gl .uniform1i (shaderObject .x3d_FillPropertiesTexture, textureUnit);
          }
       },
    });

@@ -1,4 +1,6 @@
 
+#if defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)
+
 uniform x3d_FillPropertiesParameters x3d_FillProperties;
 
 vec4
@@ -8,7 +10,7 @@ getHatchColor (vec4 color)
 
    if (x3d_FillProperties .hatched)
    {
-      vec4 hatch = texture2D (x3d_FillProperties .hatchStyle, gl_FragCoord .xy / 32.0);
+      vec4 hatch = texture2D (x3d_FillProperties .texture, gl_FragCoord .xy / 32.0);
 
       hatch .rgb *= x3d_FillProperties .hatchColor;
       finalColor  = mix (finalColor, hatch, hatch .a);
@@ -16,3 +18,5 @@ getHatchColor (vec4 color)
 
    return finalColor;
 }
+
+#endif
