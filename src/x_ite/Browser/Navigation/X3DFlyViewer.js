@@ -91,7 +91,9 @@ function ($,
    {
       X3DViewer .call (this, executionContext);
 
-      var gl = this .getBrowser () .getContext ();
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
 
       this .button            = -1;
       this .fromVector        = new Vector3 (0, 0, 0);
@@ -107,6 +109,7 @@ function ($,
       this .lookAround        = false;
       this .orientationChaser = new OrientationChaser (executionContext);
       this .geometryContext   = { geometryType: 1, colorMaterial: false, hasNormals: false };
+      this .context           = { appearanceNode: browser .getDefaultAppearance () };
 
       X3DGeometryNode .prototype .updateGeometryMask .call (this .geometryContext);
    }
@@ -659,8 +662,7 @@ function ($,
             toPoint               = new Vector3 (0, 0, 0),
             projectionMatrix      = new Matrix4 (),
             projectionMatrixArray = new Float32Array (Matrix4 .Identity),
-            modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
-            context               = { shadows: false, fogNode: null };
+            modelViewMatrixArray  = new Float32Array (Matrix4 .Identity);
 
          return function (type)
          {
@@ -693,7 +695,7 @@ function ($,
 
             const
                gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext, context),
+               shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext, this .context),
                lineWidth  = gl .getParameter (gl .LINE_WIDTH);
 
             shaderNode .enable (gl);

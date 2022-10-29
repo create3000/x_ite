@@ -261,13 +261,9 @@ function (Fields,
       createShader: function (key, geometryContext, context)
       {
          const
-            browser = this .getBrowser (),
-            options = [ ];
-
-         const appearanceNode = context .appearanceNode;
-
-         if (appearanceNode)
-            var stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType);
+            browser             = this .getBrowser (),
+            stylePropertiesNode = context .appearanceNode .getStyleProperties (geometryContext .geometryType),
+            options             = [ ];
 
          if (! geometryContext .hasNormals)
             return browser .getDefaultMaterial () .createShader (key, geometryContext, context);

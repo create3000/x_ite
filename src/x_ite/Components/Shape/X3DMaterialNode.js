@@ -124,10 +124,7 @@ function (Fields,
          // 23      -> color material
          // 24      -> normals
 
-         const appearanceNode = context .appearanceNode;
-
-         if (appearanceNode)
-            var stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType);
+         const stylePropertiesNode = context .appearanceNode .getStyleProperties (geometryContext .geometryType);
 
          let key = +this .textureBits;
 
