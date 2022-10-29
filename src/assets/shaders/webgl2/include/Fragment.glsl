@@ -59,18 +59,16 @@ getMaterialColor ();
 vec4
 getFinalColor ()
 {
-   #if defined (X3D_GEOMETRY_0D)
+   #if defined (X3D_GEOMETRY_0D) || defined (X3D_GEOMETRY_1D)
       setTexCoords ();
+   #endif
 
-      #if ! defined (X3D_MATERIAL_TEXTURES)
+   #if defined (X3D_GEOMETRY_0D) && ! defined (X3D_MATERIAL_TEXTURES)
       if (x3d_NumTextures == 0)
          return getPointColor (getMaterialColor ());
-      #endif
-
-      return getMaterialColor ();
-   #else
-      return getMaterialColor ();
    #endif
+
+   return getMaterialColor ();
 }
 
 void
@@ -78,11 +76,11 @@ fragment_main ()
 {
    clip ();
 
+   vec4 finalColor = getFinalColor ();
+
    #if defined (X3D_GEOMETRY_1D)
       stipple ();
    #endif
-
-   vec4 finalColor = getFinalColor ();
 
    #if defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)
       finalColor = getHatchColor (finalColor);

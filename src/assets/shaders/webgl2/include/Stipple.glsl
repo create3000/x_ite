@@ -9,7 +9,7 @@ flat in vec2  startPoint;  // in px, stipple support
 in vec2       midPoint;    // in px, stipple support
 
 void
-stipple ()
+setTexCoords ()
 {
    if (x3d_LineProperties .applied)
    {
@@ -23,14 +23,18 @@ stipple ()
       #if x3d_MaxTextures > 1
          texCoord1 = vec4 (s, 0.0, 0.0, 1.0);
       #endif
+   }
+}
 
-      if (x3d_LineProperties .linetype != 16)
-      {
-         float alpha = texture (x3d_LineProperties .texture, vec2 (s, 0.0)) .a;
+void
+stipple ()
+{
+   if (x3d_LineProperties .applied && x3d_LineProperties .linetype != 16)
+   {
+      float alpha = texture (x3d_LineProperties .texture, texCoord0 .st) .a;
 
-         if (alpha != 1.0)
-            discard;
-      }
+      if (alpha != 1.0)
+         discard;
    }
 }
 
