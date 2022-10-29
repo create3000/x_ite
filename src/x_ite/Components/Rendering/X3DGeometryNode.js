@@ -1001,7 +1001,7 @@ function (Fields,
       display: function (gl, context)
       {
          const
-            appearanceNode = context .shapeNode .getAppearance (),
+            appearanceNode = context .appearanceNode,
             shaderNode     = appearanceNode .getShader (this, context);
 
          if (this .solid || ! appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())
@@ -1120,7 +1120,7 @@ function (Fields,
       displayParticles: function (gl, context, particleSystem)
       {
          const
-            appearanceNode = context .shapeNode .getAppearance (),
+            appearanceNode = context .appearanceNode,
             shaderNode     = appearanceNode .getShader (this, context);
 
          if (this .solid || ! appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())

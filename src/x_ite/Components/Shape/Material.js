@@ -264,12 +264,10 @@ function (Fields,
             browser = this .getBrowser (),
             options = [ ];
 
-         if (context .shapeNode)
-         {
-            var
-               appearanceNode      = context .shapeNode .getAppearance (),
-               stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType);
-         }
+         const appearanceNode = context .appearanceNode;
+
+         if (appearanceNode)
+            var stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType);
 
          if (! geometryContext .hasNormals)
             return browser .getDefaultMaterial () .createShader (key, geometryContext, context);

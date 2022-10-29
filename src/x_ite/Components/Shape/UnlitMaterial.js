@@ -125,12 +125,10 @@ function (Fields,
             browser = this .getBrowser (),
             options = [ ];
 
-         if (context .shapeNode)
-         {
-            var
-               appearanceNode      = context .shapeNode .getAppearance (),
-               stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType);
-         }
+         const appearanceNode = context .appearanceNode;
+
+         if (appearanceNode)
+            var stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType);
 
          options .push ("X3D_UNLIT", this .getGeometryType (geometryContext .geometryType))
 

@@ -570,11 +570,12 @@ function (TextureBuffer,
 
                context .modelViewMatrix .set (modelViewMatrix);
                context .scissor .assign (viewVolume .getScissor ());
-               context .shapeNode   = shapeNode;
-               context .textureNode = null;
-               context .distance    = bboxCenter .z;
-               context .fogNode     = this .localFogs .at (-1);
-               context .shadows     = this .shadows .at (-1);
+               context .shapeNode      = shapeNode;
+               context .appearanceNode = shapeNode .getAppearance ();
+               context .textureNode    = null;
+               context .distance       = bboxCenter .z;
+               context .fogNode        = this .localFogs .at (-1);
+               context .shadows        = this .shadows .at (-1);
 
                // Clip planes and local lights
 
