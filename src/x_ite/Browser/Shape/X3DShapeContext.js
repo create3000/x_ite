@@ -83,7 +83,6 @@ function (Appearance,
 
    function X3DShapeContext ()
    {
-      this [_linetypeTextures]   = [ ];
       this [_hatchStyleTextures] = [ ];
       this [_lineStippleScale]   = 1 / (this .getPixelPerPoint () * 32); // 32px
    }
@@ -156,20 +155,19 @@ function (Appearance,
 
          return this [_defaultMaterial];
       },
-      getLinetypeTexture: function (index)
+      getLinetypeTexture: function ()
       {
-         let linetypeTexture = this [_linetypeTextures] [index];
+         this [_linetypeTextures] = new ImageTexture (this .getPrivateScene ());
 
-         if (linetypeTexture)
-            return linetypeTexture;
+         this [_linetypeTextures] ._url [0]           = urls .getLinetypeUrl ();
+         this [_linetypeTextures] ._textureProperties = this .getLineFillTextureProperties ();
+         this [_linetypeTextures] .setup ();
 
-         linetypeTexture = this [_linetypeTextures] [index] = new ImageTexture (this .getPrivateScene ());
+         this .getLinetypeTexture = function () { return this [_linetypeTextures]; };
 
-         linetypeTexture ._url [0]           = urls .getLinetypeUrl (index);
-         linetypeTexture ._textureProperties = this .getLineFillTextureProperties ();
-         linetypeTexture .setup ();
+         Object .defineProperty (this, "getLinetypeTexture", { enumerable: false });
 
-         return linetypeTexture;
+         return this [_linetypeTextures];
       },
       getHatchStyleTexture: function (index)
       {

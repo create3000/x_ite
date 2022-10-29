@@ -76,7 +76,7 @@ define (function ()
       },
       getLinetypeUrl: function (index)
       {
-         return new URL ("assets/linetype/" + index + ".png", getScriptURL ()) .href;
+         return new URL ("assets/linetype/linetypes.png", getScriptURL ()) .href;
       },
       getHatchingUrl: function (index)
       {
