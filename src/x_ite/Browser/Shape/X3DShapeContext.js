@@ -190,7 +190,6 @@ function (Appearance,
 
          this [_lineFillTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
          this [_lineFillTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
-
          this [_lineFillTextureProperties] .setup ();
 
          this .getLineFillTextureProperties = function () { return this [_lineFillTextureProperties]; };

@@ -74,7 +74,7 @@ define (function ()
       {
          return new URL ("assets/fonts/" + file, getScriptURL ()) .href;
       },
-      getLinetypeUrl: function (index)
+      getLinetypeUrl: function ()
       {
          return new URL ("assets/linetype/linetypes.png", getScriptURL ()) .href;
       },
