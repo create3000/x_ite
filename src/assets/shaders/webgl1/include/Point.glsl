@@ -20,15 +20,10 @@ vec4
 getPointColor (in vec4 color)
 {
    if (pointSize > 1.0)
-   {
-      float t = max (distance (vec2 (0.5), gl_PointCoord) * pointSize - max (pointSize / 2.0 - 1.0, 0.0), 0.0);
+      color .a *= clamp (pointSize * 0.5 - distance (vec2 (0.5), gl_PointCoord) * pointSize, 0.0, 1.0);
 
-      color .a *= 1.0 - t;
-   }
    else
-   {
       color .a *= pointSize;
-   }
 
    return color;
 }
