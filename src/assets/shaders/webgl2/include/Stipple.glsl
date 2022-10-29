@@ -17,11 +17,11 @@ stipple ()
       float s     = (lengthSoFar + length (point - startPoint)) * x3d_LineProperties .lineStippleScale;
 
       #if x3d_MaxTextures > 0
-         texCoord0 = vec4 (s, 0.5, 0.0, 1.0);
+         texCoord0 = vec4 (s, 0.0, 0.0, 1.0);
       #endif
 
       #if x3d_MaxTextures > 1
-         texCoord1 = vec4 (s, 0.5, 0.0, 1.0);
+         texCoord1 = vec4 (s, 0.0, 0.0, 1.0);
       #endif
 
       if (x3d_LineProperties .linetype != 16)
