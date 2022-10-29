@@ -151,7 +151,7 @@ function ($,
          if (! browser .getBrowserOption ("Rubberband"))
             return;
 
-         browser .getDefaultMaterial () .getShader (this .geometryContext, false);
+         browser .getDefaultMaterial () .getShader (this .geometryContext, this .context);
          browser .getDepthShader ();
       },
       addCollision: function () { },
