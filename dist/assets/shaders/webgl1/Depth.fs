@@ -1,7 +1,7 @@
 precision highp float;
 precision highp int;
 varying vec3 vertex; 
-#ifdef TITANIA
+#if defined (TITANIA)
 vec4
 pack (const in float value)
 {
@@ -13,7 +13,7 @@ unpack (const in vec4 color)
 return color .r;
 }
 #endif
-#ifdef X_ITE
+#if defined (X_ITE)
 vec4
 pack (const in float value)
 {
@@ -22,7 +22,7 @@ const vec3 bitShifts = vec3 (255.0,
 255.0 * 255.0 * 255.0);
 return vec4 (value, fract (value * bitShifts));
 }
-#ifdef X3D_DEPTH_TEXTURE
+#if defined (X3D_DEPTH_TEXTURE)
 float
 unpack (const in vec4 color)
 {

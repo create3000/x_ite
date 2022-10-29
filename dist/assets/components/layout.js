@@ -992,9 +992,9 @@ function (Fields,
       {
          this .layoutNode = X3DCast (X3DConstants .X3DLayoutNode, this ._layout);
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
-         return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadow) .multRight (this .getMatrix ());
+         return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .getMatrix ());
       },
       getMatrix: function ()
       {
@@ -1813,9 +1813,9 @@ function (Fields,
       {
          return "children";
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
-         return this .getSubBBox (bbox, shadow) .multRight (this .matrix);
+         return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
       },
       getMatrix: function ()
       {
@@ -1828,7 +1828,7 @@ function (Fields,
             case TraverseType .CAMERA:
             case TraverseType .PICKING:
             case TraverseType .SHADOW: // ???
-               // No clone support for shadow, generated cube map texture and bbox
+               // No clone support for shadows, generated cube map texture and bbox
                break;
             default:
                this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix);

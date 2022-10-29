@@ -77,6 +77,9 @@ sub shader {
 }
 
 sub shaders {
+	unlink glob "'dist/assets/shaders/webgl1/*.*'";
+	unlink glob "'dist/assets/shaders/webgl2/*.*'";
+
 	shader ("src/assets/shaders/webgl1/$_", "dist/assets/shaders/webgl1") foreach `ls -C1 src/assets/shaders/webgl1`;
 	shader ("src/assets/shaders/webgl2/$_", "dist/assets/shaders/webgl2") foreach `ls -C1 src/assets/shaders/webgl2`;
 }

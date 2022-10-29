@@ -4277,7 +4277,7 @@ function (Fields,
 
          this .set_geometry__ ();
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
          // Add bounding boxes
 

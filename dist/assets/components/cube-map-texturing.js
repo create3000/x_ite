@@ -132,7 +132,7 @@ function (X3DSingleTextureNode,
       },
       setShaderUniformsToChannel: function (gl, shaderObject, renderObject, channel)
       {
-         const textureUnit = renderObject .getBrowser () .getTextureCubeUnit ();
+         const textureUnit = this .getBrowser () .getTextureCubeUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
@@ -200,13 +200,15 @@ define ('x_ite/Components/CubeMapTexturing/ComposedCubeMapTexture',[
    "x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
    "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
+   "standard/Utility/BitSet",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DEnvironmentTextureNode,
           X3DCast,
-          X3DConstants)
+          X3DConstants,
+          BitSet)
 {
 "use strict";
 
@@ -223,9 +225,9 @@ function (Fields,
       this .addAlias ("bottom", this ._bottomTexture);
       this .addAlias ("top",    this ._topTexture);
 
-      this .textures   = [null, null, null, null, null, null];
-      this .symbols    = [Symbol (), Symbol (), Symbol (), Symbol (), Symbol (), Symbol ()];
-      this .loadStates = 0;
+      this .textures      = [null, null, null, null, null, null];
+      this .symbols       = [Symbol (), Symbol (), Symbol (), Symbol (), Symbol (), Symbol ()];
+      this .loadStateBits = new BitSet ();
    }
 
    ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
@@ -309,14 +311,11 @@ function (Fields,
       },
       setLoadStateBit: function (loadState, data, bit)
       {
-         if (loadState === X3DConstants .COMPLETE_STATE || data)
-            this .loadStates |= 1 << bit;
-         else
-            this .loadStates &= ~(1 << bit);
+         this .loadStateBits .set (bit, loadState === X3DConstants .COMPLETE_STATE || data);
       },
       isComplete: function ()
       {
-         if (this .loadStates !== 0b111111)
+         if (+this .loadStateBits !== 0b111111)
             return false;
 
          const
@@ -482,10 +481,6 @@ function (X3DBaseNode,
       setRenderer: function (value)
       {
          this .renderObject = value;
-      },
-      getBrowser: function ()
-      {
-         return this .renderObject .getBrowser ();
       },
       getLayer: function ()
       {
@@ -705,7 +700,7 @@ function (Fields,
          if (!this .frameBuffer)
             return;
 
-         //if (renderObject .getBrowser () !== this .getBrowser ())
+         //if (this .getBrowser () !== this .getBrowser ())
          //	return; // Could be interesting for four-side-view
 
          if (!renderObject .isIndependent ())
@@ -747,7 +742,7 @@ function (Fields,
 
             const
                renderer           = this .renderer,
-               browser            = renderObject .getBrowser (),
+               browser            = this .getBrowser (),
                layer              = renderObject .getLayer (),
                gl                 = browser .getContext (),
                background         = renderer .getBackground (),

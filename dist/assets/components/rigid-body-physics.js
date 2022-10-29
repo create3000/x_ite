@@ -816,14 +816,14 @@ function (Fields,
 
          this .set_collidable__ ();
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
          if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
             const boundedObject = this .visibleNode;
 
             if (boundedObject)
-               return boundedObject .getBBox (bbox, shadow);
+               return boundedObject .getBBox (bbox, shadows);
 
             return bbox .set ();
          }
@@ -943,7 +943,7 @@ function (Fields,
             case TraverseType .PICKING:
             {
                const
-                  browser          = renderObject .getBrowser (),
+                  browser          = this .getBrowser (),
                   pickingHierarchy = browser .getPickingHierarchy (),
                   modelViewMatrix  = renderObject .getModelViewMatrix ();
 
@@ -1116,14 +1116,14 @@ function (Fields,
 
          this .set_shape__ ();
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
          if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
             const boundedObject = this .visibleNode;
 
             if (boundedObject)
-               return boundedObject .getBBox (bbox, shadow);
+               return boundedObject .getBBox (bbox, shadows);
 
             return bbox .set ();
          }
@@ -1466,7 +1466,7 @@ function (Fields,
             case TraverseType .PICKING:
             {
                const
-                  browser          = renderObject .getBrowser (),
+                  browser          = this .getBrowser (),
                   pickingHierarchy = browser .getPickingHierarchy (),
                   modelViewMatrix  = renderObject .getModelViewMatrix ();
 
@@ -2282,11 +2282,11 @@ function (Fields,
 
          this .set_collidables__ ();
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
          // TODO: add space node.
          if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-            return X3DBoundedObject .getBBox (this .collidableNodes, bbox, shadow);
+            return X3DBoundedObject .getBBox (this .collidableNodes, bbox, shadows);
 
          return bbox;
       },

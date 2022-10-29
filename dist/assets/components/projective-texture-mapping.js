@@ -198,7 +198,7 @@ function (X3DChildNode,
       {
          var textureProjectorContainer = this .getTextureProjectors () .pop ();
 
-         textureProjectorContainer .set (renderObject .getBrowser (),
+         textureProjectorContainer .set (this .getBrowser (),
                                          this,
                                          renderObject .getModelViewMatrix () .get ());
 
@@ -374,7 +374,7 @@ function (Fields,
 
          const
             texture     = this .textureProjectorNode .getTexture (),
-            textureUnit = renderObject .getBrowser () .getTexture2DUnit ();
+            textureUnit = this .browser .getTexture2DUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
@@ -616,7 +616,7 @@ function (Fields,
 
          const
             texture     = this .textureProjectorNode .getTexture (),
-            textureUnit = renderObject .getBrowser () .getTexture2DUnit ();
+            textureUnit = this .browser .getTexture2DUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());

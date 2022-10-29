@@ -1,4 +1,4 @@
-/* X_ITE v6.1.0-1157 */
+/* X_ITE v6.1.0-1158 */
 
 (function (global, factory)
 {
@@ -26486,6 +26486,10 @@ function (X3DEventObject,
          if (this [_initialized])
             this ._cloneCount_changed = time;
       },
+      getEnum: function (object, property, defaultValue)
+      {
+         return object .hasOwnProperty (property) ? object [property] : defaultValue;
+      },
       dispose: function ()
       {
          for (const field of this .getFields ())
@@ -27857,7 +27861,7 @@ function (Fields,
 
       this .addAlias ("AntiAliased", this ._Antialiased);
 
-      const browser = executionContext .getBrowser ();
+      const browser = this .getBrowser ();
 
       this .localStorage     = browser .getLocalStorage () .addNameSpace ("BrowserOptions.");
       this .textureQuality   = TextureQuality .MEDIUM
@@ -28007,7 +28011,7 @@ function (Fields,
       {
          this .localStorage .Rubberband = rubberband .getValue ();
 
-         this .getBrowser () .getViewer () .initShaders ();
+         this .getBrowser () .getViewer () .loadShaders ();
       },
       set_primitiveQuality__: function (value)
       {
@@ -28016,10 +28020,7 @@ function (Fields,
             primitiveQuality = value .getValue () .toUpperCase ();
 
          this .localStorage .PrimitiveQuality = primitiveQuality;
-
-         this .primitiveQuality = PrimitiveQuality .hasOwnProperty (primitiveQuality)
-            ? PrimitiveQuality [primitiveQuality]
-            : PrimitiveQuality .MEDIUM;
+         this .primitiveQuality               = this .getEnum (PrimitiveQuality, primitiveQuality, PrimitiveQuality .MEDIUM);
 
          if (typeof browser .setPrimitiveQuality2D === "function")
             browser .setPrimitiveQuality2D (this .primitiveQuality);
@@ -28034,10 +28035,7 @@ function (Fields,
             textureQuality = value .getValue () .toUpperCase ();
 
          this .localStorage .TextureQuality = textureQuality;
-
-         this .textureQuality = TextureQuality .hasOwnProperty (textureQuality)
-            ? TextureQuality [textureQuality]
-            : TextureQuality .MEDIUM;
+         this .textureQuality               = this .getEnum (TextureQuality, textureQuality, TextureQuality .MEDIUM);
 
          if (typeof browser .setTextureQuality === "function")
             browser .setTextureQuality (this .textureQuality);
@@ -28046,9 +28044,7 @@ function (Fields,
       {
          const shading = value .getValue () .toUpperCase () .replace ("POINTSET", "POINT");
 
-         this .shading = Shading .hasOwnProperty (shading)
-            ? Shading [shading]
-            : Shading .GOURAUD;
+         this .shading = this .getEnum (Shading, shading, Shading .GOURAUD);
 
          this .getBrowser () .setShading (this .shading);
       },
@@ -28062,21 +28058,7 @@ function (Fields,
             browser = this .getBrowser (),
             gl      = browser .getContext ();
 
-         logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && (gl .getVersion () >= 2 || Boolean (gl .getExtension ("EXT_frag_depth")));
-
-         if (logarithmicDepthBuffer === browser .getRenderingProperties () ._LogarithmicDepthBuffer .getValue ())
-            return;
-
-         browser .getRenderingProperties () ._LogarithmicDepthBuffer = logarithmicDepthBuffer;
-
-         // Recompile shaders.
-         // There's no need to update background shader.
-
-         for (const shader of browser .getStandardShaders ())
-         {
-            shader ._parts [0] .getValue () ._url .addEvent ();
-            shader ._parts [1] .getValue () ._url .addEvent ();
-         }
+         browser .getRenderingProperties () ._LogarithmicDepthBuffer = !! (logarithmicDepthBuffer .getValue () && (gl .getVersion () >= 2 || gl .getExtension ("EXT_frag_depth")));
       },
       set_timings__: function (timings)
       {
@@ -29698,13 +29680,13 @@ function (Fields,
             {
                this .disabled = false;
 
-               if (this ._isActive .getValue () && !this ._isPaused .getValue ())
+               if (this ._isActive .getValue () && ! this ._isPaused .getValue ())
                   this .real_resume ();
             }
          }
          else
          {
-            if (!this .disabled && this ._isActive .getValue () && !this ._isPaused .getValue ())
+            if (! this .disabled && this ._isActive .getValue () && ! this ._isPaused .getValue ())
             {
                // Only disable if needed, ie. if running!
                this .disabled = true;
@@ -30927,7 +30909,7 @@ function (Fields,
 
          return this .getProjectionMatrixWithLimits (navigationInfo .getNearValue (),
                                                      navigationInfo .getFarValue (this),
-                                                     renderObject .getLayer () .getViewport () .getRectangle (renderObject .getBrowser ()));
+                                                     renderObject .getLayer () .getViewport () .getRectangle (this .getBrowser ()));
       },
       getCameraSpaceMatrix: function ()
       {
@@ -33022,7 +33004,7 @@ function (Fields,
             return;
 
          if (this ._headlight .getValue ())
-            renderObject .getGlobalObjects () .push (renderObject .getBrowser () .getHeadlight ());
+            renderObject .getGlobalObjects () .push (this .getBrowser () .getHeadlight ());
       },
       traverse: function (type, renderObject)
       {
@@ -44987,9 +44969,9 @@ define ('x_ite/Browser/Networking/urls',[],function ()
       {
          return new URL ("assets/fonts/" + file, getScriptURL ()) .href;
       },
-      getLinetypeUrl: function (index)
+      getLinetypeUrl: function ()
       {
-         return new URL ("assets/linetype/" + index + ".png", getScriptURL ()) .href;
+         return new URL ("assets/linetype/linetypes.png", getScriptURL ()) .href;
       },
       getHatchingUrl: function (index)
       {
@@ -45339,16 +45321,12 @@ function (X3DNode,
 
 define ('x_ite/Components/Shaders/X3DShaderNode',[
    "x_ite/Fields",
-   "x_ite/Browser/Core/Shading",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
    "x_ite/Base/X3DConstants",
-   "x_ite/Rendering/TraverseType",
 ],
 function (Fields,
-          Shading,
           X3DAppearanceChildNode,
-          X3DConstants,
-          TraverseType)
+          X3DConstants)
 {
 "use strict";
 
@@ -45360,9 +45338,8 @@ function (Fields,
 
       this .addChildObjects ("activationTime", new Fields .SFTime ());
 
-      this .valid          = false;
-      this .selected       = 0;
-      this .primitiveModes = new Map ();
+      this .valid    = false;
+      this .selected = 0;
    }
 
    X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -45386,53 +45363,6 @@ function (Fields,
       {
          return this .valid;
       },
-      setShading: function (shading)
-      {
-         const gl = this .getBrowser () .getContext ();
-
-         switch (shading)
-         {
-            case Shading .POINT:
-            {
-               this .wireframe = false;
-
-               this .primitiveModes .set (gl .POINTS,    gl .POINTS);
-               this .primitiveModes .set (gl .LINES,     gl .POINTS);
-               this .primitiveModes .set (gl .TRIANGLES, gl .POINTS);
-               break;
-            }
-            case Shading .WIREFRAME:
-            {
-               this .wireframe = true;
-
-               this .primitiveModes .set (gl .POINTS,    gl .POINTS);
-               this .primitiveModes .set (gl .LINES,     gl .LINES);
-               this .primitiveModes .set (gl .TRIANGLES, gl .LINE_LOOP);
-               break;
-            }
-            default:
-            {
-               // case Shading .FLAT:
-               // case Shading .GOURAUD:
-               // case Shading .PHONG:
-
-               this .wireframe = false;
-
-               this .primitiveModes .set (gl .POINTS,    gl .POINTS);
-               this .primitiveModes .set (gl .LINES,     gl .LINES);
-               this .primitiveModes .set (gl .TRIANGLES, gl .TRIANGLES);
-               break;
-            }
-         }
-      },
-      getWireframe: function ()
-      {
-         return this .wireframe;
-      },
-      getPrimitiveMode: function (primitiveMode)
-      {
-         return this .primitiveModes .get (primitiveMode);
-      },
       select: function ()
       {
          ++ this .selected;
@@ -45449,12 +45379,6 @@ function (Fields,
             if (this ._isSelected .getValue ())
                this ._isSelected = false;
          }
-      },
-      traverse: function (type, renderObject)
-      {
-         // TraverseType .DISPLAY
-
-         renderObject .getShaders () .add (this);
       },
    });
 
@@ -45854,7 +45778,7 @@ function (X3DCast,
    {
       this .addType (X3DConstants .X3DProgrammableShaderObject);
 
-      this .uniforms = [ ];
+      this .uniformNames = [ ];
 
       this .x3d_ClipPlane                           = [ ];
       this .x3d_LightType                           = [ ];
@@ -45914,9 +45838,9 @@ function (X3DCast,
       {
          return true;
       },
-      setUniforms: function (value)
+      setUniformNames: function (value)
       {
-         this .uniforms = value;
+         this .uniformNames = value;
       },
       getDefaultUniformsAndAttributes: function (program)
       {
@@ -45928,7 +45852,7 @@ function (X3DCast,
 
          gl .useProgram (program);
 
-         for (const name of this .uniforms)
+         for (const name of this .uniformNames)
             this [name] = gl .getUniformLocation (program, name);
 
          /*
@@ -45937,7 +45861,6 @@ function (X3DCast,
 
          this .x3d_LogarithmicFarFactor1_2 = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor1_2");
 
-         this .x3d_GeometryType  = gl .getUniformLocation (program, "x3d_GeometryType");
          this .x3d_NumClipPlanes = gl .getUniformLocation (program, "x3d_NumClipPlanes");
 
          this .x3d_ClipPlanes = gl .getUniformLocation (program, "x3d_ClipPlane");
@@ -45949,7 +45872,6 @@ function (X3DCast,
          this .x3d_FogColor           = this .getUniformLocation (gl, program, "x3d_Fog.color",           "x3d_FogColor");
          this .x3d_FogVisibilityRange = this .getUniformLocation (gl, program, "x3d_Fog.visibilityRange", "x3d_FogVisibilityRange");
          this .x3d_FogMatrix          = this .getUniformLocation (gl, program, "x3d_Fog.matrix",          "x3d_FogMatrix");
-         this .x3d_FogCoord           = this .getUniformLocation (gl, program, "x3d_Fog.fogCoord",        "x3d_FogCoord");
 
          this .x3d_AlphaCutoff = gl .getUniformLocation (program, "x3d_AlphaCutoff");
 
@@ -45958,18 +45880,17 @@ function (X3DCast,
          this .x3d_PointPropertiesPointSizeMaxValue    = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeMaxValue");
          this .x3d_PointPropertiesPointSizeAttenuation = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeAttenuation");
 
-         this .x3d_LinePropertiesApplied              = gl .getUniformLocation (program, "x3d_LineProperties.applied");
-         this .x3d_LinePropertiesLinewidthScaleFactor = this .getUniformLocation (gl, program, "x3d_LineProperties.linewidthScaleFactor", "x3d_LinewidthScaleFactor");
-         this .x3d_LineStippleScale                   = gl .getUniformLocation (program, "x3d_LineProperties.lineStippleScale");
-         this .x3d_LinePropertiesLinetype             = gl .getUniformLocation (program, "x3d_LineProperties.linetype");
+         this .x3d_LinePropertiesApplied  = gl .getUniformLocation (program, "x3d_LineProperties.applied");
+         this .x3d_LinePropertiesLinetype = gl .getUniformLocation (program, "x3d_LineProperties.linetype");
+         this .x3d_LineStippleScale       = gl .getUniformLocation (program, "x3d_LineProperties.lineStippleScale");
+         this .x3d_LinePropertiesTexture  = gl .getUniformLocation (program, "x3d_LineProperties.texture");
 
          this .x3d_FillPropertiesFilled     = gl .getUniformLocation (program, "x3d_FillProperties.filled");
          this .x3d_FillPropertiesHatched    = gl .getUniformLocation (program, "x3d_FillProperties.hatched");
          this .x3d_FillPropertiesHatchColor = gl .getUniformLocation (program, "x3d_FillProperties.hatchColor");
-         this .x3d_FillPropertiesHatchStyle = gl .getUniformLocation (program, "x3d_FillProperties.hatchStyle");
+         this .x3d_FillPropertiesTexture    = gl .getUniformLocation (program, "x3d_FillProperties.texture");
 
-         this .x3d_ColorMaterial = gl .getUniformLocation (program, "x3d_ColorMaterial");
-         this .x3d_NumLights     = gl .getUniformLocation (program, "x3d_NumLights");
+         this .x3d_NumLights = gl .getUniformLocation (program, "x3d_NumLights");
 
          for (let i = 0; i < this .x3d_MaxLights; ++ i)
          {
@@ -46123,8 +46044,8 @@ function (X3DCast,
 
          // Fill special uniforms with default values, textures for units are created in X3DTexturingContext.
 
-         gl .uniform1i  (this .x3d_LinePropertiesLinetype,   browser .getDefaultTexture2DUnit ());
-         gl .uniform1i  (this .x3d_FillPropertiesHatchStyle, browser .getDefaultTexture2DUnit ());
+         gl .uniform1i  (this .x3d_LinePropertiesTexture, browser .getDefaultTexture2DUnit ());
+         gl .uniform1i  (this .x3d_FillPropertiesTexture, browser .getDefaultTexture2DUnit ());
 
          for (const materialTexture of materialTextures)
          {
@@ -46155,18 +46076,6 @@ function (X3DCast,
          }
 
          gl .uniform1i  (this .x3d_TexCoordRamp, browser .getDefaultTexture2DUnit ());
-
-         /*
-          * Check x3d_Vertex.
-          */
-
-         // if (this .x3d_Vertex < 0)
-         // {
-         //    if (gl .getVersion () >= 2)
-         //      console .warn ("Missing »in vec4 x3d_Vertex;«.");
-         //    else
-         //       console .warn ("Missing »attribute vec4 x3d_Vertex;«.");
-         // }
       },
       getUniformLocation: function (gl, program, name, depreciated)
       {
@@ -46779,127 +46688,124 @@ function (X3DCast,
          gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
          gl .uniform1i (this .x3d_NumProjectiveTextures, Math .min (this .numProjectiveTextures, this .x3d_MaxTextures));
       },
-      setGlobalUniforms: function (gl, program, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
-      {
-         const globalObjects = renderObject .getGlobalObjects ();
-
-         gl .useProgram (program);
-
-         // Set viewport
-
-         gl .uniform4iv (this .x3d_Viewport, viewportArray);
-
-         // Set projection matrix
-
-         gl .uniformMatrix4fv (this .x3d_ProjectionMatrix,  false, projectionMatrixArray);
-         gl .uniformMatrix4fv (this .x3d_CameraSpaceMatrix, false, cameraSpaceMatrixArray);
-
-         // Fog
-
-         this .fogNode = null;
-
-         // Set global lights and global texture projectors
-
-         this .numLights                      = 0;
-         this .numProjectiveTextures          = 0;
-         this .lightNodes .length             = 0;
-         this .projectiveTextureNodes .length = 0;
-
-         for (const globalObject of globalObjects)
-            globalObject .setShaderUniforms (gl, this, renderObject);
-
-         this .numGlobalLights             = this .numLights;
-         this .numGlobalProjectiveTextures = this .numProjectiveTextures;
-
-         // Logarithmic depth buffer support.
-
-         const
-            viewpoint      = renderObject .getViewpoint (),
-            navigationInfo = renderObject .getNavigationInfo ();
-
-         if (viewpoint instanceof OrthoViewpoint)
-            gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, -1);
-         else
-            gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
-      },
-      setLocalUniforms: function (gl, context, front = true)
-      {
-         const
-            renderObject    = context .renderer,
-            shapeNode       = context .shapeNode,
-            geometryNode    = context .geometryContext || shapeNode .getGeometry (),
-            geometryType    = geometryNode .geometryType,
-            appearanceNode  = shapeNode .getAppearance (),
-            materialNode    = front ? appearanceNode .materialNode : appearanceNode .backMaterialNode,
-            textureNode     = context .textureNode || appearanceNode .textureNode,
-            modelViewMatrix = context .modelViewMatrix;
-
-         // Model view matrix
-
-         gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
-
-         // Geometry type
-
-         gl .uniform1i (this .x3d_GeometryType, geometryType);
-
-         // Clip planes and local lights
-
-         this .numClipPlanes         = 0;
-         this .numLights             = this .numGlobalLights;
-         this .numProjectiveTextures = this .numGlobalProjectiveTextures;
-
-         for (const localObject of context .localObjects)
-            localObject .setShaderUniforms (gl, this, renderObject);
-
-         gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
-         gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
-         gl .uniform1i (this .x3d_NumProjectiveTextures, Math .min (this .numProjectiveTextures, this .x3d_MaxTextures));
-
-         // Fog, there is always one
-
-         context .fogNode .setShaderUniforms (gl, this);
-         gl .uniform1i (this .x3d_FogCoord, geometryNode .fogCoords);
-
-         // Alpha
-
-         gl .uniform1f (this .x3d_AlphaCutoff, appearanceNode .alphaCutoff);
-
-         // Style
-
-         appearanceNode .stylePropertiesNode [geometryType] .setShaderUniforms (gl, this);
-
-         // Material
-
-         gl .uniform1i (this .x3d_ColorMaterial, geometryNode .colorMaterial);
-         materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .textureTransformMapping, geometryNode .textureCoordinateMapping, front);
-
-         // Normal matrix
-
-         gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
-
-         // Texture
-
-         if (textureNode)
-            textureNode .setShaderUniforms (gl, this, renderObject);
-         else
-            gl .uniform1i (this .x3d_NumTextures, 0);
-
-         appearanceNode .textureTransformNode .setShaderUniforms (gl, this);
-         geometryNode .textureCoordinateNode .setShaderUniforms (gl, this);
-      },
-      getNormalMatrix: (function ()
+      setUniforms: (function ()
       {
          const normalMatrix = new Float32Array (9);
 
-         return function (modelViewMatrix)
+         return function (gl, context, front = true)
          {
+            const
+               renderObject        = context .renderer,
+               fogNode             = context .fogNode,
+               shapeNode           = context .shapeNode,
+               geometryContext     = context .geometryContext || shapeNode .getGeometry (),
+               geometryType        = geometryContext .geometryType,
+               appearanceNode      = context .appearanceNode,
+               stylePropertiesNode = appearanceNode .getStyleProperties (geometryType),
+               materialNode        = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
+               textureNode         = context .textureNode || appearanceNode .getTexture (),
+               modelViewMatrix     = context .modelViewMatrix;
+
+            // Set global uniforms.
+
+            if (this .renderTime !== renderObject .getRenderTime ())
+            {
+               this .renderTime = renderObject .getRenderTime ();
+
+               // Set viewport.
+
+               gl .uniform4iv (this .x3d_Viewport, renderObject .getViewportArray ());
+
+               // Set projection matrix.
+
+               gl .uniformMatrix4fv (this .x3d_ProjectionMatrix,  false, renderObject .getProjectionMatrixArray ());
+               gl .uniformMatrix4fv (this .x3d_CameraSpaceMatrix, false, renderObject .getCameraSpaceMatrixArray ());
+
+               // Fog
+
+               this .fogNode = null;
+
+               // Set global lights and global texture projectors.
+
+               this .numLights                      = 0;
+               this .numProjectiveTextures          = 0;
+               this .lightNodes .length             = 0;
+               this .projectiveTextureNodes .length = 0;
+
+               const globalObjects = renderObject .getGlobalObjects ();
+
+               for (const globalObject of globalObjects)
+                  globalObject .setShaderUniforms (gl, this, renderObject);
+
+               this .numGlobalLights             = this .numLights;
+               this .numGlobalProjectiveTextures = this .numProjectiveTextures;
+
+               // Logarithmic depth buffer support
+
+               const
+                  viewpoint      = renderObject .getViewpoint (),
+                  navigationInfo = renderObject .getNavigationInfo ();
+
+               if (viewpoint instanceof OrthoViewpoint)
+                  gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, -1);
+               else
+                  gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
+            }
+
+            // Model view matrix
+
+            gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+
+            // Normal matrix
+
             normalMatrix [0] = modelViewMatrix [0]; normalMatrix [3] = modelViewMatrix [1]; normalMatrix [6] = modelViewMatrix [ 2];
             normalMatrix [1] = modelViewMatrix [4]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [7] = modelViewMatrix [ 6];
             normalMatrix [2] = modelViewMatrix [8]; normalMatrix [5] = modelViewMatrix [9]; normalMatrix [8] = modelViewMatrix [10];
 
             Matrix3 .prototype .inverse .call (normalMatrix);
 
-            return normalMatrix;
+            gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrix);
+
+            // Clip planes and local lights
+
+            this .numClipPlanes         = 0;
+            this .numLights             = this .numGlobalLights;
+            this .numProjectiveTextures = this .numGlobalProjectiveTextures;
+
+            for (const localObject of context .localObjects)
+               localObject .setShaderUniforms (gl, this, renderObject);
+
+            gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
+            gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
+            gl .uniform1i (this .x3d_NumProjectiveTextures, Math .min (this .numProjectiveTextures, this .x3d_MaxTextures));
+
+            // Fog
+
+            if (fogNode)
+               fogNode .setShaderUniforms (gl, this);
+
+            // Alpha
+
+            gl .uniform1f (this .x3d_AlphaCutoff, appearanceNode .getAlphaCutoff ());
+
+            // Style Properties
+
+            if (stylePropertiesNode)
+               stylePropertiesNode .setShaderUniforms (gl, this);
+
+            // Material
+
+            materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .getTextureTransformMapping (), geometryContext .textureCoordinateMapping, front);
+
+            // Texture
+
+            if (textureNode)
+               textureNode .setShaderUniforms (gl, this, renderObject);
+            else
+               gl .uniform1i (this .x3d_NumTextures, 0);
+
+            appearanceNode .getTextureTransform () .setShaderUniforms (gl, this);
+            geometryContext .textureCoordinateNode .setShaderUniforms (gl, this);
          };
       })(),
       enable: function (gl, program)
@@ -47328,11 +47234,11 @@ function (Fields,
       {
          X3DNetworkSensorNode .prototype .initialize .call (this);
 
-         this ._enabled   .addInterest ("set_enabled__", this);
-         this ._timeOut   .addInterest ("set_timeOut__", this);
+         this ._enabled   .addInterest ("set_enabled__",   this);
+         this ._timeOut   .addInterest ("set_timeOut__",   this);
          this ._watchList .addInterest ("set_watchList__", this);
 
-         this ._watchList .addEvent ();
+         this .set_watchList__ ();
       },
       set_enabled__: function ()
       {
@@ -47378,20 +47284,19 @@ function (Fields,
       },
       count: function ()
       {
-         var
-            complete   = 0,
-            failed     = 0,
-            urlObjects = this .urlObjects;
+         const urlObjects = this .urlObjects;
 
-         for (var i = 0, length = urlObjects .length; i < length; ++ i)
+         let
+            complete = 0,
+            failed   = 0;
+
+         for (const urlObject of urlObjects)
          {
-            var urlObject = urlObjects [i];
-
             complete += urlObject .checkLoadState () == X3DConstants .COMPLETE_STATE;
             failed   += urlObject .checkLoadState () == X3DConstants .FAILED_STATE;
          }
 
-         var
+         const
             loaded   = complete == urlObjects .length,
             progress = complete / urlObjects .length;
 
@@ -47415,7 +47320,6 @@ function (Fields,
             else
             {
                this ._isActive = true;
-
                this ._progress = progress;
 
                this .set_timeOut__ ();
@@ -47437,13 +47341,11 @@ function (Fields,
 
          if (this ._enabled .getValue ())
          {
-            var
-               watchList  = this ._watchList .getValue (),
-               urlObjects = this .urlObjects;
+            const urlObjects = this .urlObjects;
 
-            for (var i = 0, length = watchList .length; i < length; ++ i)
+            for (const node of this ._watchList)
             {
-               var urlObject = X3DCast (X3DConstants .X3DUrlObject, watchList [i]);
+               const urlObject = X3DCast (X3DConstants .X3DUrlObject, node);
 
                if (urlObject)
                {
@@ -47460,16 +47362,17 @@ function (Fields,
       {
          this .clearTimeout ();
 
-         var urlObjects = this .urlObjects;
+         const urlObjects = this .urlObjects;
 
-         for (var i = 0, length = urlObjects .length; i < length; ++ i)
-            urlObjects [i] ._loadState .removeInterest ("set_loadState__", this);
+         for (const urlObject of urlObjects)
+            urlObject ._loadState .removeInterest ("set_loadState__", this);
 
          urlObjects .length = 0;
       },
       clearTimeout: function ()
       {
          clearTimeout (this .timeOutId);
+
          this .timeOutId = undefined;
       },
    });
@@ -47588,10 +47491,6 @@ function (Fields,
          X3DShaderNode               .prototype .initialize .call (this);
          X3DProgrammableShaderObject .prototype .initialize .call (this);
 
-         const gl = this .getBrowser () .getContext ();
-
-         this .primitiveMode = gl .TRIANGLES;
-
          this .isLive () .addInterest ("set_live__", this);
 
          this ._parts .addFieldInterest (this .loadSensor ._watchList);
@@ -47600,8 +47499,6 @@ function (Fields,
          this .loadSensor ._watchList = this ._parts;
          this .loadSensor .setPrivate (true);
          this .loadSensor .setup ();
-
-         //Must not call set_live__.
       },
       addUserDefinedField: function (accessType, name, field)
       {
@@ -47700,13 +47597,6 @@ function (Fields,
          if (this .isValid ())
             X3DProgrammableShaderObject .prototype .set_field__ .call (this, field, this .program);
       },
-      setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
-      {
-         if (this .isValid ())
-         {
-            X3DProgrammableShaderObject .prototype .setGlobalUniforms .call (this, gl, this .program, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-         }
-      },
       enable: function (gl)
       {
          X3DProgrammableShaderObject .prototype .enable .call (this, gl, this .program);
@@ -47717,51 +47607,7 @@ function (Fields,
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-define('text!assets/shaders/Types.glsl',[],function () { return 'struct x3d_FogParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float visibilityRange;\n   mediump mat3  matrix;\n   bool          fogCoord;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float intensity;\n   mediump float ambientIntensity;\n   mediump vec3  attenuation;\n   mediump vec3  location;\n   mediump vec3  direction;\n   mediump float radius;\n   mediump float beamWidth;\n   mediump float cutOffAngle;\n   mediump mat3  matrix;\n   #ifdef X3D_SHADOWS\n   mediump vec3  shadowColor;\n   mediump float shadowIntensity;\n   mediump float shadowBias;\n   mediump mat4  shadowMatrix;\n   mediump int   shadowMapSize;\n   #endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_PointPropertiesParameters\n{\n   mediump float pointSizeScaleFactor;\n   mediump float pointSizeMinValue;\n   mediump float pointSizeMaxValue;\n   mediump vec3  pointSizeAttenuation;\n};\n\n//uniform x3d_PointPropertiesParameters x3d_PointProperties;\n\nstruct x3d_LinePropertiesParameters\n{\n   bool          applied;\n   mediump float linewidthScaleFactor;\n   mediump float lineStippleScale;\n   sampler2D     linetype;\n};\n\n//uniform x3d_LinePropertiesParameters x3d_LineProperties;\n\nstruct x3d_FillPropertiesParameters\n{\n   bool         filled;\n   bool         hatched;\n   mediump vec3 hatchColor;\n   sampler2D    hatchStyle;\n};\n\n//uniform x3d_FillPropertiesParameters x3d_FillProperties;\n\nstruct x3d_UnlitMaterialParameters\n{\n   mediump vec3  emissiveColor;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_UnlitMaterialParameters x3d_Material;\n\nstruct x3d_MaterialParameters\n{\n   mediump float ambientIntensity;\n   mediump vec3  diffuseColor;\n   mediump vec3  specularColor;\n   mediump vec3  emissiveColor;\n   mediump float shininess;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_Material;\n\nstruct x3d_PhysicalMaterialParameters\n{\n   mediump vec3  baseColor;\n   mediump vec3  emissiveColor;\n   mediump float metallic;\n   mediump float roughness;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_PhysicalMaterialParameters x3d_Material;\n\n#ifdef X3D_MATERIAL_TEXTURES\n\nstruct x3d_AmbientTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_AMBIENT_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_AMBIENT_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_AMBIENT_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_AmbientTextureParameters x3d_AmbientTexture;\n\nstruct x3d_DiffuseTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_DIFFUSE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_DIFFUSE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_DIFFUSE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;\n\nstruct x3d_SpecularTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SPECULAR_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_SPECULAR_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SPECULAR_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_SpecularTextureParameters x3d_SpecularTexture;\n\nstruct x3d_EmissiveTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_EMISSIVE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_EMISSIVE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_EMISSIVE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;\n\nstruct x3d_ShininessTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_SHININESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_SHININESS_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_SHININESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_ShininessTextureParameters x3d_ShininessTexture;\n\nstruct x3d_BaseTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_BASE_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_BASE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_BASE_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_BaseTextureParameters x3d_BaseTexture;\n\nstruct x3d_MetallicRoughnessTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;\n\nstruct x3d_OcclusionTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_OCCLUSION_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_OCCLUSION_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_OCCLUSION_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;\n\nstruct x3d_NormalTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #ifdef X3D_NORMAL_TEXTURE_2D\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined(X3D_NORMAL_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #ifdef X3D_NORMAL_TEXTURE_CUBE\n   mediump samplerCube textureCube;\n   #endif\n};\n\n//uniform x3d_NormalTextureParameters x3d_NormalTexture;\n\n#endif // X3D_MATERIAL_TEXTURES\n\nstruct x3d_MultiTextureParameters\n{\n   mediump int mode;\n   mediump int alphaMode;\n   mediump int source;\n   mediump int function;\n};\n\n//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nstruct x3d_TextureCoordinateGeneratorParameters\n{\n   mediump int   mode;\n   mediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];\n';});
+define('text!assets/shaders/Types.glsl',[],function () { return 'struct x3d_FogParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float visibilityRange;\n   mediump mat3  matrix;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n   mediump int   type;\n   mediump vec3  color;\n   mediump float intensity;\n   mediump float ambientIntensity;\n   mediump vec3  attenuation;\n   mediump vec3  location;\n   mediump vec3  direction;\n   mediump float radius;\n   mediump float beamWidth;\n   mediump float cutOffAngle;\n   mediump mat3  matrix;\n   #if defined (X3D_SHADOWS)\n   mediump vec3  shadowColor;\n   mediump float shadowIntensity;\n   mediump float shadowBias;\n   mediump mat4  shadowMatrix;\n   mediump int   shadowMapSize;\n   #endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_PointPropertiesParameters\n{\n   mediump float pointSizeScaleFactor;\n   mediump float pointSizeMinValue;\n   mediump float pointSizeMaxValue;\n   mediump vec3  pointSizeAttenuation;\n};\n\n//uniform x3d_PointPropertiesParameters x3d_PointProperties;\n\nstruct x3d_LinePropertiesParameters\n{\n   bool          applied;\n   mediump int   linetype;\n   mediump float lineStippleScale;\n   sampler2D     texture;\n};\n\n//uniform x3d_LinePropertiesParameters x3d_LineProperties;\n\nstruct x3d_FillPropertiesParameters\n{\n   bool         filled;\n   bool         hatched;\n   mediump vec3 hatchColor;\n   sampler2D    texture;\n};\n\n//uniform x3d_FillPropertiesParameters x3d_FillProperties;\n\nstruct x3d_UnlitMaterialParameters\n{\n   mediump vec3  emissiveColor;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_UnlitMaterialParameters x3d_Material;\n\nstruct x3d_MaterialParameters\n{\n   mediump float ambientIntensity;\n   mediump vec3  diffuseColor;\n   mediump vec3  specularColor;\n   mediump vec3  emissiveColor;\n   mediump float shininess;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_Material;\n\nstruct x3d_PhysicalMaterialParameters\n{\n   mediump vec3  baseColor;\n   mediump vec3  emissiveColor;\n   mediump float metallic;\n   mediump float roughness;\n   mediump float occlusionStrength;\n   mediump float normalScale;\n   mediump float transparency;\n};\n\n//uniform x3d_PhysicalMaterialParameters x3d_Material;\n\n#if defined (X3D_AMBIENT_TEXTURE)\nstruct x3d_AmbientTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #if defined (X3D_AMBIENT_TEXTURE_2D)\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined (X3D_AMBIENT_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #if defined (X3D_AMBIENT_TEXTURE_CUBE)\n   mediump samplerCube textureCube;\n   #endif\n};\n//uniform x3d_AmbientTextureParameters x3d_AmbientTexture;\n#endif\n\n#if defined (X3D_DIFFUSE_TEXTURE)\nstruct x3d_DiffuseTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #if defined (X3D_DIFFUSE_TEXTURE_2D)\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined (X3D_DIFFUSE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #if defined (X3D_DIFFUSE_TEXTURE_CUBE)\n   mediump samplerCube textureCube;\n   #endif\n};\n//uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;\n#endif\n\n#if defined (X3D_SPECULAR_TEXTURE)\nstruct x3d_SpecularTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #if defined (X3D_SPECULAR_TEXTURE_2D)\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined (X3D_SPECULAR_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #if defined (X3D_SPECULAR_TEXTURE_CUBE)\n   mediump samplerCube textureCube;\n   #endif\n};\n//uniform x3d_SpecularTextureParameters x3d_SpecularTexture;\n#endif\n\n#if defined (X3D_EMISSIVE_TEXTURE)\nstruct x3d_EmissiveTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #if defined (X3D_EMISSIVE_TEXTURE_2D)\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined (X3D_EMISSIVE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #if defined (X3D_EMISSIVE_TEXTURE_CUBE)\n   mediump samplerCube textureCube;\n   #endif\n};\n//uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;\n#endif\n\n#if defined (X3D_SHININESS_TEXTURE)\nstruct x3d_ShininessTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #if defined (X3D_SHININESS_TEXTURE_2D)\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined (X3D_SHININESS_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #if defined (X3D_SHININESS_TEXTURE_CUBE)\n   mediump samplerCube textureCube;\n   #endif\n};\n//uniform x3d_ShininessTextureParameters x3d_ShininessTexture;\n#endif\n\n#if defined (X3D_BASE_TEXTURE)\nstruct x3d_BaseTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #if defined (X3D_BASE_TEXTURE_2D)\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined (X3D_BASE_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #if defined (X3D_BASE_TEXTURE_CUBE)\n   mediump samplerCube textureCube;\n   #endif\n};\n//uniform x3d_BaseTextureParameters x3d_BaseTexture;\n#endif\n\n#if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)\nstruct x3d_MetallicRoughnessTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_2D)\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)\n   mediump samplerCube textureCube;\n   #endif\n};\n//uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;\n#endif\n\n#if defined (X3D_OCCLUSION_TEXTURE)\nstruct x3d_OcclusionTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #if defined (X3D_OCCLUSION_TEXTURE_2D)\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined (X3D_OCCLUSION_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #if defined (X3D_OCCLUSION_TEXTURE_CUBE)\n   mediump samplerCube textureCube;\n   #endif\n};\n//uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;\n#endif\n\n#if defined (X3D_NORMAL_TEXTURE)\nstruct x3d_NormalTextureParameters\n{\n   mediump int         textureTransformMapping;\n   mediump int         textureCoordinateMapping;\n   #if defined (X3D_NORMAL_TEXTURE_2D)\n   mediump sampler2D   texture2D;\n   #endif\n   #if defined (X3D_NORMAL_TEXTURE_3D) && __VERSION__ != 100\n   mediump sampler3D   texture3D;\n   #endif\n   #if defined (X3D_NORMAL_TEXTURE_CUBE)\n   mediump samplerCube textureCube;\n   #endif\n};\n//uniform x3d_NormalTextureParameters x3d_NormalTexture;\n#endif\n\nstruct x3d_MultiTextureParameters\n{\n   mediump int mode;\n   mediump int alphaMode;\n   mediump int source;\n   mediump int function;\n};\n\n//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nstruct x3d_TextureCoordinateGeneratorParameters\n{\n   mediump int   mode;\n   mediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -48100,15 +47946,13 @@ define ('x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType',[],function
 
 
 define ('x_ite/Browser/Shaders/Shader',[
-   "x_ite/Browser/Shaders/ShaderSource",
    "text!assets/shaders/Types.glsl",
    "x_ite/Browser/Texturing/MultiTextureModeType",
    "x_ite/Browser/Texturing/MultiTextureSourceType",
    "x_ite/Browser/Texturing/MultiTextureFunctionType",
    "x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType",
 ],
-function (ShaderSource,
-          Types,
+function (Types,
           MultiTextureModeType,
           MultiTextureSourceType,
           MultiTextureFunctionType,
@@ -48118,12 +47962,8 @@ function (ShaderSource,
 
    const Shader =
    {
-      getShaderSource: function (browser, name, source, options)
+      getShaderSource: function (gl, browser, source, options)
       {
-         const gl = browser .getContext ();
-
-         source = ShaderSource .get (gl, source);
-
 			const
 				COMMENTS     = "\\s+|/\\*[\\s\\S]*?\\*/|//.*?\\n",
 				LINE         = "#line\\s+.*?\\n",
@@ -48161,11 +48001,11 @@ function (ShaderSource,
 
          constants += "#define X_ITE\n";
 
-         if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
-            constants += "#define X3D_LOGARITHMIC_DEPTH_BUFFER\n";
-
          if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
             constants += "#define X3D_DEPTH_TEXTURE\n";
+
+         if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
+            constants += "#define X3D_LOGARITHMIC_DEPTH_BUFFER\n";
 
          if (browser .getMultiTexturing ())
             constants += "#define X3D_MULTI_TEXTURING\n";
@@ -48270,7 +48110,7 @@ function (ShaderSource,
 
          const lines = (match [1] .match (/\n/g) || [ ]) .length + 1;
 
-         return match [1] + constants + definitions + types + "#line " + lines + "\n" + match [2];
+         return match [1] + constants + definitions + types + "#line " + (lines + 1) + " -1\n" + match [2];
       },
    };
 
@@ -48284,6 +48124,72 @@ function (ShaderSource,
 
    return Shader;
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -57163,20 +57069,22 @@ function (TextureBuffer,
 
    function X3DRenderObject (executionContext)
    {
+      this .viewVolumes              = [ ];
       this .cameraSpaceMatrix        = new MatrixStack (Matrix4);
       this .viewMatrix               = new MatrixStack (Matrix4);
       this .projectionMatrix         = new MatrixStack (Matrix4);
       this .modelViewMatrix          = new MatrixStack (Matrix4);
-      this .viewVolumes              = [ ];
+      this .viewportArray            = new Int32Array (4);
+      this .projectionMatrixArray    = new Float32Array (16);
+      this .cameraSpaceMatrixArray   = new Float32Array (16);
       this .globalObjects            = [ ];
       this .localObjects             = [ ];
       this .lights                   = [ ];
-      this .shadow                   = [ false ];
-      this .localFogs                = [ ];
+      this .shadows                  = [ false ];
+      this .localFogs                = [ null ];
       this .layouts                  = [ ];
       this .textureProjectors        = [ ];
       this .generatedCubeMapTextures = [ ];
-      this .shaders                  = new Set ();
       this .collisions               = [ ];
       this .numOpaqueShapes          = 0;
       this .numTransparentShapes     = 0;
@@ -57211,6 +57119,18 @@ function (TextureBuffer,
       {
          return true;
       },
+      getRenderTime: function ()
+      {
+         return this .renderTime;
+      },
+      getViewVolumes: function ()
+      {
+         return this .viewVolumes;
+      },
+      getViewVolume: function ()
+      {
+         return this .viewVolumes .at (-1);
+      },
       getCameraSpaceMatrix: function ()
       {
          return this .cameraSpaceMatrix;
@@ -57227,13 +57147,17 @@ function (TextureBuffer,
       {
          return this .modelViewMatrix;
       },
-      getViewVolumes: function ()
+      getViewportArray: function ()
       {
-         return this .viewVolumes;
+         return this .viewportArray;
       },
-      getViewVolume: function ()
+      getProjectionMatrixArray: function ()
       {
-         return this .viewVolumes .at (-1);
+         return this .projectionMatrixArray;
+      },
+      getCameraSpaceMatrixArray: function ()
+      {
+         return this .cameraSpaceMatrixArray;
       },
       getGlobalObjects: function ()
       {
@@ -57247,41 +57171,38 @@ function (TextureBuffer,
       {
          return this .lights;
       },
-      pushShadow: function (value)
+      pushShadows: function (value)
       {
-         this .shadow .push (value || this .shadow .at (-1));
+         this .shadows .push (value || this .shadows .at (-1));
       },
-      popShadow: function ()
+      popShadows: function ()
       {
-         this .shadow .pop ();
+         this .shadows .pop ();
       },
       setGlobalFog: (function ()
       {
          const modelViewMatrix = new Matrix4 ();
 
-         return function (fog)
+         return function (fogNode)
          {
-            const fogContainer = this .localFogs [0] || fog .getFogs () .pop ();
+            if (fogNode .getFogType ())
+            {
+               const fogContainer = this .localFogs [0] || fogNode .getFogs () .pop ();
 
-            modelViewMatrix .assign (fog .getModelMatrix ()) .multRight (this .getViewMatrix () .get ());
-            fogContainer .set (fog, modelViewMatrix);
+               modelViewMatrix .assign (fogNode .getModelMatrix ()) .multRight (this .getViewMatrix () .get ());
+               fogContainer .set (fogNode, modelViewMatrix);
 
-            this .localFog = this .localFogs [0] = fogContainer;
+               this .localFogs [0] = fogContainer;
+            }
+            else
+            {
+               this .localFogs [0] = null;
+            }
          };
       })(),
-      pushLocalFog: function (localFog)
+      getLocalFogs: function ()
       {
-         this .localFogs .push (localFog);
-
-         this .localFog = localFog;
-      },
-      popLocalFog: function ()
-      {
-         const localFog = this .localFogs .pop ();
-
-         this .localFog = this .localFogs .at (-1);
-
-         return localFog;
+         return this .localFogs;
       },
       getLayouts: function ()
       {
@@ -57298,10 +57219,6 @@ function (TextureBuffer,
       getGeneratedCubeMapTextures: function ()
       {
          return this .generatedCubeMapTextures;
-      },
-      getShaders: function ()
-      {
-         return this .shaders;
       },
       getCollisions: function ()
       {
@@ -57533,7 +57450,7 @@ function (TextureBuffer,
 
                if (num === this .collisionShapes .length)
                {
-                  this .collisionShapes .push ({ renderer: this, browser: this .getBrowser (), modelViewMatrix: new Float32Array (16), collisions: [ ], clipPlanes: [ ] });
+                  this .collisionShapes .push ({ renderer: this, modelViewMatrix: new Float32Array (16), collisions: [ ], clipPlanes: [ ] });
                }
 
                const context = this .collisionShapes [num];
@@ -57579,7 +57496,7 @@ function (TextureBuffer,
 
                if (num === this .depthShapes .length)
                {
-                  this .depthShapes .push ({ renderer: this, browser: this .getBrowser (), modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
+                  this .depthShapes .push ({ renderer: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
                }
 
                const context = this .depthShapes [num];
@@ -57638,11 +57555,12 @@ function (TextureBuffer,
 
                context .modelViewMatrix .set (modelViewMatrix);
                context .scissor .assign (viewVolume .getScissor ());
-               context .shapeNode   = shapeNode;
-               context .textureNode = null;
-               context .distance    = bboxCenter .z;
-               context .fogNode     = this .localFog;
-               context .shadow      = this .shadow .at (-1);
+               context .shapeNode      = shapeNode;
+               context .appearanceNode = shapeNode .getAppearance ();
+               context .textureNode    = null;
+               context .distance       = bboxCenter .z;
+               context .fogNode        = this .localFogs .at (-1);
+               context .shadows        = this .shadows .at (-1);
 
                // Clip planes and local lights
 
@@ -57658,7 +57576,6 @@ function (TextureBuffer,
       {
          return {
             renderer: this,
-            browser: this .getBrowser (),
             transparent: transparent,
             modelViewMatrix: new Float32Array (16),
             scissor: new Vector4 (0, 0, 0, 0),
@@ -57914,169 +57831,155 @@ function (TextureBuffer,
             }
          };
       })(),
-      draw: (function ()
+      draw: function ()
       {
          const
-            viewportArray          = new Int32Array (4),
-            projectionMatrixArray  = new Float32Array (16),
-            cameraSpaceMatrixArray = new Float32Array (16);
+            browser                  = this .getBrowser (),
+            gl                       = browser .getContext (),
+            viewport                 = this .getViewVolume () .getViewport (),
+            lights                   = this .lights,
+            textureProjectors        = this .textureProjectors,
+            generatedCubeMapTextures = this .generatedCubeMapTextures;
 
-         return function ()
+
+         this .renderTime = performance .now ();
+
+
+         // PREPARATIONS
+
+
+         if (this .isIndependent ())
          {
-            const
-               browser                  = this .getBrowser (),
-               gl                       = browser .getContext (),
-               viewport                 = this .getViewVolume () .getViewport (),
-               shaders                  = this .shaders,
-               lights                   = this .lights,
-               textureProjectors        = this .textureProjectors,
-               generatedCubeMapTextures = this .generatedCubeMapTextures;
-
-
-            // PREPARATIONS
-
-
-            if (this .isIndependent ())
-            {
-               // Render shadow maps.
-
-               for (const light of lights)
-                  light .renderShadowMap (this);
-
-               // Render GeneratedCubeMapTextures.
-
-               for (const generatedCubeMapTexture of generatedCubeMapTextures)
-                  generatedCubeMapTexture .renderTexture (this);
-            }
-
-
-            // DRAW
-
-
-            // Set up shadow matrix for all lights, and matrix for all projective textures.
-
-            browser .getHeadlight () .setGlobalVariables (this);
+            // Render shadow maps.
 
             for (const light of lights)
-               light .setGlobalVariables (this);
+               light .renderShadowMap (this);
 
-            for (const textureProjector of textureProjectors)
-               textureProjector .setGlobalVariables (this);
+            // Render GeneratedCubeMapTextures.
 
-            // Configure viewport and background
+            for (const generatedCubeMapTexture of generatedCubeMapTextures)
+               generatedCubeMapTexture .renderTexture (this);
+         }
 
-            gl .viewport (viewport [0],
-                          viewport [1],
-                          viewport [2],
-                          viewport [3]);
+         // Set up shadow matrix for all lights, and matrix for all projective textures.
 
-            gl .scissor (viewport [0],
-                         viewport [1],
-                         viewport [2],
-                         viewport [3]);
+         browser .getHeadlight () .setGlobalVariables (this);
 
-            // Draw background.
+         for (const light of lights)
+            light .setGlobalVariables (this);
 
-            gl .clear (gl .DEPTH_BUFFER_BIT);
+         for (const textureProjector of textureProjectors)
+            textureProjector .setGlobalVariables (this);
 
-            this .getBackground () .display (gl, this, viewport);
+         // Set global uniforms.
 
-            // Set global uniforms.
-
-            viewportArray          .set (viewport);
-            cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
-            projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
-
-            for (const shader of browser .getStandardShaders ())
-               shaders .add (shader);
-
-            for (const shader of shaders)
-               shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
-
-            // Sorted blend
-
-            // Render opaque objects first
-
-            gl .enable (gl .DEPTH_TEST);
-            gl .depthMask (true);
-            gl .disable (gl .BLEND);
-
-            const opaqueShapes = this .opaqueShapes;
-
-            for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
-            {
-               const
-                  context = opaqueShapes [i],
-                  scissor = context .scissor;
-
-               gl .scissor (scissor .x,
-                            scissor .y,
-                            scissor .z,
-                            scissor .w);
-
-               context .shapeNode .display (gl, context);
-               browser .resetTextureUnits ();
-            }
-
-            // Render transparent objects
-
-            gl .depthMask (false);
-            gl .enable (gl .BLEND);
-
-            const transparentShapes = this .transparentShapes;
-
-            this .transparencySorter .sort (0, this .numTransparentShapes);
-
-            for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
-            {
-               const
-                  context = transparentShapes [i],
-                  scissor = context .scissor;
-
-               gl .scissor (scissor .x,
-                            scissor .y,
-                            scissor .z,
-                            scissor .w);
-
-               context .shapeNode .display (gl, context);
-               browser .resetTextureUnits ();
-            }
-
-            gl .depthMask (true);
-            gl .disable (gl .BLEND);
+         this .viewportArray          .set (viewport);
+         this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
+         this .projectionMatrixArray  .set (this .getProjectionMatrix () .get ());
 
 
-            // POST DRAW
+         // DRAW
 
-            const globalObjects = this .globalObjects;
 
-            if (this .isIndependent ())
-            {
-               // Recycle clip planes, local fogs, local lights, and local projective textures.
+         // Configure viewport and background
 
-               const localObjects = browser .getLocalObjects ();
+         gl .viewport (viewport .x,
+                       viewport .y,
+                       viewport .z,
+                       viewport .w);
 
-               for (const localObject of localObjects)
-                  localObject .dispose ();
+         gl .scissor (viewport .x,
+                      viewport .y,
+                      viewport .z,
+                      viewport .w);
 
-               localObjects .length = 0;
+         // Draw background.
 
-               // Recycle global lights and global projective textures.
+         gl .clear (gl .DEPTH_BUFFER_BIT);
 
-               for (const globalObject of globalObjects)
-                  globalObject .dispose ();
-            }
+         this .getBackground () .display (gl, this, viewport);
 
-            // Reset containers.
+         // Sorted blend
 
-            shaders .clear ();
+         // Render opaque objects first
 
-            globalObjects            .length = 0;
-            lights                   .length = 0;
-            textureProjectors        .length = 0;
-            generatedCubeMapTextures .length = 0;
-         };
-      })(),
+         gl .depthMask (true);
+         gl .enable (gl .DEPTH_TEST);
+         gl .disable (gl .BLEND);
+
+         const opaqueShapes = this .opaqueShapes;
+
+         for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
+         {
+            const
+               context = opaqueShapes [i],
+               scissor = context .scissor;
+
+            gl .scissor (scissor .x,
+                         scissor .y,
+                         scissor .z,
+                         scissor .w);
+
+            context .shapeNode .display (gl, context);
+            browser .resetTextureUnits ();
+         }
+
+         // Render transparent objects
+
+         gl .depthMask (false);
+         gl .enable (gl .BLEND);
+
+         const transparentShapes = this .transparentShapes;
+
+         this .transparencySorter .sort (0, this .numTransparentShapes);
+
+         for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
+         {
+            const
+               context = transparentShapes [i],
+               scissor = context .scissor;
+
+            gl .scissor (scissor .x,
+                         scissor .y,
+                         scissor .z,
+                         scissor .w);
+
+            context .shapeNode .display (gl, context);
+            browser .resetTextureUnits ();
+         }
+
+         gl .depthMask (true);
+         gl .disable (gl .BLEND);
+
+
+         // POST DRAW
+
+         const globalObjects = this .globalObjects;
+
+         if (this .isIndependent ())
+         {
+            // Recycle clip planes, local fogs, local lights, and local projective textures.
+
+            const localObjects = browser .getLocalObjects ();
+
+            for (const localObject of localObjects)
+               localObject .dispose ();
+
+            localObjects .length = 0;
+
+            // Recycle global lights and global projective textures.
+
+            for (const globalObject of globalObjects)
+               globalObject .dispose ();
+         }
+
+         // Reset containers.
+
+         globalObjects            .length = 0;
+         lights                   .length = 0;
+         textureProjectors        .length = 0;
+         generatedCubeMapTextures .length = 0;
+      },
    };
 
    function assign (lhs, rhs)
@@ -58182,7 +58085,7 @@ function (Fields,
             return defaultBBoxSize;
          };
       })(),
-      getBBox: function (nodes, bbox, shadow)
+      getBBox: function (nodes, bbox, shadows)
       {
          // Must be unique for each X3DBoundedObject.
          const childBBox = this .childBBox;
@@ -58196,7 +58099,7 @@ function (Fields,
             const node = nodes [i];
 
             if (node .getBBox)
-               bbox .add (node .getBBox (childBBox, shadow));
+               bbox .add (node .getBBox (childBBox, shadows));
          }
 
          return bbox;
@@ -58351,14 +58254,14 @@ function (X3DChildNode,
 
          this .set_children__ ();
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
-         return this .getSubBBox (bbox, shadow);
+         return this .getSubBBox (bbox, shadows);
       },
-      getSubBBox: function (bbox, shadow)
+      getSubBBox: function (bbox, shadows)
       {
          if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-            return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadow);
+            return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadows);
 
          return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },
@@ -58844,7 +58747,7 @@ function (X3DChildNode,
                      pointingDeviceSensorNode .push (renderObject, sensors);
 
                   if (sensors .size)
-                     renderObject .getBrowser () .getSensors () .push (sensors);
+                     this .getBrowser () .getSensors () .push (sensors);
                }
 
                for (const clipPlaneNode of clipPlaneNodes)
@@ -58857,7 +58760,7 @@ function (X3DChildNode,
                   clipPlaneNode .pop (renderObject);
 
                if (sensors .size)
-                  renderObject .getBrowser () .getSensors () .pop ();
+                  this .getBrowser () .getSensors () .pop ();
 
                return;
             }
@@ -58882,7 +58785,7 @@ function (X3DChildNode,
                   pickableSensorNode .traverse (type, renderObject);
 
                const
-                  browser          = renderObject .getBrowser (),
+                  browser          = this .getBrowser (),
                   pickingHierarchy = browser .getPickingHierarchy ();
 
                pickingHierarchy .push (this);
@@ -59599,7 +59502,7 @@ function (X3DConstants,
       set: function (fogNode, modelViewMatrix)
       {
          this .fogNode = fogNode;
-         
+
          this .fogMatrix .set (modelViewMatrix .submatrix .inverse ());
       },
       setShaderUniforms: function (gl, shaderObject)
@@ -59607,23 +59510,12 @@ function (X3DConstants,
          if (shaderObject .hasFog (this))
             return;
 
-         const
-            fogNode         = this .fogNode,
-            visibilityRange = Math .max (0, fogNode ._visibilityRange .getValue ());
+         const fogNode = this .fogNode;
 
-         if (fogNode .getHidden () || visibilityRange === 0)
-         {
-            gl .uniform1i (shaderObject .x3d_FogType, 0); // NO_FOG
-         }
-         else
-         {
-            const color = fogNode ._color .getValue ();
-
-            gl .uniform1i        (shaderObject .x3d_FogType,            fogNode .fogType);
-            gl .uniform3f        (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
-            gl .uniform1f        (shaderObject .x3d_FogVisibilityRange, visibilityRange);
-            gl .uniformMatrix3fv (shaderObject .x3d_FogMatrix, false,   this .fogMatrix);
-         }
+         gl .uniform1i        (shaderObject .x3d_FogType,            fogNode .fogType);
+         gl .uniform3fv       (shaderObject .x3d_FogColor,           fogNode .colorArray);
+         gl .uniform1f        (shaderObject .x3d_FogVisibilityRange, fogNode .visibilityRange);
+         gl .uniformMatrix3fv (shaderObject .x3d_FogMatrix, false,   this .fogMatrix);
       },
       dispose: function ()
       {
@@ -59637,7 +59529,8 @@ function (X3DConstants,
 
       this ._visibilityRange .setUnit ("length");
 
-      this .hidden = false;
+      this .hidden     = false;
+      this .colorArray = new Float32Array (3);
    }
 
    X3DFogObject .prototype =
@@ -59645,28 +59538,18 @@ function (X3DConstants,
       constructor: X3DFogObject,
       initialize: function ()
       {
-         this ._fogType .addInterest ("set_fogType__", this);
+         this ._fogType         .addInterest ("set_fogType__",         this);
+         this ._color           .addInterest ("set_color__",           this);
+         this ._visibilityRange .addInterest ("set_visibilityRange__", this);
 
-         this .set_fogType__ ();
-      },
-      set_fogType__: function ()
-      {
-         switch (this ._fogType .getValue ())
-         {
-            case "EXPONENTIAL":
-               this .fogType = 2;
-               break;
-            //case "EXPONENTIAL2":
-            //	this .fogType = 3;
-            //	break;
-            default:
-               this .fogType = 1;
-               break;
-         }
+         this .set_color__ ();
+         this .set_visibilityRange__ ();
       },
       setHidden: function (value)
       {
          this .hidden = value;
+
+         this .set_fogType__ ();
 
          this .getBrowser () .addBrowserEvent ();
       },
@@ -59674,9 +59557,44 @@ function (X3DConstants,
       {
          return this .hidden;
       },
+      getFogType: function ()
+      {
+         return this .fogType;
+      },
       getFogs: function ()
       {
          return Fogs;
+      },
+      set_fogType__: (function ()
+      {
+         const fogTypes = new Map ([
+            ["LINEAR",      1],
+            ["EXPONENTIAL", 2],
+         ]);
+
+         return function ()
+         {
+            if (this .hidden || this .visibilityRange === 0)
+               this .fogType = 0;
+            else
+               this .fogType = fogTypes .get (this ._fogType .getValue ()) || 1;
+         };
+      })(),
+      set_color__: function ()
+      {
+         const
+            color      = this ._color .getValue (),
+            colorArray = this .colorArray;
+
+         colorArray [0] = color .r;
+         colorArray [1] = color .g;
+         colorArray [2] = color .b;
+      },
+      set_visibilityRange__: function ()
+      {
+         this .visibilityRange = Math .max (0, this ._visibilityRange .getValue ());
+
+         this .set_fogType__ ();
       },
    };
 
@@ -59964,6 +59882,1231 @@ define ('x_ite/Rendering/VertexArray',[],function ()
  ******************************************************************************/
 
 
+define ('x_ite/Components/Rendering/X3DGeometryNode',[
+   "x_ite/Fields",
+   "x_ite/Rendering/VertexArray",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Browser/Core/Shading",
+   "standard/Math/Numbers/Vector2",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Matrix4",
+   "standard/Math/Geometry/Box3",
+   "standard/Math/Geometry/Plane3",
+   "standard/Math/Geometry/Triangle3",
+   "standard/Math/Algorithm",
+],
+function (Fields,
+          VertexArray,
+          X3DNode,
+          X3DConstants,
+          Shading,
+          Vector2,
+          Vector3,
+          Matrix4,
+          Box3,
+          Plane3,
+          Triangle3,
+          Algorithm)
+{
+"use strict";
+
+   const ARRAY_TYPE = "Array"; // For color, texCoord, normal, and vertex array, can be MFFloat or Array;
+
+   // Box normals for bbox / line intersection.
+   const boxNormals = [
+      new Vector3 (0,  0,  1), // front
+      new Vector3 (0,  0, -1), // back
+      new Vector3 (0,  1,  0), // top
+      new Vector3 (0, -1,  0), // bottom
+      new Vector3 (1,  0,  0)  // right
+      // left: We do not have to test for left.
+   ];
+
+   function X3DGeometryNode (executionContext)
+   {
+      X3DNode .call (this, executionContext);
+
+      this .addType (X3DConstants .X3DGeometryNode);
+
+      this .addChildObjects ("transparent",  new Fields .SFBool (),
+                             "bbox_changed", new Fields .SFTime (),
+                             "rebuild",      new Fields .SFTime ());
+
+      this ._transparent  .setAccessType (X3DConstants .outputOnly);
+      this ._bbox_changed .setAccessType (X3DConstants .outputOnly);
+      this ._rebuild      .setAccessType (X3DConstants .outputOnly);
+
+      // Members
+
+      const browser = this .getBrowser ();
+
+      this .min                      = new Vector3 (0, 0, 0);
+      this .max                      = new Vector3 (0, 0, 0);
+      this .bbox                     = new Box3 (this .min, this .max, true);
+      this .solid                    = true;
+      this .primitiveMode            = browser .getContext () .TRIANGLES;
+      this .geometryType             = 3;
+      this .flatShading              = undefined;
+      this .colorMaterial            = false;
+      this .attribNodes              = [ ];
+      this .attribArrays             = [ ];
+      this .textureCoordinateMapping = new Map ();
+      this .multiTexCoords           = [ ];
+      this .texCoords                = X3DGeometryNode .createArray ();
+      this .fogDepths                = X3DGeometryNode .createArray ();
+      this .colors                   = X3DGeometryNode .createArray ();
+      this .normals                  = X3DGeometryNode .createArray ();
+      this .flatNormals              = X3DGeometryNode .createArray ();
+      this .vertices                 = X3DGeometryNode .createArray ();
+      this .hasFogCoords             = false;
+      this .hasNormals               = false;
+      this .geometryMask             = 0;
+      this .vertexCount              = 0;
+      this .planes                   = [ ];
+
+      for (let i = 0; i < 5; ++ i)
+         this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
+   }
+
+   // Function to select ether Array or MFFloat for color/normal/vertex arrays.
+   X3DGeometryNode .createArray = function ()
+   {
+      if (ARRAY_TYPE == "MFFloat")
+         return new Fields .MFFloat ();
+
+      const array = [ ];
+
+      array .typedArray = new Float32Array ();
+
+      array .assign = function (value)
+      {
+         const length = value .length;
+
+         for (let i = 0; i < length; ++ i)
+            this [i] = value [i];
+
+         this .length = length;
+      };
+
+      array .getValue = function ()
+      {
+         return this .typedArray;
+      };
+
+      array .shrinkToFit = function ()
+      {
+         if (this .length === this .typedArray .length)
+            this .typedArray .set (this);
+         else
+            this .typedArray = new Float32Array (this);
+      };
+
+      return array;
+   }
+
+   X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+   {
+      constructor: X3DGeometryNode,
+      setup: function ()
+      {
+         X3DNode .prototype .setup .call (this);
+
+         this .rebuild ();
+      },
+      initialize: function ()
+      {
+         X3DNode .prototype .initialize .call (this);
+
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
+
+         this .isLive () .addInterest ("set_live__", this);
+
+         this .addInterest ("requestRebuild", this);
+         this ._rebuild .addInterest ("rebuild", this);
+
+         this .frontFace             = gl .CCW;
+         this .backFace              = new Map ([[gl .CCW, gl .CW], [gl .CW, gl .CCW]]);
+         this .attribBuffers         = [ ];
+         this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
+         this .texCoordBuffers       = Array .from ({length: browser .getMaxTextures ()}, () => gl .createBuffer ());
+         this .fogDepthBuffer        = gl .createBuffer ();
+         this .colorBuffer           = gl .createBuffer ();
+         this .normalBuffer          = gl .createBuffer ();
+         this .vertexBuffer          = gl .createBuffer ();
+         this .vertexArrayObject     = new VertexArray ();
+         this .shadowArrayObject     = new VertexArray ();
+
+         this .set_live__ ();
+      },
+      setGeometryType: function (value)
+      {
+         this .geometryType = value;
+      },
+      getGeometryType: function ()
+      {
+         return this .geometryType;
+      },
+      setTransparent: function (value)
+      {
+         if (value !== this ._transparent .getValue ())
+            this ._transparent = value;
+      },
+      getTransparent: function ()
+      {
+         return this ._transparent .getValue ();
+      },
+      getBBox: function ()
+      {
+         // With screen matrix applied.
+         return this .bbox;
+      },
+      setBBox: function (bbox)
+      {
+         if (bbox .equals (this .bbox))
+            return;
+
+         bbox .getExtents (this .min, this .max);
+
+         this .bbox .assign (bbox);
+
+         for (let i = 0; i < 5; ++ i)
+            this .planes [i] .set (i % 2 ? this .min : this .max, boxNormals [i]);
+
+         this ._bbox_changed .addEvent ();
+      },
+      getMin: function ()
+      {
+         // With screen matrix applied.
+         return this .min;
+      },
+      getMax: function ()
+      {
+         // With screen matrix applied.
+         return this .max;
+      },
+      getMatrix: function ()
+      {
+         return Matrix4 .Identity;
+      },
+      setPrimitiveMode: function (value)
+      {
+         this .primitiveMode = value;
+      },
+      getPrimitiveMode: function ()
+      {
+         return this .primitiveMode;
+      },
+      setSolid: function (value)
+      {
+         this .solid = value;
+      },
+      setCCW: function (value)
+      {
+         const gl = this .getBrowser () .getContext ();
+
+         this .frontFace = value ? gl .CCW : gl .CW;
+      },
+      getAttrib: function ()
+      {
+         return this .attribNodes;
+      },
+      getAttribs: function ()
+      {
+         return this .attribArrays;
+      },
+      getAttribBuffers: function ()
+      {
+         return this .attribBuffers;
+      },
+      setFogDepths: function (value)
+      {
+         this .fogDepths .assign (value);
+      },
+      getFogDepths: function ()
+      {
+         return this .fogDepths;
+      },
+      setColors: function (value)
+      {
+         this .colors .assign (value);
+      },
+      getColors: function ()
+      {
+         return this .colors;
+      },
+      setMultiTexCoords: function (value)
+      {
+         const
+            multiTexCoords = this .multiTexCoords,
+            length         = value .length;
+
+         for (let i = 0; i < length; ++ i)
+            multiTexCoords [i] = value [i];
+
+         multiTexCoords .length = length;
+      },
+      getMultiTexCoords: function ()
+      {
+         return this .multiTexCoords;
+      },
+      getTexCoords: function ()
+      {
+         return this .texCoords;
+      },
+      setTextureCoordinate: function (value)
+      {
+         this .textureCoordinateNode .removeInterest ("updateTextureCoordinateMapping", this);
+
+         if (value)
+            this .textureCoordinateNode = value;
+         else
+            this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();
+
+         this .textureCoordinateNode .addInterest ("updateTextureCoordinateMapping", this);
+
+         this .updateTextureCoordinateMapping ();
+      },
+      updateTextureCoordinateMapping: function ()
+      {
+         this .textureCoordinateMapping .clear ();
+
+         this .textureCoordinateNode .getTextureMapping (this .textureCoordinateMapping);
+      },
+      setNormals: function (value)
+      {
+         this .normals .assign (value);
+      },
+      getNormals: function ()
+      {
+         return this .normals;
+      },
+      setVertices: function (value)
+      {
+         this .vertices .assign (value);
+      },
+      getVertices: function ()
+      {
+         return this .vertices;
+      },
+      updateVertexArrays: function ()
+      {
+         this .vertexArrayObject .update ();
+         this .shadowArrayObject .update ();
+
+         this .updateParticlesShadow = true;
+         this .updateParticles       = true;
+      },
+      buildTexCoords: function ()
+      {
+         const texCoords = this .texCoords;
+
+         if (texCoords .length === 0)
+         {
+            const
+               p         = this .getTexCoordParams (),
+               min       = p .min,
+               Sindex    = p .Sindex,
+               Tindex    = p .Tindex,
+               Ssize     = p .Ssize,
+               S         = min [Sindex],
+               T         = min [Tindex],
+               vertices  = this .vertices .getValue ();
+
+            for (let i = 0, length = vertices .length; i < length; i += 4)
+            {
+               texCoords .push ((vertices [i + Sindex] - S) / Ssize,
+                                (vertices [i + Tindex] - T) / Ssize,
+                                0,
+                                1);
+            }
+
+            texCoords .shrinkToFit ();
+         }
+
+         this .getMultiTexCoords () .push (texCoords);
+      },
+      getTexCoordParams: (function ()
+      {
+         const texCoordParams = { min: new Vector3 (0, 0, 0), Ssize: 0, Sindex: 0, Tindex: 0 };
+
+         return function ()
+         {
+            const
+               bbox  = this .getBBox (),
+               size  = bbox .size,
+               Xsize = size .x,
+               Ysize = size .y,
+               Zsize = size .z;
+
+            texCoordParams .min .assign (bbox .center) .subtract (size .divide (2));
+
+            if ((Xsize >= Ysize) && (Xsize >= Zsize))
+            {
+               // X size largest
+               texCoordParams .Ssize = Xsize; texCoordParams .Sindex = 0;
+
+               if (Ysize >= Zsize)
+                  texCoordParams .Tindex = 1;
+               else
+                  texCoordParams .Tindex = 2;
+            }
+            else if ((Ysize >= Xsize) && (Ysize >= Zsize))
+            {
+               // Y size largest
+               texCoordParams .Ssize = Ysize; texCoordParams .Sindex = 1;
+
+               if (Xsize >= Zsize)
+                  texCoordParams .Tindex = 0;
+               else
+                  texCoordParams .Tindex = 2;
+            }
+            else
+            {
+               // Z is the largest
+               texCoordParams .Ssize = Zsize; texCoordParams .Sindex = 2;
+
+               if (Xsize >= Ysize)
+                  texCoordParams .Tindex = 0;
+               else
+                  texCoordParams .Tindex = 1;
+            }
+
+            return texCoordParams;
+         };
+      })(),
+      refineNormals: function (normalIndex, normals, creaseAngle)
+      {
+         if (creaseAngle === 0)
+            return normals;
+
+         const
+            cosCreaseAngle = Math .cos (Algorithm .clamp (creaseAngle, 0, Math .PI)),
+            normals_       = [ ];
+
+         for (const i in normalIndex) // Don't use forEach
+         {
+            const vertex = normalIndex [i];
+
+            for (const p of vertex)
+            {
+               const
+                  P = normals [p],
+                  N = new Vector3 (0, 0, 0);
+
+               for (const q of vertex)
+               {
+                  const Q = normals [q];
+
+                  if (Q .dot (P) >= cosCreaseAngle)
+                     N .add (Q);
+               }
+
+               normals_ [p] = N .normalize ();
+            }
+         }
+
+         return normals_;
+      },
+      transformLine: function (hitRay)
+      {
+         // Apply sceen nodes transformation in place here.
+      },
+      transformMatrix: function (hitRay)
+      {
+         // Apply sceen nodes transformation in place here.
+      },
+      isClipped: function (point, clipPlanes)
+      {
+         return clipPlanes .some (function (clipPlane)
+         {
+            return clipPlane .isClipped (point);
+         });
+      },
+      intersectsLine: function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
+      {
+         return this .intersectsLineWithGeometry (hitRay, renderObject .getModelViewMatrix () .get (), renderObject .getLocalObjects (), intersections);
+      },
+      intersectsLineWithGeometry: (function ()
+      {
+         const
+            modelViewMatrix = new Matrix4 (),
+            uvt             = { u: 0, v: 0, t: 0 },
+            v0              = new Vector3 (0, 0, 0),
+            v1              = new Vector3 (0, 0, 0),
+            v2              = new Vector3 (0, 0, 0),
+            clipPoint       = new Vector3 (0, 0, 0);
+
+         return function (hitRay, matrix, clipPlanes, intersections)
+         {
+            if (this .intersectsBBox (hitRay))
+            {
+               this .transformLine (hitRay); // Apply screen transformations from screen nodes.
+               this .transformMatrix (modelViewMatrix .assign (matrix)); // Apply screen transformations from screen nodes.
+
+               const
+                  texCoords   = this .multiTexCoords [0] .getValue (),
+                  normals     = this .normals .getValue (),
+                  vertices    = this .vertices .getValue (),
+                  vertexCount = this .vertexCount;
+
+               for (let i = 0; i < vertexCount; i += 3)
+               {
+                  const i4 = i * 4;
+
+                  v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+                  v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
+                  v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
+
+                  if (hitRay .intersectsTriangle (v0, v1, v2, uvt))
+                  {
+                     // Get barycentric coordinates.
+
+                     const
+                        u = uvt .u,
+                        v = uvt .v,
+                        t = uvt .t;
+
+                     // Determine vectors for X3DPointingDeviceSensors.
+
+                     const point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
+                                                t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
+                                                t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
+
+                     if (clipPlanes .length)
+                     {
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                           continue;
+                     }
+
+                     const texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
+                                                   t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
+
+                     const i3 = i * 3;
+
+                     const normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
+                                                 t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
+                                                 t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
+
+                     intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
+                  }
+               }
+            }
+
+            return intersections .length;
+         };
+      })(),
+      getPlanesWithOffset: (function ()
+      {
+         const
+            min    = new Vector3 (0, 0, 0),
+            max    = new Vector3 (0, 0, 0),
+            planes = [ ];
+
+         for (let i = 0; i < 5; ++ i)
+            planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
+
+         return function (minX, minY, minZ, maxX, maxY, maxZ)
+         {
+            min .set (minX, minY, minZ);
+            max .set (maxX, maxY, maxZ);
+
+            for (let i = 0; i < 5; ++ i)
+               planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+
+            return planes;
+         };
+      })(),
+      intersectsBBox: (function ()
+      {
+         const intersection = new Vector3 (0, 0, 0);
+
+         return function (hitRay, offsets)
+         {
+            if (offsets)
+            {
+               var
+                  min    = this .min,
+                  max    = this .max,
+                  minX   = min .x - offsets .x,
+                  maxX   = max .x + offsets .x,
+                  minY   = min .y - offsets .y,
+                  maxY   = max .y + offsets .y,
+                  minZ   = min .z - offsets .z,
+                  maxZ   = max .z + offsets .z,
+                  planes = this .getPlanesWithOffset (minX, minY, minZ, maxX, maxY, maxZ);
+            }
+            else
+            {
+               var
+                  min    = this .min,
+                  max    = this .max,
+                  minX   = min .x,
+                  maxX   = max .x,
+                  minY   = min .y,
+                  maxY   = max .y,
+                  minZ   = min .z,
+                  maxZ   = max .z,
+                  planes = this .planes;
+            }
+
+            // front
+            if (planes [0] .intersectsLine (hitRay, intersection))
+            {
+               if (intersection .x >= minX && intersection .x <= maxX &&
+                   intersection .y >= minY && intersection .y <= maxY)
+                  return true;
+            }
+
+            // back
+            if (planes [1] .intersectsLine (hitRay, intersection))
+            {
+               if (intersection .x >= minX && intersection .x <= maxX &&
+                   intersection .y >= minY && intersection .y <= maxY)
+                  return true;
+            }
+
+            // top
+            if (planes [2] .intersectsLine (hitRay, intersection))
+            {
+               if (intersection .x >= minX && intersection .x <= maxX &&
+                   intersection .z >= minZ && intersection .z <= maxZ)
+                  return true;
+            }
+
+            // bottom
+            if (planes [3] .intersectsLine (hitRay, intersection))
+            {
+               if (intersection .x >= minX && intersection .x <= maxX &&
+                   intersection .z >= minZ && intersection .z <= maxZ)
+                  return true;
+            }
+
+            // right
+            if (planes [4] .intersectsLine (hitRay, intersection))
+            {
+               if (intersection .y >= minY && intersection .y <= maxY &&
+                   intersection .z >= minZ && intersection .z <= maxZ)
+                  return true;
+            }
+
+            return false;
+         };
+      })(),
+      intersectsBox: (function ()
+      {
+         const
+            v0        = new Vector3 (0, 0, 0),
+            v1        = new Vector3 (0, 0, 0),
+            v2        = new Vector3 (0, 0, 0),
+            invMatrix = new Matrix4 (),
+            clipPoint = new Vector3 (0, 0, 0);
+
+         return function (box, clipPlanes, modelViewMatrix)
+         {
+            if (box .intersectsBox (this .bbox))
+            {
+               box .multRight (invMatrix .assign (this .getMatrix ()) .inverse ());
+
+               this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
+
+               const vertices = this .vertices .getValue ();
+
+               for (let i = 0, length = this .vertexCount; i < length; i += 3)
+               {
+                  const i4 = i * 4;
+
+                  v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+                  v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
+                  v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
+
+                  if (box .intersectsTriangle (v0, v1, v2))
+                  {
+                     if (clipPlanes .length)
+                     {
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v0)), clipPlanes))
+                           continue;
+
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v1)), clipPlanes))
+                           continue;
+
+                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v2)), clipPlanes))
+                           continue;
+                     }
+
+                     return true;
+                  }
+               }
+            }
+
+            return false;
+         };
+      })(),
+      set_live__: function ()
+      {
+         if (this .isLive () .getValue ())
+            this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
+         else
+            this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
+      },
+      set_shading__: (function ()
+      {
+         const
+            v0     = new Vector3 (0, 0, 0),
+            v1     = new Vector3 (0, 0, 0),
+            v2     = new Vector3 (0, 0, 0),
+            normal = new Vector3 (0, 0, 0);
+
+         return function (shading)
+         {
+            if (this .geometryType < 2)
+               return;
+
+            const
+               browser     = this .getBrowser (),
+               flatShading = browser .getBrowserOptions () .getShading () === Shading .FLAT;
+
+            if (flatShading === this .flatShading)
+               return;
+
+            this .flatShading = flatShading;
+
+            // Generate flat normals if needed.
+
+            const gl = browser .getContext ();
+
+            if (flatShading)
+            {
+               if (! this .flatNormals .length)
+               {
+                  const
+                     cw          = this .frontFace === gl .CW,
+                     flatNormals = this .flatNormals,
+                     vertices    = this .vertices .getValue ();
+
+                  for (let i = 0, length = vertices .length; i < length; i += 12)
+                  {
+                     Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
+                                        v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
+                                        v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
+                                        normal);
+
+                     if (cw)
+                        normal .negate ();
+
+                     flatNormals .push (normal .x, normal .y, normal .z,
+                                        normal .x, normal .y, normal .z,
+                                        normal .x, normal .y, normal .z);
+                  }
+
+                  flatNormals .shrinkToFit ();
+               }
+            }
+
+            // Transfer normals.
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .DYNAMIC_DRAW);
+         };
+      })(),
+      requestRebuild: function ()
+      {
+         this ._rebuild .addEvent ();
+      },
+      rebuild: (function ()
+      {
+         const point = new Vector3 (0, 0, 0);
+
+         return function ()
+         {
+            this .clear ();
+            this .build ();
+
+            // Shrink arrays before transfer to graphics card.
+
+            for (const attribArray of this .attribArrays)
+               attribArray .shrinkToFit ();
+
+            for (const multiTexCoord of this .multiTexCoords)
+               multiTexCoord .shrinkToFit ();
+
+            this .fogDepths .shrinkToFit ();
+            this .colors    .shrinkToFit ();
+            this .normals   .shrinkToFit ();
+            this .vertices  .shrinkToFit ();
+
+            // Determine bbox.
+
+            const
+               min      = this .min,
+               max      = this .max,
+               vertices = this .vertices .getValue ();
+
+            if (vertices .length)
+            {
+               if (min .x === Number .POSITIVE_INFINITY)
+               {
+                  for (let i = 0, length = vertices .length; i < length; i += 4)
+                  {
+                     point .set (vertices [i], vertices [i + 1], vertices [i + 2]);
+
+                     min .min (point);
+                     max .max (point);
+                  }
+               }
+
+               this .bbox .setExtents (min, max);
+            }
+            else
+            {
+               this .bbox .setExtents (min .set (0, 0, 0), max .set (0, 0, 0));
+            }
+
+            this ._bbox_changed .addEvent ();
+
+            for (let i = 0; i < 5; ++ i)
+               this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+
+            // Generate texCoord if needed.
+
+            if (this .multiTexCoords .length === 0)
+               this .buildTexCoords ();
+
+            if (this .multiTexCoords .length)
+            {
+               const maxTextures = this .getBrowser () .getMaxTextures ();
+
+               for (let i = this .multiTexCoords .length; i < maxTextures; ++ i)
+                  this .multiTexCoords [i] = this .multiTexCoords .at (-1);
+
+               this .multiTexCoords .length = maxTextures;
+            }
+
+            // Transfer arrays and update.
+
+            this .transfer ();
+            this .updateGeometryMask ();
+            this .updateRenderFunctions ();
+         };
+      })(),
+      clear: function ()
+      {
+         // BBox
+
+         this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
+         this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
+
+         // Create attribArray arrays.
+         {
+            const attribArrays = this .attribArrays;
+
+            for (const attribArray of attribArrays)
+               attribArray .length = 0;
+
+            const length = this .attribNodes .length;
+
+            for (let a = attribArrays .length; a < length; ++ a)
+               attribArrays [a] = X3DGeometryNode .createArray ();
+
+            attribArrays .length = length;
+         }
+
+         // Buffer
+
+         this .flatShading = undefined;
+
+         this .fogDepths      .length = 0;
+         this .colors         .length = 0;
+         this .multiTexCoords .length = 0;
+         this .texCoords      .length = 0;
+         this .normals        .length = 0;
+         this .flatNormals    .length = 0;
+         this .vertices       .length = 0;
+      },
+      transfer: function ()
+      {
+         const gl = this .getBrowser () .getContext ();
+
+         // Transfer attribArrays.
+
+         for (let i = this .attribBuffers .length, length = this .attribArrays .length; i < length; ++ i)
+            this .attribBuffers .push (gl .createBuffer ());
+
+         for (let i = 0, length = this .attribArrays .length; i < length; ++ i)
+         {
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .attribBuffers [i]);
+            gl .bufferData (gl .ARRAY_BUFFER, this .attribArrays [i] .getValue (), gl .DYNAMIC_DRAW);
+         }
+
+         // Transfer fog depths.
+
+         const lastHasFogCoords = this .hasFogCoords;
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .fogDepthBuffer);
+         gl .bufferData (gl .ARRAY_BUFFER, this .fogDepths .getValue (), gl .DYNAMIC_DRAW);
+
+         this .hasFogCoords = !! this .fogDepths .length;
+
+         if (this .hasFogCoords !== lastHasFogCoords)
+            this .updateVertexArrays ();
+
+         // Transfer colors.
+
+         const lastColorMaterial = this .colorMaterial;
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
+         gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .DYNAMIC_DRAW);
+
+         this .colorMaterial = !! this .colors .length;
+
+         if (this .colorMaterial !== lastColorMaterial)
+            this .updateVertexArrays ();
+
+         // Transfer multiTexCoords.
+
+         for (let i = 0, length = this .multiTexCoords .length; i < length; ++ i)
+         {
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [i]);
+            gl .bufferData (gl .ARRAY_BUFFER, this .multiTexCoords [i] .getValue (), gl .DYNAMIC_DRAW);
+         }
+
+         // Transfer normals or flat normals.
+
+         const lastHasNormals = this .hasNormals;
+
+         this .set_shading__ (this .getBrowser () .getBrowserOptions () ._Shading);
+
+         this .hasNormals = !! this .normals .getValue () .length;
+
+         if (this .hasNormals !== lastHasNormals)
+            this .updateVertexArrays ();
+
+         // Transfer vertices.
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
+         gl .bufferData (gl .ARRAY_BUFFER, this .vertices .getValue (), gl .DYNAMIC_DRAW);
+
+         this .vertexCount = this .vertices .length / 4;
+      },
+      updateGeometryMask: function ()
+      {
+         // Mask
+         // 0 - 1 -> geometry type
+         // 2     -> fog coords
+         // 3     -> color material
+         // 4     -> normals
+
+         this .geometryMask  = this .geometryType;
+         this .geometryMask |= this .hasFogCoords  << 2;
+         this .geometryMask |= this .colorMaterial << 3;
+         this .geometryMask |= this .hasNormals    << 4;
+      },
+      updateRenderFunctions: function ()
+      {
+         if (this .vertexCount)
+         {
+            // Use default render functions.
+
+            delete this .depth;
+            delete this .display;
+            delete this .displayParticlesDepth;
+            delete this .displayParticles;
+         }
+         else
+         {
+            // Use no render function.
+
+            this .depth                 = Function .prototype;
+            this .display               = Function .prototype;
+            this .displayParticlesDepth = Function .prototype;
+            this .displayParticles      = Function .prototype;
+         }
+      },
+      traverse: function (type, renderObject)
+      { },
+      depth: function (gl, context, shaderNode)
+      {
+         if (this .shadowArrayObject .enable (gl, shaderNode))
+            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+
+         gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+      },
+      display: function (gl, context)
+      {
+         const
+            appearanceNode = context .appearanceNode,
+            shaderNode     = appearanceNode .getShader (this, context);
+
+         if (this .solid || ! appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())
+         {
+            this .displayGeometry (gl, context, appearanceNode, shaderNode, true, true);
+         }
+         else
+         {
+            const backShaderNode = appearanceNode .getBackShader (this, context)
+
+            this .displayGeometry (gl, context, appearanceNode, backShaderNode, true,  false);
+            this .displayGeometry (gl, context, appearanceNode, shaderNode,     false, true);
+         }
+      },
+      displayGeometry: function (gl, context, appearanceNode, shaderNode, back, front)
+      {
+         const
+            browser       = this .getBrowser (),
+            blendModeNode = appearanceNode .getBlendMode (),
+            attribNodes   = this .attribNodes,
+            attribBuffers = this .attribBuffers,
+            primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
+
+         if (blendModeNode)
+            blendModeNode .enable (gl);
+
+         shaderNode .enable (gl);
+         shaderNode .setUniforms (gl, context, front);
+
+         // Setup vertex attributes.
+
+         if (this .vertexArrayObject .enable (gl, shaderNode))
+         {
+            for (let i = 0, length = attribNodes .length; i < length; ++ i)
+               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+            if (this .hasFogCoords)
+               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+
+            if (this .colorMaterial)
+               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+            shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
+            shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+         }
+
+         // Draw depending on wireframe, solid and transparent.
+
+         if (browser .getWireframe ())
+         {
+            for (let i = 0, length = this .vertexCount; i < length; i += 3)
+               gl .drawArrays (primitiveMode, i, 3);
+         }
+         else
+         {
+            const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+
+            gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
+
+            if (context .transparent || back !== front)
+            {
+               // Render transparent or back or front.
+
+               gl .enable (gl .CULL_FACE);
+
+               // Render back.
+
+               if (back && ! this .solid)
+               {
+                  gl .cullFace (gl .FRONT);
+                  gl .drawArrays (primitiveMode, 0, this .vertexCount);
+               }
+
+               // Render front.
+
+               if (front)
+               {
+                  gl .cullFace (gl .BACK);
+                  gl .drawArrays (primitiveMode, 0, this .vertexCount);
+               }
+            }
+            else
+            {
+               // Render solid or both sides.
+
+               if (this .solid)
+                  gl .enable (gl .CULL_FACE);
+               else
+                  gl .disable (gl .CULL_FACE);
+
+               gl .drawArrays (primitiveMode, 0, this .vertexCount);
+            }
+         }
+
+         if (blendModeNode)
+            blendModeNode .disable (gl);
+      },
+      displayParticlesDepth: function (gl, context, shaderNode, particleSystem)
+      {
+         const outputParticles = particleSystem .outputParticles;
+
+         if (outputParticles .shadowArrayObject .update (this .updateParticlesShadow) .enable (gl, shaderNode))
+         {
+            const particleStride = particleSystem .particleStride;
+
+            shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+            shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
+            shaderNode .enableVertexAttribute         (gl, this .vertexBuffer, 0, 0);
+
+            this .updateParticlesShadow = false;
+         }
+
+         gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+      },
+      displayParticles: function (gl, context, particleSystem)
+      {
+         const
+            appearanceNode = context .appearanceNode,
+            shaderNode     = appearanceNode .getShader (this, context);
+
+         if (this .solid || ! appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())
+         {
+            this .displayParticlesGeometry (gl, context, appearanceNode, shaderNode, true, true, particleSystem);
+         }
+         else
+         {
+            const backShaderNode = appearanceNode .getBackShader (this, context);
+
+            this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode, true,  false, particleSystem);
+            this .displayParticlesGeometry (gl, context, appearanceNode, shaderNode,     false, true,  particleSystem);
+         }
+      },
+      displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particleSystem)
+      {
+         const
+            browser       = this .getBrowser (),
+            blendModeNode = appearanceNode .getBlendMode (),
+            attribNodes   = this .attribNodes,
+            attribBuffers = this .attribBuffers,
+            primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
+
+         if (blendModeNode)
+            blendModeNode .enable (gl);
+
+         // Setup shader.
+
+         shaderNode .enable (gl);
+         shaderNode .setUniforms (gl, context, front);
+
+         // Setup vertex attributes.
+
+         const outputParticles = particleSystem .outputParticles;
+
+         if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
+         {
+            const particleStride = particleSystem .particleStride;
+
+            shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+            shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
+
+            for (let i = 0, length = attribNodes .length; i < length; ++ i)
+               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+            if (this .hasFogCoords)
+               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+
+            if (this .colorMaterial)
+               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+            shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
+            shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+
+            this .updateParticles = false;
+         }
+
+         // Draw depending on wireframe, solid and transparent.
+
+         const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+
+         gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
+
+         if (context .transparent || back !== front)
+         {
+            // Render transparent or back or front.
+
+            gl .enable (gl .CULL_FACE);
+
+            if (back && ! this .solid)
+            {
+               gl .cullFace (gl .FRONT);
+               gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+            }
+
+            if (front)
+            {
+               gl .cullFace (gl .BACK);
+               gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+            }
+         }
+         else
+         {
+            // Render solid or both sides.
+
+            if (this .solid)
+               gl .enable (gl .CULL_FACE);
+            else
+               gl .disable (gl .CULL_FACE);
+
+            gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+         }
+
+         if (blendModeNode)
+            blendModeNode .disable (gl);
+      },
+   });
+
+   return X3DGeometryNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('standard/Math/Numbers/Complex',[],function ()
 {
 "use strict";
@@ -60182,8 +61325,97 @@ define ('standard/Math/Numbers/Complex',[],function ()
  ******************************************************************************/
 
 
+define ('standard/Utility/BitSet',[],function ()
+{
+"use strict";
+
+   function BitSet (value = 0)
+   {
+      this .value = value;
+   }
+
+   BitSet .prototype =
+   {
+      set: function (index, value)
+      {
+         const mask = 1 << index;
+
+         if (value)
+            this .value |= mask;
+         else
+            this .value &= ~mask;
+      },
+      get: function (index)
+      {
+         const mask = 1 << index;
+
+         return !! (this .value & mask);
+      },
+      valueOf: function ()
+      {
+         return this .value;
+      },
+      toString: function ()
+      {
+         return "0b" + this .value .toString (2);
+      },
+   };
+
+   return BitSet;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/EnvironmentalEffects/X3DBackgroundNode',[
    "x_ite/Components/Core/X3DBindableNode",
+   "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Rendering/VertexArray",
    "x_ite/Rendering/TraverseType",
    "x_ite/Base/X3DConstants",
@@ -60193,8 +61425,10 @@ define ('x_ite/Components/EnvironmentalEffects/X3DBackgroundNode',[
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Algorithm",
+   "standard/Utility/BitSet",
 ],
 function (X3DBindableNode,
+          X3DGeometryNode,
           VertexArray,
           TraverseType,
           X3DConstants,
@@ -60203,87 +61437,14 @@ function (X3DBindableNode,
           Vector3,
           Rotation4,
           Matrix4,
-          Algorithm)
+          Algorithm,
+          BitSet)
 {
 "use strict";
 
    const
-      RADIUS      = 1,
-      SIZE        = Math .sqrt (RADIUS * RADIUS / 2),
-      U_DIMENSION = 20;
-
-   const s = SIZE;
-
-   const texCoords = [
-      1, 1, 0, 1,
-      0, 1, 0, 1,
-      0, 0, 0, 1,
-      1, 1, 0, 1,
-      0, 0, 0, 1,
-      1, 0, 0, 1,
-   ];
-
-   const frontVertices = [
-       s,  s, -s, 1,
-      -s,  s, -s, 1,
-      -s, -s, -s, 1,
-       s,  s, -s, 1,
-      -s, -s, -s, 1,
-       s, -s, -s, 1,
-   ];
-
-   const backVertices = [
-      -s,  s,  s, 1,
-       s,  s,  s, 1,
-       s, -s,  s, 1,
-      -s,  s,  s, 1,
-       s, -s,  s, 1,
-      -s, -s,  s, 1,
-   ];
-
-   const leftVertices = [
-      -s,  s, -s, 1,
-      -s,  s,  s, 1,
-      -s, -s,  s, 1,
-      -s,  s, -s, 1,
-      -s, -s,  s, 1,
-      -s, -s, -s, 1,
-   ];
-
-   const rightVertices = [
-      s,  s,  s, 1,
-      s,  s, -s, 1,
-      s, -s, -s, 1,
-      s,  s,  s, 1,
-      s, -s, -s, 1,
-      s, -s,  s, 1,
-   ];
-
-   const topVertices = [
-       s, s,  s, 1,
-      -s, s,  s, 1,
-      -s, s, -s, 1,
-       s, s,  s, 1,
-      -s, s, -s, 1,
-       s, s, -s, 1,
-   ];
-
-   const bottomVertices = [
-       s, -s, -s, 1,
-      -s, -s, -s, 1,
-      -s, -s,  s, 1,
-       s, -s, -s, 1,
-      -s, -s,  s, 1,
-       s, -s,  s, 1,
-   ];
-
-   const
-      z1 = new Complex (0, 0),
-      z2 = new Complex (0, 0),
-      y1 = new Complex (0, 0),
-      y2 = new Complex (0, 0),
-      y3 = new Complex (0, 0),
-      y4 = new Complex (0, 0);
+      RADIUS = 1,
+      SIZE   = Math .SQRT2 / 2;
 
    function X3DBackgroundNode (executionContext)
    {
@@ -60294,6 +61455,8 @@ function (X3DBindableNode,
       this ._skyAngle    .setUnit ("angle");
       this ._groundAngle .setUnit ("angle");
 
+      const browser = this .getBrowser ();
+
       this .hidden                = false;
       this .projectionMatrixArray = new Float32Array (16);
       this .modelMatrix           = new Matrix4 ();
@@ -60301,7 +61464,13 @@ function (X3DBindableNode,
       this .localObjects          = [ ];
       this .colors                = [ ];
       this .sphere                = [ ];
-      this .textures              = 0;
+      this .textureBits           = new BitSet ();
+      this .sphereContext         = { geometryType: 3, colorMaterial: true,  hasNormals: false };
+      this .texturesContext       = { geometryType: 3, colorMaterial: false, hasNormals: false };
+      this .context               = { appearanceNode: browser .getDefaultAppearance () };
+
+      X3DGeometryNode .prototype .updateGeometryMask .call (this .sphereContext);
+      X3DGeometryNode .prototype .updateGeometryMask .call (this .texturesContext);
    }
 
    X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
@@ -60317,8 +61486,6 @@ function (X3DBindableNode,
 
          this .colorBuffer       = gl .createBuffer ();
          this .sphereBuffer      = gl .createBuffer ();
-         this .texCoordBuffer    = gl .createBuffer ();
-         this .cubeBuffer        = gl .createBuffer ();
          this .texCoordBuffers   = new Array (browser .getMaxTextures ()) .fill (gl .createBuffer ());
          this .frontBuffer       = gl .createBuffer ();
          this .backBuffer        = gl .createBuffer ();
@@ -60338,7 +61505,6 @@ function (X3DBindableNode,
          this ._groundColor  .addInterest ("build", this);
          this ._skyAngle     .addInterest ("build", this);
          this ._skyColor     .addInterest ("build", this);
-         this ._transparency .addInterest ("build", this);
 
          this .build ();
          this .transferRectangle ();
@@ -60380,14 +61546,13 @@ function (X3DBindableNode,
             this .setTextureBit (texture, bit, texture ._loadState);
          }
          else
-            this .textures &= ~(1 << bit);
+         {
+            this .textureBits .set (bit, false);
+         }
       },
       setTextureBit: function (texture, bit, loadState)
       {
-         if (loadState .getValue () === X3DConstants .COMPLETE_STATE || (texture && texture .getData ()))
-            this .textures |= 1 << bit;
-         else
-            this .textures &= ~(1 << bit);
+         this .textureBits .set (bit, loadState .getValue () === X3DConstants .COMPLETE_STATE || (texture && texture .getData ()));
       },
       setHidden: function (value)
       {
@@ -60435,18 +61600,13 @@ function (X3DBindableNode,
       },
       build: function ()
       {
+         const s = SIZE;
+
          this .colors .length = 0;
          this .sphere .length = 0;
 
-         if (this ._transparency .getValue () >= 1)
-            return;
-
-         const alpha = 1 - Algorithm .clamp (this ._transparency .getValue (), 0, 1);
-
          if (this ._groundColor .length === 0 && this ._skyColor .length == 1)
          {
-            const s = SIZE;
-
             // Build cube
 
             this .sphere .vertices = 36;
@@ -60457,9 +61617,9 @@ function (X3DBindableNode,
                                 -s, -s,  s, 1,  s,  s,  s, 1,  s, -s,  s, 1,
                                 -s,  s, -s, 1, -s,  s,  s, 1, -s, -s,  s, 1, // Left
                                 -s,  s, -s, 1, -s, -s,  s, 1, -s, -s, -s, 1,
-                                   s,  s,  s, 1,  s,  s, -s, 1,  s, -s,  s, 1, // Right
+                                 s,  s,  s, 1,  s,  s, -s, 1,  s, -s,  s, 1, // Right
                                  s, -s,  s, 1,  s,  s, -s, 1,  s, -s, -s, 1,
-                                   s,  s,  s, 1, -s,  s,  s, 1, -s,  s, -s, 1, // Top
+                                 s,  s,  s, 1, -s,  s,  s, 1, -s,  s, -s, 1, // Top
                                  s,  s,  s, 1, -s,  s, -s, 1,  s,  s, -s, 1,
                                 -s, -s,  s, 1,  s, -s,  s, 1, -s, -s, -s, 1, // Bottom
                                 -s, -s, -s, 1,  s, -s,  s, 1,  s, -s, -s, 1);
@@ -60467,7 +61627,7 @@ function (X3DBindableNode,
             const c = this ._skyColor [0];
 
             for (let i = 0, vertices = this .sphere .vertices; i < vertices; ++ i)
-               this .colors .push (c .r, c .g, c .b, alpha);
+               this .colors .push (c .r, c .g, c .b, 1);
          }
          else
          {
@@ -60486,7 +61646,7 @@ function (X3DBindableNode,
                if (vAngle .length === 2)
 						vAngle .splice (1, 0, (vAngle [0] + vAngle [1]) / 2)
 
-               this .buildSphere (RADIUS, vAngle, this ._skyAngle, this ._skyColor, alpha, false);
+               this .buildSphere (RADIUS, vAngle, this ._skyAngle, this ._skyColor, false);
             }
 
             if (this ._groundColor .length > this ._groundAngle .length)
@@ -60499,77 +61659,90 @@ function (X3DBindableNode,
                if (vAngle .at (-1) > 0)
                   vAngle .push (0);
 
-               this .buildSphere (RADIUS, vAngle, this ._groundAngle, this ._groundColor, alpha, true);
+               this .buildSphere (RADIUS, vAngle, this ._groundAngle, this ._groundColor, true);
             }
          }
 
          this .transferSphere ();
       },
-      buildSphere: function (radius, vAngle, angle, color, alpha, bottom)
+      buildSphere: (function ()
       {
+         const U_DIMENSION = 20;
+
          const
-            vAngleMax   = bottom ? Math .PI / 2 : Math .PI,
-            V_DIMENSION = vAngle .length - 1;
+            z1 = new Complex (0, 0),
+            z2 = new Complex (0, 0),
+            y1 = new Complex (0, 0),
+            y2 = new Complex (0, 0),
+            y3 = new Complex (0, 0),
+            y4 = new Complex (0, 0);
 
-         for (let v = 0; v < V_DIMENSION; ++ v)
+         return function (radius, vAngle, angle, color, bottom)
          {
-            let
-               theta1 = Algorithm .clamp (vAngle [v],     0, vAngleMax),
-               theta2 = Algorithm .clamp (vAngle [v + 1], 0, vAngleMax);
-
-            if (bottom)
-            {
-               theta1 = Math .PI - theta1;
-               theta2 = Math .PI - theta2;
-            }
-
-            z1 .setPolar (radius, theta1);
-            z2 .setPolar (radius, theta2);
-
             const
-               c1 = this .getColor (vAngle [v],     color, angle),
-               c2 = this .getColor (vAngle [v + 1], color, angle);
+               vAngleMax   = bottom ? Math .PI / 2 : Math .PI,
+               V_DIMENSION = vAngle .length - 1;
 
-            for (let u = 0; u < U_DIMENSION; ++ u)
+            for (let v = 0; v < V_DIMENSION; ++ v)
             {
-               // p4 --- p1
-               //  |   / |
-               //  | /   |
-               // p3 --- p2
+               let
+                  theta1 = Algorithm .clamp (vAngle [v],     0, vAngleMax),
+                  theta2 = Algorithm .clamp (vAngle [v + 1], 0, vAngleMax);
 
-               // The last point is the first one.
-               const u1 = u < U_DIMENSION - 1 ? u + 1 : 0;
+               if (bottom)
+               {
+                  theta1 = Math .PI - theta1;
+                  theta2 = Math .PI - theta2;
+               }
 
-               // p1, p2
-               let phi = 2 * Math .PI * (u / U_DIMENSION);
-               y1 .setPolar (-z1 .imag, phi);
-               y2 .setPolar (-z2 .imag, phi);
+               z1 .setPolar (radius, theta1);
+               z2 .setPolar (radius, theta2);
 
-               // p3, p4
-               phi = 2 * Math .PI * (u1 / U_DIMENSION);
-               y3 .setPolar (-z2 .imag, phi);
-               y4 .setPolar (-z1 .imag, phi);
+               const
+                  c1 = this .getColor (vAngle [v],     color, angle),
+                  c2 = this .getColor (vAngle [v + 1], color, angle);
 
-               // Triangle 1 and 2
+               for (let u = 0; u < U_DIMENSION; ++ u)
+               {
+                  // p4 --- p1
+                  //  |   / |
+                  //  | /   |
+                  // p3 --- p2
 
-               this .colors .push (c1 .r, c1 .g, c1 .b, alpha,
-                                   c2 .r, c2 .g, c2 .b, alpha,
-                                   c2 .r, c2 .g, c2 .b, alpha,
-                                   // Triangle 2
-                                   c1 .r, c1 .g, c1 .b, alpha,
-                                   c1 .r, c1 .g, c1 .b, alpha,
-                                   c2 .r, c2 .g, c2 .b, alpha);
+                  // The last point is the first one.
+                  const u1 = u < U_DIMENSION - 1 ? u + 1 : 0;
 
-               this .sphere .push (y1 .imag, z1 .real, y1 .real, 1,
-                                   y3 .imag, z2 .real, y3 .real, 1,
-                                   y2 .imag, z2 .real, y2 .real, 1,
-                                   // Triangle 2
-                                   y1 .imag, z1 .real, y1 .real, 1,
-                                   y4 .imag, z1 .real, y4 .real, 1,
-                                   y3 .imag, z2 .real, y3 .real, 1);
+                  // p1, p2
+                  let phi = 2 * Math .PI * (u / U_DIMENSION);
+                  y1 .setPolar (-z1 .imag, phi);
+                  y2 .setPolar (-z2 .imag, phi);
+
+                  // p3, p4
+                  phi = 2 * Math .PI * (u1 / U_DIMENSION);
+                  y3 .setPolar (-z2 .imag, phi);
+                  y4 .setPolar (-z1 .imag, phi);
+
+                  // Triangle 1 and 2
+
+                  this .colors .push (c1 .r, c1 .g, c1 .b, 1,
+                                      c2 .r, c2 .g, c2 .b, 1,
+                                      c2 .r, c2 .g, c2 .b, 1,
+                                      // Triangle 2
+                                      c1 .r, c1 .g, c1 .b, 1,
+                                      c1 .r, c1 .g, c1 .b, 1,
+                                      c2 .r, c2 .g, c2 .b, 1);
+
+                  this .sphere .push (y1 .imag, z1 .real, y1 .real, 1,
+                                      y3 .imag, z2 .real, y3 .real, 1,
+                                      y2 .imag, z2 .real, y2 .real, 1,
+                                      // Triangle 2
+                                      y1 .imag, z1 .real, y1 .real, 1,
+                                      y4 .imag, z1 .real, y4 .real, 1,
+                                      y3 .imag, z2 .real, y3 .real, 1);
+               }
             }
-         }
-      },
+         };
+      })(),
       transferSphere: function ()
       {
          const gl = this .getBrowser () .getContext ();
@@ -60583,37 +61756,106 @@ function (X3DBindableNode,
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .sphereBuffer);
          gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (this .sphere), gl .DYNAMIC_DRAW);
+
          this .sphereCount = this .sphere .length / 4;
       },
-      transferRectangle: function ()
+      transferRectangle: (function ()
       {
-         const gl = this .getBrowser () .getContext ();
+         const s = SIZE;
 
-         // Transfer texCoords.
+         const texCoords = [
+            1, 1, 0, 1,
+            0, 1, 0, 1,
+            0, 0, 0, 1,
+            1, 1, 0, 1,
+            0, 0, 0, 1,
+            1, 0, 0, 1,
+         ];
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (texCoords), gl .DYNAMIC_DRAW);
+         const frontVertices = [
+            s,  s, -s, 1,
+           -s,  s, -s, 1,
+           -s, -s, -s, 1,
+            s,  s, -s, 1,
+           -s, -s, -s, 1,
+            s, -s, -s, 1,
+         ];
 
-         // Transfer rectangle.
+         const backVertices = [
+            -s,  s,  s, 1,
+             s,  s,  s, 1,
+             s, -s,  s, 1,
+            -s,  s,  s, 1,
+             s, -s,  s, 1,
+            -s, -s,  s, 1,
+         ];
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .frontBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (frontVertices), gl .DYNAMIC_DRAW);
+         const leftVertices = [
+            -s,  s, -s, 1,
+            -s,  s,  s, 1,
+            -s, -s,  s, 1,
+            -s,  s, -s, 1,
+            -s, -s,  s, 1,
+            -s, -s, -s, 1,
+         ];
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .backBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (backVertices), gl .DYNAMIC_DRAW);
+         const rightVertices = [
+            s,  s,  s, 1,
+            s,  s, -s, 1,
+            s, -s, -s, 1,
+            s,  s,  s, 1,
+            s, -s, -s, 1,
+            s, -s,  s, 1,
+         ];
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .leftBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (leftVertices), gl .DYNAMIC_DRAW);
+         const topVertices = [
+             s, s,  s, 1,
+            -s, s,  s, 1,
+            -s, s, -s, 1,
+             s, s,  s, 1,
+            -s, s, -s, 1,
+             s, s, -s, 1,
+         ];
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .rightBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (rightVertices), gl .DYNAMIC_DRAW);
+         const bottomVertices = [
+             s, -s, -s, 1,
+            -s, -s, -s, 1,
+            -s, -s,  s, 1,
+             s, -s, -s, 1,
+            -s, -s,  s, 1,
+             s, -s,  s, 1,
+         ];
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .topBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (topVertices), gl .DYNAMIC_DRAW);
+         return function ()
+         {
+            const gl = this .getBrowser () .getContext ();
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .bottomBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (bottomVertices), gl .DYNAMIC_DRAW);
-      },
+            // Transfer texCoords.
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (texCoords), gl .DYNAMIC_DRAW);
+
+            // Transfer rectangle.
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .frontBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (frontVertices), gl .DYNAMIC_DRAW);
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .backBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (backVertices), gl .DYNAMIC_DRAW);
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .leftBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (leftVertices), gl .DYNAMIC_DRAW);
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .rightBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (rightVertices), gl .DYNAMIC_DRAW);
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .topBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (topVertices), gl .DYNAMIC_DRAW);
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .bottomBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (bottomVertices), gl .DYNAMIC_DRAW);
+         };
+      })(),
       traverse: function (type, renderObject)
       {
          switch (type)
@@ -60683,7 +61925,7 @@ function (X3DBindableNode,
 
             this .drawSphere (renderObject);
 
-            if (this .textures)
+            if (+this .textureBits)
                this .drawCube (renderObject);
          };
       })(),
@@ -60695,90 +61937,88 @@ function (X3DBindableNode,
             return;
 
          const
-            browser    = renderObject .getBrowser (),
+            browser    = this .getBrowser (),
             gl         = browser .getContext (),
-            shaderNode = browser .getBackgroundSphereShader ();
+            shaderNode = browser .getDefaultMaterial () .getShader (this .sphereContext, this .context);
 
-         if (shaderNode .isValid ())
+         shaderNode .enable (gl);
+
+         // Clip planes
+
+         shaderNode .setLocalObjects (gl, this .localObjects);
+
+         // Uniforms
+
+         gl .uniform1i (shaderNode .x3d_FogType,                            0);
+         gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,               true);
+         gl .uniform1i (shaderNode .x3d_FillPropertiesHatched,              false);
+         gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
+         gl .uniform1i (shaderNode .x3d_NumTextures,                        0);
+         gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
+         gl .uniform1i (shaderNode .x3d_NumProjectiveTextures,              0);
+
+         gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
+         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
+
+         // Enable vertex attribute arrays.
+
+         if (this .sphereArrayObject .enable (gl, shaderNode))
          {
+            shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
+            shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
+         }
+
+         // Setup context.
+
+         if (transparency)
+            gl .enable (gl .BLEND);
+         else
+            gl .disable (gl .BLEND);
+
+         // Draw.
+
+         gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
+      },
+      drawCube: (function ()
+      {
+         const textureMatrixArray = new Float32Array (Matrix4 .Identity);
+
+         return function (renderObject)
+         {
+            const
+               browser    = this .getBrowser (),
+               gl         = browser .getContext (),
+               shaderNode = browser .getDefaultMaterial () .getShader (this .texturesContext, this .context);
+
             shaderNode .enable (gl);
 
             // Clip planes
 
             shaderNode .setLocalObjects (gl, this .localObjects);
 
-            // Enable vertex attribute arrays.
-
-            if (this .sphereArrayObject .enable (gl, shaderNode))
-            {
-               shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
-               shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
-            }
-
             // Uniforms
 
-            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
-            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
+            gl .uniform1i (shaderNode .x3d_FogType,                            0);
+            gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,               true);
+            gl .uniform1i (shaderNode .x3d_FillPropertiesHatched,              false);
+            gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1)
+            gl .uniform1f (shaderNode .x3d_Transparency,                       0)
+            gl .uniform1i (shaderNode .x3d_NumTextures,                        1);
+            gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
+            gl .uniform1i (shaderNode .x3d_NumProjectiveTextures,              0);
 
-            // Setup context.
-
-            if (transparency)
-               gl .enable (gl .BLEND);
-            else
-               gl .disable (gl .BLEND);
+            gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
 
             // Draw.
 
-            gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
-         }
-      },
-      drawCube: (function ()
-      {
-         const
-            textureMatrixArray = new Float32Array (Matrix4 .Identity),
-            white              = new Float32Array ([1, 1, 1]);
-
-         return function (renderObject)
-         {
-            const
-               browser    = renderObject .getBrowser (),
-               gl         = browser .getContext (),
-               shaderNode = browser .getUnlitShader ();
-
-            if (shaderNode .isValid ())
-            {
-               shaderNode .enable (gl);
-
-               // Clip planes
-
-               shaderNode .setLocalObjects (gl, this .localObjects);
-
-               // Uniforms
-
-               gl .uniform1i  (shaderNode .x3d_FogType,                            0);
-               gl .uniform1i  (shaderNode .x3d_FillPropertiesFilled,               true);
-               gl .uniform1i  (shaderNode .x3d_FillPropertiesHatched,              false);
-               gl .uniform1i  (shaderNode .x3d_ColorMaterial,                      false);
-               gl .uniform3fv (shaderNode .x3d_EmissiveColor,                      white)
-               gl .uniform1i  (shaderNode .x3d_EmissiveTexture .textureType,       0)
-               gl .uniform1f  (shaderNode .x3d_Transparency,                       0)
-               gl .uniform1i  (shaderNode .x3d_NumTextures,                        1);
-               gl .uniform1i  (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-               gl .uniform1i  (shaderNode .x3d_NumProjectiveTextures,              0);
-
-               gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
-               gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
-               gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
-
-               // Draw.
-
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer,  this .frontArrayObject);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer,   this .backArrayObject);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .leftTexture,   this .leftBuffer,   this .leftArrayObject);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .rightTexture,  this .rightBuffer,  this .rightArrayObject);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .topTexture,    this .topBuffer,    this .topArrayObject);
-               this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer, this .bottomArrayObject);
-            }
+            this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer,  this .frontArrayObject);
+            this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer,   this .backArrayObject);
+            this .drawRectangle (gl, browser, shaderNode, renderObject, this .leftTexture,   this .leftBuffer,   this .leftArrayObject);
+            this .drawRectangle (gl, browser, shaderNode, renderObject, this .rightTexture,  this .rightBuffer,  this .rightArrayObject);
+            this .drawRectangle (gl, browser, shaderNode, renderObject, this .topTexture,    this .topBuffer,    this .topArrayObject);
+            this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer, this .bottomArrayObject);
          };
       })(),
       drawRectangle: function (gl, browser, shaderNode, renderObject, texture, buffer, vertexArray)
@@ -61255,7 +62495,7 @@ function (X3DSingleTextureNode,
       },
       setShaderUniformsToChannel: function (gl, shaderObject, renderObject, channel)
       {
-         const textureUnit = renderObject .getBrowser () .getTexture2DUnit ();
+         const textureUnit = this .getBrowser () .getTexture2DUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
@@ -61346,6 +62586,8 @@ function ($,
 
       this .addType (X3DConstants .ImageTexture);
 
+      this .image    = $("<img></img>");
+      this .canvas   = $("<canvas></canvas>");
       this .urlStack = new Fields .MFString ();
    }
 
@@ -61381,12 +62623,8 @@ function ($,
          X3DTexture2DNode .prototype .initialize .call (this);
          X3DUrlObject     .prototype .initialize .call (this);
 
-         this .canvas = $("<canvas></canvas>");
-
-         this .image = $("<img></img>");
-         this .image .on ("load", this .setImage .bind (this));
-         this .image .on ("error", this .setError .bind (this));
-         this .image .bind ("abort", this .setError .bind (this));
+         this .image .on ("load",        this .setImage .bind (this));
+         this .image .on ("abort error", this .setError .bind (this));
 
          this .image [0] .crossOrigin = "Anonymous";
 
@@ -61422,10 +62660,10 @@ function ($,
 
          this .image .attr ("src", this .URL .href);
       },
-      setError: function ()
+      setError: function (event)
       {
          if (this .URL .protocol !== "data:")
-            console .warn ("Error loading image:", decodeURI (this .URL .href));
+            console .warn ("Error loading image:", decodeURI (this .URL .href), event .type);
 
          this .loadNext ();
       },
@@ -61813,7 +63051,7 @@ function (X3DNode,
          this .backgrounds     .setup ();
          this .fogs            .setup ();
 
-         this ._viewport       .addInterest ("set_viewport__", this);
+         this ._viewport .addInterest ("set_viewport__", this);
 
          this .set_viewport__ ();
       },
@@ -61896,9 +63134,9 @@ function (X3DNode,
       {
          return this .viewpointStack;
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
-         return this .groupNode .getBBox (bbox, shadow);
+         return this .groupNode .getBBox (bbox, shadows);
       },
       lookAt: function (factor, straighten)
       {
@@ -66416,7 +67654,7 @@ function ($,
       createX3DFromURLAsync: function (callback, data)
       {
          if (data === null)
-            callback (null);
+            callback (null, this .URL);
          else
             this .createX3DFromString (this .URL, data, callback, this .loadDocumentError .bind (this));
       },
@@ -66626,7 +67864,7 @@ function ($,
       {
          try
          {
-            this .callback (pako .ungzip (this .fileReader .result, { to: "string" }));
+            this .callback (pako .ungzip (this .fileReader .result, { to: "string" }), this .URL);
          }
          catch (exception)
          {
@@ -66639,7 +67877,7 @@ function ($,
       {
          try
          {
-            this .callback (this .fileReader .result);
+            this .callback (this .fileReader .result, this .URL);
          }
          catch (exception)
          {
@@ -66650,7 +67888,7 @@ function ($,
       {
          try
          {
-            this .callback (this .fileReader .result);
+            this .callback (this .fileReader .result, this .URL);
          }
          catch (exception)
          {
@@ -66764,21 +68002,21 @@ define ('x_ite/Components/Shaders/ShaderPart',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Browser/Shaders/Shader",
+   "x_ite/Browser/Shaders/ShaderCompiler",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/InputOutput/FileLoader",
    "x_ite/Base/X3DConstants",
-   "x_ite/DEBUG",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           Shader,
+          ShaderCompiler,
           X3DNode,
           X3DUrlObject,
           FileLoader,
-          X3DConstants,
-          DEBUG)
+          X3DConstants)
 {
 "use strict";
 
@@ -66833,24 +68071,18 @@ function (Fields,
       },
       getShaderType: (function ()
       {
-         const shaderTypes =
-         {
-            VERTEX:          "VERTEX_SHADER",
-            TESS_CONTROL:    "TESS_CONTROL_SHADER",
-            TESS_EVALUATION: "TESS_EVALUATION_SHADER",
-            GEOMETRY:        "GEOMETRY_SHADER",
-            FRAGMENT:        "FRAGMENT_SHADER",
-            COMPUTE:         "COMPUTE_SHADER",
-         };
+         const shaderTypes = new Map ([
+            ["VERTEX",          "VERTEX_SHADER"],
+            ["TESS_CONTROL",    "TESS_CONTROL_SHADER"],
+            ["TESS_EVALUATION", "TESS_EVALUATION_SHADER"],
+            ["GEOMETRY",        "GEOMETRY_SHADER"],
+            ["FRAGMENT",        "FRAGMENT_SHADER"],
+            ["COMPUTE",         "COMPUTE_SHADER"],
+         ]);
 
          return function ()
          {
-            const type = shaderTypes [this ._type .getValue ()];
-
-            if (type)
-               return type;
-
-            return "VERTEX_SHADER";
+            return shaderTypes .get (this ._type .getValue ()) || "VERTEX_SHADER";
          };
       })(),
       getSourceText: function ()
@@ -66872,7 +68104,7 @@ function (Fields,
       loadNow: function ()
       {
          new FileLoader (this) .loadDocument (this ._url,
-         function (data)
+         function (data, url)
          {
             if (data === null)
             {
@@ -66882,14 +68114,23 @@ function (Fields,
             else
             {
                const
-                  gl     = this .getBrowser () .getContext (),
-                  source = Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .options);
+                  browser        = this .getBrowser (),
+                  gl             = browser .getContext (),
+                  shaderCompiler = new ShaderCompiler (gl),
+                  source         = Shader .getShaderSource (gl, browser, shaderCompiler .process (data), this .options);
 
                gl .shaderSource (this .shader, source);
                gl .compileShader (this .shader);
 
-               if (!gl .getShaderParameter (this .shader, gl .COMPILE_STATUS))
-                  throw new Error (this .getTypeName () + " '" + this .getName () + "': " + gl .getShaderInfoLog (this .shader));
+               if (! gl .getShaderParameter (this .shader, gl .COMPILE_STATUS))
+               {
+                  const
+                     log      = gl .getShaderInfoLog (this .shader),
+                     match    = log .match (/(\d+):(\d+)/),
+                     fileName = shaderCompiler .getSourceFileName (match [1]) || url;
+
+                  throw new Error ("Error in " + this .getTypeName () + " '" + this .getName () + "' in URL '" + fileName + "', line " + match [2]);
+               }
 
                this .setLoadState (X3DConstants .COMPLETE_STATE);
             }
@@ -66950,211 +68191,37 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Browser/Shaders/ShaderTest',[
-   "x_ite/Rendering/VertexArray",
-   "x_ite/Rendering/TextureBuffer",
-   "standard/Math/Numbers/Matrix3",
-   "standard/Math/Numbers/Matrix4",
-   "standard/Math/Geometry/Camera",
-],
-function (VertexArray,
-          TextureBuffer,
-          Matrix3,
-          Matrix4,
-          Camera)
-{
-"use strict";
-
-   const ShaderTest =
-   {
-      verify: (function ()
-      {
-         const normals = [
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-            0, 0, 1,
-         ];
-
-         const vertices = [
-             2,  2, 0, 1,
-            -2,  2, 0, 1,
-            -2, -2, 0, 1,
-             2,  2, 0, 1,
-            -2, -2, 0, 1,
-             2, -2, 0, 1,
-         ];
-
-         return function (browser, shaderNode)
-         {
-            const
-               gl           = browser .getContext (),
-               frameBuffer  = new TextureBuffer (browser, 16, 16),
-               normalBuffer = gl .createBuffer (),
-               vertexBuffer = gl .createBuffer (),
-               vertexArrayObject  = new VertexArray ();
-
-            frameBuffer .bind ();
-
-            shaderNode .enable (gl);
-            shaderNode .setLocalObjects (gl, [ ]);
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .DYNAMIC_DRAW);
-            gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .DYNAMIC_DRAW);
-
-            // Matrices
-
-            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, new Float32Array (Camera .ortho (-1, 1, -1, 1, -1, 1, new Matrix4 ())));
-            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, new Float32Array (Matrix4 .Identity));
-            gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix,     false, new Float32Array (Matrix3 .Identity));
-
-            // Set clip planes and lights to none.
-
-            gl .uniform1i (shaderNode .x3d_FogType,               0);
-            gl .uniform1f (shaderNode .x3d_AlphaCutoff,           0);
-            gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,  true);
-            gl .uniform1i (shaderNode .x3d_FillPropertiesHatched, false);
-            gl .uniform1i (shaderNode .x3d_ColorMaterial,         false);
-            gl .uniform1i (shaderNode .x3d_NumLights,             0);
-            gl .uniform1i (shaderNode .x3d_NumTextures,           0);
-            gl .uniform1i (shaderNode .x3d_NumProjectiveTextures, 0);
-            gl .uniform1i (shaderNode .x3d_NumClipPlanes,         0);
-
-            gl .uniform1f (shaderNode .x3d_AmbientIntensity, 0);
-            gl .uniform3f (shaderNode .x3d_DiffuseColor,     1, 0, 0);
-            gl .uniform3f (shaderNode .x3d_SpecularColor,    1, 0, 0);
-            gl .uniform3f (shaderNode .x3d_EmissiveColor,    1, 0, 0);
-            gl .uniform1f (shaderNode .x3d_Shininess,        0);
-            gl .uniform1f (shaderNode .x3d_Transparency,     0);
-
-            gl .viewport (0, 0, 16, 16);
-            gl .clearColor (0, 0, 0, 0);
-            gl .clear (gl .COLOR_BUFFER_BIT);
-
-            gl .disable (gl .DEPTH_TEST);
-            gl .disable (gl .BLEND);
-            gl .frontFace (gl .CCW);
-            gl .enable (gl .CULL_FACE);
-            gl .cullFace (gl .BACK);
-
-            vertexArrayObject .enable (gl, shaderNode);
-            shaderNode .enableNormalAttribute (gl, normalBuffer, 0, 0);
-            shaderNode .enableVertexAttribute (gl, vertexBuffer, 0, 0);
-
-            gl .drawArrays (gl .TRIANGLES, 0, 6);
-
-            const data = frameBuffer .readPixels ();
-
-            frameBuffer .unbind ();
-            frameBuffer .delete ();
-
-            gl .deleteBuffer (normalBuffer);
-            gl .deleteBuffer (vertexBuffer);
-
-            vertexArrayObject .delete (gl);
-
-            return true || (data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255);
-         };
-      })(),
-   };
-
-   return ShaderTest;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Browser/Shaders/X3DShadersContext',[
    "x_ite/Browser/Core/Shading",
    "x_ite/Components/Shaders/ComposedShader",
    "x_ite/Components/Shaders/ShaderPart",
-   "x_ite/Browser/Shaders/ShaderTest",
    "x_ite/Browser/Networking/urls",
 ],
 function (Shading,
           ComposedShader,
           ShaderPart,
-          ShaderTest,
           urls)
 {
 "use strict";
 
    const
-      _shaders                        = Symbol (),
-      _defaultShader                  = Symbol (),
-      _standardShaders                = Symbol (),
-      _pointShader                    = Symbol (),
-      _lineShader                     = Symbol (),
-      _unlitShader                    = Symbol (),
-      _unlitTexturesShader            = Symbol (),
-      _gouraudShader                  = Symbol (),
-      _phongShader                    = Symbol (),
-      _materialTexturesShader         = Symbol (),
-      _physicalMaterialShader         = Symbol (),
-      _physicalMaterialTexturesShader = Symbol (),
-      _shadowShader                   = Symbol (),
-      _depthShader                    = Symbol ();
+      _wireframe      = Symbol (),
+      _primitiveModes = Symbol (),
+      _defaultShader  = Symbol (),
+      _shaderNodes    = Symbol ();
 
    function X3DShadersContext ()
    {
-      this [_shaders]         = new Set ();
-      this [_standardShaders] = [ ];
+      this [_wireframe]      = false;
+      this [_primitiveModes] = new Map ();
+      this [_shaderNodes]    = new Map ();
    }
 
    X3DShadersContext .prototype =
    {
       initialize: function ()
       {
+         this .getDefaultShader ();
          this .setShading (this .getBrowserOptions () .getShading ());
       },
       getShadingLanguageVersion: function ()
@@ -67181,103 +68248,93 @@ function (Shading,
 
          return gl .getParameter (gl .MAX_VERTEX_ATTRIBS);
       },
-      addShader: function (shader)
+      getWireframe: function ()
       {
-         this [_shaders] .add (shader);
-
-         shader .setShading (this .getBrowserOptions () .getShading ());
+         return this [_wireframe];
       },
-      removeShader: function (shader)
+      getPrimitiveMode: function (primitiveMode)
       {
-         this [_shaders] .delete (shader);
-      },
-      getShaders: function ()
-      {
-         return this [_shaders];
+         return this [_primitiveModes] .get (primitiveMode);
       },
       getDefaultShader: function ()
       {
+         const vs = /* glsl */ `data:x-shader/x-vertex,
+         precision highp float;
+         uniform mat4 x3d_ProjectionMatrix;
+         uniform mat4 x3d_ModelViewMatrix;
+         attribute vec4 x3d_Vertex;
+         void
+         main ()
+         {
+            gl_Position = x3d_ProjectionMatrix * (x3d_ModelViewMatrix * x3d_Vertex);
+         }
+         `;
+
+         const fs = /* glsl */ `data:x-shader/x-fragment,
+         precision highp float;
+         void
+         main ()
+         {
+            gl_FragColor = vec4 (0.0);
+            discard;
+         }
+         `;
+
+         this [_defaultShader] = this .createShader ("DefaultShader", vs, fs);
+
+         this .getDefaultShader = function () { return this [_defaultShader]; };
+
+         Object .defineProperty (this, "getDefaultShader", { enumerable: false });
+
          return this [_defaultShader];
       },
-      getStandardShaders: function ()
+      getShaders: function ()
       {
-         return this [_standardShaders];
-      },
-      getPointShader: function ()
-      {
-         return this .getStandardShader ("getPointShader", _pointShader, "PointShader", "Point", [ ], "set_point_shader_valid__");
-      },
-      getLineShader: function ()
-      {
-         return this .getStandardShader ("getLineShader", _lineShader, "LineShader", "Line", [ ], "set_line_shader_valid__");
-      },
-      getUnlitShader: function ()
-      {
-         return this .getStandardShader ("getUnlitShader", _unlitShader, "UnlitShader", "Unlit", [ ], "set_unlit_shader_valid__");
-      },
-      getGouraudShader: function ()
-      {
-         return this .getStandardShader ("getGouraudShader", _gouraudShader, "GouraudShader", "Gouraud", [ ], "set_gouraud_shader_valid__");
-      },
-      getPhongShader: function ()
-      {
-         return this .getStandardShader ("getPhongShader", _phongShader, "PhongShader", "Phong", [ ], "set_phong_shader_valid__");
-      },
-      getShadowShader: function ()
-      {
-         return this .getStandardShader ("getShadowShader", _shadowShader, "ShadowShader", "Phong",["X3D_SHADOWS", "X3D_PCF_FILTERING"], "set_shadow_shader_valid__");
-      },
-      getPhysicalMaterialShader: function ()
-      {
-         return this .getStandardShader ("getPhysicalMaterialShader", _physicalMaterialShader, "PhysicalMaterialShader", "PBR", [ ], "set_physical_material_shader_valid__");
-      },
-      getDepthShader: function ()
-      {
-         this [_depthShader] = this .createShader ("DepthShader", "Depth");
-
-         this .getDepthShader = function () { return this [_depthShader]; };
-
-         Object .defineProperty (this, "getDepthShader", { enumerable: false });
-
-         return this [_depthShader];
+         return this [_shaderNodes];
       },
       setShading: function (type)
       {
+         const gl = this .getContext ();
+
          switch (type)
          {
-            case Shading .PHONG:
+            case Shading .POINT:
             {
-               this [_defaultShader] = this .getPhongShader ();
+               this [_wireframe] = false;
+
+               this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
+               this [_primitiveModes] .set (gl .LINES,     gl .POINTS);
+               this [_primitiveModes] .set (gl .TRIANGLES, gl .POINTS);
+               break;
+            }
+            case Shading .WIREFRAME:
+            {
+               this [_wireframe] = true;
+
+               this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
+               this [_primitiveModes] .set (gl .LINES,     gl .LINES);
+               this [_primitiveModes] .set (gl .TRIANGLES, gl .LINE_LOOP);
                break;
             }
             default:
             {
-               this [_defaultShader] = this .getGouraudShader ();
+               // case Shading .FLAT:
+               // case Shading .GOURAUD:
+               // case Shading .PHONG:
+
+               this [_wireframe] = false;
+
+               this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
+               this [_primitiveModes] .set (gl .LINES,     gl .LINES);
+               this [_primitiveModes] .set (gl .TRIANGLES, gl .TRIANGLES);
                break;
             }
          }
-
-         // Configure shaders.
-
-         for (const shader of this .getShaders ())
-            shader .setShading (type);
       },
-      getStandardShader: function (func, property, name, shader, options, valid)
-      {
-         this [property] = this .createShader (name, shader, options);
-
-         this [property] ._isValid .addInterest (valid, this);
-
-         this [func] = function () { return this [property]; };
-
-         Object .defineProperty (this, func, { enumerable: false });
-
-         return this [property];
-      },
-      createShader: function (name, file, options = [ ])
+      createShader: function (name, vs, fs = vs, options = [ ])
       {
          if (this .getDebug ())
-            console .log ("Initializing " + name);
+            console .info ("Initializing " + name);
 
          const
             gl      = this .getContext (),
@@ -67285,15 +68342,15 @@ function (Shading,
 
          const vertexShader = new ShaderPart (this .getPrivateScene ());
          vertexShader .setName (name + "Vertex");
-         vertexShader ._url .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".vs"));
          vertexShader .setOptions (options);
+         vertexShader ._url .push (vs .startsWith ("data:") ? vs : urls .getShaderUrl ("webgl" + version + "/" + vs + ".vs"));
          vertexShader .setup ();
 
          const fragmentShader = new ShaderPart (this .getPrivateScene ());
          fragmentShader .setName (name + "Fragment");
-         fragmentShader ._type  = "FRAGMENT";
-         fragmentShader ._url .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".fs"));
          fragmentShader .setOptions (options);
+         fragmentShader ._type  = "FRAGMENT";
+         fragmentShader ._url .push (fs .startsWith ("data:") ? fs : urls .getShaderUrl ("webgl" + version + "/" + fs + ".fs"));
          fragmentShader .setup ();
 
          const shader = new ComposedShader (this .getPrivateScene ());
@@ -67301,81 +68358,9 @@ function (Shading,
          shader ._language = "GLSL";
          shader ._parts .push (vertexShader);
          shader ._parts .push (fragmentShader);
-         shader .setShading (this .getBrowserOptions () .getShading ());
          shader .setup ();
 
-         this [_standardShaders] .push (shader);
-
-         this .addShader (shader);
-
          return shader;
-      },
-      set_point_shader_valid__: function ()
-      { },
-      set_line_shader_valid__: function ()
-      { },
-      set_unlit_shader_valid__: function (valid)
-      {
-         this [_unlitShader] ._isValid .removeInterest ("set_unlit_shader_valid__", this);
-
-         if (valid .getValue () && ShaderTest .verify (this, this [_unlitShader]))
-            return;
-
-         console .error ("X_ITE: Unlit shading is not available, using fallback VRML shader.");
-
-         // Recompile shader.
-         this [_unlitShader] ._parts [0] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.vs") ];
-         this [_unlitShader] ._parts [1] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.fs") ];
-      },
-      set_gouraud_shader_valid__: function (valid)
-      {
-         this [_gouraudShader] ._isValid .removeInterest ("set_gouraud_shader_valid__", this);
-
-         if (valid .getValue () && ShaderTest .verify (this, this [_gouraudShader]))
-            return;
-
-         console .warn ("X_ITE: All else fails, using fallback VRML shader.");
-
-         // Recompile shader.
-         this [_gouraudShader] ._parts [0] .url = [ urls .getShaderUrl ("webgl1/Fallback.vs") ];
-         this [_gouraudShader] ._parts [1] .url = [ urls .getShaderUrl ("webgl1/Fallback.fs") ];
-      },
-      set_phong_shader_valid__: function (valid)
-      {
-         this [_phongShader] ._isValid .removeInterest ("set_phong_shader_valid__", this);
-
-         if (valid .getValue () && ShaderTest .verify (this, this [_phongShader]))
-            return;
-
-         console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
-
-         this [_phongShader] = this .getGouraudShader ();
-
-         this .setShading (this .getBrowserOptions () .getShading ());
-      },
-      set_physical_material_shader_valid__: function (valid)
-      {
-         this [_physicalMaterialShader] ._isValid .removeInterest ("set_physical_material_shader_valid__", this);
-
-         if (valid .getValue () && ShaderTest .verify (this, this [_physicalMaterialShader]))
-            return;
-
-         console .warn ("X_ITE: Physical material shading is not available, using Gouraud shading.");
-
-         this [_physicalMaterialShader] = this .getGouraudShader ();
-
-         this .setShading (this .getBrowserOptions () .getShading ());
-      },
-      set_shadow_shader_valid__: function (valid)
-      {
-         this [_shadowShader] ._isValid .removeInterest ("set_shadow_shader_valid__", this);
-
-         if (valid .getValue () && ShaderTest .verify (this, this [_shadowShader]))
-            return;
-
-         console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
-
-         this [_shadowShader] = this .getGouraudShader ();
       },
    };
 
@@ -67815,6 +68800,7 @@ function ($,
    const
       _viewport     = Symbol (),
       _localObjects = Symbol (),
+      _depthShader  = Symbol (),
       _resizer      = Symbol ();
 
    function X3DRenderingContext ()
@@ -67917,6 +68903,16 @@ function ($,
       getLocalObjects: function ()
       {
          return this [_localObjects];
+      },
+      getDepthShader: function ()
+      {
+         this [_depthShader] = this .createShader ("DepthShader", "Depth");
+
+         this .getDepthShader = function () { return this [_depthShader]; };
+
+         Object .defineProperty (this, "getDepthShader", { enumerable: false });
+
+         return this [_depthShader];
       },
       reshape: function ()
       {
@@ -68225,8 +69221,6 @@ function (Fields,
       {
          X3DAppearanceNode .prototype .initialize .call (this);
 
-         this .isLive () .addInterest ("set_live__", this);
-
          this ._alphaMode  		.addInterest ("set_alphaMode__",        this);
          this ._alphaCutoff  		.addInterest ("set_alphaCutoff__",      this);
          this ._pointProperties  .addInterest ("set_pointProperties__",  this);
@@ -68245,7 +69239,6 @@ function (Fields,
          this ._texture        .addInterest ("set_transparent__", this);
          this ._blendMode      .addInterest ("set_transparent__", this);
 
-         this .set_live__ ();
          this .set_alphaMode__ ();
          this .set_pointProperties__ ();
          this .set_lineProperties__ ();
@@ -68262,6 +69255,14 @@ function (Fields,
       {
          return this .alphaMode;
       },
+      getAlphaCutoff: function ()
+      {
+         return this .alphaCutoff;
+      },
+      getStyleProperties: function (geometryType)
+      {
+         return this .stylePropertiesNode [geometryType];
+      },
       getPointProperties: function ()
       {
          return this .stylePropertiesNode [0];
@@ -68274,26 +69275,41 @@ function (Fields,
       {
          return this .stylePropertiesNode [2];
       },
-      set_live__: function ()
+      getMaterial: function ()
       {
-         if (this .isLive () .getValue ())
-         {
-            this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
-
-            if (this .shaderNode)
-               this .getBrowser () .addShader (this .shaderNode);
-         }
-         else
-         {
-            this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
-
-            if (this .shaderNode)
-               this .getBrowser () .removeShader (this .shaderNode);
-         }
+         return this .materialNode;
+      },
+      getBackMaterial: function ()
+      {
+         return this .backMaterialNode;
+      },
+      getTexture: function ()
+      {
+         return this .textureNode;
+      },
+      getTextureTransform: function ()
+      {
+         return this .textureTransformNode;
+      },
+      getTextureTransformMapping: function ()
+      {
+         return this .textureTransformMapping;
+      },
+      getShader: function (geometryContext, context)
+      {
+         return this .materialNode .getShader (geometryContext, context);
+      },
+      getBackShader: function (geometryContext, context)
+      {
+         return this .backMaterialNode .getShader (geometryContext, context);
+      },
+      getBlendMode: function ()
+      {
+         return this .blendModeNode;
       },
       set_alphaMode__: function ()
       {
-         this .alphaMode = AlphaMode [this ._alphaMode .getValue ()] || AlphaMode .AUTO;
+         this .alphaMode = this .getEnum (AlphaMode, this ._alphaMode .getValue (), AlphaMode .AUTO);
 
          this .set_alphaCutoff__ ();
       },
@@ -68304,16 +69320,10 @@ function (Fields,
       set_pointProperties__: function ()
       {
          this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this ._pointProperties);
-
-         if (! this .stylePropertiesNode [0])
-            this .stylePropertiesNode [0] = this .getBrowser () .getDefaultPointProperties ();
       },
       set_lineProperties__: function ()
       {
          this .stylePropertiesNode [1] = X3DCast (X3DConstants .LineProperties, this ._lineProperties);
-
-         if (! this .stylePropertiesNode [1])
-            this .stylePropertiesNode [1] = this .getBrowser () .getDefaultLineProperties ();
       },
       set_fillProperties__: function ()
       {
@@ -68321,9 +69331,6 @@ function (Fields,
             this .stylePropertiesNode [2] ._transparent .removeInterest ("set_transparent__", this);
 
          this .stylePropertiesNode [2] = X3DCast (X3DConstants .FillProperties, this ._fillProperties);
-
-         if (! this .stylePropertiesNode [2])
-            this .stylePropertiesNode [2] = this .getBrowser () .getDefaultFillProperties ();
 
          if (this .stylePropertiesNode [2])
             this .stylePropertiesNode [2] ._transparent .addInterest ("set_transparent__", this);
@@ -68346,10 +69353,7 @@ function (Fields,
          // Depreciated TwoSidedMaterial handling.
 
          if (this .materialNode .getTypeName () === "TwoSidedMaterial")
-         {
-            console .warn ("TwoSidedMaterial is depreciated, please use Appearance backMaterial.");
             this .set_backMaterial__ ();
-         }
       },
       set_backMaterial__: function ()
       {
@@ -68363,7 +69367,7 @@ function (Fields,
 
          // Depreciated TwoSidedMaterial handling.
 
-         if (!this .backMaterialNode && this .materialNode .getTypeName () === "TwoSidedMaterial")
+         if (! this .backMaterialNode && this .materialNode .getTypeName () === "TwoSidedMaterial")
             this .backMaterialNode = this .materialNode;
       },
       set_texture__: function ()
@@ -68383,7 +69387,7 @@ function (Fields,
 
          this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this ._textureTransform);
 
-         if (!this .textureTransformNode)
+         if (! this .textureTransformNode)
             this .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
 
          this .textureTransformNode .addInterest ("updateTextureTransformMapping", this);
@@ -68423,55 +69427,60 @@ function (Fields,
 
          this .set_shader__ ();
       },
-      set_shader__: function ()
+      set_shader__: (function ()
       {
-         const shaderNodes = this .shaderNodes;
-
-         if (this .shaderNode)
+         function getShader ()
          {
-            this .getBrowser () .removeShader (this .shaderNode);
-            this .shaderNode .deselect ();
+            return this .shaderNode;
          }
 
-         this .shaderNode = null;
-
-         for (const shaderNode of shaderNodes)
+         return function ()
          {
-            if (shaderNode ._isValid .getValue ())
-            {
-               if (shaderNode ._activationTime .getValue () === this .getBrowser () .getCurrentTime ())
-               {
-                  this .shaderNode = shaderNode;
-                  break;
-               }
-            }
-         }
+            const shaderNodes = this .shaderNodes;
 
-         if (!this .shaderNode)
-         {
+            if (this .shaderNode)
+               this .shaderNode .deselect ();
+
+            this .shaderNode = null;
+
             for (const shaderNode of shaderNodes)
             {
                if (shaderNode ._isValid .getValue ())
                {
-                  this .shaderNode = shaderNode;
-                  break;
+                  if (shaderNode ._activationTime .getValue () === this .getBrowser () .getCurrentTime ())
+                  {
+                     this .shaderNode = shaderNode;
+                     break;
+                  }
                }
             }
-         }
 
-         if (this .isLive () .getValue ())
-         {
+            if (! this .shaderNode)
+            {
+               for (const shaderNode of shaderNodes)
+               {
+                  if (shaderNode ._isValid .getValue ())
+                  {
+                     this .shaderNode = shaderNode;
+                     break;
+                  }
+               }
+            }
+
             if (this .shaderNode)
             {
-               this .getBrowser () .addShader (this .shaderNode);
                this .shaderNode .select ();
+
+               this .getShader     = getShader;
+               this .getBackShader = getShader;
             }
-         }
-      },
-      set_shading__: function ()
-      {
-         this .set_shader__ ();
-      },
+            else
+            {
+               delete this .getShader;
+               delete this .getBackShader;
+            }
+         };
+      })(),
       set_blendMode__: function ()
       {
          this .blendModeNode = X3DCast (X3DConstants .BlendMode, this ._blendMode);
@@ -68481,7 +69490,7 @@ function (Fields,
          switch (this .alphaMode)
          {
             case AlphaMode .AUTO:
-               this .setTransparent (Boolean (this .stylePropertiesNode [3] .getTransparent () ||
+               this .setTransparent (Boolean (this .stylePropertiesNode [3] && this .stylePropertiesNode [3] .getTransparent () ||
                                      (this .materialNode && this .materialNode .getTransparent ()) ||
                                      (this .backMaterialNode && this .backMaterialNode .getTransparent ()) ||
                                      (this .textureNode && this .textureNode .getTransparent ()) ||
@@ -68491,6 +69500,7 @@ function (Fields,
                this .setTransparent (false);
                break;
             case AlphaMode .MASK:
+               // Alpha testing using alphaCutoff.
                this .setTransparent (false);
                break;
             case AlphaMode .BLEND:
@@ -68502,9 +69512,6 @@ function (Fields,
       {
          if (this .textureNode)
             this .textureNode .traverse (type, renderObject);
-
-         if (this .shaderNode)
-            this .shaderNode .traverse (type, renderObject);
       },
    });
 
@@ -68560,526 +69567,16 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/Shape/PointProperties',[
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Algorithm",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DAppearanceChildNode,
-          X3DConstants,
-          Algorithm,
-          Vector3)
-{
-"use strict";
-
-   function PointProperties (executionContext)
-   {
-      X3DAppearanceChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .PointProperties);
-
-      this .pointSizeAttenuation = new Float32Array (3);
-   }
-
-   PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
-   {
-      constructor: PointProperties,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeScaleFactor", new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMinValue",    new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMaxValue",    new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeAttenuation", new Fields .MFFloat (1, 0, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "markerType",           new Fields .SFInt32 (1)),
-      ]),
-      getTypeName: function ()
-      {
-         return "PointProperties";
-      },
-      getComponentName: function ()
-      {
-         return "Shape";
-      },
-      getContainerField: function ()
-      {
-         return "pointProperties";
-      },
-      initialize: function ()
-      {
-         X3DAppearanceChildNode .prototype .initialize .call (this);
-
-         const gl = this .getBrowser () .getContext ();
-
-         this .pointSizeRange = gl .getParameter (gl .ALIASED_POINT_SIZE_RANGE);
-
-         this ._pointSizeScaleFactor .addInterest ("set_pointSizeScaleFactor__", this);
-         this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
-         this ._pointSizeMaxValue    .addInterest ("set_pointSizeMaxValue__",    this);
-         this ._pointSizeAttenuation .addInterest ("set_pointSizeAttenuation__", this);
-         this ._markerType           .addInterest ("set_markerType__",           this);
-
-         this .set_pointSizeScaleFactor__ ();
-         this .set_pointSizeMinValue__ ();
-         this .set_pointSizeMaxValue__ ();
-         this .set_pointSizeAttenuation__ ();
-         this .set_markerType__ ();
-      },
-      getPointSize: function (point)
-      {
-         const
-            pointSizeAttenuation = this .pointSizeAttenuation,
-            dL                   = point .magnitude ();
-
-         let pointSize = this .pointSizeScaleFactor;
-
-         pointSize /= pointSizeAttenuation [0] + pointSizeAttenuation [1] * dL + pointSizeAttenuation [2] * (dL * dL);
-         pointSize  = Algorithm .clamp (pointSize, this .pointSizeMinValue, this .pointSizeMaxValue);
-
-         return pointSize;
-      },
-      set_pointSizeScaleFactor__: function ()
-      {
-         this .pointSizeScaleFactor = Math .max (1, this ._pointSizeScaleFactor .getValue ());
-      },
-      set_pointSizeMinValue__: function ()
-      {
-         this .pointSizeMinValue = Algorithm .clamp (this ._pointSizeMinValue .getValue (), this .pointSizeRange [0], this .pointSizeRange [1]);
-      },
-      set_pointSizeMaxValue__: function ()
-      {
-         this .pointSizeMaxValue = Algorithm .clamp (this ._pointSizeMaxValue .getValue (), this .pointSizeRange [0], this .pointSizeRange [1]);
-      },
-      set_pointSizeAttenuation__: function ()
-      {
-         const length = this ._pointSizeAttenuation .length;
-
-         this .pointSizeAttenuation [0] = length > 0 ? Math .max (0, this ._pointSizeAttenuation [0]) : 1;
-         this .pointSizeAttenuation [1] = length > 1 ? Math .max (0, this ._pointSizeAttenuation [1]) : 0;
-         this .pointSizeAttenuation [2] = length > 2 ? Math .max (0, this ._pointSizeAttenuation [2]) : 0;
-      },
-      set_markerType__: function ()
-      {
-      },
-      setShaderUniforms: function (gl, shaderObject)
-      {
-         gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeScaleFactor, this .pointSizeScaleFactor);
-         gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMinValue,    this .pointSizeMinValue);
-         gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMaxValue,    this .pointSizeMaxValue);
-         gl .uniform3fv (shaderObject .x3d_PointPropertiesPointSizeAttenuation, this .pointSizeAttenuation);
-      },
-   });
-
-   return PointProperties;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Shape/LineProperties',[
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DAppearanceChildNode,
-          X3DConstants)
-{
-"use strict";
-
-   function LineProperties (executionContext)
-   {
-      X3DAppearanceChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .LineProperties);
-   }
-
-   LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
-   {
-      constructor: LineProperties,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "applied",              new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "linetype",             new Fields .SFInt32 (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "linewidthScaleFactor", new Fields .SFFloat ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "LineProperties";
-      },
-      getComponentName: function ()
-      {
-         return "Shape";
-      },
-      getContainerField: function ()
-      {
-         return "lineProperties";
-      },
-      initialize: function ()
-      {
-         X3DAppearanceChildNode .prototype .initialize .call (this);
-
-         this ._applied              .addInterest ("set_applied__",              this);
-         this ._linetype             .addInterest ("set_linetype__",             this);
-         this ._linewidthScaleFactor .addInterest ("set_linewidthScaleFactor__", this);
-
-         this .set_applied__ ();
-         this .set_linetype__ ();
-         this .set_linewidthScaleFactor__ ();
-      },
-      getApplied: function ()
-      {
-         return this .applied;
-      },
-      getLinetype: function ()
-      {
-         return this .linetype;
-      },
-      getLinewidthScaleFactor: function ()
-      {
-         return this .linewidthScaleFactor;
-      },
-      getMustTransformLines: function ()
-      {
-         return this .mustTransformLines;
-      },
-      set_applied__: function ()
-      {
-         this .applied = this ._applied .getValue ();
-      },
-      set_linetype__: function ()
-      {
-         let linetype = this ._linetype .getValue ();
-
-         if (linetype < 1 || linetype > 16)
-            linetype = 1;
-
-         this .linetype = linetype;
-      },
-      set_linewidthScaleFactor__: function ()
-      {
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
-
-         this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ());
-         this .mustTransformLines   = gl .MUST_TRANSFORM_LINES && this .linewidthScaleFactor > 1;
-      },
-      setShaderUniforms: function (gl, shaderObject)
-      {
-         if (this .applied)
-         {
-            const
-               browser     = shaderObject .getBrowser (),
-               texture     = browser .getLinetypeTexture (this .linetype),
-               textureUnit = browser .getTexture2DUnit ();
-
-            gl .lineWidth (this .linewidthScaleFactor);
-            gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,              true);
-            gl .uniform1f (shaderObject .x3d_LinePropertiesLinewidthScaleFactor, this .linewidthScaleFactor);
-
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
-            gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
-            gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, textureUnit);
-         }
-         else
-         {
-            gl .lineWidth (1);
-            gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,              false);
-            gl .uniform1f (shaderObject .x3d_LinePropertiesLinewidthScaleFactor, 1);
-         }
-      },
-   });
-
-   return LineProperties;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Shape/FillProperties',[
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DAppearanceChildNode,
-          X3DConstants)
-{
-"use strict";
-
-   function FillProperties (executionContext)
-   {
-      X3DAppearanceChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .FillProperties);
-
-      this .addChildObjects ("transparent", new Fields .SFBool ());
-
-      this ._transparent .setAccessType (X3DConstants .outputOnly);
-
-      this .hatchColor = new Float32Array (3);
-   }
-
-   FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
-   {
-      constructor: FillProperties,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "filled",     new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "hatched",    new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "hatchColor", new Fields .SFColor (1, 1, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "hatchStyle", new Fields .SFInt32 (1)),
-      ]),
-      getTypeName: function ()
-      {
-         return "FillProperties";
-      },
-      getComponentName: function ()
-      {
-         return "Shape";
-      },
-      getContainerField: function ()
-      {
-         return "fillProperties";
-      },
-      initialize: function ()
-      {
-         X3DAppearanceChildNode .prototype .initialize .call (this);
-
-         this ._filled     .addInterest ("set_filled__",     this);
-         this ._hatched    .addInterest ("set_hatched__",    this);
-         this ._hatchColor .addInterest ("set_hatchColor__", this);
-         this ._hatchStyle .addInterest ("set_hatchStyle__", this);
-
-         this .set_filled__ ();
-         this .set_hatched__ ();
-         this .set_hatchColor__ ();
-         this .set_hatchStyle__ ();
-      },
-      set_filled__: function ()
-      {
-         this .filled = this ._filled .getValue ();
-
-         this .setTransparent (! this .filled);
-      },
-      set_hatched__: function ()
-      {
-         this .hatched = this ._hatched .getValue ();
-      },
-      set_hatchColor__: function ()
-      {
-         this .hatchColor [0] = this ._hatchColor [0];
-         this .hatchColor [1] = this ._hatchColor [1];
-         this .hatchColor [2] = this ._hatchColor [2];
-      },
-      set_hatchStyle__: function ()
-      {
-         let hatchStyle = this ._hatchStyle .getValue ();
-
-         if (hatchStyle < 1 || hatchStyle > 19)
-            hatchStyle = 1;
-
-         this .hatchStyle = hatchStyle;
-      },
-      setTransparent: function (value)
-      {
-         if (value !== this ._transparent .getValue ())
-            this ._transparent = value;
-      },
-      getTransparent: function ()
-      {
-         return this ._transparent .getValue ();
-      },
-      setShaderUniforms: function (gl, shaderObject)
-      {
-         const hatched = this .hatched;
-
-         gl .uniform1i (shaderObject .x3d_FillPropertiesFilled,  this .filled);
-         gl .uniform1i (shaderObject .x3d_FillPropertiesHatched, hatched);
-
-         if (hatched)
-         {
-            const
-               browser     = shaderObject .getBrowser (),
-               texture     = browser .getHatchStyleTexture (this .hatchStyle),
-               textureUnit = browser .getTexture2DUnit ();
-
-            gl .uniform3fv (shaderObject .x3d_FillPropertiesHatchColor, this .hatchColor);
-
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
-            gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
-            gl .uniform1i (shaderObject .x3d_FillPropertiesHatchStyle, textureUnit);
-         }
-      },
-   });
-
-   return FillProperties;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Components/Shape/X3DMaterialNode',[
    "x_ite/Fields",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
    "x_ite/Base/X3DConstants",
+   "standard/Utility/BitSet",
 ],
 function (Fields,
           X3DAppearanceChildNode,
-          X3DConstants)
+          X3DConstants,
+          BitSet)
 {
 "use strict";
 
@@ -69092,11 +69589,26 @@ function (Fields,
       this .addChildObjects ("transparent", new Fields .SFBool ());
 
       this ._transparent .setAccessType (X3DConstants .outputOnly);
+
+      this .textureBits = new BitSet ();
+      this .shaderNodes = this .getBrowser () .getShaders ();
    }
 
    X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
    {
       constructor: X3DMaterialNode,
+      initialize: function ()
+      {
+         X3DAppearanceChildNode .prototype .initialize .call (this);
+
+         this .getBrowser () .getRenderingProperties () ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
+
+         this .set_logarithmicDepthBuffer__ ();
+      },
+      set_logarithmicDepthBuffer__: function ()
+      {
+         this .logarithmicDepthBuffer = this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer");
+      },
       setTransparent: function (value)
       {
          if (value !== this ._transparent .getValue ())
@@ -69106,6 +69618,75 @@ function (Fields,
       {
          return this ._transparent .getValue ();
       },
+      setTexture: function (index, textureNode)
+      {
+         const textureType = textureNode ? textureNode .getTextureType () - 1 : 0;
+
+         this .textureBits .set (index * 2 + 0, textureType & 0b01);
+         this .textureBits .set (index * 2 + 1, textureType & 0b10);
+      },
+      getTextureBits: function ()
+      {
+         return this .textureBits;
+      },
+      getShader: function (geometryContext, context)
+      {
+         // Bit Schema of Shader Key
+         //
+         // 0  - 13 -> textures
+         // 14 - 15 -> material type
+         // 16      -> logarithmic depth buffer
+         // 17      -> shadows
+         // 18      -> fog
+         // 19      -> style properties
+         // 20 - 21 -> geometry type
+         // 22      -> fog coords
+         // 23      -> color material
+         // 24      -> normals
+
+         const stylePropertiesNode = context .appearanceNode .getStyleProperties (geometryContext .geometryType);
+
+         let key = +this .textureBits;
+
+         key |= this .getMaterialType (context .shadows) << 14;
+         key |= this .logarithmicDepthBuffer             << 16;
+         key |= context .shadows                         << 17;
+         key |= (context .fogNode ? 1 : 0)               << 18;
+         key |= (stylePropertiesNode ? 1 : 0)            << 19;
+         key |= geometryContext .geometryMask            << 20;
+
+         const shaderNode = this .shaderNodes .get (key) || this .createShader (key, geometryContext, context);
+
+         if (shaderNode .isValid ())
+         {
+            geometryContext .shaderNode = shaderNode;
+
+            return shaderNode;
+         }
+         else
+         {
+            const shaderNode = geometryContext .shaderNode;
+
+            if (shaderNode && shaderNode .isValid ())
+               return shaderNode;
+
+            return this .getBrowser () .getDefaultShader ();
+         }
+      },
+      getGeometryType: (function ()
+      {
+         const geometryTypes = [
+            "X3D_GEOMETRY_0D",
+            "X3D_GEOMETRY_1D",
+            "X3D_GEOMETRY_2D",
+            "X3D_GEOMETRY_3D",
+         ];
+
+         return function (geometryType)
+         {
+            return geometryTypes [geometryType];
+         }
+      })(),
    });
 
    return X3DMaterialNode;
@@ -69184,7 +69765,6 @@ function (Fields,
       this .addChildObjects ("textures", new Fields .SFTime ());
 
       this .emissiveColor = new Float32Array (3);
-      this .textures      = 0;
    }
 
    X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
@@ -69196,12 +69776,9 @@ function (Fields,
 
          this ._emissiveColor   .addInterest ("set_emissiveColor__",   this);
          this ._emissiveTexture .addInterest ("set_emissiveTexture__", this);
-         this ._emissiveTexture .addInterest ("set_textures__",        this);
          this ._normalTexture   .addInterest ("set_normalTexture__",   this);
-         this ._normalTexture   .addInterest ("set_textures__",        this);
          this ._transparency    .addInterest ("set_transparency__",    this);
          this ._transparency    .addInterest ("set_transparent__",     this);
-         this ._textures        .addInterest ("set_textures__",        this);
 
          this .set_emissiveColor__ ();
          this .set_emissiveTexture__ ();
@@ -69237,8 +69814,6 @@ function (Fields,
       {
          this .transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
       },
-      set_textures__: function ()
-      { },
       set_transparent__: function ()
       {
          this .setTransparent (Boolean (this .transparency));
@@ -69255,10 +69830,6 @@ function (Fields,
       {
          return this .transparency;
       },
-      getTextures: function ()
-      {
-         return this .textures;
-      },
       getTextureIndices: (function ()
       {
          const textureIndices = {
@@ -69271,30 +69842,19 @@ function (Fields,
             return textureIndices;
          };
       })(),
-      setTexture: function (index, value)
-      {
-         if (value)
-            this .textures |= 1 << index;
-         else
-            this .textures &= ~(1 << index);
-
-         this ._textures = this .getBrowser () .getCurrentTime ();
-      },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
          gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
          gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
 
-         if (this .textures)
+         if (+this .getTextureBits ())
          {
-            const
-               emissiveTexture = shaderObject .x3d_EmissiveTexture,
-               normalTexture   = shaderObject .x3d_NormalTexture;
-
             // Emissive parameters
 
             if (this .emissiveTextureNode)
             {
+               const emissiveTexture = shaderObject .x3d_EmissiveTexture;
+
                this .emissiveTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, emissiveTexture);
 
                gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (this ._emissiveTextureMapping .getValue ()) || 0);
@@ -69305,12 +69865,14 @@ function (Fields,
 
             if (this .normalTextureNode)
             {
-               gl .uniform1f (shaderObject .x3d_NormalScale, this ._normalScale .getValue ());
+               const normalTexture = shaderObject .x3d_NormalTexture;
 
                this .normalTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, normalTexture);
 
                gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (this ._normalTextureMapping .getValue ()) || 0);
                gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._normalTextureMapping .getValue ()) || 0);
+
+               gl .uniform1f (shaderObject .x3d_NormalScale, this ._normalScale .getValue ());
             }
          }
       },
@@ -69419,8 +69981,6 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
-         this .shaderNode = this .getBrowser () .getUnlitShader ();
-
          this .set_transparent__ ();
       },
       set_emissiveTexture__: function ()
@@ -69438,38 +69998,53 @@ function (Fields,
          this .setTransparent (Boolean (this .getTransparency () ||
                                (this .getEmissiveTexture () && this .getEmissiveTexture () .getTransparent ())));
       },
-      set_textures__: function ()
+      getMaterialType: function ()
       {
-         const browser = this .getBrowser ();
+         return 0;
+      },
+      createShader: function (key, geometryContext, context)
+      {
+         const
+            browser             = this .getBrowser (),
+            stylePropertiesNode = context .appearanceNode .getStyleProperties (geometryContext .geometryType),
+            options             = [ ];
 
-         if (this .getTextures ())
+         options .push ("X3D_UNLIT", this .getGeometryType (geometryContext .geometryType))
+
+         if (context .shadows)
+            options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
+
+         if (context .fogNode)
+            options .push ("X3D_FOG");
+
+         if (geometryContext .hasFogCoords)
+            options .push ("X3D_FOG_COORDS");
+
+         if (geometryContext .colorMaterial)
+            options .push ("X3D_COLOR_MATERIAL");
+
+         if (geometryContext .hasNormals)
+            options .push ("X3D_NORMALS");
+
+         if (stylePropertiesNode)
+            options .push ("X3D_STYLE_PROPERTIES");
+
+         if (+this .getTextureBits ())
          {
-            const options = ["X3D_MATERIAL_TEXTURES"];
+            options .push ("X3D_MATERIAL_TEXTURES");
 
             if (this .getEmissiveTexture ())
-               options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+               options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
 
             if (this .getNormalTexture ())
                options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
-
-            const shaderNode = browser .createShader ("UnlitTexturesShader", "Unlit", options);
-
-            shaderNode ._isValid .addInterest ("set_shader__", this, shaderNode);
          }
-         else
-         {
-            this .shaderNode = browser .getUnlitShader ();
-         }
-      },
-      set_shader__: function (shaderNode)
-      {
-         shaderNode ._isValid .removeInterest ("set_shader__", this);
 
-         this .shaderNode = shaderNode;
-      },
-      getShader: function (browser, shadow)
-      {
-         return this .shaderNode;
+         const shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
+
+         browser .getShaders () .set (key, shaderNode);
+
+         return shaderNode;
       },
    });
 
@@ -69745,18 +70320,12 @@ function (Fields,
 
 define ('x_ite/Browser/Shape/X3DShapeContext',[
    "x_ite/Components/Shape/Appearance",
-   "x_ite/Components/Shape/PointProperties",
-   "x_ite/Components/Shape/LineProperties",
-   "x_ite/Components/Shape/FillProperties",
    "x_ite/Components/Shape/UnlitMaterial",
    "x_ite/Components/Texturing/ImageTexture",
    "x_ite/Components/Texturing/TextureProperties",
    "x_ite/Browser/Networking/urls",
 ],
 function (Appearance,
-          PointProperties,
-          LineProperties,
-          FillProperties,
           UnlitMaterial,
           ImageTexture,
           TextureProperties,
@@ -69769,9 +70338,6 @@ function (Appearance,
       _linetypeTextures          = Symbol (),
       _hatchStyleTextures        = Symbol (),
       _defaultAppearance         = Symbol (),
-      _defaultPointProperties    = Symbol (),
-      _defaultLineProperties     = Symbol (),
-      _defaultFillProperties     = Symbol (),
       _defaultMaterial           = Symbol (),
       _lineFillTextureProperties = Symbol (),
       _lineTransformShaderNode   = Symbol (),
@@ -69779,7 +70345,6 @@ function (Appearance,
 
    function X3DShapeContext ()
    {
-      this [_linetypeTextures]   = [ ];
       this [_hatchStyleTextures] = [ ];
       this [_lineStippleScale]   = 1 / (this .getPixelPerPoint () * 32); // 32px
    }
@@ -69799,46 +70364,9 @@ function (Appearance,
 
          return this [_defaultAppearance];
       },
-      getDefaultPointProperties: function ()
-      {
-         this [_defaultPointProperties] = new PointProperties (this .getPrivateScene ());
-         this [_defaultPointProperties] .setup ();
-
-         this .getDefaultPointProperties = function () { return this [_defaultPointProperties]; };
-
-         Object .defineProperty (this, "getDefaultPointProperties", { enumerable: false });
-
-         return this [_defaultPointProperties];
-      },
       getLineStippleScale: function ()
       {
          return this [_lineStippleScale];
-      },
-      getDefaultLineProperties: function ()
-      {
-         this [_defaultLineProperties] = new LineProperties (this .getPrivateScene ());
-
-         this [_defaultLineProperties] ._applied = false;
-         this [_defaultLineProperties] .setup ();
-
-         this .getDefaultLineProperties = function () { return this [_defaultLineProperties]; };
-
-         Object .defineProperty (this, "getDefaultLineProperties", { enumerable: false });
-
-         return this [_defaultLineProperties];
-      },
-      getDefaultFillProperties: function ()
-      {
-         this [_defaultFillProperties] = new FillProperties (this .getPrivateScene ());
-
-         this [_defaultFillProperties] ._hatched = false;
-         this [_defaultFillProperties] .setup ();
-
-         this .getDefaultFillProperties = function () { return this [_defaultFillProperties]; };
-
-         Object .defineProperty (this, "getDefaultFillProperties", { enumerable: false });
-
-         return this [_defaultFillProperties];
       },
       getDefaultMaterial: function ()
       {
@@ -69852,20 +70380,19 @@ function (Appearance,
 
          return this [_defaultMaterial];
       },
-      getLinetypeTexture: function (index)
+      getLinetypeTexture: function ()
       {
-         let linetypeTexture = this [_linetypeTextures] [index];
+         this [_linetypeTextures] = new ImageTexture (this .getPrivateScene ());
 
-         if (linetypeTexture)
-            return linetypeTexture;
+         this [_linetypeTextures] ._url [0]           = urls .getLinetypeUrl ();
+         this [_linetypeTextures] ._textureProperties = this .getLineFillTextureProperties ();
+         this [_linetypeTextures] .setup ();
 
-         linetypeTexture = this [_linetypeTextures] [index] = new ImageTexture (this .getPrivateScene ());
+         this .getLinetypeTexture = function () { return this [_linetypeTextures]; };
 
-         linetypeTexture ._url [0]           = urls .getLinetypeUrl (index);
-         linetypeTexture ._textureProperties = this .getLineFillTextureProperties ();
-         linetypeTexture .setup ();
+         Object .defineProperty (this, "getLinetypeTexture", { enumerable: false });
 
-         return linetypeTexture;
+         return this [_linetypeTextures];
       },
       getHatchStyleTexture: function (index)
       {
@@ -69888,7 +70415,6 @@ function (Appearance,
 
          this [_lineFillTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
          this [_lineFillTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
-
          this [_lineFillTextureProperties] .setup ();
 
          this .getLineFillTextureProperties = function () { return this [_lineFillTextureProperties]; };
@@ -69901,7 +70427,7 @@ function (Appearance,
       {
          this [_lineTransformShaderNode] = this .createShader ("LineTransformShader", "LineTransform");
 
-         this [_lineTransformShaderNode] .setUniforms ([
+         this [_lineTransformShaderNode] .setUniformNames ([
             "viewport",
             "modelViewProjectionMatrix",
             "invModelViewProjectionMatrix",
@@ -70038,18 +70564,14 @@ function (X3DChildNode,
          this .set_geometry__ ();
          this .set_transparent__ ();
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
-         if (shadow)
+         if (shadows)
          {
             if (this ._castShadow .getValue ())
-            {
                return bbox .assign (this .bbox);
-            }
             else
-            {
                return bbox .set ();
-            }
          }
          else
          {
@@ -70693,7 +71215,7 @@ function (Fields,
 
          return function (renderObject)
          {
-            const browser = renderObject .getBrowser ();
+            const browser = this .getBrowser ();
 
             if (browser .getPickOnlySensors () && browser .getSensors () .length === 1)
                return;
@@ -70742,7 +71264,7 @@ function (Fields,
          }
 
          const
-            browser          = renderObject .getBrowser (),
+            browser          = this .getBrowser (),
             pickSensorStack  = browser .getPickSensors (),
             pickingHierarchy = browser .getPickingHierarchy ();
 
@@ -70766,1215 +71288,6 @@ function (Fields,
    });
 
    return Shape;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Rendering/X3DGeometryNode',[
-   "x_ite/Fields",
-   "x_ite/Rendering/VertexArray",
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Browser/Core/Shading",
-   "standard/Math/Numbers/Vector2",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Matrix4",
-   "standard/Math/Geometry/Box3",
-   "standard/Math/Geometry/Plane3",
-   "standard/Math/Geometry/Triangle3",
-   "standard/Math/Algorithm",
-],
-function (Fields,
-          VertexArray,
-          X3DNode,
-          X3DConstants,
-          Shading,
-          Vector2,
-          Vector3,
-          Matrix4,
-          Box3,
-          Plane3,
-          Triangle3,
-          Algorithm)
-{
-"use strict";
-
-   const ARRAY_TYPE = "Array"; // For color, texCoord, normal, and vertex array, can be MFFloat or Array;
-
-   // Box normals for bbox / line intersection.
-   const boxNormals = [
-      new Vector3 (0,  0,  1), // front
-      new Vector3 (0,  0, -1), // back
-      new Vector3 (0,  1,  0), // top
-      new Vector3 (0, -1,  0), // bottom
-      new Vector3 (1,  0,  0)  // right
-      // left: We do not have to test for left.
-   ];
-
-   function X3DGeometryNode (executionContext)
-   {
-      X3DNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DGeometryNode);
-
-      this .addChildObjects ("transparent",  new Fields .SFBool (),
-                             "bbox_changed", new Fields .SFTime (),
-                             "rebuild",      new Fields .SFTime ());
-
-      this ._transparent  .setAccessType (X3DConstants .outputOnly);
-      this ._bbox_changed .setAccessType (X3DConstants .outputOnly);
-      this ._rebuild      .setAccessType (X3DConstants .outputOnly);
-
-      // Members
-
-      const browser = this .getBrowser ();
-
-      this .min                      = new Vector3 (0, 0, 0);
-      this .max                      = new Vector3 (0, 0, 0);
-      this .bbox                     = new Box3 (this .min, this .max, true);
-      this .solid                    = true;
-      this .primitiveMode            = browser .getContext () .TRIANGLES;
-      this .geometryType             = 3;
-      this .flatShading              = undefined;
-      this .colorMaterial            = false;
-      this .attribNodes              = [ ];
-      this .attribArrays             = [ ];
-      this .textureCoordinateMapping = new Map ();
-      this .multiTexCoords           = [ ];
-      this .texCoords                = X3DGeometryNode .createArray ();
-      this .fogDepths                = X3DGeometryNode .createArray ();
-      this .colors                   = X3DGeometryNode .createArray ();
-      this .normals                  = X3DGeometryNode .createArray ();
-      this .flatNormals              = X3DGeometryNode .createArray ();
-      this .vertices                 = X3DGeometryNode .createArray ();
-      this .fogCoords                = false;
-      this .vertexCount              = 0;
-      this .planes                   = [ ];
-
-      for (let i = 0; i < 5; ++ i)
-         this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
-   }
-
-   // Function to select ether Array or MFFloat for color/normal/vertex arrays.
-   X3DGeometryNode .createArray = function ()
-   {
-      if (ARRAY_TYPE == "MFFloat")
-         return new Fields .MFFloat ();
-
-      const array = [ ];
-
-      array .typedArray = new Float32Array ();
-
-      array .assign = function (value)
-      {
-         const length = value .length;
-
-         for (let i = 0; i < length; ++ i)
-            this [i] = value [i];
-
-         this .length = length;
-      };
-
-      array .getValue = function ()
-      {
-         return this .typedArray;
-      };
-
-      array .shrinkToFit = function ()
-      {
-         if (this .length === this .typedArray .length)
-            this .typedArray .set (this);
-         else
-            this .typedArray = new Float32Array (this);
-      };
-
-      return array;
-   }
-
-   X3DGeometryNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-   {
-      constructor: X3DGeometryNode,
-      setup: function ()
-      {
-         X3DNode .prototype .setup .call (this);
-
-         this .rebuild ();
-      },
-      initialize: function ()
-      {
-         X3DNode .prototype .initialize .call (this);
-
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
-
-         this .isLive () .addInterest ("set_live__", this);
-
-         this .addInterest ("requestRebuild", this);
-         this ._rebuild .addInterest ("rebuild", this);
-
-         this .frontFace             = gl .CCW;
-         this .backFace              = new Map ([[gl .CCW, gl .CW], [gl .CW, gl .CCW]]);
-         this .attribBuffers         = [ ];
-         this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
-         this .texCoordBuffers       = Array .from ({length: browser .getMaxTextures ()}, () => gl .createBuffer ());
-         this .fogDepthBuffer        = gl .createBuffer ();
-         this .colorBuffer           = gl .createBuffer ();
-         this .normalBuffer          = gl .createBuffer ();
-         this .vertexBuffer          = gl .createBuffer ();
-         this .vertexArrayObject     = new VertexArray ();
-         this .shadowArrayObject     = new VertexArray ();
-
-         this .set_live__ ();
-      },
-      setGeometryType: function (value)
-      {
-         this .geometryType = value;
-      },
-      getGeometryType: function ()
-      {
-         return this .geometryType;
-      },
-      setTransparent: function (value)
-      {
-         if (value !== this ._transparent .getValue ())
-            this ._transparent = value;
-      },
-      getTransparent: function ()
-      {
-         return this ._transparent .getValue ();
-      },
-      getBBox: function ()
-      {
-         // With screen matrix applied.
-         return this .bbox;
-      },
-      setBBox: function (bbox)
-      {
-         if (bbox .equals (this .bbox))
-            return;
-
-         bbox .getExtents (this .min, this .max);
-
-         this .bbox .assign (bbox);
-
-         for (let i = 0; i < 5; ++ i)
-            this .planes [i] .set (i % 2 ? this .min : this .max, boxNormals [i]);
-
-         this ._bbox_changed .addEvent ();
-      },
-      getMin: function ()
-      {
-         // With screen matrix applied.
-         return this .min;
-      },
-      getMax: function ()
-      {
-         // With screen matrix applied.
-         return this .max;
-      },
-      getMatrix: function ()
-      {
-         return Matrix4 .Identity;
-      },
-      setPrimitiveMode: function (value)
-      {
-         this .primitiveMode = value;
-      },
-      getPrimitiveMode: function ()
-      {
-         return this .primitiveMode;
-      },
-      setSolid: function (value)
-      {
-         this .solid = value;
-      },
-      setCCW: function (value)
-      {
-         const gl = this .getBrowser () .getContext ();
-
-         this .frontFace = value ? gl .CCW : gl .CW;
-      },
-      getAttrib: function ()
-      {
-         return this .attribNodes;
-      },
-      getAttribs: function ()
-      {
-         return this .attribArrays;
-      },
-      setFogDepths: function (value)
-      {
-         this .fogDepths .assign (value);
-      },
-      getFogDepths: function ()
-      {
-         return this .fogDepths;
-      },
-      setColors: function (value)
-      {
-         this .colors .assign (value);
-      },
-      getColors: function ()
-      {
-         return this .colors;
-      },
-      setMultiTexCoords: function (value)
-      {
-         const
-            multiTexCoords = this .multiTexCoords,
-            length         = value .length;
-
-         for (let i = 0; i < length; ++ i)
-            multiTexCoords [i] = value [i];
-
-         multiTexCoords .length = length;
-      },
-      getMultiTexCoords: function ()
-      {
-         return this .multiTexCoords;
-      },
-      getTexCoords: function ()
-      {
-         return this .texCoords;
-      },
-      setTextureCoordinate: function (value)
-      {
-         this .textureCoordinateNode .removeInterest ("updateTextureCoordinateMapping", this);
-
-         if (value)
-            this .textureCoordinateNode = value;
-         else
-            this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();
-
-         this .textureCoordinateNode .addInterest ("updateTextureCoordinateMapping", this);
-
-         this .updateTextureCoordinateMapping ();
-      },
-      updateTextureCoordinateMapping: function ()
-      {
-         this .textureCoordinateMapping .clear ();
-
-         this .textureCoordinateNode .getTextureMapping (this .textureCoordinateMapping);
-      },
-      setNormals: function (value)
-      {
-         this .normals .assign (value);
-      },
-      getNormals: function ()
-      {
-         return this .normals;
-      },
-      setVertices: function (value)
-      {
-         this .vertices .assign (value);
-      },
-      getVertices: function ()
-      {
-         return this .vertices;
-      },
-      updateVertexArrays: function ()
-      {
-         this .vertexArrayObject .update ();
-         this .shadowArrayObject .update ();
-
-         this .updateParticlesShadow = true;
-         this .updateParticles       = true;
-      },
-      buildTexCoords: function ()
-      {
-         const texCoords = this .texCoords;
-
-         if (texCoords .length === 0)
-         {
-            const
-               p         = this .getTexCoordParams (),
-               min       = p .min,
-               Sindex    = p .Sindex,
-               Tindex    = p .Tindex,
-               Ssize     = p .Ssize,
-               S         = min [Sindex],
-               T         = min [Tindex],
-               vertices  = this .vertices .getValue ();
-
-            for (let i = 0, length = vertices .length; i < length; i += 4)
-            {
-               texCoords .push ((vertices [i + Sindex] - S) / Ssize,
-                                (vertices [i + Tindex] - T) / Ssize,
-                                0,
-                                1);
-            }
-
-            texCoords .shrinkToFit ();
-         }
-
-         this .getMultiTexCoords () .push (texCoords);
-      },
-      getTexCoordParams: (function ()
-      {
-         const texCoordParams = { min: new Vector3 (0, 0, 0), Ssize: 0, Sindex: 0, Tindex: 0 };
-
-         return function ()
-         {
-            const
-               bbox  = this .getBBox (),
-               size  = bbox .size,
-               Xsize = size .x,
-               Ysize = size .y,
-               Zsize = size .z;
-
-            texCoordParams .min .assign (bbox .center) .subtract (size .divide (2));
-
-            if ((Xsize >= Ysize) && (Xsize >= Zsize))
-            {
-               // X size largest
-               texCoordParams .Ssize = Xsize; texCoordParams .Sindex = 0;
-
-               if (Ysize >= Zsize)
-                  texCoordParams .Tindex = 1;
-               else
-                  texCoordParams .Tindex = 2;
-            }
-            else if ((Ysize >= Xsize) && (Ysize >= Zsize))
-            {
-               // Y size largest
-               texCoordParams .Ssize = Ysize; texCoordParams .Sindex = 1;
-
-               if (Xsize >= Zsize)
-                  texCoordParams .Tindex = 0;
-               else
-                  texCoordParams .Tindex = 2;
-            }
-            else
-            {
-               // Z is the largest
-               texCoordParams .Ssize = Zsize; texCoordParams .Sindex = 2;
-
-               if (Xsize >= Ysize)
-                  texCoordParams .Tindex = 0;
-               else
-                  texCoordParams .Tindex = 1;
-            }
-
-            return texCoordParams;
-         };
-      })(),
-      refineNormals: function (normalIndex, normals, creaseAngle)
-      {
-         if (creaseAngle === 0)
-            return normals;
-
-         const
-            cosCreaseAngle = Math .cos (Algorithm .clamp (creaseAngle, 0, Math .PI)),
-            normals_       = [ ];
-
-         for (const i in normalIndex) // Don't use forEach
-         {
-            const vertex = normalIndex [i];
-
-            for (const p of vertex)
-            {
-               const
-                  P = normals [p],
-                  N = new Vector3 (0, 0, 0);
-
-               for (const q of vertex)
-               {
-                  const Q = normals [q];
-
-                  if (Q .dot (P) >= cosCreaseAngle)
-                     N .add (Q);
-               }
-
-               normals_ [p] = N .normalize ();
-            }
-         }
-
-         return normals_;
-      },
-      transformLine: function (hitRay)
-      {
-         // Apply sceen nodes transformation in place here.
-      },
-      transformMatrix: function (hitRay)
-      {
-         // Apply sceen nodes transformation in place here.
-      },
-      isClipped: function (point, clipPlanes)
-      {
-         return clipPlanes .some (function (clipPlane)
-         {
-            return clipPlane .isClipped (point);
-         });
-      },
-      intersectsLine: function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
-      {
-         return this .intersectsLineWithGeometry (hitRay, renderObject .getModelViewMatrix () .get (), renderObject .getLocalObjects (), intersections);
-      },
-      intersectsLineWithGeometry: (function ()
-      {
-         const
-            modelViewMatrix = new Matrix4 (),
-            uvt             = { u: 0, v: 0, t: 0 },
-            v0              = new Vector3 (0, 0, 0),
-            v1              = new Vector3 (0, 0, 0),
-            v2              = new Vector3 (0, 0, 0),
-            clipPoint       = new Vector3 (0, 0, 0);
-
-         return function (hitRay, matrix, clipPlanes, intersections)
-         {
-            if (this .intersectsBBox (hitRay))
-            {
-               this .transformLine (hitRay); // Apply screen transformations from screen nodes.
-               this .transformMatrix (modelViewMatrix .assign (matrix)); // Apply screen transformations from screen nodes.
-
-               const
-                  texCoords   = this .multiTexCoords [0] .getValue (),
-                  normals     = this .normals .getValue (),
-                  vertices    = this .vertices .getValue (),
-                  vertexCount = this .vertexCount;
-
-               for (let i = 0; i < vertexCount; i += 3)
-               {
-                  const i4 = i * 4;
-
-                  v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
-                  v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
-                  v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-
-                  if (hitRay .intersectsTriangle (v0, v1, v2, uvt))
-                  {
-                     // Get barycentric coordinates.
-
-                     const
-                        u = uvt .u,
-                        v = uvt .v,
-                        t = uvt .t;
-
-                     // Determine vectors for X3DPointingDeviceSensors.
-
-                     const point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
-                                                t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
-                                                t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
-
-                     if (clipPlanes .length)
-                     {
-                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                           continue;
-                     }
-
-                     const texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
-                                                   t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
-
-                     const i3 = i * 3;
-
-                     const normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
-                                                 t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
-                                                 t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
-
-                     intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
-                  }
-               }
-            }
-
-            return intersections .length;
-         };
-      })(),
-      getPlanesWithOffset: (function ()
-      {
-         const
-            min    = new Vector3 (0, 0, 0),
-            max    = new Vector3 (0, 0, 0),
-            planes = [ ];
-
-         for (let i = 0; i < 5; ++ i)
-            planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
-
-         return function (minX, minY, minZ, maxX, maxY, maxZ)
-         {
-            min .set (minX, minY, minZ);
-            max .set (maxX, maxY, maxZ);
-
-            for (let i = 0; i < 5; ++ i)
-               planes [i] .set (i % 2 ? min : max, boxNormals [i]);
-
-            return planes;
-         };
-      })(),
-      intersectsBBox: (function ()
-      {
-         const intersection = new Vector3 (0, 0, 0);
-
-         return function (hitRay, offsets)
-         {
-            if (offsets)
-            {
-               var
-                  min    = this .min,
-                  max    = this .max,
-                  minX   = min .x - offsets .x,
-                  maxX   = max .x + offsets .x,
-                  minY   = min .y - offsets .y,
-                  maxY   = max .y + offsets .y,
-                  minZ   = min .z - offsets .z,
-                  maxZ   = max .z + offsets .z,
-                  planes = this .getPlanesWithOffset (minX, minY, minZ, maxX, maxY, maxZ);
-            }
-            else
-            {
-               var
-                  min    = this .min,
-                  max    = this .max,
-                  minX   = min .x,
-                  maxX   = max .x,
-                  minY   = min .y,
-                  maxY   = max .y,
-                  minZ   = min .z,
-                  maxZ   = max .z,
-                  planes = this .planes;
-            }
-
-            // front
-            if (planes [0] .intersectsLine (hitRay, intersection))
-            {
-               if (intersection .x >= minX && intersection .x <= maxX &&
-                   intersection .y >= minY && intersection .y <= maxY)
-                  return true;
-            }
-
-            // back
-            if (planes [1] .intersectsLine (hitRay, intersection))
-            {
-               if (intersection .x >= minX && intersection .x <= maxX &&
-                   intersection .y >= minY && intersection .y <= maxY)
-                  return true;
-            }
-
-            // top
-            if (planes [2] .intersectsLine (hitRay, intersection))
-            {
-               if (intersection .x >= minX && intersection .x <= maxX &&
-                   intersection .z >= minZ && intersection .z <= maxZ)
-                  return true;
-            }
-
-            // bottom
-            if (planes [3] .intersectsLine (hitRay, intersection))
-            {
-               if (intersection .x >= minX && intersection .x <= maxX &&
-                   intersection .z >= minZ && intersection .z <= maxZ)
-                  return true;
-            }
-
-            // right
-            if (planes [4] .intersectsLine (hitRay, intersection))
-            {
-               if (intersection .y >= minY && intersection .y <= maxY &&
-                   intersection .z >= minZ && intersection .z <= maxZ)
-                  return true;
-            }
-
-            return false;
-         };
-      })(),
-      intersectsBox: (function ()
-      {
-         const
-            v0        = new Vector3 (0, 0, 0),
-            v1        = new Vector3 (0, 0, 0),
-            v2        = new Vector3 (0, 0, 0),
-            invMatrix = new Matrix4 (),
-            clipPoint = new Vector3 (0, 0, 0);
-
-         return function (box, clipPlanes, modelViewMatrix)
-         {
-            if (box .intersectsBox (this .bbox))
-            {
-               box .multRight (invMatrix .assign (this .getMatrix ()) .inverse ());
-
-               this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
-
-               const vertices = this .vertices .getValue ();
-
-               for (let i = 0, length = this .vertexCount; i < length; i += 3)
-               {
-                  const i4 = i * 4;
-
-                  v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
-                  v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
-                  v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-
-                  if (box .intersectsTriangle (v0, v1, v2))
-                  {
-                     if (clipPlanes .length)
-                     {
-                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v0)), clipPlanes))
-                           continue;
-
-                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v1)), clipPlanes))
-                           continue;
-
-                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v2)), clipPlanes))
-                           continue;
-                     }
-
-                     return true;
-                  }
-               }
-            }
-
-            return false;
-         };
-      })(),
-      set_live__: function ()
-      {
-         if (this .isLive () .getValue ())
-            this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
-         else
-            this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
-      },
-      set_shading__: (function ()
-      {
-         const
-            v0     = new Vector3 (0, 0, 0),
-            v1     = new Vector3 (0, 0, 0),
-            v2     = new Vector3 (0, 0, 0),
-            normal = new Vector3 (0, 0, 0);
-
-         return function (shading)
-         {
-            if (this .geometryType < 2)
-               return;
-
-            const
-               browser     = this .getBrowser (),
-               flatShading = browser .getBrowserOptions () .getShading () === Shading .FLAT;
-
-            if (flatShading === this .flatShading)
-               return;
-
-            this .flatShading = flatShading;
-
-            // Generate flat normals if needed.
-
-            const gl = browser .getContext ();
-
-            if (flatShading)
-            {
-               if (! this .flatNormals .length)
-               {
-                  const
-                     cw          = this .frontFace === gl .CW,
-                     flatNormals = this .flatNormals,
-                     vertices    = this .vertices .getValue ();
-
-                  for (let i = 0, length = vertices .length; i < length; i += 12)
-                  {
-                     Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
-                                        v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
-                                        v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
-                                        normal);
-
-                     if (cw)
-                        normal .negate ();
-
-                     flatNormals .push (normal .x, normal .y, normal .z,
-                                        normal .x, normal .y, normal .z,
-                                        normal .x, normal .y, normal .z);
-                  }
-
-                  flatNormals .shrinkToFit ();
-               }
-            }
-
-            // Transfer normals.
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .DYNAMIC_DRAW);
-         };
-      })(),
-      requestRebuild: function ()
-      {
-         this ._rebuild .addEvent ();
-      },
-      rebuild: (function ()
-      {
-         const point = new Vector3 (0, 0, 0);
-
-         return function ()
-         {
-            this .clear ();
-            this .build ();
-
-            // Shrink arrays before transfer to graphics card.
-
-            for (const attribArray of this .attribArrays)
-               attribArray .shrinkToFit ();
-
-            for (const multiTexCoord of this .multiTexCoords)
-               multiTexCoord .shrinkToFit ();
-
-            this .fogDepths .shrinkToFit ();
-            this .colors    .shrinkToFit ();
-            this .normals   .shrinkToFit ();
-            this .vertices  .shrinkToFit ();
-
-            // Determine bbox.
-
-            const
-               min      = this .min,
-               max      = this .max,
-               vertices = this .vertices .getValue ();
-
-            if (vertices .length)
-            {
-               if (min .x === Number .POSITIVE_INFINITY)
-               {
-                  for (let i = 0, length = vertices .length; i < length; i += 4)
-                  {
-                     point .set (vertices [i], vertices [i + 1], vertices [i + 2]);
-
-                     min .min (point);
-                     max .max (point);
-                  }
-               }
-
-               this .bbox .setExtents (min, max);
-            }
-            else
-            {
-               this .bbox .setExtents (min .set (0, 0, 0), max .set (0, 0, 0));
-            }
-
-            this ._bbox_changed .addEvent ();
-
-            for (let i = 0; i < 5; ++ i)
-               this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
-
-            // Generate texCoord if needed.
-
-            if (this .multiTexCoords .length === 0)
-               this .buildTexCoords ();
-
-            if (this .multiTexCoords .length)
-            {
-               const maxTextures = this .getBrowser () .getMaxTextures ();
-
-               for (let i = this .multiTexCoords .length; i < maxTextures; ++ i)
-                  this .multiTexCoords [i] = this .multiTexCoords .at (-1);
-
-               this .multiTexCoords .length = maxTextures;
-            }
-
-            // Upload normals or flat normals.
-
-            this .set_shading__ (this .getBrowser () .getBrowserOptions () ._Shading);
-
-            // Upload arrays.
-
-            this .transfer ();
-
-            // Setup render functions.
-
-            this .setRenderFunctions ();
-         };
-      })(),
-      clear: function ()
-      {
-         // BBox
-
-         this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
-         this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
-
-         // Create attribArray arrays.
-         {
-            const attribArrays = this .attribArrays;
-
-            for (const attribArray of attribArrays)
-               attribArray .length = 0;
-
-            const length = this .attribNodes .length;
-
-            for (let a = attribArrays .length; a < length; ++ a)
-               attribArrays [a] = X3DGeometryNode .createArray ();
-
-            attribArrays .length = length;
-         }
-
-         // Buffer
-
-         this .flatShading = undefined;
-
-         this .fogDepths      .length = 0;
-         this .colors         .length = 0;
-         this .multiTexCoords .length = 0;
-         this .texCoords      .length = 0;
-         this .normals        .length = 0;
-         this .flatNormals    .length = 0;
-         this .vertices       .length = 0;
-      },
-      transfer: function ()
-      {
-         const gl = this .getBrowser () .getContext ();
-
-         // Transfer attribArrays.
-
-         for (let i = this .attribBuffers .length, length = this .attribArrays .length; i < length; ++ i)
-            this .attribBuffers .push (gl .createBuffer ());
-
-         for (let i = 0, length = this .attribArrays .length; i < length; ++ i)
-         {
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .attribBuffers [i]);
-            gl .bufferData (gl .ARRAY_BUFFER, this .attribArrays [i] .getValue (), gl .DYNAMIC_DRAW);
-         }
-
-         // Transfer fog depths.
-
-         const lastFogCoords = this .fogCoords;
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .fogDepthBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .fogDepths .getValue (), gl .DYNAMIC_DRAW);
-
-         this .fogCoords = !! this .fogDepths .length;
-
-         if (this .fogCoords !== lastFogCoords)
-            this .updateVertexArrays ();
-
-         // Transfer colors.
-
-         const lastColorMaterial = this .colorMaterial;
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .colors .getValue (), gl .DYNAMIC_DRAW);
-
-         this .colorMaterial = !! this .colors .length;
-
-         if (this .colorMaterial !== lastColorMaterial)
-            this .updateVertexArrays ();
-
-         // Transfer multiTexCoords.
-
-         for (let i = 0, length = this .multiTexCoords .length; i < length; ++ i)
-         {
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [i]);
-            gl .bufferData (gl .ARRAY_BUFFER, this .multiTexCoords [i] .getValue (), gl .DYNAMIC_DRAW);
-         }
-
-         // Transfer vertices.
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .vertexBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .vertices .getValue (), gl .DYNAMIC_DRAW);
-
-         this .vertexCount = this .vertices .length / 4;
-      },
-      setRenderFunctions: function ()
-      {
-         if (this .vertexCount)
-         {
-            // Use default render functions.
-
-            delete this .depth;
-            delete this .display;
-            delete this .displayParticlesDepth;
-            delete this .displayParticles;
-         }
-         else
-         {
-            // Use no render function.
-
-            this .depth                 = Function .prototype;
-            this .display               = Function .prototype;
-            this .displayParticlesDepth = Function .prototype;
-            this .displayParticles      = Function .prototype;
-         }
-      },
-      traverse: function (type, renderObject)
-      { },
-      depth: function (gl, context, shaderNode)
-      {
-         if (this .shadowArrayObject .enable (gl, shaderNode))
-            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
-
-         gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
-      },
-      display: function (gl, context)
-      {
-         const
-            appearanceNode   = context .shapeNode .getAppearance (),
-            materialNode     = appearanceNode .materialNode,
-            backMaterialNode = appearanceNode .backMaterialNode,
-            frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
-
-         if (this .solid || ! backMaterialNode || frontShaderNode .getWireframe ())
-         {
-            this .displayGeometry (gl, context, appearanceNode, frontShaderNode, true, true);
-         }
-         else
-         {
-            const backShaderNode = appearanceNode .shaderNode || backMaterialNode .getShader (context .browser, context .shadow)
-
-            this .displayGeometry (gl, context, appearanceNode, backShaderNode,  true,  false);
-            this .displayGeometry (gl, context, appearanceNode, frontShaderNode, false, true);
-         }
-      },
-      displayGeometry: function (gl, context, appearanceNode, shaderNode, back, front)
-      {
-         if (shaderNode .isValid ())
-         {
-            const
-               blendModeNode = appearanceNode .blendModeNode,
-               attribNodes   = this .attribNodes,
-               attribBuffers = this .attribBuffers,
-               primitiveMode = shaderNode .getPrimitiveMode (this .primitiveMode);
-
-            if (blendModeNode)
-               blendModeNode .enable (gl);
-
-            shaderNode .enable (gl);
-            shaderNode .setLocalUniforms (gl, context, front);
-
-            // Setup vertex attributes.
-
-            if (this .vertexArrayObject .enable (gl, shaderNode))
-            {
-               for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-               if (this .fogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
-
-               if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
-
-               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-               shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
-               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
-            }
-
-            // Draw depending on wireframe, solid and transparent.
-
-            if (shaderNode .getWireframe ())
-            {
-               for (let i = 0, length = this .vertexCount; i < length; i += 3)
-                  gl .drawArrays (primitiveMode, i, 3);
-            }
-            else
-            {
-               const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
-
-               gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
-
-               if (context .transparent || back !== front)
-               {
-                  // Render transparent or back or front.
-
-                  gl .enable (gl .CULL_FACE);
-
-                  // Render back.
-
-                  if (back && ! this .solid)
-                  {
-                     gl .cullFace (gl .FRONT);
-                     gl .drawArrays (primitiveMode, 0, this .vertexCount);
-                  }
-
-                  // Render front.
-
-                  if (front)
-                  {
-                     gl .cullFace (gl .BACK);
-                     gl .drawArrays (primitiveMode, 0, this .vertexCount);
-                  }
-               }
-               else
-               {
-                  // Render solid or both sides.
-
-                  if (this .solid)
-                     gl .enable (gl .CULL_FACE);
-                  else
-                     gl .disable (gl .CULL_FACE);
-
-                  gl .drawArrays (primitiveMode, 0, this .vertexCount);
-               }
-            }
-
-            if (blendModeNode)
-               blendModeNode .disable (gl);
-         }
-      },
-      displayParticlesDepth: function (gl, context, shaderNode, particleSystem)
-      {
-         const outputParticles = particleSystem .outputParticles;
-
-         if (outputParticles .shadowArrayObject .update (this .updateParticlesShadow) .enable (gl, shaderNode))
-         {
-            const particleStride = particleSystem .particleStride;
-
-            shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
-            shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
-            shaderNode .enableVertexAttribute         (gl, this .vertexBuffer, 0, 0);
-
-            this .updateParticlesShadow = false;
-         }
-
-         gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-      },
-      displayParticles: function (gl, context, particleSystem)
-      {
-         const
-            appearanceNode   = context .shapeNode .getAppearance (),
-            materialNode     = appearanceNode .materialNode,
-            backMaterialNode = appearanceNode .backMaterialNode,
-            frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
-
-         if (this .solid || ! backMaterialNode || frontShaderNode .getWireframe ())
-         {
-            this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particleSystem);
-         }
-         else
-         {
-            const backShaderNode = appearanceNode .shaderNode || backMaterialNode .getShader (context .browser, context .shadow);
-
-            this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode,  true,  false, particleSystem);
-            this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, false, true,  particleSystem);
-         }
-      },
-      displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particleSystem)
-      {
-         if (shaderNode .isValid ())
-         {
-            const
-               blendModeNode = appearanceNode .blendModeNode,
-               attribNodes   = this .attribNodes,
-               attribBuffers = this .attribBuffers,
-               primitiveMode = shaderNode .getPrimitiveMode (this .primitiveMode);
-
-            if (blendModeNode)
-               blendModeNode .enable (gl);
-
-            // Setup shader.
-
-            shaderNode .enable (gl);
-            shaderNode .setLocalUniforms (gl, context, front);
-
-            // Setup vertex attributes.
-
-            const outputParticles = particleSystem .outputParticles;
-
-            if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
-            {
-               const particleStride = particleSystem .particleStride;
-
-               shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
-               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset,   1);
-
-               for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-               if (this .fogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
-
-               if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
-
-               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-               shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
-               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
-
-               this .updateParticles = false;
-            }
-
-            // Draw depending on wireframe, solid and transparent.
-
-            const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
-
-            gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
-
-            if (context .transparent || back !== front)
-            {
-               // Render transparent or back or front.
-
-               gl .enable (gl .CULL_FACE);
-
-               if (back && ! this .solid)
-               {
-                  gl .cullFace (gl .FRONT);
-                  gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-               }
-
-               if (front)
-               {
-                  gl .cullFace (gl .BACK);
-                  gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-               }
-            }
-            else
-            {
-               // Render solid or both sides.
-
-               if (this .solid)
-                  gl .enable (gl .CULL_FACE);
-               else
-                  gl .disable (gl .CULL_FACE);
-
-               gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-            }
-
-            if (blendModeNode)
-               blendModeNode .disable (gl);
-         }
-      },
-   });
-
-   return X3DGeometryNode;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -72274,7 +71587,7 @@ function (X3DGeometryNode,
                viewport           = renderObject .getViewVolume () .getViewport (),
                extents            = bbox .assign (this .getBBox ()) .multRight (modelViewMatrix) .getExtents (min, max),
                linePropertiesNode = appearanceNode .getLineProperties (),
-               lineWidth1_2       = Math .max (1.5, linePropertiesNode .getApplied () ? linePropertiesNode .getLinewidthScaleFactor () / 2 : 0),
+               lineWidth1_2       = Math .max (1.5, linePropertiesNode && linePropertiesNode .getApplied () ? linePropertiesNode .getLinewidthScaleFactor () / 2 : 1),
                screenScale1       = renderObject .getViewpoint () .getScreenScale (min, viewport, screenScale1_), // in m/px
                offsets1           = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (lineWidth1_2)),
                screenScale2       = renderObject .getViewpoint () .getScreenScale (max, viewport, screenScale2_), // in m/px
@@ -72283,7 +71596,7 @@ function (X3DGeometryNode,
             if (this .intersectsBBox (hitRay, offsets1 .abs () .max (offsets2 .abs ())))
             {
                const
-                  pointer          = renderObject .getBrowser () .getPointer (),
+                  pointer          = this .getBrowser () .getPointer (),
                   projectionMatrix = renderObject .getProjectionMatrix () .get (),
                   clipPlanes       = renderObject .getLocalObjects (),
                   vertices         = this .getVertices (),
@@ -72423,222 +71736,175 @@ function (X3DGeometryNode,
          return function (gl, context)
          {
             const
-               browser            = context .browser,
-               appearanceNode     = context .shapeNode .getAppearance (),
+               browser            = this .getBrowser (),
+               appearanceNode     = context .appearanceNode,
                linePropertiesNode = appearanceNode .getLineProperties (),
-               shaderNode         = appearanceNode .shaderNode || browser .getLineShader (),
-               blendModeNode      = appearanceNode .blendModeNode,
-               attribNodes        = this .attribNodes,
-               attribBuffers      = this .attribBuffers;
+               shaderNode         = appearanceNode .getShader (this, context),
+               blendModeNode      = appearanceNode .getBlendMode (),
+               attribNodes        = this .getAttrib (),
+               attribBuffers      = this .getAttribBuffers ();
 
-            if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
-               this .updateLengthSoFar (gl, context);
-
-            if (linePropertiesNode .getMustTransformLines ())
+            if (linePropertiesNode)
             {
-               const transformShaderNode = browser .getLineTransformShader ();
+               if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
+                  this .updateLengthSoFar (gl, context);
 
-               if (transformShaderNode .isValid ())
+               if (linePropertiesNode .getMustTransformLines ())
                {
-                  const
-                     viewport         = context .renderer .getViewVolume () .getViewport (),
-                     projectionMatrix = context .renderer .getProjectionMatrix () .get (),
-                     primitiveMode    = shaderNode .getPrimitiveMode (gl .TRIANGLES);
+                  const transformShaderNode = browser .getLineTransformShader ();
 
-                  modelViewProjectionMatrixArray .set (matrix .assign (context .modelViewMatrix) .multRight (projectionMatrix));
-                  invModelViewProjectionMatrixArray .set (matrix .inverse ());
-
-                  // Start
-
-                  transformShaderNode .enable (gl);
-
-                  gl .uniform4f (transformShaderNode .viewport, viewport .x, viewport .y, viewport .z, viewport .w);
-                  gl .uniformMatrix4fv (transformShaderNode .modelViewProjectionMatrix,    false, modelViewProjectionMatrixArray);
-                  gl .uniformMatrix4fv (transformShaderNode .invModelViewProjectionMatrix, false, invModelViewProjectionMatrixArray);
-                  gl .uniform1f (transformShaderNode .scale, linePropertiesNode .getLinewidthScaleFactor () / 2);
-
-                  // Setup vertex attributes.
-
-                  if (this .transformVertexArrayObject .enable (gl, shaderNode))
+                  if (transformShaderNode .isValid ())
                   {
                      const
-                        fogDepthStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
-                        fogDepthOffset0 = 0,
-                        fogDepthOffset1 = 1 * Float32Array .BYTES_PER_ELEMENT,
-                        colorStride     = 8 * Float32Array .BYTES_PER_ELEMENT,
-                        colorOffset0    = 0,
-                        colorOffset1    = 4 * Float32Array .BYTES_PER_ELEMENT,
-                        texCoordStride  = 8 * Float32Array .BYTES_PER_ELEMENT,
-                        texCoordOffset0 = 0,
-                        texCoordOffset1 = 4 * Float32Array .BYTES_PER_ELEMENT,
-                        vertexStride    = 8 * Float32Array .BYTES_PER_ELEMENT,
-                        vertexOffset0   = 0,
-                        vertexOffset1   = 4 * Float32Array .BYTES_PER_ELEMENT;
+                        renderer         = context .renderer,
+                        viewport         = renderer .getViewVolume () .getViewport (),
+                        projectionMatrix = renderer .getProjectionMatrix () .get (),
+                        primitiveMode    = browser .getPrimitiveMode (gl .TRIANGLES);
 
-                     // for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                     //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+                     modelViewProjectionMatrixArray .set (matrix .assign (context .modelViewMatrix) .multRight (projectionMatrix));
+                     invModelViewProjectionMatrixArray .set (matrix .inverse ());
 
-                     if (this .fogCoords)
+                     // Start
+
+                     transformShaderNode .enable (gl);
+
+                     gl .uniform4f (transformShaderNode .viewport, viewport .x, viewport .y, viewport .z, viewport .w);
+                     gl .uniformMatrix4fv (transformShaderNode .modelViewProjectionMatrix,    false, modelViewProjectionMatrixArray);
+                     gl .uniformMatrix4fv (transformShaderNode .invModelViewProjectionMatrix, false, invModelViewProjectionMatrixArray);
+                     gl .uniform1f (transformShaderNode .scale, linePropertiesNode .getLinewidthScaleFactor () / 2);
+
+                     // Setup vertex attributes.
+
+                     if (this .transformVertexArrayObject .enable (gl, shaderNode))
                      {
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth0", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset0);
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth1", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset1);
+                        const
+                           fogDepthStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
+                           fogDepthOffset0 = 0,
+                           fogDepthOffset1 = 1 * Float32Array .BYTES_PER_ELEMENT,
+                           colorStride     = 8 * Float32Array .BYTES_PER_ELEMENT,
+                           colorOffset0    = 0,
+                           colorOffset1    = 4 * Float32Array .BYTES_PER_ELEMENT,
+                           texCoordStride  = 8 * Float32Array .BYTES_PER_ELEMENT,
+                           texCoordOffset0 = 0,
+                           texCoordOffset1 = 4 * Float32Array .BYTES_PER_ELEMENT,
+                           vertexStride    = 8 * Float32Array .BYTES_PER_ELEMENT,
+                           vertexOffset0   = 0,
+                           vertexOffset1   = 4 * Float32Array .BYTES_PER_ELEMENT;
+
+                        // for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                        //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                        if (this .hasFogCoords)
+                        {
+                           transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth0", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset0);
+                           transformShaderNode .enableFloatAttrib (gl, "x3d_FogDepth1", this .fogDepthBuffer, 1, fogDepthStride, fogDepthOffset1);
+                        }
+
+                        if (this .colorMaterial)
+                        {
+                           transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
+                           transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
+                        }
+
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord0", this .texCoordBuffers [0], 4, texCoordStride, texCoordOffset0);
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord1", this .texCoordBuffers [0], 4, texCoordStride, texCoordOffset1);
+
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
                      }
 
-                     if (this .colorMaterial)
+                     // Transform lines.
+
+                     gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
+                     gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .trianglesBuffer);
+                     gl .enable (gl .RASTERIZER_DISCARD);
+                     gl .beginTransformFeedback (gl .POINTS);
+                     gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount / 2, 2);
+                     gl .endTransformFeedback ();
+                     gl .disable (gl .RASTERIZER_DISCARD);
+                     gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
+
+                     // DEBUG
+
+                     // const data = new Float32Array (13 * 6 * this .vertexCount / 2);
+                     // gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
+                     // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
+                     // console .log (data);
+
+                     // Render triangles.
+
+                     if (blendModeNode)
+                        blendModeNode .enable (gl);
+
+                     // Setup shader.
+
+                     shaderNode .enable (gl);
+                     shaderNode .setUniforms (gl, context);
+
+                     // Setup vertex attributes.
+
+                     if (this .thickVertexArrayObject .enable (gl, shaderNode))
                      {
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
+                        const
+                           stride         = 13 * Float32Array .BYTES_PER_ELEMENT,
+                           fogCoordOffset = 0,
+                           colorOffset    = 1 * Float32Array .BYTES_PER_ELEMENT,
+                           texCoordOffset = 5 * Float32Array .BYTES_PER_ELEMENT,
+                           vertexOffset   = 9 * Float32Array .BYTES_PER_ELEMENT;
+
+                        // for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                        //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                        if (this .hasFogCoords)
+                           shaderNode .enableFogDepthAttribute (gl, this .trianglesBuffer, stride, fogCoordOffset);
+
+                        if (this .colorMaterial)
+                           shaderNode .enableColorAttribute (gl, this .trianglesBuffer, stride, colorOffset);
+
+                        shaderNode .enableTexCoordAttribute (gl, this .trianglesTexCoordBuffers, stride, texCoordOffset);
+                        shaderNode .enableVertexAttribute   (gl, this .trianglesBuffer,          stride, vertexOffset);
+
+                        gl .bindBuffer (gl .ARRAY_BUFFER, null);
                      }
 
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord0", this .texCoordBuffers [0], 4, texCoordStride, texCoordOffset0);
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord1", this .texCoordBuffers [0], 4, texCoordStride, texCoordOffset1);
+                     if (browser .getWireframe ())
+                     {
+                        for (let i = 0, length = this .vertexCount * 3; i < length; i += 3)
+                           gl .drawArrays (primitiveMode, i, 3);
+                     }
+                     else
+                     {
+                        gl .frontFace (gl .CCW);
+                        gl .enable (gl .CULL_FACE);
+                        gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
+                     }
 
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
-                     transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
+                     if (blendModeNode)
+                        blendModeNode .disable (gl);
                   }
 
-                  // Transform lines.
-
-                  gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, browser .getLineTransformFeedback ());
-                  gl .bindBufferBase (gl .TRANSFORM_FEEDBACK_BUFFER, 0, this .trianglesBuffer);
-                  gl .enable (gl .RASTERIZER_DISCARD);
-                  gl .beginTransformFeedback (gl .POINTS);
-                  gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount / 2, 2);
-                  gl .endTransformFeedback ();
-                  gl .disable (gl .RASTERIZER_DISCARD);
-                  gl .bindTransformFeedback (gl .TRANSFORM_FEEDBACK, null);
-
-                  // DEBUG
-
-                  // const data = new Float32Array (13 * 6 * this .vertexCount / 2);
-                  // gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
-                  // gl .getBufferSubData (gl .ARRAY_BUFFER, 0, data);
-                  // console .log (data);
-
-                  // Render triangles.
-
-                  if (blendModeNode)
-                     blendModeNode .enable (gl);
-
-                  // Setup shader.
-
-                  shaderNode .enable (gl);
-                  shaderNode .setLocalUniforms (gl, context);
-
-                  // Setup vertex attributes.
-
-                  if (this .thickVertexArrayObject .enable (gl, shaderNode))
-                  {
-                     const
-                        stride         = 13 * Float32Array .BYTES_PER_ELEMENT,
-                        fogCoordOffset = 0,
-                        colorOffset    = 1 * Float32Array .BYTES_PER_ELEMENT,
-                        texCoordOffset = 5 * Float32Array .BYTES_PER_ELEMENT,
-                        vertexOffset   = 9 * Float32Array .BYTES_PER_ELEMENT;
-
-                     // for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                     //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-                     if (this .fogCoords)
-                        shaderNode .enableFogDepthAttribute (gl, this .trianglesBuffer, stride, fogCoordOffset);
-
-                     if (this .colorMaterial)
-                        shaderNode .enableColorAttribute (gl, this .trianglesBuffer, stride, colorOffset);
-
-                     shaderNode .enableTexCoordAttribute (gl, this .trianglesTexCoordBuffers, stride, texCoordOffset);
-                     shaderNode .enableVertexAttribute   (gl, this .trianglesBuffer,          stride, vertexOffset);
-
-                     gl .bindBuffer (gl .ARRAY_BUFFER, null);
-                  }
-
-                  if (shaderNode .getWireframe ())
-                  {
-                     for (let i = 0, length = this .vertexCount * 3; i < length; i += 3)
-                        gl .drawArrays (primitiveMode, i, 3);
-                  }
-                  else
-                  {
-                     gl .frontFace (gl .CCW);
-                     gl .enable (gl .CULL_FACE);
-                     gl .drawArrays (primitiveMode, 0, this .vertexCount * 3);
-                  }
-
-                  if (blendModeNode)
-                     blendModeNode .disable (gl);
+                  return;
                }
             }
-            else if (shaderNode .isValid ())
-            {
-               const primitiveMode = shaderNode .getPrimitiveMode (this .primitiveMode);
 
-               if (blendModeNode)
-                  blendModeNode .enable (gl);
+            const primitiveMode = browser .getPrimitiveMode (this .getPrimitiveMode ());
 
-               // Setup shader.
-
-               shaderNode .enable (gl);
-               shaderNode .setLocalUniforms (gl, context);
-
-               // Setup vertex attributes.
-
-               if (this .vertexArrayObject .enable (gl, shaderNode))
-               {
-                  for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                     attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-                  if (this .fogCoords)
-                     shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
-
-                  if (this .colorMaterial)
-                     shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
-
-                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-                  shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
-               }
-
-               gl .drawArrays (primitiveMode, 0, this .vertexCount);
-
-               if (blendModeNode)
-                  blendModeNode .disable (gl);
-            }
-         };
-      })(),
-      displayParticles: function (gl, context, particleSystem)
-      {
-         const
-            browser        = context .browser,
-            appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .shaderNode || browser .getLineShader (),
-            blendModeNode  = appearanceNode .blendModeNode,
-            attribNodes    = this .attribNodes,
-            attribBuffers  = this .attribBuffers,
-            primitiveMode  = shaderNode .getPrimitiveMode (this .primitiveMode);
-
-         if (shaderNode .isValid ())
-         {
             if (blendModeNode)
                blendModeNode .enable (gl);
 
             // Setup shader.
 
             shaderNode .enable (gl);
-            shaderNode .setLocalUniforms (gl, context);
+            shaderNode .setUniforms (gl, context);
 
             // Setup vertex attributes.
 
-            const outputParticles = particleSystem .outputParticles;
-
-            if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
+            if (this .vertexArrayObject .enable (gl, shaderNode))
             {
-               const particleStride = particleSystem .particleStride;
-
-               shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
-               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
-
                for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-               if (this .fogCoords)
+               if (this .hasFogCoords)
                   shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
                if (this .colorMaterial)
@@ -72646,17 +71912,65 @@ function (X3DGeometryNode,
 
                shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
                shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
-
-               this .updateParticles = false;
             }
 
-            // Wireframes are always solid so only one drawing call is needed.
-
-            gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+            gl .drawArrays (primitiveMode, 0, this .vertexCount);
 
             if (blendModeNode)
                blendModeNode .disable (gl);
+         };
+      })(),
+      displayParticles: function (gl, context, particleSystem)
+      {
+         const
+            browser        = this .getBrowser (),
+            appearanceNode = context .appearanceNode,
+            shaderNode     = appearanceNode .getShader (this, context),
+            blendModeNode  = appearanceNode .getBlendMode (),
+            attribNodes    = this .getAttrib (),
+            attribBuffers  = this .getAttribBuffers (),
+            primitiveMode  = browser .getPrimitiveMode (this .getPrimitiveMode ());
+
+         if (blendModeNode)
+            blendModeNode .enable (gl);
+
+         // Setup shader.
+
+         shaderNode .enable (gl);
+         shaderNode .setUniforms (gl, context);
+
+         // Setup vertex attributes.
+
+         const outputParticles = particleSystem .outputParticles;
+
+         if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
+         {
+            const particleStride = particleSystem .particleStride;
+
+            shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+            shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
+
+            for (let i = 0, length = attribNodes .length; i < length; ++ i)
+               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+            if (this .hasFogCoords)
+               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+
+            if (this .colorMaterial)
+               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+
+            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+            shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+
+            this .updateParticles = false;
          }
+
+         // Wireframes are always solid so only one drawing call is needed.
+
+         gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+
+         if (blendModeNode)
+            blendModeNode .disable (gl);
       },
    });
 
@@ -72737,6 +72051,7 @@ function (Fields,
 
       this .fogCoordNode = null;
       this .colorNode    = null;
+      this .normalNode   = null;
       this .coordNode    = null;
    }
 
@@ -72753,6 +72068,7 @@ function (Fields,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",         new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "color",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",          new Fields .SFNode ()),
       ]),
       getTypeName: function ()
@@ -72776,11 +72092,13 @@ function (Fields,
          this ._attrib         .addInterest ("set_attrib__",   this);
          this ._fogCoord       .addInterest ("set_fogCoord__", this);
          this ._color          .addInterest ("set_color__",    this);
+         this ._normal         .addInterest ("set_normal__",   this);
          this ._coord          .addInterest ("set_coord__",    this);
 
          this .set_attrib__ ();
          this .set_fogCoord__ ();
          this .set_color__ ();
+         this .set_normal__ ();
          this .set_coord__ ();
       },
       set_attrib__: function ()
@@ -72844,6 +72162,16 @@ function (Fields,
       set_transparent__: function ()
       {
          this .setTransparent (this .colorNode .getTransparent ());
+      },
+      set_normal__: function ()
+      {
+         if (this .normalNode)
+            this .normalNode .removeInterest ("requestRebuild", this);
+
+         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
+
+         if (this .normalNode)
+            this .normalNode .addInterest ("requestRebuild", this);
       },
       set_coord__: function ()
       {
@@ -76389,7 +75717,7 @@ function (X3DBaseNode,
       },
       initialize: function ()
       { },
-      initShaders: function ()
+      loadShaders: function ()
       { },
       getActiveLayer: function ()
       {
@@ -78015,6 +77343,7 @@ define ('x_ite/Browser/Navigation/X3DFlyViewer',[
    "jquery",
    "x_ite/Browser/Navigation/X3DViewer",
    "x_ite/Components/Followers/OrientationChaser",
+   "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Rendering/VertexArray",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
@@ -78025,6 +77354,7 @@ define ('x_ite/Browser/Navigation/X3DFlyViewer',[
 function ($,
           X3DViewer,
           OrientationChaser,
+          X3DGeometryNode,
           VertexArray,
           Vector3,
           Rotation4,
@@ -78053,7 +77383,9 @@ function ($,
    {
       X3DViewer .call (this, executionContext);
 
-      var gl = this .getBrowser () .getContext ();
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
 
       this .button            = -1;
       this .fromVector        = new Vector3 (0, 0, 0);
@@ -78068,6 +77400,10 @@ function ($,
       this .event             = null;
       this .lookAround        = false;
       this .orientationChaser = new OrientationChaser (executionContext);
+      this .geometryContext   = { geometryType: 1, colorMaterial: false, hasNormals: false };
+      this .context           = { appearanceNode: browser .getDefaultAppearance () };
+
+      X3DGeometryNode .prototype .updateGeometryMask .call (this .geometryContext);
    }
 
    X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
@@ -78098,17 +77434,16 @@ function ($,
          this .orientationChaser .setPrivate (true);
          this .orientationChaser .setup ();
 
-         // Preload line shader.
-         this .initShaders ()
+         this .loadShaders ()
       },
-      initShaders: function ()
+      loadShaders: function ()
       {
          const browser = this .getBrowser ();
 
-         if (!browser .getBrowserOption ("Rubberband"))
+         if (! browser .getBrowserOption ("Rubberband"))
             return;
 
-         browser .getLineShader ();
+         browser .getDefaultMaterial () .getShader (this .geometryContext, this .context);
          browser .getDepthShader ();
       },
       addCollision: function () { },
@@ -78652,41 +77987,37 @@ function ($,
 
             const
                gl         = browser .getContext (),
-               shaderNode = browser .getLineShader (),
+               shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext, this .context),
                lineWidth  = gl .getParameter (gl .LINE_WIDTH);
 
-            if (shaderNode .isValid ())
-            {
-               shaderNode .enable (gl);
+            shaderNode .enable (gl);
 
-               if (this .lineArrayObject .enable (gl, shaderNode))
-                  shaderNode .enableVertexAttribute (gl, this .lineBuffer, 0, 0);
+            if (this .lineArrayObject .enable (gl, shaderNode))
+               shaderNode .enableVertexAttribute (gl, this .lineBuffer, 0, 0);
 
-               gl .uniform1i (shaderNode .x3d_NumClipPlanes,         0);
-               gl .uniform1i (shaderNode .x3d_FogType,               0);
-               gl .uniform1i (shaderNode .x3d_ColorMaterial,         false);
-               gl .uniform1i (shaderNode .x3d_LinePropertiesApplied, false);
+            gl .uniform1i (shaderNode .x3d_NumClipPlanes,         0);
+            gl .uniform1i (shaderNode .x3d_FogType,               0);
+            gl .uniform1i (shaderNode .x3d_LinePropertiesApplied, false);
 
-               gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
-               gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
 
-               gl .disable (gl .DEPTH_TEST);
+            gl .disable (gl .DEPTH_TEST);
 
-               // Draw a black and a white line.
-               gl .lineWidth (2);
-               gl .uniform3f (shaderNode .x3d_EmissiveColor, 0, 0, 0);
-               gl .uniform1f (shaderNode .x3d_Transparency,  0);
+            // Draw a black and a white line.
+            gl .lineWidth (2);
+            gl .uniform3f (shaderNode .x3d_EmissiveColor, 0, 0, 0);
+            gl .uniform1f (shaderNode .x3d_Transparency,  0);
 
-               gl .drawArrays (gl .LINES, 0, this .lineCount);
+            gl .drawArrays (gl .LINES, 0, this .lineCount);
 
-               gl .lineWidth (1);
-               gl .uniform3f (shaderNode .x3d_EmissiveColor, 1, 1, 1);
+            gl .lineWidth (1);
+            gl .uniform3f (shaderNode .x3d_EmissiveColor, 1, 1, 1);
 
-               gl .drawArrays (gl .LINES, 0, this .lineCount);
-               gl .enable (gl .DEPTH_TEST);
+            gl .drawArrays (gl .LINES, 0, this .lineCount);
+            gl .enable (gl .DEPTH_TEST);
 
-               gl .lineWidth (lineWidth);
-            }
+            gl .lineWidth (lineWidth);
          };
       })(),
       transfer: function (fromPoint, toPoint)
@@ -79995,7 +79326,7 @@ function (X3DChildNode,
 
             if (this ._global .getValue ())
             {
-               lightContainer .set (renderObject .getBrowser (),
+               lightContainer .set (this .getBrowser (),
                                     this,
                                     renderObject .getLayer () .getGroup (),
                                     renderObject .getModelViewMatrix () .get ());
@@ -80005,7 +79336,7 @@ function (X3DChildNode,
             }
             else
             {
-               lightContainer .set (renderObject .getBrowser (),
+               lightContainer .set (this .getBrowser (),
                                     this,
                                     group,
                                     renderObject .getModelViewMatrix () .get ());
@@ -80034,7 +79365,7 @@ function (X3DChildNode,
             }
          }
 
-         renderObject .pushShadow (this .getShadowIntensity ());
+         renderObject .pushShadows (!! this .getShadowIntensity ());
       },
       pop: function (renderObject)
       {
@@ -80042,11 +79373,11 @@ function (X3DChildNode,
             return;
 
          if (renderObject .isIndependent ())
-            renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
+            this .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
          else
             renderObject .getLocalObjects () .pop ();
 
-         renderObject .popShadow ();
+         renderObject .popShadows ();
       },
    });
 
@@ -80330,7 +79661,7 @@ function (Fields,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",        new Fields .SFVec3f (0, 0, -1)),
 
          new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new  Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadow.
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadows.
          new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat (1)),       // Intensity of shadow color in the range (0, 1).
          new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
          new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
@@ -80758,7 +80089,7 @@ function (Fields,
          {
             case TraverseType .POINTER:
             {
-               if (renderObject .getBrowser () .isPointerInRectangle (this .rectangle))
+               if (this .getBrowser () .isPointerInRectangle (this .rectangle))
                   X3DViewportNode .prototype .traverse .call (this, type, renderObject);
 
                break;
@@ -80774,7 +80105,7 @@ function (Fields,
       {
          const
             viewVolumes = renderObject .getViewVolumes (),
-            rectangle   = this .getRectangle (renderObject .getBrowser ()),
+            rectangle   = this .getRectangle (this .getBrowser ()),
             viewport    = viewVolumes .length ? viewVolumes .at (-1) .getViewport () : rectangle,
             viewVolume  = ViewVolumes .pop ();
 
@@ -80925,25 +80256,13 @@ function (TextureProperties)
 {
 "use strict";
 
-   const
-      _backgroundSphereShader      = Symbol (),
-      _backgroundTextureProperties = Symbol ();
+   const _backgroundTextureProperties = Symbol ();
 
    function X3DEnvironmentalEffectsContext () { }
 
    X3DEnvironmentalEffectsContext .prototype =
    {
       initialize: function () { },
-      getBackgroundSphereShader: function ()
-      {
-         this [_backgroundSphereShader] = this .createShader ("BackgroundSphereShader", "Background");
-
-         this .getBackgroundSphereShader = function () { return this [_backgroundSphereShader]; };
-
-         Object .defineProperty (this, "getBackgroundSphereShader", { enumerable: false });
-
-         return this [_backgroundSphereShader];
-      },
       getBackgroundTextureProperties: function ()
       {
          this [_backgroundTextureProperties] = new TextureProperties (this .getPrivateScene ());
@@ -100223,19 +99542,19 @@ function (Fields,
       },
       push: function (renderObject)
       {
-         if (this ._enabled .getValue ())
+         if (this ._enabled .getValue () && this .getFogType ())
          {
             const fogContainer = this .getFogs () .pop ();
 
             fogContainer .set (this, renderObject .getModelViewMatrix () .get ());
 
-            renderObject .pushLocalFog (fogContainer);
+            renderObject .getLocalFogs () .push (fogContainer);
          }
       },
       pop: function (renderObject)
       {
-         if (this ._enabled .getValue ())
-            renderObject .getBrowser () .getLocalObjects () .push (renderObject .popLocalFog ());
+         if (this ._enabled .getValue () && this .getFogType ())
+            this .getBrowser () .getLocalObjects () .push (renderObject .getLocalFogs () .pop ());
       },
    });
 
@@ -105775,9 +105094,9 @@ function (Fields,
 
          this .set_children__ ();
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
-         return bbox .assign (shadow ? this .shadowBBox : this .bbox);
+         return bbox .assign (shadows ? this .shadowBBox : this .bbox);
       },
       set_children__: function ()
       {
@@ -106068,14 +105387,14 @@ function (Fields,
 
          this .set_child__ ();
       },
-      getSubBBox: function (bbox, shadow)
+      getSubBBox: function (bbox, shadows)
       {
          if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
             const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .visibleNode);
 
             if (boundedObject)
-               return boundedObject .getBBox (bbox, shadow);
+               return boundedObject .getBBox (bbox, shadows);
 
             return bbox .set ();
          }
@@ -106206,7 +105525,7 @@ function (Fields,
                if (childNode)
                {
                   const
-                     browser          = renderObject .getBrowser (),
+                     browser          = this .getBrowser (),
                      pickingHierarchy = browser .getPickingHierarchy ();
 
                   pickingHierarchy .push (this);
@@ -106366,9 +105685,9 @@ function (X3DGroupingNode,
       },
       getGetBBox: (function ()
       {
-         function getBBox (bbox, shadow)
+         function getBBox (bbox, shadows)
          {
-            return this .getSubBBox (bbox, shadow) .multRight (this .matrix);
+            return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
          }
 
          return function ()
@@ -109099,7 +108418,7 @@ function (Fields,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "radius",           new Fields .SFFloat (100)),
 
          new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new  Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadow.
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadows.
          new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat (1)),        // Intensity of shadow color in the range (0, 1).
          new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
          new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
@@ -109462,7 +108781,7 @@ function (Fields,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "cutOffAngle",      new Fields .SFFloat (1.5708)),
 
          new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new  Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadow.
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadows.
          new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat (1)),       // Intensity of shadow color in the range (0, 1).
          new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
          new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
@@ -109706,9 +109025,9 @@ function (Fields,
       {
          return "children";
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
-         return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadow) .multRight (this .matrix);
+         return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .matrix);
       },
       getMatrix: function ()
       {
@@ -109772,7 +109091,7 @@ function (Fields,
             case TraverseType .CAMERA:
             case TraverseType .PICKING:
             case TraverseType .SHADOW:
-               // No clone support for shadow, generated cube map texture, and bbox
+               // No clone support for shadows, generated cube map texture, and bbox
                modelViewMatrix .multLeft (this .matrix);
                break;
             default:
@@ -110095,14 +109414,14 @@ function (Fields,
 
          this ._children .addInterest ("set_child__", this);
       },
-      getSubBBox: function (bbox, shadow)
+      getSubBBox: function (bbox, shadows)
       {
          if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
             const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .visibleNode);
 
             if (boundedObject)
-               return boundedObject .getBBox (bbox, shadow);
+               return boundedObject .getBBox (bbox, shadows);
 
             return bbox .set ();
          }
@@ -110276,7 +109595,7 @@ function (Fields,
                   if (childNode)
                   {
                      const
-                        browser          = renderObject .getBrowser (),
+                        browser          = this .getBrowser (),
                         pickingHierarchy = browser .getPickingHierarchy ();
 
                      pickingHierarchy .push (this);
@@ -110302,7 +109621,7 @@ function (Fields,
                   if (! this .keepCurrentLevel)
                   {
                      let
-                        level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
+                        level        = this .getLevel (this .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
                         currentLevel = this ._level_changed .getValue ();
 
                      if (this ._forceTransitions .getValue ())
@@ -111301,7 +110620,7 @@ function (Fields,
          if (type === TraverseType .POINTER)
          {
             const
-               sensorsStack = renderObject .getBrowser () .getSensors (),
+               sensorsStack = this .getBrowser () .getSensors (),
                sensors      = this .anchorSensors;
 
             sensors .clear ();
@@ -111461,10 +110780,10 @@ function (Fields,
 
          this .requestImmediateLoad ();
       },
-      getBBox: function (bbox, shadow)
+      getBBox: function (bbox, shadows)
       {
          if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-            return this .group .getBBox (bbox, shadow);
+            return this .group .getBBox (bbox, shadows);
 
          return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },
@@ -111531,7 +110850,7 @@ function (Fields,
             case TraverseType .PICKING:
             {
                const
-                  browser          = renderObject .getBrowser (),
+                  browser          = this .getBrowser (),
                   pickingHierarchy = browser .getPickingHierarchy ();
 
                pickingHierarchy .push (this);
@@ -113194,7 +112513,7 @@ function (Fields,
       pop: function (renderObject)
       {
          if (this .enabled)
-            renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
+            this .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
       },
    });
 
@@ -113893,6 +113212,7 @@ function (Fields,
 
       this .fogCoordNode = null;
       this .colorNode    = null;
+      this .normalNode   = null;
       this .coordNode    = null;
    }
 
@@ -113905,6 +113225,7 @@ function (Fields,
          new X3DFieldDefinition (X3DConstants .inputOutput, "attrib",      new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "fogCoord",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "color",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normal",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "coord",       new Fields .SFNode ()),
       ]),
       getTypeName: function ()
@@ -113926,11 +113247,13 @@ function (Fields,
          this ._attrib   .addInterest ("set_attrib__",   this);
          this ._fogCoord .addInterest ("set_fogCoord__", this);
          this ._color    .addInterest ("set_color__",    this);
+         this ._normal   .addInterest ("set_normal__",   this);
          this ._coord    .addInterest ("set_coord__",    this);
 
          this .set_attrib__ ();
          this .set_fogCoord__ ();
          this .set_color__ ();
+         this .set_normal__ ();
          this .set_coord__ ();
       },
       set_attrib__: function ()
@@ -113994,6 +113317,16 @@ function (Fields,
       set_transparent__: function ()
       {
          this .setTransparent (this .colorNode .getTransparent ());
+      },
+      set_normal__: function ()
+      {
+         if (this .normalNode)
+            this .normalNode .removeInterest ("requestRebuild", this);
+
+         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
+
+         if (this .normalNode)
+            this .normalNode .addInterest ("requestRebuild", this);
       },
       set_coord__: function ()
       {
@@ -114398,17 +113731,17 @@ function (X3DGeometryNode,
                viewport            = renderObject .getViewVolume () .getViewport (),
                extents             = bbox .assign (this .getBBox ()) .multRight (modelViewMatrix) .getExtents (min, max),
                pointPropertiesNode = appearanceNode .getPointProperties (),
-               pointSize1          = Math .max (1.5, pointPropertiesNode .getPointSize (min) / 2),
+               pointSize1          = Math .max (1.5, pointPropertiesNode ? pointPropertiesNode .getPointSize (min) / 2 : 1),
                screenScale1        = renderObject .getViewpoint () .getScreenScale (min, viewport, screenScale1_), // in m/px
                offsets1            = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (pointSize1)),
-               pointSize2          = Math .max (1.5, pointPropertiesNode .getPointSize (max) / 2),
+               pointSize2          = Math .max (1.5, pointPropertiesNode ? pointPropertiesNode .getPointSize (max) / 2 : 1),
                screenScale2        = renderObject .getViewpoint () .getScreenScale (max, viewport, screenScale2_), // in m/px
                offsets2            = invModelViewMatrix .multDirMatrix (screenScale2 .multiply (pointSize2));
 
             if (this .intersectsBBox (hitRay, offsets1 .abs () .max (offsets2 .abs ())))
             {
                const
-                  pointer          = renderObject .getBrowser () .getPointer (),
+                  pointer          = this .getBrowser () .getPointer (),
                   projectionMatrix = renderObject .getProjectionMatrix () .get (),
                   clipPlanes       = renderObject .getLocalObjects (),
                   vertices         = this .getVertices (),
@@ -114422,7 +113755,7 @@ function (X3DGeometryNode,
 
                   ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, projected);
 
-                  const pointSize1_2 = Math .max (1.5, pointPropertiesNode .getPointSize (modelViewMatrix .multVecMatrix (pointSizePoint .assign (point))) / 2);
+                  const pointSize1_2 = Math .max (1.5, pointPropertiesNode ? pointPropertiesNode .getPointSize (modelViewMatrix .multVecMatrix (pointSizePoint .assign (point))) / 2 : 1);
 
                   if (projected .distance (pointer) <= pointSize1_2)
                   {
@@ -114457,97 +113790,89 @@ function (X3DGeometryNode,
       display: function (gl, context)
       {
          const
-            browser        = context .browser,
-            appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .shaderNode || browser .getPointShader (),
-            blendModeNode  = appearanceNode .blendModeNode,
-            attribNodes    = this .attribNodes,
-            attribBuffers  = this .attribBuffers;
+            appearanceNode = context .appearanceNode,
+            shaderNode     = appearanceNode .getShader (this, context),
+            blendModeNode  = appearanceNode .getBlendMode (),
+            attribNodes    = this .getAttrib (),
+            attribBuffers  = this .getAttribBuffers ();
 
-         if (shaderNode .isValid ())
+         if (blendModeNode)
+            blendModeNode .enable (gl);
+
+         // Setup shader.
+
+         shaderNode .enable (gl);
+         shaderNode .setUniforms (gl, context);
+
+         // Setup vertex attributes.
+
+         if (this .vertexArrayObject .enable (gl, shaderNode))
          {
-            if (blendModeNode)
-               blendModeNode .enable (gl);
+            for (let i = 0, length = attribNodes .length; i < length; ++ i)
+               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-            // Setup shader.
+            if (this .hasFogCoords)
+               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
-            shaderNode .enable (gl);
-            shaderNode .setLocalUniforms (gl, context);
+            if (this .colorMaterial)
+               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-            // Setup vertex attributes.
-
-            if (this .vertexArrayObject .enable (gl, shaderNode))
-            {
-               for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-               if (this .fogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
-
-               if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
-
-               shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
-            }
-
-            gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
-
-            if (blendModeNode)
-               blendModeNode .disable (gl);
+            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
          }
+
+         gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+
+         if (blendModeNode)
+            blendModeNode .disable (gl);
       },
       displayParticles: function (gl, context, particleSystem)
       {
          const
-            browser        = context .browser,
-            appearanceNode = context .shapeNode .getAppearance (),
-            shaderNode     = appearanceNode .shaderNode || browser .getPointShader (),
-            blendModeNode  = appearanceNode .blendModeNode,
-            attribNodes    = this .attribNodes,
-            attribBuffers  = this .attribBuffers;
+            appearanceNode = context .appearanceNode,
+            shaderNode     = appearanceNode .getShader (this, context),
+            blendModeNode  = appearanceNode .getBlendMode (),
+            attribNodes    = this .getAttrib (),
+            attribBuffers  = this .getAttribBuffers ();
 
-         if (shaderNode .isValid ())
+         if (blendModeNode)
+            blendModeNode .enable (gl);
+
+         // Setup shader.
+
+         shaderNode .enable (gl);
+         shaderNode .setUniforms (gl, context);
+
+         // Setup vertex attributes.
+
+         const outputParticles = particleSystem .outputParticles;
+
+         if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
          {
-            if (blendModeNode)
-               blendModeNode .enable (gl);
+            const particleStride = particleSystem .particleStride;
 
-            // Setup shader.
+            shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+            shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
 
-            shaderNode .enable (gl);
-            shaderNode .setLocalUniforms (gl, context);
+            for (let i = 0, length = attribNodes .length; i < length; ++ i)
+               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-            // Setup vertex attributes.
+            if (this .hasFogCoords)
+               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
-            const outputParticles = particleSystem .outputParticles;
+            if (this .colorMaterial)
+               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-            if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
-            {
-               const particleStride = particleSystem .particleStride;
+            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
-               shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
-               shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
-
-               for (let i = 0, length = attribNodes .length; i < length; ++ i)
-                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-               if (this .fogCoords)
-                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
-
-               if (this .colorMaterial)
-                  shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
-
-               shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
-
-               this .updateParticles = false;
-            }
-
-            // Wireframes are always solid so only one drawing call is needed.
-
-            gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
-
-            if (blendModeNode)
-               blendModeNode .disable (gl);
+            this .updateParticles = false;
          }
+
+         // Wireframes are always solid so only one drawing call is needed.
+
+         gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+
+         if (blendModeNode)
+            blendModeNode .disable (gl);
       },
    });
 
@@ -114628,6 +113953,7 @@ function (Fields,
 
       this .fogCoordNode = null;
       this .colorNode    = null;
+      this .normalNode   = null;
       this .coordNode    = null;
    }
 
@@ -114639,6 +113965,7 @@ function (Fields,
          new X3DFieldDefinition (X3DConstants .inputOutput, "attrib",   new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "fogCoord", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "normal",   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "coord",    new Fields .SFNode ()),
       ]),
       getTypeName: function ()
@@ -114660,11 +113987,13 @@ function (Fields,
          this ._attrib   .addInterest ("set_attrib__",   this);
          this ._fogCoord .addInterest ("set_fogCoord__", this);
          this ._color    .addInterest ("set_color__",    this);
+         this ._normal   .addInterest ("set_normal__",   this);
          this ._coord    .addInterest ("set_coord__",    this);
 
          this .set_attrib__ ();
          this .set_fogCoord__ ();
          this .set_color__ ();
+         this .set_normal__ ();
          this .set_coord__ ();
       },
       getCoord: function ()
@@ -114718,6 +114047,16 @@ function (Fields,
 
          if (this .colorNode)
             this .colorNode .addInterest ("requestRebuild", this);
+      },
+      set_normal__: function ()
+      {
+         if (this .normalNode)
+            this .normalNode .removeInterest ("requestRebuild", this);
+
+         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
+
+         if (this .normalNode)
+            this .normalNode .addInterest ("requestRebuild", this);
       },
       set_coord__: function ()
       {
@@ -116408,11 +115747,357 @@ function (Fields,
  ******************************************************************************/
 
 
+define ('x_ite/Components/Shape/FillProperties',[
+   "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Components/Shape/X3DAppearanceChildNode",
+   "x_ite/Base/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DAppearanceChildNode,
+          X3DConstants)
+{
+"use strict";
+
+   function FillProperties (executionContext)
+   {
+      X3DAppearanceChildNode .call (this, executionContext);
+
+      this .addType (X3DConstants .FillProperties);
+
+      this .addChildObjects ("transparent", new Fields .SFBool ());
+
+      this ._transparent .setAccessType (X3DConstants .outputOnly);
+
+      this .hatchColor = new Float32Array (3);
+   }
+
+   FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+   {
+      constructor: FillProperties,
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "filled",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "hatched",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "hatchColor", new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "hatchStyle", new Fields .SFInt32 (1)),
+      ]),
+      getTypeName: function ()
+      {
+         return "FillProperties";
+      },
+      getComponentName: function ()
+      {
+         return "Shape";
+      },
+      getContainerField: function ()
+      {
+         return "fillProperties";
+      },
+      initialize: function ()
+      {
+         X3DAppearanceChildNode .prototype .initialize .call (this);
+
+         this ._filled     .addInterest ("set_filled__",     this);
+         this ._hatched    .addInterest ("set_hatched__",    this);
+         this ._hatchColor .addInterest ("set_hatchColor__", this);
+         this ._hatchStyle .addInterest ("set_hatchStyle__", this);
+
+         this .set_filled__ ();
+         this .set_hatched__ ();
+         this .set_hatchColor__ ();
+         this .set_hatchStyle__ ();
+      },
+      set_filled__: function ()
+      {
+         this .filled = this ._filled .getValue ();
+
+         this .setTransparent (! this .filled);
+      },
+      set_hatched__: function ()
+      {
+         this .hatched = this ._hatched .getValue ();
+      },
+      set_hatchColor__: function ()
+      {
+         this .hatchColor [0] = this ._hatchColor [0];
+         this .hatchColor [1] = this ._hatchColor [1];
+         this .hatchColor [2] = this ._hatchColor [2];
+      },
+      set_hatchStyle__: function ()
+      {
+         let hatchStyle = this ._hatchStyle .getValue ();
+
+         if (hatchStyle < 1 || hatchStyle > 19)
+            hatchStyle = 1;
+
+         this .hatchStyle = hatchStyle;
+      },
+      setTransparent: function (value)
+      {
+         if (value !== this ._transparent .getValue ())
+            this ._transparent = value;
+      },
+      getTransparent: function ()
+      {
+         return this ._transparent .getValue ();
+      },
+      setShaderUniforms: function (gl, shaderObject)
+      {
+         const hatched = this .hatched;
+
+         gl .uniform1i (shaderObject .x3d_FillPropertiesFilled,  this .filled);
+         gl .uniform1i (shaderObject .x3d_FillPropertiesHatched, hatched);
+
+         if (hatched)
+         {
+            const
+               browser     = shaderObject .getBrowser (),
+               texture     = browser .getHatchStyleTexture (this .hatchStyle),
+               textureUnit = browser .getTexture2DUnit ();
+
+            gl .uniform3fv (shaderObject .x3d_FillPropertiesHatchColor, this .hatchColor);
+
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
+            gl .uniform1i (shaderObject .x3d_FillPropertiesTexture, textureUnit);
+         }
+      },
+   });
+
+   return FillProperties;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Shape/LineProperties',[
+   "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Components/Shape/X3DAppearanceChildNode",
+   "x_ite/Base/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DAppearanceChildNode,
+          X3DConstants)
+{
+"use strict";
+
+   function LineProperties (executionContext)
+   {
+      X3DAppearanceChildNode .call (this, executionContext);
+
+      this .addType (X3DConstants .LineProperties);
+   }
+
+   LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+   {
+      constructor: LineProperties,
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "applied",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "linetype",             new Fields .SFInt32 (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "linewidthScaleFactor", new Fields .SFFloat ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "LineProperties";
+      },
+      getComponentName: function ()
+      {
+         return "Shape";
+      },
+      getContainerField: function ()
+      {
+         return "lineProperties";
+      },
+      initialize: function ()
+      {
+         X3DAppearanceChildNode .prototype .initialize .call (this);
+
+         this ._applied              .addInterest ("set_applied__",              this);
+         this ._linetype             .addInterest ("set_linetype__",             this);
+         this ._linewidthScaleFactor .addInterest ("set_linewidthScaleFactor__", this);
+
+         this .set_applied__ ();
+         this .set_linetype__ ();
+         this .set_linewidthScaleFactor__ ();
+
+         if (this .mustTransformLines)
+            this .getBrowser () .getLineTransformShader ();
+      },
+      getApplied: function ()
+      {
+         return this .applied;
+      },
+      getLinetype: function ()
+      {
+         return this .linetype;
+      },
+      getLinewidthScaleFactor: function ()
+      {
+         return this .linewidthScaleFactor;
+      },
+      getMustTransformLines: function ()
+      {
+         return this .mustTransformLines;
+      },
+      set_applied__: function ()
+      {
+         this .applied = this ._applied .getValue ();
+      },
+      set_linetype__: function ()
+      {
+         let linetype = this ._linetype .getValue ();
+
+         if (linetype < 1 || linetype > 16)
+            linetype = 1;
+
+         this .linetype = linetype;
+      },
+      set_linewidthScaleFactor__: function ()
+      {
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
+
+         this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ());
+         this .mustTransformLines   = gl .MUST_TRANSFORM_LINES && this .linewidthScaleFactor > 1;
+      },
+      setShaderUniforms: function (gl, shaderObject)
+      {
+         if (this .applied)
+         {
+            const
+               browser     = shaderObject .getBrowser (),
+               textureUnit = browser .getTexture2DUnit ();
+
+            gl .lineWidth (this .linewidthScaleFactor);
+            gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,  true);
+            gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, this .linetype);
+
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
+            gl .bindTexture (gl .TEXTURE_2D, browser .getLinetypeTexture () .getTexture ());
+            gl .uniform1i (shaderObject .x3d_LinePropertiesTexture, textureUnit);
+         }
+         else
+         {
+            gl .lineWidth (1);
+            gl .uniform1i (shaderObject .x3d_LinePropertiesApplied, false);
+         }
+      },
+   });
+
+   return LineProperties;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Shape/Material',[
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DOneSidedMaterialNode",
+   "x_ite/Browser/Core/Shading",
    "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
@@ -116421,6 +116106,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DOneSidedMaterialNode,
+          Shading,
           X3DCast,
           X3DConstants,
           Algorithm)
@@ -116435,7 +116121,6 @@ function (Fields,
 
       this .diffuseColor  = new Float32Array (3);
       this .specularColor = new Float32Array (3);
-      this .shaderNode    = this .getBrowser () .getDefaultShader ();
    }
 
    Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
@@ -116482,8 +116167,6 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
-         this .isLive () .addInterest ("set_live__", this);
-
          this ._ambientIntensity  .addInterest ("set_ambientIntensity__",  this);
          this ._ambientTexture    .addInterest ("set_ambientTexture__",    this);
          this ._diffuseColor      .addInterest ("set_diffuseColor__",      this);
@@ -116495,7 +116178,6 @@ function (Fields,
          this ._occlusionStrength .addInterest ("set_occlusionStrength__", this);
          this ._occlusionTexture  .addInterest ("set_occlusionTexture__",  this);
 
-         this .set_live__ ();
          this .set_ambientIntensity__ ();
          this .set_ambientTexture__ ();
          this .set_diffuseColor__ ();
@@ -116507,15 +116189,6 @@ function (Fields,
          this .set_occlusionStrength__ ();
          this .set_occlusionTexture__ ();
          this .set_transparent__ ();
-      },
-      set_live__: function ()
-      {
-         if (this .isLive () .getValue ())
-            this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
-         else
-            this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
-
-         this .set_shading__ ();
       },
       set_ambientIntensity__: function ()
       {
@@ -116596,13 +116269,72 @@ function (Fields,
          this .setTransparent (Boolean (this .getTransparency () ||
                                (this .diffuseTextureNode && this .diffuseTextureNode .getTransparent ())));
       },
-      set_textures__: function ()
+      getTextureIndices: (function ()
       {
-         if (this .getTextures ())
+         const textureIndices = {
+            AMBIENT_TEXTURE: 0,
+            DIFFUSE_TEXTURE: 1,
+            SPECULAR_TEXTURE: 2,
+            EMISSIVE_TEXTURE: 3,
+            SHININESS_TEXTURE: 4,
+            OCCLUSION_TEXTURE: 5,
+            NORMAL_TEXTURE: 6,
+         };
+
+         return function ()
          {
-            const
-               browser = this .getBrowser (),
-               options = ["X3D_MATERIAL_TEXTURES"];
+            return textureIndices;
+         };
+      })(),
+      getMaterialType: function (shadows)
+      {
+         if (shadows || +this .getTextureBits ())
+         {
+            return 2;
+         }
+         else
+         {
+            switch (this .getBrowser () .getBrowserOptions () .getShading ())
+            {
+               default:
+                  return 1;
+               case Shading .PHONG:
+                  return 2;
+            }
+         }
+      },
+      createShader: function (key, geometryContext, context)
+      {
+         const
+            browser             = this .getBrowser (),
+            stylePropertiesNode = context .appearanceNode .getStyleProperties (geometryContext .geometryType),
+            options             = [ ];
+
+         if (! geometryContext .hasNormals)
+            return browser .getDefaultMaterial () .createShader (key, geometryContext, context);
+
+         options .push (this .getGeometryType (geometryContext .geometryType))
+
+         if (context .shadows)
+            options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
+
+         if (context .fogNode)
+            options .push ("X3D_FOG");
+
+         if (geometryContext .hasFogCoords)
+            options .push ("X3D_FOG_COORDS");
+
+         if (geometryContext .colorMaterial)
+            options .push ("X3D_COLOR_MATERIAL");
+
+         options .push ("X3D_NORMALS");
+
+         if (stylePropertiesNode)
+            options .push ("X3D_STYLE_PROPERTIES");
+
+         if (+this .getTextureBits ())
+         {
+            options .push ("X3D_MATERIAL_TEXTURES");
 
             if (this .ambientTextureNode)
                options .push ("X3D_AMBIENT_TEXTURE", "X3D_AMBIENT_TEXTURE_" + this .ambientTextureNode .getTextureTypeString ());
@@ -116624,54 +116356,31 @@ function (Fields,
 
             if (this .getNormalTexture ())
                options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
-
-            const shaderNode = browser .createShader ("MaterialTexturesShader", "Phong", options);
-
-            shaderNode ._isValid .addInterest ("set_shader__", this, shaderNode);
          }
-         else
+
+         switch (this .getMaterialType (context .shadows))
          {
-            this .set_shading__ ();
+            case 1:
+            {
+               options .push ("X3D_GOURAUD");
+
+               var shaderNode = browser .createShader ("GouraudShader", "Gouraud", "Gouraud", options);
+
+               break
+            }
+            case 2:
+            {
+               options .push ("X3D_PHONG");
+
+               var shaderNode = browser .createShader ("PhongShader", "Default", "Phong", options);
+
+               break;
+            }
          }
-      },
-      set_shader__: function (shaderNode)
-      {
-         shaderNode ._isValid .removeInterest ("set_shader__", this);
 
-         this .shaderNode = shaderNode;
-      },
-      set_shading__: function ()
-      {
-         if (this .getTextures ())
-            return;
+         browser .getShaders () .set (key, shaderNode);
 
-         const shaderNode = this .getBrowser () .getDefaultShader ();
-
-         if (shaderNode ._isValid .getValue ())
-            this .shaderNode = shaderNode;
-         else
-            shaderNode ._isValid .addInterest ("set_shader__", this, shaderNode);
-      },
-      getTextureIndices: (function ()
-      {
-         const textureIndices = {
-            AMBIENT_TEXTURE: 0,
-            DIFFUSE_TEXTURE: 1,
-            SPECULAR_TEXTURE: 2,
-            EMISSIVE_TEXTURE: 3,
-            SHININESS_TEXTURE: 4,
-            OCCLUSION_TEXTURE: 5,
-            NORMAL_TEXTURE: 6,
-         };
-
-         return function ()
-         {
-            return textureIndices;
-         };
-      })(),
-      getShader: function (browser, shadow)
-      {
-         return shadow ? browser .getShadowShader () : this .shaderNode;
+         return shaderNode;
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
@@ -116682,7 +116391,7 @@ function (Fields,
          gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColor);
          gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
 
-         if (this .getTextures ())
+         if (+this .getTextureBits ())
          {
             const
                ambientTexture   = shaderObject .x3d_AmbientTexture,
@@ -116865,8 +116574,6 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
-         this .shaderNode = this .getBrowser () .getPhysicalMaterialShader ();
-
          this ._baseColor                .addInterest ("set_baseColor__",                this);
          this ._baseTexture              .addInterest ("set_baseTexture__",              this);
          this ._metallic                 .addInterest ("set_metallic__",                 this);
@@ -116938,44 +116645,6 @@ function (Fields,
          this .setTransparent (Boolean (this .getTransparency () ||
                                (this .baseTextureNode && this .baseTextureNode .getTransparent ())));
       },
-      set_textures__: function ()
-      {
-         const browser = this .getBrowser ();
-
-         if (this .getTextures ())
-         {
-            const options = ["X3D_MATERIAL_TEXTURES"];
-
-            if (this .baseTextureNode)
-               options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
-
-            if (this .getEmissiveTexture ())
-               options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
-
-            if (this .metallicRoughnessTextureNode)
-               options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", "X3D_METALLIC_ROUGHNESS_TEXTURE_" + this .metallicRoughnessTextureNode .getTextureTypeString ());
-
-            if (this .occlusionTextureNode)
-               options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
-
-            if (this .getNormalTexture ())
-               options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
-
-            const shaderNode = browser .createShader ("PhysicalMaterialTexturesShader", "PBR", options);
-
-            shaderNode._isValid .addInterest ("set_shader__", this, shaderNode);
-         }
-         else
-         {
-            this .shaderNode = browser .getPhysicalMaterialShader ();
-         }
-      },
-      set_shader__: function (shaderNode)
-      {
-         shaderNode ._isValid .removeInterest ("set_shader__", this);
-
-         this .shaderNode = shaderNode;
-      },
       getTextureIndices: (function ()
       {
          const textureIndices = {
@@ -116991,9 +116660,64 @@ function (Fields,
             return textureIndices;
          };
       })(),
-      getShader: function (browser, shadow)
+      getMaterialType: function ()
       {
-         return this .shaderNode;
+         return 3;
+      },
+      createShader: function (key, geometryContext, context)
+      {
+         const
+            browser             = this .getBrowser (),
+            stylePropertiesNode = context .appearanceNode .getStyleProperties (geometryContext .geometryType),
+            options             = [ ];
+
+         if (! geometryContext .hasNormals)
+            return browser .getDefaultMaterial () .createShader (key, geometryContext, context);
+
+         options .push ("X3D_PHYSICAL", this .getGeometryType (geometryContext .geometryType));
+
+         if (context .shadows)
+            options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
+
+         if (context .fogNode)
+            options .push ("X3D_FOG");
+
+         if (geometryContext .hasFogCoords)
+            options .push ("X3D_FOG_COORDS");
+
+         if (geometryContext .colorMaterial)
+            options .push ("X3D_COLOR_MATERIAL");
+
+         options .push ("X3D_NORMALS");
+
+         if (stylePropertiesNode)
+            options .push ("X3D_STYLE_PROPERTIES");
+
+         if (+this .getTextureBits ())
+         {
+            options .push ("X3D_MATERIAL_TEXTURES");
+
+            if (this .baseTextureNode)
+               options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
+
+            if (this .getEmissiveTexture ())
+               options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+
+            if (this .metallicRoughnessTextureNode)
+               options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", "X3D_METALLIC_ROUGHNESS_TEXTURE_" + this .metallicRoughnessTextureNode .getTextureTypeString ());
+
+            if (this .occlusionTextureNode)
+               options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
+
+            if (this .getNormalTexture ())
+               options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+         }
+
+         const shaderNode = browser .createShader ("PhysicalMaterialShader", "Default", "PBR", options);
+
+         browser .getShaders () .set (key, shaderNode);
+
+         return shaderNode;
       },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
@@ -117003,7 +116727,7 @@ function (Fields,
          gl .uniform1f  (shaderObject .x3d_Metallic,  this .metallic);
          gl .uniform1f  (shaderObject .x3d_Roughness, this .roughness);
 
-         if (this .getTextures ())
+         if (+this .getTextureBits ())
          {
             const
                baseTexture              = shaderObject .x3d_BaseTexture,
@@ -117097,11 +116821,180 @@ function (Fields,
  ******************************************************************************/
 
 
+define ('x_ite/Components/Shape/PointProperties',[
+   "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Components/Shape/X3DAppearanceChildNode",
+   "x_ite/Base/X3DConstants",
+   "standard/Math/Algorithm",
+   "standard/Math/Numbers/Vector3",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DAppearanceChildNode,
+          X3DConstants,
+          Algorithm,
+          Vector3)
+{
+"use strict";
+
+   function PointProperties (executionContext)
+   {
+      X3DAppearanceChildNode .call (this, executionContext);
+
+      this .addType (X3DConstants .PointProperties);
+
+      this .pointSizeAttenuation = new Float32Array (3);
+   }
+
+   PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+   {
+      constructor: PointProperties,
+      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeScaleFactor", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMinValue",    new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMaxValue",    new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeAttenuation", new Fields .MFFloat (1, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "markerType",           new Fields .SFInt32 (1)),
+      ]),
+      getTypeName: function ()
+      {
+         return "PointProperties";
+      },
+      getComponentName: function ()
+      {
+         return "Shape";
+      },
+      getContainerField: function ()
+      {
+         return "pointProperties";
+      },
+      initialize: function ()
+      {
+         X3DAppearanceChildNode .prototype .initialize .call (this);
+
+         const gl = this .getBrowser () .getContext ();
+
+         this .pointSizeRange = gl .getParameter (gl .ALIASED_POINT_SIZE_RANGE);
+
+         this ._pointSizeScaleFactor .addInterest ("set_pointSizeScaleFactor__", this);
+         this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
+         this ._pointSizeMaxValue    .addInterest ("set_pointSizeMaxValue__",    this);
+         this ._pointSizeAttenuation .addInterest ("set_pointSizeAttenuation__", this);
+         this ._markerType           .addInterest ("set_markerType__",           this);
+
+         this .set_pointSizeScaleFactor__ ();
+         this .set_pointSizeMinValue__ ();
+         this .set_pointSizeMaxValue__ ();
+         this .set_pointSizeAttenuation__ ();
+         this .set_markerType__ ();
+      },
+      getPointSize: function (point)
+      {
+         const
+            pointSizeAttenuation = this .pointSizeAttenuation,
+            dL                   = point .magnitude ();
+
+         let pointSize = this .pointSizeScaleFactor;
+
+         pointSize /= pointSizeAttenuation [0] + pointSizeAttenuation [1] * dL + pointSizeAttenuation [2] * (dL * dL);
+         pointSize  = Algorithm .clamp (pointSize, this .pointSizeMinValue, this .pointSizeMaxValue);
+
+         return pointSize;
+      },
+      set_pointSizeScaleFactor__: function ()
+      {
+         this .pointSizeScaleFactor = Math .max (1, this ._pointSizeScaleFactor .getValue ());
+      },
+      set_pointSizeMinValue__: function ()
+      {
+         this .pointSizeMinValue = Algorithm .clamp (this ._pointSizeMinValue .getValue (), this .pointSizeRange [0], this .pointSizeRange [1]);
+      },
+      set_pointSizeMaxValue__: function ()
+      {
+         this .pointSizeMaxValue = Algorithm .clamp (this ._pointSizeMaxValue .getValue (), this .pointSizeRange [0], this .pointSizeRange [1]);
+      },
+      set_pointSizeAttenuation__: function ()
+      {
+         const length = this ._pointSizeAttenuation .length;
+
+         this .pointSizeAttenuation [0] = length > 0 ? Math .max (0, this ._pointSizeAttenuation [0]) : 1;
+         this .pointSizeAttenuation [1] = length > 1 ? Math .max (0, this ._pointSizeAttenuation [1]) : 0;
+         this .pointSizeAttenuation [2] = length > 2 ? Math .max (0, this ._pointSizeAttenuation [2]) : 0;
+      },
+      set_markerType__: function ()
+      {
+      },
+      setShaderUniforms: function (gl, shaderObject)
+      {
+         gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeScaleFactor, this .pointSizeScaleFactor);
+         gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMinValue,    this .pointSizeMinValue);
+         gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMaxValue,    this .pointSizeMaxValue);
+         gl .uniform3fv (shaderObject .x3d_PointPropertiesPointSizeAttenuation, this .pointSizeAttenuation);
+      },
+   });
+
+   return PointProperties;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Shape/TwoSidedMaterial',[
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DMaterialNode",
+   "x_ite/Components/Shape/Material",
    "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
@@ -117109,6 +117002,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DMaterialNode,
+          Material,
           X3DConstants,
           Algorithm)
 {
@@ -117116,6 +117010,8 @@ function (Fields,
 
    function TwoSidedMaterial (executionContext)
    {
+      console .warn ("TwoSidedMaterial is depreciated, please use Appearance backMaterial field.");
+
       X3DMaterialNode .call (this, executionContext);
 
       this .addType (X3DConstants .TwoSidedMaterial);
@@ -117307,13 +117203,11 @@ function (Fields,
       {
          this .setTransparent (Boolean (this ._transparency .getValue () || (this ._separateBackColor .getValue () && this ._backTransparency .getValue ())));
       },
-      getShader: function (browser, shadow)
-      {
-         return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
-      },
+      getMaterialType: Material .prototype .getMaterialType,
+      createShader: Material .prototype .createShader,
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, front)
       {
-         if (!front && this ._separateBackColor .getValue ())
+         if (! front && this ._separateBackColor .getValue ())
          {
             gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .backAmbientIntensity);
             gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .backDiffuseColor);
@@ -117549,6 +117443,7 @@ function (Fields,
          {
             this .getBrowser () ._volume .addInterest ("set_volume__", this);
             this .getBrowser () ._mute   .addInterest ("set_volume__", this);
+
             this .set_volume__ ();
          }
       },
@@ -117556,8 +117451,10 @@ function (Fields,
       {
          if (this .media)
          {
-            this .media [0] .volume = 0;
-            this .media [0] .pause ();
+            const media = this .media [0];
+
+            media .muted = true;
+            media .pause ();
          }
 
          this .media = value;
@@ -117566,7 +117463,9 @@ function (Fields,
          {
             const media = value [0];
 
-            media .loop = this ._loop .getValue ();
+            media .muted  = false;
+            media .volume = 0;
+            media .loop   = this ._loop .getValue ();
 
             this .setVolume (0);
             this ._duration_changed = media .duration;
@@ -117631,7 +117530,7 @@ function (Fields,
             if (this ._speed .getValue ())
             {
                this .media [0] .currentTime = 0;
-               this .media [0] .play ();
+               this .media [0] .play () .catch (Function .prototype);
             }
          }
       },
@@ -117645,7 +117544,7 @@ function (Fields,
          if (this .media)
          {
             if (this ._speed .getValue ())
-               this .media [0] .play ();
+               this .media [0] .play () .catch (Function .prototype);
          }
       },
       set_stop: function ()
@@ -117802,11 +117701,12 @@ function ($,
          X3DSoundSourceNode .prototype .initialize .call (this);
          X3DUrlObject       .prototype .initialize .call (this);
 
-         this .audio .on ("error", this .setError .bind (this));
+         this .audio .on ("abort error",     this .setError   .bind (this));
+         this .audio .on ("suspend stalled", this .setTimeout .bind (this));
 
-         this .audio [0] .preload     = "auto";
-         this .audio [0] .volume      = 0;
          this .audio [0] .crossOrigin = "Anonymous";
+         this .audio [0] .preload     = "auto";
+         this .audio [0] .muted       = true;
 
          this .requestImmediateLoad ();
       },
@@ -117827,14 +117727,14 @@ function ($,
       {
          this .setMedia (null);
          this .urlStack .setValue (this ._url);
-         this .audio .bind ("canplaythrough", this .setAudio .bind (this));
+         this .audio .on ("canplaythrough", this .setAudio .bind (this));
          this .loadNext ();
       },
       loadNext: function ()
       {
          if (this .urlStack .length === 0)
          {
-            this .audio .unbind ("canplaythrough");
+            this .audio .off ("canplaythrough");
             this ._duration_changed = -1;
             this .setLoadState (X3DConstants .FAILED_STATE);
             return;
@@ -117853,10 +117753,19 @@ function ($,
          this .audio .attr ("src", this .URL .href);
          this .audio .get (0) .load ();
       },
-      setError: function ()
+      setTimeout: function (event)
+      {
+         setTimeout (function ()
+         {
+            if (this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
+               this .setError (event);
+         }
+         .bind (this), 3000);
+      },
+      setError: function (event)
       {
          if (this .URL .protocol !== "data:")
-            console .warn ("Error loading audio:", decodeURI (this .URL .href));
+            console .warn ("Error loading audio:", decodeURI (this .URL .href), event .type);
 
          this .loadNext ();
       },
@@ -118733,11 +118642,12 @@ function ($,
          X3DSoundSourceNode .prototype .initialize .call (this);
          X3DUrlObject       .prototype .initialize .call (this);
 
-         this .video .on ("error", this .setError .bind (this));
+         this .video .on ("abort error",     this .setError   .bind (this));
+         this .video .on ("suspend stalled", this .setTimeout .bind (this));
 
-         this .video [0] .preload     = "auto";
-         this .video [0] .volume      = 0;
          this .video [0] .crossOrigin = "Anonymous";
+         this .video [0] .preload     = "auto";
+         this .video [0] .muted       = true;
 
          this .requestImmediateLoad ();
       },
@@ -118758,14 +118668,14 @@ function ($,
       {
          this .setMedia (null);
          this .urlStack .setValue (this ._url);
-         this .video .bind ("canplaythrough", this .setVideo .bind (this));
+         this .video .on ("canplaythrough", this .setVideo .bind (this));
          this .loadNext ();
       },
       loadNext: function ()
       {
          if (this .urlStack .length === 0)
          {
-            this .video .unbind ("canplaythrough");
+            this .video .off ("canplaythrough");
             this ._duration_changed = -1;
             this .clearTexture ();
             this .setLoadState (X3DConstants .FAILED_STATE);
@@ -118785,10 +118695,19 @@ function ($,
          this .video .attr ("src", this .URL .href);
          this .video .get (0) .load ();
       },
-      setError: function ()
+      setTimeout: function (event)
+      {
+         setTimeout (function ()
+         {
+            if (this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
+               this .setError (event);
+         }
+         .bind (this), 3000);
+      },
+      setError: function (event)
       {
          if (this .URL .protocol !== "data:")
-            console .warn ("Error loading movie:", decodeURI (this .URL .href));
+            console .warn ("Error loading movie:", decodeURI (this .URL .href), event .type);
 
          this .loadNext ();
       },
@@ -120242,7 +120161,7 @@ function (DEBUG,
          if (component .name)
          {
             if (DEBUG)
-               console .log ("Done loading external component '" + component .name + "'.");
+               console .info ("Done loading external component '" + component .name + "'.");
          }
       },
    };
@@ -121314,12 +121233,7 @@ function ($,
       },
       replaceWorld: function (scene)
       {
-         // Cancel any loading.
-
-         this ._loadCount       .removeInterest ("set_loadCount__", this);
-         this .prepareEvents () .removeInterest ("bind", this);
-
-         if (this [_loader])
+          if (this [_loader])
             this [_loader] .abort ();
 
          // Remove world.
@@ -121358,12 +121272,11 @@ function ($,
 
          // Replace.
 
-         this .description = "";
-
+         this .setDescription ("");
          this .getBrowserOptions () .configure ();
          this .setBrowserLoading (true);
-         this ._loadCount .addInterest ("set_loadCount__", this);
          this .prepareEvents () .removeInterest ("bind", this);
+         this ._loadCount .addInterest ("set_loadCount__", this);
 
          for (const object of scene .getLoadingObjects ())
             this .addLoadCount (object);
@@ -122642,18 +122555,24 @@ const getScriptURL = (function ()
 define("x_ite", function(){});
 
 
-define ('x_ite/Browser/Shaders/ShaderSource',[
+define ('x_ite/Browser/Shaders/ShaderCompiler',[
 ],
 function ()
 {
 "use strict";
 
-	return {
-		get: function (gl, source)
+	function ShaderCompiler () { }
+
+	ShaderCompiler .prototype = {
+      getSourceFileName: function ()
+      { },
+		process: function (source)
 		{
 			return source;
 		},
 	};
+
+	return ShaderCompiler;
 });
 
 })));

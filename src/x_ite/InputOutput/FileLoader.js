@@ -193,7 +193,7 @@ function ($,
       createX3DFromURLAsync: function (callback, data)
       {
          if (data === null)
-            callback (null);
+            callback (null, this .URL);
          else
             this .createX3DFromString (this .URL, data, callback, this .loadDocumentError .bind (this));
       },
@@ -403,7 +403,7 @@ function ($,
       {
          try
          {
-            this .callback (pako .ungzip (this .fileReader .result, { to: "string" }));
+            this .callback (pako .ungzip (this .fileReader .result, { to: "string" }), this .URL);
          }
          catch (exception)
          {
@@ -416,7 +416,7 @@ function ($,
       {
          try
          {
-            this .callback (this .fileReader .result);
+            this .callback (this .fileReader .result, this .URL);
          }
          catch (exception)
          {
@@ -427,7 +427,7 @@ function ($,
       {
          try
          {
-            this .callback (this .fileReader .result);
+            this .callback (this .fileReader .result, this .URL);
          }
          catch (exception)
          {

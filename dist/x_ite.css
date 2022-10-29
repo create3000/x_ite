@@ -1,4 +1,4 @@
-/* X_ITE v6.1.0-1157 */
+/* X_ITE v6.1.0-1158 */
 @charset "utf-8";
 @import url("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic");
 :host,
@@ -275,7 +275,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   position: relative;
   border-radius: 5px;
   margin: 0;
-  padding: 5px 24px;
   font-size: 10pt;
   line-height: 1;
   letter-spacing: unset;
@@ -315,12 +314,17 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   width: 0;
   height: 0;
 }
+.x_ite-private-menu .context-menu-item > span {
+  display: block;
+  width: 100%;
+  padding: 5px 24px;
+}
 .x_ite-private-menu .context-menu-input > label {
   cursor: pointer;
   display: block;
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
+  padding: 5px 24px;
   width: 100%;
   font-size: 10pt;
   letter-spacing: unset;
@@ -357,7 +361,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 .x_ite-private-menu .context-menu-title {
   font-weight: bold;
-  padding: 4px 32px 4px 8px;
 }
 .x_ite-private-menu .context-menu-selected {
   font-weight: bold;

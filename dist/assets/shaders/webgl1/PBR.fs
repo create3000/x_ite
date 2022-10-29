@@ -1,63 +1,130 @@
 
-#extension GL_OES_standard_derivatives : enable
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-#extension GL_EXT_frag_depth : enable
-#endif
 precision highp float;
 precision highp int;
-uniform int x3d_GeometryType;
-uniform bool x3d_ColorMaterial; 
+precision highp sampler2D;
+precision highp samplerCube;
 uniform float x3d_AlphaCutoff;
-uniform int x3d_NumLights;
-uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
-uniform x3d_PhysicalMaterialParameters x3d_Material;
-#ifdef USE_IBL
-uniform samplerCube diffuseEnvironmentTexture;
-uniform samplerCube specularEnvironmentTexture;
-uniform sampler2D brdfLUT;
+varying vec3 vertex; 
+varying vec3 localVertex; 
+#if defined (X3D_FOG)
+#if defined (X3D_FOG_COORDS)
+varying float fogDepth;
 #endif
-varying vec3 vertex;
-varying vec4 texCoord0;
-varying vec4 texCoord1;
+#endif
+#if defined (X3D_COLOR_MATERIAL)
 varying vec4 color;
+#endif
+#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+#if x3d_MaxTextures > 0
+varying vec4 texCoord0;
+#endif
+#if x3d_MaxTextures > 1
+varying vec4 texCoord1;
+#endif
+#else
+#if x3d_MaxTextures > 0
+vec4 texCoord0 = vec4 (0.0);
+#endif
+#if x3d_MaxTextures > 1
+vec4 texCoord1 = vec4 (0.0);
+#endif
+#endif
+#if defined (X3D_NORMALS)
 varying vec3 normal;
 varying vec3 localNormal;
-varying vec3 localVertex;
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-uniform float x3d_LogarithmicFarFactor1_2;
-in float depth;
+#else
+vec3 normal = vec3 (0.0, 0.0, 1.0);
+vec3 localNormal = vec3 (0.0, 0.0, 1.0);
 #endif
-#define MANUAL_SRGB
-vec4
-SRGBtoLINEAR (const in vec4 srgbIn)
+#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
+uniform float x3d_LogarithmicFarFactor1_2;
+varying float depth;
+#endif
+#if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_0D)
+varying float pointSize;
+void
+setTexCoords ()
 {
-#ifdef MANUAL_SRGB
-#ifdef SRGB_FAST_APPROXIMATION
-vec3 linOut = pow (srgbIn .xyz, vec3 (2.2));
-#else 
-vec3 bLess = step (vec3 (0.04045), srgbIn .xyz);
-vec3 linOut = mix (srgbIn .xyz / vec3 (12.92), pow ((srgbIn .xyz + vec3 (0.055)) / vec3 (1.055), vec3 (2.4)), bLess);
-#endif 
-return vec4 (linOut, srgbIn .w);
-#else 
-return srgbIn;
-#endif 
+vec4 texCoord = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
+#if x3d_MaxTextures > 0
+texCoord0 = texCoord;
+#endif
+#if x3d_MaxTextures > 1
+texCoord1 = texCoord;
+#endif
 }
 vec4
-Gamma (const in vec4 color)
+getPointColor (in vec4 color)
 {
-#ifdef MANUAL_SRGB
-return vec4 (pow (color .rgb, vec3 (1.0 / 2.2)), color .a);
-#else
+if (pointSize > 1.0)
+{
+float t = max (distance (vec2 (0.5), gl_PointCoord) * pointSize - max (pointSize / 2.0 - 1.0, 0.0), 0.0);
+color .a = mix (color .a, 0.0, t);
+}
+else
+{
+color .a *= pointSize;
+}
 return color;
+}
 #endif
+#if defined (X3D_STYLE_PROPERTIES) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
+uniform x3d_FillPropertiesParameters x3d_FillProperties;
+vec4
+getHatchColor (vec4 color)
+{
+vec4 finalColor = x3d_FillProperties .filled ? color : vec4 (0.0);
+if (x3d_FillProperties .hatched)
+{
+vec4 hatch = texture2D (x3d_FillProperties .texture, gl_FragCoord .xy / 32.0);
+hatch .rgb *= x3d_FillProperties .hatchColor;
+finalColor = mix (finalColor, hatch, hatch .a);
+}
+return finalColor;
+}
+#endif
+#if defined (X3D_FOG)
+uniform x3d_FogParameters x3d_Fog;
+float
+getFogInterpolant ()
+{
+#if defined (X3D_FOG_COORDS)
+return clamp (1.0 - fogDepth, 0.0, 1.0);
+#else
+float visibilityRange = x3d_Fog .visibilityRange;
+float dV = length (x3d_Fog .matrix * vertex);
+if (x3d_Fog .type == x3d_LinearFog)
+return max (0.0, visibilityRange - dV) / visibilityRange;
+if (x3d_Fog .type == x3d_ExponentialFog)
+return exp (-dV / max (0.001, visibilityRange - dV));
+return 1.0;
+#endif
+}
+vec3
+getFogColor (const in vec3 color)
+{
+return mix (x3d_Fog .color, color, getFogInterpolant ());
+}
+#endif
+uniform int x3d_NumClipPlanes;
+uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
+void
+clip ()
+{
+for (int i = 0; i < x3d_MaxClipPlanes; ++ i)
+{
+if (i == x3d_NumClipPlanes)
+break;
+if (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)
+discard;
+}
 }
 uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
 uniform int x3d_NumTextures;
 uniform int x3d_TextureType [x3d_MaxTextures]; 
 uniform sampler2D x3d_Texture2D [x3d_MaxTextures];
 uniform samplerCube x3d_TextureCube [x3d_MaxTextures];
-#ifdef X3D_MULTI_TEXTURING
+#if defined (X3D_MULTI_TEXTURING)
 float rand (vec2 co) { return fract (sin (dot (co.xy, vec2 (12.9898,78.233))) * 43758.5453); }
 float rand (vec2 co, float l) { return rand (vec2 (rand (co), l)); }
 float rand (vec2 co, float l, float t) { return rand (vec2 (rand (co, l), t)); }
@@ -87,7 +154,7 @@ return vec3 (perlin (p.xy, 1.0, 0.0),
 perlin (p.yz, 1.0, 0.0),
 perlin (p.zx, 1.0, 0.0));
 }
-#ifdef X3D_PROJECTIVE_TEXTURE_MAPPING
+#if defined (X3D_PROJECTIVE_TEXTURE_MAPPING)
 uniform int x3d_NumProjectiveTextures;
 uniform sampler2D x3d_ProjectiveTexture [x3d_MaxTextures];
 uniform mat4 x3d_ProjectiveTextureMatrix [x3d_MaxTextures];
@@ -191,7 +258,7 @@ return vec4 (refract (normalize (localVertex - eye), -N, eta), 1.0);
 }
 return getTextureMatrix (textureTransformMapping) * getTexCoord (textureCoordinateMapping);
 }
-vec4
+vec3
 getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
 {
 vec4 texCoord;
@@ -204,9 +271,11 @@ else if (textureCoordinateMapping == 1)
 texCoord = getTexCoord (x3d_TextureCoordinateGenerator [1], textureTransformMapping, textureCoordinateMapping);
 #endif
 texCoord .stp /= texCoord .q;
-if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
+#if defined (X3D_GEOMETRY_2D)
+if (gl_FrontFacing == false)
 texCoord .s = 1.0 - texCoord .s;
-return texCoord;
+#endif
+return texCoord .stp;
 }
 vec4
 getTexture2D (const in int i, const in vec2 texCoord)
@@ -244,11 +313,8 @@ for (int i = 0; i < x3d_MaxTextures; ++ i)
 {
 if (i == x3d_NumTextures)
 break;
-vec4 texCoord = getTexCoord (x3d_TextureCoordinateGenerator [i], i, i);
+vec3 texCoord = getTexCoord (i, i);
 vec4 textureColor = vec4 (1.0);
-texCoord .stp /= texCoord .q;
-if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
-texCoord .s = 1.0 - texCoord .s;
 if (x3d_TextureType [i] == x3d_TextureType2D)
 {
 textureColor = getTexture2D (i, texCoord .st);
@@ -443,7 +509,7 @@ else if (alphaMode == x3d_Off)
 }
 return currentColor;
 }
-#ifdef X3D_PROJECTIVE_TEXTURE_MAPPING
+#if defined (X3D_PROJECTIVE_TEXTURE_MAPPING)
 vec4
 getProjectiveTexture (const in int i, const in vec2 texCoord)
 {
@@ -503,8 +569,10 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 vec4 texCoord = texCoord0;
 vec4 textureColor = vec4 (1.0);
 texCoord .stp /= texCoord .q;
-if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing ? false : true))
+#if defined (X3D_GEOMETRY_2D)
+if (gl_FrontFacing == false)
 texCoord .s = 1.0 - texCoord .s;
+#endif
 if (x3d_TextureType [0] == x3d_TextureType2D)
 {
 textureColor = texture2D (x3d_Texture2D [0], texCoord .st);
@@ -521,8 +589,67 @@ getProjectiveTextureColor (in vec4 currentColor)
 return currentColor;
 }
 #endif 
-#ifdef X3D_MATERIAL_TEXTURES
-uniform x3d_NormalTextureParameters x3d_NormalTexture;
+vec4
+getMaterialColor ();
+vec4
+getFinalColor ()
+{
+#if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_0D)
+setTexCoords ();
+#if ! defined (X3D_MATERIAL_TEXTURES)
+if (x3d_NumTextures == 0)
+return getPointColor (getMaterialColor ());
+#endif
+#endif
+return getMaterialColor ();
+}
+void
+fragment_main ()
+{
+clip ();
+vec4 finalColor = getFinalColor ();
+#if defined (X3D_STYLE_PROPERTIES) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
+finalColor = getHatchColor (finalColor);
+#endif
+#if defined (X3D_FOG)
+finalColor .rgb = getFogColor (finalColor .rgb);
+#endif
+if (finalColor .a < x3d_AlphaCutoff)
+discard;
+gl_FragColor = finalColor;
+#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
+if (x3d_LogarithmicFarFactor1_2 > 0.0)
+gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+else
+gl_FragDepth = gl_FragCoord .z;
+#endif
+}
+#define MANUAL_SRGB
+vec4
+SRGBtoLINEAR (const in vec4 srgbIn)
+{
+#if defined (MANUAL_SRGB)
+#if defined (SRGB_FAST_APPROXIMATION)
+vec3 linOut = pow (srgbIn .xyz, vec3 (2.2));
+#else 
+vec3 bLess = step (vec3 (0.04045), srgbIn .xyz);
+vec3 linOut = mix (srgbIn .xyz / vec3 (12.92), pow ((srgbIn .xyz + vec3 (0.055)) / vec3 (1.055), vec3 (2.4)), bLess);
+#endif 
+return vec4 (linOut, srgbIn .w);
+#else 
+return srgbIn;
+#endif 
+}
+vec4
+Gamma (const in vec4 color)
+{
+#if defined (MANUAL_SRGB)
+return vec4 (pow (color .rgb, vec3 (1.0 / 2.2)), color .a);
+#else
+return color;
+#endif
+}
+#if defined (X3D_NORMAL_TEXTURE)
 mat3
 getTBNMatrix (const in vec2 texCoord)
 {
@@ -538,20 +665,23 @@ mat3 tbn = mat3 (T, B, N);
 return tbn;
 }
 #endif
+#if defined (X3D_NORMAL_TEXTURE)
+uniform x3d_NormalTextureParameters x3d_NormalTexture;
+#endif
 vec3
-getNormalVector ()
+getNormalVector (const in float normalScale)
 {
 float facing = gl_FrontFacing ? 1.0 : -1.0;
-#if defined(X3D_NORMAL_TEXTURE) && !defined(X3D_NORMAL_TEXTURE_3D)
-vec4 texCoord = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
-vec3 normalScale = vec3 (vec2 (x3d_Material .normalScale), 1.0);
+#if defined (X3D_NORMAL_TEXTURE) && ! defined (X3D_NORMAL_TEXTURE_3D)
+vec3 texCoord = getTexCoord (x3d_NormalTexture .textureTransformMapping, x3d_NormalTexture .textureCoordinateMapping);
+vec3 scale = vec3 (vec2 (normalScale), 1.0);
 mat3 tbn = getTBNMatrix (texCoord .st);
-#if defined(X3D_NORMAL_TEXTURE_2D)
+#if defined (X3D_NORMAL_TEXTURE_2D)
 vec3 n = texture2D (x3d_NormalTexture .texture2D, texCoord .st) .rgb;
-#elif defined(X3D_NORMAL_TEXTURE_CUBE)
-vec3 n = textureCube (x3d_NormalTexture .textureCube, texCoord .stp) .rgb;
+#elif defined (X3D_NORMAL_TEXTURE_CUBE)
+vec3 n = textureCube (x3d_NormalTexture .textureCube, texCoord) .rgb;
 #endif
-return normalize (tbn * ((n * 2.0 - 1.0) * normalScale)) * facing;
+return normalize (tbn * ((n * 2.0 - 1.0) * scale)) * facing;
 #else
 return normalize (normal) * facing;
 #endif
@@ -566,54 +696,312 @@ else if (spotAngle <= beamWidth)
 return 1.0;
 return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
 }
-#ifdef X3D_MATERIAL_TEXTURES
+#if defined (TITANIA)
+vec4
+pack (const in float value)
+{
+return vec4 (0.0, 0.0, 0.0, 0.0);
+}
+float
+unpack (const in vec4 color)
+{
+return color .r;
+}
+#endif
+#if defined (X_ITE)
+vec4
+pack (const in float value)
+{
+const vec3 bitShifts = vec3 (255.0,
+255.0 * 255.0,
+255.0 * 255.0 * 255.0);
+return vec4 (value, fract (value * bitShifts));
+}
+#if defined (X3D_DEPTH_TEXTURE)
+float
+unpack (const in vec4 color)
+{
+return color .r;
+}
+#else
+float
+unpack (const vec4 color)
+{
+const vec3 bitShifts = vec3 (1.0 / 255.0,
+1.0 / (255.0 * 255.0),
+1.0 / (255.0 * 255.0 * 255.0));
+return color .x + dot (color .gba, bitShifts);
+}
+#endif
+#endif
+#if defined (X3D_SHADOWS)
+uniform sampler2D x3d_ShadowMap [x3d_MaxLights];
+float
+getShadowDepth (const in int index, const in vec2 shadowCoord)
+{
+#if x3d_MaxLights > 0
+if (index == 0)
+return unpack (texture2D (x3d_ShadowMap [0], shadowCoord));
+#endif
+#if x3d_MaxLights > 1
+if (index == 1)
+return unpack (texture2D (x3d_ShadowMap [1], shadowCoord));
+#endif
+#if x3d_MaxLights > 2
+if (index == 2)
+return unpack (texture2D (x3d_ShadowMap [2], shadowCoord));
+#endif
+#if x3d_MaxLights > 3
+if (index == 3)
+return unpack (texture2D (x3d_ShadowMap [3], shadowCoord));
+#endif
+#if x3d_MaxLights > 4
+if (index == 4)
+return unpack (texture2D (x3d_ShadowMap [4], shadowCoord));
+#endif
+#if x3d_MaxLights > 5
+if (index == 5)
+return unpack (texture2D (x3d_ShadowMap [5], shadowCoord));
+#endif
+#if x3d_MaxLights > 6
+if (index == 6)
+return unpack (texture2D (x3d_ShadowMap [6], shadowCoord));
+#endif
+#if x3d_MaxLights > 7
+if (index == 7)
+return unpack (texture2D (x3d_ShadowMap [7], shadowCoord));
+#endif
+return 0.0;
+}
+float
+texture2DCompare (const in int index, const in vec2 texCoord, const in float compare)
+{
+float shadowDepth = getShadowDepth (index, texCoord);
+return (1.0 - step (1.0, shadowDepth)) * step (shadowDepth, compare);
+}
+float
+texture2DShadowLerp (const in int index, const in vec2 texelSize, const in float shadowMapSize, const in vec2 texCoord, const in float compare)
+{
+const vec2 offset = vec2 (0.0, 1.0);
+vec2 centroidTexCoord = floor (texCoord * shadowMapSize + 0.5) / shadowMapSize;
+float lb = texture2DCompare (index, centroidTexCoord + texelSize * offset .xx, compare);
+float lt = texture2DCompare (index, centroidTexCoord + texelSize * offset .xy, compare);
+float rb = texture2DCompare (index, centroidTexCoord + texelSize * offset .yx, compare);
+float rt = texture2DCompare (index, centroidTexCoord + texelSize * offset .yy, compare);
+vec2 f = fract (texCoord * shadowMapSize + 0.5);
+float a = mix (lb, lt, f.y);
+float b = mix (rb, rt, f.y);
+float c = mix (a, b, f.x);
+return c;
+}
+vec2
+cubeToUVCompact (in vec3 v, const float texelSizeY)
+{
+vec3 absV = abs (v);
+float scaleToCube = 1.0 / max (absV .x, max (absV .y, absV .z));
+absV *= scaleToCube;
+v *= scaleToCube * (1.0 - 2.0 * texelSizeY);
+vec2 planar = v .xy;
+float almostATexel = 1.5 * texelSizeY;
+float almostOne = 1.0 - almostATexel;
+if (absV .z >= almostOne)
+{
+if (v .z > 0.0)
+planar .x = 4.0 - v .x;
+}
+else if (absV .x >= almostOne)
+{
+float signX = sign (v .x);
+planar .x = v .z * signX + 2.0 * signX;
+}
+else if (absV .y >= almostOne)
+{
+float signY = sign (v .y);
+planar .x = (v .x + 0.5 + signY) * 2.0;
+planar .y = v .z * signY - 2.0;
+}
+return vec2 (0.125, 0.25) * planar + vec2 (0.375, 0.75);
+}
+mat4
+getPointLightRotations (const in vec3 vector)
+{
+mat4 rotations [6];
+rotations [0] = mat4 ( 0, 0 , 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 1); 
+rotations [1] = mat4 ( 0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1); 
+rotations [2] = mat4 (-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1); 
+rotations [3] = mat4 ( 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); 
+rotations [4] = mat4 ( 1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1); 
+rotations [5] = mat4 ( 1, 0, 0, 0, 0, 0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1); 
+vec3 a = abs (vector .xyz);
+if (a .x > a .y)
+{
+if (a .x > a .z)
+return vector .x > 0.0 ? rotations [1] : rotations [0];
+else
+return vector .z > 0.0 ? rotations [2] : rotations [3];
+}
+else
+{
+if (a .y > a .z)
+return vector .y > 0.0 ? rotations [5] : rotations [4];
+else
+return vector .z > 0.0 ? rotations [2] : rotations [3];
+}
+return rotations [3];
+}
+float
+getShadowIntensity (const in int index, const in x3d_LightSourceParameters light)
+{
+if (light .type == x3d_PointLight)
+{
+const mat4 biasMatrix = mat4 (0.5, 0.0, 0.0, 0.0,
+0.0, 0.5, 0.0, 0.0,
+0.0, 0.0, 0.5, 0.0,
+0.5, 0.5, 0.5, 1.0);
+const mat4 projectionMatrix = mat4 (1.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, -1.000025000312504, -1.0, 0, 0.0, -0.25000312503906297, 0.0);
+vec2 texelSize = vec2 (1.0) / (float (light .shadowMapSize) * vec2 (4.0, 2.0));
+vec4 shadowCoord = light .shadowMatrix * vec4 (vertex, 1.0);
+vec3 lightToPosition = shadowCoord .xyz;
+shadowCoord = biasMatrix * (projectionMatrix * (getPointLightRotations (lightToPosition) * shadowCoord));
+shadowCoord .z -= light .shadowBias;
+shadowCoord .xyz /= shadowCoord .w;
+#if defined (X3D_PCF_FILTERING) || defined (X3D_PCF_SOFT_FILTERING)
+vec2 offset = vec2 (-1, 1) * (texelSize .y * 42.0);
+float value = (
+texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyy, texelSize .y), shadowCoord .z) +
+texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyy, texelSize .y), shadowCoord .z) +
+texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyx, texelSize .y), shadowCoord .z) +
+texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyx, texelSize .y), shadowCoord .z) +
+texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z) +
+texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxy, texelSize .y), shadowCoord .z) +
+texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxy, texelSize .y), shadowCoord .z) +
+texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxx, texelSize .y), shadowCoord .z) +
+texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxx, texelSize .y), shadowCoord .z)
+) * (1.0 / 9.0);
+return light .shadowIntensity * value;
+#else 
+float value = texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z);
+return light .shadowIntensity * value;
+#endif
+}
+else
+{
+#if defined (X3D_PCF_FILTERING)
+vec2 texelSize = vec2 (1.0) / vec2 (light .shadowMapSize);
+vec4 shadowCoord = light .shadowMatrix * vec4 (vertex, 1.0);
+shadowCoord .z -= light .shadowBias;
+shadowCoord .xyz /= shadowCoord .w;
+float dx0 = - texelSize .x;
+float dy0 = - texelSize .y;
+float dx1 = + texelSize .x;
+float dy1 = + texelSize .y;
+float value = (
+texture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +
+texture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +
+texture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +
+texture2DCompare (index, shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +
+texture2DCompare (index, shadowCoord .xy, shadowCoord .z) +
+texture2DCompare (index, shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +
+texture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +
+texture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +
+texture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)
+) * (1.0 / 9.0);
+return light .shadowIntensity * value;
+#elif defined (X3D_PCF_SOFT_FILTERING)
+vec2 texelSize = vec2 (1.0) / vec2 (light .shadowMapSize);
+vec4 shadowCoord = light .shadowMatrix * vec4 (vertex, 1.0);
+shadowCoord .z -= light .shadowBias;
+shadowCoord .xyz /= shadowCoord .w;
+float dx0 = - texelSize.x;
+float dy0 = - texelSize.y;
+float dx1 = + texelSize.x;
+float dy1 = + texelSize.y;
+float value = (
+texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +
+texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +
+texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy0), shadowCoord .z) +
+texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, 0.0), shadowCoord .z) +
+texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy, shadowCoord .z) +
+texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, 0.0), shadowCoord .z) +
+texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy1), shadowCoord .z) +
+texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +
+texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)
+) * ( 1.0 / 9.0 );
+return light .shadowIntensity * value;
+#else 
+vec4 shadowCoord = shadowMatrix * vec4 (vertex, 1.0);
+shadowCoord .z -= shadowBias;
+shadowCoord .xyz /= shadowCoord .w;
+float value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);
+return light .shadowIntensity * value;
+#endif
+}
+return 0.0;
+}
+#endif
+uniform int x3d_NumLights;
+uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
+uniform x3d_PhysicalMaterialParameters x3d_Material;
+#if defined (USE_IBL)
+uniform samplerCube diffuseEnvironmentTexture;
+uniform samplerCube specularEnvironmentTexture;
+uniform sampler2D brdfLUT;
+#endif
+#if defined (X3D_BASE_TEXTURE)
 uniform x3d_BaseTextureParameters x3d_BaseTexture;
-uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
-uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
-uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
 #endif
 vec4
 getBaseColor ()
 {
 float alpha = 1.0 - x3d_Material .transparency;
-vec4 baseParameter = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .baseColor, alpha);
-#if defined(X3D_BASE_TEXTURE) && !defined(X3D_BASE_TEXTURE_3D)
-vec4 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
-#if defined(X3D_BASE_TEXTURE_2D)
+#if defined (X3D_COLOR_MATERIAL)
+vec4 baseParameter = vec4 (color .rgb, color .a * alpha);
+#else
+vec4 baseParameter = vec4 (x3d_Material .baseColor, alpha);
+#endif
+#if defined (X3D_BASE_TEXTURE)
+vec3 texCoord = getTexCoord (x3d_BaseTexture .textureTransformMapping, x3d_BaseTexture .textureCoordinateMapping);
+#if defined (X3D_BASE_TEXTURE_2D)
 return baseParameter * SRGBtoLINEAR (texture2D (x3d_BaseTexture .texture2D, texCoord .st));
-#elif defined(X3D_BASE_TEXTURE_CUBE)
-return baseParameter * SRGBtoLINEAR (textureCube (x3d_BaseTexture .textureCube, texCoord .stp));
+#elif defined (X3D_BASE_TEXTURE_CUBE)
+return baseParameter * SRGBtoLINEAR (textureCube (x3d_BaseTexture .textureCube, texCoord));
 #endif
 #else
 return getTextureColor (baseParameter, vec4 (vec3 (1.0), alpha));
 #endif
 }
+#if defined (X3D_EMISSIVE_TEXTURE)
+uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
+#endif
 vec3
 getEmissiveColor ()
 {
 vec3 emissiveParameter = x3d_Material .emissiveColor;
-#if defined(X3D_EMISSIVE_TEXTURE) && !defined(X3D_EMISSIVE_TEXTURE_3D)
-vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
-#if defined(X3D_EMISSIVE_TEXTURE_2D)
+#if defined (X3D_EMISSIVE_TEXTURE)
+vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+#if defined (X3D_EMISSIVE_TEXTURE_2D)
 return emissiveParameter * SRGBtoLINEAR (texture2D (x3d_EmissiveTexture .texture2D, texCoord .st)) .rgb;
-#elif defined(X3D_EMISSIVE_TEXTURE_CUBE)
-return emissiveParameter * SRGBtoLINEAR (textureCube (x3d_EmissiveTexture .textureCube, texCoord .stp)) .rgb;
+#elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
+return emissiveParameter * SRGBtoLINEAR (textureCube (x3d_EmissiveTexture .textureCube, texCoord)) .rgb;
 #endif
 #else
 return emissiveParameter .rgb;
 #endif
 }
+#if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
+uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
+#endif
 vec2
 getMetallicRoughness ()
 {
 float metallic = x3d_Material .metallic;
 float perceptualRoughness = x3d_Material .roughness;
-#if defined(X3D_METALLIC_ROUGHNESS_TEXTURE) && !defined(X3D_METALLIC_ROUGHNESS_TEXTURE_3D)
-vec4 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
-#if defined(X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
+#if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
+vec3 texCoord = getTexCoord (x3d_MetallicRoughnessTexture .textureTransformMapping, x3d_MetallicRoughnessTexture .textureCoordinateMapping);
+#if defined (X3D_METALLIC_ROUGHNESS_TEXTURE_2D)
 vec4 mrSample = texture2D (x3d_MetallicRoughnessTexture .texture2D, texCoord .st);
-#elif defined(X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)
-vec4 mrSample = textureCube (x3d_MetallicRoughnessTexture .textureCube, texCoord .stp);
+#elif defined (X3D_METALLIC_ROUGHNESS_TEXTURE_CUBE)
+vec4 mrSample = textureCube (x3d_MetallicRoughnessTexture .textureCube, texCoord);
 #endif
 metallic *= mrSample .b;
 perceptualRoughness *= mrSample .g;
@@ -622,15 +1010,18 @@ return vec2 (metallic, perceptualRoughness);
 return vec2 (metallic, perceptualRoughness);
 #endif
 }
+#if defined (X3D_OCCLUSION_TEXTURE)
+uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
+#endif
 float
 getOcclusionFactor ()
 {
-#if defined(X3D_OCCLUSION_TEXTURE) && !defined(X3D_OCCLUSION_TEXTURE_3D)
-vec4 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
-#if defined(X3D_OCCLUSION_TEXTURE_2D)
+#if defined (X3D_OCCLUSION_TEXTURE)
+vec3 texCoord = getTexCoord (x3d_OcclusionTexture .textureTransformMapping, x3d_OcclusionTexture .textureCoordinateMapping);
+#if defined (X3D_OCCLUSION_TEXTURE_2D)
 return texture2D (x3d_OcclusionTexture .texture2D, texCoord .st) .r;
-#elif defined(X3D_OCCLUSION_TEXTURE_CUBE)
-return textureCube (x3d_OcclusionTexture .textureCube, texCoord .stp) .r;
+#elif defined (X3D_OCCLUSION_TEXTURE_CUBE)
+return textureCube (x3d_OcclusionTexture .textureCube, texCoord) .r;
 #endif
 #else
 return 1.0;
@@ -653,15 +1044,15 @@ vec3 specularColor;
 };
 const float M_PI = 3.141592653589793;
 const float c_MinRoughness = 0.04;
-#ifdef USE_IBL
+#if defined (USE_IBL)
 vec3
 getIBLContribution (const in PBRInfo pbrInputs, vec3 n, const in vec3 reflection)
 {
 float mipCount = 9.0; 
 float lod = pbrInputs .perceptualRoughness * mipCount;
-vec3 brdf = SRGBtoLINEAR (texture (brdfLUT, vec2 (pbrInputs .NdotV, 1.0 - pbrInputs .perceptualRoughness))) .rgb;
+vec3 brdf = SRGBtoLINEAR (texture2D (brdfLUT, vec2 (pbrInputs .NdotV, 1.0 - pbrInputs .perceptualRoughness))) .rgb;
 vec3 diffuseLight = SRGBtoLINEAR (textureCube (diffuseEnvironmentTexture, n)) .rgb;
-#ifdef USE_TEX_LOD
+#if defined (USE_TEX_LOD)
 vec3 specularLight = SRGBtoLINEAR (textureCubeLodEXT (specularEnvironmentTexture, reflection, lod)) .rgb;
 #else
 vec3 specularLight = SRGBtoLINEAR (textureCube (specularEnvironmentTexture, reflection)) .rgb;
@@ -698,18 +1089,15 @@ float roughnessSq = pbrInputs .alphaRoughness * pbrInputs .alphaRoughness;
 float f = (pbrInputs .NdotH * roughnessSq - pbrInputs .NdotH) * pbrInputs .NdotH + 1.0;
 return roughnessSq / (M_PI * f * f);
 }
-void
-main ()
+vec4
+getMaterialColor ()
 {
 vec2 metallicRoughness = getMetallicRoughness ();
 float perceptualRoughness = clamp (metallicRoughness [1], c_MinRoughness, 1.0);
 float metallic = clamp (metallicRoughness [0], 0.0, 1.0);
 float alphaRoughness = perceptualRoughness * perceptualRoughness;
 vec4 baseColor = getBaseColor ();
-if (baseColor .a < x3d_AlphaCutoff)
-{
-discard;
-}
+float alpha = baseColor .a;
 vec3 f0 = vec3 (0.04);
 vec3 diffuseColor = baseColor .rgb * (vec3 (1.0) - f0);
 diffuseColor *= 1.0 - metallic;
@@ -718,7 +1106,7 @@ float reflectance = max (max (specularColor .r, specularColor .g), specularColor
 float reflectance90 = clamp (reflectance * 25.0, 0.0, 1.0);
 vec3 specularEnvironmentR0 = specularColor .rgb;
 vec3 specularEnvironmentR90 = vec3 (1.0, 1.0, 1.0) * reflectance90;
-vec3 n = getNormalVector (); 
+vec3 n = getNormalVector (x3d_Material .normalScale); 
 vec3 v = normalize (-vertex); 
 vec3 finalColor = vec3 (0.0);
 for (int i = 0; i < x3d_MaxLights; i ++)
@@ -763,23 +1151,27 @@ float spotFactor = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAn
 float attenuationSpotFactor = attenuationFactor * spotFactor;
 vec3 diffuseContrib = (1.0 - F) * diffuse (pbrInputs);
 vec3 specContrib = F * G * D / (4.0 * NdotL * NdotV);
-vec3 color = NdotL * attenuationSpotFactor * light .color * light .intensity * (diffuseContrib + specContrib);
+vec3 diffuseSpecContrib = light .intensity * (diffuseContrib + specContrib);
+#if defined (X3D_SHADOWS)
+if (NdotL > 0.001)
+diffuseSpecContrib = mix (diffuseSpecContrib, light .shadowColor, getShadowIntensity (i, light));
+#endif
+vec3 color = NdotL * attenuationSpotFactor * light .color * diffuseSpecContrib;
 finalColor += color;
 }
 }
-#ifdef USE_IBL
+#if defined (USE_IBL)
 vec3 reflection = -normalize (reflect (v, n));
 finalColor += getIBLContribution (pbrInputs, n, reflection);
 #endif
-#ifdef X3D_OCCLUSION_TEXTURE
+#if defined (X3D_OCCLUSION_TEXTURE)
 finalColor = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
 #endif
 finalColor += getEmissiveColor ();
-gl_FragColor = Gamma (vec4 (finalColor, baseColor .a));
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-if (x3d_LogarithmicFarFactor1_2 > 0.0)
-gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
-else
-gl_FragDepth = gl_FragCoord .z;
-#endif
+return Gamma (vec4 (finalColor, alpha));
+}
+void
+main ()
+{
+fragment_main ();
 }

@@ -52,6 +52,7 @@ define ([
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Browser/Shaders/Shader",
+   "x_ite/Browser/Shaders/ShaderCompiler",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/InputOutput/FileLoader",
@@ -61,6 +62,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           Shader,
+          ShaderCompiler,
           X3DNode,
           X3DUrlObject,
           FileLoader,
@@ -152,7 +154,7 @@ function (Fields,
       loadNow: function ()
       {
          new FileLoader (this) .loadDocument (this ._url,
-         function (data)
+         function (data, url)
          {
             if (data === null)
             {
@@ -162,14 +164,23 @@ function (Fields,
             else
             {
                const
-                  gl     = this .getBrowser () .getContext (),
-                  source = Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .options);
+                  browser        = this .getBrowser (),
+                  gl             = browser .getContext (),
+                  shaderCompiler = new ShaderCompiler (gl),
+                  source         = Shader .getShaderSource (gl, browser, shaderCompiler .process (data), this .options);
 
                gl .shaderSource (this .shader, source);
                gl .compileShader (this .shader);
 
                if (! gl .getShaderParameter (this .shader, gl .COMPILE_STATUS))
-                  throw new Error (this .getTypeName () + " '" + this .getName () + "': " + gl .getShaderInfoLog (this .shader));
+               {
+                  const
+                     log      = gl .getShaderInfoLog (this .shader),
+                     match    = log .match (/(\d+):(\d+)/),
+                     fileName = shaderCompiler .getSourceFileName (match [1]) || url;
+
+                  throw new Error ("Error in " + this .getTypeName () + " '" + this .getName () + "' in URL '" + fileName + "', line " + match [2]);
+               }
 
                this .setLoadState (X3DConstants .COMPLETE_STATE);
             }

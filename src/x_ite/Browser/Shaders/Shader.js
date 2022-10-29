@@ -48,15 +48,13 @@
 
 
 define ([
-   "x_ite/Browser/Shaders/ShaderSource",
    "text!assets/shaders/Types.glsl",
    "x_ite/Browser/Texturing/MultiTextureModeType",
    "x_ite/Browser/Texturing/MultiTextureSourceType",
    "x_ite/Browser/Texturing/MultiTextureFunctionType",
    "x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType",
 ],
-function (ShaderSource,
-          Types,
+function (Types,
           MultiTextureModeType,
           MultiTextureSourceType,
           MultiTextureFunctionType,
@@ -66,12 +64,8 @@ function (ShaderSource,
 
    const Shader =
    {
-      getShaderSource: function (browser, name, source, options)
+      getShaderSource: function (gl, browser, source, options)
       {
-         const gl = browser .getContext ();
-
-         source = ShaderSource .get (gl, source);
-
 			const
 				COMMENTS     = "\\s+|/\\*[\\s\\S]*?\\*/|//.*?\\n",
 				LINE         = "#line\\s+.*?\\n",
@@ -218,7 +212,7 @@ function (ShaderSource,
 
          const lines = (match [1] .match (/\n/g) || [ ]) .length + 1;
 
-         return match [1] + constants + definitions + types + "#line " + lines + "\n" + match [2];
+         return match [1] + constants + definitions + types + "#line " + (lines + 1) + " -1\n" + match [2];
       },
    };
 

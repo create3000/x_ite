@@ -1518,7 +1518,7 @@ function (Fields,
          this .display          = base .prototype .display;
          this .displayParticles = base .prototype .displayParticles;
       },
-      setRenderFunctions: function ()
+      updateRenderFunctions: function ()
       { },
    });
 

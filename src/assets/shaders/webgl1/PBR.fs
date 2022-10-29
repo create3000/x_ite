@@ -9,7 +9,7 @@ precision highp samplerCube;
 #pragma X3D include "include/Colors.glsl"
 #pragma X3D include "include/Normal.glsl"
 #pragma X3D include "include/SpotFactor.glsl"
-#pragma X3D include "Shadow.glsl"
+#pragma X3D include "include/Shadow.glsl"
 
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];

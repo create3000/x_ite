@@ -1,36 +1,190 @@
 #version 300 es
 precision highp float;
 precision highp int;
+precision highp sampler2D;
 precision highp sampler3D;
-uniform int x3d_GeometryType;
-uniform bool x3d_ColorMaterial; 
+precision highp samplerCube;
 uniform float x3d_AlphaCutoff;
-uniform x3d_UnlitMaterialParameters x3d_Material;
-in float fogDepth; 
-in vec4 color; 
-in vec3 normal; 
 in vec3 vertex; 
-in vec3 localNormal; 
 in vec3 localVertex; 
+#if defined (X3D_FOG)
+#if defined (X3D_FOG_COORDS)
+in float fogDepth;
+#endif
+#endif
+#if defined (X3D_COLOR_MATERIAL)
+in vec4 color;
+#endif
+#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
 #if x3d_MaxTextures > 0
 in vec4 texCoord0;
 #endif
 #if x3d_MaxTextures > 1
 in vec4 texCoord1;
 #endif
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+#else
+#if x3d_MaxTextures > 0
+vec4 texCoord0 = vec4 (0.0);
+#endif
+#if x3d_MaxTextures > 1
+vec4 texCoord1 = vec4 (0.0);
+#endif
+#endif
+#if defined (X3D_NORMALS)
+in vec3 normal;
+in vec3 localNormal;
+#else
+vec3 normal = vec3 (0.0, 0.0, 1.0);
+vec3 localNormal = vec3 (0.0, 0.0, 1.0);
+#endif
+#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
 uniform float x3d_LogarithmicFarFactor1_2;
 in float depth;
 #endif
 out vec4 x3d_FragColor;
-precision highp sampler3D;
+#if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_0D)
+in float pointSize;
+void
+setTexCoords ()
+{
+vec4 texCoord = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
+#if x3d_MaxTextures > 0
+texCoord0 = texCoord;
+#endif
+#if x3d_MaxTextures > 1
+texCoord1 = texCoord;
+#endif
+}
+vec4
+getPointColor (in vec4 color)
+{
+if (pointSize > 1.0)
+{
+float t = max (distance (vec2 (0.5), gl_PointCoord) * pointSize - max (pointSize / 2.0 - 1.0, 0.0), 0.0);
+color .a = mix (color .a, 0.0, t);
+}
+else
+{
+color .a *= pointSize;
+}
+return color;
+}
+#endif
+#if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_1D)
+struct Line2
+{
+vec2 point;
+vec2 direction;
+};
+Line2
+line2 (const in vec2 point1, const in vec2 point2)
+{
+return Line2 (point1, normalize (point2 - point1));
+}
+vec2
+closest_point (const in Line2 line, const in vec2 point)
+{
+vec2 r = point - line .point;
+float d = dot (r, line .direction);
+return line .direction * d + line .point;
+}
+uniform x3d_LinePropertiesParameters x3d_LineProperties;
+flat in float lengthSoFar; 
+flat in vec2 startPoint; 
+in vec2 midPoint; 
+void
+stipple ()
+{
+if (x3d_LineProperties .applied)
+{
+vec2 point = closest_point (line2 (startPoint, midPoint), gl_FragCoord .xy);
+float s = (lengthSoFar + length (point - startPoint)) * x3d_LineProperties .lineStippleScale;
+#if x3d_MaxTextures > 0
+texCoord0 = vec4 (s, 0.0, 0.0, 1.0);
+#endif
+#if x3d_MaxTextures > 1
+texCoord1 = vec4 (s, 0.0, 0.0, 1.0);
+#endif
+if (x3d_LineProperties .linetype != 16)
+{
+int linetype = x3d_LineProperties .linetype;
+int height = textureSize (x3d_LineProperties .texture, 0) .y;
+float t = 1.0 - float (linetype * 2 + 1) / float (height * 2);
+float alpha = texture (x3d_LineProperties .texture, vec2 (s, t)) .a;
+if (alpha != 1.0)
+discard;
+}
+}
+}
+#endif
+#if defined (X3D_STYLE_PROPERTIES) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
+uniform x3d_FillPropertiesParameters x3d_FillProperties;
+vec4
+getHatchColor (vec4 color)
+{
+vec4 finalColor = x3d_FillProperties .filled ? color : vec4 (0.0);
+if (x3d_FillProperties .hatched)
+{
+vec4 hatch = texture (x3d_FillProperties .texture, gl_FragCoord .xy / 32.0);
+hatch .rgb *= x3d_FillProperties .hatchColor;
+finalColor = mix (finalColor, hatch, hatch .a);
+}
+return finalColor;
+}
+#endif
+#if defined (X3D_FOG)
+uniform x3d_FogParameters x3d_Fog;
+float
+getFogInterpolant ()
+{
+#if defined (X3D_FOG_COORDS)
+return clamp (1.0 - fogDepth, 0.0, 1.0);
+#else
+float visibilityRange = x3d_Fog .visibilityRange;
+float dV = length (x3d_Fog .matrix * vertex);
+switch (x3d_Fog .type)
+{
+case x3d_LinearFog:
+{
+return max (0.0, visibilityRange - dV) / visibilityRange;
+}
+case x3d_ExponentialFog:
+{
+return exp (-dV / max (0.001, visibilityRange - dV));
+}
+default:
+{
+return 1.0;
+}
+}
+#endif
+}
+vec3
+getFogColor (const in vec3 color)
+{
+return mix (x3d_Fog .color, color, getFogInterpolant ());
+}
+#endif
+uniform int x3d_NumClipPlanes;
+uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
+void
+clip ()
+{
+for (int i = 0; i < x3d_MaxClipPlanes; ++ i)
+{
+if (i == x3d_NumClipPlanes)
+break;
+if (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)
+discard;
+}
+}
 uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
 uniform int x3d_NumTextures;
 uniform int x3d_TextureType [x3d_MaxTextures]; 
 uniform sampler2D x3d_Texture2D [x3d_MaxTextures];
 uniform sampler3D x3d_Texture3D [x3d_MaxTextures];
 uniform samplerCube x3d_TextureCube [x3d_MaxTextures];
-#ifdef X3D_MULTI_TEXTURING
+#if defined (X3D_MULTI_TEXTURING)
 float rand (vec2 co) { return fract (sin (dot (co.xy, vec2 (12.9898,78.233))) * 43758.5453); }
 float rand (vec2 co, float l) { return rand (vec2 (rand (co), l)); }
 float rand (vec2 co, float l, float t) { return rand (vec2 (rand (co, l), t)); }
@@ -60,7 +214,7 @@ return vec3 (perlin (p.xy, 1.0, 0.0),
 perlin (p.yz, 1.0, 0.0),
 perlin (p.zx, 1.0, 0.0));
 }
-#ifdef X3D_PROJECTIVE_TEXTURE_MAPPING
+#if defined (X3D_PROJECTIVE_TEXTURE_MAPPING)
 uniform int x3d_NumProjectiveTextures;
 uniform sampler2D x3d_ProjectiveTexture [x3d_MaxTextures];
 uniform mat4 x3d_ProjectiveTextureMatrix [x3d_MaxTextures];
@@ -165,14 +319,16 @@ return x3d_TextureMatrix [textureTransformMapping] * getTexCoord (textureCoordin
 }
 }
 }
-vec4
+vec3
 getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
 {
 vec4 texCoord = getTexCoord (x3d_TextureCoordinateGenerator [textureCoordinateMapping], textureTransformMapping, textureCoordinateMapping);
 texCoord .stp /= texCoord .q;
-if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
+#if defined (X3D_GEOMETRY_2D)
+if (gl_FrontFacing == false)
 texCoord .s = 1.0 - texCoord .s;
-return texCoord;
+#endif
+return texCoord .stp;
 }
 vec4
 getTexture2D (const in int i, const in vec2 texCoord)
@@ -251,7 +407,7 @@ for (int i = 0; i < x3d_MaxTextures; ++ i)
 {
 if (i == x3d_NumTextures)
 break;
-vec4 texCoord = getTexCoord (i, i);
+vec3 texCoord = getTexCoord (i, i);
 vec4 textureColor = vec4 (1.0);
 switch (x3d_TextureType [i])
 {
@@ -516,7 +672,7 @@ break;
 }
 return currentColor;
 }
-#ifdef X3D_PROJECTIVE_TEXTURE_MAPPING
+#if defined (X3D_PROJECTIVE_TEXTURE_MAPPING)
 vec4
 getProjectiveTexture (const in int i, const in vec2 texCoord)
 {
@@ -585,8 +741,10 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 vec4 texCoord = texCoord0;
 vec4 textureColor = vec4 (1.0);
 texCoord .stp /= texCoord .q;
-if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing ? false : true))
+#if defined (X3D_GEOMETRY_2D)
+if (gl_FrontFacing == false)
 texCoord .s = 1.0 - texCoord .s;
+#endif
 switch (x3d_TextureType [0])
 {
 case x3d_TextureType2D:
@@ -613,83 +771,65 @@ getProjectiveTextureColor (in vec4 currentColor)
 return currentColor;
 }
 #endif 
-uniform x3d_FillPropertiesParameters x3d_FillProperties;
 vec4
-getHatchColor (vec4 color)
+getMaterialColor ();
+vec4
+getFinalColor ()
 {
-vec4 finalColor = x3d_FillProperties .filled ? color : vec4 (0.0);
-if (x3d_FillProperties .hatched)
-{
-vec4 hatch = texture (x3d_FillProperties .hatchStyle, gl_FragCoord .xy / 32.0);
-hatch .rgb *= x3d_FillProperties .hatchColor;
-finalColor = mix (finalColor, hatch, hatch .a);
+#if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_0D)
+setTexCoords ();
+#if ! defined (X3D_MATERIAL_TEXTURES)
+if (x3d_NumTextures == 0)
+return getPointColor (getMaterialColor ());
+#endif
+#endif
+return getMaterialColor ();
 }
-return finalColor;
-}
-uniform x3d_FogParameters x3d_Fog;
-float
-getFogInterpolant ()
-{
-if (x3d_Fog .type == x3d_None)
-return 1.0;
-if (x3d_Fog .fogCoord)
-return clamp (1.0 - fogDepth, 0.0, 1.0);
-float visibilityRange = x3d_Fog .visibilityRange;
-if (visibilityRange <= 0.0)
-return 1.0;
-float dV = length (x3d_Fog .matrix * vertex);
-if (dV >= visibilityRange)
-return 0.0;
-switch (x3d_Fog .type)
-{
-case x3d_LinearFog:
-{
-return (visibilityRange - dV) / visibilityRange;
-}
-case x3d_ExponentialFog:
-{
-return exp (-dV / (visibilityRange - dV));
-}
-default:
-{
-return 1.0;
-}
-}
-}
-vec3
-getFogColor (const in vec3 color)
-{
-return mix (x3d_Fog .color, color, getFogInterpolant ());
-}
-uniform int x3d_NumClipPlanes;
-uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
 void
-clip ()
+fragment_main ()
 {
-for (int i = 0; i < x3d_MaxClipPlanes; ++ i)
-{
-if (i == x3d_NumClipPlanes)
-break;
-if (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)
+clip ();
+#if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_1D)
+stipple ();
+#endif
+vec4 finalColor = getFinalColor ();
+#if defined (X3D_STYLE_PROPERTIES) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
+finalColor = getHatchColor (finalColor);
+#endif
+#if defined (X3D_FOG)
+finalColor .rgb = getFogColor (finalColor .rgb);
+#endif
+if (finalColor .a < x3d_AlphaCutoff)
 discard;
+x3d_FragColor = finalColor;
+#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
+if (x3d_LogarithmicFarFactor1_2 > 0.0)
+gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+else
+gl_FragDepth = gl_FragCoord .z;
+#endif
 }
-}
-#ifdef X3D_MATERIAL_TEXTURES
+uniform x3d_UnlitMaterialParameters x3d_Material;
+#if defined (X3D_EMISSIVE_TEXTURE)
 uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
 #endif
 vec4
 getEmissiveColor ()
 {
 float alpha = 1.0 - x3d_Material .transparency;
-vec4 emissiveParameter = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .emissiveColor, alpha);
-#if defined(X3D_EMISSIVE_TEXTURE)
-vec4 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
-#if defined(X3D_EMISSIVE_TEXTURE_2D)
-return emissiveParameter * texture (x3d_EmissiveTexture .texture2D, texCoord .st) .rgba;
-#elif defined(X3D_EMISSIVE_TEXTURE_3D)
-return emissiveParameter * texture (x3d_EmissiveTexture .texture3D, texCoord .stp) .rgba;
-#elif defined(X3D_EMISSIVE_TEXTURE_CUBE)
-return emissiveParameter * texture (x3d_EmissiveTexture .textureCube, texCoord .stp) .rgba;
+#if defined (X3D_COLOR_MATERIAL)
+vec4 emissiveParameter = vec4 (color .rgb, color .a * alpha);
+#else
+vec4 emissiveParameter = vec4 (x3d_Material .emissiveColor, alpha);
+#endif
+#if defined (X3D_EMISSIVE_TEXTURE)
+vec3 texCoord = getTexCoord (x3d_EmissiveTexture .textureTransformMapping, x3d_EmissiveTexture .textureCoordinateMapping);
+#if defined (X3D_EMISSIVE_TEXTURE_2D)
+return emissiveParameter * texture (x3d_EmissiveTexture .texture2D, texCoord .st);
+#elif defined (X3D_EMISSIVE_TEXTURE_3D)
+return emissiveParameter * texture (x3d_EmissiveTexture .texture3D, texCoord);
+#elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
+return emissiveParameter * texture (x3d_EmissiveTexture .textureCube, texCoord);
 #endif
 #else
 return getTextureColor (emissiveParameter, vec4 (vec3 (1.0), alpha));
@@ -703,24 +843,5 @@ return getEmissiveColor ();
 void
 main ()
 {
-clip ();
-vec4 finalColor = vec4 (0.0);
-finalColor = getMaterialColor ();
-finalColor = getHatchColor (finalColor);
-finalColor .rgb = getFogColor (finalColor .rgb);
-if (finalColor .a < x3d_AlphaCutoff)
-{
-discard;
-}
-x3d_FragColor = finalColor;
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-if (x3d_LogarithmicFarFactor1_2 > 0.0)
-gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
-else
-gl_FragDepth = gl_FragCoord .z;
-#endif
-#ifdef X3D_SHADOWS
-#endif
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-#endif
+fragment_main ();
 }

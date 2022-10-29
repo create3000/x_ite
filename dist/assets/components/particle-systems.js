@@ -2380,6 +2380,7 @@ define ('x_ite/Components/ParticleSystems/ParticleSystem',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DShapeNode",
+   "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Browser/ParticleSystems/GeometryTypes",
    "x_ite/Rendering/VertexArray",
    "x_ite/Rendering/TraverseType",
@@ -2395,6 +2396,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShapeNode,
+          X3DGeometryNode,
           GeometryTypes,
           VertexArray,
           TraverseType,
@@ -2517,16 +2519,12 @@ function (Fields,
       {
          X3DShapeNode .prototype .initialize .call (this);
 
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
+         const browser = this .getBrowser ();
 
          if (browser .getContext () .getVersion () < 2)
             return;
 
          this .isLive () .addInterest ("set_live__", this);
-
-         browser .getBrowserOptions () ._Shading .addInterest ("set_shader__", this);
 
          this ._enabled           .addInterest ("set_enabled__",           this);
          this ._createParticles   .addInterest ("set_createParticles__",   this);
@@ -2568,7 +2566,7 @@ function (Fields,
 
          // Geometry context
 
-         this .geometryContext .fogCoords                = false;
+         this .geometryContext .hasFogCoords             = false;
          this .geometryContext .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
          this .geometryContext .textureCoordinateMapping = new Map ();
 
@@ -2694,11 +2692,9 @@ function (Fields,
             browser = this .getBrowser (),
             gl      = browser .getContext ();
 
-         // Set geometryType.
+         // Get geometryType.
 
-         this .geometryType = GeometryTypes .hasOwnProperty (this ._geometryType .getValue ())
-            ? GeometryTypes [this ._geometryType .getValue ()]
-            : GeometryTypes .QUAD;
+         this .geometryType = this .getEnum (GeometryTypes, this ._geometryType .getValue (), GeometryTypes .QUAD);
 
          // Create buffers.
 
@@ -2766,31 +2762,10 @@ function (Fields,
             }
          }
 
+         this .updateGeometryMask ();
          this .updateVertexArrays ();
 
-         this .set_shader__ ();
          this .set_transparent__ ();
-      },
-      set_shader__: function ()
-      {
-         switch (this .geometryType)
-         {
-            case GeometryTypes .POINT:
-            {
-               this .shaderNode = this .getBrowser () .getPointShader ();
-               break;
-            }
-            case GeometryTypes .LINE:
-            {
-               this .shaderNode = this .getBrowser () .getLineShader ();
-               break;
-            }
-            default:
-            {
-               this .shaderNode = null;
-               break;
-            }
-         }
       },
       set_maxParticles__: function ()
       {
@@ -2965,6 +2940,7 @@ function (Fields,
          this .numColors                      = numColors;
          this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
 
+         this .updateGeometryMask ();
          this .updateVertexArrays ();
       },
       set_texCoordRamp__: function ()
@@ -3009,6 +2985,10 @@ function (Fields,
          this .numTexCoords = this .texCoordRampNode ? numTexCoords : 0;
 
          this .updateVertexArrays ();
+      },
+      updateGeometryMask: function ()
+      {
+         X3DGeometryNode .prototype .updateGeometryMask .call (this .geometryContext);
       },
       updateVertexArrays: function ()
       {
@@ -3141,7 +3121,7 @@ function (Fields,
 
             for (let i = 0; i < numForces; ++ i)
             {
-               disabledForces += !forcePhysicsModelNodes [i] .addForce (i - disabledForces, emitterNode, timeByMass, forces);
+               disabledForces += ! forcePhysicsModelNodes [i] .addForce (i - disabledForces, emitterNode, timeByMass, forces);
             }
 
             this .numForces = numForces -= disabledForces;
@@ -3216,37 +3196,37 @@ function (Fields,
       { },
       traverse: function (type, renderObject)
       {
-         if (this .numParticles === 0)
-            return;
-
-         switch (type)
+         if (this .numParticles)
          {
-            case TraverseType .POINTER:
-            case TraverseType .PICKING:
-            case TraverseType .COLLISION:
+            switch (type)
             {
-               break;
+               case TraverseType .POINTER:
+               case TraverseType .PICKING:
+               case TraverseType .COLLISION:
+               {
+                  break;
+               }
+               case TraverseType .SHADOW:
+               {
+                  if (this ._castShadow .getValue ())
+                     renderObject .addDepthShape (this);
+
+                  break;
+               }
+               case TraverseType .DISPLAY:
+               {
+                  if (renderObject .addDisplayShape (this))
+                     this .getAppearance () .traverse (type, renderObject); // Currently used for GeneratedCubeMapTexture.
+
+                  break;
+               }
             }
-            case TraverseType .SHADOW:
+
+            if (this .geometryType === GeometryTypes .GEOMETRY)
             {
-               if (this ._castShadow .getValue ())
-                  renderObject .addDepthShape (this);
-
-               break;
+               if (this .getGeometry ())
+                  this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
             }
-            case TraverseType .DISPLAY:
-            {
-               if (renderObject .addDisplayShape (this))
-                  this .getAppearance () .traverse (type, renderObject); // Currently used for GeneratedCubeMapTexture.
-
-               break;
-            }
-         }
-
-         if (this .geometryType === GeometryTypes .GEOMETRY)
-         {
-            if (this .getGeometry ())
-               this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
          }
       },
       depth: function (gl, context, shaderNode)
@@ -3322,70 +3302,67 @@ function (Fields,
             default:
             {
                const
+                  browser        = this .getBrowser (),
                   appearanceNode = this .getAppearance (),
-                  shaderNode     = appearanceNode .shaderNode || this .shaderNode || appearanceNode .materialNode .getShader (context .browser, context .shadow),
-                  primitiveMode  = shaderNode .getPrimitiveMode (this .primitiveMode);
+                  shaderNode     = appearanceNode .getShader (this .geometryContext, context),
+                  primitiveMode  = browser .getPrimitiveMode (this .primitiveMode);
 
                // Setup shader.
 
-               if (shaderNode .isValid ())
+               context .geometryContext = this .geometryContext;
+
+               const blendModeNode = appearanceNode .getBlendMode ();
+
+               if (blendModeNode)
+                  blendModeNode .enable (gl);
+
+               shaderNode .enable (gl);
+               shaderNode .setUniforms (gl, context);
+
+               if (this .numTexCoords)
                {
-                  context .geometryContext = this .geometryContext;
+                  const textureUnit = browser .getTexture2DUnit ();
 
-                  const blendModeNode = appearanceNode .blendModeNode;
-
-                  if (blendModeNode)
-                     blendModeNode .enable (gl);
-
-                  shaderNode .enable (gl);
-                  shaderNode .setLocalUniforms (gl, context);
-
-                  if (this .numTexCoords)
-                  {
-                     const textureUnit = context .browser .getTexture2DUnit ();
-
-                     gl .activeTexture (gl .TEXTURE0 + textureUnit);
-                     gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
-                     gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
-                  }
-
-                  // Setup vertex attributes.
-
-                  const outputParticles = this .outputParticles;
-
-                  if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
-                  {
-                     const particleStride = this .particleStride;
-
-                     shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
-                     shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
-
-                     if (this .geometryContext .colorMaterial)
-                     {
-                        shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
-                        shaderNode .colorAttributeDivisor (gl, 1);
-                     }
-
-                     if (this .texCoordCount)
-                        shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
-
-                     if (this .hasNormals)
-                     {
-                        shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
-                        shaderNode .normalAttributeDivisor (gl, this .maxParticles);
-                     }
-
-                     shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
-                  }
-
-                  gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, this .numParticles);
-
-                  if (blendModeNode)
-                     blendModeNode .disable (gl);
-
-                  delete context .geometryContext;
+                  gl .activeTexture (gl .TEXTURE0 + textureUnit);
+                  gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+                  gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
                }
 
+               // Setup vertex attributes.
+
+               const outputParticles = this .outputParticles;
+
+               if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
+               {
+                  const particleStride = this .particleStride;
+
+                  shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
+                  shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
+
+                  if (this .geometryContext .colorMaterial)
+                  {
+                     shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
+                     shaderNode .colorAttributeDivisor (gl, 1);
+                  }
+
+                  if (this .texCoordCount)
+                     shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
+
+                  if (this .hasNormals)
+                  {
+                     shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
+                     shaderNode .normalAttributeDivisor (gl, this .maxParticles);
+                  }
+
+                  shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
+               }
+
+               gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, this .numParticles);
+
+               if (blendModeNode)
+                  blendModeNode .disable (gl);
+
+               delete context .geometryContext;
                break;
             }
          }

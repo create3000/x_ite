@@ -1,16 +1,22 @@
 
-define ('x_ite/Browser/Shaders/ShaderSource',[
+define ('x_ite/Browser/Shaders/ShaderCompiler',[
 ],
 function ()
 {
 "use strict";
 
-	return {
-		get: function (gl, source)
+	function ShaderCompiler () { }
+
+	ShaderCompiler .prototype = {
+      getSourceFileName: function ()
+      { },
+		process: function (source)
 		{
 			return source;
 		},
 	};
+
+	return ShaderCompiler;
 });
 
 })));
