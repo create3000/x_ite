@@ -985,15 +985,16 @@ function (X3DCast,
          return function (gl, context, front = true)
          {
             const
-               renderObject    = context .renderer,
-               fogNode         = context .fogNode,
-               shapeNode       = context .shapeNode,
-               geometryContext = context .geometryContext || shapeNode .getGeometry (),
-               geometryType    = geometryContext .geometryType,
-               appearanceNode  = shapeNode .getAppearance (),
-               materialNode    = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
-               textureNode     = context .textureNode || appearanceNode .getTexture (),
-               modelViewMatrix = context .modelViewMatrix;
+               renderObject        = context .renderer,
+               fogNode             = context .fogNode,
+               shapeNode           = context .shapeNode,
+               geometryContext     = context .geometryContext || shapeNode .getGeometry (),
+               geometryType        = geometryContext .geometryType,
+               appearanceNode      = shapeNode .getAppearance (),
+               stylePropertiesNode = appearanceNode .getStyleProperties (geometryType),
+               materialNode        = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
+               textureNode         = context .textureNode || appearanceNode .getTexture (),
+               modelViewMatrix     = context .modelViewMatrix;
 
             // Set global uniforms.
 
@@ -1077,9 +1078,10 @@ function (X3DCast,
 
             gl .uniform1f (this .x3d_AlphaCutoff, appearanceNode .getAlphaCutoff ());
 
-            // Style
+            // Style Properties
 
-            appearanceNode .getStyleProperties (geometryType) .setShaderUniforms (gl, this);
+            if (stylePropertiesNode)
+               stylePropertiesNode .setShaderUniforms (gl, this);
 
             // Material
 

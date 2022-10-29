@@ -1,4 +1,4 @@
-#if defined (X3D_GEOMETRY_1D)
+#if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_1D)
 
 #pragma X3D include "Line2.glsl"
 

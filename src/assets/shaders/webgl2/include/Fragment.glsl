@@ -59,13 +59,13 @@ getMaterialColor ();
 vec4
 getFinalColor ()
 {
-   #if defined (X3D_GEOMETRY_0D)
+   #if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_0D)
       setTexCoords ();
-   #endif
 
-   #if defined (X3D_GEOMETRY_0D) && ! defined (X3D_MATERIAL_TEXTURES)
-      if (x3d_NumTextures == 0)
-         return getPointColor (getMaterialColor ());
+      #if ! defined (X3D_MATERIAL_TEXTURES)
+         if (x3d_NumTextures == 0)
+            return getPointColor (getMaterialColor ());
+      #endif
    #endif
 
    return getMaterialColor ();
@@ -76,13 +76,13 @@ fragment_main ()
 {
    clip ();
 
-   #if defined (X3D_GEOMETRY_1D)
+   #if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_1D)
       stipple ();
    #endif
 
    vec4 finalColor = getFinalColor ();
 
-   #if defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)
+   #if defined (X3D_STYLE_PROPERTIES) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
       finalColor = getHatchColor (finalColor);
    #endif
 
@@ -96,10 +96,10 @@ fragment_main ()
    x3d_FragColor = finalColor;
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-   //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-   if (x3d_LogarithmicFarFactor1_2 > 0.0)
-      gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
-   else
-      gl_FragDepth = gl_FragCoord .z;
+      //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
+      if (x3d_LogarithmicFarFactor1_2 > 0.0)
+         gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+      else
+         gl_FragDepth = gl_FragCoord .z;
    #endif
 }

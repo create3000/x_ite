@@ -264,6 +264,13 @@ function (Fields,
             browser = this .getBrowser (),
             options = [ ];
 
+         if (context .shapeNode)
+         {
+            var
+               appearanceNode      = context .shapeNode .getAppearance (),
+               stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType);
+         }
+
          if (! geometryContext .hasNormals)
             return browser .getDefaultMaterial () .createShader (key, geometryContext, context);
 
@@ -282,6 +289,9 @@ function (Fields,
             options .push ("X3D_COLOR_MATERIAL");
 
          options .push ("X3D_NORMALS");
+
+         if (stylePropertiesNode)
+            options .push ("X3D_STYLE_PROPERTIES");
 
          if (+this .getTextureBits ())
          {

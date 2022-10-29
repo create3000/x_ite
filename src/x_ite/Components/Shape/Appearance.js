@@ -216,16 +216,10 @@ function (Fields,
       set_pointProperties__: function ()
       {
          this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this ._pointProperties);
-
-         if (! this .stylePropertiesNode [0])
-            this .stylePropertiesNode [0] = this .getBrowser () .getDefaultPointProperties ();
       },
       set_lineProperties__: function ()
       {
          this .stylePropertiesNode [1] = X3DCast (X3DConstants .LineProperties, this ._lineProperties);
-
-         if (! this .stylePropertiesNode [1])
-            this .stylePropertiesNode [1] = this .getBrowser () .getDefaultLineProperties ();
       },
       set_fillProperties__: function ()
       {
@@ -233,9 +227,6 @@ function (Fields,
             this .stylePropertiesNode [2] ._transparent .removeInterest ("set_transparent__", this);
 
          this .stylePropertiesNode [2] = X3DCast (X3DConstants .FillProperties, this ._fillProperties);
-
-         if (! this .stylePropertiesNode [2])
-            this .stylePropertiesNode [2] = this .getBrowser () .getDefaultFillProperties ();
 
          if (this .stylePropertiesNode [2])
             this .stylePropertiesNode [2] ._transparent .addInterest ("set_transparent__", this);
@@ -395,7 +386,7 @@ function (Fields,
          switch (this .alphaMode)
          {
             case AlphaMode .AUTO:
-               this .setTransparent (Boolean (this .stylePropertiesNode [3] .getTransparent () ||
+               this .setTransparent (Boolean (this .stylePropertiesNode [3] && this .stylePropertiesNode [3] .getTransparent () ||
                                      (this .materialNode && this .materialNode .getTransparent ()) ||
                                      (this .backMaterialNode && this .backMaterialNode .getTransparent ()) ||
                                      (this .textureNode && this .textureNode .getTransparent ()) ||

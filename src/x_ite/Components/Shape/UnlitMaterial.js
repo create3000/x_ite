@@ -125,6 +125,13 @@ function (Fields,
             browser = this .getBrowser (),
             options = [ ];
 
+         if (context .shapeNode)
+         {
+            var
+               appearanceNode      = context .shapeNode .getAppearance (),
+               stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType);
+         }
+
          options .push ("X3D_UNLIT", this .getGeometryType (geometryContext .geometryType))
 
          if (context .shadows)
@@ -141,6 +148,9 @@ function (Fields,
 
          if (geometryContext .hasNormals)
             options .push ("X3D_NORMALS");
+
+         if (stylePropertiesNode)
+            options .push ("X3D_STYLE_PROPERTIES");
 
          if (+this .getTextureBits ())
          {

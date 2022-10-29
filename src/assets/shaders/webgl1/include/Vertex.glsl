@@ -70,7 +70,7 @@ varying vec3 localVertex;
 void
 vertex_main ()
 {
-   #if defined (X3D_GEOMETRY_0D)
+   #if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_0D)
       gl_PointSize = pointSize = getPointSize (vertex);
    #endif
 

@@ -14,8 +14,10 @@ uniform mat4 x3d_ModelViewMatrix;
 #endif
 
 #if ! defined (X3D_GEOMETRY_0D)
-   #if x3d_MaxTextures > 0
-      in vec4 x3d_TexCoord0;
+   #if (defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_1D)) || defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)
+      #if x3d_MaxTextures > 0
+         in vec4 x3d_TexCoord0;
+      #endif
    #endif
 
    #if ! defined (X3D_GEOMETRY_1D)
@@ -58,7 +60,7 @@ in vec4 x3d_Vertex;
    vec3 normal = vec3 (0.0, 0.0, 1.0);
 #endif
 
-#if defined (X3D_GEOMETRY_1D)
+#if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_1D)
    flat out float lengthSoFar;
    flat out vec2  startPoint;
    out vec2       midPoint;
@@ -79,11 +81,11 @@ out vec3 localVertex;
 void
 vertex_main ()
 {
-   #if defined (X3D_GEOMETRY_0D)
+   #if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_0D)
       gl_PointSize = pointSize = getPointSize (vertex);
    #endif
 
-   #if defined (X3D_GEOMETRY_1D)
+   #if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_1D)
       lengthSoFar = x3d_TexCoord0 .z;
       startPoint  = x3d_TexCoord0 .xy;
       midPoint    = x3d_TexCoord0 .xy;
