@@ -531,8 +531,8 @@ function (X3DBindableNode,
 
             // Setup context.
 
-            gl .disable (gl .DEPTH_TEST);
             gl .depthMask (false);
+            gl .disable (gl .DEPTH_TEST);
             gl .enable (gl .CULL_FACE);
             gl .frontFace (gl .CCW);
 

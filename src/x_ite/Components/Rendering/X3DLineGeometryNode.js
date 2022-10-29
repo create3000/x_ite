@@ -462,6 +462,8 @@ function (X3DGeometryNode,
 
             if (blendModeNode)
                blendModeNode .disable (gl);
+
+            gl .lineWidth (1);
          };
       })(),
       displayParticles: function (gl, context, particleSystem)
@@ -515,6 +517,8 @@ function (X3DGeometryNode,
 
          if (blendModeNode)
             blendModeNode .disable (gl);
+
+         gl .lineWidth (1);
       },
    });
 

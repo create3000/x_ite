@@ -695,8 +695,7 @@ function ($,
 
             const
                gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext, this .context),
-               lineWidth  = gl .getParameter (gl .LINE_WIDTH);
+               shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext, this .context);
 
             shaderNode .enable (gl);
 
@@ -713,19 +712,13 @@ function ($,
             gl .disable (gl .DEPTH_TEST);
 
             // Draw a black and a white line.
-            gl .lineWidth (2);
+
             gl .uniform3f (shaderNode .x3d_EmissiveColor, 0, 0, 0);
             gl .uniform1f (shaderNode .x3d_Transparency,  0);
-
             gl .drawArrays (gl .LINES, 0, this .lineCount);
 
-            gl .lineWidth (1);
             gl .uniform3f (shaderNode .x3d_EmissiveColor, 1, 1, 1);
-
             gl .drawArrays (gl .LINES, 0, this .lineCount);
-            gl .enable (gl .DEPTH_TEST);
-
-            gl .lineWidth (lineWidth);
          };
       })(),
       transfer: function (fromPoint, toPoint)

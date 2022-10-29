@@ -814,8 +814,8 @@ function (TextureBuffer,
 
                // Render all objects
 
-               gl .enable (gl .DEPTH_TEST);
                gl .depthMask (true);
+               gl .enable (gl .DEPTH_TEST);
                gl .disable (gl .BLEND);
                gl .disable (gl .CULL_FACE);
 

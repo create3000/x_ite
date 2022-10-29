@@ -79,14 +79,11 @@ function ($,
          const gl = this .getContext ();
 
          gl .enable (gl .SCISSOR_TEST);
-         gl .cullFace (gl .BACK);
-         gl .enable (gl .DEPTH_TEST);
          gl .depthFunc (gl .LEQUAL);
          gl .clearDepth (1);
 
          gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
          gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
-         gl .enable (gl .BLEND);
 
          // Configure viewport.
 
