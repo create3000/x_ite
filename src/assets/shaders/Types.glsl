@@ -43,9 +43,9 @@ struct x3d_PointPropertiesParameters
 struct x3d_LinePropertiesParameters
 {
    bool          applied;
-   mediump float linewidthScaleFactor;
+   mediump int   linetype;
    mediump float lineStippleScale;
-   sampler2D     linetype;
+   sampler2D     texture;
 };
 
 //uniform x3d_LinePropertiesParameters x3d_LineProperties;

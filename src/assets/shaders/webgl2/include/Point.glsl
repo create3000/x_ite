@@ -1,15 +1,19 @@
 #if defined (X3D_GEOMETRY_0D)
+
 in float pointSize;
-vec4 texCoord0 = vec4 (0.0);
-vec4 texCoord1 = vec4 (0.0);
 
 void
 setTexCoords ()
 {
    vec4 texCoord = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
 
-   texCoord0 = texCoord;
-   texCoord1 = texCoord;
+   #if x3d_MaxTextures > 0
+      texCoord0 = texCoord;
+   #endif
+
+   #if x3d_MaxTextures > 1
+      texCoord1 = texCoord;
+   #endif
 }
 
 vec4
@@ -28,4 +32,5 @@ getPointColor (in vec4 color)
 
    return color;
 }
+
 #endif

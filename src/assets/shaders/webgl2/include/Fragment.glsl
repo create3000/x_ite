@@ -13,13 +13,21 @@ in vec3 localVertex; // point on geometry in local coordinates
    in vec4 color;
 #endif
 
-#if ! defined (X3D_GEOMETRY_0D)
+#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
    #if x3d_MaxTextures > 0
       in vec4 texCoord0;
    #endif
 
    #if x3d_MaxTextures > 1
       in vec4 texCoord1;
+   #endif
+#else
+   #if x3d_MaxTextures > 0
+      vec4 texCoord0 = vec4 (0.0);
+   #endif
+
+   #if x3d_MaxTextures > 1
+      vec4 texCoord1 = vec4 (0.0);
    #endif
 #endif
 

@@ -18,8 +18,10 @@ uniform mat4 x3d_ModelViewMatrix;
       in vec4 x3d_TexCoord0;
    #endif
 
-   #if x3d_MaxTextures > 1
-      in vec4 x3d_TexCoord1;
+   #if ! defined (X3D_GEOMETRY_1D)
+      #if x3d_MaxTextures > 1
+         in vec4 x3d_TexCoord1;
+      #endif
    #endif
 #endif
 
@@ -37,7 +39,7 @@ in vec4 x3d_Vertex;
    out vec4 color;
 #endif
 
-#if ! defined (X3D_GEOMETRY_0D)
+#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
    #if x3d_MaxTextures > 0
       out vec4 texCoord0;
    #endif
@@ -97,7 +99,7 @@ vertex_main ()
       color = x3d_Color;
    #endif
 
-   #if ! defined (X3D_GEOMETRY_0D)
+   #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
       #if x3d_MaxTextures > 0
          texCoord0 = getTexCoord (x3d_TexCoord0);
       #endif

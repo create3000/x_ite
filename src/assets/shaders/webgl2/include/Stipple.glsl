@@ -1,4 +1,5 @@
 #if defined (X3D_GEOMETRY_1D)
+
 #pragma X3D include "Line2.glsl"
 
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
@@ -14,10 +15,23 @@ stipple ()
    {
       vec2  point = closest_point (line2 (startPoint, midPoint), gl_FragCoord .xy);
       float s     = (lengthSoFar + length (point - startPoint)) * x3d_LineProperties .lineStippleScale;
-      float alpha = texture (x3d_LineProperties .linetype, vec2 (s, 0.5)) .a;
 
-      if (alpha != 1.0)
-         discard;
+      #if x3d_MaxTextures > 0
+         texCoord0 = vec4 (s, 0.0, 0.0, 1.0);
+      #endif
+
+      #if x3d_MaxTextures > 1
+         texCoord1 = vec4 (s, 0.0, 0.0, 1.0);
+      #endif
+
+      if (x3d_LineProperties .linetype != 16)
+      {
+         float alpha = texture (x3d_LineProperties .texture, texCoord0 .st) .a;
+
+         if (alpha != 1.0)
+            discard;
+      }
    }
 }
+
 #endif

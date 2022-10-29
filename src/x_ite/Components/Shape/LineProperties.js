@@ -153,18 +153,17 @@ function (Fields,
                textureUnit = browser .getTexture2DUnit ();
 
             gl .lineWidth (this .linewidthScaleFactor);
-            gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,              true);
-            gl .uniform1f (shaderObject .x3d_LinePropertiesLinewidthScaleFactor, this .linewidthScaleFactor);
+            gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,  true);
+            gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, this .linetype);
 
             gl .activeTexture (gl .TEXTURE0 + textureUnit);
             gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
-            gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, textureUnit);
+            gl .uniform1i (shaderObject .x3d_LinePropertiesTexture, textureUnit);
          }
          else
          {
             gl .lineWidth (1);
-            gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,              false);
-            gl .uniform1f (shaderObject .x3d_LinePropertiesLinewidthScaleFactor, 1);
+            gl .uniform1i (shaderObject .x3d_LinePropertiesApplied, false);
          }
       },
    });
