@@ -26,7 +26,7 @@ stipple ()
 
       if (x3d_LineProperties .linetype != 16)
       {
-         float alpha = texture (x3d_LineProperties .texture, texCoord0 .st) .a;
+         float alpha = texture (x3d_LineProperties .texture, vec2 (s, 0.0)) .a;
 
          if (alpha != 1.0)
             discard;
