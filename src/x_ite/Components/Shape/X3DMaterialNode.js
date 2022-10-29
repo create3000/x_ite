@@ -149,7 +149,7 @@ function (Fields,
             return this .getBrowser () .getDefaultShader ();
          }
       },
-      getGeometryTypes: (function ()
+      getGeometryType: (function ()
       {
          const geometryTypes = [
             "X3D_GEOMETRY_0D",
@@ -158,9 +158,9 @@ function (Fields,
             "X3D_GEOMETRY_3D",
          ];
 
-         return function ()
+         return function (geometryType)
          {
-            return geometryTypes;
+            return geometryTypes [geometryType];
          }
       })(),
    });

@@ -125,7 +125,7 @@ function (Fields,
             browser = this .getBrowser (),
             options = [ ];
 
-         options .push ("X3D_UNLIT", this .getGeometryTypes () [geometryContext .geometryType])
+         options .push ("X3D_UNLIT", this .getGeometryType (geometryContext .geometryType))
 
          if (context .shadows)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");

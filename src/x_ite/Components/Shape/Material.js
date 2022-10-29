@@ -267,7 +267,7 @@ function (Fields,
          if (! geometryContext .hasNormals)
             return browser .getDefaultMaterial () .createShader (key, geometryContext, context);
 
-         options .push (this .getGeometryTypes () [geometryContext .geometryType])
+         options .push (this .getGeometryType (geometryContext .geometryType))
 
          if (context .shadows)
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
