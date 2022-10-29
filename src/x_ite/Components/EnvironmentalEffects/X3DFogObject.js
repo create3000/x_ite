@@ -110,9 +110,7 @@ function (X3DConstants,
          this ._fogType         .addInterest ("set_fogType__",         this);
          this ._color           .addInterest ("set_color__",           this);
          this ._visibilityRange .addInterest ("set_visibilityRange__", this);
-         this ._visibilityRange .addInterest ("set_fogType__",         this);
 
-         this .set_fogType__ ();
          this .set_color__ ();
          this .set_visibilityRange__ ();
       },
@@ -164,6 +162,8 @@ function (X3DConstants,
       set_visibilityRange__: function ()
       {
          this .visibilityRange = Math .max (0, this ._visibilityRange .getValue ());
+
+         this .set_fogType__ ();
       },
    };
 
