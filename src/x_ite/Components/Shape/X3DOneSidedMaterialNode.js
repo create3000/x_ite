@@ -138,9 +138,11 @@ function (Fields,
       },
       getTextureIndices: (function ()
       {
+         let i = 0;
+
          const textureIndices = {
-            EMISSIVE_TEXTURE: 0,
-            NORMAL_TEXTURE: 1,
+            EMISSIVE_TEXTURE: i ++,
+            NORMAL_TEXTURE: i ++,
          };
 
          return function ()

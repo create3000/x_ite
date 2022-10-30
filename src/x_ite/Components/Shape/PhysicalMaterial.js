@@ -187,12 +187,14 @@ function (Fields,
       },
       getTextureIndices: (function ()
       {
+         let i = 0;
+
          const textureIndices = {
-            BASE_TEXTURE: 0,
-            EMISSIVE_TEXTURE: 1,
-            METALLIC_ROUGHNESS_TEXTURE: 2,
-            OCCLUSION_TEXTURE: 3,
-            NORMAL_TEXTURE: 4,
+            EMISSIVE_TEXTURE: i ++,
+            NORMAL_TEXTURE:  i ++,
+            BASE_TEXTURE: i ++,
+            METALLIC_ROUGHNESS_TEXTURE: i ++,
+            OCCLUSION_TEXTURE:  i ++,
          };
 
          return function ()
@@ -229,6 +231,8 @@ function (Fields,
          else
          {
             var shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
+
+            browser .getShaders () .set (key .replace (/\d$/, 0), shaderNode);
          }
 
          browser .getShaders () .set (key, shaderNode);
