@@ -133,15 +133,15 @@ function (Fields,
       },
       set_pointSizeScaleFactor__: function ()
       {
-         this .pointSizeScaleFactor = Math .max (1, this ._pointSizeScaleFactor .getValue ());
+         this .pointSizeScaleFactor = Math .max (this ._pointSizeScaleFactor .getValue (), 0);
       },
       set_pointSizeMinValue__: function ()
       {
-         this .pointSizeMinValue = Algorithm .clamp (this ._pointSizeMinValue .getValue (), this .pointSizeRange [0], this .pointSizeRange [1]);
+         this .pointSizeMinValue = Algorithm .clamp (this ._pointSizeMinValue .getValue (), 0, this .pointSizeRange [1]);
       },
       set_pointSizeMaxValue__: function ()
       {
-         this .pointSizeMaxValue = Algorithm .clamp (this ._pointSizeMaxValue .getValue (), this .pointSizeRange [0], this .pointSizeRange [1]);
+         this .pointSizeMaxValue = Algorithm .clamp (this ._pointSizeMaxValue .getValue (), 0, this .pointSizeRange [1]);
       },
       set_pointSizeAttenuation__: function ()
       {
