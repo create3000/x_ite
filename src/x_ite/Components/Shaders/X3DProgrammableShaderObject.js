@@ -117,7 +117,13 @@ function (X3DCast,
    {
       constructor: X3DProgrammableShaderObject,
       initialize: function ()
-      { },
+      {
+         const browser = this .getBrowser ();
+
+         this .x3d_MaxClipPlanes = browser .getMaxClipPlanes ();
+         this .x3d_MaxLights     = browser .getMaxLights ();
+         this .x3d_MaxTextures   = browser .getMaxTextures ();
+      },
       canUserDefinedFields: function ()
       {
          return true;
@@ -148,7 +154,7 @@ function (X3DCast,
          this .x3d_NumClipPlanes = gl .getUniformLocation (program, "x3d_NumClipPlanes");
          this .x3d_ClipPlanes    = gl .getUniformLocation (program, "x3d_ClipPlane");
 
-         for (let i = 0, length = browser .getMaxClipPlanes (); i < length; ++ i)
+         for (let i = 0, length = this .x3d_MaxClipPlanes; i < length; ++ i)
             this .x3d_ClipPlane [i] = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
 
          this .x3d_FogType            = this .getUniformLocation (gl, program, "x3d_Fog.type",            "x3d_FogType");
@@ -175,7 +181,7 @@ function (X3DCast,
 
          this .x3d_NumLights = gl .getUniformLocation (program, "x3d_NumLights");
 
-         for (let i = 0, length = browser .getMaxLights (); i < length; ++ i)
+         for (let i = 0, length = this .x3d_MaxLights; i < length; ++ i)
          {
             this .x3d_LightType [i]             = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].type",             "x3d_LightType[" + i + "]");
             this .x3d_LightColor [i]            = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].color",            "x3d_LightColor[" + i + "]");
@@ -238,7 +244,7 @@ function (X3DCast,
 
          this .x3d_TexCoord .length = 0;
 
-         for (let i = 0, length = browser .getMaxTextures (); i < length; ++ i)
+         for (let i = 0, length = this .x3d_MaxTextures; i < length; ++ i)
          {
             this .x3d_Textures [i] = {
                textureType: gl .getUniformLocation (program, "x3d_TextureType[" + i + "]"),
@@ -961,7 +967,7 @@ function (X3DCast,
          for (const clipPlane of clipPlanes)
             clipPlane .setShaderUniforms (gl, this);
 
-         gl .uniform1i (this .x3d_NumClipPlanes, this .numClipPlanes);
+         gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
       },
       setUniforms: (function ()
       {
@@ -1050,9 +1056,9 @@ function (X3DCast,
             for (const localObject of renderContext .localObjects)
                localObject .setShaderUniforms (gl, this, renderObject);
 
-            gl .uniform1i (this .x3d_NumClipPlanes,         this .numClipPlanes);
-            gl .uniform1i (this .x3d_NumLights,             this .numLights);
-            gl .uniform1i (this .x3d_NumProjectiveTextures, this .numProjectiveTextures);
+            gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
+            gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
+            gl .uniform1i (this .x3d_NumProjectiveTextures, Math .min (this .numProjectiveTextures, this .x3d_MaxTextures));
 
             // Fog
 
