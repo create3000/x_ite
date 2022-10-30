@@ -575,23 +575,17 @@ function (X3DBindableNode,
             shaderNode = browser .getDefaultMaterial () .getShader (this .sphereContext);
 
          shaderNode .enable (gl);
-
-         // Clip planes
-
          shaderNode .setClipPlanes (gl, this .clipPlanes);
 
          // Uniforms
 
-         gl .uniform1i (shaderNode .x3d_FogType,                            0);
-         gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,               true);
-         gl .uniform1i (shaderNode .x3d_FillPropertiesHatched,              false);
+         gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
+         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
+
          gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
          gl .uniform1i (shaderNode .x3d_NumTextures,                        0);
          gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
          gl .uniform1i (shaderNode .x3d_NumProjectiveTextures,              0);
-
-         gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
-         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
 
          // Enable vertex attribute arrays.
 
@@ -601,14 +595,12 @@ function (X3DBindableNode,
             shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
          }
 
-         // Setup context.
+         // Draw.
 
          if (transparency)
             gl .enable (gl .BLEND);
          else
             gl .disable (gl .BLEND);
-
-         // Draw.
 
          gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
       },
@@ -624,27 +616,21 @@ function (X3DBindableNode,
                shaderNode = browser .getDefaultMaterial () .getShader (this .texturesContext);
 
             shaderNode .enable (gl);
-
-            // Clip planes
-
             shaderNode .setClipPlanes (gl, this .clipPlanes);
 
-            // Uniforms
+            // Set uniforms.
 
-            gl .uniform1i (shaderNode .x3d_FogType,                            0);
-            gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,               true);
-            gl .uniform1i (shaderNode .x3d_FillPropertiesHatched,              false);
-            gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1)
-            gl .uniform1f (shaderNode .x3d_Transparency,                       0)
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
+            gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
+
+            gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1);
+            gl .uniform1f (shaderNode .x3d_Transparency,                       0);
             gl .uniform1i (shaderNode .x3d_NumTextures,                        1);
             gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
             gl .uniform1i (shaderNode .x3d_NumProjectiveTextures,              0);
 
-            gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
-            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
-            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
-
-            // Draw.
+            // Draw all textures.
 
             this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer,  this .frontArrayObject);
             this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer,   this .backArrayObject);
@@ -660,11 +646,6 @@ function (X3DBindableNode,
          {
             texture .setShaderUniforms (gl, shaderNode, renderObject);
 
-            if (texture ._transparent .getValue ())
-               gl .enable (gl .BLEND);
-            else
-               gl .disable (gl .BLEND);
-
             if (vertexArray .enable (gl, shaderNode))
             {
                shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
@@ -672,6 +653,11 @@ function (X3DBindableNode,
             }
 
             // Draw.
+
+            if (texture ._transparent .getValue ())
+               gl .enable (gl .BLEND);
+            else
+               gl .disable (gl .BLEND);
 
             gl .drawArrays (gl .TRIANGLES, 0, 6);
 

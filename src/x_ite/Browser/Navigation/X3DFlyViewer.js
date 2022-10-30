@@ -100,13 +100,13 @@ function ($,
       this .toVector          = new Vector3 (0, 0, 0);
       this .direction         = new Vector3 (0, 0, 0);
       this .startTime         = 0;
+      this .event             = null;
+      this .lookAround        = false;
+      this .orientationChaser = new OrientationChaser (executionContext);
       this .lineCount         = 2;
       this .lineArray         = new Float32Array (this .lineCount * 4) .fill (1);
       this .lineBuffer        = gl .createBuffer ();
       this .lineArrayObject   = new VertexArray ();
-      this .event             = null;
-      this .lookAround        = false;
-      this .orientationChaser = new OrientationChaser (executionContext);
       this .geometryContext   = { geometryType: 1 };
 
       X3DGeometryNode .prototype .updateGeometryKey .call (this .geometryContext);
@@ -660,7 +660,8 @@ function ($,
             toPoint               = new Vector3 (0, 0, 0),
             projectionMatrix      = new Matrix4 (),
             projectionMatrixArray = new Float32Array (Matrix4 .Identity),
-            modelViewMatrixArray  = new Float32Array (Matrix4 .Identity);
+            modelViewMatrixArray  = new Float32Array (Matrix4 .Identity),
+            clipPlanes            = [ ];
 
          return function (type)
          {
@@ -673,9 +674,7 @@ function ($,
                width    = viewport [2],
                height   = viewport [3];
 
-            Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix);
-
-            projectionMatrixArray .set (projectionMatrix);
+            projectionMatrixArray .set (Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix));
 
             // Display Rubberband.
 
@@ -692,40 +691,32 @@ function ($,
 
             // Set line vertices.
 
-            const lineArray = this .lineArray;
-
-            lineArray [0] = fromPoint .x;
-            lineArray [1] = fromPoint .y;
-            lineArray [2] = fromPoint .z;
-
-            lineArray [4] = toPoint .x;
-            lineArray [5] = toPoint .y;
-            lineArray [6] = toPoint .z;
+            this .lineArray .set (fromPoint, 0);
+            this .lineArray .set (toPoint,   4);
 
             // Transfer line.
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .lineBuffer);
             gl .bufferData (gl .ARRAY_BUFFER, this .lineArray, gl .DYNAMIC_DRAW);
 
-            // Render two lines.
+            // Set uniforms and attributes.
 
             const shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext);
 
             shaderNode .enable (gl);
-
-            if (this .lineArrayObject .enable (gl, shaderNode))
-               shaderNode .enableVertexAttribute (gl, this .lineBuffer, 0, 0);
-
-            gl .uniform1i (shaderNode .x3d_NumClipPlanes,         0);
-            gl .uniform1i (shaderNode .x3d_FogType,               0);
-            gl .uniform1i (shaderNode .x3d_LinePropertiesApplied, false);
+            shaderNode .setClipPlanes (gl, clipPlanes);
 
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
 
-            gl .disable (gl .DEPTH_TEST);
+            gl .uniform1i (shaderNode .x3d_NumClipPlanes, 0);
+
+            if (this .lineArrayObject .enable (gl, shaderNode))
+               shaderNode .enableVertexAttribute (gl, this .lineBuffer, 0, 0);
 
             // Draw a black and a white line.
+
+            gl .disable (gl .DEPTH_TEST);
 
             gl .uniform3f (shaderNode .x3d_EmissiveColor, 0, 0, 0);
             gl .uniform1f (shaderNode .x3d_Transparency,  0);
