@@ -269,8 +269,6 @@ function (Fields,
 
          if (+this .getTextureBits ())
          {
-            options .push ("X3D_MATERIAL_TEXTURES");
-
             if (this .ambientTextureNode)
                options .push ("X3D_AMBIENT_TEXTURE", "X3D_AMBIENT_TEXTURE_" + this .ambientTextureNode .getTextureTypeString ());
 
@@ -280,17 +278,11 @@ function (Fields,
             if (this .specularTextureNode)
                options .push ("X3D_SPECULAR_TEXTURE", "X3D_SPECULAR_TEXTURE_" + this .specularTextureNode .getTextureTypeString ());
 
-            if (this .getEmissiveTexture ())
-               options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
-
             if (this .shininessTextureNode)
                options .push ("X3D_SHININESS_TEXTURE", "X3D_SHININESS_TEXTURE_" + this .shininessTextureNode .getTextureTypeString ());
 
             if (this .occlusionTextureNode)
                options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
-
-            if (this .getNormalTexture ())
-               options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
          }
 
          switch (this .getMaterialKey (context && context .shadows))

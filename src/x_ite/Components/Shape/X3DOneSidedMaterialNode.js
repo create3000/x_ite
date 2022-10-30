@@ -148,6 +148,23 @@ function (Fields,
             return textureIndices;
          };
       })(),
+      getOptions: function (geometryContext, context)
+      {
+         const options = X3DMaterialNode .prototype .getOptions .call (this, geometryContext, context);
+
+         if (+this .getTextureBits ())
+         {
+            options .push ("X3D_MATERIAL_TEXTURES");
+
+            if (this .getEmissiveTexture ())
+               options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+
+            if (this .getNormalTexture ())
+               options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+         }
+
+         return options;
+      },
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
       {
          gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
