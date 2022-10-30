@@ -147,6 +147,7 @@ function (Fields,
       {
          return this .transformSensorNodes;
       },
+      dispose: function () { },
    };
 
    return X3DBoundedObject;

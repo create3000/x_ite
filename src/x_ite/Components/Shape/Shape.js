@@ -251,17 +251,17 @@ function (Fields,
 
          pickingHierarchy .pop ();
       },
-      depth: function (gl, context, shaderNode)
+      depth: function (gl, depthContext, shaderNode)
       {
-         shaderNode .setClipPlanes (gl, context .clipPlanes);
+         shaderNode .setClipPlanes (gl, depthContext .clipPlanes);
 
-         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, context .modelViewMatrix);
+         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, depthContext .modelViewMatrix);
 
-         this .getGeometry () .depth (gl, context, shaderNode);
+         this .getGeometry () .depth (gl, depthContext, shaderNode);
       },
-      display: function (gl, context)
+      display: function (gl, renderContext)
       {
-         this .getGeometry () .display (gl, context);
+         this .getGeometry () .display (gl, renderContext);
       },
    });
 

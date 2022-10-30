@@ -974,19 +974,19 @@ function (X3DCast,
       {
          const normalMatrix = new Float32Array (9);
 
-         return function (gl, context, front = true)
+         return function (gl, renderContext, front = true)
          {
             const
-               renderObject        = context .renderer,
-               fogNode             = context .fogNode,
-               shapeNode           = context .shapeNode,
-               geometryContext     = context .geometryContext || shapeNode .getGeometry (),
+               renderObject        = renderContext .renderer,
+               fogNode             = renderContext .fogNode,
+               shapeNode           = renderContext .shapeNode,
+               geometryContext     = renderContext .geometryContext || shapeNode .getGeometry (),
                geometryType        = geometryContext .geometryType,
-               appearanceNode      = context .appearanceNode,
+               appearanceNode      = renderContext .appearanceNode,
                stylePropertiesNode = appearanceNode .getStyleProperties (geometryType),
                materialNode        = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
-               textureNode         = context .textureNode || appearanceNode .getTexture (),
-               modelViewMatrix     = context .modelViewMatrix;
+               textureNode         = renderContext .textureNode || appearanceNode .getTexture (),
+               modelViewMatrix     = renderContext .modelViewMatrix;
 
             // Set global uniforms.
 
@@ -1056,7 +1056,7 @@ function (X3DCast,
             this .numLights             = this .numGlobalLights;
             this .numProjectiveTextures = this .numGlobalProjectiveTextures;
 
-            for (const localObject of context .localObjects)
+            for (const localObject of renderContext .localObjects)
                localObject .setShaderUniforms (gl, this, renderObject);
 
             gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
@@ -1327,6 +1327,7 @@ function (X3DCast,
          console .table (programInfo .uniforms);
          console .log (this .getName (), "uniformCount", programInfo .uniformCount);
       },
+      dispose: function () { },
    };
 
    function lcfirst (string)

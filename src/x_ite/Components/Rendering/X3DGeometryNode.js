@@ -986,32 +986,32 @@ function (Fields,
       },
       traverse: function (type, renderObject)
       { },
-      depth: function (gl, context, shaderNode)
+      depth: function (gl, depthContext, shaderNode)
       {
          if (this .shadowArrayObject .enable (gl, shaderNode))
             shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 
          gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
       },
-      display: function (gl, context)
+      display: function (gl, renderContext)
       {
          const
-            appearanceNode = context .appearanceNode,
-            shaderNode     = appearanceNode .getShader (this, context);
+            appearanceNode = renderContext .appearanceNode,
+            shaderNode     = appearanceNode .getShader (this, renderContext);
 
          if (this .solid || ! appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())
          {
-            this .displayGeometry (gl, context, appearanceNode, shaderNode, true, true);
+            this .displayGeometry (gl, renderContext, appearanceNode, shaderNode, true, true);
          }
          else
          {
-            const backShaderNode = appearanceNode .getBackShader (this, context)
+            const backShaderNode = appearanceNode .getBackShader (this, renderContext)
 
-            this .displayGeometry (gl, context, appearanceNode, backShaderNode, true,  false);
-            this .displayGeometry (gl, context, appearanceNode, shaderNode,     false, true);
+            this .displayGeometry (gl, renderContext, appearanceNode, backShaderNode, true,  false);
+            this .displayGeometry (gl, renderContext, appearanceNode, shaderNode,     false, true);
          }
       },
-      displayGeometry: function (gl, context, appearanceNode, shaderNode, back, front)
+      displayGeometry: function (gl, renderContext, appearanceNode, shaderNode, back, front)
       {
          const
             browser       = this .getBrowser (),
@@ -1024,7 +1024,7 @@ function (Fields,
             blendModeNode .enable (gl);
 
          shaderNode .enable (gl);
-         shaderNode .setUniforms (gl, context, front);
+         shaderNode .setUniforms (gl, renderContext, front);
 
          // Setup vertex attributes.
 
@@ -1053,11 +1053,11 @@ function (Fields,
          }
          else
          {
-            const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+            const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
 
             gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
 
-            if (context .transparent || back !== front)
+            if (renderContext .transparent || back !== front)
             {
                // Render transparent or back or front.
 
@@ -1095,7 +1095,7 @@ function (Fields,
          if (blendModeNode)
             blendModeNode .disable (gl);
       },
-      displayParticlesDepth: function (gl, context, shaderNode, particleSystem)
+      displayParticlesDepth: function (gl, depthContext, shaderNode, particleSystem)
       {
          const outputParticles = particleSystem .outputParticles;
 
@@ -1112,25 +1112,25 @@ function (Fields,
 
          gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
       },
-      displayParticles: function (gl, context, particleSystem)
+      displayParticles: function (gl, renderContext, particleSystem)
       {
          const
-            appearanceNode = context .appearanceNode,
-            shaderNode     = appearanceNode .getShader (this, context);
+            appearanceNode = renderContext .appearanceNode,
+            shaderNode     = appearanceNode .getShader (this, renderContext);
 
          if (this .solid || ! appearanceNode .getBackMaterial () || this .getBrowser () .getWireframe ())
          {
-            this .displayParticlesGeometry (gl, context, appearanceNode, shaderNode, true, true, particleSystem);
+            this .displayParticlesGeometry (gl, renderContext, appearanceNode, shaderNode, true, true, particleSystem);
          }
          else
          {
-            const backShaderNode = appearanceNode .getBackShader (this, context);
+            const backShaderNode = appearanceNode .getBackShader (this, renderContext);
 
-            this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode, true,  false, particleSystem);
-            this .displayParticlesGeometry (gl, context, appearanceNode, shaderNode,     false, true,  particleSystem);
+            this .displayParticlesGeometry (gl, renderContext, appearanceNode, backShaderNode, true,  false, particleSystem);
+            this .displayParticlesGeometry (gl, renderContext, appearanceNode, shaderNode,     false, true,  particleSystem);
          }
       },
-      displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particleSystem)
+      displayParticlesGeometry: function (gl, renderContext, appearanceNode, shaderNode, back, front, particleSystem)
       {
          const
             browser       = this .getBrowser (),
@@ -1145,7 +1145,7 @@ function (Fields,
          // Setup shader.
 
          shaderNode .enable (gl);
-         shaderNode .setUniforms (gl, context, front);
+         shaderNode .setUniforms (gl, renderContext, front);
 
          // Setup vertex attributes.
 
@@ -1176,11 +1176,11 @@ function (Fields,
 
          // Draw depending on wireframe, solid and transparent.
 
-         const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+         const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
 
          gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
 
-         if (context .transparent || back !== front)
+         if (renderContext .transparent || back !== front)
          {
             // Render transparent or back or front.
 

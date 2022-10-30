@@ -235,16 +235,16 @@ function (X3DGeometryNode,
             projectedPoint0           = new Vector2 (0, 0),
             projectedPoint1           = new Vector2 (0, 0);
 
-         return function (gl, context)
+         return function (gl, renderContext)
          {
             const
-               viewport         = context .renderer .getViewVolume () .getViewport (),
-               projectionMatrix = context .renderer .getProjectionMatrix () .get (),
+               viewport         = renderContext .renderer .getViewVolume () .getViewport (),
+               projectionMatrix = renderContext .renderer .getProjectionMatrix () .get (),
                texCoordArray    = this .getTexCoords () .getValue (),
                vertices         = this .getVertices (),
                numVertices      = vertices .length;
 
-            modelViewProjectionMatrix .assign (context .modelViewMatrix) .multRight (projectionMatrix);
+            modelViewProjectionMatrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix);
 
             let lengthSoFar = 0;
 
@@ -277,13 +277,13 @@ function (X3DGeometryNode,
             modelViewProjectionMatrixArray    = new Float32Array (16),
             invModelViewProjectionMatrixArray = new Float32Array (16);
 
-         return function (gl, context)
+         return function (gl, renderContext)
          {
             const
                browser            = this .getBrowser (),
-               appearanceNode     = context .appearanceNode,
+               appearanceNode     = renderContext .appearanceNode,
                linePropertiesNode = appearanceNode .getLineProperties (),
-               shaderNode         = appearanceNode .getShader (this, context),
+               shaderNode         = appearanceNode .getShader (this, renderContext),
                blendModeNode      = appearanceNode .getBlendMode (),
                attribNodes        = this .getAttrib (),
                attribBuffers      = this .getAttribBuffers ();
@@ -291,7 +291,7 @@ function (X3DGeometryNode,
             if (linePropertiesNode)
             {
                if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
-                  this .updateLengthSoFar (gl, context);
+                  this .updateLengthSoFar (gl, renderContext);
 
                if (linePropertiesNode .getMustTransformLines ())
                {
@@ -300,12 +300,12 @@ function (X3DGeometryNode,
                   if (transformShaderNode .isValid ())
                   {
                      const
-                        renderer         = context .renderer,
+                        renderer         = renderContext .renderer,
                         viewport         = renderer .getViewVolume () .getViewport (),
                         projectionMatrix = renderer .getProjectionMatrix () .get (),
                         primitiveMode    = browser .getPrimitiveMode (gl .TRIANGLES);
 
-                     modelViewProjectionMatrixArray .set (matrix .assign (context .modelViewMatrix) .multRight (projectionMatrix));
+                     modelViewProjectionMatrixArray .set (matrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix));
                      invModelViewProjectionMatrixArray .set (matrix .inverse ());
 
                      // Start
@@ -383,7 +383,7 @@ function (X3DGeometryNode,
                      // Setup shader.
 
                      shaderNode .enable (gl);
-                     shaderNode .setUniforms (gl, context);
+                     shaderNode .setUniforms (gl, renderContext);
 
                      // Setup vertex attributes.
 
@@ -439,7 +439,7 @@ function (X3DGeometryNode,
             // Setup shader.
 
             shaderNode .enable (gl);
-            shaderNode .setUniforms (gl, context);
+            shaderNode .setUniforms (gl, renderContext);
 
             // Setup vertex attributes.
 
@@ -466,12 +466,12 @@ function (X3DGeometryNode,
             gl .lineWidth (1);
          };
       })(),
-      displayParticles: function (gl, context, particleSystem)
+      displayParticles: function (gl, renderContext, particleSystem)
       {
          const
             browser        = this .getBrowser (),
-            appearanceNode = context .appearanceNode,
-            shaderNode     = appearanceNode .getShader (this, context),
+            appearanceNode = renderContext .appearanceNode,
+            shaderNode     = appearanceNode .getShader (this, renderContext),
             blendModeNode  = appearanceNode .getBlendMode (),
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers (),
@@ -483,7 +483,7 @@ function (X3DGeometryNode,
          // Setup shader.
 
          shaderNode .enable (gl);
-         shaderNode .setUniforms (gl, context);
+         shaderNode .setUniforms (gl, renderContext);
 
          // Setup vertex attributes.
 

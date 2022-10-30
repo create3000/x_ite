@@ -905,14 +905,14 @@ function (Fields,
             }
          }
       },
-      depth: function (gl, context, _, shaderNode)
+      depth: function (gl, depthContext, _, shaderNode)
       {
          // Display geometry.
 
          shaderNode .enable (gl);
-         shaderNode .setClipPlanes (gl, context .clipPlanes);
+         shaderNode .setClipPlanes (gl, depthContext .clipPlanes);
 
-         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, context .modelViewMatrix);
+         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, depthContext .modelViewMatrix);
 
          switch (this .geometryType)
          {
@@ -921,13 +921,13 @@ function (Fields,
                const geometryNode = this .getGeometry ();
 
                if (geometryNode)
-                  geometryNode .displayParticlesDepth (gl, context, shaderNode, this);
+                  geometryNode .displayParticlesDepth (gl, depthContext, shaderNode, this);
 
                break;
             }
             case GeometryTypes .SPRITE:
             {
-               this .updateSprite (gl, this .getScreenAlignedRotation (context .modelViewMatrix));
+               this .updateSprite (gl, this .getScreenAlignedRotation (depthContext .modelViewMatrix));
                // [fall trough]
             }
             default:
@@ -951,7 +951,7 @@ function (Fields,
 
          _ .enable (gl);
       },
-      display: function (gl, context)
+      display: function (gl, renderContext)
       {
          // Display geometry.
 
@@ -962,19 +962,19 @@ function (Fields,
                const geometryNode = this .getGeometry ();
 
                if (geometryNode)
-                  geometryNode .displayParticles (gl, context, this);
+                  geometryNode .displayParticles (gl, renderContext, this);
 
                break;
             }
             case GeometryTypes .SPRITE:
             {
-               this .updateSprite (gl, this .getScreenAlignedRotation (context .modelViewMatrix));
+               this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
                // [fall trough]
             }
             case GeometryTypes .QUAD:
             case GeometryTypes .TRIANGLE:
             {
-               const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+               const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
 
                gl .frontFace (positiveScale ? gl .CCW : gl .CW);
                gl .enable (gl .CULL_FACE);
@@ -987,12 +987,12 @@ function (Fields,
                const
                   browser        = this .getBrowser (),
                   appearanceNode = this .getAppearance (),
-                  shaderNode     = appearanceNode .getShader (this .geometryContext, context),
+                  shaderNode     = appearanceNode .getShader (this .geometryContext, renderContext),
                   primitiveMode  = browser .getPrimitiveMode (this .primitiveMode);
 
                // Setup shader.
 
-               context .geometryContext = this .geometryContext;
+               renderContext .geometryContext = this .geometryContext;
 
                const blendModeNode = appearanceNode .getBlendMode ();
 
@@ -1000,7 +1000,7 @@ function (Fields,
                   blendModeNode .enable (gl);
 
                shaderNode .enable (gl);
-               shaderNode .setUniforms (gl, context);
+               shaderNode .setUniforms (gl, renderContext);
 
                if (this .numTexCoords)
                {
@@ -1045,7 +1045,7 @@ function (Fields,
                if (blendModeNode)
                   blendModeNode .disable (gl);
 
-               delete context .geometryContext;
+               delete renderContext .geometryContext;
                break;
             }
          }

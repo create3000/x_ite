@@ -156,11 +156,11 @@ function (X3DGeometryNode,
       },
       buildTexCoords: function ()
       { },
-      display: function (gl, context)
+      display: function (gl, renderContext)
       {
          const
-            appearanceNode = context .appearanceNode,
-            shaderNode     = appearanceNode .getShader (this, context),
+            appearanceNode = renderContext .appearanceNode,
+            shaderNode     = appearanceNode .getShader (this, renderContext),
             blendModeNode  = appearanceNode .getBlendMode (),
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers ();
@@ -171,7 +171,7 @@ function (X3DGeometryNode,
          // Setup shader.
 
          shaderNode .enable (gl);
-         shaderNode .setUniforms (gl, context);
+         shaderNode .setUniforms (gl, renderContext);
 
          // Setup vertex attributes.
 
@@ -194,11 +194,11 @@ function (X3DGeometryNode,
          if (blendModeNode)
             blendModeNode .disable (gl);
       },
-      displayParticles: function (gl, context, particleSystem)
+      displayParticles: function (gl, renderContext, particleSystem)
       {
          const
-            appearanceNode = context .appearanceNode,
-            shaderNode     = appearanceNode .getShader (this, context),
+            appearanceNode = renderContext .appearanceNode,
+            shaderNode     = appearanceNode .getShader (this, renderContext),
             blendModeNode  = appearanceNode .getBlendMode (),
             attribNodes    = this .getAttrib (),
             attribBuffers  = this .getAttribBuffers ();
@@ -209,7 +209,7 @@ function (X3DGeometryNode,
          // Setup shader.
 
          shaderNode .enable (gl);
-         shaderNode .setUniforms (gl, context);
+         shaderNode .setUniforms (gl, renderContext);
 
          // Setup vertex attributes.
 

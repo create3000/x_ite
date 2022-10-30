@@ -96,7 +96,7 @@ function (DEBUG,
          }
 
          if (component .context)
-            X3DBrowserContext .addContext (component .context);
+            X3DBrowserContext .addBrowserContext (component .context);
 
          if (component .name)
          {

@@ -109,7 +109,7 @@ function (Fields,
       {
          return this .textureBits;
       },
-      getShader: function (geometryContext, context)
+      getShader: function (geometryContext, renderContext)
       {
          let key = this .textureBits .toString ();
 
@@ -117,23 +117,23 @@ function (Fields,
          key += this .logarithmicDepthBuffer;
          key += geometryContext .geometryKey;
 
-         if (context)
+         if (renderContext)
          {
-            const appearanceNode = context .appearanceNode;
+            const appearanceNode = renderContext .appearanceNode;
 
-            key += this .getMaterialKey (context .shadows);
-            key += context .shadows ? "1" : "0";
-            key += context .fogNode ? "1" : "0";
-            key += context .shapeNode .getShapeKey ();
+            key += renderContext .shadows ? "1" : "0";
+            key += renderContext .fogNode ? "1" : "0";
+            key += renderContext .shapeNode .getShapeKey ();
             key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? "1" : "0";
+            key += this .getMaterialKey (renderContext .shadows);
          }
          else
          {
-            key += this .getMaterialKey (false);
             key += "0000";
+            key += this .getMaterialKey (false);
          }
 
-         const shaderNode = this .shaderNodes .get (key) || this .createShader (key, geometryContext, context);
+         const shaderNode = this .shaderNodes .get (key) || this .createShader (key, geometryContext, renderContext);
 
          if (shaderNode .isValid ())
          {
@@ -160,7 +160,7 @@ function (Fields,
             "X3D_GEOMETRY_3D",
          ];
 
-         return function (geometryContext, context)
+         return function (geometryContext, renderContext)
          {
             const options = [ ];
 
@@ -175,20 +175,20 @@ function (Fields,
             if (geometryContext .hasNormals)
                options .push ("X3D_NORMALS");
 
-            if (context)
+            if (renderContext)
             {
-               const appearanceNode = context .appearanceNode;
+               const appearanceNode = renderContext .appearanceNode;
 
-               if (context .shadows)
+               if (renderContext .shadows)
                   options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
-               if (context .fogNode)
+               if (renderContext .fogNode)
                   options .push ("X3D_FOG");
 
                if (appearanceNode .getStyleProperties (geometryContext .geometryType))
                   options .push ("X3D_STYLE_PROPERTIES");
 
-               switch (context .shapeNode .getShapeKey ())
+               switch (renderContext .shapeNode .getShapeKey ())
                {
                   case "1":
                      options .push ("X3D_PARTICLE");

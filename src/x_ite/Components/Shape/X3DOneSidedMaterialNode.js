@@ -148,9 +148,9 @@ function (Fields,
             return textureIndices;
          };
       })(),
-      getOptions: function (geometryContext, context)
+      getOptions: function (geometryContext, renderContext)
       {
-         const options = X3DMaterialNode .prototype .getOptions .call (this, geometryContext, context);
+         const options = X3DMaterialNode .prototype .getOptions .call (this, geometryContext, renderContext);
 
          if (+this .getTextureBits ())
          {

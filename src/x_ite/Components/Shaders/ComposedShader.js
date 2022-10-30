@@ -219,6 +219,17 @@ function (Fields,
       {
          X3DProgrammableShaderObject .prototype .enable .call (this, gl, this .program);
       },
+      dispose: function ()
+      {
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
+
+         gl .deleteProgram (this .program);
+
+         X3DProgrammableShaderObject .prototype .dispose .call (this);
+         X3DShaderNode               .prototype .dispose .call (this);
+      },
    });
 
    return ComposedShader;

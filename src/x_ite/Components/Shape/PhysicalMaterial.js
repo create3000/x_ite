@@ -204,16 +204,14 @@ function (Fields,
       {
          return "3";
       },
-      createShader: function (key, geometryContext, context)
+      createShader: function (key, geometryContext, renderContext)
       {
          const
             browser = this .getBrowser (),
-            options = this .getOptions (geometryContext, context);
+            options = this .getOptions (geometryContext, renderContext);
 
          if (geometryContext .hasNormals)
          {
-            options .push ("X3D_PHYSICAL");
-
             if (+this .getTextureBits ())
             {
                if (this .baseTextureNode)
@@ -230,7 +228,7 @@ function (Fields,
          }
          else
          {
-            var shaderNode = browser .getDefaultMaterial () .getShader (geometryContext, context);
+            var shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
          }
 
          browser .getShaders () .set (key, shaderNode);

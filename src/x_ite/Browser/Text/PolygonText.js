@@ -369,7 +369,7 @@ function (PrimitiveQuality,
                return 5;
          }
       },
-      display: function (gl, context)
+      display: function (gl, renderContext)
       { },
       transformLine: function (line)
       { },

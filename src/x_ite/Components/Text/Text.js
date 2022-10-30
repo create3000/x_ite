@@ -160,11 +160,11 @@ function (Fields,
 
          X3DGeometryNode .prototype .traverse .call (this, type, renderObject);
       },
-      display: function (gl, context)
+      display: function (gl, renderContext)
       {
-         this .textGeometry .display (gl, context);
+         this .textGeometry .display (gl, renderContext);
 
-         X3DGeometryNode .prototype .display .call (this, gl, context);
+         X3DGeometryNode .prototype .display .call (this, gl, renderContext);
       },
       transformLine: function (line)
       {

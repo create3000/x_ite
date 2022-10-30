@@ -63,6 +63,7 @@ function (X3DConstants)
    {
       constructor: X3DMetadataObject,
       initialize: function () { },
+      dispose: function () { },
    };
 
    return X3DMetadataObject;

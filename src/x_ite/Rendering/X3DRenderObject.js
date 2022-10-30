@@ -468,19 +468,19 @@ function (TextureBuffer,
                   this .collisionShapes .push ({ renderer: this, modelViewMatrix: new Float32Array (16), collisions: [ ], clipPlanes: [ ] });
                }
 
-               const context = this .collisionShapes [num];
+               const collisionContext = this .collisionShapes [num];
 
-               context .modelViewMatrix .set (modelViewMatrix);
-               context .shapeNode = shapeNode;
-               context .scissor   = viewVolume .getScissor ();
+               collisionContext .modelViewMatrix .set (modelViewMatrix);
+               collisionContext .shapeNode = shapeNode;
+               collisionContext .scissor   = viewVolume .getScissor ();
 
                // Collisions
 
-               assign (context .collisions, this .collisions);
+               assign (collisionContext .collisions, this .collisions);
 
                // Clip planes
 
-               assign (context .clipPlanes, this .localObjects);
+               assign (collisionContext .clipPlanes, this .localObjects);
 
                return true;
             }
@@ -514,15 +514,15 @@ function (TextureBuffer,
                   this .depthShapes .push ({ renderer: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
                }
 
-               const context = this .depthShapes [num];
+               const depthContext = this .depthShapes [num];
 
-               context .modelViewMatrix .set (modelViewMatrix);
-               context .shapeNode = shapeNode;
-               context .scissor   = viewVolume .getScissor ();
+               depthContext .modelViewMatrix .set (modelViewMatrix);
+               depthContext .shapeNode = shapeNode;
+               depthContext .scissor   = viewVolume .getScissor ();
 
                // Clip planes
 
-               assign (context .clipPlanes, this .localObjects);
+               assign (depthContext .clipPlanes, this .localObjects);
 
                return true;
             }
@@ -554,32 +554,32 @@ function (TextureBuffer,
                   const num = this .numTransparentShapes ++;
 
                   if (num === this .transparentShapes .length)
-                     this .transparentShapes .push (this .createShapeContext (true));
+                     this .transparentShapes .push (this .createRenderContext (true));
 
-                  var context = this .transparentShapes [num];
+                  var renderContext = this .transparentShapes [num];
                }
                else
                {
                   const num = this .numOpaqueShapes ++;
 
                   if (num === this .opaqueShapes .length)
-                     this .opaqueShapes .push (this .createShapeContext (false));
+                     this .opaqueShapes .push (this .createRenderContext (false));
 
-                  var context = this .opaqueShapes [num];
+                  var renderContext = this .opaqueShapes [num];
                }
 
-               context .modelViewMatrix .set (modelViewMatrix);
-               context .scissor .assign (viewVolume .getScissor ());
-               context .shapeNode      = shapeNode;
-               context .appearanceNode = shapeNode .getAppearance ();
-               context .textureNode    = null;
-               context .distance       = bboxCenter .z;
-               context .fogNode        = this .localFogs .at (-1);
-               context .shadows        = this .shadows .at (-1);
+               renderContext .modelViewMatrix .set (modelViewMatrix);
+               renderContext .scissor .assign (viewVolume .getScissor ());
+               renderContext .shapeNode      = shapeNode;
+               renderContext .appearanceNode = shapeNode .getAppearance ();
+               renderContext .textureNode    = null;
+               renderContext .distance       = bboxCenter .z;
+               renderContext .fogNode        = this .localFogs .at (-1);
+               renderContext .shadows        = this .shadows .at (-1);
 
                // Clip planes and local lights
 
-               assign (context .localObjects, this .localObjects);
+               assign (renderContext .localObjects, this .localObjects);
 
                return true;
             }
@@ -587,7 +587,7 @@ function (TextureBuffer,
             return false;
          };
       })(),
-      createShapeContext: function (transparent)
+      createRenderContext: function (transparent)
       {
          return {
             renderer: this,
@@ -618,15 +618,15 @@ function (TextureBuffer,
             for (let i = 0, length = this .numCollisionShapes; i < length; ++ i)
             {
                const
-                  context    = this .collisionShapes [i],
-                  collisions = context .collisions;
+                  collisionContext = this .collisionShapes [i],
+                  collisions       = collisionContext .collisions;
 
                if (collisions .length)
                {
                   collisionBox .set (collisionSize, Vector3 .Zero);
-                  collisionBox .multRight (invModelViewMatrix .assign (context .modelViewMatrix) .inverse ());
+                  collisionBox .multRight (invModelViewMatrix .assign (collisionContext .modelViewMatrix) .inverse ());
 
-                  if (context .shapeNode .intersectsBox (collisionBox, context .clipPlanes, modelViewMatrix .assign (context .modelViewMatrix)))
+                  if (collisionContext .shapeNode .intersectsBox (collisionBox, collisionContext .clipPlanes, modelViewMatrix .assign (collisionContext .modelViewMatrix)))
                   {
                      for (const collision of collisions)
                         activeCollisions .add (collision);
@@ -828,8 +828,8 @@ function (TextureBuffer,
                for (let s = 0; s < numShapes; ++ s)
                {
                   const
-                     context = shapes [s],
-                     scissor = context .scissor;
+                     depthContext = shapes [s],
+                     scissor      = depthContext .scissor;
 
                   gl .scissor (scissor .x,
                                scissor .y,
@@ -838,7 +838,7 @@ function (TextureBuffer,
 
                   // Draw
 
-                  context .shapeNode .depth (gl, context, shaderNode, particleShaderNode);
+                  depthContext .shapeNode .depth (gl, depthContext, shaderNode, particleShaderNode);
                }
             }
          };
@@ -924,15 +924,15 @@ function (TextureBuffer,
          for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
          {
             const
-               context = opaqueShapes [i],
-               scissor = context .scissor;
+               renderContext = opaqueShapes [i],
+               scissor       = renderContext .scissor;
 
             gl .scissor (scissor .x,
                          scissor .y,
                          scissor .z,
                          scissor .w);
 
-            context .shapeNode .display (gl, context);
+            renderContext .shapeNode .display (gl, renderContext);
             browser .resetTextureUnits ();
          }
 
@@ -948,15 +948,15 @@ function (TextureBuffer,
          for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
          {
             const
-               context = transparentShapes [i],
-               scissor = context .scissor;
+               renderContext = transparentShapes [i],
+               scissor       = renderContext .scissor;
 
             gl .scissor (scissor .x,
                          scissor .y,
                          scissor .z,
                          scissor .w);
 
-            context .shapeNode .display (gl, context);
+            renderContext .shapeNode .display (gl, renderContext);
             browser .resetTextureUnits ();
          }
 

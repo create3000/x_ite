@@ -403,11 +403,11 @@ function ($,
             this .getText () .setBBox (bbox);
          };
       })(),
-      display: function (gl, context)
+      display: function (gl, renderContext)
       {
-         Matrix4 .prototype .multLeft .call (context .modelViewMatrix, this .matrix);
+         Matrix4 .prototype .multLeft .call (renderContext .modelViewMatrix, this .matrix);
 
-         context .textureNode = this .textureNode;
+         renderContext .textureNode = this .textureNode;
       },
       transformLine: function (line)
       {

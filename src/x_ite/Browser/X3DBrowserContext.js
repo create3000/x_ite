@@ -112,7 +112,7 @@ function ($,
       _collisionTime   = Symbol (),
       _displayTime     = Symbol ();
 
-   const contexts = [ ];
+   const browserContexts = [ ];
 
    function X3DBrowserContext (element)
    {
@@ -137,8 +137,8 @@ function ($,
       X3DTexturingContext            .call (this);
       X3DTimeContext                 .call (this);
 
-      for (const context of contexts)
-         context .call (this);
+      for (const browserContext of browserContexts)
+         browserContext .call (this);
 
       this .addChildObjects ("initialized",   new SFTime (),
                              "shutdown",      new SFTime (),
@@ -203,10 +203,10 @@ function ($,
          X3DTexturingContext            .prototype .initialize .call (this);
          X3DTimeContext                 .prototype .initialize .call (this);
 
-         for (const context of contexts)
+         for (const browserContext of browserContexts)
          {
-            if (context .prototype .initialize)
-               context .prototype .initialize .call (this);
+            if (browserContext .prototype .initialize)
+               browserContext .prototype .initialize .call (this);
          }
 
          // Process events from context creation. This will setup nodes like
@@ -349,20 +349,20 @@ function ($,
 
    Object .assign (X3DBrowserContext,
    {
-      addContext: function (context)
+      addBrowserContext: function (browserContext)
       {
          const X3D = require ("x_ite/X3D");
 
-         contexts .push (context);
+         browserContexts .push (browserContext);
 
-         for (const key of Object .keys (context .prototype) .concat (Object .getOwnPropertySymbols (context .prototype)))
+         for (const key of Object .keys (browserContext .prototype) .concat (Object .getOwnPropertySymbols (browserContext .prototype)))
          {
             if (X3DBrowserContext .prototype .hasOwnProperty (key))
                continue;
 
             Object .defineProperty (X3DBrowserContext .prototype, key,
             {
-               value: context .prototype [key],
+               value: browserContext .prototype [key],
                enumerable: false,
                writable: true,
             });
@@ -372,10 +372,10 @@ function ($,
          {
             const browser = X3D .getBrowser (canvas);
 
-            context .call (browser);
+            browserContext .call (browser);
 
-            if (context .prototype .initialize)
-               context .prototype .initialize .call (browser);
+            if (browserContext .prototype .initialize)
+               browserContext .prototype .initialize .call (browser);
 
             // Process events from context creation. This will setup nodes like
             // geometry option nodes before any node is created.

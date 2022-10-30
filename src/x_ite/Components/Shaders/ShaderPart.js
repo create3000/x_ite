@@ -78,6 +78,7 @@ function (Fields,
       this .addType (X3DConstants .ShaderPart);
 
       this .options = [ ];
+      this .shader  = null;
    }
 
    ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -109,9 +110,13 @@ function (Fields,
          X3DNode      .prototype .initialize .call (this);
          X3DUrlObject .prototype .initialize .call (this);
 
-         const gl = this .getBrowser () .getContext ();
+         this ._type .addInterest ("set_type__", this);
 
-         this .shader = gl .createShader (gl [this .getShaderType ()]);
+         this .requestImmediateLoad ();
+      },
+      set_type__: function ()
+      {
+         this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
          this .requestImmediateLoad ();
       },
@@ -166,8 +171,14 @@ function (Fields,
                const
                   browser        = this .getBrowser (),
                   gl             = browser .getContext (),
+                  type           = this .getShaderType (),
+                  options        = ["X3D_" + type] .concat (this .options),
                   shaderCompiler = new ShaderCompiler (gl),
-                  source         = Shader .getShaderSource (gl, browser, shaderCompiler .process (data), this .options);
+                  source         = Shader .getShaderSource (gl, browser, shaderCompiler .process (data), options);
+
+               gl .deleteShader (this .shader);
+
+               this .shader = gl .createShader (gl [type]);
 
                gl .shaderSource (this .shader, source);
                gl .compileShader (this .shader);
@@ -186,6 +197,16 @@ function (Fields,
             }
          }
          .bind (this));
+      },
+      dispose: function ()
+      {
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
+
+         gl .deleteShader (this .shader);
+
+         X3DNode .prototype .dispose .call (this);
       },
    });
 

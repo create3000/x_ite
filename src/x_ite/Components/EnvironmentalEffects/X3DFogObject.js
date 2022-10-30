@@ -165,6 +165,7 @@ function (X3DConstants,
 
          this .set_fogType__ ();
       },
+      dispose: function () { },
    };
 
    return X3DFogObject;

@@ -258,11 +258,11 @@ function (Fields,
             }
          }
       },
-      createShader: function (key, geometryContext, context)
+      createShader: function (key, geometryContext, renderContext)
       {
          const
             browser = this .getBrowser (),
-            options = this .getOptions (geometryContext, context);
+            options = this .getOptions (geometryContext, renderContext);
 
          if (geometryContext .hasNormals)
          {
@@ -284,29 +284,19 @@ function (Fields,
                   options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
             }
 
-            switch (this .getMaterialKey (context && context .shadows))
+            switch (this .getMaterialKey (renderContext && renderContext .shadows))
             {
                case "1":
-               {
-                  options .push ("X3D_GOURAUD");
-
                   var shaderNode = browser .createShader ("GouraudShader", "Gouraud", "Gouraud", options);
-
-                  break
-               }
-               case "2":
-               {
-                  options .push ("X3D_PHONG");
-
-                  var shaderNode = browser .createShader ("PhongShader", "Default", "Phong", options);
-
                   break;
-               }
+               case "2":
+                  var shaderNode = browser .createShader ("PhongShader", "Default", "Phong", options);
+                  break;
             }
          }
          else
          {
-            var shaderNode = browser .getDefaultMaterial () .getShader (geometryContext, context);
+            var shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
          }
 
          browser .getShaders () .set (key, shaderNode);

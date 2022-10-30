@@ -220,7 +220,8 @@ function (Fields,
             autoRefreshInterval = Math .ceil (elapsedTime / autoRefresh) * autoRefresh - elapsedTime;
 
          this .setAutoRefreshTimer (autoRefreshInterval);
-      }
+      },
+      dispose: function () { },
    };
 
    return X3DUrlObject;

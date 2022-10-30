@@ -119,13 +119,11 @@ function (Fields,
       {
          return "0";
       },
-      createShader: function (key, geometryContext, context)
+      createShader: function (key, geometryContext, renderContext)
       {
          const
             browser = this .getBrowser (),
-            options = this .getOptions (geometryContext, context);
-
-         options .push ("X3D_UNLIT");
+            options = this .getOptions (geometryContext, renderContext);
 
          const shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
 

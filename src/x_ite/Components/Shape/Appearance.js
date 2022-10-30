@@ -191,13 +191,13 @@ function (Fields,
       {
          return this .textureTransformMapping;
       },
-      getShader: function (geometryContext, context)
+      getShader: function (geometryContext, renderContext)
       {
-         return this .materialNode .getShader (geometryContext, context);
+         return this .materialNode .getShader (geometryContext, renderContext);
       },
-      getBackShader: function (geometryContext, context)
+      getBackShader: function (geometryContext, renderContext)
       {
-         return this .backMaterialNode .getShader (geometryContext, context);
+         return this .backMaterialNode .getShader (geometryContext, renderContext);
       },
       getBlendMode: function ()
       {
