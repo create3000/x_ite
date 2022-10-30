@@ -53,6 +53,6 @@ define (function ()
 
    return function (globalObject, sourceText)
    {
-      return Function (/* js */ `with (arguments [0]) { ${sourceText} }`) (globalObject);
+      return Function (/* js */ `with (this) { ${sourceText} }`) .call (globalObject);
    };
 });
