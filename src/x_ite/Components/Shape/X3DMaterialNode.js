@@ -111,7 +111,7 @@ function (Fields,
       },
       getShader: function (geometryContext, renderContext)
       {
-         let key = this .textureBits .toString (2);
+         let key = this .textureBits .toString (36);
 
          key += ".";
          key += this .logarithmicDepthBuffer;
@@ -126,7 +126,7 @@ function (Fields,
             key += renderContext .shapeNode .getShapeKey ();
             key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? "1" : "0";
             key += ".";
-            key += appearanceNode .getTextureKey ();
+            key += appearanceNode .getTextureBits () .toString (36);
             key += ".";
             key += this .getMaterialKey (renderContext .shadows);
          }
