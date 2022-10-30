@@ -1007,8 +1007,6 @@ function (X3DCast,
 
                this .fogNode = null;
 
-               gl .uniform1i (this .x3d_FogType, 0);
-
                // Set global lights and global texture projectors.
 
                this .numLights                      = 0;
@@ -1067,6 +1065,8 @@ function (X3DCast,
 
             if (fogNode)
                fogNode .setShaderUniforms (gl, this);
+            else
+               gl .uniform1i (this .x3d_FogType, 0);
 
             // Alpha
 
