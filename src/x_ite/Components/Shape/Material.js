@@ -266,8 +266,6 @@ function (Fields,
             browser = this .getBrowser (),
             options = this .getOptions (geometryContext, renderContext);
 
-         // console .log (key);
-
          if (geometryContext .hasNormals)
          {
             if (+this .getTextureBits ())

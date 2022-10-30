@@ -217,8 +217,11 @@ function ($,
                }
             }
 
-            text += "\n;var " + callbacks .join (",") + ";";
-            text += "\n[" + callbacks .join (",") + "];";
+            text += "\nreturn [" + callbacks .map (function (c)
+            {
+               return `typeof ${c} !== "undefined" ? ${c} : undefined`;
+            })
+            .join (",") + "];";
 
             this .global = this .getGlobal ();
 
