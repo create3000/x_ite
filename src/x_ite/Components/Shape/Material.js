@@ -241,20 +241,20 @@ function (Fields,
             return textureIndices;
          };
       })(),
-      getMaterialType: function (shadows)
+      getMaterialKey: function (shadows)
       {
          if (shadows || +this .getTextureBits ())
          {
-            return 2;
+            return "2";
          }
          else
          {
             switch (this .getBrowser () .getBrowserOptions () .getShading ())
             {
                default:
-                  return 1;
+                  return "1";
                case Shading .PHONG:
-                  return 2;
+                  return "2";
             }
          }
       },
@@ -280,12 +280,12 @@ function (Fields,
             if (context .appearanceNode .getStyleProperties (geometryContext .geometryType))
                options .push ("X3D_STYLE_PROPERTIES");
 
-            switch (context .shapeNode .getShapeType ())
+            switch (context .shapeNode .getShapeKey ())
             {
-               case 1:
+               case "1":
                   options .push ("X3D_PARTICLE");
                   break;
-               case 2:
+               case "2":
                   options .push ("X3D_PARTICLE", "X3D_TEX_COORD_RAMP");
                   break;
             }
@@ -325,9 +325,9 @@ function (Fields,
                options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
          }
 
-         switch (this .getMaterialType (context && context .shadows))
+         switch (this .getMaterialKey (context && context .shadows))
          {
-            case 1:
+            case "1":
             {
                options .push ("X3D_GOURAUD");
 
@@ -335,7 +335,7 @@ function (Fields,
 
                break
             }
-            case 2:
+            case "2":
             {
                options .push ("X3D_PHONG");
 

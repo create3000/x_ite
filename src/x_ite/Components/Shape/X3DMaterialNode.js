@@ -121,15 +121,15 @@ function (Fields,
          {
             const appearanceNode = context .appearanceNode;
 
-            key += this .getMaterialType (context .shadows);
-            key += context .shadows ? 1 : 0;
-            key += context .fogNode ? 1 : 0;
-            key += context .shapeNode .getShapeType ();
-            key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
+            key += this .getMaterialKey (context .shadows);
+            key += context .shadows ? "1" : "0";
+            key += context .fogNode ? "1" : "0";
+            key += context .shapeNode .getShapeKey ();
+            key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? "1" : "0";
          }
          else
          {
-            key += this .getMaterialType (false);
+            key += this .getMaterialKey (false);
             key += "0000";
          }
 

@@ -261,7 +261,7 @@ function (Fields,
       {
          this .setTransparent (Boolean (this ._transparency .getValue () || (this ._separateBackColor .getValue () && this ._backTransparency .getValue ())));
       },
-      getMaterialType: Material .prototype .getMaterialType,
+      getMaterialKey: Material .prototype .getMaterialKey,
       createShader: Material .prototype .createShader,
       setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping, front)
       {

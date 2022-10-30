@@ -114,7 +114,7 @@ function (Fields,
 
          this .set_transformSensors__ ();
       },
-      getShapeType: function ()
+      getShapeKey: function ()
       {
          return 0;
       },

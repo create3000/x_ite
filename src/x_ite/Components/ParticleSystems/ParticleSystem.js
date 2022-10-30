@@ -255,9 +255,9 @@ function (Fields,
          this .set_colorRamp__ ();
          this .set_texCoordRamp__ ();
       },
-      getShapeType: function ()
+      getShapeKey: function ()
       {
-         return this .numTexCoords ? 2 : 1;
+         return this .numTexCoords ? "2" : "1";
       },
       set_bbox__: function ()
       {
