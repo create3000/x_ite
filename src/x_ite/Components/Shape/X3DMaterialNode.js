@@ -111,7 +111,7 @@ function (Fields,
       },
       getShader: function (geometryContext, renderContext)
       {
-         let key = this .textureBits .toString ();
+         let key = this .textureBits .toString (2);
 
          key += ".";
          key += this .logarithmicDepthBuffer;

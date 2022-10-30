@@ -77,9 +77,9 @@ define (function ()
       {
          return this .value;
       },
-      toString: function ()
+      toString: function (radix)
       {
-         return this .value .toString (2);
+         return this .value .toString (radix);
       },
    };
 
