@@ -103,7 +103,7 @@ function (Types,
 
          constants += "#define X_ITE\n";
 
-         if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
+         if (gl .CAN_DEPTH_TEXTURE)
             constants += "#define X3D_DEPTH_TEXTURE\n";
 
          if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))

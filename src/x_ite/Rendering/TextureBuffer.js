@@ -89,7 +89,7 @@ function (ViewVolume,
 
       // Create depth buffer.
 
-      if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
+      if (gl .CAN_DEPTH_TEXTURE)
       {
          this .depthTexture = gl .createTexture ();
 
@@ -222,7 +222,7 @@ function (ViewVolume,
          gl .deleteFramebuffer (this .buffer);
          gl .deleteTexture (this .colorTexture);
 
-         if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
+         if (gl .CAN_DEPTH_TEXTURE)
             gl .deleteTexture (this .depthTexture);
          else
             gl .deleteRenderbuffer (this .depthBuffer);
