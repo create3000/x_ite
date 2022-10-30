@@ -253,6 +253,10 @@ function (Fields,
       },
       depth: function (gl, context, shaderNode)
       {
+         shaderNode .setClipPlanes (gl, context .clipPlanes);
+
+         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, context .modelViewMatrix);
+
          this .getGeometry () .depth (gl, context, shaderNode);
       },
       display: function (gl, context)
