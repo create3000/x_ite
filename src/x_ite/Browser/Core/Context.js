@@ -170,7 +170,7 @@ function (DEBUG)
             gl .MUST_TRANSFORM_LINES = false;
          }
 
-         gl .CAN_DEPTH_TEXTURE = gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture");
+         gl .CAN_DEPTH_TEXTURE = gl .getVersion () >= 2 || !! gl .getExtension ("WEBGL_depth_texture");
 
          // Load extensions.
 
