@@ -264,45 +264,49 @@ function (Fields,
             browser = this .getBrowser (),
             options = this .getOptions (geometryContext, context);
 
-         if (! geometryContext .hasNormals)
-            return browser .getDefaultMaterial () .createShader (key, geometryContext, context);
-
-         if (+this .getTextureBits ())
+         if (geometryContext .hasNormals)
          {
-            if (this .ambientTextureNode)
-               options .push ("X3D_AMBIENT_TEXTURE", "X3D_AMBIENT_TEXTURE_" + this .ambientTextureNode .getTextureTypeString ());
+            if (+this .getTextureBits ())
+            {
+               if (this .ambientTextureNode)
+                  options .push ("X3D_AMBIENT_TEXTURE", "X3D_AMBIENT_TEXTURE_" + this .ambientTextureNode .getTextureTypeString ());
 
-            if (this .diffuseTextureNode)
-               options .push ("X3D_DIFFUSE_TEXTURE", "X3D_DIFFUSE_TEXTURE_" + this .diffuseTextureNode .getTextureTypeString ());
+               if (this .diffuseTextureNode)
+                  options .push ("X3D_DIFFUSE_TEXTURE", "X3D_DIFFUSE_TEXTURE_" + this .diffuseTextureNode .getTextureTypeString ());
 
-            if (this .specularTextureNode)
-               options .push ("X3D_SPECULAR_TEXTURE", "X3D_SPECULAR_TEXTURE_" + this .specularTextureNode .getTextureTypeString ());
+               if (this .specularTextureNode)
+                  options .push ("X3D_SPECULAR_TEXTURE", "X3D_SPECULAR_TEXTURE_" + this .specularTextureNode .getTextureTypeString ());
 
-            if (this .shininessTextureNode)
-               options .push ("X3D_SHININESS_TEXTURE", "X3D_SHININESS_TEXTURE_" + this .shininessTextureNode .getTextureTypeString ());
+               if (this .shininessTextureNode)
+                  options .push ("X3D_SHININESS_TEXTURE", "X3D_SHININESS_TEXTURE_" + this .shininessTextureNode .getTextureTypeString ());
 
-            if (this .occlusionTextureNode)
-               options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
+               if (this .occlusionTextureNode)
+                  options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
+            }
+
+            switch (this .getMaterialKey (context && context .shadows))
+            {
+               case "1":
+               {
+                  options .push ("X3D_GOURAUD");
+
+                  var shaderNode = browser .createShader ("GouraudShader", "Gouraud", "Gouraud", options);
+
+                  break
+               }
+               case "2":
+               {
+                  options .push ("X3D_PHONG");
+
+                  var shaderNode = browser .createShader ("PhongShader", "Default", "Phong", options);
+
+                  break;
+               }
+            }
          }
-
-         switch (this .getMaterialKey (context && context .shadows))
+         else
          {
-            case "1":
-            {
-               options .push ("X3D_GOURAUD");
-
-               var shaderNode = browser .createShader ("GouraudShader", "Gouraud", "Gouraud", options);
-
-               break
-            }
-            case "2":
-            {
-               options .push ("X3D_PHONG");
-
-               var shaderNode = browser .createShader ("PhongShader", "Default", "Phong", options);
-
-               break;
-            }
+            var shaderNode = browser .getDefaultMaterial () .getShader (geometryContext, context);
          }
 
          browser .getShaders () .set (key, shaderNode);

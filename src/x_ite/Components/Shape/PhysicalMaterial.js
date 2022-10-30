@@ -210,24 +210,28 @@ function (Fields,
             browser = this .getBrowser (),
             options = this .getOptions (geometryContext, context);
 
-         if (! geometryContext .hasNormals)
-            return browser .getDefaultMaterial () .createShader (key, geometryContext, context);
-
-         options .push ("X3D_PHYSICAL");
-
-         if (+this .getTextureBits ())
+         if (geometryContext .hasNormals)
          {
-            if (this .baseTextureNode)
-               options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
+            options .push ("X3D_PHYSICAL");
 
-            if (this .metallicRoughnessTextureNode)
-               options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", "X3D_METALLIC_ROUGHNESS_TEXTURE_" + this .metallicRoughnessTextureNode .getTextureTypeString ());
+            if (+this .getTextureBits ())
+            {
+               if (this .baseTextureNode)
+                  options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
 
-            if (this .occlusionTextureNode)
-               options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
+               if (this .metallicRoughnessTextureNode)
+                  options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", "X3D_METALLIC_ROUGHNESS_TEXTURE_" + this .metallicRoughnessTextureNode .getTextureTypeString ());
+
+               if (this .occlusionTextureNode)
+                  options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
+            }
+
+            var shaderNode = browser .createShader ("PhysicalMaterialShader", "Default", "PBR", options);
          }
-
-         const shaderNode = browser .createShader ("PhysicalMaterialShader", "Default", "PBR", options);
+         else
+         {
+            var shaderNode = browser .getDefaultMaterial () .getShader (geometryContext, context);
+         }
 
          browser .getShaders () .set (key, shaderNode);
 
