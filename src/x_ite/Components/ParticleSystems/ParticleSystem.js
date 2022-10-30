@@ -238,7 +238,6 @@ function (Fields,
 
          // Geometry context
 
-         this .geometryContext .hasFogCoords             = false;
          this .geometryContext .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
          this .geometryContext .textureCoordinateMapping = new Map ();
 
@@ -379,13 +378,13 @@ function (Fields,
             case GeometryTypes .POINT:
             {
                this .geometryContext .geometryType = 0;
+               this .geometryContext .hasNormals   = false;
 
                this .texCoordCount = 0;
-               this .vertexCount   = 1;
-               this .hasNormals    = false;
-               this .primitiveMode = gl .POINTS;
-
+               this .vertexCount    = 1;
+               this .hasNormals     = false;
                this .verticesOffset = 0;
+               this .primitiveMode  = gl .POINTS;
 
                gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, PointGeometry, gl .DYNAMIC_DRAW);
@@ -395,14 +394,14 @@ function (Fields,
             case GeometryTypes .LINE:
             {
                this .geometryContext .geometryType = 1;
+               this .geometryContext .hasNormals   = false;
 
-               this .texCoordCount = 2;
-               this .vertexCount   = 2;
-               this .hasNormals    = false;
-               this .primitiveMode = gl .LINES;
-
+               this .texCoordCount   = 2;
+               this .vertexCount     = 2;
+               this .hasNormals      = false;
                this .texCoordsOffset = 0;
                this .verticesOffset  = Float32Array .BYTES_PER_ELEMENT * 8;
+               this .primitiveMode   = gl .LINES;
 
                gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, LineGeometry, gl .DYNAMIC_DRAW);
@@ -414,15 +413,15 @@ function (Fields,
             case GeometryTypes .SPRITE:
             {
                this .geometryContext .geometryType = 2;
+               this .geometryContext .hasNormals   = true;
 
-               this .texCoordCount = 4;
-               this .vertexCount   = 6;
-               this .hasNormals    = true;
-               this .primitiveMode = gl .TRIANGLES;
-
+               this .texCoordCount   = 4;
+               this .vertexCount     = 6;
+               this .hasNormals      = true;
                this .texCoordsOffset = 0;
                this .normalOffset    = Float32Array .BYTES_PER_ELEMENT * 24;
                this .verticesOffset  = Float32Array .BYTES_PER_ELEMENT * 27;
+               this .primitiveMode   = gl .TRIANGLES;
 
                gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, QuadGeometry, gl .DYNAMIC_DRAW);
@@ -432,8 +431,6 @@ function (Fields,
             case GeometryTypes .GEOMETRY:
             {
                this .texCoordCount = 0;
-               this .vertexCount   = 0;
-
                break;
             }
          }
