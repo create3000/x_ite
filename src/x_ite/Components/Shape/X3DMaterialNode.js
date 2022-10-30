@@ -177,13 +177,15 @@ function (Fields,
 
             if (context)
             {
+               const appearanceNode = context .appearanceNode;
+
                if (context .shadows)
                   options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
                if (context .fogNode)
                   options .push ("X3D_FOG");
 
-               if (context .appearanceNode .getStyleProperties (geometryContext .geometryType))
+               if (appearanceNode .getStyleProperties (geometryContext .geometryType))
                   options .push ("X3D_STYLE_PROPERTIES");
 
                switch (context .shapeNode .getShapeKey ())
