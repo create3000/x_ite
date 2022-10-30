@@ -961,22 +961,14 @@ function (X3DCast,
 
          return false;
       },
-      setLocalObjects: function (gl, localObjects)
+      setClipPlanes: function (gl, clipPlanes)
       {
-         // Clip planes and local lights
+         this .numClipPlanes = 0;
 
-         this .numClipPlanes                  = 0;
-         this .numLights                      = 0;
-         this .numProjectiveTextures          = 0;
-         this .lightNodes .length             = 0;
-         this .projectiveTextureNodes .length = 0;
+         for (const clipPlane of clipPlanes)
+            clipPlane .setShaderUniforms (gl, this);
 
-         for (const localObject of localObjects)
-            localObject .setShaderUniforms (gl, this);
-
-         gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
-         gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
-         gl .uniform1i (this .x3d_NumProjectiveTextures, Math .min (this .numProjectiveTextures, this .x3d_MaxTextures));
+         gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
       },
       setUniforms: (function ()
       {
@@ -1100,15 +1092,13 @@ function (X3DCast,
       })(),
       enable: function (gl, program)
       {
-         const browser = this .getBrowser ();
-
          gl .useProgram (program);
 
          for (const location of this .textures)
          {
             const
                texture     = location .texture,
-               textureUnit = browser .getTextureUnit (texture .getTextureType ());
+               textureUnit = this .getBrowser () .getTextureUnit (texture .getTextureType ());
 
             if (textureUnit === undefined)
             {

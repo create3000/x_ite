@@ -782,19 +782,25 @@ function (TextureBuffer,
          return function (shapes, numShapes)
          {
             const
-               browser    = this .getBrowser (),
-               gl         = browser .getContext (),
-               viewport   = this .getViewVolume () .getViewport (),
-               shaderNode = browser .getDepthShader ();
+               browser            = this .getBrowser (),
+               gl                 = browser .getContext (),
+               viewport           = this .getViewVolume () .getViewport (),
+               shaderNode         = browser .getDepthShader (),
+               particleShaderNode = browser .getParticleDepthShader && browser .getParticleDepthShader ();
 
             // Configure depth shader.
 
-            if (shaderNode .isValid ())
+            if (shaderNode .isValid () && (! particleShaderNode || particleShaderNode .isValid ()))
             {
-               shaderNode .enable (gl);
-
                projectionMatrixArray .set (this .getProjectionMatrix () .get ());
 
+               if (particleShaderNode)
+               {
+                  particleShaderNode .enable (gl);
+                  gl .uniformMatrix4fv (particleShaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+               }
+
+               shaderNode .enable (gl);
                gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
 
                // Configure viewport and background
@@ -825,23 +831,14 @@ function (TextureBuffer,
                      context = shapes [s],
                      scissor = context .scissor;
 
-                  // TODO: viewport must not be the browser or layer viewport.
                   gl .scissor (scissor .x,
                                scissor .y,
                                scissor .z,
                                scissor .w);
 
-                  // Clip planes
-
-                  shaderNode .setLocalObjects (gl, context .clipPlanes);
-
-                  // modelViewMatrix
-
-                  gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, context .modelViewMatrix);
-
                   // Draw
 
-                  context .shapeNode .depth (gl, context, shaderNode);
+                  context .shapeNode .depth (gl, context, shaderNode, particleShaderNode);
                }
             }
          };

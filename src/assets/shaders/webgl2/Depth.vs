@@ -9,7 +9,7 @@ uniform mat4 x3d_ModelViewMatrix;
 
 in vec4 x3d_Vertex;
 
-out vec3 vertex; // point on geometry
+out vec3 vertex;
 
 #pragma X3D include "include/Particle.glsl"
 

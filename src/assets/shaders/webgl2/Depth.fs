@@ -3,12 +3,12 @@
 precision highp float;
 precision highp int;
 
-in vec3 vertex; // point on geometry
+in vec3 vertex;
 
 out vec4 x3d_FragColor;
 
-#pragma X3D include "include/Pack.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
+#pragma X3D include "include/Pack.glsl"
 
 void
 main ()

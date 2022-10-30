@@ -217,8 +217,8 @@ function (Fields,
          this .inputParticles  = this .createBuffer ();
          this .outputParticles = this .createBuffer ();
 
-         this .inputParticles . emitterArrayObject = new VertexArray ();
-         this .inputParticles . vertexArrayObject  = new VertexArray ();
+         this .inputParticles  .emitterArrayObject = new VertexArray ();
+         this .inputParticles  .vertexArrayObject  = new VertexArray ();
          this .inputParticles  .shadowArrayObject  = new VertexArray ();
          this .outputParticles .emitterArrayObject = new VertexArray ();
          this .outputParticles .vertexArrayObject  = new VertexArray ();
@@ -254,6 +254,10 @@ function (Fields,
          this .set_physics__ ();
          this .set_colorRamp__ ();
          this .set_texCoordRamp__ ();
+      },
+      getShapeType: function ()
+      {
+         return 1;
       },
       set_bbox__: function ()
       {
@@ -901,9 +905,14 @@ function (Fields,
             }
          }
       },
-      depth: function (gl, context, shaderNode)
+      depth: function (gl, context, _, shaderNode)
       {
          // Display geometry.
+
+         shaderNode .enable (gl);
+         shaderNode .setClipPlanes (gl, context .clipPlanes);
+
+         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, context .modelViewMatrix);
 
          switch (this .geometryType)
          {
@@ -939,6 +948,8 @@ function (Fields,
                break;
             }
          }
+
+         _ .enable (gl);
       },
       display: function (gl, context)
       {

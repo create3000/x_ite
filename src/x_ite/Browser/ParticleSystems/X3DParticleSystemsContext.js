@@ -54,7 +54,9 @@ function (PointEmitter)
 {
 "use strict";
 
-   const _defaultEmitter = Symbol ();
+   const
+      _defaultEmitter = Symbol (),
+      _depthShader    = Symbol ();
 
    function X3DParticleSystemsContext () { }
 
@@ -70,6 +72,16 @@ function (PointEmitter)
          Object .defineProperty (this, "getDefaultEmitter", { enumerable: false });
 v
          return this [_defaultEmitter];
+      },
+      getParticleDepthShader: function ()
+      {
+         this [_depthShader] = this .createShader ("ParticleDepthShader", "Depth", "Depth", ["X3D_PARTICLE"]);
+
+         this .getParticleDepthShader = function () { return this [_depthShader]; };
+
+         Object .defineProperty (this, "getParticleDepthShader", { enumerable: false });
+
+         return this [_depthShader];
       },
    };
 

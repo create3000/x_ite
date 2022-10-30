@@ -1,11 +1,10 @@
-
 precision highp float;
 precision highp int;
 
-varying vec3 vertex; // point on geometry
+varying vec3 vertex;
 
-#pragma X3D include "include/Pack.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
+#pragma X3D include "include/Pack.glsl"
 
 void
 main ()

@@ -114,6 +114,10 @@ function (Fields,
 
          this .set_transformSensors__ ();
       },
+      getShapeType: function ()
+      {
+         return 0;
+      },
       set_geometry__: function ()
       {
          X3DShapeNode .prototype .set_geometry__ .call (this);

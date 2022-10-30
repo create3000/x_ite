@@ -988,6 +988,10 @@ function (Fields,
       { },
       depth: function (gl, context, shaderNode)
       {
+         shaderNode .setClipPlanes (gl, context .clipPlanes);
+
+         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, context .modelViewMatrix);
+
          if (this .shadowArrayObject .enable (gl, shaderNode))
             shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
 

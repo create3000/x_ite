@@ -1,3 +1,5 @@
+#if defined (X3D_PARTICLE)
+
 in vec4 x3d_Particle;
 in mat4 x3d_ParticleMatrix;
 
@@ -14,23 +16,27 @@ texelFetch (const in sampler2D sampler, const in int index, const in int lod)
 }
 
 vec4
-getVertex (const in vec4 vertex)
-{
-   if (x3d_Particle [0] == 0.0)
-      return vertex;
-
-   return x3d_ParticleMatrix * vertex;
-}
-
-vec4
 getTexCoord (const in vec4 texCoord)
 {
    int index0 = int (x3d_Particle [3]);
 
-   if (x3d_Particle [0] == 0.0 || index0 == -1)
+   if (index0 == -1)
       return texCoord;
 
    const int map [6] = int [6] (0, 1, 2, 0, 2, 3);
 
    return texelFetch (x3d_TexCoordRamp, index0 + map [gl_VertexID % 6], 0);
 }
+
+vec4
+getVertex (const in vec4 vertex)
+{
+   return x3d_ParticleMatrix * vertex;
+}
+
+#else
+
+#define getVertex(vertex) vertex
+#define getTexCoord(texCoord) texCoord
+
+#endif

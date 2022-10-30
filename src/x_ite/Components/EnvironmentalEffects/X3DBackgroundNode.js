@@ -95,13 +95,12 @@ function (X3DBindableNode,
       this .projectionMatrixArray = new Float32Array (16);
       this .modelMatrix           = new Matrix4 ();
       this .modelViewMatrixArray  = new Float32Array (16);
-      this .localObjects          = [ ];
+      this .clipPlanes            = [ ];
       this .colors                = [ ];
       this .sphere                = [ ];
       this .textureBits           = new BitSet ();
       this .sphereContext         = { geometryType: 3, colorMaterial: true,  hasNormals: false };
       this .texturesContext       = { geometryType: 3, colorMaterial: false, hasNormals: false };
-      this .context               = { appearanceNode: browser .getDefaultAppearance () };
 
       X3DGeometryNode .prototype .updateGeometryKey .call (this .sphereContext);
       X3DGeometryNode .prototype .updateGeometryKey .call (this .texturesContext);
@@ -505,7 +504,7 @@ function (X3DBindableNode,
             {
                const
                   sourceObjects = renderObject .getLocalObjects (),
-                  destObjects   = this .localObjects;
+                  destObjects   = this .clipPlanes;
 
                for (let i = 0, length = sourceObjects .length; i < length; ++ i)
                   destObjects [i] = sourceObjects [i];
@@ -573,13 +572,13 @@ function (X3DBindableNode,
          const
             browser    = this .getBrowser (),
             gl         = browser .getContext (),
-            shaderNode = browser .getDefaultMaterial () .getShader (this .sphereContext, this .context);
+            shaderNode = browser .getDefaultMaterial () .getShader (this .sphereContext);
 
          shaderNode .enable (gl);
 
          // Clip planes
 
-         shaderNode .setLocalObjects (gl, this .localObjects);
+         shaderNode .setClipPlanes (gl, this .clipPlanes);
 
          // Uniforms
 
@@ -622,13 +621,13 @@ function (X3DBindableNode,
             const
                browser    = this .getBrowser (),
                gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (this .texturesContext, this .context);
+               shaderNode = browser .getDefaultMaterial () .getShader (this .texturesContext);
 
             shaderNode .enable (gl);
 
             // Clip planes
 
-            shaderNode .setLocalObjects (gl, this .localObjects);
+            shaderNode .setClipPlanes (gl, this .clipPlanes);
 
             // Uniforms
 

@@ -87,7 +87,7 @@ function (Fields,
       },
       set_logarithmicDepthBuffer__: function ()
       {
-         this .logarithmicDepthBuffer = this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer");
+         this .logarithmicDepthBuffer = String (this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1 : 0);
       },
       setTransparent: function (value)
       {
@@ -111,18 +111,27 @@ function (Fields,
       },
       getShader: function (geometryContext, context)
       {
-         const stylePropertiesNode = context .appearanceNode .getStyleProperties (geometryContext .geometryType);
-
          let key = this .textureBits .toString ();
 
          key += ".";
-         key += this .getMaterialType (context .shadows);
-         key += this .logarithmicDepthBuffer ? 1 : 0;
-         key += context .shadows ? 1 : 0;
-         key += context .fogNode ? 1 : 0;
-         key += stylePropertiesNode ? 1 : 0;
-         key += ".";
+         key += this .logarithmicDepthBuffer;
          key += geometryContext .geometryKey;
+
+         if (context)
+         {
+            const appearanceNode = context .appearanceNode;
+
+            key += this .getMaterialType (context .shadows);
+            key += context .shadows ? 1 : 0;
+            key += context .fogNode ? 1 : 0;
+            key += context .shapeNode .getShapeType ();
+            key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
+         }
+         else
+         {
+            key += this .getMaterialType (false);
+            key += "0000";
+         }
 
          const shaderNode = this .shaderNodes .get (key) || this .createShader (key, geometryContext, context);
 

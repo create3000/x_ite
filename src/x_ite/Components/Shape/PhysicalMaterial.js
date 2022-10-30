@@ -207,20 +207,28 @@ function (Fields,
       createShader: function (key, geometryContext, context)
       {
          const
-            browser             = this .getBrowser (),
-            stylePropertiesNode = context .appearanceNode .getStyleProperties (geometryContext .geometryType),
-            options             = [ ];
+            browser = this .getBrowser (),
+            options = [ ];
 
          if (! geometryContext .hasNormals)
             return browser .getDefaultMaterial () .createShader (key, geometryContext, context);
 
          options .push ("X3D_PHYSICAL", this .getGeometryType (geometryContext .geometryType));
 
-         if (context .shadows)
-            options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
+         if (context)
+         {
+            if (context .shadows)
+               options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
-         if (context .fogNode)
-            options .push ("X3D_FOG");
+            if (context .fogNode)
+               options .push ("X3D_FOG");
+
+            if (context .appearanceNode .getStyleProperties (geometryContext .geometryType))
+               options .push ("X3D_STYLE_PROPERTIES");
+
+            if (context .shapeNode .getShapeType () == 1)
+               options .push ("X3D_PARTICLE");
+         }
 
          if (geometryContext .hasFogCoords)
             options .push ("X3D_FOG_COORDS");
@@ -229,9 +237,6 @@ function (Fields,
             options .push ("X3D_COLOR_MATERIAL");
 
          options .push ("X3D_NORMALS");
-
-         if (stylePropertiesNode)
-            options .push ("X3D_STYLE_PROPERTIES");
 
          if (+this .getTextureBits ())
          {

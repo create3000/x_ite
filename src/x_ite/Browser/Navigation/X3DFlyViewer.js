@@ -101,15 +101,13 @@ function ($,
       this .direction         = new Vector3 (0, 0, 0);
       this .startTime         = 0;
       this .lineCount         = 2;
-      this .lineVertices      = new Array (this .lineCount * 4);
-      this .lineArray         = new Float32Array (this .lineVertices);
+      this .lineArray         = new Float32Array (this .lineCount * 4) .fill (1);
       this .lineBuffer        = gl .createBuffer ();
       this .lineArrayObject   = new VertexArray ();
       this .event             = null;
       this .lookAround        = false;
       this .orientationChaser = new OrientationChaser (executionContext);
       this .geometryContext   = { geometryType: 1, colorMaterial: false, hasNormals: false };
-      this .context           = { appearanceNode: browser .getDefaultAppearance () };
 
       X3DGeometryNode .prototype .updateGeometryKey .call (this .geometryContext);
    }
@@ -151,7 +149,7 @@ function ($,
          if (! browser .getBrowserOption ("Rubberband"))
             return;
 
-         browser .getDefaultMaterial () .getShader (this .geometryContext, this .context);
+         browser .getDefaultMaterial () .getShader (this .geometryContext);
          browser .getDepthShader ();
       },
       addCollision: function () { },
@@ -670,6 +668,7 @@ function ($,
 
             const
                browser  = this .getBrowser (),
+               gl       = browser .getContext (),
                viewport = browser .getViewport (),
                width    = viewport [2],
                height   = viewport [3];
@@ -691,11 +690,26 @@ function ($,
                toPoint   .set (this .toVector   .x, height + this .toVector   .y, 0);
             }
 
-            this .transfer (fromPoint, toPoint);
+            // Set line vertices.
 
-            const
-               gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext, this .context);
+            const lineArray = this .lineArray;
+
+            lineArray [0] = fromPoint .x;
+            lineArray [1] = fromPoint .y;
+            lineArray [2] = fromPoint .z;
+
+            lineArray [4] = toPoint .x;
+            lineArray [5] = toPoint .y;
+            lineArray [6] = toPoint .z;
+
+            // Transfer line.
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .lineBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, this .lineArray, gl .DYNAMIC_DRAW);
+
+            // Render two lines.
+
+            const shaderNode = browser .getDefaultMaterial () .getShader (this .geometryContext);
 
             shaderNode .enable (gl);
 
@@ -721,29 +735,6 @@ function ($,
             gl .drawArrays (gl .LINES, 0, this .lineCount);
          };
       })(),
-      transfer: function (fromPoint, toPoint)
-      {
-         const
-            gl           = this .getBrowser () .getContext (),
-            lineVertices = this .lineVertices;
-
-         lineVertices [0] = fromPoint .x;
-         lineVertices [1] = fromPoint .y;
-         lineVertices [2] = fromPoint .z;
-         lineVertices [3] = 1;
-
-         lineVertices [4] = toPoint .x;
-         lineVertices [5] = toPoint .y;
-         lineVertices [6] = toPoint .z;
-         lineVertices [7] = 1;
-
-         this .lineArray .set (lineVertices);
-
-         // Transfer line.
-
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .lineBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, this .lineArray, gl .DYNAMIC_DRAW);
-      },
       disconnect: function ()
       {
          var browser = this .getBrowser ();
