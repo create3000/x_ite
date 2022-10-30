@@ -262,42 +262,10 @@ function (Fields,
       {
          const
             browser = this .getBrowser (),
-            options = [ ];
+            options = this .getOptions (geometryContext, context);
 
          if (! geometryContext .hasNormals)
             return browser .getDefaultMaterial () .createShader (key, geometryContext, context);
-
-         options .push (this .getGeometryType (geometryContext .geometryType))
-
-         if (context)
-         {
-            if (context .shadows)
-               options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
-
-            if (context .fogNode)
-               options .push ("X3D_FOG");
-
-            if (context .appearanceNode .getStyleProperties (geometryContext .geometryType))
-               options .push ("X3D_STYLE_PROPERTIES");
-
-            switch (context .shapeNode .getShapeKey ())
-            {
-               case "1":
-                  options .push ("X3D_PARTICLE");
-                  break;
-               case "2":
-                  options .push ("X3D_PARTICLE", "X3D_TEX_COORD_RAMP");
-                  break;
-            }
-         }
-
-         if (geometryContext .hasFogCoords)
-            options .push ("X3D_FOG_COORDS");
-
-         if (geometryContext .colorMaterial)
-            options .push ("X3D_COLOR_MATERIAL");
-
-         options .push ("X3D_NORMALS");
 
          if (+this .getTextureBits ())
          {

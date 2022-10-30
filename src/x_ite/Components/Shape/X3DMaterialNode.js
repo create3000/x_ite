@@ -151,7 +151,7 @@ function (Fields,
             return this .getBrowser () .getDefaultShader ();
          }
       },
-      getGeometryType: (function ()
+      getOptions: (function ()
       {
          const geometryTypes = [
             "X3D_GEOMETRY_0D",
@@ -160,10 +160,45 @@ function (Fields,
             "X3D_GEOMETRY_3D",
          ];
 
-         return function (geometryType)
+         return function (geometryContext, context)
          {
-            return geometryTypes [geometryType];
-         }
+            const options = [ ];
+
+            options .push (geometryTypes [geometryContext .geometryType]);
+
+            if (geometryContext .hasFogCoords)
+               options .push ("X3D_FOG_COORDS");
+
+            if (geometryContext .colorMaterial)
+               options .push ("X3D_COLOR_MATERIAL");
+
+            if (geometryContext .hasNormals)
+               options .push ("X3D_NORMALS");
+
+            if (context)
+            {
+               if (context .shadows)
+                  options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
+
+               if (context .fogNode)
+                  options .push ("X3D_FOG");
+
+               if (context .appearanceNode .getStyleProperties (geometryContext .geometryType))
+                  options .push ("X3D_STYLE_PROPERTIES");
+
+               switch (context .shapeNode .getShapeKey ())
+               {
+                  case "1":
+                     options .push ("X3D_PARTICLE");
+                     break;
+                  case "2":
+                     options .push ("X3D_PARTICLE", "X3D_TEX_COORD_RAMP");
+                     break;
+               }
+            }
+
+            return options;
+         };
       })(),
    });
 
