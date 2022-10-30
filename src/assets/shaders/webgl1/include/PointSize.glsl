@@ -1,7 +1,6 @@
 #if defined (X3D_GEOMETRY_0D)
 
 uniform x3d_PointPropertiesParameters x3d_PointProperties;
-uniform int x3d_NumTextures;
 
 varying float pointSize;
 
@@ -20,10 +19,11 @@ getPointSize (const in vec3 vertex)
    pointSize /= dot (pointSizeAttenuation, vec3 (1.0, dL, dL * dL));
    pointSize  = clamp (pointSize, pointSizeMinValue, pointSizeMaxValue);
 
-   if (x3d_NumTextures == 0)
+   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURE)
+      return pointSize;
+   #else
       return pointSize + 1.0 - step (pointSize, 1.0);
-
-   return pointSize;
+   #endif
 }
 
 #endif

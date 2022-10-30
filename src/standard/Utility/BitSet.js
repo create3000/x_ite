@@ -58,6 +58,12 @@ define (function ()
 
    BitSet .prototype =
    {
+      get: function (index)
+      {
+         const mask = 1 << index;
+
+         return !! (this .value & mask);
+      },
       set: function (index, value)
       {
          const mask = 1 << index;
@@ -67,11 +73,9 @@ define (function ()
          else
             this .value &= ~mask;
       },
-      get: function (index)
+      clear: function ()
       {
-         const mask = 1 << index;
-
-         return !! (this .value & mask);
+         this .value = 0;
       },
       valueOf: function ()
       {

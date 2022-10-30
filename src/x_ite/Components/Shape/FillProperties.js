@@ -155,7 +155,7 @@ function (Fields,
          if (hatched)
          {
             const
-               browser     = shaderObject .getBrowser (),
+               browser     = this .getBrowser (),
                texture     = browser .getHatchStyleTexture (this .hatchStyle),
                textureUnit = browser .getTexture2DUnit ();
 

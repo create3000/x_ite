@@ -289,6 +289,15 @@ function (Fields,
                this .textureNodes .push (textureNode);
          }
       },
+      updateTextureBits: function (textureBits)
+      {
+         const
+            textureNodes = this .textureNodes,
+            channels     = Math .min (this .getBrowser () .getMaxTextures (), textureNodes .length);
+
+         for (let i = 0; i < channels; ++ i)
+            textureNodes [i] .updateTextureBits (textureBits, i);
+      },
       traverse: function (type, renderObject)
       {
          for (const textureNode of this .textureNodes)
@@ -298,7 +307,7 @@ function (Fields,
       {
          const
             textureNodes = this .textureNodes,
-            channels     = Math .min (shaderObject .getBrowser () .getMaxTextures (), textureNodes .length);
+            channels     = Math .min (this .getBrowser () .getMaxTextures (), textureNodes .length);
 
          gl .uniform1i  (shaderObject .x3d_NumTextures,       channels);
          gl .uniform4fv (shaderObject .x3d_MultiTextureColor, this .color);

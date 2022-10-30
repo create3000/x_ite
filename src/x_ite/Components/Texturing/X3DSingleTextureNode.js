@@ -168,6 +168,13 @@ function (X3DTextureNode,
             }
          };
       })(),
+      updateTextureBits: function (textureBits, channel = 0)
+      {
+         const textureType = this .getTextureType () - 1;
+
+         textureBits .set (channel * 2 + 0, textureType & 0b01);
+         textureBits .set (channel * 2 + 1, textureType & 0b10);
+      },
       setShaderUniforms: function (gl, shaderObject, renderObject)
       {
          this .setShaderUniformsToChannel (gl, shaderObject, renderObject, shaderObject .x3d_Textures [0]);

@@ -148,7 +148,7 @@ function (Fields,
          if (this .applied)
          {
             const
-               browser     = shaderObject .getBrowser (),
+               browser     = this .getBrowser (),
                textureUnit = browser .getTexture2DUnit ();
 
             gl .lineWidth (this .linewidthScaleFactor);

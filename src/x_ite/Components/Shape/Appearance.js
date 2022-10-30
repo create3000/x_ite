@@ -55,6 +55,7 @@ define ([
    "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
    "x_ite/Browser/Shape/AlphaMode",
+   "standard/Utility/BitSet",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -62,7 +63,8 @@ function (Fields,
           X3DAppearanceNode,
           X3DCast,
           X3DConstants,
-          AlphaMode)
+          AlphaMode,
+          BitSet)
 {
 "use strict";
 
@@ -73,14 +75,9 @@ function (Fields,
       this .addType (X3DConstants .Appearance);
 
       this .stylePropertiesNode     = [ ];
-      this .materialNode            = null;
-      this .backMaterialNode        = null;
-      this .textureNode             = null;
-      this .textureTransformNode    = null;
       this .textureTransformMapping = new Map ();
+      this .textureBits             = new BitSet ();
       this .shaderNodes             = [ ];
-      this .shaderNode              = null;
-      this .blendModeNode           = null;
    }
 
    Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .prototype),
@@ -183,6 +180,15 @@ function (Fields,
       {
          return this .textureNode;
       },
+      getTextureBits: function ()
+      {
+         return this .textureBits;
+      },
+      updateTextureBits: function ()
+      {
+         this .textureBits .clear ();
+         this .textureNode .updateTextureBits (this .textureBits);
+      },
       getTextureTransform: function ()
       {
          return this .textureTransformNode;
@@ -269,12 +275,24 @@ function (Fields,
       set_texture__: function ()
       {
          if (this .textureNode)
+         {
+            this .textureNode .removeInterest ("updateTextureBits", this);
             this .textureNode ._transparent .removeInterest ("set_transparent__", this);
+         }
 
          this .textureNode = X3DCast (X3DConstants .X3DTextureNode, this ._texture);
 
          if (this .textureNode)
+         {
+            this .textureNode .addInterest ("updateTextureBits", this);
             this .textureNode ._transparent .addInterest ("set_transparent__", this);
+
+            this .updateTextureBits ();
+         }
+         else
+         {
+            this .textureBits .clear ();
+         }
       },
       set_textureTransform__: function ()
       {

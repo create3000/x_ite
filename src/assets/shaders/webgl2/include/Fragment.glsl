@@ -62,9 +62,8 @@ getFinalColor ()
    #if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_0D)
       setTexCoords ();
 
-      #if ! defined (X3D_MATERIAL_TEXTURES)
-         if (x3d_NumTextures == 0)
-            return getPointColor (getMaterialColor ());
+      #if ! defined (X3D_TEXTURE) && ! defined (X3D_MATERIAL_TEXTURES)
+         return getPointColor (getMaterialColor ());
       #endif
    #endif
 

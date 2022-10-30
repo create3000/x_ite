@@ -125,11 +125,14 @@ function (Fields,
             key += renderContext .fogNode ? "1" : "0";
             key += renderContext .shapeNode .getShapeKey ();
             key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? "1" : "0";
+            key += ".";
+            key += appearanceNode .getTextureBits () .toString (2);
+            key += ".";
             key += this .getMaterialKey (renderContext .shadows);
          }
          else
          {
-            key += "0000";
+            key += "0000.0.";
             key += this .getMaterialKey (false);
          }
 
@@ -187,6 +190,11 @@ function (Fields,
 
                if (appearanceNode .getStyleProperties (geometryContext .geometryType))
                   options .push ("X3D_STYLE_PROPERTIES");
+
+               if (+appearanceNode .getTextureBits ())
+               {
+                  options .push ("X3D_TEXTURE");
+               }
 
                switch (renderContext .shapeNode .getShapeKey ())
                {
