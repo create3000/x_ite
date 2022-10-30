@@ -103,8 +103,8 @@ function (X3DBindableNode,
       this .texturesContext       = { geometryType: 3, colorMaterial: false, hasNormals: false };
       this .context               = { appearanceNode: browser .getDefaultAppearance () };
 
-      X3DGeometryNode .prototype .updateGeometryMask .call (this .sphereContext);
-      X3DGeometryNode .prototype .updateGeometryMask .call (this .texturesContext);
+      X3DGeometryNode .prototype .updateGeometryKey .call (this .sphereContext);
+      X3DGeometryNode .prototype .updateGeometryKey .call (this .texturesContext);
    }
 
    X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),

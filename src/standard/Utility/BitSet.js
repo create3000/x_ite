@@ -79,7 +79,7 @@ define (function ()
       },
       toString: function ()
       {
-         return "0b" + this .value .toString (2);
+         return this .value .toString (2);
       },
    };
 

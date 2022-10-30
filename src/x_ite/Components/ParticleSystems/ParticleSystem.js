@@ -434,7 +434,7 @@ function (Fields,
             }
          }
 
-         this .updateGeometryMask ();
+         this .updateGeometryKey ();
          this .updateVertexArrays ();
 
          this .set_transparent__ ();
@@ -612,7 +612,7 @@ function (Fields,
          this .numColors                      = numColors;
          this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
 
-         this .updateGeometryMask ();
+         this .updateGeometryKey ();
          this .updateVertexArrays ();
       },
       set_texCoordRamp__: function ()
@@ -658,9 +658,9 @@ function (Fields,
 
          this .updateVertexArrays ();
       },
-      updateGeometryMask: function ()
+      updateGeometryKey: function ()
       {
-         X3DGeometryNode .prototype .updateGeometryMask .call (this .geometryContext);
+         X3DGeometryNode .prototype .updateGeometryKey .call (this .geometryContext);
       },
       updateVertexArrays: function ()
       {

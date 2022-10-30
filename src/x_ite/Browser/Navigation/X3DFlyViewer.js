@@ -111,7 +111,7 @@ function ($,
       this .geometryContext   = { geometryType: 1, colorMaterial: false, hasNormals: false };
       this .context           = { appearanceNode: browser .getDefaultAppearance () };
 
-      X3DGeometryNode .prototype .updateGeometryMask .call (this .geometryContext);
+      X3DGeometryNode .prototype .updateGeometryKey .call (this .geometryContext);
    }
 
    X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),

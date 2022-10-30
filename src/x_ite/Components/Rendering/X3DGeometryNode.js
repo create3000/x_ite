@@ -126,7 +126,7 @@ function (Fields,
       this .vertices                 = X3DGeometryNode .createArray ();
       this .hasFogCoords             = false;
       this .hasNormals               = false;
-      this .geometryMask             = 0;
+      this .geometryKey              = "";
       this .vertexCount              = 0;
       this .planes                   = [ ];
 
@@ -852,7 +852,7 @@ function (Fields,
             // Transfer arrays and update.
 
             this .transfer ();
-            this .updateGeometryMask ();
+            this .updateGeometryKey ();
             this .updateRenderFunctions ();
          };
       })(),
@@ -955,18 +955,13 @@ function (Fields,
 
          this .vertexCount = this .vertices .length / 4;
       },
-      updateGeometryMask: function ()
+      updateGeometryKey: function ()
       {
-         // Mask
-         // 0 - 1 -> geometry type
-         // 2     -> fog coords
-         // 3     -> color material
-         // 4     -> normals
-
-         this .geometryMask  = this .geometryType;
-         this .geometryMask |= this .hasFogCoords  << 2;
-         this .geometryMask |= this .colorMaterial << 3;
-         this .geometryMask |= this .hasNormals    << 4;
+         this .geometryKey  = "";
+         this .geometryKey += this .geometryType;
+         this .geometryKey += this .hasFogCoords ? 1 : 0;
+         this .geometryKey += this .colorMaterial ? 1 : 0;
+         this .geometryKey += this .hasNormals ? 1 : 0;
       },
       updateRenderFunctions: function ()
       {

@@ -111,29 +111,18 @@ function (Fields,
       },
       getShader: function (geometryContext, context)
       {
-         // Bit Schema of Shader Key
-         //
-         // 0  - 13 -> textures
-         // 14 - 15 -> material type
-         // 16      -> logarithmic depth buffer
-         // 17      -> shadows
-         // 18      -> fog
-         // 19      -> style properties
-         // 20 - 21 -> geometry type
-         // 22      -> fog coords
-         // 23      -> color material
-         // 24      -> normals
-
          const stylePropertiesNode = context .appearanceNode .getStyleProperties (geometryContext .geometryType);
 
-         let key = +this .textureBits;
+         let key = this .textureBits .toString ();
 
-         key |= this .getMaterialType (context .shadows) << 14;
-         key |= this .logarithmicDepthBuffer             << 16;
-         key |= context .shadows                         << 17;
-         key |= (context .fogNode ? 1 : 0)               << 18;
-         key |= (stylePropertiesNode ? 1 : 0)            << 19;
-         key |= geometryContext .geometryMask            << 20;
+         key += ".";
+         key += this .getMaterialType (context .shadows);
+         key += this .logarithmicDepthBuffer ? 1 : 0;
+         key += context .shadows ? 1 : 0;
+         key += context .fogNode ? 1 : 0;
+         key += stylePropertiesNode ? 1 : 0;
+         key += ".";
+         key += geometryContext .geometryKey;
 
          const shaderNode = this .shaderNodes .get (key) || this .createShader (key, geometryContext, context);
 
