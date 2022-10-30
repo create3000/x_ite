@@ -449,7 +449,7 @@ getProjectiveTexture (const in int i, const in vec2 texCoord)
 vec4
 getProjectiveTextureColor (in vec4 currentColor)
 {
-   if (x3d_NumProjectiveTextures > 0)
+   if (x3d_NumProjectiveTextures != 0)
    {
       vec3 N = gl_FrontFacing ? normal : -normal;
 

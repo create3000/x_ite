@@ -968,7 +968,7 @@ function (X3DCast,
          for (const clipPlane of clipPlanes)
             clipPlane .setShaderUniforms (gl, this);
 
-         gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
+         gl .uniform1i (this .x3d_NumClipPlanes, this .numClipPlanes);
       },
       setUniforms: (function ()
       {
@@ -1057,9 +1057,9 @@ function (X3DCast,
             for (const localObject of renderContext .localObjects)
                localObject .setShaderUniforms (gl, this, renderObject);
 
-            gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
-            gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
-            gl .uniform1i (this .x3d_NumProjectiveTextures, Math .min (this .numProjectiveTextures, this .x3d_MaxTextures));
+            gl .uniform1i (this .x3d_NumClipPlanes,         this .numClipPlanes);
+            gl .uniform1i (this .x3d_NumLights,             this .numLights);
+            gl .uniform1i (this .x3d_NumProjectiveTextures, this .numProjectiveTextures);
 
             // Fog
 
