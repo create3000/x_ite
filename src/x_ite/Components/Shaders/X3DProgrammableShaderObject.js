@@ -1007,6 +1007,8 @@ function (X3DCast,
 
                this .fogNode = null;
 
+               gl .uniform1i (this .x3d_FogType, 0);
+
                // Set global lights and global texture projectors.
 
                this .numLights                      = 0;
