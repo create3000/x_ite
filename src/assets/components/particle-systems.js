@@ -99,6 +99,6 @@ function (Components,
          X3DParticleEmitterNode:      X3DParticleEmitterNode,
          X3DParticlePhysicsModelNode: X3DParticlePhysicsModelNode,
       },
-      context: X3DParticleSystemsContext,
+      browserContext: X3DParticleSystemsContext,
    });
 });

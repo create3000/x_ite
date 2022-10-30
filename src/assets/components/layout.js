@@ -81,6 +81,6 @@ function (Components,
       {
          X3DLayoutNode: X3DLayoutNode,
       },
-      context: X3DLayoutContext,
+      browserContext: X3DLayoutContext,
    });
 });

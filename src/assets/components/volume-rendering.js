@@ -113,6 +113,6 @@ function (Components,
          X3DVolumeDataNode:                  X3DVolumeDataNode,
          X3DVolumeRenderStyleNode:           X3DVolumeRenderStyleNode,
       },
-      context: X3DVolumeRenderingContext,
+      browserContext: X3DVolumeRenderingContext,
    });
 });

@@ -72,6 +72,6 @@ function (Components,
       {
          X3DKeyDeviceSensorNode: X3DKeyDeviceSensorNode,
       },
-      context: X3DKeyDeviceSensorContext,
+      browserContext: X3DKeyDeviceSensorContext,
    });
 });
