@@ -51,8 +51,8 @@ define (function ()
 {
 "use strict";
 
-   return function (/* __global__, __text__ */)
+   return function (globalObject, sourceText)
    {
-      return Function (/* js */ `with (arguments [0]) { ${arguments [1]} }`) (arguments [0]);
+      return Function (/* js */ `with (arguments [0]) { ${sourceText} }`) (globalObject);
    };
 });
