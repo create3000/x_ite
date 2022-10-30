@@ -172,28 +172,6 @@ function (TextureProperties,
       {
          return this [_maxCombinedTextureUnits];
       },
-      popTexture2DUnit: function ()
-      {
-         if (this [_texture2DUnitIndex] > 0)
-         {
-            -- this [_texture2DUnitIndex];
-
-            return this [_texture2DUnits] .pop ();
-         }
-         else
-         {
-            return this [_combinedTextureUnits] .pop ();
-         }
-      },
-      pushTexture2DUnit: function (textureUnit)
-      {
-         if (textureUnit === undefined)
-            return;
-
-         ++ this [_texture2DUnitIndex];
-
-         this [_texture2DUnits] .push (textureUnit);
-      },
       getTexture2DUnit: function ()
       {
          if (this [_texture2DUnitIndex] > 0)

@@ -128,7 +128,6 @@ function (Fields,
       this .shadowMatrixArray             = new Float32Array (16);
       this .rotation                      = new Rotation4 ();
       this .rotationMatrix                = new Matrix4 ();
-      this .textureUnit                   = undefined;
    }
 
    PointLightContainer .prototype =
@@ -215,6 +214,27 @@ function (Fields,
       {
          const i = shaderObject .numLights ++;
 
+         if (this .shadowBuffer)
+         {
+            const textureUnit = this. browser .getTexture2DUnit ();
+
+            if (textureUnit !== undefined)
+            {
+               gl .activeTexture (gl .TEXTURE0 + textureUnit);
+
+               if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
+                  gl .bindTexture (gl .TEXTURE_2D, shadowBuffer .getDepthTexture ());
+               else
+                  gl .bindTexture (gl .TEXTURE_2D, shadowBuffer .getColorTexture ());
+
+               gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
+            }
+            else
+            {
+               console .warn ("Not enough combined texture units for shadow map available.");
+            }
+         }
+
          if (shaderObject .hasLight (i, this))
             return;
 
@@ -235,45 +255,18 @@ function (Fields,
 
          if (this .shadowBuffer)
          {
-            const
-               browser     = this .browser,
-               shadowColor = lightNode .getShadowColor ();
+            const shadowColor = lightNode .getShadowColor ();
 
             gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
             gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
             gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
             gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
             gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
-
-            this .textureUnit = lightNode .getGlobal ()
-               ? this .textureUnit === undefined ? browser .popTexture2DUnit () : this .textureUnit
-               : browser .getTexture2DUnit ();
-
-            if (this .textureUnit !== undefined)
-            {
-               gl .activeTexture (gl .TEXTURE0 + this .textureUnit);
-
-               if (gl .getVersion () >= 2 || gl .getExtension ("WEBGL_depth_texture"))
-                  gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
-               else
-                  gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
-
-               gl .uniform1i (shaderObject .x3d_ShadowMap [i], this .textureUnit);
-            }
-            else
-            {
-               console .warn ("Not enough combined texture units for shadow map available.");
-            }
          }
       },
       dispose: function ()
       {
-         // Return shadowBuffer and textureUnit.
-
          this .browser .pushShadowBuffer (this .shadowBuffer);
-
-         if (this .lightNode .getGlobal ())
-            this .browser .pushTexture2DUnit (this .textureUnit);
 
          this .modelViewMatrix .clear ();
 
@@ -281,7 +274,6 @@ function (Fields,
          this .lightNode    = null;
          this .groupNode    = null;
          this .shadowBuffer = null;
-         this .textureUnit  = undefined;
 
          // Return container
 
