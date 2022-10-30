@@ -188,6 +188,12 @@ function (Fields,
       {
          this .textureBits .clear ();
          this .textureNode .updateTextureBits (this .textureBits);
+
+         this .textureKey = this .textureBits .toString (2);
+      },
+      getTextureKey: function ()
+      {
+         return this .textureKey;
       },
       getTextureTransform: function ()
       {

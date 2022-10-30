@@ -126,7 +126,7 @@ function (Fields,
             key += renderContext .shapeNode .getShapeKey ();
             key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? "1" : "0";
             key += ".";
-            key += appearanceNode .getTextureBits () .toString (2);
+            key += appearanceNode .getTextureKey ();
             key += ".";
             key += this .getMaterialKey (renderContext .shadows);
          }
