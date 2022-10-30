@@ -78,7 +78,6 @@ function (Fields,
       this .addType (X3DConstants .ShaderPart);
 
       this .options = [ ];
-      this .shader  = null;
    }
 
    ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -174,21 +173,22 @@ function (Fields,
                   type           = this .getShaderType (),
                   options        = ["X3D_" + type] .concat (this .options),
                   shaderCompiler = new ShaderCompiler (gl),
-                  source         = Shader .getShaderSource (gl, browser, shaderCompiler .process (data), options);
+                  source         = Shader .getShaderSource (gl, browser, shaderCompiler .process (data), options),
+                  shader         = gl .createShader (gl [type]);
 
                gl .deleteShader (this .shader);
 
-               this .shader = gl .createShader (gl [type]);
+               this .shader = shader;
 
-               gl .shaderSource (this .shader, source);
-               gl .compileShader (this .shader);
+               gl .shaderSource (shader, source);
+               gl .compileShader (shader);
 
-               if (! gl .getShaderParameter (this .shader, gl .COMPILE_STATUS))
+               if (! gl .getShaderParameter (shader, gl .COMPILE_STATUS))
                {
                   const
-                     log      = gl .getShaderInfoLog (this .shader),
+                     log      = gl .getShaderInfoLog (shader),
                      match    = log .match (/(\d+):(\d+)/),
-                     fileName = shaderCompiler .getSourceFileName (match [1]) || url;
+                     fileName = shaderCompiler .getSourceFileName (match [1]) || url || this .getExecutionContext () .getWorldUrl ();
 
                   throw new Error ("Error in " + this .getTypeName () + " '" + this .getName () + "' in URL '" + fileName + "', line " + match [2]);
                }
