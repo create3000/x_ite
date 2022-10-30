@@ -219,8 +219,8 @@ function ($,
          this .setBrowserEventHandler ("onshutdown");
          this .setBrowserEventHandler ("onerror");
 
-         this .getElement () .bind ("keydown.X3DCoreContext", this [_keydown] .bind (this));
-         this .getElement () .bind ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
+         this .getElement () .on ("keydown.X3DCoreContext", this [_keydown] .bind (this));
+         this .getElement () .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
       },
       getDebug: function ()
       {

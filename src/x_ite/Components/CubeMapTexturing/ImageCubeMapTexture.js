@@ -90,6 +90,8 @@ function ($,
 
       this .addType (X3DConstants .ImageCubeMapTexture);
 
+      this .image    = $("<img></img>");
+      this .canvas   = $("<canvas></canvas>");
       this .urlStack = new Fields .MFString ();
    }
 
@@ -134,12 +136,8 @@ function ($,
 
          // Initialize.
 
-         this .canvas = $("<canvas></canvas>");
-
-         this .image = $("<img></img>");
-         this .image .on ("load", this .setImage .bind (this));
-         this .image .on ("error", this .setError .bind (this));
-         this .image .bind ("abort", this .setError .bind (this));
+         this .image .on ("load",        this .setImage .bind (this));
+         this .image .on ("abort error", this .setError .bind (this));
 
          this .image [0] .crossOrigin = "Anonymous";
 

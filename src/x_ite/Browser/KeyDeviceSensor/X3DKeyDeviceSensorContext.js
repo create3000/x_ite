@@ -70,8 +70,8 @@ function (Fields)
       {
          const element = this .getElement ();
 
-         element .bind ("keydown.X3DKeyDeviceSensorContext", this [_keydown] .bind (this));
-         element .bind ("keyup.X3DKeyDeviceSensorContext",   this [_keyup]   .bind (this));
+         element .on ("keydown.X3DKeyDeviceSensorContext", this [_keydown] .bind (this));
+         element .on ("keyup.X3DKeyDeviceSensorContext",   this [_keyup]   .bind (this));
       },
       addKeyDeviceSensorNode: function (keyDeviceSensorNode)
       {

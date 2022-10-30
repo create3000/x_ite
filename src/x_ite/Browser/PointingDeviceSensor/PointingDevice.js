@@ -78,15 +78,15 @@ function ($,
       {
          const element = this .getBrowser () .getSurface ();
 
-         //element .bind ("mousewheel.PointingDevice", this .mousewheel .bind (this));
-         element .bind ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
-         element .bind ("mouseup.PointingDevice"   + this .getId (), this .mouseup    .bind (this));
-         element .bind ("dblclick.PointingDevice"  + this .getId (), this .dblclick   .bind (this));
-         element .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove  .bind (this));
-         element .bind ("mouseout.PointingDevice"  + this .getId (), this .onmouseout .bind (this));
+         //element .on ("mousewheel.PointingDevice", this .mousewheel .bind (this));
+         element .on ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
+         element .on ("mouseup.PointingDevice"   + this .getId (), this .mouseup    .bind (this));
+         element .on ("dblclick.PointingDevice"  + this .getId (), this .dblclick   .bind (this));
+         element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove  .bind (this));
+         element .on ("mouseout.PointingDevice"  + this .getId (), this .onmouseout .bind (this));
 
-         element .bind ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
-         element .bind ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
+         element .on ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
+         element .on ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
       },
       mousewheel: function (event)
       {
@@ -109,12 +109,12 @@ function ($,
                x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
                y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
-            element .unbind ("mousemove.PointingDevice" + this .getId ());
+            element .off ("mousemove.PointingDevice" + this .getId ());
 
-            $(document) .bind ("mouseup.PointingDevice"   + this .getId (), this .mouseup   .bind (this));
-            $(document) .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
-            $(document) .bind ("touchend.PointingDevice"  + this .getId (), this .touchend  .bind (this));
-            $(document) .bind ("touchmove.PointingDevice" + this .getId (), this .touchmove .bind (this));
+            $(document) .on ("mouseup.PointingDevice"   + this .getId (), this .mouseup   .bind (this));
+            $(document) .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
+            $(document) .on ("touchend.PointingDevice"  + this .getId (), this .touchend  .bind (this));
+            $(document) .on ("touchmove.PointingDevice" + this .getId (), this .touchmove .bind (this));
 
             if (browser .buttonPressEvent (x, y))
             {
@@ -139,8 +139,8 @@ function ($,
                x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
                y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
-            $(document) .unbind (".PointingDevice" + this .getId ());
-            element .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
+            $(document) .off (".PointingDevice" + this .getId ());
+            element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
             browser .buttonReleaseEvent ();
             browser .setCursor (this .isOver ? "HAND" : "DEFAULT");

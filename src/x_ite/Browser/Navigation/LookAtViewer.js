@@ -115,13 +115,13 @@ function ($,
 
          // Bind pointing device events.
 
-         element .bind ("mousedown.LookAtViewer",  this .mousedown  .bind (this));
-         element .bind ("mouseup.LookAtViewer",    this .mouseup    .bind (this));
-         element .bind ("dblclick.LookAtViewer",   this .dblclick   .bind (this));
-         element .bind ("mousewheel.LookAtViewer", this .mousewheel .bind (this));
+         element .on ("mousedown.LookAtViewer",  this .mousedown  .bind (this));
+         element .on ("mouseup.LookAtViewer",    this .mouseup    .bind (this));
+         element .on ("dblclick.LookAtViewer",   this .dblclick   .bind (this));
+         element .on ("mousewheel.LookAtViewer", this .mousewheel .bind (this));
 
-         element .bind ("touchstart.LookAtViewer", this .touchstart .bind (this));
-         element .bind ("touchend.LookAtViewer",   this .touchend   .bind (this));
+         element .on ("touchstart.LookAtViewer", this .touchstart .bind (this));
+         element .on ("touchend.LookAtViewer",   this .touchend   .bind (this));
 
          // Setup chaser.
 
@@ -158,10 +158,10 @@ function ($,
 
                this .button = event .button;
 
-               $(document) .bind ("mouseup.LookAtViewer"   + this .getId (), this .mouseup   .bind (this));
-               $(document) .bind ("mousemove.LookAtViewer" + this .getId (), this .mousemove .bind (this));
-               $(document) .bind ("touchend.LookAtViewer"  + this .getId (), this .mouseup   .bind (this));
-               $(document) .bind ("touchmove.LookAtViewer" + this .getId (), this .touchmove .bind (this));
+               $(document) .on ("mouseup.LookAtViewer"   + this .getId (), this .mouseup   .bind (this));
+               $(document) .on ("mousemove.LookAtViewer" + this .getId (), this .mousemove .bind (this));
+               $(document) .on ("touchend.LookAtViewer"  + this .getId (), this .mouseup   .bind (this));
+               $(document) .on ("touchmove.LookAtViewer" + this .getId (), this .touchmove .bind (this));
 
                this .getActiveViewpoint () .transitionStop ();
 
@@ -181,7 +181,7 @@ function ($,
 
          this .button = -1;
 
-         $(document) .unbind (".LookAtViewer" + this .getId ());
+         $(document) .off (".LookAtViewer" + this .getId ());
 
          switch (event .button)
          {
@@ -516,8 +516,8 @@ function ($,
       },
       dispose: function ()
       {
-         this .getBrowser () .getSurface () .unbind (".LookAtViewer");
-         $(document) .unbind (".LookAtViewer" + this .getId ());
+         this .getBrowser () .getSurface () .off (".LookAtViewer");
+         $(document) .off (".LookAtViewer" + this .getId ());
       },
    });
 

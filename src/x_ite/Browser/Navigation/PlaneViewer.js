@@ -101,10 +101,10 @@ function ($,
             browser = this .getBrowser (),
             element = browser .getSurface ();
 
-         element .bind ("mousedown.PlaneViewer",  this .mousedown  .bind (this));
-         element .bind ("mouseup.PlaneViewer",    this .mouseup    .bind (this));
-         element .bind ("mousemove.PlaneViewer",  this .mousemove  .bind (this));
-         element .bind ("mousewheel.PlaneViewer", this .mousewheel .bind (this));
+         element .on ("mousedown.PlaneViewer",  this .mousedown  .bind (this));
+         element .on ("mouseup.PlaneViewer",    this .mouseup    .bind (this));
+         element .on ("mousemove.PlaneViewer",  this .mousemove  .bind (this));
+         element .on ("mousewheel.PlaneViewer", this .mousewheel .bind (this));
       },
       mousedown: function (event)
       {
@@ -127,9 +127,9 @@ function ($,
 
                this .button = event .button;
 
-               this .getBrowser () .getSurface () .unbind ("mousemove.PlaneViewer");
-               $(document) .bind ("mouseup.PlaneViewer"   + this .getId (), this .mouseup .bind (this));
-               $(document) .bind ("mousemove.PlaneViewer" + this .getId (), this .mousemove .bind (this));
+               this .getBrowser () .getSurface () .off ("mousemove.PlaneViewer");
+               $(document) .on ("mouseup.PlaneViewer"   + this .getId (), this .mouseup .bind (this));
+               $(document) .on ("mousemove.PlaneViewer" + this .getId (), this .mousemove .bind (this));
 
                this .getActiveViewpoint () .transitionStop ();
                this .getBrowser () .setCursor ("MOVE");
@@ -153,8 +153,8 @@ function ($,
 
          this .button = -1;
 
-         $(document) .unbind (".PlaneViewer" + this .getId ());
-         this .getBrowser () .getSurface () .bind ("mousemove.PlaneViewer", this .mousemove .bind (this));
+         $(document) .off (".PlaneViewer" + this .getId ());
+         this .getBrowser () .getSurface () .on ("mousemove.PlaneViewer", this .mousemove .bind (this));
 
          this .getBrowser () .setCursor ("DEFAULT");
 
@@ -244,8 +244,8 @@ function ($,
       },
       dispose: function ()
       {
-         this .getBrowser () .getSurface () .unbind (".PlaneViewer");
-         $(document) .unbind (".PlaneViewer" + this .getId ());
+         this .getBrowser () .getSurface () .off (".PlaneViewer");
+         $(document) .off (".PlaneViewer" + this .getId ());
       },
    });
 

@@ -135,13 +135,13 @@ function ($,
 
          // Bind pointing device events.
 
-         element .bind ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
-         element .bind ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
-         element .bind ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
-         element .bind ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
+         element .on ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
+         element .on ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
+         element .on ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
+         element .on ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
 
-         element .bind ("touchstart.ExamineViewer",  this .touchstart .bind (this));
-         element .bind ("touchend.ExamineViewer",    this .touchend   .bind (this));
+         element .on ("touchstart.ExamineViewer",  this .touchstart .bind (this));
+         element .on ("touchend.ExamineViewer",    this .touchend   .bind (this));
 
          // Setup scroll chaser.
 
@@ -195,10 +195,10 @@ function ($,
 
                this .button = event .button;
 
-               $(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
-               $(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
-               $(document) .bind ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
-               $(document) .bind ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
+               $(document) .on ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
+               $(document) .on ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
+               $(document) .on ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
+               $(document) .on ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
 
                this .disconnect ();
                this .getActiveViewpoint () .transitionStop ();
@@ -222,10 +222,10 @@ function ($,
 
                this .button = event .button;
 
-               $(document) .bind ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
-               $(document) .bind ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
-               $(document) .bind ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
-               $(document) .bind ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
+               $(document) .on ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
+               $(document) .on ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
+               $(document) .on ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
+               $(document) .on ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
 
                this .disconnect ();
                this .getActiveViewpoint () .transitionStop ();
@@ -245,7 +245,7 @@ function ($,
 
          this .button = -1;
 
-         $(document) .unbind (".ExamineViewer" + this .getId ());
+         $(document) .off (".ExamineViewer" + this .getId ());
 
          switch (this .getButton (event .button))
          {
@@ -803,8 +803,8 @@ function ($,
 
          this .disconnect ();
          browser ._activeViewpoint .removeInterest ("set_activeViewpoint__", this);
-         browser .getSurface () .unbind (".ExamineViewer");
-         $(document) .unbind (".ExamineViewer" + this .getId ());
+         browser .getSurface () .off (".ExamineViewer");
+         $(document) .off (".ExamineViewer" + this .getId ());
       },
    });
 

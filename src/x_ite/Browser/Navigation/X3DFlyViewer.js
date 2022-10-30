@@ -125,12 +125,12 @@ function ($,
 
          // Bind pointing device events.
 
-         element .bind ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
-         element .bind ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
-         element .bind ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
+         element .on ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
+         element .on ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
+         element .on ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
 
-         element .bind ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
-         element .bind ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
+         element .on ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
+         element .on ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
 
          browser ._controlKey .addInterest ("set_controlKey__", this);
 
@@ -186,10 +186,10 @@ function ($,
 
                this .button = event .button;
 
-               $(document) .bind ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
-               $(document) .bind ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
-               $(document) .bind ("touchend.X3DFlyViewer"  + this .getId (), this .touchend  .bind (this));
-               $(document) .bind ("touchmove.X3DFlyViewer" + this .getId (), this .touchmove .bind (this));
+               $(document) .on ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
+               $(document) .on ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
+               $(document) .on ("touchend.X3DFlyViewer"  + this .getId (), this .touchend  .bind (this));
+               $(document) .on ("touchmove.X3DFlyViewer" + this .getId (), this .touchmove .bind (this));
 
                this .disconnect ();
                this .getActiveViewpoint () .transitionStop ();
@@ -229,8 +229,8 @@ function ($,
 
                this .button = event .button;
 
-               $(document) .bind ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
-               $(document) .bind ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
+               $(document) .on ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
+               $(document) .on ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
 
                this .disconnect ();
                this .getActiveViewpoint () .transitionStop ();
@@ -261,7 +261,7 @@ function ($,
          this .event  = null;
          this .button = -1;
 
-         $(document) .unbind (".X3DFlyViewer" + this .getId ());
+         $(document) .off (".X3DFlyViewer" + this .getId ());
 
          this .disconnect ();
          this .getBrowser () .setCursor ("DEFAULT");
@@ -758,8 +758,8 @@ function ($,
 
          this .disconnect ();
          this .getBrowser () ._controlKey .removeInterest ("set_controlKey__", this);
-         this .getBrowser () .getSurface () .unbind (".X3DFlyViewer");
-         $(document) .unbind (".X3DFlyViewer" + this .getId ());
+         this .getBrowser () .getSurface () .off (".X3DFlyViewer");
+         $(document) .off (".X3DFlyViewer" + this .getId ());
       },
    });
 
