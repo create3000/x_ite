@@ -138,8 +138,15 @@ function (Fields,
             if (context .appearanceNode .getStyleProperties (geometryContext .geometryType))
                options .push ("X3D_STYLE_PROPERTIES");
 
-            if (context .shapeNode .getShapeType () == 1)
-               options .push ("X3D_PARTICLE");
+            switch (context .shapeNode .getShapeType ())
+            {
+               case 1:
+                  options .push ("X3D_PARTICLE");
+                  break;
+               case 2:
+                  options .push ("X3D_PARTICLE", "X3D_TEX_COORD_RAMP");
+                  break;
+            }
          }
 
          if (geometryContext .hasFogCoords)

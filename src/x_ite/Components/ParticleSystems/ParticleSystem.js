@@ -257,7 +257,7 @@ function (Fields,
       },
       getShapeType: function ()
       {
-         return 1;
+         return this .numTexCoords ? 2 : 1;
       },
       set_bbox__: function ()
       {
