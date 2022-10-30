@@ -1,4 +1,4 @@
-#if defined (X3D_SHADOWS)
+#if defined (X3D_FRAGMENT_SHADER) && defined (X3D_SHADOWS)
 
 #pragma X3D include "Pack.glsl"
 

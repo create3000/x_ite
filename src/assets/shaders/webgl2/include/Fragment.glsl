@@ -59,15 +59,17 @@ getMaterialColor ();
 vec4
 getFinalColor ()
 {
-   #if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_0D)
+   #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
       setTexCoords ();
 
       #if ! defined (X3D_TEXTURE) && ! defined (X3D_MATERIAL_TEXTURES)
          return getPointColor (getMaterialColor ());
+      #else
+         return getMaterialColor ();
       #endif
+   #else
+      return getMaterialColor ();
    #endif
-
-   return getMaterialColor ();
 }
 
 void
