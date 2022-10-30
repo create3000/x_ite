@@ -89,7 +89,7 @@ function (ViewVolume,
 
       // Create depth buffer.
 
-      if (gl .CAN_DEPTH_TEXTURE)
+      if (gl .HAS_FEATURE_DEPTH_TEXTURE)
       {
          this .depthTexture = gl .createTexture ();
 
@@ -222,7 +222,7 @@ function (ViewVolume,
          gl .deleteFramebuffer (this .buffer);
          gl .deleteTexture (this .colorTexture);
 
-         if (gl .CAN_DEPTH_TEXTURE)
+         if (gl .HAS_FEATURE_DEPTH_TEXTURE)
             gl .deleteTexture (this .depthTexture);
          else
             gl .deleteRenderbuffer (this .depthBuffer);

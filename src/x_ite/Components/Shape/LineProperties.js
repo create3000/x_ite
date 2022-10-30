@@ -117,9 +117,9 @@ function (Fields,
       {
          return this .linewidthScaleFactor;
       },
-      getMustTransformLines: function ()
+      getTransformLines: function ()
       {
-         return this .mustTransformLines;
+         return this .transformLines;
       },
       set_applied__: function ()
       {
@@ -141,7 +141,7 @@ function (Fields,
             gl      = browser .getContext ();
 
          this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ());
-         this .mustTransformLines   = gl .MUST_TRANSFORM_LINES && this .linewidthScaleFactor > 1;
+         this .transformLines       = gl .HAS_FEATURE_TRANSFORMED_LINES && this .linewidthScaleFactor > 1;
       },
       setShaderUniforms: function (gl, shaderObject)
       {

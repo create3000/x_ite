@@ -159,18 +159,18 @@ function (DEBUG)
 
          if (aliasedLineWidthRange [0] === 1 && aliasedLineWidthRange [1] === 1)
          {
-            gl .lineWidth            = Function .prototype;
-            gl .MUST_TRANSFORM_LINES = gl .getVersion () >= 2;
+            gl .lineWidth                     = Function .prototype;
+            gl .HAS_FEATURE_TRANSFORMED_LINES = gl .getVersion () >= 2;
 
             if (DEBUG)
                console .info ("Lines are transformed if necessary to obtain thick lines.");
          }
          else
          {
-            gl .MUST_TRANSFORM_LINES = false;
+            gl .HAS_FEATURE_TRANSFORMED_LINES = false;
          }
 
-         gl .CAN_DEPTH_TEXTURE = gl .getVersion () >= 2 || !! gl .getExtension ("WEBGL_depth_texture");
+         gl .HAS_FEATURE_DEPTH_TEXTURE = gl .getVersion () >= 2 || !! gl .getExtension ("WEBGL_depth_texture");
 
          // Load extensions.
 

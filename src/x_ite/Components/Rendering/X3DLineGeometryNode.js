@@ -293,7 +293,7 @@ function (X3DGeometryNode,
                if (linePropertiesNode .getApplied () && linePropertiesNode .getLinetype () !== 1)
                   this .updateLengthSoFar (gl, renderContext);
 
-               if (linePropertiesNode .getMustTransformLines ())
+               if (linePropertiesNode .getTransformLines ())
                {
                   const transformShaderNode = browser .getLineTransformShader ();
 

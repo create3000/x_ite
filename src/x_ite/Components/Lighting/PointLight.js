@@ -222,7 +222,7 @@ function (Fields,
             {
                gl .activeTexture (gl .TEXTURE0 + textureUnit);
 
-               if (gl .CAN_DEPTH_TEXTURE)
+               if (gl .HAS_FEATURE_DEPTH_TEXTURE)
                   gl .bindTexture (gl .TEXTURE_2D, shadowBuffer .getDepthTexture ());
                else
                   gl .bindTexture (gl .TEXTURE_2D, shadowBuffer .getColorTexture ());
