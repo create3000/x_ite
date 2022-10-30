@@ -128,6 +128,7 @@ function (Fields,
       this .shadowMatrixArray             = new Float32Array (16);
       this .rotation                      = new Rotation4 ();
       this .rotationMatrix                = new Matrix4 ();
+      this .textureUnit                   = undefined;
    }
 
    PointLightContainer .prototype =
@@ -216,7 +217,11 @@ function (Fields,
 
          if (this .shadowBuffer)
          {
-            const textureUnit = this. browser .getTexture2DUnit ();
+            const textureUnit = this .lightNode .getGlobal ()
+               ? (this .textureUnit = this .textureUnit !== undefined
+                  ? this .textureUnit
+                  : this .browser .popTexture2DUnit ())
+               : this .browser .getTexture2DUnit ();
 
             if (textureUnit !== undefined)
             {
@@ -267,13 +272,12 @@ function (Fields,
       dispose: function ()
       {
          this .browser .pushShadowBuffer (this .shadowBuffer);
+         this .browser .pushTexture2DUnit (this .textureUnit);
 
          this .modelViewMatrix .clear ();
 
-         this .browser      = null;
-         this .lightNode    = null;
-         this .groupNode    = null;
          this .shadowBuffer = null;
+         this .textureUnit  = undefined;
 
          // Return container
 

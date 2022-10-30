@@ -110,6 +110,7 @@ function (Fields,
       this .rotation                      = new Rotation4 ();
       this .lightBBoxMin                  = new Vector3 (0, 0, 0);
       this .lightBBoxMax                  = new Vector3 (0, 0, 0);
+      this .textureUnit                   = undefined;
    }
 
    SpotLightContainer .prototype =
@@ -204,7 +205,11 @@ function (Fields,
 
          if (this .shadowBuffer)
          {
-            const textureUnit = this .browser .getTexture2DUnit ();
+            const textureUnit = this .lightNode .getGlobal ()
+               ? (this .textureUnit = this .textureUnit !== undefined
+                  ? this .textureUnit
+                  : this .browser .popTexture2DUnit ())
+               : this .browser .getTexture2DUnit ();
 
             if (textureUnit !== undefined)
             {
@@ -259,13 +264,12 @@ function (Fields,
       dispose: function ()
       {
          this .browser .pushShadowBuffer (this .shadowBuffer);
+         this .browser .pushTexture2DUnit (this .textureUnit);
 
          this .modelViewMatrix .clear ();
 
-         this .browser      = null;
-         this .lightNode    = null;
-         this .groupNode    = null;
          this .shadowBuffer = null;
+         this .textureUnit  = undefined;
 
          // Return container
 
