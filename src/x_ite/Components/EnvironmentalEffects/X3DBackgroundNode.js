@@ -99,8 +99,8 @@ function (X3DBindableNode,
       this .colors                = [ ];
       this .sphere                = [ ];
       this .textureBits           = new BitSet ();
-      this .sphereContext         = { geometryType: 3, colorMaterial: true,  hasNormals: false };
-      this .texturesContext       = { geometryType: 3, colorMaterial: false, hasNormals: false };
+      this .sphereContext         = { geometryType: 3, colorMaterial: true };
+      this .texturesContext       = { geometryType: 3 };
 
       X3DGeometryNode .prototype .updateGeometryKey .call (this .sphereContext);
       X3DGeometryNode .prototype .updateGeometryKey .call (this .texturesContext);

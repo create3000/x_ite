@@ -107,7 +107,7 @@ function ($,
       this .event             = null;
       this .lookAround        = false;
       this .orientationChaser = new OrientationChaser (executionContext);
-      this .geometryContext   = { geometryType: 1, colorMaterial: false, hasNormals: false };
+      this .geometryContext   = { geometryType: 1 };
 
       X3DGeometryNode .prototype .updateGeometryKey .call (this .geometryContext);
    }

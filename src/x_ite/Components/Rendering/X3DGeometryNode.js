@@ -959,9 +959,9 @@ function (Fields,
       {
          this .geometryKey  = "";
          this .geometryKey += this .geometryType;
-         this .geometryKey += this .hasFogCoords ? 1 : 0;
-         this .geometryKey += this .colorMaterial ? 1 : 0;
-         this .geometryKey += this .hasNormals ? 1 : 0;
+         this .geometryKey += this .hasFogCoords  ? "1" : "0";
+         this .geometryKey += this .colorMaterial ? "1" : "0";
+         this .geometryKey += this .hasNormals    ? "1" : "0";
       },
       updateRenderFunctions: function ()
       {
