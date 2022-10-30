@@ -49,6 +49,8 @@
 
 define (function ()
 {
+"use strict";
+
    return function (/* __global__, __text__ */)
    {
       return Function (/* js */ `with (arguments [0]) { ${arguments [1]} }`) (arguments [0]);
