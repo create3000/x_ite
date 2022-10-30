@@ -394,13 +394,14 @@ function (TextureBuffer,
             ///  Returns the depth value to the closest object.  The maximum determinable value is avatarHeight * 2.
 
             this .depthBuffer .bind ();
-
             this .viewVolumes .push (depthBufferViewVolume);
-            this .depth (this .collisionShapes, this .numCollisionShapes);
+
+            if (this .depth (this .collisionShapes, this .numCollisionShapes))
+               var depth = this .depthBuffer .getDepth (projectionMatrix, depthBufferViewport);
+            else
+               var depth = 0;
+
             this .viewVolumes .pop ();
-
-            const depth = this .depthBuffer .getDepth (projectionMatrix, depthBufferViewport);
-
             this .depthBuffer .unbind ();
 
             return depth;
@@ -720,7 +721,7 @@ function (TextureBuffer,
 
                this .getProjectionMatrix () .pop ();
 
-               // Gravite or step up
+               // Gravite or step up.
 
                distance -= avatarHeight;
 
@@ -788,10 +789,10 @@ function (TextureBuffer,
                shaderNode         = browser .getDepthShader (),
                particleShaderNode = browser .getParticleDepthShader && browser .getParticleDepthShader ();
 
-            // Configure depth shader.
-
             if (shaderNode .isValid () && (! particleShaderNode || particleShaderNode .isValid ()))
             {
+               // Configure depth shaders.
+
                projectionMatrixArray .set (this .getProjectionMatrix () .get ());
 
                if (particleShaderNode)
@@ -840,6 +841,12 @@ function (TextureBuffer,
 
                   depthContext .shapeNode .depth (gl, depthContext, shaderNode, particleShaderNode);
                }
+
+               return true;
+            }
+            else
+            {
+               return false;
             }
          };
       })(),
