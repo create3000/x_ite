@@ -133,12 +133,12 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
 {
    vec4 texCoord;
 
-   #if X3D_NUM_TEXTURES > 0
+   #if X3D_NUM_TEXTURE_COORDINATES > 0
    if (textureCoordinateMapping == 0)
       texCoord = getTexCoord (x3d_TextureCoordinateGenerator [0], textureTransformMapping, textureCoordinateMapping);
    #endif
 
-   #if X3D_NUM_TEXTURES > 1
+   #if X3D_NUM_TEXTURE_COORDINATES > 1
    else if (textureCoordinateMapping == 1)
       texCoord = getTexCoord (x3d_TextureCoordinateGenerator [1], textureTransformMapping, textureCoordinateMapping);
    #endif

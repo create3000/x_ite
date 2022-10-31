@@ -8,11 +8,11 @@ setTexCoords ()
 {
    vec4 texCoord = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
 
-   #if X3D_NUM_TEXTURES > 0
+   #if X3D_NUM_TEXTURE_COORDINATES > 0
       texCoord0 = texCoord;
    #endif
 
-   #if X3D_NUM_TEXTURES > 1
+   #if X3D_NUM_TEXTURE_COORDINATES > 1
       texCoord1 = texCoord;
    #endif
 }
