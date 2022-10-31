@@ -1045,7 +1045,7 @@ function (Fields,
                   if (blendModeNode)
                      blendModeNode .disable (gl);
 
-                  delete renderContext .geometryContext;
+                  renderContext .geometryContext = null;
                }
 
                break;
