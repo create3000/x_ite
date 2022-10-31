@@ -231,19 +231,13 @@ function (Fields,
          this .linePropertiesNode = X3DCast (X3DConstants .LineProperties, this ._lineProperties);
 
          if (this .linePropertiesNode)
-         {
             this .linePropertiesNode ._applied .addInterest ("set_applied__", this);
 
-            this .set_applied__ ();
-         }
-         else
-         {
-            this .stylePropertiesNode [1] = null;
-         }
+         this .set_applied__ ();
       },
       set_applied__: function ()
       {
-         if (this .linePropertiesNode ._applied .getValue ())
+         if (this .linePropertiesNode && this .linePropertiesNode ._applied .getValue ())
             this .stylePropertiesNode [1] = this .linePropertiesNode;
          else
             this .stylePropertiesNode [1] = null;
