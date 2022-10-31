@@ -287,14 +287,14 @@ function (Fields,
       })(),
       setShaderUniformsToChannel: (function ()
       {
-         const Zero = new Float32Array (16); // Trick: zero model view matrix to hide object.
+         const zeros = new Float32Array (16); // Trick: zero model view matrix to hide object.
 
          return function (gl, shaderObject, renderObject, channel)
          {
             X3DEnvironmentTextureNode .prototype .setShaderUniformsToChannel .call (this, gl, shaderObject, renderObject, channel);
 
             if (renderObject === this .renderer)
-               gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, Zero);
+               gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
          };
       })(),
    });
