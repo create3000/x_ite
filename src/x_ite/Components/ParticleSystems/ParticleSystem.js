@@ -137,7 +137,7 @@ function (Fields,
       this .colorRamp                = new Float32Array ();
       this .texCoordRamp             = new Float32Array ();
       this .geometryContext          = new GeometryContext ();
-      this .creationTime             = Number .NEGATIVE_INFINITY;
+      this .creationTime             = 0;
       this .pauseTime                = 0;
       this .deltaTime                = 0;
       this .particleStride           = Float32Array .BYTES_PER_ELEMENT * 7 * 4; // 7 x vec4
