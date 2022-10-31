@@ -427,9 +427,9 @@ function (X3DGeometryNode,
 
                      if (blendModeNode)
                         blendModeNode .disable (gl);
-                  }
 
-                  return;
+                     return;
+                  }
                }
             }
 

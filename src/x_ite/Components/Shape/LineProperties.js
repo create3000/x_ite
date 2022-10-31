@@ -101,9 +101,6 @@ function (Fields,
          this .set_applied__ ();
          this .set_linetype__ ();
          this .set_linewidthScaleFactor__ ();
-
-         if (this .mustTransformLines)
-            this .getBrowser () .getLineTransformShader ();
       },
       getApplied: function ()
       {
