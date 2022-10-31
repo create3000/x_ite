@@ -57,7 +57,10 @@ in vec4 x3d_Vertex;
    uniform mat3 x3d_NormalMatrix;
    in  vec3 x3d_Normal;
    out vec3 normal;
-   out vec3 localNormal;
+
+   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+      out vec3 localNormal;
+   #endif
 #endif
 
 #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
@@ -115,8 +118,11 @@ vertex_main ()
    #endif
 
    #if defined (X3D_NORMALS)
-      normal      = x3d_NormalMatrix * x3d_Normal;
-      localNormal = x3d_Normal;
+      normal = x3d_NormalMatrix * x3d_Normal;
+
+      #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+         localNormal = x3d_Normal;
+      #endif
    #endif
 
    vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);

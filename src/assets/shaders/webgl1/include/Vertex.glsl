@@ -53,7 +53,10 @@ attribute vec4 x3d_Vertex;
    uniform mat3 x3d_NormalMatrix;
    attribute vec3 x3d_Normal;
    varying vec3 normal;
-   varying vec3 localNormal;
+
+   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+      varying vec3 localNormal;
+   #endif
 #endif
 
 varying vec3 vertex;
@@ -99,7 +102,10 @@ vertex_main ()
 
    #if defined (X3D_NORMALS)
       normal      = x3d_NormalMatrix * x3d_Normal;
-      localNormal = x3d_Normal;
+
+      #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+         localNormal = x3d_Normal;
+      #endif
    #endif
 
    vec4 position = x3d_ModelViewMatrix * x3d_Vertex;

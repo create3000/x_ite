@@ -32,10 +32,16 @@ uniform float x3d_AlphaCutoff;
 
 #if defined (X3D_NORMALS)
    in vec3 normal;
-   in vec3 localNormal;
+
+   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+      in vec3 localNormal;
+   #endif
 #else
-   const vec3 normal      = vec3 (0.0, 0.0, 1.0);
-   const vec3 localNormal = vec3 (0.0, 0.0, 1.0);
+   const vec3 normal = vec3 (0.0, 0.0, 1.0);
+
+   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+      const vec3 localNormal = vec3 (0.0, 0.0, 1.0);
+   #endif
 #endif
 
 in vec3 vertex;
