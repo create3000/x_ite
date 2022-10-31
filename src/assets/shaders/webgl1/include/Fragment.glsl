@@ -1,3 +1,7 @@
+#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
+   #extension GL_EXT_frag_depth : enable
+#endif
+
 uniform float x3d_AlphaCutoff;
 
 #if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
@@ -102,8 +106,8 @@ fragment_main ()
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
       //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
       if (x3d_LogarithmicFarFactor1_2 > 0.0)
-         gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+         gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
       else
-         gl_FragDepth = gl_FragCoord .z;
+         gl_FragDepthEXT = gl_FragCoord .z;
    #endif
 }

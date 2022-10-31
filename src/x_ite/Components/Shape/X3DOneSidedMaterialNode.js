@@ -156,8 +156,6 @@ function (Fields,
 
          if (+this .getTextureBits ())
          {
-            const appearanceNode = renderContext .appearanceNode;
-
             if (this .getEmissiveTexture ())
                options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
 

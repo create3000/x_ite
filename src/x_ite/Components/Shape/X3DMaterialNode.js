@@ -172,6 +172,9 @@ function (Fields,
          {
             const options = [ ];
 
+            if (this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer"))
+               options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
+
             options .push (geometryTypes [geometryContext .geometryType]);
 
             if (geometryContext .hasFogCoords)

@@ -99,6 +99,8 @@ function (Types,
          if (! match)
             return source;
 
+         // Constants
+
          let constants = "";
 
          constants += "#define X_ITE\n";
@@ -106,14 +108,13 @@ function (Types,
          if (gl .HAS_FEATURE_DEPTH_TEXTURE)
             constants += "#define X3D_DEPTH_TEXTURE\n";
 
-         if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
-            constants += "#define X3D_LOGARITHMIC_DEPTH_BUFFER\n";
-
          if (browser .getProjectiveTextureMapping ())
             constants += "#define X3D_PROJECTIVE_TEXTURE_MAPPING\n";
 
          for (const option of options)
             constants += "#define " + option + "\n";
+
+         // Definitions
 
          let definitions = "";
 
