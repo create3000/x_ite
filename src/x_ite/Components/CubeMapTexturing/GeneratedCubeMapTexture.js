@@ -120,21 +120,29 @@ function (Fields,
       {
          X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
+         this ._size .addInterest ("set_size__", this);
+
          this .renderer .setup ();
+
+         this .set_size__ ();
+      },
+      set_size__: function ()
+      {
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
 
          // Transfer 6 textures of size x size pixels.
 
-         let size = Algorithm .nextPowerOfTwo (this ._size .getValue ());
+         const size = gl .getVersion () >= 2
+            ? this ._size .getValue ()
+            : Algorithm .nextPowerOfTwo (this ._size .getValue ());
 
          if (size > 0)
          {
-            size = Algorithm .nextPowerOfTwo (size);
-
             // Upload default data.
 
-            const
-               gl          = this .getBrowser () .getContext (),
-               defaultData = new Uint8Array (size * size * 4);
+            const defaultData = new Uint8Array (size * size * 4);
 
             gl .bindTexture (this .getTarget (), this .getTexture ());
 
@@ -146,6 +154,10 @@ function (Fields,
             this .viewport    = new Vector4 (0, 0, size, size);
             this .frameBuffer = new TextureBuffer (this .getBrowser (), size, size);
          }
+         else
+         {
+            this .frameBuffer = null;
+         }
       },
       traverse: function (type, renderObject)
       {
@@ -154,13 +166,10 @@ function (Fields,
          if (this ._update .getValue () === "NONE")
             return;
 
-         if (!this .frameBuffer)
+         if (! renderObject .isIndependent ())
             return;
 
-         //if (this .getBrowser () !== this .getBrowser ())
-         //	return; // Could be interesting for four-side-view
-
-         if (!renderObject .isIndependent ())
+         if (! this .frameBuffer)
             return;
 
          renderObject .getGeneratedCubeMapTextures () .push (this);
