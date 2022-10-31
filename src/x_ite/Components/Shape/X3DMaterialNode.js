@@ -203,8 +203,7 @@ function (Fields,
                }
                else if (renderContext .textureNode)
                {
-                  options .push ("X3D_TEXTURE");
-                  options .push ("X3D_NUM_TEXTURES " + 1);
+                  options .push ("X3D_TEXTURE", "X3D_NUM_TEXTURES 1");
                }
 
                switch (renderContext .shapeNode .getShapeKey ())
@@ -221,7 +220,7 @@ function (Fields,
             {
                if (geometryContext .textureNode)
                {
-                  options .push ("X3D_TEXTURE");
+                  options .push ("X3D_TEXTURE", "X3D_NUM_TEXTURES 1");
                }
             }
 
