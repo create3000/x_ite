@@ -190,11 +190,11 @@ function (Fields,
          for (const object of this [_loadingObjects])
             displayValue += ! object .internalShader;
 
-         if (displayValue)
+         if (value || this [_loading])
          {
-            var string = (displayValue == 1 ? _ ("Loading %1 file") : _ ("Loading %1 files")) .replace ("%1", displayValue);
+            var string = (displayValue == 1 ? _ ("Loading %1 file") : _ ("Loading %1 files")) .replace ("%1", displayValue || 1);
          }
-         else if (value === 0)
+         else
          {
             var string = _("Loading done");
             this .setCursor ("DEFAULT");
