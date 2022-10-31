@@ -9,7 +9,7 @@ uniform mat4 x3d_ModelViewMatrix;
    in vec3 x3d_LineStipple;
 #endif
 
-#if defined (X3D_FOG_COORDS)
+#if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
    in float x3d_FogDepth;
 #endif
 
@@ -33,10 +33,8 @@ in vec4 x3d_Vertex;
 
 // Varyings
 
-#if defined (X3D_FOG)
-   #if defined (X3D_FOG_COORDS)
-      out float fogDepth;
-   #endif
+#if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
+   out float fogDepth;
 #endif
 
 #if defined (X3D_COLOR_MATERIAL)
@@ -93,10 +91,8 @@ vertex_main ()
       midPoint    = x3d_LineStipple .xy;
    #endif
 
-   #if defined (X3D_FOG)
-      #if defined (X3D_FOG_COORDS)
-         fogDepth = x3d_FogDepth;
-      #endif
+   #if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
+      fogDepth = x3d_FogDepth;
    #endif
 
    #if defined (X3D_COLOR_MATERIAL)
