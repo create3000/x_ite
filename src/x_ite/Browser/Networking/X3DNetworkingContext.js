@@ -169,7 +169,7 @@ function (Fields,
 
          this [_loadingObjects] .add (object);
 
-         this .updateLoadCount ();
+         this .setLoadCount (this [_loadingObjects] .size);
          this .setCursor ("DEFAULT");
       },
       removeLoadCount: function (object)
@@ -179,22 +179,22 @@ function (Fields,
 
          this [_loadingObjects] .delete (object);
 
-         this .updateLoadCount ();
+         this .setLoadCount (this [_loadingObjects] .size);
       },
-      updateLoadCount: function ()
+      setLoadCount: function (value)
       {
-         this ._loadCount = this [_loadingObjects] .size;
+         this ._loadCount = value;
 
          let displayValue = 0;
 
          for (const object of this [_loadingObjects])
             displayValue += ! object .internalShader;
 
-          if (displayValue)
+         if (displayValue)
          {
             var string = (displayValue == 1 ? _ ("Loading %1 file") : _ ("Loading %1 files")) .replace ("%1", displayValue);
          }
-         else
+         else if (value === 0)
          {
             var string = _("Loading done");
             this .setCursor ("DEFAULT");
@@ -204,7 +204,8 @@ function (Fields,
             this .getNotification () ._string = string;
 
          this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
-         this .getSplashScreen () .find (".x_ite-private-progressbar div") .css ("width", ((this [_loadingTotal] - displayValue) * 100 / this [_loadingTotal]) + "%");
+         this .getSplashScreen () .find (".x_ite-private-progressbar div")
+            .css ("width", (100 - 100 * value / this [_loadingTotal]) + "%");
       },
       resetLoadCount: function ()
       {
