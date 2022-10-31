@@ -6,22 +6,26 @@
 vec4
 getTexCoord (const in int i)
 {
-   switch (i)
-   {
-      #if X3D_NUM_TEXTURES > 0
-      case 0:
-         return texCoord0;
-      #endif
-      #if X3D_NUM_TEXTURES > 1
-      case 1:
-         return texCoord1;
-      #endif
-      default:
-         return vec4 (0.0);
-   }
+   #if defined (X3D_MULTI_TEXTURING)
+      switch (i)
+      {
+         #if X3D_NUM_TEXTURE_COORDINATES > 0
+         case 0:
+            return texCoord0;
+         #endif
+         #if X3D_NUM_TEXTURE_COORDINATES > 1
+         case 1:
+            return texCoord1;
+         #endif
+         default:
+            return vec4 (0.0);
+      }
+   #else
+      return texCoord0;
+   #endif
 }
 
-uniform mat4 x3d_TextureMatrix [X3D_NUM_TEXTURES];
+uniform mat4 x3d_TextureMatrix [X3D_NUM_TEXTURE_TRANSFORMS];
 
 vec4
 getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int textureTransformMapping, const in int textureCoordinateMapping)
@@ -106,7 +110,7 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
    }
 }
 
-uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [X3D_NUM_TEXTURES];
+uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [X3D_NUM_TEXTURE_COORDINATES];
 
 vec3
 getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
@@ -135,55 +139,67 @@ uniform samplerCube x3d_TextureCube [X3D_NUM_TEXTURES];
 vec4
 getTexture2D (const in int i, const in vec2 texCoord)
 {
-   switch (i)
-   {
-      #if X3D_NUM_TEXTURES > 0
-      case 0:
-         return texture (x3d_Texture2D [0], texCoord);
-      #endif
-      #if X3D_NUM_TEXTURES > 1
-      case 1:
-         return texture (x3d_Texture2D [1], texCoord);
-      #endif
-      default:
-         return vec4 (0.0);
-   }
+   #if defined (X3D_MULTI_TEXTURING)
+      switch (i)
+      {
+         #if X3D_NUM_TEXTURES > 0
+         case 0:
+            return texture (x3d_Texture2D [0], texCoord);
+         #endif
+         #if X3D_NUM_TEXTURES > 1
+         case 1:
+            return texture (x3d_Texture2D [1], texCoord);
+         #endif
+         default:
+            return vec4 (0.0);
+      }
+   #else
+      return texture (x3d_Texture2D [0], texCoord);
+   #endif
 }
 
 vec4
 getTexture3D (const in int i, const in vec3 texCoord)
 {
-   switch (i)
-   {
-      #if X3D_NUM_TEXTURES > 0
-      case 0:
-         return texture (x3d_Texture3D [0], texCoord);
-      #endif
-      #if X3D_NUM_TEXTURES > 1
-      case 1:
-         return texture (x3d_Texture3D [1], texCoord);
-      #endif
-      default:
-         return vec4 (0.0);
-   }
+   #if defined (X3D_MULTI_TEXTURING)
+      switch (i)
+      {
+         #if X3D_NUM_TEXTURES > 0
+         case 0:
+            return texture (x3d_Texture3D [0], texCoord);
+         #endif
+         #if X3D_NUM_TEXTURES > 1
+         case 1:
+            return texture (x3d_Texture3D [1], texCoord);
+         #endif
+         default:
+            return vec4 (0.0);
+      }
+   #else
+      return texture (x3d_Texture3D [0], texCoord);
+   #endif
 }
 
 vec4
 getTextureCube (const in int i, const in vec3 texCoord)
 {
-   switch (i)
-   {
-      #if X3D_NUM_TEXTURES > 0
-      case 0:
-         return texture (x3d_TextureCube [0], texCoord);
-      #endif
-      #if X3D_NUM_TEXTURES > 1
-      case 1:
-         return texture (x3d_TextureCube [1], texCoord);
-      #endif
-      default:
-         return vec4 (0.0);
-   }
+   #if defined (X3D_MULTI_TEXTURING)
+      switch (i)
+      {
+         #if X3D_NUM_TEXTURES > 0
+         case 0:
+            return texture (x3d_TextureCube [0], texCoord);
+         #endif
+         #if X3D_NUM_TEXTURES > 1
+         case 1:
+            return texture (x3d_TextureCube [1], texCoord);
+         #endif
+         default:
+            return vec4 (0.0);
+      }
+   #else
+      return texture (x3d_TextureCube [0], texCoord);
+   #endif
 }
 
 #if defined (X3D_MULTI_TEXTURING)

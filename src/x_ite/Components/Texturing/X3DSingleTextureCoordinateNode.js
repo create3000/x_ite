@@ -76,6 +76,10 @@ function (X3DTextureCoordinateNode,
 
          multiArray .push (this .texCoordArray);
       },
+      getCount: function ()
+      {
+         return 1;
+      },
       addTexCoord: function (index, multiArray)
       {
          this .addTexCoordToChannel (index, multiArray [0]);

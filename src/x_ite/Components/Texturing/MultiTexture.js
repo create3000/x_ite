@@ -131,7 +131,7 @@ function (Fields,
 
          this ._loadState = X3DConstants .COMPLETE_STATE;
       },
-      getNumTextures: function ()
+      getCount: function ()
       {
          return Math .min (this .getBrowser () .getMaxTextures (), this .textureNodes .length);
       },

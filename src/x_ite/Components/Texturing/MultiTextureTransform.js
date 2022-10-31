@@ -114,6 +114,10 @@ function (Fields,
                textureTransformNodes .push (textureTransformNode);
          }
       },
+      getCount: function ()
+      {
+         return Math .min (this .getBrowser () .getMaxTextures (), this .textureTransformNodes .length);
+      },
       getTextureMapping: function (textureTransformMapping)
       {
          const

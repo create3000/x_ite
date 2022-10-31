@@ -66,6 +66,10 @@ function (X3DTextureTransformNode,
    X3DSingleTextureTransformNode .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
    {
       constructor: X3DSingleTextureTransformNode,
+      getCount: function ()
+      {
+         return 1;
+      },
       getTextureMapping: function (textureTransformMapping, channel = 0)
       {
          if (this ._mapping .getValue ())

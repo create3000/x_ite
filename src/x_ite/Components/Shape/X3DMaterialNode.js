@@ -129,15 +129,15 @@ function (Fields,
             key += ".";
             key += renderContext .textureNode ? "1" : appearanceNode .getTextureBits () .toString (4);
             key += ".";
+            key += appearanceNode .getTextureTransformMapping () .size || 1;
+            key += geometryContext .textureCoordinateMapping .size || 1;
             key += this .getMaterialKey (renderContext .shadows);
          }
          else
          {
-            key += ".";
-            key += "0000";
-            key += ".";
+            key += ".0000.";
             key += geometryContext .textureNode ? "1" : "0";
-            key += ".";
+            key += ".11";
             key += this .getMaterialKey (false);
          }
 
@@ -196,19 +196,29 @@ function (Fields,
                if (appearanceNode .getStyleProperties (geometryContext .geometryType))
                   options .push ("X3D_STYLE_PROPERTIES");
 
-               if (+appearanceNode .getTextureBits ())
+               if (! +this .textureBits)
                {
-                  const textureNode = appearanceNode .getTexture ();
+                  if (renderContext .textureNode)
+                  {
+                     // ScreenText
 
-                  options .push ("X3D_TEXTURE");
-                  options .push ("X3D_NUM_TEXTURES " + textureNode .getNumTextures ());
+                     options .push ("X3D_TEXTURE",
+                                    "X3D_NUM_TEXTURES 1",
+                                    "X3D_NUM_TEXTURE_TRANSFORMS 1",
+                                    "X3D_NUM_TEXTURE_COORDINATES 1");
+                  }
+                  else if (+appearanceNode .getTextureBits ())
+                  {
+                     const textureNode = appearanceNode .getTexture ();
 
-                  if (textureNode .getType () .includes (X3DConstants .MultiTexture))
-                     options .push ("X3D_MULTI_TEXTURING");
-               }
-               else if (renderContext .textureNode)
-               {
-                  options .push ("X3D_TEXTURE", "X3D_NUM_TEXTURES 1");
+                     options .push ("X3D_TEXTURE");
+                     options .push ("X3D_NUM_TEXTURES "            + textureNode .getCount ());
+                     options .push ("X3D_NUM_TEXTURE_TRANSFORMS "  + textureNode .getCount ());
+                     options .push ("X3D_NUM_TEXTURE_COORDINATES " + textureNode .getCount ());
+
+                     if (textureNode .getType () .includes (X3DConstants .MultiTexture))
+                        options .push ("X3D_MULTI_TEXTURING");
+                  }
                }
 
                switch (renderContext .shapeNode .getShapeKey ())
@@ -225,7 +235,12 @@ function (Fields,
             {
                if (geometryContext .textureNode)
                {
-                  options .push ("X3D_TEXTURE", "X3D_NUM_TEXTURES 1");
+                  // TextureBackground
+
+                  options .push ("X3D_TEXTURE",
+                                 "X3D_NUM_TEXTURES 1",
+                                 "X3D_NUM_TEXTURE_TRANSFORMS 1",
+                                 "X3D_NUM_TEXTURE_COORDINATES 1");
                }
             }
 

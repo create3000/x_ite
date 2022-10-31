@@ -156,6 +156,8 @@ function (Fields,
 
          if (+this .getTextureBits ())
          {
+            const appearanceNode = renderContext .appearanceNode;
+
             options .push ("X3D_MATERIAL_TEXTURES");
 
             if (this .getEmissiveTexture ())
@@ -163,6 +165,9 @@ function (Fields,
 
             if (this .getNormalTexture ())
                options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+
+            options .push ("X3D_NUM_TEXTURE_TRANSFORMS " + (appearanceNode .getTextureTransformMapping () .size || 1));
+            options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .textureCoordinateMapping .size || 1));
          }
 
          return options;

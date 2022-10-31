@@ -120,6 +120,10 @@ function (Fields,
          for (const textureCoordinateNode of textureCoordinateNodes)
             textureCoordinateNode .addInterest ("addNodeEvent", this);
       },
+      getCount: function ()
+      {
+         return Math .min (this .getBrowser () .getMaxTextures (), this .textureCoordinateNodes .length);
+      },
       isEmpty: function ()
       {
          return true;

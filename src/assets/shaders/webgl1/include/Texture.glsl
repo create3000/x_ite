@@ -2,42 +2,50 @@
 
 #pragma X3D include "Perlin.glsl"
 
-uniform mat4 x3d_TextureMatrix [X3D_NUM_TEXTURES];
+uniform mat4 x3d_TextureMatrix [X3D_NUM_TEXTURE_TRANSFORMS];
 
 mat4
 getTextureMatrix (const in int i)
 {
-   mat4 textureMatrix = mat4 (0.0);
+   #if defined (X3D_MULTI_TEXTURING)
+      mat4 textureMatrix = mat4 (0.0);
 
-   #if X3D_NUM_TEXTURES > 0
-   if (i == 0)
-      textureMatrix = x3d_TextureMatrix [0];
+      #if X3D_NUM_TEXTURE_TRANSFORMS > 0
+      if (i == 0)
+         textureMatrix = x3d_TextureMatrix [0];
+      #endif
+
+      #if X3D_NUM_TEXTURE_TRANSFORMS > 1
+      else if (i == 1)
+         textureMatrix = x3d_TextureMatrix [1];
+      #endif
+
+      return textureMatrix;
+   #else
+      return x3d_TextureMatrix [0];
    #endif
-
-   #if X3D_NUM_TEXTURES > 1
-   else if (i == 1)
-      textureMatrix = x3d_TextureMatrix [1];
-   #endif
-
-   return textureMatrix;
 }
 
 vec4
 getTexCoord (const in int i)
 {
-   vec4 texCoord = vec4 (0.0);
+   #if defined (X3D_MULTI_TEXTURING)
+      vec4 texCoord = vec4 (0.0);
 
-   #if X3D_NUM_TEXTURES > 0
-   if (i == 0)
-      texCoord = texCoord0;
+      #if X3D_NUM_TEXTURE_COORDINATES > 0
+      if (i == 0)
+         texCoord = texCoord0;
+      #endif
+
+      #if X3D_NUM_TEXTURE_COORDINATES > 1
+      else if (i == 1)
+         texCoord = texCoord1;
+      #endif
+
+      return texCoord;
+   #else
+      return texCoord0;
    #endif
-
-   #if X3D_NUM_TEXTURES > 1
-   else if (i == 1)
-      texCoord = texCoord1;
-   #endif
-
-   return texCoord;
 }
 
 vec4
@@ -118,7 +126,7 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
    return getTextureMatrix (textureTransformMapping) * getTexCoord (textureCoordinateMapping);
 }
 
-uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [X3D_NUM_TEXTURES];
+uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [X3D_NUM_TEXTURE_COORDINATES];
 
 vec3
 getTexCoord (const in int textureTransformMapping, const in int textureCoordinateMapping)
@@ -156,37 +164,45 @@ uniform samplerCube x3d_TextureCube [X3D_NUM_TEXTURES];
 vec4
 getTexture2D (const in int i, const in vec2 texCoord)
 {
-   vec4 color = vec4 (0.0);
+   #if defined (X3D_MULTI_TEXTURING)
+      vec4 color = vec4 (0.0);
 
-   #if X3D_NUM_TEXTURES > 0
-   if (i == 0)
-      color = texture2D (x3d_Texture2D [0], texCoord);
+      #if X3D_NUM_TEXTURES > 0
+      if (i == 0)
+         color = texture2D (x3d_Texture2D [0], texCoord);
+      #endif
+
+      #if X3D_NUM_TEXTURES > 1
+      else if (i == 1)
+         color = texture2D (x3d_Texture2D [1], texCoord);
+      #endif
+
+      return color;
+   #else
+      return texture2D (x3d_Texture2D [0], texCoord);
    #endif
-
-   #if X3D_NUM_TEXTURES > 1
-   else if (i == 1)
-      color = texture2D (x3d_Texture2D [1], texCoord);
-   #endif
-
-   return color;
 }
 
 vec4
 getTextureCube (const in int i, const in vec3 texCoord)
 {
-   vec4 color = vec4 (0.0);
+   #if defined (X3D_MULTI_TEXTURING)
+      vec4 color = vec4 (0.0);
 
-   #if X3D_NUM_TEXTURES > 0
-   if (i == 0)
-      color = textureCube (x3d_TextureCube [0], texCoord);
+      #if X3D_NUM_TEXTURES > 0
+      if (i == 0)
+         color = textureCube (x3d_TextureCube [0], texCoord);
+      #endif
+
+      #if X3D_NUM_TEXTURES > 1
+      else if (i == 1)
+         color = textureCube (x3d_TextureCube [1], texCoord);
+      #endif
+
+      return color;
+   #else
+      return textureCube (x3d_TextureCube [0], texCoord);
    #endif
-
-   #if X3D_NUM_TEXTURES > 1
-   else if (i == 1)
-      color = textureCube (x3d_TextureCube [1], texCoord);
-   #endif
-
-   return color;
 }
 
 #if defined (X3D_MULTI_TEXTURING)

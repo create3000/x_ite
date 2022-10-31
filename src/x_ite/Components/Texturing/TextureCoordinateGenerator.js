@@ -148,7 +148,7 @@ function (Fields,
       },
       getTexCoord: function (array)
       {
-         return arrray;
+         return array;
       },
       setShaderUniformsToChannel: function (gl, shaderObject, channel)
       {
