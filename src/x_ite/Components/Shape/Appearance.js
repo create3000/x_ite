@@ -225,7 +225,28 @@ function (Fields,
       },
       set_lineProperties__: function ()
       {
-         this .stylePropertiesNode [1] = X3DCast (X3DConstants .LineProperties, this ._lineProperties);
+         if (this .linePropertiesNode)
+            this .linePropertiesNode ._applied .removeInterest ("set_applied__", this);
+
+         this .linePropertiesNode = X3DCast (X3DConstants .LineProperties, this ._lineProperties);
+
+         if (this .linePropertiesNode)
+         {
+            this .linePropertiesNode ._applied .addInterest ("set_applied__", this);
+
+            this .set_applied__ ();
+         }
+         else
+         {
+            this .stylePropertiesNode [1] = null;
+         }
+      },
+      set_applied__: function ()
+      {
+         if (this .linePropertiesNode ._applied .getValue ())
+            this .stylePropertiesNode [1] = this .linePropertiesNode;
+         else
+            this .stylePropertiesNode [1] = null;
       },
       set_fillProperties__: function ()
       {
