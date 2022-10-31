@@ -239,8 +239,8 @@ function (X3DGeometryNode,
          return function (gl, renderContext)
          {
             const
-               viewport         = renderContext .renderer .getViewVolume () .getViewport (),
-               projectionMatrix = renderContext .renderer .getProjectionMatrix () .get (),
+               viewport         = renderContext .renderObject .getViewVolume () .getViewport (),
+               projectionMatrix = renderContext .renderObject .getProjectionMatrix () .get (),
                lineStippleArray = this .getTexCoords () .getValue (),
                vertices         = this .getVertices (),
                numVertices      = vertices .length;
@@ -301,9 +301,9 @@ function (X3DGeometryNode,
                   if (transformShaderNode .isValid ())
                   {
                      const
-                        renderer         = renderContext .renderer,
-                        viewport         = renderer .getViewVolume () .getViewport (),
-                        projectionMatrix = renderer .getProjectionMatrix () .get (),
+                        renderObject     = renderContext .renderObject,
+                        viewport         = renderObject .getViewVolume () .getViewport (),
+                        projectionMatrix = renderObject .getProjectionMatrix () .get (),
                         primitiveMode    = browser .getPrimitiveMode (gl .TRIANGLES);
 
                      modelViewProjectionMatrixArray .set (matrix .assign (renderContext .modelViewMatrix) .multRight (projectionMatrix));

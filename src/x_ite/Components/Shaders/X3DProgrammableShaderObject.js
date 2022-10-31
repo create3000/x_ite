@@ -977,7 +977,7 @@ function (X3DCast,
          return function (gl, renderContext, front = true)
          {
             const
-               renderObject        = renderContext .renderer,
+               renderObject        = renderContext .renderObject,
                fogNode             = renderContext .fogNode,
                shapeNode           = renderContext .shapeNode,
                geometryContext     = renderContext .geometryContext || shapeNode .getGeometry (),

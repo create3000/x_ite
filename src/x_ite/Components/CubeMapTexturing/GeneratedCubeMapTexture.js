@@ -88,10 +88,10 @@ function (Fields,
 
       this .addType (X3DConstants .GeneratedCubeMapTexture);
 
-      this .renderer         = new DependentRenderer (executionContext);
-      this .projectionMatrix = new Matrix4 ();
-      this .modelMatrix      = new Matrix4 ();
-      this .viewVolume       = new ViewVolume ();
+      this .dependentRenderer = new DependentRenderer (executionContext);
+      this .projectionMatrix  = new Matrix4 ();
+      this .modelMatrix       = new Matrix4 ();
+      this .viewVolume        = new ViewVolume ();
    }
 
    GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
@@ -122,7 +122,7 @@ function (Fields,
 
          this ._size .addInterest ("set_size__", this);
 
-         this .renderer .setup ();
+         this .dependentRenderer .setup ();
 
          this .set_size__ ();
       },
@@ -204,16 +204,16 @@ function (Fields,
 
          return function (renderObject)
          {
-            this .renderer .setRenderer (renderObject);
+            this .dependentRenderer .setRenderer (renderObject);
 
             const
-               renderer           = this .renderer,
+               dependentRenderer  = this .dependentRenderer,
                browser            = this .getBrowser (),
                layer              = renderObject .getLayer (),
                gl                 = browser .getContext (),
-               background         = renderer .getBackground (),
-               navigationInfo     = renderer .getNavigationInfo (),
-               viewpoint          = renderer .getViewpoint (),
+               background         = dependentRenderer .getBackground (),
+               navigationInfo     = dependentRenderer .getNavigationInfo (),
+               viewpoint          = dependentRenderer .getViewpoint (),
                headlightContainer = browser .getHeadlight (),
                headlight          = navigationInfo ._headlight .getValue (),
                nearValue          = navigationInfo .getNearValue (),
@@ -224,8 +224,8 @@ function (Fields,
 
             this .frameBuffer .bind ();
 
-            renderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
-            renderer .getProjectionMatrix () .pushMatrix (projectionMatrix);
+            dependentRenderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
+            dependentRenderer .getProjectionMatrix () .pushMatrix (projectionMatrix);
 
             gl .bindTexture (this .getTarget (), this .getTexture ());
 
@@ -235,12 +235,12 @@ function (Fields,
 
                // Setup inverse texture space matrix.
 
-               renderer .getCameraSpaceMatrix () .pushMatrix (this .modelMatrix);
-               renderer .getCameraSpaceMatrix () .rotate (rotations [i]);
-               renderer .getCameraSpaceMatrix () .scale (scales [i]);
+               dependentRenderer .getCameraSpaceMatrix () .pushMatrix (this .modelMatrix);
+               dependentRenderer .getCameraSpaceMatrix () .rotate (rotations [i]);
+               dependentRenderer .getCameraSpaceMatrix () .scale (scales [i]);
 
-               renderer .getViewMatrix () .pushMatrix (invCameraSpaceMatrix .assign (renderer .getCameraSpaceMatrix () .get ()) .inverse ());
-               renderer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
+               dependentRenderer .getViewMatrix () .pushMatrix (invCameraSpaceMatrix .assign (dependentRenderer .getCameraSpaceMatrix () .get ()) .inverse ());
+               dependentRenderer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
 
                // Setup headlight if enabled.
 
@@ -252,16 +252,16 @@ function (Fields,
 
                // Render layer's children.
 
-               layer .traverse (TraverseType .DISPLAY, renderer);
+               layer .traverse (TraverseType .DISPLAY, dependentRenderer);
 
                // Pop matrices.
 
                if (headlight)
                   headlightContainer .getModelViewMatrix () .pop ();
 
-               renderer .getModelViewMatrix ()   .pop ();
-               renderer .getCameraSpaceMatrix () .pop ();
-               renderer .getViewMatrix ()        .pop ();
+               dependentRenderer .getModelViewMatrix ()   .pop ();
+               dependentRenderer .getCameraSpaceMatrix () .pop ();
+               dependentRenderer .getViewMatrix ()        .pop ();
 
                // Transfer image.
 
@@ -276,8 +276,8 @@ function (Fields,
 
             this .updateTextureProperties ();
 
-            renderer .getProjectionMatrix () .pop ();
-            renderer .getViewVolumes      () .pop ();
+            dependentRenderer .getProjectionMatrix () .pop ();
+            dependentRenderer .getViewVolumes      () .pop ();
 
             this .frameBuffer .unbind ();
 
@@ -293,7 +293,7 @@ function (Fields,
          {
             X3DEnvironmentTextureNode .prototype .setShaderUniformsToChannel .call (this, gl, shaderObject, renderObject, channel);
 
-            if (renderObject === this .renderer)
+            if (renderObject === this .dependentRenderer)
                gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
          };
       })(),

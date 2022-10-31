@@ -466,7 +466,7 @@ function (TextureBuffer,
 
                if (num === this .collisionShapes .length)
                {
-                  this .collisionShapes .push ({ renderer: this, modelViewMatrix: new Float32Array (16), collisions: [ ], clipPlanes: [ ] });
+                  this .collisionShapes .push ({ renderObject: this, modelViewMatrix: new Float32Array (16), collisions: [ ], clipPlanes: [ ] });
                }
 
                const collisionContext = this .collisionShapes [num];
@@ -512,7 +512,7 @@ function (TextureBuffer,
 
                if (num === this .depthShapes .length)
                {
-                  this .depthShapes .push ({ renderer: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
+                  this .depthShapes .push ({ renderObject: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
                }
 
                const depthContext = this .depthShapes [num];
@@ -590,7 +590,7 @@ function (TextureBuffer,
       createRenderContext: function (transparent)
       {
          return {
-            renderer: this,
+            renderObject: this,
             transparent: transparent,
             modelViewMatrix: new Float32Array (16),
             scissor: new Vector4 (0, 0, 0, 0),
