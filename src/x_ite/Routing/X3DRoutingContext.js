@@ -79,7 +79,7 @@ function ()
       {
          this [_taintedNodes] .push (node);
       },
-      processEvents: function ()
+      [Symbol .for ("X_ITE.X3DRoutingContext.processEvents")]: function ()
       {
          do
          {

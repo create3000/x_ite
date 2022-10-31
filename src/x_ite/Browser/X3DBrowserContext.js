@@ -112,7 +112,8 @@ function ($,
       _browserTime     = Symbol (),
       _cameraTime      = Symbol (),
       _collisionTime   = Symbol (),
-      _displayTime     = Symbol ();
+      _displayTime     = Symbol (),
+      _processEvents   = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
 
    const browserContexts = [ ];
 
@@ -207,13 +208,13 @@ function ($,
 
          for (const browserContext of browserContexts)
          {
-            if (browserContext .prototype .initialize)
+            if (typeof browserContext .prototype .initialize === "function")
                browserContext .prototype .initialize .call (this);
          }
 
          // Process events from context creation. This will setup nodes like
          // geometry option nodes before any node is created.
-         this .processEvents ();
+         this [_processEvents] ();
       },
       initialized: function ()
       {
@@ -296,10 +297,10 @@ function ($,
          this .advanceTime (now);
 
          this ._prepareEvents .processInterests ();
-         this .processEvents ();
+         this [_processEvents] ();
 
          this ._timeEvents .processInterests ();
-         this .processEvents ();
+         this [_processEvents] ();
 
          const t1 = performance .now ();
          this [_world] .traverse (TraverseType .CAMERA, null);
@@ -311,7 +312,7 @@ function ($,
          this [_collisionTime] = performance .now () - t2;
 
          this ._sensorEvents .processInterests ();
-         this .processEvents ();
+         this [_processEvents] ();
 
          const t3 = performance .now ();
          gl .clearColor (0, 0, 0, 0);
@@ -353,8 +354,6 @@ function ($,
    {
       addBrowserContext: function (browserContext)
       {
-         const X3D = require ("x_ite/X3D");
-
          browserContexts .push (browserContext);
 
          for (const key of Object .keys (browserContext .prototype) .concat (Object .getOwnPropertySymbols (browserContext .prototype)))
@@ -370,18 +369,20 @@ function ($,
             });
          }
 
+         const X3D = require ("x_ite/X3D");
+
          $("x3d-canvas, X3DCanvas") .each (function (i, canvas)
          {
             const browser = X3D .getBrowser (canvas);
 
             browserContext .call (browser);
 
-            if (browserContext .prototype .initialize)
+            if (typeof browserContext .prototype .initialize === "function")
                browserContext .prototype .initialize .call (browser);
 
             // Process events from context creation. This will setup nodes like
             // geometry option nodes before any node is created.
-            browser .processEvents ();
+            browser [_processEvents] ();
          });
       },
    });
