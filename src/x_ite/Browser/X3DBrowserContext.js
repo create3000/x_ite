@@ -103,6 +103,8 @@ function ($,
    const
       _world           = Symbol (),
       _changedTime     = Symbol (),
+      _limitFrameRate  = Symbol (),
+      _traverse        = Symbol (),
       _renderCallback  = Symbol (),
       _previousTime    = Symbol (),
       _systemTime      = Symbol (),
@@ -149,7 +151,7 @@ function ($,
 
       this [_changedTime]     = 0;
       this [_previousTime]    = 0;
-      this [_renderCallback]  = this .traverse .bind (this);
+      this [_renderCallback]  = this [_traverse] .bind (this);
       this [_systemTime]      = 0;
       this [_systemStartTime] = 0;
       this [_browserTime]     = 0;
@@ -263,7 +265,7 @@ function ($,
 
          requestAnimationFrame (this [_renderCallback]);
       },
-      limitFrameRate: function (now)
+      [_limitFrameRate]: function (now)
       {
          if (now === this [_previousTime])
          {
@@ -278,11 +280,11 @@ function ($,
             return false;
          }
       },
-      traverse: function (now)
+      [_traverse]: function (now)
       {
          // Limit frame rate.
 
-         if (this .limitFrameRate (now))
+         if (this [_limitFrameRate] (now))
             return;
 
          // Start rendering.
