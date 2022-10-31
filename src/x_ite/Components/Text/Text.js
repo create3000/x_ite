@@ -165,6 +165,8 @@ function (Fields,
          this .textGeometry .display (gl, renderContext);
 
          X3DGeometryNode .prototype .display .call (this, gl, renderContext);
+
+         renderContext .textureNode = null;
       },
       transformLine: function (line)
       {

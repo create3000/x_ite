@@ -100,7 +100,7 @@ function (X3DBindableNode,
       this .sphere                = [ ];
       this .textureBits           = new BitSet ();
       this .sphereContext         = new GeometryContext ({ colorMaterial: true });
-      this .texturesContext       = new GeometryContext ();
+      this .texturesContext       = new GeometryContext ({ textureNode: true });
    }
 
    X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),

@@ -14,20 +14,24 @@ varying vec3 localVertex; // point on geometry in local coordinates
 #endif
 
 #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
-   #if x3d_MaxTextures > 0
-      varying vec4 texCoord0;
-   #endif
+   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+      #if x3d_MaxTextures > 0
+         varying vec4 texCoord0;
+      #endif
 
-   #if x3d_MaxTextures > 1
-      varying vec4 texCoord1;
+      #if x3d_MaxTextures > 1
+         varying vec4 texCoord1;
+      #endif
    #endif
 #else
-   #if x3d_MaxTextures > 0
-      vec4 texCoord0 = vec4 (0.0);
-   #endif
+   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+      #if x3d_MaxTextures > 0
+         vec4 texCoord0 = vec4 (0.0);
+      #endif
 
-   #if x3d_MaxTextures > 1
-      vec4 texCoord1 = vec4 (0.0);
+      #if x3d_MaxTextures > 1
+         vec4 texCoord1 = vec4 (0.0);
+      #endif
    #endif
 #endif
 
@@ -57,18 +61,17 @@ vec4
 getFinalColor ()
 {
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
-      setTexCoords ();
+      #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+         setTexCoords ();
 
-      #if ! defined (X3D_TEXTURE) && ! defined (X3D_MATERIAL_TEXTURES)
-         return getPointColor (getMaterialColor ());
-      #else
          return getMaterialColor ();
+       #else
+         return getPointColor (getMaterialColor ());
       #endif
    #else
       return getMaterialColor ();
    #endif
 }
-
 void
 fragment_main ()
 {
@@ -76,7 +79,7 @@ fragment_main ()
 
    vec4 finalColor = getFinalColor ();
 
-   #if defined (X3D_STYLE_PROPERTIES) && (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D))
+   #if (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)) && defined (X3D_STYLE_PROPERTIES)
       finalColor = getHatchColor (finalColor);
    #endif
 

@@ -52,8 +52,10 @@ getBaseColor ()
       #elif defined (X3D_BASE_TEXTURE_CUBE)
          return baseParameter * SRGBtoLINEAR (texture (x3d_BaseTexture .textureCube, texCoord));
       #endif
-   #else
+   #elif defined (X3D_TEXTURE)
       return getTextureColor (baseParameter, vec4 (vec3 (1.0), alpha));
+   #else
+      return baseParameter;
    #endif
 }
 

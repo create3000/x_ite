@@ -85,8 +85,8 @@ function (X3DGeometryNode,
 
       this .transformVertexArrayObject = new VertexArray ();
       this .thickVertexArrayObject     = new VertexArray ();
+      this .lineStippleBuffer          = gl .createBuffer ();
       this .trianglesBuffer            = gl .createBuffer ();
-      this .trianglesTexCoordBuffers   = new Array (browser .getMaxTextures ()) .fill (this .trianglesBuffer);
 
       this .setGeometryType (1);
       this .setPrimitiveMode (gl .LINES);
@@ -207,24 +207,25 @@ function (X3DGeometryNode,
       {
          // Line stipple support.
 
-         const texCoords = this .getTexCoords ();
+         const lineStipple = this .getTexCoords ();
 
-         if (texCoords .getValue () .length !== this .getVertices () .length)
+         if (lineStipple .getValue () .length / 6 !== this .getVertices () .length / 8)
          {
             const
                gl       = this .getBrowser () .getContext (),
                numLines = this .getVertices () .length / 8;
 
-            texCoords .length = this .getVertices () .length;
+            lineStipple .length = numLines * 6;
 
-            texCoords .fill (0);
-            texCoords .shrinkToFit ();
+            lineStipple .fill (0);
+            lineStipple .shrinkToFit ();
+
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, lineStipple .getValue (), gl .DYNAMIC_DRAW);
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .trianglesBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (13 * 6 * numLines), gl .DYNAMIC_DRAW);
+            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (12 * 6 * numLines), gl .DYNAMIC_DRAW);
          }
-
-         this .getMultiTexCoords () .push (texCoords);
       },
       updateLengthSoFar: (function ()
       {
@@ -240,7 +241,7 @@ function (X3DGeometryNode,
             const
                viewport         = renderContext .renderer .getViewVolume () .getViewport (),
                projectionMatrix = renderContext .renderer .getProjectionMatrix () .get (),
-               texCoordArray    = this .getTexCoords () .getValue (),
+               lineStippleArray = this .getTexCoords () .getValue (),
                vertices         = this .getVertices (),
                numVertices      = vertices .length;
 
@@ -248,7 +249,7 @@ function (X3DGeometryNode,
 
             let lengthSoFar = 0;
 
-            for (let i = 0; i < numVertices; i += 8)
+            for (let i = 0, l = 0; i < numVertices; i += 8, l += 6)
             {
                point0 .set (vertices [i],     vertices [i + 1], vertices [i + 2], vertices [i + 3]);
                point1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6], vertices [i + 7]);
@@ -256,18 +257,18 @@ function (X3DGeometryNode,
                ViewVolume .projectPointMatrix (point0, modelViewProjectionMatrix, viewport, projectedPoint0);
                ViewVolume .projectPointMatrix (point1, modelViewProjectionMatrix, viewport, projectedPoint1);
 
-               texCoordArray [i]     = projectedPoint1 .x;
-               texCoordArray [i + 1] = projectedPoint1 .y;
+               lineStippleArray [l]     = projectedPoint1 .x;
+               lineStippleArray [l + 1] = projectedPoint1 .y;
 
-               texCoordArray [i + 4] = projectedPoint0 .x;
-               texCoordArray [i + 5] = projectedPoint0 .y;
-               texCoordArray [i + 6] = lengthSoFar;
+               lineStippleArray [l + 3] = projectedPoint0 .x;
+               lineStippleArray [l + 4] = projectedPoint0 .y;
+               lineStippleArray [l + 5] = lengthSoFar;
 
                lengthSoFar += projectedPoint1 .subtract (projectedPoint0) .magnitude ();
             }
 
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
-            gl .bufferData (gl .ARRAY_BUFFER, texCoordArray, gl .DYNAMIC_DRAW);
+            gl .bindBuffer (gl .ARRAY_BUFFER, this .lineStippleBuffer);
+            gl .bufferData (gl .ARRAY_BUFFER, lineStippleArray, gl .DYNAMIC_DRAW);
          };
       })(),
       display: (function ()
@@ -322,21 +323,24 @@ function (X3DGeometryNode,
                      if (this .transformVertexArrayObject .enable (gl, shaderNode))
                      {
                         const
-                           fogDepthStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
-                           fogDepthOffset0 = 0,
-                           fogDepthOffset1 = 1 * Float32Array .BYTES_PER_ELEMENT,
-                           colorStride     = 8 * Float32Array .BYTES_PER_ELEMENT,
-                           colorOffset0    = 0,
-                           colorOffset1    = 4 * Float32Array .BYTES_PER_ELEMENT,
-                           texCoordStride  = 8 * Float32Array .BYTES_PER_ELEMENT,
-                           texCoordOffset0 = 0,
-                           texCoordOffset1 = 4 * Float32Array .BYTES_PER_ELEMENT,
-                           vertexStride    = 8 * Float32Array .BYTES_PER_ELEMENT,
-                           vertexOffset0   = 0,
-                           vertexOffset1   = 4 * Float32Array .BYTES_PER_ELEMENT;
+                           lineStippleStride  = 6 * Float32Array .BYTES_PER_ELEMENT,
+                           lineStippleOffset0 = 0,
+                           lineStippleOffset1 = 3 * Float32Array .BYTES_PER_ELEMENT,
+                           fogDepthStride     = 2 * Float32Array .BYTES_PER_ELEMENT,
+                           fogDepthOffset0    = 0,
+                           fogDepthOffset1    = 1 * Float32Array .BYTES_PER_ELEMENT,
+                           colorStride        = 8 * Float32Array .BYTES_PER_ELEMENT,
+                           colorOffset0       = 0,
+                           colorOffset1       = 4 * Float32Array .BYTES_PER_ELEMENT,
+                           vertexStride       = 8 * Float32Array .BYTES_PER_ELEMENT,
+                           vertexOffset0      = 0,
+                           vertexOffset1      = 4 * Float32Array .BYTES_PER_ELEMENT;
 
                         // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                         //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_LineStipple0", this .lineStippleBuffer, 3, lineStippleStride, lineStippleOffset0);
+                        transformShaderNode .enableFloatAttrib (gl, "x3d_LineStipple1", this .lineStippleBuffer, 3, lineStippleStride, lineStippleOffset1);
 
                         if (this .hasFogCoords)
                         {
@@ -349,9 +353,6 @@ function (X3DGeometryNode,
                            transformShaderNode .enableFloatAttrib (gl, "x3d_Color0", this .colorBuffer, 4, colorStride, colorOffset0);
                            transformShaderNode .enableFloatAttrib (gl, "x3d_Color1", this .colorBuffer, 4, colorStride, colorOffset1);
                         }
-
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord0", this .texCoordBuffers [0], 4, texCoordStride, texCoordOffset0);
-                        transformShaderNode .enableFloatAttrib (gl, "x3d_TexCoord1", this .texCoordBuffers [0], 4, texCoordStride, texCoordOffset1);
 
                         transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex0", this .vertexBuffer, 4, vertexStride, vertexOffset0);
                         transformShaderNode .enableFloatAttrib (gl, "x3d_Vertex1", this .vertexBuffer, 4, vertexStride, vertexOffset1);
@@ -390,14 +391,16 @@ function (X3DGeometryNode,
                      if (this .thickVertexArrayObject .enable (gl, shaderNode))
                      {
                         const
-                           stride         = 13 * Float32Array .BYTES_PER_ELEMENT,
-                           fogCoordOffset = 0,
-                           colorOffset    = 1 * Float32Array .BYTES_PER_ELEMENT,
-                           texCoordOffset = 5 * Float32Array .BYTES_PER_ELEMENT,
-                           vertexOffset   = 9 * Float32Array .BYTES_PER_ELEMENT;
+                           stride            = 12 * Float32Array .BYTES_PER_ELEMENT,
+                           lineStippleOffset = 0,
+                           fogCoordOffset    = 3 * Float32Array .BYTES_PER_ELEMENT,
+                           colorOffset       = 4 * Float32Array .BYTES_PER_ELEMENT,
+                           vertexOffset      = 8 * Float32Array .BYTES_PER_ELEMENT;
 
                         // for (let i = 0, length = attribNodes .length; i < length; ++ i)
                         //    attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+                        shaderNode .enableLineStippleAttribute (gl, this .trianglesBuffer, stride, lineStippleOffset);
 
                         if (this .hasFogCoords)
                            shaderNode .enableFogDepthAttribute (gl, this .trianglesBuffer, stride, fogCoordOffset);
@@ -405,8 +408,7 @@ function (X3DGeometryNode,
                         if (this .colorMaterial)
                            shaderNode .enableColorAttribute (gl, this .trianglesBuffer, stride, colorOffset);
 
-                        shaderNode .enableTexCoordAttribute (gl, this .trianglesTexCoordBuffers, stride, texCoordOffset);
-                        shaderNode .enableVertexAttribute   (gl, this .trianglesBuffer,          stride, vertexOffset);
+                        shaderNode .enableVertexAttribute (gl, this .trianglesBuffer, stride, vertexOffset);
 
                         gl .bindBuffer (gl .ARRAY_BUFFER, null);
                      }
@@ -448,14 +450,15 @@ function (X3DGeometryNode,
                for (let i = 0, length = attribNodes .length; i < length; ++ i)
                   attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
+               shaderNode .enableLineStippleAttribute (gl, this .lineStippleBuffer, 0, 0);
+
                if (this .hasFogCoords)
                   shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
                if (this .colorMaterial)
                   shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+               shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
             }
 
             gl .drawArrays (primitiveMode, 0, this .vertexCount);

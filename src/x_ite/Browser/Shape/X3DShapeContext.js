@@ -164,9 +164,9 @@ function (Appearance,
          ]);
 
          this [_lineTransformShaderNode] .setTransformFeedbackVaryings ([
-            "fogDepth0", "color0", "texCoord0", "vertex0",
-            "fogDepth1", "color1", "texCoord1", "vertex1",
-            "fogDepth2", "color2", "texCoord2", "vertex2",
+            "lineStipple0", "fogDepth0", "color0", "vertex0",
+            "lineStipple1", "fogDepth1", "color1", "vertex1",
+            "lineStipple2", "fogDepth2", "color2", "vertex2",
          ]);
 
          this .getLineTransformShader = function () { return this [_lineTransformShaderNode]; };

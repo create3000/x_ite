@@ -20,8 +20,13 @@ getMaterialColor ()
       vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
    #endif
 
-   finalColor = getTextureColor (finalColor, vec4 (1.0));
-   finalColor = getProjectiveTextureColor (finalColor);
+   #if defined (X3D_TEXTURE)
+      finalColor = getTextureColor (finalColor, vec4 (1.0));
+   #endif
+
+   #if defined (X3D_PROJECTIVE_TEXTURE_MAPPING)
+      finalColor = getProjectiveTextureColor (finalColor);
+   #endif
 
    return finalColor;
 }

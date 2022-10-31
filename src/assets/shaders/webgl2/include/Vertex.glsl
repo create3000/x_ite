@@ -5,6 +5,10 @@ uniform mat4 x3d_ModelViewMatrix;
 
 // Attributes
 
+#if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
+   in vec3 x3d_LineStipple;
+#endif
+
 #if defined (X3D_FOG_COORDS)
    in float x3d_FogDepth;
 #endif
@@ -13,14 +17,12 @@ uniform mat4 x3d_ModelViewMatrix;
    in vec4  x3d_Color;
 #endif
 
-#if ! defined (X3D_GEOMETRY_0D)
-   #if (defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_1D)) || defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)
+#if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
+   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
       #if x3d_MaxTextures > 0
          in vec4 x3d_TexCoord0;
       #endif
-   #endif
 
-   #if ! defined (X3D_GEOMETRY_1D)
       #if x3d_MaxTextures > 1
          in vec4 x3d_TexCoord1;
       #endif
@@ -42,12 +44,14 @@ in vec4 x3d_Vertex;
 #endif
 
 #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
-   #if x3d_MaxTextures > 0
-      out vec4 texCoord0;
-   #endif
+   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+      #if x3d_MaxTextures > 0
+         out vec4 texCoord0;
+      #endif
 
-   #if x3d_MaxTextures > 1
-      out vec4 texCoord1;
+      #if x3d_MaxTextures > 1
+         out vec4 texCoord1;
+      #endif
    #endif
 #endif
 
@@ -58,7 +62,7 @@ in vec4 x3d_Vertex;
    out vec3 localNormal;
 #endif
 
-#if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_1D)
+#if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
    flat out float lengthSoFar;
    flat out vec2  startPoint;
    out vec2       midPoint;
@@ -83,10 +87,10 @@ vertex_main ()
       gl_PointSize = pointSize = getPointSize (vertex);
    #endif
 
-   #if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_1D)
-      lengthSoFar = x3d_TexCoord0 .z;
-      startPoint  = x3d_TexCoord0 .xy;
-      midPoint    = x3d_TexCoord0 .xy;
+   #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
+      lengthSoFar = x3d_LineStipple .z;
+      startPoint  = x3d_LineStipple .xy;
+      midPoint    = x3d_LineStipple .xy;
    #endif
 
    #if defined (X3D_FOG)
@@ -100,12 +104,14 @@ vertex_main ()
    #endif
 
    #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
-      #if x3d_MaxTextures > 0
-         texCoord0 = getTexCoord (x3d_TexCoord0);
-      #endif
+      #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+         #if x3d_MaxTextures > 0
+            texCoord0 = getTexCoord (x3d_TexCoord0);
+         #endif
 
-      #if x3d_MaxTextures > 1
-         texCoord1 = getTexCoord (x3d_TexCoord1);
+         #if x3d_MaxTextures > 1
+            texCoord1 = getTexCoord (x3d_TexCoord1);
+         #endif
       #endif
    #endif
 

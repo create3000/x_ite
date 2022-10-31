@@ -92,7 +92,7 @@ function (TextureProperties,
 
       this [_maxTextures]              = maxTextureImageUnits > 8 ? 2 : 1;
       this [_multiTexturing]           = maxTextureImageUnits > 8;
-      this [_projectiveTextureMapping] = maxTextureImageUnits > 8;
+      this [_projectiveTextureMapping] = this [_multiTexturing];
    }
 
    X3DTexturingContext .prototype =

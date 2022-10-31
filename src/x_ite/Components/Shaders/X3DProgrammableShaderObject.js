@@ -288,6 +288,7 @@ function (X3DCast,
           */
 
          const attributes = [
+            "LineStipple",
             "FogDepth",
             "Color",
             "Normal",
@@ -1160,6 +1161,14 @@ function (X3DCast,
             gl .enableVertexAttribArray (location);
             gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset + 16 * i);
          }
+      },
+      enableLineStippleAttribute: function (gl, buffer, stride, offset)
+      {
+         const location = this .x3d_LineStipple;
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+         gl .enableVertexAttribArray (location);
+         gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset);
       },
       enableFogDepthAttribute: function (gl, buffer, stride, offset)
       {

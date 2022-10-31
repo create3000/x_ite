@@ -62,6 +62,7 @@ function (X3DGeometryNode)
          hasFogCoords: false,
          colorMaterial: false,
          hasNormals: false,
+         textureNode: false,
       },
       options)
 

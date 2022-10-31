@@ -16,12 +16,14 @@ uniform mat4 x3d_ModelViewMatrix;
 #endif
 
 #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
-   #if x3d_MaxTextures > 0
-      attribute vec4 x3d_TexCoord0;
-   #endif
+   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+      #if x3d_MaxTextures > 0
+         attribute vec4 x3d_TexCoord0;
+      #endif
 
-   #if x3d_MaxTextures > 1
-      attribute vec4 x3d_TexCoord1;
+      #if x3d_MaxTextures > 1
+         attribute vec4 x3d_TexCoord1;
+      #endif
    #endif
 #endif
 
@@ -38,12 +40,14 @@ attribute vec4 x3d_Vertex;
 #endif
 
 #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
-   #if x3d_MaxTextures > 0
-      varying vec4 texCoord0;
-   #endif
+   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+      #if x3d_MaxTextures > 0
+         varying vec4 texCoord0;
+      #endif
 
-   #if x3d_MaxTextures > 1
-      varying vec4 texCoord1;
+      #if x3d_MaxTextures > 1
+         varying vec4 texCoord1;
+      #endif
    #endif
 #endif
 
@@ -83,12 +87,14 @@ vertex_main ()
    #endif
 
    #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
-      #if x3d_MaxTextures > 0
-         texCoord0 = x3d_TexCoord0;
-      #endif
+      #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+         #if x3d_MaxTextures > 0
+            texCoord0 = x3d_TexCoord0;
+         #endif
 
-      #if x3d_MaxTextures > 1
-         texCoord1 = x3d_TexCoord1;
+         #if x3d_MaxTextures > 1
+            texCoord1 = x3d_TexCoord1;
+         #endif
       #endif
    #endif
 

@@ -2,6 +2,7 @@
 
 in float pointSize;
 
+#if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
 void
 setTexCoords ()
 {
@@ -15,6 +16,7 @@ setTexCoords ()
       texCoord1 = texCoord;
    #endif
 }
+#endif
 
 vec4
 getPointColor (in vec4 color)

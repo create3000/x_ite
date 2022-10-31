@@ -39,8 +39,10 @@ getEmissiveColor ()
       #elif defined (X3D_EMISSIVE_TEXTURE_CUBE)
          return emissiveParameter * texture (x3d_EmissiveTexture .textureCube, texCoord);
       #endif
-   #else
+   #elif defined (X3D_TEXTURE)
       return getTextureColor (emissiveParameter, vec4 (vec3 (1.0), alpha));
+   #else
+      return emissiveParameter;
    #endif
 }
 

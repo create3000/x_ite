@@ -67,8 +67,10 @@ getDiffuseColor ()
       #elif defined (X3D_DIFFUSE_TEXTURE_CUBE)
          return diffuseParameter * texture (x3d_DiffuseTexture .textureCube, texCoord);
       #endif
-   #else
+   #elif defined (X3D_TEXTURE)
       return getTextureColor (diffuseParameter, vec4 (x3d_Material .specularColor, alpha));
+   #else
+      return diffuseParameter;
    #endif
 }
 
@@ -193,12 +195,12 @@ getMaterialColor ()
    float shininess         = getShininessFactor ();
    float normalScale       = x3d_Material .normalScale;
 
-   // Projective texture
+   #if defined (X3D_PROJECTIVE_TEXTURE_MAPPING)
+      vec4 P = getProjectiveTextureColor (vec4 (1.0));
 
-   vec4 P = getProjectiveTextureColor (vec4 (1.0));
-
-   diffuseColor *= P .rgb;
-   alpha        *= P .a;
+      diffuseColor *= P .rgb;
+      alpha        *= P .a;
+   #endif
 
    vec3 finalColor = getMaterialColor (vertex, getNormalVector (normalScale), ambientColor, diffuseColor, specularColor, shininess);
 
