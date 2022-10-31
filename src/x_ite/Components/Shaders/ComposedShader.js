@@ -113,7 +113,8 @@ function (Fields,
 
          this ._parts .addFieldInterest (this .loadSensor ._watchList);
 
-         this .loadSensor ._isLoaded .addInterest ("set_loaded__", this);
+         this .loadSensor ._isActive .addInterest ("set_loading__", this);
+         this .loadSensor ._isLoaded .addInterest ("set_loaded__",  this);
          this .loadSensor ._watchList = this ._parts;
          this .loadSensor .setPrivate (true);
          this .loadSensor .setup ();
@@ -158,6 +159,13 @@ function (Fields,
             if (this .isValid ())
                this .removeShaderFields ();
          }
+      },
+      set_loading__: function ()
+      {
+         if (this .loadSensor ._isActive .getValue ())
+            this .getScene () .addLoadCount (this);
+         else
+            this .getScene () .removeLoadCount (this);
       },
       set_loaded__: function ()
       {
