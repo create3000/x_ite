@@ -1,8 +1,5 @@
 uniform float x3d_AlphaCutoff;
 
-varying vec3 vertex;      // point on geometry
-varying vec3 localVertex; // point on geometry in local coordinates
-
 #if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
    varying float fogDepth;
 #endif
@@ -39,6 +36,12 @@ varying vec3 localVertex; // point on geometry in local coordinates
 #else
    const vec3 normal      = vec3 (0.0, 0.0, 1.0);
    const vec3 localNormal = vec3 (0.0, 0.0, 1.0);
+#endif
+
+varying vec3 vertex;
+
+#if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+   varying vec3 localVertex;
 #endif
 
 #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)

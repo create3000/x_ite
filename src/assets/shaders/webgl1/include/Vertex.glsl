@@ -57,7 +57,10 @@ attribute vec4 x3d_Vertex;
 #endif
 
 varying vec3 vertex;
-varying vec3 localVertex;
+
+#if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+   varying vec3 localVertex;
+#endif
 
 #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
    varying float depth;
@@ -101,8 +104,11 @@ vertex_main ()
 
    vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
-   vertex      = position .xyz;
-   localVertex = x3d_Vertex .xyz;
+   vertex = position .xyz;
+
+   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+      localVertex = x3d_Vertex .xyz;
+   #endif
 
    gl_Position = x3d_ProjectionMatrix * position;
 

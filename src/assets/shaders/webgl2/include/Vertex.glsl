@@ -67,7 +67,10 @@ in vec4 x3d_Vertex;
 #endif
 
 out vec3 vertex;
-out vec3 localVertex;
+
+#if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+   out vec3 localVertex;
+#endif
 
 #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
    out float depth;
@@ -118,8 +121,11 @@ vertex_main ()
 
    vec4 position = x3d_ModelViewMatrix * getVertex (x3d_Vertex);
 
-   vertex      = position .xyz;
-   localVertex = x3d_Vertex .xyz;
+   vertex = position .xyz;
+
+   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+      localVertex = x3d_Vertex .xyz;
+   #endif
 
    gl_Position = x3d_ProjectionMatrix * position;
 
