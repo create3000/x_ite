@@ -158,16 +158,11 @@ function (Fields,
          {
             const appearanceNode = renderContext .appearanceNode;
 
-            options .push ("X3D_MATERIAL_TEXTURES");
-
             if (this .getEmissiveTexture ())
                options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
 
             if (this .getNormalTexture ())
                options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
-
-            options .push ("X3D_NUM_TEXTURE_TRANSFORMS " + (appearanceNode .getTextureTransformMapping () .size || 1));
-            options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .textureCoordinateMapping .size || 1));
          }
 
          return options;

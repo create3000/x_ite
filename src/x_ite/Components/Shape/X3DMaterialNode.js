@@ -196,7 +196,13 @@ function (Fields,
                if (appearanceNode .getStyleProperties (geometryContext .geometryType))
                   options .push ("X3D_STYLE_PROPERTIES");
 
-               if (! +this .textureBits)
+               if (+this .textureBits)
+               {
+                  options .push ("X3D_MATERIAL_TEXTURES");
+                  options .push ("X3D_NUM_TEXTURE_TRANSFORMS " + (appearanceNode .getTextureTransformMapping () .size || 1));
+                  options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .textureCoordinateMapping .size || 1));
+               }
+               else
                {
                   if (renderContext .textureNode)
                   {
