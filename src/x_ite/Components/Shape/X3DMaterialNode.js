@@ -170,9 +170,11 @@ function (Fields,
 
          return function (geometryContext, renderContext)
          {
-            const options = [ ];
+            const
+               browser = this .getBrowser (),
+               options = [ ];
 
-            if (this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer"))
+            if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
                options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
 
             options .push (geometryTypes [geometryContext .geometryType]);

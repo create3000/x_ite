@@ -798,18 +798,14 @@ To address the issue of the depth not being interpolated in perspectively-correc
 ```glsl
 #version 300 es
 
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 out float depth;
-#endif
 
 void
 main ()
 {
    ...
-   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
    // Assuming gl_Position was already computed.
    depth = 1.0 + gl_Position .w;
-   #endif
 }
 ```
 
@@ -818,23 +814,22 @@ and then in the fragment shader add:
 ```glsl
 #version 300 es
 
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+#if __VERSION__ == 100
 #extension GL_EXT_frag_depth : enable
+#endif
+
 uniform float x3d_LogarithmicFarValue1_2;
 in float depth;
-#endif
 
 void
 main ()
 {
    ...
-   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
    //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
    if (x3d_LogarithmicFarFactor1_2 > 0.0)
       gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
    else
       gl_FragDepthEXT = gl_FragCoord .z;
-   #endif
 }
 ```
 
