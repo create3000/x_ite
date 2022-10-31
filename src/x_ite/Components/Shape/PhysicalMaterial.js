@@ -232,7 +232,7 @@ function (Fields,
          {
             var shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
 
-            browser .getShaders () .set (key .replace (/\d$/, 0), shaderNode);
+            browser .getShaders () .set (key .replace (/^(\d{1,2})\d*/, "$1") .replace (/\d$/, "0"), shaderNode);
          }
 
          browser .getShaders () .set (key, shaderNode);

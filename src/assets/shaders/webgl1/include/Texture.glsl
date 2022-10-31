@@ -69,7 +69,7 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
    {
       vec2 N = normalize (gl_FrontFacing ? normal : -normal) .xy;
 
-      return vec4 (N / 2.0 + 0.5, 0.0, 1.0);
+      return vec4 (N * 0.5 + 0.5, 0.0, 1.0);
    }
    else if (mode == x3d_CameraSpaceNormal)
    {
@@ -91,7 +91,7 @@ getTexCoord (const in x3d_TextureCoordinateGeneratorParameters textureCoordinate
    {
       vec2 N = normalize (gl_FrontFacing ? localNormal : -localNormal) .xy;
 
-      return vec4 (N / 2.0 + 0.5, 0.0, 1.0);
+      return vec4 (N * 0.5 + 0.5, 0.0, 1.0);
    }
    else if (mode == x3d_Coord)
    {

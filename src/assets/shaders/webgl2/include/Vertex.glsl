@@ -56,8 +56,6 @@ in vec4 x3d_Vertex;
    in  vec3 x3d_Normal;
    out vec3 normal;
    out vec3 localNormal;
-#else
-   vec3 normal = vec3 (0.0, 0.0, 1.0);
 #endif
 
 #if defined (X3D_STYLE_PROPERTIES) && defined (X3D_GEOMETRY_1D)

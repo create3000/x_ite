@@ -52,8 +52,6 @@ attribute vec4 x3d_Vertex;
    attribute vec3 x3d_Normal;
    varying vec3 normal;
    varying vec3 localNormal;
-#else
-   vec3 normal = vec3 (0.0, 0.0, 1.0);
 #endif
 
 varying vec3 vertex;

@@ -35,8 +35,8 @@ in vec3 localVertex; // point on geometry in local coordinates
    in vec3 normal;
    in vec3 localNormal;
 #else
-   vec3 normal      = vec3 (0.0, 0.0, 1.0);
-   vec3 localNormal = vec3 (0.0, 0.0, 1.0);
+   const vec3 normal      = vec3 (0.0, 0.0, 1.0);
+   const vec3 localNormal = vec3 (0.0, 0.0, 1.0);
 #endif
 
 #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
