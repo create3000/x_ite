@@ -123,7 +123,7 @@ function (Fields,
       {
          const
             browser = this .getBrowser (),
-            options = this .getOptions (geometryContext, renderContext);
+            options = this .getShaderOptions (geometryContext, renderContext);
 
          const shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
 

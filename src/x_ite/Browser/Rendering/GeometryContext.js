@@ -47,46 +47,32 @@
  ******************************************************************************/
 
 
-define (function ()
+define ([
+   "x_ite/Components/Rendering/X3DGeometryNode",
+],
+function (X3DGeometryNode)
 {
 "use strict";
 
-   function BitSet (value = 0)
+   function GeometryContext (options = { })
    {
-      this .value = value;
+      Object .assign (this,
+      {
+         geometryType: 3,
+         hasFogCoords: false,
+         colorMaterial: false,
+         hasNormals: false,
+      },
+      options)
+
+      this .updateGeometryKey ();
    }
 
-   BitSet .prototype =
+   GeometryContext .prototype =
    {
-      constructor: BitSet,
-      get: function (index)
-      {
-         const mask = 1 << index;
-
-         return !! (this .value & mask);
-      },
-      set: function (index, value)
-      {
-         const mask = 1 << index;
-
-         if (value)
-            this .value |= mask;
-         else
-            this .value &= ~mask;
-      },
-      clear: function ()
-      {
-         this .value = 0;
-      },
-      valueOf: function ()
-      {
-         return this .value;
-      },
-      toString: function (radix)
-      {
-         return this .value .toString (radix);
-      },
+      constructor: GeometryContext,
+      updateGeometryKey: X3DGeometryNode .prototype .updateGeometryKey,
    };
 
-   return BitSet;
+   return GeometryContext;
 });

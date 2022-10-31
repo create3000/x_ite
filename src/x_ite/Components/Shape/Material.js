@@ -264,7 +264,7 @@ function (Fields,
       {
          const
             browser = this .getBrowser (),
-            options = this .getOptions (geometryContext, renderContext);
+            options = this .getShaderOptions (geometryContext, renderContext);
 
          if (geometryContext .hasNormals)
          {

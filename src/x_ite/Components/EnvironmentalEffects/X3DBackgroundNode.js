@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Components/Core/X3DBindableNode",
-   "x_ite/Components/Rendering/X3DGeometryNode",
+   "x_ite/Browser/Rendering/GeometryContext",
    "x_ite/Rendering/VertexArray",
    "x_ite/Rendering/TraverseType",
    "x_ite/Base/X3DConstants",
@@ -62,7 +62,7 @@ define ([
    "standard/Utility/BitSet",
 ],
 function (X3DBindableNode,
-          X3DGeometryNode,
+          GeometryContext,
           VertexArray,
           TraverseType,
           X3DConstants,
@@ -99,11 +99,8 @@ function (X3DBindableNode,
       this .colors                = [ ];
       this .sphere                = [ ];
       this .textureBits           = new BitSet ();
-      this .sphereContext         = { geometryType: 3, colorMaterial: true };
-      this .texturesContext       = { geometryType: 3 };
-
-      X3DGeometryNode .prototype .updateGeometryKey .call (this .sphereContext);
-      X3DGeometryNode .prototype .updateGeometryKey .call (this .texturesContext);
+      this .sphereContext         = new GeometryContext ({ colorMaterial: true });
+      this .texturesContext       = new GeometryContext ();
    }
 
    X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),

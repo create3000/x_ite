@@ -51,7 +51,7 @@ define ([
    "jquery",
    "x_ite/Browser/Navigation/X3DViewer",
    "x_ite/Components/Followers/OrientationChaser",
-   "x_ite/Components/Rendering/X3DGeometryNode",
+   "x_ite/Browser/Rendering/GeometryContext",
    "x_ite/Rendering/VertexArray",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
@@ -62,7 +62,7 @@ define ([
 function ($,
           X3DViewer,
           OrientationChaser,
-          X3DGeometryNode,
+          GeometryContext,
           VertexArray,
           Vector3,
           Rotation4,
@@ -107,9 +107,7 @@ function ($,
       this .lineArray         = new Float32Array (this .lineCount * 4) .fill (1);
       this .lineBuffer        = gl .createBuffer ();
       this .lineArrayObject   = new VertexArray ();
-      this .geometryContext   = { geometryType: 1 };
-
-      X3DGeometryNode .prototype .updateGeometryKey .call (this .geometryContext);
+      this .geometryContext   = new GeometryContext ({ geometryType: 1 });
    }
 
    X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),

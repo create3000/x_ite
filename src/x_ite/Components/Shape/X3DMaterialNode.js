@@ -155,7 +155,7 @@ function (Fields,
             return this .getBrowser () .getDefaultShader ();
          }
       },
-      getOptions: (function ()
+      getShaderOptions: (function ()
       {
          const geometryTypes = [
             "X3D_GEOMETRY_0D",

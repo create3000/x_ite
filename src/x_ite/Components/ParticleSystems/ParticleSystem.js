@@ -52,7 +52,7 @@ define ([
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DShapeNode",
-   "x_ite/Components/Rendering/X3DGeometryNode",
+   "x_ite/Browser/Rendering/GeometryContext",
    "x_ite/Browser/ParticleSystems/GeometryTypes",
    "x_ite/Rendering/VertexArray",
    "x_ite/Rendering/TraverseType",
@@ -68,7 +68,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShapeNode,
-          X3DGeometryNode,
+          GeometryContext,
           GeometryTypes,
           VertexArray,
           TraverseType,
@@ -136,7 +136,7 @@ function (Fields,
       this .boundedVertices          = [ ];
       this .colorRamp                = new Float32Array ();
       this .texCoordRamp             = new Float32Array ();
-      this .geometryContext          = { };
+      this .geometryContext          = new GeometryContext ();
       this .creationTime             = 0;
       this .pauseTime                = 0;
       this .deltaTime                = 0;
@@ -435,7 +435,7 @@ function (Fields,
             }
          }
 
-         this .updateGeometryKey ();
+         this .geometryContext .updateGeometryKey ();
          this .updateVertexArrays ();
 
          this .set_transparent__ ();
@@ -613,7 +613,7 @@ function (Fields,
          this .numColors                      = numColors;
          this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
 
-         this .updateGeometryKey ();
+         this .geometryContext .updateGeometryKey ();
          this .updateVertexArrays ();
       },
       set_texCoordRamp__: function ()
@@ -658,10 +658,6 @@ function (Fields,
          this .numTexCoords = this .texCoordRampNode ? numTexCoords : 0;
 
          this .updateVertexArrays ();
-      },
-      updateGeometryKey: function ()
-      {
-         X3DGeometryNode .prototype .updateGeometryKey .call (this .geometryContext);
       },
       updateVertexArrays: function ()
       {
