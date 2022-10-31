@@ -126,6 +126,8 @@ function (Fields,
       {
          this [_loading] = value;
 
+         this .setLoadCount (0);
+
          if (value)
          {
             this .resetLoadCount ();
