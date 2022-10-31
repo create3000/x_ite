@@ -101,6 +101,10 @@ function (X3DTextureNode,
          if (update)
             this .updateTextureProperties ();
       },
+      getNumTextures: function ()
+      {
+         return 1;
+      },
       getTexture: function ()
       {
          return this .texture;

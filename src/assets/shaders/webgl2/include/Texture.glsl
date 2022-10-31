@@ -134,7 +134,6 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
 
 #if defined (X3D_TEXTURE)
 
-uniform int         x3d_NumTextures;
 uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_TextureType2D, x3d_TextureType3D, x3d_TextureTypeCube
 uniform sampler2D   x3d_Texture2D [x3d_MaxTextures];
 uniform sampler3D   x3d_Texture3D [x3d_MaxTextures];
@@ -220,11 +219,8 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 {
    vec4 currentColor = diffuseColor;
 
-   for (int i = 0; i < x3d_MaxTextures; ++ i)
+   for (int i = 0; i < X3D_NUM_TEXTURES; ++ i)
    {
-      if (i == x3d_NumTextures)
-         break;
-
       // Get texture color.
 
       vec3 texCoord     = getTexCoord (i, i);

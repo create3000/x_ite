@@ -199,10 +199,12 @@ function (Fields,
                if (+appearanceNode .getTextureBits ())
                {
                   options .push ("X3D_TEXTURE");
+                  options .push ("X3D_NUM_TEXTURES " + appearanceNode .getTexture () .getNumTextures ());
                }
                else if (renderContext .textureNode)
                {
                   options .push ("X3D_TEXTURE");
+                  options .push ("X3D_NUM_TEXTURES " + 1);
                }
 
                switch (renderContext .shapeNode .getShapeKey ())
