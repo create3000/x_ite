@@ -10,21 +10,21 @@ uniform float x3d_AlphaCutoff;
 
 #if ! defined (X3D_GEOMETRY_0D) && ! defined (X3D_GEOMETRY_1D)
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-      #if x3d_MaxTextures > 0
+      #if X3D_NUM_TEXTURES > 0
          in vec4 texCoord0;
       #endif
 
-      #if x3d_MaxTextures > 1
+      #if X3D_NUM_TEXTURES > 1
          in vec4 texCoord1;
       #endif
    #endif
 #else
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-      #if x3d_MaxTextures > 0
+      #if X3D_NUM_TEXTURES > 0
          vec4 texCoord0 = vec4 (0.0);
       #endif
 
-      #if x3d_MaxTextures > 1
+      #if X3D_NUM_TEXTURES > 1
          vec4 texCoord1 = vec4 (0.0);
       #endif
    #endif

@@ -296,11 +296,14 @@ function (Fields,
       updateTextureBits: function (textureBits)
       {
          const
+            maxTextures  = this .getBrowser () .getMaxTextures (),
             textureNodes = this .textureNodes,
-            channels     = Math .min (this .getBrowser () .getMaxTextures (), textureNodes .length);
+            channels     = Math .min (maxTextures, textureNodes .length);
 
          for (let i = 0; i < channels; ++ i)
             textureNodes [i] .updateTextureBits (textureBits, i);
+
+         textureBits .set (maxTextures * 2, 1);
       },
       traverse: function (type, renderObject)
       {

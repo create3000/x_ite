@@ -109,9 +109,6 @@ function (Types,
          if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
             constants += "#define X3D_LOGARITHMIC_DEPTH_BUFFER\n";
 
-         if (browser .getMultiTexturing ())
-            constants += "#define X3D_MULTI_TEXTURING\n";
-
          if (browser .getProjectiveTextureMapping ())
             constants += "#define X3D_PROJECTIVE_TEXTURE_MAPPING\n";
 

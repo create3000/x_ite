@@ -198,8 +198,13 @@ function (Fields,
 
                if (+appearanceNode .getTextureBits ())
                {
+                  const textureNode = appearanceNode .getTexture ();
+
                   options .push ("X3D_TEXTURE");
-                  options .push ("X3D_NUM_TEXTURES " + appearanceNode .getTexture () .getNumTextures ());
+                  options .push ("X3D_NUM_TEXTURES " + textureNode .getNumTextures ());
+
+                  if (textureNode .getType () .includes (X3DConstants .MultiTexture))
+                     options .push ("X3D_MULTI_TEXTURING");
                }
                else if (renderContext .textureNode)
                {
