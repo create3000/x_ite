@@ -24,11 +24,11 @@ uniform float x3d_AlphaCutoff;
    #endif
 #else
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-      #if x3d_MaxTextures > 0
+      #if X3D_NUM_TEXTURE_COORDINATES > 0
          vec4 texCoord0 = vec4 (0.0);
       #endif
 
-      #if x3d_MaxTextures > 1
+      #if X3D_NUM_TEXTURE_COORDINATES > 1
          vec4 texCoord1 = vec4 (0.0);
       #endif
    #endif
