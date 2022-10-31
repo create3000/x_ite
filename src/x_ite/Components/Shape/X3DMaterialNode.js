@@ -246,7 +246,7 @@ function (Fields,
             {
                if (geometryContext .textureNode)
                {
-                  // X3DBackground textures
+                  // X3DBackgroundNode textures
 
                   options .push ("X3D_TEXTURE",
                                  "X3D_NUM_TEXTURES 1",
