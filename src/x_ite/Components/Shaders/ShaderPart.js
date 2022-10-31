@@ -186,11 +186,21 @@ function (Fields,
                if (! gl .getShaderParameter (shader, gl .COMPILE_STATUS))
                {
                   const
-                     log      = gl .getShaderInfoLog (shader),
-                     match    = log .match (/(\d+):(\d+)/),
-                     fileName = shaderCompiler .getSourceFileName (match [1]) || url || this .getExecutionContext () .getWorldUrl ();
+                     log   = gl .getShaderInfoLog (shader),
+                     match = log .match (/(\d+):(\d+)/);
 
-                  throw new Error ("Error in " + this .getTypeName () + " '" + this .getName () + "' in URL '" + fileName + "', line " + match [2]);
+                  if (match)
+                  {
+                     const fileName = shaderCompiler .getSourceFileName (match [1]) || url || this .getExecutionContext () .getWorldURL ();
+
+                     throw new Error ("Error in " + this .getTypeName () + " '" + this .getName () + "' in URL '" + fileName + "', line " + match [2] + ", " + log);
+                  }
+                  else
+                  {
+                     const fileName = url || this .getExecutionContext () .getWorldURL ();
+
+                     throw new Error ("Error in " + this .getTypeName () + " '" + this .getName () + "' in URL '" + fileName + "', " + log);
+                  }
                }
 
                this .setLoadState (X3DConstants .COMPLETE_STATE);
