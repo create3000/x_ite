@@ -129,8 +129,8 @@ function (Fields,
             key += ".";
             key += renderContext .textureNode ? "1" : appearanceNode .getTextureBits () .toString (4);
             key += ".";
-            key += appearanceNode .getTextureTransformMapping () .size || 1;
-            key += geometryContext .textureCoordinateMapping .size || 1;
+            key += appearanceNode .getTextureTransformMapping () .size || "1";
+            key += geometryContext .textureCoordinateMapping .size || "1";
             key += this .getMaterialKey (renderContext .shadows);
          }
          else
@@ -204,8 +204,8 @@ function (Fields,
                if (+this .textureBits)
                {
                   options .push ("X3D_MATERIAL_TEXTURES");
-                  options .push ("X3D_NUM_TEXTURE_TRANSFORMS " + (appearanceNode .getTextureTransformMapping () .size || 1));
-                  options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .textureCoordinateMapping .size || 1));
+                  options .push ("X3D_NUM_TEXTURE_TRANSFORMS " + (appearanceNode .getTextureTransformMapping () .size || "1"));
+                  options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .textureCoordinateMapping .size || "1"));
                }
                else
                {
