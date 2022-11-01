@@ -129,11 +129,12 @@ function (X3DCast,
       {
          this .uniformNames = value;
       },
-      getDefaultUniformsAndAttributes: function (program)
+      getDefaultUniformsAndAttributes: function ()
       {
          // Get uniforms and attributes.
 
          const
+            program       = this .getProgram (),
             browser       = this .getBrowser (),
             gl            = browser .getContext (),
             maxClipPlanes = browser .getMaxClipPlanes (),
@@ -417,9 +418,11 @@ function (X3DCast,
 
          return -1;
       },
-      addShaderFields: function (program)
+      addShaderFields: function ()
       {
-         const gl = this .getBrowser () .getContext ();
+         const
+            program = this .getProgram (),
+            gl      = this .getBrowser () .getContext ();
 
          gl .useProgram (program);
 
@@ -529,9 +532,9 @@ function (X3DCast,
                else
                   field [_uniformLocation] = location;
 
-               field .addInterest ("set_field__", this, program);
+               field .addInterest ("set_field__", this);
 
-               this .set_field__ (program, field);
+               this .set_field__ (field);
             }
          }
       },
@@ -544,9 +547,10 @@ function (X3DCast,
       {
          const rotation = new Float32Array (9);
 
-         return function (program, field)
+         return function (field)
          {
             const
+               program  = this .getProgram (),
                gl       = this .getBrowser () .getContext (),
                location = field [_uniformLocation];
 
@@ -1089,9 +1093,9 @@ function (X3DCast,
             geometryContext .textureCoordinateNode .setShaderUniforms (gl, this);
          };
       })(),
-      enable: function (gl, program)
+      enable: function (gl)
       {
-         gl .useProgram (program);
+         gl .useProgram (this .getProgram ());
 
          for (const location of this .textures)
          {
@@ -1258,8 +1262,8 @@ function (X3DCast,
          function cmp (lhs, rhs) { return lhs < rhs ? -1 : lhs > rhs ? 1 : 0; }
 
          const
-            gl      = this .getBrowser () .getContext (),
-            program = this .getProgram ();
+            program = this .getProgram (),
+            gl      = this .getBrowser () .getContext ();
 
          const
             result = {

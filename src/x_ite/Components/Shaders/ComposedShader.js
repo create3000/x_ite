@@ -126,7 +126,7 @@ function (Fields,
          X3DShaderNode .prototype .addUserDefinedField .call (this, accessType, name, field);
 
          if (this .isInitialized () && this .isLive () .getValue () && this .isValid ())
-            this .addShaderFields (this .program);
+            this .addShaderFields ();
       },
       removeUserDefinedField: function (name)
       {
@@ -136,7 +136,7 @@ function (Fields,
          X3DShaderNode .prototype .removeUserDefinedField .call (this, name);
 
          if (this .isInitialized () && this .isLive () .getValue () && this .isValid ())
-            this .addShaderFields (this .program);
+            this .addShaderFields ();
       },
       setTransformFeedbackVaryings: function (value)
       {
@@ -151,7 +151,7 @@ function (Fields,
          if (this .isLive () .getValue ())
          {
             if (this .isValid ())
-               this .addShaderFields (this .program);
+               this .addShaderFields ();
          }
          else
          {
@@ -190,8 +190,8 @@ function (Fields,
             if (gl .getProgramParameter (program, gl .LINK_STATUS))
             {
                this .setValid (true);
-               this .getDefaultUniformsAndAttributes (program);
-               this .addShaderFields (program);
+               this .getDefaultUniformsAndAttributes ();
+               this .addShaderFields ();
             }
             else
             {
@@ -207,10 +207,6 @@ function (Fields,
          {
             this .setValid (false);
          }
-      },
-      enable: function (gl)
-      {
-         X3DProgrammableShaderObject .prototype .enable .call (this, gl, this .program);
       },
       dispose: function ()
       {
