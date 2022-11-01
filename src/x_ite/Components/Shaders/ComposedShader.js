@@ -189,31 +189,24 @@ function (Fields,
 
             if (gl .getProgramParameter (program, gl .LINK_STATUS))
             {
-               this .getDefaultUniformsAndAttributes (program);
                this .setValid (true);
+               this .getDefaultUniformsAndAttributes (program);
+               this .addShaderFields (program);
             }
             else
             {
+               this .setValid (false);
+
                if (this ._parts .length)
                {
                   console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
                }
-
-               this .setValid (false);
             }
-
-            if (this .isValid ())
-               this .addShaderFields (this .program);
          }
          else
          {
             this .setValid (false);
          }
-      },
-      set_field__: function (field)
-      {
-         if (this .isValid ())
-            X3DProgrammableShaderObject .prototype .set_field__ .call (this, field, this .program);
       },
       enable: function (gl)
       {

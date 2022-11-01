@@ -529,9 +529,9 @@ function (X3DCast,
                else
                   field [_uniformLocation] = location;
 
-               field .addInterest ("set_field__", this);
+               field .addInterest ("set_field__", this, program);
 
-               this .set_field__ (field, program);
+               this .set_field__ (program, field);
             }
          }
       },
@@ -542,9 +542,9 @@ function (X3DCast,
       },
       set_field__: (function ()
       {
-         const matrix3 = new Matrix3 ();
+         const rotation = new Float32Array (9);
 
-         return function (field, program)
+         return function (program, field)
          {
             const
                gl       = this .getBrowser () .getContext (),
@@ -824,17 +824,17 @@ function (X3DCast,
 
                      for (var i = 0, k = 0, length = field .length; i < length; ++ i)
                      {
-                        const matrix = field [i] .getValue () .getMatrix (matrix3);
+                        field [i] .getValue () .getMatrix (rotation);
 
-                        array [k++] = matrix [0];
-                        array [k++] = matrix [1];
-                        array [k++] = matrix [2];
-                        array [k++] = matrix [3];
-                        array [k++] = matrix [4];
-                        array [k++] = matrix [5];
-                        array [k++] = matrix [6];
-                        array [k++] = matrix [7];
-                        array [k++] = matrix [8];
+                        array [k++] = rotation [0];
+                        array [k++] = rotation [1];
+                        array [k++] = rotation [2];
+                        array [k++] = rotation [3];
+                        array [k++] = rotation [4];
+                        array [k++] = rotation [5];
+                        array [k++] = rotation [6];
+                        array [k++] = rotation [7];
+                        array [k++] = rotation [8];
                      }
 
                      for (let length = array .length; k < length; ++ k)
