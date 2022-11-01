@@ -211,14 +211,14 @@ function (Shading,
          fragmentShader ._url .push (fs .startsWith ("data:") ? fs : urls .getShaderUrl ("webgl" + version + "/" + fs + ".fs"));
          fragmentShader .setup ();
 
-         const shader = new ComposedShader (this .getPrivateScene ());
-         shader .setName (name);
-         shader ._language = "GLSL";
-         shader ._parts .push (vertexShader);
-         shader ._parts .push (fragmentShader);
-         shader .setup ();
+         const shaderNode = new ComposedShader (this .getPrivateScene ());
+         shaderNode .setName (name);
+         shaderNode ._language = "GLSL";
+         shaderNode ._parts .push (vertexShader);
+         shaderNode ._parts .push (fragmentShader);
+         shaderNode .setup ();
 
-         return shader;
+         return shaderNode;
       },
    };
 

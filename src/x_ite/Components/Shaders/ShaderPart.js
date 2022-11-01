@@ -119,6 +119,18 @@ function (Fields,
 
          this .requestImmediateLoad ();
       },
+      getSourceText: function ()
+      {
+         return this ._url;
+      },
+      getOptions: function ()
+      {
+         return this .options;
+      },
+      setOptions: function (value)
+      {
+         this .options = value;
+      },
       getShader: function ()
       {
          return this .shader;
@@ -139,18 +151,6 @@ function (Fields,
             return shaderTypes .get (this ._type .getValue ()) || "VERTEX_SHADER";
          };
       })(),
-      getSourceText: function ()
-      {
-         return this ._url;
-      },
-      setOptions: function (value)
-      {
-         this .options = value;
-      },
-      getOptions: function ()
-      {
-         return this .options;
-      },
       unloadNow: function ()
       {
          this .valid = false;

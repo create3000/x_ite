@@ -125,6 +125,10 @@ function (X3DCast,
       {
          return true;
       },
+      getUniformNames: function ()
+      {
+         return this .uniformNames;
+      },
       setUniformNames: function (value)
       {
          this .uniformNames = value;
