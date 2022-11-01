@@ -109,9 +109,9 @@ function (X3DSingleTextureNode,
                gl .texImage2D (target, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          };
       })(),
-      updateTextureProperties: function ()
+      updateTextureParameters: function ()
       {
-         X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
+         X3DSingleTextureNode .prototype .updateTextureParameters .call (this,
                                                                          this .target,
                                                                          this ._textureProperties .getValue (),
                                                                          this .texturePropertiesNode,

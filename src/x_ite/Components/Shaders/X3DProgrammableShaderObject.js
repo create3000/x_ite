@@ -118,8 +118,18 @@ function (X3DCast,
       constructor: X3DProgrammableShaderObject,
       initialize: function ()
       {
+         const browser = this .getBrowser ();
+
+         browser .getRenderingProperties () ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
+
          // Use by multi texture nodes.
-         this .x3d_MaxTextures = this .getBrowser () .getMaxTextures ();
+         this .x3d_MaxTextures = browser .getMaxTextures ();
+
+         this .set_logarithmicDepthBuffer__ ();
+      },
+      set_logarithmicDepthBuffer__: function ()
+      {
+         this .logarithmicDepthBuffer =this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer");
       },
       canUserDefinedFields: function ()
       {
@@ -1029,14 +1039,17 @@ function (X3DCast,
 
                // Logarithmic depth buffer support
 
-               const
-                  viewpoint      = renderObject .getViewpoint (),
-                  navigationInfo = renderObject .getNavigationInfo ();
+               if (this .logarithmicDepthBuffer)
+               {
+                  const
+                     viewpoint      = renderObject .getViewpoint (),
+                     navigationInfo = renderObject .getNavigationInfo ();
 
-               if (viewpoint instanceof OrthoViewpoint)
-                  gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, -1);
-               else
-                  gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
+                  if (viewpoint instanceof OrthoViewpoint)
+                     gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, -1);
+                  else
+                     gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
+               }
             }
 
             // Model view matrix
@@ -1053,6 +1066,13 @@ function (X3DCast,
 
             gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrix);
 
+            // Fog
+
+            if (fogNode)
+               fogNode .setShaderUniforms (gl, this);
+            else
+               gl .uniform1i (this .x3d_FogType, 0);
+
             // Clip planes and local lights
 
             this .numClipPlanes         = 0;
@@ -1065,13 +1085,6 @@ function (X3DCast,
             gl .uniform1i (this .x3d_NumClipPlanes,         this .numClipPlanes);
             gl .uniform1i (this .x3d_NumLights,             this .numLights);
             gl .uniform1i (this .x3d_NumProjectiveTextures, this .numProjectiveTextures);
-
-            // Fog
-
-            if (fogNode)
-               fogNode .setShaderUniforms (gl, this);
-            else
-               gl .uniform1i (this .x3d_FogType, 0);
 
             // Alpha
 

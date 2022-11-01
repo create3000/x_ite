@@ -80,8 +80,8 @@ function (X3DSingleTextureNode,
       {
          X3DSingleTextureNode .prototype .initialize .call (this);
 
-         this ._repeatS .addInterest ("updateTextureProperties", this);
-         this ._repeatT .addInterest ("updateTextureProperties", this);
+         this ._repeatS .addInterest ("updateTextureParameters", this);
+         this ._repeatT .addInterest ("updateTextureParameters", this);
 
          const gl = this .getBrowser () .getContext ();
 
@@ -137,7 +137,7 @@ function (X3DSingleTextureNode,
          gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
          this .setTransparent (transparent);
-         this .updateTextureProperties ();
+         this .updateTextureParameters ();
          this .addNodeEvent ();
       },
       updateTexture: function (data, flipY)
@@ -156,9 +156,9 @@ function (X3DSingleTextureNode,
 
          this .addNodeEvent ();
       },
-      updateTextureProperties: function ()
+      updateTextureParameters: function ()
       {
-         X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
+         X3DSingleTextureNode .prototype .updateTextureParameters .call (this,
                                                                          this .target,
                                                                          this ._textureProperties .getValue (),
                                                                          this .texturePropertiesNode,

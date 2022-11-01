@@ -89,17 +89,17 @@ function (X3DTextureNode,
       set_textureProperties__: function (update)
       {
          if (this .texturePropertiesNode)
-            this .texturePropertiesNode .removeInterest ("updateTextureProperties", this);
+            this .texturePropertiesNode .removeInterest ("updateTextureParameters", this);
 
          this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this ._textureProperties);
 
          if (! this .texturePropertiesNode)
             this .texturePropertiesNode = this .getBrowser () .getDefaultTextureProperties ();
 
-         this .texturePropertiesNode .addInterest ("updateTextureProperties", this);
+         this .texturePropertiesNode .addInterest ("updateTextureParameters", this);
 
          if (update)
-            this .updateTextureProperties ();
+            this .updateTextureParameters ();
       },
       getCount: function ()
       {
@@ -109,7 +109,7 @@ function (X3DTextureNode,
       {
          return this .texture;
       },
-      updateTextureProperties: (function ()
+      updateTextureParameters: (function ()
       {
          // Anisotropic Filtering in WebGL is handled by an extension, use one of getExtension depending on browser:
 

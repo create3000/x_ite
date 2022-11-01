@@ -274,7 +274,7 @@ function (Fields,
                gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
             }
 
-            this .updateTextureProperties ();
+            this .updateTextureParameters ();
 
             dependentRenderer .getProjectionMatrix () .pop ();
             dependentRenderer .getViewVolumes      () .pop ();

@@ -219,7 +219,7 @@ function (Fields,
 
             gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
-            this .updateTextureProperties ();
+            this .updateTextureParameters ();
          }
          else
          {
