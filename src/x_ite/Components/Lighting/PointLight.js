@@ -228,9 +228,9 @@ function (Fields,
                gl .activeTexture (gl .TEXTURE0 + textureUnit);
 
                if (gl .HAS_FEATURE_DEPTH_TEXTURE)
-                  gl .bindTexture (gl .TEXTURE_2D, shadowBuffer .getDepthTexture ());
+                  gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
                else
-                  gl .bindTexture (gl .TEXTURE_2D, shadowBuffer .getColorTexture ());
+                  gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
 
                gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
             }
