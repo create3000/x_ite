@@ -105,14 +105,6 @@ function (Fields,
          this ._MaxLights      = browser .getMaxLights ();
          this ._ColorDepth     = browser .getColorDepth ();
          this ._TextureMemory  = browser .getTextureMemory ();
-
-         browser .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
-
-         this .set_shading__ (browser .getBrowserOptions () ._Shading);
-      },
-      set_shading__: function (shading)
-      {
-         this ._Shading = shading;
       },
    });
 

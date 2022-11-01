@@ -238,7 +238,7 @@ function (X3DNode,
          if (! this .currentViewport)
             this .currentViewport = this .getBrowser () .getDefaultViewport ();
       },
-      bind: function (viewpointName)
+      bindBindables: function (viewpointName)
       {
          this .traverse (TraverseType .CAMERA, this);
 

@@ -302,32 +302,31 @@ function ($,
          this .setDescription ("");
          this .getBrowserOptions () .configure ();
          this .setBrowserLoading (true);
-         this .prepareEvents () .removeInterest ("bind", this);
-         this ._loadCount .addInterest ("set_loadCount__", this);
+         this .prepareEvents () .removeInterest ("updateInitialized", this);
+         this ._loadCount .addInterest ("checkLoadCount", this);
 
          for (const object of scene .getLoadingObjects ())
             this .addLoadCount (object);
 
          this .setExecutionContext (scene);
-         this .getWorld () .bind ();
+         this .getWorld () .bindBindables ();
          this .getWorld () .traverse (TraverseType .DISPLAY, null);
 
          scene .setLive (this .isLive () .getValue ());
       },
-      set_loadCount__: function (loadCount)
+      checkLoadCount: function (loadCount)
       {
          if (loadCount .getValue ())
             return;
 
-         this ._loadCount .removeInterest ("set_loadCount__", this);
+         this ._loadCount .removeInterest ("checkLoadCount", this);
 
-         this .prepareEvents () .addInterest ("bind", this);
+         this .prepareEvents () .addInterest ("updateInitialized", this);
          this .addBrowserEvent ();
       },
-      bind: function ()
+      updateInitialized: function ()
       {
-         this .prepareEvents () .removeInterest ("bind", this);
-
+         this .prepareEvents () .removeInterest ("updateInitialized", this);
          this .setBrowserLoading (false);
 
          if (this .initialized () .getValue ())
@@ -445,8 +444,8 @@ function ($,
 
             // Cancel any loading.
 
-            this ._loadCount       .removeInterest ("set_loadCount__", this);
-            this .prepareEvents () .removeInterest ("bind", this);
+            this ._loadCount       .removeInterest ("checkLoadCount",    this);
+            this .prepareEvents () .removeInterest ("updateInitialized", this);
 
             if (this [_loader])
                this [_loader] .abort ();

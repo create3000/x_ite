@@ -150,13 +150,13 @@ function (SupportedNodes,
       {
          this ._activeLayer = this .layerSet .getActiveLayer ();
       },
-      bind: function ()
+      bindBindables: function ()
       {
          // Bind first X3DBindableNodes found in each layer.
 
          const worldURL = this .getExecutionContext () .getWorldURL ();
 
-         this .layerSet .bind (decodeURIComponent (new URL (worldURL, worldURL) .hash .substr (1)));
+         this .layerSet .bindBindables (decodeURIComponent (new URL (worldURL, worldURL) .hash .substr (1)));
       },
       traverse: function (type, renderObject)
       {

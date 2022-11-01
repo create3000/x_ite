@@ -253,14 +253,28 @@ function (Fields,
          if (typeof browser .setTextureQuality === "function")
             browser .setTextureQuality (this .textureQuality);
       },
-      set_shading__: function (value)
+      set_shading__: (function ()
       {
-         const shading = value .getValue () .toUpperCase () .replace ("POINTSET", "POINT");
+         const strings = {
+            [Shading .POINT]:     "POINT",
+            [Shading .WIREFRAME]: "WIREFRAME",
+            [Shading .FLAT]:      "FLAT",
+            [Shading .GOURAUD]:   "GOURAUD",
+            [Shading .PHONG]:     "PHONG",
+         };
 
-         this .shading = this .getEnum (Shading, shading, Shading .GOURAUD);
+         return function (value)
+         {
+            const
+               browser = this .getBrowser (),
+               shading = value .getValue () .toUpperCase () .replace ("POINTSET", "POINT");
 
-         this .getBrowser () .setShading (this .shading);
-      },
+            this .shading = this .getEnum (Shading, shading, Shading .GOURAUD);
+
+            browser .getRenderingProperties () ._Shading = strings [this .shading];
+            browser .setShading (this .shading);
+         };
+      })(),
       set_straightenHorizon__: function (straightenHorizon)
       {
          this .localStorage .StraightenHorizon = straightenHorizon .getValue ();
