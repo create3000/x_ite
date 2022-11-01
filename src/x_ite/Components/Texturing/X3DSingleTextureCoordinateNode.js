@@ -92,7 +92,7 @@ function (X3DTextureCoordinateNode,
       setShaderUniforms: function (gl, shaderObject)
       {
          for (let i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-            this .setShaderUniformsToChannel (gl, shaderObject, i);
+            gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [i], 0);
       },
       setShaderUniformsToChannel: function (gl, shaderObject, i)
       {
