@@ -157,13 +157,13 @@ function (Fields,
       set_loadState__: function (texture, index)
       {
          if (texture)
-            this .setLoadStateBit (texture .checkLoadState (), texture .getData (), index);
+            this .setLoadStateBit (index, texture .checkLoadState (), texture .getData ());
          else
-            this .setLoadStateBit (X3DConstants .NOT_STARTED, null, index);
+            this .setLoadStateBit (index, X3DConstants .NOT_STARTED, null);
 
-         this .setTextures ();
+         this .updateTextures ();
       },
-      setLoadStateBit: function (loadState, data, bit)
+      setLoadStateBit: function (bit, loadState, data)
       {
          this .loadStateBits .set (bit, loadState === X3DConstants .COMPLETE_STATE || data);
       },
@@ -187,7 +187,7 @@ function (Fields,
 
          return true;
       },
-      setTextures: function ()
+      updateTextures: function ()
       {
          const gl = this .getBrowser () .getContext ();
 

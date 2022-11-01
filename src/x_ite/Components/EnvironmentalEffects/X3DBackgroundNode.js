@@ -141,46 +141,47 @@ function (X3DBindableNode,
       },
       set_frontTexture__: function (value)
       {
-         this .setTexture ("frontTexture", value, 0);
+         this .updateTexture ("frontTexture", value, 0);
       },
       set_backTexture__: function (value)
       {
-         this .setTexture ("backTexture", value, 1);
+         this .updateTexture ("backTexture", value, 1);
       },
       set_leftTexture__: function (value)
       {
-         this .setTexture ("leftTexture", value, 2);
+         this .updateTexture ("leftTexture", value, 2);
       },
       set_rightTexture__: function (value)
       {
-         this .setTexture ("rightTexture", value, 3);
+         this .updateTexture ("rightTexture", value, 3);
       },
       set_topTexture__: function (value)
       {
-         this .setTexture ("topTexture", value, 4);
+         this .updateTexture ("topTexture", value, 4);
       },
       set_bottomTexture__: function (value)
       {
-         this .setTexture ("bottomTexture", value, 5);
+         this .updateTexture ("bottomTexture", value, 5);
       },
-      setTexture: function (key, texture, bit)
+      updateTexture: function (name, texture, index)
       {
-         if (this [key])
-            this [key] ._loadState .removeInterest ("setTextureBit", this);
+         if (this [name])
+            this [name] ._loadState .removeInterest ("setTextureBit", this);
 
-         this [key] = texture;
+         this [name] = texture;
 
          if (texture)
          {
-            texture ._loadState .addInterest ("setTextureBit", this, texture, bit);
-            this .setTextureBit (texture, bit, texture ._loadState);
+            texture ._loadState .addInterest ("setTextureBit", this, index, texture);
+
+            this .setTextureBit (index, texture, texture ._loadState);
          }
          else
          {
-            this .textureBits .set (bit, false);
+            this .textureBits .set (index, false);
          }
       },
-      setTextureBit: function (texture, bit, loadState)
+      setTextureBit: function (bit, texture, loadState)
       {
          this .textureBits .set (bit, loadState .getValue () === X3DConstants .COMPLETE_STATE || (texture && texture .getData ()));
       },
