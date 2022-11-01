@@ -979,11 +979,9 @@ function (X3DCast,
             const
                renderObject        = renderContext .renderObject,
                fogNode             = renderContext .fogNode,
-               shapeNode           = renderContext .shapeNode,
-               geometryContext     = renderContext .geometryContext || shapeNode .getGeometry (),
-               geometryType        = geometryContext .geometryType,
+               geometryContext     = renderContext .geometryContext,
                appearanceNode      = renderContext .appearanceNode,
-               stylePropertiesNode = appearanceNode .getStyleProperties (geometryType),
+               stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
                materialNode        = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
                textureNode         = renderContext .textureNode || appearanceNode .getTexture (),
                modelViewMatrix     = renderContext .modelViewMatrix;

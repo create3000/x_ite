@@ -571,11 +571,12 @@ function (TextureBuffer,
 
                renderContext .modelViewMatrix .set (modelViewMatrix);
                renderContext .scissor .assign (viewVolume .getScissor ());
-               renderContext .shapeNode      = shapeNode;
-               renderContext .appearanceNode = shapeNode .getAppearance ();
-               renderContext .distance       = bboxCenter .z;
-               renderContext .fogNode        = this .localFogs .at (-1);
-               renderContext .shadows        = this .shadows .at (-1);
+               renderContext .shapeNode       = shapeNode;
+               renderContext .appearanceNode  = shapeNode .getAppearance ();
+               renderContext .geometryContext = shapeNode .getGeometry ();
+               renderContext .distance        = bboxCenter .z;
+               renderContext .fogNode         = this .localFogs .at (-1);
+               renderContext .shadows         = this .shadows .at (-1);
 
                // Clip planes and local lights
 
