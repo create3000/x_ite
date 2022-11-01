@@ -384,7 +384,7 @@ function (X3DGeometryNode,
                      // Setup shader.
 
                      shaderNode .enable (gl);
-                     shaderNode .setUniforms (gl, renderContext);
+                     shaderNode .setUniforms (gl, this, renderContext);
 
                      // Setup vertex attributes.
 
@@ -441,7 +441,7 @@ function (X3DGeometryNode,
             // Setup shader.
 
             shaderNode .enable (gl);
-            shaderNode .setUniforms (gl, renderContext);
+            shaderNode .setUniforms (gl, this, renderContext);
 
             // Setup vertex attributes.
 
@@ -486,7 +486,7 @@ function (X3DGeometryNode,
          // Setup shader.
 
          shaderNode .enable (gl);
-         shaderNode .setUniforms (gl, renderContext);
+         shaderNode .setUniforms (gl, this, renderContext);
 
          // Setup vertex attributes.
 

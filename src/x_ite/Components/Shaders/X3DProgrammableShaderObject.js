@@ -974,12 +974,11 @@ function (X3DCast,
       {
          const normalMatrix = new Float32Array (9);
 
-         return function (gl, renderContext, front = true)
+         return function (gl, geometryContext, renderContext, front = true)
          {
             const
                renderObject        = renderContext .renderObject,
                fogNode             = renderContext .fogNode,
-               geometryContext     = renderContext .geometryContext,
                appearanceNode      = renderContext .appearanceNode,
                stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
                materialNode        = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),

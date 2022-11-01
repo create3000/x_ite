@@ -992,15 +992,13 @@ function (Fields,
                {
                   // Setup shader.
 
-                  renderContext .geometryContext = this .geometryContext;
-
                   const blendModeNode = appearanceNode .getBlendMode ();
 
                   if (blendModeNode)
                      blendModeNode .enable (gl);
 
                   shaderNode .enable (gl);
-                  shaderNode .setUniforms (gl, renderContext);
+                  shaderNode .setUniforms (gl, this .geometryContext, renderContext);
 
                   if (this .numTexCoords)
                   {

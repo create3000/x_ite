@@ -1024,7 +1024,7 @@ function (Fields,
             blendModeNode .enable (gl);
 
          shaderNode .enable (gl);
-         shaderNode .setUniforms (gl, renderContext, front);
+         shaderNode .setUniforms (gl, this, renderContext, front);
 
          // Setup vertex attributes.
 
@@ -1145,7 +1145,7 @@ function (Fields,
          // Setup shader.
 
          shaderNode .enable (gl);
-         shaderNode .setUniforms (gl, renderContext, front);
+         shaderNode .setUniforms (gl, this, renderContext, front);
 
          // Setup vertex attributes.
 
