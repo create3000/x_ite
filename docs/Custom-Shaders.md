@@ -562,13 +562,12 @@ A ComposedShader defines a number of special variables for the various shader st
 
 ### Uniform Struct x3d\_PointPropertiesParameters
 
-| Type  | Name                 | Comment                                                       |
-|-------|----------------------|---------------------------------------------------------------|
-| float | pointSizeScaleFactor |                                                               |
-| float | pointSizeMinValue    |                                                               |
-| float | pointSizeMaxValue    |                                                               |
-| vec3  | pointSizeAttenuation |                                                               |
-| int   | colorMode            | x3d\_PointColor, x3d\_TextureColor, x3d\_TextureAndPointColor |
+| Type  | Name                 | Comment  |
+|-------|----------------------|----------|
+| float | pointSizeScaleFactor |          |
+| float | pointSizeMinValue    |          |
+| float | pointSizeMaxValue    |          |
+| vec3  | pointSizeAttenuation |          |
 
 ### Uniform Struct x3d\_LinePropertiesParameters
 
@@ -705,31 +704,6 @@ Some built-in variables are enumerated and have special values and meanings. The
          <td>int</td>
          <td>x3d_SpotLight</td>
          <td>3</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td colspan="5"><hr/>
-         </td>
-      </tr>
-      <tr>
-         <td>x3d_ColorMode</td>
-         <td>int</td>
-         <td>x3d_PointColor</td>
-         <td>0</td>
-         <td>PointProperties colorMode constants</td>
-      </tr>
-      <tr>
-         <td></td>
-         <td>int</td>
-         <td>x3d_TextureColor</td>
-         <td>1</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td></td>
-         <td>int</td>
-         <td>x3d_TextureAndPointColor</td>
-         <td>2</td>
          <td></td>
       </tr>
    </tbody>
