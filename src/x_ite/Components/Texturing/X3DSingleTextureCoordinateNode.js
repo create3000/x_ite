@@ -94,6 +94,10 @@ function (X3DTextureCoordinateNode,
          for (let i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
             this .setShaderUniformsToChannel (gl, shaderObject, i);
       },
+      setShaderUniformsToChannel: function (gl, shaderObject, i)
+      {
+         gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [i], 0);
+      },
    });
 
    return X3DSingleTextureCoordinateNode;

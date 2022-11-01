@@ -66,10 +66,6 @@ function (X3DGeometricPropertyNode,
    X3DTextureCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
    {
       constructor: X3DTextureCoordinateNode,
-      setShaderUniformsToChannel: function (gl, shaderObject, i)
-      {
-         gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [i], 0);
-      },
    });
 
    return X3DTextureCoordinateNode;

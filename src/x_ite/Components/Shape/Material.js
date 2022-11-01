@@ -329,7 +329,7 @@ function (Fields,
 
             if (this .ambientTextureNode)
             {
-               this .ambientTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, ambientTexture);
+               this .ambientTextureNode .setShaderUniforms (gl, shaderObject, renderObject, ambientTexture);
 
                gl .uniform1i (ambientTexture .textureTransformMapping,  textureTransformMapping  .get (this ._ambientTextureMapping .getValue ()) || 0);
                gl .uniform1i (ambientTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._ambientTextureMapping .getValue ()) || 0);
@@ -339,7 +339,7 @@ function (Fields,
 
             if (this .diffuseTextureNode)
             {
-               this .diffuseTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, diffuseTexture);
+               this .diffuseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, diffuseTexture);
 
                gl .uniform1i (diffuseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._diffuseTextureMapping .getValue ()) || 0);
                gl .uniform1i (diffuseTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._diffuseTextureMapping .getValue ()) || 0);
@@ -349,7 +349,7 @@ function (Fields,
 
             if (this .specularTextureNode)
             {
-               this .specularTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, specularTexture);
+               this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, specularTexture);
 
                gl .uniform1i (specularTexture .textureTransformMapping,  textureTransformMapping  .get (this ._specularTextureMapping .getValue ()) || 0);
                gl .uniform1i (specularTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._specularTextureMapping .getValue ()) || 0);
@@ -359,7 +359,7 @@ function (Fields,
 
             if (this .shininessTextureNode)
             {
-               this .shininessTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, shininessTexture);
+               this .shininessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, shininessTexture);
 
                gl .uniform1i (shininessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._shininessTextureMapping .getValue ()) || 0);
                gl .uniform1i (shininessTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._shininessTextureMapping .getValue ()) || 0);
@@ -371,7 +371,7 @@ function (Fields,
             {
                gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
-               this .occlusionTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, occlusionTexture);
+               this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, occlusionTexture);
 
                gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
                gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._occlusionTextureMapping .getValue ()) || 0);

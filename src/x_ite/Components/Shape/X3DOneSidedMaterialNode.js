@@ -178,7 +178,7 @@ function (Fields,
             {
                const emissiveTexture = shaderObject .x3d_EmissiveTexture;
 
-               this .emissiveTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, emissiveTexture);
+               this .emissiveTextureNode .setShaderUniforms (gl, shaderObject, renderObject, emissiveTexture);
 
                gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (this ._emissiveTextureMapping .getValue ()) || 0);
                gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._emissiveTextureMapping .getValue ()) || 0);
@@ -190,7 +190,7 @@ function (Fields,
             {
                const normalTexture = shaderObject .x3d_NormalTexture;
 
-               this .normalTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, normalTexture);
+               this .normalTextureNode .setShaderUniforms (gl, shaderObject, renderObject, normalTexture);
 
                gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (this ._normalTextureMapping .getValue ()) || 0);
                gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._normalTextureMapping .getValue ()) || 0);

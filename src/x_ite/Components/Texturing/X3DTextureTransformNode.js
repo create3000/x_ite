@@ -74,10 +74,6 @@ function (X3DAppearanceChildNode,
       {
          this .matrixArray .set (value);
       },
-      setShaderUniformsToChannel: function (gl, shaderObject, i)
-      {
-         gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [i], false, this .matrixArray);
-      },
    });
 
    return X3DTextureTransformNode;

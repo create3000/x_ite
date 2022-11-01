@@ -258,7 +258,7 @@ function (Fields,
 
             if (this .baseTextureNode)
             {
-               this .baseTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, baseTexture);
+               this .baseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, baseTexture);
 
                gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._baseTextureMapping .getValue ()) || 0);
                gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._baseTextureMapping .getValue ()) || 0);
@@ -268,7 +268,7 @@ function (Fields,
 
             if (this .metallicRoughnessTextureNode)
             {
-               this .metallicRoughnessTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, metallicRoughnessTexture);
+               this .metallicRoughnessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, metallicRoughnessTexture);
 
                gl .uniform1i (metallicRoughnessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
                gl .uniform1i (metallicRoughnessTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
@@ -280,7 +280,7 @@ function (Fields,
             {
                gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
-               this .occlusionTextureNode .setShaderUniformsToChannel (gl, shaderObject, renderObject, occlusionTexture);
+               this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, occlusionTexture);
 
                gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
                gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._occlusionTextureMapping .getValue ()) || 0);
