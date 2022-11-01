@@ -108,11 +108,11 @@ function (Fields,
          this .layerNode0 .setup ();
          this .layerNode0 .isLayer0 (true);
 
-         this ._activeLayer .addInterest ("set_activeLayer", this);
-         this ._order       .addInterest ("set_layers", this);
-         this ._layers      .addInterest ("set_layers", this);
+         this ._activeLayer .addInterest ("set_activeLayer__", this);
+         this ._order       .addInterest ("set_layers__", this);
+         this ._layers      .addInterest ("set_layers__", this);
 
-         this .set_layers ();
+         this .set_layers__ ();
       },
       getActiveLayer: function ()
       {
@@ -122,7 +122,7 @@ function (Fields,
       {
          this .layerNode0 = value;
 
-         this .set_layers ();
+         this .set_layers__ ();
       },
       getLayer0: function ()
       {
@@ -132,7 +132,7 @@ function (Fields,
       {
          return this .layerNodes;
       },
-      set_activeLayer: function ()
+      set_activeLayer__: function ()
       {
          if (this ._activeLayer .getValue () === 0)
          {
@@ -155,7 +155,7 @@ function (Fields,
             }
          }
       },
-      set_layers: function ()
+      set_layers__: function ()
       {
          const layers = this ._layers .getValue ();
 
@@ -181,7 +181,7 @@ function (Fields,
             }
          }
 
-         this .set_activeLayer ();
+         this .set_activeLayer__ ();
       },
       bindBindables: function (viewpointName)
       {
