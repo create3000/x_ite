@@ -136,71 +136,37 @@ uniform sampler2D   x3d_Texture2D [X3D_NUM_TEXTURES];
 uniform sampler3D   x3d_Texture3D [X3D_NUM_TEXTURES];
 uniform samplerCube x3d_TextureCube [X3D_NUM_TEXTURES];
 
+#if defined (X3D_MULTI_TEXTURING)
 vec4
-getTexture2D (const in int i, const in vec2 texCoord)
+getTexture (const in int i, const in vec3 texCoord)
 {
-   #if defined (X3D_MULTI_TEXTURING)
-      switch (i)
-      {
-         #if X3D_NUM_TEXTURES > 0
-         case 0:
-            return texture (x3d_Texture2D [0], texCoord);
+   switch (i)
+   {
+      #if X3D_NUM_TEXTURES > 0
+      case 0:
+         #if defined (X3D_TEXTURE0_2D)
+            return texture (x3d_Texture2D [0], texCoord .st);
+         #elif defined (X3D_TEXTURE0_3D)
+            return texture (x3d_Texture3D [0], texCoord .stp);
+         #elif defined (X3D_TEXTURE0_CUBE)
+            return texture (x3d_TextureCube [0], texCoord .stp);
          #endif
-         #if X3D_NUM_TEXTURES > 1
-         case 1:
-            return texture (x3d_Texture2D [1], texCoord);
+      #endif
+      #if X3D_NUM_TEXTURES > 1
+      case 1:
+         #if defined (X3D_TEXTURE0_2D)
+            return texture (x3d_Texture2D [1], texCoord .st);
+         #elif defined (X3D_TEXTURE0_3D)
+            return texture (x3d_Texture3D [1], texCoord .stp);
+         #elif defined (X3D_TEXTURE0_CUBE)
+            return texture (x3d_TextureCube [1], texCoord .stp);
          #endif
-         default:
-            return vec4 (0.0);
-      }
-   #else
-      return texture (x3d_Texture2D [0], texCoord);
-   #endif
-}
+      #endif
+   }
 
-vec4
-getTexture3D (const in int i, const in vec3 texCoord)
-{
-   #if defined (X3D_MULTI_TEXTURING)
-      switch (i)
-      {
-         #if X3D_NUM_TEXTURES > 0
-         case 0:
-            return texture (x3d_Texture3D [0], texCoord);
-         #endif
-         #if X3D_NUM_TEXTURES > 1
-         case 1:
-            return texture (x3d_Texture3D [1], texCoord);
-         #endif
-         default:
-            return vec4 (0.0);
-      }
-   #else
-      return texture (x3d_Texture3D [0], texCoord);
-   #endif
+   return vec4 (0.0);
 }
-
-vec4
-getTextureCube (const in int i, const in vec3 texCoord)
-{
-   #if defined (X3D_MULTI_TEXTURING)
-      switch (i)
-      {
-         #if X3D_NUM_TEXTURES > 0
-         case 0:
-            return texture (x3d_TextureCube [0], texCoord);
-         #endif
-         #if X3D_NUM_TEXTURES > 1
-         case 1:
-            return texture (x3d_TextureCube [1], texCoord);
-         #endif
-         default:
-            return vec4 (0.0);
-      }
-   #else
-      return texture (x3d_TextureCube [0], texCoord);
-   #endif
-}
+#endif
 
 #if defined (X3D_MULTI_TEXTURING)
    uniform vec4 x3d_MultiTextureColor;
@@ -218,26 +184,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
          // Get texture color.
 
          vec3 texCoord     = getTexCoord (i, i);
-         vec4 textureColor = vec4 (1.0);
-
-         switch (x3d_TextureType [i])
-         {
-            case x3d_TextureType2D:
-            {
-               textureColor = getTexture2D (i, texCoord .st);
-               break;
-            }
-            case x3d_TextureType3D:
-            {
-               textureColor = getTexture3D (i, texCoord .stp);
-               break;
-            }
-            case x3d_TextureTypeCube:
-            {
-               textureColor = getTextureCube (i, texCoord .stp);
-               break;
-            }
-         }
+         vec4 textureColor = getTexture (i, texCoord);
 
          // Multi texturing
 
@@ -507,27 +454,15 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
    #else
       // Get texture color.
 
-      vec3 texCoord     = getTexCoord (0, 0);
-      vec4 textureColor = vec4 (1.0);
+      vec3 texCoord = getTexCoord (0, 0);
 
-      switch (x3d_TextureType [0])
-      {
-         case x3d_TextureType2D:
-         {
-            textureColor = getTexture2D (0, texCoord .st);
-            break;
-         }
-         case x3d_TextureType3D:
-         {
-            textureColor = getTexture3D (0, texCoord .stp);
-            break;
-         }
-         case x3d_TextureTypeCube:
-         {
-            textureColor = getTextureCube (0, texCoord .stp);
-            break;
-         }
-      }
+      #if defined (X3D_TEXTURE0_2D)
+         vec4 textureColor = texture (x3d_Texture2D [0], texCoord .st);
+      #elif defined (X3D_TEXTURE0_3D)
+         vec4 textureColor = texture (x3d_Texture3D [0], texCoord .stp);
+      #elif defined (X3D_TEXTURE0_CUBE)
+         vec4 textureColor = texture (x3d_TextureCube [0], texCoord .stp);
+      #endif
 
       return diffuseColor * textureColor;
    #endif

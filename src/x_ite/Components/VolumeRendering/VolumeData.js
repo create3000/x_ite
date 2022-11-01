@@ -119,7 +119,6 @@ function (Fields,
 
          this ._renderStyle .addInterest ("set_renderStyle__", this);
          this ._voxels      .addInterest ("set_voxels__",      this);
-         this ._voxels      .addFieldInterest (this .getAppearance () ._texture);
 
          this ._renderStyle .addInterest ("update", this);
 
@@ -157,7 +156,13 @@ function (Fields,
          {
             this .voxelsNode .addInterest ("set_textureSize__", this);
 
+            this .getAppearance () ._texture = this ._voxels;
+
             this .set_textureSize__ ();
+         }
+         else
+         {
+            this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
          }
       },
       set_textureSize__: function ()

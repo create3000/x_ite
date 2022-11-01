@@ -59,6 +59,7 @@ function (PixelTexture,
 "use strict";
 
    const
+      _defaultVoxelsNode         = Symbol (),
       _defaultVolumeStyle        = Symbol (),
       _defaultBlendedVolumeStyle = Symbol (),
       _defaultTransferFunction   = Symbol ();
@@ -67,6 +68,21 @@ function (PixelTexture,
 
    X3DVolumeRenderingContext .prototype =
    {
+      getDefaultVoxels: function (executionContext)
+      {
+         this [_defaultVoxelsNode] = executionContext .createNode ("PixelTexture3D", false);
+         this [_defaultVoxelsNode] ._image = [1, 2, 2, 2, 255, 255, 255, 255];
+         this [_defaultVoxelsNode] .repeatS = true;
+         this [_defaultVoxelsNode] .repeatT = true;
+         this [_defaultVoxelsNode] .repeatR = true;
+         this [_defaultVoxelsNode] .setup ();
+
+         this .getDefaultVoxels = function () { return this [_defaultVoxelsNode]; };
+
+         Object .defineProperty (this, "getDefaultVoxels", { enumerable: false });
+
+         return this [_defaultVoxelsNode];
+      },
       getDefaultVolumeStyle: function ()
       {
          this [_defaultVolumeStyle] = new OpacityMapVolumeStyle (this .getPrivateScene ());

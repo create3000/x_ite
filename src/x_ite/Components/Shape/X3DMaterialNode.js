@@ -216,7 +216,8 @@ function (Fields,
                      options .push ("X3D_TEXTURE",
                                     "X3D_NUM_TEXTURES 1",
                                     "X3D_NUM_TEXTURE_TRANSFORMS 1",
-                                    "X3D_NUM_TEXTURE_COORDINATES 1");
+                                    "X3D_NUM_TEXTURE_COORDINATES 1",
+                                    "X3D_TEXTURE0_2D");
                   }
                   else if (+appearanceNode .getTextureBits ())
                   {
@@ -226,6 +227,8 @@ function (Fields,
                      options .push ("X3D_NUM_TEXTURES "            + textureNode .getCount ());
                      options .push ("X3D_NUM_TEXTURE_TRANSFORMS "  + textureNode .getCount ());
                      options .push ("X3D_NUM_TEXTURE_COORDINATES " + textureNode .getCount ());
+
+                     textureNode .getShaderOptions (options);
 
                      if (textureNode .getType () .includes (X3DConstants .MultiTexture))
                         options .push ("X3D_MULTI_TEXTURING");
@@ -251,7 +254,8 @@ function (Fields,
                   options .push ("X3D_TEXTURE",
                                  "X3D_NUM_TEXTURES 1",
                                  "X3D_NUM_TEXTURE_TRANSFORMS 1",
-                                 "X3D_NUM_TEXTURE_COORDINATES 1");
+                                 "X3D_NUM_TEXTURE_COORDINATES 1",
+                                 "X3D_TEXTURE0_2D");
                }
             }
 

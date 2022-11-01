@@ -127,7 +127,6 @@ function (X3DSingleTextureNode,
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
-         gl .uniform1i (channel .textureType, 4);
          gl .uniform1i (channel .textureCube, textureUnit);
       },
    });

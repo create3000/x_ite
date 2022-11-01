@@ -7,7 +7,6 @@ precision highp sampler3D;
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 
-uniform int       x3d_NumTextures;
 uniform sampler3D x3d_Texture3D [1];
 uniform vec3      x3d_TextureSize;
 
@@ -77,9 +76,6 @@ clip ()
 vec4
 getTextureColor (in vec3 texCoord)
 {
-   if (x3d_NumTextures == 0)
-      discard;
-
    if (texCoord .s < 0.0 || texCoord .s > 1.0)
       discard;
 

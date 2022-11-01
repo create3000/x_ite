@@ -122,7 +122,6 @@ function (Fields,
 
          this ._segmentIdentifiers .addInterest ("set_segmentIdentifiers__", this);
          this ._renderStyle        .addInterest ("set_renderStyle__",        this);
-         this ._voxels             .addFieldInterest (this .getAppearance () ._texture);
 
          this ._segmentEnabled     .addInterest ("update", this);
          this ._segmentIdentifiers .addInterest ("update", this);
@@ -185,7 +184,13 @@ function (Fields,
          {
             this .voxelsNode .addInterest ("set_textureSize__", this);
 
+            this .getAppearance () ._texture = this ._voxels;
+
             this .set_textureSize__ ();
+         }
+         else
+         {
+            this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
          }
       },
       set_textureSize__: function ()

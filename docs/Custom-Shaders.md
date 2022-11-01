@@ -441,16 +441,6 @@ A ComposedShader defines a number of special variables for the various shader st
          <td colspan="3"><hr/></td>
       </tr>
       <tr>
-         <td>uniform int</td>
-         <td>x3d_NumTextures</td>
-         <td>number of textures in texture arrays.</td>
-      </tr>
-      <tr>
-         <td>uniform int</td>
-         <td>x3d_TextureType [x3d_MaxTextures]</td>
-         <td>x3d_TextureType2D, x3d_TextureType3D, x3d_TextureTypeCube</td>
-      </tr>
-      <tr>
          <td>uniform sampler2D</td>
          <td>x3d_Texture2D [x3d_MaxTextures]</td>
          <td>texture from Appearance texture field</td>
@@ -715,38 +705,6 @@ Some built-in variables are enumerated and have special values and meanings. The
          <td>int</td>
          <td>x3d_SpotLight</td>
          <td>3</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td colspan="5"><hr/>
-         </td>
-      </tr>
-      <tr>
-         <td></td>
-         <td>int</td>
-         <td>x3d_MaxTextures</td>
-         <td>2</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>x3d_TextureType</td>
-         <td>int</td>
-         <td>x3d_TextureType2D</td>
-         <td>2</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td></td>
-         <td>int</td>
-         <td>x3d_TextureType3D</td>
-         <td>3</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td></td>
-         <td>int</td>
-         <td>x3d_TextureTypeCube</td>
-         <td>4</td>
          <td></td>
       </tr>
       <tr>

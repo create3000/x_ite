@@ -123,7 +123,6 @@ function (Fields,
 
          this ._gradients          .addInterest ("set_gradients__",   this);
          this ._renderStyle        .addInterest ("set_renderStyle__", this);
-         this ._voxels             .addFieldInterest (this .getAppearance () ._texture);
 
          this ._contourStepSize    .addInterest ("update", this);
          this ._surfaceValues      .addInterest ("update", this);
@@ -183,7 +182,13 @@ function (Fields,
          {
             this .voxelsNode .addInterest ("set_textureSize__", this);
 
+            this .getAppearance () ._texture = this ._voxels;
+
             this .set_textureSize__ ();
+         }
+         else
+         {
+            this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
          }
       },
       set_textureSize__: function ()

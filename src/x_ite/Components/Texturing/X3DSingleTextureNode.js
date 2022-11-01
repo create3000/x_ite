@@ -173,11 +173,22 @@ function (X3DTextureNode,
          textureBits .set (channel * 2 + 0, textureType & 0b01);
          textureBits .set (channel * 2 + 1, textureType & 0b10);
       },
+      getShaderOptions: (function ()
+      {
+         const textureTypes = {
+            2: "2D",
+            3: "3D",
+            4: "CUBE"
+         };
+
+         return function (options, channel = 0)
+         {
+            options .push ("X3D_TEXTURE" + channel + "_" + textureTypes [this .getTextureType ()]);
+         };
+      })(),
       setShaderUniforms: function (gl, shaderObject, renderObject)
       {
          this .setShaderUniformsToChannel (gl, shaderObject, renderObject, shaderObject .x3d_Textures [0]);
-
-         gl .uniform1i (shaderObject .x3d_NumTextures, 1);
       },
    });
 

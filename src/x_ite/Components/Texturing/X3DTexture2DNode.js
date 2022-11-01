@@ -174,7 +174,6 @@ function (X3DSingleTextureNode,
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-         gl .uniform1i (channel .textureType, 2);
          gl .uniform1i (channel .texture2D, textureUnit);
       },
    });

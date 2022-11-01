@@ -253,7 +253,6 @@ function (X3DCast,
             };
          }
 
-         this .x3d_NumTextures           = gl .getUniformLocation (program, "x3d_NumTextures");
          this .x3d_NumProjectiveTextures = gl .getUniformLocation (program, "x3d_NumProjectiveTextures");
          this .x3d_MultiTextureColor     = gl .getUniformLocation (program, "x3d_MultiTextureColor");
 
@@ -262,7 +261,6 @@ function (X3DCast,
          for (let i = 0; i < maxTextures; ++ i)
          {
             this .x3d_Textures [i] = {
-               textureType: gl .getUniformLocation (program, "x3d_TextureType[" + i + "]"),
                texture2D: gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]"),
                texture3D: gl .getUniformLocation (program, "x3d_Texture3D[" + i + "]"),
                textureCube: this .getUniformLocation (gl, program, "x3d_TextureCube[" + i + "]", "x3d_CubeMapTexture[" + i + "]"),
@@ -358,8 +356,6 @@ function (X3DCast,
             gl .uniform1i (this [materialTexture] .texture3D,   browser .getDefaultTexture3DUnit ());
             gl .uniform1i (this [materialTexture] .textureCube, browser .getDefaultTextureCubeUnit ());
          }
-
-         gl .uniform1i (this .x3d_NumTextures, 0);
 
          for (const uniforms of this .x3d_Textures)
          {
@@ -1103,8 +1099,6 @@ function (X3DCast,
 
             if (textureNode)
                textureNode .setShaderUniforms (gl, this, renderObject);
-            else
-               gl .uniform1i (this .x3d_NumTextures, 0);
 
             appearanceNode .getTextureTransform () .setShaderUniforms (gl, this);
             geometryContext .textureCoordinateNode .setShaderUniforms (gl, this);

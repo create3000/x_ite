@@ -193,8 +193,17 @@ function (Fields,
 
          const browser = this .getBrowser ();
 
+         // Geometry context
+
+         this .geometryContext .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
+         this .geometryContext .textureCoordinateMapping = new Map ();
+
+         // Check version.
+
          if (browser .getContext () .getVersion () < 2)
             return;
+
+         // Connect fields.
 
          this .isLive () .addInterest ("set_live__", this);
 
@@ -235,11 +244,6 @@ function (Fields,
 
          this .geometryBuffer  = this .createBuffer ();
          this .texCoordBuffers = new Array (browser .getMaxTextures ()) .fill (this .geometryBuffer);
-
-         // Geometry context
-
-         this .geometryContext .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
-         this .geometryContext .textureCoordinateMapping = new Map ();
 
          // Init fields.
          // Call order is very important at startup.

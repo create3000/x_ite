@@ -165,19 +165,11 @@ function (X3DSingleTextureNode,
       },
       setShaderUniformsToChannel: function (gl, shaderObject, renderObject, channel)
       {
-         if (gl .getVersion () >= 2)
-         {
-            const textureUnit = this .getBrowser () .getTexture3DUnit ();
+         const textureUnit = this .getBrowser () .getTexture3DUnit ();
 
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
-            gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-            gl .uniform1i (channel .textureType, 3);
-            gl .uniform1i (channel .texture3D, textureUnit);
-         }
-         else
-         {
-            gl .uniform1i (channel .textureType, 3);
-         }
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+         gl .uniform1i (channel .texture3D, textureUnit);
       },
    });
 

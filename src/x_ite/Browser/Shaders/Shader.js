@@ -194,7 +194,6 @@ function (Types,
          depreciatedWarning (source, "x3d_NoneClipPlane",  "x3d_NumClipPlanes");
          depreciatedWarning (source, "x3d_NoneFog",        "x3d_None");
          depreciatedWarning (source, "x3d_NoneLight",      "x3d_NumLights");
-         depreciatedWarning (source, "x3d_NoneTexture",    "x3d_NumTextures");
 
          // Adjust precision of struct types;
 

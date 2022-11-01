@@ -581,7 +581,6 @@ function (X3DBindableNode,
          gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
 
          gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
-         gl .uniform1i (shaderNode .x3d_NumTextures,                        0);
          gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
          gl .uniform1i (shaderNode .x3d_NumProjectiveTextures,              0);
 
@@ -624,7 +623,6 @@ function (X3DBindableNode,
 
             gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1);
             gl .uniform1f (shaderNode .x3d_Transparency,                       0);
-            gl .uniform1i (shaderNode .x3d_NumTextures,                        1);
             gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
             gl .uniform1i (shaderNode .x3d_NumProjectiveTextures,              0);
 
