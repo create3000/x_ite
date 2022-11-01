@@ -186,10 +186,6 @@ function (X3DTextureNode,
             options .push ("X3D_TEXTURE" + channel + "_" + textureTypes [this .getTextureType ()]);
          };
       })(),
-      setShaderUniforms: function (gl, shaderObject, renderObject)
-      {
-         this .setShaderUniformsToChannel (gl, shaderObject, renderObject, shaderObject .x3d_Textures [0]);
-      },
    });
 
    return X3DSingleTextureNode;
