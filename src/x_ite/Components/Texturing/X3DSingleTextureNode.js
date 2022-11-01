@@ -51,16 +51,10 @@
    "x_ite/Components/Texturing/X3DTextureNode",
    "x_ite/Base/X3DConstants",
    "x_ite/Base/X3DCast",
-   "x_ite/Browser/Texturing/MultiTextureModeType",
-   "x_ite/Browser/Texturing/MultiTextureSourceType",
-   "x_ite/Browser/Texturing/MultiTextureFunctionType",
 ],
 function (X3DTextureNode,
           X3DConstants,
-          X3DCast,
-          ModeType,
-          SourceType,
-          FunctionType)
+          X3DCast)
 {
 "use strict";
 
