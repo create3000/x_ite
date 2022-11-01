@@ -178,7 +178,7 @@ function (Fields,
       },
       setInterpolators: function (fromViewpointNode, toViewpointNode)
       {
-         if (fromViewpointNode .getType () .indexOf (X3DConstants .OrthoViewpoint) >= 0)
+         if (fromViewpointNode .getType () .includes (X3DConstants .OrthoViewpoint))
          {
             const
                toLength   = toViewpointNode   ._fieldOfView .length,

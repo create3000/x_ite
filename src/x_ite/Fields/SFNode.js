@@ -289,7 +289,7 @@ function (X3DField,
       {
          const
             target = this [_target],
-             value  = target .getValue ();
+            value  = target .getValue ();
 
          if (value)
             return value .getType () .slice ();

@@ -68,7 +68,7 @@ function (Fields)
                if (innerNode)
                   node = node .getInnerNode ();
 
-               if (node .getType () .indexOf (type) !== -1)
+               if (node .getType () .includes (type))
                   return node;
             }
          }

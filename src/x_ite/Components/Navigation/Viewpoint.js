@@ -126,7 +126,7 @@ function (Fields,
       },
       setInterpolators: function (fromViewpointNode, toViewpointNode)
       {
-         if (fromViewpointNode .getType () .indexOf (X3DConstants .Viewpoint) >= 0)
+         if (fromViewpointNode .getType () .includes (X3DConstants .Viewpoint) || fromViewpointNode .getType () .includes (X3DConstants .GeoViewpoint))
          {
             const scale = fromViewpointNode .getFieldOfView () / toViewpointNode .getFieldOfView ();
 

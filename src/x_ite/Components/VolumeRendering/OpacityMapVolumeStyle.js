@@ -132,7 +132,7 @@ function (Fields,
          string += "// OpacityMapVolumeStyle\n";
          string += "\n";
 
-         if (this .transferFunctionNode .getType () .indexOf (X3DConstants .X3DTexture2DNode) !== -1)
+         if (this .transferFunctionNode .getType () .includes (X3DConstants .X3DTexture2DNode))
          {
             string += "uniform sampler2D transferFunction_" + this .getId () + ";\n";
 
