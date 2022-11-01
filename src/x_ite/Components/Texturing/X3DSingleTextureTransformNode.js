@@ -86,7 +86,7 @@ function (X3DTextureTransformNode,
       setShaderUniforms: function (gl, shaderObject)
       {
          for (let i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-            gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [i], false, this .matrixArray);
+            this .setShaderUniformsToChannel (gl, shaderObject, i);
       },
       setShaderUniformsToChannel: function (gl, shaderObject, channel = 0)
       {
