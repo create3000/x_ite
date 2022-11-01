@@ -214,11 +214,7 @@ function (Fields,
       },
       dispose: function ()
       {
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
-
-         gl .deleteProgram (this .program);
+         this .getBrowser () .getContext () .deleteProgram (this .program);
 
          X3DProgrammableShaderObject .prototype .dispose .call (this);
          X3DShaderNode               .prototype .dispose .call (this);

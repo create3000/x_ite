@@ -186,20 +186,22 @@ function (Fields,
                if (! gl .getShaderParameter (shader, gl .COMPILE_STATUS))
                {
                   const
-                     log   = gl .getShaderInfoLog (shader),
-                     match = log .match (/(\d+):(\d+)/);
+                     typeName = this .getTypeName (),
+                     name     = this .getName (),
+                     log      = gl .getShaderInfoLog (shader),
+                     match    = log .match (/(\d+):(\d+)/);
 
                   if (match)
                   {
                      const fileName = shaderCompiler .getSourceFileName (match [1]) || url || this .getExecutionContext () .getWorldURL ();
 
-                     throw new Error ("Error in " + this .getTypeName () + " '" + this .getName () + "' in URL '" + fileName + "', line " + match [2] + ", " + log);
+                     throw new Error ("Error in " + typeName + " '" + name + "' in URL '" + fileName + "', line " + match [2] + ", " + log);
                   }
                   else
                   {
                      const fileName = url || this .getExecutionContext () .getWorldURL ();
 
-                     throw new Error ("Error in " + this .getTypeName () + " '" + this .getName () + "' in URL '" + fileName + "', " + log);
+                     throw new Error ("Error in " + typeName + " '" + name + "' in URL '" + fileName + "', " + log);
                   }
                }
 
@@ -210,11 +212,7 @@ function (Fields,
       },
       dispose: function ()
       {
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
-
-         gl .deleteShader (this .shader);
+         this .getBrowser () .getContext () .deleteShader (this .shader);
 
          X3DNode .prototype .dispose .call (this);
       },
