@@ -17,9 +17,9 @@ getTexCoord (const in int i)
          case 1:
             return texCoord1;
          #endif
-         default:
-            return vec4 (0.0);
       }
+
+      return vec4 (0.0);
    #else
       return texCoord0;
    #endif
