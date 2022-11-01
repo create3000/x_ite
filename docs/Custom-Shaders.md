@@ -562,12 +562,12 @@ A ComposedShader defines a number of special variables for the various shader st
 
 ### Uniform Struct x3d\_PointPropertiesParameters
 
-| Type  | Name                 | Comment  |
-|-------|----------------------|----------|
-| float | pointSizeScaleFactor |          |
-| float | pointSizeMinValue    |          |
-| float | pointSizeMaxValue    |          |
-| vec3  | pointSizeAttenuation |          |
+| Type  | Name                 |
+|-------|----------------------|
+| float | pointSizeScaleFactor |
+| float | pointSizeMinValue    |
+| float | pointSizeMaxValue    |
+| vec3  | pointSizeAttenuation |
 
 ### Uniform Struct x3d\_LinePropertiesParameters
 
