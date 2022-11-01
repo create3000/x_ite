@@ -83,7 +83,12 @@ function (X3DTextureTransformNode,
          if (this ._mapping .getValue ())
             textureTransformMapping .set (this ._mapping .getValue (), channel);
       },
-      setShaderUniforms: function (gl, shaderObject, channel = 0)
+      setShaderUniforms: function (gl, shaderObject)
+      {
+         for (let i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+            gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [i], false, this .matrixArray);
+      },
+      setShaderUniformsToChannel: function (gl, shaderObject, channel = 0)
       {
          gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [channel], false, this .matrixArray);
       },

@@ -140,14 +140,14 @@ function (Fields,
                length                = Math .min (shaderObject .x3d_MaxTextures, textureTransformNodes .length);
 
             for (let i = 0; i < length; ++ i)
-               textureTransformNodes [i] .setShaderUniforms (gl, shaderObject, i);
+               textureTransformNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
 
             if (length)
             {
                const last = textureTransformNodes .at (-1);
 
                for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
-                  last .setShaderUniforms (gl, shaderObject, i);
+                  last .setShaderUniformsToChannel (gl, shaderObject, i);
             }
             else
             {
