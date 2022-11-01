@@ -50,11 +50,9 @@
 define ([
    "x_ite/Components/Shape/X3DAppearanceChildNode",
    "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Matrix4",
 ],
 function (X3DAppearanceChildNode,
-          X3DConstants,
-          Matrix4)
+          X3DConstants)
 {
 "use strict";
 
@@ -63,17 +61,11 @@ function (X3DAppearanceChildNode,
       X3DAppearanceChildNode .call (this, executionContext);
 
       this .addType (X3DConstants .X3DTextureTransformNode);
-
-      this .matrixArray = new Float32Array (Matrix4 .Identity);
    }
 
    X3DTextureTransformNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
    {
       constructor: X3DTextureTransformNode,
-      setMatrix: function (value)
-      {
-         this .matrixArray .set (value);
-      },
    });
 
    return X3DTextureTransformNode;

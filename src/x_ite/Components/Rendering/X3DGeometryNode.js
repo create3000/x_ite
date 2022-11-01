@@ -338,7 +338,7 @@ function (Fields,
       {
          this .textureCoordinateMapping .clear ();
 
-         this .textureCoordinateNode .getTextureMapping (this .textureCoordinateMapping);
+         this .textureCoordinateNode .getTextureCoordinateMapping (this .textureCoordinateMapping);
       },
       setNormals: function (value)
       {

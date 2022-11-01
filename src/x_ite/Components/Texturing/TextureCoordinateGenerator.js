@@ -150,7 +150,7 @@ function (Fields,
       {
          return array;
       },
-      setShaderUniformsToChannel: function (gl, shaderObject, channel)
+      setShaderUniformsToChannel: function (gl, shaderObject, channel = 0)
       {
          gl .uniform1i  (shaderObject .x3d_TextureCoordinateGeneratorMode [channel],      this .mode);
          gl .uniform1fv (shaderObject .x3d_TextureCoordinateGeneratorParameter [channel], this .parameter);

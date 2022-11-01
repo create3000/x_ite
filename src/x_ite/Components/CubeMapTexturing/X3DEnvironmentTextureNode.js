@@ -121,13 +121,13 @@ function (X3DSingleTextureNode,
                                                                          false,
                                                                          false);
       },
-      setShaderUniforms: function (gl, shaderObject, renderObject, channel = 0)
+      setShaderUniforms: function (gl, shaderObject, renderObject, channel = shaderObject .x3d_Textures [0])
       {
          const textureUnit = this .getBrowser () .getTextureCubeUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
-         gl .uniform1i (shaderObject .x3d_Textures [channel] .textureCube, textureUnit);
+         gl .uniform1i (channel .textureCube, textureUnit);
       },
    });
 

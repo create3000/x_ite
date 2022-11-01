@@ -318,17 +318,12 @@ function (Fields,
 
          if (+this .getTextureBits ())
          {
-            const
-               ambientTexture   = shaderObject .x3d_AmbientTexture,
-               diffuseTexture   = shaderObject .x3d_DiffuseTexture,
-               specularTexture  = shaderObject .x3d_SpecularTexture,
-               shininessTexture = shaderObject .x3d_ShininessTexture,
-               occlusionTexture = shaderObject .x3d_OcclusionTexture;
-
             // Ambient parameters
 
             if (this .ambientTextureNode)
             {
+               const ambientTexture = shaderObject .x3d_AmbientTexture;
+
                this .ambientTextureNode .setShaderUniforms (gl, shaderObject, renderObject, ambientTexture);
 
                gl .uniform1i (ambientTexture .textureTransformMapping,  textureTransformMapping  .get (this ._ambientTextureMapping .getValue ()) || 0);
@@ -339,6 +334,8 @@ function (Fields,
 
             if (this .diffuseTextureNode)
             {
+               const diffuseTexture = shaderObject .x3d_DiffuseTexture;
+
                this .diffuseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, diffuseTexture);
 
                gl .uniform1i (diffuseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._diffuseTextureMapping .getValue ()) || 0);
@@ -349,6 +346,8 @@ function (Fields,
 
             if (this .specularTextureNode)
             {
+               const specularTexture = shaderObject .x3d_SpecularTexture;
+
                this .specularTextureNode .setShaderUniforms (gl, shaderObject, renderObject, specularTexture);
 
                gl .uniform1i (specularTexture .textureTransformMapping,  textureTransformMapping  .get (this ._specularTextureMapping .getValue ()) || 0);
@@ -359,6 +358,8 @@ function (Fields,
 
             if (this .shininessTextureNode)
             {
+               const shininessTexture = shaderObject .x3d_ShininessTexture;
+
                this .shininessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, shininessTexture);
 
                gl .uniform1i (shininessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._shininessTextureMapping .getValue ()) || 0);
@@ -369,6 +370,8 @@ function (Fields,
 
             if (this .occlusionTextureNode)
             {
+               const occlusionTexture = shaderObject .x3d_OcclusionTexture;
+
                gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
                this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, occlusionTexture);

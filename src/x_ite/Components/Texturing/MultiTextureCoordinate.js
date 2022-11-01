@@ -160,14 +160,14 @@ function (Fields,
 
          return array;
       },
-      getTextureMapping: function (textureCoordinateMapping)
+      getTextureCoordinateMapping: function (textureCoordinateMapping)
       {
          const
             textureCoordinateNodes = this .textureCoordinateNodes,
             length                 = Math .min (this .getBrowser () .getMaxTextures (), textureCoordinateNodes .length);
 
          for (let i = 0; i < length; ++ i)
-            textureCoordinateNodes [i] .getTextureMapping (textureCoordinateMapping, i);
+            textureCoordinateNodes [i] .getTextureCoordinateMapping (textureCoordinateMapping, i);
       },
       setShaderUniforms: function (gl, shaderObject)
       {
@@ -178,10 +178,18 @@ function (Fields,
          for (let i = 0; i < length; ++ i)
             textureCoordinateNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
 
-         const last = length ? textureCoordinateNodes .at (-1) : this;
+         if (length)
+         {
+            const last = textureCoordinateNodes .at (-1);
 
-         for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
-            last .setShaderUniformsToChannel (gl, shaderObject, i);
+            for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
+               last .setShaderUniformsToChannel (gl, shaderObject, i);
+         }
+         else
+         {
+            for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
+               gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [i], 0);
+         }
       },
    });
 

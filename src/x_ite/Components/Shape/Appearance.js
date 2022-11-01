@@ -327,7 +327,7 @@ function (Fields,
       {
          this .textureTransformMapping .clear ();
 
-         this .textureTransformNode .getTextureMapping (this .textureTransformMapping);
+         this .textureTransformNode .getTextureTransformMapping (this .textureTransformMapping);
       },
       set_shaders__: function ()
       {

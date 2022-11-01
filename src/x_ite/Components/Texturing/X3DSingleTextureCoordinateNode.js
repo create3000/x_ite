@@ -84,7 +84,7 @@ function (X3DTextureCoordinateNode,
       {
          this .addTexCoordToChannel (index, multiArray [0]);
       },
-      getTextureMapping: function (textureCoordinateMapping, channel = 0)
+      getTextureCoordinateMapping: function (textureCoordinateMapping, channel = 0)
       {
          if (this ._mapping .getValue ())
             textureCoordinateMapping .set (this ._mapping .getValue (), channel);

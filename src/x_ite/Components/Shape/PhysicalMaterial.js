@@ -249,15 +249,12 @@ function (Fields,
 
          if (+this .getTextureBits ())
          {
-            const
-               baseTexture              = shaderObject .x3d_BaseTexture,
-               metallicRoughnessTexture = shaderObject .x3d_MetallicRoughnessTexture,
-               occlusionTexture         = shaderObject .x3d_OcclusionTexture;
-
             // Base parameters
 
             if (this .baseTextureNode)
             {
+               const baseTexture = shaderObject .x3d_BaseTexture;
+
                this .baseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, baseTexture);
 
                gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._baseTextureMapping .getValue ()) || 0);
@@ -268,6 +265,8 @@ function (Fields,
 
             if (this .metallicRoughnessTextureNode)
             {
+               const metallicRoughnessTexture = shaderObject .x3d_MetallicRoughnessTexture;
+
                this .metallicRoughnessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, metallicRoughnessTexture);
 
                gl .uniform1i (metallicRoughnessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
@@ -278,6 +277,8 @@ function (Fields,
 
             if (this .occlusionTextureNode)
             {
+               const occlusionTexture = shaderObject .x3d_OcclusionTexture;
+
                gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
                this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, occlusionTexture);
