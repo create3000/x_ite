@@ -984,10 +984,8 @@ function (X3DCast,
 
          gl .uniform1i (this .x3d_NumClipPlanes, this .numClipPlanes);
       },
-      setCustomUniforms: function ()
+      setCustomUniforms: function (gl)
       {
-         const gl = this .getBrowser () .getContext ();
-
          gl .useProgram (this .getProgram ());
 
          gl .uniform1i (this .x3d_FogType, 0);

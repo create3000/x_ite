@@ -358,9 +358,9 @@ function (Fields,
       },
       set_shader__: (function ()
       {
-         function getShader (geometryContext, renderContext)
+         function getShader (gl, geometryContext, renderContext)
          {
-            return this .shaderNode .setCustomUniforms ();
+            return this .shaderNode .setCustomUniforms (gl);
          }
 
          return function ()
@@ -400,8 +400,8 @@ function (Fields,
             {
                this .shaderNode .select ();
 
-               this .getShader     = getShader;
-               this .getBackShader = getShader;
+               this .getShader     = getShader .bind (this, this .getBrowser () .getContext ());
+               this .getBackShader = this .getShader;
             }
             else
             {
