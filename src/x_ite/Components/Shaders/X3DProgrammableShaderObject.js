@@ -1066,8 +1066,6 @@ function (X3DCast,
 
             if (fogNode)
                fogNode .setShaderUniforms (gl, this);
-            else
-               gl .uniform1i (this .x3d_FogType, 0);
 
             // Clip planes and local lights
 

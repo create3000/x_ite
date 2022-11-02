@@ -612,7 +612,7 @@ Some built-in variables are enumerated and have special values and meanings. The
 <table>
    <thead>
       <tr>
-         <th>Variable</th>
+         <th>Constant</th>
          <th>Type</th>
          <th>Name</th>
          <th>Value</th>
@@ -632,17 +632,6 @@ Some built-in variables are enumerated and have special values and meanings. The
          </td>
       </tr>
       <tr>
-         <td>X3D_LOGARITHMIC_DEPTH_BUFFER</td>
-         <td></td>
-         <td></td>
-         <td></td>
-         <td>defined if logarithmic depth buffer is enabled in <a href="reference/Browser-Services.html#string-getbrowseroption-string-name">browser options</a>.</td>
-      </tr>
-      <tr>
-         <td colspan="5"><hr/>
-         </td>
-      </tr>
-      <tr>
          <td>x3d_ClipPlane</td>
          <td>int</td>
          <td>x3d_MaxClipPlanes</td>
@@ -655,13 +644,6 @@ Some built-in variables are enumerated and have special values and meanings. The
       </tr>
       <tr>
          <td>x3d_FogType</td>
-         <td>int</td>
-         <td>x3d_None</td>
-         <td>0</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td></td>
          <td>int</td>
          <td>x3d_LinearFog</td>
          <td>1</td>
