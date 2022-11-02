@@ -254,7 +254,6 @@ function (X3DCast,
          }
 
          this .x3d_NumProjectiveTextures = gl .getUniformLocation (program, "x3d_NumProjectiveTextures");
-         this .x3d_NumTextures           = gl .getUniformLocation (program, "x3d_NumTextures");
          this .x3d_MultiTextureColor     = gl .getUniformLocation (program, "x3d_MultiTextureColor");
 
          this .x3d_TexCoord .length = 0;
@@ -991,8 +990,7 @@ function (X3DCast,
 
          gl .useProgram (this .getProgram ());
 
-         gl .uniform1i (this .x3d_FogType,     0);
-         gl .uniform1i (this .x3d_NumTextures, 0);
+         gl .uniform1i (this .x3d_FogType, 0);
 
          return this;
       },
