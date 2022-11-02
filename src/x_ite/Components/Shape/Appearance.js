@@ -358,9 +358,9 @@ function (Fields,
       },
       set_shader__: (function ()
       {
-         function getShader ()
+         function getShader (geometryContext, renderContext)
          {
-            return this .shaderNode;
+            return this .shaderNode .setCustomUniforms ();
          }
 
          return function ()
