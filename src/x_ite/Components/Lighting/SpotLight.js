@@ -196,6 +196,9 @@ function (Fields,
          modelViewMatrix .multVecMatrix (this .location  .assign (lightNode ._location  .getValue ()));
          modelViewMatrix .multDirMatrix (this .direction .assign (lightNode ._direction .getValue ())) .normalize ();
 
+         if (! this .shadowBuffer)
+            return;
+
          this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
          this .shadowMatrixArray .set (this .shadowMatrix);
       },

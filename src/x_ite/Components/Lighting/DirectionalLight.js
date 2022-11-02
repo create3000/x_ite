@@ -175,6 +175,9 @@ function (Fields,
       {
          this .modelViewMatrix .get () .multDirMatrix (this .direction .assign (this .lightNode .getDirection ())) .normalize ();
 
+         if (! this .shadowBuffer)
+            return;
+
          this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
          this .shadowMatrixArray .set (this .shadowMatrix);
       },
