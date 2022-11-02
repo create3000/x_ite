@@ -126,7 +126,9 @@ function (Fields,
             key += fogNode ? fogNode .getFogKey () : "0";
             key += shapeNode .getShapeKey ();
             key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? "1" : "0";
-            key += objectsCount .join ("");
+            key += objectsCount [0];
+            key += objectsCount [1];
+            key += objectsCount [2];
             key += ".";
             key += textureNode ? "1" : appearanceNode .getTextureBits () .toString (4);
             key += ".";
@@ -136,10 +138,14 @@ function (Fields,
          }
          else
          {
+            const { textureNode, objectsCount } = geometryContext;
+
             key += ".0000";
-            key += geometryContext .objectsCount .join ("");
+            key += objectsCount [0];
+            key += objectsCount [1];
+            key += objectsCount [2];
             key += ".";
-            key += geometryContext .textureNode ? "1" : "0";
+            key += textureNode ? "1" : "0";
             key += ".11";
             key += this .getMaterialKey (false);
          }
@@ -193,7 +199,7 @@ function (Fields,
 
             if (renderContext)
             {
-               const appearanceNode = renderContext .appearanceNode;
+               const { appearanceNode, objectsCount } = renderContext;
 
                if (renderContext .shadows)
                   options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
@@ -213,22 +219,22 @@ function (Fields,
                   }
                }
 
-               if (renderContext .objectsCount [0])
+               if (objectsCount [0])
                {
                   options .push ("X3D_CLIP_PLANES")
-                  options .push ("X3D_NUM_CLIP_PLANES " + renderContext .objectsCount [0]);
+                  options .push ("X3D_NUM_CLIP_PLANES " + Math .min (objectsCount [0], browser .getMaxClipPlanes ()));
                }
 
-               if (renderContext .objectsCount [1])
+               if (objectsCount [1])
                {
                   options .push ("X3D_LIGHTING")
-                  options .push ("X3D_NUM_LIGHTS " + renderContext .objectsCount [1]);
+                  options .push ("X3D_NUM_LIGHTS " + Math .min (objectsCount [1], browser .getMaxLights ()));
                }
 
-               if (renderContext .objectsCount [2])
+               if (objectsCount [2])
                {
                   options .push ("X3D_PROJECTIVE_TEXTURE_MAPPING")
-                  options .push ("X3D_NUM_TEXTURE_PROJECTORS " + renderContext .objectsCount [2]);
+                  options .push ("X3D_NUM_TEXTURE_PROJECTORS " + Math .min (objectsCount [2], browser .getMaxTextures ()));
                }
 
                if (appearanceNode .getStyleProperties (geometryContext .geometryType))
@@ -280,25 +286,27 @@ function (Fields,
             }
             else
             {
-               if (geometryContext .objectsCount [0])
+               const { textureNode, objectsCount } = geometryContext;
+
+               if (objectsCount [0])
                {
                   options .push ("X3D_CLIP_PLANES")
-                  options .push ("X3D_NUM_CLIP_PLANES " + geometryContext .objectsCount [0]);
+                  options .push ("X3D_NUM_CLIP_PLANES " + Math .min (objectsCount [0], browser .getMaxClipPlanes ()));
                }
 
-               if (geometryContext .objectsCount [1])
+               if (objectsCount [1])
                {
                   options .push ("X3D_LIGHTING")
-                  options .push ("X3D_NUM_LIGHTS " + geometryContext .objectsCount [1]);
+                  options .push ("X3D_NUM_LIGHTS " + Math .min (objectsCount [1], browser .getMaxLights ()));
                }
 
-               if (geometryContext .objectsCount [2])
+               if (objectsCount [2])
                {
                   options .push ("X3D_PROJECTIVE_TEXTURE_MAPPING")
-                  options .push ("X3D_NUM_TEXTURE_PROJECTORS " + geometryContext .objectsCount [2]);
+                  options .push ("X3D_NUM_TEXTURE_PROJECTORS " + Math .min (objectsCount [2], browser .getMaxTextures ()));
                }
 
-               if (geometryContext .textureNode)
+               if (textureNode)
                {
                   // X3DBackgroundNode textures
 
