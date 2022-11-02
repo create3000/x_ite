@@ -119,19 +119,19 @@ function (Fields,
 
          if (renderContext)
          {
-            const appearanceNode = renderContext .appearanceNode;
+            const { shadows, fogNode, shapeNode, appearanceNode, textureNode } = renderContext;
 
             key += ".";
-            key += renderContext .shadows ? "1" : "0";
-            key += renderContext .fogNode ? renderContext .fogNode .getFogKey () : "0";
-            key += renderContext .shapeNode .getShapeKey ();
+            key += shadows ? "1" : "0";
+            key += fogNode ? fogNode .getFogKey () : "0";
+            key += shapeNode .getShapeKey ();
             key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? "1" : "0";
             key += ".";
-            key += renderContext .textureNode ? "1" : appearanceNode .getTextureBits () .toString (4);
+            key += textureNode ? "1" : appearanceNode .getTextureBits () .toString (4);
             key += ".";
             key += appearanceNode .getTextureTransformMapping () .size || "1";
             key += geometryContext .textureCoordinateMapping .size || "1";
-            key += this .getMaterialKey (renderContext .shadows);
+            key += this .getMaterialKey (shadows);
          }
          else
          {
