@@ -125,6 +125,8 @@ function (Fields,
             browser = this .getBrowser (),
             options = this .getShaderOptions (geometryContext, renderContext);
 
+         options .push ("X3D_UNLIT_MATERIAL");
+
          const shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
 
          browser .getShaders () .set (key, shaderNode);

@@ -1,9 +1,11 @@
+#if defined (X3D_FOG)
 struct x3d_FogParameters {
    mediump int   type;
    mediump vec3  color;
    mediump float visibilityRange;
    mediump mat3  matrix;
 };
+#endif
 
 //uniform x3d_FogParameters x3d_Fog;
 
@@ -30,6 +32,7 @@ struct x3d_LightSourceParameters {
 
 //uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 
+#if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
 struct x3d_PointPropertiesParameters
 {
    mediump float pointSizeScaleFactor;
@@ -37,9 +40,11 @@ struct x3d_PointPropertiesParameters
    mediump float pointSizeMaxValue;
    mediump vec3  pointSizeAttenuation;
 };
+#endif
 
 //uniform x3d_PointPropertiesParameters x3d_PointProperties;
 
+#if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
 struct x3d_LinePropertiesParameters
 {
    bool          applied;
@@ -47,9 +52,11 @@ struct x3d_LinePropertiesParameters
    mediump float lineStippleScale;
    sampler2D     texture;
 };
+#endif
 
 //uniform x3d_LinePropertiesParameters x3d_LineProperties;
 
+#if (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)) && defined (X3D_STYLE_PROPERTIES)
 struct x3d_FillPropertiesParameters
 {
    bool         filled;
@@ -57,18 +64,22 @@ struct x3d_FillPropertiesParameters
    mediump vec3 hatchColor;
    sampler2D    texture;
 };
+#endif
 
 //uniform x3d_FillPropertiesParameters x3d_FillProperties;
 
+#if defined (X3D_UNLIT_MATERIAL)
 struct x3d_UnlitMaterialParameters
 {
    mediump vec3  emissiveColor;
    mediump float normalScale;
    mediump float transparency;
 };
+#endif
 
 //uniform x3d_UnlitMaterialParameters x3d_Material;
 
+#if defined (X3D_MATERIAL)
 struct x3d_MaterialParameters
 {
    mediump float ambientIntensity;
@@ -80,9 +91,11 @@ struct x3d_MaterialParameters
    mediump float normalScale;
    mediump float transparency;
 };
+#endif
 
 //uniform x3d_MaterialParameters x3d_Material;
 
+#if defined (X3D_PHYSICAL_MATERIAL)
 struct x3d_PhysicalMaterialParameters
 {
    mediump vec3  baseColor;
@@ -93,6 +106,7 @@ struct x3d_PhysicalMaterialParameters
    mediump float normalScale;
    mediump float transparency;
 };
+#endif
 
 //uniform x3d_PhysicalMaterialParameters x3d_Material;
 
@@ -111,8 +125,9 @@ struct x3d_AmbientTextureParameters
    mediump samplerCube textureCube;
    #endif
 };
-//uniform x3d_AmbientTextureParameters x3d_AmbientTexture;
 #endif
+
+//uniform x3d_AmbientTextureParameters x3d_AmbientTexture;
 
 #if defined (X3D_DIFFUSE_TEXTURE)
 struct x3d_DiffuseTextureParameters
@@ -129,8 +144,9 @@ struct x3d_DiffuseTextureParameters
    mediump samplerCube textureCube;
    #endif
 };
-//uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
 #endif
+
+//uniform x3d_DiffuseTextureParameters x3d_DiffuseTexture;
 
 #if defined (X3D_SPECULAR_TEXTURE)
 struct x3d_SpecularTextureParameters
@@ -147,8 +163,9 @@ struct x3d_SpecularTextureParameters
    mediump samplerCube textureCube;
    #endif
 };
-//uniform x3d_SpecularTextureParameters x3d_SpecularTexture;
 #endif
+
+//uniform x3d_SpecularTextureParameters x3d_SpecularTexture;
 
 #if defined (X3D_EMISSIVE_TEXTURE)
 struct x3d_EmissiveTextureParameters
@@ -165,8 +182,9 @@ struct x3d_EmissiveTextureParameters
    mediump samplerCube textureCube;
    #endif
 };
-//uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
 #endif
+
+//uniform x3d_EmissiveTextureParameters x3d_EmissiveTexture;
 
 #if defined (X3D_SHININESS_TEXTURE)
 struct x3d_ShininessTextureParameters
@@ -183,8 +201,9 @@ struct x3d_ShininessTextureParameters
    mediump samplerCube textureCube;
    #endif
 };
-//uniform x3d_ShininessTextureParameters x3d_ShininessTexture;
 #endif
+
+//uniform x3d_ShininessTextureParameters x3d_ShininessTexture;
 
 #if defined (X3D_BASE_TEXTURE)
 struct x3d_BaseTextureParameters
@@ -201,8 +220,9 @@ struct x3d_BaseTextureParameters
    mediump samplerCube textureCube;
    #endif
 };
-//uniform x3d_BaseTextureParameters x3d_BaseTexture;
 #endif
+
+//uniform x3d_BaseTextureParameters x3d_BaseTexture;
 
 #if defined (X3D_METALLIC_ROUGHNESS_TEXTURE)
 struct x3d_MetallicRoughnessTextureParameters
@@ -219,8 +239,9 @@ struct x3d_MetallicRoughnessTextureParameters
    mediump samplerCube textureCube;
    #endif
 };
-//uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
 #endif
+
+//uniform x3d_MetallicRoughnessTextureParameters x3d_MetallicRoughnessTexture;
 
 #if defined (X3D_OCCLUSION_TEXTURE)
 struct x3d_OcclusionTextureParameters
@@ -237,8 +258,9 @@ struct x3d_OcclusionTextureParameters
    mediump samplerCube textureCube;
    #endif
 };
-//uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
 #endif
+
+//uniform x3d_OcclusionTextureParameters x3d_OcclusionTexture;
 
 #if defined (X3D_NORMAL_TEXTURE)
 struct x3d_NormalTextureParameters
@@ -255,9 +277,11 @@ struct x3d_NormalTextureParameters
    mediump samplerCube textureCube;
    #endif
 };
-//uniform x3d_NormalTextureParameters x3d_NormalTexture;
 #endif
 
+//uniform x3d_NormalTextureParameters x3d_NormalTexture;
+
+#if defined (X3D_MULTI_TEXTURING)
 struct x3d_MultiTextureParameters
 {
    mediump int mode;
@@ -265,13 +289,16 @@ struct x3d_MultiTextureParameters
    mediump int source;
    mediump int function;
 };
+#endif
 
 //uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
 
+#if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
 struct x3d_TextureCoordinateGeneratorParameters
 {
    mediump int   mode;
    mediump float parameter [6];
 };
+#endif
 
 //uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];

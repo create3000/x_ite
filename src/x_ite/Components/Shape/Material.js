@@ -268,6 +268,8 @@ function (Fields,
 
          if (geometryContext .hasNormals)
          {
+            options .push ("X3D_MATERIAL");
+
             if (+this .getTextureBits ())
             {
                if (this .ambientTextureNode)
@@ -298,6 +300,8 @@ function (Fields,
          }
          else
          {
+            options .push ("X3D_UNLIT_MATERIAL");
+
             var shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
 
             browser .getShaders () .set (key .replace (/^(\d{1,2})\d*/, "$1") .replace (/\d$/, "0"), shaderNode);

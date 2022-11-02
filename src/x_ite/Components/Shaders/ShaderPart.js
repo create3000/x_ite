@@ -70,6 +70,19 @@ function (Fields,
 {
 "use strict";
 
+   const defaultOptions = [
+      "X3D_GEOMETRY_0D",
+      "X3D_GEOMETRY_1D",
+      "X3D_GEOMETRY_2D",
+      "X3D_GEOMETRY_3D",
+      "X3D_FOG",
+      "X3D_STYLE_PROPERTIES",
+      "X3D_UNLIT_MATERIAL",
+      "X3D_MATERIAL",
+      "X3D_TEXTURE",
+      "X3D_MULTI_TEXTURING",
+  ];
+
    function ShaderPart (executionContext)
    {
       X3DNode      .call (this, executionContext);
@@ -77,7 +90,7 @@ function (Fields,
 
       this .addType (X3DConstants .ShaderPart);
 
-      this .options = [ ];
+      this .options = defaultOptions;
    }
 
    ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),

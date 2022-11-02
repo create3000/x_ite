@@ -1,4 +1,4 @@
-#if defined (X3D_GEOMETRY_0D)
+#if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
 
 uniform x3d_PointPropertiesParameters x3d_PointProperties;
 
