@@ -990,12 +990,15 @@ function (X3DCast,
       },
       setCustomUniforms: function (gl, geometryContext, renderContext)
       {
-         const fogNode = renderContext .fogNode;
+         const
+            fogNode        = renderContext .fogNode,
+            appearanceNode = renderContext .appearanceNode,
+            textureNode    = renderContext .textureNode || appearanceNode .getTexture ();
 
          gl .useProgram (this .getProgram ());
 
          gl .uniform1i (this .x3d_FogType,     fogNode ? +fogNode .getFogKey () : 0);
-         gl .uniform1i (this .x3d_NumTextures, 0);
+         gl .uniform1i (this .x3d_NumTextures, textureNode ? textureNode .getCount () : 0);
 
          return this;
       },
