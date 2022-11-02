@@ -164,7 +164,7 @@ function ($,
       },
       getDepthShader: function ()
       {
-         this [_depthShader] = this .createShader ("DepthShader", "Depth", "Depth");
+         this [_depthShader] = this .createShader ("DepthShader", "Depth");
 
          this .getDepthShader = function () { return this [_depthShader]; };
 
