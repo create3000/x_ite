@@ -92,9 +92,9 @@ function (Fields,
    TextureProjectorPerspectiveContainer .prototype =
    {
       constructor: TextureProjectorPerspectiveContainer,
-      set: function (browser, textureProjectorNode, modelViewMatrix)
+      set: function (textureProjectorNode, modelViewMatrix)
       {
-         this .browser              = browser;
+         this .browser              = textureProjectorNode .getBrowser ();
          this .textureProjectorNode = textureProjectorNode;
 
          this .modelViewMatrix .assign (modelViewMatrix);

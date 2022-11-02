@@ -504,10 +504,18 @@ function (X3DBindableNode,
                   sourceObjects = renderObject .getLocalObjects (),
                   destObjects   = this .clipPlanes;
 
-               for (let i = 0, length = sourceObjects .length; i < length; ++ i)
-                  destObjects [i] = sourceObjects [i];
+               let d = 0;
 
-               destObjects .length = sourceObjects .length;
+               for (let s = 0, length = sourceObjects .length; s < length; ++ s)
+               {
+                  if (sourceObjects [s] .isClipped)
+                     destObjects [d ++] = sourceObjects [s];
+               }
+
+               destObjects .length = d;
+
+               this .sphereContext   .objectsKey = destObjects .length + "00";
+               this .texturesContext .objectsKey = destObjects .length + "00";
                return;
             }
          }

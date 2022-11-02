@@ -163,12 +163,18 @@ function (Fields,
             clipPlaneContainer .set (this, renderObject .getModelViewMatrix () .get ());
 
             renderObject .getLocalObjects () .push (clipPlaneContainer);
+
+            ++ renderObject .getLocalObjectsCount () [0];
          }
       },
       pop: function (renderObject)
       {
          if (this .enabled)
+         {
             this .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
+
+            -- renderObject .getLocalObjectsCount () [0];
+         }
       },
    });
 

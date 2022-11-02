@@ -189,8 +189,7 @@ function (X3DChildNode,
       {
          var textureProjectorContainer = this .getTextureProjectors () .pop ();
 
-         textureProjectorContainer .set (this .getBrowser (),
-                                         this,
+         textureProjectorContainer .set (this,
                                          renderObject .getModelViewMatrix () .get ());
 
          if (this ._global .getValue ())
@@ -202,6 +201,8 @@ function (X3DChildNode,
          {
             renderObject .getLocalObjects ()      .push (textureProjectorContainer);
             renderObject .getTextureProjectors () .push (textureProjectorContainer);
+
+            ++ renderObject .getLocalObjectsCount () [2];
          }
       },
       pop: function (renderObject)
@@ -210,6 +211,8 @@ function (X3DChildNode,
             return;
 
          renderObject .getLocalObjects () .pop ();
+
+         -- renderObject .getLocalObjectsCount () [2];
       },
    });
 

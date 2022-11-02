@@ -153,23 +153,27 @@ function (X3DChildNode,
 
             if (this ._global .getValue ())
             {
-               lightContainer .set (this .getBrowser (),
-                                    this,
+               lightContainer .set (this,
                                     renderObject .getLayer () .getGroup (),
                                     renderObject .getModelViewMatrix () .get ());
 
                renderObject .getGlobalObjects () .push (lightContainer);
                renderObject .getLights ()        .push (lightContainer);
+
+               renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
             }
             else
             {
-               lightContainer .set (this .getBrowser (),
-                                    this,
+               lightContainer .set (this,
                                     group,
                                     renderObject .getModelViewMatrix () .get ());
 
                renderObject .getLocalObjects () .push (lightContainer);
                renderObject .getLights ()       .push (lightContainer);
+
+               renderObject .pushLocalShadows (!! this .getShadowIntensity ());
+
+               ++ renderObject .getLocalObjectsCount () [1];
             }
          }
          else
@@ -182,6 +186,8 @@ function (X3DChildNode,
 
                renderObject .getGlobalObjects () .push (lightContainer);
                renderObject .getLights ()        .push (lightContainer);
+
+               renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
             }
             else
             {
@@ -189,10 +195,12 @@ function (X3DChildNode,
 
                renderObject .getLocalObjects () .push (lightContainer);
                renderObject .getLights ()       .push (lightContainer);
+
+               renderObject .pushLocalShadows (!! this .getShadowIntensity ());
+
+               ++ renderObject .getLocalObjectsCount () [1];
             }
          }
-
-         renderObject .pushShadows (!! this .getShadowIntensity ());
       },
       pop: function (renderObject)
       {
@@ -204,7 +212,9 @@ function (X3DChildNode,
          else
             renderObject .getLocalObjects () .pop ();
 
-         renderObject .popShadows ();
+         renderObject .popLocalShadows ();
+
+         -- renderObject .getLocalObjectsCount () [1];
       },
    });
 

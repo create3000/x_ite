@@ -92,10 +92,12 @@ function (TextureBuffer,
       this .viewportArray            = new Int32Array (4);
       this .projectionMatrixArray    = new Float32Array (16);
       this .cameraSpaceMatrixArray   = new Float32Array (16);
+      this .localObjectsCount        = [0, 0, 0];
       this .globalObjects            = [ ];
       this .localObjects             = [ ];
       this .lights                   = [ ];
-      this .shadows                  = [ false ];
+      this .globalShadows            = [ false ];
+      this .localShadows             = [ false ];
       this .localFogs                = [ null ];
       this .layouts                  = [ ];
       this .textureProjectors        = [ ];
@@ -182,17 +184,25 @@ function (TextureBuffer,
       {
          return this .localObjects;
       },
+      getLocalObjectsCount: function ()
+      {
+         return this .localObjectsCount;
+      },
       getLights: function ()
       {
          return this .lights;
       },
-      pushShadows: function (value)
+      pushGlobalShadows: function (value)
       {
-         this .shadows .push (value || this .shadows .at (-1));
+         this .globalShadows .push (value || this .globalShadows .at (-1));
       },
-      popShadows: function ()
+      pushLocalShadows: function (value)
       {
-         this .shadows .pop ();
+         this .localShadows .push (value || this .localShadows .at (-1));
+      },
+      popLocalShadows: function ()
+      {
+         this .localShadows .pop ();
       },
       setGlobalFog: (function ()
       {
@@ -571,11 +581,12 @@ function (TextureBuffer,
 
                renderContext .modelViewMatrix .set (modelViewMatrix);
                renderContext .scissor .assign (viewVolume .getScissor ());
+               renderContext .shadows         = this .localShadows .at (-1);
+               renderContext .fogNode         = this .localFogs .at (-1);
                renderContext .shapeNode       = shapeNode;
                renderContext .appearanceNode  = shapeNode .getAppearance ();
                renderContext .distance        = bboxCenter .z;
-               renderContext .fogNode         = this .localFogs .at (-1);
-               renderContext .shadows         = this .shadows .at (-1);
+               renderContext .objectsKey      = this .localObjectsCount .join ("");
 
                // Clip planes and local lights
 
@@ -857,7 +868,10 @@ function (TextureBuffer,
             viewport                 = this .getViewVolume () .getViewport (),
             lights                   = this .lights,
             textureProjectors        = this .textureProjectors,
-            generatedCubeMapTextures = this .generatedCubeMapTextures;
+            generatedCubeMapTextures = this .generatedCubeMapTextures,
+            globalShadows            = this .globalShadows,
+            numGlobalLights          = globalShadows .length - 1,
+            shadows                  = globalShadows .at (-1);
 
 
          this .renderTime = performance .now ();
@@ -938,6 +952,8 @@ function (TextureBuffer,
                          scissor .z,
                          scissor .w);
 
+            renderContext .shadows = renderContext .shadows || shadows;
+
             renderContext .shapeNode .display (gl, renderContext);
             browser .resetTextureUnits ();
          }
@@ -961,6 +977,8 @@ function (TextureBuffer,
                          scissor .y,
                          scissor .z,
                          scissor .w);
+
+            renderContext .shadows = renderContext .shadows || shadows;
 
             renderContext .shapeNode .display (gl, renderContext);
             browser .resetTextureUnits ();
@@ -995,6 +1013,7 @@ function (TextureBuffer,
 
          globalObjects            .length = 0;
          lights                   .length = 0;
+         globalShadows            .length = 1;
          textureProjectors        .length = 0;
          generatedCubeMapTextures .length = 0;
       },

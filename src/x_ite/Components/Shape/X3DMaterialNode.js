@@ -119,13 +119,16 @@ function (Fields,
 
          if (renderContext)
          {
-            const { shadows, fogNode, shapeNode, appearanceNode, textureNode } = renderContext;
+            //console .log (renderContext .objectsKey);
+
+            const { shadows, fogNode, shapeNode, appearanceNode, textureNode, objectsKey } = renderContext;
 
             key += ".";
             key += shadows ? "1" : "0";
             key += fogNode ? fogNode .getFogKey () : "0";
             key += shapeNode .getShapeKey ();
             key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? "1" : "0";
+            key += objectsKey;
             key += ".";
             key += textureNode ? "1" : appearanceNode .getTextureBits () .toString (4);
             key += ".";
@@ -135,7 +138,9 @@ function (Fields,
          }
          else
          {
-            key += ".0000.";
+            key += ".0000";
+            key += geometryContext .objectsKey;
+            key += ".";
             key += geometryContext .textureNode ? "1" : "0";
             key += ".11";
             key += this .getMaterialKey (false);

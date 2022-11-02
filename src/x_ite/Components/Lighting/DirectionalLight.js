@@ -111,11 +111,11 @@ function (Fields,
       {
          return this .modelViewMatrix;
       },
-      set: function (browser, lightNode, groupNode, modelViewMatrix)
+      set: function (lightNode, groupNode, modelViewMatrix)
       {
          const shadowMapSize = lightNode .getShadowMapSize ();
 
-         this .browser   = browser;
+         this .browser   = lightNode .getBrowser ();
          this .lightNode = lightNode;
          this .groupNode = groupNode;
 
@@ -125,7 +125,7 @@ function (Fields,
 
          if (lightNode .getShadowIntensity () > 0 && shadowMapSize > 0)
          {
-            this .shadowBuffer = browser .popShadowBuffer (shadowMapSize);
+            this .shadowBuffer = this .browser .popShadowBuffer (shadowMapSize);
 
             if (! this .shadowBuffer)
                console .warn ("Couldn't create shadow buffer.");

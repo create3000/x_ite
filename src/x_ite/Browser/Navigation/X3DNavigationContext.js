@@ -75,8 +75,7 @@ function (Fields,
       _viewerNode         = Symbol (),
       _headlightContainer = Symbol ();
 
-
-   function getHeadLight (browser)
+   function getHeadlight (browser)
    {
       const headlight = new DirectionalLight (browser .getPrivateScene ());
 
@@ -84,7 +83,7 @@ function (Fields,
 
       const headlightContainer = headlight .getLights () .pop ();
 
-      headlightContainer .set (browser, headlight, null, Matrix4 .Identity);
+      headlightContainer .set (headlight, null, Matrix4 .Identity);
       headlightContainer .dispose = Function .prototype;
 
       return headlightContainer;
@@ -111,7 +110,7 @@ function (Fields,
          this .initialized () .addInterest ("set_world__",    this);
          this .shutdown ()    .addInterest ("remove_world__", this);
 
-         this [_headlightContainer] = getHeadLight (this);
+         this [_headlightContainer] = getHeadlight (this);
          this [_viewerNode] .setup ();
       },
       getHeadlight: function ()
