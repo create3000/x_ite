@@ -14,13 +14,11 @@ getFogInterpolant ()
       float visibilityRange = x3d_Fog .visibilityRange;
       float dV              = length (x3d_Fog .matrix * vertex);
 
-      if (x3d_Fog .type == x3d_LinearFog)
+      #if defined (X3D_FOG_LINEAR)
          return max (0.0, visibilityRange - dV) / visibilityRange;
-
-      if (x3d_Fog .type == x3d_ExponentialFog)
+      #elif defined (X3D_FOG_EXPONENTIAL)
          return exp (-dV / max (0.001, visibilityRange - dV));
-
-      return 1.0;
+      #endif
    #endif
 }
 

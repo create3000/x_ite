@@ -123,7 +123,7 @@ function (Fields,
 
             key += ".";
             key += renderContext .shadows ? "1" : "0";
-            key += renderContext .fogNode ? "1" : "0";
+            key += renderContext .fogNode ? renderContext .fogNode .getFogKey () : "0";
             key += renderContext .shapeNode .getShapeKey ();
             key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? "1" : "0";
             key += ".";
@@ -196,7 +196,19 @@ function (Fields,
                   options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
 
                if (renderContext .fogNode)
+               {
                   options .push ("X3D_FOG");
+
+                  switch (renderContext .fogNode .getFogKey ())
+                  {
+                     case "1":
+                        options .push ("X3D_FOG_LINEAR");
+                        break;
+                     case "2":
+                        options .push ("X3D_FOG_EXPONENTIAL");
+                        break;
+                  }
+               }
 
                if (appearanceNode .getStyleProperties (geometryContext .geometryType))
                   options .push ("X3D_STYLE_PROPERTIES");

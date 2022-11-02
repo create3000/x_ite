@@ -71,8 +71,13 @@ function (X3DConstants,
       set: function (fogNode, modelViewMatrix)
       {
          this .fogNode = fogNode;
+         this .fogKey  = String (fogNode .getFogType ());
 
          this .fogMatrix .set (modelViewMatrix .submatrix .inverse ());
+      },
+      getFogKey: function ()
+      {
+         return this .fogKey;
       },
       setShaderUniforms: function (gl, shaderObject)
       {
@@ -81,7 +86,6 @@ function (X3DConstants,
 
          const fogNode = this .fogNode;
 
-         gl .uniform1i        (shaderObject .x3d_FogType,            fogNode .fogType);
          gl .uniform3fv       (shaderObject .x3d_FogColor,           fogNode .colorArray);
          gl .uniform1f        (shaderObject .x3d_FogVisibilityRange, fogNode .visibilityRange);
          gl .uniformMatrix3fv (shaderObject .x3d_FogMatrix, false,   this .fogMatrix);

@@ -62,6 +62,11 @@ function (X3DCast,
 {
 "use strict";
 
+   const defaultUniformNames = [
+      "x3d_FogType",
+      "x3d_NumTextures",
+   ]
+
    const _uniformLocation = Symbol .for ("X3DField.uniformLocation");
 
    function X3DProgrammableShaderObject (executionContext)
@@ -172,7 +177,6 @@ function (X3DCast,
          for (let i = 0; i < maxClipPlanes; ++ i)
             this .x3d_ClipPlane [i] = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
 
-         this .x3d_FogType            = this .getUniformLocation (gl, program, "x3d_Fog.type",            "x3d_FogType");
          this .x3d_FogColor           = this .getUniformLocation (gl, program, "x3d_Fog.color",           "x3d_FogColor");
          this .x3d_FogVisibilityRange = this .getUniformLocation (gl, program, "x3d_Fog.visibilityRange", "x3d_FogVisibilityRange");
          this .x3d_FogMatrix          = this .getUniformLocation (gl, program, "x3d_Fog.matrix",          "x3d_FogMatrix");
@@ -984,11 +988,14 @@ function (X3DCast,
 
          gl .uniform1i (this .x3d_NumClipPlanes, this .numClipPlanes);
       },
-      setCustomUniforms: function (gl)
+      setCustomUniforms: function (gl, geometryContext, renderContext)
       {
+         const fogNode = renderContext .fogNode;
+
          gl .useProgram (this .getProgram ());
 
-         gl .uniform1i (this .x3d_FogType, 0);
+         gl .uniform1i (this .x3d_FogType,     fogNode ? +fogNode .getFogKey () : 0);
+         gl .uniform1i (this .x3d_NumTextures, 0);
 
          return this;
       },

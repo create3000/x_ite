@@ -360,7 +360,7 @@ function (Fields,
       {
          function getShader (gl, geometryContext, renderContext)
          {
-            return this .shaderNode .setCustomUniforms (gl);
+            return this .shaderNode .setCustomUniforms (gl, geometryContext, renderContext);
          }
 
          return function ()
