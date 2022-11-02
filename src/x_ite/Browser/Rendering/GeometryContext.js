@@ -64,6 +64,8 @@ function (X3DGeometryNode)
          hasNormals: false,
          textureNode: false,
          objectsCount: [0, 0, 0],
+         textureCoordinateMapping: new Map (),
+         textureCoordinateNode: null,
       },
       options)
 
@@ -74,6 +76,14 @@ function (X3DGeometryNode)
    {
       constructor: GeometryContext,
       updateGeometryKey: X3DGeometryNode .prototype .updateGeometryKey,
+      getTextureCoordinateMapping: function ()
+      {
+         return this .textureCoordinateMapping;
+      },
+      getTextureCoordinate: function ()
+      {
+         return this .textureCoordinateNode;
+      },
    };
 
    return GeometryContext;

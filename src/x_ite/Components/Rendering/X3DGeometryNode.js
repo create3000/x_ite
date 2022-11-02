@@ -321,6 +321,10 @@ function (Fields,
       {
          return this .texCoords;
       },
+      getTextureCoordinate: function ()
+      {
+         return this .textureCoordinateNode;
+      },
       setTextureCoordinate: function (value)
       {
          this .textureCoordinateNode .removeInterest ("updateTextureCoordinateMapping", this);
@@ -333,6 +337,10 @@ function (Fields,
          this .textureCoordinateNode .addInterest ("updateTextureCoordinateMapping", this);
 
          this .updateTextureCoordinateMapping ();
+      },
+      getTextureCoordinateMapping: function ()
+      {
+         return this .textureCoordinateMapping;
       },
       updateTextureCoordinateMapping: function ()
       {

@@ -1096,15 +1096,15 @@ function (X3DCast,
 
             // Material
 
-            materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .getTextureTransformMapping (), geometryContext .textureCoordinateMapping, front);
+            materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .getTextureTransformMapping (), geometryContext .getTextureCoordinateMapping (), front);
 
             // Texture
 
             if (textureNode)
                textureNode .setShaderUniforms (gl, this, renderObject);
 
-            appearanceNode .getTextureTransform () .setShaderUniforms (gl, this);
-            geometryContext .textureCoordinateNode .setShaderUniforms (gl, this);
+            appearanceNode  .getTextureTransform ()  .setShaderUniforms (gl, this);
+            geometryContext .getTextureCoordinate () .setShaderUniforms (gl, this);
          };
       })(),
       enable: function (gl)

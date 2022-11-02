@@ -127,6 +127,8 @@ function (Fields,
 
       this ._particleSize .setUnit ("length");
 
+      const browser = this .getBrowser ();
+
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .forcePhysicsModelNodes   = [ ];
@@ -136,7 +138,7 @@ function (Fields,
       this .boundedVertices          = [ ];
       this .colorRamp                = new Float32Array ();
       this .texCoordRamp             = new Float32Array ();
-      this .geometryContext          = new GeometryContext ();
+      this .geometryContext          = new GeometryContext ({ textureCoordinateNode: browser .getDefaultTextureCoordinate () });
       this .creationTime             = 0;
       this .pauseTime                = 0;
       this .deltaTime                = 0;
@@ -192,11 +194,6 @@ function (Fields,
          X3DShapeNode .prototype .initialize .call (this);
 
          const browser = this .getBrowser ();
-
-         // Geometry context
-
-         this .geometryContext .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
-         this .geometryContext .textureCoordinateMapping = new Map ();
 
          // Check version.
 
