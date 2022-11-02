@@ -81,7 +81,7 @@ function (Fields,
       "X3D_MATERIAL",
       "X3D_TEXTURE",
       "X3D_MULTI_TEXTURING",
-  ];
+   ];
 
    function ShaderPart (executionContext)
    {
