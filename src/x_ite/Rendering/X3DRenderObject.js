@@ -586,10 +586,10 @@ function (TextureBuffer,
                renderContext .shapeNode       = shapeNode;
                renderContext .appearanceNode  = shapeNode .getAppearance ();
                renderContext .distance        = bboxCenter .z;
-               renderContext .objectsKey      = this .localObjectsCount .join ("");
 
                // Clip planes and local lights
 
+               assign (renderContext .objectsCount, this .localObjectsCount);
                assign (renderContext .localObjects, this .localObjects);
 
                return true;
@@ -606,6 +606,7 @@ function (TextureBuffer,
             modelViewMatrix: new Float32Array (16),
             scissor: new Vector4 (0, 0, 0, 0),
             localObjects: [ ],
+            objectsCount: [0, 0, 0],
          };
       },
       collide: (function ()
@@ -863,15 +864,17 @@ function (TextureBuffer,
       draw: function ()
       {
          const
-            browser                  = this .getBrowser (),
-            gl                       = browser .getContext (),
-            viewport                 = this .getViewVolume () .getViewport (),
-            lights                   = this .lights,
-            textureProjectors        = this .textureProjectors,
-            generatedCubeMapTextures = this .generatedCubeMapTextures,
-            globalShadows            = this .globalShadows,
-            numGlobalLights          = globalShadows .length - 1,
-            shadows                  = globalShadows .at (-1);
+            browser                    = this .getBrowser (),
+            gl                         = browser .getContext (),
+            viewport                   = this .getViewVolume () .getViewport (),
+            lights                     = this .lights,
+            textureProjectors          = this .textureProjectors,
+            generatedCubeMapTextures   = this .generatedCubeMapTextures,
+            globalShadows              = this .globalShadows,
+            shadows                    = globalShadows .at (-1),
+            headlight                  = this .getNavigationInfo () ._headlight .getValue (),
+            numGlobalLights            = lights .reduce ((v, c) => v + c .lightNode .getGlobal (), +headlight),
+            numGlobalTextureProjectors = textureProjectors .reduce ((v, c) => v + c .textureProjectorNode .getGlobal (), 0);
 
 
          this .renderTime = performance .now ();
@@ -895,7 +898,8 @@ function (TextureBuffer,
 
          // Set up shadow matrix for all lights, and matrix for all projective textures.
 
-         browser .getHeadlight () .setGlobalVariables (this);
+         if (headlight)
+            browser .getHeadlight () .setGlobalVariables (this);
 
          for (const light of lights)
             light .setGlobalVariables (this);
@@ -952,7 +956,9 @@ function (TextureBuffer,
                          scissor .z,
                          scissor .w);
 
-            renderContext .shadows = renderContext .shadows || shadows;
+            renderContext .shadows           = renderContext .shadows || shadows;
+            renderContext .objectsCount [1] += numGlobalLights;
+            renderContext .objectsCount [2] += numGlobalTextureProjectors;
 
             renderContext .shapeNode .display (gl, renderContext);
             browser .resetTextureUnits ();
@@ -978,7 +984,9 @@ function (TextureBuffer,
                          scissor .z,
                          scissor .w);
 
-            renderContext .shadows = renderContext .shadows || shadows;
+            renderContext .shadows           = renderContext .shadows || shadows;
+            renderContext .objectsCount [1] += numGlobalLights;
+            renderContext .objectsCount [2] += numGlobalTextureProjectors;
 
             renderContext .shapeNode .display (gl, renderContext);
             browser .resetTextureUnits ();

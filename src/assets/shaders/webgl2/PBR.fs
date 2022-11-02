@@ -14,8 +14,10 @@ precision highp samplerCube;
 #pragma X3D include "include/SpotFactor.glsl"
 #pragma X3D include "include/Shadow.glsl"
 
-uniform int x3d_NumLights;
-uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
+#if defined (X3D_LIGHTING)
+   uniform x3d_LightSourceParameters x3d_LightSource [X3D_NUM_LIGHTS];
+#endif
+
 uniform x3d_PhysicalMaterialParameters x3d_Material;
 
 #if defined (USE_IBL)
@@ -281,11 +283,9 @@ getMaterialColor ()
 
    vec3 finalColor = vec3 (0.0);
 
-   for (int i = 0; i < x3d_MaxLights; i ++)
+   #if defined (X3D_LIGHTING)
+   for (int i = 0; i < X3D_NUM_LIGHTS; i ++)
    {
-      if (i == x3d_NumLights)
-         break;
-
       x3d_LightSourceParameters light = x3d_LightSource [i];
 
       vec3  vL = light .location - vertex; // Light to fragment
@@ -346,6 +346,7 @@ getMaterialColor ()
          finalColor += color;
       }
    }
+   #endif
 
    // Calculate lighting contribution from image based lighting source (IBL).
    #if defined (USE_IBL)

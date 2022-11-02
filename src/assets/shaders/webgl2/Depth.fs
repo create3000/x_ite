@@ -13,7 +13,9 @@ out vec4 x3d_FragColor;
 void
 main ()
 {
-   clip ();
+   #if defined (X3D_CLIP_PLANES)
+      clip ();
+   #endif
 
    x3d_FragColor = pack (gl_FragCoord .z);
 }

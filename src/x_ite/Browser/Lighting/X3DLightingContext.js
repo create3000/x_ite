@@ -61,13 +61,11 @@ function (TextureBuffer)
    function X3DLightingContext ()
    {
       const
-         gl                    = this .getContext (),
-         maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS);
+         gl                   = this .getContext (),
+         maxTextureImageUnits = gl .getParameter (gl .MAX_TEXTURE_IMAGE_UNITS);
 
-      if (maxVertexTextureUnits > 16)
+      if (maxTextureImageUnits > 8)
          this [_maxLights] = 8;
-      else if (maxVertexTextureUnits > 8)
-         this [_maxLights] = 4;
       else
          this [_maxLights] = 2;
 

@@ -86,7 +86,9 @@ getFinalColor ()
 void
 fragment_main ()
 {
-   clip ();
+   #if defined (X3D_CLIP_PLANES)
+      clip ();
+   #endif
 
    #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
       stipple ();

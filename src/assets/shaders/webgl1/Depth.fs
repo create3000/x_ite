@@ -9,7 +9,9 @@ varying vec3 vertex;
 void
 main ()
 {
-   clip ();
+   #if defined (X3D_CLIP_PLANES)
+      clip ();
+   #endif
 
    gl_FragColor = pack (gl_FragCoord .z);
 }

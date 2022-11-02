@@ -435,22 +435,21 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 
 #if defined (X3D_PROJECTIVE_TEXTURE_MAPPING)
 
-uniform int       x3d_NumProjectiveTextures;
-uniform sampler2D x3d_ProjectiveTexture [x3d_MaxTextures];
-uniform mat4      x3d_ProjectiveTextureMatrix [x3d_MaxTextures];
-uniform vec3      x3d_ProjectiveTextureLocation [x3d_MaxTextures];
+uniform sampler2D x3d_ProjectiveTexture [X3D_NUM_TEXTURE_PROJECTORS];
+uniform mat4      x3d_ProjectiveTextureMatrix [X3D_NUM_TEXTURE_PROJECTORS];
+uniform vec3      x3d_ProjectiveTextureLocation [X3D_NUM_TEXTURE_PROJECTORS];
 
 vec4
 getProjectiveTexture (const in int i, const in vec2 texCoord)
 {
    vec4 color = vec4 (0.0);
 
-   #if x3d_MaxTextures > 0
+   #if X3D_NUM_TEXTURE_PROJECTORS > 0
    if (i == 0)
       color = texture2D (x3d_ProjectiveTexture [0], texCoord);
    #endif
 
-   #if x3d_MaxTextures > 1
+   #if X3D_NUM_TEXTURE_PROJECTORS > 1
    else if (i == 1)
       color = texture2D (x3d_ProjectiveTexture [1], texCoord);
    #endif
@@ -461,36 +460,30 @@ getProjectiveTexture (const in int i, const in vec2 texCoord)
 vec4
 getProjectiveTextureColor (in vec4 currentColor)
 {
-   if (x3d_NumProjectiveTextures != 0)
+   vec3 N = gl_FrontFacing ? normal : -normal;
+
+   for (int i = 0; i < X3D_NUM_TEXTURE_PROJECTORS; ++ i)
    {
-      vec3 N = gl_FrontFacing ? normal : -normal;
+      vec4 texCoord = x3d_ProjectiveTextureMatrix [i] * vec4 (vertex, 1.0);
 
-      for (int i = 0; i < x3d_MaxTextures; ++ i)
-      {
-         if (i == x3d_NumProjectiveTextures)
-            break;
+      texCoord .stp /= texCoord .q;
 
-         vec4 texCoord = x3d_ProjectiveTextureMatrix [i] * vec4 (vertex, 1.0);
+      if (texCoord .s < 0.0 || texCoord .s > 1.0)
+         continue;
 
-         texCoord .stp /= texCoord .q;
+      if (texCoord .t < 0.0 || texCoord .t > 1.0)
+         continue;
 
-         if (texCoord .s < 0.0 || texCoord .s > 1.0)
-            continue;
+      if (texCoord .p < 0.0 || texCoord .p > 1.0)
+         continue;
 
-         if (texCoord .t < 0.0 || texCoord .t > 1.0)
-            continue;
+      // We do not need to normalze p, as we only need the sign of the dot product.
+      vec3 p = x3d_ProjectiveTextureLocation [i] - vertex;
 
-         if (texCoord .p < 0.0 || texCoord .p > 1.0)
-            continue;
+      if (dot (N, p) < 0.0)
+         continue;
 
-         // We do not need to normalze p, as we only need the sign of the dot product.
-         vec3 p = x3d_ProjectiveTextureLocation [i] - vertex;
-
-         if (dot (N, p) < 0.0)
-            continue;
-
-         currentColor *= getProjectiveTexture (i, texCoord .st);
-      }
+      currentColor *= getProjectiveTexture (i, texCoord .st);
    }
 
    return currentColor;

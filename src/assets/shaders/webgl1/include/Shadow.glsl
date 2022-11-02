@@ -2,47 +2,47 @@
 
 #pragma X3D include "Pack.glsl"
 
-uniform sampler2D x3d_ShadowMap [x3d_MaxLights];
+uniform sampler2D x3d_ShadowMap [X3D_NUM_LIGHTS];
 
 float
 getShadowDepth (const in int index, const in vec2 shadowCoord)
 {
-   #if x3d_MaxLights > 0
+   #if X3D_NUM_LIGHTS > 0
    if (index == 0)
       return unpack (texture2D (x3d_ShadowMap [0], shadowCoord));
    #endif
 
-   #if x3d_MaxLights > 1
+   #if X3D_NUM_LIGHTS > 1
    if (index == 1)
       return unpack (texture2D (x3d_ShadowMap [1], shadowCoord));
    #endif
 
-   #if x3d_MaxLights > 2
+   #if X3D_NUM_LIGHTS > 2
    if (index == 2)
       return unpack (texture2D (x3d_ShadowMap [2], shadowCoord));
    #endif
 
-   #if x3d_MaxLights > 3
+   #if X3D_NUM_LIGHTS > 3
    if (index == 3)
       return unpack (texture2D (x3d_ShadowMap [3], shadowCoord));
    #endif
 
-   #if x3d_MaxLights > 4
+   #if X3D_NUM_LIGHTS > 4
    if (index == 4)
       return unpack (texture2D (x3d_ShadowMap [4], shadowCoord));
    #endif
 
-   #if x3d_MaxLights > 5
+   #if X3D_NUM_LIGHTS > 5
    if (index == 5)
       return unpack (texture2D (x3d_ShadowMap [5], shadowCoord));
    #endif
 
-   #if x3d_MaxLights > 6
+   #if X3D_NUM_LIGHTS > 6
    if (index == 6)
       return unpack (texture2D (x3d_ShadowMap [6], shadowCoord));
    #endif
 
-   #if x3d_MaxLights > 7
+   #if X3D_NUM_LIGHTS > 7
    if (index == 7)
       return unpack (texture2D (x3d_ShadowMap [7], shadowCoord));
    #endif

@@ -1,9 +1,11 @@
+uniform x3d_MaterialParameters x3d_Material;
+
+#if defined (X3D_LIGHTING)
+
 #pragma X3D include "SpotFactor.glsl"
 #pragma X3D include "Shadow.glsl"
 
-uniform int x3d_NumLights;
-uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
-uniform x3d_MaterialParameters x3d_Material;
+uniform x3d_LightSourceParameters x3d_LightSource [X3D_NUM_LIGHTS];
 
 vec3
 getMaterialColor (const in vec3 vertex, const in vec3 N, const in vec3 ambientColor, const in vec3 diffuseColor, const in vec3 specularColor, const in float shininess)
@@ -14,11 +16,8 @@ getMaterialColor (const in vec3 vertex, const in vec3 N, const in vec3 ambientCo
 
    vec3 finalColor = vec3 (0.0);
 
-   for (int i = 0; i < x3d_MaxLights; ++ i)
+   for (int i = 0; i < X3D_NUM_LIGHTS; ++ i)
    {
-      if (i == x3d_NumLights)
-         break;
-
       x3d_LightSourceParameters light = x3d_LightSource [i];
 
       vec3  vL = light .location - vertex;
@@ -54,3 +53,5 @@ getMaterialColor (const in vec3 vertex, const in vec3 N, const in vec3 ambientCo
 
    return finalColor;
 }
+
+#endif

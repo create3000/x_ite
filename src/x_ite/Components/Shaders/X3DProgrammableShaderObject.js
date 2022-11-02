@@ -52,19 +52,20 @@ define ([
    "x_ite/Base/X3DConstants",
    "x_ite/Components/Navigation/OrthoViewpoint",
    "standard/Math/Numbers/Matrix3",
-   "standard/Math/Numbers/Matrix4",
 ],
 function (X3DCast,
           X3DConstants,
           OrthoViewpoint,
-          Matrix3,
-          Matrix4)
+          Matrix3)
 {
 "use strict";
 
    const defaultUniformNames = [
       "x3d_FogType",
-   ]
+      "x3d_NumClipPlanes",
+      "x3d_NumLights",
+      "x3d_NumProjectiveTextures",
+   ];
 
    const _uniformLocation = Symbol .for ("X3DField.uniformLocation");
 
@@ -170,8 +171,7 @@ function (X3DCast,
 
          this .x3d_LogarithmicFarFactor1_2 = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor1_2");
 
-         this .x3d_NumClipPlanes = gl .getUniformLocation (program, "x3d_NumClipPlanes");
-         this .x3d_ClipPlanes    = gl .getUniformLocation (program, "x3d_ClipPlane");
+         this .x3d_ClipPlanes = gl .getUniformLocation (program, "x3d_ClipPlane");
 
          for (let i = 0; i < maxClipPlanes; ++ i)
             this .x3d_ClipPlane [i] = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
@@ -196,8 +196,6 @@ function (X3DCast,
          this .x3d_FillPropertiesHatched    = gl .getUniformLocation (program, "x3d_FillProperties.hatched");
          this .x3d_FillPropertiesHatchColor = gl .getUniformLocation (program, "x3d_FillProperties.hatchColor");
          this .x3d_FillPropertiesTexture    = gl .getUniformLocation (program, "x3d_FillProperties.texture");
-
-         this .x3d_NumLights = gl .getUniformLocation (program, "x3d_NumLights");
 
          for (let i = 0; i < maxLights; ++ i)
          {
@@ -256,8 +254,7 @@ function (X3DCast,
             };
          }
 
-         this .x3d_NumProjectiveTextures = gl .getUniformLocation (program, "x3d_NumProjectiveTextures");
-         this .x3d_MultiTextureColor     = gl .getUniformLocation (program, "x3d_MultiTextureColor");
+         this .x3d_MultiTextureColor = gl .getUniformLocation (program, "x3d_MultiTextureColor");
 
          this .x3d_TexCoord .length = 0;
 
@@ -373,11 +370,8 @@ function (X3DCast,
          for (const uniform of this .x3d_ShadowMap)
             gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
 
-         if (browser .getProjectiveTextureMapping ())
-         {
-            for (const uniform of this .x3d_ProjectiveTexture)
-               gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
-         }
+         for (const uniform of this .x3d_ProjectiveTexture)
+            gl .uniform1i (uniform, browser .getDefaultTexture2DUnit ());
 
          gl .uniform1i  (this .x3d_TexCoordRamp, browser .getDefaultTexture2DUnit ());
       },
@@ -984,8 +978,6 @@ function (X3DCast,
 
          for (const clipPlane of clipPlanes)
             clipPlane .setShaderUniforms (gl, this);
-
-         gl .uniform1i (this .x3d_NumClipPlanes, this .numClipPlanes);
       },
       setCustomUniforms: function (gl, geometryContext, renderContext)
       {
@@ -994,6 +986,10 @@ function (X3DCast,
          gl .useProgram (this .getProgram ());
 
          gl .uniform1i (this .x3d_FogType, fogNode ? +fogNode .getFogKey () : 0);
+
+         gl .uniform1i (this .x3d_NumClipPlanes,         renderContext .objectsCount [0]);
+         gl .uniform1i (this .x3d_NumLights,             renderContext .objectsCount [1]);
+         gl .uniform1i (this .x3d_NumProjectiveTextures, renderContext .objectsCount [2]);
 
          return this;
       },
@@ -1088,10 +1084,6 @@ function (X3DCast,
 
             for (const localObject of renderContext .localObjects)
                localObject .setShaderUniforms (gl, this, renderObject);
-
-            gl .uniform1i (this .x3d_NumClipPlanes,         this .numClipPlanes);
-            gl .uniform1i (this .x3d_NumLights,             this .numLights);
-            gl .uniform1i (this .x3d_NumProjectiveTextures, this .numProjectiveTextures);
 
             // Alpha
 

@@ -62,7 +62,6 @@ function (TextureProperties,
 
    const
       _maxTextures              = Symbol (),
-      _projectiveTextureMapping = Symbol (),
       _maxTextureSize           = Symbol (),
       _maxCombinedTextureUnits  = Symbol (),
       _textureMemory            = Symbol (),
@@ -89,8 +88,7 @@ function (TextureProperties,
       // console .log (gl .getParameter (gl .MAX_TEXTURE_IMAGE_UNITS))
       // console .log (gl .getParameter (gl .MAX_ARRAY_TEXTURE_LAYERS))
 
-      this [_maxTextures]              = maxTextureImageUnits > 8 ? 2 : 1;
-      this [_projectiveTextureMapping] = maxTextureImageUnits > 8;
+      this [_maxTextures] = maxTextureImageUnits > 8 ? 2 : 1;
    }
 
    X3DTexturingContext .prototype =
@@ -258,10 +256,6 @@ function (TextureProperties,
       getTextureMemory: function ()
       {
          return this [_textureMemory];
-      },
-      getProjectiveTextureMapping: function ()
-      {
-         return this [_projectiveTextureMapping];
       },
       getDefaultTextureProperties: function ()
       {

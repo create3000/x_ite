@@ -119,16 +119,14 @@ function (Fields,
 
          if (renderContext)
          {
-            //console .log (renderContext .objectsKey);
-
-            const { shadows, fogNode, shapeNode, appearanceNode, textureNode, objectsKey } = renderContext;
+            const { shadows, fogNode, shapeNode, appearanceNode, textureNode, objectsCount } = renderContext;
 
             key += ".";
             key += shadows ? "1" : "0";
             key += fogNode ? fogNode .getFogKey () : "0";
             key += shapeNode .getShapeKey ();
             key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? "1" : "0";
-            key += objectsKey;
+            key += objectsCount .join ("");
             key += ".";
             key += textureNode ? "1" : appearanceNode .getTextureBits () .toString (4);
             key += ".";
@@ -139,7 +137,7 @@ function (Fields,
          else
          {
             key += ".0000";
-            key += geometryContext .objectsKey;
+            key += geometryContext .objectsCount .join ("");
             key += ".";
             key += geometryContext .textureNode ? "1" : "0";
             key += ".11";
@@ -215,6 +213,24 @@ function (Fields,
                   }
                }
 
+               if (renderContext .objectsCount [0])
+               {
+                  options .push ("X3D_CLIP_PLANES")
+                  options .push ("X3D_NUM_CLIP_PLANES " + renderContext .objectsCount [0]);
+               }
+
+               if (renderContext .objectsCount [1])
+               {
+                  options .push ("X3D_LIGHTING")
+                  options .push ("X3D_NUM_LIGHTS " + renderContext .objectsCount [1]);
+               }
+
+               if (renderContext .objectsCount [2])
+               {
+                  options .push ("X3D_PROJECTIVE_TEXTURE_MAPPING")
+                  options .push ("X3D_NUM_TEXTURE_PROJECTORS " + renderContext .objectsCount [2]);
+               }
+
                if (appearanceNode .getStyleProperties (geometryContext .geometryType))
                   options .push ("X3D_STYLE_PROPERTIES");
 
@@ -264,6 +280,24 @@ function (Fields,
             }
             else
             {
+               if (geometryContext .objectsCount [0])
+               {
+                  options .push ("X3D_CLIP_PLANES")
+                  options .push ("X3D_NUM_CLIP_PLANES " + geometryContext .objectsCount [0]);
+               }
+
+               if (geometryContext .objectsCount [1])
+               {
+                  options .push ("X3D_LIGHTING")
+                  options .push ("X3D_NUM_LIGHTS " + geometryContext .objectsCount [1]);
+               }
+
+               if (geometryContext .objectsCount [2])
+               {
+                  options .push ("X3D_PROJECTIVE_TEXTURE_MAPPING")
+                  options .push ("X3D_NUM_TEXTURE_PROJECTORS " + geometryContext .objectsCount [2]);
+               }
+
                if (geometryContext .textureNode)
                {
                   // X3DBackgroundNode textures

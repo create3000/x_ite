@@ -63,7 +63,7 @@ function (X3DGeometryNode)
          colorMaterial: false,
          hasNormals: false,
          textureNode: false,
-         objectsKey: "000",
+         objectsCount: [0, 0, 0],
       },
       options)
 

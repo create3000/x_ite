@@ -108,9 +108,6 @@ function (Types,
          if (gl .HAS_FEATURE_DEPTH_TEXTURE)
             constants += "#define X3D_DEPTH_TEXTURE\n";
 
-         if (browser .getProjectiveTextureMapping ())
-            constants += "#define X3D_PROJECTIVE_TEXTURE_MAPPING\n";
-
          for (const option of options)
             constants += "#define " + option + "\n";
 
@@ -188,12 +185,6 @@ function (Types,
          definitions += "#define x3d_NoneFog         0\n";
          definitions += "#define x3d_NoneLight       0\n";
          definitions += "#define x3d_NoneTexture     0\n";
-
-         depreciatedWarning (source, "x3d_GeometryPoints", "x3d_Points");
-         depreciatedWarning (source, "x3d_GeometryLines",  "x3d_Lines");
-         depreciatedWarning (source, "x3d_NoneClipPlane",  "x3d_NumClipPlanes");
-         depreciatedWarning (source, "x3d_NoneFog",        "x3d_None");
-         depreciatedWarning (source, "x3d_NoneLight",      "x3d_NumLights");
 
          // Adjust precision of struct types;
 

@@ -86,7 +86,9 @@ getFinalColor ()
 void
 fragment_main ()
 {
-   clip ();
+   #if defined (X3D_CLIP_PLANES)
+      clip ();
+   #endif
 
    vec4 finalColor = getFinalColor ();
 

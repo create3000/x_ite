@@ -33,7 +33,12 @@ getMaterialColor (const in vec3 N,
    // Get material color.
 
    vec3 ambientColor = diffuseParameter .rgb * material .ambientIntensity;
-   vec3 finalColor   = getMaterialColor (vertex, N, ambientColor, diffuseParameter .rgb, material .specularColor, material .shininess);
+
+   #if defined (X3D_LIGHTING)
+      vec3 finalColor = getMaterialColor (vertex, N, ambientColor, diffuseParameter .rgb, material .specularColor, material .shininess);
+   #else
+      vec3 finalColor = vec3 (0.0);
+   #endif
 
    finalColor += material .emissiveColor;
 

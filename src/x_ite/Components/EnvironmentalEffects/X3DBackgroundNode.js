@@ -514,8 +514,8 @@ function (X3DBindableNode,
 
                destObjects .length = d;
 
-               this .sphereContext   .objectsKey = destObjects .length + "00";
-               this .texturesContext .objectsKey = destObjects .length + "00";
+               this .sphereContext   .objectsCount [0] = destObjects .length;
+               this .texturesContext .objectsCount [0] = destObjects .length;
                return;
             }
          }
@@ -590,7 +590,6 @@ function (X3DBindableNode,
 
          gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
          gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-         gl .uniform1i (shaderNode .x3d_NumProjectiveTextures,              0);
 
          // Enable vertex attribute arrays.
 
@@ -632,7 +631,6 @@ function (X3DBindableNode,
             gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1);
             gl .uniform1f (shaderNode .x3d_Transparency,                       0);
             gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-            gl .uniform1i (shaderNode .x3d_NumProjectiveTextures,              0);
 
             // Draw all textures.
 

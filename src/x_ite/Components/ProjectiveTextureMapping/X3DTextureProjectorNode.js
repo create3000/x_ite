@@ -154,7 +154,7 @@ function (X3DChildNode,
       })(),
       set_on__: function ()
       {
-         if (this ._on .getValue () && this .textureNode && this .getBrowser () .getProjectiveTextureMapping ())
+         if (this ._on .getValue () && this .textureNode)
          {
             delete this .push;
             delete this .pop;

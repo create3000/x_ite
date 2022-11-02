@@ -707,8 +707,6 @@ function ($,
             gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
 
-            gl .uniform1i (shaderNode .x3d_NumClipPlanes, 0);
-
             if (this .lineArrayObject .enable (gl, shaderNode))
                shaderNode .enableVertexAttribute (gl, this .lineBuffer, 0, 0);
 

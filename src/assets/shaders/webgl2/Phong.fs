@@ -202,7 +202,11 @@ getMaterialColor ()
       alpha        *= P .a;
    #endif
 
-   vec3 finalColor = getMaterialColor (vertex, getNormalVector (normalScale), ambientColor, diffuseColor, specularColor, shininess);
+   #if defined (X3D_LIGHTING)
+      vec3 finalColor = getMaterialColor (vertex, getNormalVector (normalScale), ambientColor, diffuseColor, specularColor, shininess);
+   #else
+      vec3 finalColor = vec3 (0.0);
+   #endif
 
    #if defined (X3D_OCCLUSION_TEXTURE)
    finalColor = mix (finalColor, finalColor * getOcclusionFactor (), x3d_Material .occlusionStrength);
