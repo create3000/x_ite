@@ -645,6 +645,13 @@ Some built-in variables are enumerated and have special values and meanings. The
       <tr>
          <td>x3d_FogType</td>
          <td>int</td>
+         <td>x3d_None</td>
+         <td>0</td>
+         <td></td>
+      </tr>
+      <tr>
+         <td></td>
+         <td>int</td>
          <td>x3d_LinearFog</td>
          <td>1</td>
          <td></td>
