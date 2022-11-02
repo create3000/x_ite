@@ -64,7 +64,6 @@ function (X3DCast,
 
    const defaultUniformNames = [
       "x3d_FogType",
-      "x3d_NumTextures",
    ]
 
    const _uniformLocation = Symbol .for ("X3DField.uniformLocation");
@@ -73,7 +72,7 @@ function (X3DCast,
    {
       this .addType (X3DConstants .X3DProgrammableShaderObject);
 
-      this .uniformNames = [ ];
+      this .uniformNames = defaultUniformNames;
 
       this .x3d_ClipPlane                           = [ ];
       this .x3d_LightType                           = [ ];
@@ -990,15 +989,11 @@ function (X3DCast,
       },
       setCustomUniforms: function (gl, geometryContext, renderContext)
       {
-         const
-            fogNode        = renderContext .fogNode,
-            appearanceNode = renderContext .appearanceNode,
-            textureNode    = renderContext .textureNode || appearanceNode .getTexture ();
+         const fogNode = renderContext .fogNode;
 
          gl .useProgram (this .getProgram ());
 
-         gl .uniform1i (this .x3d_FogType,     fogNode ? +fogNode .getFogKey () : 0);
-         gl .uniform1i (this .x3d_NumTextures, textureNode ? textureNode .getCount () : 0);
+         gl .uniform1i (this .x3d_FogType, fogNode ? +fogNode .getFogKey () : 0);
 
          return this;
       },
