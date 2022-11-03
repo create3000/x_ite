@@ -125,6 +125,9 @@ function (X3DCast,
       {
          const browser = this .getBrowser ();
 
+         if (! this .isPrivate ())
+            this .setUniforms = this .setCustomUniforms;
+
          browser .getRenderingProperties () ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
 
          // Use by multi texture nodes.
@@ -979,19 +982,17 @@ function (X3DCast,
          for (const clipPlane of clipPlanes)
             clipPlane .setShaderUniforms (gl, this);
       },
-      setCustomUniforms: function (gl, geometryContext, renderContext)
+      setCustomUniforms: function (gl, geometryContext, renderContext, front)
       {
          const fogNode = renderContext .fogNode;
 
-         gl .useProgram (this .getProgram ());
-
-         gl .uniform1i (this .x3d_FogType, fogNode ? +fogNode .getFogKey () : 0);
+         gl .uniform1i (this .x3d_FogType, fogNode ? fogNode .fogNode .getFogType () : 0);
 
          gl .uniform1i (this .x3d_NumClipPlanes,         renderContext .objectsCount [0]);
          gl .uniform1i (this .x3d_NumLights,             renderContext .objectsCount [1]);
          gl .uniform1i (this .x3d_NumProjectiveTextures, renderContext .objectsCount [2]);
 
-         return this;
+         X3DProgrammableShaderObject .prototype .setUniforms .call (this, gl, geometryContext, renderContext, front);
       },
       setUniforms: (function ()
       {

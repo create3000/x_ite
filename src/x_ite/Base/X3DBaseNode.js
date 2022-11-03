@@ -342,7 +342,7 @@ function (X3DEventObject,
             configurable: true, // false : non deletable
          });
 
-         if (!this .getPrivate ())
+         if (!this .isPrivate ())
             field .addCloneCount (1);
 
          if (this [_initialized])
@@ -411,7 +411,7 @@ function (X3DEventObject,
 
             delete this ["_" + field .getName ()];
 
-            if (!this .getPrivate ())
+            if (!this .isPrivate ())
                field .removeCloneCount (1);
 
             if (this [_initialized])
@@ -436,7 +436,7 @@ function (X3DEventObject,
          this [_fields]            .add (name, field);
          this [_userDefinedFields] .add (name, field);
 
-         if (!this .getPrivate ())
+         if (!this .isPrivate ())
             field .addCloneCount (1);
 
          if (this [_initialized])
@@ -454,7 +454,7 @@ function (X3DEventObject,
             this [_userDefinedFields] .remove (name);
             this [_fieldDefinitions]  .remove (name);
 
-            if (!this .getPrivate ())
+            if (!this .isPrivate ())
                field .removeCloneCount (1);
 
             if (this [_initialized])
@@ -538,7 +538,7 @@ function (X3DEventObject,
 
          return false;
       },
-      getPrivate: function ()
+      isPrivate: function ()
       {
          return this [_private];
       },

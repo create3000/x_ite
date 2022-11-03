@@ -169,7 +169,7 @@ function ($,
             throw new Error ("PROTO not found");
 
          this [_scene] .setLive (this .isLive () .getValue ());
-         this [_scene] .setPrivate (this .getScene () .getPrivate ());
+         this [_scene] .setPrivate (this .getScene () .isPrivate ());
          this [_scene] .setExecutionContext (this .getExecutionContext ());
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);

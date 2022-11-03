@@ -187,10 +187,7 @@ function (Fields,
       {
          this ._loadCount = value;
 
-         let displayValue = 0;
-
-         for (const object of this [_loadingObjects])
-            displayValue += ! object .internalShader;
+         const displayValue = Array .from (this [_loadingObjects]) .reduce ((v, o) => v + ! o .isPrivate (), 0);
 
          if (value || this [_loading])
          {

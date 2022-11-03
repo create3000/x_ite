@@ -139,7 +139,7 @@ function (Fields,
       {
          X3DUrlObject .prototype .set_live__ .call (this);
 
-         if (this .getPrivate ())
+         if (this .isPrivate ())
             return
 
          this .scene .setLive (this .isLive () .getValue ());
@@ -174,7 +174,7 @@ function (Fields,
 
          this .scene = scene;
          this .scene .setExecutionContext (this .getExecutionContext ());
-         this .scene .setPrivate (this .getExecutionContext () .getPrivate ());
+         this .scene .setPrivate (this .getExecutionContext () .isPrivate ());
 
          this .scene .rootNodes .addFieldInterest (this .group ._children);
          this .group ._children = this .scene .rootNodes;

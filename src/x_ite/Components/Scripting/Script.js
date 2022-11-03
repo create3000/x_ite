@@ -261,7 +261,7 @@ function ($,
             live .addFieldInterest (scene .isLive ());
 
             scene .setLive (live .getValue ());
-            scene .setPrivate (executionContext .getPrivate ());
+            scene .setPrivate (executionContext .isPrivate ());
             scene .setExecutionContext (executionContext);
 
             if (rootNodes .length && rootNodes [0])

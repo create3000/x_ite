@@ -227,7 +227,7 @@ function (X3DChildObject,
             this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
             this .getFields ()           .update (newField .getName (), newField .getName (), oldField);
 
-            if (!this .getPrivate ())
+            if (! this .isPrivate ())
                oldField .addCloneCount (1);
 
             oldFields .delete (oldFieldName);
