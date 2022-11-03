@@ -58,12 +58,17 @@ const
 
 define ('x_ite/Browser/Scripting/evaluate',[],function ()
 {
-   return function (/* __global__, __text__ */)
+"use strict";
+
+   return function (globalObject, sourceText)
    {
-      with (arguments [0])
+      return Function (/* js */ `with (arguments [0])
       {
-         return eval (arguments [1]);
-      }
+         delete arguments [0];
+         arguments .length = 0;
+         ${sourceText}
+      }`)
+      (globalObject);
    };
 });
 
@@ -300,7 +305,7 @@ function ($,
       {
          X3DScriptNode .prototype .addUserDefinedField .call (this, accessType, name, field);
 
-         if (!this .isInitialized ())
+         if (! this .isInitialized ())
             return;
 
          this .setLoadState (X3DConstants .NOT_STARTED_STATE);
@@ -310,7 +315,7 @@ function ($,
       {
          X3DScriptNode .prototype .removeUserDefinedField .call (this, name);
 
-         if (!this .isInitialized ())
+         if (! this .isInitialized ())
             return;
 
          this .setLoadState (X3DConstants .NOT_STARTED_STATE);
@@ -363,8 +368,11 @@ function ($,
                }
             }
 
-            text += "\n;var " + callbacks .join (",") + ";";
-            text += "\n[" + callbacks .join (",") + "];";
+            text += "\nreturn [" + callbacks .map (function (c)
+            {
+               return `typeof ${c} !== "undefined" ? ${c} : undefined`;
+            })
+            .join (",") + "];";
 
             this .global = this .getGlobal ();
 
@@ -404,7 +412,7 @@ function ($,
             live .addFieldInterest (scene .isLive ());
 
             scene .setLive (live .getValue ());
-            scene .setPrivate (executionContext .getPrivate ());
+            scene .setPrivate (executionContext .isPrivate ());
             scene .setExecutionContext (executionContext);
 
             if (rootNodes .length && rootNodes [0])

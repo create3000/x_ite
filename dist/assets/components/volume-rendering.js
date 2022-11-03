@@ -349,7 +349,7 @@ function (Fields,
          string += "// OpacityMapVolumeStyle\n";
          string += "\n";
 
-         if (this .transferFunctionNode .getType () .indexOf (X3DConstants .X3DTexture2DNode) !== -1)
+         if (this .transferFunctionNode .getType () .includes (X3DConstants .X3DTexture2DNode))
          {
             string += "uniform sampler2D transferFunction_" + this .getId () + ";\n";
 
@@ -454,6 +454,7 @@ function (PixelTexture,
 "use strict";
 
    const
+      _defaultVoxelsNode         = Symbol (),
       _defaultVolumeStyle        = Symbol (),
       _defaultBlendedVolumeStyle = Symbol (),
       _defaultTransferFunction   = Symbol ();
@@ -462,9 +463,26 @@ function (PixelTexture,
 
    X3DVolumeRenderingContext .prototype =
    {
+      getDefaultVoxels: function (executionContext)
+      {
+         this [_defaultVoxelsNode] = executionContext .createNode ("PixelTexture3D", false);
+         this [_defaultVoxelsNode] ._image = [1, 1, 1, 1, 255];
+         this [_defaultVoxelsNode] .repeatS = true;
+         this [_defaultVoxelsNode] .repeatT = true;
+         this [_defaultVoxelsNode] .repeatR = true;
+         this [_defaultVoxelsNode] .setPrivate (true);
+         this [_defaultVoxelsNode] .setup ();
+
+         this .getDefaultVoxels = function () { return this [_defaultVoxelsNode]; };
+
+         Object .defineProperty (this, "getDefaultVoxels", { enumerable: false });
+
+         return this [_defaultVoxelsNode];
+      },
       getDefaultVolumeStyle: function ()
       {
          this [_defaultVolumeStyle] = new OpacityMapVolumeStyle (this .getPrivateScene ());
+         this [_defaultVolumeStyle] .setPrivate (true);
          this [_defaultVolumeStyle] .setup ();
 
          this .getDefaultVolumeStyle = function () { return this [_defaultVolumeStyle]; };
@@ -476,6 +494,7 @@ function (PixelTexture,
       getDefaultBlendedVolumeStyle: function ()
       {
          this [_defaultBlendedVolumeStyle] = new OpacityMapVolumeStyle (this .getPrivateScene ());
+         this [_defaultBlendedVolumeStyle] .setPrivate (true);
          this [_defaultBlendedVolumeStyle] .setup ();
 
          this .getDefaultBlendedVolumeStyle = function () { return this [_defaultBlendedVolumeStyle]; };
@@ -486,26 +505,20 @@ function (PixelTexture,
       },
       getDefaultTransferFunction: function ()
       {
-         this [_defaultTransferFunction] = new PixelTexture (this .getPrivateScene ());
-
          const textureProperties = new TextureProperties (this .getPrivateScene ());
-
          textureProperties ._generateMipMaps = true;
          textureProperties ._boundaryModeS   = "CLAMP_TO_EDGE";
          textureProperties ._boundaryModeT   = "REPEAT";
+         textureProperties .setPrivate (true);
+         textureProperties .setup ();
 
+         this [_defaultTransferFunction] = new PixelTexture (this .getPrivateScene ());
          this [_defaultTransferFunction] ._textureProperties = textureProperties;
-
-         this [_defaultTransferFunction] ._image .width  = 256;
-         this [_defaultTransferFunction] ._image .height = 1;
-         this [_defaultTransferFunction] ._image .comp   = 2;
-
-         const array = this [_defaultTransferFunction] ._image .array;
-
-         for (let i = 0; i < 256; ++ i)
-            array [i] = (i << 8) | i;
-
-         textureProperties               .setup ();
+         this [_defaultTransferFunction] ._image .width      = 256;
+         this [_defaultTransferFunction] ._image .height     = 1;
+         this [_defaultTransferFunction] ._image .comp       = 2;
+         this [_defaultTransferFunction] ._image .array      = Array .from ({ length: 256 }, (v, i) => (i << 8) | i);
+         this [_defaultTransferFunction] .setPrivate (true);
          this [_defaultTransferFunction] .setup ();
 
          this .getDefaultTransferFunction = function () { return this [_defaultTransferFunction]; };
@@ -2019,7 +2032,7 @@ function (Fields,
 define('text!x_ite/Browser/VolumeRendering/VolumeStyle.vs',[],function () { return '#version 300 es\n\nprecision highp float;\nprecision highp int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\nuniform mat4 x3d_TextureMatrix [1];\n\nin float x3d_FogDepth;\nin vec4  x3d_TexCoord0;\nin vec4  x3d_Vertex;\n\nout float fogDepth;\nout vec3 vertex;\nout vec4 texCoord;\n\nvoid\nmain ()\n{\n   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;\n\n   fogDepth = x3d_FogDepth;\n   vertex   = position .xyz;\n   texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;\n\n   gl_Position = x3d_ProjectionMatrix * position;\n}\n';});
 
 
-define('text!x_ite/Browser/VolumeRendering/VolumeStyle.fs',[],function () { return '#version 300 es\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler3D;\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nuniform int       x3d_NumTextures;\nuniform sampler3D x3d_Texture3D [1];\nuniform vec3      x3d_TextureSize;\n\nuniform mat3 x3d_TextureNormalMatrix;\n\nconst float M_PI = 3.14159265359;\n\nin float fogDepth;\nin vec3  vertex;\nin vec4  texCoord;\n\n\nuniform x3d_FogParameters x3d_Fog;\n\nfloat\ngetFogInterpolant ()\n{\n   // Returns 0.0 for fog color and 1.0 for material color.\n\n   if (x3d_Fog .type == x3d_None)\n      return 1.0;\n\n   if (x3d_Fog .fogCoord)\n      return clamp (1.0 - fogDepth, 0.0, 1.0);\n\n   float visibilityRange = x3d_Fog .visibilityRange;\n\n   if (visibilityRange <= 0.0)\n      return 1.0;\n\n   float dV = length (x3d_Fog .matrix * vertex);\n\n   if (dV >= visibilityRange)\n      return 0.0;\n\n   switch (x3d_Fog .type)\n   {\n      case x3d_LinearFog:\n      {\n         return (visibilityRange - dV) / visibilityRange;\n      }\n      case x3d_ExponentialFog:\n      {\n         return exp (-dV / (visibilityRange - dV));\n      }\n      default:\n      {\n         return 1.0;\n      }\n   }\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n   return mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\n// VOLUME_STYLES_UNIFORMS\n\nout vec4 x3d_FragColor;\n\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvoid\nclip ()\n{\n   for (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n   {\n      if (i == x3d_NumClipPlanes)\n         break;\n\n      if (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n         discard;\n   }\n}\n\nvec4\ngetTextureColor (in vec3 texCoord)\n{\n   if (x3d_NumTextures == 0)\n      discard;\n\n   if (texCoord .s < 0.0 || texCoord .s > 1.0)\n      discard;\n\n   if (texCoord .t < 0.0 || texCoord .t > 1.0)\n      discard;\n\n   if (texCoord .p < 0.0 || texCoord .p > 1.0)\n      discard;\n\n   vec4 textureColor = texture (x3d_Texture3D [0], texCoord);\n\n   // Apply volume styles.\n\n// VOLUME_STYLES_FUNCTIONS\n\n   return textureColor;\n}\n\nvoid\nmain ()\n{\n   clip ();\n\n   x3d_FragColor = getTextureColor (texCoord .stp / texCoord .q);\n}\n';});
+define('text!x_ite/Browser/VolumeRendering/VolumeStyle.fs',[],function () { return '#version 300 es\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler3D;\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nuniform sampler3D x3d_Texture3D [1];\nuniform vec3      x3d_TextureSize;\n\nuniform mat3 x3d_TextureNormalMatrix;\n\nconst float M_PI = 3.14159265359;\n\nin float fogDepth;\nin vec3  vertex;\nin vec4  texCoord;\n\n\nuniform x3d_FogParameters x3d_Fog;\n\nfloat\ngetFogInterpolant ()\n{\n   // Returns 0.0 for fog color and 1.0 for material color.\n\n   float visibilityRange = x3d_Fog .visibilityRange;\n   float dV              = length (x3d_Fog .matrix * vertex);\n\n   switch (x3d_Fog .type)\n   {\n      case x3d_LinearFog:\n      {\n         return max (0.0, visibilityRange - dV) / visibilityRange;\n      }\n      case x3d_ExponentialFog:\n      {\n         return exp (-dV / max (0.001, visibilityRange - dV));\n      }\n      default:\n      {\n         return 1.0;\n      }\n   }\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n   return mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\n// VOLUME_STYLES_UNIFORMS\n\nout vec4 x3d_FragColor;\n\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvoid\nclip ()\n{\n   for (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n   {\n      if (i == x3d_NumClipPlanes)\n         break;\n\n      if (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n         discard;\n   }\n}\n\nvec4\ngetTextureColor (in vec3 texCoord)\n{\n   if (texCoord .s < 0.0 || texCoord .s > 1.0)\n      discard;\n\n   if (texCoord .t < 0.0 || texCoord .t > 1.0)\n      discard;\n\n   if (texCoord .p < 0.0 || texCoord .p > 1.0)\n      discard;\n\n   vec4 textureColor = texture (x3d_Texture3D [0], texCoord);\n\n   // Apply volume styles.\n\n// VOLUME_STYLES_FUNCTIONS\n\n   return textureColor;\n}\n\nvoid\nmain ()\n{\n   clip ();\n\n   x3d_FragColor = getTextureColor (texCoord .stp / texCoord .q);\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -2146,7 +2159,6 @@ function (Fields,
 
          this ._gradients          .addInterest ("set_gradients__",   this);
          this ._renderStyle        .addInterest ("set_renderStyle__", this);
-         this ._voxels             .addFieldInterest (this .getAppearance () ._texture);
 
          this ._contourStepSize    .addInterest ("update", this);
          this ._surfaceValues      .addInterest ("update", this);
@@ -2206,7 +2218,13 @@ function (Fields,
          {
             this .voxelsNode .addInterest ("set_textureSize__", this);
 
+            this .getAppearance () ._texture = this ._voxels;
+
             this .set_textureSize__ ();
+         }
+         else
+         {
+            this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
          }
       },
       set_textureSize__: function ()
@@ -2774,7 +2792,6 @@ function (Fields,
 
          this ._segmentIdentifiers .addInterest ("set_segmentIdentifiers__", this);
          this ._renderStyle        .addInterest ("set_renderStyle__",        this);
-         this ._voxels             .addFieldInterest (this .getAppearance () ._texture);
 
          this ._segmentEnabled     .addInterest ("update", this);
          this ._segmentIdentifiers .addInterest ("update", this);
@@ -2837,7 +2854,13 @@ function (Fields,
          {
             this .voxelsNode .addInterest ("set_textureSize__", this);
 
+            this .getAppearance () ._texture = this ._voxels;
+
             this .set_textureSize__ ();
+         }
+         else
+         {
+            this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
          }
       },
       set_textureSize__: function ()
@@ -3734,7 +3757,6 @@ function (Fields,
 
          this ._renderStyle .addInterest ("set_renderStyle__", this);
          this ._voxels      .addInterest ("set_voxels__",      this);
-         this ._voxels      .addFieldInterest (this .getAppearance () ._texture);
 
          this ._renderStyle .addInterest ("update", this);
 
@@ -3772,7 +3794,13 @@ function (Fields,
          {
             this .voxelsNode .addInterest ("set_textureSize__", this);
 
+            this .getAppearance () ._texture = this ._voxels;
+
             this .set_textureSize__ ();
+         }
+         else
+         {
+            this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
          }
       },
       set_textureSize__: function ()
@@ -3972,7 +4000,7 @@ function (Components,
          X3DVolumeDataNode:                  X3DVolumeDataNode,
          X3DVolumeRenderStyleNode:           X3DVolumeRenderStyleNode,
       },
-      context: X3DVolumeRenderingContext,
+      browserContext: X3DVolumeRenderingContext,
    });
 });
 

@@ -156,20 +156,20 @@ function (Appearance,
       },
       getLineTransformShader: function ()
       {
-         this [_lineTransformShaderNode] = this .createShader ("LineTransformShader", "LineTransform");
-
-         this [_lineTransformShaderNode] .setUniformNames ([
+         const uniformNames = [
             "viewport",
             "modelViewProjectionMatrix",
             "invModelViewProjectionMatrix",
             "scale",
-         ]);
+         ];
 
-         this [_lineTransformShaderNode] .setTransformFeedbackVaryings ([
+         const transformFeedbackVaryings = [
             "lineStipple0", "fogDepth0", "color0", "vertex0",
             "lineStipple1", "fogDepth1", "color1", "vertex1",
             "lineStipple2", "fogDepth2", "color2", "vertex2",
-         ]);
+         ];
+
+         this [_lineTransformShaderNode] = this .createShader ("LineTransformShader", "LineTransform", "LineTransform", [ ], uniformNames, transformFeedbackVaryings);
 
          this .getLineTransformShader = function () { return this [_lineTransformShaderNode]; };
 

@@ -13,7 +13,6 @@ dist:
 
 	node_modules/requirejs/bin/r.js -o build/x_ite.build.js
 	perl -pi -e 's|text/text!|text!|sg' dist/x_ite.js
-	perl -pi -e "s|define\\s*\\('text!assets/shaders/webgl.*?\\n||sg;" dist/x_ite.js
 	perl -pi -e "s|\"X_ITE.X3D\"|\"X_ITE.X3D-"$(X_ITE_VERSION)"\"|" dist/x_ite.js
 	node_modules/terser/bin/terser --mangle --compress -- dist/x_ite.js > dist/x_ite.min.js
 	node_modules/requirejs/bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css

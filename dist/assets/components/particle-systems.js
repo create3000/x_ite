@@ -1294,7 +1294,9 @@ function (PointEmitter)
 {
 "use strict";
 
-   const _defaultEmitter = Symbol ();
+   const
+      _defaultEmitter = Symbol (),
+      _depthShader    = Symbol ();
 
    function X3DParticleSystemsContext () { }
 
@@ -1303,12 +1305,13 @@ function (PointEmitter)
       getDefaultEmitter: function ()
       {
          this [_defaultEmitter] = new PointEmitter (this .getPrivateScene ());
+         this [_defaultEmitter] .setPrivate (true);
          this [_defaultEmitter] .setup ();
 
          this .getDefaultEmitter = function () { return this [_defaultEmitter]; };
 
          Object .defineProperty (this, "getDefaultEmitter", { enumerable: false });
-v
+
          return this [_defaultEmitter];
       },
    };
@@ -2380,7 +2383,7 @@ define ('x_ite/Components/ParticleSystems/ParticleSystem',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DShapeNode",
-   "x_ite/Components/Rendering/X3DGeometryNode",
+   "x_ite/Browser/Rendering/GeometryContext",
    "x_ite/Browser/ParticleSystems/GeometryTypes",
    "x_ite/Rendering/VertexArray",
    "x_ite/Rendering/TraverseType",
@@ -2396,7 +2399,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DShapeNode,
-          X3DGeometryNode,
+          GeometryContext,
           GeometryTypes,
           VertexArray,
           TraverseType,
@@ -2455,6 +2458,8 @@ function (Fields,
 
       this ._particleSize .setUnit ("length");
 
+      const browser = this .getBrowser ();
+
       this .maxParticles             = 0;
       this .numParticles             = 0;
       this .forcePhysicsModelNodes   = [ ];
@@ -2464,7 +2469,7 @@ function (Fields,
       this .boundedVertices          = [ ];
       this .colorRamp                = new Float32Array ();
       this .texCoordRamp             = new Float32Array ();
-      this .geometryContext          = { };
+      this .geometryContext          = new GeometryContext ({ textureCoordinateNode: browser .getDefaultTextureCoordinate () });
       this .creationTime             = 0;
       this .pauseTime                = 0;
       this .deltaTime                = 0;
@@ -2521,8 +2526,12 @@ function (Fields,
 
          const browser = this .getBrowser ();
 
+         // Check version.
+
          if (browser .getContext () .getVersion () < 2)
             return;
+
+         // Connect fields.
 
          this .isLive () .addInterest ("set_live__", this);
 
@@ -2545,8 +2554,8 @@ function (Fields,
          this .inputParticles  = this .createBuffer ();
          this .outputParticles = this .createBuffer ();
 
-         this .inputParticles . emitterArrayObject = new VertexArray ();
-         this .inputParticles . vertexArrayObject  = new VertexArray ();
+         this .inputParticles  .emitterArrayObject = new VertexArray ();
+         this .inputParticles  .vertexArrayObject  = new VertexArray ();
          this .inputParticles  .shadowArrayObject  = new VertexArray ();
          this .outputParticles .emitterArrayObject = new VertexArray ();
          this .outputParticles .vertexArrayObject  = new VertexArray ();
@@ -2564,12 +2573,6 @@ function (Fields,
          this .geometryBuffer  = this .createBuffer ();
          this .texCoordBuffers = new Array (browser .getMaxTextures ()) .fill (this .geometryBuffer);
 
-         // Geometry context
-
-         this .geometryContext .hasFogCoords             = false;
-         this .geometryContext .textureCoordinateNode    = browser .getDefaultTextureCoordinate ();
-         this .geometryContext .textureCoordinateMapping = new Map ();
-
          // Init fields.
          // Call order is very important at startup.
 
@@ -2582,6 +2585,10 @@ function (Fields,
          this .set_physics__ ();
          this .set_colorRamp__ ();
          this .set_texCoordRamp__ ();
+      },
+      getShapeKey: function ()
+      {
+         return this .numTexCoords ? "2" : "1";
       },
       set_bbox__: function ()
       {
@@ -2648,7 +2655,7 @@ function (Fields,
       {
          if (this ._enabled .getValue () && this ._maxParticles .getValue ())
          {
-            if (!this ._isActive .getValue ())
+            if (! this ._isActive .getValue ())
             {
                if (this .isLive () .getValue ())
                {
@@ -2657,7 +2664,9 @@ function (Fields,
                   this .pauseTime = 0;
                }
                else
+               {
                   this .pauseTime = performance .now () / 1000;
+               }
 
                this ._isActive = true;
 
@@ -2669,9 +2678,7 @@ function (Fields,
             if (this ._isActive .getValue ())
             {
                if (this .isLive () .getValue ())
-               {
                   this .getBrowser () .sensorEvents () .removeInterest ("animateParticles", this);
-               }
 
                this ._isActive = false;
 
@@ -2703,13 +2710,13 @@ function (Fields,
             case GeometryTypes .POINT:
             {
                this .geometryContext .geometryType = 0;
+               this .geometryContext .hasNormals   = false;
 
                this .texCoordCount = 0;
-               this .vertexCount   = 1;
-               this .hasNormals    = false;
-               this .primitiveMode = gl .POINTS;
-
+               this .vertexCount    = 1;
+               this .hasNormals     = false;
                this .verticesOffset = 0;
+               this .primitiveMode  = gl .POINTS;
 
                gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, PointGeometry, gl .DYNAMIC_DRAW);
@@ -2719,14 +2726,14 @@ function (Fields,
             case GeometryTypes .LINE:
             {
                this .geometryContext .geometryType = 1;
+               this .geometryContext .hasNormals   = false;
 
-               this .texCoordCount = 2;
-               this .vertexCount   = 2;
-               this .hasNormals    = false;
-               this .primitiveMode = gl .LINES;
-
+               this .texCoordCount   = 2;
+               this .vertexCount     = 2;
+               this .hasNormals      = false;
                this .texCoordsOffset = 0;
                this .verticesOffset  = Float32Array .BYTES_PER_ELEMENT * 8;
+               this .primitiveMode   = gl .LINES;
 
                gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, LineGeometry, gl .DYNAMIC_DRAW);
@@ -2738,15 +2745,15 @@ function (Fields,
             case GeometryTypes .SPRITE:
             {
                this .geometryContext .geometryType = 2;
+               this .geometryContext .hasNormals   = true;
 
-               this .texCoordCount = 4;
-               this .vertexCount   = 6;
-               this .hasNormals    = true;
-               this .primitiveMode = gl .TRIANGLES;
-
+               this .texCoordCount   = 4;
+               this .vertexCount     = 6;
+               this .hasNormals      = true;
                this .texCoordsOffset = 0;
                this .normalOffset    = Float32Array .BYTES_PER_ELEMENT * 24;
                this .verticesOffset  = Float32Array .BYTES_PER_ELEMENT * 27;
+               this .primitiveMode   = gl .TRIANGLES;
 
                gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, QuadGeometry, gl .DYNAMIC_DRAW);
@@ -2756,13 +2763,11 @@ function (Fields,
             case GeometryTypes .GEOMETRY:
             {
                this .texCoordCount = 0;
-               this .vertexCount   = 0;
-
                break;
             }
          }
 
-         this .updateGeometryMask ();
+         this .geometryContext .updateGeometryKey ();
          this .updateVertexArrays ();
 
          this .set_transparent__ ();
@@ -2776,7 +2781,7 @@ function (Fields,
          this .maxParticles = maxParticles;
          this .numParticles = Math .min (lastNumParticles, maxParticles);
 
-         if (!this .emitterNode .isExplosive ())
+         if (! this .emitterNode .isExplosive ())
             this .creationTime = performance .now () / 1000;
 
          this .resizeBuffers (lastNumParticles);
@@ -2794,7 +2799,7 @@ function (Fields,
       {
          this .emitterNode = X3DCast (X3DConstants .X3DParticleEmitterNode, this ._emitter);
 
-         if (!this .emitterNode)
+         if (! this .emitterNode)
             this .emitterNode = this .getBrowser () .getDefaultEmitter ();
 
          this .createParticles = this ._createParticles .getValue ();
@@ -2940,7 +2945,7 @@ function (Fields,
          this .numColors                      = numColors;
          this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
 
-         this .updateGeometryMask ();
+         this .geometryContext .updateGeometryKey ();
          this .updateVertexArrays ();
       },
       set_texCoordRamp__: function ()
@@ -2985,10 +2990,6 @@ function (Fields,
          this .numTexCoords = this .texCoordRampNode ? numTexCoords : 0;
 
          this .updateVertexArrays ();
-      },
-      updateGeometryMask: function ()
-      {
-         X3DGeometryNode .prototype .updateGeometryMask .call (this .geometryContext);
       },
       updateVertexArrays: function ()
       {
@@ -3075,7 +3076,7 @@ function (Fields,
                now              = performance .now () / 1000,
                particleLifetime = this .particleLifetime + this .particleLifetime * this .lifetimeVariation;
 
-            if (this .numParticles === 0 || now - this .creationTime > particleLifetime)
+            if (now - this .creationTime > particleLifetime)
             {
                this .creationTime    = now;
                this .numParticles    = this .maxParticles;
@@ -3084,7 +3085,9 @@ function (Fields,
                deltaTime = Number .POSITIVE_INFINITY;
             }
             else
+            {
                this .createParticles = false;
+            }
          }
          else
          {
@@ -3097,7 +3100,7 @@ function (Fields,
                if (newParticles)
                   this .creationTime = now;
 
-               this .numParticles = Math .floor (Math .min (this .maxParticles, this .numParticles + newParticles));
+               this .numParticles = Math .min (this .maxParticles, this .numParticles + newParticles);
             }
          }
 
@@ -3196,40 +3199,89 @@ function (Fields,
       { },
       traverse: function (type, renderObject)
       {
+         switch (type)
+         {
+            case TraverseType .POINTER:
+            case TraverseType .PICKING:
+            case TraverseType .COLLISION:
+            {
+               break;
+            }
+            case TraverseType .SHADOW:
+            {
+               if (this ._castShadow .getValue ())
+                  renderObject .addShadowShape (this);
+
+               break;
+            }
+            case TraverseType .DISPLAY:
+            {
+               if (renderObject .addDisplayShape (this))
+                  this .getAppearance () .traverse (type, renderObject); // Currently used for GeneratedCubeMapTexture.
+
+               break;
+            }
+         }
+
+         if (this .geometryType === GeometryTypes .GEOMETRY)
+         {
+            if (this .getGeometry ())
+               this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
+         }
+      },
+      depth: function (gl, depthContext, projectionMatrix)
+      {
          if (this .numParticles)
          {
-            switch (type)
+            // Display geometry.
+
+            const
+               clipPlanes = depthContext .clipPlanes,
+               shaderNode = this .getBrowser () .getDepthShader (clipPlanes .length, true);
+
+            shaderNode .enable (gl);
+            shaderNode .setClipPlanes (gl, clipPlanes);
+
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrix);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, depthContext .modelViewMatrix);
+
+            switch (this .geometryType)
             {
-               case TraverseType .POINTER:
-               case TraverseType .PICKING:
-               case TraverseType .COLLISION:
+               case GeometryTypes .GEOMETRY:
                {
-                  break;
-               }
-               case TraverseType .SHADOW:
-               {
-                  if (this ._castShadow .getValue ())
-                     renderObject .addDepthShape (this);
+                  const geometryNode = this .getGeometry ();
+
+                  if (geometryNode)
+                     geometryNode .displayParticlesDepth (gl, depthContext, shaderNode, this);
 
                   break;
                }
-               case TraverseType .DISPLAY:
+               case GeometryTypes .SPRITE:
                {
-                  if (renderObject .addDisplayShape (this))
-                     this .getAppearance () .traverse (type, renderObject); // Currently used for GeneratedCubeMapTexture.
+                  this .updateSprite (gl, this .getScreenAlignedRotation (depthContext .modelViewMatrix));
+                  // [fall trough]
+               }
+               default:
+               {
+                  const outputParticles = this .outputParticles;
+
+                  if (outputParticles .shadowArrayObject .enable (gl, shaderNode))
+                  {
+                     const particleStride = this .particleStride;
+
+                     shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
+                     shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
+                     shaderNode .enableVertexAttribute         (gl, this .geometryBuffer, 0, this .verticesOffset);
+                  }
+
+                  gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
 
                   break;
                }
-            }
-
-            if (this .geometryType === GeometryTypes .GEOMETRY)
-            {
-               if (this .getGeometry ())
-                  this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
             }
          }
       },
-      depth: function (gl, context, shaderNode)
+      display: function (gl, renderContext)
       {
          // Display geometry.
 
@@ -3237,61 +3289,25 @@ function (Fields,
          {
             case GeometryTypes .GEOMETRY:
             {
-               const geometryNode = this .getGeometry ();
-
-               if (geometryNode)
-                  geometryNode .displayParticlesDepth (gl, context, shaderNode, this);
-
-               break;
-            }
-            case GeometryTypes .SPRITE:
-            {
-               this .updateSprite (gl, this .getScreenAlignedRotation (context .modelViewMatrix));
-               // [fall trough]
-            }
-            default:
-            {
-               const outputParticles = this .outputParticles;
-
-               if (outputParticles .shadowArrayObject .enable (gl, shaderNode))
+               if (this .numParticles)
                {
-                  const particleStride = this .particleStride;
+                  const geometryNode = this .getGeometry ();
 
-                  shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
-                  shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
-                  shaderNode .enableVertexAttribute         (gl, this .geometryBuffer, 0, this .verticesOffset);
+                  if (geometryNode)
+                     geometryNode .displayParticles (gl, renderContext, this);
                }
 
-               gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, this .numParticles);
-
-               break;
-            }
-         }
-      },
-      display: function (gl, context)
-      {
-         // Display geometry.
-
-         switch (this .geometryType)
-         {
-            case GeometryTypes .GEOMETRY:
-            {
-               const geometryNode = this .getGeometry ();
-
-               if (geometryNode)
-                  geometryNode .displayParticles (gl, context, this);
-
                break;
             }
             case GeometryTypes .SPRITE:
             {
-               this .updateSprite (gl, this .getScreenAlignedRotation (context .modelViewMatrix));
+               this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
                // [fall trough]
             }
             case GeometryTypes .QUAD:
             case GeometryTypes .TRIANGLE:
             {
-               const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+               const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
 
                gl .frontFace (positiveScale ? gl .CCW : gl .CW);
                gl .enable (gl .CULL_FACE);
@@ -3304,65 +3320,65 @@ function (Fields,
                const
                   browser        = this .getBrowser (),
                   appearanceNode = this .getAppearance (),
-                  shaderNode     = appearanceNode .getShader (this .geometryContext, context),
+                  shaderNode     = appearanceNode .getShader (this .geometryContext, renderContext),
                   primitiveMode  = browser .getPrimitiveMode (this .primitiveMode);
 
-               // Setup shader.
-
-               context .geometryContext = this .geometryContext;
-
-               const blendModeNode = appearanceNode .getBlendMode ();
-
-               if (blendModeNode)
-                  blendModeNode .enable (gl);
-
-               shaderNode .enable (gl);
-               shaderNode .setUniforms (gl, context);
-
-               if (this .numTexCoords)
+               if (this .numParticles)
                {
-                  const textureUnit = browser .getTexture2DUnit ();
+                  // Setup shader.
 
-                  gl .activeTexture (gl .TEXTURE0 + textureUnit);
-                  gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
-                  gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
-               }
+                  const blendModeNode = appearanceNode .getBlendMode ();
 
-               // Setup vertex attributes.
+                  if (blendModeNode)
+                     blendModeNode .enable (gl);
 
-               const outputParticles = this .outputParticles;
+                  shaderNode .enable (gl);
+                  shaderNode .setUniforms (gl, this .geometryContext, renderContext);
 
-               if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
-               {
-                  const particleStride = this .particleStride;
-
-                  shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
-                  shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
-
-                  if (this .geometryContext .colorMaterial)
+                  if (this .numTexCoords)
                   {
-                     shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
-                     shaderNode .colorAttributeDivisor (gl, 1);
+                     const textureUnit = browser .getTexture2DUnit ();
+
+                     gl .activeTexture (gl .TEXTURE0 + textureUnit);
+                     gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+                     gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
                   }
 
-                  if (this .texCoordCount)
-                     shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
+                  // Setup vertex attributes.
 
-                  if (this .hasNormals)
+                  const outputParticles = this .outputParticles;
+
+                  if (outputParticles .vertexArrayObject .enable (gl, shaderNode))
                   {
-                     shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
-                     shaderNode .normalAttributeDivisor (gl, this .maxParticles);
+                     const particleStride = this .particleStride;
+
+                     shaderNode .enableParticleAttribute       (gl, outputParticles, particleStride, this .particleOffset, 1);
+                     shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, this .matrixOffset,   1);
+
+                     if (this .geometryContext .colorMaterial)
+                     {
+                        shaderNode .enableColorAttribute (gl, outputParticles, particleStride, this .colorOffset);
+                        shaderNode .colorAttributeDivisor (gl, 1);
+                     }
+
+                     if (this .texCoordCount)
+                        shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
+
+                     if (this .hasNormals)
+                     {
+                        shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
+                        shaderNode .normalAttributeDivisor (gl, this .maxParticles);
+                     }
+
+                     shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
                   }
 
-                  shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
+                  gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, this .numParticles);
+
+                  if (blendModeNode)
+                     blendModeNode .disable (gl);
                }
 
-               gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, this .numParticles);
-
-               if (blendModeNode)
-                  blendModeNode .disable (gl);
-
-               delete context .geometryContext;
                break;
             }
          }
@@ -4433,7 +4449,7 @@ function (Components,
          X3DParticleEmitterNode:      X3DParticleEmitterNode,
          X3DParticlePhysicsModelNode: X3DParticlePhysicsModelNode,
       },
-      context: X3DParticleSystemsContext,
+      browserContext: X3DParticleSystemsContext,
    });
 });
 

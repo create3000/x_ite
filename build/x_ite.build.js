@@ -9,7 +9,6 @@
 		"../node_modules/requirejs/require.js"
 	],
 	excludeShallow: [
-		"x_ite/Browser/Shaders/ShaderCompiler"
 	],
 	wrap: {
 		startFile: "parts/x_ite.start.frag.js",

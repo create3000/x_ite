@@ -49,11 +49,13 @@
 
 define ([
    "x_ite/Browser/Core/Shading",
+   "x_ite/Browser/Shaders/Shaders",
    "x_ite/Components/Shaders/ComposedShader",
    "x_ite/Components/Shaders/ShaderPart",
    "x_ite/Browser/Networking/urls",
 ],
 function (Shading,
+          Shaders,
           ComposedShader,
           ShaderPart,
           urls)
@@ -77,7 +79,6 @@ function (Shading,
    {
       initialize: function ()
       {
-         this .getDefaultShader ();
          this .setShading (this .getBrowserOptions () .getShading ());
       },
       getShadingLanguageVersion: function ()
@@ -111,38 +112,6 @@ function (Shading,
       getPrimitiveMode: function (primitiveMode)
       {
          return this [_primitiveModes] .get (primitiveMode);
-      },
-      getDefaultShader: function ()
-      {
-         const vs = /* glsl */ `data:x-shader/x-vertex,
-         precision highp float;
-         uniform mat4 x3d_ProjectionMatrix;
-         uniform mat4 x3d_ModelViewMatrix;
-         attribute vec4 x3d_Vertex;
-         void
-         main ()
-         {
-            gl_Position = x3d_ProjectionMatrix * (x3d_ModelViewMatrix * x3d_Vertex);
-         }
-         `;
-
-         const fs = /* glsl */ `data:x-shader/x-fragment,
-         precision highp float;
-         void
-         main ()
-         {
-            gl_FragColor = vec4 (0.0);
-            discard;
-         }
-         `;
-
-         this [_defaultShader] = this .createShader ("DefaultShader", vs, fs);
-
-         this .getDefaultShader = function () { return this [_defaultShader]; };
-
-         Object .defineProperty (this, "getDefaultShader", { enumerable: false });
-
-         return this [_defaultShader];
       },
       getShaders: function ()
       {
@@ -187,7 +156,7 @@ function (Shading,
             }
          }
       },
-      createShader: function (name, vs, fs = vs, options = [ ])
+      createShader: function (name, vs, fs = vs, options = [ ], uniformNames = [ ], transformFeedbackVaryings = [ ])
       {
          if (this .getDebug ())
             console .info ("Initializing " + name);
@@ -197,7 +166,7 @@ function (Shading,
             version = gl .getVersion ();
 
          const vertexShader = new ShaderPart (this .getPrivateScene ());
-         vertexShader ._url .push (vs .startsWith ("data:") ? vs : urls .getShaderUrl ("webgl" + version + "/" + vs + ".vs"));
+         vertexShader ._url .push (vs .startsWith ("data:") ? vs : "data:x-shader/x-vertex," + Shaders .vertex [version] [vs]);
          vertexShader .setPrivate (true);
          vertexShader .setName (name + "Vertex");
          vertexShader .setOptions (options);
@@ -205,7 +174,7 @@ function (Shading,
 
          const fragmentShader = new ShaderPart (this .getPrivateScene ());
          fragmentShader ._type  = "FRAGMENT";
-         fragmentShader ._url .push (fs .startsWith ("data:") ? fs : urls .getShaderUrl ("webgl" + version + "/" + fs + ".fs"));
+         fragmentShader ._url .push (fs .startsWith ("data:") ? fs : "data:x-shader/x-fragment," + Shaders .fragment [version] [fs]);
          fragmentShader .setPrivate (true);
          fragmentShader .setName (name + "Fragment");
          fragmentShader .setOptions (options);
@@ -217,6 +186,8 @@ function (Shading,
          shaderNode ._parts .push (fragmentShader);
          shaderNode .setPrivate (true);
          shaderNode .setName (name);
+         shaderNode .setUniformNames (uniformNames);
+         shaderNode .setTransformFeedbackVaryings (transformFeedbackVaryings);
          shaderNode .setup ();
 
          return shaderNode;

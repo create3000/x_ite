@@ -163,7 +163,7 @@ function (X3DChildNode,
       })(),
       set_on__: function ()
       {
-         if (this ._on .getValue () && this .textureNode && this .getBrowser () .getProjectiveTextureMapping ())
+         if (this ._on .getValue () && this .textureNode)
          {
             delete this .push;
             delete this .pop;
@@ -198,8 +198,7 @@ function (X3DChildNode,
       {
          var textureProjectorContainer = this .getTextureProjectors () .pop ();
 
-         textureProjectorContainer .set (this .getBrowser (),
-                                         this,
+         textureProjectorContainer .set (this,
                                          renderObject .getModelViewMatrix () .get ());
 
          if (this ._global .getValue ())
@@ -211,6 +210,8 @@ function (X3DChildNode,
          {
             renderObject .getLocalObjects ()      .push (textureProjectorContainer);
             renderObject .getTextureProjectors () .push (textureProjectorContainer);
+
+            ++ renderObject .getLocalObjectsCount () [2];
          }
       },
       pop: function (renderObject)
@@ -219,6 +220,8 @@ function (X3DChildNode,
             return;
 
          renderObject .getLocalObjects () .pop ();
+
+         -- renderObject .getLocalObjectsCount () [2];
       },
    });
 
@@ -319,9 +322,9 @@ function (Fields,
    TextureProjectorPerspectiveContainer .prototype =
    {
       constructor: TextureProjectorPerspectiveContainer,
-      set: function (browser, textureProjectorNode, modelViewMatrix)
+      set: function (textureProjectorNode, modelViewMatrix)
       {
-         this .browser              = browser;
+         this .browser              = textureProjectorNode .getBrowser ();
          this .textureProjectorNode = textureProjectorNode;
 
          this .modelViewMatrix .assign (modelViewMatrix);
@@ -540,9 +543,9 @@ function (Fields,
    TextureProjectorParallelContainer .prototype =
    {
       constructor: TextureProjectorParallelContainer,
-      set: function (browser, textureProjectorNode, modelViewMatrix)
+      set: function (textureProjectorNode, modelViewMatrix)
       {
-         this .browser              = browser;
+         this .browser              = textureProjectorNode .getBrowser ();
          this .textureProjectorNode = textureProjectorNode;
 
          this .modelViewMatrix .assign (modelViewMatrix);
@@ -650,7 +653,7 @@ function (Fields,
          new X3DFieldDefinition (X3DConstants .inputOutput, "global",       new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "location",     new Fields .SFVec3f (0, 0, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "direction",    new Fields .SFVec3f (0, 0, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "upVector",     new Fields .SFVec3f (0, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "upVector",     new Fields .SFVec3f (0, 1, 0)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView" , new Fields .MFFloat (-1, -1, 1, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "nearDistance", new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "farDistance",  new Fields .SFFloat (10)),

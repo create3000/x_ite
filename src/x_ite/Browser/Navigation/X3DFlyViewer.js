@@ -137,18 +137,6 @@ function ($,
          this .orientationChaser ._duration = ROTATE_TIME;
          this .orientationChaser .setPrivate (true);
          this .orientationChaser .setup ();
-
-         this .loadShaders ()
-      },
-      loadShaders: function ()
-      {
-         const browser = this .getBrowser ();
-
-         if (! browser .getBrowserOption ("Rubberband"))
-            return;
-
-         browser .getDefaultMaterial () .getShader (this .geometryContext);
-         browser .getDepthShader ();
       },
       addCollision: function () { },
       removeCollision: function () { },

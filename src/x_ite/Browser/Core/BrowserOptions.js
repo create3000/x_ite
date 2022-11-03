@@ -223,8 +223,6 @@ function (Fields,
       set_rubberband__: function (rubberband)
       {
          this .localStorage .Rubberband = rubberband .getValue ();
-
-         this .getBrowser () .getViewer () .loadShaders ();
       },
       set_primitiveQuality__: function (value)
       {

@@ -2120,7 +2120,7 @@ function (Components,
       abstractTypes:
       {
       },
-      context: X3DGeometry2DContext,
+      browserContext: X3DGeometry2DContext,
    });
 });
 

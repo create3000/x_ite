@@ -118,9 +118,9 @@ function (X3DSingleTextureNode,
                gl .texImage2D (target, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          };
       })(),
-      updateTextureProperties: function ()
+      updateTextureParameters: function ()
       {
-         X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
+         X3DSingleTextureNode .prototype .updateTextureParameters .call (this,
                                                                          this .target,
                                                                          this ._textureProperties .getValue (),
                                                                          this .texturePropertiesNode,
@@ -130,13 +130,12 @@ function (X3DSingleTextureNode,
                                                                          false,
                                                                          false);
       },
-      setShaderUniformsToChannel: function (gl, shaderObject, renderObject, channel)
+      setShaderUniforms: function (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
       {
          const textureUnit = this .getBrowser () .getTextureCubeUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
-         gl .uniform1i (channel .textureType, 4);
          gl .uniform1i (channel .textureCube, textureUnit);
       },
    });
@@ -303,13 +302,13 @@ function (Fields,
       set_loadState__: function (texture, index)
       {
          if (texture)
-            this .setLoadStateBit (texture .checkLoadState (), texture .getData (), index);
+            this .setLoadStateBit (index, texture .checkLoadState (), texture .getData ());
          else
-            this .setLoadStateBit (X3DConstants .NOT_STARTED, null, index);
+            this .setLoadStateBit (index, X3DConstants .NOT_STARTED, null);
 
-         this .setTextures ();
+         this .updateTextures ();
       },
-      setLoadStateBit: function (loadState, data, bit)
+      setLoadStateBit: function (bit, loadState, data)
       {
          this .loadStateBits .set (bit, loadState === X3DConstants .COMPLETE_STATE || data);
       },
@@ -333,7 +332,7 @@ function (Fields,
 
          return true;
       },
-      setTextures: function ()
+      updateTextures: function ()
       {
          const gl = this .getBrowser () .getContext ();
 
@@ -365,7 +364,7 @@ function (Fields,
 
             gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
-            this .updateTextureProperties ();
+            this .updateTextureParameters ();
          }
          else
          {
@@ -631,10 +630,10 @@ function (Fields,
 
       this .addType (X3DConstants .GeneratedCubeMapTexture);
 
-      this .renderer         = new DependentRenderer (executionContext);
-      this .projectionMatrix = new Matrix4 ();
-      this .modelMatrix      = new Matrix4 ();
-      this .viewVolume       = new ViewVolume ();
+      this .dependentRenderer = new DependentRenderer (executionContext);
+      this .projectionMatrix  = new Matrix4 ();
+      this .modelMatrix       = new Matrix4 ();
+      this .viewVolume        = new ViewVolume ();
    }
 
    GeneratedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
@@ -663,21 +662,29 @@ function (Fields,
       {
          X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
-         this .renderer .setup ();
+         this ._size .addInterest ("set_size__", this);
+
+         this .dependentRenderer .setup ();
+
+         this .set_size__ ();
+      },
+      set_size__: function ()
+      {
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
 
          // Transfer 6 textures of size x size pixels.
 
-         let size = Algorithm .nextPowerOfTwo (this ._size .getValue ());
+         const size = gl .getVersion () >= 2
+            ? this ._size .getValue ()
+            : Algorithm .nextPowerOfTwo (this ._size .getValue ());
 
          if (size > 0)
          {
-            size = Algorithm .nextPowerOfTwo (size);
-
             // Upload default data.
 
-            const
-               gl          = this .getBrowser () .getContext (),
-               defaultData = new Uint8Array (size * size * 4);
+            const defaultData = new Uint8Array (size * size * 4);
 
             gl .bindTexture (this .getTarget (), this .getTexture ());
 
@@ -689,6 +696,10 @@ function (Fields,
             this .viewport    = new Vector4 (0, 0, size, size);
             this .frameBuffer = new TextureBuffer (this .getBrowser (), size, size);
          }
+         else
+         {
+            this .frameBuffer = null;
+         }
       },
       traverse: function (type, renderObject)
       {
@@ -697,13 +708,10 @@ function (Fields,
          if (this ._update .getValue () === "NONE")
             return;
 
-         if (!this .frameBuffer)
+         if (! renderObject .isIndependent ())
             return;
 
-         //if (this .getBrowser () !== this .getBrowser ())
-         //	return; // Could be interesting for four-side-view
-
-         if (!renderObject .isIndependent ())
+         if (! this .frameBuffer)
             return;
 
          renderObject .getGeneratedCubeMapTextures () .push (this);
@@ -738,16 +746,16 @@ function (Fields,
 
          return function (renderObject)
          {
-            this .renderer .setRenderer (renderObject);
+            this .dependentRenderer .setRenderer (renderObject);
 
             const
-               renderer           = this .renderer,
+               dependentRenderer  = this .dependentRenderer,
                browser            = this .getBrowser (),
                layer              = renderObject .getLayer (),
                gl                 = browser .getContext (),
-               background         = renderer .getBackground (),
-               navigationInfo     = renderer .getNavigationInfo (),
-               viewpoint          = renderer .getViewpoint (),
+               background         = dependentRenderer .getBackground (),
+               navigationInfo     = dependentRenderer .getNavigationInfo (),
+               viewpoint          = dependentRenderer .getViewpoint (),
                headlightContainer = browser .getHeadlight (),
                headlight          = navigationInfo ._headlight .getValue (),
                nearValue          = navigationInfo .getNearValue (),
@@ -758,8 +766,8 @@ function (Fields,
 
             this .frameBuffer .bind ();
 
-            renderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
-            renderer .getProjectionMatrix () .pushMatrix (projectionMatrix);
+            dependentRenderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
+            dependentRenderer .getProjectionMatrix () .pushMatrix (projectionMatrix);
 
             gl .bindTexture (this .getTarget (), this .getTexture ());
 
@@ -769,12 +777,12 @@ function (Fields,
 
                // Setup inverse texture space matrix.
 
-               renderer .getCameraSpaceMatrix () .pushMatrix (this .modelMatrix);
-               renderer .getCameraSpaceMatrix () .rotate (rotations [i]);
-               renderer .getCameraSpaceMatrix () .scale (scales [i]);
+               dependentRenderer .getCameraSpaceMatrix () .pushMatrix (this .modelMatrix);
+               dependentRenderer .getCameraSpaceMatrix () .rotate (rotations [i]);
+               dependentRenderer .getCameraSpaceMatrix () .scale (scales [i]);
 
-               renderer .getViewMatrix () .pushMatrix (invCameraSpaceMatrix .assign (renderer .getCameraSpaceMatrix () .get ()) .inverse ());
-               renderer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
+               dependentRenderer .getViewMatrix () .pushMatrix (invCameraSpaceMatrix .assign (dependentRenderer .getCameraSpaceMatrix () .get ()) .inverse ());
+               dependentRenderer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
 
                // Setup headlight if enabled.
 
@@ -786,16 +794,16 @@ function (Fields,
 
                // Render layer's children.
 
-               layer .traverse (TraverseType .DISPLAY, renderer);
+               layer .traverse (TraverseType .DISPLAY, dependentRenderer);
 
                // Pop matrices.
 
                if (headlight)
                   headlightContainer .getModelViewMatrix () .pop ();
 
-               renderer .getModelViewMatrix ()   .pop ();
-               renderer .getCameraSpaceMatrix () .pop ();
-               renderer .getViewMatrix ()        .pop ();
+               dependentRenderer .getModelViewMatrix ()   .pop ();
+               dependentRenderer .getCameraSpaceMatrix () .pop ();
+               dependentRenderer .getViewMatrix ()        .pop ();
 
                // Transfer image.
 
@@ -808,10 +816,10 @@ function (Fields,
                gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
             }
 
-            this .updateTextureProperties ();
+            this .updateTextureParameters ();
 
-            renderer .getProjectionMatrix () .pop ();
-            renderer .getViewVolumes      () .pop ();
+            dependentRenderer .getProjectionMatrix () .pop ();
+            dependentRenderer .getViewVolumes      () .pop ();
 
             this .frameBuffer .unbind ();
 
@@ -819,16 +827,16 @@ function (Fields,
                this ._update = "NONE";
          };
       })(),
-      setShaderUniformsToChannel: (function ()
+      setShaderUniforms: (function ()
       {
-         const Zero = new Float32Array (16); // Trick: zero model view matrix to hide object.
+         const zeros = new Float32Array (16); // Trick: zero model view matrix to hide object.
 
          return function (gl, shaderObject, renderObject, channel)
          {
-            X3DEnvironmentTextureNode .prototype .setShaderUniformsToChannel .call (this, gl, shaderObject, renderObject, channel);
+            X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, channel);
 
-            if (renderObject === this .renderer)
-               gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, Zero);
+            if (renderObject === this .dependentRenderer)
+               gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
          };
       })(),
    });
@@ -928,6 +936,8 @@ function ($,
 
       this .addType (X3DConstants .ImageCubeMapTexture);
 
+      this .image    = $("<img></img>");
+      this .canvas   = $("<canvas></canvas>");
       this .urlStack = new Fields .MFString ();
    }
 
@@ -972,12 +982,8 @@ function ($,
 
          // Initialize.
 
-         this .canvas = $("<canvas></canvas>");
-
-         this .image = $("<img></img>");
-         this .image .on ("load", this .setImage .bind (this));
-         this .image .on ("error", this .setError .bind (this));
-         this .image .bind ("abort", this .setError .bind (this));
+         this .image .on ("load",        this .setImage .bind (this));
+         this .image .on ("abort error", this .setError .bind (this));
 
          this .image [0] .crossOrigin = "Anonymous";
 
@@ -1094,7 +1100,7 @@ function ($,
                gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, false, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (data .buffer));
             }
 
-            this .updateTextureProperties ();
+            this .updateTextureParameters ();
 
             // Update transparent field.
 

@@ -66,10 +66,6 @@ define (function ()
 
          return "https://create3000.github.io/x_ite/";
       },
-      getShaderUrl: function (file)
-      {
-         return new URL ("assets/shaders/" + file, getScriptURL ()) .href;
-      },
       getFontsUrl: function (file)
       {
          return new URL ("assets/fonts/" + file, getScriptURL ()) .href;

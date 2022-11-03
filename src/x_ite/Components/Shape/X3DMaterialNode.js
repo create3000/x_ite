@@ -150,23 +150,7 @@ function (Fields,
             key += this .getMaterialKey (false);
          }
 
-         const shaderNode = this .shaderNodes .get (key) || this .createShader (key, geometryContext, renderContext);
-
-         if (shaderNode .isValid ())
-         {
-            geometryContext .shaderNode = shaderNode;
-
-            return shaderNode;
-         }
-         else
-         {
-            const shaderNode = geometryContext .shaderNode;
-
-            if (shaderNode && shaderNode .isValid ())
-               return shaderNode;
-
-            return this .getBrowser () .getDefaultShader ();
-         }
+         return this .shaderNodes .get (key) || this .createShader (key, geometryContext, renderContext);
       },
       getShaderOptions: (function ()
       {

@@ -51,7 +51,7 @@ define ([
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Browser/Shaders/Shader",
+   "x_ite/Browser/Shaders/ShaderSource",
    "x_ite/Browser/Shaders/ShaderCompiler",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Networking/X3DUrlObject",
@@ -61,7 +61,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          Shader,
+          ShaderSource,
           ShaderCompiler,
           X3DNode,
           X3DUrlObject,
@@ -189,7 +189,7 @@ function (Fields,
                   type           = this .getShaderType (),
                   options        = ["X3D_" + type] .concat (this .options),
                   shaderCompiler = new ShaderCompiler (gl),
-                  source         = Shader .getShaderSource (gl, browser, shaderCompiler .process (data), options),
+                  source         = ShaderSource .getSource (gl, browser, shaderCompiler .process (data), options),
                   shader         = gl .createShader (gl [type]);
 
                gl .deleteShader (this .shader);

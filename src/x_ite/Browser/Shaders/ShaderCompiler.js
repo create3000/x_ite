@@ -48,120 +48,17 @@
 
 
 define ([
-   "text!assets/shaders/webgl1/include/ClipPlanes.glsl",
-   "text!assets/shaders/webgl1/include/Colors.glsl",
-   "text!assets/shaders/webgl1/include/Fog.glsl",
-   "text!assets/shaders/webgl1/include/Fragment.glsl",
-   "text!assets/shaders/webgl1/include/Hatch.glsl",
-   "text!assets/shaders/webgl1/include/Material.glsl",
-   "text!assets/shaders/webgl1/include/Normal.glsl",
-   "text!assets/shaders/webgl1/include/Pack.glsl",
-   "text!assets/shaders/webgl1/include/Perlin.glsl",
-   "text!assets/shaders/webgl1/include/Point.glsl",
-   "text!assets/shaders/webgl1/include/PointSize.glsl",
-   "text!assets/shaders/webgl1/include/Shadow.glsl",
-   "text!assets/shaders/webgl1/include/SpotFactor.glsl",
-   "text!assets/shaders/webgl1/include/Texture.glsl",
-   "text!assets/shaders/webgl1/include/Vertex.glsl",
-   "text!assets/shaders/webgl2/include/ClipPlanes.glsl",
-   "text!assets/shaders/webgl2/include/Colors.glsl",
-   "text!assets/shaders/webgl2/include/Fog.glsl",
-   "text!assets/shaders/webgl2/include/Fragment.glsl",
-   "text!assets/shaders/webgl2/include/Hatch.glsl",
-   "text!assets/shaders/webgl2/include/Line2.glsl",
-   "text!assets/shaders/webgl2/include/Material.glsl",
-   "text!assets/shaders/webgl2/include/Normal.glsl",
-   "text!assets/shaders/webgl2/include/Pack.glsl",
-   "text!assets/shaders/webgl2/include/Particle.glsl",
-   "text!assets/shaders/webgl2/include/Perlin.glsl",
-   "text!assets/shaders/webgl2/include/Point.glsl",
-   "text!assets/shaders/webgl2/include/PointSize.glsl",
-   "text!assets/shaders/webgl2/include/Shadow.glsl",
-   "text!assets/shaders/webgl2/include/Stipple.glsl",
-   "text!assets/shaders/webgl2/include/SpotFactor.glsl",
-   "text!assets/shaders/webgl2/include/Texture.glsl",
-   "text!assets/shaders/webgl2/include/Vertex.glsl",
+   "x_ite/Browser/Shaders/Shaders"
 ],
-function (ClipPlanes1,
-          Colors1,
-          Fog1,
-          Fragment1,
-          Hatch1,
-          Material1,
-          Normal1,
-          Pack1,
-          Perlin1,
-          Point1,
-          PointSize1,
-          Shadow1,
-          SpotFactor1,
-          Texture1,
-          Vertex1,
-          ClipPlanes2,
-          Colors2,
-          Fog2,
-          Fragment2,
-          Hatch2,
-          Line22,
-          Material2,
-          Normal2,
-          Pack2,
-          Particle2,
-          Perlin2,
-          Point2,
-          PointSize2,
-          Shadow2,
-          Stipple2,
-          SpotFactor2,
-          Texture2,
-          Vertex2)
+function (Shaders)
 {
 "use strict";
 
    const include = /^\s*#pragma\s+X3D\s+include\s+".*?([^\/]+)\.glsl"\s*$/;
 
-   const includes1 = {
-      ClipPlanes: ClipPlanes1,
-      Colors: Colors1,
-      Fog: Fog1,
-      Fragment: Fragment1,
-      Hatch: Hatch1,
-      Material: Material1,
-      Normal: Normal1,
-      Pack: Pack1,
-      Perlin: Perlin1,
-      Point: Point1,
-      PointSize: PointSize1,
-      Shadow: Shadow1,
-      SpotFactor: SpotFactor1,
-      Texture: Texture1,
-      Vertex: Vertex1,
-   };
-
-   const includes2 = {
-      ClipPlanes: ClipPlanes2,
-      Colors: Colors2,
-      Fog: Fog2,
-      Fragment: Fragment2,
-      Hatch: Hatch2,
-      Line2: Line22,
-      Material: Material2,
-      Normal: Normal2,
-      Pack: Pack2,
-      Particle: Particle2,
-      Perlin: Perlin2,
-      Point: Point2,
-      PointSize: PointSize2,
-      Shadow: Shadow2,
-      Stipple: Stipple2,
-      SpotFactor: SpotFactor2,
-      Texture: Texture2,
-      Vertex: Vertex2,
-   };
-
    function ShaderCompiler (gl)
    {
-      this .includes          = gl .getVersion () <= 1 ? includes1 : includes2;
+      this .includes          = Shaders .includes [gl .getVersion ()];
       this .sourceFileNumbers = { };
 
       for (const [i, name] of Object .getOwnPropertyNames (this .includes) .entries ())

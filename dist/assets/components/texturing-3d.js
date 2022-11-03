@@ -89,9 +89,9 @@ function (X3DSingleTextureNode,
       {
          X3DSingleTextureNode .prototype .initialize .call (this);
 
-         this ._repeatS .addInterest ("updateTextureProperties", this);
-         this ._repeatT .addInterest ("updateTextureProperties", this);
-         this ._repeatR .addInterest ("updateTextureProperties", this);
+         this ._repeatS .addInterest ("updateTextureParameters", this);
+         this ._repeatT .addInterest ("updateTextureParameters", this);
+         this ._repeatR .addInterest ("updateTextureParameters", this);
 
          const gl = this .getBrowser () .getContext ();
 
@@ -157,12 +157,12 @@ function (X3DSingleTextureNode,
          gl .texImage3D  (gl .TEXTURE_3D, 0, format, width, height, depth, 0, format, gl .UNSIGNED_BYTE, data);
 
          this .setTransparent (transparent);
-         this .updateTextureProperties ();
+         this .updateTextureParameters ();
          this .addNodeEvent ();
       },
-      updateTextureProperties: function ()
+      updateTextureParameters: function ()
       {
-         X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
+         X3DSingleTextureNode .prototype .updateTextureParameters .call (this,
                                                                          this .target,
                                                                          this ._textureProperties .getValue (),
                                                                          this .texturePropertiesNode,
@@ -172,21 +172,13 @@ function (X3DSingleTextureNode,
                                                                          this ._repeatT .getValue (),
                                                                          this ._repeatR .getValue ());
       },
-      setShaderUniformsToChannel: function (gl, shaderObject, renderObject, channel)
+      setShaderUniforms: function (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
       {
-         if (gl .getVersion () >= 2)
-         {
-            const textureUnit = this .getBrowser () .getTexture3DUnit ();
+         const textureUnit = this .getBrowser () .getTexture3DUnit ();
 
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
-            gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-            gl .uniform1i (channel .textureType, 3);
-            gl .uniform1i (channel .texture3D, textureUnit);
-         }
-         else
-         {
-            gl .uniform1i (channel .textureType, 3);
-         }
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+         gl .uniform1i (channel .texture3D, textureUnit);
       },
    });
 

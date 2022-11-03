@@ -170,12 +170,7 @@ function ($,
          key += numClipPlanes;
          key += particles ? "1" : "0";
 
-         const shaderNode = this [_depthShaders] .get (key) || this .createDepthShader (key, numClipPlanes, particles);
-
-         if (shaderNode .isValid ())
-            return shaderNode;
-
-         return this .getDefaultShader ();
+         return this [_depthShaders] .get (key) || this .createDepthShader (key, numClipPlanes, particles);
       },
       createDepthShader: function (key, numClipPlanes, particles)
       {

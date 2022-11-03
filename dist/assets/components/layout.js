@@ -83,9 +83,9 @@ function ($,
       {
          this [_screenTextureProperties] = new TextureProperties (this .getPrivateScene ());
 
-         this [_screenTextureProperties] ._boundaryModeS       = "CLAMP";
-         this [_screenTextureProperties] ._boundaryModeT       = "CLAMP";
-         this [_screenTextureProperties] ._boundaryModeR       = "CLAMP";
+         this [_screenTextureProperties] ._boundaryModeS       = "CLAMP_TO_EDGE";
+         this [_screenTextureProperties] ._boundaryModeT       = "CLAMP_TO_EDGE";
+         this [_screenTextureProperties] ._boundaryModeR       = "CLAMP_TO_EDGE";
          this [_screenTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
          this [_screenTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
          this [_screenTextureProperties] ._generateMipMaps     = false;
@@ -1577,11 +1577,11 @@ function ($,
             this .getText () .setBBox (bbox);
          };
       })(),
-      display: function (gl, context)
+      display: function (gl, renderContext)
       {
-         Matrix4 .prototype .multLeft .call (context .modelViewMatrix, this .matrix);
+         Matrix4 .prototype .multLeft .call (renderContext .modelViewMatrix, this .matrix);
 
-         context .textureNode = this .textureNode;
+         renderContext .textureNode = this .textureNode;
       },
       transformLine: function (line)
       {
@@ -1932,7 +1932,7 @@ function (Components,
       {
          X3DLayoutNode: X3DLayoutNode,
       },
-      context: X3DLayoutContext,
+      browserContext: X3DLayoutContext,
    });
 });
 
