@@ -187,7 +187,7 @@ function (Fields,
       {
          this ._loadCount = value;
 
-         const displayValue = Array .from (this [_loadingObjects]) .reduce ((v, o) => v + ! o .isPrivate (), 0);
+         const displayValue = [... this [_loadingObjects]] .reduce ((v, o) => v + ! o .isPrivate (), 0);
 
          if (value || this [_loading])
          {
