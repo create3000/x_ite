@@ -53,24 +53,25 @@ define (function ()
 
    return function (Type)
    {
+      const stack = [ ];
+
       return {
-         stack: [ ],
-         last: -1,
+         size: 0,
          pop: function ()
          {
-            if (this .last !== -1)
-               return this .stack [this .last --];
+            if (this .size !== 0)
+               return stack [-- this .size];
 
             return new Type ();
          },
          push: function (object)
          {
-            this .stack [++ this .last] = object;
+            stack [this .size ++] = object;
          },
          clear: function ()
          {
-            this .stack .length = 0;
-            this .last          = -1;
+            stack .length = 0;
+            this .size    = 0;
          },
       };
    };
