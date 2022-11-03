@@ -130,7 +130,7 @@ function (X3DField,
       },
       setArray: function (value)
       {
-         this .array .assign (value);
+         this .array .setValue (value);
          this .array .length = this .width  * this .height;
       },
       getArray: function ()

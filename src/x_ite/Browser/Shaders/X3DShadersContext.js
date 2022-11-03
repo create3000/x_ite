@@ -197,26 +197,26 @@ function (Shading,
             version = gl .getVersion ();
 
          const vertexShader = new ShaderPart (this .getPrivateScene ());
+         vertexShader ._url .push (vs .startsWith ("data:") ? vs : urls .getShaderUrl ("webgl" + version + "/" + vs + ".vs"));
          vertexShader .setPrivate (true);
          vertexShader .setName (name + "Vertex");
          vertexShader .setOptions (options);
-         vertexShader ._url .push (vs .startsWith ("data:") ? vs : urls .getShaderUrl ("webgl" + version + "/" + vs + ".vs"));
          vertexShader .setup ();
 
          const fragmentShader = new ShaderPart (this .getPrivateScene ());
+         fragmentShader ._type  = "FRAGMENT";
+         fragmentShader ._url .push (fs .startsWith ("data:") ? fs : urls .getShaderUrl ("webgl" + version + "/" + fs + ".fs"));
          fragmentShader .setPrivate (true);
          fragmentShader .setName (name + "Fragment");
          fragmentShader .setOptions (options);
-         fragmentShader ._type  = "FRAGMENT";
-         fragmentShader ._url .push (fs .startsWith ("data:") ? fs : urls .getShaderUrl ("webgl" + version + "/" + fs + ".fs"));
          fragmentShader .setup ();
 
          const shaderNode = new ComposedShader (this .getPrivateScene ());
-         shaderNode .setPrivate (true);
-         shaderNode .setName (name);
          shaderNode ._language = "GLSL";
          shaderNode ._parts .push (vertexShader);
          shaderNode ._parts .push (fragmentShader);
+         shaderNode .setPrivate (true);
+         shaderNode .setName (name);
          shaderNode .setup ();
 
          return shaderNode;

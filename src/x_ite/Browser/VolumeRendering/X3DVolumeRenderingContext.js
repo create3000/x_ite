@@ -71,11 +71,11 @@ function (PixelTexture,
       getDefaultVoxels: function (executionContext)
       {
          this [_defaultVoxelsNode] = executionContext .createNode ("PixelTexture3D", false);
-         this [_defaultVoxelsNode] .setPrivate (true);
          this [_defaultVoxelsNode] ._image = [1, 1, 1, 1, 255];
          this [_defaultVoxelsNode] .repeatS = true;
          this [_defaultVoxelsNode] .repeatT = true;
          this [_defaultVoxelsNode] .repeatR = true;
+         this [_defaultVoxelsNode] .setPrivate (true);
          this [_defaultVoxelsNode] .setup ();
 
          this .getDefaultVoxels = function () { return this [_defaultVoxelsNode]; };
@@ -110,28 +110,20 @@ function (PixelTexture,
       },
       getDefaultTransferFunction: function ()
       {
-         this [_defaultTransferFunction] = new PixelTexture (this .getPrivateScene ());
-         this [_defaultTransferFunction] .setPrivate (true);
-
          const textureProperties = new TextureProperties (this .getPrivateScene ());
-
-         textureProperties .setPrivate (true);
          textureProperties ._generateMipMaps = true;
          textureProperties ._boundaryModeS   = "CLAMP_TO_EDGE";
          textureProperties ._boundaryModeT   = "REPEAT";
+         textureProperties .setPrivate (true);
+         textureProperties .setup ();
 
+         this [_defaultTransferFunction] = new PixelTexture (this .getPrivateScene ());
          this [_defaultTransferFunction] ._textureProperties = textureProperties;
-
-         this [_defaultTransferFunction] ._image .width  = 256;
-         this [_defaultTransferFunction] ._image .height = 1;
-         this [_defaultTransferFunction] ._image .comp   = 2;
-
-         const array = this [_defaultTransferFunction] ._image .array;
-
-         for (let i = 0; i < 256; ++ i)
-            array [i] = (i << 8) | i;
-
-         textureProperties               .setup ();
+         this [_defaultTransferFunction] ._image .width      = 256;
+         this [_defaultTransferFunction] ._image .height     = 1;
+         this [_defaultTransferFunction] ._image .comp       = 2;
+         this [_defaultTransferFunction] ._image .array      = Array .from ({ length: 256 }, (v, i) => (i << 8) | i);
+         this [_defaultTransferFunction] .setPrivate (true);
          this [_defaultTransferFunction] .setup ();
 
          this .getDefaultTransferFunction = function () { return this [_defaultTransferFunction]; };

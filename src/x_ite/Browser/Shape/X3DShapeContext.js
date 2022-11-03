@@ -113,9 +113,9 @@ function (Appearance,
       getLinetypeTexture: function ()
       {
          this [_linetypeTextures] = new ImageTexture (this .getPrivateScene ());
-         this [_linetypeTextures] .setPrivate (true);
          this [_linetypeTextures] ._url [0]           = urls .getLinetypeUrl ();
          this [_linetypeTextures] ._textureProperties = this .getLineFillTextureProperties ();
+         this [_linetypeTextures] .setPrivate (true);
          this [_linetypeTextures] .setup ();
 
          this .getLinetypeTexture = function () { return this [_linetypeTextures]; };
@@ -133,9 +133,9 @@ function (Appearance,
 
          hatchStyleTexture = this [_hatchStyleTextures] [index] = new ImageTexture (this .getPrivateScene ());
 
-         hatchStyleTexture .setPrivate (true);
          hatchStyleTexture ._url [0]           = urls .getHatchingUrl (index);
          hatchStyleTexture ._textureProperties = this .getLineFillTextureProperties ();
+         hatchStyleTexture .setPrivate (true);
          hatchStyleTexture .setup ();
 
          return hatchStyleTexture;
@@ -143,9 +143,9 @@ function (Appearance,
       getLineFillTextureProperties: function ()
       {
          this [_lineFillTextureProperties] = new TextureProperties (this .getPrivateScene ());
-         this [_lineFillTextureProperties] .setPrivate (true);
          this [_lineFillTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
          this [_lineFillTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
+         this [_lineFillTextureProperties] .setPrivate (true);
          this [_lineFillTextureProperties] .setup ();
 
          this .getLineFillTextureProperties = function () { return this [_lineFillTextureProperties]; };
