@@ -52,13 +52,11 @@ define ([
    "x_ite/Browser/Shaders/Shaders",
    "x_ite/Components/Shaders/ComposedShader",
    "x_ite/Components/Shaders/ShaderPart",
-   "x_ite/Browser/Networking/urls",
 ],
 function (Shading,
           Shaders,
           ComposedShader,
-          ShaderPart,
-          urls)
+          ShaderPart)
 {
 "use strict";
 

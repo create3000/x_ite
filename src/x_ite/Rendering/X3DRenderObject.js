@@ -790,9 +790,9 @@ function (TextureBuffer,
          return function (shapes, numShapes)
          {
             const
-               browser            = this .getBrowser (),
-               gl                 = browser .getContext (),
-               viewport           = this .getViewVolume () .getViewport ();
+               browser  = this .getBrowser (),
+               gl       = browser .getContext (),
+               viewport = this .getViewVolume () .getViewport ();
 
             this .renderTime = performance .now ();
 
