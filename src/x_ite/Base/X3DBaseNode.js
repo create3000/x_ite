@@ -72,6 +72,7 @@ function (X3DEventObject,
       _predefinedFields  = Symbol (),
       _aliases           = Symbol (),
       _userDefinedFields = Symbol (),
+      _setuped           = Symbol (),
       _initialized       = Symbol (),
       _live              = Symbol (),
       _set_live__        = Symbol ("X3DBaseNode.set_live__"),
@@ -287,6 +288,12 @@ function (X3DEventObject,
             field .setTainted (false);
 
          this .initialize ();
+
+         this [_setuped] = true;
+      },
+      isSetuped: function ()
+      {
+         return this [_setuped];
       },
       isInitialized: function ()
       {

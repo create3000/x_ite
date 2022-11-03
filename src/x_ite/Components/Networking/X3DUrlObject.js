@@ -67,7 +67,7 @@ function (Fields,
       this .addType (X3DConstants .X3DUrlObject);
 
       this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE),
-                             "loadNow", new Fields .SFTime ());
+                             "loadNow",   new Fields .SFTime ());
 
       this [_cache]                = true;
       this [_autoRefreshStartTime] = performance .now ();
@@ -134,7 +134,9 @@ function (Fields,
       },
       requestImmediateLoad: function (cache = true)
       {
-         if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
+         const loadState = this .checkLoadState ();
+
+         if (loadState === X3DConstants .COMPLETE_STATE || loadState === X3DConstants .IN_PROGRESS_STATE)
             return;
 
          if (!this ._load .getValue ())
@@ -146,14 +148,19 @@ function (Fields,
          this .setCache (cache);
          this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
-         // Buffer prevents double load of the scene if load and url field are set at the same time.
-         this ._loadNow = this .getBrowser () .getCurrentTime ();
+         if (this .isSetuped ())
+            // Buffer prevents double load of the scene if load and url field are set at the same time.
+            this ._loadNow = this .getBrowser () .getCurrentTime ();
+         else
+            this .loadNow ();
       },
       loadNow: function ()
       { },
       requestUnload: function ()
       {
-         if (this .checkLoadState () === X3DConstants .NOT_STARTED_STATE || this .checkLoadState () === X3DConstants .FAILED_STATE)
+         const loadState = this .checkLoadState ();
+
+         if (loadState === X3DConstants .NOT_STARTED_STATE || loadState === X3DConstants .FAILED_STATE)
             return;
 
          this .setLoadState (X3DConstants .NOT_STARTED_STATE);
