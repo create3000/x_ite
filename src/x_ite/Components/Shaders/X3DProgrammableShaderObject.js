@@ -130,8 +130,6 @@ function (X3DCast,
          if (! this .isPrivate ())
             this .setUniforms = this .setCustomUniforms;
 
-         console .log (this .getName (), this .isPrivate ())
-
          // Use by multi texture nodes.
          this .x3d_MaxTextures = browser .getMaxTextures ();
 
@@ -263,6 +261,20 @@ function (X3DCast,
 
          for (let i = 0; i < maxTextures; ++ i)
          {
+            // Attributes
+
+            const x3d_TexCoord = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
+
+            if (x3d_TexCoord !== -1)
+               this .x3d_TexCoord .push ([i, x3d_TexCoord]);
+
+            // Uniforms
+
+            this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
+
+            this .x3d_TextureCoordinateGeneratorMode [i]      = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode");
+            this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
+
             this .x3d_Texture [i] = {
                texture2D: gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]"),
                texture3D: gl .getUniformLocation (program, "x3d_Texture3D[" + i + "]"),
@@ -274,21 +286,9 @@ function (X3DCast,
             this .x3d_MultiTextureSource [i]    = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].source");
             this .x3d_MultiTextureFunction [i]  = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].function");
 
-            this .x3d_TextureCoordinateGeneratorMode [i]      = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode");
-            this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
-
             this .x3d_ProjectiveTexture [i]         = gl .getUniformLocation (program, "x3d_ProjectiveTexture[" + i + "]");
             this .x3d_ProjectiveTextureMatrix [i]   = gl .getUniformLocation (program, "x3d_ProjectiveTextureMatrix[" + i + "]");
             this .x3d_ProjectiveTextureLocation [i] = gl .getUniformLocation (program, "x3d_ProjectiveTextureLocation[" + i + "]");
-
-            this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
-
-            // Attribute
-
-            const x3d_TexCoord = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
-
-            if (x3d_TexCoord !== -1)
-               this .x3d_TexCoord .push ([i, x3d_TexCoord]);
          }
 
          this .x3d_TexCoordRamp = gl .getUniformLocation (program, "x3d_TexCoordRamp");
