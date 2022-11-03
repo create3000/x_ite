@@ -52,26 +52,37 @@ define (function ($)
 "use strict";
 
    const MapUtilities = {
-      assign: function (m1, m2)
+      assign: (function ()
       {
-         m1 .clear ();
+         function callback (value, key)
+         {
+            this .set (key, value);
+         }
 
-         for (const [key, value] of m2)
-            m1 .set (key, value);
+         return function (m1, m2)
+         {
+            m1 .clear ();
+            m2 .forEach (callback, m1);
 
-         return m1;
-      },
-      values: function (a, m)
+            return m1;
+         };
+      })(),
+      values: (function ()
       {
-         let i = 0;
+         function callback (value)
+         {
+            this .push (value);
+         }
 
-         for (const value of m .values ())
-            a [i ++] = value;
+         return function (a, m)
+         {
+            a .length = 0;
 
-         a .length = m .size;
+            m .forEach (callback, a);
 
-         return a;
-      },
+            return a;
+         };
+      })(),
    };
 
    return MapUtilities;
