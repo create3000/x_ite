@@ -106,13 +106,13 @@ function (TextureBuffer,
       this .numOpaqueShapes          = 0;
       this .numTransparentShapes     = 0;
       this .numCollisionShapes       = 0;
-      this .numDepthShapes           = 0;
+      this .numShadowShapes          = 0;
       this .opaqueShapes             = [ ];
       this .transparentShapes        = [ ];
       this .transparencySorter       = new MergeSort (this .transparentShapes, compareDistance);
       this .collisionShapes          = [ ];
       this .activeCollisions         = new Set ();
-      this .depthShapes              = [ ];
+      this .shadowShapes             = [ ];
       this .speed                    = 0;
 
       try
@@ -261,17 +261,17 @@ function (TextureBuffer,
       {
          return this .collisionShapes;
       },
-      setNumDepthShapes: function (value)
+      setNumShadowShapes: function (value)
       {
-         this .numDepthShapes = value;
+         this .numShadowShapes = value;
       },
-      getNumDepthShapes: function ()
+      getNumShadowShapes: function ()
       {
-         return this .numDepthShapes;
+         return this .numShadowShapes;
       },
-      getDepthShapes: function ()
+      getShadowShapes: function ()
       {
-         return this .depthShapes;
+         return this .shadowShapes;
       },
       setNumOpaqueShapes: function (value)
       {
@@ -432,10 +432,10 @@ function (TextureBuffer,
             }
             case TraverseType .SHADOW:
             {
-               this .numDepthShapes = 0;
+               this .numShadowShapes = 0;
 
                callback .call (group, type, this);
-               this .depth (this .depthShapes, this .numDepthShapes);
+               this .depth (this .shadowShapes, this .numShadowShapes);
                break;
             }
             case TraverseType .DISPLAY:
@@ -498,7 +498,7 @@ function (TextureBuffer,
             return false;
          };
       })(),
-      addDepthShape: (function ()
+      addShadowShape: (function ()
       {
          const
             bboxSize   = new Vector3 (0, 0, 0),
@@ -517,14 +517,14 @@ function (TextureBuffer,
 
             if (viewVolume .intersectsSphere (radius, bboxCenter))
             {
-               const num = this .numDepthShapes ++;
+               const num = this .numShadowShapes ++;
 
-               if (num === this .depthShapes .length)
+               if (num === this .shadowShapes .length)
                {
-                  this .depthShapes .push ({ renderObject: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
+                  this .shadowShapes .push ({ renderObject: this, modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
                }
 
-               const depthContext = this .depthShapes [num];
+               const depthContext = this .shadowShapes [num];
 
                depthContext .modelViewMatrix .set (modelViewMatrix);
                depthContext .shapeNode = shapeNode;

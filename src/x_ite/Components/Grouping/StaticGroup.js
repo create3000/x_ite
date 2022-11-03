@@ -83,7 +83,7 @@ function (Fields,
 
       this .group             = new Group (this .getExecutionContext ());
       this .collisionShapes   = null;
-      this .depthShapes       = null;
+      this .shadowShapes      = null;
       this .opaqueShapes      = null;
       this .transparentShapes = null;
       this .bbox              = new Box3 ();
@@ -149,7 +149,7 @@ function (Fields,
          this .group .getBBox (this .shadowBBox, true);
 
          this .collisionShapes   = null;
-         this .depthShapes       = null;
+         this .shadowShapes      = null;
          this .opaqueShapes      = null;
          this .transparentShapes = null;
       },
@@ -212,16 +212,16 @@ function (Fields,
                }
                case TraverseType .SHADOW:
                {
-                  if (! this .depthShapes)
+                  if (! this .shadowShapes)
                   {
-                     //console .log ("Rebuilding StaticGroup depthShapes");
+                     //console .log ("Rebuilding StaticGroup shadowShapes");
 
                      const
                         viewVolumes      = renderObject .getViewVolumes (),
                         viewport         = renderObject .getViewport (),
                         projectionMatrix = renderObject .getProjectionMatrix (),
                         modelViewMatrix  = renderObject .getModelViewMatrix (),
-                        firstDepthShape  = renderObject .getNumDepthShapes ();
+                        firstShadowShape = renderObject .getNumShadowShapes ();
 
                      viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
 
@@ -233,16 +233,16 @@ function (Fields,
                      modelViewMatrix .pop ();
                      viewVolumes     .pop ();
 
-                     const lastDepthShape = renderObject .getNumDepthShapes ();
+                     const lastShadowShape = renderObject .getNumShadowShapes ();
 
-                     this .depthShapes = renderObject .getDepthShapes () .splice (firstDepthShape, lastDepthShape - firstDepthShape);
+                     this .shadowShapes = renderObject .getShadowShapes () .splice (firstShadowShape, lastShadowShape - firstShadowShape);
 
-                     renderObject .setNumDepthShapes (firstDepthShape);
+                     renderObject .setNumShadowShapes (firstShadowShape);
                   }
 
                   const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-                  for (const depthShape of this .depthShapes)
+                  for (const depthShape of this .shadowShapes)
                   {
                      modelViewMatrix .push ();
                      modelViewMatrix .multLeft (depthShape .modelViewMatrix);

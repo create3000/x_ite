@@ -879,7 +879,7 @@ function (Fields,
             case TraverseType .SHADOW:
             {
                if (this ._castShadow .getValue ())
-                  renderObject .addDepthShape (this);
+                  renderObject .addShadowShape (this);
 
                break;
             }
