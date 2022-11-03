@@ -162,7 +162,7 @@ function ($,
       {
          return this [_localObjects];
       },
-      getDepthShader: function (numClipPlanes)
+      getDepthShader: function (numClipPlanes, particles)
       {
          this [_depthShader] = this .createShader ("DepthShader", "Depth");
 

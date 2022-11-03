@@ -71,7 +71,7 @@ function (PointEmitter)
          this .getDefaultEmitter = function () { return this [_defaultEmitter]; };
 
          Object .defineProperty (this, "getDefaultEmitter", { enumerable: false });
-v
+
          return this [_defaultEmitter];
       },
       getParticleDepthShader: function ()
