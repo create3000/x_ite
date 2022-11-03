@@ -61,13 +61,14 @@ function ($,
    const
       _viewport     = Symbol (),
       _localObjects = Symbol (),
-      _depthShader  = Symbol (),
+      _depthShaders = Symbol (),
       _resizer      = Symbol ();
 
    function X3DRenderingContext ()
    {
       this [_viewport]     = [0, 0, 300, 150];
       this [_localObjects] = [ ]; // shader objects dumpster
+      this [_depthShaders] = new Map ();
    }
 
    X3DRenderingContext .prototype =
@@ -164,13 +165,36 @@ function ($,
       },
       getDepthShader: function (numClipPlanes, particles)
       {
-         this [_depthShader] = this .createShader ("DepthShader", "Depth");
+         let key = "";
 
-         this .getDepthShader = function () { return this [_depthShader]; };
+         key += numClipPlanes;
+         key += particles ? "1" : "0";
 
-         Object .defineProperty (this, "getDepthShader", { enumerable: false });
+         const shaderNode = this [_depthShaders] .get (key) || this .createDepthShader (key, numClipPlanes, particles);
 
-         return this [_depthShader];
+         if (shaderNode .isValid ())
+            return shaderNode;
+
+         return this .getDefaultShader ();
+      },
+      createDepthShader: function (key, numClipPlanes, particles)
+      {
+         const options = [ ];
+
+         if (numClipPlanes)
+         {
+            options .push ("X3D_CLIP_PLANES");
+            options .push ("X3D_NUM_CLIP_PLANES " + numClipPlanes);
+         }
+
+         if (particles)
+            options .push ("X3D_PARTICLE_SYSTEM");
+
+         const shaderNode = this .createShader ("DepthShader", "Depth", "Depth", options);
+
+         this [_depthShaders] .set (key, shaderNode);
+
+         return shaderNode;
       },
       reshape: function ()
       {

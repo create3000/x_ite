@@ -406,10 +406,9 @@ function (TextureBuffer,
             this .depthBuffer .bind ();
             this .viewVolumes .push (depthBufferViewVolume);
 
-            if (this .depth (this .collisionShapes, this .numCollisionShapes))
-               var depth = this .depthBuffer .getDepth (projectionMatrix, depthBufferViewport);
-            else
-               var depth = 0;
+            this .depth (this .collisionShapes, this .numCollisionShapes);
+
+            const depth = this .depthBuffer .getDepth (projectionMatrix, depthBufferViewport);
 
             this .viewVolumes .pop ();
             this .depthBuffer .unbind ();
@@ -676,113 +675,110 @@ function (TextureBuffer,
 
          return function ()
          {
-            const
-               browser    = this .getBrowser (),
-               shaderNode = browser .getDepthShader ();
+            const browser = this .getBrowser ();
 
-            if (shaderNode .isValid ())
+            // Terrain following and gravitation
+
+            if (browser .getActiveLayer () === this)
             {
-               // Terrain following and gravitation
-
-               if (browser .getActiveLayer () === this)
-               {
-                  if (browser .getCurrentViewer () !== "WALK")
-                     return;
-               }
-               else if (this .getNavigationInfo () .getViewer () !== "WALK")
+               if (browser .getCurrentViewer () !== "WALK")
                   return;
+            }
+            else if (this .getNavigationInfo () .getViewer () !== "WALK")
+            {
+               return;
+            }
 
-               // Get NavigationInfo values
+            // Get NavigationInfo values
 
-               const
-                  navigationInfo  = this .getNavigationInfo (),
-                  viewpoint       = this .getViewpoint (),
-                  collisionRadius = navigationInfo .getCollisionRadius (),
-                  nearValue       = navigationInfo .getNearValue (),
-                  avatarHeight    = navigationInfo .getAvatarHeight (),
-                  stepHeight      = navigationInfo .getStepHeight ();
+            const
+               navigationInfo  = this .getNavigationInfo (),
+               viewpoint       = this .getViewpoint (),
+               collisionRadius = navigationInfo .getCollisionRadius (),
+               nearValue       = navigationInfo .getNearValue (),
+               avatarHeight    = navigationInfo .getAvatarHeight (),
+               stepHeight      = navigationInfo .getStepHeight ();
 
-               // Reshape viewpoint for gravite.
+            // Reshape viewpoint for gravite.
 
-               Camera .ortho (-collisionRadius,
-                              collisionRadius,
-                              -collisionRadius,
-                              collisionRadius,
-                              nearValue,
-                              Math .max (collisionRadius * 2, avatarHeight * 2),
-                              projectionMatrix);
+            Camera .ortho (-collisionRadius,
+                           collisionRadius,
+                           -collisionRadius,
+                           collisionRadius,
+                           nearValue,
+                           Math .max (collisionRadius * 2, avatarHeight * 2),
+                           projectionMatrix);
 
-               // Transform viewpoint to look down the up vector
+            // Transform viewpoint to look down the up vector
 
-               const
-                  upVector = viewpoint .getUpVector (),
-                  down     = rotation .setFromToVec (Vector3 .zAxis, upVector);
+            const
+               upVector = viewpoint .getUpVector (),
+               down     = rotation .setFromToVec (Vector3 .zAxis, upVector);
 
-               cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
-               cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
-               cameraSpaceProjectionMatrix .rotate (down);
-               cameraSpaceProjectionMatrix .inverse ();
+            cameraSpaceProjectionMatrix .assign (viewpoint .getModelMatrix ());
+            cameraSpaceProjectionMatrix .translate (viewpoint .getUserPosition ());
+            cameraSpaceProjectionMatrix .rotate (down);
+            cameraSpaceProjectionMatrix .inverse ();
 
-               cameraSpaceProjectionMatrix .multRight (projectionMatrix);
-               cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
+            cameraSpaceProjectionMatrix .multRight (projectionMatrix);
+            cameraSpaceProjectionMatrix .multLeft (viewpoint .getCameraSpaceMatrix ());
 
-               this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
+            this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
 
-               let distance = -this .getDepth (projectionMatrix);
+            let distance = -this .getDepth (projectionMatrix);
 
-               this .getProjectionMatrix () .pop ();
+            this .getProjectionMatrix () .pop ();
 
-               // Gravite or step up.
+            // Gravite or step up.
 
-               distance -= avatarHeight;
+            distance -= avatarHeight;
 
-               const up = rotation .setFromToVec (Vector3 .yAxis, upVector);
+            const up = rotation .setFromToVec (Vector3 .yAxis, upVector);
 
-               if (distance > 0)
+            if (distance > 0)
+            {
+               // Gravite and fall down the to the floor
+
+               const currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
+
+               this .speed -= browser .getBrowserOptions () ._Gravity .getValue () / currentFrameRate;
+
+               let y = this .speed / currentFrameRate;
+
+               if (y < -distance)
                {
-                  // Gravite and fall down the to the floor
-
-                  const currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
-
-                  this .speed -= browser .getBrowserOptions () ._Gravity .getValue () / currentFrameRate;
-
-                  let y = this .speed / currentFrameRate;
-
-                  if (y < -distance)
-                  {
-                     // The ground is reached.
-                     y = -distance;
-                     this .speed = 0;
-                  }
-
-                  viewpoint ._positionOffset = viewpoint ._positionOffset .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
-               }
-               else
-               {
+                  // The ground is reached.
+                  y = -distance;
                   this .speed = 0;
+               }
 
-                  distance = -distance;
+               viewpoint ._positionOffset = viewpoint ._positionOffset .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
+            }
+            else
+            {
+               this .speed = 0;
 
-                  if (distance > 0.01 && distance < stepHeight)
-                  {
-                     // Step up
-                     this .constrainTranslation (up .multVecRot (translation .set (0, distance, 0)), false);
+               distance = -distance;
 
-                     //if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
-                     //{
-                     //	float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
-                     //	step = abs (getViewMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
-                     //
-                     //	Vector3f offset = Vector3f (0, step, 0) * up;
-                     //
-                     //	if (math::abs (offset) > math::abs (translation) or getBrowser () -> getCurrentSpeed () == 0)
-                     //		offset = translation;
-                     //
-                     //	getViewpoint () -> positionOffset () += offset;
-                     //}
-                     //else
-                        viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
-                  }
+               if (distance > 0.01 && distance < stepHeight)
+               {
+                  // Step up
+                  this .constrainTranslation (up .multVecRot (translation .set (0, distance, 0)), false);
+
+                  //if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
+                  //{
+                  //	float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
+                  //	step = abs (getViewMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
+                  //
+                  //	Vector3f offset = Vector3f (0, step, 0) * up;
+                  //
+                  //	if (math::abs (offset) > math::abs (translation) or getBrowser () -> getCurrentSpeed () == 0)
+                  //		offset = translation;
+                  //
+                  //	getViewpoint () -> positionOffset () += offset;
+                  //}
+                  //else
+                     viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
                }
             }
          };
@@ -796,68 +792,50 @@ function (TextureBuffer,
             const
                browser            = this .getBrowser (),
                gl                 = browser .getContext (),
-               viewport           = this .getViewVolume () .getViewport (),
-               shaderNode         = browser .getDepthShader (),
-               particleShaderNode = browser .getParticleDepthShader && browser .getParticleDepthShader ();
+               viewport           = this .getViewVolume () .getViewport ();
 
-            if (shaderNode .isValid () && (! particleShaderNode || particleShaderNode .isValid ()))
+            this .renderTime = performance .now ();
+
+            // Configure depth shaders.
+
+            projectionMatrixArray .set (this .getProjectionMatrix () .get ());
+
+            // Configure viewport and background
+
+            gl .viewport (viewport [0],
+                          viewport [1],
+                          viewport [2],
+                          viewport [3]);
+
+            gl .scissor (viewport [0],
+                         viewport [1],
+                         viewport [2],
+                         viewport [3]);
+
+            gl .clearColor (1, 0, 0, 0); // Must be '1, 0, 0, 0'.
+            gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
+
+            // Render all objects
+
+            gl .depthMask (true);
+            gl .enable (gl .DEPTH_TEST);
+            gl .disable (gl .BLEND);
+            gl .disable (gl .CULL_FACE);
+
+            for (let s = 0; s < numShapes; ++ s)
             {
-               // Configure depth shaders.
+               const
+                  depthContext = shapes [s],
+                  scissor      = depthContext .scissor;
 
-               projectionMatrixArray .set (this .getProjectionMatrix () .get ());
+               gl .scissor (scissor .x,
+                            scissor .y,
+                            scissor .z,
+                            scissor .w);
 
-               if (particleShaderNode)
-               {
-                  particleShaderNode .enable (gl);
-                  gl .uniformMatrix4fv (particleShaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
-               }
+               // Draw
 
-               shaderNode .enable (gl);
-               gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
-
-               // Configure viewport and background
-
-               gl .viewport (viewport [0],
-                             viewport [1],
-                             viewport [2],
-                             viewport [3]);
-
-               gl .scissor (viewport [0],
-                            viewport [1],
-                            viewport [2],
-                            viewport [3]);
-
-               gl .clearColor (1, 0, 0, 0); // Must be '1, 0, 0, 0'.
-               gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
-
-               // Render all objects
-
-               gl .depthMask (true);
-               gl .enable (gl .DEPTH_TEST);
-               gl .disable (gl .BLEND);
-               gl .disable (gl .CULL_FACE);
-
-               for (let s = 0; s < numShapes; ++ s)
-               {
-                  const
-                     depthContext = shapes [s],
-                     scissor      = depthContext .scissor;
-
-                  gl .scissor (scissor .x,
-                               scissor .y,
-                               scissor .z,
-                               scissor .w);
-
-                  // Draw
-
-                  depthContext .shapeNode .depth (gl, depthContext, shaderNode, particleShaderNode);
-               }
-
-               return true;
-            }
-            else
-            {
-               return false;
+               depthContext .shapeNode .depth (gl, depthContext, projectionMatrixArray);
             }
          };
       })(),

@@ -898,16 +898,21 @@ function (Fields,
                this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
          }
       },
-      depth: function (gl, depthContext, _, shaderNode)
+      depth: function (gl, depthContext, projectionMatrix)
       {
          if (this .numParticles)
          {
             // Display geometry.
 
-            shaderNode .enable (gl);
-            shaderNode .setClipPlanes (gl, depthContext .clipPlanes);
+            const
+               clipPlanes = depthContext .clipPlanes,
+               shaderNode = this .getBrowser () .getDepthShader (clipPlanes .length, true);
 
-            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, depthContext .modelViewMatrix);
+            shaderNode .enable (gl);
+            shaderNode .setClipPlanes (gl, clipPlanes);
+
+            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrix);
+            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, depthContext .modelViewMatrix);
 
             switch (this .geometryType)
             {
@@ -943,8 +948,6 @@ function (Fields,
                   break;
                }
             }
-
-            _ .enable (gl);
          }
       },
       display: function (gl, renderContext)

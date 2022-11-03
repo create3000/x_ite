@@ -115,6 +115,10 @@ function ($,
          this .bindViewpoint = Function .prototype;
          this .foreign       = Function .prototype;
       },
+      isPrivate: function ()
+      {
+         return true;
+      },
       getWorldURL: function ()
       {
          return this .URL;

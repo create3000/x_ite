@@ -277,10 +277,10 @@ function (Fields,
                switch (renderContext .shapeNode .getShapeKey ())
                {
                   case "1":
-                     options .push ("X3D_PARTICLE");
+                     options .push ("X3D_PARTICLE_SYSTEM");
                      break;
                   case "2":
-                     options .push ("X3D_PARTICLE", "X3D_TEX_COORD_RAMP");
+                     options .push ("X3D_PARTICLE_SYSTEM", "X3D_TEX_COORD_RAMP");
                      break;
                }
             }

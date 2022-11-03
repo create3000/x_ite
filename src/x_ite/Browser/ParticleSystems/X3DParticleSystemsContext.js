@@ -74,16 +74,6 @@ function (PointEmitter)
 
          return this [_defaultEmitter];
       },
-      getParticleDepthShader: function ()
-      {
-         this [_depthShader] = this .createShader ("ParticleDepthShader", "Depth", "Depth", ["X3D_PARTICLE"]);
-
-         this .getParticleDepthShader = function () { return this [_depthShader]; };
-
-         Object .defineProperty (this, "getParticleDepthShader", { enumerable: false });
-
-         return this [_depthShader];
-      },
    };
 
    return X3DParticleSystemsContext;

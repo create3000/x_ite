@@ -1,4 +1,4 @@
-#if defined (X3D_PARTICLE)
+#if defined (X3D_PARTICLE_SYSTEM)
 
 in vec4 x3d_Particle;
 in mat4 x3d_ParticleMatrix;
