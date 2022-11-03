@@ -75,7 +75,7 @@ function (X3DCast,
 
       this .uniformNames = defaultUniformNames;
 
-      this .x3d_ClipPlane                           = [ ];
+      this .x3d_ClipPlanes                          = [ ];
       this .x3d_LightType                           = [ ];
       this .x3d_LightOn                             = [ ];
       this .x3d_LightColor                          = [ ];
@@ -125,10 +125,12 @@ function (X3DCast,
       {
          const browser = this .getBrowser ();
 
+         browser .getRenderingProperties () ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
+
          if (! this .isPrivate ())
             this .setUniforms = this .setCustomUniforms;
 
-         browser .getRenderingProperties () ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
+         console .log (this .getName (), this .isPrivate ())
 
          // Use by multi texture nodes.
          this .x3d_MaxTextures = browser .getMaxTextures ();
@@ -174,10 +176,10 @@ function (X3DCast,
 
          this .x3d_LogarithmicFarFactor1_2 = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor1_2");
 
-         this .x3d_ClipPlanes = gl .getUniformLocation (program, "x3d_ClipPlane");
+         this .x3d_ClipPlanes = gl .getUniformLocation (program, "x3d_ClipPlanes");
 
          for (let i = 0; i < maxClipPlanes; ++ i)
-            this .x3d_ClipPlane [i] = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
+            this .x3d_ClipPlanes [i] = gl .getUniformLocation (program, "x3d_ClipPlanes[" + i + "]");
 
          this .x3d_FogColor           = this .getUniformLocation (gl, program, "x3d_Fog.color",           "x3d_FogColor");
          this .x3d_FogVisibilityRange = this .getUniformLocation (gl, program, "x3d_Fog.visibilityRange", "x3d_FogVisibilityRange");
