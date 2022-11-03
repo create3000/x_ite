@@ -132,6 +132,7 @@ const X_ITE_TESTS = [
    { path: "Navigation/Billboard.x3d" },
    { path: "Navigation/ClonedLOD.x3d" },
    { path: "Navigation/Depth.x3d" },
+   { path: "Navigation/DifferentViewpoints.x3dv" },
    { path: "Navigation/Gravitation.x3d" },
    { path: "Navigation/ScreenScale.x3d" },
    { path: "Navigation/ViewpointJump.x3d" },
