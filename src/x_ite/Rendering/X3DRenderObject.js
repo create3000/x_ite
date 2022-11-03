@@ -794,8 +794,6 @@ function (TextureBuffer,
                gl       = browser .getContext (),
                viewport = this .getViewVolume () .getViewport ();
 
-            this .renderTime = performance .now ();
-
             // Configure depth shaders.
 
             projectionMatrixArray .set (this .getProjectionMatrix () .get ());
