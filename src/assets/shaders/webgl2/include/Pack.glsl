@@ -1,22 +1,3 @@
-
-#if defined (TITANIA)
-
-vec4
-pack (const in float value)
-{
-   return vec4 (0.0, 0.0, 0.0, 0.0);
-}
-
-float
-unpack (const in vec4 color)
-{
-   return color .r;
-}
-
-#endif
-
-#if defined (X_ITE)
-
 vec4
 pack (const in float value)
 {
@@ -47,5 +28,4 @@ unpack (const vec4 color)
    return color .x + dot (color .gba, bitShifts);
 }
 
-#endif
 #endif

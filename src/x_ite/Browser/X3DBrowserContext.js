@@ -52,24 +52,24 @@ define ([
    "x_ite/Fields/SFTime",
    "x_ite/Base/X3DBaseNode",
    "x_ite/Browser/Core/X3DCoreContext",
-   "x_ite/Routing/X3DRoutingContext",
-   "x_ite/Browser/Scripting/X3DScriptingContext",
-   "x_ite/Browser/Networking/X3DNetworkingContext",
-   "x_ite/Browser/Shaders/X3DShadersContext",
-   "x_ite/Browser/Rendering/X3DRenderingContext",
-   "x_ite/Browser/Shape/X3DShapeContext",
-   "x_ite/Browser/Grouping/X3DGroupingContext",
-   "x_ite/Browser/Geometry3D/X3DGeometry3DContext",
-   "x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext",
-   "x_ite/Browser/Navigation/X3DNavigationContext",
-   "x_ite/Browser/Layering/X3DLayeringContext",
    "x_ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext",
+   "x_ite/Browser/Geometry3D/X3DGeometry3DContext",
+   "x_ite/Browser/Grouping/X3DGroupingContext",
+   "x_ite/Browser/Layering/X3DLayeringContext",
    "x_ite/Browser/Lighting/X3DLightingContext",
+   "x_ite/Browser/Navigation/X3DNavigationContext",
+   "x_ite/Browser/Networking/X3DNetworkingContext",
    "x_ite/Browser/Picking/X3DPickingContext",
+   "x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext",
+   "x_ite/Browser/Rendering/X3DRenderingContext",
+   "x_ite/Browser/Scripting/X3DScriptingContext",
+   "x_ite/Browser/Shaders/X3DShadersContext",
+   "x_ite/Browser/Shape/X3DShapeContext",
    "x_ite/Browser/Sound/X3DSoundContext",
    "x_ite/Browser/Text/X3DTextContext",
    "x_ite/Browser/Texturing/X3DTexturingContext",
    "x_ite/Browser/Time/X3DTimeContext",
+   "x_ite/Routing/X3DRoutingContext",
    "x_ite/Execution/X3DWorld",
    "x_ite/Rendering/TraverseType",
 ],
@@ -77,24 +77,24 @@ function ($,
           SFTime,
           X3DBaseNode,
           X3DCoreContext,
-          X3DRoutingContext,
-          X3DScriptingContext,
-          X3DNetworkingContext,
-          X3DShadersContext,
-          X3DRenderingContext,
-          X3DShapeContext,
-          X3DGroupingContext,
-          X3DGeometry3DContext,
-          X3DPointingDeviceSensorContext,
-          X3DNavigationContext,
-          X3DLayeringContext,
           X3DEnvironmentalEffectsContext,
+          X3DGeometry3DContext,
+          X3DGroupingContext,
+          X3DLayeringContext,
           X3DLightingContext,
+          X3DNavigationContext,
+          X3DNetworkingContext,
           X3DPickingContext,
+          X3DPointingDeviceSensorContext,
+          X3DRenderingContext,
+          X3DScriptingContext,
+          X3DShadersContext,
+          X3DShapeContext,
           X3DSoundContext,
           X3DTextContext,
           X3DTexturingContext,
           X3DTimeContext,
+          X3DRoutingContext,
           X3DWorld,
           TraverseType)
 {
@@ -124,6 +124,7 @@ function ($,
       X3DCoreContext                 .call (this, element);
       X3DScriptingContext            .call (this);
       X3DNetworkingContext           .call (this);
+      X3DTexturingContext            .call (this);
       X3DShadersContext              .call (this);
       X3DRenderingContext            .call (this);
       X3DShapeContext                .call (this);
@@ -137,7 +138,6 @@ function ($,
       X3DPickingContext              .call (this);
       X3DSoundContext                .call (this);
       X3DTextContext                 .call (this);
-      X3DTexturingContext            .call (this);
       X3DTimeContext                 .call (this);
 
       for (const browserContext of browserContexts)
@@ -162,21 +162,21 @@ function ($,
    };
 
    X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-      X3DRoutingContext .prototype,
       X3DCoreContext .prototype,
-      X3DScriptingContext .prototype,
-      X3DNetworkingContext .prototype,
-      X3DShadersContext .prototype,
-      X3DRenderingContext .prototype,
-      X3DShapeContext .prototype,
-      X3DGroupingContext .prototype,
-      X3DGeometry3DContext .prototype,
-      X3DPointingDeviceSensorContext .prototype,
-      X3DNavigationContext .prototype,
-      X3DLayeringContext .prototype,
       X3DEnvironmentalEffectsContext .prototype,
+      X3DGeometry3DContext .prototype,
+      X3DGroupingContext .prototype,
+      X3DLayeringContext .prototype,
       X3DLightingContext .prototype,
+      X3DNavigationContext .prototype,
+      X3DNetworkingContext .prototype,
       X3DPickingContext .prototype,
+      X3DPointingDeviceSensorContext .prototype,
+      X3DRenderingContext .prototype,
+      X3DRoutingContext .prototype,
+      X3DScriptingContext .prototype,
+      X3DShadersContext .prototype,
+      X3DShapeContext .prototype,
       X3DSoundContext .prototype,
       X3DTextContext .prototype,
       X3DTexturingContext .prototype,
@@ -190,6 +190,7 @@ function ($,
          X3DCoreContext                 .prototype .initialize .call (this);
          X3DScriptingContext            .prototype .initialize .call (this);
          X3DNetworkingContext           .prototype .initialize .call (this);
+         X3DTexturingContext            .prototype .initialize .call (this);
          X3DShadersContext              .prototype .initialize .call (this);
          X3DRenderingContext            .prototype .initialize .call (this);
          X3DShapeContext                .prototype .initialize .call (this);
@@ -203,7 +204,6 @@ function ($,
          X3DPickingContext              .prototype .initialize .call (this);
          X3DSoundContext                .prototype .initialize .call (this);
          X3DTextContext                 .prototype .initialize .call (this);
-         X3DTexturingContext            .prototype .initialize .call (this);
          X3DTimeContext                 .prototype .initialize .call (this);
 
          for (const browserContext of browserContexts)

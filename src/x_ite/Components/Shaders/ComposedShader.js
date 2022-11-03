@@ -113,29 +113,43 @@ function (Fields,
 
          this ._parts .addFieldInterest (this .loadSensor ._watchList);
 
-         this .loadSensor ._isLoaded .addInterest ("set_loaded__",  this);
+         this .loadSensor ._isLoaded .addInterest ("connectLoaded", this);
          this .loadSensor ._watchList = this ._parts;
          this .loadSensor .setPrivate (true);
          this .loadSensor .setup ();
+
+         if (this .loadSensor ._isLoaded .getValue ())
+            this .set_loaded__ ();
+         else
+            this .connectLoaded ();
+      },
+      connectLoaded: function ()
+      {
+         this .loadSensor ._isLoaded .removeInterest ("connectLoaded", this);
+         this .loadSensor ._isLoaded .addInterest ("set_loaded__", this);
       },
       addUserDefinedField: function (accessType, name, field)
       {
-         if (this .isInitialized () && this .isLive () .getValue () && this .isValid ())
+         const shaderFields = this .isInitialized () && this .isLive () .getValue () && this .isValid ();
+
+         if (shaderFields)
             this .removeShaderFields ();
 
          X3DShaderNode .prototype .addUserDefinedField .call (this, accessType, name, field);
 
-         if (this .isInitialized () && this .isLive () .getValue () && this .isValid ())
+         if (shaderFields)
             this .addShaderFields ();
       },
       removeUserDefinedField: function (name)
       {
-         if (this .isInitialized () && this .isLive () .getValue () && this .isValid ())
+         const shaderFields = this .isInitialized () && this .isLive () .getValue () && this .isValid ();
+
+         if (shaderFields)
             this .removeShaderFields ();
 
          X3DShaderNode .prototype .removeUserDefinedField .call (this, name);
 
-         if (this .isInitialized () && this .isLive () .getValue () && this .isValid ())
+         if (shaderFields)
             this .addShaderFields ();
       },
       setTransformFeedbackVaryings: function (value)
