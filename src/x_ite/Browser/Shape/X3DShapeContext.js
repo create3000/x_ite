@@ -85,6 +85,7 @@ function (Appearance,
       getDefaultAppearance: function ()
       {
          this [_defaultAppearance] = new Appearance (this .getPrivateScene ());
+         this [_defaultAppearance] .setPrivate (true);
          this [_defaultAppearance] .setup ();
 
          this .getDefaultAppearance = function () { return this [_defaultAppearance]; };
@@ -100,7 +101,7 @@ function (Appearance,
       getDefaultMaterial: function ()
       {
          this [_defaultMaterial] = new UnlitMaterial (this .getPrivateScene ());
-
+         this [_defaultMaterial] .setPrivate (true);
          this [_defaultMaterial] .setup ();
 
          this .getDefaultMaterial = function () { return this [_defaultMaterial]; };
@@ -112,7 +113,7 @@ function (Appearance,
       getLinetypeTexture: function ()
       {
          this [_linetypeTextures] = new ImageTexture (this .getPrivateScene ());
-
+         this [_linetypeTextures] .setPrivate (true);
          this [_linetypeTextures] ._url [0]           = urls .getLinetypeUrl ();
          this [_linetypeTextures] ._textureProperties = this .getLineFillTextureProperties ();
          this [_linetypeTextures] .setup ();
@@ -132,6 +133,7 @@ function (Appearance,
 
          hatchStyleTexture = this [_hatchStyleTextures] [index] = new ImageTexture (this .getPrivateScene ());
 
+         hatchStyleTexture .setPrivate (true);
          hatchStyleTexture ._url [0]           = urls .getHatchingUrl (index);
          hatchStyleTexture ._textureProperties = this .getLineFillTextureProperties ();
          hatchStyleTexture .setup ();
@@ -141,7 +143,7 @@ function (Appearance,
       getLineFillTextureProperties: function ()
       {
          this [_lineFillTextureProperties] = new TextureProperties (this .getPrivateScene ());
-
+         this [_lineFillTextureProperties] .setPrivate (true);
          this [_lineFillTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
          this [_lineFillTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
          this [_lineFillTextureProperties] .setup ();

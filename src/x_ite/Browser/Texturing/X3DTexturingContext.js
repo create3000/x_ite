@@ -276,6 +276,7 @@ function (TextureProperties,
       getDefaultTextureTransform: function ()
       {
          this [_defaultTextureTransform] = new TextureTransform (this .getPrivateScene ());
+         this [_defaultTextureTransform] .setPrivate (true);
          this [_defaultTextureTransform] .setup ();
 
          this .getDefaultTextureTransform = function () { return this [_defaultTextureTransform]; };
@@ -287,6 +288,7 @@ function (TextureProperties,
       getDefaultTextureCoordinate: function ()
       {
          this [_defaultTextureCoordinate] = new TextureCoordinate (this .getPrivateScene ());
+         this [_defaultTextureCoordinate] .setPrivate (true);
          this [_defaultTextureCoordinate] .setup ();
 
          this .getDefaultTextureCoordinate = function () { return this [_defaultTextureCoordinate]; };

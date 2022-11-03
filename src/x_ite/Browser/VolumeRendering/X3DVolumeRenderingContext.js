@@ -71,7 +71,8 @@ function (PixelTexture,
       getDefaultVoxels: function (executionContext)
       {
          this [_defaultVoxelsNode] = executionContext .createNode ("PixelTexture3D", false);
-         this [_defaultVoxelsNode] ._image = [1, 2, 2, 2, 255, 255, 255, 255];
+         this [_defaultVoxelsNode] .setPrivate (true);
+         this [_defaultVoxelsNode] ._image = [1, 1, 1, 1, 255];
          this [_defaultVoxelsNode] .repeatS = true;
          this [_defaultVoxelsNode] .repeatT = true;
          this [_defaultVoxelsNode] .repeatR = true;
@@ -86,6 +87,7 @@ function (PixelTexture,
       getDefaultVolumeStyle: function ()
       {
          this [_defaultVolumeStyle] = new OpacityMapVolumeStyle (this .getPrivateScene ());
+         this [_defaultVolumeStyle] .setPrivate (true);
          this [_defaultVolumeStyle] .setup ();
 
          this .getDefaultVolumeStyle = function () { return this [_defaultVolumeStyle]; };
@@ -97,6 +99,7 @@ function (PixelTexture,
       getDefaultBlendedVolumeStyle: function ()
       {
          this [_defaultBlendedVolumeStyle] = new OpacityMapVolumeStyle (this .getPrivateScene ());
+         this [_defaultBlendedVolumeStyle] .setPrivate (true);
          this [_defaultBlendedVolumeStyle] .setup ();
 
          this .getDefaultBlendedVolumeStyle = function () { return this [_defaultBlendedVolumeStyle]; };
@@ -108,9 +111,11 @@ function (PixelTexture,
       getDefaultTransferFunction: function ()
       {
          this [_defaultTransferFunction] = new PixelTexture (this .getPrivateScene ());
+         this [_defaultTransferFunction] .setPrivate (true);
 
          const textureProperties = new TextureProperties (this .getPrivateScene ());
 
+         textureProperties .setPrivate (true);
          textureProperties ._generateMipMaps = true;
          textureProperties ._boundaryModeS   = "CLAMP_TO_EDGE";
          textureProperties ._boundaryModeT   = "REPEAT";

@@ -76,6 +76,7 @@ function ($,
       getDefaultFontStyle: function ()
       {
          this [_defaultFontStyle] = new FontStyle (this .getPrivateScene ());
+         this [_defaultFontStyle] .setPrivate (true);
          this [_defaultFontStyle] .setup ();
 
          this .getDefaultFontStyle = function () { return this [_defaultFontStyle]; };

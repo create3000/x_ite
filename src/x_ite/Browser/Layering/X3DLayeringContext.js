@@ -65,6 +65,7 @@ function (Viewport)
    {
       initialize: function ()
       {
+         this [_defaultViewport] .setPrivate (true);
          this [_defaultViewport] .setup ();
       },
       getDefaultViewport: function ()
