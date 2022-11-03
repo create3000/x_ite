@@ -160,11 +160,11 @@ function ($,
                       "      Antialiased: " + this .getAntialiased () + "\n" +
                       "      Depth size: " + this .getDepthSize () + " bits\n" +
                       "      Color depth: " + this .getColorDepth () + " bits\n" +
-                      "      Max clip planes: " + this .getMaxClipPlanes () + "\n" +
-                      "      Max global lights: " + this .getMaxLights () + "\n" +
-                      "      Max textures: " + this .getMaxTextures () + "\n" +
+                      "      Max clip planes per shape: " + this .getMaxClipPlanes () + "\n" +
+                      "      Max lights per shape: " + this .getMaxLights () + "\n" +
+                      "      Max textures per shape: " + this .getMaxTextures () + "\n" +
                       "      Texture units: " + this .getMaxCombinedTextureUnits () + "\n" +
-                      "      Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixel\n" +
+                      "      Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixels\n" +
                       "      Texture memory: " + this .getTextureMemory () + "\n" +
                       "      Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
                       "      Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
