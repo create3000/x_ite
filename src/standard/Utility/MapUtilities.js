@@ -56,10 +56,8 @@ define (function ($)
       {
          m1 .clear ();
 
-         m2 .forEach (function (value, key)
-         {
+         for (const [key, value] of m2)
             m1 .set (key, value);
-         });
 
          return m1;
       },
@@ -67,10 +65,8 @@ define (function ($)
       {
          let i = 0;
 
-         m .forEach (function (value)
-         {
+         for (const value of m .values ())
             a [i ++] = value;
-         });
 
          a .length = m .size;
 

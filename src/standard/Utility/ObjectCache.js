@@ -58,21 +58,14 @@ define (function ()
          last: -1,
          pop: function ()
          {
-            if (this .last > -1)
-            {
-               const object = this .stack [this .last];
-
-               this .last --;
-
-               return object;
-            }
+            if (this .last !== -1)
+               return this .stack [this .last --];
 
             return new Type ();
          },
          push: function (object)
          {
-            this .last ++;
-            return this .stack [this .last] = object;
+            this .stack [++ this .last] = object;
          },
          clear: function ()
          {
