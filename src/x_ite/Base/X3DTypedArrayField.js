@@ -49,12 +49,10 @@
 
 define ([
    "x_ite/Base/X3DArrayField",
-   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
    "standard/Math/Algorithm",
 ],
 function (X3DArrayField,
-          X3DConstants,
           Generator,
           Algorithm)
 {

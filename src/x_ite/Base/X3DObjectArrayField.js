@@ -48,13 +48,11 @@
 
 
 define ([
-   "jquery",
    "x_ite/Base/X3DField",
    "x_ite/Base/X3DArrayField",
    "x_ite/InputOutput/Generator",
 ],
-function ($,
-          X3DField,
+function (X3DField,
           X3DArrayField,
           Generator)
 {
@@ -336,7 +334,7 @@ function ($,
             target = this [_target],
             values = target .getValue ();
 
-         if ($.isFunction (value))
+         if (typeof value === "function")
          {
             for (let i = first; i < last; ++ i)
             {
@@ -361,7 +359,7 @@ function ($,
             target = this [_target],
             values = target .getValue ();
 
-         if ($.isFunction (value))
+         if (typeof value === "function")
          {
             first = target .find (first, last, value);
 
