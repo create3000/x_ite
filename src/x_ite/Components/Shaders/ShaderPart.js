@@ -70,7 +70,7 @@ function (Fields,
 {
 "use strict";
 
-   const defaultOptions = [
+   const customOptions = [
       "X3D_GEOMETRY_0D",
       "X3D_GEOMETRY_1D",
       "X3D_GEOMETRY_2D",
@@ -90,7 +90,7 @@ function (Fields,
 
       this .addType (X3DConstants .ShaderPart);
 
-      this .options = defaultOptions;
+      this .options = [ ];
    }
 
    ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -123,6 +123,9 @@ function (Fields,
          X3DUrlObject .prototype .initialize .call (this);
 
          this ._type .addInterest ("set_type__", this);
+
+         if (! this .isPrivate ())
+            this .options = customOptions .slice ();
 
          this .requestImmediateLoad ();
       },

@@ -60,7 +60,7 @@ function (X3DCast,
 {
 "use strict";
 
-   const defaultUniformNames = [
+   const customUniformNames = [
       "x3d_FogType",
       "x3d_NumClipPlanes",
       "x3d_NumLights",
@@ -73,7 +73,7 @@ function (X3DCast,
    {
       this .addType (X3DConstants .X3DProgrammableShaderObject);
 
-      this .uniformNames = defaultUniformNames;
+      this .uniformNames = [ ];
 
       this .x3d_ClipPlane                           = [ ];
       this .x3d_LightType                           = [ ];
@@ -128,7 +128,10 @@ function (X3DCast,
          browser .getRenderingProperties () ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
 
          if (! this .isPrivate ())
-            this .setUniforms = this .setCustomUniforms;
+         {
+            this .uniformNames = customUniformNames .slice ();
+            this .setUniforms  = this .setCustomUniforms;
+         }
 
          // Use by multi texture nodes.
          this .x3d_MaxTextures = browser .getMaxTextures ();
