@@ -101,7 +101,7 @@ function (Fields,
             plane  = this .plane,
             normal = plane .normal;
 
-         gl .uniform4f (shaderObject .x3d_ClipPlanes [shaderObject .numClipPlanes ++], normal .x, normal .y, normal .z, plane .distanceFromOrigin);
+         gl .uniform4f (shaderObject .x3d_ClipPlane [shaderObject .numClipPlanes ++], normal .x, normal .y, normal .z, plane .distanceFromOrigin);
       },
       dispose: function ()
       {

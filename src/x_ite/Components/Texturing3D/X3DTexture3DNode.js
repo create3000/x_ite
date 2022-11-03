@@ -163,7 +163,7 @@ function (X3DSingleTextureNode,
                                                                          this ._repeatT .getValue (),
                                                                          this ._repeatR .getValue ());
       },
-      setShaderUniforms: function (gl, shaderObject, renderObject, channel = shaderObject .x3d_Textures [0])
+      setShaderUniforms: function (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
       {
          const textureUnit = this .getBrowser () .getTexture3DUnit ();
 

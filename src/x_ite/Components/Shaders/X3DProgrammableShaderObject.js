@@ -75,7 +75,7 @@ function (X3DCast,
 
       this .uniformNames = defaultUniformNames;
 
-      this .x3d_ClipPlanes                          = [ ];
+      this .x3d_ClipPlane                           = [ ];
       this .x3d_LightType                           = [ ];
       this .x3d_LightOn                             = [ ];
       this .x3d_LightColor                          = [ ];
@@ -94,7 +94,7 @@ function (X3DCast,
       this .x3d_ShadowMatrix                        = [ ];
       this .x3d_ShadowMapSize                       = [ ];
       this .x3d_ShadowMap                           = [ ];
-      this .x3d_Textures                            = [ ];
+      this .x3d_Texture                             = [ ];
       this .x3d_MultiTextureMode                    = [ ];
       this .x3d_MultiTextureAlphaMode               = [ ];
       this .x3d_MultiTextureSource                  = [ ];
@@ -176,10 +176,8 @@ function (X3DCast,
 
          this .x3d_LogarithmicFarFactor1_2 = gl .getUniformLocation (program, "x3d_LogarithmicFarFactor1_2");
 
-         this .x3d_ClipPlanes = gl .getUniformLocation (program, "x3d_ClipPlanes");
-
          for (let i = 0; i < maxClipPlanes; ++ i)
-            this .x3d_ClipPlanes [i] = gl .getUniformLocation (program, "x3d_ClipPlanes[" + i + "]");
+            this .x3d_ClipPlane [i] = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
 
          this .x3d_FogColor           = this .getUniformLocation (gl, program, "x3d_Fog.color",           "x3d_FogColor");
          this .x3d_FogVisibilityRange = this .getUniformLocation (gl, program, "x3d_Fog.visibilityRange", "x3d_FogVisibilityRange");
@@ -265,7 +263,7 @@ function (X3DCast,
 
          for (let i = 0; i < maxTextures; ++ i)
          {
-            this .x3d_Textures [i] = {
+            this .x3d_Texture [i] = {
                texture2D: gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]"),
                texture3D: gl .getUniformLocation (program, "x3d_Texture3D[" + i + "]"),
                textureCube: this .getUniformLocation (gl, program, "x3d_TextureCube[" + i + "]", "x3d_CubeMapTexture[" + i + "]"),
@@ -362,7 +360,7 @@ function (X3DCast,
             gl .uniform1i (this [materialTexture] .textureCube, browser .getDefaultTextureCubeUnit ());
          }
 
-         for (const uniforms of this .x3d_Textures)
+         for (const uniforms of this .x3d_Texture)
          {
             gl .uniform1i (uniforms .texture2D, browser .getDefaultTexture2DUnit ());
 
