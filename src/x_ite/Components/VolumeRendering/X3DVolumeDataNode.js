@@ -105,8 +105,6 @@ function (Fields,
             this .set_dimensions__ ();
          }
 
-         this .appearanceNode .setPrivate (true);
-
          this .proximitySensorNode ._size         = new Fields .SFVec3f (-1, -1, -1);
          this .transformNode ._children           = new Fields .MFNode (this .shapeNode);
          this .shapeNode ._appearance             = this .appearanceNode;
@@ -117,6 +115,15 @@ function (Fields,
          this .textureTransformNode ._center      = new Fields .SFVec3f (-0.5, -0.5, -0.5);
          this .geometryNode ._texCoord            = this .textureCoordinateNode;
          this .geometryNode ._coord               = this .coordinateNode;
+
+         this .coordinateNode        .setPrivate (true);
+         this .textureCoordinateNode .setPrivate (true);
+         this .geometryNode          .setPrivate (true);
+         this .textureTransformNode  .setPrivate (true);
+         this .appearanceNode        .setPrivate (true);
+         this .shapeNode             .setPrivate (true);
+         this .transformNode         .setPrivate (true);
+         this .proximitySensorNode   .setPrivate (true);
 
          this .coordinateNode        .setup ();
          this .textureCoordinateNode .setup ();

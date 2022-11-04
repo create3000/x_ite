@@ -272,21 +272,24 @@ function (Fields,
          // 	this .getBrowser () .print (fs);
 
          var vertexShader = new ShaderPart (this .getExecutionContext ());
-         vertexShader .setName ("SegmentedVolumeDataVertexShader");
          vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
+         // vertexShader .setPrivate (true);
+         vertexShader .setName ("SegmentedVolumeDataVertexShader");
          vertexShader .setup ();
 
          var fragmentShader = new ShaderPart (this .getExecutionContext ());
-         fragmentShader .setName ("SegmentedVolumeDataFragmentShader");
          fragmentShader ._type = "FRAGMENT";
          fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
+         // fragmentShader .setPrivate (true);
+         fragmentShader .setName ("SegmentedVolumeDataFragmentShader");
          fragmentShader .setup ();
 
          var shaderNode = new ComposedShader (this .getExecutionContext ());
-         shaderNode .setName ("SegmentedVolumeDataShader");
          shaderNode ._language = "GLSL";
          shaderNode ._parts .push (vertexShader);
          shaderNode ._parts .push (fragmentShader);
+         // shaderNode .setPrivate (true);
+         shaderNode .setName ("SegmentedVolumeDataShader");
 
          if (this .voxelsNode)
          {

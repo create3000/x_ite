@@ -359,21 +359,24 @@ function (Fields,
          // 	this .getBrowser () .print (fs);
 
          var vertexShader = new ShaderPart (this .getExecutionContext ());
-         vertexShader .setName ("VolumeDataVertexShader");
          vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
+         // vertexShader .setPrivate (true);
+         vertexShader .setName ("VolumeDataVertexShader");
          vertexShader .setup ();
 
          var fragmentShader = new ShaderPart (this .getExecutionContext ());
-         fragmentShader .setName ("VolumeDataFragmentShader");
          fragmentShader ._type = "FRAGMENT";
          fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
+         // fragmentShader .setPrivate (true);
+         fragmentShader .setName ("VolumeDataFragmentShader");
          fragmentShader .setup ();
 
          var shaderNode = new ComposedShader (this .getExecutionContext ());
-         shaderNode .setName ("VolumeDataShader");
          shaderNode ._language = "GLSL";
          shaderNode ._parts .push (vertexShader);
          shaderNode ._parts .push (fragmentShader);
+         // shaderNode .setPrivate (true);
+         shaderNode .setName ("VolumeDataShader");
 
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceValues",    this ._surfaceValues    .copy ());
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", this ._surfaceTolerance .copy ());
