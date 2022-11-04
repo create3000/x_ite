@@ -189,7 +189,7 @@ function ($,
          const elements = $("X3DCanvas");
 
          if (elements .length)
-            console .warn ("Use of <X3DCanvas> element is depreciated, please use <x3d-canvas> element instead.");
+            console .warn ("Use of <X3DCanvas> element is depreciated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
 
          $.map (elements, createBrowserFromElement);
       });
