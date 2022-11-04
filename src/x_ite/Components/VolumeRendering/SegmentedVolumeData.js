@@ -194,9 +194,9 @@ function (Fields,
 
          if (this .segmentIdentifiersNode)
          {
-            styleUniforms  += "\n";
-            styleUniforms  += "uniform sampler3D segmentIdentifiers;\n";
-            styleFunctions += "\n";
+            styleUniforms += "\n";
+            styleUniforms += "uniform sampler3D segmentIdentifiers;\n";
+            styleUniforms += "\n";
 
             styleFunctions += "\n";
             styleFunctions += "   int segment = int (texture (segmentIdentifiers, texCoord) .r * 255.0);\n";
