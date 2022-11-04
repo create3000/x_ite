@@ -355,7 +355,7 @@ function (Fields,
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", this ._surfaceTolerance .copy ());
 
          if (this .gradientsNode)
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "grandients", new Fields .SFNode (this .gradientsNode));
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "gradients", new Fields .SFNode (this .gradientsNode));
 
          opacityMapVolumeStyle .addShaderFields (shaderNode);
 
