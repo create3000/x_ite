@@ -119,7 +119,7 @@ function (Fields,
          string += "getBoundaryEnhancementStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
          string += "{\n";
          string += "	float f0 = texture (x3d_Texture3D [0], texCoord) .r;\n";
-         string += "	float f1 = texture (x3d_Texture3D [0], texCoord + vec3 (0.0, 0.0, 1.0 / x3d_TextureSize .z)) .r;\n";
+         string += "	float f1 = texture (x3d_Texture3D [0], texCoord + vec3 (0.0, 0.0, 1.0 / float (textureSize (x3d_Texture3D [0], 0) .z))) .r;\n";
          string += "	float f  = abs (f0 - f1);\n";
          string += "\n";
          string += "	float retainedOpacity = retainedOpacity_" + this .getId () + ";\n";

@@ -154,7 +154,7 @@ function (Fields,
       {
          this .getAppearance () ._shaders [0] = shaderNode;
 
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureNormalMatrix" , new Fields .SFMatrix3f ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureNormalMatrix", new Fields .SFMatrix3f ());
          shaderNode .setup ();
 
          this .set_textureTransform__ ();

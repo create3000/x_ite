@@ -113,7 +113,7 @@ function (X3DNode,
             string += "vec4\n";
             string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
             string += "{\n";
-            string += "	vec4  offset = vec4 (1.0 / x3d_TextureSize, 0.0);\n";
+            string += "	vec4  offset = vec4 (1.0 / vec3 (textureSize (x3d_Texture3D [0], 0)), 0.0);\n";
             string += "	float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
             string += "	float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
             string += "	float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";

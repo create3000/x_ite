@@ -169,37 +169,7 @@ function (Fields,
       },
       set_voxels__: function ()
       {
-         if (this .voxelsNode)
-            this .voxelsNode .removeInterest ("set_textureSize__", this);
-
          this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
-
-         if (this .voxelsNode)
-         {
-            this .voxelsNode .addInterest ("set_textureSize__", this);
-
-            this .set_textureSize__ ();
-         }
-      },
-      set_textureSize__: function ()
-      {
-         this .getVolumeData () .forEach (function (volumeDataNode)
-         {
-            try
-            {
-               var textureSize = volumeDataNode .getShader () .getField ("textureSize_" + this .getId ());
-
-               textureSize .x = this .voxelsNode .getWidth ();
-               textureSize .y = this .voxelsNode .getHeight ();
-               textureSize .z = this .voxelsNode .getDepth ();
-            }
-            catch (error)
-            {
-               if (DEBUG)
-                  console .error (error);
-            }
-         }
-         .bind (this));
       },
       addShaderFields: function (shaderNode)
       {
@@ -217,14 +187,7 @@ function (Fields,
 
          if (this .voxelsNode)
          {
-            var textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
-
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "voxels_"      + this .getId (), new Fields .SFNode (this .voxelsNode));
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "textureSize_" + this .getId (), textureSize);
-         }
-         else
-         {
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "textureSize_" + this .getId (), new Fields .SFVec3f ());
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "voxels_" + this .getId (), new Fields .SFNode (this .voxelsNode));
          }
 
          this .getBrowser () .getDefaultBlendedVolumeStyle () .addShaderFields (shaderNode);
@@ -254,16 +217,14 @@ function (Fields,
          if (this .weightTransferFunction2Node)
             string += "uniform sampler2D weightTransferFunction2_" + this .getId () + ";\n";
 
-         string += "uniform sampler3D voxels_"      + this .getId () + ";\n";
-         string += "uniform vec3      textureSize_" + this .getId () + ";\n";
+         string += "uniform sampler3D voxels_" + this .getId () + ";\n";
 
          var uniformsText = this .getBrowser () .getDefaultBlendedVolumeStyle () .getUniformsText ();
 
          if (this .renderStyleNode)
             uniformsText += this .renderStyleNode .getUniformsText ();
 
-         uniformsText = uniformsText .replace (/x3d_Texture3D \[0\]/g, "voxels_"      + this .getId ());
-         uniformsText = uniformsText .replace (/x3d_TextureSize/g,     "textureSize_" + this .getId ());
+         uniformsText = uniformsText .replace (/x3d_Texture3D\s*\[0\]/g, "voxels_" + this .getId ());
 
          string += "\n";
          string += uniformsText;

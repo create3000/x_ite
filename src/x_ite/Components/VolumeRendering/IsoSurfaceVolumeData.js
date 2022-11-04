@@ -124,10 +124,10 @@ function (Fields,
          this ._gradients          .addInterest ("set_gradients__",   this);
          this ._renderStyle        .addInterest ("set_renderStyle__", this);
 
-         this ._contourStepSize    .addInterest ("update", this);
-         this ._surfaceValues      .addInterest ("update", this);
-         this ._surfaceTolerance   .addInterest ("update", this);
-         this ._renderStyle        .addInterest ("update", this);
+         this ._contourStepSize    .addInterest ("updateShader", this);
+         this ._surfaceValues      .addInterest ("updateShader", this);
+         this ._surfaceTolerance   .addInterest ("updateShader", this);
+         this ._renderStyle        .addInterest ("updateShader", this);
 
          this .getAppearance () ._texture = this ._voxels;
 
@@ -135,7 +135,7 @@ function (Fields,
          this .set_renderStyle__ ();
          this .set_voxels__ ();
 
-         this .update ();
+         this .updateShader ();
       },
       set_gradients__: function ()
       {
@@ -149,7 +149,7 @@ function (Fields,
          {
             var renderStyleNode = renderStyleNodes [i];
 
-            renderStyleNode .removeInterest ("update", this);
+            renderStyleNode .removeInterest ("updateShader", this);
             renderStyleNode .removeVolumeData (this);
          }
 
@@ -167,47 +167,20 @@ function (Fields,
          {
             var renderStyleNode = renderStyleNodes [i];
 
-            renderStyleNode .addInterest ("update", this);
+            renderStyleNode .addInterest ("updateShader", this);
             renderStyleNode .addVolumeData (this);
          }
       },
       set_voxels__: function ()
       {
-         if (this .voxelsNode)
-            this .voxelsNode .removeInterest ("set_textureSize__", this);
-
          this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
          if (this .voxelsNode)
-         {
-            this .voxelsNode .addInterest ("set_textureSize__", this);
-
             this .getAppearance () ._texture = this ._voxels;
-
-            this .set_textureSize__ ();
-         }
          else
-         {
             this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
-         }
       },
-      set_textureSize__: function ()
-      {
-         try
-         {
-            var textureSize = this .getShader () .getField ("x3d_TextureSize");
-
-            textureSize .x = this .voxelsNode .getWidth ();
-            textureSize .y = this .voxelsNode .getHeight ();
-            textureSize .z = this .voxelsNode .getDepth ();
-         }
-         catch (error)
-         {
-            if (DEBUG)
-               console .log (error .message);
-         }
-      },
-      update: function ()
+      updateShader: function ()
       {
          this .setShader (this .createShader (vs, fs));
       },
@@ -246,7 +219,7 @@ function (Fields,
             styleUniforms += "vec4\n";
             styleUniforms += "getNormal (in vec3 texCoord)\n";
             styleUniforms += "{\n";
-            styleUniforms += "	vec4  offset = vec4 (1.0 / x3d_TextureSize, 0.0);\n";
+            styleUniforms += "	vec4  offset = vec4 (1.0 / vec3 (textureSize (x3d_Texture3D [0], 0)), 0.0);\n";
             styleUniforms += "	float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
             styleUniforms += "	float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
             styleUniforms += "	float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
@@ -383,17 +356,6 @@ function (Fields,
 
          if (this .gradientsNode)
             shaderNode .addUserDefinedField (X3DConstants .inputOutput, "grandients", new Fields .SFNode (this .gradientsNode));
-
-         if (this .voxelsNode)
-         {
-            var textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
-
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", textureSize);
-         }
-         else
-         {
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", new Fields .SFVec3f ());
-         }
 
          opacityMapVolumeStyle .addShaderFields (shaderNode);
 
