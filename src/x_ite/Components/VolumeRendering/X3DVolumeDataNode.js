@@ -105,6 +105,9 @@ function (Fields,
             this .set_dimensions__ ();
          }
 
+         this ._visible     .addFieldInterest (this .transformNode ._visible);
+         this ._bboxDisplay .addFieldInterest (this .transformNode ._bboxDisplay);
+
          this .proximitySensorNode ._size         = new Fields .SFVec3f (-1, -1, -1);
          this .transformNode ._children           = new Fields .MFNode (this .shapeNode);
          this .shapeNode ._appearance             = this .appearanceNode;
