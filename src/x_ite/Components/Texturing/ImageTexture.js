@@ -121,7 +121,7 @@ function ($,
 
          this .requestImmediateLoad ();
       },
-      unloadNow: function ()
+      unLoadNow: function ()
       {
          this .clearTexture ();
       },

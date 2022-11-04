@@ -129,7 +129,7 @@ function (Fields,
                return gl .RGBA;
          }
       },
-      unloadNow: function ()
+      unLoadNow: function ()
       {
          this .clearTexture ();
       },

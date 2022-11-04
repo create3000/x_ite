@@ -140,7 +140,7 @@ function ($,
          X3DSoundSourceNode .prototype .set_live__ .call (this);
          X3DUrlObject       .prototype .set_live__ .call (this);
       },
-      unloadNow: function ()
+      unLoadNow: function ()
       {
          this .setMedia (null);
       },

@@ -174,7 +174,7 @@ function ($,
       {
          return this ._url;
       },
-      unloadNow: function ()
+      unLoadNow: function ()
       {
          this .initialize__ ("");
       },

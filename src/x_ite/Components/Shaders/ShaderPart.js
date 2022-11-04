@@ -167,7 +167,7 @@ function (Fields,
             return shaderTypes .get (this ._type .getValue ()) || "VERTEX_SHADER";
          };
       })(),
-      unloadNow: function ()
+      unLoadNow: function ()
       {
          this .valid = false;
       },

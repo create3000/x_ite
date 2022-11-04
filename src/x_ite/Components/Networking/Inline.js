@@ -144,7 +144,7 @@ function (Fields,
 
          this .scene .setLive (this .isLive () .getValue ());
       },
-      unloadNow: function ()
+      unLoadNow: function ()
       {
          this .setInternalScene (this .getBrowser () .getDefaultScene ());
       },

@@ -164,9 +164,9 @@ function (Fields,
             return;
 
          this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-         this .unloadNow ();
+         this .unLoadNow ();
       },
-      unloadNow: function ()
+      unLoadNow: function ()
       { },
       setAutoRefreshTimer: function (autoRefreshInterval)
       {
