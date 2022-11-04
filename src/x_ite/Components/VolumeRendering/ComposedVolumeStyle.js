@@ -140,10 +140,8 @@ function (Fields,
 
             renderStyleNode .removeInterest ("addNodeEvent", this);
 
-            this .getVolumeData () .forEach (function (volumeDataNode)
-            {
+            for (const volumeDataNode of this .getVolumeData ())
                renderStyleNode .removeVolumeData (volumeDataNode);
-            });
          }
 
          renderStyleNodes .length = 0;
@@ -162,10 +160,8 @@ function (Fields,
 
             renderStyleNode .addInterest ("addNodeEvent", this);
 
-            this .getVolumeData () .forEach (function (volumeDataNode)
-            {
+            for (const volumeDataNode of this .getVolumeData ())
                renderStyleNode .addVolumeData (volumeDataNode);
-            });
          }
       },
       addShaderFields: function (shaderNode)

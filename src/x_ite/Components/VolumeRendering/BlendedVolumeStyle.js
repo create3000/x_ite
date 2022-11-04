@@ -147,11 +147,8 @@ function (Fields,
          {
             this .renderStyleNode .removeInterest ("addNodeEvent", this);
 
-            this .getVolumeData () .forEach (function (volumeDataNode)
-            {
+            for (const volumeDataNode of this .getVolumeData ())
                this .renderStyleNode .removeVolumeData (volumeDataNode);
-            }
-            .bind (this));
          }
 
          this .renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this ._renderStyle);
@@ -160,11 +157,8 @@ function (Fields,
          {
             this .renderStyleNode .addInterest ("addNodeEvent", this);
 
-            this .getVolumeData () .forEach (function (volumeDataNode)
-            {
+            for (const volumeDataNode of this .getVolumeData ())
                this .renderStyleNode .addVolumeData (volumeDataNode);
-            }
-            .bind (this));
          }
       },
       set_voxels__: function ()
