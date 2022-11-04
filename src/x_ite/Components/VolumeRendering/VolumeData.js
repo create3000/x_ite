@@ -161,7 +161,7 @@ function (Fields,
       createShader: function (vs, fs)
       {
          // if (DEBUG)
-         // 	console .log ("Creating VolumeData Shader ...");
+         //    console .log ("Creating VolumeData Shader ...");
 
          var
             opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
@@ -178,7 +178,7 @@ function (Fields,
          fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
 
          // if (DEBUG)
-         // 	this .getBrowser () .print (fs);
+         //    this .getBrowser () .print (fs);
 
          var vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader ._url .push ("data:x-shader/x-vertex," + vs);

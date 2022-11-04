@@ -189,7 +189,7 @@ function (Fields,
       createShader: function (vs, fs)
       {
          // if (DEBUG)
-         // 	console .log ("Creating SegmentedVolumeData Shader ...");
+         //    console .log ("Creating SegmentedVolumeData Shader ...");
 
          var
             opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
@@ -203,46 +203,46 @@ function (Fields,
             styleFunctions += "\n";
 
             styleFunctions += "\n";
-            styleFunctions += "	int segment = int (texture (segmentIdentifiers, texCoord) .r * 255.0);\n";
+            styleFunctions += "   int segment = int (texture (segmentIdentifiers, texCoord) .r * 255.0);\n";
          }
          else
          {
-            styleFunctions += "	int segment = 0;\n";
+            styleFunctions += "   int segment = 0;\n";
          }
 
          if (this .renderStyleNodes .length)
          {
             styleFunctions += "\n";
-            styleFunctions += "	switch (segment)\n";
-            styleFunctions += "	{\n";
+            styleFunctions += "   switch (segment)\n";
+            styleFunctions += "   {\n";
 
             for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
             {
-               styleFunctions += "		case " + i + ":\n";
-               styleFunctions += "		{\n";
+               styleFunctions += "      case " + i + ":\n";
+               styleFunctions += "      {\n";
 
                if (this .getSegmentEnabled (i))
                {
                   styleUniforms  += this .renderStyleNodes [i] .getUniformsText (),
                   styleFunctions += this .renderStyleNodes [i] .getFunctionsText ();
-                  styleFunctions += "			break;\n";
+                  styleFunctions += "         break;\n";
                }
                else
                {
-                  styleFunctions += "			discard;\n";
+                  styleFunctions += "         discard;\n";
                }
 
-               styleFunctions += "		}\n";
+               styleFunctions += "      }\n";
             }
 
-            styleFunctions += "	}\n";
+            styleFunctions += "   }\n";
          }
 
          fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
          fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
 
          // if (DEBUG)
-         // 	this .getBrowser () .print (fs);
+         //    this .getBrowser () .print (fs);
 
          var vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader ._url .push ("data:x-shader/x-vertex," + vs);

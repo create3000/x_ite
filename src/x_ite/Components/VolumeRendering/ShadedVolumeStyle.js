@@ -165,99 +165,99 @@ function (Fields,
          string += "float\n";
          string += "getSpotFactor_" + this .getId () + " (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n";
          string += "{\n";
-         string += "	float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n";
+         string += "   float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n";
          string += "\n";
-         string += "	if (spotAngle >= cutOffAngle)\n";
-         string += "		return 0.0;\n";
-         string += "	else if (spotAngle <= beamWidth)\n";
-         string += "		return 1.0;\n";
+         string += "   if (spotAngle >= cutOffAngle)\n";
+         string += "      return 0.0;\n";
+         string += "   else if (spotAngle <= beamWidth)\n";
+         string += "      return 1.0;\n";
          string += "\n";
-         string += "	return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n";
+         string += "   return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n";
          string += "}\n";
 
          string += "\n";
          string += "vec4\n";
          string += "getShadedStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
          string += "{\n";
-         string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+         string += "   vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
          string += "\n";
-         string += "	if (surfaceNormal .w == 0.0)\n";
-         string += "		return vec4 (0.0);\n";
+         string += "   if (surfaceNormal .w == 0.0)\n";
+         string += "      return vec4 (0.0);\n";
          string += "\n";
-         string += "	vec4 shadedColor   = vec4 (0.0);\n";
+         string += "   vec4 shadedColor   = vec4 (0.0);\n";
 
          if (this ._lighting .getValue ())
          {
             if (this .materialNode)
             {
-               string += "	vec3 diffuseFactor = diffuseColor_" + this .getId () + ";\n";
-               string += "	vec3 ambientTerm   = diffuseFactor * ambientIntensity_" + this .getId () + ";\n";
+               string += "   vec3 diffuseFactor = diffuseColor_" + this .getId () + ";\n";
+               string += "   vec3 ambientTerm   = diffuseFactor * ambientIntensity_" + this .getId () + ";\n";
                string += "\n";
-               string += "	shadedColor .a = originalColor .a * (1.0 - transparency_" + this .getId () + ");\n";
+               string += "   shadedColor .a = originalColor .a * (1.0 - transparency_" + this .getId () + ");\n";
             }
             else
             {
-               string += "	vec3 diffuseFactor = originalColor .rgb;\n";
-               string += "	vec3 ambientTerm   = vec3 (0.0);\n";
+               string += "   vec3 diffuseFactor = originalColor .rgb;\n";
+               string += "   vec3 ambientTerm   = vec3 (0.0);\n";
                string += "\n";
-               string += "	shadedColor .a = originalColor .a;\n";
+               string += "   shadedColor .a = originalColor .a;\n";
             }
 
             string += "\n";
-            string += "	vec3 N = surfaceNormal .xyz;\n";
-            string += "	vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position\n";
+            string += "   vec3 N = surfaceNormal .xyz;\n";
+            string += "   vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position\n";
             string += "\n";
-            string += "	for (int i = 0; i < x3d_MaxLights; ++ i)\n";
-            string += "	{\n";
-            string += "		if (i == x3d_NumLights)\n";
-            string += "			break;\n";
+            string += "   for (int i = 0; i < x3d_MaxLights; ++ i)\n";
+            string += "   {\n";
+            string += "      if (i == x3d_NumLights)\n";
+            string += "         break;\n";
             string += "\n";
-            string += "		x3d_LightSourceParameters light = x3d_LightSource [i];\n";
+            string += "      x3d_LightSourceParameters light = x3d_LightSource [i];\n";
             string += "\n";
-            string += "		vec3  vL = light .location - vertex; // Light to fragment\n";
-            string += "		float dL = length (light .matrix * vL);\n";
-            string += "		bool  di = light .type == x3d_DirectionalLight;\n";
+            string += "      vec3  vL = light .location - vertex; // Light to fragment\n";
+            string += "      float dL = length (light .matrix * vL);\n";
+            string += "      bool  di = light .type == x3d_DirectionalLight;\n";
             string += "\n";
-            string += "		if (di || dL <= light .radius)\n";
-            string += "		{\n";
-            string += "			vec3 d = light .direction;\n";
-            string += "			vec3 c = light .attenuation;\n";
-            string += "			vec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n";
-            string += "			vec3 H = normalize (L + V);             // Specular term\n";
+            string += "      if (di || dL <= light .radius)\n";
+            string += "      {\n";
+            string += "         vec3 d = light .direction;\n";
+            string += "         vec3 c = light .attenuation;\n";
+            string += "         vec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n";
+            string += "         vec3 H = normalize (L + V);             // Specular term\n";
             string += "\n";
-            string += "			float lightAngle     = max (dot (N, L), 0.0);      // Angle between normal and light ray.\n";
-            string += "			vec3  diffuseTerm    = diffuseFactor * lightAngle;\n";
-            string += "			float specularFactor = shininess_" + this .getId () + " > 0.0 ? pow (max (dot (N, H), 0.0), shininess_" + this .getId () + " * 128.0) : 1.0;\n";
-            string += "			vec3  specularTerm   = light .intensity * specularColor_" + this .getId () + " * specularFactor;\n";
+            string += "         float lightAngle     = max (dot (N, L), 0.0);      // Angle between normal and light ray.\n";
+            string += "         vec3  diffuseTerm    = diffuseFactor * lightAngle;\n";
+            string += "         float specularFactor = shininess_" + this .getId () + " > 0.0 ? pow (max (dot (N, H), 0.0), shininess_" + this .getId () + " * 128.0) : 1.0;\n";
+            string += "         vec3  specularTerm   = light .intensity * specularColor_" + this .getId () + " * specularFactor;\n";
             string += "\n";
-            string += "			float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n";
-            string += "			float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor_" + this .getId () + " (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n";
-            string += "			float attenuationSpotFactor = attenuationFactor * spotFactor;\n";
-            string += "			vec3  ambientColor          = light .ambientIntensity * ambientTerm;\n";
-            string += "			vec3  diffuseSpecularColor  = light .intensity * (diffuseTerm + specularTerm);\n";
+            string += "         float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n";
+            string += "         float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor_" + this .getId () + " (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n";
+            string += "         float attenuationSpotFactor = attenuationFactor * spotFactor;\n";
+            string += "         vec3  ambientColor          = light .ambientIntensity * ambientTerm;\n";
+            string += "         vec3  diffuseSpecularColor  = light .intensity * (diffuseTerm + specularTerm);\n";
             string += "\n";
-            string += "			shadedColor .rgb += attenuationSpotFactor * light .color * (ambientColor + diffuseSpecularColor);\n";
-            string += "		}\n";
+            string += "         shadedColor .rgb += attenuationSpotFactor * light .color * (ambientColor + diffuseSpecularColor);\n";
+            string += "      }\n";
             string += "\n";
-            string += "		shadedColor .rgb += emissiveColor_" + this .getId () + ";\n";
-            string += "		shadedColor .rgb  = getFogColor (shadedColor .rgb);\n";
-            string += "	}\n";
+            string += "      shadedColor .rgb += emissiveColor_" + this .getId () + ";\n";
+            string += "      shadedColor .rgb  = getFogColor (shadedColor .rgb);\n";
+            string += "   }\n";
          }
          else
          {
             if (this .materialNode)
             {
-               string += "	shadedColor .rgb = diffuseColor_" + this .getId () + ";\n";
-               string += "	shadedColor .a   = originalColor .a * (1.0 - transparency_" + this .getId () + ");\n";
+               string += "   shadedColor .rgb = diffuseColor_" + this .getId () + ";\n";
+               string += "   shadedColor .a   = originalColor .a * (1.0 - transparency_" + this .getId () + ");\n";
             }
             else
             {
-               string += "	shadedColor = originalColor;\n";
+               string += "   shadedColor = originalColor;\n";
             }
          }
 
          string += "\n";
-         string += "	return shadedColor;\n";
+         string += "   return shadedColor;\n";
          string += "}\n";
 
          return string;
@@ -270,9 +270,9 @@ function (Fields,
          var string = "";
 
          string += "\n";
-         string += "	// ShadedVolumeStyle\n";
+         string += "   // ShadedVolumeStyle\n";
          string += "\n";
-         string += "	textureColor = getShadedStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "   textureColor = getShadedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
          return string;
       },

@@ -140,20 +140,20 @@ function (Fields,
          string += "vec4\n";
          string += "getEdgeEnhacementStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
          string += "{\n";
-         string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+         string += "   vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
          string += "\n";
-         string += "	if (surfaceNormal .w == 0.0)\n";
-         string += "		return vec4 (0.0);\n";
+         string += "   if (surfaceNormal .w == 0.0)\n";
+         string += "      return vec4 (0.0);\n";
          string += "\n";
-         string += "	vec4  edgeColor         = edgeColor_" + this .getId () + ";\n";
-         string += "	float gradientThreshold = gradientThreshold_" + this .getId () + ";\n";
+         string += "   vec4  edgeColor         = edgeColor_" + this .getId () + ";\n";
+         string += "   float gradientThreshold = gradientThreshold_" + this .getId () + ";\n";
          string += "\n";
-         string += "	float angle = abs (dot (surfaceNormal .xyz, normalize (vertex)));\n";
+         string += "   float angle = abs (dot (surfaceNormal .xyz, normalize (vertex)));\n";
          string += "\n";
-         string += "	if (angle >= cos (gradientThreshold))\n";
-         string += "		return originalColor;\n";
-         string += "	else\n";
-         string += "		return vec4 (mix (edgeColor .rgb, originalColor.rgb, angle), originalColor .a);\n";
+         string += "   if (angle >= cos (gradientThreshold))\n";
+         string += "      return originalColor;\n";
+         string += "   else\n";
+         string += "      return vec4 (mix (edgeColor .rgb, originalColor.rgb, angle), originalColor .a);\n";
          string += "}\n";
 
          return string;
@@ -166,9 +166,9 @@ function (Fields,
          var string = "";
 
          string += "\n";
-         string += "	// EdgeEnhancementVolumeStyle\n";
+         string += "   // EdgeEnhancementVolumeStyle\n";
          string += "\n";
-         string += "	textureColor = getEdgeEnhacementStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "   textureColor = getEdgeEnhacementStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
          return string;
       },

@@ -140,29 +140,29 @@ function (Fields,
          string += "vec4\n";
          string += "getToneMappedStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
          string += "{\n";
-         string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+         string += "   vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
          string += "\n";
-         string += "	if (surfaceNormal .w == 0.0)\n";
-         string += "		return vec4 (0.0);\n";
+         string += "   if (surfaceNormal .w == 0.0)\n";
+         string += "      return vec4 (0.0);\n";
          string += "\n";
-         string += "	vec3 toneColor = vec3 (0.0);\n";
-         string += "	vec3 coolColor = coolColor_" + this .getId () + " .rgb;\n";
-         string += "	vec3 warmColor = warmColor_" + this .getId () + " .rgb;\n";
+         string += "   vec3 toneColor = vec3 (0.0);\n";
+         string += "   vec3 coolColor = coolColor_" + this .getId () + " .rgb;\n";
+         string += "   vec3 warmColor = warmColor_" + this .getId () + " .rgb;\n";
          string += "\n";
-         string += "	for (int i = 0; i < x3d_MaxLights; ++ i)\n";
-         string += "	{\n";
-         string += "		if (i == x3d_NumLights)\n";
-         string += "			break;\n";
+         string += "   for (int i = 0; i < x3d_MaxLights; ++ i)\n";
+         string += "   {\n";
+         string += "      if (i == x3d_NumLights)\n";
+         string += "         break;\n";
          string += "\n";
-         string += "		x3d_LightSourceParameters light = x3d_LightSource [i];\n";
+         string += "      x3d_LightSourceParameters light = x3d_LightSource [i];\n";
          string += "\n";
-         string += "		vec3  L           = light .type == x3d_DirectionalLight ? -light .direction : normalize (light .location - vertex);\n";
-         string += "		float colorFactor = (1.0 + dot (L, surfaceNormal .xyz)) * 0.5;\n";
+         string += "      vec3  L           = light .type == x3d_DirectionalLight ? -light .direction : normalize (light .location - vertex);\n";
+         string += "      float colorFactor = (1.0 + dot (L, surfaceNormal .xyz)) * 0.5;\n";
          string += "\n";
-         string += "		toneColor += mix (warmColor .rgb, coolColor .rgb, colorFactor);\n";
-         string += "	}\n";
+         string += "      toneColor += mix (warmColor .rgb, coolColor .rgb, colorFactor);\n";
+         string += "   }\n";
          string += "\n";
-         string += "	return vec4 (toneColor, originalColor .a);\n";
+         string += "   return vec4 (toneColor, originalColor .a);\n";
          string += "}\n";
 
          return string;
@@ -175,9 +175,9 @@ function (Fields,
          var string = "";
 
          string += "\n";
-         string += "	// ToneMappedVolumeStyle\n";
+         string += "   // ToneMappedVolumeStyle\n";
          string += "\n";
-         string += "	textureColor = getToneMappedStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "   textureColor = getToneMappedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
          return string;
       },

@@ -187,7 +187,7 @@ function (Fields,
       createShader: function (vs, fs)
       {
          // if (DEBUG)
-         // 	console .log ("Creating VolumeData Shader ...");
+         //    console .log ("Creating VolumeData Shader ...");
 
          var
             opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
@@ -202,7 +202,7 @@ function (Fields,
             styleUniforms  += this .renderStyleNodes [i] .getUniformsText ();
 
          styleFunctions += "\n";
-         styleFunctions += "	// IsoSurfaceVolumeData\n";
+         styleFunctions += "   // IsoSurfaceVolumeData\n";
          styleFunctions += "\n";
 
          if (this .gradientsNode)
@@ -210,8 +210,8 @@ function (Fields,
             styleUniforms += "\n";
             styleUniforms += "uniform sampler3D gradients;\n";
 
-            styleFunctions += "	if (length (texture (gradients, texCoord) .xyz * 2.0 - 1.0) < surfaceTolerance)\n";
-            styleFunctions += "		discard;\n";
+            styleFunctions += "   if (length (texture (gradients, texCoord) .xyz * 2.0 - 1.0) < surfaceTolerance)\n";
+            styleFunctions += "      discard;\n";
          }
          else
          {
@@ -219,24 +219,24 @@ function (Fields,
             styleUniforms += "vec4\n";
             styleUniforms += "getNormal (in vec3 texCoord)\n";
             styleUniforms += "{\n";
-            styleUniforms += "	vec4  offset = vec4 (1.0 / vec3 (textureSize (x3d_Texture3D [0], 0)), 0.0);\n";
-            styleUniforms += "	float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
-            styleUniforms += "	float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
-            styleUniforms += "	float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
-            styleUniforms += "	float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
-            styleUniforms += "	float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
-            styleUniforms += "	float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
-            styleUniforms += "	vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
+            styleUniforms += "   vec4  offset = vec4 (1.0 / vec3 (textureSize (x3d_Texture3D [0], 0)), 0.0);\n";
+            styleUniforms += "   float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
+            styleUniforms += "   float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
+            styleUniforms += "   float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
+            styleUniforms += "   float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
+            styleUniforms += "   float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
+            styleUniforms += "   float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
+            styleUniforms += "   vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
             styleUniforms += "\n";
-            styleUniforms += "	return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
+            styleUniforms += "   return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
             styleUniforms += "}\n";
 
-            styleFunctions += "	if (getNormal (texCoord) .w < surfaceTolerance)\n";
-            styleFunctions += "		discard;\n";
+            styleFunctions += "   if (getNormal (texCoord) .w < surfaceTolerance)\n";
+            styleFunctions += "      discard;\n";
          }
 
          styleFunctions += "\n";
-         styleFunctions += "	float intensity = textureColor .r;\n";
+         styleFunctions += "   float intensity = textureColor .r;\n";
          styleFunctions += "\n";
 
          if (this ._surfaceValues .length === 1)
@@ -245,20 +245,20 @@ function (Fields,
 
             if (contourStepSize === 0)
             {
-               styleFunctions += "	if (intensity > surfaceValues [0])\n";
-               styleFunctions += "	{\n";
-               styleFunctions += "		textureColor = vec4 (vec3 (surfaceValues [0]), 1.0);\n";
+               styleFunctions += "   if (intensity > surfaceValues [0])\n";
+               styleFunctions += "   {\n";
+               styleFunctions += "      textureColor = vec4 (vec3 (surfaceValues [0]), 1.0);\n";
 
                if (this .renderStyleNodes .length)
                {
                   styleFunctions += this .renderStyleNodes [0] .getFunctionsText ();
                }
 
-               styleFunctions += "	}\n";
-               styleFunctions += "	else\n";
-               styleFunctions += "	{\n";
-               styleFunctions += "		discard;\n";
-               styleFunctions += "	}\n";
+               styleFunctions += "   }\n";
+               styleFunctions += "   else\n";
+               styleFunctions += "   {\n";
+               styleFunctions += "      discard;\n";
+               styleFunctions += "   }\n";
                styleFunctions += "\n";
             }
             else
@@ -273,40 +273,40 @@ function (Fields,
                for (var v = this ._surfaceValues [0] + contourStepSize; v < 1; v += contourStepSize)
                   surfaceValues .push (v);
 
-               styleFunctions += "	if (false)\n";
-               styleFunctions += "	{ }\n";
+               styleFunctions += "   if (false)\n";
+               styleFunctions += "   { }\n";
 
                for (var i = surfaceValues_ .length - 1; i >= 0; -- i)
                {
-                  styleFunctions += "	else if (intensity > " + surfaceValues [i] + ")\n";
-                  styleFunctions += "	{\n";
-                  styleFunctions += "		textureColor = vec4 (vec3 (" + surfaceValues [i] + "), 1.0);\n";
+                  styleFunctions += "   else if (intensity > " + surfaceValues [i] + ")\n";
+                  styleFunctions += "   {\n";
+                  styleFunctions += "      textureColor = vec4 (vec3 (" + surfaceValues [i] + "), 1.0);\n";
 
                   if (this .renderStyleNodes .length)
                   {
                      styleFunctions += this .renderStyleNodes [0] .getFunctionsText ();
                   }
 
-                  styleFunctions += "	}\n";
+                  styleFunctions += "   }\n";
                }
 
-               styleFunctions += "	else\n";
-               styleFunctions += "	{\n";
-               styleFunctions += "		discard;\n";
-               styleFunctions += "	}\n";
+               styleFunctions += "   else\n";
+               styleFunctions += "   {\n";
+               styleFunctions += "      discard;\n";
+               styleFunctions += "   }\n";
                styleFunctions += "\n";
             }
          }
          else
          {
-            styleFunctions += "	if (false)\n";
-            styleFunctions += "	{ }\n";
+            styleFunctions += "   if (false)\n";
+            styleFunctions += "   { }\n";
 
             for (var i = this ._surfaceValues .length - 1; i >= 0; -- i)
             {
-               styleFunctions += "	else if (intensity > surfaceValues [" + i + "])\n";
-               styleFunctions += "	{\n";
-               styleFunctions += "		textureColor = vec4 (vec3 (surfaceValues [" + i + "]), 1.0);\n";
+               styleFunctions += "   else if (intensity > surfaceValues [" + i + "])\n";
+               styleFunctions += "   {\n";
+               styleFunctions += "      textureColor = vec4 (vec3 (surfaceValues [" + i + "]), 1.0);\n";
 
                if (this .renderStyleNodes .length)
                {
@@ -315,13 +315,13 @@ function (Fields,
                   styleFunctions += this .renderStyleNodes [r] .getFunctionsText ();
                }
 
-               styleFunctions += "	}\n";
+               styleFunctions += "   }\n";
             }
 
-            styleFunctions += "	else\n";
-            styleFunctions += "	{\n";
-            styleFunctions += "		discard;\n";
-            styleFunctions += "	}\n";
+            styleFunctions += "   else\n";
+            styleFunctions += "   {\n";
+            styleFunctions += "      discard;\n";
+            styleFunctions += "   }\n";
             styleFunctions += "\n";
          }
 
@@ -329,7 +329,7 @@ function (Fields,
          fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
 
          // if (DEBUG)
-         // 	this .getBrowser () .print (fs);
+         //    this .getBrowser () .print (fs);
 
          var vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader ._url .push ("data:x-shader/x-vertex," + vs);

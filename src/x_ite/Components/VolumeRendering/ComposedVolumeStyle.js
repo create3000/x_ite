@@ -195,7 +195,7 @@ function (Fields,
             string += renderStyleNodes [i] .getFunctionsText ();
 
          string += "\n";
-         string += "	return textureColor;\n";
+         string += "   return textureColor;\n";
          string += "}\n";
 
          return string;
@@ -208,9 +208,9 @@ function (Fields,
          var string = "";
 
          string += "\n";
-         string += "	// ComposedVolumeStyle\n";
+         string += "   // ComposedVolumeStyle\n";
          string += "\n";
-         string += "	textureColor = getComposedStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "   textureColor = getComposedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
          return string;
       }

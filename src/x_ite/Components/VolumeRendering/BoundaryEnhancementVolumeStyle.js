@@ -118,15 +118,15 @@ function (Fields,
          string += "vec4\n";
          string += "getBoundaryEnhancementStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
          string += "{\n";
-         string += "	float f0 = texture (x3d_Texture3D [0], texCoord) .r;\n";
-         string += "	float f1 = texture (x3d_Texture3D [0], texCoord + vec3 (0.0, 0.0, 1.0 / float (textureSize (x3d_Texture3D [0], 0) .z))) .r;\n";
-         string += "	float f  = abs (f0 - f1);\n";
+         string += "   float f0 = texture (x3d_Texture3D [0], texCoord) .r;\n";
+         string += "   float f1 = texture (x3d_Texture3D [0], texCoord + vec3 (0.0, 0.0, 1.0 / float (textureSize (x3d_Texture3D [0], 0) .z))) .r;\n";
+         string += "   float f  = abs (f0 - f1);\n";
          string += "\n";
-         string += "	float retainedOpacity = retainedOpacity_" + this .getId () + ";\n";
-         string += "	float boundaryOpacity = boundaryOpacity_" + this .getId () + ";\n";
-         string += "	float opacityFactor   = opacityFactor_" + this .getId () + ";\n";
+         string += "   float retainedOpacity = retainedOpacity_" + this .getId () + ";\n";
+         string += "   float boundaryOpacity = boundaryOpacity_" + this .getId () + ";\n";
+         string += "   float opacityFactor   = opacityFactor_" + this .getId () + ";\n";
          string += "\n";
-         string += "	return vec4 (originalColor .rgb, originalColor .a * (retainedOpacity + boundaryOpacity * pow (f, opacityFactor)));\n";
+         string += "   return vec4 (originalColor .rgb, originalColor .a * (retainedOpacity + boundaryOpacity * pow (f, opacityFactor)));\n";
          string += "}\n";
 
          return string;
@@ -139,9 +139,9 @@ function (Fields,
          var string = "";
 
          string += "\n";
-         string += "	// BoundaryEnhancementVolumeStyle\n";
+         string += "   // BoundaryEnhancementVolumeStyle\n";
          string += "\n";
-         string += "	textureColor = getBoundaryEnhancementStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "   textureColor = getBoundaryEnhancementStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
          return string;
       },
