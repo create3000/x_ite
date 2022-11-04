@@ -174,7 +174,7 @@ function (Fields,
                options = [ ];
 
             if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
-               options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
+               options  .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
 
             options .push (geometryTypes [geometryContext .geometryType]);
 
