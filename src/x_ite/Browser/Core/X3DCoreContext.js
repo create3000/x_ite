@@ -215,10 +215,6 @@ function ($,
 
          // Configure browser event handlers.
 
-         this .setBrowserEventHandler ("onload");
-         this .setBrowserEventHandler ("onshutdown");
-         this .setBrowserEventHandler ("onerror");
-
          this .getElement () .on ("keydown.X3DCoreContext", this [_keydown] .bind (this));
          this .getElement () .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
       },
@@ -332,21 +328,6 @@ function ($,
 
          switch (attributeName .toLowerCase ())
          {
-            case "onerror":
-            {
-               this .setBrowserEventHandler ("onerror");
-               break;
-            }
-            case "onload":
-            {
-               this .setBrowserEventHandler ("onload");
-               break;
-            }
-            case "onshutdown":
-            {
-               this .setBrowserEventHandler ("onshutdown");
-               break;
-            }
             case "splashscreen":
             {
                this .getBrowserOptions () .setAttributeSplashScreen ();
@@ -386,29 +367,6 @@ function ($,
             if (! this .getLoading ())
                this .getCanvas () .show ();
          }
-      },
-      setBrowserEventHandler: function (name)
-      {
-         const
-            element      = this .getElement () .get (0),
-            browserEvent = this .getElement () .attr (name);
-
-         if (browserEvent)
-            element [name] = new Function (browserEvent);
-         else
-            element [name] = Function .prototype;
-      },
-      callBrowserEventHandler: function (name)
-      {
-         const
-            element             = this .getElement () .get (0),
-            browserEventHandler = element [name];
-
-         if (window .jQuery)
-            window .jQuery (element) .trigger (name .substr (2));
-
-         else if (browserEventHandler)
-            browserEventHandler .call (element);
       },
       getShiftKey: function ()
       {

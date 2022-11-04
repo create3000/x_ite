@@ -144,7 +144,7 @@ function ($,
          {
             this .initialized () .setValue (this .getCurrentTime ());
             this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
-            this .callBrowserEventHandler ("onload");
+            this .getElement () .trigger ("load");
          }
 
          // Print welcome message.
@@ -270,7 +270,7 @@ function ($,
             this .getExecutionContext () .setLive (false);
             this .shutdown () .processInterests ();
             this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
-            this .callBrowserEventHandler ("onshutdown");
+            this .getElement () .trigger ("shutdown");
          }
 
          // Replace world.
@@ -333,7 +333,7 @@ function ($,
          {
             this .initialized () .setValue (this .getCurrentTime ());
             this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
-            this .callBrowserEventHandler ("onload");
+            this .getElement () .trigger ("load");
          }
       },
       createVrmlFromString: function (vrmlSyntax)
@@ -479,7 +479,7 @@ function ($,
                else
                {
                   this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
-                  this .callBrowserEventHandler ("onerror");
+                  this .getElement () .trigger ("error");
 
                   setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
 
