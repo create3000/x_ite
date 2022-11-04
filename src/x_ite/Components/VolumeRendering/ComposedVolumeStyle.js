@@ -132,12 +132,10 @@ function (Fields,
       },
       set_renderStyle__: function ()
       {
-         var renderStyleNodes = this .renderStyleNodes;
+         const renderStyleNodes = this .renderStyleNodes;
 
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
+         for (const renderStyleNode of renderStyleNodes)
          {
-            var renderStyleNode = renderStyleNodes [i];
-
             renderStyleNode .removeInterest ("addNodeEvent", this);
 
             for (const volumeDataNode of this .getVolumeData ())
@@ -146,18 +144,16 @@ function (Fields,
 
          renderStyleNodes .length = 0;
 
-         for (var i = 0, length = this ._renderStyle .length; i < length; ++ i)
+         for (const node of this ._renderStyle)
          {
-            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this ._renderStyle [i]);
+            const renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, node);
 
             if (renderStyleNode)
                renderStyleNodes .push (renderStyleNode);
          }
 
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
+         for (const renderStyleNode of renderStyleNodes)
          {
-            var renderStyleNode = renderStyleNodes [i];
-
             renderStyleNode .addInterest ("addNodeEvent", this);
 
             for (const volumeDataNode of this .getVolumeData ())
