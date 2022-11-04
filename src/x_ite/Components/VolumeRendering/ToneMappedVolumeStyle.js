@@ -157,7 +157,7 @@ function (Fields,
          string += "      x3d_LightSourceParameters light = x3d_LightSource [i];\n";
          string += "\n";
          string += "      vec3  L           = light .type == x3d_DirectionalLight ? -light .direction : normalize (light .location - vertex);\n";
-         string += "      float colorFactor = (1.0 + dot (L, surfaceNormal .xyz)) * 0.5;\n";
+         string += "      float colorFactor = dot (L, surfaceNormal .xyz) * 0.5 + 0.5;\n";
          string += "\n";
          string += "      toneColor += mix (warmColor .rgb, coolColor .rgb, colorFactor);\n";
          string += "   }\n";

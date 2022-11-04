@@ -74,12 +74,22 @@ main.color-management .browser {
 
 .file {
    margin: 10px 40px 10px 20px;
+   border-color: white;
+}
+
+.file.loaded {
+   color: #ffe32d;
 }
 
 .file a {
    margin-left: 10px;
    padding-left: 10px;
    border-left: 1px solid white;
+   color: inherit;
+}
+
+.file.loaded a {
+   border-color: #ffe32d;
 }
 
 .browser {
@@ -278,6 +288,8 @@ X3D (function ()
       if (location .href .includes (".min.html") && url .startsWith ("tests/"))
          url = "src/" + url;
 
+      $(".file") .removeClass ("loaded");
+
       bookmarks .loadURL (url);
 
       return false;
@@ -349,7 +361,7 @@ function (error)
       <main>
          <div>
             <form action="javascript:alert('form submited')">
-               <x3d-canvas id="browser" class="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false">
+               <x3d-canvas id="browser" class="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false" onload="$('.file') .addClass ('loaded')">
                   <p class="fallback">
                      Sorry,<br/>
                      it wasn't me!<br/>
