@@ -213,8 +213,9 @@ function (Fields,
 
          this .coordinateNode ._point        = points;
          this .textureCoordinateNode ._point = points;
-
-         this .textureTransformNode ._scale = new Fields .SFVec3f (1 / this ._dimensions .x, 1 / this ._dimensions .y, 1 / this ._dimensions .z);
+         this .textureTransformNode ._scale  = new Fields .SFVec3f (1 / this ._dimensions .x,
+                                                                    1 / this ._dimensions .y,
+                                                                    1 / this ._dimensions .z);
       },
       set_textureTransform__: function ()
       {
