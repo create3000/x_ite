@@ -112,7 +112,7 @@ function (Fields,
       {
          X3DVolumeDataNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -163,10 +163,11 @@ function (Fields,
          // if (DEBUG)
          //    console .log ("Creating VolumeData Shader ...");
 
-         var
-            opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
-            styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
-            styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
+         const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
+
+         let
+            styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
+            styleFunctions = opacityMapVolumeStyle .getFunctionsText ();
 
          if (this .renderStyleNode)
          {
@@ -180,20 +181,20 @@ function (Fields,
          // if (DEBUG)
          //    this .getBrowser () .print (fs);
 
-         var vertexShader = new ShaderPart (this .getExecutionContext ());
+         const vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
          // vertexShader .setPrivate (true);
          vertexShader .setName ("VolumeDataVertexShader");
          vertexShader .setup ();
 
-         var fragmentShader = new ShaderPart (this .getExecutionContext ());
+         const fragmentShader = new ShaderPart (this .getExecutionContext ());
          fragmentShader ._type = "FRAGMENT";
          fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
          // fragmentShader .setPrivate (true);
          fragmentShader .setName ("VolumeDataFragmentShader");
          fragmentShader .setup ();
 
-         var shaderNode = new ComposedShader (this .getExecutionContext ());
+         const shaderNode = new ComposedShader (this .getExecutionContext ());
          shaderNode ._language = "GLSL";
          shaderNode ._parts .push (vertexShader);
          shaderNode ._parts .push (fragmentShader);

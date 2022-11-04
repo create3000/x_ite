@@ -102,7 +102,7 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "// ProjectionVolumeStyle\n";
@@ -212,7 +212,7 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "   // ProjectionVolumeStyle\n";

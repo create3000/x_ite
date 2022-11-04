@@ -104,7 +104,7 @@ function (Fields,
       {
          X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -197,7 +197,7 @@ function (Fields,
          if (! this .voxelsNode)
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "// BlendedVolumeStyle\n";
@@ -213,7 +213,7 @@ function (Fields,
 
          string += "uniform sampler3D voxels_" + this .getId () + ";\n";
 
-         var uniformsText = this .getBrowser () .getDefaultBlendedVolumeStyle () .getUniformsText ();
+         let uniformsText = this .getBrowser () .getDefaultBlendedVolumeStyle () .getUniformsText ();
 
          if (this .renderStyleNode)
             uniformsText += this .renderStyleNode .getUniformsText ();
@@ -230,7 +230,7 @@ function (Fields,
 
          string += "   vec4 blendColor_" + this .getId () + " = texture (voxels_" + this .getId () + ", texCoord);";
 
-         var functionsText = this .getBrowser () .getDefaultBlendedVolumeStyle () .getFunctionsText ();
+         let functionsText = this .getBrowser () .getDefaultBlendedVolumeStyle () .getFunctionsText ();
 
          if (this .renderStyleNode)
             functionsText += this .renderStyleNode .getFunctionsText ();
@@ -340,7 +340,7 @@ function (Fields,
          if (! this .voxelsNode)
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "   // BlendedVolumeStyle\n";

@@ -97,7 +97,7 @@ function (Fields,
       {
          X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -110,25 +110,15 @@ function (Fields,
       {
          X3DComposableVolumeRenderStyleNode .prototype .addVolumeData .call (this, volumeDataNode);
 
-         var renderStyleNodes = this .renderStyleNodes;
-
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
-         {
-            var renderStyleNode = renderStyleNodes [i];
-
+         for (const renderStyleNode of this .renderStyleNodes)
             renderStyleNode .addVolumeData (volumeDataNode);
-         }
       },
       removeVolumeData: function (volumeDataNode)
       {
          X3DComposableVolumeRenderStyleNode .prototype .removeVolumeData .call (this, volumeDataNode);
 
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
-         {
-            var renderStyleNode = renderStyleNodes [i];
-
+         for (const renderStyleNode of this .renderStyleNodes)
             renderStyleNode .removeVolumeData (volumeDataNode);
-         }
       },
       set_renderStyle__: function ()
       {
@@ -165,30 +155,26 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return;
 
-         var renderStyleNodes = this .renderStyleNodes;
-
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
-            renderStyleNodes [i] .addShaderFields (shaderNode);
+         for (const renderStyleNode of this .renderStyleNodes)
+            renderStyleNode .addShaderFields (shaderNode);
       },
       getUniformsText: function ()
       {
          if (! this ._enabled .getValue ())
             return "";
 
-         var
-            renderStyleNodes = this .renderStyleNodes,
-            string           = "";
+         let string = "";
 
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
-            string += renderStyleNodes [i] .getUniformsText ();
+         for (const renderStyleNode of this .renderStyleNodes)
+            string += renderStyleNode .getUniformsText ();
 
          string += "\n";
          string += "vec4\n";
          string += "getComposedStyle_" + this .getId () + " (in vec4 textureColor, in vec3 texCoord)\n";
          string += "{\n";
 
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
-            string += renderStyleNodes [i] .getFunctionsText ();
+         for (const renderStyleNode of this .renderStyleNodes)
+            string += renderStyleNode .getFunctionsText ();
 
          string += "\n";
          string += "   return textureColor;\n";
@@ -201,7 +187,7 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "   // ComposedVolumeStyle\n";

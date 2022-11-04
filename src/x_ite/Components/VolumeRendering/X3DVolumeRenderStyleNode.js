@@ -92,7 +92,7 @@ function (X3DNode,
       },
       getNormalText: function (surfaceNormalsNode)
       {
-         var string = "";
+         let string = "";
 
          if (surfaceNormalsNode)
          {

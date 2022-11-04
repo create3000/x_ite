@@ -105,7 +105,7 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "// BoundaryEnhancementVolumeStyle\n";
@@ -136,7 +136,7 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "   // BoundaryEnhancementVolumeStyle\n";

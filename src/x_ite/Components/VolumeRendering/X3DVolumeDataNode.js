@@ -92,7 +92,7 @@ function (Fields,
          X3DChildNode     .prototype .initialize .call (this);
          X3DBoundedObject .prototype .initialize .call (this);
 
-         var
+         const
             browser = this .getBrowser (),
             gl      = browser .getContext ();
 
@@ -164,10 +164,10 @@ function (Fields,
       },
       getShader: function ()
       {
-         var node = this .appearanceNode ._shaders [0];
+         const shader = this .appearanceNode ._shaders [0];
 
-         if (node)
-            return node .getValue ();
+         if (shader)
+            return shader .getValue ();
 
          return null;
       },
@@ -193,7 +193,7 @@ function (Fields,
       },
       set_dimensions__: function ()
       {
-         var
+         const
             NUM_PLANES = this .getNumPlanes (),
             size       = this ._dimensions .getValue () .magnitude (),
             size1_2    = size / 2,
@@ -201,9 +201,9 @@ function (Fields,
 
          this .coordinateNode ._point .length = 0;
 
-         for (var i = 0; i < NUM_PLANES; ++ i)
+         for (let i = 0; i < NUM_PLANES; ++ i)
          {
-            var z = i / (NUM_PLANES - 1) - 0.5;
+            const z = i / (NUM_PLANES - 1) - 0.5;
 
             points .push ( size1_2,  size1_2, size * z,
                           -size1_2,  size1_2, size * z,
@@ -218,14 +218,14 @@ function (Fields,
       },
       set_textureTransform__: function ()
       {
-         var shaderNode = this .getShader ();
+         const shaderNode = this .getShader ();
 
-         if (shaderNode)
-         {
-            var invTextureMatrix = shaderNode .getField ("x3d_TextureNormalMatrix");
+         if (! shaderNode)
+            return;
 
-            invTextureMatrix .setValue (this .textureTransformNode .getMatrix () .submatrix .inverse () .transpose ());
-         }
+         const invTextureMatrix = shaderNode .getField ("x3d_TextureNormalMatrix");
+
+         invTextureMatrix .setValue (this .textureTransformNode .getMatrix () .submatrix .inverse () .transpose ());
       },
       traverse: function (type, renderObject)
       {

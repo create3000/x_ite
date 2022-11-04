@@ -116,7 +116,7 @@ function (Fields,
       {
          X3DVolumeDataNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -185,17 +185,18 @@ function (Fields,
          // if (DEBUG)
          //    console .log ("Creating VolumeData Shader ...");
 
-         var
-            opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
-            styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
-            styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
+         const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
+
+         let
+            styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
+            styleFunctions = opacityMapVolumeStyle .getFunctionsText ();
 
          styleUniforms  += "\n";
          styleUniforms  += "uniform float surfaceValues [" + this ._surfaceValues .length + "];\n";
          styleUniforms  += "uniform float surfaceTolerance;\n";
 
-         for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
-            styleUniforms  += this .renderStyleNodes [i] .getUniformsText ();
+         for (const renderStyleNode of this .renderStyleNodes)
+            styleUniforms  += renderStyleNode .getUniformsText ();
 
          styleFunctions += "\n";
          styleFunctions += "   // IsoSurfaceVolumeData\n";
@@ -237,7 +238,7 @@ function (Fields,
 
          if (this ._surfaceValues .length === 1)
          {
-            var contourStepSize = Math .abs (this ._contourStepSize .getValue ());
+            const contourStepSize = Math .abs (this ._contourStepSize .getValue ());
 
             if (contourStepSize === 0)
             {
@@ -259,20 +260,20 @@ function (Fields,
             }
             else
             {
-               var surfaceValues = [ ];
+               const surfaceValues = [ ];
 
-               for (var v = this ._surfaceValues [0] - contourStepSize; v > 0; v -= contourStepSize)
+               for (let v = this ._surfaceValues [0] - contourStepSize; v > 0; v -= contourStepSize)
                   surfaceValues .unshift (v);
 
                surfaceValues .push (this ._surfaceValues [0]);
 
-               for (var v = this ._surfaceValues [0] + contourStepSize; v < 1; v += contourStepSize)
+               for (let v = this ._surfaceValues [0] + contourStepSize; v < 1; v += contourStepSize)
                   surfaceValues .push (v);
 
                styleFunctions += "   if (false)\n";
                styleFunctions += "   { }\n";
 
-               for (var i = surfaceValues_ .length - 1; i >= 0; -- i)
+               for (let i = this ._surfaceValues .length - 1; i >= 0; -- i)
                {
                   styleFunctions += "   else if (intensity > " + surfaceValues [i] + ")\n";
                   styleFunctions += "   {\n";
@@ -298,7 +299,7 @@ function (Fields,
             styleFunctions += "   if (false)\n";
             styleFunctions += "   { }\n";
 
-            for (var i = this ._surfaceValues .length - 1; i >= 0; -- i)
+            for (let i = this ._surfaceValues .length - 1; i >= 0; -- i)
             {
                styleFunctions += "   else if (intensity > surfaceValues [" + i + "])\n";
                styleFunctions += "   {\n";
@@ -306,7 +307,7 @@ function (Fields,
 
                if (this .renderStyleNodes .length)
                {
-                  var r = Math .min (i, this .renderStyleNodes .length - 1);
+                  const r = Math .min (i, this .renderStyleNodes .length - 1);
 
                   styleFunctions += this .renderStyleNodes [r] .getFunctionsText ();
                }
@@ -327,20 +328,20 @@ function (Fields,
          // if (DEBUG)
          //    this .getBrowser () .print (fs);
 
-         var vertexShader = new ShaderPart (this .getExecutionContext ());
+         const vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
          // vertexShader .setPrivate (true);
          vertexShader .setName ("VolumeDataVertexShader");
          vertexShader .setup ();
 
-         var fragmentShader = new ShaderPart (this .getExecutionContext ());
+         const fragmentShader = new ShaderPart (this .getExecutionContext ());
          fragmentShader ._type = "FRAGMENT";
          fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
          // fragmentShader .setPrivate (true);
          fragmentShader .setName ("VolumeDataFragmentShader");
          fragmentShader .setup ();
 
-         var shaderNode = new ComposedShader (this .getExecutionContext ());
+         const shaderNode = new ComposedShader (this .getExecutionContext ());
          shaderNode ._language = "GLSL";
          shaderNode ._parts .push (vertexShader);
          shaderNode ._parts .push (fragmentShader);
@@ -355,8 +356,8 @@ function (Fields,
 
          opacityMapVolumeStyle .addShaderFields (shaderNode);
 
-         for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
-            this .renderStyleNodes [i] .addShaderFields (shaderNode);
+         for (const renderStyleNode of this .renderStyleNodes)
+            renderStyleNode .addShaderFields (shaderNode);
 
          return shaderNode;
       },

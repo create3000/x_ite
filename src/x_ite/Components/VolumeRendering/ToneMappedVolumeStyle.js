@@ -97,7 +97,7 @@ function (Fields,
       {
          X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -126,7 +126,7 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "// ToneMappedVolumeStyle\n";
@@ -172,7 +172,7 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "   // ToneMappedVolumeStyle\n";

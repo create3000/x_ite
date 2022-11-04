@@ -115,7 +115,7 @@ function (Fields,
       {
          X3DVolumeDataNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -187,10 +187,11 @@ function (Fields,
          // if (DEBUG)
          //    console .log ("Creating SegmentedVolumeData Shader ...");
 
-         var
-            opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
-            styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
-            styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
+         const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
+
+         let
+            styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
+            styleFunctions = opacityMapVolumeStyle .getFunctionsText ();
 
          if (this .segmentIdentifiersNode)
          {
@@ -212,15 +213,15 @@ function (Fields,
             styleFunctions += "   switch (segment)\n";
             styleFunctions += "   {\n";
 
-            for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
+            for (const [i, renderStyleNode] of this .renderStyleNodes .entries ())
             {
                styleFunctions += "      case " + i + ":\n";
                styleFunctions += "      {\n";
 
                if (this .getSegmentEnabled (i))
                {
-                  styleUniforms  += this .renderStyleNodes [i] .getUniformsText (),
-                  styleFunctions += this .renderStyleNodes [i] .getFunctionsText ();
+                  styleUniforms  += renderStyleNode .getUniformsText (),
+                  styleFunctions += renderStyleNode .getFunctionsText ();
                   styleFunctions += "         break;\n";
                }
                else
@@ -240,20 +241,20 @@ function (Fields,
          // if (DEBUG)
          //    this .getBrowser () .print (fs);
 
-         var vertexShader = new ShaderPart (this .getExecutionContext ());
+         const vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
          // vertexShader .setPrivate (true);
          vertexShader .setName ("SegmentedVolumeDataVertexShader");
          vertexShader .setup ();
 
-         var fragmentShader = new ShaderPart (this .getExecutionContext ());
+         const fragmentShader = new ShaderPart (this .getExecutionContext ());
          fragmentShader ._type = "FRAGMENT";
          fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
          // fragmentShader .setPrivate (true);
          fragmentShader .setName ("SegmentedVolumeDataFragmentShader");
          fragmentShader .setup ();
 
-         var shaderNode = new ComposedShader (this .getExecutionContext ());
+         const shaderNode = new ComposedShader (this .getExecutionContext ());
          shaderNode ._language = "GLSL";
          shaderNode ._parts .push (vertexShader);
          shaderNode ._parts .push (fragmentShader);
@@ -265,10 +266,10 @@ function (Fields,
 
          opacityMapVolumeStyle .addShaderFields (shaderNode);
 
-         for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
+         for (const [i, renderStyleNode] of this .renderStyleNodes .entries ())
          {
             if (this .getSegmentEnabled (i))
-               this .renderStyleNodes [i] .addShaderFields (shaderNode);
+               renderStyleNode .addShaderFields (shaderNode);
          }
 
          return shaderNode;
