@@ -85,7 +85,7 @@ function (Fields,
       constructor: ComposedShader,
       [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",   new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",   new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isValid",    new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "language",   new Fields .SFString ()),
@@ -179,12 +179,22 @@ function (Fields,
       set_loaded__: function ()
       {
          if (this .loadSensor ._isLoaded .getValue ())
-            this .set_activate__ ();
+         {
+            if (this .isSetuped ())
+               this ._activate = true;
+            else
+               this .set_activate__ ();
+         }
          else
+         {
             this .setValid (false);
+         }
       },
       set_activate__: function ()
       {
+         if (! this ._activate .getValue ())
+            return;
+
          const
             gl      = this .getBrowser () .getContext (),
             program = gl .createProgram ();
