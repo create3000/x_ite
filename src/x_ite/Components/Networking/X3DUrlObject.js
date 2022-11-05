@@ -148,7 +148,7 @@ function (Fields,
          this .setCache (cache);
          this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
-         if (this .isSetuped ())
+         if (this .isInitialized ())
             // Buffer prevents double load of the scene if load and url field are set at the same time.
             this ._loadNow = this .getBrowser () .getCurrentTime ();
          else

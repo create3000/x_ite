@@ -112,7 +112,7 @@ function (X3DChildObject,
 
          const proto = this [_protoNode] .getProtoDeclaration ();
 
-         if (!proto)
+         if (! proto)
          {
             this [_body] = new X3DExecutionContext (this .getExecutionContext ());
             this [_body] .setOuterNode (this);
@@ -143,7 +143,7 @@ function (X3DChildObject,
                      continue;
 
                   // Continue if field is eventIn or eventOut.
-                  if (!field .isInitializable ())
+                  if (! field .isInitializable ())
                      continue;
 
                   // Is set during parse.
@@ -213,7 +213,7 @@ function (X3DChildObject,
          {
             const oldFieldName = oldProtoFields .get (protoField);
 
-            if (!oldFieldName)
+            if (! oldFieldName)
                continue;
 
             const
@@ -585,7 +585,7 @@ function (X3DChildObject,
                }
             }
 
-            if (references .length && !sharedNode)
+            if (references .length && ! sharedNode)
             {
                stream .string += generator .Indent ();
                stream .string += "<IS>";

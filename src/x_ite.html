@@ -321,7 +321,8 @@ X3D (function ()
 
    $(".version") .text (Browser .name + " v" + Browser .version);
    $(".file") .append ($("<a></a>") .attr ('href', "tests/d3/ParticlePlot.html") .text ("d3"));
-   $(".browser") .on ("shutdown", () => $(".console") .empty ());
+   $(".browser") .on ("load", () => Browser .println ("Scene loaded at " + new Date () .toUTCString ()));
+   $(".browser") .on ("shutdown", () => Browser .println ("Shutdown at " + new Date () .toUTCString ()));
    $(".location-entry") .val (localStorage ["Bookmarks.history"] [index])
    $(".location-go") .on ("click", () => loadURL ($(".location-entry") .val ()));
    $(".print-vrml") .on ("click", toVRMLString);

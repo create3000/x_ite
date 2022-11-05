@@ -72,7 +72,6 @@ function (X3DEventObject,
       _predefinedFields  = Symbol (),
       _aliases           = Symbol (),
       _userDefinedFields = Symbol (),
-      _setuped           = Symbol (),
       _initialized       = Symbol (),
       _live              = Symbol (),
       _set_live__        = Symbol ("X3DBaseNode.set_live__"),
@@ -255,6 +254,23 @@ function (X3DEventObject,
       {
          return new (this .constructor) (executionContext || this [_executionContext]);
       },
+      setup: function ()
+      {
+         Object .defineProperty (this, "setup", { value: Function .prototype, enumerable: false });
+
+         for (const field of this [_fields])
+            field .setTainted (false);
+
+         this .initialize ();
+
+         this [_initialized] = true;
+      },
+      initialize: function ()
+      { },
+      isInitialized: function ()
+      {
+         return this [_initialized];
+      },
       copy: function (executionContext)
       {
          const copy = this .create (executionContext);
@@ -277,29 +293,6 @@ function (X3DEventObject,
 
          return copy;
       },
-      setup: function ()
-      {
-         if (this [_initialized])
-            return;
-
-         this [_initialized] = true;
-
-         for (const field of this [_fields])
-            field .setTainted (false);
-
-         this .initialize ();
-
-         this [_setuped] = true;
-      },
-      isSetuped: function ()
-      {
-         return this [_setuped];
-      },
-      isInitialized: function ()
-      {
-         return this [_initialized];
-      },
-      initialize: function () { },
       addChildObjects: function (name, field)
       {
          for (let i = 0, length = arguments .length; i < length; i += 2)

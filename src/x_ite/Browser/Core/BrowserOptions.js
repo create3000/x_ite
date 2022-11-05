@@ -140,9 +140,6 @@ function (Fields,
       },
       configure: function ()
       {
-         if (! this .isInitialized ())
-            return;
-
          const localStorage = this .localStorage;
 
          for (const fieldDefinition of this .getFieldDefinitions ())
