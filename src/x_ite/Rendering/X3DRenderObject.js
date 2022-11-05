@@ -677,7 +677,7 @@ function (TextureBuffer,
          {
             const browser = this .getBrowser ();
 
-            // Terrain following and gravitation
+            // Terrain following and gravitation.
 
             if (browser .getActiveLayer () === this)
             {
@@ -689,7 +689,7 @@ function (TextureBuffer,
                return;
             }
 
-            // Get NavigationInfo values
+            // Get NavigationInfo values.
 
             const
                navigationInfo  = this .getNavigationInfo (),
@@ -709,7 +709,7 @@ function (TextureBuffer,
                            Math .max (collisionRadius * 2, avatarHeight * 2),
                            projectionMatrix);
 
-            // Transform viewpoint to look down the up vector
+            // Transform viewpoint to look down the up vector.
 
             const
                upVector = viewpoint .getUpVector (),
@@ -737,7 +737,7 @@ function (TextureBuffer,
 
             if (distance > 0)
             {
-               // Gravite and fall down the to the floor
+               // Gravite and fall down the to the floor.
 
                const currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
 
@@ -762,7 +762,8 @@ function (TextureBuffer,
 
                if (distance > 0.01 && distance < stepHeight)
                {
-                  // Step up
+                  // Step up.
+
                   this .constrainTranslation (up .multVecRot (translation .set (0, distance, 0)), false);
 
                   //if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
