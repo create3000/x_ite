@@ -195,6 +195,12 @@ function (Fields,
          if (! this ._activate .getValue ())
             return;
 
+         if (this ._language .getValue () !== "GLSL")
+         {
+            this .setValid (false);
+            return;
+         }
+
          const
             gl      = this .getBrowser () .getContext (),
             program = gl .createProgram ();
