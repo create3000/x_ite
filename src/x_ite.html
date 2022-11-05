@@ -321,6 +321,7 @@ X3D (function ()
 
    $(".version") .text (Browser .name + " v" + Browser .version);
    $(".file") .append ($("<a></a>") .attr ('href', "tests/d3/ParticlePlot.html") .text ("d3"));
+   $("x3d-canvas") .on ("shutdown", () => $(".console") .empty ());
    $(".location-entry") .val (localStorage ["Bookmarks.history"] [index])
    $(".location-go") .click (() => loadURL ($(".location-entry") .val ()));
    $(".print-vrml") .click (toVRMLString);
