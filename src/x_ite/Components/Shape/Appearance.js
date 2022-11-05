@@ -377,18 +377,6 @@ function (Fields,
                }
             }
 
-            if (! this .shaderNode)
-            {
-               for (const shaderNode of shaderNodes)
-               {
-                  if (shaderNode ._isValid .getValue ())
-                  {
-                     this .shaderNode = shaderNode;
-                     break;
-                  }
-               }
-            }
-
             if (this .shaderNode)
             {
                this .shaderNode .select ();
