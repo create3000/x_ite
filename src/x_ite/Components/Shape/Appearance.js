@@ -343,12 +343,11 @@ function (Fields,
             const shaderNode = X3DCast (X3DConstants .X3DShaderNode, node);
 
             if (shaderNode)
-            {
                shaderNodes .push (shaderNode);
-
-               shaderNode ._isValid .addInterest ("set_shader__", this);
-            }
          }
+
+         for (const shaderNode of shaderNodes)
+            shaderNode ._isValid .addInterest ("set_shader__", this);
 
          this .set_shader__ ();
       },
