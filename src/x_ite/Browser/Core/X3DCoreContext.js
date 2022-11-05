@@ -83,7 +83,7 @@ function ($,
    const WEBGL_LATEST_VERSION = 2;
 
    const
-      _number              = Symbol (),
+      _instanceId          = Symbol (),
       _element             = Symbol (),
       _shadow              = Symbol (),
       _surface             = Symbol (),
@@ -104,7 +104,7 @@ function ($,
       _keyup               = Symbol (),
       _pixelPerPoint       = Symbol ();
 
-   let browserNumber = 0;
+   let instanceId = 0;
 
    function X3DCoreContext (element)
    {
@@ -122,7 +122,7 @@ function ($,
       $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
       $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress);
 
-      this [_number]       = ++ browserNumber;
+      this [_instanceId]   = ++ instanceId;
       this [_element]      = element;
       this [_shadow]       = shadow .length ? shadow .append (browser .hide ()) : this [_element] .prepend (browser);
       this [_surface]      = surface;
@@ -133,7 +133,7 @@ function ($,
       if (shadow .length)
          shadow .prop ("loaded") .then (function () { browser .show (); });
 
-      this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_number] + ").");
+      this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_instanceId] + ").");
       this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
       this [_browserTimings]      = new BrowserTimings      (this .getPrivateScene ());
@@ -222,9 +222,9 @@ function ($,
       {
          return this .getBrowserOptions () .getDebug ();
       },
-      getNumber: function ()
+      getInstanceId: function ()
       {
-         return this [_number];
+         return this [_instanceId];
       },
       isStrict: function ()
       {
@@ -337,17 +337,17 @@ function ($,
             {
                const urlCharacters = this .getElement () .attr ("src");
 
-               this .load ('"' + urlCharacters + '"');
+               this .loadAttribute ('"' + urlCharacters + '"');
                break;
             }
             case "url":
             {
-               this .load (this .getElement () .attr ("url"));
+               this .loadAttribute (this .getElement () .attr ("url"));
                break;
             }
          }
       },
-      load: function (urlCharacters)
+      loadAttribute: function (urlCharacters)
       {
          if (urlCharacters)
          {

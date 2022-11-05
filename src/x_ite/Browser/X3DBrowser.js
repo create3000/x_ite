@@ -126,7 +126,11 @@ function ($,
       {
          X3DBrowserContext .prototype .initialize .call (this);
 
+         // Set initial empty scene.
+
          this .replaceWorld (this .getExecutionContext ());
+
+         // Load src or url attribute.
 
          let urlCharacters = this .getElement () .attr ("src");
 
@@ -136,20 +140,11 @@ function ($,
             urlCharacters = this .getElement () .attr ("url");
 
          if (urlCharacters)
-         {
-            this .initialized () .set (this .getCurrentTime ());
-            this .load (urlCharacters);
-         }
-         else
-         {
-            this .initialized () .setValue (this .getCurrentTime ());
-            this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
-            this .callBrowserEventHandler ("initialized load");
-         }
+            this .loadAttribute (urlCharacters);
 
          // Print welcome message.
 
-         if (this .getNumber () > 1) return;
+         if (this .getInstanceId () > 1) return;
 
          this .print ("Welcome to " + this .name + " X3D Browser " + this .version + ":\n" +
                       "   Current Graphics Renderer\n" +
@@ -327,14 +322,10 @@ function ($,
       updateInitialized: function ()
       {
          this .prepareEvents () .removeInterest ("updateInitialized", this);
+         this .initialized () .setValue (this .getCurrentTime ());
+         this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
+         this .callBrowserEventHandler ("initialized load");
          this .setBrowserLoading (false);
-
-         if (this .initialized () .getValue ())
-         {
-            this .initialized () .setValue (this .getCurrentTime ());
-            this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
-            this .callBrowserEventHandler ("initialized load");
-         }
       },
       createVrmlFromString: function (vrmlSyntax)
       {
