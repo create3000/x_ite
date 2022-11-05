@@ -323,10 +323,10 @@ X3D (function ()
    $(".file") .append ($("<a></a>") .attr ('href', "tests/d3/ParticlePlot.html") .text ("d3"));
    $("x3d-canvas") .on ("shutdown", () => $(".console") .empty ());
    $(".location-entry") .val (localStorage ["Bookmarks.history"] [index])
-   $(".location-go") .click (() => loadURL ($(".location-entry") .val ()));
-   $(".print-vrml") .click (toVRMLString);
-   $(".print-xml") .click (toXMLString);
-   $(".print-json") .click (toJSONString);
+   $(".location-go") .on ("click", () => loadURL ($(".location-entry") .val ()));
+   $(".print-vrml") .on ("click", toVRMLString);
+   $(".print-xml") .on ("click", toXMLString);
+   $(".print-json") .on ("click", toJSONString);
 
    $(".location-entry") .keydown (function (event)
    {
