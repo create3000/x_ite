@@ -334,10 +334,7 @@ function (Fields,
          const shaderNodes = this .shaderNodes;
 
          for (const shaderNode of shaderNodes)
-         {
-            shaderNode ._isValid        .removeInterest ("set_shader__", this);
-            shaderNode ._activationTime .removeInterest ("set_shader__", this);
-         }
+            shaderNode ._isValid .removeInterest ("set_shader__", this);
 
          shaderNodes .length = 0;
 
@@ -349,8 +346,7 @@ function (Fields,
             {
                shaderNodes .push (shaderNode);
 
-               shaderNode ._isValid        .addInterest ("set_shader__", this);
-               shaderNode ._activationTime .addInterest ("set_shader__", this);
+               shaderNode ._isValid .addInterest ("set_shader__", this);
             }
          }
 
@@ -376,11 +372,8 @@ function (Fields,
             {
                if (shaderNode ._isValid .getValue ())
                {
-                  if (shaderNode ._activationTime .getValue () === this .getBrowser () .getCurrentTime ())
-                  {
-                     this .shaderNode = shaderNode;
-                     break;
-                  }
+                  this .shaderNode = shaderNode;
+                  break;
                }
             }
 

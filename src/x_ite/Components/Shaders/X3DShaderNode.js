@@ -64,8 +64,6 @@ function (Fields,
 
       this .addType (X3DConstants .X3DShaderNode);
 
-      this .addChildObjects ("activationTime", new Fields .SFTime ());
-
       this .valid    = false;
       this .selected = 0;
    }
@@ -73,16 +71,6 @@ function (Fields,
    X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
    {
       constructor: X3DShaderNode,
-      initialize: function ()
-      {
-         X3DAppearanceChildNode .prototype .initialize .call (this);
-
-         this ._activate .addInterest ("set_activate__", this);
-      },
-      set_activate__: function ()
-      {
-         this ._activationTime = this .getBrowser () .getCurrentTime ();
-      },
       setValid: function (value)
       {
          this ._isValid = this .valid = value;
