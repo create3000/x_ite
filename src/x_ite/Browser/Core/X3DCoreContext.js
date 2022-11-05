@@ -368,12 +368,14 @@ function ($,
                this .getCanvas () .show ();
          }
       },
-      callBrowserEventHandler: function (name)
+      callBrowserEventHandler: function (events)
       {
-         if (window .jQuery)
-            window .jQuery (this .getElement () .get (0)) .trigger (name);
-         else
-            this .getElement () .trigger (name);
+         const element = window .jQuery
+            ? window .jQuery (this .getElement () .get (0))
+            : this .getElement ();
+
+         for (const event of events .split (" "))
+            element .trigger (event);
       },
       getShiftKey: function ()
       {

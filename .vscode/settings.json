@@ -17,6 +17,8 @@
       "glsl",
       "highp",
       "mult",
+      "oninitialized",
+      "onshutdown",
       "polylines",
       "srand",
       "tessellator",

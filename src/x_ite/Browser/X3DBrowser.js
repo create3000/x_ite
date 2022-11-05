@@ -144,7 +144,7 @@ function ($,
          {
             this .initialized () .setValue (this .getCurrentTime ());
             this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
-            this .callBrowserEventHandler ("load");
+            this .callBrowserEventHandler ("initialized load");
          }
 
          // Print welcome message.
@@ -333,7 +333,7 @@ function ($,
          {
             this .initialized () .setValue (this .getCurrentTime ());
             this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
-            this .callBrowserEventHandler ("load");
+            this .callBrowserEventHandler ("initialized load");
          }
       },
       createVrmlFromString: function (vrmlSyntax)
