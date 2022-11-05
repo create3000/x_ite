@@ -333,6 +333,8 @@ function ($,
       },
       addRouteCallback: function (key, object)
       {
+         // Processed if routes are changed.
+
          if (this [_routeCallbacks] === X3DField .prototype [_routeCallbacks])
             this [_routeCallbacks] = new Map ();
 
