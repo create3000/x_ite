@@ -153,10 +153,6 @@ function ($,
          element .data ("browser", browser);
 
          browser .setup ();
-
-         setTimeout (function () { callbacks .resolve (); }, 1);
-
-         return browser;
       }
       catch (error)
       {
@@ -189,9 +185,13 @@ function ($,
          const elements = $("X3DCanvas");
 
          if (elements .length)
+         {
             console .warn ("Use of <X3DCanvas> element is depreciated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
 
-         $.map (elements, createBrowserFromElement);
+            $.each (elements, createBrowserFromElement);
+         }
+
+         callbacks .resolve ();
       });
    }
 

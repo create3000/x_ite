@@ -162,7 +162,7 @@ const getScriptURL = (function ()
 
          shadow .appendChild (link);
 
-         require ([ "x_ite/X3D" ], function (X3D)
+         require (["x_ite/X3D"], function (X3D)
          {
             X3D .createBrowserFromElement (this);
          }

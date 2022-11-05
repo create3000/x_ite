@@ -297,7 +297,6 @@ function ($,
          this .setDescription ("");
          this .getBrowserOptions () .configure ();
          this .setBrowserLoading (true);
-         this .prepareEvents () .removeInterest ("updateInitialized", this);
          this ._loadCount .addInterest ("checkLoadCount", this);
 
          for (const object of scene .getLoadingObjects ())
@@ -315,13 +314,6 @@ function ($,
             return;
 
          this ._loadCount .removeInterest ("checkLoadCount", this);
-
-         this .prepareEvents () .addInterest ("updateInitialized", this);
-         this .addBrowserEvent ();
-      },
-      updateInitialized: function ()
-      {
-         this .prepareEvents () .removeInterest ("updateInitialized", this);
          this .initialized () .setValue (this .getCurrentTime ());
          this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
          this .callBrowserEventHandler ("initialized load");
