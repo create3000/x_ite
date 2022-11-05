@@ -176,69 +176,60 @@ function (Fields,
                this .removeShaderFields ();
          }
       },
-      set_loaded__: function ()
-      {
-         if (this .loadSensor ._isLoaded .getValue ())
-         {
-            if (this .isSetuped ())
-               this ._activate = true;
-            else
-               this .set_activate__ ();
-         }
-         else
-         {
-            this .setValid (false);
-         }
-      },
       set_activate__: function ()
       {
          if (! this ._activate .getValue ())
             return;
 
-         if (this ._language .getValue () !== "GLSL")
+         this .set_loaded__ ();
+      },
+      set_loaded__: function ()
+      {
+         if (this .loadSensor ._isLoaded .getValue () && this ._language .getValue () === "GLSL")
          {
-            this .setValid (false);
-            return;
-         }
+            const
+               gl      = this .getBrowser () .getContext (),
+               program = gl .createProgram ();
 
-         const
-            gl      = this .getBrowser () .getContext (),
-            program = gl .createProgram ();
+            if (this .isValid ())
+               this .removeShaderFields ();
 
-         if (this .isValid ())
-            this .removeShaderFields ();
+            gl .deleteProgram (this .program);
 
-         gl .deleteProgram (this .program);
+            this .program = program;
 
-         this .program = program;
+            for (const node of this ._parts)
+            {
+               const partNode = X3DCast (X3DConstants .ShaderPart, node);
 
-         for (const node of this ._parts)
-         {
-            const partNode = X3DCast (X3DConstants .ShaderPart, node);
+               if (partNode)
+                  gl .attachShader (program, partNode .getShader ());
+            }
 
-            if (partNode)
-               gl .attachShader (program, partNode .getShader ());
-         }
+            if (this .transformFeedbackVaryings .length)
+               gl .transformFeedbackVaryings (program, this .transformFeedbackVaryings, gl .INTERLEAVED_ATTRIBS);
 
-         if (this .transformFeedbackVaryings .length)
-            gl .transformFeedbackVaryings (program, this .transformFeedbackVaryings, gl .INTERLEAVED_ATTRIBS);
+            gl .linkProgram (program);
 
-         gl .linkProgram (program);
+            if (gl .getProgramParameter (program, gl .LINK_STATUS))
+            {
+               this .setValid (true);
+               this .getDefaultUniformsAndAttributes ();
+               this .addShaderFields ();
+            }
+            else
+            {
+               this .setValid (false);
 
-         if (gl .getProgramParameter (program, gl .LINK_STATUS))
-         {
-            this .setValid (true);
-            this .getDefaultUniformsAndAttributes ();
-            this .addShaderFields ();
+               if (this ._parts .length)
+               {
+                  console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
+               }
+            }
          }
          else
          {
             this .setValid (false);
-
-            if (this ._parts .length)
-            {
-               console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
-            }
          }
       },
       dispose: function ()
