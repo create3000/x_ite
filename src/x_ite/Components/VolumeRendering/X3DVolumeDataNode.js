@@ -219,12 +219,9 @@ function (Fields,
       },
       set_textureTransform__: function ()
       {
-         const shaderNode = this .getShader ();
-
-         if (! shaderNode)
-            return;
-
-         const invTextureMatrix = shaderNode .getField ("x3d_TextureNormalMatrix");
+         const
+            shaderNode       = this .getShader (),
+            invTextureMatrix = shaderNode .getField ("x3d_TextureNormalMatrix");
 
          invTextureMatrix .setValue (this .textureTransformNode .getMatrix () .submatrix .inverse () .transpose ());
       },
