@@ -21,6 +21,7 @@
       "onshutdown",
       "polylines",
       "srand",
+      "Struct",
       "tessellator",
       "Wireframe",
       "Wireframes"

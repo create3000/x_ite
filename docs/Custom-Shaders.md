@@ -373,15 +373,10 @@ A ComposedShader defines a number of special variables for the various shader st
       <tr>
          <td>uniform float</td>
          <td>x3d_LogarithmicFarFactor1_2</td>
-         <td>this is a uniform value for logarithmic depth buffer computed as 1.0 / log2 (farplane + 1.0).</td>
+         <td>this is a uniform value for logarithmic depth buffer computed as 1.0 / log2 (farPlane + 1.0).</td>
       </tr>
       <tr>
          <td colspan="3"><hr/></td>
-      </tr>
-      <tr>
-         <td>uniform int</td>
-         <td>x3d_NumClipPlanes</td>
-         <td>number of clip planes in x3d_ClipPlane</td>
       </tr>
       <tr>
          <td>uniform vec4</td>
@@ -395,11 +390,6 @@ A ComposedShader defines a number of special variables for the various shader st
       </tr>
       <tr>
          <td colspan="3"><hr/></td>
-      </tr>
-      <tr>
-         <td>uniform int</td>
-         <td>x3d_NumLights</td>
-         <td>number of lights in x3d_LightSource</td>
       </tr>
       <tr>
          <td>uniform x3d_LightSourceParameters</td>
@@ -528,7 +518,6 @@ A ComposedShader defines a number of special variables for the various shader st
 
 | Type  | Name            | Comment                                                 |
 |-------|-----------------|---------------------------------------------------------|
-| int   | type            | x3d\_LinearFog, x3d\_ExponentialFog                     |
 | vec3  | color           |                                                         |
 | float | visibilityRange |                                                         |
 | mat3  | matrix          | inverse fog space matrix, rotation and scale components |
@@ -643,31 +632,6 @@ Some built-in variables are enumerated and have special values and meanings. The
          </td>
       </tr>
       <tr>
-         <td>x3d_FogType</td>
-         <td>int</td>
-         <td>x3d_None</td>
-         <td>0</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td></td>
-         <td>int</td>
-         <td>x3d_LinearFog</td>
-         <td>1</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td></td>
-         <td>int</td>
-         <td>x3d_ExponentialFog</td>
-         <td>2</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td colspan="5"><hr/>
-         </td>
-      </tr>
-      <tr>
          <td></td>
          <td>int</td>
          <td>x3d_MaxLights</td>
@@ -693,6 +657,17 @@ Some built-in variables are enumerated and have special values and meanings. The
          <td>int</td>
          <td>x3d_SpotLight</td>
          <td>3</td>
+         <td></td>
+      </tr>
+      <tr>
+         <td colspan="5"><hr/>
+         </td>
+      </tr>
+      <tr>
+         <td></td>
+         <td>int</td>
+         <td>x3d_MaxTextures</td>
+         <td>2</td>
          <td></td>
       </tr>
    </tbody>
