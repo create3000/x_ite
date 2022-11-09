@@ -128,11 +128,11 @@ function (Fields,
             key += shapeNode .getShapeKey ();
             key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? "1" : "0";
             key += ".";
-            key += objectsCount [0];
+            key += objectsCount [0]; // Clip planes
             key += ".";
-            key += objectsCount [1];
+            key += objectsCount [1]; // Lights
             key += ".";
-            key += objectsCount [2];
+            key += objectsCount [2]; // Texture projectors
             key += ".";
             key += textureNode ? "1" : appearanceNode .getTextureBits () .toString (4);
             key += ".";
@@ -145,11 +145,11 @@ function (Fields,
             const { textureNode, objectsCount } = geometryContext;
 
             key += ".0000.";
-            key += objectsCount [0];
+            key += objectsCount [0]; // Clip planes
             key += ".";
-            key += objectsCount [1];
+            key += objectsCount [1]; // Lights
             key += ".";
-            key += objectsCount [2];
+            key += objectsCount [2]; // Texture projectors
             key += ".";
             key += textureNode ? "1" : "0";
             key += ".11";

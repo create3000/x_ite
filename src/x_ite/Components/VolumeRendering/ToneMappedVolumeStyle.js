@@ -149,11 +149,8 @@ function (Fields,
          string += "   vec3 coolColor = coolColor_" + this .getId () + " .rgb;\n";
          string += "   vec3 warmColor = warmColor_" + this .getId () + " .rgb;\n";
          string += "\n";
-         string += "   for (int i = 0; i < x3d_MaxLights; ++ i)\n";
+         string += "   for (int i = 0; i < X3D_NUM_LIGHTS; ++ i)\n";
          string += "   {\n";
-         string += "      if (i == x3d_NumLights)\n";
-         string += "         break;\n";
-         string += "\n";
          string += "      x3d_LightSourceParameters light = x3d_LightSource [i];\n";
          string += "\n";
          string += "      vec3  L           = light .type == x3d_DirectionalLight ? -light .direction : normalize (light .location - vertex);\n";

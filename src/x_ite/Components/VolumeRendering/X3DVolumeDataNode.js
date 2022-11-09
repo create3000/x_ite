@@ -53,18 +53,16 @@ define ([
    "x_ite/Components/Grouping/X3DBoundedObject",
    "x_ite/Base/X3DConstants",
    "x_ite/Browser/Core/TextureQuality",
+   "x_ite/Browser/VolumeRendering/VolumeMaterial",
    "standard/Math/Numbers/Vector3",
-   "text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
-   "text!x_ite/Browser/VolumeRendering/VolumeStyle.fs",
 ],
 function (Fields,
           X3DChildNode,
           X3DBoundedObject,
           X3DConstants,
           TextureQuality,
-          Vector3,
-          vs,
-          fs)
+          VolumeMaterial,
+          Vector3)
 {
 "use strict";
 
@@ -75,14 +73,16 @@ function (Fields,
 
       this .addType (X3DConstants .X3DVolumeDataNode);
 
-      this .proximitySensorNode   = executionContext .createNode ("ProximitySensor",     false);
-      this .transformNode         = executionContext .createNode ("Transform",           false);
-      this .shapeNode             = executionContext .createNode ("Shape",               false);
-      this .appearanceNode        = executionContext .createNode ("Appearance",          false);
-      this .textureTransformNode  = executionContext .createNode ("TextureTransform3D",  false);
-      this .geometryNode          = executionContext .createNode ("QuadSet",             false);
-      this .textureCoordinateNode = executionContext .createNode ("TextureCoordinate3D", false);
-      this .coordinateNode        = executionContext .createNode ("Coordinate",          false);
+      this .proximitySensorNode      = executionContext .createNode ("ProximitySensor",     false);
+      this .transformNode            = executionContext .createNode ("Transform",           false);
+      this .shapeNode                = executionContext .createNode ("Shape",               false);
+      this .appearanceNode           = executionContext .createNode ("Appearance",          false);
+      this .textureTransformNode     = executionContext .createNode ("TextureTransform3D",  false);
+      this .geometryNode             = executionContext .createNode ("QuadSet",             false);
+      this .textureCoordinateNode    = executionContext .createNode ("TextureCoordinate3D", false);
+      this .coordinateNode           = executionContext .createNode ("Coordinate",          false);
+      this .volumeMaterialNode       = new VolumeMaterial (executionContext);
+      this .textureNormalMatrixArray = new Float32Array (9);
 
       this .setCameraObject (true);
    }
@@ -117,16 +117,20 @@ function (Fields,
          this .shapeNode ._appearance             = this .appearanceNode;
          this .shapeNode ._geometry               = this .geometryNode;
          this .appearanceNode ._alphaMode         = "BLEND";
+         this .appearanceNode ._material          = this .volumeMaterialNode;
          this .appearanceNode ._textureTransform  = this .textureTransformNode;
          this .textureTransformNode ._translation = new Fields .SFVec3f (0.5, 0.5, 0.5);
          this .textureTransformNode ._center      = new Fields .SFVec3f (-0.5, -0.5, -0.5);
          this .geometryNode ._texCoord            = this .textureCoordinateNode;
          this .geometryNode ._coord               = this .coordinateNode;
 
+         this .volumeMaterialNode .setVolumeData (this);
+
          this .coordinateNode        .setPrivate (true);
          this .textureCoordinateNode .setPrivate (true);
          this .geometryNode          .setPrivate (true);
          this .textureTransformNode  .setPrivate (true);
+         this .volumeMaterialNode    .setPrivate (true);
          this .appearanceNode        .setPrivate (true);
          this .shapeNode             .setPrivate (true);
          this .transformNode         .setPrivate (true);
@@ -136,6 +140,7 @@ function (Fields,
          this .textureCoordinateNode .setup ();
          this .geometryNode          .setup ();
          this .textureTransformNode  .setup ();
+         this .volumeMaterialNode    .setup ();
          this .appearanceNode        .setup ();
          this .shapeNode             .setup ();
          this .transformNode         .setup ();
@@ -145,6 +150,8 @@ function (Fields,
          this .proximitySensorNode ._orientation_changed .addFieldInterest (this .textureTransformNode ._rotation);
 
          this .textureTransformNode .addInterest ("set_textureTransform__", this);
+
+         this .set_textureTransform__ ();
       },
       getBBox: function (bbox, shadows)
       {
@@ -159,25 +166,11 @@ function (Fields,
       },
       updateShader: function ()
       {
-         this .setShader (this .createShader (vs, fs));
+         this .volumeMaterialNode .getVolumeShaders () .clear ();
       },
-      setShader: function (shaderNode)
+      addShaderUniformNames: function (uniformNames)
       {
-         this .getAppearance () ._shaders [0] = shaderNode;
-
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureNormalMatrix", new Fields .SFMatrix3f ());
-         shaderNode .setup ();
-
-         this .set_textureTransform__ ();
-      },
-      getShader: function ()
-      {
-         const shader = this .appearanceNode ._shaders [0];
-
-         if (shader)
-            return shader .getValue ();
-
-         return null;
+         uniformNames .push ("x3d_TextureNormalMatrix");
       },
       getNumPlanes: function ()
       {
@@ -227,16 +220,16 @@ function (Fields,
       },
       set_textureTransform__: function ()
       {
-         const
-            shaderNode       = this .getShader (),
-            invTextureMatrix = shaderNode .getField ("x3d_TextureNormalMatrix");
-
-         invTextureMatrix .setValue (this .textureTransformNode .getMatrix () .submatrix .inverse () .transpose ());
+         this .textureNormalMatrixArray .set (this .textureTransformNode .getMatrix () .submatrix .inverse ());
       },
       traverse: function (type, renderObject)
       {
          this .proximitySensorNode .traverse (type, renderObject);
          this .transformNode       .traverse (type, renderObject);
+      },
+      setShaderUniforms (gl, shaderObject)
+      {
+         gl .uniformMatrix3fv (shaderObject .x3d_TextureNormalMatrix, true, this .textureNormalMatrixArray);
       },
    });
 

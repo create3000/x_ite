@@ -207,11 +207,8 @@ function (Fields,
             string += "   vec3 N = surfaceNormal .xyz;\n";
             string += "   vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position\n";
             string += "\n";
-            string += "   for (int i = 0; i < x3d_MaxLights; ++ i)\n";
+            string += "   for (int i = 0; i < X3D_NUM_LIGHTS; ++ i)\n";
             string += "   {\n";
-            string += "      if (i == x3d_NumLights)\n";
-            string += "         break;\n";
-            string += "\n";
             string += "      x3d_LightSourceParameters light = x3d_LightSource [i];\n";
             string += "\n";
             string += "      vec3  vL = light .location - vertex; // Light to fragment\n";
@@ -240,7 +237,6 @@ function (Fields,
             string += "      }\n";
             string += "\n";
             string += "      shadedColor .rgb += emissiveColor_" + this .getId () + ";\n";
-            string += "      shadedColor .rgb  = getFogColor (shadedColor .rgb);\n";
             string += "   }\n";
          }
          else

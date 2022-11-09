@@ -70,19 +70,6 @@ function (Fields,
 {
 "use strict";
 
-   const customOptions = [
-      "X3D_GEOMETRY_0D",
-      "X3D_GEOMETRY_1D",
-      "X3D_GEOMETRY_2D",
-      "X3D_GEOMETRY_3D",
-      "X3D_FOG",
-      "X3D_STYLE_PROPERTIES",
-      "X3D_UNLIT_MATERIAL",
-      "X3D_MATERIAL",
-      "X3D_TEXTURE",
-      "X3D_MULTI_TEXTURING",
-   ];
-
    function ShaderPart (executionContext)
    {
       X3DNode      .call (this, executionContext);
@@ -123,9 +110,6 @@ function (Fields,
          X3DUrlObject .prototype .initialize .call (this);
 
          this ._type .addInterest ("set_type__", this);
-
-         if (! this .isPrivate ())
-            this .options = customOptions .slice ();
 
          this .requestImmediateLoad ();
       },

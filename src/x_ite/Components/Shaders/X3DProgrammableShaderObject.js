@@ -60,13 +60,6 @@ function (X3DCast,
 {
 "use strict";
 
-   const customUniformNames = [
-      "x3d_FogType",
-      "x3d_NumClipPlanes",
-      "x3d_NumLights",
-      "x3d_NumProjectiveTextures",
-   ];
-
    const _uniformLocation = Symbol .for ("X3DField.uniformLocation");
 
    function X3DProgrammableShaderObject (executionContext)
@@ -127,12 +120,6 @@ function (X3DCast,
 
          browser .getRenderingProperties () ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
 
-         if (! this .isPrivate ())
-         {
-            this .uniformNames = customUniformNames .slice ();
-            this .setUniforms  = this .setCustomUniforms;
-         }
-
          // Use by multi texture nodes.
          this .x3d_MaxTextures = browser .getMaxTextures ();
 
@@ -140,7 +127,7 @@ function (X3DCast,
       },
       set_logarithmicDepthBuffer__: function ()
       {
-         this .logarithmicDepthBuffer =this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer");
+         this .logarithmicDepthBuffer = this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer");
       },
       canUserDefinedFields: function ()
       {
@@ -984,18 +971,6 @@ function (X3DCast,
 
          for (const clipPlane of clipPlanes)
             clipPlane .setShaderUniforms (gl, this);
-      },
-      setCustomUniforms: function (gl, geometryContext, renderContext, front)
-      {
-         const fogNode = renderContext .fogNode;
-
-         gl .uniform1i (this .x3d_FogType, fogNode ? fogNode .fogNode .getFogType () : 0);
-
-         gl .uniform1i (this .x3d_NumClipPlanes,         renderContext .objectsCount [0]);
-         gl .uniform1i (this .x3d_NumLights,             renderContext .objectsCount [1]);
-         gl .uniform1i (this .x3d_NumProjectiveTextures, renderContext .objectsCount [2]);
-
-         X3DProgrammableShaderObject .prototype .setUniforms .call (this, gl, geometryContext, renderContext, front);
       },
       setUniforms: (function ()
       {

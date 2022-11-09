@@ -64,7 +64,7 @@ function (Fields,
           ComposedShader,
           ShaderPart,
           X3DConstants,
-          X3DCast,)
+          X3DCast)
 {
 "use strict";
 
@@ -170,7 +170,7 @@ function (Fields,
          else
             this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
       },
-      createShader: function (vs, fs)
+      createShader: function (options, vs, fs)
       {
          // if (DEBUG)
          //    console .log ("Creating VolumeData Shader ...");
@@ -320,22 +320,24 @@ function (Fields,
 
          const vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
-         // vertexShader .setPrivate (true);
+         vertexShader .setPrivate (true);
          vertexShader .setName ("VolumeDataVertexShader");
+         vertexShader .setOptions (options);
          vertexShader .setup ();
 
          const fragmentShader = new ShaderPart (this .getExecutionContext ());
          fragmentShader ._type = "FRAGMENT";
          fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
-         // fragmentShader .setPrivate (true);
+         fragmentShader .setPrivate (true);
          fragmentShader .setName ("VolumeDataFragmentShader");
+         fragmentShader .setOptions (options);
          fragmentShader .setup ();
 
          const shaderNode = new ComposedShader (this .getExecutionContext ());
          shaderNode ._language = "GLSL";
          shaderNode ._parts .push (vertexShader);
          shaderNode ._parts .push (fragmentShader);
-         // shaderNode .setPrivate (true);
+         shaderNode .setPrivate (true);
          shaderNode .setName ("VolumeDataShader");
 
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceValues",    this ._surfaceValues    .copy ());
@@ -348,6 +350,13 @@ function (Fields,
 
          for (const renderStyleNode of this .renderStyleNodes)
             renderStyleNode .addShaderFields (shaderNode);
+
+         const uniformNames = [ ];
+
+         this .addShaderUniformNames (uniformNames);
+
+         shaderNode .setUniformNames (uniformNames);
+         shaderNode .setup ();
 
          return shaderNode;
       },
