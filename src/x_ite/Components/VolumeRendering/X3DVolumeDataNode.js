@@ -232,7 +232,7 @@ function (Fields,
       {
          this .proximitySensorNode .traverse (type, renderObject);
          this .transformNode       .traverse (type, renderObject);
-      }
+      },
    });
 
    return X3DVolumeDataNode;
