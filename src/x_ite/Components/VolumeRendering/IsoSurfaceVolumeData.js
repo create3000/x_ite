@@ -56,9 +56,6 @@ define ([
    "x_ite/Components/Shaders/ShaderPart",
    "x_ite/Base/X3DConstants",
    "x_ite/Base/X3DCast",
-   "text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
-   "text!x_ite/Browser/VolumeRendering/VolumeStyle.fs",
-   "x_ite/DEBUG",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -67,10 +64,7 @@ function (Fields,
           ComposedShader,
           ShaderPart,
           X3DConstants,
-          X3DCast,
-          vs,
-          fs,
-          DEBUG)
+          X3DCast,)
 {
 "use strict";
 
@@ -175,10 +169,6 @@ function (Fields,
             this .getAppearance () ._texture = this ._voxels;
          else
             this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
-      },
-      updateShader: function ()
-      {
-         this .setShader (this .createShader (vs, fs));
       },
       createShader: function (vs, fs)
       {

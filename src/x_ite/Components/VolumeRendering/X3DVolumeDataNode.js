@@ -54,13 +54,17 @@ define ([
    "x_ite/Base/X3DConstants",
    "x_ite/Browser/Core/TextureQuality",
    "standard/Math/Numbers/Vector3",
+   "text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
+   "text!x_ite/Browser/VolumeRendering/VolumeStyle.fs",
 ],
 function (Fields,
           X3DChildNode,
           X3DBoundedObject,
           X3DConstants,
           TextureQuality,
-          Vector3)
+          Vector3,
+          vs,
+          fs)
 {
 "use strict";
 
@@ -152,6 +156,10 @@ function (Fields,
       getAppearance: function ()
       {
          return this .appearanceNode;
+      },
+      updateShader: function ()
+      {
+         this .setShader (this .createShader (vs, fs));
       },
       setShader: function (shaderNode)
       {
