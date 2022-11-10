@@ -1023,11 +1023,11 @@ function (X3DCast,
 
                // Logarithmic depth buffer support
 
-               if (this .logarithmicDepthBuffer)
+               const viewpoint = renderObject .getViewpoint ();
+
+               if (this .logarithmicDepthBuffer || viewpoint .getLogarithmicDepthBuffer ())
                {
-                  const
-                     viewpoint      = renderObject .getViewpoint (),
-                     navigationInfo = renderObject .getNavigationInfo ();
+                  const navigationInfo = renderObject .getNavigationInfo ();
 
                   gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
                }

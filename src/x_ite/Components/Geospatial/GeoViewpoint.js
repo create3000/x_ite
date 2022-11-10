@@ -186,6 +186,10 @@ function (Fields,
             this ._fieldOfViewScale = toViewpointNode ._fieldOfViewScale .getValue ();
          }
       },
+      getLogarithmicDepthBuffer: function ()
+      {
+         return true;
+      },
       setPosition: (function ()
       {
          const geoPosition = new Vector3 (0, 0, 0);
@@ -266,7 +270,7 @@ function (Fields,
       },
       getMaxFarValue: function ()
       {
-         return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e9;
+         return 1e10;
       },
       getUpVector: (function ()
       {
@@ -324,18 +328,9 @@ function (Fields,
       {
          return (bbox .size .magnitude () / 2) / Math .tan (this .getFieldOfView () / 2);
       },
-      getProjectionMatrixWithLimits: function (nearValue, farValue, viewport, limit)
+      getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
       {
-         if (limit || this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer"))
-            return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
-
-         // Linear interpolate nearValue and farValue
-
-         const
-            geoZNear = Math .max (Algorithm .lerp (Math .min (nearValue, 1e4), 1e4, this .elevation / 1e7), 1),
-            geoZFar  = Math .max (Algorithm .lerp (1e6, Math .max (farValue, 1e6),  this .elevation / 1e7), 1e6);
-
-         return Camera .perspective (this .getFieldOfView (), geoZNear, geoZFar, viewport [2], viewport [3], this .projectionMatrix);
+         return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
       },
    });
 

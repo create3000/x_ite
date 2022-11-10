@@ -87,7 +87,7 @@ function (Fields,
       },
       set_logarithmicDepthBuffer__: function ()
       {
-         this .logarithmicDepthBuffer = String (this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1 : 0);
+         this .logarithmicDepthBuffer = this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer");
       },
       setTransparent: function (value)
       {
@@ -115,14 +115,13 @@ function (Fields,
 
          key += this .textureBits .toString (4);
          key += ".";
-         key += this .logarithmicDepthBuffer;
          key += geometryContext .geometryKey;
 
          if (renderContext)
          {
-            const { shadows, fogNode, shapeNode, appearanceNode, textureNode, objectsCount } = renderContext;
+            const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, objectsCount } = renderContext;
 
-            key += ".";
+            key += this .logarithmicDepthBuffer || renderObject .getViewpoint () .getLogarithmicDepthBuffer () ? "1" : "0";
             key += shadows ? "1" : "0";
             key += fogNode ? fogNode .getFogKey () : "0";
             key += shapeNode .getShapeKey ();
@@ -144,7 +143,8 @@ function (Fields,
          {
             const { textureNode, objectsCount } = geometryContext;
 
-            key += ".0000.";
+            key += this .logarithmicDepthBuffer ? "1" : "0";
+            key += "0000.";
             key += objectsCount [0]; // Clip planes
             key += ".";
             key += objectsCount [1]; // Lights
@@ -173,9 +173,6 @@ function (Fields,
                browser = this .getBrowser (),
                options = [ ];
 
-            if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
-               options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
-
             options .push (geometryTypes [geometryContext .geometryType]);
 
             if (geometryContext .hasFogCoords)
@@ -189,7 +186,10 @@ function (Fields,
 
             if (renderContext)
             {
-               const { appearanceNode, objectsCount } = renderContext;
+               const { renderObject, appearanceNode, objectsCount } = renderContext;
+
+               if (browser .getRenderingProperty ("LogarithmicDepthBuffer") || renderObject .getViewpoint () .getLogarithmicDepthBuffer ())
+                  options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
 
                if (renderContext .shadows)
                   options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
@@ -277,6 +277,9 @@ function (Fields,
             else
             {
                const { textureNode, objectsCount } = geometryContext;
+
+               if (browser .getRenderingProperty ("LogarithmicDepthBuffer"))
+                  options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
 
                if (objectsCount [0])
                {

@@ -217,6 +217,10 @@ function (Fields,
             this ._fieldOfViewScale  = toViewpointNode ._fieldOfViewScale  .getValue ();
          }
       },
+      getLogarithmicDepthBuffer: function ()
+      {
+         return false;
+      },
       getMinimumX: function ()
       {
          return this .minimumX;

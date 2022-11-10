@@ -141,6 +141,10 @@ function (Fields,
             this ._fieldOfViewScale = toViewpointNode ._fieldOfViewScale .getValue ();
          }
       },
+      getLogarithmicDepthBuffer: function ()
+      {
+         return false;
+      },
       getFieldOfView: function ()
       {
          const fov = this ._fieldOfView .getValue () * this ._fieldOfViewScale .getValue ();
