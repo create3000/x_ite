@@ -9,6 +9,7 @@ struct x3d_FogParameters {
 
 //uniform x3d_FogParameters x3d_Fog;
 
+#if defined (X3D_LIGHTING)
 struct x3d_LightSourceParameters {
    mediump int   type;
    mediump vec3  color;
@@ -29,6 +30,7 @@ struct x3d_LightSourceParameters {
    mediump int   shadowMapSize;
    #endif
 };
+#endif
 
 //uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 
