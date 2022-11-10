@@ -152,6 +152,14 @@ function (Fields,
          X3DViewpointNode    .prototype .initialize .call (this);
          X3DGeospatialObject .prototype .initialize .call (this);
 
+         // Logarithmic depth buffer support
+
+         const gl = this .getBrowser () .getContext ();
+
+         this .logarithmicDepthBuffer = gl .getVersion () >= 2 || gl .getExtension ("EXT_frag_depth");
+
+         // Fields
+
          this ._position       .addInterest ("set_position__", this);
          this ._positionOffset .addInterest ("set_position__", this);
          this ._navType        .addFieldInterest (this .navigationInfoNode ._type);
@@ -188,7 +196,7 @@ function (Fields,
       },
       getLogarithmicDepthBuffer: function ()
       {
-         return true;
+         return this .logarithmicDepthBuffer;
       },
       setPosition: (function ()
       {
