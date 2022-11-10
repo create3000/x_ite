@@ -218,7 +218,7 @@ Returns a browser option with the corresponding name.
       </tr>
       <tr>
          <td>LogarithmicDepthBuffer</td>
-         <td>Whether to use a logarithmic depth buffer. It may be neccesary to use this if dealing with huge differences in scale in a single scene. (non standard)</td>
+         <td>Whether to use a logarithmic depth buffer. It may be necessary to use this if dealing with huge differences in scale in a single scene. It is automatically enabled if a GeoViewpoint is bound. (non standard)</td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
