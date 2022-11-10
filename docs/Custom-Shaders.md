@@ -710,10 +710,6 @@ and then in the fragment shader add:
 ```glsl
 #version 300 es
 
-#if __VERSION__ == 100
-#extension GL_EXT_frag_depth : enable
-#endif
-
 uniform float x3d_LogarithmicFarValue1_2;
 in float depth;
 
@@ -722,10 +718,7 @@ main ()
 {
    ...
    //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-   if (x3d_LogarithmicFarFactor1_2 > 0.0)
-      gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
-   else
-      gl_FragDepthEXT = gl_FragCoord .z;
+   gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
 }
 ```
 

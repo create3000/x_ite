@@ -1029,10 +1029,7 @@ function (X3DCast,
                      viewpoint      = renderObject .getViewpoint (),
                      navigationInfo = renderObject .getNavigationInfo ();
 
-                  if (viewpoint instanceof OrthoViewpoint)
-                     gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, -1);
-                  else
-                     gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
+                  gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
                }
             }
 
