@@ -280,7 +280,7 @@ function (Fields,
             browser = this .getBrowser (),
             gl      = browser .getContext ();
 
-         browser .getRenderingProperties () ._LogarithmicDepthBuffer = !! (logarithmicDepthBuffer .getValue () && (gl .getVersion () >= 2 || gl .getExtension ("EXT_frag_depth")));
+         browser .getRenderingProperties () ._LogarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && gl .HAS_FEATURE_FRAG_DEPTH;
       },
       set_timings__: function (timings)
       {

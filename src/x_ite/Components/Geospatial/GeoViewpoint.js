@@ -156,7 +156,7 @@ function (Fields,
 
          const gl = this .getBrowser () .getContext ();
 
-         this .logarithmicDepthBuffer = gl .getVersion () >= 2 || gl .getExtension ("EXT_frag_depth");
+         this .logarithmicDepthBuffer = gl .HAS_FEATURE_FRAG_DEPTH;
 
          // Fields
 
