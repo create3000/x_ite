@@ -234,7 +234,7 @@ function (Fields,
                {
                   options .push ("X3D_MATERIAL_TEXTURES");
                   options .push ("X3D_NUM_TEXTURE_TRANSFORMS " + (appearanceNode .getTextureTransformMapping () .size || "1"));
-                  options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .textureCoordinateMapping .size || "1"));
+                  options .push ("X3D_NUM_TEXTURE_COORDINATES " + (geometryContext .getTextureCoordinateMapping () .size || "1"));
                }
                else
                {
