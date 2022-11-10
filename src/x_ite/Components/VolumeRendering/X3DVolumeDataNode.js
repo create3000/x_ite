@@ -3,7 +3,7 @@
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -81,7 +81,7 @@ function (Fields,
       this .geometryNode             = executionContext .createNode ("QuadSet",             false);
       this .textureCoordinateNode    = executionContext .createNode ("TextureCoordinate3D", false);
       this .coordinateNode           = executionContext .createNode ("Coordinate",          false);
-      this .volumeMaterialNode       = new VolumeMaterial (executionContext);
+      this .volumeMaterialNode       = new VolumeMaterial (executionContext, this);
       this .textureNormalMatrixArray = new Float32Array (9);
 
       this .setCameraObject (true);
@@ -123,8 +123,6 @@ function (Fields,
          this .textureTransformNode ._center      = new Fields .SFVec3f (-0.5, -0.5, -0.5);
          this .geometryNode ._texCoord            = this .textureCoordinateNode;
          this .geometryNode ._coord               = this .coordinateNode;
-
-         this .volumeMaterialNode .setVolumeData (this);
 
          this .coordinateNode        .setPrivate (true);
          this .textureCoordinateNode .setPrivate (true);

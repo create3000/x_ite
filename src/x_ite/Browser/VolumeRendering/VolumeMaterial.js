@@ -58,10 +58,11 @@ function (UnlitMaterial,
 {
 "use strict";
 
-   function VolumeMaterial (executionContext)
+   function VolumeMaterial (executionContext, volumeDataNode)
    {
       UnlitMaterial .call (this, executionContext);
 
+      this .volumeDataNode    = volumeDataNode;
       this .volumeShaderNodes = new Map ();
    }
 
@@ -79,10 +80,6 @@ function (UnlitMaterial,
       getContainerField: function ()
       {
          return "material";
-      },
-      setVolumeData: function (value)
-      {
-         this .volumeDataNode = value;
       },
       getVolumeShaders: function ()
       {
