@@ -230,7 +230,7 @@ Returns a browser option with the corresponding name.
       </tr>
       <tr>
          <td>Timings</td>
-         <td>Whether browser timings should be displayed.</td>
+         <td>Whether browser timings should be displayed. (non standard)</td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
