@@ -428,14 +428,12 @@ function (Fields,
             localZAxis  = new Vector3 (0, 0, 0),
             rotation    = new Rotation4 (0, 0, 1, 0);
 
-         return function (orientation)
+         return function (orientation, upVector = this .getUpVector ())
          {
             orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
             orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
 
-            const
-                upVector = this .getUpVector (),
-               vector   = localZAxis .cross (upVector);
+            const vector = localZAxis .cross (upVector);
 
             // If viewer looks along the up vector.
             if (Math .abs (localZAxis .dot (upVector)) >= 1)

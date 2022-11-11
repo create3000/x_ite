@@ -482,11 +482,6 @@ function ($,
             delete menu .items ["straighten-horizon"];
          }
 
-         if (browser .getCurrentViewer () .match (/^(?:EXAMINE)$/) && currentViewpoint .getTypeName () === "GeoViewpoint")
-         {
-            delete menu .items ["straighten-horizon"];
-         }
-
          if (! browser .getDebug ())
          {
             delete menu .items ["shading"];

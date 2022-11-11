@@ -263,7 +263,7 @@ function ($,
 
                if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
                {
-                  if (this .getStraightenHorizon () && viewpoint .getTypeName () !== "GeoViewpoint")
+                  if (this .getStraightenHorizon ())
                      this .rotation = this .getHorizonRotation (this .rotation);
 
                   this .addSpinning (this .rotation);
@@ -745,22 +745,22 @@ function ($,
                .multRight (viewpoint .getOrientation ())
                .multRight (orientationOffsetBefore);
 
-            if (straightenHorizon && viewpoint .getTypeName () !== "GeoViewpoint")
-               viewpoint .straightenHorizon (userOrientation);
+            if (straightenHorizon)
+               viewpoint .straightenHorizon (userOrientation, this .getUpVector (viewpoint));
 
             const orientationOffsetAfter = orientationOffset
                .assign (viewpoint .getOrientation ())
                .inverse ()
                .multRight (userOrientation);
 
-            if (straightenHorizon && viewpoint .getTypeName () !== "GeoViewpoint")
+            if (straightenHorizon)
             {
                if (! _throw)
                   return orientationOffsetAfter;
 
                const userVector = userOrientation .multVecRot (zAxis .assign (Vector3 .zAxis));
 
-               if (Math .abs (viewpoint .getUpVector () .dot (userVector)) < MAX_ANGLE)
+               if (Math .abs (this .getUpVector (viewpoint) .dot (userVector)) < MAX_ANGLE)
                   return orientationOffsetAfter;
 
                throw new Error ("Critical angle");
@@ -781,12 +781,22 @@ function ($,
 
             const
                V = rotation .multVecRot (zAxis .assign (Vector3 .zAxis)) .normalize (),
-               N = Vector3 .cross (viewpoint .getUpVector (), V) .normalize (),
-               H = Vector3 .cross (N, viewpoint .getUpVector ()) .normalize ();
+               N = Vector3 .cross (this .getUpVector (viewpoint), V) .normalize (),
+               H = Vector3 .cross (N, this .getUpVector (viewpoint)) .normalize ();
 
             return new Rotation4 (Vector3 .zAxis, H);
          };
       })(),
+      getUpVector: function (viewpoint)
+      {
+         if (viewpoint .getTypeName () !== "GeoViewpoint")
+            return viewpoint .getUpVector ();
+
+         if (viewpoint .getUserPosition () .magnitude () < 6_500_000)
+            return viewpoint .getUpVector ();
+
+         return Vector3 .zAxis;
+      },
       disconnect: function ()
       {
          const browser = this .getBrowser ();
