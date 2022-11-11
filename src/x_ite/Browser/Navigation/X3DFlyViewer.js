@@ -422,7 +422,6 @@ function ($,
             userOrientation    = new Rotation4 (0, 0, 1, 0),
             orientationOffset  = new Rotation4 (0, 0, 1, 0),
             rubberBandRotation = new Rotation4 (0, 0, 1, 0),
-            up                 = new Rotation4 (0, 0, 1, 0),
             geoRotation        = new Rotation4 (0, 0, 1, 0);
 
          return function ()
