@@ -790,7 +790,7 @@ function ($,
          if (viewpoint .getTypeName () !== "GeoViewpoint")
             return viewpoint .getUpVector ();
 
-         if (viewpoint .getUserPosition () .magnitude () < 6_500_000)
+         if (viewpoint .getUserPosition () .magnitude () < 6.5e6)
             return viewpoint .getUpVector ();
 
          return Vector3 .zAxis;
