@@ -93,14 +93,14 @@ function (Fields,
       },
       getTranslationOffset: (function ()
       {
-         var
+         const
             localYAxis      = new Vector3 (0, 0, 0),
             userOrientation = new Rotation4 (0, 0, 1, 0),
             rotation        = new Rotation4 (0, 0, 1, 0);
 
          return function (velocity)
          {
-            var
+            const
                viewpoint = this .getActiveViewpoint (),
                upVector  = viewpoint .getUpVector ();
 
@@ -108,7 +108,7 @@ function (Fields,
             userOrientation .multVecRot (localYAxis .assign (Vector3 .yAxis));
             rotation        .setFromToVec (localYAxis, upVector);
 
-            var orientation = userOrientation .multRight (rotation);
+            const orientation = userOrientation .multRight (rotation);
 
             return orientation .multVecRot (velocity);
          };

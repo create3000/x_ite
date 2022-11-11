@@ -75,9 +75,9 @@ function ($,
 {
 "use strict";
 
-   var macOS = /Mac OS X/i .test (navigator .userAgent)
+   const macOS = /Mac OS X/i .test (navigator .userAgent)
 
-   var
+   const
       MOTION_TIME       = 0.05 * 1000,
       SPIN_RELEASE_TIME = 0.04 * 1000,
       SPIN_ANGLE        = 0.003,
@@ -124,7 +124,7 @@ function ($,
       {
          X3DViewer .prototype .initialize .call (this);
 
-         var
+         const
             browser = this .getBrowser (),
             element = browser .getSurface ();
 
@@ -163,7 +163,7 @@ function ($,
       {
          if (this .getStraightenHorizon ())
          {
-            var viewpoint = this .getActiveViewpoint ();
+            const viewpoint = this .getActiveViewpoint ();
 
             if (viewpoint)
                viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .Identity, viewpoint ._orientationOffset .getValue (), false);
@@ -178,7 +178,7 @@ function ($,
 
          this .pressTime = performance .now ();
 
-         var
+         const
             offset = this .getBrowser () .getSurface () .offset (),
             x      = event .pageX - offset .left,
             y      = event .pageY - offset .top;
@@ -257,7 +257,7 @@ function ($,
                event .preventDefault ();
                event .stopImmediatePropagation ();
 
-               var viewpoint = this .getActiveViewpoint ();
+               const viewpoint = this .getActiveViewpoint ();
 
                this .getBrowser () .setCursor ("DEFAULT");
 
@@ -304,11 +304,11 @@ function ($,
       },
       mousemove: (function ()
       {
-         var fromPoint = new Vector3 (0, 0, 0);
+         const fromPoint = new Vector3 (0, 0, 0);
 
          return function (event)
          {
-            var
+            const
                offset = this .getBrowser () .getSurface () .offset (),
                x      = event .pageX - offset .left,
                y      = event .pageY - offset .top;
@@ -323,7 +323,7 @@ function ($,
                   event .preventDefault ();
                   event .stopImmediatePropagation ();
 
-                  var toVector = this .trackballProjectToSphere (x, y, this .toVector);
+                  const toVector = this .trackballProjectToSphere (x, y, this .toVector);
 
                   this .rotation .setFromToVec (toVector, this .fromVector);
 
@@ -344,7 +344,7 @@ function ($,
                   event .preventDefault ();
                   event .stopImmediatePropagation ();
 
-                  var
+                  const
                      viewpoint   = this .getActiveViewpoint (),
                      toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
                      translation = viewpoint .getUserOrientation () .multVecRot (fromPoint .assign (this .fromPoint) .subtract (toPoint));
@@ -359,7 +359,7 @@ function ($,
       })(),
       mousewheel: (function ()
       {
-         var
+         const
             step        = new Vector3 (0, 0, 0),
             translation = new Vector3 (0, 0, 0);
 
@@ -371,15 +371,15 @@ function ($,
 
             // Change viewpoint position.
 
-            var
+            const
                browser   = this .getBrowser (),
                viewpoint = this .getActiveViewpoint ();
 
             browser .prepareEvents () .removeInterest ("spin", this);
             viewpoint .transitionStop ();
 
-            step        = this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR),
-            translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .magnitude ()));
+            this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR);
+            viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .magnitude ()));
 
             if (event .deltaY > 0)
                this .addMove (translation .negate (), Vector3 .Zero);
@@ -390,7 +390,7 @@ function ($,
       })(),
       touchstart: function (event)
       {
-         var touches = event .originalEvent .touches;
+         const touches = event .originalEvent .touches;
 
          switch (touches .length)
          {
@@ -480,7 +480,7 @@ function ($,
       },
       touchmove: (function ()
       {
-         var
+         const
             MOVE_ANGLE   = 0.7,
             ZOOM_ANGLE   = -0.7,
             touch1Change = new Vector2 (0, 0),
@@ -488,7 +488,7 @@ function ($,
 
          return function (event)
          {
-            var touches = event .originalEvent .touches;
+            const touches = event .originalEvent .touches;
 
             switch (touches .length)
             {
@@ -507,7 +507,7 @@ function ($,
                   touch1Change .set (touches [0] .pageX, touches [0] .pageY) .subtract (this .touch1) .normalize ();
                   touch2Change .set (touches [1] .pageX, touches [1] .pageY) .subtract (this .touch2) .normalize ();
 
-                  var
+                  const
                      move = touch1Change .dot (touch2Change) > MOVE_ANGLE,
                      zoom = touch1Change .dot (touch2Change) < ZOOM_ANGLE,
                      mode = this .touchMode || (move ? 1 : (zoom ? 2 : 0));
@@ -533,12 +533,12 @@ function ($,
 
                         this .touchMode = 2;
 
-                        var distance1 = this .touch1 .distance (this .touch2);
+                        const distance1 = this .touch1 .distance (this .touch2);
 
                         this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
                         this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
 
-                        var
+                        const
                            distance2 = this .touch1 .distance (this .touch2),
                            delta     = distance2 - distance1;
 
@@ -560,7 +560,7 @@ function ($,
       })(),
       spin: function ()
       {
-         var viewpoint = this .getActiveViewpoint ();
+         const viewpoint = this .getActiveViewpoint ();
 
          this .orientationOffset .assign (viewpoint ._orientationOffset .getValue ());
 
@@ -569,30 +569,30 @@ function ($,
       },
       set_positionOffset__: function (value)
       {
-         var viewpoint = this .getActiveViewpoint ();
+         const viewpoint = this .getActiveViewpoint ();
 
          viewpoint ._positionOffset = value;
       },
       set_centerOfRotationOffset__: function (value)
       {
-         var viewpoint = this .getActiveViewpoint ();
+         const viewpoint = this .getActiveViewpoint ();
 
          viewpoint ._centerOfRotationOffset = value;
       },
       set_rotation__: function (value)
       {
-         var viewpoint = this .getActiveViewpoint ();
+         const viewpoint = this .getActiveViewpoint ();
 
          viewpoint ._orientationOffset = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset, false);
          viewpoint ._positionOffset    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint ._orientationOffset .getValue ());
       },
       addRotate: (function ()
       {
-         var destination = new Rotation4 ();
+         const destination = new Rotation4 ();
 
          return function (rotationChange)
          {
-            var viewpoint = this .getActiveViewpoint ();
+            const viewpoint = this .getActiveViewpoint ();
 
             if (this .rotationChaser ._isActive .getValue () && this .rotationChaser ._value_changed .hasInterest ("set_rotation__", this))
             {
@@ -646,7 +646,7 @@ function ($,
       })(),
       addSpinning: (function ()
       {
-         var rotation = new Rotation4 (0, 0, 1, 0);
+         const rotation = new Rotation4 (0, 0, 1, 0);
 
          return function (rotationChange)
          {
@@ -658,13 +658,13 @@ function ($,
       })(),
       addMove: (function ()
       {
-         var
+         const
             positionOffset         = new Vector3 (0, 0, 0),
             centerOfRotationOffset = new Vector3 (0, 0, 0);
 
          return function (positionOffsetChange, centerOfRotationOffsetChange)
          {
-            var viewpoint = this .getActiveViewpoint ();
+            const viewpoint = this .getActiveViewpoint ();
 
             if (this .positionChaser ._isActive .getValue () && this .positionChaser ._value_changed .hasInterest ("set_positionOffset__", this))
             {
@@ -709,7 +709,7 @@ function ($,
       })(),
       getPositionOffset: (function ()
       {
-         var
+         const
             distance = new Vector3 (0, 0, 0),
             d        = new Vector3 (0, 0, 0),
             oob      = new Rotation4 (0, 0, 1, 0);
@@ -729,14 +729,14 @@ function ($,
       })(),
       getOrientationOffset: (function ()
       {
-         var
+         const
             userOrientation   = new Rotation4 (0, 0, 1, 0),
             orientationOffset = new Rotation4 (0, 0, 1, 0),
             zAxis             = new Vector3 (0, 0, 0);
 
          return function (rotation, orientationOffsetBefore, _throw)
          {
-            var
+            const
                viewpoint         = this .getActiveViewpoint (),
                straightenHorizon = this .getStraightenHorizon ();
 
@@ -748,7 +748,7 @@ function ($,
             if (straightenHorizon && viewpoint .getTypeName () !== "GeoViewpoint")
                viewpoint .straightenHorizon (userOrientation);
 
-            var orientationOffsetAfter = orientationOffset
+            const orientationOffsetAfter = orientationOffset
                .assign (viewpoint .getOrientation ())
                .inverse ()
                .multRight (userOrientation);
@@ -758,7 +758,7 @@ function ($,
                if (! _throw)
                   return orientationOffsetAfter;
 
-               var userVector = userOrientation .multVecRot (zAxis .assign (Vector3 .zAxis));
+               const userVector = userOrientation .multVecRot (zAxis .assign (Vector3 .zAxis));
 
                if (Math .abs (viewpoint .getUpVector () .dot (userVector)) < MAX_ANGLE)
                   return orientationOffsetAfter;
@@ -773,13 +773,13 @@ function ($,
       })(),
       getHorizonRotation: (function ()
       {
-         var zAxis = new Vector3 (0, 0, 0);
+         const zAxis = new Vector3 (0, 0, 0);
 
          return function (rotation)
          {
-            var viewpoint = this .getActiveViewpoint ();
+            const viewpoint = this .getActiveViewpoint ();
 
-            var
+            const
                V = rotation .multVecRot (zAxis .assign (Vector3 .zAxis)) .normalize (),
                N = Vector3 .cross (viewpoint .getUpVector (), V) .normalize (),
                H = Vector3 .cross (N, viewpoint .getUpVector ()) .normalize ();
@@ -789,7 +789,7 @@ function ($,
       })(),
       disconnect: function ()
       {
-         var browser = this .getBrowser ();
+         const browser = this .getBrowser ();
 
          this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this);
          this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this);
@@ -799,7 +799,7 @@ function ($,
       },
       dispose: function ()
       {
-         var browser = this .getBrowser ();
+         const browser = this .getBrowser ();
 
          this .disconnect ();
          browser ._activeViewpoint .removeInterest ("set_activeViewpoint__", this);

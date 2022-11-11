@@ -71,9 +71,9 @@ function ($,
 {
 "use strict";
 
-   var macOS = /Mac OS X/i .test (navigator .userAgent)
+   const macOS = /Mac OS X/i .test (navigator .userAgent)
 
-   var
+   const
       SPEED_FACTOR           = 0.007,
       SHIFT_SPEED_FACTOR     = 4 * SPEED_FACTOR,
       ROTATION_SPEED_FACTOR  = 1.4,
@@ -83,7 +83,7 @@ function ($,
       ROLL_ANGLE             = macOS ? Math .PI / 512 : Math .PI / 32,
       ROTATE_TIME            = 0.3;
 
-   var
+   const
       MOVE = 0,
       PAN  = 1;
 
@@ -155,7 +155,7 @@ function ($,
 
          this .event = event;
 
-         var
+         const
             offset = this .getBrowser () .getSurface () .offset (),
             x      = event .pageX - offset .left,
             y      = event .pageY - offset .top;
@@ -261,7 +261,7 @@ function ($,
 
          this .event = event;
 
-         var
+         const
             offset = this .getBrowser () .getSurface () .offset (),
             x      = event .pageX - offset .left,
             y      = event .pageY - offset .top;
@@ -278,7 +278,7 @@ function ($,
 
                   // Look around
 
-                  var toVector = this .trackballProjectToSphere (x, y, this .toVector);
+                  const toVector = this .trackballProjectToSphere (x, y, this .toVector);
 
                   this .addRotation (this .fromVector, toVector);
                   this .fromVector .assign (toVector);
@@ -316,7 +316,7 @@ function ($,
 
          // Change viewpoint position.
 
-         var viewpoint = this .getActiveViewpoint ();
+         const viewpoint = this .getActiveViewpoint ();
 
          viewpoint .transitionStop ();
 
@@ -328,7 +328,7 @@ function ($,
       },
       touchstart: function (event)
       {
-         var touches = event .originalEvent .touches;
+         const touches = event .originalEvent .touches;
 
          switch (touches .length)
          {
@@ -385,7 +385,7 @@ function ($,
       },
       touchmove: function (event)
       {
-         var touches = event .originalEvent .touches;
+         const touches = event .originalEvent .touches;
 
          switch (touches .length)
          {
@@ -415,18 +415,17 @@ function ($,
       },
       fly: (function ()
       {
-         var
+         const
             upVector           = new Vector3 (0, 0, 0),
             direction          = new Vector3 (0, 0, 0),
             axis               = new Vector3 (0, 0, 0),
             userOrientation    = new Rotation4 (0, 0, 1, 0),
             orientationOffset  = new Rotation4 (0, 0, 1, 0),
-            rubberBandRotation = new Rotation4 (0, 0, 1, 0),
-            geoRotation        = new Rotation4 (0, 0, 1, 0);
+            rubberBandRotation = new Rotation4 (0, 0, 1, 0);
 
          return function ()
          {
-            var
+            const
                navigationInfo = this .getNavigationInfo (),
                viewpoint      = this .getActiveViewpoint (),
                now            = performance .now (),
@@ -441,18 +440,18 @@ function ($,
             else
                rubberBandRotation .setFromToVec (axis .set (0, 0, -1), this .direction);
 
-            var rubberBandLength = this .direction .magnitude ();
+               const rubberBandLength = this .direction .magnitude ();
 
             // Determine positionOffset.
 
-            var speedFactor = 1 - rubberBandRotation .angle / (Math .PI / 2);
+            let speedFactor = 1 - rubberBandRotation .angle / (Math .PI / 2);
 
             speedFactor *= navigationInfo ._speed .getValue ();
             speedFactor *= viewpoint .getSpeedFactor ();
             speedFactor *= this .getBrowser () .getShiftKey () ? SHIFT_SPEED_FACTOR : SPEED_FACTOR;
             speedFactor *= dt;
 
-            var translation = this .getTranslationOffset (direction .assign (this .direction) .multiply (speedFactor));
+            const translation = this .getTranslationOffset (direction .assign (this .direction) .multiply (speedFactor));
 
             this .getActiveLayer () .constrainTranslation (translation, true);
 
@@ -460,7 +459,7 @@ function ($,
 
             // Determine weight for rubberBandRotation.
 
-            var weight = ROTATION_SPEED_FACTOR * dt * Math .pow (rubberBandLength / (rubberBandLength + ROTATION_LIMIT), 2);
+            const weight = ROTATION_SPEED_FACTOR * dt * Math .pow (rubberBandLength / (rubberBandLength + ROTATION_LIMIT), 2);
 
             // Determine userOrientation.
 
@@ -471,8 +470,7 @@ function ($,
 
             // Straighten horizon of userOrientation.
 
-            if (viewpoint .getTypeName () !== "GeoViewpoint" && this .getStraightenHorizon ())
-               viewpoint .straightenHorizon (userOrientation);
+            viewpoint .straightenHorizon (userOrientation);
 
             // Determine orientationOffset.
 
@@ -485,24 +483,18 @@ function ($,
 
             viewpoint ._orientationOffset = orientationOffset;
 
-            // GeoRotation
-
-            geoRotation .setFromToVec (upVector, viewpoint .getUpVector ());
-
-            viewpoint ._orientationOffset = geoRotation .multLeft (viewpoint ._orientationOffset .getValue ());
-
             this .startTime = now;
          };
       })(),
       pan: (function ()
       {
-         var
+         const
             direction = new Vector3 (0, 0, 0),
             axis      = new Vector3 (0, 0, 0);
 
          return function ()
          {
-            var
+            const
                navigationInfo = this .getNavigationInfo (),
                viewpoint      = this .getActiveViewpoint (),
                now            = performance .now (),
@@ -511,14 +503,14 @@ function ($,
 
             this .constrainPanDirection (direction .assign (this .direction));
 
-            var speedFactor = 1;
+            let speedFactor = 1;
 
             speedFactor *= navigationInfo ._speed .getValue ();
             speedFactor *= viewpoint .getSpeedFactor ();
             speedFactor *= this .getBrowser () .getShiftKey () ? PAN_SHIFT_SPEED_FACTOR : PAN_SPEED_FACTOR;
             speedFactor *= dt;
 
-            var
+            const
                orientation = viewpoint .getUserOrientation () .multRight (new Rotation4 (viewpoint .getUserOrientation () .multVecRot (axis .assign (Vector3 .yAxis)), upVector)),
                translation = orientation .multVecRot (direction .multiply (speedFactor));
 
@@ -531,7 +523,7 @@ function ($,
       })(),
       set_orientationOffset__: function (value)
       {
-         var viewpoint = this .getActiveViewpoint ();
+         const viewpoint = this .getActiveViewpoint ();
 
          viewpoint ._orientationOffset = value;
       },
@@ -558,13 +550,13 @@ function ($,
       },
       addRoll: (function ()
       {
-         var
+         const
             orientationOffset = new Rotation4 (0, 0, 1, 0),
             roll              = new Rotation4 (0, 0, 1, 0);
 
          return function (rollAngle)
          {
-            var viewpoint = this .getActiveViewpoint ();
+            const viewpoint = this .getActiveViewpoint ();
 
             if (this .orientationChaser ._isActive .getValue () && this .orientationChaser ._value_changed .hasInterest ("set_orientationOffset__", this))
             {
@@ -595,13 +587,13 @@ function ($,
       })(),
       addRotation: (function ()
       {
-         var
+         const
             userOrientation   = new Rotation4 (0, 0, 1, 0),
             orientationOffset = new Rotation4 (0, 0, 1, 0);
 
          return function (fromVector, toVector)
          {
-            var viewpoint = this .getActiveViewpoint ();
+            const viewpoint = this .getActiveViewpoint ();
 
             if (this .orientationChaser ._isActive .getValue () && this .orientationChaser ._value_changed .hasInterest ("set_orientationOffset__", this))
             {
@@ -709,7 +701,7 @@ function ($,
       })(),
       disconnect: function ()
       {
-         var browser = this .getBrowser ();
+         const browser = this .getBrowser ();
 
          browser .addBrowserEvent ();
 

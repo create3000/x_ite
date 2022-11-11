@@ -69,11 +69,11 @@ function ($,
 {
 "use strict";
 
-   var macOS = /Mac OS X/i .test (navigator .userAgent)
+   const macOS = /Mac OS X/i .test (navigator .userAgent)
 
-   var SCROLL_FACTOR = macOS ? 1 / 160 : 1 / 20;
+   const SCROLL_FACTOR = macOS ? 1 / 160 : 1 / 20;
 
-   var
+   const
       vector                 = new Vector3 (0 ,0, 0),
       positionOffset         = new Vector3 (0 ,0, 0),
       centerOfRotationOffset = new Vector3 (0, 0, 0);
@@ -97,7 +97,7 @@ function ($,
       {
          X3DViewer .prototype .initialize .call (this);
 
-         var
+         const
             browser = this .getBrowser (),
             element = browser .getSurface ();
 
@@ -111,7 +111,7 @@ function ($,
          if (this .button >= 0)
             return;
 
-         var
+         const
             offset = this .getBrowser () .getSurface () .offset (),
             x      = event .pageX - offset .left,
             y      = event .pageY - offset .top;
@@ -162,7 +162,7 @@ function ($,
       },
       mousemove: function (event)
       {
-         var
+         const
             offset = this .getBrowser () .getSurface () .offset (),
             x      = event .pageX - offset .left,
             y      = event .pageY - offset .top;
@@ -178,7 +178,7 @@ function ($,
 
                // Move.
 
-               var
+               const
                   viewpoint   = this .getActiveViewpoint (),
                   toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
                   translation = viewpoint .getUserOrientation () .multVecRot (this .fromPoint .subtract (toPoint));
@@ -198,14 +198,14 @@ function ($,
          event .preventDefault ();
          event .stopImmediatePropagation ();
 
-         var
+         const
             offset = this .getBrowser () .getSurface () .offset (),
             x      = event .pageX - offset .left,
             y      = event .pageY - offset .top;
 
          // Change viewpoint position.
 
-         var
+         const
             viewpoint = this .getActiveViewpoint (),
             fromPoint = this .getPointOnCenterPlane (x, y, this .fromPoint);
 
@@ -225,7 +225,7 @@ function ($,
          if (viewpoint .set_fieldOfView___)
             viewpoint .set_fieldOfView___ (); // XXX: Immediately apply fieldOfViewScale;
 
-         var
+         const
             toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
             translation = viewpoint .getUserOrientation () .multVecRot (vector .assign (fromPoint) .subtract (toPoint));
 
@@ -234,7 +234,7 @@ function ($,
       },
       constrainFieldOfViewScale: function ()
       {
-         var viewpoint = this .getActiveViewpoint ();
+         const viewpoint = this .getActiveViewpoint ();
 
          if (viewpoint instanceof Viewpoint || viewpoint .getTypeName () === "GeoViewpoint")
          {

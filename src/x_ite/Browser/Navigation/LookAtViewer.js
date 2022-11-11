@@ -74,9 +74,9 @@ function ($,
 {
 "use strict";
 
-   var macOS = /Mac OS X/i .test (navigator .userAgent)
+   const macOS = /Mac OS X/i .test (navigator .userAgent)
 
-   var
+   const
       SCROLL_FACTOR = macOS ? 1 / 120 : 1 / 20,
       MOVE_TIME     = 0.3,
       ROTATE_TIME   = 0.3;
@@ -109,7 +109,7 @@ function ($,
       {
          X3DViewer .prototype .initialize .call (this);
 
-         var
+         const
             browser = this .getBrowser (),
             element = browser .getSurface ();
 
@@ -142,7 +142,7 @@ function ($,
          if (this .button >= 0)
             return;
 
-         var
+         const
             offset = this .getBrowser () .getSurface () .offset (),
             x      = event .pageX - offset .left,
             y      = event .pageY - offset .top;
@@ -203,7 +203,7 @@ function ($,
          event .preventDefault ();
          event .stopImmediatePropagation ();
 
-         var
+         const
             element = this .getBrowser () .getSurface (),
             offset  = element .offset (),
             x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
@@ -218,7 +218,7 @@ function ($,
 
          this .event = event;
 
-         var
+         const
             offset = this .getBrowser () .getSurface () .offset (),
             x      = event .pageX - offset .left,
             y      = event .pageY - offset .top;
@@ -233,7 +233,7 @@ function ($,
 
                // Look around
 
-               var toVector  = this .trackballProjectToSphere (x, y, this .toVector);
+               const toVector = this .trackballProjectToSphere (x, y, this .toVector);
 
                this .addRotation (this .fromVector, toVector);
                this .fromVector .assign (toVector);
@@ -243,7 +243,7 @@ function ($,
       },
       mousewheel: (function ()
       {
-         var
+         const
             step        = new Vector3 (0, 0, 0),
             translation = new Vector3 (0, 0, 0);
 
@@ -255,7 +255,7 @@ function ($,
 
             // Change viewpoint position.
 
-            var viewpoint = this .getActiveViewpoint ();
+            const viewpoint = this .getActiveViewpoint ();
 
             viewpoint .transitionStop ();
 
@@ -271,7 +271,7 @@ function ($,
       })(),
       touchstart: function (event)
       {
-         var touches = event .originalEvent .touches;
+         const touches = event .originalEvent .touches;
 
          switch (touches .length)
          {
@@ -336,7 +336,7 @@ function ($,
       },
       touchmove: (function ()
       {
-         var
+         const
             MOVE_ANGLE   = 0.7,
             ZOOM_ANGLE   = -0.7,
             touch1Change = new Vector2 (0, 0),
@@ -344,7 +344,7 @@ function ($,
 
          return function (event)
          {
-            var touches = event .originalEvent .touches;
+            const touches = event .originalEvent .touches;
 
             switch (touches .length)
             {
@@ -358,7 +358,7 @@ function ($,
                   touch1Change .set (touches [0] .pageX, touches [0] .pageY) .subtract (this .touch1) .normalize ();
                   touch2Change .set (touches [1] .pageX, touches [1] .pageY) .subtract (this .touch2) .normalize ();
 
-                  var
+                  const
                      move = touch1Change .dot (touch2Change) > MOVE_ANGLE,
                      zoom = touch1Change .dot (touch2Change) < ZOOM_ANGLE;
 
@@ -376,12 +376,12 @@ function ($,
                   {
                      // Zoom (mouse wheel).
 
-                     var distance1 = this .touch1 .distance (this .touch2);
+                     const distance1 = this .touch1 .distance (this .touch2);
 
                      this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
                      this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
 
-                     var
+                     const
                         distance2 = this .touch1 .distance (this .touch2),
                         delta     = distance2 - distance1;
 
@@ -400,31 +400,31 @@ function ($,
       })(),
       set_positionOffset__: function (value)
       {
-         var viewpoint = this .getActiveViewpoint ();
+         const viewpoint = this .getActiveViewpoint ();
 
          viewpoint ._positionOffset = value;
       },
       set_centerOfRotationOffset__: function (value)
       {
-         var viewpoint = this .getActiveViewpoint ();
+         const viewpoint = this .getActiveViewpoint ();
 
          viewpoint ._centerOfRotationOffset = value;
       },
       set_orientationOffset__: function (value)
       {
-         var viewpoint = this .getActiveViewpoint ();
+         const viewpoint = this .getActiveViewpoint ();
 
          viewpoint ._orientationOffset = value;
       },
       addMove: (function ()
       {
-         var
+         const
             positionOffset         = new Vector3 (0, 0, 0),
             centerOfRotationOffset = new Vector3 (0, 0, 0);
 
          return function (positionOffsetChange, centerOfRotationOffsetChange)
          {
-            var viewpoint = this .getActiveViewpoint ();
+            const viewpoint = this .getActiveViewpoint ();
 
             if (this .positionChaser ._isActive .getValue () && this .positionChaser ._value_changed .hasInterest ("set_positionOffset__", this))
             {
@@ -469,13 +469,13 @@ function ($,
       })(),
       addRotation: (function ()
       {
-         var
+         const
             userOrientation   = new Rotation4 (0, 0, 1, 0),
             orientationOffset = new Rotation4 (0, 0, 1, 0);
 
          return function (fromVector, toVector)
          {
-            var viewpoint = this .getActiveViewpoint ();
+            const viewpoint = this .getActiveViewpoint ();
 
             if (this .orientationChaser ._isActive .getValue () && this .orientationChaser ._value_changed .hasInterest ("set_orientationOffset__", this))
             {
