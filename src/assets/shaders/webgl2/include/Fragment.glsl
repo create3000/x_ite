@@ -52,6 +52,7 @@ in vec3 vertex;
 
 #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
    uniform float x3d_LogarithmicFarFactor1_2;
+   in float depth;
 #endif
 
 out vec4 x3d_FragColor;
@@ -110,6 +111,6 @@ fragment_main ()
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
       //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-      gl_FragDepth = log2 (1.0 + 1.0 / gl_FragCoord .w) * x3d_LogarithmicFarFactor1_2;
+      gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
    #endif
 }
