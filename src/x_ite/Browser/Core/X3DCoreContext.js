@@ -298,12 +298,9 @@ function ($,
       },
       parseUrlAttribute: function (urlCharacters)
       {
-         const
-            parser = new VRMLParser (this .getExecutionContext ()),
-            url    = new Fields .MFString ();
+         const url = new Fields .MFString ();
 
-         parser .setInput (urlCharacters);
-         parser .sfstringValues (url);
+         url .fromString (urlCharacters, this .getExecutionContext ());
 
          return url;
       },
