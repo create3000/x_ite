@@ -157,13 +157,14 @@ function ($,
                       "      Color depth: " + this .getColorDepth () + " bits\n" +
                       "      Max clip planes per shape: " + this .getMaxClipPlanes () + "\n" +
                       "      Max lights per shape: " + this .getMaxLights () + "\n" +
-                      "      Max textures per shape: " + this .getMaxTextures () + "\n" +
+                      "      Max multi textures per shape: " + this .getMaxTextures () + "\n" +
                       "      Texture units: " + this .getMaxCombinedTextureUnits () + "\n" +
                       "      Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixels\n" +
                       "      Texture memory: " + this .getTextureMemory () + "\n" +
                       "      Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
                       "      Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
-                      "      Max vertex attribs: " + this .getMaxVertexAttribs () + "\n");
+                      "      Max vertex attribs: " + this .getMaxVertexAttribs () + "\n" +
+                      "      Max varying vectors: " + this .getMaxVaryingVectors () + "\n");
       },
       getName: function ()
       {

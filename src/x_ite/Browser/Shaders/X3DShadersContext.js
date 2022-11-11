@@ -103,6 +103,12 @@ function (Shading,
 
          return gl .getParameter (gl .MAX_VERTEX_ATTRIBS);
       },
+      getMaxVaryingVectors: function ()
+      {
+         const gl = this .getContext ();
+
+         return gl .getParameter (gl .MAX_VARYING_VECTORS);
+      },
       getWireframe: function ()
       {
          return this [_wireframe];
