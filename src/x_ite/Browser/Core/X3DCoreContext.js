@@ -196,12 +196,7 @@ function ($,
          {
             get: function ()
             {
-               const worldURL = this .getExecutionContext () .getWorldURL ();
-
-               if (worldURL)
-                  return new Fields .MFString (worldURL);
-               else
-                  return new Fields .MFString ();
+               return new Fields .MFString (this .getExecutionContext () .getWorldURL ());
             }
             .bind (this),
             set: function (value)
@@ -301,13 +296,21 @@ function ($,
 
          return this [_privateScene];
       },
+      parseUrlAttribute: function (urlCharacters)
+      {
+         const
+            parser = new VRMLParser (this .getExecutionContext ()),
+            url    = new Fields .MFString ();
+
+         parser .setInput (urlCharacters);
+         parser .sfstringValues (url);
+
+         return url;
+      },
       processMutations: function (mutations)
       {
-         mutations .forEach (function (mutation)
-         {
+         for (const mutation of mutations)
             this .processMutation (mutation);
-         },
-         this);
       },
       processMutation: function (mutation)
       {
@@ -337,35 +340,16 @@ function ($,
             {
                const urlCharacters = this .getElement () .attr ("src");
 
-               this .loadAttribute ('"' + urlCharacters + '"');
+               this .loadURL (new Fields .MFString (urlCharacters), new Fields .MFString ());
                break;
             }
             case "url":
             {
-               this .loadAttribute (this .getElement () .attr ("url"));
+               const urlCharacters = this .getElement () .attr ("url");
+
+               this .loadURL (this .parseUrlAttribute (urlCharacters), new Fields .MFString ());
                break;
             }
-         }
-      },
-      loadAttribute: function (urlCharacters)
-      {
-         if (urlCharacters)
-         {
-            const
-               parser    = new VRMLParser (this .getExecutionContext ()),
-               url       = new Fields .MFString (),
-               parameter = new Fields .MFString ();
-
-            parser .setInput (urlCharacters);
-            parser .sfstringValues (url);
-
-            if (url .length)
-               this .loadURL (url, parameter);
-         }
-         else
-         {
-            if (! this .getLoading ())
-               this .getCanvas () .show ();
          }
       },
       callBrowserEventHandler: function (events)

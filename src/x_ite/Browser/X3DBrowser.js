@@ -132,15 +132,19 @@ function ($,
 
          // Load src or url attribute.
 
-         let urlCharacters = this .getElement () .attr ("src");
+         const urlCharacters = this .getElement () .attr ("src");
 
          if (urlCharacters)
-            urlCharacters = '"' + urlCharacters + '"';
+         {
+            this .loadURL (new Fields .MFString (urlCharacters), new Fields .MFString ());
+         }
          else
-            urlCharacters = this .getElement () .attr ("url");
+         {
+            const urlCharacters = this .getElement () .attr ("url");
 
-         if (urlCharacters)
-            this .loadAttribute (urlCharacters);
+            if (urlCharacters)
+               this .loadURL (this .parseUrlAttribute (urlCharacters), new Fields .MFString ());
+         }
 
          // Print welcome message.
 
