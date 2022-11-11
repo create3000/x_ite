@@ -54,7 +54,6 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Base/X3DConstants",
    "x_ite/Browser/Navigation/X3DViewer",
-   "x_ite/Components/Navigation/Viewpoint",
    "standard/Math/Numbers/Vector3",
    "jquery-mousewheel",
 ],
@@ -64,7 +63,6 @@ function ($,
           FieldDefinitionArray,
           X3DConstants,
           X3DViewer,
-          Viewpoint,
           Vector3)
 {
 "use strict";
@@ -236,7 +234,7 @@ function ($,
       {
          const viewpoint = this .getActiveViewpoint ();
 
-         if (viewpoint instanceof Viewpoint || viewpoint .getTypeName () === "GeoViewpoint")
+         if (viewpoint .getTypeName () .match (/^(?:Viewpoint|GeoViewpoint)$/))
          {
             if (viewpoint ._fieldOfView .getValue () * viewpoint ._fieldOfViewScale .getValue () >= Math .PI)
                viewpoint ._fieldOfViewScale = (Math .PI - 0.001) / viewpoint ._fieldOfView .getValue ();

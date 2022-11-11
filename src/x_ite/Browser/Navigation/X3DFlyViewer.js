@@ -470,7 +470,8 @@ function ($,
 
             // Straighten horizon of userOrientation.
 
-            viewpoint .straightenHorizon (userOrientation);
+            if (this .getStraightenHorizon ())
+               viewpoint .straightenHorizon (userOrientation);
 
             // Determine orientationOffset.
 
@@ -602,7 +603,7 @@ function ($,
                   .multRight (viewpoint .getOrientation ())
                   .multRight (this .orientationChaser ._set_destination .getValue ());
 
-               if (viewpoint .getTypeName () !== "GeoViewpoint" && this .getStraightenHorizon ())
+               if (this .getStraightenHorizon ())
                   viewpoint .straightenHorizon (userOrientation);
 
                orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
@@ -615,7 +616,7 @@ function ($,
                   .setFromToVec (toVector, fromVector)
                   .multRight (viewpoint .getUserOrientation ());
 
-               if (viewpoint .getTypeName () !== "GeoViewpoint" && this .getStraightenHorizon ())
+               if (this .getStraightenHorizon ())
                   viewpoint .straightenHorizon (userOrientation);
 
                orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);

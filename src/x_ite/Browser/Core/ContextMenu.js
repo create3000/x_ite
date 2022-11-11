@@ -50,14 +50,12 @@
 define ([
    "jquery",
    "x_ite/Base/X3DBaseNode",
-   "x_ite/Components/Geospatial/GeoViewpoint",
    "locale/gettext",
    "lib/jquery.fullscreen-min",
    "jquery-mousewheel",
 ],
 function ($,
           X3DBaseNode,
-          GeoViewpoint,
           _)
 {
 "use strict";
@@ -479,7 +477,12 @@ function ($,
             delete menu .items ["available-viewers"];
          }
 
-         if (! browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/) || (currentViewpoint instanceof GeoViewpoint))
+         if (! browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/))
+         {
+            delete menu .items ["straighten-horizon"];
+         }
+
+         if (browser .getCurrentViewer () .match (/^(?:EXAMINE)$/) && currentViewpoint .getTypeName () === "GeoViewpoint")
          {
             delete menu .items ["straighten-horizon"];
          }
