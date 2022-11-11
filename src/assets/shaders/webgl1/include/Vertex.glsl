@@ -65,10 +65,6 @@ varying vec3 vertex;
    varying vec3 localVertex;
 #endif
 
-#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-   varying float depth;
-#endif
-
 // Main
 
 #pragma X3D include "PointSize.glsl"
@@ -121,8 +117,4 @@ vertex_main ()
    #endif
 
    gl_Position = x3d_ProjectionMatrix * position;
-
-   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-      depth = 1.0 + gl_Position .w;
-   #endif
 }

@@ -290,7 +290,7 @@ function (Fields,
          {
             this .getCoord (this ._position .getValue (), position);
 
-            return this .getGeoUpVector .call (this, position .add (this ._positionOffset .getValue ()), upVector);
+            return this .getGeoUpVector (position .add (this ._positionOffset .getValue ()), upVector);
          };
       })(),
       getSpeedFactor: function ()

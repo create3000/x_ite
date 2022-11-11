@@ -689,36 +689,19 @@ function initialize ()
 }
 ```
 
-To address the issue of the depth not being interpolated in perspectively-correct way, output the following interpolant to the vertex shader:
-
-```glsl
-#version 300 es
-
-out float depth;
-
-void
-main ()
-{
-   ...
-   // Assuming gl_Position was already computed.
-   depth = 1.0 + gl_Position .w;
-}
-```
-
-and then in the fragment shader add:
+To address the issue of the depth not being interpolated in perspectively-correct way, add to the fragment shader:
 
 ```glsl
 #version 300 es
 
 uniform float x3d_LogarithmicFarValue1_2;
-in float depth;
 
 void
 main ()
 {
    ...
    //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-   gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+   gl_FragDepth = log2 (1.0 + 1.0 / gl_FragCoord .w) * x3d_LogarithmicFarFactor1_2;
 }
 ```
 

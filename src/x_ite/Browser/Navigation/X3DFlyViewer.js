@@ -437,12 +437,10 @@ function ($,
 
             // Rubberband values
 
-            up .setFromToVec (Vector3 .yAxis, upVector);
-
             if (this .direction .z > 0)
-               rubberBandRotation .setFromToVec (up .multVecRot (direction .assign (this .direction)), up .multVecRot (axis .set (0, 0, 1)));
+               rubberBandRotation .setFromToVec (this .direction, axis .set (0, 0, 1));
             else
-               rubberBandRotation .setFromToVec (up .multVecRot (axis .set (0, 0, -1)), up .multVecRot (direction .assign (this .direction)));
+               rubberBandRotation .setFromToVec (axis .set (0, 0, -1), this .direction);
 
             var rubberBandLength = this .direction .magnitude ();
 
