@@ -777,12 +777,10 @@ function ($,
 
          return function (rotation)
          {
-            const viewpoint = this .getActiveViewpoint ();
-
             const
-               V = rotation .multVecRot (zAxis .assign (Vector3 .zAxis)) .normalize (),
-               N = Vector3 .cross (this .getUpVector (viewpoint), V) .normalize (),
-               H = Vector3 .cross (N, this .getUpVector (viewpoint)) .normalize ();
+               V = rotation .multVecRot (zAxis .assign (Vector3 .zAxis)),
+               N = Vector3 .cross (Vector3 .yAxis, V),
+               H = Vector3 .cross (N, Vector3 .yAxis);
 
             return new Rotation4 (Vector3 .zAxis, H);
          };
