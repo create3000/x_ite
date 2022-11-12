@@ -1,6 +1,6 @@
 {
 	"name": "x_ite",
-	"version": "6.1.0",
+	"version": "7.0.0",
 	"revision": "1157",
 	"description": "X_ITE X3D Browser, a framework for integrating and manipulating X3D and VRML scenes in HTML.",
 	"homepage": "https://create3000.github.io/x_ite/",
