@@ -47,13 +47,13 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DChildNode from "../Core/X3DChildNode.js";
+import Fields           from "../../Fields.js";
+import X3DChildNode     from "../Core/X3DChildNode.js";
 import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import TextureQuality from "../../Browser/Core/TextureQuality.js";
-import VolumeMaterial from "../../Browser/VolumeRendering/VolumeMaterial.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import X3DConstants     from "../../Base/X3DConstants.js";
+import TextureQuality   from "../../Browser/Core/TextureQuality.js";
+import VolumeMaterial   from "../../Browser/VolumeRendering/VolumeMaterial.js";
+import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
 
 function X3DVolumeDataNode (executionContext)
 {

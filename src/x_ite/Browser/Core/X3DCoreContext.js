@@ -47,19 +47,19 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import Context from "./Context.js";
-import BrowserTimings from "./BrowserTimings.js";
-import BrowserOptions from "./BrowserOptions.js";
-import BrowserProperties from "./BrowserProperties.js";
+import Fields              from "../../Fields.js";
+import Context             from "./Context.js";
+import BrowserTimings      from "./BrowserTimings.js";
+import BrowserOptions      from "./BrowserOptions.js";
+import BrowserProperties   from "./BrowserProperties.js";
 import RenderingProperties from "./RenderingProperties.js";
-import Notification from "./Notification.js";
-import ContextMenu from "./ContextMenu.js";
-import Scene from "../../Execution/Scene.js";
-import VRMLParser from "../../Parser/VRMLParser.js";
-import DataStorage from "../../../standard/Utility/DataStorage.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import _ from "../../../locale/gettext.js";
+import Notification        from "./Notification.js";
+import ContextMenu         from "./ContextMenu.js";
+import Scene               from "../../Execution/Scene.js";
+import VRMLParser          from "../../Parser/VRMLParser.js";
+import DataStorage         from "../../../standard/Utility/DataStorage.js";
+import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
+import _                   from "../../../locale/gettext.js";
 
 const WEBGL_LATEST_VERSION = 2;
 

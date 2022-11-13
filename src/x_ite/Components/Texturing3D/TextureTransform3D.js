@@ -47,14 +47,14 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import Fields                        from "../../Fields.js";
+import X3DFieldDefinition            from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray          from "../../Base/FieldDefinitionArray.js";
 import X3DSingleTextureTransformNode from "../Texturing/X3DSingleTextureTransformNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import X3DConstants                  from "../../Base/X3DConstants.js";
+import Vector3                       from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4                     from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4                       from "../../../standard/Math/Numbers/Matrix4.js";
 
 function TextureTransform3D (executionContext)
 {

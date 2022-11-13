@@ -47,21 +47,21 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DDragSensorNode from "./X3DDragSensorNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
-import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import Line2 from "../../../standard/Math/Geometry/Line2.js";
-import Line3 from "../../../standard/Math/Geometry/Line3.js";
-import Plane3 from "../../../standard/Math/Geometry/Plane3.js";
-import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
+import X3DDragSensorNode    from "./X3DDragSensorNode.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
+import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
+import Line2                from "../../../standard/Math/Geometry/Line2.js";
+import Line3                from "../../../standard/Math/Geometry/Line3.js";
+import Plane3               from "../../../standard/Math/Geometry/Plane3.js";
+import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 const
    screenLine     = new Line2 (Vector2 .Zero, Vector2 .Zero),

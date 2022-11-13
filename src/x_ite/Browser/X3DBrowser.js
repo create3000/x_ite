@@ -47,26 +47,26 @@
  ******************************************************************************/
 
 
-import VERSION from "./VERSION.js";
-import Fields from "../Fields.js";
-import Components from "../Components.js";
-import X3DLayerNode from "../Components/Layering/X3DLayerNode.js";
-import X3DBrowserContext from "./X3DBrowserContext.js";
-import ProfileInfo from "../Configuration/ProfileInfo.js";
-import ComponentInfo from "../Configuration/ComponentInfo.js";
-import SupportedProfiles from "../Configuration/SupportedProfiles.js";
+import VERSION             from "./VERSION.js";
+import Fields              from "../Fields.js";
+import Components          from "../Components.js";
+import X3DLayerNode        from "../Components/Layering/X3DLayerNode.js";
+import X3DBrowserContext   from "./X3DBrowserContext.js";
+import ProfileInfo         from "../Configuration/ProfileInfo.js";
+import ComponentInfo       from "../Configuration/ComponentInfo.js";
+import SupportedProfiles   from "../Configuration/SupportedProfiles.js";
 import SupportedComponents from "../Configuration/SupportedComponents.js";
-import SupportedNodes from "../Configuration/SupportedNodes.js";
-import Scene from "../Execution/Scene.js";
-import X3DScene from "../Execution/X3DScene.js";
-import TraverseType from "../Rendering/TraverseType.js";
-import FileLoader from "../InputOutput/FileLoader.js";
-import XMLParser from "../Parser/XMLParser.js";
-import JSONParser from "../Parser/JSONParser.js";
-import X3DCast from "../Base/X3DCast.js";
-import X3DConstants from "../Base/X3DConstants.js";
-import MapUtilities from "../../standard/Utility/MapUtilities.js";
-import _ from "../../locale/gettext.js";
+import SupportedNodes      from "../Configuration/SupportedNodes.js";
+import Scene               from "../Execution/Scene.js";
+import X3DScene            from "../Execution/X3DScene.js";
+import TraverseType        from "../Rendering/TraverseType.js";
+import FileLoader          from "../InputOutput/FileLoader.js";
+import XMLParser           from "../Parser/XMLParser.js";
+import JSONParser          from "../Parser/JSONParser.js";
+import X3DCast             from "../Base/X3DCast.js";
+import X3DConstants        from "../Base/X3DConstants.js";
+import MapUtilities        from "../../standard/Utility/MapUtilities.js";
+import _                   from "../../locale/gettext.js";
 
 const
    _loader           = Symbol (),

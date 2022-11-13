@@ -47,12 +47,12 @@
  ******************************************************************************/
 
 
-import Arc2DOptions from "./Arc2DOptions.js";
-import ArcClose2DOptions from "./ArcClose2DOptions.js";
-import Circle2DOptions from "./Circle2DOptions.js";
-import Disk2DOptions from "./Disk2DOptions.js";
+import Arc2DOptions       from "./Arc2DOptions.js";
+import ArcClose2DOptions  from "./ArcClose2DOptions.js";
+import Circle2DOptions    from "./Circle2DOptions.js";
+import Disk2DOptions      from "./Disk2DOptions.js";
 import Rectangle2DOptions from "./Rectangle2DOptions.js";
-import PrimitiveQuality from "../Core/PrimitiveQuality.js";
+import PrimitiveQuality   from "../Core/PrimitiveQuality.js";
 
 function X3DGeometry2DContext () { }
 

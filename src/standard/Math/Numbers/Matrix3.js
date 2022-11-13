@@ -47,9 +47,9 @@
  ******************************************************************************/
 
 
-import Vector2 from "./Vector2.js";
-import Vector3 from "./Vector3.js";
-import Matrix2 from "./Matrix2.js";
+import Vector2             from "./Vector2.js";
+import Vector3             from "./Vector3.js";
+import Matrix2             from "./Matrix2.js";
 import eigen_decomposition from "../Algorithms/eigen_decomposition.js";
 
 function Matrix3 ()

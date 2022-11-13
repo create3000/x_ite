@@ -47,13 +47,13 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DGroupingNode from "../Grouping/X3DGroupingNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 function ScreenGroup (executionContext)
 {

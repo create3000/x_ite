@@ -47,13 +47,13 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DChildNode from "../Core/X3DChildNode.js";
+import Fields           from "../../Fields.js";
+import X3DChildNode     from "../Core/X3DChildNode.js";
 import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import Ammo from "../../../lib/ammojs/AmmoClass.js";
+import X3DConstants     from "../../Base/X3DConstants.js";
+import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4          from "../../../standard/Math/Numbers/Matrix4.js";
+import Ammo             from "../../../lib/ammojs/AmmoClass.js";
 
 function X3DNBodyCollidableNode (executionContext)
 {

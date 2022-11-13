@@ -47,15 +47,15 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DChildNode from "../Core/X3DChildNode.js";
+import X3DChildNode         from "../Core/X3DChildNode.js";
 import PositionInterpolator from "../Interpolation/PositionInterpolator.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import X3DCast from "../../Base/X3DCast.js";
-import NURBS from "../../Browser/NURBS/NURBS.js";
-import nurbs from "../../../lib/nurbs/nurbs.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
+import NURBS                from "../../Browser/NURBS/NURBS.js";
+import nurbs                from "../../../lib/nurbs/nurbs.js";
 
 function NurbsPositionInterpolator (executionContext)
 {

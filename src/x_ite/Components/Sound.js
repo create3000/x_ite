@@ -46,10 +46,10 @@
  ******************************************************************************/
 
 
-import SupportedNodes from "../Configuration/SupportedNodes.js";
-import AudioClip from "./Sound/AudioClip.js";
-import Sound from "./Sound/Sound.js";
-import X3DSoundNode from "./Sound/X3DSoundNode.js";
+import SupportedNodes     from "../Configuration/SupportedNodes.js";
+import AudioClip          from "./Sound/AudioClip.js";
+import Sound              from "./Sound/Sound.js";
+import X3DSoundNode       from "./Sound/X3DSoundNode.js";
 import X3DSoundSourceNode from "./Sound/X3DSoundSourceNode.js";
 
 const Types =

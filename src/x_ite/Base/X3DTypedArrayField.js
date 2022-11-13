@@ -48,8 +48,8 @@
 
 
 import X3DArrayField from "./X3DArrayField.js";
-import Generator from "../InputOutput/Generator.js";
-import Algorithm from "../../standard/Math/Algorithm.js";
+import Generator     from "../InputOutput/Generator.js";
+import Algorithm     from "../../standard/Math/Algorithm.js";
 
 const
    _target = Symbol (),

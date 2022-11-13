@@ -46,11 +46,11 @@
  ******************************************************************************/
 
 
-import SupportedNodes from "../Configuration/SupportedNodes.js";
+import SupportedNodes   from "../Configuration/SupportedNodes.js";
 import DirectionalLight from "./Lighting/DirectionalLight.js";
-import PointLight from "./Lighting/PointLight.js";
-import SpotLight from "./Lighting/SpotLight.js";
-import X3DLightNode from "./Lighting/X3DLightNode.js";
+import PointLight       from "./Lighting/PointLight.js";
+import SpotLight        from "./Lighting/SpotLight.js";
+import X3DLightNode     from "./Lighting/X3DLightNode.js";
 
 const Types =
 {

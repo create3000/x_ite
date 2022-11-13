@@ -47,16 +47,16 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DChildNode from "../Core/X3DChildNode.js";
-import X3DBoundedObject from "./X3DBoundedObject.js";
-import Group from "./Group.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import Box3 from "../../../standard/Math/Geometry/Box3.js";
-import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
+import X3DChildNode         from "../Core/X3DChildNode.js";
+import X3DBoundedObject     from "./X3DBoundedObject.js";
+import Group                from "./Group.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
+import Box3                 from "../../../standard/Math/Geometry/Box3.js";
+import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js";
 
 // No support for X3DBindableNode nodes, local lights. X3DLocalFog, local ClipPlane nodes, LOD, Billboard, Switch node.
 

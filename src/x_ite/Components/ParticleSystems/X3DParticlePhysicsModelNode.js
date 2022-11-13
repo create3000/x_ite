@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 
-import X3DNode from "../Core/X3DNode.js";
+import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 
 function X3DParticlePhysicsModelNode (executionContext)

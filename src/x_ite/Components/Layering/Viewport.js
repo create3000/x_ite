@@ -47,15 +47,15 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DViewportNode from "./X3DViewportNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import ObjectCache from "../../../standard/Utility/ObjectCache.js";
-import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
-import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
+import X3DViewportNode      from "./X3DViewportNode.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
+import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
+import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js";
+import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 
 const ViewVolumes = ObjectCache (ViewVolume);
 

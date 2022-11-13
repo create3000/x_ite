@@ -47,11 +47,11 @@
  ******************************************************************************/
 
 
-import X3DChildNode from "../Core/X3DChildNode.js";
+import X3DChildNode     from "../Core/X3DChildNode.js";
 import X3DBoundedObject from "./X3DBoundedObject.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import X3DCast from "../../Base/X3DCast.js";
+import TraverseType     from "../../Rendering/TraverseType.js";
+import X3DConstants     from "../../Base/X3DConstants.js";
+import X3DCast          from "../../Base/X3DCast.js";
 
 function X3DGroupingNode (executionContext)
 {

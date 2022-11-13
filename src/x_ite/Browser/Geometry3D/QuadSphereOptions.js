@@ -47,14 +47,14 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DBaseNode from "../../Base/X3DBaseNode.js";
-import IndexedFaceSet from "../../Components/Geometry3D/IndexedFaceSet.js";
-import Coordinate from "../../Components/Rendering/Coordinate.js";
+import Fields            from "../../Fields.js";
+import X3DBaseNode       from "../../Base/X3DBaseNode.js";
+import IndexedFaceSet    from "../../Components/Geometry3D/IndexedFaceSet.js";
+import Coordinate        from "../../Components/Rendering/Coordinate.js";
 import TextureCoordinate from "../../Components/Texturing/TextureCoordinate.js";
-import Complex from "../../../standard/Math/Numbers/Complex.js";
-import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Complex           from "../../../standard/Math/Numbers/Complex.js";
+import Vector2           from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
 
 function QuadSphereOptions (executionContext)
 {

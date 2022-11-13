@@ -1,7 +1,7 @@
 
-import isNdarray from "./is-ndarray.js";
+import isNdarray     from "./is-ndarray.js";
 import isNdarrayLike from "./is-ndarray-like.js";
-import isArrayLike from "./is-array-like.js";
+import isArrayLike   from "./is-array-like.js";
 
 function inferType (x)
 {

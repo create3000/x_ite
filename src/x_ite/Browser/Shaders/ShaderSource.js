@@ -47,10 +47,10 @@
  ******************************************************************************/
 
 
-import Types from "../../../assets/shaders/Types.glsl.js";
-import MultiTextureModeType from "../Texturing/ModeType.js";
-import MultiTextureSourceType from "../Texturing/SourceType.js";
-import MultiTextureFunctionType from "../Texturing/FunctionType.js";
+import Types                              from "../../../assets/shaders/Types.glsl.js";
+import MultiTextureModeType               from "../Texturing/ModeType.js";
+import MultiTextureSourceType             from "../Texturing/SourceType.js";
+import MultiTextureFunctionType           from "../Texturing/FunctionType.js";
 import TextureCoordinateGeneratorModeType from "../Texturing/TextureCoordinateGeneratorModeType.js";
 
 const ShaderSource =

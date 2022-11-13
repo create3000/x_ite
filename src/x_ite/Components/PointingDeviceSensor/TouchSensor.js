@@ -47,12 +47,12 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DTouchSensorNode from "./X3DTouchSensorNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import X3DTouchSensorNode   from "./X3DTouchSensorNode.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 var invModelViewMatrix = new Matrix4 ();
 

@@ -47,16 +47,16 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DViewpointNode from "./X3DViewpointNode.js";
-import ScalarInterpolator from "../Interpolation/ScalarInterpolator.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Camera from "../../../standard/Math/Geometry/Camera.js";
-import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import X3DViewpointNode     from "./X3DViewpointNode.js";
+import ScalarInterpolator   from "../Interpolation/ScalarInterpolator.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import Camera               from "../../../standard/Math/Geometry/Camera.js";
+import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 function Viewpoint (executionContext)
 {

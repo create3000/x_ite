@@ -47,28 +47,28 @@
  ******************************************************************************/
 
 
-import X3DBrowserContext from "./Browser/X3DBrowserContext.js";
-import SupportedNodes from "./Configuration/SupportedNodes.js";
-import Core from "./Components/Core.js";
+import X3DBrowserContext    from "./Browser/X3DBrowserContext.js";
+import SupportedNodes       from "./Configuration/SupportedNodes.js";
+import Core                 from "./Components/Core.js";
 import EnvironmentalEffects from "./Components/EnvironmentalEffects.js";
-import EnvironmentalSensor from "./Components/EnvironmentalSensor.js";
-import Followers from "./Components/Followers.js";
-import Geometry3D from "./Components/Geometry3D.js";
-import Grouping from "./Components/Grouping.js";
-import Interpolation from "./Components/Interpolation.js";
-import Layering from "./Components/Layering.js";
-import Lighting from "./Components/Lighting.js";
-import Navigation from "./Components/Navigation.js";
-import Networking from "./Components/Networking.js";
+import EnvironmentalSensor  from "./Components/EnvironmentalSensor.js";
+import Followers            from "./Components/Followers.js";
+import Geometry3D           from "./Components/Geometry3D.js";
+import Grouping             from "./Components/Grouping.js";
+import Interpolation        from "./Components/Interpolation.js";
+import Layering             from "./Components/Layering.js";
+import Lighting             from "./Components/Lighting.js";
+import Navigation           from "./Components/Navigation.js";
+import Networking           from "./Components/Networking.js";
 import PointingDeviceSensor from "./Components/PointingDeviceSensor.js";
-import Rendering from "./Components/Rendering.js";
-import Shaders from "./Components/Shaders.js";
-import Shape from "./Components/Shape.js";
-import Sound from "./Components/Sound.js";
-import Text from "./Components/Text.js";
-import Texturing from "./Components/Texturing.js";
-import Time from "./Components/Time.js";
-import DEBUG from "./DEBUG.js";
+import Rendering            from "./Components/Rendering.js";
+import Shaders              from "./Components/Shaders.js";
+import Shape                from "./Components/Shape.js";
+import Sound                from "./Components/Sound.js";
+import Text                 from "./Components/Text.js";
+import Texturing            from "./Components/Texturing.js";
+import Time                 from "./Components/Time.js";
+import DEBUG                from "./DEBUG.js";
 
 function Components () { }
 

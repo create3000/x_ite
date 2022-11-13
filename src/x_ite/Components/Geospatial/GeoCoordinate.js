@@ -47,14 +47,14 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DCoordinateNode from "../Rendering/X3DCoordinateNode.js";
-import X3DGeospatialObject from "./X3DGeospatialObject.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Triangle3 from "../../../standard/Math/Geometry/Triangle3.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import X3DCoordinateNode    from "../Rendering/X3DCoordinateNode.js";
+import X3DGeospatialObject  from "./X3DGeospatialObject.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import Triangle3            from "../../../standard/Math/Geometry/Triangle3.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
 function GeoCoordinate (executionContext)
 {

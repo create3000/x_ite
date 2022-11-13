@@ -47,8 +47,8 @@
  ******************************************************************************/
 
 
-import X3DBaseNode from "../../Base/X3DBaseNode.js";
-import _ from "../../../locale/gettext.js";
+import X3DBaseNode      from "../../Base/X3DBaseNode.js";
+import _                from "../../../locale/gettext.js";
 import jqueryFullscreen from "../../../lib/jquery.fullscreen-min.js";
 
 const _userMenu = Symbol ();

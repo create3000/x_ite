@@ -47,12 +47,12 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DDamperNode from "./X3DDamperNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import X3DDamperNode        from "./X3DDamperNode.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
 function PositionDamper (executionContext)
 {

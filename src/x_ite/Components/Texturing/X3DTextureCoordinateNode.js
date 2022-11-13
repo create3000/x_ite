@@ -48,7 +48,7 @@
 
 
 import X3DGeometricPropertyNode from "../Rendering/X3DGeometricPropertyNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
+import X3DConstants             from "../../Base/X3DConstants.js";
 
 function X3DTextureCoordinateNode (executionContext)
 {

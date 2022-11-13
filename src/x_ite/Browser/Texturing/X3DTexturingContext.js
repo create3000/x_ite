@@ -48,9 +48,9 @@
 
 
 import TextureProperties from "../../Components/Texturing/TextureProperties.js";
-import TextureTransform from "../../Components/Texturing/TextureTransform.js";
+import TextureTransform  from "../../Components/Texturing/TextureTransform.js";
 import TextureCoordinate from "../../Components/Texturing/TextureCoordinate.js";
-import TextureQuality from "../Core/TextureQuality.js";
+import TextureQuality    from "../Core/TextureQuality.js";
 
 const
    _maxTextures              = Symbol (),

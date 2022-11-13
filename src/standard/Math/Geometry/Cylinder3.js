@@ -47,10 +47,10 @@
  ******************************************************************************/
 
 
-import Vector3 from "../Numbers/Vector3.js";
+import Vector3   from "../Numbers/Vector3.js";
 import Rotation4 from "../Numbers/Rotation4.js";
-import Matrix4 from "../Numbers/Matrix4.js";
-import Line3 from "./Line3.js";
+import Matrix4   from "../Numbers/Matrix4.js";
+import Line3     from "./Line3.js";
 
 function Cylinder3 (axis, radius)
 {

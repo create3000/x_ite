@@ -48,9 +48,9 @@
 
 
 import Triangle3 from "./Triangle3.js";
-import Matrix4 from "../Numbers/Matrix4.js";
-import Vector3 from "../Numbers/Vector3.js";
-import SAT from "../Algorithms/SAT.js";
+import Matrix4   from "../Numbers/Matrix4.js";
+import Vector3   from "../Numbers/Vector3.js";
+import SAT       from "../Algorithms/SAT.js";
 
 function Box3 (size, center)
 {

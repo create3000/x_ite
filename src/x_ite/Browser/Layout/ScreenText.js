@@ -48,13 +48,13 @@
 
 
 import X3DTextGeometry from "../Text/X3DTextGeometry.js";
-import TextAlignment from "../Text/TextAlignment.js";
-import PixelTexture from "../../Components/Texturing/PixelTexture.js";
+import TextAlignment   from "../Text/TextAlignment.js";
+import PixelTexture    from "../../Components/Texturing/PixelTexture.js";
 import X3DGeometryNode from "../../Components/Rendering/X3DGeometryNode.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import Box3 from "../../../standard/Math/Geometry/Box3.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
+import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
+import Box3            from "../../../standard/Math/Geometry/Box3.js";
+import Algorithm       from "../../../standard/Math/Algorithm.js";
 
 function ScreenText (text, fontStyle)
 {

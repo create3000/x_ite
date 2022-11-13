@@ -47,15 +47,15 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DTexture3DNode from "./X3DTexture3DNode.js";
-import X3DUrlObject from "../Networking/X3DUrlObject.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import NRRDParser from "../../Browser/Texturing3D/NRRDParser.js";
-import DICOMParser from "../../Browser/Texturing3D/DICOMParser.js";
-import FileLoader from "../../InputOutput/FileLoader.js";
+import X3DTexture3DNode     from "./X3DTexture3DNode.js";
+import X3DUrlObject         from "../Networking/X3DUrlObject.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import NRRDParser           from "../../Browser/Texturing3D/NRRDParser.js";
+import DICOMParser          from "../../Browser/Texturing3D/DICOMParser.js";
+import FileLoader           from "../../InputOutput/FileLoader.js";
 
 function ImageTexture3D (executionContext)
 {

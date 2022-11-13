@@ -47,10 +47,10 @@
  ******************************************************************************/
 
 
-import X3DField from "../Base/X3DField.js";
-import SFColor from "./SFColor.js";
+import X3DField     from "../Base/X3DField.js";
+import SFColor      from "./SFColor.js";
 import X3DConstants from "../Base/X3DConstants.js";
-import Color4 from "../../standard/Math/Numbers/Color4.js";
+import Color4       from "../../standard/Math/Numbers/Color4.js";
 
 function SFColorRGBA (r, g, b, a)
 {

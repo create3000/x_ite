@@ -47,18 +47,18 @@
  ******************************************************************************/
 
 
-import SupportedNodes from "../Configuration/SupportedNodes.js";
-import Fields from "../Fields.js";
+import SupportedNodes      from "../Configuration/SupportedNodes.js";
+import Fields              from "../Fields.js";
 import X3DExecutionContext from "./X3DExecutionContext.js";
-import ComponentInfoArray from "../Configuration/ComponentInfoArray.js";
-import UnitInfo from "../Configuration/UnitInfo.js";
-import UnitInfoArray from "../Configuration/UnitInfoArray.js";
-import X3DExportedNode from "./X3DExportedNode.js";
-import ExportedNodesArray from "./ExportedNodesArray.js";
-import X3DCast from "../Base/X3DCast.js";
-import X3DConstants from "../Base/X3DConstants.js";
-import Generator from "../InputOutput/Generator.js";
-import SFNodeCache from "../Fields/SFNodeCache.js";
+import ComponentInfoArray  from "../Configuration/ComponentInfoArray.js";
+import UnitInfo            from "../Configuration/UnitInfo.js";
+import UnitInfoArray       from "../Configuration/UnitInfoArray.js";
+import X3DExportedNode     from "./X3DExportedNode.js";
+import ExportedNodesArray  from "./ExportedNodesArray.js";
+import X3DCast             from "../Base/X3DCast.js";
+import X3DConstants        from "../Base/X3DConstants.js";
+import Generator           from "../InputOutput/Generator.js";
+import SFNodeCache         from "../Fields/SFNodeCache.js";
 
 const
    _specificationVersion = Symbol (),

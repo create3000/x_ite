@@ -46,10 +46,10 @@
  ******************************************************************************/
 
 
-import SupportedNodes from "../Configuration/SupportedNodes.js";
-import ProximitySensor from "./EnvironmentalSensor/ProximitySensor.js";
-import TransformSensor from "./EnvironmentalSensor/TransformSensor.js";
-import VisibilitySensor from "./EnvironmentalSensor/VisibilitySensor.js";
+import SupportedNodes             from "../Configuration/SupportedNodes.js";
+import ProximitySensor            from "./EnvironmentalSensor/ProximitySensor.js";
+import TransformSensor            from "./EnvironmentalSensor/TransformSensor.js";
+import VisibilitySensor           from "./EnvironmentalSensor/VisibilitySensor.js";
 import X3DEnvironmentalSensorNode from "./EnvironmentalSensor/X3DEnvironmentalSensorNode.js";
 
 const Types =

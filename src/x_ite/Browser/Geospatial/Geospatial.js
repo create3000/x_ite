@@ -47,10 +47,10 @@
  ******************************************************************************/
 
 
-import ReferenceEllipsoids from "../../../standard/Geospatial/ReferenceEllipsoids.js";
-import Geodetic from "../../../standard/Geospatial/Geodetic.js";
+import ReferenceEllipsoids         from "../../../standard/Geospatial/ReferenceEllipsoids.js";
+import Geodetic                    from "../../../standard/Geospatial/Geodetic.js";
 import UniversalTransverseMercator from "../../../standard/Geospatial/UniversalTransverseMercator.js";
-import Geocentric from "./Geocentric.js";
+import Geocentric                  from "./Geocentric.js";
 
 let i = 0;
 

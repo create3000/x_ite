@@ -48,7 +48,7 @@
 
 
 import X3DConstants from "../Base/X3DConstants.js";
-import HTMLSupport from "../Parser/HTMLSupport.js";
+import HTMLSupport  from "../Parser/HTMLSupport.js";
 
 const
    types         = new Map (),

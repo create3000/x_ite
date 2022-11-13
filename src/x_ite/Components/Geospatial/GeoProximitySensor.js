@@ -47,14 +47,14 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import Fields                     from "../../Fields.js";
+import X3DFieldDefinition         from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray       from "../../Base/FieldDefinitionArray.js";
 import X3DEnvironmentalSensorNode from "../EnvironmentalSensor/X3DEnvironmentalSensorNode.js";
-import X3DGeospatialObject from "./X3DGeospatialObject.js";
-import ProximitySensor from "../EnvironmentalSensor/ProximitySensor.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import X3DGeospatialObject        from "./X3DGeospatialObject.js";
+import ProximitySensor            from "../EnvironmentalSensor/ProximitySensor.js";
+import X3DConstants               from "../../Base/X3DConstants.js";
+import Vector3                    from "../../../standard/Math/Numbers/Vector3.js";
 
 var geoCoord = new Vector3 (0, 0, 0);
 

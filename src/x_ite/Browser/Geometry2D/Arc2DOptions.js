@@ -48,7 +48,7 @@
 
 
 import X3DBaseNode from "../../Base/X3DBaseNode.js";
-import Fields from "../../Fields.js";
+import Fields      from "../../Fields.js";
 
 function ArcClose2DOptions (executionContext)
 {

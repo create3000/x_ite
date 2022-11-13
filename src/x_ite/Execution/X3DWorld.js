@@ -48,12 +48,12 @@
 
 
 import SupportedNodes from "../Configuration/SupportedNodes.js";
-import SFNode from "../Fields/SFNode.js";
-import X3DBaseNode from "../Base/X3DBaseNode.js";
-import LayerSet from "../Components/Layering/LayerSet.js";
-import Layer from "../Components/Layering/Layer.js";
-import X3DCast from "../Base/X3DCast.js";
-import X3DConstants from "../Base/X3DConstants.js";
+import SFNode         from "../Fields/SFNode.js";
+import X3DBaseNode    from "../Base/X3DBaseNode.js";
+import LayerSet       from "../Components/Layering/LayerSet.js";
+import Layer          from "../Components/Layering/Layer.js";
+import X3DCast        from "../Base/X3DCast.js";
+import X3DConstants   from "../Base/X3DConstants.js";
 
 SupportedNodes .addAbstractType ("X3DWorld", X3DWorld);
 

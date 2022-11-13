@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 
-import X3DField from "../Base/X3DField.js";
+import X3DField  from "../Base/X3DField.js";
 import Generator from "../InputOutput/Generator.js";
 
 export default function (Type, double)

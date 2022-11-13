@@ -1,10 +1,10 @@
 
-import ndloop from "./utils/ndloop.js";
-import variable from "./utils/variable.js";
+import ndloop           from "./utils/ndloop.js";
+import variable         from "./utils/variable.js";
 import accessorPreamble from "./utils/accessor-preamble.js";
-import inferType from "./utils/infer-type.js";
-import isArrayLike from "./utils/is-array-like.js";
-import sizeGetter from "./utils/size-getter.js";
+import inferType        from "./utils/infer-type.js";
+import isArrayLike      from "./utils/is-array-like.js";
+import sizeGetter       from "./utils/size-getter.js";
 
 var evaluatorCache = {};
 var codeCache = {};

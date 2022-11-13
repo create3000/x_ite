@@ -48,9 +48,9 @@
 
 
 import TextureProperties from "../../Components/Texturing/TextureProperties.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
+import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4           from "../../../standard/Math/Numbers/Matrix4.js";
+import ViewVolume        from "../../../standard/Math/Geometry/ViewVolume.js";
 
 const
    _screenTextureProperties = Symbol ();

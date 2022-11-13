@@ -47,10 +47,10 @@
  ******************************************************************************/
 
 
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Vector3   from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import require .getComponentUrl ("rigid-body-physics") from "../../../require .getComponentUrl ("rigid-body-physics").js";
+import Matrix4   from "../../../standard/Math/Numbers/Matrix4.js";
+import require   .getComponentUrl ("rigid-body-physics") from "../../../require .getComponentUrl ("rigid-body-physics").js";
 
 const Ammo = RigidBodyPhysics .Ammo;
 

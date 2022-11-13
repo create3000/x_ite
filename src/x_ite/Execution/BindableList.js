@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 
-import X3DBaseNode from "../Base/X3DBaseNode.js";
+import X3DBaseNode          from "../Base/X3DBaseNode.js";
 import X3DPrototypeInstance from "../Components/Core/X3DPrototypeInstance.js";
 
 function BindableList (executionContext, defaultNode)

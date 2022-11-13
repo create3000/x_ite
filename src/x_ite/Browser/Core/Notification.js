@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 
-import SFString from "../../Fields/SFString.js";
+import SFString    from "../../Fields/SFString.js";
 import X3DBaseNode from "../../Base/X3DBaseNode.js";
 
 $.fn.textWidth = function (string)

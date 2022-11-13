@@ -48,7 +48,7 @@
 
 
 import X3DVolumeRenderStyleNode from "./X3DVolumeRenderStyleNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
+import X3DConstants             from "../../Base/X3DConstants.js";
 
 function X3DComposableVolumeRenderStyleNode (executionContext)
 {

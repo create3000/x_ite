@@ -1,7 +1,7 @@
 
 import accessorPreamble from "./utils/accessor-preamble.js";
-import sizeGetter from "./utils/size-getter.js";
-import variable from "./utils/variable.js";
+import sizeGetter       from "./utils/size-getter.js";
+import variable         from "./utils/variable.js";
 
 var transformerCache = {};
 

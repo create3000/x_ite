@@ -48,13 +48,13 @@
 
 
 import X3DParametricGeometryNode from "./X3DParametricGeometryNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import X3DCast from "../../Base/X3DCast.js";
-import NURBS from "../../Browser/NURBS/NURBS.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Triangle3 from "../../../standard/Math/Geometry/Triangle3.js";
-import nurbs from "../../../lib/nurbs/nurbs.js";
+import X3DConstants              from "../../Base/X3DConstants.js";
+import X3DCast                   from "../../Base/X3DCast.js";
+import NURBS                     from "../../Browser/NURBS/NURBS.js";
+import Algorithm                 from "../../../standard/Math/Algorithm.js";
+import Vector3                   from "../../../standard/Math/Numbers/Vector3.js";
+import Triangle3                 from "../../../standard/Math/Geometry/Triangle3.js";
+import nurbs                     from "../../../lib/nurbs/nurbs.js";
 
 function X3DNurbsSurfaceGeometryNode (executionContext)
 {

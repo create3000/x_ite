@@ -47,10 +47,10 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
+import Fields                 from "../../Fields.js";
 import X3DAppearanceChildNode from "./X3DAppearanceChildNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import BitSet from "../../../standard/Utility/BitSet.js";
+import X3DConstants           from "../../Base/X3DConstants.js";
+import BitSet                 from "../../../standard/Utility/BitSet.js";
 
 function X3DMaterialNode (executionContext)
 {

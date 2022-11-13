@@ -47,16 +47,16 @@
  ******************************************************************************/
 
 
-import X3DField from "../Base/X3DField.js";
-import X3DBaseNode from "../Base/X3DBaseNode.js";
-import X3DPrototypeInstance from "../Components/Core/X3DPrototypeInstance.js";
-import Fields from "../Fields.js";
-import X3DParser from "./X3DParser.js";
-import VRMLParser from "./VRMLParser.js";
-import HTMLSupport from "./HTMLSupport.js";
+import X3DField                  from "../Base/X3DField.js";
+import X3DBaseNode               from "../Base/X3DBaseNode.js";
+import X3DPrototypeInstance      from "../Components/Core/X3DPrototypeInstance.js";
+import Fields                    from "../Fields.js";
+import X3DParser                 from "./X3DParser.js";
+import VRMLParser                from "./VRMLParser.js";
+import HTMLSupport               from "./HTMLSupport.js";
 import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js";
-import X3DProtoDeclaration from "../Prototype/X3DProtoDeclaration.js";
-import X3DConstants from "../Base/X3DConstants.js";
+import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
+import X3DConstants              from "../Base/X3DConstants.js";
 
 const _dom = Symbol .for ("X_ITE.dom");
 
@@ -155,8 +155,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                if (this .success)
                {
-                  Promise .all (this .getProviderUrls () .map (url => import (url)))
-                  .then (function ()
+                  Promise .all (this .getProviderUrls () .map (url => import (url)))                   .then (function ()
                   {
                      this .childrenElements (xmlElement);
                      this .success (this .getScene ());
@@ -187,8 +186,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             if (this .success)
             {
-               Promise .all (this .getProviderUrls () .map (url => import (url)))
-               .then (function ()
+               Promise .all (this .getProviderUrls () .map (url => import (url)))                   .then (function ()
                {
                   this .sceneElement (xmlElement);
                   this .success (this .getScene ());
@@ -212,8 +210,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             if (this .success)
             {
-               Promise .all (this .getProviderUrls () .map (url => import (url)))
-               .then (function ()
+               Promise .all (this .getProviderUrls () .map (url => import (url)))                   .then (function ()
                {
                   this .childrenElements (xmlElement);
                   this .success (this .getScene ());
@@ -268,8 +265,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (this .success)
       {
-         Promise .all (this .getProviderUrls () .map (url => import (url)))
-         .then (function ()
+         Promise .all (this .getProviderUrls () .map (url => import (url)))                   .then (function ()
          {
             for (var i = 0; i < childNodes .length; ++ i)
                this .x3dElementChildScene (childNodes [i])

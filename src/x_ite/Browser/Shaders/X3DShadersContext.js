@@ -47,10 +47,10 @@
  ******************************************************************************/
 
 
-import Shading from "../Core/Shading.js";
-import Shaders from "./Shaders.js";
+import Shading        from "../Core/Shading.js";
+import Shaders        from "./Shaders.js";
 import ComposedShader from "../../Components/Shaders/ComposedShader.js";
-import ShaderPart from "../../Components/Shaders/ShaderPart.js";
+import ShaderPart     from "../../Components/Shaders/ShaderPart.js";
 
 const
    _wireframe      = Symbol (),

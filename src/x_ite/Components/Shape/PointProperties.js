@@ -47,13 +47,13 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import Fields                 from "../../Fields.js";
+import X3DFieldDefinition     from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
 import X3DAppearanceChildNode from "./X3DAppearanceChildNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import X3DConstants           from "../../Base/X3DConstants.js";
+import Algorithm              from "../../../standard/Math/Algorithm.js";
+import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
 
 function PointProperties (executionContext)
 {

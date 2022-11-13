@@ -47,29 +47,29 @@
  ******************************************************************************/
 
 
-import SFTime from "../Fields/SFTime.js";
-import X3DBaseNode from "../Base/X3DBaseNode.js";
-import X3DCoreContext from "./Core/X3DCoreContext.js";
+import SFTime                         from "../Fields/SFTime.js";
+import X3DBaseNode                    from "../Base/X3DBaseNode.js";
+import X3DCoreContext                 from "./Core/X3DCoreContext.js";
 import X3DEnvironmentalEffectsContext from "./EnvironmentalEffects/X3DEnvironmentalEffectsContext.js";
-import X3DGeometry3DContext from "./Geometry3D/X3DGeometry3DContext.js";
-import X3DGroupingContext from "./Grouping/X3DGroupingContext.js";
-import X3DLayeringContext from "./Layering/X3DLayeringContext.js";
-import X3DLightingContext from "./Lighting/X3DLightingContext.js";
-import X3DNavigationContext from "./Navigation/X3DNavigationContext.js";
-import X3DNetworkingContext from "./Networking/X3DNetworkingContext.js";
-import X3DPickingContext from "./Picking/X3DPickingContext.js";
+import X3DGeometry3DContext           from "./Geometry3D/X3DGeometry3DContext.js";
+import X3DGroupingContext             from "./Grouping/X3DGroupingContext.js";
+import X3DLayeringContext             from "./Layering/X3DLayeringContext.js";
+import X3DLightingContext             from "./Lighting/X3DLightingContext.js";
+import X3DNavigationContext           from "./Navigation/X3DNavigationContext.js";
+import X3DNetworkingContext           from "./Networking/X3DNetworkingContext.js";
+import X3DPickingContext              from "./Picking/X3DPickingContext.js";
 import X3DPointingDeviceSensorContext from "./PointingDeviceSensor/X3DPointingDeviceSensorContext.js";
-import X3DRenderingContext from "./Rendering/X3DRenderingContext.js";
-import X3DScriptingContext from "./Scripting/X3DScriptingContext.js";
-import X3DShadersContext from "./Shaders/X3DShadersContext.js";
-import X3DShapeContext from "./Shape/X3DShapeContext.js";
-import X3DSoundContext from "./Sound/X3DSoundContext.js";
-import X3DTextContext from "./Text/X3DTextContext.js";
-import X3DTexturingContext from "./Texturing/X3DTexturingContext.js";
-import X3DTimeContext from "./Time/X3DTimeContext.js";
-import X3DRoutingContext from "../Routing/X3DRoutingContext.js";
-import X3DWorld from "../Execution/X3DWorld.js";
-import TraverseType from "../Rendering/TraverseType.js";
+import X3DRenderingContext            from "./Rendering/X3DRenderingContext.js";
+import X3DScriptingContext            from "./Scripting/X3DScriptingContext.js";
+import X3DShadersContext              from "./Shaders/X3DShadersContext.js";
+import X3DShapeContext                from "./Shape/X3DShapeContext.js";
+import X3DSoundContext                from "./Sound/X3DSoundContext.js";
+import X3DTextContext                 from "./Text/X3DTextContext.js";
+import X3DTexturingContext            from "./Texturing/X3DTexturingContext.js";
+import X3DTimeContext                 from "./Time/X3DTimeContext.js";
+import X3DRoutingContext              from "../Routing/X3DRoutingContext.js";
+import X3DWorld                       from "../Execution/X3DWorld.js";
+import TraverseType                   from "../Rendering/TraverseType.js";
 
 const
    _world           = Symbol (),

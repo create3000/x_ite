@@ -48,7 +48,7 @@
 
 
 import ComponentInfoArray from "./ComponentInfoArray.js";
-import urls from "../Browser/Networking/urls.js";
+import urls               from "../Browser/Networking/urls.js";
 
 const SupportedComponents = new ComponentInfoArray ([ ]);
 

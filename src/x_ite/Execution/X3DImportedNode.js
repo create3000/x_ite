@@ -47,10 +47,10 @@
  ******************************************************************************/
 
 
-import X3dNode from "../Components/Core/X3dNode.js";
+import X3dNode      from "../Components/Core/X3dNode.js";
 import X3DConstants from "../Base/X3DConstants.js";
-import SFNodeCache from "../Fields/SFNodeCache.js";
-import Generator from "../InputOutput/Generator.js";
+import SFNodeCache  from "../Fields/SFNodeCache.js";
+import Generator    from "../InputOutput/Generator.js";
 
 const
    _inlineNode   = Symbol (),

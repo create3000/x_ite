@@ -47,30 +47,30 @@
  ******************************************************************************/
 
 
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DField from "../../Base/X3DField.js";
-import X3DArrayField from "../../Base/X3DArrayField.js";
-import Fields from "../../Fields.js";
-import X3DBrowser from "../../Browser/X3DBrowser.js";
-import ComponentInfo from "../../Configuration/ComponentInfo.js";
-import ComponentInfoArray from "../../Configuration/ComponentInfoArray.js";
-import ProfileInfo from "../../Configuration/ProfileInfo.js";
-import ProfileInfoArray from "../../Configuration/ProfileInfoArray.js";
-import UnitInfo from "../../Configuration/UnitInfo.js";
-import UnitInfoArray from "../../Configuration/UnitInfoArray.js";
-import X3DExecutionContext from "../../Execution/X3DExecutionContext.js";
-import X3DScene from "../../Execution/X3DScene.js";
+import X3DFieldDefinition          from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray        from "../../Base/FieldDefinitionArray.js";
+import X3DField                    from "../../Base/X3DField.js";
+import X3DArrayField               from "../../Base/X3DArrayField.js";
+import Fields                      from "../../Fields.js";
+import X3DBrowser                  from "../../Browser/X3DBrowser.js";
+import ComponentInfo               from "../../Configuration/ComponentInfo.js";
+import ComponentInfoArray          from "../../Configuration/ComponentInfoArray.js";
+import ProfileInfo                 from "../../Configuration/ProfileInfo.js";
+import ProfileInfoArray            from "../../Configuration/ProfileInfoArray.js";
+import UnitInfo                    from "../../Configuration/UnitInfo.js";
+import UnitInfoArray               from "../../Configuration/UnitInfoArray.js";
+import X3DExecutionContext         from "../../Execution/X3DExecutionContext.js";
+import X3DScene                    from "../../Execution/X3DScene.js";
 import ExternProtoDeclarationArray from "../../Prototype/ExternProtoDeclarationArray.js";
-import ProtoDeclarationArray from "../../Prototype/ProtoDeclarationArray.js";
-import X3DExternProtoDeclaration from "../../Prototype/X3DExternProtoDeclaration.js";
-import X3DProtoDeclaration from "../../Prototype/X3DProtoDeclaration.js";
-import RouteArray from "../../Routing/RouteArray.js";
-import X3DRoute from "../../Routing/X3DRoute.js";
-import evaluate from "../../Browser/Scripting/evaluate.js";
-import X3DScriptNode from "./X3DScriptNode.js";
-import FileLoader from "../../InputOutput/FileLoader.js";
-import X3DConstants from "../../Base/X3DConstants.js";
+import ProtoDeclarationArray       from "../../Prototype/ProtoDeclarationArray.js";
+import X3DExternProtoDeclaration   from "../../Prototype/X3DExternProtoDeclaration.js";
+import X3DProtoDeclaration         from "../../Prototype/X3DProtoDeclaration.js";
+import RouteArray                  from "../../Routing/RouteArray.js";
+import X3DRoute                    from "../../Routing/X3DRoute.js";
+import evaluate                    from "../../Browser/Scripting/evaluate.js";
+import X3DScriptNode               from "./X3DScriptNode.js";
+import FileLoader                  from "../../InputOutput/FileLoader.js";
+import X3DConstants                from "../../Base/X3DConstants.js";
 
 function Script (executionContext)
 {

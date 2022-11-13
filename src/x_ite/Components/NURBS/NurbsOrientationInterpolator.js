@@ -47,17 +47,17 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DChildNode from "../Core/X3DChildNode.js";
+import Fields                  from "../../Fields.js";
+import X3DFieldDefinition      from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray    from "../../Base/FieldDefinitionArray.js";
+import X3DChildNode            from "../Core/X3DChildNode.js";
 import OrientationInterpolator from "../Interpolation/OrientationInterpolator.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import X3DCast from "../../Base/X3DCast.js";
-import NURBS from "../../Browser/NURBS/NURBS.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
-import nurbs from "../../../lib/nurbs/nurbs.js";
+import X3DConstants            from "../../Base/X3DConstants.js";
+import X3DCast                 from "../../Base/X3DCast.js";
+import NURBS                   from "../../Browser/NURBS/NURBS.js";
+import Vector3                 from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4               from "../../../standard/Math/Numbers/Rotation4.js";
+import nurbs                   from "../../../lib/nurbs/nurbs.js";
 
 function NurbsOrientationInterpolator (executionContext)
 {

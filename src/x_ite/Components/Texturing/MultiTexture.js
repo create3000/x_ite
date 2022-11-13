@@ -47,15 +47,15 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DTextureNode from "./X3DTextureNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import X3DCast from "../../Base/X3DCast.js";
-import ModeType from "../../Browser/Texturing/ModeType.js";
-import SourceType from "../../Browser/Texturing/SourceType.js";
-import FunctionType from "../../Browser/Texturing/FunctionType.js";
+import X3DTextureNode       from "./X3DTextureNode.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
+import ModeType             from "../../Browser/Texturing/ModeType.js";
+import SourceType           from "../../Browser/Texturing/SourceType.js";
+import FunctionType         from "../../Browser/Texturing/FunctionType.js";
 
 function MultiTexture (executionContext)
 {

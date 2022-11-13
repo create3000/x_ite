@@ -47,21 +47,21 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DShapeNode from "../Shape/X3DShapeNode.js";
-import GeometryContext from "../../Browser/Rendering/GeometryContext.js";
-import GeometryTypes from "../../Browser/ParticleSystems/GeometryTypes.js";
-import VertexArray from "../../Rendering/VertexArray.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import X3DCast from "../../Base/X3DCast.js";
-import AlphaMode from "../../Browser/Shape/AlphaMode.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import Matrix3 from "../../../standard/Math/Numbers/Matrix3.js";
-import BVH from "../../../standard/Math/Utility/BVH.js";
+import X3DShapeNode         from "../Shape/X3DShapeNode.js";
+import GeometryContext      from "../../Browser/Rendering/GeometryContext.js";
+import GeometryTypes        from "../../Browser/ParticleSystems/GeometryTypes.js";
+import VertexArray          from "../../Rendering/VertexArray.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
+import AlphaMode            from "../../Browser/Shape/AlphaMode.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
+import Matrix3              from "../../../standard/Math/Numbers/Matrix3.js";
+import BVH                  from "../../../standard/Math/Utility/BVH.js";
 
 const PointGeometry = new Float32Array ([0, 0, 0, 1]);
 

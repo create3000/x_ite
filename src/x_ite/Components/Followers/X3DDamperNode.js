@@ -48,8 +48,8 @@
 
 
 import X3DFollowerNode from "./X3DFollowerNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
+import X3DConstants    from "../../Base/X3DConstants.js";
+import Algorithm       from "../../../standard/Math/Algorithm.js";
 
 function X3DDamperNode (executionContext)
 {

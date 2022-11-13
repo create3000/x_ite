@@ -47,10 +47,10 @@
  ******************************************************************************/
 
 
-import X3DField from "../Base/X3DField.js";
+import X3DField               from "../Base/X3DField.js";
 import SFVecPrototypeTemplate from "./SFVecPrototypeTemplate.js";
-import X3DConstants from "../Base/X3DConstants.js";
-import Vector3 from "../../standard/Math/Numbers/Vector3.js";
+import X3DConstants           from "../Base/X3DConstants.js";
+import Vector3                from "../../standard/Math/Numbers/Vector3.js";
 
 function SFVec3Template (TypeName, Type, double)
 {

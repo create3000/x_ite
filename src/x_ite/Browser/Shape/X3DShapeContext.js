@@ -47,11 +47,11 @@
  ******************************************************************************/
 
 
-import Appearance from "../../Components/Shape/Appearance.js";
-import UnlitMaterial from "../../Components/Shape/UnlitMaterial.js";
-import ImageTexture from "../../Components/Texturing/ImageTexture.js";
+import Appearance        from "../../Components/Shape/Appearance.js";
+import UnlitMaterial     from "../../Components/Shape/UnlitMaterial.js";
+import ImageTexture      from "../../Components/Texturing/ImageTexture.js";
 import TextureProperties from "../../Components/Texturing/TextureProperties.js";
-import urls from "../Networking/urls.js";
+import urls              from "../Networking/urls.js";
 
 const
    _lineStippleScale          = Symbol (),

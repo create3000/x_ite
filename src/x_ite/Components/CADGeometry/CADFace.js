@@ -47,13 +47,13 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import Fields                       from "../../Fields.js";
+import X3DFieldDefinition           from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray         from "../../Base/FieldDefinitionArray.js";
 import X3DProductStructureChildNode from "./X3DProductStructureChildNode.js";
-import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import TraverseType from "../../Rendering/TraverseType.js";
+import X3DBoundedObject             from "../Grouping/X3DBoundedObject.js";
+import X3DConstants                 from "../../Base/X3DConstants.js";
+import TraverseType                 from "../../Rendering/TraverseType.js";
 
 function CADFace (executionContext)
 {

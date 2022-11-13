@@ -47,11 +47,11 @@
  ******************************************************************************/
 
 
-import X3DBaseNode from "../../Base/X3DBaseNode.js";
-import Fields from "../../Fields.js";
+import X3DBaseNode     from "../../Base/X3DBaseNode.js";
+import Fields          from "../../Fields.js";
 import X3DGeometryNode from "../../Components/Rendering/X3DGeometryNode.js";
-import Complex from "../../../standard/Math/Numbers/Complex.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Complex         from "../../../standard/Math/Numbers/Complex.js";
+import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 
 function Disk2DOptions (executionContext)
 {

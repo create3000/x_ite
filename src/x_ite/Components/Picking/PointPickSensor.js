@@ -47,18 +47,18 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DPickSensorNode from "./X3DPickSensorNode.js";
-import X3DCast from "../../Base/X3DCast.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import IntersectionType from "../../Browser/Picking/IntersectionType.js";
-import VolumePicker from "../../Browser/Picking/VolumePicker.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
-import Box3 from "../../../standard/Math/Geometry/Box3.js";
-import require .getComponentUrl ("rigid-body-physics") from "../../../require .getComponentUrl ("rigid-body-physics").js";
+import X3DPickSensorNode    from "./X3DPickSensorNode.js";
+import X3DCast              from "../../Base/X3DCast.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import IntersectionType     from "../../Browser/Picking/IntersectionType.js";
+import VolumePicker         from "../../Browser/Picking/VolumePicker.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
+import Box3                 from "../../../standard/Math/Geometry/Box3.js";
+import require              .getComponentUrl ("rigid-body-physics") from "../../../require .getComponentUrl ("rigid-body-physics").js";
 
 var Ammo = RigidBodyPhysics .Ammo;
 

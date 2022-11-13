@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
+import Fields      from "../../Fields.js";
 import X3DBaseNode from "../../Base/X3DBaseNode.js";
 
 function CylinderOptions (executionContext)

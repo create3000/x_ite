@@ -47,11 +47,11 @@
  ******************************************************************************/
 
 
-import X3DField from "../Base/X3DField.js";
+import X3DField                  from "../Base/X3DField.js";
 import SFMatrixPrototypeTemplate from "./SFMatrixPrototypeTemplate.js";
-import SFVec3 from "./SFVec3.js";
-import X3DConstants from "../Base/X3DConstants.js";
-import Matrix4 from "../../standard/Math/Numbers/Matrix4.js";
+import SFVec3                    from "./SFVec3.js";
+import X3DConstants              from "../Base/X3DConstants.js";
+import Matrix4                   from "../../standard/Math/Numbers/Matrix4.js";
 
 function SFMatrix4Template (TypeName, Type, SFVec3, double)
 {

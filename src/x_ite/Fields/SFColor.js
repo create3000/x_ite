@@ -47,10 +47,10 @@
  ******************************************************************************/
 
 
-import Color3 from "../../standard/Math/Numbers/Color3.js";
-import X3DField from "../Base/X3DField.js";
+import Color3       from "../../standard/Math/Numbers/Color3.js";
+import X3DField     from "../Base/X3DField.js";
 import X3DConstants from "../Base/X3DConstants.js";
-import Generator from "../InputOutput/Generator.js";
+import Generator    from "../InputOutput/Generator.js";
 
 function SFColor (r, g, b)
 {

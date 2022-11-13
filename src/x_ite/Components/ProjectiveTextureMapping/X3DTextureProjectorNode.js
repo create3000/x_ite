@@ -49,10 +49,10 @@
 
 import X3DChildNode from "../Core/X3DChildNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
-import X3DCast from "../../Base/X3DCast.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import X3DCast      from "../../Base/X3DCast.js";
+import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4    from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
 
 function X3DTextureProjectorNode (executionContext)
 {

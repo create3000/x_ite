@@ -47,8 +47,8 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DNode from "./X3DNode.js";
+import Fields       from "../../Fields.js";
+import X3DNode      from "./X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 
 function X3DChildNode (executionContext)

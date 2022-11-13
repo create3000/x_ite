@@ -47,12 +47,12 @@
  ******************************************************************************/
 
 
-import SupportedNodes from "../Configuration/SupportedNodes.js";
-import Fields from "../Fields.js";
-import X3DBaseNode from "../Base/X3DBaseNode.js";
+import SupportedNodes       from "../Configuration/SupportedNodes.js";
+import Fields               from "../Fields.js";
+import X3DBaseNode          from "../Base/X3DBaseNode.js";
 import X3DPrototypeInstance from "../Components/Core/X3DPrototypeInstance.js";
-import SFNodeCache from "../Fields/SFNodeCache.js";
-import X3DConstants from "../Base/X3DConstants.js";
+import SFNodeCache          from "../Fields/SFNodeCache.js";
+import X3DConstants         from "../Base/X3DConstants.js";
 
 SupportedNodes .addAbstractType ("X3DProtoDeclarationNode", X3DProtoDeclarationNode);
 

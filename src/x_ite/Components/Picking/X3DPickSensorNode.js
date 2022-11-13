@@ -47,16 +47,16 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DSensorNode from "../Core/X3DSensorNode.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import MatchCriterion from "../../Browser/Picking/MatchCriterion.js";
+import Fields           from "../../Fields.js";
+import X3DSensorNode    from "../Core/X3DSensorNode.js";
+import TraverseType     from "../../Rendering/TraverseType.js";
+import X3DConstants     from "../../Base/X3DConstants.js";
+import MatchCriterion   from "../../Browser/Picking/MatchCriterion.js";
 import IntersectionType from "../../Browser/Picking/IntersectionType.js";
-import SortOrder from "../../Browser/Picking/SortOrder.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import QuickSort from "../../../standard/Math/Algorithms/QuickSort.js";
-import ObjectCache from "../../../standard/Utility/ObjectCache.js";
+import SortOrder        from "../../Browser/Picking/SortOrder.js";
+import Matrix4          from "../../../standard/Math/Numbers/Matrix4.js";
+import QuickSort        from "../../../standard/Math/Algorithms/QuickSort.js";
+import ObjectCache      from "../../../standard/Utility/ObjectCache.js";
 
 var ModelMatrixCache = ObjectCache (Matrix4);
 

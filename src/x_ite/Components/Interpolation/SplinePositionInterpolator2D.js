@@ -47,12 +47,12 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DInterpolatorNode from "./X3DInterpolatorNode.js";
+import Fields                        from "../../Fields.js";
+import X3DFieldDefinition            from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray          from "../../Base/FieldDefinitionArray.js";
+import X3DInterpolatorNode           from "./X3DInterpolatorNode.js";
 import CatmullRomSplineInterpolator2 from "../../Browser/Interpolation/CatmullRomSplineInterpolator2.js";
-import X3DConstants from "../../Base/X3DConstants.js";
+import X3DConstants                  from "../../Base/X3DConstants.js";
 
 function SplinePositionInterpolator2D (executionContext)
 {

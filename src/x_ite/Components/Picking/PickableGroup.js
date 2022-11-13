@@ -47,14 +47,14 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DGroupingNode from "../Grouping/X3DGroupingNode.js";
-import X3DPickableObject from "./X3DPickableObject.js";
-import MatchCriterion from "../../Browser/Picking/MatchCriterion.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import TraverseType from "../../Rendering/TraverseType.js";
+import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
+import X3DPickableObject    from "./X3DPickableObject.js";
+import MatchCriterion       from "../../Browser/Picking/MatchCriterion.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
 
 function PickableGroup (executionContext)
 {

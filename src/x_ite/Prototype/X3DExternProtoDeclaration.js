@@ -47,14 +47,14 @@
  ******************************************************************************/
 
 
-import SupportedNodes from "../Configuration/SupportedNodes.js";
-import Fields from "../Fields.js";
-import X3DFieldDefinition from "../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../Base/FieldDefinitionArray.js";
-import X3DUrlObject from "../Components/Networking/X3DUrlObject.js";
+import SupportedNodes          from "../Configuration/SupportedNodes.js";
+import Fields                  from "../Fields.js";
+import X3DFieldDefinition      from "../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray    from "../Base/FieldDefinitionArray.js";
+import X3DUrlObject            from "../Components/Networking/X3DUrlObject.js";
 import X3DProtoDeclarationNode from "./X3DProtoDeclarationNode.js";
-import X3DConstants from "../Base/X3DConstants.js";
-import Generator from "../InputOutput/Generator.js";
+import X3DConstants            from "../Base/X3DConstants.js";
+import Generator               from "../InputOutput/Generator.js";
 
 SupportedNodes .addAbstractType ("X3DExternProtoDeclaration", X3DExternProtoDeclaration);
 

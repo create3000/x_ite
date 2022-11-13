@@ -48,8 +48,8 @@
 
 
 import X3DGeometryNode from "../Rendering/X3DGeometryNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import NURBS from "../../Browser/NURBS/NURBS.js";
+import X3DConstants    from "../../Base/X3DConstants.js";
+import NURBS           from "../../Browser/NURBS/NURBS.js";
 
 function X3DParametricGeometryNode (executionContext)
 {

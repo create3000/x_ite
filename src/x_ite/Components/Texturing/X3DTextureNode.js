@@ -47,9 +47,9 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
+import Fields                 from "../../Fields.js";
 import X3DAppearanceChildNode from "../Shape/X3DAppearanceChildNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
+import X3DConstants           from "../../Base/X3DConstants.js";
 
 function X3DTextureNode (executionContext)
 {

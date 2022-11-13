@@ -47,12 +47,12 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import Fields                 from "../../Fields.js";
+import X3DFieldDefinition     from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
 import X3DAppearanceChildNode from "../Shape/X3DAppearanceChildNode.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import X3DConstants from "../../Base/X3DConstants.js";
+import TraverseType           from "../../Rendering/TraverseType.js";
+import X3DConstants           from "../../Base/X3DConstants.js";
 
 function BlendMode (executionContext)
 {

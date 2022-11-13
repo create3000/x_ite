@@ -48,6 +48,6 @@
 
 
 import CatmullRomSplineInterpolatorTemplate from "./CatmullRomSplineInterpolatorTemplate.js";
-import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
+import Vector2                              from "../../../standard/Math/Numbers/Vector2.js";
 
 export default CatmullRomSplineInterpolatorTemplate (Vector2);

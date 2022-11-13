@@ -47,10 +47,10 @@
  ******************************************************************************/
 
 
-import X3DParser from "./X3DParser.js";
+import X3DParser  from "./X3DParser.js";
 import JSONParser from "./JSONParser.js";
 import VRMLParser from "./VRMLParser.js";
-import XMLParser from "./XMLParser.js";
+import XMLParser  from "./XMLParser.js";
 
 function GoldenGate (scene)
 {

@@ -46,9 +46,9 @@
  ******************************************************************************/
 
 
-import SupportedNodes from "../Configuration/SupportedNodes.js";
-import FontStyle from "./Text/FontStyle.js";
-import Text from "./Text/Text.js";
+import SupportedNodes   from "../Configuration/SupportedNodes.js";
+import FontStyle        from "./Text/FontStyle.js";
+import Text             from "./Text/Text.js";
 import X3DFontStyleNode from "./Text/X3DFontStyleNode.js";
 
 const Types =

@@ -48,9 +48,9 @@
 
 
 import X3DChildObject from "./X3DChildObject.js";
-import X3DConstants from "./X3DConstants.js";
-import Events from "./Events.js";
-import MapUtilities from "../../standard/Utility/MapUtilities.js";
+import X3DConstants   from "./X3DConstants.js";
+import Events         from "./Events.js";
+import MapUtilities   from "../../standard/Utility/MapUtilities.js";
 
 const
    _value               = Symbol (),

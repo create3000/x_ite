@@ -48,9 +48,9 @@
 
 
 import X3DGeometricPropertyNode from "./X3DGeometricPropertyNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Triangle3 from "../../../standard/Math/Geometry/Triangle3.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import X3DConstants             from "../../Base/X3DConstants.js";
+import Triangle3                from "../../../standard/Math/Geometry/Triangle3.js";
+import Vector3                  from "../../../standard/Math/Numbers/Vector3.js";
 
 function X3DCoordinateNode (executionContext)
 {

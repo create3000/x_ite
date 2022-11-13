@@ -47,12 +47,12 @@
  ******************************************************************************/
 
 
-import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import X3DBaseNode    from "../../Base/X3DBaseNode.js";
 import OrthoViewpoint from "../../Components/Navigation/OrthoViewpoint.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import Box3 from "../../../standard/Math/Geometry/Box3.js";
-import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
+import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
+import Box3           from "../../../standard/Math/Geometry/Box3.js";
+import ViewVolume     from "../../../standard/Math/Geometry/ViewVolume.js";
 
 function X3DViewer (executionContext)
 {

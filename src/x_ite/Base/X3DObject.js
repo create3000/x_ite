@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 
-import Generator from "../InputOutput/Generator.js";
+import Generator    from "../InputOutput/Generator.js";
 import MapUtilities from "../../standard/Utility/MapUtilities.js";
 
 const

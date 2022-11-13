@@ -47,15 +47,15 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import ShaderSource from "../../Browser/Shaders/ShaderSource.js";
-import ShaderCompiler from "../../Browser/Shaders/ShaderCompiler.js";
-import X3DNode from "../Core/X3DNode.js";
-import X3DUrlObject from "../Networking/X3DUrlObject.js";
-import FileLoader from "../../InputOutput/FileLoader.js";
-import X3DConstants from "../../Base/X3DConstants.js";
+import ShaderSource         from "../../Browser/Shaders/ShaderSource.js";
+import ShaderCompiler       from "../../Browser/Shaders/ShaderCompiler.js";
+import X3DNode              from "../Core/X3DNode.js";
+import X3DUrlObject         from "../Networking/X3DUrlObject.js";
+import FileLoader           from "../../InputOutput/FileLoader.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
 
 const customOptions = [
    "X3D_GEOMETRY_0D",

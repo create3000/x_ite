@@ -48,14 +48,14 @@
 
 
 import PointingDevice from "./PointingDevice.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import Line3 from "../../../standard/Math/Geometry/Line3.js";
-import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
-import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import MergeSort from "../../../standard/Math/Algorithms/MergeSort.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
+import TraverseType   from "../../Rendering/TraverseType.js";
+import Line3          from "../../../standard/Math/Geometry/Line3.js";
+import ViewVolume     from "../../../standard/Math/Geometry/ViewVolume.js";
+import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
+import MergeSort      from "../../../standard/Math/Algorithms/MergeSort.js";
+import Algorithm      from "../../../standard/Math/Algorithm.js";
 
 const
    _pointingDevice  = Symbol (),

@@ -47,17 +47,17 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DBindableNode from "../Core/X3DBindableNode.js";
-import TimeSensor from "../Time/TimeSensor.js";
-import EaseInEaseOut from "../Interpolation/EaseInEaseOut.js";
-import PositionInterpolator from "../Interpolation/PositionInterpolator.js";
+import Fields                  from "../../Fields.js";
+import X3DBindableNode         from "../Core/X3DBindableNode.js";
+import TimeSensor              from "../Time/TimeSensor.js";
+import EaseInEaseOut           from "../Interpolation/EaseInEaseOut.js";
+import PositionInterpolator    from "../Interpolation/PositionInterpolator.js";
 import OrientationInterpolator from "../Interpolation/OrientationInterpolator.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import TraverseType            from "../../Rendering/TraverseType.js";
+import X3DConstants            from "../../Base/X3DConstants.js";
+import Vector3                 from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4               from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4                 from "../../../standard/Math/Numbers/Matrix4.js";
 
 function X3DViewpointNode (executionContext)
 {

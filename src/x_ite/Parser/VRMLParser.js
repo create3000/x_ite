@@ -47,11 +47,11 @@
  ******************************************************************************/
 
 
-import Fields from "../Fields.js";
-import X3DParser from "./X3DParser.js";
+import Fields                    from "../Fields.js";
+import X3DParser                 from "./X3DParser.js";
 import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js";
-import X3DProtoDeclaration from "../Prototype/X3DProtoDeclaration.js";
-import X3DConstants from "../Base/X3DConstants.js";
+import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
+import X3DConstants              from "../Base/X3DConstants.js";
 
 function accessTypeToString (accessType)
 {
@@ -460,8 +460,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (this .success)
       {
-         Promise .all (this .getProviderUrls () .map (url => import (url)))
-         .then (function ()
+         Promise .all (this .getProviderUrls () .map (url => import (url)))                   .then (function ()
          {
             try
             {

@@ -47,23 +47,23 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DLightNode from "./X3DLightNode.js";
-import X3DGroupingNode from "../Grouping/X3DGroupingNode.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Camera from "../../../standard/Math/Geometry/Camera.js";
-import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
-import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
-import Matrix3 from "../../../standard/Math/Numbers/Matrix3.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import MatrixStack from "../../../standard/Math/Utility/MatrixStack.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
-import ObjectCache from "../../../standard/Utility/ObjectCache.js";
+import X3DLightNode         from "./X3DLightNode.js";
+import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import Camera               from "../../../standard/Math/Geometry/Camera.js";
+import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
+import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix3              from "../../../standard/Math/Numbers/Matrix3.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
+import MatrixStack          from "../../../standard/Math/Utility/MatrixStack.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
+import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
 
 // Shadow map layout
 // Compact layout:

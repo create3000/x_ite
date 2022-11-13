@@ -47,13 +47,13 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DLineGeometryNode from "../Rendering/X3DLineGeometryNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Complex from "../../../standard/Math/Numbers/Complex.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
+import X3DLineGeometryNode  from "../Rendering/X3DLineGeometryNode.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import Complex              from "../../../standard/Math/Numbers/Complex.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function Arc2D (executionContext)
 {

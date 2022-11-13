@@ -49,8 +49,8 @@
 
 import X3DChildNode from "../Core/X3DChildNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
+import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
+import Algorithm    from "../../../standard/Math/Algorithm.js";
 
 function X3DLightNode (executionContext)
 {

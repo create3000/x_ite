@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 
-import Color3 from "./Color3.js";
+import Color3    from "./Color3.js";
 import Algorithm from "../Algorithm.js";
 
 const clamp = Algorithm .clamp;

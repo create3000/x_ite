@@ -47,15 +47,15 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import Fields                    from "../../Fields.js";
+import X3DFieldDefinition        from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray      from "../../Base/FieldDefinitionArray.js";
 import X3DEnvironmentTextureNode from "./X3DEnvironmentTextureNode.js";
-import X3DUrlObject from "../Networking/X3DUrlObject.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
-import DEBUG from "../../DEBUG.js";
+import X3DUrlObject              from "../Networking/X3DUrlObject.js";
+import X3DConstants              from "../../Base/X3DConstants.js";
+import Vector2                   from "../../../standard/Math/Numbers/Vector2.js";
+import Algorithm                 from "../../../standard/Math/Algorithm.js";
+import DEBUG                     from "../../DEBUG.js";
 
 const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 

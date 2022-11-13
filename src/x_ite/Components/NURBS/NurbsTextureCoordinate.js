@@ -47,12 +47,12 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DNode from "../Core/X3DNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
+import X3DNode              from "../Core/X3DNode.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 
 function NurbsTextureCoordinate (executionContext)
 {

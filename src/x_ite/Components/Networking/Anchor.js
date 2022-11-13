@@ -47,15 +47,15 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DGroupingNode from "../Grouping/X3DGroupingNode.js";
-import X3DUrlObject from "./X3DUrlObject.js";
-import TouchSensor from "../PointingDeviceSensor/TouchSensor.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import FileLoader from "../../InputOutput/FileLoader.js";
+import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
+import X3DUrlObject         from "./X3DUrlObject.js";
+import TouchSensor          from "../PointingDeviceSensor/TouchSensor.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import FileLoader           from "../../InputOutput/FileLoader.js";
 
 function Anchor (executionContext)
 {

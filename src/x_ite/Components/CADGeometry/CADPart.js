@@ -47,12 +47,12 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DTransformNode from "../Grouping/X3DTransformNode.js";
+import Fields                       from "../../Fields.js";
+import X3DFieldDefinition           from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray         from "../../Base/FieldDefinitionArray.js";
+import X3DTransformNode             from "../Grouping/X3DTransformNode.js";
 import X3DProductStructureChildNode from "./X3DProductStructureChildNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
+import X3DConstants                 from "../../Base/X3DConstants.js";
 
 function CADPart (executionContext)
 {

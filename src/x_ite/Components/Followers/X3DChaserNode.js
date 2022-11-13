@@ -48,7 +48,7 @@
 
 
 import X3DFollowerNode from "./X3DFollowerNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
+import X3DConstants    from "../../Base/X3DConstants.js";
 
 function X3DChaserNode (executionContext)
 {

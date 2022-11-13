@@ -47,13 +47,13 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DDamperNode from "./X3DDamperNode.js";
+import Fields                   from "../../Fields.js";
+import X3DFieldDefinition       from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
+import X3DDamperNode            from "./X3DDamperNode.js";
 import X3DArrayFollowerTemplate from "../../Browser/Followers/X3DArrayFollowerTemplate.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
+import X3DConstants             from "../../Base/X3DConstants.js";
+import Vector2                  from "../../../standard/Math/Numbers/Vector2.js";
 
 var X3DArrayFollowerObject = X3DArrayFollowerTemplate (X3DDamperNode);
 

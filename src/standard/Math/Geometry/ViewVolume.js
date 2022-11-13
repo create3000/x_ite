@@ -47,13 +47,13 @@
  ******************************************************************************/
 
 
-import Plane3 from "./Plane3.js";
+import Plane3    from "./Plane3.js";
 import Triangle3 from "./Triangle3.js";
-import Vector2 from "../Numbers/Vector2.js";
-import Vector3 from "../Numbers/Vector3.js";
-import Vector4 from "../Numbers/Vector4.js";
-import Matrix4 from "../Numbers/Matrix4.js";
-import SAT from "../Algorithms/SAT.js";
+import Vector2   from "../Numbers/Vector2.js";
+import Vector3   from "../Numbers/Vector3.js";
+import Vector4   from "../Numbers/Vector4.js";
+import Matrix4   from "../Numbers/Matrix4.js";
+import SAT       from "../Algorithms/SAT.js";
 
 /*
  * p7 -------- p6  far plane

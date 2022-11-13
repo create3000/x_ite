@@ -47,12 +47,12 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DAnnotationNode from "./X3DAnnotationNode.js";
-import X3DUrlObject from "../Networking/X3DUrlObject.js";
-import X3DConstants from "../../Base/X3DConstants.js";
+import X3DAnnotationNode    from "./X3DAnnotationNode.js";
+import X3DUrlObject         from "../Networking/X3DUrlObject.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
 
 function IconAnnotation (executionContext)
 {

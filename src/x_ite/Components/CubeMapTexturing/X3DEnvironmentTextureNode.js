@@ -48,7 +48,7 @@
 
 
 import X3DSingleTextureNode from "../Texturing/X3DSingleTextureNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
 
 function X3DEnvironmentTextureNode (executionContext)
 {

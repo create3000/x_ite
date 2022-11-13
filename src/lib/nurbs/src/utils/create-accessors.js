@@ -1,5 +1,5 @@
 
-import inferType from "./infer-type.js";
+import inferType      from "./infer-type.js";
 import createVariable from "./variable.js";
 
 var properties = [".x", ".y", ".z", ".w"];

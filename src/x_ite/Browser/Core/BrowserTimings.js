@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 import X3DBaseNode from "../../Base/X3DBaseNode.js";
-import _ from "../../../locale/gettext.js";
+import _           from "../../../locale/gettext.js";
 
 function f2 (n) { return n .toFixed (2); }
 

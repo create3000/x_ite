@@ -1,10 +1,10 @@
 
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Vector3   from "../../../standard/Math/Numbers/Vector3.js";
 import Triangle3 from "../../../standard/Math/Geometry/Triangle3.js";
 
 var tmp1 = [ ];
 
-return function (mesh, surface, opts)
+export default function (mesh, surface, opts)
 {
    mesh = mesh || { };
    opts = opts || { };
@@ -231,5 +231,5 @@ return function (mesh, surface, opts)
          throw new Error("Can only sample curves and surfaces");
    }
 
-   export default mesh;
+   return mesh;
 };

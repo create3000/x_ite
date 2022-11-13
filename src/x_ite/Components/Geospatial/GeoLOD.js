@@ -47,19 +47,19 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DChildNode from "../Core/X3DChildNode.js";
-import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
-import X3DGeospatialObject from "./X3DGeospatialObject.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import Group from "../Grouping/Group.js";
-import Inline from "../Networking/Inline.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import Box3 from "../../../standard/Math/Geometry/Box3.js";
+import X3DChildNode         from "../Core/X3DChildNode.js";
+import X3DBoundedObject     from "../Grouping/X3DBoundedObject.js";
+import X3DGeospatialObject  from "./X3DGeospatialObject.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
+import Group                from "../Grouping/Group.js";
+import Inline               from "../Networking/Inline.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
+import Box3                 from "../../../standard/Math/Geometry/Box3.js";
 
 var center = new Vector3 (0, 0, 0);
 

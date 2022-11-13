@@ -48,7 +48,7 @@
 
 
 import X3DSingleTextureNode from "../Texturing/X3DSingleTextureNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
 
 const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 

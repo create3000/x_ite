@@ -47,11 +47,11 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
+import Fields          from "../../Fields.js";
 import X3DMaterialNode from "./X3DMaterialNode.js";
-import X3DCast from "../../Base/X3DCast.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
+import X3DCast         from "../../Base/X3DCast.js";
+import X3DConstants    from "../../Base/X3DConstants.js";
+import Algorithm       from "../../../standard/Math/Algorithm.js";
 
 function X3DOneSidedMaterialNode (executionContext)
 {

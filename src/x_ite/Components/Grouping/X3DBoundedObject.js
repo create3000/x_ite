@@ -47,12 +47,12 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DCast from "../../Base/X3DCast.js";
+import Fields       from "../../Fields.js";
+import X3DCast      from "../../Base/X3DCast.js";
 import X3DConstants from "../../Base/X3DConstants.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import Box3 from "../../../standard/Math/Geometry/Box3.js";
+import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
+import Box3         from "../../../standard/Math/Geometry/Box3.js";
 
 function X3DBoundedObject (executionContext)
 {

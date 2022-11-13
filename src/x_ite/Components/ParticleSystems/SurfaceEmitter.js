@@ -47,14 +47,14 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import Fields                 from "../../Fields.js";
+import X3DFieldDefinition     from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
 import X3DParticleEmitterNode from "./X3DParticleEmitterNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import X3DCast from "../../Base/X3DCast.js";
-import Triangle3 from "../../../standard/Math/Geometry/Triangle3.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import X3DConstants           from "../../Base/X3DConstants.js";
+import X3DCast                from "../../Base/X3DCast.js";
+import Triangle3              from "../../../standard/Math/Geometry/Triangle3.js";
+import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
 
 function SurfaceEmitter (executionContext)
 {

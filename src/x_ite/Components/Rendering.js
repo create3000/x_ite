@@ -46,28 +46,28 @@
  ******************************************************************************/
 
 
-import SupportedNodes from "../Configuration/SupportedNodes.js";
-import ClipPlane from "./Rendering/ClipPlane.js";
-import Color from "./Rendering/Color.js";
-import ColorRGBA from "./Rendering/ColorRGBA.js";
-import Coordinate from "./Rendering/Coordinate.js";
-import IndexedLineSet from "./Rendering/IndexedLineSet.js";
-import IndexedTriangleFanSet from "./Rendering/IndexedTriangleFanSet.js";
-import IndexedTriangleSet from "./Rendering/IndexedTriangleSet.js";
-import IndexedTriangleStripSet from "./Rendering/IndexedTriangleStripSet.js";
-import LineSet from "./Rendering/LineSet.js";
-import Normal from "./Rendering/Normal.js";
-import PointSet from "./Rendering/PointSet.js";
-import TriangleFanSet from "./Rendering/TriangleFanSet.js";
-import TriangleSet from "./Rendering/TriangleSet.js";
-import TriangleStripSet from "./Rendering/TriangleStripSet.js";
-import X3DColorNode from "./Rendering/X3DColorNode.js";
-import X3DComposedGeometryNode from "./Rendering/X3DComposedGeometryNode.js";
-import X3DCoordinateNode from "./Rendering/X3DCoordinateNode.js";
+import SupportedNodes           from "../Configuration/SupportedNodes.js";
+import ClipPlane                from "./Rendering/ClipPlane.js";
+import Color                    from "./Rendering/Color.js";
+import ColorRGBA                from "./Rendering/ColorRGBA.js";
+import Coordinate               from "./Rendering/Coordinate.js";
+import IndexedLineSet           from "./Rendering/IndexedLineSet.js";
+import IndexedTriangleFanSet    from "./Rendering/IndexedTriangleFanSet.js";
+import IndexedTriangleSet       from "./Rendering/IndexedTriangleSet.js";
+import IndexedTriangleStripSet  from "./Rendering/IndexedTriangleStripSet.js";
+import LineSet                  from "./Rendering/LineSet.js";
+import Normal                   from "./Rendering/Normal.js";
+import PointSet                 from "./Rendering/PointSet.js";
+import TriangleFanSet           from "./Rendering/TriangleFanSet.js";
+import TriangleSet              from "./Rendering/TriangleSet.js";
+import TriangleStripSet         from "./Rendering/TriangleStripSet.js";
+import X3DColorNode             from "./Rendering/X3DColorNode.js";
+import X3DComposedGeometryNode  from "./Rendering/X3DComposedGeometryNode.js";
+import X3DCoordinateNode        from "./Rendering/X3DCoordinateNode.js";
 import X3DGeometricPropertyNode from "./Rendering/X3DGeometricPropertyNode.js";
-import X3DGeometryNode from "./Rendering/X3DGeometryNode.js";
-import X3DLineGeometryNode from "./Rendering/X3DLineGeometryNode.js";
-import X3DNormalNode from "./Rendering/X3DNormalNode.js";
+import X3DGeometryNode          from "./Rendering/X3DGeometryNode.js";
+import X3DLineGeometryNode      from "./Rendering/X3DLineGeometryNode.js";
+import X3DNormalNode            from "./Rendering/X3DNormalNode.js";
 
 const Types =
 {

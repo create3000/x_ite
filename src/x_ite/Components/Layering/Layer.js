@@ -47,13 +47,13 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DLayerNode from "./X3DLayerNode.js";
-import Viewpoint from "../Navigation/Viewpoint.js";
-import Group from "../Grouping/Group.js";
-import X3DConstants from "../../Base/X3DConstants.js";
+import X3DLayerNode         from "./X3DLayerNode.js";
+import Viewpoint            from "../Navigation/Viewpoint.js";
+import Group                from "../Grouping/Group.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
 
 function Layer (executionContext)
 {

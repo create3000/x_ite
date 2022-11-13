@@ -47,21 +47,21 @@
  ******************************************************************************/
 
 
-import X3DNode from "../Core/X3DNode.js";
+import X3DNode         from "../Core/X3DNode.js";
 import X3DRenderObject from "../../Rendering/X3DRenderObject.js";
 import X3DViewportNode from "./X3DViewportNode.js";
-import BindableStack from "../../Execution/BindableStack.js";
-import BindableList from "../../Execution/BindableList.js";
-import NavigationInfo from "../Navigation/NavigationInfo.js";
-import Fog from "../EnvironmentalEffects/Fog.js";
-import Background from "../EnvironmentalEffects/Background.js";
-import X3DCast from "../../Base/X3DCast.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Camera from "../../../standard/Math/Geometry/Camera.js";
-import Box3 from "../../../standard/Math/Geometry/Box3.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import BindableStack   from "../../Execution/BindableStack.js";
+import BindableList    from "../../Execution/BindableList.js";
+import NavigationInfo  from "../Navigation/NavigationInfo.js";
+import Fog             from "../EnvironmentalEffects/Fog.js";
+import Background      from "../EnvironmentalEffects/Background.js";
+import X3DCast         from "../../Base/X3DCast.js";
+import TraverseType    from "../../Rendering/TraverseType.js";
+import X3DConstants    from "../../Base/X3DConstants.js";
+import Camera          from "../../../standard/Math/Geometry/Camera.js";
+import Box3            from "../../../standard/Math/Geometry/Box3.js";
+import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 
 var projectionMatrix = new Matrix4 ();
 

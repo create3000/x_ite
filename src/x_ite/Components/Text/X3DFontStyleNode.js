@@ -47,13 +47,13 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DNode from "../Core/X3DNode.js";
-import X3DUrlObject from "../Networking/X3DUrlObject.js";
+import Fields        from "../../Fields.js";
+import X3DNode       from "../Core/X3DNode.js";
+import X3DUrlObject  from "../Networking/X3DUrlObject.js";
 import TextAlignment from "../../Browser/Text/TextAlignment.js";
-import FileLoader from "../../InputOutput/FileLoader.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import urls from "../../Browser/Networking/urls.js";
+import FileLoader    from "../../InputOutput/FileLoader.js";
+import X3DConstants  from "../../Base/X3DConstants.js";
+import urls          from "../../Browser/Networking/urls.js";
 
 /*
  * Font paths for default SERIF, SANS and TYPWRITER families.

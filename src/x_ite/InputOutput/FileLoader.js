@@ -47,12 +47,12 @@
  ******************************************************************************/
 
 
-import X3DObject from "../Base/X3DObject.js";
-import Fields from "../Fields.js";
-import GoldenGate from "../Parser/GoldenGate.js";
-import X3DWorld from "../Execution/X3DWorld.js";
+import X3DObject       from "../Base/X3DObject.js";
+import Fields          from "../Fields.js";
+import GoldenGate      from "../Parser/GoldenGate.js";
+import X3DWorld        from "../Execution/X3DWorld.js";
 import BinaryTransport from "../../standard/Networking/BinaryTransport.js";
-import DEBUG from "../DEBUG.js";
+import DEBUG           from "../DEBUG.js";
 
 BinaryTransport ($);
 

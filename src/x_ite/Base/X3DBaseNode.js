@@ -47,12 +47,12 @@
  ******************************************************************************/
 
 
-import X3DEventObject from "./X3DEventObject.js";
-import X3DFieldDefinition from "./X3DFieldDefinition.js";
+import X3DEventObject       from "./X3DEventObject.js";
+import X3DFieldDefinition   from "./X3DFieldDefinition.js";
 import FieldDefinitionArray from "./FieldDefinitionArray.js";
-import FieldArray from "./FieldArray.js";
-import Fields from "../Fields.js";
-import X3DConstants from "./X3DConstants.js";
+import FieldArray           from "./FieldArray.js";
+import Fields               from "../Fields.js";
+import X3DConstants         from "./X3DConstants.js";
 
 const
    _executionContext  = Symbol (),

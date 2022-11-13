@@ -47,15 +47,15 @@
  ******************************************************************************/
 
 
-import X3DCast from "../../Base/X3DCast.js";
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DCast                   from "../../Base/X3DCast.js";
+import Fields                    from "../../Fields.js";
+import X3DFieldDefinition        from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray      from "../../Base/FieldDefinitionArray.js";
 import X3DParametricGeometryNode from "./X3DParametricGeometryNode.js";
-import X3DLineGeometryNode from "../Rendering/X3DLineGeometryNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import NURBS from "../../Browser/NURBS/NURBS.js";
-import nurbs from "../../../lib/nurbs/nurbs.js";
+import X3DLineGeometryNode       from "../Rendering/X3DLineGeometryNode.js";
+import X3DConstants              from "../../Base/X3DConstants.js";
+import NURBS                     from "../../Browser/NURBS/NURBS.js";
+import nurbs                     from "../../../lib/nurbs/nurbs.js";
 
 function NurbsCurve (executionContext)
 {

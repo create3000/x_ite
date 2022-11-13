@@ -48,10 +48,10 @@
 
 
 import X3DConstants from "../../Base/X3DConstants.js";
-import Geospatial from "../../Browser/Geospatial/Geospatial.js";
-import X3DCast from "../../Base/X3DCast.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import Geospatial   from "../../Browser/Geospatial/Geospatial.js";
+import X3DCast      from "../../Base/X3DCast.js";
+import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
 
 var
    vector = new Vector3 (0, 0, 0),

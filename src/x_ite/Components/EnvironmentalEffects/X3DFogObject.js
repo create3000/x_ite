@@ -48,8 +48,8 @@
 
 
 import X3DConstants from "../../Base/X3DConstants.js";
-import Matrix3 from "../../../standard/Math/Numbers/Matrix3.js";
-import ObjectCache from "../../../standard/Utility/ObjectCache.js";
+import Matrix3      from "../../../standard/Math/Numbers/Matrix3.js";
+import ObjectCache  from "../../../standard/Utility/ObjectCache.js";
 
 const Fogs = ObjectCache (FogContainer);
 

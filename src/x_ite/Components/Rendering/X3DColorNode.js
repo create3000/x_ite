@@ -47,9 +47,9 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
+import Fields                   from "../../Fields.js";
 import X3DGeometricPropertyNode from "./X3DGeometricPropertyNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
+import X3DConstants             from "../../Base/X3DConstants.js";
 
 function X3DColorNode (executionContext)
 {

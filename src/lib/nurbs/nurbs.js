@@ -1,15 +1,15 @@
 
-import inferType from "./src/utils/infer-type.js";
-import computeCacheKey from "./src/utils/cache-key.js";
-import isNdarray from "./src/utils/is-ndarray.js";
-import isNdarrayLike from "./src/utils/is-ndarray-like.js";
-import createAccessors from "./src/utils/create-accessors.js";
+import inferType           from "./src/utils/infer-type.js";
+import computeCacheKey     from "./src/utils/cache-key.js";
+import isNdarray           from "./src/utils/is-ndarray.js";
+import isNdarrayLike       from "./src/utils/is-ndarray-like.js";
+import createAccessors     from "./src/utils/create-accessors.js";
 import numericalDerivative from "./src/numerical-derivative.js";
-import isArrayLike from "./src/utils/is-array-like.js";
-import createEvaluator from "./src/evaluate.js";
-import createTransform from "./src/transform.js";
-import createSupport from "./src/support.js";
-import sample from "./extras/sample.js";
+import isArrayLike         from "./src/utils/is-array-like.js";
+import createEvaluator     from "./src/evaluate.js";
+import createTransform     from "./src/transform.js";
+import createSupport       from "./src/support.js";
+import sample              from "./extras/sample.js";
 
 var BOUNDARY_TYPES = {
    open: "open",

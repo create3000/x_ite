@@ -47,11 +47,11 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import Shape from "../../Components/Shape/Shape.js";
+import Fields         from "../../Fields.js";
+import Shape          from "../../Components/Shape/Shape.js";
 import IndexedLineSet from "../../Components/Rendering/IndexedLineSet.js";
-import Color from "../../Components/Rendering/Color.js";
-import Coordinate from "../../Components/Rendering/Coordinate.js";
+import Color          from "../../Components/Rendering/Color.js";
+import Coordinate     from "../../Components/Rendering/Coordinate.js";
 
 const _bboxNode = Symbol ();
 

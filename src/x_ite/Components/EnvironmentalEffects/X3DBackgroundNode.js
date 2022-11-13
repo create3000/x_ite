@@ -49,16 +49,16 @@
 
 import X3DBindableNode from "../Core/X3DBindableNode.js";
 import GeometryContext from "../../Browser/Rendering/GeometryContext.js";
-import VertexArray from "../../Rendering/VertexArray.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
-import Complex from "../../../standard/Math/Numbers/Complex.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
-import BitSet from "../../../standard/Utility/BitSet.js";
+import VertexArray     from "../../Rendering/VertexArray.js";
+import TraverseType    from "../../Rendering/TraverseType.js";
+import X3DConstants    from "../../Base/X3DConstants.js";
+import ViewVolume      from "../../../standard/Math/Geometry/ViewVolume.js";
+import Complex         from "../../../standard/Math/Numbers/Complex.js";
+import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4       from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
+import Algorithm       from "../../../standard/Math/Algorithm.js";
+import BitSet          from "../../../standard/Utility/BitSet.js";
 
 const
    RADIUS = 1,

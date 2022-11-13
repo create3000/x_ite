@@ -48,7 +48,7 @@
 
 
 import X3DGroupingNode from "../Grouping/X3DGroupingNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
+import X3DConstants    from "../../Base/X3DConstants.js";
 
 function X3DViewportNode (executionContext)
 {

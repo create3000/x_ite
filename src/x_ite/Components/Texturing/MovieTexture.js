@@ -47,15 +47,15 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DTexture2DNode from "./X3DTexture2DNode.js";
-import X3DSoundSourceNode from "../Sound/X3DSoundSourceNode.js";
-import X3DUrlObject from "../Networking/X3DUrlObject.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
-import DEBUG from "../../DEBUG.js";
+import X3DTexture2DNode     from "./X3DTexture2DNode.js";
+import X3DSoundSourceNode   from "../Sound/X3DSoundSourceNode.js";
+import X3DUrlObject         from "../Networking/X3DUrlObject.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
+import DEBUG                from "../../DEBUG.js";
 
 function MovieTexture (executionContext)
 {

@@ -47,16 +47,16 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DChildNode from "../Core/X3DChildNode.js";
-import X3DUrlObject from "./X3DUrlObject.js";
-import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
-import Group from "../Grouping/Group.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import FileLoader from "../../InputOutput/FileLoader.js";
+import X3DChildNode         from "../Core/X3DChildNode.js";
+import X3DUrlObject         from "./X3DUrlObject.js";
+import X3DBoundedObject     from "../Grouping/X3DBoundedObject.js";
+import Group                from "../Grouping/Group.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import FileLoader           from "../../InputOutput/FileLoader.js";
 
 function Inline (executionContext)
 {

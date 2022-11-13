@@ -47,11 +47,11 @@
  ******************************************************************************/
 
 
-import ProfileInfo from "./ProfileInfo.js";
-import ProfileInfoArray from "./ProfileInfoArray.js";
-import ComponentInfoArray from "./ComponentInfoArray.js";
+import ProfileInfo         from "./ProfileInfo.js";
+import ProfileInfoArray    from "./ProfileInfoArray.js";
+import ComponentInfoArray  from "./ComponentInfoArray.js";
 import SupportedComponents from "./SupportedComponents.js";
-import urls from "../Browser/Networking/urls.js";
+import urls                from "../Browser/Networking/urls.js";
 
 const SupportedProfiles = new ProfileInfoArray ();
 

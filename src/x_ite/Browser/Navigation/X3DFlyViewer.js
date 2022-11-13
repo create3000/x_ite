@@ -47,14 +47,14 @@
  ******************************************************************************/
 
 
-import X3DViewer from "./X3DViewer.js";
+import X3DViewer         from "./X3DViewer.js";
 import OrientationChaser from "../../Components/Followers/OrientationChaser.js";
-import GeometryContext from "../Rendering/GeometryContext.js";
-import VertexArray from "../../Rendering/VertexArray.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import Camera from "../../../standard/Math/Geometry/Camera.js";
+import GeometryContext   from "../Rendering/GeometryContext.js";
+import VertexArray       from "../../Rendering/VertexArray.js";
+import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4           from "../../../standard/Math/Numbers/Matrix4.js";
+import Camera            from "../../../standard/Math/Geometry/Camera.js";
 
 const macOS = /Mac OS X/i .test (navigator .userAgent)
 

@@ -47,10 +47,10 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DBaseNode from "../../Base/X3DBaseNode.js";
-import IndexedFaceSet from "../../Components/Geometry3D/IndexedFaceSet.js";
-import Coordinate from "../../Components/Rendering/Coordinate.js";
+import Fields            from "../../Fields.js";
+import X3DBaseNode       from "../../Base/X3DBaseNode.js";
+import IndexedFaceSet    from "../../Components/Geometry3D/IndexedFaceSet.js";
+import Coordinate        from "../../Components/Rendering/Coordinate.js";
 import TextureCoordinate from "../../Components/Texturing/TextureCoordinate.js";
 
 function BoxOptions (executionContext)

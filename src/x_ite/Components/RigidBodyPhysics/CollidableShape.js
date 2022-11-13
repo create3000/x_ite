@@ -47,14 +47,14 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import Fields                 from "../../Fields.js";
+import X3DFieldDefinition     from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
 import X3DNBodyCollidableNode from "./X3DNBodyCollidableNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import X3DCast from "../../Base/X3DCast.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import Ammo from "../../../lib/ammojs/AmmoClass.js";
+import X3DConstants           from "../../Base/X3DConstants.js";
+import X3DCast                from "../../Base/X3DCast.js";
+import TraverseType           from "../../Rendering/TraverseType.js";
+import Ammo                   from "../../../lib/ammojs/AmmoClass.js";
 
 function CollidableShape (executionContext)
 {

@@ -47,11 +47,11 @@
  ******************************************************************************/
 
 
-import BoxOptions from "./BoxOptions.js";
-import ConeOptions from "./ConeOptions.js";
-import CylinderOptions from "./CylinderOptions.js";
+import BoxOptions        from "./BoxOptions.js";
+import ConeOptions       from "./ConeOptions.js";
+import CylinderOptions   from "./CylinderOptions.js";
 import QuadSphereOptions from "./QuadSphereOptions.js";
-import PrimitiveQuality from "../Core/PrimitiveQuality.js";
+import PrimitiveQuality  from "../Core/PrimitiveQuality.js";
 
 function X3DGeometry3DContext () { }
 

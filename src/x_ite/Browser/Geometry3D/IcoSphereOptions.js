@@ -47,12 +47,12 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DBaseNode from "../../Base/X3DBaseNode.js";
-import IndexedFaceSet from "../../Components/Geometry3D/IndexedFaceSet.js";
-import Coordinate from "../../Components/Rendering/Coordinate.js";
+import Fields            from "../../Fields.js";
+import X3DBaseNode       from "../../Base/X3DBaseNode.js";
+import IndexedFaceSet    from "../../Components/Geometry3D/IndexedFaceSet.js";
+import Coordinate        from "../../Components/Rendering/Coordinate.js";
 import TextureCoordinate from "../../Components/Texturing/TextureCoordinate.js";
-import IcoSphere from "./IcoSphere.js";
+import IcoSphere         from "./IcoSphere.js";
 
 function IcoSphereOptions (executionContext)
 {

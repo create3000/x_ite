@@ -47,17 +47,17 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DShapeNode from "./X3DShapeNode.js";
-import TraverseType from "../../Rendering/TraverseType.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import Line3 from "../../../standard/Math/Geometry/Line3.js";
-import QuickSort from "../../../standard/Math/Algorithms/QuickSort.js";
+import X3DShapeNode         from "./X3DShapeNode.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
+import Line3                from "../../../standard/Math/Geometry/Line3.js";
+import QuickSort            from "../../../standard/Math/Algorithms/QuickSort.js";
 
 function Shape (executionContext)
 {

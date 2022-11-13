@@ -48,7 +48,7 @@
 
 
 import X3DChildObject from "./X3DChildObject.js";
-import Events from "./Events.js";
+import Events         from "./Events.js";
 
 const _browser = Symbol .for ("X3DEventObject.browser");
 

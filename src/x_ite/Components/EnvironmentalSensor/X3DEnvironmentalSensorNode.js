@@ -47,10 +47,10 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
+import Fields        from "../../Fields.js";
 import X3DSensorNode from "../Core/X3DSensorNode.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import X3DConstants  from "../../Base/X3DConstants.js";
+import Vector3       from "../../../standard/Math/Numbers/Vector3.js";
 
 function X3DEnvironmentalSensorNode (executionContext)
 {

@@ -48,8 +48,8 @@
 
 
 import Fields from "../../Fields.js";
-import urls from "./urls.js";
-import _ from "../../../locale/gettext.js";
+import urls   from "./urls.js";
+import _      from "../../../locale/gettext.js";
 
 const
    _loadingTotal   = Symbol (),

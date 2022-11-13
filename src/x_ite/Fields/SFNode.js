@@ -47,10 +47,10 @@
  ******************************************************************************/
 
 
-import X3DField from "../Base/X3DField.js";
+import X3DField     from "../Base/X3DField.js";
 import X3DConstants from "../Base/X3DConstants.js";
-import Generator from "../InputOutput/Generator.js";
-import SFNodeCache from "./SFNodeCache.js";
+import Generator    from "../InputOutput/Generator.js";
+import SFNodeCache  from "./SFNodeCache.js";
 
 const
    _target     = Symbol (),

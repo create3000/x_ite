@@ -47,18 +47,18 @@
  ******************************************************************************/
 
 
-import Fields from "../../Fields.js";
-import VertexArray from "../../Rendering/VertexArray.js";
-import X3DNode from "../Core/X3DNode.js";
+import Fields       from "../../Fields.js";
+import VertexArray  from "../../Rendering/VertexArray.js";
+import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
-import Shading from "../../Browser/Core/Shading.js";
-import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
-import Box3 from "../../../standard/Math/Geometry/Box3.js";
-import Plane3 from "../../../standard/Math/Geometry/Plane3.js";
-import Triangle3 from "../../../standard/Math/Geometry/Triangle3.js";
-import Algorithm from "../../../standard/Math/Algorithm.js";
+import Shading      from "../../Browser/Core/Shading.js";
+import Vector2      from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
+import Box3         from "../../../standard/Math/Geometry/Box3.js";
+import Plane3       from "../../../standard/Math/Geometry/Plane3.js";
+import Triangle3    from "../../../standard/Math/Geometry/Triangle3.js";
+import Algorithm    from "../../../standard/Math/Algorithm.js";
 
 const ARRAY_TYPE = "Array"; // For color, texCoord, normal, and vertex array, can be MFFloat or Array;
 

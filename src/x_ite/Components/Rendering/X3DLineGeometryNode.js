@@ -48,16 +48,16 @@
 
 
 import X3DGeometryNode from "./X3DGeometryNode.js";
-import VertexArray from "../../Rendering/VertexArray.js";
-import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
-import Box3 from "../../../standard/Math/Geometry/Box3.js";
-import Line2 from "../../../standard/Math/Geometry/Line2.js";
-import Line3 from "../../../standard/Math/Geometry/Line3.js";
-import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
-import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
-import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
-import Matrix2 from "../../../standard/Math/Numbers/Matrix2.js";
-import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import VertexArray     from "../../Rendering/VertexArray.js";
+import ViewVolume      from "../../../standard/Math/Geometry/ViewVolume.js";
+import Box3            from "../../../standard/Math/Geometry/Box3.js";
+import Line2           from "../../../standard/Math/Geometry/Line2.js";
+import Line3           from "../../../standard/Math/Geometry/Line3.js";
+import Vector2         from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4         from "../../../standard/Math/Numbers/Vector4.js";
+import Matrix2         from "../../../standard/Math/Numbers/Matrix2.js";
+import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 
 function X3DLineGeometryNode (executionContext)
 {
