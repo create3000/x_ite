@@ -61,7 +61,11 @@ sub convert {
 
    $file .= "\n";
 
-   say $file if $filename =~ /Bezier|Matrix4|DEBUG/;
+   open FILE, ">", $filename;
+   print FILE $file;
+   close FILE;
+
+   print $file if $filename =~ /Bezier|Matrix4|DEBUG/;
 }
 
 convert $_ foreach `find src/standard -type f -name "*.js"`;
