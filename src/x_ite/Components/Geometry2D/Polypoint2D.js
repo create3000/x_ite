@@ -47,61 +47,51 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DPointGeometryNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DPointGeometryNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DPointGeometryNode from "../Rendering/X3DPointGeometryNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function Polypoint2D (executionContext)
 {
-"use strict";
+   X3DPointGeometryNode .call (this, executionContext);
 
-   function Polypoint2D (executionContext)
+   this .addType (X3DConstants .Polypoint2D);
+
+   this ._point .setUnit ("length");
+}
+
+Polypoint2D .prototype = Object .assign (Object .create (X3DPointGeometryNode .prototype),
+{
+   constructor: Polypoint2D,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec2f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DPointGeometryNode .call (this, executionContext);
-
-      this .addType (X3DConstants .Polypoint2D);
-
-      this ._point .setUnit ("length");
-   }
-
-   Polypoint2D .prototype = Object .assign (Object .create (X3DPointGeometryNode .prototype),
+      return "Polypoint2D";
+   },
+   getComponentName: function ()
    {
-      constructor: Polypoint2D,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec2f ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "Polypoint2D";
-      },
-      getComponentName: function ()
-      {
-         return "Geometry2D";
-      },
-      getContainerField: function ()
-      {
-         return "geometry";
-      },
-      build: function ()
-      {
-         const
-            point       = this ._point .getValue (),
-            vertexArray = this .getVertices ();
+      return "Geometry2D";
+   },
+   getContainerField: function ()
+   {
+      return "geometry";
+   },
+   build: function ()
+   {
+      const
+         point       = this ._point .getValue (),
+         vertexArray = this .getVertices ();
 
-         for (let i = 0, length = this ._point .length * 2; i < length; i += 2)
-         {
-            vertexArray .push (point [i], point [i + 1], 0, 1);
-         }
-      },
-   });
-
-   return Polypoint2D;
+      for (let i = 0, length = this ._point .length * 2; i < length; i += 2)
+      {
+         vertexArray .push (point [i], point [i + 1], 0, 1);
+      }
+   },
 });
+
+export default Polypoint2D;

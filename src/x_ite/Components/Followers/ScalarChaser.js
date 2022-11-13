@@ -47,88 +47,77 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Followers/X3DChaserNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Algorithm",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DChaserNode,
-          X3DConstants,
-          Algorithm)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DChaserNode from "./X3DChaserNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+function ScalarChaser (executionContext)
 {
-"use strict";
+   X3DChaserNode .call (this, executionContext);
 
-   function ScalarChaser (executionContext)
+   this .addType (X3DConstants .ScalarChaser);
+}
+
+ScalarChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
+{
+   constructor: ScalarChaser,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFFloat ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DChaserNode .call (this, executionContext);
-
-      this .addType (X3DConstants .ScalarChaser);
-   }
-
-   ScalarChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
+      return "ScalarChaser";
+   },
+   getComponentName: function ()
    {
-      constructor: ScalarChaser,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFFloat ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "ScalarChaser";
-      },
-      getComponentName: function ()
-      {
-         return "Followers";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      getVector: function ()
-      {
-         return 0;
-      },
-      setPreviousValue: function (value)
-      {
-         this .previousValue = value;
-      },
-      setDestination: function (value)
-      {
-         this .destination = value;
-      },
-      duplicate: function (value)
-      {
-         return value;
-      },
-      assign: function (buffer, i, value)
-      {
-         buffer [i] = value;
-      },
-      equals: function (lhs, rhs, tolerance)
-      {
-         return Math .abs (lhs - rhs) < tolerance;
-      },
-      interpolate: function (source, destination, weight)
-      {
-         return Algorithm .lerp (source, destination, weight);
-      },
-      step: function (value1, value2, t)
-      {
-         this .output += (value1 - value2) * t;
-      },
-   });
-
-   return ScalarChaser;
+      return "Followers";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   getVector: function ()
+   {
+      return 0;
+   },
+   setPreviousValue: function (value)
+   {
+      this .previousValue = value;
+   },
+   setDestination: function (value)
+   {
+      this .destination = value;
+   },
+   duplicate: function (value)
+   {
+      return value;
+   },
+   assign: function (buffer, i, value)
+   {
+      buffer [i] = value;
+   },
+   equals: function (lhs, rhs, tolerance)
+   {
+      return Math .abs (lhs - rhs) < tolerance;
+   },
+   interpolate: function (source, destination, weight)
+   {
+      return Algorithm .lerp (source, destination, weight);
+   },
+   step: function (value1, value2, t)
+   {
+      this .output += (value1 - value2) * t;
+   },
 });
+
+export default ScalarChaser;

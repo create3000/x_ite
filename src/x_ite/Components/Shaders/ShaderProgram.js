@@ -47,68 +47,56 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Components/Shaders/X3DProgrammableShaderObject",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DNode,
-          X3DUrlObject,
-          X3DProgrammableShaderObject,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode from "../Core/X3DNode.js";
+import X3DUrlObject from "../Networking/X3DUrlObject.js";
+import X3DProgrammableShaderObject from "./X3DProgrammableShaderObject.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function ShaderProgram (executionContext)
 {
-"use strict";
+   X3DNode                     .call (this, executionContext);
+   X3DUrlObject                .call (this, executionContext);
+   X3DProgrammableShaderObject .call (this, executionContext);
 
-   function ShaderProgram (executionContext)
+   this .addType (X3DConstants .ShaderProgram);
+}
+
+ShaderProgram .prototype = Object .assign (Object .create (X3DNode .prototype),
+   X3DUrlObject .prototype,
+   X3DProgrammableShaderObject .prototype,
+{
+   constructor: ShaderProgram,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+   ]),
+   getTypeName: function ()
    {
-      X3DNode                     .call (this, executionContext);
-      X3DUrlObject                .call (this, executionContext);
-      X3DProgrammableShaderObject .call (this, executionContext);
-
-      this .addType (X3DConstants .ShaderProgram);
-   }
-
-   ShaderProgram .prototype = Object .assign (Object .create (X3DNode .prototype),
-      X3DUrlObject .prototype,
-      X3DProgrammableShaderObject .prototype,
+      return "ShaderProgram";
+   },
+   getComponentName: function ()
    {
-      constructor: ShaderProgram,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      ]),
-      getTypeName: function ()
-      {
-         return "ShaderProgram";
-      },
-      getComponentName: function ()
-      {
-         return "Shaders";
-      },
-      getContainerField: function ()
-      {
-         return "programs";
-      },
-      getSourceText: function ()
-      {
-         return this ._url;
-      },
-      requestImmediateLoad: function (cache = true)
-      { },
-      requestUnload: function ()
-      { },
-   });
-
-   return ShaderProgram;
+      return "Shaders";
+   },
+   getContainerField: function ()
+   {
+      return "programs";
+   },
+   getSourceText: function ()
+   {
+      return this ._url;
+   },
+   requestImmediateLoad: function (cache = true)
+   { },
+   requestUnload: function ()
+   { },
 });
+
+export default ShaderProgram;

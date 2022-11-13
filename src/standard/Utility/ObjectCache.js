@@ -47,32 +47,27 @@
  ******************************************************************************/
 
 
-define (function ()
+export default function (Type)
 {
-"use strict";
+   const stack = [ ];
 
-   return function (Type)
-   {
-      const stack = [ ];
+   return {
+      size: 0,
+      pop: function ()
+      {
+         if (this .size !== 0)
+            return stack [-- this .size];
 
-      return {
-         size: 0,
-         pop: function ()
-         {
-            if (this .size !== 0)
-               return stack [-- this .size];
-
-            return new Type ();
-         },
-         push: function (object)
-         {
-            stack [this .size ++] = object;
-         },
-         clear: function ()
-         {
-            stack .length = 0;
-            this .size    = 0;
-         },
-      };
+         return new Type ();
+      },
+      push: function (object)
+      {
+         stack [this .size ++] = object;
+      },
+      clear: function ()
+      {
+         stack .length = 0;
+         this .size    = 0;
+      },
    };
-});
+};

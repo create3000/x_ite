@@ -47,19 +47,14 @@
  ******************************************************************************/
 
 
-define (function ()
+let i = 0;
+
+const SortOrder =
 {
-"use strict";
+   ANY:        i ++,
+   CLOSEST:    i ++,
+   ALL:        i ++,
+   ALL_SORTED: i ++,
+};
 
-   let i = 0;
-
-   const SortOrder =
-   {
-      ANY:        i ++,
-      CLOSEST:    i ++,
-      ALL:        i ++,
-      ALL_SORTED: i ++,
-   };
-
-   return SortOrder;
-});
+export default SortOrder;

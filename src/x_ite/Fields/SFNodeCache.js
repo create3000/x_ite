@@ -47,36 +47,31 @@
  ******************************************************************************/
 
 
-define (function ()
+import SFNode from "./SFNode.js";
+
+const cache = new WeakMap ();
+
+function SFNodeCache () { }
+
+SFNodeCache .prototype =
 {
-"use strict";
-
-   const cache = new WeakMap ();
-
-   function SFNodeCache () { }
-
-   SFNodeCache .prototype =
+   get: function (baseNode)
    {
-      get: function (baseNode)
+      const node = cache .get (baseNode);
+
+      if (node)
       {
-         const node = cache .get (baseNode);
+         return node;
+      }
+      else
+      {
+         const node = new SFNode (baseNode);
 
-         if (node)
-         {
-            return node;
-         }
-         else
-         {
-            const
-               SFNode = require ("x_ite/Fields/SFNode"),
-               node   = new SFNode (baseNode);
+         cache .set (baseNode, node);
 
-            cache .set (baseNode, node);
+         return node;
+      }
+   },
+};
 
-            return node;
-         }
-      },
-   };
-
-   return new SFNodeCache ();
-});
+export default new SFNodeCache ();

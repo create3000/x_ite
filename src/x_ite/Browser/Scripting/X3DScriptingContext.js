@@ -47,32 +47,27 @@
  ******************************************************************************/
 
 
-define ([
-],
-function ()
+
+
+const _scripts = Symbol ();
+
+function X3DScriptingContext ()
 {
-"use strict";
+   this [_scripts] = [this];
+}
 
-   const _scripts = Symbol ();
-
-   function X3DScriptingContext ()
+X3DScriptingContext .prototype =
+{
+   initialize: function ()
+   { },
+   isExternal: function ()
    {
-      this [_scripts] = [this];
+      return this [_scripts] .length === 1;
+   },
+   getScriptStack: function ()
+   {
+      return this [_scripts];
    }
+};
 
-   X3DScriptingContext .prototype =
-   {
-      initialize: function ()
-      { },
-      isExternal: function ()
-      {
-         return this [_scripts] .length === 1;
-      },
-      getScriptStack: function ()
-      {
-         return this [_scripts];
-      }
-   };
-
-   return X3DScriptingContext;
-});
+export default X3DScriptingContext;

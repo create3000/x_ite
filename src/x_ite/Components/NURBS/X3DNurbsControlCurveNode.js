@@ -47,26 +47,19 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DNode,
-          X3DConstants)
+import X3DNode from "../Core/X3DNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DNurbsControlCurveNode (executionContext)
 {
-"use strict";
+   X3DNode .call (this, executionContext);
 
-   function X3DNurbsControlCurveNode (executionContext)
-   {
-      X3DNode .call (this, executionContext);
+   this .addType (X3DConstants .X3DNurbsControlCurveNode);
+}
 
-      this .addType (X3DConstants .X3DNurbsControlCurveNode);
-   }
-
-   X3DNurbsControlCurveNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-   {
-      constructor: X3DNurbsControlCurveNode,
-   });
-
-   return X3DNurbsControlCurveNode;
+X3DNurbsControlCurveNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+{
+   constructor: X3DNurbsControlCurveNode,
 });
+
+export default X3DNurbsControlCurveNode;

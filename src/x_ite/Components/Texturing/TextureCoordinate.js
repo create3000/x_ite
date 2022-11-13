@@ -47,131 +47,120 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DSingleTextureCoordinateNode,
-          X3DConstants,
-          Vector4)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DSingleTextureCoordinateNode from "./X3DSingleTextureCoordinateNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
+
+function TextureCoordinate (executionContext)
 {
-"use strict";
+   X3DSingleTextureCoordinateNode .call (this, executionContext);
 
-   function TextureCoordinate (executionContext)
+   this .addType (X3DConstants .TextureCoordinate);
+}
+
+TextureCoordinate .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
+{
+   constructor: TextureCoordinate,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec2f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DSingleTextureCoordinateNode .call (this, executionContext);
-
-      this .addType (X3DConstants .TextureCoordinate);
-   }
-
-   TextureCoordinate .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
+      return "TextureCoordinate";
+   },
+   getComponentName: function ()
    {
-      constructor: TextureCoordinate,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec2f ()),
-      ]),
-      getTypeName: function ()
+      return "Texturing";
+   },
+   getContainerField: function ()
+   {
+      return "texCoord";
+   },
+   initialize: function ()
+   {
+      X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
+
+      this ._point .addInterest ("set_point__", this);
+
+      this .set_point__ ();
+   },
+   set_point__: function ()
+   {
+      this .point  = this ._point .getValue ();
+      this .length = this ._point .length;
+   },
+   isEmpty: function ()
+   {
+      return this .length === 0;
+   },
+   getSize: function ()
+   {
+      return this .length;
+   },
+   get1Point: function (index, vector)
+   {
+      if (index >= 0 && index < this .length)
       {
-         return "TextureCoordinate";
-      },
-      getComponentName: function ()
+         const point = this .point;
+
+         index *= 2;
+
+         return vector .set (point [index], point [index + 1], 0, 1);
+      }
+      else if (index >= 0 && this .length)
       {
-         return "Texturing";
-      },
-      getContainerField: function ()
+         const point = this .point;
+
+         index %= this .length;
+         index *= 2;
+
+         return vector .set (point [index], point [index + 1], 0, 1);
+      }
+      else
       {
-         return "texCoord";
-      },
-      initialize: function ()
+         return vector .set (0, 0, 0, 1);
+      }
+   },
+   addTexCoordToChannel: function (index, array)
+   {
+      if (index >= 0 && index < this .length)
       {
-         X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
+         const point = this .point;
 
-         this ._point .addInterest ("set_point__", this);
+         index *= 2;
 
-         this .set_point__ ();
-      },
-      set_point__: function ()
+         array .push (point [index], point [index + 1], 0, 1);
+      }
+      else if (index >= 0 && this .length)
       {
-         this .point  = this ._point .getValue ();
-         this .length = this ._point .length;
-      },
-      isEmpty: function ()
+         const point = this .point;
+
+         index %= this .length;
+         index *= 2;
+
+         array .push (point [index], point [index + 1], 0, 1);
+      }
+      else
       {
-         return this .length === 0;
-      },
-      getSize: function ()
-      {
-         return this .length;
-      },
-      get1Point: function (index, vector)
-      {
-         if (index >= 0 && index < this .length)
-         {
-            const point = this .point;
+         array .push (0, 0, 0, 1);
+      }
+   },
+   getTexCoord: function (array)
+   {
+      const
+         point  = this .point,
+         length = this .length;
 
-            index *= 2;
+      for (let i = 0, p = 0; i < length; ++ i, p += 2)
+         array .push (point [p], point [p + 1], 0, 1);
 
-            return vector .set (point [index], point [index + 1], 0, 1);
-         }
-         else if (index >= 0 && this .length)
-         {
-            const point = this .point;
-
-            index %= this .length;
-            index *= 2;
-
-            return vector .set (point [index], point [index + 1], 0, 1);
-         }
-         else
-         {
-            return vector .set (0, 0, 0, 1);
-         }
-      },
-      addTexCoordToChannel: function (index, array)
-      {
-         if (index >= 0 && index < this .length)
-         {
-            const point = this .point;
-
-            index *= 2;
-
-            array .push (point [index], point [index + 1], 0, 1);
-         }
-         else if (index >= 0 && this .length)
-         {
-            const point = this .point;
-
-            index %= this .length;
-            index *= 2;
-
-            array .push (point [index], point [index + 1], 0, 1);
-         }
-         else
-         {
-            array .push (0, 0, 0, 1);
-         }
-      },
-      getTexCoord: function (array)
-      {
-         const
-            point  = this .point,
-            length = this .length;
-
-         for (let i = 0, p = 0; i < length; ++ i, p += 2)
-            array .push (point [p], point [p + 1], 0, 1);
-
-         return array;
-      },
-   });
-
-   return TextureCoordinate;
+      return array;
+   },
 });
+
+export default TextureCoordinate;

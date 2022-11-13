@@ -47,84 +47,73 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Color3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode,
-          X3DConstants,
-          Color3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DInterpolatorNode from "./X3DInterpolatorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Color3 from "../../../standard/Math/Numbers/Color3.js";
+
+function ColorInterpolator (executionContext)
 {
-"use strict";
+   X3DInterpolatorNode .call (this, executionContext);
 
-   function ColorInterpolator (executionContext)
+   this .addType (X3DConstants .ColorInterpolator);
+
+   this .hsv = [ ];
+}
+
+ColorInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+{
+   constructor: ColorInterpolator,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFColor ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFColor ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DInterpolatorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .ColorInterpolator);
-
-      this .hsv = [ ];
-   }
-
-   ColorInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+      return "ColorInterpolator";
+   },
+   getComponentName: function ()
    {
-      constructor: ColorInterpolator,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFColor ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFColor ()),
-      ]),
-      getTypeName: function ()
+      return "Interpolation";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DInterpolatorNode .prototype .initialize .call (this);
+
+      this ._keyValue .addInterest ("set_keyValue__", this);
+   },
+   set_keyValue__: function ()
+   {
+      const keyValue = this ._keyValue;
+
+      if (keyValue .length < this ._key .length)
+         this ._keyValue .resize (this ._key .length, keyValue .length ? keyValue [this ._keyValue .length - 1] : new Fields .SFColor ());
+
+      this .hsv .length = 0;
+
+      for (const value of keyValue)
+         this .hsv .push (value .getHSV ([ ]));
+   },
+   interpolate: (function ()
+   {
+      const value = [ ];
+
+      return function (index0, index1, weight)
       {
-         return "ColorInterpolator";
-      },
-      getComponentName: function ()
-      {
-         return "Interpolation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DInterpolatorNode .prototype .initialize .call (this);
+         Color3 .lerp (this .hsv [index0], this .hsv [index1], weight, value);
 
-         this ._keyValue .addInterest ("set_keyValue__", this);
-      },
-      set_keyValue__: function ()
-      {
-         const keyValue = this ._keyValue;
-
-         if (keyValue .length < this ._key .length)
-            this ._keyValue .resize (this ._key .length, keyValue .length ? keyValue [this ._keyValue .length - 1] : new Fields .SFColor ());
-
-         this .hsv .length = 0;
-
-         for (const value of keyValue)
-            this .hsv .push (value .getHSV ([ ]));
-      },
-      interpolate: (function ()
-      {
-         const value = [ ];
-
-         return function (index0, index1, weight)
-         {
-            Color3 .lerp (this .hsv [index0], this .hsv [index1], weight, value);
-
-            this ._value_changed .setHSV (value [0], value [1], value [2]);
-         };
-      })(),
-   });
-
-   return ColorInterpolator;
+         this ._value_changed .setHSV (value [0], value [1], value [2]);
+      };
+   })(),
 });
+
+export default ColorInterpolator;

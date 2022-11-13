@@ -47,335 +47,323 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Browser/Core/PrimitiveQuality",
-   "x_ite/Browser/Text/X3DTextGeometry",
-   "x_ite/Components/Rendering/X3DGeometryNode",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Matrix4",
-   "standard/Math/Geometry/Triangle3",
-   "standard/Math/Algorithms/Bezier"
-],
-function (PrimitiveQuality,
-          X3DTextGeometry,
-          X3DGeometryNode,
-          Vector3,
-          Matrix4,
-          Triangle3,
-          Bezier)
+import PrimitiveQuality from "../Core/PrimitiveQuality.js";
+import X3DTextGeometry from "./X3DTextGeometry.js";
+import X3DGeometryNode from "../../Components/Rendering/X3DGeometryNode.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import Triangle3 from "../../../standard/Math/Geometry/Triangle3.js";
+import Bezier from "../../../standard/Math/Algorithms/Bezier.js";
+
+function PolygonText (text, fontStyle)
 {
-"use strict";
+   X3DTextGeometry .call (this, text, fontStyle);
 
-   function PolygonText (text, fontStyle)
+   text ._transparent = false;
+
+   this .texCoordArray = X3DGeometryNode .createArray ();
+}
+
+PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
+{
+   constructor: PolygonText,
+   getTransparent: function ()
    {
-      X3DTextGeometry .call (this, text, fontStyle);
-
-      text ._transparent = false;
-
-      this .texCoordArray = X3DGeometryNode .createArray ();
-   }
-
-   PolygonText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
+      return false;
+   },
+   getMatrix: function ()
    {
-      constructor: PolygonText,
-      getTransparent: function ()
-      {
-         return false;
-      },
-      getMatrix: function ()
-      {
-         return Matrix4 .Identity;
-      },
-      build: (function ()
+      return Matrix4 .Identity;
+   },
+   build: (function ()
+   {
+      var
+         min = new Vector3 (0, 0, 0),
+         max = new Vector3 (0, 0, 0);
+
+      return function ()
       {
          var
-            min = new Vector3 (0, 0, 0),
-            max = new Vector3 (0, 0, 0);
+            fontStyle = this .getFontStyle (),
+            font      = fontStyle .getFont ();
 
-         return function ()
+         if (! font)
+            return;
+
+         var
+            text             = this .getText (),
+            glyphs           = this .getGlyphs (),
+            minorAlignment   = this .getMinorAlignment (),
+            translations     = this .getTranslations (),
+            charSpacings     = this .getCharSpacings (),
+            size             = fontStyle .getScale (),
+            spacing          = fontStyle ._spacing .getValue (),
+            origin           = text ._origin .getValue (),
+            sizeUnitsPerEm   = size / font .unitsPerEm,
+            primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
+            texCoordArray    = this .texCoordArray,
+            normalArray      = text .getNormals (),
+            vertexArray      = text .getVertices ();
+
+         // Set texCoords.
+
+         text .getMultiTexCoords () .push (texCoordArray);
+
+         this .getBBox () .getExtents (min, max);
+         text .getMin () .assign (min);
+         text .getMax () .assign (max);
+
+         if (fontStyle ._horizontal .getValue ())
          {
-            var
-               fontStyle = this .getFontStyle (),
-               font      = fontStyle .getFont ();
-
-            if (! font)
-               return;
-
-            var
-               text             = this .getText (),
-               glyphs           = this .getGlyphs (),
-               minorAlignment   = this .getMinorAlignment (),
-               translations     = this .getTranslations (),
-               charSpacings     = this .getCharSpacings (),
-               size             = fontStyle .getScale (),
-               spacing          = fontStyle ._spacing .getValue (),
-               origin           = text ._origin .getValue (),
-               sizeUnitsPerEm   = size / font .unitsPerEm,
-               primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
-               texCoordArray    = this .texCoordArray,
-               normalArray      = text .getNormals (),
-               vertexArray      = text .getVertices ();
-
-            // Set texCoords.
-
-            text .getMultiTexCoords () .push (texCoordArray);
-
-            this .getBBox () .getExtents (min, max);
-            text .getMin () .assign (min);
-            text .getMax () .assign (max);
-
-            if (fontStyle ._horizontal .getValue ())
-            {
-               for (var l = 0, length = glyphs .length; l < length; ++ l)
-               {
-                  var
-                     line         = glyphs [l],
-                     charSpacing  = charSpacings [l],
-                     translation  = translations [l],
-                     advanceWidth = 0;
-
-                  for (var g = 0, gl = line .length; g < gl; ++ g)
-                  {
-                     var
-                        glyph         = line [g],
-                        glyphVertices = this .getGlyphGeometry (font, glyph, primitiveQuality),
-                        xOffset       = minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
-                        yOffset       = minorAlignment .y + translation .y;
-
-                     for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
-                     {
-                        var
-                           x = glyphVertices [v] .x * size + xOffset,
-                           y = glyphVertices [v] .y * size + yOffset;
-
-                        texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
-                        normalArray   .push (0, 0, 1);
-                        vertexArray   .push (x, y, 0, 1);
-                     }
-
-                     // Calculate advanceWidth.
-
-                     var kerning = 0;
-
-                     if (g + 1 < line .length)
-                        kerning = font .getKerningValue (glyph, line [g + 1]);
-
-                     advanceWidth += (glyph .advanceWidth + kerning) * sizeUnitsPerEm;
-                  }
-               }
-            }
-            else
+            for (var l = 0, length = glyphs .length; l < length; ++ l)
             {
                var
-                  leftToRight = fontStyle ._leftToRight .getValue (),
-                  topToBottom = fontStyle ._topToBottom .getValue (),
-                  first       = leftToRight ? 0 : text ._string .length - 1,
-                  last        = leftToRight ? text ._string .length  : -1,
-                  step        = leftToRight ? 1 : -1;
+                  line         = glyphs [l],
+                  charSpacing  = charSpacings [l],
+                  translation  = translations [l],
+                  advanceWidth = 0;
 
-               for (var l = first, t = 0; l !== last; l += step)
+               for (var g = 0, gl = line .length; g < gl; ++ g)
                {
-                  var line = glyphs [l];
-
                   var
-                     numChars = line .length,
-                     firstG   = topToBottom ? 0 : numChars - 1,
-                     lastG    = topToBottom ? numChars : -1,
-                     stepG    = topToBottom ? 1 : -1;
+                     glyph         = line [g],
+                     glyphVertices = this .getGlyphGeometry (font, glyph, primitiveQuality),
+                     xOffset       = minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
+                     yOffset       = minorAlignment .y + translation .y;
 
-                  for (var g = firstG; g !== lastG; g += stepG, ++ t)
+                  for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
                   {
                      var
-                        translation   = translations [t],
-                        glyphVertices = this .getGlyphGeometry (font, line [g], primitiveQuality);
+                        x = glyphVertices [v] .x * size + xOffset,
+                        y = glyphVertices [v] .y * size + yOffset;
 
-                     for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
-                     {
-                        var
-                           x = glyphVertices [v] .x * size + minorAlignment .x + translation .x,
-                           y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
-
-                        texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
-                        normalArray   .push (0, 0, 1);
-                        vertexArray   .push (x, y, 0, 1);
-                     }
+                     texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
+                     normalArray   .push (0, 0, 1);
+                     vertexArray   .push (x, y, 0, 1);
                   }
+
+                  // Calculate advanceWidth.
+
+                  var kerning = 0;
+
+                  if (g + 1 < line .length)
+                     kerning = font .getKerningValue (glyph, line [g + 1]);
+
+                  advanceWidth += (glyph .advanceWidth + kerning) * sizeUnitsPerEm;
                }
-            }
-         };
-      })(),
-      getGlyphExtents: function (font, glyph, primitiveQuality, min, max)
-      {
-         var
-            glyphCache = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
-            extents    = glyphCache .extents;
-
-         if (extents)
-         {
-            min .assign (extents .min);
-            max .assign (extents .max);
-            return;
-         }
-
-         var vertices = this .getGlyphGeometry (font, glyph, primitiveQuality);
-
-         if (vertices .length)
-         {
-            var vertex = vertices [0];
-
-            min .assign (vertex);
-            max .assign (vertex);
-
-            for (var i = 1, length = vertices .length; i < length; ++ i)
-            {
-               var vertex = vertices [i];
-
-               min .min (vertex);
-               max .max (vertex);
             }
          }
          else
          {
-            min .set (0, 0, 0);
-            max .set (0, 0, 0);
-         }
-
-         var extents = glyphCache .extents = { };
-
-         extents .min = min .copy ();
-         extents .max = max .copy ();
-      },
-      getGlyphGeometry: function (font, glyph, primitiveQuality)
-      {
-         var
-            glyphCache    = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
-            glyphGeometry = glyphCache .geometry;
-
-         if (glyphGeometry)
-            return glyphGeometry;
-
-         glyphGeometry = glyphCache .geometry = [ ];
-
-         this .createGlyphGeometry (glyph, glyphGeometry, primitiveQuality);
-
-         return glyphGeometry;
-      },
-      createGlyphGeometry: (function ()
-      {
-         var
-            points = [ ],
-            curves = [ ],
-            normal = new Vector3 (0, 0, 0);
-
-         return function (glyph, vertices, primitiveQuality)
-         {
-            // Get curves for the current glyph.
-
             var
-               dimension  = this .getBezierDimension (primitiveQuality),
-               path       = glyph .getPath (0, 0, 1),
-               commands   = path .commands,
-               x          = 0,
-               y          = 0;
+               leftToRight = fontStyle ._leftToRight .getValue (),
+               topToBottom = fontStyle ._topToBottom .getValue (),
+               first       = leftToRight ? 0 : text ._string .length - 1,
+               last        = leftToRight ? text ._string .length  : -1,
+               step        = leftToRight ? 1 : -1;
 
-            points .length = 0;
-            curves .length = 0;
-
-            for (var i = 0, cl = commands .length; i < cl; ++ i)
+            for (var l = first, t = 0; l !== last; l += step)
             {
-               var command = commands [i];
+               var line = glyphs [l];
 
-               switch (command .type)
+               var
+                  numChars = line .length,
+                  firstG   = topToBottom ? 0 : numChars - 1,
+                  lastG    = topToBottom ? numChars : -1,
+                  stepG    = topToBottom ? 1 : -1;
+
+               for (var g = firstG; g !== lastG; g += stepG, ++ t)
                {
-                  case "M": // Start
-                  case "Z": // End
-                  {
-                     if (points .length > 2)
-                     {
-                        if (points [0] .x === points .at (-1) .x && points [0] .y === points .at (-1) .y)
-                           points .pop ();
+                  var
+                     translation   = translations [t],
+                     glyphVertices = this .getGlyphGeometry (font, line [g], primitiveQuality);
 
-                        curves .push (points);
-                     }
-
-                     points = [ ];
-
-                     if (command .type === "M")
-                        points .push (new Vector3 (command .x, -command .y, 0));
-
-                     break;
-                  }
-                  case "L": // Linear
-                  {
-                     points .push (new Vector3 (command .x, -command .y, 0));
-                     break;
-                  }
-                  case "Q": // Quadric
+                  for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
                   {
                      var
-                        curve = new Bezier (x, -y, command .x1, -command .y1, command .x, -command .y),
-                        lut   = curve .getLUT (dimension);
+                        x = glyphVertices [v] .x * size + minorAlignment .x + translation .x,
+                        y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
 
-                     for (var l = 1, ll = lut .length; l < ll; ++ l)
-                        points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
-
-                     break;
+                     texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
+                     normalArray   .push (0, 0, 1);
+                     vertexArray   .push (x, y, 0, 1);
                   }
-                  case "C": // Cubic
-                  {
-                     var
-                        curve = new Bezier (x, -y, command .x1, -command .y1, command .x2, -command .y2, command .x, -command .y),
-                        lut   = curve .getLUT (dimension);
-
-                     for (var l = 1, ll = lut .length; l < ll; ++ l)
-                        points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
-
-                     break;
-                  }
-                  default:
-                     continue;
                }
+            }
+         }
+      };
+   })(),
+   getGlyphExtents: function (font, glyph, primitiveQuality, min, max)
+   {
+      var
+         glyphCache = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
+         extents    = glyphCache .extents;
 
-               x = command .x;
-               y = command .y;
+      if (extents)
+      {
+         min .assign (extents .min);
+         max .assign (extents .max);
+         return;
+      }
+
+      var vertices = this .getGlyphGeometry (font, glyph, primitiveQuality);
+
+      if (vertices .length)
+      {
+         var vertex = vertices [0];
+
+         min .assign (vertex);
+         max .assign (vertex);
+
+         for (var i = 1, length = vertices .length; i < length; ++ i)
+         {
+            var vertex = vertices [i];
+
+            min .min (vertex);
+            max .max (vertex);
+         }
+      }
+      else
+      {
+         min .set (0, 0, 0);
+         max .set (0, 0, 0);
+      }
+
+      var extents = glyphCache .extents = { };
+
+      extents .min = min .copy ();
+      extents .max = max .copy ();
+   },
+   getGlyphGeometry: function (font, glyph, primitiveQuality)
+   {
+      var
+         glyphCache    = this .getBrowser () .getGlyph (font, primitiveQuality, glyph .index),
+         glyphGeometry = glyphCache .geometry;
+
+      if (glyphGeometry)
+         return glyphGeometry;
+
+      glyphGeometry = glyphCache .geometry = [ ];
+
+      this .createGlyphGeometry (glyph, glyphGeometry, primitiveQuality);
+
+      return glyphGeometry;
+   },
+   createGlyphGeometry: (function ()
+   {
+      var
+         points = [ ],
+         curves = [ ],
+         normal = new Vector3 (0, 0, 0);
+
+      return function (glyph, vertices, primitiveQuality)
+      {
+         // Get curves for the current glyph.
+
+         var
+            dimension  = this .getBezierDimension (primitiveQuality),
+            path       = glyph .getPath (0, 0, 1),
+            commands   = path .commands,
+            x          = 0,
+            y          = 0;
+
+         points .length = 0;
+         curves .length = 0;
+
+         for (var i = 0, cl = commands .length; i < cl; ++ i)
+         {
+            var command = commands [i];
+
+            switch (command .type)
+            {
+               case "M": // Start
+               case "Z": // End
+               {
+                  if (points .length > 2)
+                  {
+                     if (points [0] .x === points .at (-1) .x && points [0] .y === points .at (-1) .y)
+                        points .pop ();
+
+                     curves .push (points);
+                  }
+
+                  points = [ ];
+
+                  if (command .type === "M")
+                     points .push (new Vector3 (command .x, -command .y, 0));
+
+                  break;
+               }
+               case "L": // Linear
+               {
+                  points .push (new Vector3 (command .x, -command .y, 0));
+                  break;
+               }
+               case "Q": // Quadric
+               {
+                  var
+                     curve = new Bezier (x, -y, command .x1, -command .y1, command .x, -command .y),
+                     lut   = curve .getLUT (dimension);
+
+                  for (var l = 1, ll = lut .length; l < ll; ++ l)
+                     points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
+
+                  break;
+               }
+               case "C": // Cubic
+               {
+                  var
+                     curve = new Bezier (x, -y, command .x1, -command .y1, command .x2, -command .y2, command .x, -command .y),
+                     lut   = curve .getLUT (dimension);
+
+                  for (var l = 1, ll = lut .length; l < ll; ++ l)
+                     points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
+
+                  break;
+               }
+               default:
+                  continue;
             }
 
-            // Triangulate contours.
-
-            curves = curves .map (function (curve)
-            {
-               Triangle3 .getPolygonNormal (curve, normal);
-
-               if (normal .dot (Vector3 .zAxis) > 0)
-                  return curve;
-
-               return curve .reverse ();
-            });
-
-            curves .push (vertices);
-
-            Triangle3 .triangulatePolygon .apply (Triangle3, curves);
-         };
-      })(),
-      getBezierDimension: function (primitiveQuality)
-      {
-         switch (primitiveQuality)
-         {
-            case PrimitiveQuality .LOW:
-               return 3;
-            case PrimitiveQuality .HIGH:
-               return 7;
-            default:
-               return 5;
+            x = command .x;
+            y = command .y;
          }
-      },
-      display: function (gl, renderContext)
-      { },
-      transformLine: function (line)
-      { },
-      transformMatrix: function (matrix)
-      { },
-   });
 
-   return PolygonText;
+         // Triangulate contours.
+
+         curves = curves .map (function (curve)
+         {
+            Triangle3 .getPolygonNormal (curve, normal);
+
+            if (normal .dot (Vector3 .zAxis) > 0)
+               return curve;
+
+            return curve .reverse ();
+         });
+
+         curves .push (vertices);
+
+         Triangle3 .triangulatePolygon .apply (Triangle3, curves);
+      };
+   })(),
+   getBezierDimension: function (primitiveQuality)
+   {
+      switch (primitiveQuality)
+      {
+         case PrimitiveQuality .LOW:
+            return 3;
+         case PrimitiveQuality .HIGH:
+            return 7;
+         default:
+            return 5;
+      }
+   },
+   display: function (gl, renderContext)
+   { },
+   transformLine: function (line)
+   { },
+   transformMatrix: function (matrix)
+   { },
 });
+
+export default PolygonText;

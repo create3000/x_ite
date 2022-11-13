@@ -47,187 +47,130 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Components/Rendering/X3DLineGeometryNode",
-   "x_ite/Components/Rendering/X3DPointGeometryNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DGeometryNode,
-          X3DLineGeometryNode,
-          X3DPointGeometryNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DGeometryNode from "../Rendering/X3DGeometryNode.js";
+import X3DLineGeometryNode from "../Rendering/X3DLineGeometryNode.js";
+import X3DPointGeometryNode from "../Rendering/X3DPointGeometryNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function Disk2D (executionContext)
 {
-"use strict";
+   X3DLineGeometryNode .call (this, executionContext);
 
-   function Disk2D (executionContext)
+   this .addType (X3DConstants .Disk2D);
+
+   this ._innerRadius .setUnit ("length");
+   this ._outerRadius .setUnit ("length");
+}
+
+Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+{
+   constructor: Disk2D,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "innerRadius", new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "outerRadius", new Fields .SFFloat (1)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",       new Fields .SFBool ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DLineGeometryNode .call (this, executionContext);
-
-      this .addType (X3DConstants .Disk2D);
-
-      this ._innerRadius .setUnit ("length");
-      this ._outerRadius .setUnit ("length");
-   }
-
-   Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+      return "Disk2D";
+   },
+   getComponentName: function ()
    {
-      constructor: Disk2D,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "innerRadius", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "outerRadius", new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",       new Fields .SFBool ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "Disk2D";
-      },
-      getComponentName: function ()
-      {
-         return "Geometry2D";
-      },
-      getContainerField: function ()
-      {
-         return "geometry";
-      },
-      initialize: function ()
-      {
-         X3DGeometryNode .prototype .initialize .call (this);
-      },
-      set_live__: function ()
-      {
-         X3DGeometryNode .prototype .set_live__ .call (this);
+      return "Geometry2D";
+   },
+   getContainerField: function ()
+   {
+      return "geometry";
+   },
+   initialize: function ()
+   {
+      X3DGeometryNode .prototype .initialize .call (this);
+   },
+   set_live__: function ()
+   {
+      X3DGeometryNode .prototype .set_live__ .call (this);
 
-         if (this .isLive () .getValue ())
-            this .getBrowser () .getDisk2DOptions () .addInterest ("requestRebuild", this);
+      if (this .isLive () .getValue ())
+         this .getBrowser () .getDisk2DOptions () .addInterest ("requestRebuild", this);
+      else
+         this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);
+   },
+   build: function ()
+   {
+      const
+         browser     = this .getBrowser (),
+         gl          = browser .getContext (),
+         options     = browser .getDisk2DOptions (),
+         innerRadius = Math .min (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ())),
+         outerRadius = Math .max (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ()));
+
+      if (innerRadius === outerRadius)
+      {
+         const vertexArray = this .getVertices ();
+
+         // Point
+
+         if (outerRadius === 0)
+         {
+            vertexArray .push (0, 0, 0, 1);
+
+            this .getMin () .set (0, 0, 0);
+            this .getMax () .set (0, 0, 0);
+
+            this .setGeometryType (0);
+            this .setPrimitiveMode (gl .POINTS);
+            this .setTransparent (true);
+            this .setBase (X3DPointGeometryNode);
+            return;
+         }
+
+         // Circle
+
+         if (outerRadius === 1)
+         {
+            this .setVertices (options .getCircleVertices ());
+         }
          else
-            this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);
-      },
-      build: function ()
+         {
+            const defaultVertices = options .getCircleVertices () .getValue ();
+
+            for (let i = 0, length = defaultVertices .length; i < length; i += 4)
+               vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
+         }
+
+         this .getMin () .set (-outerRadius, -outerRadius, 0);
+         this .getMax () .set ( outerRadius,  outerRadius, 0);
+
+         this .setGeometryType (1);
+         this .setPrimitiveMode (gl .LINES);
+         this .setTransparent (false);
+         this .setBase (X3DLineGeometryNode);
+         return;
+      }
+
+      if (innerRadius === 0)
       {
-         const
-            browser     = this .getBrowser (),
-            gl          = browser .getContext (),
-            options     = browser .getDisk2DOptions (),
-            innerRadius = Math .min (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ())),
-            outerRadius = Math .max (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ()));
+         // Disk
 
-         if (innerRadius === outerRadius)
+         this .getMultiTexCoords () .push (options .getDiskTexCoords ());
+         this .setNormals (options .getDiskNormals ());
+
+         if (outerRadius === 1)
          {
-            const vertexArray = this .getVertices ();
-
-            // Point
-
-            if (outerRadius === 0)
-            {
-               vertexArray .push (0, 0, 0, 1);
-
-               this .getMin () .set (0, 0, 0);
-               this .getMax () .set (0, 0, 0);
-
-               this .setGeometryType (0);
-               this .setPrimitiveMode (gl .POINTS);
-               this .setTransparent (true);
-               this .setBase (X3DPointGeometryNode);
-               return;
-            }
-
-            // Circle
-
-            if (outerRadius === 1)
-            {
-               this .setVertices (options .getCircleVertices ());
-            }
-            else
-            {
-               const defaultVertices = options .getCircleVertices () .getValue ();
-
-               for (let i = 0, length = defaultVertices .length; i < length; i += 4)
-                  vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
-            }
-
-            this .getMin () .set (-outerRadius, -outerRadius, 0);
-            this .getMax () .set ( outerRadius,  outerRadius, 0);
-
-            this .setGeometryType (1);
-            this .setPrimitiveMode (gl .LINES);
-            this .setTransparent (false);
-            this .setBase (X3DLineGeometryNode);
-            return;
+            this .setVertices (options .getDiskVertices ());
          }
-
-         if (innerRadius === 0)
+         else
          {
-            // Disk
+            const
+               defaultVertices = options .getDiskVertices () .getValue (),
+               vertexArray     = this .getVertices ();
 
-            this .getMultiTexCoords () .push (options .getDiskTexCoords ());
-            this .setNormals (options .getDiskNormals ());
-
-            if (outerRadius === 1)
-            {
-               this .setVertices (options .getDiskVertices ());
-            }
-            else
-            {
-               const
-                  defaultVertices = options .getDiskVertices () .getValue (),
-                  vertexArray     = this .getVertices ();
-
-               for (let i = 0, length = defaultVertices .length; i < length; i += 4)
-                  vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
-            }
-
-            this .getMin () .set (-outerRadius, -outerRadius, 0);
-            this .getMax () .set ( outerRadius,  outerRadius, 0);
-
-            this .setGeometryType (2);
-            this .setPrimitiveMode (gl .TRIANGLES);
-            this .setTransparent (false);
-            this .setSolid (this ._solid .getValue ());
-            this .setBase (X3DGeometryNode);
-            return;
-         }
-
-         // Disk with hole
-
-         const
-            scale            = innerRadius / outerRadius,
-            offset           = (1 - scale) / 2,
-            defaultTexCoords = options .getDiskTexCoords () .getValue (),
-            defaultVertices  = options .getDiskVertices () .getValue (),
-            texCoordArray    = this .getTexCoords (),
-            normalArray      = this .getNormals (),
-            vertexArray      = this .getVertices ();
-
-         this .getMultiTexCoords () .push (texCoordArray);
-
-         for (let i = 0, length = defaultVertices .length; i < length; i += 12)
-         {
-            texCoordArray .push (defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
-                                 defaultTexCoords [i + 4], defaultTexCoords [i + 5], 0, 1,
-                                 defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
-
-                                 defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
-                                 defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
-                                 defaultTexCoords [i + 8] * scale + offset, defaultTexCoords [i + 9] * scale + offset, 0, 1);
-
-            normalArray .push (0, 0, 1,  0, 0, 1,  0, 0, 1,
-                               0, 0, 1,  0, 0, 1,  0, 0, 1);
-
-            vertexArray .push (defaultVertices [i + 4] * innerRadius, defaultVertices [i + 5] * innerRadius, 0, 1,
-                               defaultVertices [i + 4] * outerRadius, defaultVertices [i + 5] * outerRadius, 0, 1,
-                               defaultVertices [i + 8] * outerRadius, defaultVertices [i + 9] * outerRadius, 0, 1,
-
-                               defaultVertices [i + 4] * innerRadius, defaultVertices [i + 5] * innerRadius, 0, 1,
-                               defaultVertices [i + 8] * outerRadius, defaultVertices [i + 9] * outerRadius, 0, 1,
-                               defaultVertices [i + 8] * innerRadius, defaultVertices [i + 9] * innerRadius, 0, 1);
+            for (let i = 0, length = defaultVertices .length; i < length; i += 4)
+               vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
          }
 
          this .getMin () .set (-outerRadius, -outerRadius, 0);
@@ -238,17 +181,62 @@ function (Fields,
          this .setTransparent (false);
          this .setSolid (this ._solid .getValue ());
          this .setBase (X3DGeometryNode);
-      },
-      setBase: function (base)
-      {
-         this .intersectsLine   = base .prototype .intersectsLine;
-         this .intersectsBox    = base .prototype .intersectsBox;
-         this .display          = base .prototype .display;
-         this .displayParticles = base .prototype .displayParticles;
-      },
-      updateRenderFunctions: function ()
-      { },
-   });
+         return;
+      }
 
-   return Disk2D;
+      // Disk with hole
+
+      const
+         scale            = innerRadius / outerRadius,
+         offset           = (1 - scale) / 2,
+         defaultTexCoords = options .getDiskTexCoords () .getValue (),
+         defaultVertices  = options .getDiskVertices () .getValue (),
+         texCoordArray    = this .getTexCoords (),
+         normalArray      = this .getNormals (),
+         vertexArray      = this .getVertices ();
+
+      this .getMultiTexCoords () .push (texCoordArray);
+
+      for (let i = 0, length = defaultVertices .length; i < length; i += 12)
+      {
+         texCoordArray .push (defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
+                              defaultTexCoords [i + 4], defaultTexCoords [i + 5], 0, 1,
+                              defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
+
+                              defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
+                              defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
+                              defaultTexCoords [i + 8] * scale + offset, defaultTexCoords [i + 9] * scale + offset, 0, 1);
+
+         normalArray .push (0, 0, 1,  0, 0, 1,  0, 0, 1,
+                            0, 0, 1,  0, 0, 1,  0, 0, 1);
+
+         vertexArray .push (defaultVertices [i + 4] * innerRadius, defaultVertices [i + 5] * innerRadius, 0, 1,
+                            defaultVertices [i + 4] * outerRadius, defaultVertices [i + 5] * outerRadius, 0, 1,
+                            defaultVertices [i + 8] * outerRadius, defaultVertices [i + 9] * outerRadius, 0, 1,
+
+                            defaultVertices [i + 4] * innerRadius, defaultVertices [i + 5] * innerRadius, 0, 1,
+                            defaultVertices [i + 8] * outerRadius, defaultVertices [i + 9] * outerRadius, 0, 1,
+                            defaultVertices [i + 8] * innerRadius, defaultVertices [i + 9] * innerRadius, 0, 1);
+      }
+
+      this .getMin () .set (-outerRadius, -outerRadius, 0);
+      this .getMax () .set ( outerRadius,  outerRadius, 0);
+
+      this .setGeometryType (2);
+      this .setPrimitiveMode (gl .TRIANGLES);
+      this .setTransparent (false);
+      this .setSolid (this ._solid .getValue ());
+      this .setBase (X3DGeometryNode);
+   },
+   setBase: function (base)
+   {
+      this .intersectsLine   = base .prototype .intersectsLine;
+      this .intersectsBox    = base .prototype .intersectsBox;
+      this .display          = base .prototype .display;
+      this .displayParticles = base .prototype .displayParticles;
+   },
+   updateRenderFunctions: function ()
+   { },
 });
+
+export default Disk2D;

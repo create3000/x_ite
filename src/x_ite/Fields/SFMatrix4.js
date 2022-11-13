@@ -47,90 +47,80 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DField",
-   "x_ite/Fields/SFMatrixPrototypeTemplate",
-   "x_ite/Fields/SFVec3",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Matrix4",
-],
-function (X3DField,
-          SFMatrixPrototypeTemplate,
-          SFVec3,
-          X3DConstants,
-          Matrix4)
+import X3DField from "../Base/X3DField.js";
+import SFMatrixPrototypeTemplate from "./SFMatrixPrototypeTemplate.js";
+import SFVec3 from "./SFVec3.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import Matrix4 from "../../standard/Math/Numbers/Matrix4.js";
+
+function SFMatrix4Template (TypeName, Type, SFVec3, double)
 {
-"use strict";
-
-   function SFMatrix4Template (TypeName, Type, SFVec3, double)
+   function SFMatrix4 (m00, m01, m02, m03,
+                       m10, m11, m12, m13,
+                       m20, m21, m22, m23,
+                       m30, m31, m32, m33)
    {
-      function SFMatrix4 (m00, m01, m02, m03,
-                          m10, m11, m12, m13,
-                          m20, m21, m22, m23,
-                          m30, m31, m32, m33)
+      switch (arguments .length)
       {
-         switch (arguments .length)
-         {
-            case 0:
-               return X3DField .call (this, new Matrix4 ());
+         case 0:
+            return X3DField .call (this, new Matrix4 ());
 
-            case 1:
-               return X3DField .call (this, arguments [0]);
+         case 1:
+            return X3DField .call (this, arguments [0]);
 
-            case 16:
-               return X3DField .call (this, new Matrix4 (+m00, +m01, +m02, +m03,
-                                                         +m10, +m11, +m12, +m13,
-                                                         +m20, +m21, +m22, +m23,
-                                                         +m30, +m31, +m32, +m33));
-         }
-
-         throw new Error ("Invalid arguments.");
+         case 16:
+            return X3DField .call (this, new Matrix4 (+m00, +m01, +m02, +m03,
+                                                      +m10, +m11, +m12, +m13,
+                                                      +m20, +m21, +m22, +m23,
+                                                      +m30, +m31, +m32, +m33));
       }
 
-      SFMatrix4 .prototype = Object .assign (Object .create (X3DField .prototype),
-         SFMatrixPrototypeTemplate (Matrix4, SFVec3, double),
-      {
-         constructor: SFMatrix4,
-         getTypeName: function ()
-         {
-            return TypeName;
-         },
-         getType: function ()
-         {
-            return Type;
-         },
-      });
-
-      for (const key of Reflect .ownKeys (SFMatrix4 .prototype))
-         Object .defineProperty (SFMatrix4 .prototype, key, { enumerable: false });
-
-      function defineProperty (i)
-      {
-         Object .defineProperty (SFMatrix4 .prototype, i,
-         {
-            get: function ()
-            {
-               return this .getValue () [i];
-            },
-            set: function (value)
-            {
-               this .getValue () [i] = value;
-               this .addEvent ();
-            },
-            enumerable: true,
-            configurable: false,
-         });
-      }
-
-      for (let i = 0, length = Matrix4 .prototype .length; i < length; ++ i)
-         defineProperty (i);
-
-      return SFMatrix4;
+      throw new Error ("Invalid arguments.");
    }
 
-   return {
-      SFMatrix4d: SFMatrix4Template ("SFMatrix4d", X3DConstants .SFMatrix4d, SFVec3 .SFVec3d, true),
-      SFMatrix4f: SFMatrix4Template ("SFMatrix4f", X3DConstants .SFMatrix4f, SFVec3 .SFVec3f, false),
-      VrmlMatrix: SFMatrix4Template ("VrmlMatrix", X3DConstants .VrmlMatrix, SFVec3 .SFVec3f, false),
-   };
-});
+   SFMatrix4 .prototype = Object .assign (Object .create (X3DField .prototype),
+      SFMatrixPrototypeTemplate (Matrix4, SFVec3, double),
+   {
+      constructor: SFMatrix4,
+      getTypeName: function ()
+      {
+         return TypeName;
+      },
+      getType: function ()
+      {
+         return Type;
+      },
+   });
+
+   for (const key of Reflect .ownKeys (SFMatrix4 .prototype))
+      Object .defineProperty (SFMatrix4 .prototype, key, { enumerable: false });
+
+   function defineProperty (i)
+   {
+      Object .defineProperty (SFMatrix4 .prototype, i,
+      {
+         get: function ()
+         {
+            return this .getValue () [i];
+         },
+         set: function (value)
+         {
+            this .getValue () [i] = value;
+            this .addEvent ();
+         },
+         enumerable: true,
+         configurable: false,
+      });
+   }
+
+   for (let i = 0, length = Matrix4 .prototype .length; i < length; ++ i)
+      defineProperty (i);
+
+   return SFMatrix4;
+}
+
+export default {
+   SFMatrix4d: SFMatrix4Template ("SFMatrix4d", X3DConstants .SFMatrix4d, SFVec3 .SFVec3d, true),
+   SFMatrix4f: SFMatrix4Template ("SFMatrix4f", X3DConstants .SFMatrix4f, SFVec3 .SFVec3f, false),
+   VrmlMatrix: SFMatrix4Template ("VrmlMatrix", X3DConstants .VrmlMatrix, SFVec3 .SFVec3f, false),
+};

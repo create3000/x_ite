@@ -47,165 +47,159 @@
  ******************************************************************************/
 
 
-define ([
-   "standard/Math/Numbers/Color3",
-   "standard/Math/Algorithm",
-],
-function (Color3, Algorithm)
+import Color3 from "./Color3.js";
+import Algorithm from "../Algorithm.js";
+
+const clamp = Algorithm .clamp;
+
+const
+   _r = Symbol .for ("X_ITE.Color3.r"),
+   _g = Symbol .for ("X_ITE.Color3.g"),
+   _b = Symbol .for ("X_ITE.Color3.b"),
+   _a = Symbol ();
+
+function Color4 (r, g, b, a)
 {
-"use strict";
-
-   const clamp = Algorithm .clamp;
-
-   const
-      _r = Symbol .for ("X_ITE.Color3.r"),
-      _g = Symbol .for ("X_ITE.Color3.g"),
-      _b = Symbol .for ("X_ITE.Color3.b"),
-      _a = Symbol ();
-
-   function Color4 (r, g, b, a)
+   if (arguments .length)
    {
-      if (arguments .length)
-      {
-         this [_r] = clamp (r, 0, 1);
-         this [_g] = clamp (g, 0, 1);
-         this [_b] = clamp (b, 0, 1);
-         this [_a] = clamp (a, 0, 1);
-      }
-      else
-      {
-         this [_r] = 0;
-         this [_g] = 0;
-         this [_b] = 0;
-         this [_a] = 0;
-      }
+      this [_r] = clamp (r, 0, 1);
+      this [_g] = clamp (g, 0, 1);
+      this [_b] = clamp (b, 0, 1);
+      this [_a] = clamp (a, 0, 1);
    }
-
-   Color4 .prototype =
+   else
    {
-      constructor: Color4,
-      length: 4,
-      [Symbol .iterator]: function* ()
-      {
-         yield this [_r];
-         yield this [_g];
-         yield this [_b];
-         yield this [_a];
-      },
-      copy: function ()
-      {
-         const copy = Object .create (Color4 .prototype);
-         copy [_r] = this [_r];
-         copy [_g] = this [_g];
-         copy [_b] = this [_b];
-         copy [_a] = this [_a];
-         return copy;
-      },
-      assign: function (color)
-      {
-         this [_r] = color [_r];
-         this [_g] = color [_g];
-         this [_b] = color [_b];
-         this [_a] = color [_a];
-      },
-      set: function (r, g, b, a)
-      {
-         this [_r] = clamp (r, 0, 1);
-         this [_g] = clamp (g, 0, 1);
-         this [_b] = clamp (b, 0, 1);
-         this [_a] = clamp (a, 0, 1);
-      },
-      equals: function (color)
-      {
-         return this [_r] === color [_r] &&
-                this [_g] === color [_g] &&
-                this [_b] === color [_b] &&
-                this [_a] === color [_a];
-      },
-      getHSVA: function (result)
-      {
-         Color3 .prototype .getHSV .call (this, result);
+      this [_r] = 0;
+      this [_g] = 0;
+      this [_b] = 0;
+      this [_a] = 0;
+   }
+}
 
-         result [3] = this [_a];
-
-         return result;
-      },
-      setHSVA: function (h, s, v, a)
-      {
-         Color3 .prototype .setHSV .call (this, h, s, v);
-
-         this [_a] = clamp (a, 0, 1);
-      },
-      toString: function ()
-      {
-         return this [_r] + " " +
-                this [_g] + " " +
-                this [_b] + " " +
-                this [_a];
-      },
-   };
-
-   const r = {
-      get: function () { return this [_r]; },
-      set: function (value) { this [_r] = clamp (value, 0, 1); },
-      enumerable: true,
-      configurable: false
-   };
-
-   const g = {
-      get: function () { return this [_g]; },
-      set: function (value) { this [_g] = clamp (value, 0, 1); },
-      enumerable: true,
-      configurable: false
-   };
-
-   const b = {
-      get: function () { return this [_b]; },
-      set: function (value) { this [_b] = clamp (value, 0, 1); },
-      enumerable: true,
-      configurable: false
-   };
-
-   const a = {
-      get: function () { return this [_a]; },
-      set: function (value) { this [_a] = clamp (value, 0, 1); },
-      enumerable: true,
-      configurable: false
-   };
-
-   Object .defineProperty (Color4 .prototype, "r", r);
-   Object .defineProperty (Color4 .prototype, "g", g);
-   Object .defineProperty (Color4 .prototype, "b", b);
-   Object .defineProperty (Color4 .prototype, "a", a);
-
-   r .enumerable = false;
-   g .enumerable = false;
-   b .enumerable = false;
-   a .enumerable = false;
-
-   Object .defineProperty (Color4 .prototype, "0", r);
-   Object .defineProperty (Color4 .prototype, "1", g);
-   Object .defineProperty (Color4 .prototype, "2", b);
-   Object .defineProperty (Color4 .prototype, "3", a);
-
-   Object .assign (Color4,
+Color4 .prototype =
+{
+   constructor: Color4,
+   length: 4,
+   [Symbol .iterator]: function* ()
    {
-      HSVA: function (h, s, v, a)
-      {
-         const color = Object .create (this .prototype);
-         color .setHSVA (h, s, v, a);
-         return color;
-      },
-      lerp: function (a, b, t, r)
-      {
-         // Linearely interpolate in HSVA space between source color @a a and destination color @a b by an amount of @a t.
-         // Source and destination color must be in HSVA space. The resulting HSVA color is stored in @a r.
-         const aa = a [3];
-         Color3 .lerp (a, b, t, r);
-         r [3] = aa + t * (b [3] - aa);
-         return r;
-      },
-   });
+      yield this [_r];
+      yield this [_g];
+      yield this [_b];
+      yield this [_a];
+   },
+   copy: function ()
+   {
+      const copy = Object .create (Color4 .prototype);
+      copy [_r] = this [_r];
+      copy [_g] = this [_g];
+      copy [_b] = this [_b];
+      copy [_a] = this [_a];
+      return copy;
+   },
+   assign: function (color)
+   {
+      this [_r] = color [_r];
+      this [_g] = color [_g];
+      this [_b] = color [_b];
+      this [_a] = color [_a];
+   },
+   set: function (r, g, b, a)
+   {
+      this [_r] = clamp (r, 0, 1);
+      this [_g] = clamp (g, 0, 1);
+      this [_b] = clamp (b, 0, 1);
+      this [_a] = clamp (a, 0, 1);
+   },
+   equals: function (color)
+   {
+      return this [_r] === color [_r] &&
+             this [_g] === color [_g] &&
+             this [_b] === color [_b] &&
+             this [_a] === color [_a];
+   },
+   getHSVA: function (result)
+   {
+      Color3 .prototype .getHSV .call (this, result);
 
-   return Color4;
+      result [3] = this [_a];
+
+      return result;
+   },
+   setHSVA: function (h, s, v, a)
+   {
+      Color3 .prototype .setHSV .call (this, h, s, v);
+
+      this [_a] = clamp (a, 0, 1);
+   },
+   toString: function ()
+   {
+      return this [_r] + " " +
+             this [_g] + " " +
+             this [_b] + " " +
+             this [_a];
+   },
+};
+
+const r = {
+   get: function () { return this [_r]; },
+   set: function (value) { this [_r] = clamp (value, 0, 1); },
+   enumerable: true,
+   configurable: false
+};
+
+const g = {
+   get: function () { return this [_g]; },
+   set: function (value) { this [_g] = clamp (value, 0, 1); },
+   enumerable: true,
+   configurable: false
+};
+
+const b = {
+   get: function () { return this [_b]; },
+   set: function (value) { this [_b] = clamp (value, 0, 1); },
+   enumerable: true,
+   configurable: false
+};
+
+const a = {
+   get: function () { return this [_a]; },
+   set: function (value) { this [_a] = clamp (value, 0, 1); },
+   enumerable: true,
+   configurable: false
+};
+
+Object .defineProperty (Color4 .prototype, "r", r);
+Object .defineProperty (Color4 .prototype, "g", g);
+Object .defineProperty (Color4 .prototype, "b", b);
+Object .defineProperty (Color4 .prototype, "a", a);
+
+r .enumerable = false;
+g .enumerable = false;
+b .enumerable = false;
+a .enumerable = false;
+
+Object .defineProperty (Color4 .prototype, "0", r);
+Object .defineProperty (Color4 .prototype, "1", g);
+Object .defineProperty (Color4 .prototype, "2", b);
+Object .defineProperty (Color4 .prototype, "3", a);
+
+Object .assign (Color4,
+{
+   HSVA: function (h, s, v, a)
+   {
+      const color = Object .create (this .prototype);
+      color .setHSVA (h, s, v, a);
+      return color;
+   },
+   lerp: function (a, b, t, r)
+   {
+      // Linearely interpolate in HSVA space between source color @a a and destination color @a b by an amount of @a t.
+      // Source and destination color must be in HSVA space. The resulting HSVA color is stored in @a r.
+      const aa = a [3];
+      Color3 .lerp (a, b, t, r);
+      r [3] = aa + t * (b [3] - aa);
+      return r;
+   },
 });
+
+export default Color4;

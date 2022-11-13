@@ -47,156 +47,147 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Browser/Core/Shading",
-   "x_ite/Browser/Shaders/Shaders",
-   "x_ite/Components/Shaders/ComposedShader",
-   "x_ite/Components/Shaders/ShaderPart",
-],
-function (Shading,
-          Shaders,
-          ComposedShader,
-          ShaderPart)
+import Shading from "../Core/Shading.js";
+import Shaders from "./Shaders.js";
+import ComposedShader from "../../Components/Shaders/ComposedShader.js";
+import ShaderPart from "../../Components/Shaders/ShaderPart.js";
+
+const
+   _wireframe      = Symbol (),
+   _primitiveModes = Symbol (),
+   _defaultShader  = Symbol (),
+   _shaderNodes    = Symbol ();
+
+function X3DShadersContext ()
 {
-"use strict";
+   this [_wireframe]      = false;
+   this [_primitiveModes] = new Map ();
+   this [_shaderNodes]    = new Map ();
+}
 
-   const
-      _wireframe      = Symbol (),
-      _primitiveModes = Symbol (),
-      _defaultShader  = Symbol (),
-      _shaderNodes    = Symbol ();
-
-   function X3DShadersContext ()
+X3DShadersContext .prototype =
+{
+   initialize: function ()
    {
-      this [_wireframe]      = false;
-      this [_primitiveModes] = new Map ();
-      this [_shaderNodes]    = new Map ();
-   }
-
-   X3DShadersContext .prototype =
+      this .setShading (this .getBrowserOptions () .getShading ());
+   },
+   getShadingLanguageVersion: function ()
    {
-      initialize: function ()
-      {
-         this .setShading (this .getBrowserOptions () .getShading ());
-      },
-      getShadingLanguageVersion: function ()
-      {
-         const gl = this .getContext ();
+      const gl = this .getContext ();
 
-         return gl .getParameter (gl .SHADING_LANGUAGE_VERSION);
-      },
-      getMaxVertexUniformVectors: function ()
-      {
-         const gl = this .getContext ();
+      return gl .getParameter (gl .SHADING_LANGUAGE_VERSION);
+   },
+   getMaxVertexUniformVectors: function ()
+   {
+      const gl = this .getContext ();
 
-         return gl .getParameter (gl .MAX_VERTEX_UNIFORM_VECTORS);
-      },
-      getMaxFragmentUniformVectors: function ()
-      {
-         const gl = this .getContext ();
+      return gl .getParameter (gl .MAX_VERTEX_UNIFORM_VECTORS);
+   },
+   getMaxFragmentUniformVectors: function ()
+   {
+      const gl = this .getContext ();
 
-         return gl .getParameter (gl .MAX_FRAGMENT_UNIFORM_VECTORS);
-      },
-      getMaxVertexAttribs: function ()
-      {
-         const gl = this .getContext ();
+      return gl .getParameter (gl .MAX_FRAGMENT_UNIFORM_VECTORS);
+   },
+   getMaxVertexAttribs: function ()
+   {
+      const gl = this .getContext ();
 
-         return gl .getParameter (gl .MAX_VERTEX_ATTRIBS);
-      },
-      getMaxVaryingVectors: function ()
-      {
-         const gl = this .getContext ();
+      return gl .getParameter (gl .MAX_VERTEX_ATTRIBS);
+   },
+   getMaxVaryingVectors: function ()
+   {
+      const gl = this .getContext ();
 
-         return gl .getParameter (gl .MAX_VARYING_VECTORS);
-      },
-      getWireframe: function ()
-      {
-         return this [_wireframe];
-      },
-      getPrimitiveMode: function (primitiveMode)
-      {
-         return this [_primitiveModes] .get (primitiveMode);
-      },
-      getShaders: function ()
-      {
-         return this [_shaderNodes];
-      },
-      setShading: function (type)
-      {
-         const gl = this .getContext ();
+      return gl .getParameter (gl .MAX_VARYING_VECTORS);
+   },
+   getWireframe: function ()
+   {
+      return this [_wireframe];
+   },
+   getPrimitiveMode: function (primitiveMode)
+   {
+      return this [_primitiveModes] .get (primitiveMode);
+   },
+   getShaders: function ()
+   {
+      return this [_shaderNodes];
+   },
+   setShading: function (type)
+   {
+      const gl = this .getContext ();
 
-         switch (type)
+      switch (type)
+      {
+         case Shading .POINT:
          {
-            case Shading .POINT:
-            {
-               this [_wireframe] = false;
+            this [_wireframe] = false;
 
-               this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
-               this [_primitiveModes] .set (gl .LINES,     gl .POINTS);
-               this [_primitiveModes] .set (gl .TRIANGLES, gl .POINTS);
-               break;
-            }
-            case Shading .WIREFRAME:
-            {
-               this [_wireframe] = true;
-
-               this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
-               this [_primitiveModes] .set (gl .LINES,     gl .LINES);
-               this [_primitiveModes] .set (gl .TRIANGLES, gl .LINE_LOOP);
-               break;
-            }
-            default:
-            {
-               // case Shading .FLAT:
-               // case Shading .GOURAUD:
-               // case Shading .PHONG:
-
-               this [_wireframe] = false;
-
-               this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
-               this [_primitiveModes] .set (gl .LINES,     gl .LINES);
-               this [_primitiveModes] .set (gl .TRIANGLES, gl .TRIANGLES);
-               break;
-            }
+            this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
+            this [_primitiveModes] .set (gl .LINES,     gl .POINTS);
+            this [_primitiveModes] .set (gl .TRIANGLES, gl .POINTS);
+            break;
          }
-      },
-      createShader: function (name, vs, fs = vs, options = [ ], uniformNames = [ ], transformFeedbackVaryings = [ ])
-      {
-         if (this .getDebug ())
-            console .info ("Initializing " + name);
+         case Shading .WIREFRAME:
+         {
+            this [_wireframe] = true;
 
-         const
-            gl      = this .getContext (),
-            version = gl .getVersion ();
+            this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
+            this [_primitiveModes] .set (gl .LINES,     gl .LINES);
+            this [_primitiveModes] .set (gl .TRIANGLES, gl .LINE_LOOP);
+            break;
+         }
+         default:
+         {
+            // case Shading .FLAT:
+            // case Shading .GOURAUD:
+            // case Shading .PHONG:
 
-         const vertexShader = new ShaderPart (this .getPrivateScene ());
-         vertexShader ._url .push (vs .startsWith ("data:") ? vs : "data:x-shader/x-vertex," + Shaders .vertex [version] [vs]);
-         vertexShader .setPrivate (true);
-         vertexShader .setName (name + "Vertex");
-         vertexShader .setOptions (options);
-         vertexShader .setup ();
+            this [_wireframe] = false;
 
-         const fragmentShader = new ShaderPart (this .getPrivateScene ());
-         fragmentShader ._type  = "FRAGMENT";
-         fragmentShader ._url .push (fs .startsWith ("data:") ? fs : "data:x-shader/x-fragment," + Shaders .fragment [version] [fs]);
-         fragmentShader .setPrivate (true);
-         fragmentShader .setName (name + "Fragment");
-         fragmentShader .setOptions (options);
-         fragmentShader .setup ();
+            this [_primitiveModes] .set (gl .POINTS,    gl .POINTS);
+            this [_primitiveModes] .set (gl .LINES,     gl .LINES);
+            this [_primitiveModes] .set (gl .TRIANGLES, gl .TRIANGLES);
+            break;
+         }
+      }
+   },
+   createShader: function (name, vs, fs = vs, options = [ ], uniformNames = [ ], transformFeedbackVaryings = [ ])
+   {
+      if (this .getDebug ())
+         console .info ("Initializing " + name);
 
-         const shaderNode = new ComposedShader (this .getPrivateScene ());
-         shaderNode ._language = "GLSL";
-         shaderNode ._parts .push (vertexShader);
-         shaderNode ._parts .push (fragmentShader);
-         shaderNode .setPrivate (true);
-         shaderNode .setName (name);
-         shaderNode .setUniformNames (uniformNames);
-         shaderNode .setTransformFeedbackVaryings (transformFeedbackVaryings);
-         shaderNode .setup ();
+      const
+         gl      = this .getContext (),
+         version = gl .getVersion ();
 
-         return shaderNode;
-      },
-   };
+      const vertexShader = new ShaderPart (this .getPrivateScene ());
+      vertexShader ._url .push (vs .startsWith ("data:") ? vs : "data:x-shader/x-vertex," + Shaders .vertex [version] [vs]);
+      vertexShader .setPrivate (true);
+      vertexShader .setName (name + "Vertex");
+      vertexShader .setOptions (options);
+      vertexShader .setup ();
 
-   return X3DShadersContext;
-});
+      const fragmentShader = new ShaderPart (this .getPrivateScene ());
+      fragmentShader ._type  = "FRAGMENT";
+      fragmentShader ._url .push (fs .startsWith ("data:") ? fs : "data:x-shader/x-fragment," + Shaders .fragment [version] [fs]);
+      fragmentShader .setPrivate (true);
+      fragmentShader .setName (name + "Fragment");
+      fragmentShader .setOptions (options);
+      fragmentShader .setup ();
+
+      const shaderNode = new ComposedShader (this .getPrivateScene ());
+      shaderNode ._language = "GLSL";
+      shaderNode ._parts .push (vertexShader);
+      shaderNode ._parts .push (fragmentShader);
+      shaderNode .setPrivate (true);
+      shaderNode .setName (name);
+      shaderNode .setUniformNames (uniformNames);
+      shaderNode .setTransformFeedbackVaryings (transformFeedbackVaryings);
+      shaderNode .setup ();
+
+      return shaderNode;
+   },
+};
+
+export default X3DShadersContext;

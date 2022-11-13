@@ -47,79 +47,74 @@
  ******************************************************************************/
 
 
-define ([
-],
-function ()
+
+
+const
+   _taintedFields     = Symbol (),
+   _taintedFieldsTemp = Symbol (),
+   _taintedNodes      = Symbol (),
+   _taintedNodesTemp  = Symbol ();
+
+function X3DRoutingContext ()
 {
-"use strict";
+   this [_taintedFields]     = [ ];
+   this [_taintedFieldsTemp] = [ ];
+   this [_taintedNodes]      = [ ];
+   this [_taintedNodesTemp]  = [ ];
+}
 
-   const
-      _taintedFields     = Symbol (),
-      _taintedFieldsTemp = Symbol (),
-      _taintedNodes      = Symbol (),
-      _taintedNodesTemp  = Symbol ();
-
-   function X3DRoutingContext ()
+X3DRoutingContext .prototype =
+{
+   constructor: X3DRoutingContext,
+   initialize: function () { },
+   addTaintedField: function (field, event)
    {
-      this [_taintedFields]     = [ ];
-      this [_taintedFieldsTemp] = [ ];
-      this [_taintedNodes]      = [ ];
-      this [_taintedNodesTemp]  = [ ];
-   }
-
-   X3DRoutingContext .prototype =
+      this [_taintedFields] .push (field, event);
+   },
+   addTaintedNode: function (node)
    {
-      constructor: X3DRoutingContext,
-      initialize: function () { },
-      addTaintedField: function (field, event)
+      this [_taintedNodes] .push (node);
+   },
+   [Symbol .for ("X_ITE.X3DRoutingContext.processEvents")]: function ()
+   {
+      do
       {
-         this [_taintedFields] .push (field, event);
-      },
-      addTaintedNode: function (node)
-      {
-         this [_taintedNodes] .push (node);
-      },
-      [Symbol .for ("X_ITE.X3DRoutingContext.processEvents")]: function ()
-      {
+         // Process field events
          do
          {
-            // Process field events
-            do
-            {
-               const taintedFields = this [_taintedFields];
+            const taintedFields = this [_taintedFields];
 
-               // Swap tainted fields.
-               this [_taintedFields]         = this [_taintedFieldsTemp];
-               this [_taintedFields] .length = 0;
+            // Swap tainted fields.
+            this [_taintedFields]         = this [_taintedFieldsTemp];
+            this [_taintedFields] .length = 0;
 
-               for (let i = 0, length = taintedFields .length; i < length; i += 2)
-                  taintedFields [i] .processEvent (taintedFields [i + 1]);
+            for (let i = 0, length = taintedFields .length; i < length; i += 2)
+               taintedFields [i] .processEvent (taintedFields [i + 1]);
 
-               // Don't know why this must be done after the for loop, otherwise a fatal error could be thrown.
-               this [_taintedFieldsTemp] = taintedFields;
-            }
-            while (this [_taintedFields] .length);
-
-            // Process node events
-            do
-            {
-               const taintedNodes = this [_taintedNodes];
-
-               // Swap tainted nodes.
-               this [_taintedNodes]         = this [_taintedNodesTemp];
-               this [_taintedNodes] .length = 0;
-
-               for (const taintedNode of taintedNodes)
-                  taintedNode .processEvents ();
-
-               // Don't know why this must be done after the for loop, otherwise a fatal error could be thrown.
-               this [_taintedNodesTemp] = taintedNodes;
-            }
-            while (! this [_taintedFields] .length && this [_taintedNodes] .length);
+            // Don't know why this must be done after the for loop, otherwise a fatal error could be thrown.
+            this [_taintedFieldsTemp] = taintedFields;
          }
          while (this [_taintedFields] .length);
-      },
-   };
 
-   return X3DRoutingContext;
-});
+         // Process node events
+         do
+         {
+            const taintedNodes = this [_taintedNodes];
+
+            // Swap tainted nodes.
+            this [_taintedNodes]         = this [_taintedNodesTemp];
+            this [_taintedNodes] .length = 0;
+
+            for (const taintedNode of taintedNodes)
+               taintedNode .processEvents ();
+
+            // Don't know why this must be done after the for loop, otherwise a fatal error could be thrown.
+            this [_taintedNodesTemp] = taintedNodes;
+         }
+         while (! this [_taintedFields] .length && this [_taintedNodes] .length);
+      }
+      while (this [_taintedFields] .length);
+   },
+};
+
+export default X3DRoutingContext;

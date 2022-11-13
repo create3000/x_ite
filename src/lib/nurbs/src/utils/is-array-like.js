@@ -1,10 +1,5 @@
 
-define (function ()
+export default function isArrayLike (data)
 {
-'use strict';
-
-   return function isArrayLike (data)
-   {
-      return Array .isArray (data) || ArrayBuffer .isView (data) || data .length !== undefined;
-   };
-});
+   return Array .isArray (data) || ArrayBuffer .isView (data) || data .length !== undefined;
+};

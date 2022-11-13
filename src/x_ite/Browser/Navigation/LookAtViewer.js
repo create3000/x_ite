@@ -47,229 +47,286 @@
  ******************************************************************************/
 
 
-define ([
-   "jquery",
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Browser/Navigation/X3DViewer",
-   "x_ite/Components/Followers/PositionChaser",
-   "x_ite/Components/Followers/OrientationChaser",
-   "standard/Math/Numbers/Vector2",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
-],
-function ($,
-          Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DConstants,
-          X3DViewer,
-          PositionChaser,
-          OrientationChaser,
-          Vector2,
-          Vector3,
-          Rotation4)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DViewer from "./X3DViewer.js";
+import PositionChaser from "../../Components/Followers/PositionChaser.js";
+import OrientationChaser from "../../Components/Followers/OrientationChaser.js";
+import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+
+const macOS = /Mac OS X/i .test (navigator .userAgent)
+
+const
+   SCROLL_FACTOR = macOS ? 1 / 120 : 1 / 20,
+   MOVE_TIME     = 0.3,
+   ROTATE_TIME   = 0.3;
+
+function LookAtViewer (executionContext)
 {
-"use strict";
+   X3DViewer .call (this, executionContext);
 
-   const macOS = /Mac OS X/i .test (navigator .userAgent)
+   this .button                 = -1;
+   this .fromVector             = new Vector3 (0, 0, 0);
+   this .toVector               = new Vector3 (0, 0, 0);
 
-   const
-      SCROLL_FACTOR = macOS ? 1 / 120 : 1 / 20,
-      MOVE_TIME     = 0.3,
-      ROTATE_TIME   = 0.3;
+   this .touch1                 = new Vector2 (0, 0);
+   this .touch2                 = new Vector2 (0, 0);
+   this .tapStart               = 0;
+   this .dblTapInterval         = 0.4;
 
-   function LookAtViewer (executionContext)
+   this .positionChaser         = new PositionChaser (executionContext);
+   this .centerOfRotationChaser = new PositionChaser (executionContext);
+   this .orientationChaser      = new OrientationChaser (executionContext);
+}
+
+LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+{
+   constructor: LookAtViewer,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+   ]),
+   initialize: function ()
    {
-      X3DViewer .call (this, executionContext);
+      X3DViewer .prototype .initialize .call (this);
 
-      this .button                 = -1;
-      this .fromVector             = new Vector3 (0, 0, 0);
-      this .toVector               = new Vector3 (0, 0, 0);
+      const
+         browser = this .getBrowser (),
+         element = browser .getSurface ();
 
-      this .touch1                 = new Vector2 (0, 0);
-      this .touch2                 = new Vector2 (0, 0);
-      this .tapStart               = 0;
-      this .dblTapInterval         = 0.4;
+      // Bind pointing device events.
 
-      this .positionChaser         = new PositionChaser (executionContext);
-      this .centerOfRotationChaser = new PositionChaser (executionContext);
-      this .orientationChaser      = new OrientationChaser (executionContext);
-   }
+      element .on ("mousedown.LookAtViewer",  this .mousedown  .bind (this));
+      element .on ("mouseup.LookAtViewer",    this .mouseup    .bind (this));
+      element .on ("dblclick.LookAtViewer",   this .dblclick   .bind (this));
+      element .on ("mousewheel.LookAtViewer", this .mousewheel .bind (this));
 
-   LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+      element .on ("touchstart.LookAtViewer", this .touchstart .bind (this));
+      element .on ("touchend.LookAtViewer",   this .touchend   .bind (this));
+
+      // Setup chaser.
+
+      this .positionChaser ._duration = MOVE_TIME;
+      this .positionChaser .setPrivate (true);
+      this .positionChaser .setup ();
+
+      this .centerOfRotationChaser ._duration = MOVE_TIME;
+      this .centerOfRotationChaser .setPrivate (true);
+      this .centerOfRotationChaser .setup ();
+
+      this .orientationChaser ._duration = ROTATE_TIME;
+      this .orientationChaser .setPrivate (true);
+      this .orientationChaser .setup ();
+   },
+   mousedown: function (event)
    {
-      constructor: LookAtViewer,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-      ]),
-      initialize: function ()
+      if (this .button >= 0)
+         return;
+
+      const
+         offset = this .getBrowser () .getSurface () .offset (),
+         x      = event .pageX - offset .left,
+         y      = event .pageY - offset .top;
+
+      switch (event .button)
       {
-         X3DViewer .prototype .initialize .call (this);
-
-         const
-            browser = this .getBrowser (),
-            element = browser .getSurface ();
-
-         // Bind pointing device events.
-
-         element .on ("mousedown.LookAtViewer",  this .mousedown  .bind (this));
-         element .on ("mouseup.LookAtViewer",    this .mouseup    .bind (this));
-         element .on ("dblclick.LookAtViewer",   this .dblclick   .bind (this));
-         element .on ("mousewheel.LookAtViewer", this .mousewheel .bind (this));
-
-         element .on ("touchstart.LookAtViewer", this .touchstart .bind (this));
-         element .on ("touchend.LookAtViewer",   this .touchend   .bind (this));
-
-         // Setup chaser.
-
-         this .positionChaser ._duration = MOVE_TIME;
-         this .positionChaser .setPrivate (true);
-         this .positionChaser .setup ();
-
-         this .centerOfRotationChaser ._duration = MOVE_TIME;
-         this .centerOfRotationChaser .setPrivate (true);
-         this .centerOfRotationChaser .setup ();
-
-         this .orientationChaser ._duration = ROTATE_TIME;
-         this .orientationChaser .setPrivate (true);
-         this .orientationChaser .setup ();
-      },
-      mousedown: function (event)
-      {
-         if (this .button >= 0)
-            return;
-
-         const
-            offset = this .getBrowser () .getSurface () .offset (),
-            x      = event .pageX - offset .left,
-            y      = event .pageY - offset .top;
-
-         switch (event .button)
+         case 0:
          {
-            case 0:
-            {
-               // Stop event propagation.
+            // Stop event propagation.
 
-               event .preventDefault ();
-               event .stopImmediatePropagation ();
+            event .preventDefault ();
+            event .stopImmediatePropagation ();
 
-               this .button = event .button;
+            this .button = event .button;
 
-               $(document) .on ("mouseup.LookAtViewer"   + this .getId (), this .mouseup   .bind (this));
-               $(document) .on ("mousemove.LookAtViewer" + this .getId (), this .mousemove .bind (this));
-               $(document) .on ("touchend.LookAtViewer"  + this .getId (), this .mouseup   .bind (this));
-               $(document) .on ("touchmove.LookAtViewer" + this .getId (), this .touchmove .bind (this));
+            $(document) .on ("mouseup.LookAtViewer"   + this .getId (), this .mouseup   .bind (this));
+            $(document) .on ("mousemove.LookAtViewer" + this .getId (), this .mousemove .bind (this));
+            $(document) .on ("touchend.LookAtViewer"  + this .getId (), this .mouseup   .bind (this));
+            $(document) .on ("touchmove.LookAtViewer" + this .getId (), this .touchmove .bind (this));
 
-               this .getActiveViewpoint () .transitionStop ();
+            this .getActiveViewpoint () .transitionStop ();
 
-               // Look around.
+            // Look around.
 
-               this .trackballProjectToSphere (x, y, this .fromVector);
+            this .trackballProjectToSphere (x, y, this .fromVector);
 
-               this ._isActive = true;
-               break;
-            }
+            this ._isActive = true;
+            break;
          }
-      },
-      mouseup: function (event)
+      }
+   },
+   mouseup: function (event)
+   {
+      if (event .button !== this .button)
+         return;
+
+      this .button = -1;
+
+      $(document) .off (".LookAtViewer" + this .getId ());
+
+      switch (event .button)
       {
-         if (event .button !== this .button)
-            return;
-
-         this .button = -1;
-
-         $(document) .off (".LookAtViewer" + this .getId ());
-
-         switch (event .button)
+         case 0:
          {
-            case 0:
-            {
-               // Stop event propagation.
+            // Stop event propagation.
 
-               event .preventDefault ();
-               event .stopImmediatePropagation ();
+            event .preventDefault ();
+            event .stopImmediatePropagation ();
 
-               this ._isActive = false;
-               break;
-            }
+            this ._isActive = false;
+            break;
          }
-      },
-      dblclick: function (event)
+      }
+   },
+   dblclick: function (event)
+   {
+      // Stop event propagation.
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      const
+         element = this .getBrowser () .getSurface (),
+         offset  = element .offset (),
+         x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
+         y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
+
+      this .disconnect ();
+      this .lookAtPoint (x, y, this .getStraightenHorizon ());
+   },
+   mousemove: function (event)
+   {
+      this .getBrowser () .addBrowserEvent ();
+
+      this .event = event;
+
+      const
+         offset = this .getBrowser () .getSurface () .offset (),
+         x      = event .pageX - offset .left,
+         y      = event .pageY - offset .top;
+
+      switch (this .button)
       {
-         // Stop event propagation.
-         event .preventDefault ();
-         event .stopImmediatePropagation ();
-
-         const
-            element = this .getBrowser () .getSurface (),
-            offset  = element .offset (),
-            x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
-            y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
-
-         this .disconnect ();
-         this .lookAtPoint (x, y, this .getStraightenHorizon ());
-      },
-      mousemove: function (event)
-      {
-         this .getBrowser () .addBrowserEvent ();
-
-         this .event = event;
-
-         const
-            offset = this .getBrowser () .getSurface () .offset (),
-            x      = event .pageX - offset .left,
-            y      = event .pageY - offset .top;
-
-         switch (this .button)
-         {
-            case 0:
-            {
-               // Stop event propagation.
-               event .preventDefault ();
-               event .stopImmediatePropagation ();
-
-               // Look around
-
-               const toVector = this .trackballProjectToSphere (x, y, this .toVector);
-
-               this .addRotation (this .fromVector, toVector);
-               this .fromVector .assign (toVector);
-               break;
-            }
-         }
-      },
-      mousewheel: (function ()
-      {
-         const
-            step        = new Vector3 (0, 0, 0),
-            translation = new Vector3 (0, 0, 0);
-
-         return function (event)
+         case 0:
          {
             // Stop event propagation.
             event .preventDefault ();
             event .stopImmediatePropagation ();
 
-            // Change viewpoint position.
+            // Look around
 
-            const viewpoint = this .getActiveViewpoint ();
+            const toVector = this .trackballProjectToSphere (x, y, this .toVector);
 
-            viewpoint .transitionStop ();
+            this .addRotation (this .fromVector, toVector);
+            this .fromVector .assign (toVector);
+            break;
+         }
+      }
+   },
+   mousewheel: (function ()
+   {
+      const
+         step        = new Vector3 (0, 0, 0),
+         translation = new Vector3 (0, 0, 0);
 
-            step        = this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR),
-            translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .magnitude ()));
+      return function (event)
+      {
+         // Stop event propagation.
+         event .preventDefault ();
+         event .stopImmediatePropagation ();
 
-            if (event .deltaY > 0)
-               this .addMove (translation .negate (), Vector3 .Zero);
+         // Change viewpoint position.
 
-            else if (event .deltaY < 0)
-               this .addMove (translation, Vector3 .Zero);
-         };
-      })(),
-      touchstart: function (event)
+         const viewpoint = this .getActiveViewpoint ();
+
+         viewpoint .transitionStop ();
+
+         step        = this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR),
+         translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .magnitude ()));
+
+         if (event .deltaY > 0)
+            this .addMove (translation .negate (), Vector3 .Zero);
+
+         else if (event .deltaY < 0)
+            this .addMove (translation, Vector3 .Zero);
+      };
+   })(),
+   touchstart: function (event)
+   {
+      const touches = event .originalEvent .touches;
+
+      switch (touches .length)
+      {
+         case 1:
+         {
+            // Start move (button 0).
+
+            this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+            break;
+         }
+         case 2:
+         {
+            // End move (button 0).
+
+            this .touchend (event);
+
+            // Start look around (button 0).
+
+            event .button = 0;
+            event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
+            event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
+
+            this .mousedown (event);
+
+            // Start zoom (mouse wheel).
+
+            this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+            this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+            break;
+         }
+         case 3:
+         {
+            this .touchend (event);
+            break;
+         }
+      }
+   },
+   touchend: function (event)
+   {
+      switch (this .button)
+      {
+         case 0:
+         {
+            // End look around (button 0).
+            this .mouseup (event);
+            break;
+         }
+      }
+
+      // Start dblclick (button 0).
+
+      if (this .getBrowser () .getCurrentTime () - this .tapStart < this .dblTapInterval)
+      {
+         event .button = 1;
+         event .pageX  = this .touch1 .x;
+         event .pageY  = this .touch1 .y;
+
+         this .dblclick (event);
+      }
+
+      this .tapStart = this .getBrowser () .getCurrentTime ();
+   },
+   touchmove: (function ()
+   {
+      const
+         MOVE_ANGLE   = 0.7,
+         ZOOM_ANGLE   = -0.7,
+         touch1Change = new Vector2 (0, 0),
+         touch2Change = new Vector2 (0, 0);
+
+      return function (event)
       {
          const touches = event .originalEvent .touches;
 
@@ -277,249 +334,175 @@ function ($,
          {
             case 1:
             {
-               // Start move (button 0).
-
-               this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+               // Move (button 0).
                break;
             }
             case 2:
             {
-               // End move (button 0).
+               touch1Change .set (touches [0] .pageX, touches [0] .pageY) .subtract (this .touch1) .normalize ();
+               touch2Change .set (touches [1] .pageX, touches [1] .pageY) .subtract (this .touch2) .normalize ();
 
-               this .touchend (event);
+               const
+                  move = touch1Change .dot (touch2Change) > MOVE_ANGLE,
+                  zoom = touch1Change .dot (touch2Change) < ZOOM_ANGLE;
 
-               // Start look around (button 0).
+               if (move)
+               {
+                  // Look around (button 0).
 
-               event .button = 0;
-               event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
-               event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
+                  event .button = 0;
+                  event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
+                  event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
 
-               this .mousedown (event);
+                  this .mousemove (event);
+               }
+               else if (zoom)
+               {
+                  // Zoom (mouse wheel).
 
-               // Start zoom (mouse wheel).
+                  const distance1 = this .touch1 .distance (this .touch2);
+
+                  this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+                  this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+
+                  const
+                     distance2 = this .touch1 .distance (this .touch2),
+                     delta     = distance2 - distance1;
+
+                  event .deltaY     = delta;
+                  event .zoomFactor = Math .abs (delta) / $(window) .width ();
+
+                  this .mousewheel (event);
+               }
 
                this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
                this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
                break;
             }
-            case 3:
-            {
-               this .touchend (event);
-               break;
-            }
          }
-      },
-      touchend: function (event)
-      {
-         switch (this .button)
-         {
-            case 0:
-            {
-               // End look around (button 0).
-               this .mouseup (event);
-               break;
-            }
-         }
+      };
+   })(),
+   set_positionOffset__: function (value)
+   {
+      const viewpoint = this .getActiveViewpoint ();
 
-         // Start dblclick (button 0).
+      viewpoint ._positionOffset = value;
+   },
+   set_centerOfRotationOffset__: function (value)
+   {
+      const viewpoint = this .getActiveViewpoint ();
 
-         if (this .getBrowser () .getCurrentTime () - this .tapStart < this .dblTapInterval)
-         {
-            event .button = 1;
-            event .pageX  = this .touch1 .x;
-            event .pageY  = this .touch1 .y;
+      viewpoint ._centerOfRotationOffset = value;
+   },
+   set_orientationOffset__: function (value)
+   {
+      const viewpoint = this .getActiveViewpoint ();
 
-            this .dblclick (event);
-         }
+      viewpoint ._orientationOffset = value;
+   },
+   addMove: (function ()
+   {
+      const
+         positionOffset         = new Vector3 (0, 0, 0),
+         centerOfRotationOffset = new Vector3 (0, 0, 0);
 
-         this .tapStart = this .getBrowser () .getCurrentTime ();
-      },
-      touchmove: (function ()
-      {
-         const
-            MOVE_ANGLE   = 0.7,
-            ZOOM_ANGLE   = -0.7,
-            touch1Change = new Vector2 (0, 0),
-            touch2Change = new Vector2 (0, 0);
-
-         return function (event)
-         {
-            const touches = event .originalEvent .touches;
-
-            switch (touches .length)
-            {
-               case 1:
-               {
-                  // Move (button 0).
-                  break;
-               }
-               case 2:
-               {
-                  touch1Change .set (touches [0] .pageX, touches [0] .pageY) .subtract (this .touch1) .normalize ();
-                  touch2Change .set (touches [1] .pageX, touches [1] .pageY) .subtract (this .touch2) .normalize ();
-
-                  const
-                     move = touch1Change .dot (touch2Change) > MOVE_ANGLE,
-                     zoom = touch1Change .dot (touch2Change) < ZOOM_ANGLE;
-
-                  if (move)
-                  {
-                     // Look around (button 0).
-
-                     event .button = 0;
-                     event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
-                     event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
-
-                     this .mousemove (event);
-                  }
-                  else if (zoom)
-                  {
-                     // Zoom (mouse wheel).
-
-                     const distance1 = this .touch1 .distance (this .touch2);
-
-                     this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
-                     this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
-
-                     const
-                        distance2 = this .touch1 .distance (this .touch2),
-                        delta     = distance2 - distance1;
-
-                     event .deltaY     = delta;
-                     event .zoomFactor = Math .abs (delta) / $(window) .width ();
-
-                     this .mousewheel (event);
-                  }
-
-                  this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
-                  this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
-                  break;
-               }
-            }
-         };
-      })(),
-      set_positionOffset__: function (value)
+      return function (positionOffsetChange, centerOfRotationOffsetChange)
       {
          const viewpoint = this .getActiveViewpoint ();
 
-         viewpoint ._positionOffset = value;
-      },
-      set_centerOfRotationOffset__: function (value)
+         if (this .positionChaser ._isActive .getValue () && this .positionChaser ._value_changed .hasInterest ("set_positionOffset__", this))
+         {
+            positionOffset
+               .assign (this .positionChaser ._set_destination .getValue ())
+               .add (positionOffsetChange);
+
+            this .positionChaser ._set_destination = positionOffset;
+         }
+         else
+         {
+            positionOffset
+               .assign (viewpoint ._positionOffset .getValue ())
+               .add (positionOffsetChange);
+
+            this .positionChaser ._set_value       = viewpoint ._positionOffset;
+            this .positionChaser ._set_destination = positionOffset;
+         }
+
+         if (this .centerOfRotationChaser ._isActive .getValue () && this .centerOfRotationChaser ._value_changed .hasInterest ("set_centerOfRotationOffset__", this))
+         {
+            centerOfRotationOffset
+               .assign (this .centerOfRotationChaser ._set_destination .getValue ())
+               .add (centerOfRotationOffsetChange);
+
+            this .centerOfRotationChaser ._set_destination = centerOfRotationOffset;
+         }
+         else
+         {
+            centerOfRotationOffset
+               .assign (viewpoint ._centerOfRotationOffset .getValue ())
+               .add (centerOfRotationOffsetChange);
+
+            this .centerOfRotationChaser ._set_value       = viewpoint ._centerOfRotationOffset;
+            this .centerOfRotationChaser ._set_destination = centerOfRotationOffset;
+         }
+
+         this .disconnect ();
+         this .positionChaser         ._value_changed .addInterest ("set_positionOffset__",         this);
+         this .centerOfRotationChaser ._value_changed .addInterest ("set_centerOfRotationOffset__", this);
+      };
+   })(),
+   addRotation: (function ()
+   {
+      const
+         userOrientation   = new Rotation4 (0, 0, 1, 0),
+         orientationOffset = new Rotation4 (0, 0, 1, 0);
+
+      return function (fromVector, toVector)
       {
          const viewpoint = this .getActiveViewpoint ();
 
-         viewpoint ._centerOfRotationOffset = value;
-      },
-      set_orientationOffset__: function (value)
-      {
-         const viewpoint = this .getActiveViewpoint ();
-
-         viewpoint ._orientationOffset = value;
-      },
-      addMove: (function ()
-      {
-         const
-            positionOffset         = new Vector3 (0, 0, 0),
-            centerOfRotationOffset = new Vector3 (0, 0, 0);
-
-         return function (positionOffsetChange, centerOfRotationOffsetChange)
+         if (this .orientationChaser ._isActive .getValue () && this .orientationChaser ._value_changed .hasInterest ("set_orientationOffset__", this))
          {
-            const viewpoint = this .getActiveViewpoint ();
+            userOrientation
+               .setFromToVec (toVector, fromVector)
+               .multRight (viewpoint .getOrientation ())
+               .multRight (this .orientationChaser ._set_destination .getValue ());
 
-            if (this .positionChaser ._isActive .getValue () && this .positionChaser ._value_changed .hasInterest ("set_positionOffset__", this))
-            {
-               positionOffset
-                  .assign (this .positionChaser ._set_destination .getValue ())
-                  .add (positionOffsetChange);
+            viewpoint .straightenHorizon (userOrientation);
 
-               this .positionChaser ._set_destination = positionOffset;
-            }
-            else
-            {
-               positionOffset
-                  .assign (viewpoint ._positionOffset .getValue ())
-                  .add (positionOffsetChange);
+            orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
 
-               this .positionChaser ._set_value       = viewpoint ._positionOffset;
-               this .positionChaser ._set_destination = positionOffset;
-            }
-
-            if (this .centerOfRotationChaser ._isActive .getValue () && this .centerOfRotationChaser ._value_changed .hasInterest ("set_centerOfRotationOffset__", this))
-            {
-               centerOfRotationOffset
-                  .assign (this .centerOfRotationChaser ._set_destination .getValue ())
-                  .add (centerOfRotationOffsetChange);
-
-               this .centerOfRotationChaser ._set_destination = centerOfRotationOffset;
-            }
-            else
-            {
-               centerOfRotationOffset
-                  .assign (viewpoint ._centerOfRotationOffset .getValue ())
-                  .add (centerOfRotationOffsetChange);
-
-               this .centerOfRotationChaser ._set_value       = viewpoint ._centerOfRotationOffset;
-               this .centerOfRotationChaser ._set_destination = centerOfRotationOffset;
-            }
-
-            this .disconnect ();
-            this .positionChaser         ._value_changed .addInterest ("set_positionOffset__",         this);
-            this .centerOfRotationChaser ._value_changed .addInterest ("set_centerOfRotationOffset__", this);
-         };
-      })(),
-      addRotation: (function ()
-      {
-         const
-            userOrientation   = new Rotation4 (0, 0, 1, 0),
-            orientationOffset = new Rotation4 (0, 0, 1, 0);
-
-         return function (fromVector, toVector)
+            this .orientationChaser ._set_destination = orientationOffset;
+         }
+         else
          {
-            const viewpoint = this .getActiveViewpoint ();
+            userOrientation
+               .setFromToVec (toVector, fromVector)
+               .multRight (viewpoint .getUserOrientation ());
 
-            if (this .orientationChaser ._isActive .getValue () && this .orientationChaser ._value_changed .hasInterest ("set_orientationOffset__", this))
-            {
-               userOrientation
-                  .setFromToVec (toVector, fromVector)
-                  .multRight (viewpoint .getOrientation ())
-                  .multRight (this .orientationChaser ._set_destination .getValue ());
+            viewpoint .straightenHorizon (userOrientation);
 
-               viewpoint .straightenHorizon (userOrientation);
+            orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
 
-               orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
+            this .orientationChaser ._set_value       = viewpoint ._orientationOffset;
+            this .orientationChaser ._set_destination = orientationOffset;
+         }
 
-               this .orientationChaser ._set_destination = orientationOffset;
-            }
-            else
-            {
-               userOrientation
-                  .setFromToVec (toVector, fromVector)
-                  .multRight (viewpoint .getUserOrientation ());
-
-               viewpoint .straightenHorizon (userOrientation);
-
-               orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
-
-               this .orientationChaser ._set_value       = viewpoint ._orientationOffset;
-               this .orientationChaser ._set_destination = orientationOffset;
-            }
-
-            this .disconnect ();
-            this .orientationChaser ._value_changed .addInterest ("set_orientationOffset__", this);
-         };
-      })(),
-      disconnect: function ()
-      {
-         this .orientationChaser      ._value_changed .removeInterest ("set_orientationOffset__", this);
-         this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this)
-         this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this)
-      },
-      dispose: function ()
-      {
-         this .getBrowser () .getSurface () .off (".LookAtViewer");
-         $(document) .off (".LookAtViewer" + this .getId ());
-      },
-   });
-
-   return LookAtViewer;
+         this .disconnect ();
+         this .orientationChaser ._value_changed .addInterest ("set_orientationOffset__", this);
+      };
+   })(),
+   disconnect: function ()
+   {
+      this .orientationChaser      ._value_changed .removeInterest ("set_orientationOffset__", this);
+      this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this)
+      this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this)
+   },
+   dispose: function ()
+   {
+      this .getBrowser () .getSurface () .off (".LookAtViewer");
+      $(document) .off (".LookAtViewer" + this .getId ());
+   },
 });
+
+export default LookAtViewer;

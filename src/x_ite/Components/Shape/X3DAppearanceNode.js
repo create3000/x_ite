@@ -47,41 +47,33 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DNode from "../Core/X3DNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DAppearanceNode (executionContext)
 {
-"use strict";
+   X3DNode .call (this, executionContext);
 
-   function X3DAppearanceNode (executionContext)
+   this .addType (X3DConstants .X3DAppearanceNode);
+
+   this .addChildObjects ("transparent", new Fields .SFBool ());
+
+   this ._transparent .setAccessType (X3DConstants .outputOnly);
+}
+
+X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+{
+   constructor: X3DAppearanceNode,
+   setTransparent: function (value)
    {
-      X3DNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DAppearanceNode);
-
-      this .addChildObjects ("transparent", new Fields .SFBool ());
-
-      this ._transparent .setAccessType (X3DConstants .outputOnly);
-   }
-
-   X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+      if (value !== this ._transparent .getValue ())
+         this ._transparent = value;
+   },
+   getTransparent: function ()
    {
-      constructor: X3DAppearanceNode,
-      setTransparent: function (value)
-      {
-         if (value !== this ._transparent .getValue ())
-            this ._transparent = value;
-      },
-      getTransparent: function ()
-      {
-         return this ._transparent .getValue ();
-      },
-   });
-
-   return X3DAppearanceNode;
+      return this ._transparent .getValue ();
+   },
 });
+
+export default X3DAppearanceNode;

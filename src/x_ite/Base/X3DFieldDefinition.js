@@ -47,32 +47,26 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DObject",
-],
-function (X3DObject)
+import X3DObject from "./X3DObject.js";
+
+function X3DFieldDefinition (accessType, name, value)
 {
-"use strict";
+   this .accessType  = accessType;
+   this .dataType    = value .getType ();
+   this .name        = name;
+   this .value       = value;
+}
 
-   function X3DFieldDefinition (accessType, name, value)
+X3DFieldDefinition .prototype = Object .assign (Object .create (X3DObject .prototype),
+{
+   constructor: X3DFieldDefinition,
+   getTypeName: function ()
    {
-      this .accessType  = accessType;
-      this .dataType    = value .getType ();
-      this .name        = name;
-      this .value       = value;
-   }
-
-   X3DFieldDefinition .prototype = Object .assign (Object .create (X3DObject .prototype),
-   {
-      constructor: X3DFieldDefinition,
-      getTypeName: function ()
-      {
-         return "X3DFieldDefinition";
-      },
-   });
-
-   for (const key of Reflect .ownKeys (X3DFieldDefinition .prototype))
-      Object .defineProperty (X3DFieldDefinition .prototype, key, { enumerable: false });
-
-   return X3DFieldDefinition;
+      return "X3DFieldDefinition";
+   },
 });
+
+for (const key of Reflect .ownKeys (X3DFieldDefinition .prototype))
+   Object .defineProperty (X3DFieldDefinition .prototype, key, { enumerable: false });
+
+export default X3DFieldDefinition;

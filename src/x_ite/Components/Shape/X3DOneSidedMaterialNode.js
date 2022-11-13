@@ -47,159 +47,149 @@
  ******************************************************************************/
 
 
- define ([
-   "x_ite/Fields",
-   "x_ite/Components/Shape/X3DMaterialNode",
-   "x_ite/Base/X3DCast",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Algorithm",
-],
-function (Fields,
-          X3DMaterialNode,
-          X3DCast,
-          X3DConstants,
-          Algorithm)
+import Fields from "../../Fields.js";
+import X3DMaterialNode from "./X3DMaterialNode.js";
+import X3DCast from "../../Base/X3DCast.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+function X3DOneSidedMaterialNode (executionContext)
 {
-"use strict";
+   X3DMaterialNode .call (this, executionContext);
 
-   function X3DOneSidedMaterialNode (executionContext)
+   this .addType (X3DConstants .X3DOneSidedMaterialNode);
+
+   this .addChildObjects ("textures", new Fields .SFTime ());
+
+   this .emissiveColor = new Float32Array (3);
+}
+
+X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
+{
+   constructor: X3DOneSidedMaterialNode,
+   initialize: function ()
    {
-      X3DMaterialNode .call (this, executionContext);
+      X3DMaterialNode .prototype .initialize .call (this);
 
-      this .addType (X3DConstants .X3DOneSidedMaterialNode);
+      this ._emissiveColor   .addInterest ("set_emissiveColor__",   this);
+      this ._emissiveTexture .addInterest ("set_emissiveTexture__", this);
+      this ._normalTexture   .addInterest ("set_normalTexture__",   this);
+      this ._transparency    .addInterest ("set_transparency__",    this);
+      this ._transparency    .addInterest ("set_transparent__",     this);
 
-      this .addChildObjects ("textures", new Fields .SFTime ());
-
-      this .emissiveColor = new Float32Array (3);
-   }
-
-   X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
+      this .set_emissiveColor__ ();
+      this .set_emissiveTexture__ ();
+      this .set_normalTexture__ ();
+      this .set_transparency__ ();
+   },
+   set_emissiveColor__: function ()
    {
-      constructor: X3DOneSidedMaterialNode,
-      initialize: function ()
-      {
-         X3DMaterialNode .prototype .initialize .call (this);
+      //We cannot use this in Windows Edge:
+      //this .emissiveColor .set (this ._emissiveColor .getValue ());
 
-         this ._emissiveColor   .addInterest ("set_emissiveColor__",   this);
-         this ._emissiveTexture .addInterest ("set_emissiveTexture__", this);
-         this ._normalTexture   .addInterest ("set_normalTexture__",   this);
-         this ._transparency    .addInterest ("set_transparency__",    this);
-         this ._transparency    .addInterest ("set_transparent__",     this);
+      const
+         emissiveColor  = this .emissiveColor,
+         emissiveColor_ = this ._emissiveColor .getValue ();
 
-         this .set_emissiveColor__ ();
-         this .set_emissiveTexture__ ();
-         this .set_normalTexture__ ();
-         this .set_transparency__ ();
-      },
-      set_emissiveColor__: function ()
-      {
-         //We cannot use this in Windows Edge:
-         //this .emissiveColor .set (this ._emissiveColor .getValue ());
+      emissiveColor [0] = emissiveColor_ .r;
+      emissiveColor [1] = emissiveColor_ .g;
+      emissiveColor [2] = emissiveColor_ .b;
+   },
+   set_emissiveTexture__: function ()
+   {
+      this .emissiveTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._emissiveTexture);
 
-         const
-            emissiveColor  = this .emissiveColor,
-            emissiveColor_ = this ._emissiveColor .getValue ();
+      this .setTexture (this .getTextureIndices () .EMISSIVE_TEXTURE, this .emissiveTextureNode);
+   },
+   set_normalTexture__: function ()
+   {
+      this .normalTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._normalTexture);
 
-         emissiveColor [0] = emissiveColor_ .r;
-         emissiveColor [1] = emissiveColor_ .g;
-         emissiveColor [2] = emissiveColor_ .b;
-      },
-      set_emissiveTexture__: function ()
-      {
-         this .emissiveTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._emissiveTexture);
+      this .setTexture (this .getTextureIndices () .NORMAL_TEXTURE, this .normalTextureNode);
+   },
+   set_transparency__: function ()
+   {
+      this .transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
+   },
+   set_transparent__: function ()
+   {
+      this .setTransparent (Boolean (this .transparency));
+   },
+   getEmissiveTexture: function ()
+   {
+      return this .emissiveTextureNode;
+   },
+   getNormalTexture: function ()
+   {
+      return this .normalTextureNode;
+   },
+   getTransparency: function ()
+   {
+      return this .transparency;
+   },
+   getTextureIndices: (function ()
+   {
+      let i = 0;
 
-         this .setTexture (this .getTextureIndices () .EMISSIVE_TEXTURE, this .emissiveTextureNode);
-      },
-      set_normalTexture__: function ()
-      {
-         this .normalTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._normalTexture);
+      const textureIndices = {
+         EMISSIVE_TEXTURE: i ++,
+         NORMAL_TEXTURE: i ++,
+      };
 
-         this .setTexture (this .getTextureIndices () .NORMAL_TEXTURE, this .normalTextureNode);
-      },
-      set_transparency__: function ()
+      return function ()
       {
-         this .transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
-      },
-      set_transparent__: function ()
-      {
-         this .setTransparent (Boolean (this .transparency));
-      },
-      getEmissiveTexture: function ()
-      {
-         return this .emissiveTextureNode;
-      },
-      getNormalTexture: function ()
-      {
-         return this .normalTextureNode;
-      },
-      getTransparency: function ()
-      {
-         return this .transparency;
-      },
-      getTextureIndices: (function ()
-      {
-         let i = 0;
+         return textureIndices;
+      };
+   })(),
+   getShaderOptions: function (geometryContext, renderContext)
+   {
+      const options = X3DMaterialNode .prototype .getShaderOptions .call (this, geometryContext, renderContext);
 
-         const textureIndices = {
-            EMISSIVE_TEXTURE: i ++,
-            NORMAL_TEXTURE: i ++,
-         };
+      if (+this .getTextureBits ())
+      {
+         if (this .getEmissiveTexture ())
+            options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
 
-         return function ()
+         if (this .getNormalTexture ())
+            options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+      }
+
+      return options;
+   },
+   setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+      gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
+      gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
+
+      if (+this .getTextureBits ())
+      {
+         // Emissive parameters
+
+         if (this .emissiveTextureNode)
          {
-            return textureIndices;
-         };
-      })(),
-      getShaderOptions: function (geometryContext, renderContext)
-      {
-         const options = X3DMaterialNode .prototype .getShaderOptions .call (this, geometryContext, renderContext);
+            const emissiveTexture = shaderObject .x3d_EmissiveTexture;
 
-         if (+this .getTextureBits ())
-         {
-            if (this .getEmissiveTexture ())
-               options .push ("X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE", "X3D_EMISSIVE_TEXTURE_" + this .getEmissiveTexture () .getTextureTypeString ());
+            this .emissiveTextureNode .setShaderUniforms (gl, shaderObject, renderObject, emissiveTexture);
 
-            if (this .getNormalTexture ())
-               options .push ("X3D_NORMAL_TEXTURE", "X3D_NORMAL_TEXTURE_" + this .getNormalTexture () .getTextureTypeString ());
+            gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (this ._emissiveTextureMapping .getValue ()) || 0);
+            gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._emissiveTextureMapping .getValue ()) || 0);
          }
 
-         return options;
-      },
-      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
-      {
-         gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
-         gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
+         // Normal parameters
 
-         if (+this .getTextureBits ())
+         if (this .normalTextureNode)
          {
-            // Emissive parameters
+            const normalTexture = shaderObject .x3d_NormalTexture;
 
-            if (this .emissiveTextureNode)
-            {
-               const emissiveTexture = shaderObject .x3d_EmissiveTexture;
+            this .normalTextureNode .setShaderUniforms (gl, shaderObject, renderObject, normalTexture);
 
-               this .emissiveTextureNode .setShaderUniforms (gl, shaderObject, renderObject, emissiveTexture);
+            gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (this ._normalTextureMapping .getValue ()) || 0);
+            gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._normalTextureMapping .getValue ()) || 0);
 
-               gl .uniform1i (emissiveTexture .textureTransformMapping,  textureTransformMapping  .get (this ._emissiveTextureMapping .getValue ()) || 0);
-               gl .uniform1i (emissiveTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._emissiveTextureMapping .getValue ()) || 0);
-            }
-
-            // Normal parameters
-
-            if (this .normalTextureNode)
-            {
-               const normalTexture = shaderObject .x3d_NormalTexture;
-
-               this .normalTextureNode .setShaderUniforms (gl, shaderObject, renderObject, normalTexture);
-
-               gl .uniform1i (normalTexture .textureTransformMapping,  textureTransformMapping  .get (this ._normalTextureMapping .getValue ()) || 0);
-               gl .uniform1i (normalTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._normalTextureMapping .getValue ()) || 0);
-
-               gl .uniform1f (shaderObject .x3d_NormalScale, this ._normalScale .getValue ());
-            }
+            gl .uniform1f (shaderObject .x3d_NormalScale, this ._normalScale .getValue ());
          }
-      },
-   });
-
-   return X3DOneSidedMaterialNode;
+      }
+   },
 });
+
+export default X3DOneSidedMaterialNode;

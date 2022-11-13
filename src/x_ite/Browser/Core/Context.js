@@ -47,142 +47,136 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/DEBUG",
-],
-function (DEBUG)
+import DEBUG from "../../DEBUG.js";
+
+const extensions = [
+   "ANGLE_instanced_arrays",
+   "EXT_blend_minmax",
+   "EXT_frag_depth",
+   "EXT_shader_texture_lod",
+   "EXT_texture_filter_anisotropic",
+   "OES_element_index_uint",
+   "OES_standard_derivatives",
+   "OES_texture_float",
+   "OES_texture_float_linear",
+   "OES_texture_half_float",
+   "OES_texture_half_float_linear",
+   "OES_vertex_array_object",
+   "WEBGL_compressed_texture_s3tc",
+   //"WEBGL_debug_renderer_info",
+   "WEBGL_debug_shaders",
+   "WEBGL_depth_texture",
+   "WEBGL_draw_buffers",
+   "WEBGL_lose_context",
+
+   "EXT_color_buffer_float",
+   "EXT_color_buffer_half_float",
+   "EXT_disjoint_timer_query",
+   "EXT_disjoint_timer_query_webgl2",
+   "EXT_sRGB",
+   "WEBGL_color_buffer_float",
+   "WEBGL_compressed_texture_astc",
+   "WEBGL_compressed_texture_atc",
+   "WEBGL_compressed_texture_etc",
+   "WEBGL_compressed_texture_etc1",
+   "WEBGL_compressed_texture_pvrtc",
+   "WEBGL_compressed_texture_s3tc",
+   "WEBGL_compressed_texture_s3tc_srgb",
+
+   "EXT_float_blend",
+   "OES_fbo_render_mipmap",
+   "WEBGL_get_buffer_sub_data_async",
+   "WEBGL_multiview",
+   "WEBGL_security_sensitive_resources",
+   "WEBGL_shared_resources",
+
+   "EXT_clip_cull_distance",
+   "WEBGL_debug",
+   "WEBGL_dynamic_texture",
+   "WEBGL_subarray_uploads",
+   "WEBGL_texture_multisample",
+   "WEBGL_texture_source_iframe",
+   "WEBGL_video_texture",
+
+   "EXT_texture_storage",
+   "OES_depth24",
+   "WEBGL_debug_shader_precision",
+   "WEBGL_draw_elements_no_range_check",
+   "WEBGL_subscribe_uniform",
+   "WEBGL_texture_from_depth_video",
+];
+
+const Context =
 {
-"use strict";
-
-   const extensions = [
-      "ANGLE_instanced_arrays",
-      "EXT_blend_minmax",
-      "EXT_frag_depth",
-      "EXT_shader_texture_lod",
-      "EXT_texture_filter_anisotropic",
-      "OES_element_index_uint",
-      "OES_standard_derivatives",
-      "OES_texture_float",
-      "OES_texture_float_linear",
-      "OES_texture_half_float",
-      "OES_texture_half_float_linear",
-      "OES_vertex_array_object",
-      "WEBGL_compressed_texture_s3tc",
-      //"WEBGL_debug_renderer_info",
-      "WEBGL_debug_shaders",
-      "WEBGL_depth_texture",
-      "WEBGL_draw_buffers",
-      "WEBGL_lose_context",
-
-      "EXT_color_buffer_float",
-      "EXT_color_buffer_half_float",
-      "EXT_disjoint_timer_query",
-      "EXT_disjoint_timer_query_webgl2",
-      "EXT_sRGB",
-      "WEBGL_color_buffer_float",
-      "WEBGL_compressed_texture_astc",
-      "WEBGL_compressed_texture_atc",
-      "WEBGL_compressed_texture_etc",
-      "WEBGL_compressed_texture_etc1",
-      "WEBGL_compressed_texture_pvrtc",
-      "WEBGL_compressed_texture_s3tc",
-      "WEBGL_compressed_texture_s3tc_srgb",
-
-      "EXT_float_blend",
-      "OES_fbo_render_mipmap",
-      "WEBGL_get_buffer_sub_data_async",
-      "WEBGL_multiview",
-      "WEBGL_security_sensitive_resources",
-      "WEBGL_shared_resources",
-
-      "EXT_clip_cull_distance",
-      "WEBGL_debug",
-      "WEBGL_dynamic_texture",
-      "WEBGL_subarray_uploads",
-      "WEBGL_texture_multisample",
-      "WEBGL_texture_source_iframe",
-      "WEBGL_video_texture",
-
-      "EXT_texture_storage",
-      "OES_depth24",
-      "WEBGL_debug_shader_precision",
-      "WEBGL_draw_elements_no_range_check",
-      "WEBGL_subscribe_uniform",
-      "WEBGL_texture_from_depth_video",
-   ];
-
-   const Context =
+   create: function (canvas, version, preserveDrawingBuffer)
    {
-      create: function (canvas, version, preserveDrawingBuffer)
+      const options = { preserveDrawingBuffer: preserveDrawingBuffer };
+
+      let gl = null;
+
+      if (version >= 2 && ! gl)
       {
-         const options = { preserveDrawingBuffer: preserveDrawingBuffer };
+         gl = canvas .getContext ("webgl2", options);
 
-         let gl = null;
+         if (gl)
+            gl .getVersion = function () { return 2; };
+      }
 
-         if (version >= 2 && ! gl)
+      if (version >= 1 && ! gl)
+      {
+         gl = canvas .getContext ("webgl",              options) ||
+              canvas .getContext ("experimental-webgl", options);
+
+         if (gl)
          {
-            gl = canvas .getContext ("webgl2", options);
+            gl .getVersion = function () { return 1; };
 
-            if (gl)
-               gl .getVersion = function () { return 2; };
-         }
-
-         if (version >= 1 && ! gl)
-         {
-            gl = canvas .getContext ("webgl",              options) ||
-                 canvas .getContext ("experimental-webgl", options);
-
-            if (gl)
             {
-               gl .getVersion = function () { return 1; };
+               const ext = gl .getExtension ("OES_vertex_array_object");
 
-               {
-                  const ext = gl .getExtension ("OES_vertex_array_object");
-
-                  gl .bindVertexArray   =  ext .bindVertexArrayOES   .bind (ext);
-                  gl .createVertexArray =  ext .createVertexArrayOES .bind (ext);
-                  gl .deleteVertexArray =  ext .deleteVertexArrayOES .bind (ext);
-                  gl .isVertexArray     =  ext .isVertexArrayOES     .bind (ext);
-               }
+               gl .bindVertexArray   =  ext .bindVertexArrayOES   .bind (ext);
+               gl .createVertexArray =  ext .createVertexArrayOES .bind (ext);
+               gl .deleteVertexArray =  ext .deleteVertexArrayOES .bind (ext);
+               gl .isVertexArray     =  ext .isVertexArrayOES     .bind (ext);
             }
-          }
-
-         if (! gl)
-            throw new Error ("Couldn't create WebGL context.");
-
-         // Feature detection:
-
-         // If the aliased lineWidth ranges are both 1, gl .lineWidth is probably not possible,
-         // thus we disable it completely to prevent webgl errors.
-
-         const aliasedLineWidthRange = gl .getParameter (gl .ALIASED_LINE_WIDTH_RANGE);
-
-         if (aliasedLineWidthRange [0] === 1 && aliasedLineWidthRange [1] === 1)
-         {
-            gl .lineWidth                     = Function .prototype;
-            gl .HAS_FEATURE_TRANSFORMED_LINES = gl .getVersion () >= 2;
-
-            if (DEBUG)
-               console .info ("Lines are transformed if necessary to obtain thick lines.");
          }
-         else
-         {
-            gl .HAS_FEATURE_TRANSFORMED_LINES = false;
-         }
+       }
 
-         gl .HAS_FEATURE_DEPTH_TEXTURE = gl .getVersion () >= 2 || !! gl .getExtension ("WEBGL_depth_texture");
-         gl .HAS_FEATURE_FRAG_DEPTH    = gl .getVersion () >= 2 || !! gl .getExtension ("EXT_frag_depth");
+      if (! gl)
+         throw new Error ("Couldn't create WebGL context.");
 
-         // Load extensions.
+      // Feature detection:
 
-         for (const extension of extensions)
-            gl .getExtension (extension);
+      // If the aliased lineWidth ranges are both 1, gl .lineWidth is probably not possible,
+      // thus we disable it completely to prevent webgl errors.
 
-         // Return context.
+      const aliasedLineWidthRange = gl .getParameter (gl .ALIASED_LINE_WIDTH_RANGE);
 
-         return gl;
-      },
-   }
+      if (aliasedLineWidthRange [0] === 1 && aliasedLineWidthRange [1] === 1)
+      {
+         gl .lineWidth                     = Function .prototype;
+         gl .HAS_FEATURE_TRANSFORMED_LINES = gl .getVersion () >= 2;
 
-   return Context;
-});
+         if (DEBUG)
+            console .info ("Lines are transformed if necessary to obtain thick lines.");
+      }
+      else
+      {
+         gl .HAS_FEATURE_TRANSFORMED_LINES = false;
+      }
+
+      gl .HAS_FEATURE_DEPTH_TEXTURE = gl .getVersion () >= 2 || !! gl .getExtension ("WEBGL_depth_texture");
+      gl .HAS_FEATURE_FRAG_DEPTH    = gl .getVersion () >= 2 || !! gl .getExtension ("EXT_frag_depth");
+
+      // Load extensions.
+
+      for (const extension of extensions)
+         gl .getExtension (extension);
+
+      // Return context.
+
+      return gl;
+   },
+}
+
+export default Context;

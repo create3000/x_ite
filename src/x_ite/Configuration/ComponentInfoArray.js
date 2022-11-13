@@ -47,35 +47,28 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/ComponentInfo",
-   "x_ite/Base/X3DInfoArray",
-],
-function (ComponentInfo,
-          X3DInfoArray)
+import ComponentInfo from "./ComponentInfo.js";
+import X3DInfoArray from "../Base/X3DInfoArray.js";
+
+function ComponentInfoArray (values)
 {
-"use strict";
+   return X3DInfoArray .call (this, values);
+}
 
-   function ComponentInfoArray (values)
+ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+{
+   constructor: ComponentInfoArray,
+   getTypeName: function ()
    {
-      return X3DInfoArray .call (this, values);
-   }
-
-   ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+      return "ComponentInfoArray";
+   },
+   addComponent: function (value)
    {
-      constructor: ComponentInfoArray,
-      getTypeName: function ()
-      {
-         return "ComponentInfoArray";
-      },
-      addComponent: function (value)
-      {
-         this .add (value .name, new ComponentInfo (value .name, value .level, value .title, value .providerUrl));
-      },
-   });
-
-   for (const key of Reflect .ownKeys (ComponentInfoArray .prototype))
-      Object .defineProperty (ComponentInfoArray .prototype, key, { enumerable: false });
-
-   return ComponentInfoArray;
+      this .add (value .name, new ComponentInfo (value .name, value .level, value .title, value .providerUrl));
+   },
 });
+
+for (const key of Reflect .ownKeys (ComponentInfoArray .prototype))
+   Object .defineProperty (ComponentInfoArray .prototype, key, { enumerable: false });
+
+export default ComponentInfoArray;

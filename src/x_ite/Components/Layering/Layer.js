@@ -47,71 +47,59 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Layering/X3DLayerNode",
-   "x_ite/Components/Navigation/Viewpoint",
-   "x_ite/Components/Grouping/Group",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DLayerNode,
-          Viewpoint,
-          Group,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DLayerNode from "./X3DLayerNode.js";
+import Viewpoint from "../Navigation/Viewpoint.js";
+import Group from "../Grouping/Group.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function Layer (executionContext)
 {
-"use strict";
+   X3DLayerNode .call (this,
+                       executionContext,
+                       new Viewpoint (executionContext),
+                       new Group (executionContext));
 
-   function Layer (executionContext)
+   this .addType (X3DConstants .Layer);
+}
+
+Layer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
+{
+   constructor: Layer,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "isPickable",     new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "viewport",       new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,   "addChildren",    new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,   "removeChildren", new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "children",       new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DLayerNode .call (this,
-                          executionContext,
-                          new Viewpoint (executionContext),
-                          new Group (executionContext));
-
-      this .addType (X3DConstants .Layer);
-   }
-
-   Layer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
+      return "Layer";
+   },
+   getComponentName: function ()
    {
-      constructor: Layer,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "isPickable",     new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "viewport",       new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "addChildren",    new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "removeChildren", new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "children",       new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "Layer";
-      },
-      getComponentName: function ()
-      {
-         return "Layering";
-      },
-      getContainerField: function ()
-      {
-         return "layers";
-      },
-      initialize: function ()
-      {
-         X3DLayerNode .prototype .initialize .call (this);
+      return "Layering";
+   },
+   getContainerField: function ()
+   {
+      return "layers";
+   },
+   initialize: function ()
+   {
+      X3DLayerNode .prototype .initialize .call (this);
 
-         this ._addChildren    .addFieldInterest (this .getGroup () ._addChildren);
-         this ._removeChildren .addFieldInterest (this .getGroup () ._removeChildren);
-         this ._children       .addFieldInterest (this .getGroup () ._children);
+      this ._addChildren    .addFieldInterest (this .getGroup () ._addChildren);
+      this ._removeChildren .addFieldInterest (this .getGroup () ._removeChildren);
+      this ._children       .addFieldInterest (this .getGroup () ._children);
 
-         this .getGroup () ._children = this ._children;
-         this .getGroup () .setPrivate (true);
-         this .getGroup () .setup ();
-      },
-   });
-
-   return Layer;
+      this .getGroup () ._children = this ._children;
+      this .getGroup () .setPrivate (true);
+      this .getGroup () .setup ();
+   },
 });
+
+export default Layer;

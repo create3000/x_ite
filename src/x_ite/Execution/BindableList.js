@@ -47,163 +47,156 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DBaseNode",
-   "x_ite/Components/Core/X3DPrototypeInstance",
-],
-function (X3DBaseNode,
-          X3DPrototypeInstance)
+import X3DBaseNode from "../Base/X3DBaseNode.js";
+import X3DPrototypeInstance from "../Components/Core/X3DPrototypeInstance.js";
+
+function BindableList (executionContext, defaultNode)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
 
-   function BindableList (executionContext, defaultNode)
+   this .collected    = [ defaultNode ];
+   this .array        = [ defaultNode ];
+   this .updateTime   = 0;
+   this .removedNodes = [ ];
+}
+
+BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: BindableList,
+   getTypeName: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-
-      this .collected    = [ defaultNode ];
-      this .array        = [ defaultNode ];
-      this .updateTime   = 0;
-      this .removedNodes = [ ];
-   }
-
-   BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return "BindableList";
+   },
+   get: function ()
    {
-      constructor: BindableList,
-      getTypeName: function ()
-      {
-         return "BindableList";
-      },
-      get: function ()
-      {
-         return this .array;
-      },
-      getBound: function (name)
-      {
-         if (this .array .length > 1)
-         {
-            const
-               enableInlineBindables = false,
-               mainScene             = this .getMainScene ();
-
-            if (name && name .length)
-            {
-               // Return first viewpoint with @name.
-
-               for (let i = 1, length = this .array .length; i < length; ++ i)
-               {
-                  const
-                     node      = this .array [i],
-                     outerNode = node .getExecutionContext () .getOuterNode (),
-                     scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
-
-                  if (!enableInlineBindables && scene !== mainScene)
-                     continue;
-
-                  if (node .getName () == name)
-                     return node;
-               }
-            }
-
-            // Return first bound viewpoint in scene.
-
-            for (let i = 1, length = this .array .length; i < length; ++ i)
-            {
-               const
-                  node      = this .array [i],
-                  outerNode = node .getExecutionContext () .getOuterNode (),
-                  scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
-
-               if (!enableInlineBindables && scene !== mainScene)
-                  continue;
-
-               if (node ._isBound .getValue ())
-                  return node;
-            }
-
-            // Return first viewpoint in scene.
-
-            for (let i = 1, length = this .array .length; i < length; ++ i)
-            {
-               const
-                  node      = this .array [i],
-                  outerNode = node .getExecutionContext () .getOuterNode (),
-                  scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
-
-               if (!enableInlineBindables && scene !== mainScene)
-                  continue;
-
-               return node;
-            }
-         }
-
-         // Return default viewpoint.
-
-         return this .array [0];
-      },
-      push: function (node)
-      {
-         return this .collected .push (node);
-      },
-      update: function (layerNode, stack)
+      return this .array;
+   },
+   getBound: function (name)
+   {
+      if (this .array .length > 1)
       {
          const
-            changedNodes = this .collected .filter (node => node ._set_bind .getModificationTime () > this .updateTime),
-            removedNodes = this .removedNodes;
+            enableInlineBindables = false,
+            mainScene             = this .getMainScene ();
 
-         if (! equals (this .collected, this .array))
+         if (name && name .length)
          {
-            // Unbind nodes not in current list (collected);
+            // Return first viewpoint with @name.
 
-            for (const node of this .array)
+            for (let i = 1, length = this .array .length; i < length; ++ i)
             {
-               if (this .collected .indexOf (node) === -1)
-               {
-                  removedNodes .push (node);
-               }
+               const
+                  node      = this .array [i],
+                  outerNode = node .getExecutionContext () .getOuterNode (),
+                  scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
+
+               if (!enableInlineBindables && scene !== mainScene)
+                  continue;
+
+               if (node .getName () == name)
+                  return node;
             }
-
-            // Swap arrays.
-
-            const tmp = this .array;
-
-            this .array     = this .collected;
-            this .collected = tmp;
          }
 
-         // Clear collected array.
+         // Return first bound viewpoint in scene.
 
-         this .collected .length = 1;
+         for (let i = 1, length = this .array .length; i < length; ++ i)
+         {
+            const
+               node      = this .array [i],
+               outerNode = node .getExecutionContext () .getOuterNode (),
+               scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
 
-         // Update stack.
+            if (!enableInlineBindables && scene !== mainScene)
+               continue;
 
-         stack .update (layerNode, removedNodes, changedNodes)
+            if (node ._isBound .getValue ())
+               return node;
+         }
 
-         removedNodes .length = 0;
+         // Return first viewpoint in scene.
 
-         // Advance updateTime time.
+         for (let i = 1, length = this .array .length; i < length; ++ i)
+         {
+            const
+               node      = this .array [i],
+               outerNode = node .getExecutionContext () .getOuterNode (),
+               scene     = outerNode instanceof X3DPrototypeInstance ? outerNode .getScene () : node .getScene ();
 
-         this .updateTime = performance .now ();
-      },
-   });
+            if (!enableInlineBindables && scene !== mainScene)
+               continue;
 
-   for (const key of Reflect .ownKeys (BindableList .prototype))
-      Object .defineProperty (BindableList .prototype, key, { enumerable: false });
-
-   // Compares two arrays.
-
-   function equals (lhs, rhs)
-   {
-      if (lhs .length !== rhs .length)
-         return false;
-
-      for (let i = 0; i < lhs .length; ++ i)
-      {
-         if (lhs [i] !== rhs [i])
-            return false
+            return node;
+         }
       }
 
-      return true;
+      // Return default viewpoint.
+
+      return this .array [0];
+   },
+   push: function (node)
+   {
+      return this .collected .push (node);
+   },
+   update: function (layerNode, stack)
+   {
+      const
+         changedNodes = this .collected .filter (node => node ._set_bind .getModificationTime () > this .updateTime),
+         removedNodes = this .removedNodes;
+
+      if (! equals (this .collected, this .array))
+      {
+         // Unbind nodes not in current list (collected);
+
+         for (const node of this .array)
+         {
+            if (this .collected .indexOf (node) === -1)
+            {
+               removedNodes .push (node);
+            }
+         }
+
+         // Swap arrays.
+
+         const tmp = this .array;
+
+         this .array     = this .collected;
+         this .collected = tmp;
+      }
+
+      // Clear collected array.
+
+      this .collected .length = 1;
+
+      // Update stack.
+
+      stack .update (layerNode, removedNodes, changedNodes)
+
+      removedNodes .length = 0;
+
+      // Advance updateTime time.
+
+      this .updateTime = performance .now ();
+   },
+});
+
+for (const key of Reflect .ownKeys (BindableList .prototype))
+   Object .defineProperty (BindableList .prototype, key, { enumerable: false });
+
+// Compares two arrays.
+
+function equals (lhs, rhs)
+{
+   if (lhs .length !== rhs .length)
+      return false;
+
+   for (let i = 0; i < lhs .length; ++ i)
+   {
+      if (lhs [i] !== rhs [i])
+         return false
    }
 
-   return BindableList;
-});
+   return true;
+}
+
+export default BindableList;

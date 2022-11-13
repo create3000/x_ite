@@ -47,38 +47,31 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DBaseNode",
-   "x_ite/Fields",
-],
-function (X3DBaseNode,
-          Fields)
+import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import Fields from "../../Fields.js";
+
+function Arc2DOptions (executionContext)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
 
-   function Arc2DOptions (executionContext)
+   this .addChildObjects ("dimension", new Fields .SFInt32 (40))
+}
+
+Arc2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: Arc2DOptions,
+   getTypeName: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-
-      this .addChildObjects ("dimension", new Fields .SFInt32 (40))
-   }
-
-   Arc2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return "Arc2DOptions";
+   },
+   getComponentName: function ()
    {
-      constructor: Arc2DOptions,
-      getTypeName: function ()
-      {
-         return "Arc2DOptions";
-      },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "arc2DOptions";
-      },
-   });
-
-   return Arc2DOptions;
+      return "X_ITE";
+   },
+   getContainerField: function ()
+   {
+      return "arc2DOptions";
+   },
 });
+
+export default Arc2DOptions;

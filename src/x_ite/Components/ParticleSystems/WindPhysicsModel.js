@@ -47,95 +47,83 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Algorithm",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DParticlePhysicsModelNode,
-          X3DConstants,
-          Vector3,
-          Algorithm)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DParticlePhysicsModelNode from "./X3DParticlePhysicsModelNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+function WindPhysicsModel (executionContext)
 {
-"use strict";
+   X3DParticlePhysicsModelNode .call (this, executionContext);
 
-   function WindPhysicsModel (executionContext)
+   this .addType (X3DConstants .WindPhysicsModel);
+
+   this ._speed .setUnit ("speed");
+}
+
+WindPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
+{
+   constructor: WindPhysicsModel,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "direction",  new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "speed",      new Fields .SFFloat (0.1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "gustiness",  new Fields .SFFloat (0.1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "turbulence", new Fields .SFFloat ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DParticlePhysicsModelNode .call (this, executionContext);
-
-      this .addType (X3DConstants .WindPhysicsModel);
-
-      this ._speed .setUnit ("speed");
-   }
-
-   WindPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
+      return "WindPhysicsModel";
+   },
+   getComponentName: function ()
    {
-      constructor: WindPhysicsModel,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",  new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",      new Fields .SFFloat (0.1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "gustiness",  new Fields .SFFloat (0.1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "turbulence", new Fields .SFFloat ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "WindPhysicsModel";
-      },
-      getComponentName: function ()
-      {
-         return "ParticleSystems";
-      },
-      getContainerField: function ()
-      {
-         return "physics";
-      },
-      getRandomSpeed: function (emitterNode)
-      {
-         const
-            speed     = Math .max (0, this ._speed .getValue ()),
-            variation = speed * Math .max (0, this ._gustiness .getValue ());
+      return "ParticleSystems";
+   },
+   getContainerField: function ()
+   {
+      return "physics";
+   },
+   getRandomSpeed: function (emitterNode)
+   {
+      const
+         speed     = Math .max (0, this ._speed .getValue ()),
+         variation = speed * Math .max (0, this ._gustiness .getValue ());
 
-         return emitterNode .getRandomValue (Math .max (0, speed - variation), speed + variation);
-      },
-      addForce: (function ()
-      {
-         const force = new Vector3 (0, 0, 0);
+      return emitterNode .getRandomValue (Math .max (0, speed - variation), speed + variation);
+   },
+   addForce: (function ()
+   {
+      const force = new Vector3 (0, 0, 0);
 
-         return function (i, emitterNode, timeByMass, forces)
+      return function (i, emitterNode, timeByMass, forces)
+      {
+         if (this ._enabled .getValue ())
          {
-            if (this ._enabled .getValue ())
-            {
-               const
-                  surfaceArea = emitterNode ._surfaceArea .getValue (),
-                  speed       = this .getRandomSpeed (emitterNode),
-                  pressure    = Math .pow (10, 2 * Math .log (speed)) * 0.64615;
+            const
+               surfaceArea = emitterNode ._surfaceArea .getValue (),
+               speed       = this .getRandomSpeed (emitterNode),
+               pressure    = Math .pow (10, 2 * Math .log (speed)) * 0.64615;
 
-               if (this ._direction .getValue () .equals (Vector3 .Zero))
-                  emitterNode .getRandomNormal (force);
-               else
-                  force .assign (this ._direction .getValue ()) .normalize ();
-
-               forces .set (force .multiply (surfaceArea * pressure * timeByMass), i * 4);
-               forces [i * 4 + 3] = Math .PI * Algorithm .clamp (this ._turbulence .getValue (), 0, 1);
-
-               return true;
-            }
+            if (this ._direction .getValue () .equals (Vector3 .Zero))
+               emitterNode .getRandomNormal (force);
             else
-            {
-               return false;
-            }
-         }
-      })(),
-   });
+               force .assign (this ._direction .getValue ()) .normalize ();
 
-   return WindPhysicsModel;
+            forces .set (force .multiply (surfaceArea * pressure * timeByMass), i * 4);
+            forces [i * 4 + 3] = Math .PI * Algorithm .clamp (this ._turbulence .getValue (), 0, 1);
+
+            return true;
+         }
+         else
+         {
+            return false;
+         }
+      }
+   })(),
 });
+
+export default WindPhysicsModel;

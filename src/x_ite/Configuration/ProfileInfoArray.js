@@ -47,40 +47,32 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/ComponentInfoArray",
-   "x_ite/Configuration/ProfileInfo",
-   "x_ite/Base/X3DInfoArray",
-],
-function (ComponentInfoArray,
-          ProfileInfo,
-          X3DInfoArray)
+import ComponentInfoArray from "./ComponentInfoArray.js";
+import ProfileInfo from "./ProfileInfo.js";
+import X3DInfoArray from "../Base/X3DInfoArray.js";
+
+function ProfileInfoArray (values)
 {
-"use strict";
+   return X3DInfoArray .call (this, values);
+}
 
-   function ProfileInfoArray (values)
+ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+{
+   constructor: ProfileInfoArray,
+   getTypeName: function ()
    {
-      return X3DInfoArray .call (this, values);
-   }
-
-   ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+      return "ProfileInfoArray";
+   },
+   addProfile: function (profile)
    {
-      constructor: ProfileInfoArray,
-      getTypeName: function ()
-      {
-         return "ProfileInfoArray";
-      },
-      addProfile: function (profile)
-      {
-         this .add (profile .name, new ProfileInfo (profile .name,
-                                                    profile .title,
-                                                    profile .providerUrl,
-                                                    new ComponentInfoArray (profile .components)));
-      },
-   });
-
-   for (const key of Reflect .ownKeys (ProfileInfoArray .prototype))
-      Object .defineProperty (ProfileInfoArray .prototype, key, { enumerable: false });
-
-   return ProfileInfoArray;
+      this .add (profile .name, new ProfileInfo (profile .name,
+                                                 profile .title,
+                                                 profile .providerUrl,
+                                                 new ComponentInfoArray (profile .components)));
+   },
 });
+
+for (const key of Reflect .ownKeys (ProfileInfoArray .prototype))
+   Object .defineProperty (ProfileInfoArray .prototype, key, { enumerable: false });
+
+export default ProfileInfoArray;

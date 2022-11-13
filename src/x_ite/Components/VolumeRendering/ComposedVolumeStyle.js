@@ -47,156 +47,145 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Base/X3DCast",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DComposableVolumeRenderStyleNode,
-          X3DConstants,
-          X3DCast)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DComposableVolumeRenderStyleNode from "./X3DComposableVolumeRenderStyleNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast from "../../Base/X3DCast.js";
+
+function ComposedVolumeStyle (executionContext)
 {
-"use strict";
+   X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
-   function ComposedVolumeStyle (executionContext)
+   this .addType (X3DConstants .ComposedVolumeStyle);
+
+   this .renderStyleNodes = [ ];
+}
+
+ComposedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
+{
+   constructor: ComposedVolumeStyle,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",     new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "renderStyle", new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DComposableVolumeRenderStyleNode .call (this, executionContext);
-
-      this .addType (X3DConstants .ComposedVolumeStyle);
-
-      this .renderStyleNodes = [ ];
-   }
-
-   ComposedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
+      return "ComposedVolumeStyle";
+   },
+   getComponentName: function ()
    {
-      constructor: ComposedVolumeStyle,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",     new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "renderStyle", new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "ComposedVolumeStyle";
-      },
-      getComponentName: function ()
-      {
-         return "VolumeRendering";
-      },
-      getContainerField: function ()
-      {
-         return "renderStyle";
-      },
-      initialize: function ()
-      {
-         X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
+      return "VolumeRendering";
+   },
+   getContainerField: function ()
+   {
+      return "renderStyle";
+   },
+   initialize: function ()
+   {
+      X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-         const gl = this .getBrowser () .getContext ();
+      const gl = this .getBrowser () .getContext ();
 
-         if (gl .getVersion () < 2)
-            return;
+      if (gl .getVersion () < 2)
+         return;
 
-         this ._renderStyle .addInterest ("set_renderStyle__", this);
+      this ._renderStyle .addInterest ("set_renderStyle__", this);
 
-         this .set_renderStyle__ ();
-      },
-      addVolumeData: function (volumeDataNode)
+      this .set_renderStyle__ ();
+   },
+   addVolumeData: function (volumeDataNode)
+   {
+      X3DComposableVolumeRenderStyleNode .prototype .addVolumeData .call (this, volumeDataNode);
+
+      for (const renderStyleNode of this .renderStyleNodes)
+         renderStyleNode .addVolumeData (volumeDataNode);
+   },
+   removeVolumeData: function (volumeDataNode)
+   {
+      X3DComposableVolumeRenderStyleNode .prototype .removeVolumeData .call (this, volumeDataNode);
+
+      for (const renderStyleNode of this .renderStyleNodes)
+         renderStyleNode .removeVolumeData (volumeDataNode);
+   },
+   set_renderStyle__: function ()
+   {
+      const renderStyleNodes = this .renderStyleNodes;
+
+      for (const renderStyleNode of renderStyleNodes)
       {
-         X3DComposableVolumeRenderStyleNode .prototype .addVolumeData .call (this, volumeDataNode);
+         renderStyleNode .removeInterest ("addNodeEvent", this);
 
-         for (const renderStyleNode of this .renderStyleNodes)
-            renderStyleNode .addVolumeData (volumeDataNode);
-      },
-      removeVolumeData: function (volumeDataNode)
-      {
-         X3DComposableVolumeRenderStyleNode .prototype .removeVolumeData .call (this, volumeDataNode);
-
-         for (const renderStyleNode of this .renderStyleNodes)
+         for (const volumeDataNode of this .getVolumeData ())
             renderStyleNode .removeVolumeData (volumeDataNode);
-      },
-      set_renderStyle__: function ()
-      {
-         const renderStyleNodes = this .renderStyleNodes;
-
-         for (const renderStyleNode of renderStyleNodes)
-         {
-            renderStyleNode .removeInterest ("addNodeEvent", this);
-
-            for (const volumeDataNode of this .getVolumeData ())
-               renderStyleNode .removeVolumeData (volumeDataNode);
-         }
-
-         renderStyleNodes .length = 0;
-
-         for (const node of this ._renderStyle)
-         {
-            const renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, node);
-
-            if (renderStyleNode)
-               renderStyleNodes .push (renderStyleNode);
-         }
-
-         for (const renderStyleNode of renderStyleNodes)
-         {
-            renderStyleNode .addInterest ("addNodeEvent", this);
-
-            for (const volumeDataNode of this .getVolumeData ())
-               renderStyleNode .addVolumeData (volumeDataNode);
-         }
-      },
-      addShaderFields: function (shaderNode)
-      {
-         if (! this ._enabled .getValue ())
-            return;
-
-         for (const renderStyleNode of this .renderStyleNodes)
-            renderStyleNode .addShaderFields (shaderNode);
-      },
-      getUniformsText: function ()
-      {
-         if (! this ._enabled .getValue ())
-            return "";
-
-         let string = "";
-
-         for (const renderStyleNode of this .renderStyleNodes)
-            string += renderStyleNode .getUniformsText ();
-
-         string += "\n";
-         string += "vec4\n";
-         string += "getComposedStyle_" + this .getId () + " (in vec4 textureColor, in vec3 texCoord)\n";
-         string += "{\n";
-
-         for (const renderStyleNode of this .renderStyleNodes)
-            string += renderStyleNode .getFunctionsText ();
-
-         string += "\n";
-         string += "   return textureColor;\n";
-         string += "}\n";
-
-         return string;
-      },
-      getFunctionsText: function ()
-      {
-         if (! this ._enabled .getValue ())
-            return "";
-
-         let string = "";
-
-         string += "\n";
-         string += "   // ComposedVolumeStyle\n";
-         string += "\n";
-         string += "   textureColor = getComposedStyle_" + this .getId () + " (textureColor, texCoord);\n";
-
-         return string;
       }
-   });
 
-   return ComposedVolumeStyle;
+      renderStyleNodes .length = 0;
+
+      for (const node of this ._renderStyle)
+      {
+         const renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, node);
+
+         if (renderStyleNode)
+            renderStyleNodes .push (renderStyleNode);
+      }
+
+      for (const renderStyleNode of renderStyleNodes)
+      {
+         renderStyleNode .addInterest ("addNodeEvent", this);
+
+         for (const volumeDataNode of this .getVolumeData ())
+            renderStyleNode .addVolumeData (volumeDataNode);
+      }
+   },
+   addShaderFields: function (shaderNode)
+   {
+      if (! this ._enabled .getValue ())
+         return;
+
+      for (const renderStyleNode of this .renderStyleNodes)
+         renderStyleNode .addShaderFields (shaderNode);
+   },
+   getUniformsText: function ()
+   {
+      if (! this ._enabled .getValue ())
+         return "";
+
+      let string = "";
+
+      for (const renderStyleNode of this .renderStyleNodes)
+         string += renderStyleNode .getUniformsText ();
+
+      string += "\n";
+      string += "vec4\n";
+      string += "getComposedStyle_" + this .getId () + " (in vec4 textureColor, in vec3 texCoord)\n";
+      string += "{\n";
+
+      for (const renderStyleNode of this .renderStyleNodes)
+         string += renderStyleNode .getFunctionsText ();
+
+      string += "\n";
+      string += "   return textureColor;\n";
+      string += "}\n";
+
+      return string;
+   },
+   getFunctionsText: function ()
+   {
+      if (! this ._enabled .getValue ())
+         return "";
+
+      let string = "";
+
+      string += "\n";
+      string += "   // ComposedVolumeStyle\n";
+      string += "\n";
+      string += "   textureColor = getComposedStyle_" + this .getId () + " (textureColor, texCoord);\n";
+
+      return string;
+   }
 });
+
+export default ComposedVolumeStyle;

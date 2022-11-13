@@ -47,92 +47,84 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Texturing/PixelTexture",
-   "x_ite/Components/Texturing/TextureProperties",
-   "x_ite/Components/VolumeRendering/OpacityMapVolumeStyle",
-],
-function (PixelTexture,
-          TextureProperties,
-          OpacityMapVolumeStyle)
+import PixelTexture from "../../Components/Texturing/PixelTexture.js";
+import TextureProperties from "../../Components/Texturing/TextureProperties.js";
+import OpacityMapVolumeStyle from "../../Components/VolumeRendering/OpacityMapVolumeStyle.js";
+
+const
+   _defaultVoxelsNode         = Symbol (),
+   _defaultVolumeStyle        = Symbol (),
+   _defaultBlendedVolumeStyle = Symbol (),
+   _defaultTransferFunction   = Symbol ();
+
+function X3DVolumeRenderingContext () { }
+
+X3DVolumeRenderingContext .prototype =
 {
-"use strict";
-
-   const
-      _defaultVoxelsNode         = Symbol (),
-      _defaultVolumeStyle        = Symbol (),
-      _defaultBlendedVolumeStyle = Symbol (),
-      _defaultTransferFunction   = Symbol ();
-
-   function X3DVolumeRenderingContext () { }
-
-   X3DVolumeRenderingContext .prototype =
+   getDefaultVoxels: function (executionContext)
    {
-      getDefaultVoxels: function (executionContext)
-      {
-         this [_defaultVoxelsNode] = executionContext .createNode ("PixelTexture3D", false);
-         this [_defaultVoxelsNode] ._image = [1, 1, 1, 1, 255];
-         this [_defaultVoxelsNode] .repeatS = true;
-         this [_defaultVoxelsNode] .repeatT = true;
-         this [_defaultVoxelsNode] .repeatR = true;
-         this [_defaultVoxelsNode] .setPrivate (true);
-         this [_defaultVoxelsNode] .setup ();
+      this [_defaultVoxelsNode] = executionContext .createNode ("PixelTexture3D", false);
+      this [_defaultVoxelsNode] ._image = [1, 1, 1, 1, 255];
+      this [_defaultVoxelsNode] .repeatS = true;
+      this [_defaultVoxelsNode] .repeatT = true;
+      this [_defaultVoxelsNode] .repeatR = true;
+      this [_defaultVoxelsNode] .setPrivate (true);
+      this [_defaultVoxelsNode] .setup ();
 
-         this .getDefaultVoxels = function () { return this [_defaultVoxelsNode]; };
+      this .getDefaultVoxels = function () { return this [_defaultVoxelsNode]; };
 
-         Object .defineProperty (this, "getDefaultVoxels", { enumerable: false });
+      Object .defineProperty (this, "getDefaultVoxels", { enumerable: false });
 
-         return this [_defaultVoxelsNode];
-      },
-      getDefaultVolumeStyle: function ()
-      {
-         this [_defaultVolumeStyle] = new OpacityMapVolumeStyle (this .getPrivateScene ());
-         this [_defaultVolumeStyle] .setPrivate (true);
-         this [_defaultVolumeStyle] .setup ();
+      return this [_defaultVoxelsNode];
+   },
+   getDefaultVolumeStyle: function ()
+   {
+      this [_defaultVolumeStyle] = new OpacityMapVolumeStyle (this .getPrivateScene ());
+      this [_defaultVolumeStyle] .setPrivate (true);
+      this [_defaultVolumeStyle] .setup ();
 
-         this .getDefaultVolumeStyle = function () { return this [_defaultVolumeStyle]; };
+      this .getDefaultVolumeStyle = function () { return this [_defaultVolumeStyle]; };
 
-         Object .defineProperty (this, "getDefaultVolumeStyle", { enumerable: false });
+      Object .defineProperty (this, "getDefaultVolumeStyle", { enumerable: false });
 
-         return this [_defaultVolumeStyle];
-      },
-      getDefaultBlendedVolumeStyle: function ()
-      {
-         this [_defaultBlendedVolumeStyle] = new OpacityMapVolumeStyle (this .getPrivateScene ());
-         this [_defaultBlendedVolumeStyle] .setPrivate (true);
-         this [_defaultBlendedVolumeStyle] .setup ();
+      return this [_defaultVolumeStyle];
+   },
+   getDefaultBlendedVolumeStyle: function ()
+   {
+      this [_defaultBlendedVolumeStyle] = new OpacityMapVolumeStyle (this .getPrivateScene ());
+      this [_defaultBlendedVolumeStyle] .setPrivate (true);
+      this [_defaultBlendedVolumeStyle] .setup ();
 
-         this .getDefaultBlendedVolumeStyle = function () { return this [_defaultBlendedVolumeStyle]; };
+      this .getDefaultBlendedVolumeStyle = function () { return this [_defaultBlendedVolumeStyle]; };
 
-         Object .defineProperty (this, "getDefaultBlendedVolumeStyle", { enumerable: false });
+      Object .defineProperty (this, "getDefaultBlendedVolumeStyle", { enumerable: false });
 
-         return this [_defaultBlendedVolumeStyle];
-      },
-      getDefaultTransferFunction: function ()
-      {
-         const textureProperties = new TextureProperties (this .getPrivateScene ());
-         textureProperties ._generateMipMaps = true;
-         textureProperties ._boundaryModeS   = "CLAMP_TO_EDGE";
-         textureProperties ._boundaryModeT   = "REPEAT";
-         textureProperties .setPrivate (true);
-         textureProperties .setup ();
+      return this [_defaultBlendedVolumeStyle];
+   },
+   getDefaultTransferFunction: function ()
+   {
+      const textureProperties = new TextureProperties (this .getPrivateScene ());
+      textureProperties ._generateMipMaps = true;
+      textureProperties ._boundaryModeS   = "CLAMP_TO_EDGE";
+      textureProperties ._boundaryModeT   = "REPEAT";
+      textureProperties .setPrivate (true);
+      textureProperties .setup ();
 
-         this [_defaultTransferFunction] = new PixelTexture (this .getPrivateScene ());
-         this [_defaultTransferFunction] ._textureProperties = textureProperties;
-         this [_defaultTransferFunction] ._image .width      = 256;
-         this [_defaultTransferFunction] ._image .height     = 1;
-         this [_defaultTransferFunction] ._image .comp       = 2;
-         this [_defaultTransferFunction] ._image .array      = Array .from ({ length: 256 }, (v, i) => (i << 8) | i);
-         this [_defaultTransferFunction] .setPrivate (true);
-         this [_defaultTransferFunction] .setup ();
+      this [_defaultTransferFunction] = new PixelTexture (this .getPrivateScene ());
+      this [_defaultTransferFunction] ._textureProperties = textureProperties;
+      this [_defaultTransferFunction] ._image .width      = 256;
+      this [_defaultTransferFunction] ._image .height     = 1;
+      this [_defaultTransferFunction] ._image .comp       = 2;
+      this [_defaultTransferFunction] ._image .array      = Array .from ({ length: 256 }, (v, i) => (i << 8) | i);
+      this [_defaultTransferFunction] .setPrivate (true);
+      this [_defaultTransferFunction] .setup ();
 
-         this .getDefaultTransferFunction = function () { return this [_defaultTransferFunction]; };
+      this .getDefaultTransferFunction = function () { return this [_defaultTransferFunction]; };
 
-         Object .defineProperty (this, "getDefaultTransferFunction", { enumerable: false });
+      Object .defineProperty (this, "getDefaultTransferFunction", { enumerable: false });
 
-         return this [_defaultTransferFunction];
-      },
-   };
+      return this [_defaultTransferFunction];
+   },
+};
 
-   return X3DVolumeRenderingContext;
-});
+export default X3DVolumeRenderingContext;

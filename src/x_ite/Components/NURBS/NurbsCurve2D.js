@@ -47,166 +47,153 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/NURBS/X3DNurbsControlCurveNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Browser/NURBS/NURBS",
-   "standard/Math/Numbers/Vector3",
-   "nurbs",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DNurbsControlCurveNode,
-          X3DConstants,
-          NURBS,
-          Vector3,
-          nurbs)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNurbsControlCurveNode from "./X3DNurbsControlCurveNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import NURBS from "../../Browser/NURBS/NURBS.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import nurbs from "../../../lib/nurbs/nurbs.js";
+
+function NurbsCurve2D (executionContext)
 {
-"use strict";
+   X3DNurbsControlCurveNode .call (this, executionContext);
 
-   function NurbsCurve2D (executionContext)
+   this .addType (X3DConstants .NurbsCurve2D);
+
+   this .knots         = [ ];
+   this .weights       = [ ];
+   this .controlPoints = [ ];
+   this .mesh          = { };
+   this .sampleOptions = { resolution: [ ] };
+   this .array         = [ ];
+}
+
+NurbsCurve2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
+{
+   constructor: NurbsCurve2D,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellation", new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "closed",       new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "order",        new Fields .SFInt32 (3)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "knot",         new Fields .MFDouble ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFDouble ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .MFVec2d ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DNurbsControlCurveNode .call (this, executionContext);
-
-      this .addType (X3DConstants .NurbsCurve2D);
-
-      this .knots         = [ ];
-      this .weights       = [ ];
-      this .controlPoints = [ ];
-      this .mesh          = { };
-      this .sampleOptions = { resolution: [ ] };
-      this .array         = [ ];
-   }
-
-   NurbsCurve2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
+      return "NurbsCurve2D";
+   },
+   getComponentName: function ()
    {
-      constructor: NurbsCurve2D,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellation", new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "closed",       new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "order",        new Fields .SFInt32 (3)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "knot",         new Fields .MFDouble ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFDouble ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .MFVec2d ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "NurbsCurve2D";
-      },
-      getComponentName: function ()
-      {
-         return "NURBS";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      getTessellation: function (numKnots)
-      {
-         return NURBS .getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
-      },
-      getClosed: function (order, knot, weight, controlPoint)
-      {
-         if (! this ._closed .getValue ())
-            return false;
+      return "NURBS";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   getTessellation: function (numKnots)
+   {
+      return NURBS .getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
+   },
+   getClosed: function (order, knot, weight, controlPoint)
+   {
+      if (! this ._closed .getValue ())
+         return false;
 
-         return NURBS .getClosed2D (order, knot, weight, controlPoint);
-      },
-      getKnots: function (result, closed, order, dimension, knot)
-      {
-         return NURBS .getKnots (result, closed, order, dimension, knot);
-      },
-      getWeights: function (result, dimension, weight)
-      {
-         return NURBS .getWeights (result, dimension, weight);
-      },
-      getControlPoints: function (result, closed, order, weights, controlPoint)
-      {
-         return NURBS .getControlPoints2D (result, closed, order, weights, controlPoint);
-      },
-      tessellate: function (type)
-      {
-         const array = this .array;
+      return NURBS .getClosed2D (order, knot, weight, controlPoint);
+   },
+   getKnots: function (result, closed, order, dimension, knot)
+   {
+      return NURBS .getKnots (result, closed, order, dimension, knot);
+   },
+   getWeights: function (result, dimension, weight)
+   {
+      return NURBS .getWeights (result, dimension, weight);
+   },
+   getControlPoints: function (result, closed, order, weights, controlPoint)
+   {
+      return NURBS .getControlPoints2D (result, closed, order, weights, controlPoint);
+   },
+   tessellate: function (type)
+   {
+      const array = this .array;
 
-         array .length = 0;
+      array .length = 0;
 
-         if (this ._order .getValue () < 2)
-            return array;
-
-         if (this ._controlPoint .length < this ._order .getValue ())
-            return array;
-
-         // Order and dimension are now positive numbers.
-
-         const
-            closed        = this .getClosed (this ._order .getValue (), this ._knot, this ._weight, this ._controlPoint),
-            weights       = this .getWeights (this .weights, this ._controlPoint .length, this ._weight),
-            controlPoints = this .getControlPoints (this .controlPoints, closed, this ._order .getValue (), weights, this ._controlPoint);
-
-         // Knots
-
-         const
-            knots = this .getKnots (this .knots, closed, this ._order .getValue (), this ._controlPoint .length, this ._knot),
-            scale = knots .at (-1) - knots [0];
-
-         // Initialize NURBS tessellator
-
-         const degree = this ._order .getValue () - 1;
-
-         const surface = this .surface = (this .surface || nurbs) ({
-            boundary: ["open"],
-            degree: [degree],
-            knots: [knots],
-            points: controlPoints,
-            debug: false,
-         });
-
-         this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
-         this .sampleOptions .haveWeights    = Boolean (weights);
-
-         const
-            mesh   = nurbs .sample (this .mesh, surface, this .sampleOptions),
-            points = mesh .points;
-
-         switch (type)
-         {
-            case 0:
-            {
-               for (let i = 0, length = points .length; i < length; i += 2)
-               {
-                  array .push (points [i], points [i + 1]);
-               }
-
-               break;
-            }
-            case 1:
-            {
-               for (let i = 0, length = points .length; i < length; i += 2)
-               {
-                  array .push (points [i], 0, points [i + 1]);
-               }
-
-               break;
-            }
-            case 2:
-            {
-               for (let i = 0, length = points .length; i < length; i += 2)
-               {
-                  array .push (new Vector3 (points [i], points [i + 1], 0));
-               }
-
-               break;
-            }
-         }
-
+      if (this ._order .getValue () < 2)
          return array;
-      },
-   });
 
-   return NurbsCurve2D;
+      if (this ._controlPoint .length < this ._order .getValue ())
+         return array;
+
+      // Order and dimension are now positive numbers.
+
+      const
+         closed        = this .getClosed (this ._order .getValue (), this ._knot, this ._weight, this ._controlPoint),
+         weights       = this .getWeights (this .weights, this ._controlPoint .length, this ._weight),
+         controlPoints = this .getControlPoints (this .controlPoints, closed, this ._order .getValue (), weights, this ._controlPoint);
+
+      // Knots
+
+      const
+         knots = this .getKnots (this .knots, closed, this ._order .getValue (), this ._controlPoint .length, this ._knot),
+         scale = knots .at (-1) - knots [0];
+
+      // Initialize NURBS tessellator
+
+      const degree = this ._order .getValue () - 1;
+
+      const surface = this .surface = (this .surface || nurbs) ({
+         boundary: ["open"],
+         degree: [degree],
+         knots: [knots],
+         points: controlPoints,
+         debug: false,
+      });
+
+      this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
+      this .sampleOptions .haveWeights    = Boolean (weights);
+
+      const
+         mesh   = nurbs .sample (this .mesh, surface, this .sampleOptions),
+         points = mesh .points;
+
+      switch (type)
+      {
+         case 0:
+         {
+            for (let i = 0, length = points .length; i < length; i += 2)
+            {
+               array .push (points [i], points [i + 1]);
+            }
+
+            break;
+         }
+         case 1:
+         {
+            for (let i = 0, length = points .length; i < length; i += 2)
+            {
+               array .push (points [i], 0, points [i + 1]);
+            }
+
+            break;
+         }
+         case 2:
+         {
+            for (let i = 0, length = points .length; i < length; i += 2)
+            {
+               array .push (new Vector3 (points [i], points [i + 1], 0));
+            }
+
+            break;
+         }
+      }
+
+      return array;
+   },
 });
+
+export default NurbsCurve2D;

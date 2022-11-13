@@ -47,20 +47,15 @@
  ******************************************************************************/
 
 
- define (function ()
-{
-"use strict";
+ let i = 0;
 
-   let i = 0;
+const GeometryTypes = {
+   POINT:    i ++,
+   LINE:     i ++,
+   TRIANGLE: i ++,
+   QUAD:     i ++,
+   SPRITE:   i ++,
+   GEOMETRY: i ++,
+};
 
-   const GeometryTypes = {
-      POINT:    i ++,
-      LINE:     i ++,
-      TRIANGLE: i ++,
-      QUAD:     i ++,
-      SPRITE:   i ++,
-      GEOMETRY: i ++,
-   };
-
-   return GeometryTypes;
-});
+export default GeometryTypes;

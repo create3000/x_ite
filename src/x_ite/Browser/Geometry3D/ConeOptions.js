@@ -47,39 +47,32 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DBaseNode",
-],
-function (Fields,
-          X3DBaseNode)
+import Fields from "../../Fields.js";
+import X3DBaseNode from "../../Base/X3DBaseNode.js";
+
+function ConeOptions (executionContext)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
 
-   function ConeOptions (executionContext)
+   this .addChildObjects ("xDimension", new Fields .SFInt32 (20),
+                          "yDimension", new Fields .SFInt32 (1))
+}
+
+ConeOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: ConeOptions,
+   getTypeName: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-
-      this .addChildObjects ("xDimension", new Fields .SFInt32 (20),
-                             "yDimension", new Fields .SFInt32 (1))
-   }
-
-   ConeOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return "ConeOptions";
+   },
+   getComponentName: function ()
    {
-      constructor: ConeOptions,
-      getTypeName: function ()
-      {
-         return "ConeOptions";
-      },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "coneOptions";
-      },
-   });
-
-   return ConeOptions;
+      return "X_ITE";
+   },
+   getContainerField: function ()
+   {
+      return "coneOptions";
+   },
 });
+
+export default ConeOptions;

@@ -47,18 +47,13 @@
  ******************************************************************************/
 
 
-define (function ()
+let i = 0;
+
+const PrimitiveQuality =
 {
-"use strict";
+   LOW:    i ++,
+   MEDIUM: i ++,
+   HIGH:   i ++,
+};
 
-   let i = 0;
-
-   const PrimitiveQuality =
-   {
-      LOW:    i ++,
-      MEDIUM: i ++,
-      HIGH:   i ++,
-   };
-
-   return PrimitiveQuality;
-});
+export default PrimitiveQuality;

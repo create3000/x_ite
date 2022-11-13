@@ -46,36 +46,28 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/SupportedNodes",
-   "x_ite/Components/Lighting/DirectionalLight",
-   "x_ite/Components/Lighting/PointLight",
-   "x_ite/Components/Lighting/SpotLight",
-   "x_ite/Components/Lighting/X3DLightNode",
-],
-function (SupportedNodes,
-          DirectionalLight,
-          PointLight,
-          SpotLight,
-          X3DLightNode)
+import SupportedNodes from "../Configuration/SupportedNodes.js";
+import DirectionalLight from "./Lighting/DirectionalLight.js";
+import PointLight from "./Lighting/PointLight.js";
+import SpotLight from "./Lighting/SpotLight.js";
+import X3DLightNode from "./Lighting/X3DLightNode.js";
+
+const Types =
 {
-"use strict";
+   DirectionalLight: DirectionalLight,
+   PointLight:       PointLight,
+   SpotLight:        SpotLight,
+};
 
-   const Types =
-   {
-      DirectionalLight: DirectionalLight,
-      PointLight:       PointLight,
-      SpotLight:        SpotLight,
-   };
+const AbstractTypes =
+{
+   X3DLightNode: X3DLightNode,
+};
 
-   const AbstractTypes =
-   {
-      X3DLightNode: X3DLightNode,
-   };
+for (const typeName in Types)
+   SupportedNodes .addType (typeName, Types [typeName]);
 
-   for (const typeName in Types)
-      SupportedNodes .addType (typeName, Types [typeName]);
+for (const typeName in AbstractTypes)
+   SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 
-   for (const typeName in AbstractTypes)
-      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
-});
+export default undefined;

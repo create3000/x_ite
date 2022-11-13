@@ -47,141 +47,135 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DBaseNode",
-],
-function (X3DBaseNode)
+import X3DBaseNode from "../Base/X3DBaseNode.js";
+
+function BindableStack (executionContext, defaultNode)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
 
-   function BindableStack (executionContext, defaultNode)
+   this .array          = [ defaultNode ];
+   this .transitionNode = defaultNode .create (executionContext);
+}
+
+BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: BindableStack,
+   getTypeName: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-
-      this .array          = [ defaultNode ];
-      this .transitionNode = defaultNode .create (executionContext);
-   }
-
-   BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return "BindableStack";
+   },
+   get: function ()
    {
-      constructor: BindableStack,
-      getTypeName: function ()
+      return this .array;
+   },
+   top: function ()
+   {
+      return this .transitionNode ._transitionActive .getValue () ? this .transitionNode : this .array .at (-1);
+   },
+   pushOnTop: function (node)
+   {
+      if (node !== this .array [0])
       {
-         return "BindableStack";
-      },
-      get: function ()
+         this .array .at (-1) ._isBound = false;
+         this .array .push (node);
+      }
+
+      // Don't do set_bind.
+      node ._isBound  = true;
+      node ._bindTime = this .getBrowser () .getCurrentTime ();
+
+      this .addNodeEvent ();
+   },
+   update: function (layerNode, removedNodes, changedNodes)
+   {
+      if (removedNodes .length === 0 && changedNodes .length === 0)
+         return;
+
+      // Save top node for later use.
+
+      const
+         fromNode  = this .top (),
+         boundNode = this .array .at (-1);
+
+      // Remove invisible nodes and unbind them if needed.
+
+      for (const removedNode of removedNodes)
       {
-         return this .array;
-      },
-      top: function ()
+         const index = this .array .indexOf (removedNode);
+
+         if (index > 0)
+            this .array .splice (index, 1);
+      }
+
+      // Unbind nodes with set_bind false and pop top node.
+
+      if (boundNode !== this .array [0])
       {
-         return this .transitionNode ._transitionActive .getValue () ? this .transitionNode : this .array .at (-1);
-      },
-      pushOnTop: function (node)
-      {
-         if (node !== this .array [0])
+         if (changedNodes .some (node => ! node ._set_bind .getValue () && node === boundNode))
          {
-            this .array .at (-1) ._isBound = false;
-            this .array .push (node);
+            this .array .pop ();
          }
+      }
 
-         // Don't do set_bind.
-         node ._isBound  = true;
-         node ._bindTime = this .getBrowser () .getCurrentTime ();
+      // Push nodes with set_bind true to top of stack.
 
-         this .addNodeEvent ();
-      },
-      update: function (layerNode, removedNodes, changedNodes)
+      for (const bindNode of changedNodes)
       {
-         if (removedNodes .length === 0 && changedNodes .length === 0)
-            return;
-
-         // Save top node for later use.
-
-         const
-            fromNode  = this .top (),
-            boundNode = this .array .at (-1);
-
-         // Remove invisible nodes and unbind them if needed.
-
-         for (const removedNode of removedNodes)
+         if (bindNode ._set_bind .getValue ())
          {
-            const index = this .array .indexOf (removedNode);
+            const index = this .array .indexOf (bindNode);
 
-            if (index > 0)
+            if (index > -1)
+            {
                this .array .splice (index, 1);
-         }
-
-         // Unbind nodes with set_bind false and pop top node.
-
-         if (boundNode !== this .array [0])
-         {
-            if (changedNodes .some (node => ! node ._set_bind .getValue () && node === boundNode))
-            {
-               this .array .pop ();
             }
+
+            this .array .push (bindNode);
          }
+      }
 
-         // Push nodes with set_bind true to top of stack.
+      // Bind top node if not bound.
 
-         for (const bindNode of changedNodes)
-         {
-            if (bindNode ._set_bind .getValue ())
-            {
-               const index = this .array .indexOf (bindNode);
+      const top = this .array .at (-1);
 
-               if (index > -1)
-               {
-                  this .array .splice (index, 1);
-               }
+      if (top === boundNode)
+         return;
 
-               this .array .push (bindNode);
-            }
-         }
+      // First unbind last bound node.
 
-         // Bind top node if not bound.
+      boundNode ._set_bind = false;
+      boundNode ._isBound  = false;
 
-         const top = this .array .at (-1);
+      // Now bind new top node.
 
-         if (top === boundNode)
-            return;
+      top ._set_bind  = true;
+      top ._isBound   = true;
+      top ._bindTime  = this .getBrowser () .getCurrentTime ();
 
-         // First unbind last bound node.
+      // Do transition.
 
-         boundNode ._set_bind = false;
-         boundNode ._isBound  = false;
+      this .transitionNode = top .create (this .getExecutionContext ());
 
-         // Now bind new top node.
+      this .transitionNode .setup ();
+      this .transitionNode .transitionStart (layerNode, fromNode, top);
 
-         top ._set_bind  = true;
-         top ._isBound   = true;
-         top ._bindTime  = this .getBrowser () .getCurrentTime ();
+      if (this .transitionNode ._transitionActive .getValue ())
+         this .transitionNode ._transitionActive .addInterest ("set_transitionActive__", this);
 
-         // Do transition.
+      this .addNodeEvent ();
+   },
+   set_transitionActive__: function (transitionActive)
+   {
+      if (transitionActive .getValue ())
+         return;
 
-         this .transitionNode = top .create (this .getExecutionContext ());
+      this .transitionNode ._transitionActive .removeInterest ("set_transitionActive__", this);
 
-         this .transitionNode .setup ();
-         this .transitionNode .transitionStart (layerNode, fromNode, top);
-
-         if (this .transitionNode ._transitionActive .getValue ())
-            this .transitionNode ._transitionActive .addInterest ("set_transitionActive__", this);
-
-         this .addNodeEvent ();
-      },
-      set_transitionActive__: function (transitionActive)
-      {
-         if (transitionActive .getValue ())
-            return;
-
-         this .transitionNode ._transitionActive .removeInterest ("set_transitionActive__", this);
-
-         this .addNodeEvent ();
-      },
-   });
-
-   for (const key of Reflect .ownKeys (BindableStack .prototype))
-      Object .defineProperty (BindableStack .prototype, key, { enumerable: false });
-
-   return BindableStack;
+      this .addNodeEvent ();
+   },
 });
+
+for (const key of Reflect .ownKeys (BindableStack .prototype))
+   Object .defineProperty (BindableStack .prototype, key, { enumerable: false });
+
+export default BindableStack;

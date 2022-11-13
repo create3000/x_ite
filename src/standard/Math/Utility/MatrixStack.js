@@ -47,75 +47,70 @@
  ******************************************************************************/
 
 
-define (function ()
+function MatrixStack (Type)
 {
-"use strict";
-
-   function MatrixStack (Type)
+   return Object .assign ([ new Type () ],
    {
-      return Object .assign ([ new Type () ],
+      top: 0,
+      set: function (matrix)
       {
-         top: 0,
-         set: function (matrix)
-         {
-            this [this .top] .assign (matrix);
-         },
-         get: function ()
-         {
-            return this [this .top];
-         },
-         push: function ()
-         {
-            const top = ++ this .top;
+         this [this .top] .assign (matrix);
+      },
+      get: function ()
+      {
+         return this [this .top];
+      },
+      push: function ()
+      {
+         const top = ++ this .top;
 
-            if (top < this .length)
-               this [top] .assign (this [top - 1]);
-            else
-               this [top] = this [top - 1] .copy ();
-         },
-         pushMatrix: function (matrix)
-         {
-            const top = ++ this .top;
+         if (top < this .length)
+            this [top] .assign (this [top - 1]);
+         else
+            this [top] = this [top - 1] .copy ();
+      },
+      pushMatrix: function (matrix)
+      {
+         const top = ++ this .top;
 
-            if (top < this .length)
-               this [top] .assign (matrix);
-            else
-               this [top] = matrix .copy ();
-         },
-         pop: function ()
-         {
-            -- this .top;
-         },
-         clear: function ()
-         {
-            this .top = 0;
-         },
-         size: function ()
-         {
-            return this .top + 1;
-         },
-         identity: function ()
-         {
-            this [this .top] .identity ();
-         },
-         multLeft: function (matrix)
-         {
-            this [this .top] .multLeft (matrix);
-         },
-         translate: function (vector)
-         {
-            this [this .top] .translate (vector);
-         },
-         rotate: function (rotation)
-         {
-            this [this .top] .rotate (rotation);
-         },
-         scale: function (vector)
-         {
-            this [this .top] .scale (vector);
-         },
-      });
-   }
+         if (top < this .length)
+            this [top] .assign (matrix);
+         else
+            this [top] = matrix .copy ();
+      },
+      pop: function ()
+      {
+         -- this .top;
+      },
+      clear: function ()
+      {
+         this .top = 0;
+      },
+      size: function ()
+      {
+         return this .top + 1;
+      },
+      identity: function ()
+      {
+         this [this .top] .identity ();
+      },
+      multLeft: function (matrix)
+      {
+         this [this .top] .multLeft (matrix);
+      },
+      translate: function (vector)
+      {
+         this [this .top] .translate (vector);
+      },
+      rotate: function (rotation)
+      {
+         this [this .top] .rotate (rotation);
+      },
+      scale: function (vector)
+      {
+         this [this .top] .scale (vector);
+      },
+   });
+}
 
-   return MatrixStack;
-});
+export default MatrixStack;

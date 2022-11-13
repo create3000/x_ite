@@ -47,75 +47,66 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DBaseNode",
-   "x_ite/Fields",
-   "x_ite/Components/Rendering/X3DGeometryNode",
-   "standard/Math/Numbers/Complex",
-],
-function (X3DBaseNode,
-          Fields,
-          X3DGeometryNode,
-          Complex)
+import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import Fields from "../../Fields.js";
+import X3DGeometryNode from "../../Components/Rendering/X3DGeometryNode.js";
+import Complex from "../../../standard/Math/Numbers/Complex.js";
+
+function Circle2DOptions (executionContext)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
 
-   function Circle2DOptions (executionContext)
+   this .addChildObjects ("dimension", new Fields .SFInt32 (40))
+
+   this .vertices = X3DGeometryNode .createArray ();
+}
+
+Circle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: Circle2DOptions,
+   getTypeName: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-
-      this .addChildObjects ("dimension", new Fields .SFInt32 (40))
-
-      this .vertices = X3DGeometryNode .createArray ();
-   }
-
-   Circle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return "Circle2DOptions";
+   },
+   getComponentName: function ()
    {
-      constructor: Circle2DOptions,
-      getTypeName: function ()
-      {
-         return "Circle2DOptions";
-      },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "circle2DOptions";
-      },
-      initialize: function ()
-      {
-         this .addInterest ("build", this);
+      return "X_ITE";
+   },
+   getContainerField: function ()
+   {
+      return "circle2DOptions";
+   },
+   initialize: function ()
+   {
+      this .addInterest ("build", this);
 
-         this .build ();
-      },
-      getVertices: function ()
-      {
-         return this .vertices;
-      },
-      build: function ()
+      this .build ();
+   },
+   getVertices: function ()
+   {
+      return this .vertices;
+   },
+   build: function ()
+   {
+      const
+         dimension = this ._dimension .getValue (),
+         angle     = Math .PI * 2 / dimension,
+         vertices  = this .vertices;
+
+      vertices .length = 0;
+
+      for (let n = 0; n < dimension; ++ n)
       {
          const
-            dimension = this ._dimension .getValue (),
-            angle     = Math .PI * 2 / dimension,
-            vertices  = this .vertices;
+            point1 = Complex .Polar (1, angle * n),
+            point2 = Complex .Polar (1, angle * (n + 1));
 
-         vertices .length = 0;
+         vertices .push (point1 .real, point1 .imag, 0, 1);
+         vertices .push (point2 .real, point2 .imag, 0, 1);
+      }
 
-         for (let n = 0; n < dimension; ++ n)
-         {
-            const
-               point1 = Complex .Polar (1, angle * n),
-               point2 = Complex .Polar (1, angle * (n + 1));
-
-            vertices .push (point1 .real, point1 .imag, 0, 1);
-            vertices .push (point2 .real, point2 .imag, 0, 1);
-         }
-
-         vertices .shrinkToFit ();
-      },
-   });
-
-   return Circle2DOptions;
+      vertices .shrinkToFit ();
+   },
 });
+
+export default Circle2DOptions;

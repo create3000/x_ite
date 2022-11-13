@@ -46,45 +46,34 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/SupportedNodes",
-   "x_ite/Components/PointingDeviceSensor/CylinderSensor",
-   "x_ite/Components/PointingDeviceSensor/PlaneSensor",
-   "x_ite/Components/PointingDeviceSensor/SphereSensor",
-   "x_ite/Components/PointingDeviceSensor/TouchSensor",
-   "x_ite/Components/PointingDeviceSensor/X3DDragSensorNode",
-   "x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
-   "x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode",
-],
-function (SupportedNodes,
-          CylinderSensor,
-          PlaneSensor,
-          SphereSensor,
-          TouchSensor,
-          X3DDragSensorNode,
-          X3DPointingDeviceSensorNode,
-          X3DTouchSensorNode)
+import SupportedNodes from "../Configuration/SupportedNodes.js";
+import CylinderSensor from "./PointingDeviceSensor/CylinderSensor.js";
+import PlaneSensor from "./PointingDeviceSensor/PlaneSensor.js";
+import SphereSensor from "./PointingDeviceSensor/SphereSensor.js";
+import TouchSensor from "./PointingDeviceSensor/TouchSensor.js";
+import X3DDragSensorNode from "./PointingDeviceSensor/X3DDragSensorNode.js";
+import X3DPointingDeviceSensorNode from "./PointingDeviceSensor/X3DPointingDeviceSensorNode.js";
+import X3DTouchSensorNode from "./PointingDeviceSensor/X3DTouchSensorNode.js";
+
+const Types =
 {
-"use strict";
+   CylinderSensor: CylinderSensor,
+   PlaneSensor:    PlaneSensor,
+   SphereSensor:   SphereSensor,
+   TouchSensor:    TouchSensor,
+};
 
-   const Types =
-   {
-      CylinderSensor: CylinderSensor,
-      PlaneSensor:    PlaneSensor,
-      SphereSensor:   SphereSensor,
-      TouchSensor:    TouchSensor,
-   };
+const AbstractTypes =
+{
+   X3DDragSensorNode:           X3DDragSensorNode,
+   X3DPointingDeviceSensorNode: X3DPointingDeviceSensorNode,
+   X3DTouchSensorNode:          X3DTouchSensorNode,
+};
 
-   const AbstractTypes =
-   {
-      X3DDragSensorNode:           X3DDragSensorNode,
-      X3DPointingDeviceSensorNode: X3DPointingDeviceSensorNode,
-      X3DTouchSensorNode:          X3DTouchSensorNode,
-   };
+for (const typeName in Types)
+   SupportedNodes .addType (typeName, Types [typeName]);
 
-   for (const typeName in Types)
-      SupportedNodes .addType (typeName, Types [typeName]);
+for (const typeName in AbstractTypes)
+   SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 
-   for (const typeName in AbstractTypes)
-      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
-});
+export default undefined;

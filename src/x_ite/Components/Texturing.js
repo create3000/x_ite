@@ -46,75 +46,54 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/SupportedNodes",
-   "x_ite/Components/Texturing/ImageTexture",
-   "x_ite/Components/Texturing/MovieTexture",
-   "x_ite/Components/Texturing/MultiTexture",
-   "x_ite/Components/Texturing/MultiTextureCoordinate",
-   "x_ite/Components/Texturing/MultiTextureTransform",
-   "x_ite/Components/Texturing/PixelTexture",
-   "x_ite/Components/Texturing/TextureCoordinate",
-   "x_ite/Components/Texturing/TextureCoordinateGenerator",
-   "x_ite/Components/Texturing/TextureProperties",
-   "x_ite/Components/Texturing/TextureTransform",
-   "x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
-   "x_ite/Components/Texturing/X3DSingleTextureNode",
-   "x_ite/Components/Texturing/X3DSingleTextureTransformNode",
-   "x_ite/Components/Texturing/X3DTexture2DNode",
-   "x_ite/Components/Texturing/X3DTextureCoordinateNode",
-   "x_ite/Components/Texturing/X3DTextureNode",
-   "x_ite/Components/Texturing/X3DTextureTransformNode",
-],
-function (SupportedNodes,
-          ImageTexture,
-          MovieTexture,
-          MultiTexture,
-          MultiTextureCoordinate,
-          MultiTextureTransform,
-          PixelTexture,
-          TextureCoordinate,
-          TextureCoordinateGenerator,
-          TextureProperties,
-          TextureTransform,
-          X3DSingleTextureCoordinateNode,
-          X3DSingleTextureNode,
-          X3DSingleTextureTransformNode,
-          X3DTexture2DNode,
-          X3DTextureCoordinateNode,
-          X3DTextureNode,
-          X3DTextureTransformNode)
+import SupportedNodes from "../Configuration/SupportedNodes.js";
+import ImageTexture from "./Texturing/ImageTexture.js";
+import MovieTexture from "./Texturing/MovieTexture.js";
+import MultiTexture from "./Texturing/MultiTexture.js";
+import MultiTextureCoordinate from "./Texturing/MultiTextureCoordinate.js";
+import MultiTextureTransform from "./Texturing/MultiTextureTransform.js";
+import PixelTexture from "./Texturing/PixelTexture.js";
+import TextureCoordinate from "./Texturing/TextureCoordinate.js";
+import TextureCoordinateGenerator from "./Texturing/TextureCoordinateGenerator.js";
+import TextureProperties from "./Texturing/TextureProperties.js";
+import TextureTransform from "./Texturing/TextureTransform.js";
+import X3DSingleTextureCoordinateNode from "./Texturing/X3DSingleTextureCoordinateNode.js";
+import X3DSingleTextureNode from "./Texturing/X3DSingleTextureNode.js";
+import X3DSingleTextureTransformNode from "./Texturing/X3DSingleTextureTransformNode.js";
+import X3DTexture2DNode from "./Texturing/X3DTexture2DNode.js";
+import X3DTextureCoordinateNode from "./Texturing/X3DTextureCoordinateNode.js";
+import X3DTextureNode from "./Texturing/X3DTextureNode.js";
+import X3DTextureTransformNode from "./Texturing/X3DTextureTransformNode.js";
+
+const Types =
 {
-"use strict";
+   ImageTexture:               ImageTexture,
+   MovieTexture:               MovieTexture,
+   MultiTexture:               MultiTexture,
+   MultiTextureCoordinate:     MultiTextureCoordinate,
+   MultiTextureTransform:      MultiTextureTransform,
+   PixelTexture:               PixelTexture,
+   TextureCoordinate:          TextureCoordinate,
+   TextureCoordinateGenerator: TextureCoordinateGenerator,
+   TextureProperties:          TextureProperties,
+   TextureTransform:           TextureTransform,
+};
 
-   const Types =
-   {
-      ImageTexture:               ImageTexture,
-      MovieTexture:               MovieTexture,
-      MultiTexture:               MultiTexture,
-      MultiTextureCoordinate:     MultiTextureCoordinate,
-      MultiTextureTransform:      MultiTextureTransform,
-      PixelTexture:               PixelTexture,
-      TextureCoordinate:          TextureCoordinate,
-      TextureCoordinateGenerator: TextureCoordinateGenerator,
-      TextureProperties:          TextureProperties,
-      TextureTransform:           TextureTransform,
-   };
+const AbstractTypes =
+{
+   X3DSingleTextureCoordinateNode: X3DSingleTextureCoordinateNode,
+   X3DSingleTextureNode:           X3DSingleTextureNode,
+   X3DSingleTextureTransformNode:  X3DSingleTextureTransformNode,
+   X3DTexture2DNode:               X3DTexture2DNode,
+   X3DTextureCoordinateNode:       X3DTextureCoordinateNode,
+   X3DTextureNode:                 X3DTextureNode,
+   X3DTextureTransformNode:        X3DTextureTransformNode,
+};
 
-   const AbstractTypes =
-   {
-      X3DSingleTextureCoordinateNode: X3DSingleTextureCoordinateNode,
-      X3DSingleTextureNode:           X3DSingleTextureNode,
-      X3DSingleTextureTransformNode:  X3DSingleTextureTransformNode,
-      X3DTexture2DNode:               X3DTexture2DNode,
-      X3DTextureCoordinateNode:       X3DTextureCoordinateNode,
-      X3DTextureNode:                 X3DTextureNode,
-      X3DTextureTransformNode:        X3DTextureTransformNode,
-   };
+for (const typeName in Types)
+   SupportedNodes .addType (typeName, Types [typeName]);
 
-   for (const typeName in Types)
-      SupportedNodes .addType (typeName, Types [typeName]);
+for (const typeName in AbstractTypes)
+   SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 
-   for (const typeName in AbstractTypes)
-      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
-});
+export default undefined;

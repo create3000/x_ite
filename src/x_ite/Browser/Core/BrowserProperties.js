@@ -47,52 +47,42 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Base/X3DBaseNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DBaseNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function BrowserProperties (executionContext)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
+}
 
-   function BrowserProperties (executionContext)
+BrowserProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: BrowserProperties,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "ABSTRACT_NODES",        new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "CONCRETE_NODES",        new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "EXTERNAL_INTERACTIONS", new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "PROTOTYPE_CREATE",      new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "DOM_IMPORT",            new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "XML_ENCODING",          new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "CLASSIC_VRML_ENCODING", new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "BINARY_ENCODING",       new Fields .SFBool ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-   }
-
-   BrowserProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return "BrowserProperties";
+   },
+   getComponentName: function ()
    {
-      constructor: BrowserProperties,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "ABSTRACT_NODES",        new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "CONCRETE_NODES",        new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "EXTERNAL_INTERACTIONS", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "PROTOTYPE_CREATE",      new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "DOM_IMPORT",            new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "XML_ENCODING",          new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "CLASSIC_VRML_ENCODING", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "BINARY_ENCODING",       new Fields .SFBool ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "BrowserProperties";
-      },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "browserProperties";
-      },
-   });
-
-   return BrowserProperties;
+      return "X_ITE";
+   },
+   getContainerField: function ()
+   {
+      return "browserProperties";
+   },
 });
+
+export default BrowserProperties;

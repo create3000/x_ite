@@ -47,205 +47,191 @@
  ******************************************************************************/
 
 
-define ([
-   "jquery",
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Browser/Navigation/X3DViewer",
-   "standard/Math/Numbers/Vector3",
-   "jquery-mousewheel",
-],
-function ($,
-          Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DConstants,
-          X3DViewer,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DViewer from "./X3DViewer.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+const macOS = /Mac OS X/i .test (navigator .userAgent)
+
+const SCROLL_FACTOR = macOS ? 1 / 160 : 1 / 20;
+
+const
+   vector                 = new Vector3 (0 ,0, 0),
+   positionOffset         = new Vector3 (0 ,0, 0),
+   centerOfRotationOffset = new Vector3 (0, 0, 0);
+
+function PlaneViewer (executionContext)
 {
-"use strict";
+   X3DViewer .call (this, executionContext);
 
-   const macOS = /Mac OS X/i .test (navigator .userAgent)
+   this .button    = -1;
+   this .fromPoint = new Vector3 (0, 0, 0);
+   this .toPoint   = new Vector3 (0, 0, 0);
+}
 
-   const SCROLL_FACTOR = macOS ? 1 / 160 : 1 / 20;
-
-   const
-      vector                 = new Vector3 (0 ,0, 0),
-      positionOffset         = new Vector3 (0 ,0, 0),
-      centerOfRotationOffset = new Vector3 (0, 0, 0);
-
-   function PlaneViewer (executionContext)
+PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+{
+   constructor: PlaneViewer,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+   ]),
+   initialize: function ()
    {
-      X3DViewer .call (this, executionContext);
+      X3DViewer .prototype .initialize .call (this);
 
-      this .button    = -1;
-      this .fromPoint = new Vector3 (0, 0, 0);
-      this .toPoint   = new Vector3 (0, 0, 0);
-   }
+      const
+         browser = this .getBrowser (),
+         element = browser .getSurface ();
 
-   PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+      element .on ("mousedown.PlaneViewer",  this .mousedown  .bind (this));
+      element .on ("mouseup.PlaneViewer",    this .mouseup    .bind (this));
+      element .on ("mousemove.PlaneViewer",  this .mousemove  .bind (this));
+      element .on ("mousewheel.PlaneViewer", this .mousewheel .bind (this));
+   },
+   mousedown: function (event)
    {
-      constructor: PlaneViewer,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-      ]),
-      initialize: function ()
+      if (this .button >= 0)
+         return;
+
+      const
+         offset = this .getBrowser () .getSurface () .offset (),
+         x      = event .pageX - offset .left,
+         y      = event .pageY - offset .top;
+
+      switch (this .getButton (event .button))
       {
-         X3DViewer .prototype .initialize .call (this);
-
-         const
-            browser = this .getBrowser (),
-            element = browser .getSurface ();
-
-         element .on ("mousedown.PlaneViewer",  this .mousedown  .bind (this));
-         element .on ("mouseup.PlaneViewer",    this .mouseup    .bind (this));
-         element .on ("mousemove.PlaneViewer",  this .mousemove  .bind (this));
-         element .on ("mousewheel.PlaneViewer", this .mousewheel .bind (this));
-      },
-      mousedown: function (event)
-      {
-         if (this .button >= 0)
-            return;
-
-         const
-            offset = this .getBrowser () .getSurface () .offset (),
-            x      = event .pageX - offset .left,
-            y      = event .pageY - offset .top;
-
-         switch (this .getButton (event .button))
+         case 1:
          {
-            case 1:
-            {
-               // Stop event propagation.
+            // Stop event propagation.
 
-               event .preventDefault ();
-               event .stopImmediatePropagation ();
+            event .preventDefault ();
+            event .stopImmediatePropagation ();
 
-               this .button = event .button;
+            this .button = event .button;
 
-               this .getBrowser () .getSurface () .off ("mousemove.PlaneViewer");
-               $(document) .on ("mouseup.PlaneViewer"   + this .getId (), this .mouseup .bind (this));
-               $(document) .on ("mousemove.PlaneViewer" + this .getId (), this .mousemove .bind (this));
+            this .getBrowser () .getSurface () .off ("mousemove.PlaneViewer");
+            $(document) .on ("mouseup.PlaneViewer"   + this .getId (), this .mouseup .bind (this));
+            $(document) .on ("mousemove.PlaneViewer" + this .getId (), this .mousemove .bind (this));
 
-               this .getActiveViewpoint () .transitionStop ();
-               this .getBrowser () .setCursor ("MOVE");
+            this .getActiveViewpoint () .transitionStop ();
+            this .getBrowser () .setCursor ("MOVE");
 
-               this .getPointOnCenterPlane (x, y, this .fromPoint);
+            this .getPointOnCenterPlane (x, y, this .fromPoint);
 
-               this ._isActive = true;
-               break;
-            }
+            this ._isActive = true;
+            break;
          }
-      },
-      mouseup: function (event)
+      }
+   },
+   mouseup: function (event)
+   {
+      // Stop event propagation.
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      if (event .button !== this .button)
+         return;
+
+      this .button = -1;
+
+      $(document) .off (".PlaneViewer" + this .getId ());
+      this .getBrowser () .getSurface () .on ("mousemove.PlaneViewer", this .mousemove .bind (this));
+
+      this .getBrowser () .setCursor ("DEFAULT");
+
+      this ._isActive = false;
+   },
+   mousemove: function (event)
+   {
+      const
+         offset = this .getBrowser () .getSurface () .offset (),
+         x      = event .pageX - offset .left,
+         y      = event .pageY - offset .top;
+
+      switch (this .getButton (this .button))
       {
-         // Stop event propagation.
-
-         event .preventDefault ();
-         event .stopImmediatePropagation ();
-
-         if (event .button !== this .button)
-            return;
-
-         this .button = -1;
-
-         $(document) .off (".PlaneViewer" + this .getId ());
-         this .getBrowser () .getSurface () .on ("mousemove.PlaneViewer", this .mousemove .bind (this));
-
-         this .getBrowser () .setCursor ("DEFAULT");
-
-         this ._isActive = false;
-      },
-      mousemove: function (event)
-      {
-         const
-            offset = this .getBrowser () .getSurface () .offset (),
-            x      = event .pageX - offset .left,
-            y      = event .pageY - offset .top;
-
-         switch (this .getButton (this .button))
+         case 1:
          {
-            case 1:
-            {
-               // Stop event propagation.
+            // Stop event propagation.
 
-               event .preventDefault ();
-               event .stopImmediatePropagation ();
+            event .preventDefault ();
+            event .stopImmediatePropagation ();
 
-               // Move.
+            // Move.
 
-               const
-                  viewpoint   = this .getActiveViewpoint (),
-                  toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
-                  translation = viewpoint .getUserOrientation () .multVecRot (this .fromPoint .subtract (toPoint));
+            const
+               viewpoint   = this .getActiveViewpoint (),
+               toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
+               translation = viewpoint .getUserOrientation () .multVecRot (this .fromPoint .subtract (toPoint));
 
-               viewpoint ._positionOffset         = positionOffset         .assign (viewpoint ._positionOffset         .getValue ()) .add (translation);
-               viewpoint ._centerOfRotationOffset = centerOfRotationOffset .assign (viewpoint ._centerOfRotationOffset .getValue ()) .add (translation);
+            viewpoint ._positionOffset         = positionOffset         .assign (viewpoint ._positionOffset         .getValue ()) .add (translation);
+            viewpoint ._centerOfRotationOffset = centerOfRotationOffset .assign (viewpoint ._centerOfRotationOffset .getValue ()) .add (translation);
 
-               this .fromPoint .assign (toPoint);
-               break;
-            }
+            this .fromPoint .assign (toPoint);
+            break;
          }
-      },
-      mousewheel: function (event)
+      }
+   },
+   mousewheel: function (event)
+   {
+      // Stop event propagation.
+
+      event .preventDefault ();
+      event .stopImmediatePropagation ();
+
+      const
+         offset = this .getBrowser () .getSurface () .offset (),
+         x      = event .pageX - offset .left,
+         y      = event .pageY - offset .top;
+
+      // Change viewpoint position.
+
+      const
+         viewpoint = this .getActiveViewpoint (),
+         fromPoint = this .getPointOnCenterPlane (x, y, this .fromPoint);
+
+      viewpoint .transitionStop ();
+
+      if (event .deltaY > 0) // Move backwards.
       {
-         // Stop event propagation.
-
-         event .preventDefault ();
-         event .stopImmediatePropagation ();
-
-         const
-            offset = this .getBrowser () .getSurface () .offset (),
-            x      = event .pageX - offset .left,
-            y      = event .pageY - offset .top;
-
-         // Change viewpoint position.
-
-         const
-            viewpoint = this .getActiveViewpoint (),
-            fromPoint = this .getPointOnCenterPlane (x, y, this .fromPoint);
-
-         viewpoint .transitionStop ();
-
-         if (event .deltaY > 0) // Move backwards.
-         {
-            viewpoint ._fieldOfViewScale = Math .max (0.00001, viewpoint ._fieldOfViewScale .getValue () * (1 - SCROLL_FACTOR));
-         }
-         else if (event .deltaY < 0) // Move forwards.
-         {
-            viewpoint ._fieldOfViewScale = viewpoint ._fieldOfViewScale .getValue () * (1 + SCROLL_FACTOR);
-
-            this .constrainFieldOfViewScale ();
-         }
-
-         if (viewpoint .set_fieldOfView___)
-            viewpoint .set_fieldOfView___ (); // XXX: Immediately apply fieldOfViewScale;
-
-         const
-            toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
-            translation = viewpoint .getUserOrientation () .multVecRot (vector .assign (fromPoint) .subtract (toPoint));
-
-         viewpoint ._positionOffset         = positionOffset         .assign (viewpoint ._positionOffset         .getValue ()) .add (translation);
-         viewpoint ._centerOfRotationOffset = centerOfRotationOffset .assign (viewpoint ._centerOfRotationOffset .getValue ()) .add (translation);
-      },
-      constrainFieldOfViewScale: function ()
+         viewpoint ._fieldOfViewScale = Math .max (0.00001, viewpoint ._fieldOfViewScale .getValue () * (1 - SCROLL_FACTOR));
+      }
+      else if (event .deltaY < 0) // Move forwards.
       {
-         const viewpoint = this .getActiveViewpoint ();
+         viewpoint ._fieldOfViewScale = viewpoint ._fieldOfViewScale .getValue () * (1 + SCROLL_FACTOR);
 
-         if (viewpoint .getTypeName () .match (/^(?:Viewpoint|GeoViewpoint)$/))
-         {
-            if (viewpoint ._fieldOfView .getValue () * viewpoint ._fieldOfViewScale .getValue () >= Math .PI)
-               viewpoint ._fieldOfViewScale = (Math .PI - 0.001) / viewpoint ._fieldOfView .getValue ();
-         }
-      },
-      dispose: function ()
+         this .constrainFieldOfViewScale ();
+      }
+
+      if (viewpoint .set_fieldOfView___)
+         viewpoint .set_fieldOfView___ (); // XXX: Immediately apply fieldOfViewScale;
+
+      const
+         toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
+         translation = viewpoint .getUserOrientation () .multVecRot (vector .assign (fromPoint) .subtract (toPoint));
+
+      viewpoint ._positionOffset         = positionOffset         .assign (viewpoint ._positionOffset         .getValue ()) .add (translation);
+      viewpoint ._centerOfRotationOffset = centerOfRotationOffset .assign (viewpoint ._centerOfRotationOffset .getValue ()) .add (translation);
+   },
+   constrainFieldOfViewScale: function ()
+   {
+      const viewpoint = this .getActiveViewpoint ();
+
+      if (viewpoint .getTypeName () .match (/^(?:Viewpoint|GeoViewpoint)$/))
       {
-         this .getBrowser () .getSurface () .off (".PlaneViewer");
-         $(document) .off (".PlaneViewer" + this .getId ());
-      },
-   });
-
-   return PlaneViewer;
+         if (viewpoint ._fieldOfView .getValue () * viewpoint ._fieldOfViewScale .getValue () >= Math .PI)
+            viewpoint ._fieldOfViewScale = (Math .PI - 0.001) / viewpoint ._fieldOfView .getValue ();
+      }
+   },
+   dispose: function ()
+   {
+      this .getBrowser () .getSurface () .off (".PlaneViewer");
+      $(document) .off (".PlaneViewer" + this .getId ());
+   },
 });
+
+export default PlaneViewer;

@@ -47,26 +47,19 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DAppearanceChildNode,
-          X3DConstants)
+import X3DAppearanceChildNode from "../Shape/X3DAppearanceChildNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DTextureTransformNode (executionContext)
 {
-"use strict";
+   X3DAppearanceChildNode .call (this, executionContext);
 
-   function X3DTextureTransformNode (executionContext)
-   {
-      X3DAppearanceChildNode .call (this, executionContext);
+   this .addType (X3DConstants .X3DTextureTransformNode);
+}
 
-      this .addType (X3DConstants .X3DTextureTransformNode);
-   }
-
-   X3DTextureTransformNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
-   {
-      constructor: X3DTextureTransformNode,
-   });
-
-   return X3DTextureTransformNode;
+X3DTextureTransformNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+{
+   constructor: X3DTextureTransformNode,
 });
+
+export default X3DTextureTransformNode;

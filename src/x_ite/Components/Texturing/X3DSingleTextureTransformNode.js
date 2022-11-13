@@ -47,52 +47,44 @@
  ******************************************************************************/
 
 
- define ([
-   "x_ite/Components/Texturing/X3DTextureTransformNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Matrix4",
-],
-function (X3DTextureTransformNode,
-          X3DConstants,
-          Matrix4)
+import X3DTextureTransformNode from "./X3DTextureTransformNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+function X3DSingleTextureTransformNode (executionContext)
 {
-"use strict";
+   X3DTextureTransformNode .call (this, executionContext);
 
-   function X3DSingleTextureTransformNode (executionContext)
+   this .addType (X3DConstants .X3DSingleTextureTransformNode);
+
+   this .matrixArray = new Float32Array (Matrix4 .Identity);
+}
+
+X3DSingleTextureTransformNode .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
+{
+   constructor: X3DSingleTextureTransformNode,
+   getCount: function ()
    {
-      X3DTextureTransformNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DSingleTextureTransformNode);
-
-      this .matrixArray = new Float32Array (Matrix4 .Identity);
-   }
-
-   X3DSingleTextureTransformNode .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
+      return 1;
+   },
+   setMatrix: function (value)
    {
-      constructor: X3DSingleTextureTransformNode,
-      getCount: function ()
-      {
-         return 1;
-      },
-      setMatrix: function (value)
-      {
-         this .matrixArray .set (value);
-      },
-      getTextureTransformMapping: function (textureTransformMapping, channel = 0)
-      {
-         if (this ._mapping .getValue ())
-            textureTransformMapping .set (this ._mapping .getValue (), channel);
-      },
-      setShaderUniforms: function (gl, shaderObject)
-      {
-         for (let i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-            this .setShaderUniformsToChannel (gl, shaderObject, i);
-      },
-      setShaderUniformsToChannel: function (gl, shaderObject, channel = 0)
-      {
-         gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [channel], false, this .matrixArray);
-      },
-   });
-
-   return X3DSingleTextureTransformNode;
+      this .matrixArray .set (value);
+   },
+   getTextureTransformMapping: function (textureTransformMapping, channel = 0)
+   {
+      if (this ._mapping .getValue ())
+         textureTransformMapping .set (this ._mapping .getValue (), channel);
+   },
+   setShaderUniforms: function (gl, shaderObject)
+   {
+      for (let i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+         this .setShaderUniformsToChannel (gl, shaderObject, i);
+   },
+   setShaderUniformsToChannel: function (gl, shaderObject, channel = 0)
+   {
+      gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [channel], false, this .matrixArray);
+   },
 });
+
+export default X3DSingleTextureTransformNode;

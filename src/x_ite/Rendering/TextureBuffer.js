@@ -47,106 +47,117 @@
  ******************************************************************************/
 
 
-define ([
-   "standard/Math/Geometry/ViewVolume",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Matrix4",
-],
-function (ViewVolume,
-          Vector3,
-          Matrix4)
+import ViewVolume from "../../standard/Math/Geometry/ViewVolume.js";
+import Vector3 from "../../standard/Math/Numbers/Vector3.js";
+import Matrix4 from "../../standard/Math/Numbers/Matrix4.js";
+
+function TextureBuffer (browser, width, height)
 {
-"use strict";
+   const gl = browser .getContext ();
 
-   function TextureBuffer (browser, width, height)
+   this .browser = browser;
+   this .width   = width;
+   this .height  = height;
+   this .array   = new Uint8Array (width * height * 4);
+
+   // Create frame buffer.
+
+   this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+   this .buffer     = gl .createFramebuffer ();
+
+   gl .bindFramebuffer (gl .FRAMEBUFFER, this .buffer);
+
+   // Create color texture.
+
+   this .colorTexture = gl .createTexture ();
+
+   gl .bindTexture (gl .TEXTURE_2D, this .colorTexture);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+   gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+
+   gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .colorTexture, 0);
+
+   // Create depth buffer.
+
+   if (gl .HAS_FEATURE_DEPTH_TEXTURE)
    {
-      const gl = browser .getContext ();
+      this .depthTexture = gl .createTexture ();
 
-      this .browser = browser;
-      this .width   = width;
-      this .height  = height;
-      this .array   = new Uint8Array (width * height * 4);
+      gl .bindTexture (gl .TEXTURE_2D, this .depthTexture);
 
-      // Create frame buffer.
-
-      this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
-      this .buffer     = gl .createFramebuffer ();
-
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .buffer);
-
-      // Create color texture.
-
-      this .colorTexture = gl .createTexture ();
-
-      gl .bindTexture (gl .TEXTURE_2D, this .colorTexture);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
 
-      gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .colorTexture, 0);
+      const internalFormat = gl .getVersion () >= 2 ? gl .DEPTH_COMPONENT24 : gl .DEPTH_COMPONENT;
 
-      // Create depth buffer.
+      gl .texImage2D (gl .TEXTURE_2D, 0, internalFormat, width, height, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
+      gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .TEXTURE_2D, this .depthTexture, 0);
+   }
+   else
+   {
+      this .depthBuffer = gl .createRenderbuffer ();
 
-      if (gl .HAS_FEATURE_DEPTH_TEXTURE)
-      {
-         this .depthTexture = gl .createTexture ();
-
-         gl .bindTexture (gl .TEXTURE_2D, this .depthTexture);
-
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
-
-         const internalFormat = gl .getVersion () >= 2 ? gl .DEPTH_COMPONENT24 : gl .DEPTH_COMPONENT;
-
-         gl .texImage2D (gl .TEXTURE_2D, 0, internalFormat, width, height, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
-         gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .TEXTURE_2D, this .depthTexture, 0);
-      }
-      else
-      {
-         this .depthBuffer = gl .createRenderbuffer ();
-
-         gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthBuffer);
-         gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT16, width, height);
-         gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
-      }
-
-      // Always check that our framebuffer is ok.
-
-      const complete = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
-
-      gl .bindTexture (gl .TEXTURE_2D, null);
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
-
-      if (complete)
-         return;
-
-      throw new Error ("Couldn't create frame buffer.");
+      gl .bindRenderbuffer (gl .RENDERBUFFER, this .depthBuffer);
+      gl .renderbufferStorage (gl .RENDERBUFFER, gl .DEPTH_COMPONENT16, width, height);
+      gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .RENDERBUFFER, this .depthBuffer);
    }
 
-   TextureBuffer .prototype =
+   // Always check that our framebuffer is ok.
+
+   const complete = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
+
+   gl .bindTexture (gl .TEXTURE_2D, null);
+   gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
+
+   if (complete)
+      return;
+
+   throw new Error ("Couldn't create frame buffer.");
+}
+
+TextureBuffer .prototype =
+{
+   constructor: TextureBuffer,
+   getWidth: function ()
    {
-      constructor: TextureBuffer,
-      getWidth: function ()
-      {
-         return this .width;
-      },
-      getHeight: function ()
-      {
-         return this .height;
-      },
-      getColorTexture: function ()
-      {
-         return this .colorTexture;
-      },
-      getDepthTexture: function ()
-      {
-         return this .depthTexture;
-      },
-      readPixels: function ()
+      return this .width;
+   },
+   getHeight: function ()
+   {
+      return this .height;
+   },
+   getColorTexture: function ()
+   {
+      return this .colorTexture;
+   },
+   getDepthTexture: function ()
+   {
+      return this .depthTexture;
+   },
+   readPixels: function ()
+   {
+      const
+         gl     = this .browser .getContext (),
+         array  = this .array,
+         width  = this .width,
+         height = this .height;
+
+      gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
+
+      return array;
+   },
+   getDepth: (function ()
+   {
+      const
+         invProjectionMatrix = new Matrix4 (),
+         point               = new Vector3 (0, 0, 0);
+
+      return function (projectionMatrix, viewport)
       {
          const
             gl     = this .browser .getContext (),
@@ -154,83 +165,64 @@ function (ViewVolume,
             width  = this .width,
             height = this .height;
 
+         let
+            winx = 0,
+            winy = 0,
+            winz = Number .POSITIVE_INFINITY;
+
+         invProjectionMatrix .assign (projectionMatrix) .inverse ();
+
          gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
 
-         return array;
-      },
-      getDepth: (function ()
-      {
-         const
-            invProjectionMatrix = new Matrix4 (),
-            point               = new Vector3 (0, 0, 0);
-
-         return function (projectionMatrix, viewport)
+         for (let wy = 0, i = 0; wy < height; ++ wy)
          {
-            const
-               gl     = this .browser .getContext (),
-               array  = this .array,
-               width  = this .width,
-               height = this .height;
-
-            let
-               winx = 0,
-               winy = 0,
-               winz = Number .POSITIVE_INFINITY;
-
-            invProjectionMatrix .assign (projectionMatrix) .inverse ();
-
-            gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
-
-            for (let wy = 0, i = 0; wy < height; ++ wy)
+            for (let wx = 0; wx < width; ++ wx, i += 4)
             {
-               for (let wx = 0; wx < width; ++ wx, i += 4)
-               {
-                  const wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
+               const wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
 
-                  if (wz < winz)
-                  {
-                     winx = wx;
-                     winy = wy;
-                     winz = wz;
-                  }
+               if (wz < winz)
+               {
+                  winx = wx;
+                  winy = wy;
+                  winz = wz;
                }
             }
+         }
 
-            ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, point);
+         ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, point);
 
-            return point .z;
-         };
-      })(),
-      bind: function ()
-      {
-         const gl = this .browser .getContext ();
+         return point .z;
+      };
+   })(),
+   bind: function ()
+   {
+      const gl = this .browser .getContext ();
 
-         this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+      this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, this .buffer);
-      },
-      unbind: function ()
-      {
-         const gl = this .browser .getContext ();
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .buffer);
+   },
+   unbind: function ()
+   {
+      const gl = this .browser .getContext ();
 
-         gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
-      },
-      delete: function ()
-      {
-         const gl = this .browser .getContext ();
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
+   },
+   delete: function ()
+   {
+      const gl = this .browser .getContext ();
 
-         gl .deleteFramebuffer (this .buffer);
-         gl .deleteTexture (this .colorTexture);
+      gl .deleteFramebuffer (this .buffer);
+      gl .deleteTexture (this .colorTexture);
 
-         if (gl .HAS_FEATURE_DEPTH_TEXTURE)
-            gl .deleteTexture (this .depthTexture);
-         else
-            gl .deleteRenderbuffer (this .depthBuffer);
-       },
-   };
+      if (gl .HAS_FEATURE_DEPTH_TEXTURE)
+         gl .deleteTexture (this .depthTexture);
+      else
+         gl .deleteRenderbuffer (this .depthBuffer);
+    },
+};
 
-   for (const key of Reflect .ownKeys (TextureBuffer .prototype))
-      Object .defineProperty (TextureBuffer .prototype, key, { enumerable: false });
+for (const key of Reflect .ownKeys (TextureBuffer .prototype))
+   Object .defineProperty (TextureBuffer .prototype, key, { enumerable: false });
 
-   return TextureBuffer;
-});
+export default TextureBuffer;

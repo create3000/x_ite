@@ -46,45 +46,34 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/SupportedNodes",
-   "x_ite/Components/Geometry3D/Box",
-   "x_ite/Components/Geometry3D/Cone",
-   "x_ite/Components/Geometry3D/Cylinder",
-   "x_ite/Components/Geometry3D/ElevationGrid",
-   "x_ite/Components/Geometry3D/Extrusion",
-   "x_ite/Components/Geometry3D/IndexedFaceSet",
-   "x_ite/Components/Geometry3D/Sphere",
-],
-function (SupportedNodes,
-          Box,
-          Cone,
-          Cylinder,
-          ElevationGrid,
-          Extrusion,
-          IndexedFaceSet,
-          Sphere)
+import SupportedNodes from "../Configuration/SupportedNodes.js";
+import Box from "./Geometry3D/Box.js";
+import Cone from "./Geometry3D/Cone.js";
+import Cylinder from "./Geometry3D/Cylinder.js";
+import ElevationGrid from "./Geometry3D/ElevationGrid.js";
+import Extrusion from "./Geometry3D/Extrusion.js";
+import IndexedFaceSet from "./Geometry3D/IndexedFaceSet.js";
+import Sphere from "./Geometry3D/Sphere.js";
+
+const Types =
 {
-"use strict";
+   Box:            Box,
+   Cone:           Cone,
+   Cylinder:       Cylinder,
+   ElevationGrid:  ElevationGrid,
+   Extrusion:      Extrusion,
+   IndexedFaceSet: IndexedFaceSet,
+   Sphere:         Sphere,
+};
 
-   const Types =
-   {
-      Box:            Box,
-      Cone:           Cone,
-      Cylinder:       Cylinder,
-      ElevationGrid:  ElevationGrid,
-      Extrusion:      Extrusion,
-      IndexedFaceSet: IndexedFaceSet,
-      Sphere:         Sphere,
-   };
+const AbstractTypes =
+{
+};
 
-   const AbstractTypes =
-   {
-   };
+for (const typeName in Types)
+   SupportedNodes .addType (typeName, Types [typeName]);
 
-   for (const typeName in Types)
-      SupportedNodes .addType (typeName, Types [typeName]);
+for (const typeName in AbstractTypes)
+   SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 
-   for (const typeName in AbstractTypes)
-      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
-});
+export default undefined;

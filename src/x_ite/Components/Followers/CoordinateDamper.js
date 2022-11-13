@@ -47,68 +47,56 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Followers/X3DDamperNode",
-   "x_ite/Browser/Followers/X3DArrayFollowerTemplate",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DDamperNode,
-          X3DArrayFollowerTemplate,
-          X3DConstants,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DDamperNode from "./X3DDamperNode.js";
+import X3DArrayFollowerTemplate from "../../Browser/Followers/X3DArrayFollowerTemplate.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+var X3DArrayFollowerObject = X3DArrayFollowerTemplate (X3DDamperNode);
+
+function CoordinateDamper (executionContext)
 {
-"use strict";
+   X3DDamperNode          .call (this, executionContext);
+   X3DArrayFollowerObject .call (this, executionContext);
 
-   var X3DArrayFollowerObject = X3DArrayFollowerTemplate (X3DDamperNode);
+   this .addType (X3DConstants .CoordinateDamper);
+}
 
-   function CoordinateDamper (executionContext)
+CoordinateDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
+   X3DArrayFollowerObject .prototype,
+{
+   constructor: CoordinateDamper,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .MFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .MFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .MFVec3f (new Vector3 (0, 0, 0))),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .MFVec3f (new Vector3 (0, 0, 0))),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "order",              new Fields .SFInt32 (3)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "tau",                new Fields .SFTime (0.3)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "tolerance",          new Fields .SFFloat (-1)),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .MFVec3f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DDamperNode          .call (this, executionContext);
-      X3DArrayFollowerObject .call (this, executionContext);
-
-      this .addType (X3DConstants .CoordinateDamper);
-   }
-
-   CoordinateDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
-      X3DArrayFollowerObject .prototype,
+      return "CoordinateDamper";
+   },
+   getComponentName: function ()
    {
-      constructor: CoordinateDamper,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .MFVec3f (new Vector3 (0, 0, 0))),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .MFVec3f (new Vector3 (0, 0, 0))),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "order",              new Fields .SFInt32 (3)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "tau",                new Fields .SFTime (0.3)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "tolerance",          new Fields .SFFloat (-1)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .MFVec3f ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "CoordinateDamper";
-      },
-      getComponentName: function ()
-      {
-         return "Followers";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      getVector: function ()
-      {
-         return new Vector3 (0, 0, 0);
-      },
-   });
-
-   return CoordinateDamper;
+      return "Followers";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   getVector: function ()
+   {
+      return new Vector3 (0, 0, 0);
+   },
 });
+
+export default CoordinateDamper;

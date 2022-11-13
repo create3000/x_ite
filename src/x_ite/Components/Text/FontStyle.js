@@ -47,68 +47,57 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Text/X3DFontStyleNode",
-   "x_ite/Browser/Text/PolygonText",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DFontStyleNode,
-          PolygonText,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DFontStyleNode from "./X3DFontStyleNode.js";
+import PolygonText from "../../Browser/Text/PolygonText.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function FontStyle (executionContext)
 {
-"use strict";
+   X3DFontStyleNode .call (this, executionContext);
 
-   function FontStyle (executionContext)
+   this .addType (X3DConstants .FontStyle);
+
+   this ._size .setUnit ("length");
+}
+
+FontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
+{
+   constructor: FontStyle,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "language",    new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "family",      new Fields .MFString ("SERIF")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "style",       new Fields .SFString ("PLAIN")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "size",        new Fields .SFFloat (1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "spacing",     new Fields .SFFloat (1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "horizontal",  new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "leftToRight", new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "topToBottom", new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "justify",     new Fields .MFString ("BEGIN")),
+   ]),
+   getTypeName: function ()
    {
-      X3DFontStyleNode .call (this, executionContext);
-
-      this .addType (X3DConstants .FontStyle);
-
-      this ._size .setUnit ("length");
-   }
-
-   FontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
+      return "FontStyle";
+   },
+   getComponentName: function ()
    {
-      constructor: FontStyle,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "language",    new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "family",      new Fields .MFString ("SERIF")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "style",       new Fields .SFString ("PLAIN")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "size",        new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "spacing",     new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "horizontal",  new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "leftToRight", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "topToBottom", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "justify",     new Fields .MFString ("BEGIN")),
-      ]),
-      getTypeName: function ()
-      {
-         return "FontStyle";
-      },
-      getComponentName: function ()
-      {
-         return "Text";
-      },
-      getContainerField: function ()
-      {
-         return "fontStyle";
-      },
-      getTextGeometry: function (text)
-      {
-         return new PolygonText (text, this);
-      },
-      getScale: function ()
-      {
-         return this ._size .getValue ();
-      },
-   });
-
-   return FontStyle;
+      return "Text";
+   },
+   getContainerField: function ()
+   {
+      return "fontStyle";
+   },
+   getTextGeometry: function (text)
+   {
+      return new PolygonText (text, this);
+   },
+   getScale: function ()
+   {
+      return this ._size .getValue ();
+   },
 });
+
+export default FontStyle;

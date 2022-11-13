@@ -47,108 +47,101 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Execution/X3DScene",
-],
-function (Fields,
-          X3DScene)
+import Fields from "../Fields.js";
+import X3DScene from "./X3DScene.js";
+
+const
+   _browser        = Symbol .for ("X3DEventObject.browser"),
+   _loadingObjects = Symbol ();
+
+function Scene (browser)
 {
-"use strict";
+   this [_browser] = browser;
 
-   const
-      _browser        = Symbol .for ("X3DEventObject.browser"),
-      _loadingObjects = Symbol ();
+   X3DScene .call (this, this);
 
-   function Scene (browser)
+   this .addChildObjects ("initLoadCount", new Fields .SFInt32 (),  // Pre load count, must be zero before the scene can be passed to the requester.
+                          "loadCount",     new Fields .SFInt32 ()); // Load count of all X3DUrlObjects.
+
+   this [_loadingObjects] = new Set ();
+}
+
+Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
+{
+   constructor: Scene,
+   setExecutionContext: function (value)
    {
-      this [_browser] = browser;
+      if (! this .isMainScene ())
+      {
+         const scene = this .getScene ();
 
-      X3DScene .call (this, this);
+         for (const object of this [_loadingObjects])
+            scene .removeLoadCount (object);
+      }
 
-      this .addChildObjects ("initLoadCount", new Fields .SFInt32 (),  // Pre load count, must be zero before the scene can be passed to the requester.
-                             "loadCount",     new Fields .SFInt32 ()); // Load count of all X3DUrlObjects.
+      X3DScene .prototype .setExecutionContext .call (this, value);
 
-      this [_loadingObjects] = new Set ();
-   }
+      if (! this .isMainScene ())
+      {
+         const scene = this .getScene ();
 
-   Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
+         for (const object of this [_loadingObjects])
+            scene .addLoadCount (object);
+      }
+   },
+   addInitLoadCount: function (node)
    {
-      constructor: Scene,
-      setExecutionContext: function (value)
-      {
-         if (! this .isMainScene ())
-         {
-            const scene = this .getScene ();
+      this ._initLoadCount = this ._initLoadCount .getValue () + 1;
+   },
+   removeInitLoadCount: function (node)
+   {
+      this ._initLoadCount = this ._initLoadCount .getValue () - 1;
+   },
+   addLoadCount: function (node)
+   {
+      if (this [_loadingObjects] .has (node))
+         return;
 
-            for (const object of this [_loadingObjects])
-               scene .removeLoadCount (object);
-         }
+      this [_loadingObjects] .add (node);
 
-         X3DScene .prototype .setExecutionContext .call (this, value);
+      this ._loadCount = this [_loadingObjects] .size;
 
-         if (! this .isMainScene ())
-         {
-            const scene = this .getScene ();
+      const
+         browser = this .getBrowser (),
+         scene   = this .getScene ();
 
-            for (const object of this [_loadingObjects])
-               scene .addLoadCount (object);
-         }
-      },
-      addInitLoadCount: function (node)
-      {
-         this ._initLoadCount = this ._initLoadCount .getValue () + 1;
-      },
-      removeInitLoadCount: function (node)
-      {
-         this ._initLoadCount = this ._initLoadCount .getValue () - 1;
-      },
-      addLoadCount: function (node)
-      {
-         if (this [_loadingObjects] .has (node))
-            return;
+      if (this === browser .getExecutionContext () || this .loader === browser .loader)
+         browser .addLoadCount (node);
 
-         this [_loadingObjects] .add (node);
+      if (! this .isMainScene ())
+         scene .addLoadCount (node);
+   },
+   removeLoadCount: function (node)
+   {
+      if (!this [_loadingObjects] .has (node))
+         return;
 
-         this ._loadCount = this [_loadingObjects] .size;
+      this [_loadingObjects] .delete (node);
 
-         const
-            browser = this .getBrowser (),
-            scene   = this .getScene ();
+      this ._loadCount = this [_loadingObjects] .size;
 
-         if (this === browser .getExecutionContext () || this .loader === browser .loader)
-            browser .addLoadCount (node);
+      const
+         browser = this .getBrowser (),
+         scene   = this .getScene ();
 
-         if (! this .isMainScene ())
-            scene .addLoadCount (node);
-      },
-      removeLoadCount: function (node)
-      {
-         if (!this [_loadingObjects] .has (node))
-            return;
+      if (this === browser .getExecutionContext () || this .loader === browser .loader)
+         browser .removeLoadCount (node);
 
-         this [_loadingObjects] .delete (node);
-
-         this ._loadCount = this [_loadingObjects] .size;
-
-         const
-            browser = this .getBrowser (),
-            scene   = this .getScene ();
-
-         if (this === browser .getExecutionContext () || this .loader === browser .loader)
-            browser .removeLoadCount (node);
-
-         if (! this .isMainScene ())
-            scene .removeLoadCount (node);
-      },
-      getLoadingObjects: function ()
-      {
-         return this [_loadingObjects];
-      },
-   });
-
-   for (const key of Reflect .ownKeys (Scene .prototype))
-      Object .defineProperty (Scene .prototype, key, { enumerable: false });
-
-   return Scene;
+      if (! this .isMainScene ())
+         scene .removeLoadCount (node);
+   },
+   getLoadingObjects: function ()
+   {
+      return this [_loadingObjects];
+   },
 });
+
+for (const key of Reflect .ownKeys (Scene .prototype))
+   Object .defineProperty (Scene .prototype, key, { enumerable: false });
+
+export default Scene;

@@ -47,138 +47,125 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Base/X3DCast",
-   "x_ite/Rendering/TraverseType",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DGroupingNode,
-          X3DCast,
-          TraverseType,
-          X3DConstants,
-          Matrix4)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DGroupingNode from "../Grouping/X3DGroupingNode.js";
+import X3DCast from "../../Base/X3DCast.js";
+import TraverseType from "../../Rendering/TraverseType.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+function LayoutGroup (executionContext)
 {
-"use strict";
+   X3DGroupingNode .call (this, executionContext);
 
-   function LayoutGroup (executionContext)
+   this .addType (X3DConstants .LayoutGroup);
+
+   this .viewportNode    = null;
+   this .layoutNode      = null;
+   this .modelViewMatrix = new Matrix4 ();
+   this .screenMatrix    = new Matrix4 ();
+}
+
+LayoutGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+{
+   constructor: LayoutGroup,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "layout",         new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "viewport",       new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DGroupingNode .call (this, executionContext);
-
-      this .addType (X3DConstants .LayoutGroup);
-
-      this .viewportNode    = null;
-      this .layoutNode      = null;
-      this .modelViewMatrix = new Matrix4 ();
-      this .screenMatrix    = new Matrix4 ();
-   }
-
-   LayoutGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+      return "LayoutGroup";
+   },
+   getComponentName: function ()
    {
-      constructor: LayoutGroup,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "layout",         new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "viewport",       new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "LayoutGroup";
-      },
-      getComponentName: function ()
-      {
-         return "Layout";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DGroupingNode .prototype .initialize .call (this);
+      return "Layout";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DGroupingNode .prototype .initialize .call (this);
 
-         this ._viewport .addInterest ("set_viewport__", this);
-         this ._layout   .addInterest ("set_layout__", this);
+      this ._viewport .addInterest ("set_viewport__", this);
+      this ._layout   .addInterest ("set_layout__", this);
 
-         this .set_viewport__ ();
-         this .set_layout__ ();
-      },
-      set_viewport__: function ()
-      {
-         this .viewportNode = X3DCast (X3DConstants .X3DViewportNode, this ._viewport);
-      },
-      set_layout__: function ()
-      {
-         this .layoutNode = X3DCast (X3DConstants .X3DLayoutNode, this ._layout);
-      },
-      getBBox: function (bbox, shadows)
-      {
-         return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .getMatrix ());
-      },
-      getMatrix: function ()
-      {
-         if (this .layoutNode)
-            this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
-         else
-            this .matrix .identity ();
+      this .set_viewport__ ();
+      this .set_layout__ ();
+   },
+   set_viewport__: function ()
+   {
+      this .viewportNode = X3DCast (X3DConstants .X3DViewportNode, this ._viewport);
+   },
+   set_layout__: function ()
+   {
+      this .layoutNode = X3DCast (X3DConstants .X3DLayoutNode, this ._layout);
+   },
+   getBBox: function (bbox, shadows)
+   {
+      return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .getMatrix ());
+   },
+   getMatrix: function ()
+   {
+      if (this .layoutNode)
+         this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
+      else
+         this .matrix .identity ();
 
-         return this .matrix;
-      },
-      traverse: function (type, renderObject)
+      return this .matrix;
+   },
+   traverse: function (type, renderObject)
+   {
+      switch (type)
       {
-         switch (type)
+         case TraverseType .COLLISION:
          {
-            case TraverseType .COLLISION:
-            {
-               return;
-            }
-            default:
-            {
-               if (this .viewportNode)
-                  this .viewportNode .push ();
-
-               if (this .layoutNode)
-               {
-                  var modelViewMatrix = renderObject .getModelViewMatrix ();
-
-                  this .modelViewMatrix .assign (modelViewMatrix .get ());
-                  this .screenMatrix .assign (this .layoutNode .transform (type, renderObject));
-
-                  modelViewMatrix .pushMatrix (this .screenMatrix);
-                  renderObject .getLayouts () .push (this .layoutNode);
-
-                  X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-
-                  renderObject .getLayouts () .pop ();
-                  modelViewMatrix .pop ();
-               }
-               else
-               {
-                  X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-               }
-
-               if (this .viewportNode)
-                  this .viewportNode .pop ();
-
-               return;
-            }
+            return;
          }
-      },
-   });
+         default:
+         {
+            if (this .viewportNode)
+               this .viewportNode .push ();
 
-   return LayoutGroup;
+            if (this .layoutNode)
+            {
+               var modelViewMatrix = renderObject .getModelViewMatrix ();
+
+               this .modelViewMatrix .assign (modelViewMatrix .get ());
+               this .screenMatrix .assign (this .layoutNode .transform (type, renderObject));
+
+               modelViewMatrix .pushMatrix (this .screenMatrix);
+               renderObject .getLayouts () .push (this .layoutNode);
+
+               X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+
+               renderObject .getLayouts () .pop ();
+               modelViewMatrix .pop ();
+            }
+            else
+            {
+               X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+            }
+
+            if (this .viewportNode)
+               this .viewportNode .pop ();
+
+            return;
+         }
+      }
+   },
 });
+
+export default LayoutGroup;

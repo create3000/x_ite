@@ -47,89 +47,79 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DComposedGeometryNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DComposedGeometryNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DComposedGeometryNode from "../Rendering/X3DComposedGeometryNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function IndexedQuadSet (executionContext)
 {
-"use strict";
+   X3DComposedGeometryNode .call (this, executionContext);
 
-   function IndexedQuadSet (executionContext)
+   this .addType (X3DConstants .IndexedQuadSet);
+}
+
+IndexedQuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+{
+   constructor: IndexedQuadSet,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_index",       new Fields .MFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "index",           new Fields .MFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DComposedGeometryNode .call (this, executionContext);
-
-      this .addType (X3DConstants .IndexedQuadSet);
-   }
-
-   IndexedQuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+      return "IndexedQuadSet";
+   },
+   getComponentName: function ()
    {
-      constructor: IndexedQuadSet,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_index",       new Fields .MFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "index",           new Fields .MFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "IndexedQuadSet";
-      },
-      getComponentName: function ()
-      {
-         return "CADGeometry";
-      },
-      getContainerField: function ()
-      {
-         return "geometry";
-      },
-      initialize: function ()
-      {
-         X3DComposedGeometryNode .prototype .initialize .call (this);
+      return "CADGeometry";
+   },
+   getContainerField: function ()
+   {
+      return "geometry";
+   },
+   initialize: function ()
+   {
+      X3DComposedGeometryNode .prototype .initialize .call (this);
 
-         this ._set_index .addFieldInterest (this ._index);
-      },
-      getTriangleIndex: (function ()
+      this ._set_index .addFieldInterest (this ._index);
+   },
+   getTriangleIndex: (function ()
+   {
+      // Define two triangles.
+      const indexMap = [0, 1, 2,   0, 2, 3];
+
+      return function (i)
       {
-         // Define two triangles.
-         const indexMap = [0, 1, 2,   0, 2, 3];
+         const mod = i % 6;
 
-         return function (i)
-         {
-            const mod = i % 6;
+         return (i - mod) / 6 * 4 + indexMap [mod];
+      };
+   })(),
+   getPolygonIndex: function (i)
+   {
+      return this ._index [i];
+   },
+   build: function ()
+   {
+      let length = this ._index .length;
 
-            return (i - mod) / 6 * 4 + indexMap [mod];
-         };
-      })(),
-      getPolygonIndex: function (i)
-      {
-         return this ._index [i];
-      },
-      build: function ()
-      {
-         let length = this ._index .length;
+      length -= length % 4;
 
-         length -= length % 4;
-
-         X3DComposedGeometryNode .prototype .build .call (this, 4, length, 6, length / 4 * 6);
-      },
-   });
-
-   return IndexedQuadSet;
+      X3DComposedGeometryNode .prototype .build .call (this, 4, length, 6, length / 4 * 6);
+   },
 });
+
+export default IndexedQuadSet;

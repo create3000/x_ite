@@ -47,88 +47,80 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Algorithm",
-],
-function (X3DChildNode,
-          X3DConstants,
-          Algorithm)
+import X3DChildNode from "../Core/X3DChildNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+function X3DInterpolatorNode (executionContext)
 {
-"use strict";
+   X3DChildNode .call (this, executionContext);
 
-   function X3DInterpolatorNode (executionContext)
+   this .addType (X3DConstants .X3DInterpolatorNode);
+}
+
+X3DInterpolatorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+{
+   constructor: X3DInterpolatorNode,
+   setup: function ()
    {
-      X3DChildNode .call (this, executionContext);
+      // If an X3DInterpolatorNode value_changed outputOnly field is read before it receives any inputs,
+      // keyValue[0] is returned if keyValue is not empty. If keyValue is empty (i.e., [ ]), the initial
+      // value for the respective field type is returned (EXAMPLE  (0, 0, 0) for Fields .SFVec3f);
 
-      this .addType (X3DConstants .X3DInterpolatorNode);
-   }
+      this .set_key__ ();
 
-   X3DInterpolatorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+      if (this ._key .length)
+         this .interpolate (0, 0, 0);
+
+      X3DChildNode .prototype .setup .call (this);
+   },
+   initialize: function ()
    {
-      constructor: X3DInterpolatorNode,
-      setup: function ()
+      X3DChildNode .prototype .initialize .call (this);
+
+      this ._set_fraction .addInterest ("set_fraction__", this);
+      this ._key          .addInterest ("set_key__", this);
+   },
+   set_fraction__: function ()
+   {
+      const
+         key      = this ._key,
+         length   = key .length,
+         fraction = this ._set_fraction .getValue ();
+
+      switch (length)
       {
-         // If an X3DInterpolatorNode value_changed outputOnly field is read before it receives any inputs,
-         // keyValue[0] is returned if keyValue is not empty. If keyValue is empty (i.e., [ ]), the initial
-         // value for the respective field type is returned (EXAMPLE  (0, 0, 0) for Fields .SFVec3f);
-
-         this .set_key__ ();
-
-         if (this ._key .length)
-            this .interpolate (0, 0, 0);
-
-         X3DChildNode .prototype .setup .call (this);
-      },
-      initialize: function ()
-      {
-         X3DChildNode .prototype .initialize .call (this);
-
-         this ._set_fraction .addInterest ("set_fraction__", this);
-         this ._key          .addInterest ("set_key__", this);
-      },
-      set_fraction__: function ()
-      {
-         const
-            key      = this ._key,
-            length   = key .length,
-            fraction = this ._set_fraction .getValue ();
-
-         switch (length)
+         case 0:
+            // Interpolator nodes containing no keys in the key field shall not produce any events.
+            return;
+         case 1:
+            return this .interpolate (0, 0, 0);
+         default:
          {
-            case 0:
-               // Interpolator nodes containing no keys in the key field shall not produce any events.
-               return;
-            case 1:
-               return this .interpolate (0, 0, 0);
-            default:
+            if (fraction <= key [0])
+               return this .interpolate (0, 1, 0);
+
+            const index1 = Algorithm .upperBound (key, 0, length, fraction);
+
+            if (index1 !== length)
             {
-               if (fraction <= key [0])
-                  return this .interpolate (0, 1, 0);
+               const
+                  index0 = index1 - 1,
+                  weight = (fraction - key [index0]) / (key [index1] - key [index0]);
 
-               const index1 = Algorithm .upperBound (key, 0, length, fraction);
-
-               if (index1 !== length)
-               {
-                  const
-                     index0 = index1 - 1,
-                     weight = (fraction - key [index0]) / (key [index1] - key [index0]);
-
-                  this .interpolate (index0, index1, Algorithm .clamp (weight, 0, 1));
-               }
-               else
-                  this .interpolate (length - 2, length - 1, 1);
+               this .interpolate (index0, index1, Algorithm .clamp (weight, 0, 1));
             }
+            else
+               this .interpolate (length - 2, length - 1, 1);
          }
-      },
-      set_key__: function ()
-      {
-         this .set_keyValue__ ();
-      },
-      set_keyValue__: function () { },
-      interpolate: function () { },
-   });
-
-   return X3DInterpolatorNode;
+      }
+   },
+   set_key__: function ()
+   {
+      this .set_keyValue__ ();
+   },
+   set_keyValue__: function () { },
+   interpolate: function () { },
 });
+
+export default X3DInterpolatorNode;

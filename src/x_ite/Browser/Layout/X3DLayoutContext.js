@@ -47,97 +47,86 @@
  ******************************************************************************/
 
 
-define ([
-   "jquery",
-   "x_ite/Components/Texturing/TextureProperties",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Matrix4",
-   "standard/Math/Geometry/ViewVolume",
-],
-function ($,
-          TextureProperties,
-          Vector3,
-          Matrix4,
-          ViewVolume)
+import TextureProperties from "../../Components/Texturing/TextureProperties.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
+
+const
+   _screenTextureProperties = Symbol ();
+
+function X3DLayoutContext ()
+{ }
+
+X3DLayoutContext .prototype =
 {
-"use strict";
-
-   const
-      _screenTextureProperties = Symbol ();
-
-   function X3DLayoutContext ()
-   { }
-
-   X3DLayoutContext .prototype =
+   getScreenTextureProperties: function ()
    {
-      getScreenTextureProperties: function ()
+      this [_screenTextureProperties] = new TextureProperties (this .getPrivateScene ());
+
+      this [_screenTextureProperties] ._boundaryModeS       = "CLAMP_TO_EDGE";
+      this [_screenTextureProperties] ._boundaryModeT       = "CLAMP_TO_EDGE";
+      this [_screenTextureProperties] ._boundaryModeR       = "CLAMP_TO_EDGE";
+      this [_screenTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
+      this [_screenTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
+      this [_screenTextureProperties] ._generateMipMaps     = false;
+
+      this [_screenTextureProperties] .setup ();
+
+      this .getScreenTextureProperties = function () { return this [_screenTextureProperties]; };
+
+      Object .defineProperty (this, "getScreenTextureProperties", { enumerable: false });
+
+      return this [_screenTextureProperties];
+   },
+   getScreenScaleMatrix: (function ()
+   {
+      const
+         screenScale  = new Vector3 (0, 0, 0),
+         screenPoint  = new Vector3 (0, 0, 0),
+         screenMatrix = new Matrix4 ();
+
+      return function (renderObject, matrix)
       {
-         this [_screenTextureProperties] = new TextureProperties (this .getPrivateScene ());
+         // throws domain error
 
-         this [_screenTextureProperties] ._boundaryModeS       = "CLAMP_TO_EDGE";
-         this [_screenTextureProperties] ._boundaryModeT       = "CLAMP_TO_EDGE";
-         this [_screenTextureProperties] ._boundaryModeR       = "CLAMP_TO_EDGE";
-         this [_screenTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
-         this [_screenTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
-         this [_screenTextureProperties] ._generateMipMaps     = false;
-
-         this [_screenTextureProperties] .setup ();
-
-         this .getScreenTextureProperties = function () { return this [_screenTextureProperties]; };
-
-         Object .defineProperty (this, "getScreenTextureProperties", { enumerable: false });
-
-         return this [_screenTextureProperties];
-      },
-      getScreenScaleMatrix: (function ()
-      {
          const
-            screenScale  = new Vector3 (0, 0, 0),
-            screenPoint  = new Vector3 (0, 0, 0),
-            screenMatrix = new Matrix4 ();
+            modelViewMatrix  = renderObject .getModelViewMatrix () .get (),
+            projectionMatrix = renderObject .getProjectionMatrix () .get (),
+            viewport         = renderObject .getViewVolume () .getViewport ();
 
-         return function (renderObject, matrix)
-         {
-            // throws domain error
+         // Determine screenMatrix.
+         // Same as in ScreenText.
 
-            const
-               modelViewMatrix  = renderObject .getModelViewMatrix () .get (),
-               projectionMatrix = renderObject .getProjectionMatrix () .get (),
-               viewport         = renderObject .getViewVolume () .getViewport ();
+         renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport, screenScale); // in meter/pixel
 
-            // Determine screenMatrix.
-            // Same as in ScreenText.
+         const
+            x = modelViewMatrix .xAxis .normalize () .multiply (screenScale .x),
+            y = modelViewMatrix .yAxis .normalize () .multiply (screenScale .y),
+            z = modelViewMatrix .zAxis .normalize () .multiply (screenScale .x);
 
-            renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport, screenScale); // in meter/pixel
+         screenMatrix .set (x .x, x .y, x .z, 0,
+                            y .x, y .y, y .z, 0,
+                            z .x, z .y, z .z, 0,
+                            modelViewMatrix [12], modelViewMatrix [13], modelViewMatrix [14], 1);
 
-            const
-               x = modelViewMatrix .xAxis .normalize () .multiply (screenScale .x),
-               y = modelViewMatrix .yAxis .normalize () .multiply (screenScale .y),
-               z = modelViewMatrix .zAxis .normalize () .multiply (screenScale .x);
+         // Snap to whole pixel.
 
-            screenMatrix .set (x .x, x .y, x .z, 0,
-                               y .x, y .y, y .z, 0,
-                               z .x, z .y, z .z, 0,
-                               modelViewMatrix [12], modelViewMatrix [13], modelViewMatrix [14], 1);
+         ViewVolume .projectPoint (Vector3 .Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
 
-            // Snap to whole pixel.
+         screenPoint .x = Math .round (screenPoint .x);
+         screenPoint .y = Math .round (screenPoint .y);
 
-            ViewVolume .projectPoint (Vector3 .Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
+         ViewVolume .unProjectPoint (screenPoint .x, screenPoint .y, screenPoint .z, screenMatrix, projectionMatrix, viewport, screenPoint);
 
-            screenPoint .x = Math .round (screenPoint .x);
-            screenPoint .y = Math .round (screenPoint .y);
+         screenPoint .z = 0;
+         screenMatrix .translate (screenPoint);
 
-            ViewVolume .unProjectPoint (screenPoint .x, screenPoint .y, screenPoint .z, screenMatrix, projectionMatrix, viewport, screenPoint);
+         // Assign relative matrix.
 
-            screenPoint .z = 0;
-            screenMatrix .translate (screenPoint);
+         matrix .assign (modelViewMatrix) .inverse () .multLeft (screenMatrix);
+      };
+   })(),
+};
 
-            // Assign relative matrix.
-
-            matrix .assign (modelViewMatrix) .inverse () .multLeft (screenMatrix);
-         };
-      })(),
-   };
-
-   return X3DLayoutContext;
-});
+export default X3DLayoutContext;

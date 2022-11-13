@@ -47,116 +47,110 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DField",
-],
-function (X3DField)
+import X3DField from "../Base/X3DField.js";
+
+export default function (Matrix, SFVec, double)
 {
-"use strict";
-
-   return function (Matrix, SFVec, double)
+   return Object .assign (Object .create (X3DField .prototype),
    {
-      return Object .assign (Object .create (X3DField .prototype),
+      [Symbol .iterator]: function* ()
       {
-         [Symbol .iterator]: function* ()
-         {
-            yield* this .getValue ();
-         },
-         copy: function ()
-         {
-            return new (this .constructor) (this .getValue () .copy ());
-         },
-         equals: function (matrix)
-         {
-            return this .getValue () .equals (matrix .getValue ());
-         },
-         isDefaultValue: function ()
-         {
-            return this .getValue () .equals (Matrix .Identity);
-         },
-         set: function (value)
-         {
-            this .getValue () .assign (value);
-         },
-         setTransform: function (translation, rotation, scale, scaleOrientation, center)
-         {
-            translation      = translation      ? translation      .getValue () : null;
-            rotation         = rotation         ? rotation         .getValue () : null;
-            scale            = scale            ? scale            .getValue () : null;
-            scaleOrientation = scaleOrientation ? scaleOrientation .getValue () : null;
-            center           = center           ? center           .getValue () : null;
+         yield* this .getValue ();
+      },
+      copy: function ()
+      {
+         return new (this .constructor) (this .getValue () .copy ());
+      },
+      equals: function (matrix)
+      {
+         return this .getValue () .equals (matrix .getValue ());
+      },
+      isDefaultValue: function ()
+      {
+         return this .getValue () .equals (Matrix .Identity);
+      },
+      set: function (value)
+      {
+         this .getValue () .assign (value);
+      },
+      setTransform: function (translation, rotation, scale, scaleOrientation, center)
+      {
+         translation      = translation      ? translation      .getValue () : null;
+         rotation         = rotation         ? rotation         .getValue () : null;
+         scale            = scale            ? scale            .getValue () : null;
+         scaleOrientation = scaleOrientation ? scaleOrientation .getValue () : null;
+         center           = center           ? center           .getValue () : null;
 
-            this .getValue () .set (translation, rotation, scale, scaleOrientation, center);
-         },
-         getTransform: function (translation, rotation, scale, scaleOrientation, center)
-         {
-            translation      = translation      ? translation      .getValue () : null;
-            rotation         = rotation         ? rotation         .getValue () : null;
-            scale            = scale            ? scale            .getValue () : null;
-            scaleOrientation = scaleOrientation ? scaleOrientation .getValue () : null;
-            center           = center           ? center           .getValue () : null;
+         this .getValue () .set (translation, rotation, scale, scaleOrientation, center);
+      },
+      getTransform: function (translation, rotation, scale, scaleOrientation, center)
+      {
+         translation      = translation      ? translation      .getValue () : null;
+         rotation         = rotation         ? rotation         .getValue () : null;
+         scale            = scale            ? scale            .getValue () : null;
+         scaleOrientation = scaleOrientation ? scaleOrientation .getValue () : null;
+         center           = center           ? center           .getValue () : null;
 
-            this .getValue () .get (translation, rotation, scale, scaleOrientation, center);
-         },
-         determinant: function ()
-         {
-            return this .getValue () .determinant ();
-         },
-         transpose: function ()
-         {
-            return new (this .constructor) (Matrix .transpose (this .getValue ()));
-         },
-         inverse: function ()
-         {
-            return new (this .constructor) (Matrix .inverse (this .getValue ()));
-         },
-         multLeft: function (matrix)
-         {
-            return new (this .constructor) (Matrix .multLeft (this .getValue (), matrix .getValue ()));
-         },
-         multRight: function (matrix)
-         {
-            return new (this .constructor) (Matrix .multRight (this .getValue (), matrix .getValue ()));
-         },
-         multVecMatrix: function (vector)
-         {
-            return new SFVec (this .getValue () .multVecMatrix (vector .getValue () .copy ()));
-         },
-         multMatrixVec: function (vector)
-         {
-            return new SFVec (this .getValue () .multMatrixVec (vector .getValue () .copy ()));
-         },
-         multDirMatrix: function (vector)
-         {
-            return new SFVec (this .getValue () .multDirMatrix (vector .getValue () .copy ()));
-         },
-         multMatrixDir: function (vector)
-         {
-            return new SFVec (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
-         },
-         toStream: function (stream)
-         {
-            const
-               generator = Generator .Get (stream),
-               value     = this .getValue (),
-               last      = value .length - 1;
+         this .getValue () .get (translation, rotation, scale, scaleOrientation, center);
+      },
+      determinant: function ()
+      {
+         return this .getValue () .determinant ();
+      },
+      transpose: function ()
+      {
+         return new (this .constructor) (Matrix .transpose (this .getValue ()));
+      },
+      inverse: function ()
+      {
+         return new (this .constructor) (Matrix .inverse (this .getValue ()));
+      },
+      multLeft: function (matrix)
+      {
+         return new (this .constructor) (Matrix .multLeft (this .getValue (), matrix .getValue ()));
+      },
+      multRight: function (matrix)
+      {
+         return new (this .constructor) (Matrix .multRight (this .getValue (), matrix .getValue ()));
+      },
+      multVecMatrix: function (vector)
+      {
+         return new SFVec (this .getValue () .multVecMatrix (vector .getValue () .copy ()));
+      },
+      multMatrixVec: function (vector)
+      {
+         return new SFVec (this .getValue () .multMatrixVec (vector .getValue () .copy ()));
+      },
+      multDirMatrix: function (vector)
+      {
+         return new SFVec (this .getValue () .multDirMatrix (vector .getValue () .copy ()));
+      },
+      multMatrixDir: function (vector)
+      {
+         return new SFVec (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
+      },
+      toStream: function (stream)
+      {
+         const
+            generator = Generator .Get (stream),
+            value     = this .getValue (),
+            last      = value .length - 1;
 
-            for (let i = 0; i < last; ++ i)
-            {
-               stream .string += double ? generator .DoublePrecision (value [i]) : generator .Precision (value [i]);
-               stream .string += " ";
-            }
+         for (let i = 0; i < last; ++ i)
+         {
+            stream .string += double ? generator .DoublePrecision (value [i]) : generator .Precision (value [i]);
+            stream .string += " ";
+         }
 
-            stream .string += double ? generator .DoublePrecision (value [last]) : generator .Precision (value [last]);
-         },
-         toVRMLStream: function (stream)
-         {
-            this .toStream (stream);
-         },
-         toXMLStream: function (stream)
-         {
-            this .toStream (stream);
-         },
-      });
-   };
-});
+         stream .string += double ? generator .DoublePrecision (value [last]) : generator .Precision (value [last]);
+      },
+      toVRMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+      toXMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+   });
+};

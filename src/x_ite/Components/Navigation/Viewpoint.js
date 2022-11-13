@@ -47,156 +47,141 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Navigation/X3DViewpointNode",
-   "x_ite/Components/Interpolation/ScalarInterpolator",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Geometry/Camera",
-   "standard/Math/Numbers/Vector2",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DViewpointNode,
-          ScalarInterpolator,
-          X3DConstants,
-          Camera,
-          Vector2,
-          Vector3,
-          Matrix4)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DViewpointNode from "./X3DViewpointNode.js";
+import ScalarInterpolator from "../Interpolation/ScalarInterpolator.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Camera from "../../../standard/Math/Geometry/Camera.js";
+import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+function Viewpoint (executionContext)
 {
-"use strict";
+   X3DViewpointNode .call (this, executionContext);
 
-   function Viewpoint (executionContext)
+   this .addType (X3DConstants .Viewpoint);
+
+   this ._position         .setUnit ("length");
+   this ._centerOfRotation .setUnit ("length");
+   this ._fieldOfView      .setUnit ("angle");
+
+   this .projectionMatrix        = new Matrix4 ();
+   this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
+}
+
+Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
+{
+   constructor: Viewpoint,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",          new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "position",          new Fields .SFVec3f (0, 0, 10)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",       new Fields .SFRotation ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfRotation",  new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",       new Fields .SFFloat (0.7854)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "jump",              new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",           new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",          new Fields .SFTime ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DViewpointNode .call (this, executionContext);
-
-      this .addType (X3DConstants .Viewpoint);
-
-      this ._position         .setUnit ("length");
-      this ._centerOfRotation .setUnit ("length");
-      this ._fieldOfView      .setUnit ("angle");
-
-      this .projectionMatrix        = new Matrix4 ();
-      this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
-   }
-
-   Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
+      return "Viewpoint";
+   },
+   getComponentName: function ()
    {
-      constructor: Viewpoint,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",          new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "position",          new Fields .SFVec3f (0, 0, 10)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",       new Fields .SFRotation ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfRotation",  new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",       new Fields .SFFloat (0.7854)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "jump",              new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",           new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",          new Fields .SFTime ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "Viewpoint";
-      },
-      getComponentName: function ()
-      {
-         return "Navigation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DViewpointNode .prototype .initialize .call (this);
+      return "Navigation";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DViewpointNode .prototype .initialize .call (this);
 
-         this .fieldOfViewInterpolator ._key = new Fields .MFFloat (0, 1);
-         this .fieldOfViewInterpolator .setup ();
+      this .fieldOfViewInterpolator ._key = new Fields .MFFloat (0, 1);
+      this .fieldOfViewInterpolator .setup ();
 
-         this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewInterpolator ._set_fraction);
-         this .fieldOfViewInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
-      },
-      setInterpolators: function (fromViewpointNode, toViewpointNode)
+      this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewInterpolator ._set_fraction);
+      this .fieldOfViewInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
+   },
+   setInterpolators: function (fromViewpointNode, toViewpointNode)
+   {
+      if (fromViewpointNode .getType () .includes (X3DConstants .Viewpoint) || fromViewpointNode .getType () .includes (X3DConstants .GeoViewpoint))
       {
-         if (fromViewpointNode .getType () .includes (X3DConstants .Viewpoint) || fromViewpointNode .getType () .includes (X3DConstants .GeoViewpoint))
-         {
-            const scale = fromViewpointNode .getFieldOfView () / toViewpointNode .getFieldOfView ();
+         const scale = fromViewpointNode .getFieldOfView () / toViewpointNode .getFieldOfView ();
 
-            this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
+         this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
 
-            this ._fieldOfViewScale = scale;
-         }
-         else
-         {
-            this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
-
-            this ._fieldOfViewScale = toViewpointNode ._fieldOfViewScale .getValue ();
-         }
-      },
-      getLogarithmicDepthBuffer: function ()
+         this ._fieldOfViewScale = scale;
+      }
+      else
       {
-         return false;
-      },
-      getFieldOfView: function ()
-      {
-         const fov = this ._fieldOfView .getValue () * this ._fieldOfViewScale .getValue ();
+         this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
 
-         return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
-      },
-      getScreenScale: function (point, viewport, screenScale)
+         this ._fieldOfViewScale = toViewpointNode ._fieldOfViewScale .getValue ();
+      }
+   },
+   getLogarithmicDepthBuffer: function ()
+   {
+      return false;
+   },
+   getFieldOfView: function ()
+   {
+      const fov = this ._fieldOfView .getValue () * this ._fieldOfViewScale .getValue ();
+
+      return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
+   },
+   getScreenScale: function (point, viewport, screenScale)
+   {
+      // Returns the screen scale in meter/pixel for on pixel.
+
+      const
+         width  = viewport [2],
+         height = viewport [3];
+
+      let size = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
+
+      if (width > height)
+         size /= height;
+      else
+         size /= width;
+
+      return screenScale .set (size, size, size);
+   },
+   getViewportSize: (function ()
+   {
+      const viewportSize = new Vector2 (0, 0);
+
+      return function (viewport, nearValue)
       {
-         // Returns the screen scale in meter/pixel for on pixel.
+         // Returns viewport size in meters.
 
          const
             width  = viewport [2],
-            height = viewport [3];
+            height = viewport [3],
+            size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
+            aspect = width / height;
 
-         let size = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
+         if (aspect > 1)
+            return viewportSize .set (size * aspect, size);
 
-         if (width > height)
-            size /= height;
-         else
-            size /= width;
-
-         return screenScale .set (size, size, size);
-      },
-      getViewportSize: (function ()
-      {
-         const viewportSize = new Vector2 (0, 0);
-
-         return function (viewport, nearValue)
-         {
-            // Returns viewport size in meters.
-
-            const
-               width  = viewport [2],
-               height = viewport [3],
-               size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
-               aspect = width / height;
-
-            if (aspect > 1)
-               return viewportSize .set (size * aspect, size);
-
-            return viewportSize .set (size, size / aspect);
-         };
-      })(),
-      getLookAtDistance: function (bbox)
-      {
-         return (bbox .size .magnitude () / 2) / Math .tan (this .getFieldOfView () / 2);
-      },
-      getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
-      {
-         return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
-      },
-   });
-
-   return Viewpoint;
+         return viewportSize .set (size, size / aspect);
+      };
+   })(),
+   getLookAtDistance: function (bbox)
+   {
+      return (bbox .size .magnitude () / 2) / Math .tan (this .getFieldOfView () / 2);
+   },
+   getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
+   {
+      return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
+   },
 });
+
+export default Viewpoint;

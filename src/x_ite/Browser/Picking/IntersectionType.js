@@ -47,17 +47,12 @@
  ******************************************************************************/
 
 
-define (function ()
+let i = 0;
+
+const IntersectionType =
 {
-"use strict";
+   BOUNDS:   i ++,
+   GEOMETRY: i ++,
+};
 
-   let i = 0;
-
-   const IntersectionType =
-   {
-      BOUNDS:   i ++,
-      GEOMETRY: i ++,
-   };
-
-   return IntersectionType;
-});
+export default IntersectionType;

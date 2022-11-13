@@ -47,189 +47,177 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Components/Grouping/X3DBoundedObject",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Browser/Core/TextureQuality",
-   "x_ite/Browser/VolumeRendering/VolumeMaterial",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DChildNode,
-          X3DBoundedObject,
-          X3DConstants,
-          TextureQuality,
-          VolumeMaterial,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DChildNode from "../Core/X3DChildNode.js";
+import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import TextureQuality from "../../Browser/Core/TextureQuality.js";
+import VolumeMaterial from "../../Browser/VolumeRendering/VolumeMaterial.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+function X3DVolumeDataNode (executionContext)
 {
-"use strict";
+   X3DChildNode     .call (this, executionContext);
+   X3DBoundedObject .call (this, executionContext);
 
-   function X3DVolumeDataNode (executionContext)
+   this .addType (X3DConstants .X3DVolumeDataNode);
+
+   this .proximitySensorNode      = executionContext .createNode ("ProximitySensor",     false);
+   this .transformNode            = executionContext .createNode ("Transform",           false);
+   this .shapeNode                = executionContext .createNode ("Shape",               false);
+   this .appearanceNode           = executionContext .createNode ("Appearance",          false);
+   this .textureTransformNode     = executionContext .createNode ("TextureTransform3D",  false);
+   this .geometryNode             = executionContext .createNode ("QuadSet",             false);
+   this .textureCoordinateNode    = executionContext .createNode ("TextureCoordinate3D", false);
+   this .coordinateNode           = executionContext .createNode ("Coordinate",          false);
+   this .volumeMaterialNode       = new VolumeMaterial (executionContext, this);
+   this .textureNormalMatrixArray = new Float32Array (9);
+
+   this .setCameraObject (true);
+}
+
+X3DVolumeDataNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   X3DBoundedObject .prototype,
+{
+   constructor: X3DVolumeDataNode,
+   initialize: function ()
    {
-      X3DChildNode     .call (this, executionContext);
-      X3DBoundedObject .call (this, executionContext);
+      X3DChildNode     .prototype .initialize .call (this);
+      X3DBoundedObject .prototype .initialize .call (this);
 
-      this .addType (X3DConstants .X3DVolumeDataNode);
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
 
-      this .proximitySensorNode      = executionContext .createNode ("ProximitySensor",     false);
-      this .transformNode            = executionContext .createNode ("Transform",           false);
-      this .shapeNode                = executionContext .createNode ("Shape",               false);
-      this .appearanceNode           = executionContext .createNode ("Appearance",          false);
-      this .textureTransformNode     = executionContext .createNode ("TextureTransform3D",  false);
-      this .geometryNode             = executionContext .createNode ("QuadSet",             false);
-      this .textureCoordinateNode    = executionContext .createNode ("TextureCoordinate3D", false);
-      this .coordinateNode           = executionContext .createNode ("Coordinate",          false);
-      this .volumeMaterialNode       = new VolumeMaterial (executionContext, this);
-      this .textureNormalMatrixArray = new Float32Array (9);
+      browser .getBrowserOptions () ._TextureQuality .addInterest ("set_dimensions__", this);
 
-      this .setCameraObject (true);
-   }
+      if (gl .getVersion () >= 2)
+      {
+         this ._dimensions .addInterest ("set_dimensions__", this);
 
-   X3DVolumeDataNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-      X3DBoundedObject .prototype,
+         this .set_dimensions__ ();
+      }
+
+      this ._visible     .addFieldInterest (this .transformNode ._visible);
+      this ._bboxDisplay .addFieldInterest (this .transformNode ._bboxDisplay);
+
+      this .proximitySensorNode ._size         = new Fields .SFVec3f (-1, -1, -1);
+      this .transformNode ._children           = new Fields .MFNode (this .shapeNode);
+      this .shapeNode ._appearance             = this .appearanceNode;
+      this .shapeNode ._geometry               = this .geometryNode;
+      this .appearanceNode ._alphaMode         = "BLEND";
+      this .appearanceNode ._material          = this .volumeMaterialNode;
+      this .appearanceNode ._textureTransform  = this .textureTransformNode;
+      this .textureTransformNode ._translation = new Fields .SFVec3f (0.5, 0.5, 0.5);
+      this .textureTransformNode ._center      = new Fields .SFVec3f (-0.5, -0.5, -0.5);
+      this .geometryNode ._texCoord            = this .textureCoordinateNode;
+      this .geometryNode ._coord               = this .coordinateNode;
+
+      this .coordinateNode        .setPrivate (true);
+      this .textureCoordinateNode .setPrivate (true);
+      this .geometryNode          .setPrivate (true);
+      this .textureTransformNode  .setPrivate (true);
+      this .volumeMaterialNode    .setPrivate (true);
+      this .appearanceNode        .setPrivate (true);
+      this .shapeNode             .setPrivate (true);
+      this .transformNode         .setPrivate (true);
+      this .proximitySensorNode   .setPrivate (true);
+
+      this .coordinateNode        .setup ();
+      this .textureCoordinateNode .setup ();
+      this .geometryNode          .setup ();
+      this .textureTransformNode  .setup ();
+      this .volumeMaterialNode    .setup ();
+      this .appearanceNode        .setup ();
+      this .shapeNode             .setup ();
+      this .transformNode         .setup ();
+      this .proximitySensorNode   .setup ();
+
+      this .proximitySensorNode ._orientation_changed .addFieldInterest (this .transformNode ._rotation);
+      this .proximitySensorNode ._orientation_changed .addFieldInterest (this .textureTransformNode ._rotation);
+
+      this .textureTransformNode .addInterest ("set_textureTransform__", this);
+
+      this .set_textureTransform__ ();
+   },
+   getBBox: function (bbox, shadows)
    {
-      constructor: X3DVolumeDataNode,
-      initialize: function ()
+      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+         return bbox .set (this ._dimensions .getValue (), Vector3 .Zero);
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+   },
+   getAppearance: function ()
+   {
+      return this .appearanceNode;
+   },
+   updateShader: function ()
+   {
+      this .volumeMaterialNode .getVolumeShaders () .clear ();
+   },
+   addShaderUniformNames: function (uniformNames)
+   {
+      uniformNames .push ("x3d_TextureNormalMatrix");
+   },
+   getNumPlanes: function ()
+   {
+      switch (this .getBrowser () .getBrowserOptions () .getTextureQuality ())
       {
-         X3DChildNode     .prototype .initialize .call (this);
-         X3DBoundedObject .prototype .initialize .call (this);
-
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
-
-         browser .getBrowserOptions () ._TextureQuality .addInterest ("set_dimensions__", this);
-
-         if (gl .getVersion () >= 2)
+         case TextureQuality .LOW:
          {
-            this ._dimensions .addInterest ("set_dimensions__", this);
-
-            this .set_dimensions__ ();
+            return 200;
          }
-
-         this ._visible     .addFieldInterest (this .transformNode ._visible);
-         this ._bboxDisplay .addFieldInterest (this .transformNode ._bboxDisplay);
-
-         this .proximitySensorNode ._size         = new Fields .SFVec3f (-1, -1, -1);
-         this .transformNode ._children           = new Fields .MFNode (this .shapeNode);
-         this .shapeNode ._appearance             = this .appearanceNode;
-         this .shapeNode ._geometry               = this .geometryNode;
-         this .appearanceNode ._alphaMode         = "BLEND";
-         this .appearanceNode ._material          = this .volumeMaterialNode;
-         this .appearanceNode ._textureTransform  = this .textureTransformNode;
-         this .textureTransformNode ._translation = new Fields .SFVec3f (0.5, 0.5, 0.5);
-         this .textureTransformNode ._center      = new Fields .SFVec3f (-0.5, -0.5, -0.5);
-         this .geometryNode ._texCoord            = this .textureCoordinateNode;
-         this .geometryNode ._coord               = this .coordinateNode;
-
-         this .coordinateNode        .setPrivate (true);
-         this .textureCoordinateNode .setPrivate (true);
-         this .geometryNode          .setPrivate (true);
-         this .textureTransformNode  .setPrivate (true);
-         this .volumeMaterialNode    .setPrivate (true);
-         this .appearanceNode        .setPrivate (true);
-         this .shapeNode             .setPrivate (true);
-         this .transformNode         .setPrivate (true);
-         this .proximitySensorNode   .setPrivate (true);
-
-         this .coordinateNode        .setup ();
-         this .textureCoordinateNode .setup ();
-         this .geometryNode          .setup ();
-         this .textureTransformNode  .setup ();
-         this .volumeMaterialNode    .setup ();
-         this .appearanceNode        .setup ();
-         this .shapeNode             .setup ();
-         this .transformNode         .setup ();
-         this .proximitySensorNode   .setup ();
-
-         this .proximitySensorNode ._orientation_changed .addFieldInterest (this .transformNode ._rotation);
-         this .proximitySensorNode ._orientation_changed .addFieldInterest (this .textureTransformNode ._rotation);
-
-         this .textureTransformNode .addInterest ("set_textureTransform__", this);
-
-         this .set_textureTransform__ ();
-      },
-      getBBox: function (bbox, shadows)
-      {
-         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-            return bbox .set (this ._dimensions .getValue (), Vector3 .Zero);
-
-         return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-      },
-      getAppearance: function ()
-      {
-         return this .appearanceNode;
-      },
-      updateShader: function ()
-      {
-         this .volumeMaterialNode .getVolumeShaders () .clear ();
-      },
-      addShaderUniformNames: function (uniformNames)
-      {
-         uniformNames .push ("x3d_TextureNormalMatrix");
-      },
-      getNumPlanes: function ()
-      {
-         switch (this .getBrowser () .getBrowserOptions () .getTextureQuality ())
+         case TextureQuality .MEDIUM:
          {
-            case TextureQuality .LOW:
-            {
-               return 200;
-            }
-            case TextureQuality .MEDIUM:
-            {
-               return 400;
-            }
-            case TextureQuality .HIGH:
-            {
-               return 600;
-            }
+            return 400;
          }
-
-         return 200;
-      },
-      set_dimensions__: function ()
-      {
-         const
-            NUM_PLANES = this .getNumPlanes (),
-            size       = this ._dimensions .getValue () .magnitude (),
-            size1_2    = size / 2,
-            points     = [ ];
-
-         this .coordinateNode ._point .length = 0;
-
-         for (let i = 0; i < NUM_PLANES; ++ i)
+         case TextureQuality .HIGH:
          {
-            const z = i / (NUM_PLANES - 1) - 0.5;
-
-            points .push ( size1_2,  size1_2, size * z,
-                          -size1_2,  size1_2, size * z,
-                          -size1_2, -size1_2, size * z,
-                           size1_2, -size1_2, size * z);
+            return 600;
          }
+      }
 
-         this .coordinateNode ._point        = points;
-         this .textureCoordinateNode ._point = points;
-         this .textureTransformNode ._scale  = new Fields .SFVec3f (1 / this ._dimensions .x,
-                                                                    1 / this ._dimensions .y,
-                                                                    1 / this ._dimensions .z);
-      },
-      set_textureTransform__: function ()
-      {
-         this .textureNormalMatrixArray .set (this .textureTransformNode .getMatrix () .submatrix .inverse ());
-      },
-      traverse: function (type, renderObject)
-      {
-         this .proximitySensorNode .traverse (type, renderObject);
-         this .transformNode       .traverse (type, renderObject);
-      },
-      setShaderUniforms (gl, shaderObject)
-      {
-         gl .uniformMatrix3fv (shaderObject .x3d_TextureNormalMatrix, true, this .textureNormalMatrixArray);
-      },
-   });
+      return 200;
+   },
+   set_dimensions__: function ()
+   {
+      const
+         NUM_PLANES = this .getNumPlanes (),
+         size       = this ._dimensions .getValue () .magnitude (),
+         size1_2    = size / 2,
+         points     = [ ];
 
-   return X3DVolumeDataNode;
+      this .coordinateNode ._point .length = 0;
+
+      for (let i = 0; i < NUM_PLANES; ++ i)
+      {
+         const z = i / (NUM_PLANES - 1) - 0.5;
+
+         points .push ( size1_2,  size1_2, size * z,
+                       -size1_2,  size1_2, size * z,
+                       -size1_2, -size1_2, size * z,
+                        size1_2, -size1_2, size * z);
+      }
+
+      this .coordinateNode ._point        = points;
+      this .textureCoordinateNode ._point = points;
+      this .textureTransformNode ._scale  = new Fields .SFVec3f (1 / this ._dimensions .x,
+                                                                 1 / this ._dimensions .y,
+                                                                 1 / this ._dimensions .z);
+   },
+   set_textureTransform__: function ()
+   {
+      this .textureNormalMatrixArray .set (this .textureTransformNode .getMatrix () .submatrix .inverse ());
+   },
+   traverse: function (type, renderObject)
+   {
+      this .proximitySensorNode .traverse (type, renderObject);
+      this .transformNode       .traverse (type, renderObject);
+   },
+   setShaderUniforms (gl, shaderObject)
+   {
+      gl .uniformMatrix3fv (shaderObject .x3d_TextureNormalMatrix, true, this .textureNormalMatrixArray);
+   },
 });
+
+export default X3DVolumeDataNode;

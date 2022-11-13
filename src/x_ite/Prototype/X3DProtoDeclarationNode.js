@@ -47,72 +47,61 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/SupportedNodes",
-   "x_ite/Fields",
-   "x_ite/Base/X3DBaseNode",
-   "x_ite/Components/Core/X3DPrototypeInstance",
-   "x_ite/Fields/SFNodeCache",
-   "x_ite/Base/X3DConstants",
-],
-function (SupportedNodes,
-          Fields,
-          X3DBaseNode,
-          X3DPrototypeInstance,
-          SFNodeCache,
-          X3DConstants)
+import SupportedNodes from "../Configuration/SupportedNodes.js";
+import Fields from "../Fields.js";
+import X3DBaseNode from "../Base/X3DBaseNode.js";
+import X3DPrototypeInstance from "../Components/Core/X3DPrototypeInstance.js";
+import SFNodeCache from "../Fields/SFNodeCache.js";
+import X3DConstants from "../Base/X3DConstants.js";
+
+SupportedNodes .addAbstractType ("X3DProtoDeclarationNode", X3DProtoDeclarationNode);
+
+function X3DProtoDeclarationNode (executionContext)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
 
-   SupportedNodes .addAbstractType ("X3DProtoDeclarationNode", X3DProtoDeclarationNode);
+   this .addType (X3DConstants .X3DProtoDeclarationNode);
 
-   function X3DProtoDeclarationNode (executionContext)
+   this .addChildObjects ("updateInstances", new Fields .SFTime ());
+}
+
+X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: X3DProtoDeclarationNode,
+   canUserDefinedFields: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DProtoDeclarationNode);
-
-      this .addChildObjects ("updateInstances", new Fields .SFTime ());
-   }
-
-   X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return true;
+   },
+   createInstance: function (executionContext, setup = true)
    {
-      constructor: X3DProtoDeclarationNode,
-      canUserDefinedFields: function ()
+      if (setup === false)
       {
-         return true;
-      },
-      createInstance: function (executionContext, setup = true)
+         return new X3DPrototypeInstance (executionContext, this);
+      }
+      else
       {
-         if (setup === false)
-         {
-            return new X3DPrototypeInstance (executionContext, this);
-         }
-         else
-         {
-            const instance = new X3DPrototypeInstance (executionContext, this);
+         const instance = new X3DPrototypeInstance (executionContext, this);
 
-            instance .setup ();
+         instance .setup ();
 
-            return SFNodeCache .get (instance);
-         }
-      },
-      newInstance: function ()
-      {
-         return this .createInstance (this .getExecutionContext ());
-      },
-      requestUpdateInstances: function ()
-      {
-         this ._updateInstances = this .getBrowser () .getCurrentTime ();
-      },
-      updateInstances: function ()
-      {
-         this ._updateInstances .processEvent ();
-      },
-   });
-
-   for (const key of Reflect .ownKeys (X3DProtoDeclarationNode .prototype))
-      Object .defineProperty (X3DProtoDeclarationNode .prototype, key, { enumerable: false });
-
-   return X3DProtoDeclarationNode;
+         return SFNodeCache .get (instance);
+      }
+   },
+   newInstance: function ()
+   {
+      return this .createInstance (this .getExecutionContext ());
+   },
+   requestUpdateInstances: function ()
+   {
+      this ._updateInstances = this .getBrowser () .getCurrentTime ();
+   },
+   updateInstances: function ()
+   {
+      this ._updateInstances .processEvent ();
+   },
 });
+
+for (const key of Reflect .ownKeys (X3DProtoDeclarationNode .prototype))
+   Object .defineProperty (X3DProtoDeclarationNode .prototype, key, { enumerable: false });
+
+export default X3DProtoDeclarationNode;

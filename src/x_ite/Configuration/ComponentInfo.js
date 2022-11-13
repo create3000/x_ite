@@ -47,60 +47,53 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DObject",
-   "x_ite/InputOutput/Generator",
-],
-function (X3DObject,
-          Generator)
+import X3DObject from "../Base/X3DObject.js";
+import Generator from "../InputOutput/Generator.js";
+
+function ComponentInfo (name, level, title, providerUrl)
 {
-"use strict";
+   this .name        = name;
+   this .level       = level;
+   this .title       = title;
+   this .providerUrl = providerUrl;
+}
 
-   function ComponentInfo (name, level, title, providerUrl)
+ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
+{
+   constructor: ComponentInfo,
+   getTypeName: function ()
    {
-      this .name        = name;
-      this .level       = level;
-      this .title       = title;
-      this .providerUrl = providerUrl;
-   }
-
-   ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
+      return "ComponentInfo";
+   },
+   toVRMLStream: function (stream)
    {
-      constructor: ComponentInfo,
-      getTypeName: function ()
-      {
-         return "ComponentInfo";
-      },
-      toVRMLStream: function (stream)
-      {
-         stream .string += "COMPONENT";
-         stream .string += " ";
-         stream .string += this .name;
-         stream .string += " ";
-         stream .string += ":";
-         stream .string += " ";
-         stream .string += this .level;
-      },
-      toXMLStream: function (stream)
-      {
-         const generator = Generator .Get (stream);
+      stream .string += "COMPONENT";
+      stream .string += " ";
+      stream .string += this .name;
+      stream .string += " ";
+      stream .string += ":";
+      stream .string += " ";
+      stream .string += this .level;
+   },
+   toXMLStream: function (stream)
+   {
+      const generator = Generator .Get (stream);
 
-         stream .string += generator .Indent ();
-         stream .string += "<component";
-         stream .string += " ";
-         stream .string += "name='";
-         stream .string += this .name;
-         stream .string += "'";
-         stream .string += " ";
-         stream .string += "level='";
-         stream .string += this .level;
-         stream .string += "'";
-         stream .string += "/>";
-      },
-   });
-
-   for (const key of Reflect .ownKeys (ComponentInfo .prototype))
-      Object .defineProperty (ComponentInfo .prototype, key, { enumerable: false });
-
-   return ComponentInfo;
+      stream .string += generator .Indent ();
+      stream .string += "<component";
+      stream .string += " ";
+      stream .string += "name='";
+      stream .string += this .name;
+      stream .string += "'";
+      stream .string += " ";
+      stream .string += "level='";
+      stream .string += this .level;
+      stream .string += "'";
+      stream .string += "/>";
+   },
 });
+
+for (const key of Reflect .ownKeys (ComponentInfo .prototype))
+   Object .defineProperty (ComponentInfo .prototype, key, { enumerable: false });
+
+export default ComponentInfo;

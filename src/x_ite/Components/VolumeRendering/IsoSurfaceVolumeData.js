@@ -47,259 +47,219 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/VolumeRendering/X3DVolumeDataNode",
-   "x_ite/Components/Shaders/ComposedShader",
-   "x_ite/Components/Shaders/ShaderPart",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Base/X3DCast",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DVolumeDataNode,
-          ComposedShader,
-          ShaderPart,
-          X3DConstants,
-          X3DCast)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DVolumeDataNode from "./X3DVolumeDataNode.js";
+import ComposedShader from "../Shaders/ComposedShader.js";
+import ShaderPart from "../Shaders/ShaderPart.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast from "../../Base/X3DCast.js";
+
+function IsoSurfaceVolumeData (executionContext)
 {
-"use strict";
+   X3DVolumeDataNode .call (this, executionContext);
 
-   function IsoSurfaceVolumeData (executionContext)
+   this .addType (X3DConstants .IsoSurfaceVolumeData);
+
+   this .renderStyleNodes = [ ];
+}
+
+IsoSurfaceVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
+{
+   constructor: IsoSurfaceVolumeData,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",       new Fields .SFVec3f (1, 1, 1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "contourStepSize",  new Fields .SFFloat (0)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceValues",    new Fields .MFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceTolerance", new Fields .SFFloat (0)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f (0, 0, 0)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "renderStyle",      new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "gradients",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "voxels",           new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DVolumeDataNode .call (this, executionContext);
-
-      this .addType (X3DConstants .IsoSurfaceVolumeData);
-
-      this .renderStyleNodes = [ ];
-   }
-
-   IsoSurfaceVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
+      return "IsoSurfaceVolumeData";
+   },
+   getComponentName: function ()
    {
-      constructor: IsoSurfaceVolumeData,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",       new Fields .SFVec3f (1, 1, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "contourStepSize",  new Fields .SFFloat (0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceValues",    new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceTolerance", new Fields .SFFloat (0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f (0, 0, 0)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "renderStyle",      new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "gradients",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "voxels",           new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
+      return "VolumeRendering";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DVolumeDataNode .prototype .initialize .call (this);
+
+      const gl = this .getBrowser () .getContext ();
+
+      if (gl .getVersion () < 2)
+         return;
+
+      this ._gradients          .addInterest ("set_gradients__",   this);
+      this ._renderStyle        .addInterest ("set_renderStyle__", this);
+
+      this ._contourStepSize    .addInterest ("updateShader", this);
+      this ._surfaceValues      .addInterest ("updateShader", this);
+      this ._surfaceTolerance   .addInterest ("updateShader", this);
+      this ._renderStyle        .addInterest ("updateShader", this);
+
+      this .getAppearance () ._texture = this ._voxels;
+
+      this .set_gradients__ ();
+      this .set_renderStyle__ ();
+      this .set_voxels__ ();
+
+      this .updateShader ();
+   },
+   set_gradients__: function ()
+   {
+      this .gradientsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._gradients);
+   },
+   set_renderStyle__: function ()
+   {
+      const renderStyleNodes = this .renderStyleNodes;
+
+      for (const renderStyleNode of renderStyleNodes)
       {
-         return "IsoSurfaceVolumeData";
-      },
-      getComponentName: function ()
+         renderStyleNode .removeInterest ("updateShader", this);
+         renderStyleNode .removeVolumeData (this);
+      }
+
+      renderStyleNodes .length = 0;
+
+      for (const node of this ._renderStyle)
       {
-         return "VolumeRendering";
-      },
-      getContainerField: function ()
+         const renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, node);
+
+         if (renderStyleNode)
+            renderStyleNodes .push (renderStyleNode);
+      }
+
+      for (const renderStyleNode of renderStyleNodes)
       {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DVolumeDataNode .prototype .initialize .call (this);
+         renderStyleNode .addInterest ("updateShader", this);
+         renderStyleNode .addVolumeData (this);
+      }
+   },
+   set_voxels__: function ()
+   {
+      this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
-         const gl = this .getBrowser () .getContext ();
-
-         if (gl .getVersion () < 2)
-            return;
-
-         this ._gradients          .addInterest ("set_gradients__",   this);
-         this ._renderStyle        .addInterest ("set_renderStyle__", this);
-
-         this ._contourStepSize    .addInterest ("updateShader", this);
-         this ._surfaceValues      .addInterest ("updateShader", this);
-         this ._surfaceTolerance   .addInterest ("updateShader", this);
-         this ._renderStyle        .addInterest ("updateShader", this);
-
+      if (this .voxelsNode)
          this .getAppearance () ._texture = this ._voxels;
+      else
+         this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
+   },
+   createShader: function (options, vs, fs)
+   {
+      // if (DEBUG)
+      //    console .log ("Creating VolumeData Shader ...");
 
-         this .set_gradients__ ();
-         this .set_renderStyle__ ();
-         this .set_voxels__ ();
+      const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
 
-         this .updateShader ();
-      },
-      set_gradients__: function ()
+      let
+         styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
+         styleFunctions = opacityMapVolumeStyle .getFunctionsText ();
+
+      styleUniforms  += "\n";
+      styleUniforms  += "uniform float surfaceValues [" + this ._surfaceValues .length + "];\n";
+      styleUniforms  += "uniform float surfaceTolerance;\n";
+
+      for (const renderStyleNode of this .renderStyleNodes)
+         styleUniforms  += renderStyleNode .getUniformsText ();
+
+      styleFunctions += "\n";
+      styleFunctions += "   // IsoSurfaceVolumeData\n";
+      styleFunctions += "\n";
+
+      if (this .gradientsNode)
       {
-         this .gradientsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._gradients);
-      },
-      set_renderStyle__: function ()
+         styleUniforms += "\n";
+         styleUniforms += "uniform sampler3D gradients;\n";
+
+         styleFunctions += "   if (length (texture (gradients, texCoord) .xyz * 2.0 - 1.0) < surfaceTolerance)\n";
+         styleFunctions += "      discard;\n";
+      }
+      else
       {
-         const renderStyleNodes = this .renderStyleNodes;
+         styleUniforms += "\n";
+         styleUniforms += "vec4\n";
+         styleUniforms += "getNormal (in vec3 texCoord)\n";
+         styleUniforms += "{\n";
+         styleUniforms += "   vec4  offset = vec4 (1.0 / vec3 (textureSize (x3d_Texture3D [0], 0)), 0.0);\n";
+         styleUniforms += "   float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
+         styleUniforms += "   float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
+         styleUniforms += "   float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
+         styleUniforms += "   float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
+         styleUniforms += "   float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
+         styleUniforms += "   float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
+         styleUniforms += "   vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
+         styleUniforms += "\n";
+         styleUniforms += "   return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
+         styleUniforms += "}\n";
 
-         for (const renderStyleNode of renderStyleNodes)
-         {
-            renderStyleNode .removeInterest ("updateShader", this);
-            renderStyleNode .removeVolumeData (this);
-         }
+         styleFunctions += "   if (getNormal (texCoord) .w < surfaceTolerance)\n";
+         styleFunctions += "      discard;\n";
+      }
 
-         renderStyleNodes .length = 0;
+      styleFunctions += "\n";
+      styleFunctions += "   float intensity = textureColor .r;\n";
+      styleFunctions += "\n";
 
-         for (const node of this ._renderStyle)
-         {
-            const renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, node);
-
-            if (renderStyleNode)
-               renderStyleNodes .push (renderStyleNode);
-         }
-
-         for (const renderStyleNode of renderStyleNodes)
-         {
-            renderStyleNode .addInterest ("updateShader", this);
-            renderStyleNode .addVolumeData (this);
-         }
-      },
-      set_voxels__: function ()
+      if (this ._surfaceValues .length === 1)
       {
-         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
+         const contourStepSize = Math .abs (this ._contourStepSize .getValue ());
 
-         if (this .voxelsNode)
-            this .getAppearance () ._texture = this ._voxels;
-         else
-            this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
-      },
-      createShader: function (options, vs, fs)
-      {
-         // if (DEBUG)
-         //    console .log ("Creating VolumeData Shader ...");
-
-         const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
-
-         let
-            styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
-            styleFunctions = opacityMapVolumeStyle .getFunctionsText ();
-
-         styleUniforms  += "\n";
-         styleUniforms  += "uniform float surfaceValues [" + this ._surfaceValues .length + "];\n";
-         styleUniforms  += "uniform float surfaceTolerance;\n";
-
-         for (const renderStyleNode of this .renderStyleNodes)
-            styleUniforms  += renderStyleNode .getUniformsText ();
-
-         styleFunctions += "\n";
-         styleFunctions += "   // IsoSurfaceVolumeData\n";
-         styleFunctions += "\n";
-
-         if (this .gradientsNode)
+         if (contourStepSize === 0)
          {
-            styleUniforms += "\n";
-            styleUniforms += "uniform sampler3D gradients;\n";
+            styleFunctions += "   if (intensity > surfaceValues [0])\n";
+            styleFunctions += "   {\n";
+            styleFunctions += "      textureColor = vec4 (vec3 (surfaceValues [0]), 1.0);\n";
 
-            styleFunctions += "   if (length (texture (gradients, texCoord) .xyz * 2.0 - 1.0) < surfaceTolerance)\n";
-            styleFunctions += "      discard;\n";
-         }
-         else
-         {
-            styleUniforms += "\n";
-            styleUniforms += "vec4\n";
-            styleUniforms += "getNormal (in vec3 texCoord)\n";
-            styleUniforms += "{\n";
-            styleUniforms += "   vec4  offset = vec4 (1.0 / vec3 (textureSize (x3d_Texture3D [0], 0)), 0.0);\n";
-            styleUniforms += "   float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
-            styleUniforms += "   float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
-            styleUniforms += "   float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
-            styleUniforms += "   float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
-            styleUniforms += "   float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
-            styleUniforms += "   float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
-            styleUniforms += "   vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
-            styleUniforms += "\n";
-            styleUniforms += "   return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
-            styleUniforms += "}\n";
-
-            styleFunctions += "   if (getNormal (texCoord) .w < surfaceTolerance)\n";
-            styleFunctions += "      discard;\n";
-         }
-
-         styleFunctions += "\n";
-         styleFunctions += "   float intensity = textureColor .r;\n";
-         styleFunctions += "\n";
-
-         if (this ._surfaceValues .length === 1)
-         {
-            const contourStepSize = Math .abs (this ._contourStepSize .getValue ());
-
-            if (contourStepSize === 0)
+            if (this .renderStyleNodes .length)
             {
-               styleFunctions += "   if (intensity > surfaceValues [0])\n";
-               styleFunctions += "   {\n";
-               styleFunctions += "      textureColor = vec4 (vec3 (surfaceValues [0]), 1.0);\n";
-
-               if (this .renderStyleNodes .length)
-               {
-                  styleFunctions += this .renderStyleNodes [0] .getFunctionsText ();
-               }
-
-               styleFunctions += "   }\n";
-               styleFunctions += "   else\n";
-               styleFunctions += "   {\n";
-               styleFunctions += "      discard;\n";
-               styleFunctions += "   }\n";
-               styleFunctions += "\n";
+               styleFunctions += this .renderStyleNodes [0] .getFunctionsText ();
             }
-            else
-            {
-               const surfaceValues = [ ];
 
-               for (let v = this ._surfaceValues [0] - contourStepSize; v > 0; v -= contourStepSize)
-                  surfaceValues .unshift (v);
-
-               surfaceValues .push (this ._surfaceValues [0]);
-
-               for (let v = this ._surfaceValues [0] + contourStepSize; v < 1; v += contourStepSize)
-                  surfaceValues .push (v);
-
-               styleFunctions += "   if (false)\n";
-               styleFunctions += "   { }\n";
-
-               for (let i = this ._surfaceValues .length - 1; i >= 0; -- i)
-               {
-                  styleFunctions += "   else if (intensity > " + surfaceValues [i] + ")\n";
-                  styleFunctions += "   {\n";
-                  styleFunctions += "      textureColor = vec4 (vec3 (" + surfaceValues [i] + "), 1.0);\n";
-
-                  if (this .renderStyleNodes .length)
-                  {
-                     styleFunctions += this .renderStyleNodes [0] .getFunctionsText ();
-                  }
-
-                  styleFunctions += "   }\n";
-               }
-
-               styleFunctions += "   else\n";
-               styleFunctions += "   {\n";
-               styleFunctions += "      discard;\n";
-               styleFunctions += "   }\n";
-               styleFunctions += "\n";
-            }
+            styleFunctions += "   }\n";
+            styleFunctions += "   else\n";
+            styleFunctions += "   {\n";
+            styleFunctions += "      discard;\n";
+            styleFunctions += "   }\n";
+            styleFunctions += "\n";
          }
          else
          {
+            const surfaceValues = [ ];
+
+            for (let v = this ._surfaceValues [0] - contourStepSize; v > 0; v -= contourStepSize)
+               surfaceValues .unshift (v);
+
+            surfaceValues .push (this ._surfaceValues [0]);
+
+            for (let v = this ._surfaceValues [0] + contourStepSize; v < 1; v += contourStepSize)
+               surfaceValues .push (v);
+
             styleFunctions += "   if (false)\n";
             styleFunctions += "   { }\n";
 
             for (let i = this ._surfaceValues .length - 1; i >= 0; -- i)
             {
-               styleFunctions += "   else if (intensity > surfaceValues [" + i + "])\n";
+               styleFunctions += "   else if (intensity > " + surfaceValues [i] + ")\n";
                styleFunctions += "   {\n";
-               styleFunctions += "      textureColor = vec4 (vec3 (surfaceValues [" + i + "]), 1.0);\n";
+               styleFunctions += "      textureColor = vec4 (vec3 (" + surfaceValues [i] + "), 1.0);\n";
 
                if (this .renderStyleNodes .length)
                {
-                  const r = Math .min (i, this .renderStyleNodes .length - 1);
-
-                  styleFunctions += this .renderStyleNodes [r] .getFunctionsText ();
+                  styleFunctions += this .renderStyleNodes [0] .getFunctionsText ();
                }
 
                styleFunctions += "   }\n";
@@ -311,56 +271,83 @@ function (Fields,
             styleFunctions += "   }\n";
             styleFunctions += "\n";
          }
+      }
+      else
+      {
+         styleFunctions += "   if (false)\n";
+         styleFunctions += "   { }\n";
 
-         fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
-         fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
+         for (let i = this ._surfaceValues .length - 1; i >= 0; -- i)
+         {
+            styleFunctions += "   else if (intensity > surfaceValues [" + i + "])\n";
+            styleFunctions += "   {\n";
+            styleFunctions += "      textureColor = vec4 (vec3 (surfaceValues [" + i + "]), 1.0);\n";
 
-         // if (DEBUG)
-         //    this .getBrowser () .print (fs);
+            if (this .renderStyleNodes .length)
+            {
+               const r = Math .min (i, this .renderStyleNodes .length - 1);
 
-         const vertexShader = new ShaderPart (this .getExecutionContext ());
-         vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
-         vertexShader .setPrivate (true);
-         vertexShader .setName ("VolumeDataVertexShader");
-         vertexShader .setOptions (options);
-         vertexShader .setup ();
+               styleFunctions += this .renderStyleNodes [r] .getFunctionsText ();
+            }
 
-         const fragmentShader = new ShaderPart (this .getExecutionContext ());
-         fragmentShader ._type = "FRAGMENT";
-         fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
-         fragmentShader .setPrivate (true);
-         fragmentShader .setName ("VolumeDataFragmentShader");
-         fragmentShader .setOptions (options);
-         fragmentShader .setup ();
+            styleFunctions += "   }\n";
+         }
 
-         const shaderNode = new ComposedShader (this .getExecutionContext ());
-         shaderNode ._language = "GLSL";
-         shaderNode ._parts .push (vertexShader);
-         shaderNode ._parts .push (fragmentShader);
-         shaderNode .setPrivate (true);
-         shaderNode .setName ("VolumeDataShader");
+         styleFunctions += "   else\n";
+         styleFunctions += "   {\n";
+         styleFunctions += "      discard;\n";
+         styleFunctions += "   }\n";
+         styleFunctions += "\n";
+      }
 
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceValues",    this ._surfaceValues    .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", this ._surfaceTolerance .copy ());
+      fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
+      fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
 
-         if (this .gradientsNode)
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "gradients", new Fields .SFNode (this .gradientsNode));
+      // if (DEBUG)
+      //    this .getBrowser () .print (fs);
 
-         opacityMapVolumeStyle .addShaderFields (shaderNode);
+      const vertexShader = new ShaderPart (this .getExecutionContext ());
+      vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
+      vertexShader .setPrivate (true);
+      vertexShader .setName ("VolumeDataVertexShader");
+      vertexShader .setOptions (options);
+      vertexShader .setup ();
 
-         for (const renderStyleNode of this .renderStyleNodes)
-            renderStyleNode .addShaderFields (shaderNode);
+      const fragmentShader = new ShaderPart (this .getExecutionContext ());
+      fragmentShader ._type = "FRAGMENT";
+      fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
+      fragmentShader .setPrivate (true);
+      fragmentShader .setName ("VolumeDataFragmentShader");
+      fragmentShader .setOptions (options);
+      fragmentShader .setup ();
 
-         const uniformNames = [ ];
+      const shaderNode = new ComposedShader (this .getExecutionContext ());
+      shaderNode ._language = "GLSL";
+      shaderNode ._parts .push (vertexShader);
+      shaderNode ._parts .push (fragmentShader);
+      shaderNode .setPrivate (true);
+      shaderNode .setName ("VolumeDataShader");
 
-         this .addShaderUniformNames (uniformNames);
+      shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceValues",    this ._surfaceValues    .copy ());
+      shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", this ._surfaceTolerance .copy ());
 
-         shaderNode .setUniformNames (uniformNames);
-         shaderNode .setup ();
+      if (this .gradientsNode)
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "gradients", new Fields .SFNode (this .gradientsNode));
 
-         return shaderNode;
-      },
-   });
+      opacityMapVolumeStyle .addShaderFields (shaderNode);
 
-   return IsoSurfaceVolumeData;
+      for (const renderStyleNode of this .renderStyleNodes)
+         renderStyleNode .addShaderFields (shaderNode);
+
+      const uniformNames = [ ];
+
+      this .addShaderUniformNames (uniformNames);
+
+      shaderNode .setUniformNames (uniformNames);
+      shaderNode .setup ();
+
+      return shaderNode;
+   },
 });
+
+export default IsoSurfaceVolumeData;

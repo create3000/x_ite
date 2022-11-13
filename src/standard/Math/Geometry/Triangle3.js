@@ -47,159 +47,150 @@
  ******************************************************************************/
 
 
-define ([
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Matrix4",
-   "libtess",
-],
-function (Vector3,
-          libtess_)
-{
-"use strict";
+import Vector3 from "../Numbers/Vector3.js";
 
-   return {
-      area: (function ()
+export default {
+   area: (function ()
+   {
+      const
+         B = new Vector3 (0, 0, 0),
+         C = new Vector3 (0, 0, 0);
+
+      return function (a, b, c)
       {
-         const
-            B = new Vector3 (0, 0, 0),
-            C = new Vector3 (0, 0, 0);
+         return B .assign (b) .subtract (a) .cross (C .assign (c) .subtract (a)) .magnitude () / 2;
+      };
+   })(),
+   normal: function (v1, v2, v3, normal)
+   {
+      const
+         x1 = v3 .x - v2 .x,
+         y1 = v3 .y - v2 .y,
+         z1 = v3 .z - v2 .z,
+         x2 = v1 .x - v2 .x,
+         y2 = v1 .y - v2 .y,
+         z2 = v1 .z - v2 .z;
 
-         return function (a, b, c)
+      normal .set (y1 * z2 - z1 * y2,
+                   z1 * x2 - x1 * z2,
+                   x1 * y2 - y1 * x2);
+
+      return normal .normalize ();
+   },
+   quadNormal: function (v1, v2, v3, v4, normal)
+   {
+      const
+         x1 = v3 .x - v1 .x,
+         y1 = v3 .y - v1 .y,
+         z1 = v3 .z - v1 .z,
+         x2 = v4 .x - v2 .x,
+         y2 = v4 .y - v2 .y,
+         z2 = v4 .z - v2 .z;
+
+      normal .set (y1 * z2 - z1 * y2,
+                   z1 * x2 - x1 * z2,
+                   x1 * y2 - y1 * x2);
+
+      return normal .normalize ();
+   },
+   triangulatePolygon: (function ()
+   {
+      const tessy = (function ()
+      {
+         // Function called for each vertex of tesselator output.
+         function vertexCallback (data, polyVertArray)
          {
-            return B .assign (b) .subtract (a) .cross (C .assign (c) .subtract (a)) .magnitude () / 2;
-         };
-      })(),
-      normal: function (v1, v2, v3, normal)
-      {
-         const
-            x1 = v3 .x - v2 .x,
-            y1 = v3 .y - v2 .y,
-            z1 = v3 .z - v2 .z,
-            x2 = v1 .x - v2 .x,
-            y2 = v1 .y - v2 .y,
-            z2 = v1 .z - v2 .z;
-
-         normal .set (y1 * z2 - z1 * y2,
-                      z1 * x2 - x1 * z2,
-                      x1 * y2 - y1 * x2);
-
-         return normal .normalize ();
-      },
-      quadNormal: function (v1, v2, v3, v4, normal)
-      {
-         const
-            x1 = v3 .x - v1 .x,
-            y1 = v3 .y - v1 .y,
-            z1 = v3 .z - v1 .z,
-            x2 = v4 .x - v2 .x,
-            y2 = v4 .y - v2 .y,
-            z2 = v4 .z - v2 .z;
-
-         normal .set (y1 * z2 - z1 * y2,
-                      z1 * x2 - x1 * z2,
-                      x1 * y2 - y1 * x2);
-
-         return normal .normalize ();
-      },
-      triangulatePolygon: (function ()
-      {
-         const tessy = (function ()
-         {
-            // Function called for each vertex of tesselator output.
-            function vertexCallback (data, polyVertArray)
-            {
-               //console .log (data);
-               polyVertArray [polyVertArray .length] = data;
-            }
-
-            function beginCallback (type)
-            {
-               if (type !== libtess .primitiveType .GL_TRIANGLES)
-                  console .log ('expected TRIANGLES but got type: ' + type);
-            }
-
-            function errorCallback (errno)
-            {
-               console .log ('error callback');
-               console .log ('error number: ' + errno);
-            }
-
-            // Callback for when segments intersect and must be split.
-            function combineCallback (coords, data, weight)
-            {
-               //console.log ('combine callback');
-               return data [0];
-            }
-
-            function edgeCallback (flag)
-            {
-               // Don't really care about the flag, but need no-strip/no-fan behavior.
-               // console .log ('edge flag: ' + flag);
-            }
-
-            const tessy = new libtess .GluTesselator ();
-
-            tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
-            tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_BEGIN,        beginCallback);
-            tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_ERROR,        errorCallback);
-            tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
-            tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_EDGE_FLAG,    edgeCallback);
-            tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_TOLERANCE,    0);
-            tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
-
-            return tessy;
-         })();
-
-         return function (/* contour, [ contour, ..., ] triangles */)
-         {
-            const triangles = arguments [arguments .length - 1];
-
-            tessy .gluTessBeginPolygon (triangles);
-
-            for (let i = 0, length = arguments .length - 1; i < length; ++ i)
-            {
-               tessy .gluTessBeginContour ();
-
-               for (const contour of arguments [i])
-               {
-                  tessy .gluTessVertex (contour, contour);
-               }
-
-               tessy .gluTessEndContour ();
-            }
-
-            tessy .gluTessEndPolygon ();
-
-            return triangles;
-         };
-      })(),
-      triangulateConvexPolygon: function (vertices, triangles)
-      {
-         // Fallback: Very simple triangulation for convex polygons.
-         for (let i = 1, length = vertices .length - 1; i < length; ++ i)
-            triangles .push (vertices [0], vertices [i], vertices [i + 1]);
-      },
-      getPolygonNormal: function (vertices, normal)
-      {
-         // Determine polygon normal.
-         // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
-
-         normal .set (0, 0, 0);
-
-         var next = vertices [0];
-
-         for (let i = 0, length = vertices .length; i < length; ++ i)
-         {
-            var
-               current = next,
-               next    = vertices [(i + 1) % length];
-
-            normal .x += (current .y - next .y) * (current .z + next .z);
-            normal .y += (current .z - next .z) * (current .x + next .x);
-            normal .z += (current .x - next .x) * (current .y + next .y);
+            //console .log (data);
+            polyVertArray [polyVertArray .length] = data;
          }
 
-         return normal .normalize ();
-      },
-   };
-});
+         function beginCallback (type)
+         {
+            if (type !== libtess .primitiveType .GL_TRIANGLES)
+               console .log ('expected TRIANGLES but got type: ' + type);
+         }
+
+         function errorCallback (errno)
+         {
+            console .log ('error callback');
+            console .log ('error number: ' + errno);
+         }
+
+         // Callback for when segments intersect and must be split.
+         function combineCallback (coords, data, weight)
+         {
+            //console.log ('combine callback');
+            return data [0];
+         }
+
+         function edgeCallback (flag)
+         {
+            // Don't really care about the flag, but need no-strip/no-fan behavior.
+            // console .log ('edge flag: ' + flag);
+         }
+
+         const tessy = new libtess .GluTesselator ();
+
+         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
+         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_BEGIN,        beginCallback);
+         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_ERROR,        errorCallback);
+         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_COMBINE,      combineCallback);
+         tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_EDGE_FLAG,    edgeCallback);
+         tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_TOLERANCE,    0);
+         tessy .gluTessProperty (libtess .gluEnum .GLU_TESS_WINDING_RULE, libtess .windingRule .GLU_TESS_WINDING_ODD);
+
+         return tessy;
+      })();
+
+      return function (/* contour, [ contour, ..., ] triangles */)
+      {
+         const triangles = arguments [arguments .length - 1];
+
+         tessy .gluTessBeginPolygon (triangles);
+
+         for (let i = 0, length = arguments .length - 1; i < length; ++ i)
+         {
+            tessy .gluTessBeginContour ();
+
+            for (const contour of arguments [i])
+            {
+               tessy .gluTessVertex (contour, contour);
+            }
+
+            tessy .gluTessEndContour ();
+         }
+
+         tessy .gluTessEndPolygon ();
+
+         return triangles;
+      };
+   })(),
+   triangulateConvexPolygon: function (vertices, triangles)
+   {
+      // Fallback: Very simple triangulation for convex polygons.
+      for (let i = 1, length = vertices .length - 1; i < length; ++ i)
+         triangles .push (vertices [0], vertices [i], vertices [i + 1]);
+   },
+   getPolygonNormal: function (vertices, normal)
+   {
+      // Determine polygon normal.
+      // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
+
+      normal .set (0, 0, 0);
+
+      var next = vertices [0];
+
+      for (let i = 0, length = vertices .length; i < length; ++ i)
+      {
+         var
+            current = next,
+            next    = vertices [(i + 1) % length];
+
+         normal .x += (current .y - next .y) * (current .z + next .z);
+         normal .y += (current .z - next .z) * (current .x + next .x);
+         normal .z += (current .x - next .x) * (current .y + next .y);
+      }
+
+      return normal .normalize ();
+   },
+};

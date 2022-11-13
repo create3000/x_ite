@@ -47,26 +47,19 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Rendering/X3DGeometricPropertyNode",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DGeometricPropertyNode,
-          X3DConstants)
+import X3DGeometricPropertyNode from "./X3DGeometricPropertyNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DNormalNode (executionContext)
 {
-"use strict";
+   X3DGeometricPropertyNode .call (this, executionContext);
 
-   function X3DNormalNode (executionContext)
-   {
-      X3DGeometricPropertyNode .call (this, executionContext);
+   this .addType (X3DConstants .X3DNormalNode);
+}
 
-      this .addType (X3DConstants .X3DNormalNode);
-   }
-
-   X3DNormalNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
-   {
-      constructor: X3DNormalNode,
-   });
-
-   return X3DNormalNode;
+X3DNormalNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+{
+   constructor: X3DNormalNode,
 });
+
+export default X3DNormalNode;

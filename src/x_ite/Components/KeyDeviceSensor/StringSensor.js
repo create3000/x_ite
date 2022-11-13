@@ -47,115 +47,105 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DKeyDeviceSensorNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DKeyDeviceSensorNode from "./X3DKeyDeviceSensorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function StringSensor (executionContext)
 {
-"use strict";
+   X3DKeyDeviceSensorNode .call (this, executionContext);
 
-   function StringSensor (executionContext)
+   this .addType (X3DConstants .StringSensor);
+}
+
+StringSensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
+{
+   constructor: StringSensor,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "deletionAllowed", new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "enteredText",     new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "finalText",       new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",        new Fields .SFBool ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DKeyDeviceSensorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .StringSensor);
-   }
-
-   StringSensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
+      return "StringSensor";
+   },
+   getComponentName: function ()
    {
-      constructor: StringSensor,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "deletionAllowed", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "enteredText",     new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "finalText",       new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",        new Fields .SFBool ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "StringSensor";
-      },
-      getComponentName: function ()
-      {
-         return "KeyDeviceSensor";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      keydown: function (event)
-      {
-         event .preventDefault ();
+      return "KeyDeviceSensor";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   keydown: function (event)
+   {
+      event .preventDefault ();
 
-         switch (event .key)
+      switch (event .key)
+      {
+         case "Backspace":
          {
-            case "Backspace":
+            if (this ._isActive .getValue ())
             {
-               if (this ._isActive .getValue ())
+               if (this ._deletionAllowed .getValue ())
                {
-                  if (this ._deletionAllowed .getValue ())
-                  {
-                     if (this ._enteredText .length)
-                        this ._enteredText  = this ._enteredText .getValue () .substr (0, this ._enteredText .length - 1);
-                  }
+                  if (this ._enteredText .length)
+                     this ._enteredText  = this ._enteredText .getValue () .substr (0, this ._enteredText .length - 1);
                }
-
-               break;
             }
-            case "Enter":
-            {
-               this ._finalText = this ._enteredText;
 
-               this ._enteredText .set ("");
-
-               if (this ._isActive .getValue ())
-                  this ._isActive = false;
-
-               break;
-            }
-            case "Escape":
-            {
-               this ._enteredText .set ("");
-
-               if (this ._isActive .getValue ())
-                  this ._isActive = false;
-
-               break;
-            }
-            case "Tab":
-            {
-               break;
-            }
-            default:
-            {
-               if (event .charCode || event .keyCode)
-               {
-                  if (event .key .length === 1)
-                  {
-                     if (! this ._isActive .getValue ())
-                     {
-                        this ._isActive    = true;
-                        this ._enteredText = "";
-                     }
-
-                     this ._enteredText = this ._enteredText .getValue () + event .key;
-                  }
-               }
-
-               break;
-            }
+            break;
          }
-      },
-   });
+         case "Enter":
+         {
+            this ._finalText = this ._enteredText;
 
-   return StringSensor;
+            this ._enteredText .set ("");
+
+            if (this ._isActive .getValue ())
+               this ._isActive = false;
+
+            break;
+         }
+         case "Escape":
+         {
+            this ._enteredText .set ("");
+
+            if (this ._isActive .getValue ())
+               this ._isActive = false;
+
+            break;
+         }
+         case "Tab":
+         {
+            break;
+         }
+         default:
+         {
+            if (event .charCode || event .keyCode)
+            {
+               if (event .key .length === 1)
+               {
+                  if (! this ._isActive .getValue ())
+                  {
+                     this ._isActive    = true;
+                     this ._enteredText = "";
+                  }
+
+                  this ._enteredText = this ._enteredText .getValue () + event .key;
+               }
+            }
+
+            break;
+         }
+      }
+   },
 });
+
+export default StringSensor;

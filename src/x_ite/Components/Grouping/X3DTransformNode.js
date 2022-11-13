@@ -47,45 +47,38 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Grouping/X3DTransformMatrix3DNode",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DTransformMatrix3DNode,
-          X3DConstants)
+import X3DTransformMatrix3DNode from "./X3DTransformMatrix3DNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DTransformNode (executionContext)
 {
-"use strict";
+   X3DTransformMatrix3DNode .call (this, executionContext);
 
-   function X3DTransformNode (executionContext)
+   this .addType (X3DConstants .X3DTransformNode);
+
+   this ._translation .setUnit ("length");
+   this ._center      .setUnit ("length");
+}
+
+X3DTransformNode .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
+{
+   constructor: X3DTransformNode,
+   initialize: function ()
    {
-      X3DTransformMatrix3DNode .call (this, executionContext);
+      X3DTransformMatrix3DNode .prototype .initialize .call (this);
 
-      this .addType (X3DConstants .X3DTransformNode);
+      this .addInterest ("eventsProcessed", this);
 
-      this ._translation .setUnit ("length");
-      this ._center      .setUnit ("length");
-   }
-
-   X3DTransformNode .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
+      this .eventsProcessed ();
+   },
+   eventsProcessed: function ()
    {
-      constructor: X3DTransformNode,
-      initialize: function ()
-      {
-         X3DTransformMatrix3DNode .prototype .initialize .call (this);
-
-         this .addInterest ("eventsProcessed", this);
-
-         this .eventsProcessed ();
-      },
-      eventsProcessed: function ()
-      {
-         this .setTransform (this ._translation      .getValue (),
-                             this ._rotation         .getValue (),
-                             this ._scale            .getValue (),
-                             this ._scaleOrientation .getValue (),
-                             this ._center           .getValue ());
-      },
-   });
-
-   return X3DTransformNode;
+      this .setTransform (this ._translation      .getValue (),
+                          this ._rotation         .getValue (),
+                          this ._scale            .getValue (),
+                          this ._scaleOrientation .getValue (),
+                          this ._center           .getValue ());
+   },
 });
+
+export default X3DTransformNode;

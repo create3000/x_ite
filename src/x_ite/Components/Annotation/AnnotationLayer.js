@@ -47,62 +47,50 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Layering/X3DLayerNode",
-   "x_ite/Components/Navigation/Viewpoint",
-   "x_ite/Components/Grouping/Group",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DLayerNode,
-          Viewpoint,
-          Group,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DLayerNode from "../Layering/X3DLayerNode.js";
+import Viewpoint from "../Navigation/Viewpoint.js";
+import Group from "../Grouping/Group.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function AnnotationLayer (executionContext)
 {
-"use strict";
+   X3DLayerNode .call (this,
+                       executionContext,
+                       new Viewpoint (executionContext),
+                       new Group (executionContext));
 
-   function AnnotationLayer (executionContext)
+   this .addType (X3DConstants .AnnotationLayer);
+}
+
+AnnotationLayer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
+{
+   constructor: AnnotationLayer,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "isPickable",   new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "layoutPolicy", new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "shownGroupID", new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "viewport",     new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DLayerNode .call (this,
-                          executionContext,
-                          new Viewpoint (executionContext),
-                          new Group (executionContext));
-
-      this .addType (X3DConstants .AnnotationLayer);
-   }
-
-   AnnotationLayer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
+      return "AnnotationLayer";
+   },
+   getComponentName: function ()
    {
-      constructor: AnnotationLayer,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "isPickable",   new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "layoutPolicy", new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "shownGroupID", new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "viewport",     new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "AnnotationLayer";
-      },
-      getComponentName: function ()
-      {
-         return "Annotation";
-      },
-      getContainerField: function ()
-      {
-         return "layers";
-      },
-      initialize: function ()
-      {
-         X3DLayerNode .prototype .initialize .call (this);
-      },
-   });
-
-   return AnnotationLayer;
+      return "Annotation";
+   },
+   getContainerField: function ()
+   {
+      return "layers";
+   },
+   initialize: function ()
+   {
+      X3DLayerNode .prototype .initialize .call (this);
+   },
 });
+
+export default AnnotationLayer;

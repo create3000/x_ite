@@ -47,50 +47,40 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DCoordinateNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DCoordinateNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DCoordinateNode from "./X3DCoordinateNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function Coordinate (executionContext)
 {
-"use strict";
+   X3DCoordinateNode .call (this, executionContext);
 
-   function Coordinate (executionContext)
+   this .addType (X3DConstants .Coordinate);
+
+   this ._point .setUnit ("length");
+}
+
+Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
+{
+   constructor: Coordinate,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DCoordinateNode .call (this, executionContext);
-
-      this .addType (X3DConstants .Coordinate);
-
-      this ._point .setUnit ("length");
-   }
-
-   Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
+      return "Coordinate";
+   },
+   getComponentName: function ()
    {
-      constructor: Coordinate,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "Coordinate";
-      },
-      getComponentName: function ()
-      {
-         return "Rendering";
-      },
-      getContainerField: function ()
-      {
-         return "coord";
-      },
-   });
-
-   return Coordinate;
+      return "Rendering";
+   },
+   getContainerField: function ()
+   {
+      return "coord";
+   },
 });
+
+export default Coordinate;

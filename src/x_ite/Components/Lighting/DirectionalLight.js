@@ -47,255 +47,234 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Lighting/X3DLightNode",
-   "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Rendering/TraverseType",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Geometry/Box3",
-   "standard/Math/Geometry/Camera",
-   "standard/Math/Geometry/ViewVolume",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Vector4",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Numbers/Matrix4",
-   "standard/Math/Utility/MatrixStack",
-   "standard/Utility/ObjectCache",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DLightNode,
-          X3DGroupingNode,
-          TraverseType,
-          X3DConstants,
-          Box3,
-          Camera,
-          ViewVolume,
-          Vector3,
-          Vector4,
-          Rotation4,
-          Matrix4,
-          MatrixStack,
-          ObjectCache)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DLightNode from "./X3DLightNode.js";
+import X3DGroupingNode from "../Grouping/X3DGroupingNode.js";
+import TraverseType from "../../Rendering/TraverseType.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Box3 from "../../../standard/Math/Geometry/Box3.js";
+import Camera from "../../../standard/Math/Geometry/Camera.js";
+import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import MatrixStack from "../../../standard/Math/Utility/MatrixStack.js";
+import ObjectCache from "../../../standard/Utility/ObjectCache.js";
+
+const DirectionalLights = ObjectCache (DirectionalLightContainer);
+
+function DirectionalLightContainer ()
 {
-"use strict";
+   this .direction                     = new Vector3 (0, 0, 0);
+   this .shadowBuffer                  = null;
+   this .bbox                          = new Box3 ();
+   this .viewVolume                    = new ViewVolume ();
+   this .viewport                      = new Vector4 (0, 0, 0, 0);
+   this .projectionMatrix              = new Matrix4 ();
+   this .modelViewMatrix               = new MatrixStack (Matrix4);
+   this .modelMatrix                   = new Matrix4 ();
+   this .invLightSpaceMatrix           = new Matrix4 ();
+   this .invLightSpaceProjectionMatrix = new Matrix4 ();
+   this .shadowMatrix                  = new Matrix4 ();
+   this .shadowMatrixArray             = new Float32Array (16);
+   this .rotation                      = new Rotation4 ();
+   this .textureUnit                   = undefined;
+}
 
-   const DirectionalLights = ObjectCache (DirectionalLightContainer);
-
-   function DirectionalLightContainer ()
+DirectionalLightContainer .prototype =
+{
+   constructor: DirectionalLightContainer,
+   getModelViewMatrix: function ()
    {
-      this .direction                     = new Vector3 (0, 0, 0);
-      this .shadowBuffer                  = null;
-      this .bbox                          = new Box3 ();
-      this .viewVolume                    = new ViewVolume ();
-      this .viewport                      = new Vector4 (0, 0, 0, 0);
-      this .projectionMatrix              = new Matrix4 ();
-      this .modelViewMatrix               = new MatrixStack (Matrix4);
-      this .modelMatrix                   = new Matrix4 ();
-      this .invLightSpaceMatrix           = new Matrix4 ();
-      this .invLightSpaceProjectionMatrix = new Matrix4 ();
-      this .shadowMatrix                  = new Matrix4 ();
-      this .shadowMatrixArray             = new Float32Array (16);
-      this .rotation                      = new Rotation4 ();
-      this .textureUnit                   = undefined;
-   }
-
-   DirectionalLightContainer .prototype =
+      return this .modelViewMatrix;
+   },
+   set: function (lightNode, groupNode, modelViewMatrix)
    {
-      constructor: DirectionalLightContainer,
-      getModelViewMatrix: function ()
+      const shadowMapSize = lightNode .getShadowMapSize ();
+
+      this .browser   = lightNode .getBrowser ();
+      this .lightNode = lightNode;
+      this .groupNode = groupNode;
+
+      this .modelViewMatrix .pushMatrix (modelViewMatrix);
+
+      // Get shadow buffer from browser.
+
+      if (lightNode .getShadowIntensity () > 0 && shadowMapSize > 0)
       {
-         return this .modelViewMatrix;
-      },
-      set: function (lightNode, groupNode, modelViewMatrix)
-      {
-         const shadowMapSize = lightNode .getShadowMapSize ();
-
-         this .browser   = lightNode .getBrowser ();
-         this .lightNode = lightNode;
-         this .groupNode = groupNode;
-
-         this .modelViewMatrix .pushMatrix (modelViewMatrix);
-
-         // Get shadow buffer from browser.
-
-         if (lightNode .getShadowIntensity () > 0 && shadowMapSize > 0)
-         {
-            this .shadowBuffer = this .browser .popShadowBuffer (shadowMapSize);
-
-            if (! this .shadowBuffer)
-               console .warn ("Couldn't create shadow buffer.");
-         }
-      },
-      renderShadowMap: function (renderObject)
-      {
-         if (! this .shadowBuffer)
-            return;
-
-         const
-            lightNode            = this .lightNode,
-            cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
-            modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-            invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
-
-         invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
-         invLightSpaceMatrix .inverse ();
-
-         const
-            groupBBox        = this .groupNode .getSubBBox (this .bbox, true), // Group bbox.
-            lightBBox        = groupBBox .multRight (invLightSpaceMatrix),     // Group bbox from the perspective of the light.
-            shadowMapSize    = lightNode .getShadowMapSize (),
-            viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
-            projectionMatrix = Camera .orthoBox (lightBBox, this .projectionMatrix);
-
-         this .shadowBuffer .bind ();
-
-         renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
-         renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
-         renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
-
-         renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
-
-         renderObject .getModelViewMatrix  () .pop ();
-         renderObject .getProjectionMatrix () .pop ();
-         renderObject .getViewVolumes      () .pop ();
-
-         this .shadowBuffer .unbind ();
-
-         if (! lightNode .getGlobal ())
-            invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
-
-         this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix) .multRight (projectionMatrix) .multRight (lightNode .getBiasMatrix ());
-      },
-      setGlobalVariables: function (renderObject)
-      {
-         this .modelViewMatrix .get () .multDirMatrix (this .direction .assign (this .lightNode .getDirection ())) .normalize ();
+         this .shadowBuffer = this .browser .popShadowBuffer (shadowMapSize);
 
          if (! this .shadowBuffer)
-            return;
+            console .warn ("Couldn't create shadow buffer.");
+      }
+   },
+   renderShadowMap: function (renderObject)
+   {
+      if (! this .shadowBuffer)
+         return;
 
-         this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
-         this .shadowMatrixArray .set (this .shadowMatrix);
-      },
-      setShaderUniforms: function (gl, shaderObject)
+      const
+         lightNode            = this .lightNode,
+         cameraSpaceMatrix    = renderObject .getCameraSpaceMatrix () .get (),
+         modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+         invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+
+      invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (lightNode .getDirection ()) .negate ()));
+      invLightSpaceMatrix .inverse ();
+
+      const
+         groupBBox        = this .groupNode .getSubBBox (this .bbox, true), // Group bbox.
+         lightBBox        = groupBBox .multRight (invLightSpaceMatrix),     // Group bbox from the perspective of the light.
+         shadowMapSize    = lightNode .getShadowMapSize (),
+         viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
+         projectionMatrix = Camera .orthoBox (lightBBox, this .projectionMatrix);
+
+      this .shadowBuffer .bind ();
+
+      renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+      renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
+      renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
+
+      renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
+
+      renderObject .getModelViewMatrix  () .pop ();
+      renderObject .getProjectionMatrix () .pop ();
+      renderObject .getViewVolumes      () .pop ();
+
+      this .shadowBuffer .unbind ();
+
+      if (! lightNode .getGlobal ())
+         invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
+
+      this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix) .multRight (projectionMatrix) .multRight (lightNode .getBiasMatrix ());
+   },
+   setGlobalVariables: function (renderObject)
+   {
+      this .modelViewMatrix .get () .multDirMatrix (this .direction .assign (this .lightNode .getDirection ())) .normalize ();
+
+      if (! this .shadowBuffer)
+         return;
+
+      this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
+      this .shadowMatrixArray .set (this .shadowMatrix);
+   },
+   setShaderUniforms: function (gl, shaderObject)
+   {
+      const i = shaderObject .numLights ++;
+
+      if (this .shadowBuffer)
       {
-         const i = shaderObject .numLights ++;
+         const textureUnit = this .lightNode .getGlobal ()
+            ? (this .textureUnit = this .textureUnit !== undefined
+               ? this .textureUnit
+               : this .browser .popTexture2DUnit ())
+            : this .browser .getTexture2DUnit ();
 
-         if (this .shadowBuffer)
+         if (textureUnit !== undefined)
          {
-            const textureUnit = this .lightNode .getGlobal ()
-               ? (this .textureUnit = this .textureUnit !== undefined
-                  ? this .textureUnit
-                  : this .browser .popTexture2DUnit ())
-               : this .browser .getTexture2DUnit ();
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
 
-            if (textureUnit !== undefined)
-            {
-               gl .activeTexture (gl .TEXTURE0 + textureUnit);
-
-               if (gl .HAS_FEATURE_DEPTH_TEXTURE)
-                  gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
-               else
-                  gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
-
-               gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
-            }
+            if (gl .HAS_FEATURE_DEPTH_TEXTURE)
+               gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
             else
-            {
-               console .warn ("Not enough combined texture units for shadow map available.");
-            }
+               gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
+
+            gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
          }
-
-         if (shaderObject .hasLight (i, this))
-            return;
-
-         const
-            lightNode = this .lightNode,
-            color     = lightNode .getColor (),
-            direction = this .direction;
-
-         gl .uniform1i (shaderObject .x3d_LightType [i],             1);
-         gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
-         gl .uniform1f (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
-         gl .uniform1f (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
-         gl .uniform3f (shaderObject .x3d_LightDirection [i],        direction .x, direction .y, direction .z);
-
-         if (this .shadowBuffer)
+         else
          {
-            const shadowColor = lightNode .getShadowColor ();
-
-            gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
-            gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
-            gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
-            gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
-            gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
+            console .warn ("Not enough combined texture units for shadow map available.");
          }
-      },
-      dispose: function ()
+      }
+
+      if (shaderObject .hasLight (i, this))
+         return;
+
+      const
+         lightNode = this .lightNode,
+         color     = lightNode .getColor (),
+         direction = this .direction;
+
+      gl .uniform1i (shaderObject .x3d_LightType [i],             1);
+      gl .uniform3f (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
+      gl .uniform1f (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
+      gl .uniform1f (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
+      gl .uniform3f (shaderObject .x3d_LightDirection [i],        direction .x, direction .y, direction .z);
+
+      if (this .shadowBuffer)
       {
-         this .browser .pushShadowBuffer (this .shadowBuffer);
-         this .browser .pushTexture2DUnit (this .textureUnit);
+         const shadowColor = lightNode .getShadowColor ();
 
-         this .modelViewMatrix .clear ();
-
-         this .shadowBuffer = null;
-         this .textureUnit  = undefined;
-
-         // Return container
-
-         DirectionalLights .push (this);
-      },
-   };
-
-   function DirectionalLight (executionContext)
+         gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
+         gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
+         gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
+         gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
+         gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
+      }
+   },
+   dispose: function ()
    {
-      X3DLightNode .call (this, executionContext);
+      this .browser .pushShadowBuffer (this .shadowBuffer);
+      this .browser .pushTexture2DUnit (this .textureUnit);
 
-      this .addType (X3DConstants .DirectionalLight);
+      this .modelViewMatrix .clear ();
 
-      if (executionContext .getSpecificationVersion () === "2.0")
-         this ._global = true;
-   }
+      this .shadowBuffer = null;
+      this .textureUnit  = undefined;
 
-   DirectionalLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
+      // Return container
+
+      DirectionalLights .push (this);
+   },
+};
+
+function DirectionalLight (executionContext)
+{
+   X3DLightNode .call (this, executionContext);
+
+   this .addType (X3DConstants .DirectionalLight);
+
+   if (executionContext .getSpecificationVersion () === "2.0")
+      this ._global = true;
+}
+
+DirectionalLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
+{
+   constructor: DirectionalLight,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "global",           new Fields .SFBool (false)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "on",               new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "color",            new Fields .SFColor (1, 1, 1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",        new Fields .SFFloat (1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "ambientIntensity", new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",        new Fields .SFVec3f (0, 0, -1)),
+
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new  Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadows.
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat (1)),       // Intensity of shadow color in the range (0, 1).
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
+   ]),
+   getTypeName: function ()
    {
-      constructor: DirectionalLight,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "global",           new Fields .SFBool (false)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "on",               new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",            new Fields .SFColor (1, 1, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",        new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "ambientIntensity", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",        new Fields .SFVec3f (0, 0, -1)),
-
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new  Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadows.
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat (1)),       // Intensity of shadow color in the range (0, 1).
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
-      ]),
-      getTypeName: function ()
-      {
-         return "DirectionalLight";
-      },
-      getComponentName: function ()
-      {
-         return "Lighting";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      getLights: function ()
-      {
-         return DirectionalLights;
-      },
-   });
-
-   return DirectionalLight;
+      return "DirectionalLight";
+   },
+   getComponentName: function ()
+   {
+      return "Lighting";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   getLights: function ()
+   {
+      return DirectionalLights;
+   },
 });
+
+export default DirectionalLight;

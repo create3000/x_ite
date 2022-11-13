@@ -47,111 +47,100 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/EnvironmentalEffects/X3DBackgroundNode",
-   "x_ite/Components/Texturing/ImageTexture",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DBackgroundNode,
-          ImageTexture,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DBackgroundNode from "./X3DBackgroundNode.js";
+import ImageTexture from "../Texturing/ImageTexture.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function Background (executionContext)
 {
-"use strict";
+   X3DBackgroundNode .call (this, executionContext);
 
-   function Background (executionContext)
+   this .addType (X3DConstants .Background);
+}
+
+Background .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
+{
+   constructor: Background,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",     new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "frontUrl",     new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "backUrl",      new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "leftUrl",      new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "rightUrl",     new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "topUrl",       new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "bottomUrl",    new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "skyAngle",     new Fields .MFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "skyColor",     new Fields .MFColor (new Fields .SFColor ())),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "groundAngle",  new Fields .MFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "groundColor",  new Fields .MFColor ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "transparency", new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",      new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",     new Fields .SFTime ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DBackgroundNode .call (this, executionContext);
+      return "Background";
+   },
+   getComponentName: function ()
+   {
+      return "EnvironmentalEffects";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DBackgroundNode .prototype .initialize .call (this);
 
-      this .addType (X3DConstants .Background);
+      const
+         frontTexture      = new ImageTexture (this .getExecutionContext ()),
+         backTexture       = new ImageTexture (this .getExecutionContext ()),
+         leftTexture       = new ImageTexture (this .getExecutionContext ()),
+         rightTexture      = new ImageTexture (this .getExecutionContext ()),
+         topTexture        = new ImageTexture (this .getExecutionContext ()),
+         bottomTexture     = new ImageTexture (this .getExecutionContext ()),
+         textureProperties = this .getBrowser () .getBackgroundTextureProperties ();
+
+      this ._frontUrl  .addFieldInterest (frontTexture  ._url);
+      this ._backUrl   .addFieldInterest (backTexture   ._url);
+      this ._leftUrl   .addFieldInterest (leftTexture   ._url);
+      this ._rightUrl  .addFieldInterest (rightTexture  ._url);
+      this ._topUrl    .addFieldInterest (topTexture    ._url);
+      this ._bottomUrl .addFieldInterest (bottomTexture ._url);
+
+      frontTexture  ._url = this ._frontUrl;
+      backTexture   ._url = this ._backUrl;
+      leftTexture   ._url = this ._leftUrl;
+      rightTexture  ._url = this ._rightUrl;
+      topTexture    ._url = this ._topUrl;
+      bottomTexture ._url = this ._bottomUrl;
+
+      frontTexture  ._textureProperties = textureProperties;
+      backTexture   ._textureProperties = textureProperties;
+      leftTexture   ._textureProperties = textureProperties;
+      rightTexture  ._textureProperties = textureProperties;
+      topTexture    ._textureProperties = textureProperties;
+      bottomTexture ._textureProperties = textureProperties;
+
+      frontTexture  .setup ();
+      backTexture   .setup ();
+      leftTexture   .setup ();
+      rightTexture  .setup ();
+      topTexture    .setup ();
+      bottomTexture .setup ();
+
+      this .set_frontTexture__  (frontTexture);
+      this .set_backTexture__   (backTexture);
+      this .set_leftTexture__   (leftTexture);
+      this .set_rightTexture__  (rightTexture);
+      this .set_topTexture__    (topTexture);
+      this .set_bottomTexture__ (bottomTexture);
    }
-
-   Background .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
-   {
-      constructor: Background,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",     new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "frontUrl",     new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "backUrl",      new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "leftUrl",      new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "rightUrl",     new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "topUrl",       new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "bottomUrl",    new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "skyAngle",     new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "skyColor",     new Fields .MFColor (new Fields .SFColor ())),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "groundAngle",  new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "groundColor",  new Fields .MFColor ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "transparency", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",      new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",     new Fields .SFTime ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "Background";
-      },
-      getComponentName: function ()
-      {
-         return "EnvironmentalEffects";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DBackgroundNode .prototype .initialize .call (this);
-
-         const
-            frontTexture      = new ImageTexture (this .getExecutionContext ()),
-            backTexture       = new ImageTexture (this .getExecutionContext ()),
-            leftTexture       = new ImageTexture (this .getExecutionContext ()),
-            rightTexture      = new ImageTexture (this .getExecutionContext ()),
-            topTexture        = new ImageTexture (this .getExecutionContext ()),
-            bottomTexture     = new ImageTexture (this .getExecutionContext ()),
-            textureProperties = this .getBrowser () .getBackgroundTextureProperties ();
-
-         this ._frontUrl  .addFieldInterest (frontTexture  ._url);
-         this ._backUrl   .addFieldInterest (backTexture   ._url);
-         this ._leftUrl   .addFieldInterest (leftTexture   ._url);
-         this ._rightUrl  .addFieldInterest (rightTexture  ._url);
-         this ._topUrl    .addFieldInterest (topTexture    ._url);
-         this ._bottomUrl .addFieldInterest (bottomTexture ._url);
-
-         frontTexture  ._url = this ._frontUrl;
-         backTexture   ._url = this ._backUrl;
-         leftTexture   ._url = this ._leftUrl;
-         rightTexture  ._url = this ._rightUrl;
-         topTexture    ._url = this ._topUrl;
-         bottomTexture ._url = this ._bottomUrl;
-
-         frontTexture  ._textureProperties = textureProperties;
-         backTexture   ._textureProperties = textureProperties;
-         leftTexture   ._textureProperties = textureProperties;
-         rightTexture  ._textureProperties = textureProperties;
-         topTexture    ._textureProperties = textureProperties;
-         bottomTexture ._textureProperties = textureProperties;
-
-         frontTexture  .setup ();
-         backTexture   .setup ();
-         leftTexture   .setup ();
-         rightTexture  .setup ();
-         topTexture    .setup ();
-         bottomTexture .setup ();
-
-         this .set_frontTexture__  (frontTexture);
-         this .set_backTexture__   (backTexture);
-         this .set_leftTexture__   (leftTexture);
-         this .set_rightTexture__  (rightTexture);
-         this .set_topTexture__    (topTexture);
-         this .set_bottomTexture__ (bottomTexture);
-      }
-   });
-
-   return Background;
 });
+
+export default Background;

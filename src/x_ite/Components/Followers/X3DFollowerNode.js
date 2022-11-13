@@ -47,101 +47,94 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DChildNode,
-          X3DConstants)
+import X3DChildNode from "../Core/X3DChildNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DFollowerNode (executionContext)
 {
-"use strict";
+   X3DChildNode .call (this, executionContext);
 
-   function X3DFollowerNode (executionContext)
+   this .addType (X3DConstants .X3DFollowerNode);
+
+   this .buffer = [ ];
+
+   // Auxillary variables
+   this .a      = this .getVector ();
+   this .vector = this .getVector ();
+}
+
+X3DFollowerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+{
+   constructor: X3DFollowerNode,
+   initialize: function ()
    {
-      X3DChildNode .call (this, executionContext);
+      X3DChildNode .prototype .initialize .call (this);
 
-      this .addType (X3DConstants .X3DFollowerNode);
-
-      this .buffer = [ ];
-
-      // Auxillary variables
-      this .a      = this .getVector ();
-      this .vector = this .getVector ();
-   }
-
-   X3DFollowerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+      this .isLive () .addInterest ("set_live__", this);
+   },
+   getBuffer: function ()
    {
-      constructor: X3DFollowerNode,
-      initialize: function ()
+      return this .buffer;
+   },
+   getValue: function ()
+   {
+      return this ._set_value .getValue ();
+   },
+   getDestination: function ()
+   {
+      return this ._set_destination .getValue ();
+   },
+   getInitialValue: function ()
+   {
+      return this ._initialValue .getValue ();
+   },
+   getInitialDestination: function ()
+   {
+      return this ._initialDestination .getValue ();
+   },
+   setValue: function (value)
+   {
+      this ._value_changed = value;
+   },
+   setDestination: function (value)
+   {
+      this .destination .assign (value);
+   },
+   duplicate: function (value)
+   {
+      return value .copy ();
+   },
+   assign: function (buffer, i, value)
+   {
+      buffer [i] .assign (value);
+   },
+   equals: function (lhs, rhs, tolerance)
+   {
+      return this .a .assign (lhs) .subtract (rhs) .magnitude () < tolerance;
+   },
+   interpolate: function (source, destination, weight)
+   {
+      return this .vector .assign (source) .lerp (destination, weight);
+   },
+   set_live__: function ()
+   {
+      if ((this .isLive () .getValue () || this .isPrivate ()) && this ._isActive .getValue ())
       {
-         X3DChildNode .prototype .initialize .call (this);
+         this .getBrowser () .prepareEvents () .addInterest ("prepareEvents", this);
+         this .getBrowser () .addBrowserEvent ();
+      }
+      else
+         this .getBrowser () .prepareEvents () .removeInterest ("prepareEvents", this);
+   },
+   set_active: function (value)
+   {
+      if (value !== this ._isActive .getValue ())
+      {
+         this ._isActive = value;
 
-         this .isLive () .addInterest ("set_live__", this);
-      },
-      getBuffer: function ()
-      {
-         return this .buffer;
-      },
-      getValue: function ()
-      {
-         return this ._set_value .getValue ();
-      },
-      getDestination: function ()
-      {
-         return this ._set_destination .getValue ();
-      },
-      getInitialValue: function ()
-      {
-         return this ._initialValue .getValue ();
-      },
-      getInitialDestination: function ()
-      {
-         return this ._initialDestination .getValue ();
-      },
-      setValue: function (value)
-      {
-         this ._value_changed = value;
-      },
-      setDestination: function (value)
-      {
-         this .destination .assign (value);
-      },
-      duplicate: function (value)
-      {
-         return value .copy ();
-      },
-      assign: function (buffer, i, value)
-      {
-         buffer [i] .assign (value);
-      },
-      equals: function (lhs, rhs, tolerance)
-      {
-         return this .a .assign (lhs) .subtract (rhs) .magnitude () < tolerance;
-      },
-      interpolate: function (source, destination, weight)
-      {
-         return this .vector .assign (source) .lerp (destination, weight);
-      },
-      set_live__: function ()
-      {
-         if ((this .isLive () .getValue () || this .isPrivate ()) && this ._isActive .getValue ())
-         {
-            this .getBrowser () .prepareEvents () .addInterest ("prepareEvents", this);
-            this .getBrowser () .addBrowserEvent ();
-         }
-         else
-            this .getBrowser () .prepareEvents () .removeInterest ("prepareEvents", this);
-      },
-      set_active: function (value)
-      {
-         if (value !== this ._isActive .getValue ())
-         {
-            this ._isActive = value;
-
-            this .set_live__ ();
-         }
-      },
-   });
-
-   return X3DFollowerNode;
+         this .set_live__ ();
+      }
+   },
 });
+
+export default X3DFollowerNode;

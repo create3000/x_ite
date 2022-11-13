@@ -47,205 +47,194 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Networking/X3DNetworkSensorNode",
-   "x_ite/Base/X3DCast",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DNetworkSensorNode,
-          X3DCast,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNetworkSensorNode from "./X3DNetworkSensorNode.js";
+import X3DCast from "../../Base/X3DCast.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function LoadSensor (executionContext)
 {
-"use strict";
+   X3DNetworkSensorNode .call (this, executionContext);
 
-   function LoadSensor (executionContext)
+   this .addType (X3DConstants .LoadSensor);
+
+   this .urlObjects = [ ];
+   this .aborted    = false;
+   this .timeOutId  = undefined;
+}
+
+LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .prototype),
+{
+   constructor: LoadSensor,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",   new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "timeOut",   new Fields .SFTime ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",  new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "isLoaded",  new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "progress",  new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "loadTime",  new Fields .SFTime ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "watchList", new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DNetworkSensorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .LoadSensor);
-
-      this .urlObjects = [ ];
-      this .aborted    = false;
-      this .timeOutId  = undefined;
-   }
-
-   LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .prototype),
+      return "LoadSensor";
+   },
+   getComponentName: function ()
    {
-      constructor: LoadSensor,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",   new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "timeOut",   new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",  new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isLoaded",  new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "progress",  new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "loadTime",  new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "watchList", new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "LoadSensor";
-      },
-      getComponentName: function ()
-      {
-         return "Networking";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DNetworkSensorNode .prototype .initialize .call (this);
+      return "Networking";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DNetworkSensorNode .prototype .initialize .call (this);
 
-         this ._enabled   .addInterest ("set_enabled__",   this);
-         this ._timeOut   .addInterest ("set_timeOut__",   this);
-         this ._watchList .addInterest ("set_watchList__", this);
+      this ._enabled   .addInterest ("set_enabled__",   this);
+      this ._timeOut   .addInterest ("set_timeOut__",   this);
+      this ._watchList .addInterest ("set_watchList__", this);
 
-         this .set_watchList__ ();
-      },
-      set_enabled__: function ()
+      this .set_watchList__ ();
+   },
+   set_enabled__: function ()
+   {
+      if (this ._enabled .getValue ())
+         this .reset ();
+
+      else
       {
-         if (this ._enabled .getValue ())
-            this .reset ();
+         this .abort ();
+         this .remove ();
+      }
+   },
+   set_timeOut__: function ()
+   {
+      if (this ._isActive .getValue ())
+      {
+         this .clearTimeout ();
 
-         else
+         this .aborted = false;
+
+         if (this ._timeOut .getValue () > 0)
+            this .timeOutId = setTimeout (this .abort .bind (this), this ._timeOut .getValue () * 1000);
+      }
+   },
+   set_watchList__: function ()
+   {
+      this .reset ();
+   },
+   set_loadState__: function (urlObject)
+   {
+      switch (urlObject .checkLoadState ())
+      {
+         case X3DConstants .NOT_STARTED_STATE:
+            break;
+         case X3DConstants .IN_PROGRESS_STATE:
+         case X3DConstants .COMPLETE_STATE:
+         case X3DConstants .FAILED_STATE:
          {
-            this .abort ();
-            this .remove ();
+            this .count ();
+            break;
          }
-      },
-      set_timeOut__: function ()
+      }
+   },
+   count: function ()
+   {
+      const urlObjects = this .urlObjects;
+
+      let
+         complete = 0,
+         failed   = 0;
+
+      for (const urlObject of urlObjects)
+      {
+         complete += urlObject .checkLoadState () == X3DConstants .COMPLETE_STATE;
+         failed   += urlObject .checkLoadState () == X3DConstants .FAILED_STATE;
+      }
+
+      const
+         loaded   = complete == urlObjects .length,
+         progress = complete / urlObjects .length;
+
+      if (this .aborted || failed || loaded)
+      {
+         this .clearTimeout ();
+
+         this ._isActive = false;
+         this ._isLoaded = loaded;
+         this ._progress = progress;
+
+         if (loaded)
+            this ._loadTime = this .getBrowser () .getCurrentTime ();
+      }
+      else
       {
          if (this ._isActive .getValue ())
          {
-            this .clearTimeout ();
-
-            this .aborted = false;
-
-            if (this ._timeOut .getValue () > 0)
-               this .timeOutId = setTimeout (this .abort .bind (this), this ._timeOut .getValue () * 1000);
-         }
-      },
-      set_watchList__: function ()
-      {
-         this .reset ();
-      },
-      set_loadState__: function (urlObject)
-      {
-         switch (urlObject .checkLoadState ())
-         {
-            case X3DConstants .NOT_STARTED_STATE:
-               break;
-            case X3DConstants .IN_PROGRESS_STATE:
-            case X3DConstants .COMPLETE_STATE:
-            case X3DConstants .FAILED_STATE:
-            {
-               this .count ();
-               break;
-            }
-         }
-      },
-      count: function ()
-      {
-         const urlObjects = this .urlObjects;
-
-         let
-            complete = 0,
-            failed   = 0;
-
-         for (const urlObject of urlObjects)
-         {
-            complete += urlObject .checkLoadState () == X3DConstants .COMPLETE_STATE;
-            failed   += urlObject .checkLoadState () == X3DConstants .FAILED_STATE;
-         }
-
-         const
-            loaded   = complete == urlObjects .length,
-            progress = complete / urlObjects .length;
-
-         if (this .aborted || failed || loaded)
-         {
-            this .clearTimeout ();
-
-            this ._isActive = false;
-            this ._isLoaded = loaded;
             this ._progress = progress;
-
-            if (loaded)
-               this ._loadTime = this .getBrowser () .getCurrentTime ();
          }
          else
          {
-            if (this ._isActive .getValue ())
-            {
-               this ._progress = progress;
-            }
-            else
-            {
-               this ._isActive = true;
-               this ._progress = progress;
+            this ._isActive = true;
+            this ._progress = progress;
 
-               this .set_timeOut__ ();
-            }
+            this .set_timeOut__ ();
          }
-      },
-      abort: function ()
+      }
+   },
+   abort: function ()
+   {
+      this .clearTimeout ();
+
+      this .aborted = true;
+
+      if (this ._enabled .getValue ())
+         this .count ();
+   },
+   reset: function ()
+   {
+      this .remove ();
+
+      if (this ._enabled .getValue ())
       {
-         this .clearTimeout ();
-
-         this .aborted = true;
-
-         if (this ._enabled .getValue ())
-            this .count ();
-      },
-      reset: function ()
-      {
-         this .remove ();
-
-         if (this ._enabled .getValue ())
-         {
-            const urlObjects = this .urlObjects;
-
-            for (const node of this ._watchList)
-            {
-               const urlObject = X3DCast (X3DConstants .X3DUrlObject, node);
-
-               if (urlObject)
-               {
-                  urlObjects .push (urlObject);
-
-                  urlObject ._loadState .addInterest ("set_loadState__", this, urlObject);
-               }
-            }
-
-            this .count ();
-         }
-      },
-      remove: function ()
-      {
-         this .clearTimeout ();
-
          const urlObjects = this .urlObjects;
 
-         for (const urlObject of urlObjects)
-            urlObject ._loadState .removeInterest ("set_loadState__", this);
+         for (const node of this ._watchList)
+         {
+            const urlObject = X3DCast (X3DConstants .X3DUrlObject, node);
 
-         urlObjects .length = 0;
-      },
-      clearTimeout: function ()
-      {
-         clearTimeout (this .timeOutId);
+            if (urlObject)
+            {
+               urlObjects .push (urlObject);
 
-         this .timeOutId = undefined;
-      },
-   });
+               urlObject ._loadState .addInterest ("set_loadState__", this, urlObject);
+            }
+         }
 
-   return LoadSensor;
+         this .count ();
+      }
+   },
+   remove: function ()
+   {
+      this .clearTimeout ();
+
+      const urlObjects = this .urlObjects;
+
+      for (const urlObject of urlObjects)
+         urlObject ._loadState .removeInterest ("set_loadState__", this);
+
+      urlObjects .length = 0;
+   },
+   clearTimeout: function ()
+   {
+      clearTimeout (this .timeOutId);
+
+      this .timeOutId = undefined;
+   },
 });
+
+export default LoadSensor;

@@ -1,56 +1,50 @@
 
-define ([
-   'nurbs/src/utils/is-array-like',
-],
-function (isArrayLike)
-{
-'use strict';
+import isArrayLike from "./is-array-like.js";
 
-   function capitalize (str) {
-      return str[0].toUpperCase() + str.slice(1);
+function capitalize (str) {
+   return str[0].toUpperCase() + str.slice(1);
+}
+
+export default function (nurbs, debug, checkBounds, pointType, weightType, knotType) {
+   var d;
+   var degreeParts = [];
+   var hasAnyKnots = false;
+   for (d = 0; d < nurbs.splineDimension; d++) {
+      var hasKnots = isArrayLike(nurbs.knots) && isArrayLike(nurbs.knots[d]);
+      if (hasKnots) hasAnyKnots = true;
+      degreeParts.push(
+         "Deg" +
+         nurbs.degree[d] +
+         (hasKnots ? "" : "Uniform") +
+         capitalize(nurbs.boundary[d])
+      );
+   }
+   var parts = [
+      [
+         hasAnyKnots ? "NU" : "",
+         nurbs.weights ? "RBS" : "BS"
+      ].join("") +
+      nurbs.dimension + "D",
+      degreeParts.join("_")
+   ];
+
+   if (pointType) {
+      parts.push(pointType + "Pts");
+   }
+   if (weightType) {
+      parts.push(weightType + "Wts");
+   }
+   if (knotType) {
+      parts.push(knotType + "Kts");
    }
 
-   return function (nurbs, debug, checkBounds, pointType, weightType, knotType) {
-      var d;
-      var degreeParts = [];
-      var hasAnyKnots = false;
-      for (d = 0; d < nurbs.splineDimension; d++) {
-         var hasKnots = isArrayLike(nurbs.knots) && isArrayLike(nurbs.knots[d]);
-         if (hasKnots) hasAnyKnots = true;
-         degreeParts.push(
-            'Deg' +
-            nurbs.degree[d] +
-            (hasKnots ? '' : 'Uniform') +
-            capitalize(nurbs.boundary[d])
-         );
-      }
-      var parts = [
-         [
-            hasAnyKnots ? 'NU' : '',
-            nurbs.weights ? 'RBS' : 'BS'
-         ].join('') +
-         nurbs.dimension + 'D',
-         degreeParts.join('_')
-      ];
+   if (debug) {
+      parts.push("debug");
+   }
 
-      if (pointType) {
-         parts.push(pointType + 'Pts');
-      }
-      if (weightType) {
-         parts.push(weightType + 'Wts');
-      }
-      if (knotType) {
-         parts.push(knotType + 'Kts');
-      }
+   if (checkBounds) {
+      parts.push("chk");
+   }
 
-      if (debug) {
-         parts.push('debug');
-      }
-
-      if (checkBounds) {
-         parts.push('chk');
-      }
-
-      return parts.join('_');
-   };
-});
+   return parts.join("_");
+};

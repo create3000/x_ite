@@ -47,42 +47,36 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DObject",
-],
-function (X3DObject)
+import X3DObject from "../Base/X3DObject.js";
+
+function ProfileInfo (name, title, providerUrl, components)
 {
-"use strict";
+   this .name        = name;
+   this .title       = title;
+   this .providerUrl = providerUrl;
+   this .components  = components;
+}
 
-   function ProfileInfo (name, title, providerUrl, components)
+ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
+{
+   constructor: ProfileInfo,
+   getTypeName: function ()
    {
-      this .name        = name;
-      this .title       = title;
-      this .providerUrl = providerUrl;
-      this .components  = components;
-   }
-
-   ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
+      return "ProfileInfo";
+   },
+   toVRMLStream: function (stream)
    {
-      constructor: ProfileInfo,
-      getTypeName: function ()
-      {
-         return "ProfileInfo";
-      },
-      toVRMLStream: function (stream)
-      {
-         stream .string += "PROFILE";
-         stream .string += " ";
-         stream .string += this .name;
-      },
-      toXMLStream: function (stream)
-      {
-         stream .string += this .name;
-      },
-   });
-
-   for (const key of Reflect .ownKeys (ProfileInfo .prototype))
-      Object .defineProperty (ProfileInfo .prototype, key, { enumerable: false });
-
-   return ProfileInfo;
+      stream .string += "PROFILE";
+      stream .string += " ";
+      stream .string += this .name;
+   },
+   toXMLStream: function (stream)
+   {
+      stream .string += this .name;
+   },
 });
+
+for (const key of Reflect .ownKeys (ProfileInfo .prototype))
+   Object .defineProperty (ProfileInfo .prototype, key, { enumerable: false });
+
+export default ProfileInfo;

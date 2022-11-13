@@ -1,33 +1,27 @@
 
-define ([
-   'nurbs/src/utils/infer-type',
-],
-function (inferType)
+import inferType from "./infer-type.js";
+
+export default function (nurbs, variableName, propertyName, data)
 {
-'use strict';
+   var code = [ ];
 
-   return function (nurbs, variableName, propertyName, data)
+   switch (inferType (data))
    {
-      var code = [ ];
-
-      switch (inferType (data))
+      case inferType .NDARRAY:
       {
-         case inferType .NDARRAY:
-         {
-            code .push ('  var ' + variableName + ' = ' + propertyName + '.data;');
-            code .push ('  var ' + variableName + 'Offset = ' + propertyName + '.offset;');
+         code .push ("  var " + variableName + " = " + propertyName + ".data;");
+         code .push ("  var " + variableName + "Offset = " + propertyName + ".offset;");
 
-            for (var i = 0; i < data .dimension; i++) {
-               code .push ('  var ' + variableName + 'Stride' + i + ' = ' + propertyName + '.stride[' + i + '];');
-            }
-
-            break;
+         for (var i = 0; i < data .dimension; i++) {
+            code .push ("  var " + variableName + "Stride" + i + " = " + propertyName + ".stride[" + i + "];");
          }
-         case inferType .ARRAY_OF_OBJECTS:
-         case inferType .ARRAY_OF_ARRAYS:
-            code .push ('  var ' + variableName + ' = ' + propertyName + ';');
-      }
 
-      return code .join ('\n');
-   };
-});
+         break;
+      }
+      case inferType .ARRAY_OF_OBJECTS:
+      case inferType .ARRAY_OF_ARRAYS:
+         code .push ("  var " + variableName + " = " + propertyName + ";");
+   }
+
+   return code .join ("\n");
+};

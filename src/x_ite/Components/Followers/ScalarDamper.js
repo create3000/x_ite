@@ -47,78 +47,67 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Followers/X3DDamperNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Algorithm",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DDamperNode,
-          X3DConstants,
-          Algorithm)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DDamperNode from "./X3DDamperNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+function ScalarDamper (executionContext)
 {
-"use strict";
+   X3DDamperNode .call (this, executionContext);
 
-   function ScalarDamper (executionContext)
+   this .addType (X3DConstants .ScalarDamper);
+}
+
+ScalarDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
+{
+   constructor: ScalarDamper,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "order",              new Fields .SFInt32 (3)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "tau",                new Fields .SFTime (0.3)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "tolerance",          new Fields .SFFloat (-1)),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFFloat ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DDamperNode .call (this, executionContext);
-
-      this .addType (X3DConstants .ScalarDamper);
-   }
-
-   ScalarDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
+      return "ScalarDamper";
+   },
+   getComponentName: function ()
    {
-      constructor: ScalarDamper,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "order",              new Fields .SFInt32 (3)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "tau",                new Fields .SFTime (0.3)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "tolerance",          new Fields .SFFloat (-1)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFFloat ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "ScalarDamper";
-      },
-      getComponentName: function ()
-      {
-         return "Followers";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      getVector: function ()
-      {
-         return 0;
-      },
-      duplicate: function (value)
-      {
-         return value;
-      },
-      assign: function (buffer, i, value)
-      {
-         buffer [i] = value;
-      },
-      equals: function (lhs, rhs, tolerance)
-      {
-         return Math .abs (lhs - rhs) < tolerance;
-      },
-      interpolate: function (source, destination, weight)
-      {
-         return Algorithm .lerp (source, destination, weight);
-      },
-   });
-
-   return ScalarDamper;
+      return "Followers";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   getVector: function ()
+   {
+      return 0;
+   },
+   duplicate: function (value)
+   {
+      return value;
+   },
+   assign: function (buffer, i, value)
+   {
+      buffer [i] = value;
+   },
+   equals: function (lhs, rhs, tolerance)
+   {
+      return Math .abs (lhs - rhs) < tolerance;
+   },
+   interpolate: function (source, destination, weight)
+   {
+      return Algorithm .lerp (source, destination, weight);
+   },
 });
+
+export default ScalarDamper;

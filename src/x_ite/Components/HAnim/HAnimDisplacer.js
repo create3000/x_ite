@@ -47,53 +47,43 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DGeometricPropertyNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DGeometricPropertyNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DGeometricPropertyNode from "../Rendering/X3DGeometricPropertyNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function HAnimDisplacer (executionContext)
 {
-"use strict";
+   X3DGeometricPropertyNode .call (this, executionContext);
 
-   function HAnimDisplacer (executionContext)
+   this .addType (X3DConstants .HAnimDisplacer);
+
+   this ._displacements .setUnit ("length");
+}
+
+HAnimDisplacer .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+{
+   constructor: HAnimDisplacer,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "name",          new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",    new Fields .MFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "displacements", new Fields .MFVec3f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DGeometricPropertyNode .call (this, executionContext);
-
-      this .addType (X3DConstants .HAnimDisplacer);
-
-      this ._displacements .setUnit ("length");
-   }
-
-   HAnimDisplacer .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+      return "HAnimDisplacer";
+   },
+   getComponentName: function ()
    {
-      constructor: HAnimDisplacer,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "name",          new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",    new Fields .MFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "displacements", new Fields .MFVec3f ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "HAnimDisplacer";
-      },
-      getComponentName: function ()
-      {
-         return "HAnim";
-      },
-      getContainerField: function ()
-      {
-         return "displacers";
-      },
-   });
-
-   return HAnimDisplacer;
+      return "HAnim";
+   },
+   getContainerField: function ()
+   {
+      return "displacers";
+   },
 });
+
+export default HAnimDisplacer;

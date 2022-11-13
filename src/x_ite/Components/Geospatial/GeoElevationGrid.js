@@ -47,398 +47,383 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Components/Geospatial/X3DGeospatialObject",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Base/X3DCast",
-   "standard/Math/Geometry/Triangle3",
-   "standard/Math/Numbers/Vector2",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DGeometryNode,
-          X3DGeospatialObject,
-          X3DConstants,
-          X3DCast,
-          Triangle3,
-          Vector2,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DGeometryNode from "../Rendering/X3DGeometryNode.js";
+import X3DGeospatialObject from "./X3DGeospatialObject.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast from "../../Base/X3DCast.js";
+import Triangle3 from "../../../standard/Math/Geometry/Triangle3.js";
+import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+function GeoElevationGrid (executionContext)
 {
-"use strict";
+   X3DGeometryNode     .call (this, executionContext);
+   X3DGeospatialObject .call (this, executionContext);
 
-   function GeoElevationGrid (executionContext)
+   this .addType (X3DConstants .GeoElevationGrid);
+
+   this ._creaseAngle .setUnit ("angle");
+   this ._height      .setUnit ("length");
+
+   this .colorNode    = null;
+   this .texCoordNode = null;
+   this .normalNode   = null;
+}
+
+GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+   X3DGeospatialObject .prototype,
+{
+   constructor: GeoElevationGrid,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",       new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",       new Fields .MFString ("GD", "WE")),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoGridOrigin",   new Fields .SFVec3d ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "xDimension",      new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "zDimension",      new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "xSpacing",        new Fields .SFDouble (1)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "zSpacing",        new Fields .SFDouble (1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "yScale",          new Fields .SFFloat (1)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "creaseAngle",     new Fields .SFDouble ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "height",          new Fields .MFDouble (0, 0)),
+   ]),
+   getTypeName: function ()
    {
-      X3DGeometryNode     .call (this, executionContext);
-      X3DGeospatialObject .call (this, executionContext);
-
-      this .addType (X3DConstants .GeoElevationGrid);
-
-      this ._creaseAngle .setUnit ("angle");
-      this ._height      .setUnit ("length");
-
-      this .colorNode    = null;
-      this .texCoordNode = null;
-      this .normalNode   = null;
-   }
-
-   GeoElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
-      X3DGeospatialObject .prototype,
+      return "GeoElevationGrid";
+   },
+   getComponentName: function ()
    {
-      constructor: GeoElevationGrid,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",       new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",       new Fields .MFString ("GD", "WE")),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoGridOrigin",   new Fields .SFVec3d ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "xDimension",      new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "zDimension",      new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "xSpacing",        new Fields .SFDouble (1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "zSpacing",        new Fields .SFDouble (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "yScale",          new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "creaseAngle",     new Fields .SFDouble ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "height",          new Fields .MFDouble (0, 0)),
-      ]),
-      getTypeName: function ()
-      {
-         return "GeoElevationGrid";
-      },
-      getComponentName: function ()
-      {
-         return "Geospatial";
-      },
-      getContainerField: function ()
-      {
-         return "geometry";
-      },
-      initialize: function ()
-      {
-         X3DGeometryNode     .prototype .initialize .call (this);
-         X3DGeospatialObject .prototype .initialize .call (this);
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "geometry";
+   },
+   initialize: function ()
+   {
+      X3DGeometryNode     .prototype .initialize .call (this);
+      X3DGeospatialObject .prototype .initialize .call (this);
 
-         this ._color    .addInterest ("set_color__", this);
-         this ._texCoord .addInterest ("set_texCoord__", this);
-         this ._normal   .addInterest ("set_normal__", this);
+      this ._color    .addInterest ("set_color__", this);
+      this ._texCoord .addInterest ("set_texCoord__", this);
+      this ._normal   .addInterest ("set_normal__", this);
 
-         this .set_color__ ();
-         this .set_texCoord__ ();
-         this .set_normal__ ();
-      },
-      set_color__: function ()
+      this .set_color__ ();
+      this .set_texCoord__ ();
+      this .set_normal__ ();
+   },
+   set_color__: function ()
+   {
+      if (this .colorNode)
       {
-         if (this .colorNode)
-         {
-            this .colorNode .removeInterest ("requestRebuild", this);
-            this .colorNode ._transparent .removeInterest ("set_transparent__", this);
-         }
+         this .colorNode .removeInterest ("requestRebuild", this);
+         this .colorNode ._transparent .removeInterest ("set_transparent__", this);
+      }
 
-         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
+      this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
-         if (this .colorNode)
-         {
-            this .colorNode .addInterest ("requestRebuild", this);
-            this .colorNode ._transparent .addInterest ("set_transparent__", this);
-
-            this .set_transparent__ ();
-         }
-         else
-            this .setTransparent (false);
-      },
-      set_transparent__: function ()
+      if (this .colorNode)
       {
-         this .setTransparent (this .colorNode .getTransparent ());
-      },
-      set_texCoord__: function ()
-      {
-         if (this .texCoordNode)
-            this .texCoordNode .removeInterest ("requestRebuild", this);
+         this .colorNode .addInterest ("requestRebuild", this);
+         this .colorNode ._transparent .addInterest ("set_transparent__", this);
 
-         this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
+         this .set_transparent__ ();
+      }
+      else
+         this .setTransparent (false);
+   },
+   set_transparent__: function ()
+   {
+      this .setTransparent (this .colorNode .getTransparent ());
+   },
+   set_texCoord__: function ()
+   {
+      if (this .texCoordNode)
+         this .texCoordNode .removeInterest ("requestRebuild", this);
 
-         if (this .texCoordNode)
-            this .texCoordNode .addInterest ("requestRebuild", this);
+      this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
 
-         this .setTextureCoordinate (this .texCoordNode);
-      },
-      set_normal__: function ()
-      {
-         if (this .normalNode)
-            this .normalNode .removeInterest ("requestRebuild", this);
+      if (this .texCoordNode)
+         this .texCoordNode .addInterest ("requestRebuild", this);
 
-         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
+      this .setTextureCoordinate (this .texCoordNode);
+   },
+   set_normal__: function ()
+   {
+      if (this .normalNode)
+         this .normalNode .removeInterest ("requestRebuild", this);
 
-         if (this .normalNode)
-            this .normalNode .addInterest ("requestRebuild", this);
-      },
-      getColor: function ()
-      {
-         return this .colorNode;
-      },
-      getTexCoord: function ()
-      {
-         return this .texCoordNode;
-      },
-      getNormal: function ()
-      {
-         return this .normalNode;
-      },
-      getHeight: function (index)
-      {
-         if (index < this ._height .length)
-            return this ._height [index] * this ._yScale .getValue ();
+      this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
 
-         return 0;
-      },
-      createTexCoords: function ()
+      if (this .normalNode)
+         this .normalNode .addInterest ("requestRebuild", this);
+   },
+   getColor: function ()
+   {
+      return this .colorNode;
+   },
+   getTexCoord: function ()
+   {
+      return this .texCoordNode;
+   },
+   getNormal: function ()
+   {
+      return this .normalNode;
+   },
+   getHeight: function (index)
+   {
+      if (index < this ._height .length)
+         return this ._height [index] * this ._yScale .getValue ();
+
+      return 0;
+   },
+   createTexCoords: function ()
+   {
+      var
+         texCoords  = [ ],
+         xDimension = this ._xDimension .getValue (),
+         zDimension = this ._zDimension .getValue (),
+         xSize      = xDimension - 1,
+         zSize      = zDimension - 1;
+
+      for (var z = 0; z < zDimension; ++ z)
+      {
+         for (var x = 0; x < xDimension; ++ x)
+            texCoords .push (new Vector2 (x / xSize, z / zSize));
+      }
+
+      return texCoords;
+   },
+   createNormals: function (points, coordIndex, creaseAngle)
+   {
+      var
+         cw          = ! this ._ccw .getValue (),
+         normalIndex = [ ],
+         normals     = [ ];
+
+      for (var p = 0; p < points .length; ++ p)
+         normalIndex [p] = [ ];
+
+      for (var c = 0; c < coordIndex .length; c += 3)
       {
          var
-            texCoords  = [ ],
-            xDimension = this ._xDimension .getValue (),
-            zDimension = this ._zDimension .getValue (),
-            xSize      = xDimension - 1,
-            zSize      = zDimension - 1;
+            c0 = coordIndex [c],
+            c1 = coordIndex [c + 1],
+            c2 = coordIndex [c + 2];
 
+         normalIndex [c0] .push (normals .length);
+         normalIndex [c1] .push (normals .length + 1);
+         normalIndex [c2] .push (normals .length + 2);
+
+         var normal = Triangle3 .normal (points [c0], points [c1], points [c2], new Vector3 (0, 0, 0));
+
+         if (cw)
+            normal .negate ();
+
+         normals .push (normal);
+         normals .push (normal);
+         normals .push (normal);
+      }
+
+      return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
+   },
+   createCoordIndex: function ()
+   {
+      // p1 - p4
+      //  | \ |
+      // p2 - p3
+
+      var
+         coordIndex = [ ],
+         xDimension = this ._xDimension .getValue (),
+         zDimension = this ._zDimension .getValue (),
+         xSize      = xDimension - 1,
+         zSize      = zDimension - 1;
+
+      for (var z = 0; z < zSize; ++ z)
+      {
+         for (var x = 0; x < xSize; ++ x)
+         {
+            var
+               i1 =       z * xDimension + x,
+               i2 = (z + 1) * xDimension + x,
+               i3 = (z + 1) * xDimension + (x + 1),
+               i4 =       z * xDimension + (x + 1);
+
+            coordIndex .push (i1); // p1
+            coordIndex .push (i3); // p3
+            coordIndex .push (i2); // p2
+
+            coordIndex .push (i1); // p1
+            coordIndex .push (i4); // p4
+            coordIndex .push (i3); // p3
+         }
+      }
+
+      return coordIndex;
+   },
+   createPoints: function ()
+   {
+      var
+         points     = [ ],
+         xDimension = this ._xDimension .getValue (),
+         zDimension = this ._zDimension .getValue (),
+         xSpacing   = this ._xSpacing .getValue (),
+         zSpacing   = this ._zSpacing .getValue ();
+
+      // When the geoSystem is "GD", xSpacing refers to the number of units of longitude in angle base units between
+      // adjacent height values and zSpacing refers to the number of units of latitude in angle base units between
+      // vertical height values.
+
+      // When the geoSystem is "UTM", xSpacing refers to the number of eastings (length base units) between adjacent
+      // height values and zSpacing refers to the number of northings (length base units) between vertical height values.
+
+      if (this .getStandardOrder ())
+      {
          for (var z = 0; z < zDimension; ++ z)
          {
             for (var x = 0; x < xDimension; ++ x)
-               texCoords .push (new Vector2 (x / xSize, z / zSize));
-         }
+            {
+               var point = new Vector3 (zSpacing * z, // latitude, northing
+                                        xSpacing * x, // longitude, easting
+                                        this .getHeight (x + z * xDimension));
 
-         return texCoords;
-      },
-      createNormals: function (points, coordIndex, creaseAngle)
+               point .add (this ._geoGridOrigin .getValue ());
+
+               points .push (this .getCoord (point, point));
+            }
+         }
+      }
+      else
+      {
+         for (var z = 0; z < zDimension; ++ z)
+         {
+            for (var x = 0; x < xDimension; ++ x)
+            {
+               var point = new Vector3 (xSpacing * x, // longitude, easting
+                                        zSpacing * z, // latitude, northing
+                                        this .getHeight (x + z * xDimension));
+
+               point .add (this ._geoGridOrigin .getValue ());
+
+               points .push (this .getCoord (point, point));
+            }
+         }
+      }
+
+      return points;
+   },
+   build: function ()
+   {
+      if (this ._xDimension .getValue () < 2 || this ._zDimension .getValue () < 2)
+         return;
+
+      var
+         colorPerVertex     = this ._colorPerVertex .getValue (),
+         normalPerVertex    = this ._normalPerVertex .getValue (),
+         coordIndex         = this .createCoordIndex (),
+         colorNode          = this .getColor (),
+         texCoordNode       = this .getTexCoord (),
+         normalNode         = this .getNormal (),
+         points             = this .createPoints (),
+         colorArray         = this .getColors (),
+         multiTexCoordArray = this .getMultiTexCoords (),
+         normalArray        = this .getNormals (),
+         vertexArray        = this .getVertices (),
+         face               = 0;
+
+      // Vertex attribute
+
+      //std::vector <std::vector <float>> attribArrays (attribNodes .size ());
+
+      //for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
+      //	attribArrays [a] .reserve (coordIndex .size ());
+
+      if (texCoordNode)
+      {
+         texCoordNode .init (multiTexCoordArray);
+      }
+      else
       {
          var
-            cw          = ! this ._ccw .getValue (),
-            normalIndex = [ ],
-            normals     = [ ];
+            texCoords     = this .createTexCoords (),
+            texCoordArray = this .getTexCoords ();
 
-         for (var p = 0; p < points .length; ++ p)
-            normalIndex [p] = [ ];
+         multiTexCoordArray .push (texCoordArray);
+      }
 
-         for (var c = 0; c < coordIndex .length; c += 3)
+      // Build geometry
+
+      for (var c = 0; c < coordIndex .length; ++ face)
+      {
+         for (var p = 0; p < 6; ++ p, ++ c)
          {
             var
-               c0 = coordIndex [c],
-               c1 = coordIndex [c + 1],
-               c2 = coordIndex [c + 2];
+               index = coordIndex [c],
+               point = points [index];
 
-            normalIndex [c0] .push (normals .length);
-            normalIndex [c1] .push (normals .length + 1);
-            normalIndex [c2] .push (normals .length + 2);
+            //for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
+            //	attribNodes [a] -> addValue (attribArrays [a], i);
 
-            var normal = Triangle3 .normal (points [c0], points [c1], points [c2], new Vector3 (0, 0, 0));
-
-            if (cw)
-               normal .negate ();
-
-            normals .push (normal);
-            normals .push (normal);
-            normals .push (normal);
-         }
-
-         return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
-      },
-      createCoordIndex: function ()
-      {
-         // p1 - p4
-         //  | \ |
-         // p2 - p3
-
-         var
-            coordIndex = [ ],
-            xDimension = this ._xDimension .getValue (),
-            zDimension = this ._zDimension .getValue (),
-            xSize      = xDimension - 1,
-            zSize      = zDimension - 1;
-
-         for (var z = 0; z < zSize; ++ z)
-         {
-            for (var x = 0; x < xSize; ++ x)
+            if (colorNode)
             {
-               var
-                  i1 =       z * xDimension + x,
-                  i2 = (z + 1) * xDimension + x,
-                  i3 = (z + 1) * xDimension + (x + 1),
-                  i4 =       z * xDimension + (x + 1);
-
-               coordIndex .push (i1); // p1
-               coordIndex .push (i3); // p3
-               coordIndex .push (i2); // p2
-
-               coordIndex .push (i1); // p1
-               coordIndex .push (i4); // p4
-               coordIndex .push (i3); // p3
-            }
-         }
-
-         return coordIndex;
-      },
-      createPoints: function ()
-      {
-         var
-            points     = [ ],
-            xDimension = this ._xDimension .getValue (),
-            zDimension = this ._zDimension .getValue (),
-            xSpacing   = this ._xSpacing .getValue (),
-            zSpacing   = this ._zSpacing .getValue ();
-
-         // When the geoSystem is "GD", xSpacing refers to the number of units of longitude in angle base units between
-         // adjacent height values and zSpacing refers to the number of units of latitude in angle base units between
-         // vertical height values.
-
-         // When the geoSystem is "UTM", xSpacing refers to the number of eastings (length base units) between adjacent
-         // height values and zSpacing refers to the number of northings (length base units) between vertical height values.
-
-         if (this .getStandardOrder ())
-         {
-            for (var z = 0; z < zDimension; ++ z)
-            {
-               for (var x = 0; x < xDimension; ++ x)
-               {
-                  var point = new Vector3 (zSpacing * z, // latitude, northing
-                                           xSpacing * x, // longitude, easting
-                                           this .getHeight (x + z * xDimension));
-
-                  point .add (this ._geoGridOrigin .getValue ());
-
-                  points .push (this .getCoord (point, point));
-               }
-            }
-         }
-         else
-         {
-            for (var z = 0; z < zDimension; ++ z)
-            {
-               for (var x = 0; x < xDimension; ++ x)
-               {
-                  var point = new Vector3 (xSpacing * x, // longitude, easting
-                                           zSpacing * z, // latitude, northing
-                                           this .getHeight (x + z * xDimension));
-
-                  point .add (this ._geoGridOrigin .getValue ());
-
-                  points .push (this .getCoord (point, point));
-               }
-            }
-         }
-
-         return points;
-      },
-      build: function ()
-      {
-         if (this ._xDimension .getValue () < 2 || this ._zDimension .getValue () < 2)
-            return;
-
-         var
-            colorPerVertex     = this ._colorPerVertex .getValue (),
-            normalPerVertex    = this ._normalPerVertex .getValue (),
-            coordIndex         = this .createCoordIndex (),
-            colorNode          = this .getColor (),
-            texCoordNode       = this .getTexCoord (),
-            normalNode         = this .getNormal (),
-            points             = this .createPoints (),
-            colorArray         = this .getColors (),
-            multiTexCoordArray = this .getMultiTexCoords (),
-            normalArray        = this .getNormals (),
-            vertexArray        = this .getVertices (),
-            face               = 0;
-
-         // Vertex attribute
-
-         //std::vector <std::vector <float>> attribArrays (attribNodes .size ());
-
-         //for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
-         //	attribArrays [a] .reserve (coordIndex .size ());
-
-         if (texCoordNode)
-         {
-            texCoordNode .init (multiTexCoordArray);
-         }
-         else
-         {
-            var
-               texCoords     = this .createTexCoords (),
-               texCoordArray = this .getTexCoords ();
-
-            multiTexCoordArray .push (texCoordArray);
-         }
-
-         // Build geometry
-
-         for (var c = 0; c < coordIndex .length; ++ face)
-         {
-            for (var p = 0; p < 6; ++ p, ++ c)
-            {
-               var
-                  index = coordIndex [c],
-                  point = points [index];
-
-               //for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
-               //	attribNodes [a] -> addValue (attribArrays [a], i);
-
-               if (colorNode)
-               {
-                  if (colorPerVertex)
-                     colorNode .addColor (index, colorArray);
-                  else
-                     colorNode .addColor (face, colorArray);
-               }
-
-               if (texCoordNode)
-               {
-                  texCoordNode .addTexCoord (index, multiTexCoordArray);
-               }
+               if (colorPerVertex)
+                  colorNode .addColor (index, colorArray);
                else
-               {
-                  var t = texCoords [index];
-
-                  texCoordArray .push (t .x, t .y, 0, 1);
-               }
-
-               if (normalNode)
-               {
-                  if (normalPerVertex)
-                     normalNode .addVector (index, normalArray);
-
-                  else
-                     normalNode .addVector (face, normalArray);
-               }
-
-               vertexArray .push (point .x, point .y, point .z, 1);
+                  colorNode .addColor (face, colorArray);
             }
-         }
 
-         // Add auto-generated normals if needed.
-
-         if (! normalNode)
-         {
-            var normals = this .createNormals (points, coordIndex);
-
-            for (var i = 0; i < normals .length; ++ i)
+            if (texCoordNode)
             {
-               var normal = normals [i];
-
-               normalArray .push (normal .x, normal .y, normal .z);
+               texCoordNode .addTexCoord (index, multiTexCoordArray);
             }
+            else
+            {
+               var t = texCoords [index];
+
+               texCoordArray .push (t .x, t .y, 0, 1);
+            }
+
+            if (normalNode)
+            {
+               if (normalPerVertex)
+                  normalNode .addVector (index, normalArray);
+
+               else
+                  normalNode .addVector (face, normalArray);
+            }
+
+            vertexArray .push (point .x, point .y, point .z, 1);
          }
+      }
 
-         this .setSolid (this ._solid .getValue ());
-         this .setCCW (this ._ccw .getValue ());
-      },
-   });
+      // Add auto-generated normals if needed.
 
-   return GeoElevationGrid;
+      if (! normalNode)
+      {
+         var normals = this .createNormals (points, coordIndex);
+
+         for (var i = 0; i < normals .length; ++ i)
+         {
+            var normal = normals [i];
+
+            normalArray .push (normal .x, normal .y, normal .z);
+         }
+      }
+
+      this .setSolid (this ._solid .getValue ());
+      this .setCCW (this ._ccw .getValue ());
+   },
 });
+
+export default GeoElevationGrid;

@@ -47,239 +47,227 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DSensorNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Base/X3DCast",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DSensorNode,
-          X3DConstants,
-          X3DCast,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DSensorNode from "../Core/X3DSensorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast from "../../Base/X3DCast.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+function CollisionSensor (executionContext)
 {
-"use strict";
+   X3DSensorNode .call (this, executionContext);
 
-   function CollisionSensor (executionContext)
+   this .addType (X3DConstants .CollisionSensor);
+
+   this .colliderNode = null;
+   this .contactCache = [ ];
+}
+
+CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+{
+   constructor: CollisionSensor,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",      new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "intersections", new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "contacts",      new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "collider",      new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DSensorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .CollisionSensor);
-
-      this .colliderNode = null;
-      this .contactCache = [ ];
-   }
-
-   CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+      return "CollisionSensor";
+   },
+   getComponentName: function ()
    {
-      constructor: CollisionSensor,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",      new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "intersections", new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "contacts",      new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "collider",      new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "CollisionSensor";
-      },
-      getComponentName: function ()
-      {
-         return "RigidBodyPhysics";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DSensorNode .prototype .initialize .call (this);
+      return "RigidBodyPhysics";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DSensorNode .prototype .initialize .call (this);
 
-         this .isLive () .addInterest ("set_live__", this);
+      this .isLive () .addInterest ("set_live__", this);
 
-         this ._collider .addInterest ("set_collider__", this);
+      this ._collider .addInterest ("set_collider__", this);
 
-         this .set_collider__ ();
-      },
-      set_live__: function ()
+      this .set_collider__ ();
+   },
+   set_live__: function ()
+   {
+      if (this .isLive () .getValue () && this ._enabled .getValue () && this .colliderNode)
       {
-         if (this .isLive () .getValue () && this ._enabled .getValue () && this .colliderNode)
-         {
-            this .getBrowser () .sensorEvents () .addInterest ("update", this);
-         }
-         else
-         {
-            this .getBrowser () .sensorEvents () .removeInterest ("update", this);
-         }
-      },
-      set_collider__: function ()
+         this .getBrowser () .sensorEvents () .addInterest ("update", this);
+      }
+      else
       {
-         this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this ._collider);
+         this .getBrowser () .sensorEvents () .removeInterest ("update", this);
+      }
+   },
+   set_collider__: function ()
+   {
+      this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this ._collider);
 
-         this .set_live__ ();
-      },
-      update: (function ()
+      this .set_live__ ();
+   },
+   update: (function ()
+   {
+      var
+         collidableNodesIndex = new Map (),
+         collisionWorlds      = new Set (),
+         intersectionNodes    = new Set (),
+         contactNodes         = [ ],
+         position             = new Vector3 (0, 0, 0),
+         contactNormal        = new Vector3 (0, 0, 0);
+
+      return function ()
       {
          var
-            collidableNodesIndex = new Map (),
-            collisionWorlds      = new Set (),
-            intersectionNodes    = new Set (),
-            contactNodes         = [ ],
-            position             = new Vector3 (0, 0, 0),
-            contactNormal        = new Vector3 (0, 0, 0);
+            colliderNode    = this .colliderNode,
+            collidableNodes = colliderNode .getCollidables ();
 
-         return function ()
+         collidableNodesIndex .clear ();
+         collisionWorlds      .clear ();
+
+         for (var i = 0, length = collidableNodes .length; i < length; ++ i)
          {
             var
-               colliderNode    = this .colliderNode,
-               collidableNodes = colliderNode .getCollidables ();
+               collidableNode = collidableNodes [i],
+               bodyNode       = collidableNodes [i] .getBody ();
 
-            collidableNodesIndex .clear ();
-            collisionWorlds      .clear ();
-
-            for (var i = 0, length = collidableNodes .length; i < length; ++ i)
+            if (bodyNode)
             {
-               var
-                  collidableNode = collidableNodes [i],
-                  bodyNode       = collidableNodes [i] .getBody ();
+               collidableNodesIndex .set (bodyNode .getRigidBody () .ptr, collidableNode);
 
-               if (bodyNode)
-               {
-                  collidableNodesIndex .set (bodyNode .getRigidBody () .ptr, collidableNode);
+               var collection = bodyNode .getCollection ();
 
-                  var collection = bodyNode .getCollection ();
-
-                  if (collection)
-                     collisionWorlds .add (collection .getDynamicsWorld ());
-               }
+               if (collection)
+                  collisionWorlds .add (collection .getDynamicsWorld ());
             }
+         }
 
-            intersectionNodes .clear ();
-            contactNodes .length = 0;
+         intersectionNodes .clear ();
+         contactNodes .length = 0;
 
-            collisionWorlds .forEach (function (collisionWorld)
+         collisionWorlds .forEach (function (collisionWorld)
+         {
+            //collisionWorld .performDiscreteCollisionDetection ();
+
+            var
+               dispatcher   = collisionWorld .getDispatcher (),
+               numManifolds = dispatcher .getNumManifolds ();
+
+            for (var i = 0; i < numManifolds; ++ i)
             {
-               //collisionWorld .performDiscreteCollisionDetection ();
-
                var
-                  dispatcher   = collisionWorld .getDispatcher (),
-                  numManifolds = dispatcher .getNumManifolds ();
+                  contactManifold = dispatcher .getManifoldByIndexInternal (i),
+                  numContacts     = contactManifold .getNumContacts ();
 
-               for (var i = 0; i < numManifolds; ++ i)
+               for (var j = 0; j < numContacts; ++ j)
                {
-                  var
-                     contactManifold = dispatcher .getManifoldByIndexInternal (i),
-                     numContacts     = contactManifold .getNumContacts ();
+                  var pt = contactManifold .getContactPoint (j);
 
-                  for (var j = 0; j < numContacts; ++ j)
+                  if (pt .getDistance () <= 0)
                   {
-                     var pt = contactManifold .getContactPoint (j);
+                     var
+                        collidableNode1 = collidableNodesIndex .get (contactManifold .getBody0 () .ptr),
+                        collidableNode2 = collidableNodesIndex .get (contactManifold .getBody1 () .ptr);
 
-                     if (pt .getDistance () <= 0)
-                     {
-                        var
-                           collidableNode1 = collidableNodesIndex .get (contactManifold .getBody0 () .ptr),
-                           collidableNode2 = collidableNodesIndex .get (contactManifold .getBody1 () .ptr);
+                     if (! collidableNode1 && ! collidableNode2)
+                        continue;
 
-                        if (! collidableNode1 && ! collidableNode2)
-                           continue;
+                     var contactNode = this .getContact (contactNodes .length);
 
-                        var contactNode = this .getContact (contactNodes .length);
+                     var
+                        btPosition      = pt .getPositionWorldOnA (),
+                        btContactNormal = pt .get_m_normalWorldOnB ();
 
-                        var
-                           btPosition      = pt .getPositionWorldOnA (),
-                           btContactNormal = pt .get_m_normalWorldOnB ();
-
-                        contactNode ._position                 = position .set (btPosition .x (), btPosition .y (), btPosition .z ());
-                        contactNode ._contactNormal            = contactNormal .set (btContactNormal .x (), btContactNormal .y (), btContactNormal .z ());
-                        contactNode ._depth                    = -pt .getDistance ();
+                     contactNode ._position                 = position .set (btPosition .x (), btPosition .y (), btPosition .z ());
+                     contactNode ._contactNormal            = contactNormal .set (btContactNormal .x (), btContactNormal .y (), btContactNormal .z ());
+                     contactNode ._depth                    = -pt .getDistance ();
 //								contactNode ._frictionDirection        = context .frictionDirection;
-                        contactNode ._appliedParameters        = colliderNode ._appliedParameters;
-                        contactNode ._bounce                   = colliderNode ._bounce;
-                        contactNode ._minBounceSpeed           = colliderNode ._minBounceSpeed;
-                        contactNode ._frictionCoefficients     = colliderNode ._frictionCoefficients;
-                        contactNode ._surfaceSpeed             = colliderNode ._surfaceSpeed;
-                        contactNode ._slipCoefficients         = colliderNode ._slipFactors;
-                        contactNode ._softnessConstantForceMix = colliderNode ._softnessConstantForceMix;
-                        contactNode ._softnessErrorCorrection  = colliderNode ._softnessErrorCorrection;
+                     contactNode ._appliedParameters        = colliderNode ._appliedParameters;
+                     contactNode ._bounce                   = colliderNode ._bounce;
+                     contactNode ._minBounceSpeed           = colliderNode ._minBounceSpeed;
+                     contactNode ._frictionCoefficients     = colliderNode ._frictionCoefficients;
+                     contactNode ._surfaceSpeed             = colliderNode ._surfaceSpeed;
+                     contactNode ._slipCoefficients         = colliderNode ._slipFactors;
+                     contactNode ._softnessConstantForceMix = colliderNode ._softnessConstantForceMix;
+                     contactNode ._softnessErrorCorrection  = colliderNode ._softnessErrorCorrection;
 
-                        if (collidableNode1)
-                        {
-                           intersectionNodes .add (collidableNode1);
+                     if (collidableNode1)
+                     {
+                        intersectionNodes .add (collidableNode1);
 
-                           contactNode .geometry1_ = collidableNode1;
-                           contactNode .body1_     = collidableNode1 .getBody ();
-                        }
-
-                        if (collidableNode2)
-                        {
-                           intersectionNodes .add (collidableNode2);
-
-                           contactNode .geometry2_ = collidableNode2;
-                           contactNode .body2_     = collidableNode2 .getBody ();
-                        }
-
-                        contactNodes .push (contactNode);
+                        contactNode .geometry1_ = collidableNode1;
+                        contactNode .body1_     = collidableNode1 .getBody ();
                      }
+
+                     if (collidableNode2)
+                     {
+                        intersectionNodes .add (collidableNode2);
+
+                        contactNode .geometry2_ = collidableNode2;
+                        contactNode .body2_     = collidableNode2 .getBody ();
+                     }
+
+                     contactNodes .push (contactNode);
                   }
                }
+            }
+         },
+         this);
+
+         var active = Boolean (contactNodes .length);
+
+         if (this ._isActive .getValue () !== active)
+            this ._isActive = active;
+
+         if (intersectionNodes .size)
+         {
+            var i = 0;
+
+            intersectionNodes .forEach (function (intersectionNode)
+            {
+               this ._intersections [i ++] = intersectionNode;
             },
             this);
 
-            var active = Boolean (contactNodes .length);
+            this ._intersections .length = i;
+         }
 
-            if (this ._isActive .getValue () !== active)
-               this ._isActive = active;
+         if (contactNodes .length)
+         {
+            var i = 0;
 
-            if (intersectionNodes .size)
+            contactNodes .forEach (function (contactNode)
             {
-               var i = 0;
+               this ._contacts [i ++] = contactNode;
+            },
+            this);
 
-               intersectionNodes .forEach (function (intersectionNode)
-               {
-                  this ._intersections [i ++] = intersectionNode;
-               },
-               this);
+            this ._contacts .length = i;
+         }
+      };
+   })(),
+   getContact: function (index)
+   {
+      var contactNode = this .contactCache [index];
 
-               this ._intersections .length = i;
-            }
-
-            if (contactNodes .length)
-            {
-               var i = 0;
-
-               contactNodes .forEach (function (contactNode)
-               {
-                  this ._contacts [i ++] = contactNode;
-               },
-               this);
-
-               this ._contacts .length = i;
-            }
-         };
-      })(),
-      getContact: function (index)
-      {
-         var contactNode = this .contactCache [index];
-
-         if (contactNode)
-            return contactNode;
-
-         contactNode = this .contactCache [index] = this .getExecutionContext () .createNode ("Contact", false);
-
-         contactNode .setup ();
-
+      if (contactNode)
          return contactNode;
-      },
-   });
 
-   return CollisionSensor;
+      contactNode = this .contactCache [index] = this .getExecutionContext () .createNode ("Contact", false);
+
+      contactNode .setup ();
+
+      return contactNode;
+   },
 });
+
+export default CollisionSensor;

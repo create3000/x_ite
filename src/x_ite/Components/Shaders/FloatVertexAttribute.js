@@ -47,103 +47,92 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Shaders/X3DVertexAttributeNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Algorithm",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DVertexAttributeNode,
-          X3DConstants,
-          Algorithm)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DVertexAttributeNode from "./X3DVertexAttributeNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+function FloatVertexAttribute (executionContext)
 {
-"use strict";
+   X3DVertexAttributeNode .call (this, executionContext);
 
-   function FloatVertexAttribute (executionContext)
+   this .addType (X3DConstants .FloatVertexAttribute);
+}
+
+FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
+{
+   constructor: FloatVertexAttribute,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "name",          new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "numComponents", new Fields .SFInt32 (4)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "value",         new Fields .MFFloat ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DVertexAttributeNode .call (this, executionContext);
-
-      this .addType (X3DConstants .FloatVertexAttribute);
-   }
-
-   FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
+      return "FloatVertexAttribute";
+   },
+   getComponentName: function ()
    {
-      constructor: FloatVertexAttribute,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "name",          new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "numComponents", new Fields .SFInt32 (4)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "value",         new Fields .MFFloat ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "FloatVertexAttribute";
-      },
-      getComponentName: function ()
-      {
-         return "Shaders";
-      },
-      getContainerField: function ()
-      {
-         return "attrib";
-      },
-      initialize: function ()
-      {
-         X3DVertexAttributeNode .prototype .initialize .call (this);
+      return "Shaders";
+   },
+   getContainerField: function ()
+   {
+      return "attrib";
+   },
+   initialize: function ()
+   {
+      X3DVertexAttributeNode .prototype .initialize .call (this);
 
-         this ._numComponents .addInterest ("set_numComponents__", this);
-         this ._numComponents .addInterest ("set_attribute__",     this);
-         this ._value         .addInterest ("set_value__",         this);
+      this ._numComponents .addInterest ("set_numComponents__", this);
+      this ._numComponents .addInterest ("set_attribute__",     this);
+      this ._value         .addInterest ("set_value__",         this);
 
-         this .set_numComponents__ ();
-         this .set_value__ ();
-      },
-      set_numComponents__: function ()
+      this .set_numComponents__ ();
+      this .set_value__ ();
+   },
+   set_numComponents__: function ()
+   {
+      this .numComponents = Algorithm .clamp (this ._numComponents .getValue (), 1, 4);
+   },
+   set_value__: function ()
+   {
+      this .value  = this ._value .getValue ();
+      this .length = this ._value .length;
+   },
+   addValue: function (index, array)
+   {
+      const value = this .value;
+
+      let
+         first = index * this .numComponents,
+         last  = first + this .numComponents;
+
+      if (last <= this .length)
       {
-         this .numComponents = Algorithm .clamp (this ._numComponents .getValue (), 1, 4);
-      },
-      set_value__: function ()
+         for (; first < last; ++ first)
+            array .push (value [first]);
+      }
+      else if (this .numComponents <= this .length)
       {
-         this .value  = this ._value .getValue ();
-         this .length = this ._value .length;
-      },
-      addValue: function (index, array)
+         last  = value .length;
+         first = last - this .numComponents;
+
+         for (; first < last; ++ first)
+            array .push (value [first]);
+      }
+      else
       {
-         const value = this .value;
-
-         let
-            first = index * this .numComponents,
-            last  = first + this .numComponents;
-
-         if (last <= this .length)
-         {
-            for (; first < last; ++ first)
-               array .push (value [first]);
-         }
-         else if (this .numComponents <= this .length)
-         {
-            last  = value .length;
-            first = last - this .numComponents;
-
-            for (; first < last; ++ first)
-               array .push (value [first]);
-         }
-         else
-         {
-            for (; first < last; ++ first)
-               array .push (0);
-         }
-      },
-      enable: function (gl, shaderNode, buffer)
-      {
-         shaderNode .enableFloatAttrib (gl, this ._name .getValue (), buffer, this .numComponents, 0, 0);
-      },
-   });
-
-   return FloatVertexAttribute;
+         for (; first < last; ++ first)
+            array .push (0);
+      }
+   },
+   enable: function (gl, shaderNode, buffer)
+   {
+      shaderNode .enableFloatAttrib (gl, this ._name .getValue (), buffer, this .numComponents, 0, 0);
+   },
 });
+
+export default FloatVertexAttribute;

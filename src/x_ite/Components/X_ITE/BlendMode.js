@@ -47,158 +47,147 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Rendering/TraverseType",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DAppearanceChildNode,
-          TraverseType,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DAppearanceChildNode from "../Shape/X3DAppearanceChildNode.js";
+import TraverseType from "../../Rendering/TraverseType.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function BlendMode (executionContext)
 {
-"use strict";
+   X3DAppearanceChildNode .call (this, executionContext);
 
-   function BlendMode (executionContext)
+   this .addType (X3DConstants .BlendMode);
+
+   this .factorTypes   = new Map ();
+   this .equationTypes = new Map ();
+}
+
+BlendMode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+{
+   constructor: BlendMode,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "blendColor",              new Fields .SFColorRGBA ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "sourceColorFactor",       new Fields .SFString ("SRC_ALPHA")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "sourceAlphaFactor",       new Fields .SFString ("ONE")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "destinationColorFactor",  new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "destinationAlphaFactor",  new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "colorEquation",           new Fields .SFString ("FUNC_ADD")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "alphaEquation",           new Fields .SFString ("FUNC_ADD")),
+   ]),
+   getTypeName: function ()
    {
-      X3DAppearanceChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .BlendMode);
-
-      this .factorTypes   = new Map ();
-      this .equationTypes = new Map ();
-   }
-
-   BlendMode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+      return "BlendMode";
+   },
+   getComponentName: function ()
    {
-      constructor: BlendMode,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "blendColor",              new Fields .SFColorRGBA ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "sourceColorFactor",       new Fields .SFString ("SRC_ALPHA")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "sourceAlphaFactor",       new Fields .SFString ("ONE")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "destinationColorFactor",  new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "destinationAlphaFactor",  new Fields .SFString ("ONE_MINUS_SRC_ALPHA")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "colorEquation",           new Fields .SFString ("FUNC_ADD")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "alphaEquation",           new Fields .SFString ("FUNC_ADD")),
-      ]),
-      getTypeName: function ()
-      {
-         return "BlendMode";
-      },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "blendMode";
-      },
-      initialize: function ()
-      {
-         X3DAppearanceChildNode .prototype .initialize .call (this);
+      return "X_ITE";
+   },
+   getContainerField: function ()
+   {
+      return "blendMode";
+   },
+   initialize: function ()
+   {
+      X3DAppearanceChildNode .prototype .initialize .call (this);
 
-         const
-            gl  = this .getBrowser () .getContext (),
-            ext = gl .getExtension ('EXT_blend_minmax');
+      const
+         gl  = this .getBrowser () .getContext (),
+         ext = gl .getExtension ('EXT_blend_minmax');
 
-         this .factorTypes .set ("ZERO",                     gl .ZERO);
-         this .factorTypes .set ("ONE",                      gl .ONE);
-         this .factorTypes .set ("SRC_COLOR",                gl .SRC_COLOR);
-         this .factorTypes .set ("ONE_MINUS_SRC_COLOR",      gl .ONE_MINUS_SRC_COLOR);
-         this .factorTypes .set ("DST_COLOR",                gl .DST_COLOR);
-         this .factorTypes .set ("ONE_MINUS_DST_COLOR",      gl .ONE_MINUS_DST_COLOR);
-         this .factorTypes .set ("SRC_ALPHA",                gl .SRC_ALPHA);
-         this .factorTypes .set ("ONE_MINUS_SRC_ALPHA",      gl .ONE_MINUS_SRC_ALPHA);
-         this .factorTypes .set ("DST_ALPHA",                gl .DST_ALPHA);
-         this .factorTypes .set ("ONE_MINUS_DST_ALPHA",      gl .ONE_MINUS_DST_ALPHA);
-         this .factorTypes .set ("SRC_ALPHA_SATURATE",       gl .SRC_ALPHA_SATURATE);
-         this .factorTypes .set ("CONSTANT_COLOR",           gl .CONSTANT_COLOR);
-         this .factorTypes .set ("ONE_MINUS_CONSTANT_COLOR", gl .ONE_MINUS_CONSTANT_COLOR);
-         this .factorTypes .set ("CONSTANT_ALPHA",           gl .CONSTANT_ALPHA);
-         this .factorTypes .set ("ONE_MINUS_CONSTANT_ALPHA", gl .ONE_MINUS_CONSTANT_ALPHA);
+      this .factorTypes .set ("ZERO",                     gl .ZERO);
+      this .factorTypes .set ("ONE",                      gl .ONE);
+      this .factorTypes .set ("SRC_COLOR",                gl .SRC_COLOR);
+      this .factorTypes .set ("ONE_MINUS_SRC_COLOR",      gl .ONE_MINUS_SRC_COLOR);
+      this .factorTypes .set ("DST_COLOR",                gl .DST_COLOR);
+      this .factorTypes .set ("ONE_MINUS_DST_COLOR",      gl .ONE_MINUS_DST_COLOR);
+      this .factorTypes .set ("SRC_ALPHA",                gl .SRC_ALPHA);
+      this .factorTypes .set ("ONE_MINUS_SRC_ALPHA",      gl .ONE_MINUS_SRC_ALPHA);
+      this .factorTypes .set ("DST_ALPHA",                gl .DST_ALPHA);
+      this .factorTypes .set ("ONE_MINUS_DST_ALPHA",      gl .ONE_MINUS_DST_ALPHA);
+      this .factorTypes .set ("SRC_ALPHA_SATURATE",       gl .SRC_ALPHA_SATURATE);
+      this .factorTypes .set ("CONSTANT_COLOR",           gl .CONSTANT_COLOR);
+      this .factorTypes .set ("ONE_MINUS_CONSTANT_COLOR", gl .ONE_MINUS_CONSTANT_COLOR);
+      this .factorTypes .set ("CONSTANT_ALPHA",           gl .CONSTANT_ALPHA);
+      this .factorTypes .set ("ONE_MINUS_CONSTANT_ALPHA", gl .ONE_MINUS_CONSTANT_ALPHA);
 
-         this .equationTypes .set ("FUNC_ADD",              gl .FUNC_ADD);
-         this .equationTypes .set ("FUNC_SUBTRACT",         gl .FUNC_SUBTRACT);
-         this .equationTypes .set ("FUNC_REVERSE_SUBTRACT", gl .FUNC_REVERSE_SUBTRACT);
-         this .equationTypes .set ("MIN",                   gl .MIN || (ext && ext .MIN_EXT));
-         this .equationTypes .set ("MAX",                   gl .MAX || (ext && ext .MAX_EXT));
+      this .equationTypes .set ("FUNC_ADD",              gl .FUNC_ADD);
+      this .equationTypes .set ("FUNC_SUBTRACT",         gl .FUNC_SUBTRACT);
+      this .equationTypes .set ("FUNC_REVERSE_SUBTRACT", gl .FUNC_REVERSE_SUBTRACT);
+      this .equationTypes .set ("MIN",                   gl .MIN || (ext && ext .MIN_EXT));
+      this .equationTypes .set ("MAX",                   gl .MAX || (ext && ext .MAX_EXT));
 
-         this ._sourceColorFactor      .addInterest ("set_sourceColorFactor__",      this);
-         this ._sourceAlphaFactor      .addInterest ("set_sourceAlphaFactor__",      this);
-         this ._destinationColorFactor .addInterest ("set_destinationColorFactor__", this);
-         this ._destinationAlphaFactor .addInterest ("set_destinationAlphaFactor__", this);
-         this ._colorEquation          .addInterest ("set_colorEquation__",          this);
-         this ._alphaEquation          .addInterest ("set_alphaEquation__",          this);
+      this ._sourceColorFactor      .addInterest ("set_sourceColorFactor__",      this);
+      this ._sourceAlphaFactor      .addInterest ("set_sourceAlphaFactor__",      this);
+      this ._destinationColorFactor .addInterest ("set_destinationColorFactor__", this);
+      this ._destinationAlphaFactor .addInterest ("set_destinationAlphaFactor__", this);
+      this ._colorEquation          .addInterest ("set_colorEquation__",          this);
+      this ._alphaEquation          .addInterest ("set_alphaEquation__",          this);
 
-         this .set_sourceColorFactor__ ();
-         this .set_sourceAlphaFactor__ ();
-         this .set_destinationColorFactor__ ();
-         this .set_destinationAlphaFactor__ ();
-         this .set_colorEquation__ ();
-         this .set_alphaEquation__ ();
-      },
-      set_sourceColorFactor__: function ()
-      {
-         this .sourceColorFactorType = this .factorTypes .get (this ._sourceColorFactor .getValue ());
+      this .set_sourceColorFactor__ ();
+      this .set_sourceAlphaFactor__ ();
+      this .set_destinationColorFactor__ ();
+      this .set_destinationAlphaFactor__ ();
+      this .set_colorEquation__ ();
+      this .set_alphaEquation__ ();
+   },
+   set_sourceColorFactor__: function ()
+   {
+      this .sourceColorFactorType = this .factorTypes .get (this ._sourceColorFactor .getValue ());
 
-         if (this .sourceColorFactorType === undefined)
-            this .sourceColorFactorType = this .factorTypes .get ("SRC_ALPHA");
-      },
-      set_sourceAlphaFactor__: function ()
-      {
-         this .sourceAlphaFactorType = this .factorTypes .get (this ._sourceAlphaFactor .getValue ());
+      if (this .sourceColorFactorType === undefined)
+         this .sourceColorFactorType = this .factorTypes .get ("SRC_ALPHA");
+   },
+   set_sourceAlphaFactor__: function ()
+   {
+      this .sourceAlphaFactorType = this .factorTypes .get (this ._sourceAlphaFactor .getValue ());
 
-         if (this .sourceAlphaFactorType === undefined)
-            this .sourceAlphaFactorType = this .factorTypes .get ("ONE");
-      },
-      set_destinationColorFactor__: function ()
-      {
-         this .destinationColorFactorType = this .factorTypes .get (this ._destinationColorFactor .getValue ());
+      if (this .sourceAlphaFactorType === undefined)
+         this .sourceAlphaFactorType = this .factorTypes .get ("ONE");
+   },
+   set_destinationColorFactor__: function ()
+   {
+      this .destinationColorFactorType = this .factorTypes .get (this ._destinationColorFactor .getValue ());
 
-         if (this .destinationColorFactorType === undefined)
-            this .destinationColorFactorType = this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
-      },
-      set_destinationAlphaFactor__: function ()
-      {
-         this .destinationAlphaFactorType = this .factorTypes .get (this ._destinationAlphaFactor .getValue ());
+      if (this .destinationColorFactorType === undefined)
+         this .destinationColorFactorType = this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
+   },
+   set_destinationAlphaFactor__: function ()
+   {
+      this .destinationAlphaFactorType = this .factorTypes .get (this ._destinationAlphaFactor .getValue ());
 
-         if (this .destinationAlphaFactorType === undefined)
-            this .destinationAlphaFactorType = this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
-      },
-      set_colorEquation__: function ()
-      {
-         this .colorEquationType = this .equationTypes .get (this ._colorEquation .getValue ());
+      if (this .destinationAlphaFactorType === undefined)
+         this .destinationAlphaFactorType = this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
+   },
+   set_colorEquation__: function ()
+   {
+      this .colorEquationType = this .equationTypes .get (this ._colorEquation .getValue ());
 
-         if (this .colorEquationType === undefined)
-            this .colorEquationType = this .equationTypes .get ("FUNC_ADD");
-      },
-      set_alphaEquation__: function ()
-      {
-         this .alphaEquationType = this .equationTypes .get (this ._alphaEquation .getValue ());
+      if (this .colorEquationType === undefined)
+         this .colorEquationType = this .equationTypes .get ("FUNC_ADD");
+   },
+   set_alphaEquation__: function ()
+   {
+      this .alphaEquationType = this .equationTypes .get (this ._alphaEquation .getValue ());
 
-         if (this .alphaEquationType === undefined)
-            this .alphaEquationType = this .equationTypes .get ("FUNC_ADD");
-      },
-      enable: function (gl)
-      {
-         const color = this ._blendColor .getValue ();
+      if (this .alphaEquationType === undefined)
+         this .alphaEquationType = this .equationTypes .get ("FUNC_ADD");
+   },
+   enable: function (gl)
+   {
+      const color = this ._blendColor .getValue ();
 
-         gl .blendColor (color .r, color .g, color .b, color .a);
-         gl .blendFuncSeparate (this .sourceColorFactorType, this .destinationColorFactorType, this .sourceAlphaFactorType, this .destinationAlphaFactorType);
-         gl .blendEquationSeparate (this .colorEquationType, this .alphaEquationType);
-      },
-      disable: function (gl)
-      {
-         gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
-         gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
-      },
-   });
-
-   return BlendMode;
+      gl .blendColor (color .r, color .g, color .b, color .a);
+      gl .blendFuncSeparate (this .sourceColorFactorType, this .destinationColorFactorType, this .sourceAlphaFactorType, this .destinationAlphaFactorType);
+      gl .blendEquationSeparate (this .colorEquationType, this .alphaEquationType);
+   },
+   disable: function (gl)
+   {
+      gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+      gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
+   },
 });
+
+export default BlendMode;

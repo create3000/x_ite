@@ -47,651 +47,643 @@
  ******************************************************************************/
 
 
-define ([
-   "pako_inflate",
-],
-function (pako)
+// Grammar
+
+var Grammar =
 {
-"use strict";
+   NRRD: new RegExp ("^NRRD(\\d+)\\n", 'gy'),
+   field: new RegExp ("([\\w\\s]+):\\s*(.+?)\\n", 'gy'),
+   comment: new RegExp ("#[^\\n]*\\n", 'gy'),
+   newLine: new RegExp ("\n", 'gy'),
+   data: new RegExp ("([^]*)$", 'gy'),
+};
 
-   // Grammar
+function parse (parser)
+{
+   this .lastIndex = parser .lastIndex;
 
-   var Grammar =
+   parser .result = this .exec (parser .input);
+
+   if (parser .result)
    {
-      NRRD: new RegExp ("^NRRD(\\d+)\\n", 'gy'),
-      field: new RegExp ("([\\w\\s]+):\\s*(.+?)\\n", 'gy'),
-      comment: new RegExp ("#[^\\n]*\\n", 'gy'),
-      newLine: new RegExp ("\n", 'gy'),
-      data: new RegExp ("([^]*)$", 'gy'),
-   };
+      parser .lastIndex = this .lastIndex;
+      return true;
+   }
 
-   function parse (parser)
+   return false;
+}
+
+for (var key in Grammar)
+   Grammar [key] .parse = parse;
+
+// Parser
+
+function NRRDParser ()
+{
+   this .fieldFunction = new Map ([
+      ["type",      this .getType],
+      ["encoding",  this .getEncoding],
+      ["dimension", this .getDimension],
+      ["sizes",     this .getSizes],
+      ["endian",    this .getEndian],
+   ]);
+}
+
+NRRDParser .prototype =
+{
+   parse: function (input)
    {
-      this .lastIndex = parser .lastIndex;
+      this .setInput (input);
 
-      parser .result = this .exec (parser .input);
-
-      if (parser .result)
+      if (this .getNRRD ())
       {
-         parser .lastIndex = this .lastIndex;
+         this .getFields ();
+         this .getData ();
+      }
+
+      return this .nrrd;
+   },
+   setInput: function (value)
+   {
+      this .input     = value;
+      this .lastIndex = 0;
+      this .nrrd      = { };
+      this .endian    = "little";
+   },
+   getNRRD: function ()
+   {
+      if (Grammar .NRRD .parse (this))
+      {
+         this .nrrd .nrrd    = true;
+         this .nrrd .version = parseInt (this .result [1]);
+         this .endian        = this .getEndianess ();
          return true;
       }
 
+      this .nrrd .nrrd = false;
       return false;
-   }
-
-   for (var key in Grammar)
-      Grammar [key] .parse = parse;
-
-   // Parser
-
-   function NRRDParser ()
+   },
+   getFields: function ()
    {
-      this .fieldFunction = new Map ([
-         ["type",      this .getType],
-         ["encoding",  this .getEncoding],
-         ["dimension", this .getDimension],
-         ["sizes",     this .getSizes],
-         ["endian",    this .getEndian],
-      ]);
-   }
+      while (Grammar .comment .parse (this))
+         ;
 
-   NRRDParser .prototype =
-   {
-      parse: function (input)
+      while (Grammar .field .parse (this))
       {
-         this .setInput (input);
+         var
+            key   = this .result [1] .toLowerCase (),
+            value = this .result [2] .trim () .toLowerCase (),
+            fun   = this .fieldFunction .get (key);
 
-         if (this .getNRRD ())
-         {
-            this .getFields ();
-            this .getData ();
-         }
+         if (fun)
+            fun .call (this, value);
 
-         return this .nrrd;
-      },
-      setInput: function (value)
-      {
-         this .input     = value;
-         this .lastIndex = 0;
-         this .nrrd      = { };
-         this .endian    = "little";
-      },
-      getNRRD: function ()
-      {
-         if (Grammar .NRRD .parse (this))
-         {
-            this .nrrd .nrrd    = true;
-            this .nrrd .version = parseInt (this .result [1]);
-            this .endian        = this .getEndianess ();
-            return true;
-         }
-
-         this .nrrd .nrrd = false;
-         return false;
-      },
-      getFields: function ()
-      {
          while (Grammar .comment .parse (this))
             ;
+      }
+   },
+   getType: (function ()
+   {
+      var types = new Map ([
+         ["signed char",        ["signed char", 1]],
+         ["int8",               ["signed char", 1]],
+         ["int8_t",             ["signed char", 1]],
+         ["uchar",              ["unsigned char", 1]],
+         ["unsigned char",      ["unsigned char", 1]],
+         ["uint8",              ["unsigned char", 1]],
+         ["uint8_t",            ["unsigned char", 1]],
+         ["short",              ["signed short", 2]],
+         ["short int",          ["signed short", 2]],
+         ["signed short",       ["signed short", 2]],
+         ["signed short int",   ["signed short", 2]],
+         ["int16",              ["signed short", 2]],
+         ["int16_t",            ["signed short", 2]],
+         ["ushort",             ["unsigned short", 2]],
+         ["unsigned short",     ["unsigned short", 2]],
+         ["unsigned short int", ["unsigned short", 2]],
+         ["uint16",             ["unsigned short", 2]],
+         ["uint16_t",           ["unsigned short", 2]],
+         ["int",                ["signed int", 4]],
+         ["signed int",         ["signed int", 4]],
+         ["int32",              ["signed int", 4]],
+         ["int32_t",            ["signed int", 4]],
+         ["uint",               ["unsigned int", 4]],
+         ["unsigned int",       ["unsigned int", 4]],
+         ["uint32",             ["unsigned int", 4]],
+         ["uint32_t",           ["unsigned int", 4]],
+         ["float",              ["float", 4]],
+         ["double",             ["double", 8]],
+      ]);
 
-         while (Grammar .field .parse (this))
-         {
-            var
-               key   = this .result [1] .toLowerCase (),
-               value = this .result [2] .trim () .toLowerCase (),
-               fun   = this .fieldFunction .get (key);
-
-            if (fun)
-               fun .call (this, value);
-
-            while (Grammar .comment .parse (this))
-               ;
-         }
-      },
-      getType: (function ()
+      return function (value)
       {
-         var types = new Map ([
-            ["signed char",        ["signed char", 1]],
-            ["int8",               ["signed char", 1]],
-            ["int8_t",             ["signed char", 1]],
-            ["uchar",              ["unsigned char", 1]],
-            ["unsigned char",      ["unsigned char", 1]],
-            ["uint8",              ["unsigned char", 1]],
-            ["uint8_t",            ["unsigned char", 1]],
-            ["short",              ["signed short", 2]],
-            ["short int",          ["signed short", 2]],
-            ["signed short",       ["signed short", 2]],
-            ["signed short int",   ["signed short", 2]],
-            ["int16",              ["signed short", 2]],
-            ["int16_t",            ["signed short", 2]],
-            ["ushort",             ["unsigned short", 2]],
-            ["unsigned short",     ["unsigned short", 2]],
-            ["unsigned short int", ["unsigned short", 2]],
-            ["uint16",             ["unsigned short", 2]],
-            ["uint16_t",           ["unsigned short", 2]],
-            ["int",                ["signed int", 4]],
-            ["signed int",         ["signed int", 4]],
-            ["int32",              ["signed int", 4]],
-            ["int32_t",            ["signed int", 4]],
-            ["uint",               ["unsigned int", 4]],
-            ["unsigned int",       ["unsigned int", 4]],
-            ["uint32",             ["unsigned int", 4]],
-            ["uint32_t",           ["unsigned int", 4]],
-            ["float",              ["float", 4]],
-            ["double",             ["double", 8]],
-         ]);
+         var type = types .get (value);
 
-         return function (value)
-         {
-            var type = types .get (value);
+         if (type === undefined)
+            throw new Error ("Unsupported NRRD type '" + value + "'.");
 
-            if (type === undefined)
-               throw new Error ("Unsupported NRRD type '" + value + "'.");
+         this .byteType = type [0];
+         this .bytes    = type [1];
+      };
+   })(),
+   getEncoding: (function ()
+   {
+      var encodings = new Map ([
+         ["ascii", "ascii"],
+         ["txt",   "ascii"],
+         ["text",  "ascii"],
+         ["raw",   "raw"],
+         ["hex",   "hex"],
+         ["gz",    "gzip"],
+         ["gzip",  "gzip"],
+      ]);
 
-            this .byteType = type [0];
-            this .bytes    = type [1];
-         };
-      })(),
-      getEncoding: (function ()
+      return function (value)
       {
-         var encodings = new Map ([
-            ["ascii", "ascii"],
-            ["txt",   "ascii"],
-            ["text",  "ascii"],
-            ["raw",   "raw"],
-            ["hex",   "hex"],
-            ["gz",    "gzip"],
-            ["gzip",  "gzip"],
-         ]);
+         var encoding = encodings .get (value);
 
-         return function (value)
-         {
-            var encoding = encodings .get (value);
+         if (encoding === undefined)
+            throw new Error ("Unsupported NRRD encoding '" + value + "'.");
 
-            if (encoding === undefined)
-               throw new Error ("Unsupported NRRD encoding '" + value + "'.");
+         this .encoding = encoding;
+      };
+   })(),
+   getDimension: function (value)
+   {
+      var
+         result    = value .match (/(\d+)/),
+         dimension = 0;
 
-            this .encoding = encoding;
-         };
-      })(),
-      getDimension: function (value)
+      if (result)
       {
-         var
-            result    = value .match (/(\d+)/),
-            dimension = 0;
+         dimension = parseInt (result [1]);
 
-         if (result)
-         {
-            dimension = parseInt (result [1]);
-
-            switch (dimension)
-            {
-               case 1:
-               case 2:
-               case 3:
-               case 4:
-                  this .dimension = dimension;
-                  return;
-            }
-         }
-
-         throw new Error ("Unsupported NRRD dimension '" + dimension + "', must be 1, 2, 3, or 4.");
-      },
-      getSizes: function (value)
-      {
-         var
-            num    = new RegExp ("\\s*(\\d+)", 'gy'),
-            result = null,
-            sizes  = [ ];
-
-         while (result = num .exec (value))
-         {
-            sizes .push (parseInt (result [1]));
-         }
-
-         switch (sizes .length)
+         switch (dimension)
          {
             case 1:
-            {
-               this .nrrd .components = 1;
-               this .nrrd .width      = sizes [0];
-               this .nrrd .height     = 1;
-               this .nrrd .depth      = 1;
-               return;
-            }
             case 2:
-            {
-               this .nrrd .components = 1;
-               this .nrrd .width      = sizes [0];
-               this .nrrd .height     = sizes [1];
-               this .nrrd .depth      = 1;
-               return;
-            }
             case 3:
-            {
-               this .nrrd .components = 1;
-               this .nrrd .width      = sizes [0];
-               this .nrrd .height     = sizes [1];
-               this .nrrd .depth      = sizes [2];
-               return;
-            }
             case 4:
-            {
-               this .nrrd .components = sizes [0];
-               this .nrrd .width      = sizes [1];
-               this .nrrd .height     = sizes [2];
-               this .nrrd .depth      = sizes [3];
+               this .dimension = dimension;
                return;
-            }
-            default:
-               throw new Error ("Unsupported NRRD sizes.");
          }
-      },
-      getEndian: function (value)
+      }
+
+      throw new Error ("Unsupported NRRD dimension '" + dimension + "', must be 1, 2, 3, or 4.");
+   },
+   getSizes: function (value)
+   {
+      var
+         num    = new RegExp ("\\s*(\\d+)", 'gy'),
+         result = null,
+         sizes  = [ ];
+
+      while (result = num .exec (value))
       {
-         if (value === 'little' || value === 'big')
+         sizes .push (parseInt (result [1]));
+      }
+
+      switch (sizes .length)
+      {
+         case 1:
          {
-            this .endian = value;
+            this .nrrd .components = 1;
+            this .nrrd .width      = sizes [0];
+            this .nrrd .height     = 1;
+            this .nrrd .depth      = 1;
             return;
          }
-
-         throw new Error ("Unsupported NRRD endian, must be 'little' or 'big'.");
-      },
-      getData: function ()
-      {
-         switch (this .encoding)
+         case 2:
          {
-            case "ascii":
-            {
-               this .ascii ();
-               break;
-            }
-            case "raw":
-            {
-               this .rawString (this .input);
-               break;
-            }
-            case "hex":
-            {
-               this .hex ();
-               break;
-            }
-            case "gzip":
-            {
-               this .gzip ();
-               break;
-            }
-         }
-      },
-      ascii: function ()
-      {
-         var
-            dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
-            data       = new Uint8Array (dataLength);
-
-         this .nrrd .data = data;
-
-         if (! Grammar .data .parse (this))
+            this .nrrd .components = 1;
+            this .nrrd .width      = sizes [0];
+            this .nrrd .height     = sizes [1];
+            this .nrrd .depth      = 1;
             return;
-
-         var numbers = this .result [1] .trim () .split (/\s+/);
-
-         switch (this .byteType)
-         {
-            case "signed char":
-            case "unsigned char":
-            {
-               numbers .forEach (function (value, i)
-               {
-                  data [i] = parseInt (value);
-               });
-
-               return;
-            }
-            case "signed short":
-            case "unsigned short":
-            {
-               numbers .forEach (function (value, i)
-               {
-                  data [i] = parseInt (value) / 256;
-               });
-
-               return;
-            }
-            case "signed int":
-            case "unsigned int":
-            {
-               numbers .forEach (function (value, i)
-               {
-                  data [i] = parseInt (value) / 16777216;
-               });
-
-               return;
-            }
-            case "float":
-            {
-               numbers .forEach (function (value, i)
-               {
-                  data [i] = parseFloat (value) / 256;
-               });
-
-               return;
-            }
-            case "double":
-            {
-               numbers .forEach (function (value, i)
-               {
-                  data [i] = parseFloat (value) / 16777216;
-               });
-
-               return;
-            }
          }
-      },
-      rawString: function (input)
-      {
-         var
-            dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
-            length     = dataLength * this .bytes,
-            data       = new Uint8Array (dataLength);
-
-         this .nrrd .data = data;
-
-         switch (this .byteType)
+         case 3:
          {
-            case "signed char":
-            case "unsigned char":
+            this .nrrd .components = 1;
+            this .nrrd .width      = sizes [0];
+            this .nrrd .height     = sizes [1];
+            this .nrrd .depth      = sizes [2];
+            return;
+         }
+         case 4:
+         {
+            this .nrrd .components = sizes [0];
+            this .nrrd .width      = sizes [1];
+            this .nrrd .height     = sizes [2];
+            this .nrrd .depth      = sizes [3];
+            return;
+         }
+         default:
+            throw new Error ("Unsupported NRRD sizes.");
+      }
+   },
+   getEndian: function (value)
+   {
+      if (value === 'little' || value === 'big')
+      {
+         this .endian = value;
+         return;
+      }
+
+      throw new Error ("Unsupported NRRD endian, must be 'little' or 'big'.");
+   },
+   getData: function ()
+   {
+      switch (this .encoding)
+      {
+         case "ascii":
+         {
+            this .ascii ();
+            break;
+         }
+         case "raw":
+         {
+            this .rawString (this .input);
+            break;
+         }
+         case "hex":
+         {
+            this .hex ();
+            break;
+         }
+         case "gzip":
+         {
+            this .gzip ();
+            break;
+         }
+      }
+   },
+   ascii: function ()
+   {
+      var
+         dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
+         data       = new Uint8Array (dataLength);
+
+      this .nrrd .data = data;
+
+      if (! Grammar .data .parse (this))
+         return;
+
+      var numbers = this .result [1] .trim () .split (/\s+/);
+
+      switch (this .byteType)
+      {
+         case "signed char":
+         case "unsigned char":
+         {
+            numbers .forEach (function (value, i)
             {
-               for (var i = input .length - length, d = 0; i < input .length; ++ i, ++ d)
-                  data [d] = input .charCodeAt (i);
+               data [i] = parseInt (value);
+            });
 
-               return;
-            }
-            case "signed short":
-            case "unsigned short":
+            return;
+         }
+         case "signed short":
+         case "unsigned short":
+         {
+            numbers .forEach (function (value, i)
             {
-               if (this .getEndianess () === this .endian)
-                  var e0 = 0, e1 = 1;
-               else
-                  var e0 = 1, e1 = 0;
+               data [i] = parseInt (value) / 256;
+            });
 
-               for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
-                  data [d] = this .short2byte (input .charCodeAt (i + e0),
-                                               input .charCodeAt (i + e1));
-
-               return;
-            }
-            case "signed int":
-            case "unsigned int":
+            return;
+         }
+         case "signed int":
+         case "unsigned int":
+         {
+            numbers .forEach (function (value, i)
             {
-               if (this .getEndianess () === this .endian)
-                  var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
-               else
-                  var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
+               data [i] = parseInt (value) / 16777216;
+            });
 
-               for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
-                  data [d] = this .int2byte (input .charCodeAt (i + e0),
+            return;
+         }
+         case "float":
+         {
+            numbers .forEach (function (value, i)
+            {
+               data [i] = parseFloat (value) / 256;
+            });
+
+            return;
+         }
+         case "double":
+         {
+            numbers .forEach (function (value, i)
+            {
+               data [i] = parseFloat (value) / 16777216;
+            });
+
+            return;
+         }
+      }
+   },
+   rawString: function (input)
+   {
+      var
+         dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
+         length     = dataLength * this .bytes,
+         data       = new Uint8Array (dataLength);
+
+      this .nrrd .data = data;
+
+      switch (this .byteType)
+      {
+         case "signed char":
+         case "unsigned char":
+         {
+            for (var i = input .length - length, d = 0; i < input .length; ++ i, ++ d)
+               data [d] = input .charCodeAt (i);
+
+            return;
+         }
+         case "signed short":
+         case "unsigned short":
+         {
+            if (this .getEndianess () === this .endian)
+               var e0 = 0, e1 = 1;
+            else
+               var e0 = 1, e1 = 0;
+
+            for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
+               data [d] = this .short2byte (input .charCodeAt (i + e0),
+                                            input .charCodeAt (i + e1));
+
+            return;
+         }
+         case "signed int":
+         case "unsigned int":
+         {
+            if (this .getEndianess () === this .endian)
+               var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
+            else
+               var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
+
+            for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
+               data [d] = this .int2byte (input .charCodeAt (i + e0),
+                                          input .charCodeAt (i + e1),
+                                          input .charCodeAt (i + e2),
+                                          input .charCodeAt (i + e3));
+
+            return;
+         }
+         case "float":
+         {
+            if (this .getEndianess () === this .endian)
+               var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
+            else
+               var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
+
+            for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
+               data [d] = this .float2byte (input .charCodeAt (i + e0),
+                                            input .charCodeAt (i + e1),
+                                            input .charCodeAt (i + e2),
+                                            input .charCodeAt (i + e3));
+
+            return;
+         }
+         case "double":
+         {
+            if (this .getEndianess () === this .endian)
+               var e0 = 0, e1 = 1, e2 = 2, e3 = 3, e4 = 4, e5 = 5, e6 = 6, e7 = 7;
+            else
+               var e0 = 7, e1 = 6, e2 = 5, e3 = 4, e4 = 3, e5 = 2, e6 = 1, e7 = 0;
+
+            for (var i = input .length - length, d = 0; i < input .length; i += 8, ++ d)
+               data [d] = this .double2byte (input .charCodeAt (i + e0),
                                              input .charCodeAt (i + e1),
                                              input .charCodeAt (i + e2),
-                                             input .charCodeAt (i + e3));
+                                             input .charCodeAt (i + e3),
+                                             input .charCodeAt (i + e4),
+                                             input .charCodeAt (i + e5),
+                                             input .charCodeAt (i + e6),
+                                             input .charCodeAt (i + e7));
 
-               return;
-            }
-            case "float":
-            {
-               if (this .getEndianess () === this .endian)
-                  var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
-               else
-                  var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
-
-               for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
-                  data [d] = this .float2byte (input .charCodeAt (i + e0),
-                                               input .charCodeAt (i + e1),
-                                               input .charCodeAt (i + e2),
-                                               input .charCodeAt (i + e3));
-
-               return;
-            }
-            case "double":
-            {
-               if (this .getEndianess () === this .endian)
-                  var e0 = 0, e1 = 1, e2 = 2, e3 = 3, e4 = 4, e5 = 5, e6 = 6, e7 = 7;
-               else
-                  var e0 = 7, e1 = 6, e2 = 5, e3 = 4, e4 = 3, e5 = 2, e6 = 1, e7 = 0;
-
-               for (var i = input .length - length, d = 0; i < input .length; i += 8, ++ d)
-                  data [d] = this .double2byte (input .charCodeAt (i + e0),
-                                                input .charCodeAt (i + e1),
-                                                input .charCodeAt (i + e2),
-                                                input .charCodeAt (i + e3),
-                                                input .charCodeAt (i + e4),
-                                                input .charCodeAt (i + e5),
-                                                input .charCodeAt (i + e6),
-                                                input .charCodeAt (i + e7));
-
-               return;
-            }
+            return;
          }
-      },
-      rawArray: function (input)
+      }
+   },
+   rawArray: function (input)
+   {
+      var
+         dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
+         length     = dataLength * this .bytes,
+         data       = new Uint8Array (dataLength);
+
+      this .nrrd .data = data;
+
+      switch (this .byteType)
       {
-         var
-            dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
-            length     = dataLength * this .bytes,
-            data       = new Uint8Array (dataLength);
-
-         this .nrrd .data = data;
-
-         switch (this .byteType)
+         case "signed char":
+         case "unsigned char":
          {
-            case "signed char":
-            case "unsigned char":
-            {
-               for (var i = input .length - length, d = 0; i < input .length; ++ i, ++ d)
-                  data [d] = input [i];
+            for (var i = input .length - length, d = 0; i < input .length; ++ i, ++ d)
+               data [d] = input [i];
 
-               return;
-            }
-            case "signed short":
-            case "unsigned short":
-            {
-               if (this .getEndianess () === this .endian)
-                  var e0 = 0, e1 = 1;
-               else
-                  var e0 = 1, e1 = 0;
+            return;
+         }
+         case "signed short":
+         case "unsigned short":
+         {
+            if (this .getEndianess () === this .endian)
+               var e0 = 0, e1 = 1;
+            else
+               var e0 = 1, e1 = 0;
 
-                  for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
-                     data [d] = this .short2byte (input [i + e0],
-                                                  input [i + e1]);
+               for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
+                  data [d] = this .short2byte (input [i + e0],
+                                               input [i + e1]);
 
-               return;
-            }
-            case "signed int":
-            case "unsigned int":
-            {
-               if (this .getEndianess () === this .endian)
-                  var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
-               else
-                  var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
+            return;
+         }
+         case "signed int":
+         case "unsigned int":
+         {
+            if (this .getEndianess () === this .endian)
+               var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
+            else
+               var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
 
-               for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
-                  data [d] = this .int2byte (input [i + e0],
+            for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
+               data [d] = this .int2byte (input [i + e0],
+                                          input [i + e1],
+                                          input [i + e2],
+                                          input [i + e3]);
+
+            return;
+         }
+         case "float":
+         {
+            if (this .getEndianess () === this .endian)
+               var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
+            else
+               var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
+
+            for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
+               data [d] = this .float2byte (input [i + e0],
+                                            input [i + e1],
+                                            input [i + e2],
+                                            input [i + e3]);
+
+            return;
+         }
+         case "double":
+         {
+            if (this .getEndianess () === this .endian)
+               var e0 = 0, e1 = 1, e2 = 2, e3 = 3, e4 = 4, e5 = 5, e6 = 6, e7 = 7;
+            else
+               var e0 = 7, e1 = 6, e2 = 5, e3 = 4, e4 = 3, e5 = 2, e6 = 1, e7 = 0;
+
+            for (var i = input .length - length, d = 0; i < input .length; i += 8, ++ d)
+               data [d] = this .double2byte (input [i + e0],
                                              input [i + e1],
                                              input [i + e2],
-                                             input [i + e3]);
+                                             input [i + e3],
+                                             input [i + e4],
+                                             input [i + e5],
+                                             input [i + e6],
+                                             input [i + e7]);
 
-               return;
-            }
-            case "float":
-            {
-               if (this .getEndianess () === this .endian)
-                  var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
-               else
-                  var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
-
-               for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
-                  data [d] = this .float2byte (input [i + e0],
-                                               input [i + e1],
-                                               input [i + e2],
-                                               input [i + e3]);
-
-               return;
-            }
-            case "double":
-            {
-               if (this .getEndianess () === this .endian)
-                  var e0 = 0, e1 = 1, e2 = 2, e3 = 3, e4 = 4, e5 = 5, e6 = 6, e7 = 7;
-               else
-                  var e0 = 7, e1 = 6, e2 = 5, e3 = 4, e4 = 3, e5 = 2, e6 = 1, e7 = 0;
-
-               for (var i = input .length - length, d = 0; i < input .length; i += 8, ++ d)
-                  data [d] = this .double2byte (input [i + e0],
-                                                input [i + e1],
-                                                input [i + e2],
-                                                input [i + e3],
-                                                input [i + e4],
-                                                input [i + e5],
-                                                input [i + e6],
-                                                input [i + e7]);
-
-               return;
-            }
+            return;
          }
-      },
-      hex: function ()
+      }
+   },
+   hex: function ()
+   {
+      if (Grammar .data .parse (this))
       {
-         if (Grammar .data .parse (this))
-         {
-            var match = this .result [1] .match (/([0-9a-fA-F]{2})/g);
+         var match = this .result [1] .match (/([0-9a-fA-F]{2})/g);
 
-            if (match)
+         if (match)
+         {
+            var raw = match .map (function (value)
             {
-               var raw = match .map (function (value)
-               {
-                  return parseInt (value, 16);
-               });
-
-               this .rawArray (raw);
-               return;
-            }
-         }
-
-         throw new Error ("Invalid NRRD data.");
-      },
-      gzip: function ()
-      {
-         try
-         {
-            if (! Grammar .newLine .parse (this))
-               throw new Error ("Invalid NRRD data.");
-
-            Grammar .data .parse (this);
-
-            const
-               buffer = this .binaryStringToBuffer (this .result [1]),
-               raw    = pako .ungzip (buffer, { to: "raw" });
+               return parseInt (value, 16);
+            });
 
             this .rawArray (raw);
+            return;
          }
-         catch (error)
-         {
+      }
+
+      throw new Error ("Invalid NRRD data.");
+   },
+   gzip: function ()
+   {
+      try
+      {
+         if (! Grammar .newLine .parse (this))
             throw new Error ("Invalid NRRD data.");
-         }
-      },
-      binaryStringToBuffer: function (string)
+
+         Grammar .data .parse (this);
+
+         const
+            buffer = this .binaryStringToBuffer (this .result [1]),
+            raw    = pako .ungzip (buffer, { to: "raw" });
+
+         this .rawArray (raw);
+      }
+      catch (error)
       {
-         const buffer = new Uint8Array (string .length);
+         throw new Error ("Invalid NRRD data.");
+      }
+   },
+   binaryStringToBuffer: function (string)
+   {
+      const buffer = new Uint8Array (string .length);
 
-         for (let i = 0, length = string .length; i < length; ++ i)
-            buffer [i] = string .charCodeAt (i);
+      for (let i = 0, length = string .length; i < length; ++ i)
+         buffer [i] = string .charCodeAt (i);
 
-         return buffer;
-      },
-      getEndianess: function ()
+      return buffer;
+   },
+   getEndianess: function ()
+   {
+      var
+         buffer = new ArrayBuffer (4),
+         int    = new Uint32Array (buffer),
+         bytes  = new Uint8Array (buffer);
+
+      int [0] = 0x01020304;
+
+      if (bytes [0] == 1 && bytes [1] == 2 && bytes [2] == 3 && bytes [3] == 4)
+         return 'big';
+
+      if (bytes [0] == 4 && bytes [1] == 3 && bytes [2] == 2 && bytes [3] == 1)
+         return 'little';
+
+      throw new Error ("NRRD: unkown system endianess,");
+   },
+   short2byte: (function ()
+   {
+      var
+         bytes  = new Uint8Array (2),
+         number = new Uint16Array (bytes .buffer);
+
+      return function (b0, b1)
       {
-         var
-            buffer = new ArrayBuffer (4),
-            int    = new Uint32Array (buffer),
-            bytes  = new Uint8Array (buffer);
+         bytes [0] = b0;
+         bytes [1] = b1;
 
-         int [0] = 0x01020304;
+         return number [0] / 256;
+      };
+   })(),
+   int2byte: (function ()
+   {
+      var
+         bytes  = new Uint8Array (4),
+         number = new Uint32Array (bytes .buffer);
 
-         if (bytes [0] == 1 && bytes [1] == 2 && bytes [2] == 3 && bytes [3] == 4)
-            return 'big';
-
-         if (bytes [0] == 4 && bytes [1] == 3 && bytes [2] == 2 && bytes [3] == 1)
-            return 'little';
-
-         throw new Error ("NRRD: unkown system endianess,");
-      },
-      short2byte: (function ()
+      return function (b0, b1, b2, b3)
       {
-         var
-            bytes  = new Uint8Array (2),
-            number = new Uint16Array (bytes .buffer);
+         bytes [0] = b0;
+         bytes [1] = b1;
+         bytes [2] = b2;
+         bytes [3] = b3;
 
-         return function (b0, b1)
-         {
-            bytes [0] = b0;
-            bytes [1] = b1;
+         return number [0] / 16777216;
+      };
+   })(),
+   float2byte: (function ()
+   {
+      var
+         bytes  = new Uint8Array (4),
+         number = new Float32Array (bytes .buffer);
 
-            return number [0] / 256;
-         };
-      })(),
-      int2byte: (function ()
+      return function (b0, b1, b2, b3)
       {
-         var
-            bytes  = new Uint8Array (4),
-            number = new Uint32Array (bytes .buffer);
+         bytes [0] = b0;
+         bytes [1] = b1;
+         bytes [2] = b2;
+         bytes [3] = b3;
 
-         return function (b0, b1, b2, b3)
-         {
-            bytes [0] = b0;
-            bytes [1] = b1;
-            bytes [2] = b2;
-            bytes [3] = b3;
+         return number [0] / 256;
+      };
+   })(),
+   double2byte: (function ()
+   {
+      var
+         bytes  = new Uint8Array (8),
+         number = new Float64Array (bytes .buffer);
 
-            return number [0] / 16777216;
-         };
-      })(),
-      float2byte: (function ()
+      return function (b0, b1, b2, b3, b4, b5, b6, b7)
       {
-         var
-            bytes  = new Uint8Array (4),
-            number = new Float32Array (bytes .buffer);
+         bytes [0] = b0;
+         bytes [1] = b1;
+         bytes [2] = b2;
+         bytes [3] = b3;
+         bytes [4] = b4;
+         bytes [5] = b5;
+         bytes [6] = b6;
+         bytes [7] = b7;
 
-         return function (b0, b1, b2, b3)
-         {
-            bytes [0] = b0;
-            bytes [1] = b1;
-            bytes [2] = b2;
-            bytes [3] = b3;
+         return number [0] / 16777216;
+      };
+   })(),
+};
 
-            return number [0] / 256;
-         };
-      })(),
-      double2byte: (function ()
-      {
-         var
-            bytes  = new Uint8Array (8),
-            number = new Float64Array (bytes .buffer);
-
-         return function (b0, b1, b2, b3, b4, b5, b6, b7)
-         {
-            bytes [0] = b0;
-            bytes [1] = b1;
-            bytes [2] = b2;
-            bytes [3] = b3;
-            bytes [4] = b4;
-            bytes [5] = b5;
-            bytes [6] = b6;
-            bytes [7] = b7;
-
-            return number [0] / 16777216;
-         };
-      })(),
-   };
-
-   return NRRDParser;
-});
+export default NRRDParser;

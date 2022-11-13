@@ -46,39 +46,48 @@
  *
  ******************************************************************************/
 
-define (function ()
+function URLs () { }
+
+URLs .prototype =
 {
-"use strict";
-
-   function URLs () { }
-
-   URLs .prototype =
+   getScriptURL: (function ()
    {
-      getProviderUrl: function (file)
-      {
-         if (file)
-         {
-            if (getScriptURL () .match (/\.min\.js$/))
-               file += ".min";
+      if (document .currentScript)
+         var src = document .currentScript .src;
+      else if (typeof __global_require__ === "function" && typeof __filename === "string")
+         var src = __global_require__ ("url") .pathToFileURL (__filename) .href;
+      else
+         var src = document .location .href;
 
-            return new URL ("assets/components/" + file + ".js", getScriptURL ()) .href;
-         }
+      return function ()
+      {
+         return src;
+      };
+   })(),
+   getProviderUrl: function (file)
+   {
+      if (file)
+      {
+         if (this .getScriptURL () .match (/\.min\.js$/))
+            file += ".min";
 
-         return "https://create3000.github.io/x_ite/";
-      },
-      getFontsUrl: function (file)
-      {
-         return new URL ("assets/fonts/" + file, getScriptURL ()) .href;
-      },
-      getLinetypeUrl: function ()
-      {
-         return new URL ("assets/linetype/linetypes.png", getScriptURL ()) .href;
-      },
-      getHatchingUrl: function (index)
-      {
-         return new URL ("assets/hatching/" + index + ".png", getScriptURL ()) .href;
-      },
-   };
+         return new URL ("assets/components/" + file + ".js", this .getScriptURL ()) .href;
+      }
 
-   return new URLs ();
-});
+      return "https://create3000.github.io/x_ite/";
+   },
+   getFontsUrl: function (file)
+   {
+      return new URL ("assets/fonts/" + file, this .getScriptURL ()) .href;
+   },
+   getLinetypeUrl: function ()
+   {
+      return new URL ("assets/linetype/linetypes.png", this .getScriptURL ()) .href;
+   },
+   getHatchingUrl: function (index)
+   {
+      return new URL ("assets/hatching/" + index + ".png", this .getScriptURL ()) .href;
+   },
+};
+
+export default new URLs ();

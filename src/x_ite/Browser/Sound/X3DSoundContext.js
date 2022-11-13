@@ -47,23 +47,17 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-],
-function (Fields)
+import Fields from "../../Fields.js";
+
+function X3DSoundContext ()
 {
-"use strict";
+   this .addChildObjects ("volume", new Fields .SFFloat (1),
+                          "mute",   new Fields .SFBool ());
+}
 
-   function X3DSoundContext ()
-   {
-      this .addChildObjects ("volume", new Fields .SFFloat (1),
-                             "mute",   new Fields .SFBool ());
-   }
+X3DSoundContext .prototype =
+{
+   initialize: function () { },
+};
 
-   X3DSoundContext .prototype =
-   {
-      initialize: function () { },
-   };
-
-   return X3DSoundContext;
-});
+export default X3DSoundContext;

@@ -47,11 +47,6 @@
  ******************************************************************************/
 
 
-define (function ()
-{
-"use strict";
+// Modified during dist build.
 
-   // Modified during dist build.
-
-   return true;
-});
+export default true;

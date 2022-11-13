@@ -47,55 +47,45 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DGroupingNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DGroupingNode from "../Grouping/X3DGroupingNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function CADLayer (executionContext)
 {
-"use strict";
+   X3DGroupingNode .call (this, executionContext);
 
-   function CADLayer (executionContext)
+   this .addType (X3DConstants .CADLayer);
+}
+
+CADLayer .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+{
+   constructor: CADLayer,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "name",           new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DGroupingNode .call (this, executionContext);
-
-      this .addType (X3DConstants .CADLayer);
-   }
-
-   CADLayer .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+      return "CADLayer";
+   },
+   getComponentName: function ()
    {
-      constructor: CADLayer,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "name",           new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "CADLayer";
-      },
-      getComponentName: function ()
-      {
-         return "CADGeometry";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-   });
-
-   return CADLayer;
+      return "CADGeometry";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
 });
+
+export default CADLayer;

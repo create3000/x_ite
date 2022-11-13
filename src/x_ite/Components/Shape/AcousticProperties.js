@@ -47,53 +47,43 @@
  ******************************************************************************/
 
 
- define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DAppearanceChildNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DAppearanceChildNode from "./X3DAppearanceChildNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function AcousticProperties (executionContext)
 {
-"use strict";
+   X3DAppearanceChildNode .call (this, executionContext);
 
-   function AcousticProperties (executionContext)
+   this .addType (X3DConstants .AcousticProperties);
+}
+
+AcousticProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+{
+   constructor: AcousticProperties,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "description",new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "absorption", new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "refraction", new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "diffuse",    new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "specular",   new Fields .SFFloat ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DAppearanceChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .AcousticProperties);
-   }
-
-   AcousticProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+      return "AcousticProperties";
+   },
+   getComponentName: function ()
    {
-      constructor: AcousticProperties,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "description",new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "absorption", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "refraction", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "diffuse",    new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "specular",   new Fields .SFFloat ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "AcousticProperties";
-      },
-      getComponentName: function ()
-      {
-         return "Shape";
-      },
-      getContainerField: function ()
-      {
-         return "AcousticProperties";
-      },
-   });
-
-   return AcousticProperties;
+      return "Shape";
+   },
+   getContainerField: function ()
+   {
+      return "AcousticProperties";
+   },
 });
+
+export default AcousticProperties;

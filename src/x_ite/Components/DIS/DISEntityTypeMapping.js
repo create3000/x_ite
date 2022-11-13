@@ -47,75 +47,64 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DInfoNode",
-   "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInfoNode,
-          X3DUrlObject,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DInfoNode from "../Core/X3DInfoNode.js";
+import X3DUrlObject from "../Networking/X3DUrlObject.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function DISEntityTypeMapping (executionContext)
 {
-"use strict";
+   X3DInfoNode  .call (this, executionContext);
+   X3DUrlObject .call (this, executionContext);
 
-   function DISEntityTypeMapping (executionContext)
+   this .addType (X3DConstants .DISEntityTypeMapping);
+}
+
+DISEntityTypeMapping .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
+   X3DUrlObject .prototype,
+{
+   constructor: DISEntityTypeMapping,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "category",             new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "country",              new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "domain",               new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "extra",                new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "kind",                 new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "specific",             new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "subcategory",          new Fields .SFInt32 ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DInfoNode  .call (this, executionContext);
-      X3DUrlObject .call (this, executionContext);
-
-      this .addType (X3DConstants .DISEntityTypeMapping);
-   }
-
-   DISEntityTypeMapping .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
-      X3DUrlObject .prototype,
+      return "DISEntityTypeMapping";
+   },
+   getComponentName: function ()
    {
-      constructor: DISEntityTypeMapping,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "category",             new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "country",              new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "domain",               new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "extra",                new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "kind",                 new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "specific",             new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "subcategory",          new Fields .SFInt32 ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "DISEntityTypeMapping";
-      },
-      getComponentName: function ()
-      {
-         return "DIS";
-      },
-      getContainerField: function ()
-      {
-         return "mapping";
-      },
-      initialize: function ()
-      {
-         X3DInfoNode  .prototype .initialize .call (this);
-         X3DUrlObject .prototype .initialize .call (this);
-      },
-      requestImmediateLoad: function (cache = true)
-      { },
-      requestUnload: function ()
-      { },
-      set_load__: function ()
-      { },
-      set_url__: function ()
-      { },
-   });
-
-   return DISEntityTypeMapping;
+      return "DIS";
+   },
+   getContainerField: function ()
+   {
+      return "mapping";
+   },
+   initialize: function ()
+   {
+      X3DInfoNode  .prototype .initialize .call (this);
+      X3DUrlObject .prototype .initialize .call (this);
+   },
+   requestImmediateLoad: function (cache = true)
+   { },
+   requestUnload: function ()
+   { },
+   set_load__: function ()
+   { },
+   set_url__: function ()
+   { },
 });
+
+export default DISEntityTypeMapping;

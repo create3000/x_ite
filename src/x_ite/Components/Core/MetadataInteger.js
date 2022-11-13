@@ -47,54 +47,43 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Components/Core/X3DMetadataObject",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DNode,
-          X3DMetadataObject,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode from "./X3DNode.js";
+import X3DMetadataObject from "./X3DMetadataObject.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function MetadataInteger (executionContext)
 {
-"use strict";
+   X3DNode           .call (this, executionContext);
+   X3DMetadataObject .call (this, executionContext);
 
-   function MetadataInteger (executionContext)
+   this .addType (X3DConstants .MetadataInteger);
+}
+
+MetadataInteger .prototype = Object .assign (Object .create (X3DNode .prototype),
+   X3DMetadataObject .prototype,
+{
+   constructor: MetadataInteger,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "name",      new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "value",     new Fields .MFInt32 ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DNode           .call (this, executionContext);
-      X3DMetadataObject .call (this, executionContext);
-
-      this .addType (X3DConstants .MetadataInteger);
-   }
-
-   MetadataInteger .prototype = Object .assign (Object .create (X3DNode .prototype),
-      X3DMetadataObject .prototype,
+      return "MetadataInteger";
+   },
+   getComponentName: function ()
    {
-      constructor: MetadataInteger,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "name",      new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "value",     new Fields .MFInt32 ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "MetadataInteger";
-      },
-      getComponentName: function ()
-      {
-         return "Core";
-      },
-      getContainerField: function ()
-      {
-         return "metadata";
-      },
-   });
-
-   return MetadataInteger;
+      return "Core";
+   },
+   getContainerField: function ()
+   {
+      return "metadata";
+   },
 });
+
+export default MetadataInteger;

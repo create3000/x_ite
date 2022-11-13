@@ -47,311 +47,298 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/SupportedNodes",
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Execution/X3DExecutionContext",
-   "x_ite/Prototype/X3DProtoDeclarationNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/InputOutput/Generator",
-],
-function (SupportedNodes,
-          Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DExecutionContext,
-          X3DProtoDeclarationNode,
-          X3DConstants,
-          Generator)
+import SupportedNodes from "../Configuration/SupportedNodes.js";
+import Fields from "../Fields.js";
+import X3DFieldDefinition from "../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../Base/FieldDefinitionArray.js";
+import X3DExecutionContext from "../Execution/X3DExecutionContext.js";
+import X3DProtoDeclarationNode from "./X3DProtoDeclarationNode.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import Generator from "../InputOutput/Generator.js";
+
+SupportedNodes .addAbstractType ("X3DProtoDeclaration", X3DProtoDeclaration);
+
+const
+   _body = Symbol ();
+
+function X3DProtoDeclaration (executionContext)
 {
-"use strict";
+   X3DProtoDeclarationNode .call (this, executionContext);
 
-   SupportedNodes .addAbstractType ("X3DProtoDeclaration", X3DProtoDeclaration);
+   this .addType (X3DConstants .X3DProtoDeclaration)
 
-   const
-      _body = Symbol ();
+   this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 
-   function X3DProtoDeclaration (executionContext)
+   this [_body] = new X3DExecutionContext (executionContext);
+   this [_body] .setOuterNode (this);
+   this [_body] .setLive (false);
+   this .setLive (false);
+}
+
+X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
+{
+   constructor: X3DProtoDeclaration,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DProtoDeclarationNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DProtoDeclaration)
-
-      this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
-
-      this [_body] = new X3DExecutionContext (executionContext);
-      this [_body] .setOuterNode (this);
-      this [_body] .setLive (false);
-      this .setLive (false);
-   }
-
-   X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
+      return "X3DProtoDeclaration";
+   },
+   initialize: function ()
    {
-      constructor: X3DProtoDeclaration,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "X3DProtoDeclaration";
-      },
-      initialize: function ()
-      {
-         X3DProtoDeclarationNode .prototype .initialize .call (this);
+      X3DProtoDeclarationNode .prototype .initialize .call (this);
 
-         this [_body] .setup ();
+      this [_body] .setup ();
 
-         this ._loadState = X3DConstants .COMPLETE_STATE;
-      },
-      getProtoDeclaration: function ()
-      {
-         return this;
-      },
-      getBody: function ()
-      {
-         return this [_body];
-      },
-      checkLoadState: function ()
-      {
-         return this ._loadState .getValue ();
-      },
-      canUserDefinedFields: function ()
-      {
-         return true;
-      },
-      toVRMLStream: function (stream)
-      {
-         const generator = Generator .Get (stream);
+      this ._loadState = X3DConstants .COMPLETE_STATE;
+   },
+   getProtoDeclaration: function ()
+   {
+      return this;
+   },
+   getBody: function ()
+   {
+      return this [_body];
+   },
+   checkLoadState: function ()
+   {
+      return this ._loadState .getValue ();
+   },
+   canUserDefinedFields: function ()
+   {
+      return true;
+   },
+   toVRMLStream: function (stream)
+   {
+      const generator = Generator .Get (stream);
 
-         stream .string += generator .Indent ();
-         stream .string += "PROTO";
+      stream .string += generator .Indent ();
+      stream .string += "PROTO";
+      stream .string += " ";
+      stream .string += this .getName ();
+      stream .string += " ";
+      stream .string += "[";
+
+      generator .EnterScope ();
+
+      const userDefinedFields = this .getUserDefinedFields ();
+
+      let
+         fieldTypeLength  = 0,
+         accessTypeLength = 0;
+
+      if (userDefinedFields .length === 0)
+      {
          stream .string += " ";
-         stream .string += this .getName ();
-         stream .string += " ";
-         stream .string += "[";
-
-         generator .EnterScope ();
-
-         const userDefinedFields = this .getUserDefinedFields ();
-
-         let
-            fieldTypeLength  = 0,
-            accessTypeLength = 0;
-
-         if (userDefinedFields .length === 0)
+      }
+      else
+      {
+         for (const field of userDefinedFields)
          {
-            stream .string += " ";
-         }
-         else
-         {
-            for (const field of userDefinedFields)
-            {
-               fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
-               accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
-            }
-
-            stream .string += "\n";
-
-            generator .IncIndent ();
-
-            for (const field of userDefinedFields)
-            {
-               this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
-               stream .string += "\n";
-            }
-
-            generator .DecIndent ();
-
-            stream .string += generator .Indent ();
+            fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
+            accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
          }
 
-         generator .LeaveScope ();
-
-         stream .string += "]";
-         stream .string += "\n";
-
-         stream .string += generator .Indent ();
-         stream .string += "{";
          stream .string += "\n";
 
          generator .IncIndent ();
 
-         this [_body] .toVRMLStream (stream);
+         for (const field of userDefinedFields)
+         {
+            this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
+            stream .string += "\n";
+         }
 
          generator .DecIndent ();
 
          stream .string += generator .Indent ();
-         stream .string += "}";
-      },
-      toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
+      }
+
+      generator .LeaveScope ();
+
+      stream .string += "]";
+      stream .string += "\n";
+
+      stream .string += generator .Indent ();
+      stream .string += "{";
+      stream .string += "\n";
+
+      generator .IncIndent ();
+
+      this [_body] .toVRMLStream (stream);
+
+      generator .DecIndent ();
+
+      stream .string += generator .Indent ();
+      stream .string += "}";
+   },
+   toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
+   {
+      const generator = Generator .Get (stream);
+
+      stream .string += generator .Indent ();
+      stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+      stream .string += " ";
+      stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+      stream .string += " ";
+      stream .string += field .getName ();
+
+      if (field .isInitializable ())
       {
-         const generator = Generator .Get (stream);
+         stream .string += " ";
+
+         field .toVRMLStream (stream);
+      }
+   },
+   toXMLStream: function (stream)
+   {
+      const generator = Generator .Get (stream);
+
+      stream .string += generator .Indent ();
+      stream .string += "<ProtoDeclare";
+      stream .string += " ";
+      stream .string += "name='";
+      stream .string += generator .XMLEncode (this .getName ());
+      stream .string += "'";
+      stream .string += ">";
+      stream .string += "\n";
+
+      // <ProtoInterface>
+
+      generator .EnterScope ();
+
+      const userDefinedFields = this .getUserDefinedFields ();
+
+      if (userDefinedFields .length !== 0)
+      {
+         generator .IncIndent ();
 
          stream .string += generator .Indent ();
-         stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-         stream .string += " ";
-         stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-         stream .string += " ";
-         stream .string += field .getName ();
+         stream .string += "<ProtoInterface>\n";
 
-         if (field .isInitializable ())
+         generator .IncIndent ();
+
+         for (const field of userDefinedFields)
          {
-            stream .string += " ";
-
-            field .toVRMLStream (stream);
-         }
-      },
-      toXMLStream: function (stream)
-      {
-         const generator = Generator .Get (stream);
-
-         stream .string += generator .Indent ();
-         stream .string += "<ProtoDeclare";
-         stream .string += " ";
-         stream .string += "name='";
-         stream .string += generator .XMLEncode (this .getName ());
-         stream .string += "'";
-         stream .string += ">";
-         stream .string += "\n";
-
-         // <ProtoInterface>
-
-         generator .EnterScope ();
-
-         const userDefinedFields = this .getUserDefinedFields ();
-
-         if (userDefinedFields .length !== 0)
-         {
-            generator .IncIndent ();
-
             stream .string += generator .Indent ();
-            stream .string += "<ProtoInterface>\n";
+            stream .string += "<field";
+            stream .string += " ";
+            stream .string += "accessType='";
+            stream .string += generator .AccessType (field .getAccessType ());
+            stream .string += "'";
+            stream .string += " ";
+            stream .string += "type='";
+            stream .string += field .getTypeName ();
+            stream .string += "'";
+            stream .string += " ";
+            stream .string += "name='";
+            stream .string += generator .XMLEncode (field .getName ());
+            stream .string += "'";
 
-            generator .IncIndent ();
-
-            for (const field of userDefinedFields)
+            if (field .isDefaultValue ())
             {
-               stream .string += generator .Indent ();
-               stream .string += "<field";
-               stream .string += " ";
-               stream .string += "accessType='";
-               stream .string += generator .AccessType (field .getAccessType ());
-               stream .string += "'";
-               stream .string += " ";
-               stream .string += "type='";
-               stream .string += field .getTypeName ();
-               stream .string += "'";
-               stream .string += " ";
-               stream .string += "name='";
-               stream .string += generator .XMLEncode (field .getName ());
-               stream .string += "'";
-
-               if (field .isDefaultValue ())
+               stream .string += "/>\n";
+            }
+            else
+            {
+               switch (field .getType ())
                {
-                  stream .string += "/>\n";
-               }
-               else
-               {
-                  switch (field .getType ())
+                  case X3DConstants .SFNode:
+                  case X3DConstants .MFNode:
                   {
-                     case X3DConstants .SFNode:
-                     case X3DConstants .MFNode:
-                     {
-                        generator .PushContainerField (field);
+                     generator .PushContainerField (field);
 
-                        stream .string += ">\n";
+                     stream .string += ">\n";
 
-                        generator .IncIndent ();
+                     generator .IncIndent ();
 
-                        field .toXMLStream (stream);
+                     field .toXMLStream (stream);
 
-                        stream .string += "\n";
+                     stream .string += "\n";
 
-                        generator .DecIndent ();
+                     generator .DecIndent ();
 
-                        stream .string += generator .Indent ();
-                        stream .string += "</field>\n";
+                     stream .string += generator .Indent ();
+                     stream .string += "</field>\n";
 
-                        generator .PopContainerField ();
-                        break;
-                     }
-                     default:
-                     {
-                        stream .string += " ";
-                        stream .string += "value='";
+                     generator .PopContainerField ();
+                     break;
+                  }
+                  default:
+                  {
+                     stream .string += " ";
+                     stream .string += "value='";
 
-                        field .toXMLStream (stream);
+                     field .toXMLStream (stream);
 
-                        stream .string += "'";
-                        stream .string += "/>\n";
-                        break;
-                     }
+                     stream .string += "'";
+                     stream .string += "/>\n";
+                     break;
                   }
                }
             }
-
-            generator .DecIndent ();
-
-            stream .string += generator .Indent ();
-            stream .string += "</ProtoInterface>\n";
-
-            generator .DecIndent ();
          }
 
-         generator .LeaveScope ();
-
-         // </ProtoInterface>
-
-         // <ProtoBody>
-
-         generator .IncIndent ();
-
-         stream .string += generator .Indent ();
-         stream .string += "<ProtoBody>\n";
-
-         generator .IncIndent ();
-
-         this [_body] .toXMLStream (stream);
-
          generator .DecIndent ();
 
          stream .string += generator .Indent ();
-         stream .string += "</ProtoBody>\n";
+         stream .string += "</ProtoInterface>\n";
 
          generator .DecIndent ();
+      }
 
-         // </ProtoBody>
+      generator .LeaveScope ();
 
-         stream .string += generator .Indent ();
-         stream .string += "</ProtoDeclare>";
-      },
-   });
+      // </ProtoInterface>
 
-   for (const key of Reflect .ownKeys (X3DProtoDeclaration .prototype))
-      Object .defineProperty (X3DProtoDeclaration .prototype, key, { enumerable: false });
+      // <ProtoBody>
 
-   Object .defineProperty (X3DProtoDeclaration .prototype, "name",
-   {
-      get: function () { return this .getName (); },
-      enumerable: true,
-      configurable: false
-   });
+      generator .IncIndent ();
 
-   Object .defineProperty (X3DProtoDeclaration .prototype, "fields",
-   {
-      get: function () { return this .getFieldDefinitions (); },
-      enumerable: true,
-      configurable: false
-   });
+      stream .string += generator .Indent ();
+      stream .string += "<ProtoBody>\n";
 
-   Object .defineProperty (X3DProtoDeclaration .prototype, "isExternProto",
-   {
-      get: function () { return false; },
-      enumerable: true,
-      configurable: false
-   });
+      generator .IncIndent ();
 
-   return X3DProtoDeclaration;
+      this [_body] .toXMLStream (stream);
+
+      generator .DecIndent ();
+
+      stream .string += generator .Indent ();
+      stream .string += "</ProtoBody>\n";
+
+      generator .DecIndent ();
+
+      // </ProtoBody>
+
+      stream .string += generator .Indent ();
+      stream .string += "</ProtoDeclare>";
+   },
 });
+
+for (const key of Reflect .ownKeys (X3DProtoDeclaration .prototype))
+   Object .defineProperty (X3DProtoDeclaration .prototype, key, { enumerable: false });
+
+Object .defineProperty (X3DProtoDeclaration .prototype, "name",
+{
+   get: function () { return this .getName (); },
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DProtoDeclaration .prototype, "fields",
+{
+   get: function () { return this .getFieldDefinitions (); },
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DProtoDeclaration .prototype, "isExternProto",
+{
+   get: function () { return false; },
+   enumerable: true,
+   configurable: false
+});
+
+export default X3DProtoDeclaration;

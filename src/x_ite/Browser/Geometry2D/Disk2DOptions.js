@@ -47,130 +47,120 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DBaseNode",
-   "x_ite/Fields",
-   "x_ite/Components/Rendering/X3DGeometryNode",
-   "standard/Math/Numbers/Complex",
-   "standard/Math/Numbers/Vector3",
-],
-function (X3DBaseNode,
-          Fields,
-          X3DGeometryNode,
-          Complex,
-          Vector3)
+import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import Fields from "../../Fields.js";
+import X3DGeometryNode from "../../Components/Rendering/X3DGeometryNode.js";
+import Complex from "../../../standard/Math/Numbers/Complex.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+function Disk2DOptions (executionContext)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
 
-   function Disk2DOptions (executionContext)
+   this .addChildObjects ("dimension", new Fields .SFInt32 (40))
+
+   this .circleVertices = X3DGeometryNode .createArray ();
+   this .diskTexCoords  = X3DGeometryNode .createArray ();
+   this .diskNormals    = X3DGeometryNode .createArray ();
+   this .diskVertices   = X3DGeometryNode .createArray ();
+}
+
+Disk2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: Disk2DOptions,
+   getTypeName: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-
-      this .addChildObjects ("dimension", new Fields .SFInt32 (40))
-
-      this .circleVertices = X3DGeometryNode .createArray ();
-      this .diskTexCoords  = X3DGeometryNode .createArray ();
-      this .diskNormals    = X3DGeometryNode .createArray ();
-      this .diskVertices   = X3DGeometryNode .createArray ();
-   }
-
-   Disk2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return "Disk2DOptions";
+   },
+   getComponentName: function ()
    {
-      constructor: Disk2DOptions,
-      getTypeName: function ()
-      {
-         return "Disk2DOptions";
-      },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "circle2DOptions";
-      },
-      initialize: function ()
-      {
-         this .addInterest ("build", this);
+      return "X_ITE";
+   },
+   getContainerField: function ()
+   {
+      return "circle2DOptions";
+   },
+   initialize: function ()
+   {
+      this .addInterest ("build", this);
 
-         this .build ();
-      },
-      getCircleVertices: function ()
-      {
-         return this .circleVertices;
-      },
-      getDiskTexCoords: function ()
-      {
-         return this .diskTexCoords;
-      },
-      getDiskNormals: function ()
-      {
-         return this .diskNormals;
-      },
-      getDiskVertices: function ()
-      {
-         return this .diskVertices;
-      },
-      build: (function ()
+      this .build ();
+   },
+   getCircleVertices: function ()
+   {
+      return this .circleVertices;
+   },
+   getDiskTexCoords: function ()
+   {
+      return this .diskTexCoords;
+   },
+   getDiskNormals: function ()
+   {
+      return this .diskNormals;
+   },
+   getDiskVertices: function ()
+   {
+      return this .diskVertices;
+   },
+   build: (function ()
+   {
+      const
+         half      = new Complex (0.5, 0.5),
+         texCoord1 = new Complex (0, 0),
+         texCoord2 = new Complex (0, 0),
+         point1    = new Complex (0, 0),
+         point2    = new Complex (0, 0);
+
+      return function ()
       {
          const
-            half      = new Complex (0.5, 0.5),
-            texCoord1 = new Complex (0, 0),
-            texCoord2 = new Complex (0, 0),
-            point1    = new Complex (0, 0),
-            point2    = new Complex (0, 0);
+            dimension      = this ._dimension .getValue (),
+            angle          = Math .PI * 2 / dimension,
+            circleVertices = this .circleVertices,
+            diskTexCoords  = this .diskTexCoords,
+            diskNormals    = this .diskNormals,
+            diskVertices   = this .diskVertices;
 
-         return function ()
+         circleVertices .length = 0;
+         diskTexCoords  .length = 0;
+         diskNormals    .length = 0;
+         diskVertices   .length = 0;
+
+         for (let n = 0; n < dimension; ++ n)
          {
             const
-               dimension      = this ._dimension .getValue (),
-               angle          = Math .PI * 2 / dimension,
-               circleVertices = this .circleVertices,
-               diskTexCoords  = this .diskTexCoords,
-               diskNormals    = this .diskNormals,
-               diskVertices   = this .diskVertices;
+               theta1 = angle * n,
+               theta2 = angle * (n + 1);
 
-            circleVertices .length = 0;
-            diskTexCoords  .length = 0;
-            diskNormals    .length = 0;
-            diskVertices   .length = 0;
+            texCoord1 .setPolar (0.5, theta1) .add (half);
+            texCoord2 .setPolar (0.5, theta2) .add (half);
+            point1    .setPolar (1, theta1);
+            point2    .setPolar (1, theta2);
 
-            for (let n = 0; n < dimension; ++ n)
-            {
-               const
-                  theta1 = angle * n,
-                  theta2 = angle * (n + 1);
+            // Circle
 
-               texCoord1 .setPolar (0.5, theta1) .add (half);
-               texCoord2 .setPolar (0.5, theta2) .add (half);
-               point1    .setPolar (1, theta1);
-               point2    .setPolar (1, theta2);
+            circleVertices .push (point1 .real, point1 .imag, 0, 1);
+            circleVertices .push (point2 .real, point2 .imag, 0, 1);
 
-               // Circle
+            // Disk
 
-               circleVertices .push (point1 .real, point1 .imag, 0, 1);
-               circleVertices .push (point2 .real, point2 .imag, 0, 1);
+            diskTexCoords .push (0.5, 0.5, 0, 1,
+                                 texCoord1 .real, texCoord1 .imag, 0, 1,
+                                 texCoord2 .real, texCoord2 .imag, 0, 1);
 
-               // Disk
+            diskNormals .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
 
-               diskTexCoords .push (0.5, 0.5, 0, 1,
-                                    texCoord1 .real, texCoord1 .imag, 0, 1,
-                                    texCoord2 .real, texCoord2 .imag, 0, 1);
+            diskVertices .push (0, 0, 0, 1,
+                                point1 .real, point1 .imag, 0, 1,
+                                point2 .real, point2 .imag, 0, 1);
+         }
 
-               diskNormals .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
-
-               diskVertices .push (0, 0, 0, 1,
-                                   point1 .real, point1 .imag, 0, 1,
-                                   point2 .real, point2 .imag, 0, 1);
-            }
-
-            circleVertices .shrinkToFit ();
-            diskTexCoords  .shrinkToFit ();
-            diskNormals    .shrinkToFit ();
-            diskVertices   .shrinkToFit ();
-         };
-      })(),
-   });
-
-   return Disk2DOptions;
+         circleVertices .shrinkToFit ();
+         diskTexCoords  .shrinkToFit ();
+         diskNormals    .shrinkToFit ();
+         diskVertices   .shrinkToFit ();
+      };
+   })(),
 });
+
+export default Disk2DOptions;

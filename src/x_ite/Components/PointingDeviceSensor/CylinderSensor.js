@@ -47,261 +47,244 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/PointingDeviceSensor/X3DDragSensorNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Numbers/Matrix4",
-   "standard/Math/Geometry/Line3",
-   "standard/Math/Geometry/Plane3",
-   "standard/Math/Geometry/Cylinder3",
-   "standard/Math/Algorithm",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DDragSensorNode,
-          X3DConstants,
-          Vector3,
-          Rotation4,
-          Matrix4,
-          Line3,
-          Plane3,
-          Cylinder3,
-          Algorithm)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DDragSensorNode from "./X3DDragSensorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import Line3 from "../../../standard/Math/Geometry/Line3.js";
+import Plane3 from "../../../standard/Math/Geometry/Plane3.js";
+import Cylinder3 from "../../../standard/Math/Geometry/Cylinder3.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+function CylinderSensor (executionContext)
 {
-"use strict";
+   X3DDragSensorNode .call (this, executionContext);
 
-   function CylinderSensor (executionContext)
+   this .addType (X3DConstants .CylinderSensor);
+
+   this ._diskAngle .setUnit ("angle");
+   this ._minAngle  .setUnit ("angle");
+   this ._maxAngle  .setUnit ("angle");
+   this ._offset    .setUnit ("angle");
+}
+
+CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
+{
+   constructor: CylinderSensor,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "description",        new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "axisRotation",       new Fields .SFRotation ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "diskAngle",          new Fields .SFFloat (0.261792)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle",           new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle",           new Fields .SFFloat (-1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "offset",             new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",         new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "trackPoint_changed", new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "rotation_changed",   new Fields .SFRotation ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",             new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",           new Fields .SFBool ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DDragSensorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .CylinderSensor);
-
-      this ._diskAngle .setUnit ("angle");
-      this ._minAngle  .setUnit ("angle");
-      this ._maxAngle  .setUnit ("angle");
-      this ._offset    .setUnit ("angle");
-   }
-
-   CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
+      return "CylinderSensor";
+   },
+   getComponentName: function ()
    {
-      constructor: CylinderSensor,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "description",        new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "axisRotation",       new Fields .SFRotation ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "diskAngle",          new Fields .SFFloat (0.261792)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle",           new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle",           new Fields .SFFloat (-1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "offset",             new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",         new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "trackPoint_changed", new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "rotation_changed",   new Fields .SFRotation ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",             new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",           new Fields .SFBool ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "CylinderSensor";
-      },
-      getComponentName: function ()
-      {
-         return "PointingDeviceSensor";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DDragSensorNode .prototype .initialize .call (this);
+      return "PointingDeviceSensor";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DDragSensorNode .prototype .initialize .call (this);
 
-         this .modelViewMatrix    = new Matrix4 ();
-         this .invModelViewMatrix = new Matrix4 ();
+      this .modelViewMatrix    = new Matrix4 ();
+      this .invModelViewMatrix = new Matrix4 ();
 
-         this .cylinder    = new Cylinder3 (new Line3 (new Vector3 (0, 0, 0), new Vector3 (0, 0, 0)), 0);
-         this .disk        = false;
-         this .yPlane      = null;
-         this .zPlane      = null;
-         this .sxPlane     = null;
-         this .szNormal    = null;
-         this .behind      = false;
-         this .fromVector  = new Vector3 (0, 0, 0);
-         this .startOffset = new Rotation4 (0, 0, 1, 0);
-      },
-      isBehind: function (hitRay, hitPoint)
+      this .cylinder    = new Cylinder3 (new Line3 (new Vector3 (0, 0, 0), new Vector3 (0, 0, 0)), 0);
+      this .disk        = false;
+      this .yPlane      = null;
+      this .zPlane      = null;
+      this .sxPlane     = null;
+      this .szNormal    = null;
+      this .behind      = false;
+      this .fromVector  = new Vector3 (0, 0, 0);
+      this .startOffset = new Rotation4 (0, 0, 1, 0);
+   },
+   isBehind: function (hitRay, hitPoint)
+   {
+      const
+         enter = new Vector3 (0, 0 ,0),
+         exit  = new Vector3 (0, 0, 0);
+
+      this .cylinder .intersectsLine (hitRay, enter, exit);
+
+      return Vector3 .subtract (hitPoint, enter) .magnitude () > Vector3 .subtract (hitPoint, exit) .magnitude ();
+   },
+   getTrackPoint: function (hitRay, trackPoint)
+   {
+      const zPoint = new Vector3 (0, 0, 0);
+
+      this .zPlane .intersectsLine (hitRay, zPoint);
+
+      const
+         axisPoint = Vector3 .add (zPoint, this .cylinder .axis .getPerpendicularVectorToPoint (zPoint, new Vector3 (0, 0, 0))),
+         distance  = this .sxPlane .getDistanceToPoint (zPoint) / this .cylinder .radius,
+         section   = Math .floor ((distance + 1) / 2);
+
+      // Use asin on the cylinder and outside linear angle.
+      const
+         sinp  = Algorithm .interval (distance, -1, 1),
+         phi   = section === 0 ? Math .asin (sinp) : sinp * Math .PI / 2,
+         angle = phi + section * Math .PI;
+
+      const rotation = new Rotation4 (this .cylinder .axis .direction, angle);
+
+      rotation .multVecRot (trackPoint .assign (this .szNormal) .multiply (this .cylinder .radius));
+      trackPoint .add (axisPoint);
+   },
+   getAngle: function (rotation)
+   {
+      if (Vector3 .dot (rotation .getAxis (), this .cylinder .axis .direction) > 0)
+         return rotation .angle;
+
+      else
+         return -rotation .angle;
+   },
+   set_active__: function (active, hit, modelViewMatrix, projectionMatrix, viewport)
+   {
+      X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
+
+      if (this ._isActive .getValue ())
       {
+         this .modelViewMatrix    .assign (modelViewMatrix);
+         this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+
          const
-            enter = new Vector3 (0, 0 ,0),
-            exit  = new Vector3 (0, 0, 0);
-
-         this .cylinder .intersectsLine (hitRay, enter, exit);
-
-         return Vector3 .subtract (hitPoint, enter) .magnitude () > Vector3 .subtract (hitPoint, exit) .magnitude ();
-      },
-      getTrackPoint: function (hitRay, trackPoint)
-      {
-         const zPoint = new Vector3 (0, 0, 0);
-
-         this .zPlane .intersectsLine (hitRay, zPoint);
+            hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+            hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
 
          const
-            axisPoint = Vector3 .add (zPoint, this .cylinder .axis .getPerpendicularVectorToPoint (zPoint, new Vector3 (0, 0, 0))),
-            distance  = this .sxPlane .getDistanceToPoint (zPoint) / this .cylinder .radius,
-            section   = Math .floor ((distance + 1) / 2);
+            yAxis      = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
+            cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
 
-         // Use asin on the cylinder and outside linear angle.
          const
-            sinp  = Algorithm .interval (distance, -1, 1),
-            phi   = section === 0 ? Math .asin (sinp) : sinp * Math .PI / 2,
-            angle = phi + section * Math .PI;
+            axis   = new Line3 (new Vector3 (0, 0, 0), yAxis),
+            radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .magnitude ();
 
-         const rotation = new Rotation4 (this .cylinder .axis .direction, angle);
+         this .cylinder = new Cylinder3 (axis, radius);
+         this .disk     = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this ._diskAngle .getValue ());
+         this .behind   = this .isBehind (hitRay, hitPoint);
+         this .yPlane   = new Plane3 (hitPoint, yAxis);             // Sensor aligned y-plane
+         this .zPlane   = new Plane3 (hitPoint, cameraBack);        // Screen aligned z-plane
 
-         rotation .multVecRot (trackPoint .assign (this .szNormal) .multiply (this .cylinder .radius));
-         trackPoint .add (axisPoint);
-      },
-      getAngle: function (rotation)
-      {
-         if (Vector3 .dot (rotation .getAxis (), this .cylinder .axis .direction) > 0)
-            return rotation .angle;
-
-         else
-            return -rotation .angle;
-      },
-      set_active__: function (active, hit, modelViewMatrix, projectionMatrix, viewport)
-      {
-         X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
-
-         if (this ._isActive .getValue ())
-         {
-            this .modelViewMatrix    .assign (modelViewMatrix);
-            this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-
-            const
-               hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-               hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
-
-            const
-               yAxis      = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
-               cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
-
-            const
-               axis   = new Line3 (new Vector3 (0, 0, 0), yAxis),
-               radius = axis .getPerpendicularVectorToPoint (hitPoint, new Vector3 (0, 0, 0)) .magnitude ();
-
-            this .cylinder = new Cylinder3 (axis, radius);
-            this .disk     = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this ._diskAngle .getValue ());
-            this .behind   = this .isBehind (hitRay, hitPoint);
-            this .yPlane   = new Plane3 (hitPoint, yAxis);             // Sensor aligned y-plane
-            this .zPlane   = new Plane3 (hitPoint, cameraBack);        // Screen aligned z-plane
-
-            // Compute normal like in Billboard with yAxis as axis of rotation.
-            const
-               billboardToViewer = this .invModelViewMatrix .origin,
-               sxNormal          = Vector3 .cross (yAxis, billboardToViewer) .normalize ();
-
-            this .sxPlane  = new Plane3 (new Vector3 (0, 0, 0), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
-            this .szNormal = Vector3 .cross (sxNormal, yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
-
-            const trackPoint = new Vector3 (0, 0, 0);
-
-            if (this .disk)
-               this .yPlane .intersectsLine (hitRay, trackPoint);
-            else
-               this .getTrackPoint (hitRay, trackPoint);
-
-            this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate ();
-            this .startOffset = new Rotation4 (yAxis, this ._offset .getValue ());
-
-            this ._trackPoint_changed = trackPoint;
-            this ._rotation_changed   = this .startOffset;
-
-            // For min/max angle.
-
-            this .angle       = this ._offset .getValue ();
-            this .startVector = this ._rotation_changed .getValue () .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1)));
-         }
-         else
-         {
-            if (this ._autoOffset .getValue ())
-               this ._offset = this .getAngle (this ._rotation_changed .getValue ());
-         }
-      },
-      set_motion__: function (hit)
-      {
+         // Compute normal like in Billboard with yAxis as axis of rotation.
          const
-            hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-            trackPoint = new Vector3 (0, 0, 0);
+            billboardToViewer = this .invModelViewMatrix .origin,
+            sxNormal          = Vector3 .cross (yAxis, billboardToViewer) .normalize ();
+
+         this .sxPlane  = new Plane3 (new Vector3 (0, 0, 0), sxNormal);   // Billboarded special x-plane made parallel to sensors axis.
+         this .szNormal = Vector3 .cross (sxNormal, yAxis) .normalize (); // Billboarded special z-normal made parallel to sensors axis.
+
+         const trackPoint = new Vector3 (0, 0, 0);
 
          if (this .disk)
             this .yPlane .intersectsLine (hitRay, trackPoint);
          else
             this .getTrackPoint (hitRay, trackPoint);
 
+         this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate ();
+         this .startOffset = new Rotation4 (yAxis, this ._offset .getValue ());
+
          this ._trackPoint_changed = trackPoint;
+         this ._rotation_changed   = this .startOffset;
 
+         // For min/max angle.
+
+         this .angle       = this ._offset .getValue ();
+         this .startVector = this ._rotation_changed .getValue () .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1)));
+      }
+      else
+      {
+         if (this ._autoOffset .getValue ())
+            this ._offset = this .getAngle (this ._rotation_changed .getValue ());
+      }
+   },
+   set_motion__: function (hit)
+   {
+      const
+         hitRay     = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+         trackPoint = new Vector3 (0, 0, 0);
+
+      if (this .disk)
+         this .yPlane .intersectsLine (hitRay, trackPoint);
+      else
+         this .getTrackPoint (hitRay, trackPoint);
+
+      this ._trackPoint_changed = trackPoint;
+
+      const
+         toVector = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate (),
+         rotation = new Rotation4 (this .fromVector, toVector);
+
+      if (this .disk)
+      {
+         // The trackpoint can swap behind the viewpoint if viewpoint is a Viewpoint node
+         // as the viewing volume is not a cube where the picking ray goes straight up.
+         // This phenomenon is very clear on the viewport corners.
+
+         const trackPoint_ = this .modelViewMatrix .multVecMatrix (trackPoint .copy ());
+
+         if (trackPoint_ .z > 0)
+            rotation .multRight (new Rotation4 (this .yPlane .normal, Math .PI));
+      }
+      else
+      {
+         if (this .behind)
+            rotation .inverse ();
+      }
+
+      rotation .multLeft (this .startOffset);
+
+      if (this ._minAngle .getValue () > this ._maxAngle .getValue ())
+      {
+         this ._rotation_changed = rotation;
+      }
+      else
+      {
          const
-            toVector = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 (0, 0, 0)) .negate (),
-            rotation = new Rotation4 (this .fromVector, toVector);
+            endVector     = rotation .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1))),
+            deltaRotation = new Rotation4 (this .startVector, endVector),
+            axis          = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
+            sign          = axis .dot (deltaRotation .getAxis ()) > 0 ? 1 : -1,
+            min           = this ._minAngle .getValue (),
+            max           = this ._maxAngle .getValue ();
 
-         if (this .disk)
-         {
-            // The trackpoint can swap behind the viewpoint if viewpoint is a Viewpoint node
-            // as the viewing volume is not a cube where the picking ray goes straight up.
-            // This phenomenon is very clear on the viewport corners.
+         this .angle += sign * deltaRotation .angle;
 
-            const trackPoint_ = this .modelViewMatrix .multVecMatrix (trackPoint .copy ());
+         this .startVector .assign (endVector);
 
-            if (trackPoint_ .z > 0)
-               rotation .multRight (new Rotation4 (this .yPlane .normal, Math .PI));
-         }
+         //console .log (this .angle, min, max);
+
+         if (this .angle < min)
+            rotation .setAxisAngle (this .cylinder .axis .direction, min);
+         else if (this .angle > max)
+            rotation .setAxisAngle (this .cylinder .axis .direction, max);
          else
-         {
-            if (this .behind)
-               rotation .inverse ();
-         }
+            rotation .setAxisAngle (this .cylinder .axis .direction, this .angle);
 
-         rotation .multLeft (this .startOffset);
-
-         if (this ._minAngle .getValue () > this ._maxAngle .getValue ())
-         {
+         if (! this ._rotation_changed .getValue () .equals (rotation))
             this ._rotation_changed = rotation;
-         }
-         else
-         {
-            const
-               endVector     = rotation .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1))),
-               deltaRotation = new Rotation4 (this .startVector, endVector),
-               axis          = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
-               sign          = axis .dot (deltaRotation .getAxis ()) > 0 ? 1 : -1,
-               min           = this ._minAngle .getValue (),
-               max           = this ._maxAngle .getValue ();
-
-            this .angle += sign * deltaRotation .angle;
-
-            this .startVector .assign (endVector);
-
-            //console .log (this .angle, min, max);
-
-            if (this .angle < min)
-               rotation .setAxisAngle (this .cylinder .axis .direction, min);
-            else if (this .angle > max)
-               rotation .setAxisAngle (this .cylinder .axis .direction, max);
-            else
-               rotation .setAxisAngle (this .cylinder .axis .direction, this .angle);
-
-            if (! this ._rotation_changed .getValue () .equals (rotation))
-               this ._rotation_changed = rotation;
-         }
-      },
-   });
-
-   return CylinderSensor;
+      }
+   },
 });
+
+export default CylinderSensor;

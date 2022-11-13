@@ -47,297 +47,283 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Texturing/X3DTextureNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Base/X3DCast",
-   "x_ite/Browser/Texturing/MultiTextureModeType",
-   "x_ite/Browser/Texturing/MultiTextureSourceType",
-   "x_ite/Browser/Texturing/MultiTextureFunctionType",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DTextureNode,
-          X3DConstants,
-          X3DCast,
-          ModeType,
-          SourceType,
-          FunctionType)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DTextureNode from "./X3DTextureNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast from "../../Base/X3DCast.js";
+import ModeType from "../../Browser/Texturing/ModeType.js";
+import SourceType from "../../Browser/Texturing/SourceType.js";
+import FunctionType from "../../Browser/Texturing/FunctionType.js";
+
+function MultiTexture (executionContext)
 {
-"use strict";
+   X3DTextureNode .call (this, executionContext);
 
-   function MultiTexture (executionContext)
+   this .addType (X3DConstants .MultiTexture);
+
+   this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+
+   this .color        = new Float32Array (4);
+   this .modes        = [ ];
+   this .alphaModes   = [ ];
+   this .sources      = [ ];
+   this .functions    = [ ];
+   this .textureNodes = [ ];
+}
+
+MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
+{
+   constructor: MultiTexture,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "description", new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "color",       new Fields .SFColor (1, 1, 1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "alpha",       new Fields .SFFloat (1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "mode",        new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "source",      new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "function",    new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "texture",     new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DTextureNode .call (this, executionContext);
-
-      this .addType (X3DConstants .MultiTexture);
-
-      this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
-
-      this .color        = new Float32Array (4);
-      this .modes        = [ ];
-      this .alphaModes   = [ ];
-      this .sources      = [ ];
-      this .functions    = [ ];
-      this .textureNodes = [ ];
-   }
-
-   MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
+      return "MultiTexture";
+   },
+   getComponentName: function ()
    {
-      constructor: MultiTexture,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "description", new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "color",       new Fields .SFColor (1, 1, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "alpha",       new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "mode",        new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "source",      new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "function",    new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "texture",     new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "MultiTexture";
-      },
-      getComponentName: function ()
-      {
-         return "Texturing";
-      },
-      getContainerField: function ()
-      {
-         return "texture";
-      },
-      initialize: function ()
-      {
-         X3DTextureNode .prototype .initialize .call (this);
+      return "Texturing";
+   },
+   getContainerField: function ()
+   {
+      return "texture";
+   },
+   initialize: function ()
+   {
+      X3DTextureNode .prototype .initialize .call (this);
 
-         this ._color    .addInterest ("set_color__",    this);
-         this ._alpha    .addInterest ("set_alpha__",    this);
-         this ._mode     .addInterest ("set_mode__",     this);
-         this ._source   .addInterest ("set_source__",   this);
-         this ._function .addInterest ("set_function__", this);
-         this ._texture  .addInterest ("set_texture__",  this);
+      this ._color    .addInterest ("set_color__",    this);
+      this ._alpha    .addInterest ("set_alpha__",    this);
+      this ._mode     .addInterest ("set_mode__",     this);
+      this ._source   .addInterest ("set_source__",   this);
+      this ._function .addInterest ("set_function__", this);
+      this ._texture  .addInterest ("set_texture__",  this);
 
-         this .set_color__ ();
-         this .set_alpha__ ();
-         this .set_mode__ ();
-         this .set_source__ ();
-         this .set_function__ ();
-         this .set_texture__ ();
+      this .set_color__ ();
+      this .set_alpha__ ();
+      this .set_mode__ ();
+      this .set_source__ ();
+      this .set_function__ ();
+      this .set_texture__ ();
 
-         this ._loadState = X3DConstants .COMPLETE_STATE;
-      },
-      getCount: function ()
-      {
-         return Math .min (this .getBrowser () .getMaxTextures (), this .textureNodes .length);
-      },
-      getMode: function (index)
-      {
-         if (index < this .modes .length)
-            return this .modes [index];
+      this ._loadState = X3DConstants .COMPLETE_STATE;
+   },
+   getCount: function ()
+   {
+      return Math .min (this .getBrowser () .getMaxTextures (), this .textureNodes .length);
+   },
+   getMode: function (index)
+   {
+      if (index < this .modes .length)
+         return this .modes [index];
 
-         return ModeType .MODULATE;
-      },
-      getAlphaMode: function (index)
-      {
-         if (index < this .alphaModes .length)
-            return this .alphaModes [index];
+      return ModeType .MODULATE;
+   },
+   getAlphaMode: function (index)
+   {
+      if (index < this .alphaModes .length)
+         return this .alphaModes [index];
 
-         return ModeType .MODULATE;
-      },
-      getSource: function (index)
-      {
-         if (index < this .sources .length)
-            return this .sources [index];
+      return ModeType .MODULATE;
+   },
+   getSource: function (index)
+   {
+      if (index < this .sources .length)
+         return this .sources [index];
 
-         return SourceType .DEFAULT;
-      },
-      getFunction: function (index)
-      {
-         if (index < this .functions .length)
-            return this .functions [index];
+      return SourceType .DEFAULT;
+   },
+   getFunction: function (index)
+   {
+      if (index < this .functions .length)
+         return this .functions [index];
 
-         return FunctionType .DEFAULT;
-      },
-      set_color__: function ()
-      {
-         this .color [0] = this ._color .r;
-         this .color [1] = this ._color .g;
-         this .color [2] = this ._color .b;
-      },
-      set_alpha__: function ()
-      {
-         this .color [3] = this ._alpha;
-      },
-      set_mode__: (function ()
-      {
-         const modeTypes = new Map ([
-            ["REPLACE",                   ModeType .REPLACE],
-            ["MODULATE",                  ModeType .MODULATE],
-            ["MODULATE2X",                ModeType .MODULATE2X],
-            ["MODULATE4X",                ModeType .MODULATE4X],
-            ["ADD",                       ModeType .ADD],
-            ["ADDSIGNED",                 ModeType .ADDSIGNED],
-            ["ADDSIGNED2X",               ModeType .ADDSIGNED2X],
-            ["ADDSMOOTH",                 ModeType .ADDSMOOTH],
-            ["SUBTRACT",                  ModeType .SUBTRACT],
-            ["BLENDDIFFUSEALPHA",         ModeType .BLENDDIFFUSEALPHA],
-            ["BLENDTEXTUREALPHA",         ModeType .BLENDTEXTUREALPHA],
-            ["BLENDFACTORALPHA",          ModeType .BLENDFACTORALPHA],
-            ["BLENDCURRENTALPHA",         ModeType .BLENDCURRENTALPHA],
-            ["MODULATEALPHA_ADDCOLOR",    ModeType .MODULATEALPHA_ADDCOLOR],
-            ["MODULATEINVALPHA_ADDCOLOR", ModeType .MODULATEINVALPHA_ADDCOLOR],
-            ["MODULATEINVCOLOR_ADDALPHA", ModeType .MODULATEINVCOLOR_ADDALPHA],
-            ["DOTPRODUCT3",               ModeType .DOTPRODUCT3],
-            ["SELECTARG1",                ModeType .SELECTARG1],
-            ["SELECTARG2",                ModeType .SELECTARG2],
-            ["OFF",                       ModeType .OFF],
-         ]);
+      return FunctionType .DEFAULT;
+   },
+   set_color__: function ()
+   {
+      this .color [0] = this ._color .r;
+      this .color [1] = this ._color .g;
+      this .color [2] = this ._color .b;
+   },
+   set_alpha__: function ()
+   {
+      this .color [3] = this ._alpha;
+   },
+   set_mode__: (function ()
+   {
+      const modeTypes = new Map ([
+         ["REPLACE",                   ModeType .REPLACE],
+         ["MODULATE",                  ModeType .MODULATE],
+         ["MODULATE2X",                ModeType .MODULATE2X],
+         ["MODULATE4X",                ModeType .MODULATE4X],
+         ["ADD",                       ModeType .ADD],
+         ["ADDSIGNED",                 ModeType .ADDSIGNED],
+         ["ADDSIGNED2X",               ModeType .ADDSIGNED2X],
+         ["ADDSMOOTH",                 ModeType .ADDSMOOTH],
+         ["SUBTRACT",                  ModeType .SUBTRACT],
+         ["BLENDDIFFUSEALPHA",         ModeType .BLENDDIFFUSEALPHA],
+         ["BLENDTEXTUREALPHA",         ModeType .BLENDTEXTUREALPHA],
+         ["BLENDFACTORALPHA",          ModeType .BLENDFACTORALPHA],
+         ["BLENDCURRENTALPHA",         ModeType .BLENDCURRENTALPHA],
+         ["MODULATEALPHA_ADDCOLOR",    ModeType .MODULATEALPHA_ADDCOLOR],
+         ["MODULATEINVALPHA_ADDCOLOR", ModeType .MODULATEINVALPHA_ADDCOLOR],
+         ["MODULATEINVCOLOR_ADDALPHA", ModeType .MODULATEINVCOLOR_ADDALPHA],
+         ["DOTPRODUCT3",               ModeType .DOTPRODUCT3],
+         ["SELECTARG1",                ModeType .SELECTARG1],
+         ["SELECTARG2",                ModeType .SELECTARG2],
+         ["OFF",                       ModeType .OFF],
+      ]);
 
-         return function ()
+      return function ()
+      {
+         this .modes      .length = 0;
+         this .alphaModes .length = 0;
+
+         for (const modes of this ._mode)
          {
-            this .modes      .length = 0;
-            this .alphaModes .length = 0;
+            const mode = modes .split (",");
 
-            for (const modes of this ._mode)
-            {
-               const mode = modes .split (",");
+            for (let m = 0, l = mode .length; m < l; ++ m)
+               mode [m] = mode [m] .trim ();
 
-               for (let m = 0, l = mode .length; m < l; ++ m)
-                  mode [m] = mode [m] .trim ();
+            if (mode .length === 0)
+               mode .push ("MODULATE");
 
-               if (mode .length === 0)
-                  mode .push ("MODULATE");
+            if (mode .length < 2)
+               mode .push (mode [0]);
 
-               if (mode .length < 2)
-                  mode .push (mode [0]);
+            // RGB
 
-               // RGB
+            const modeType = modeTypes .get (mode [0]);
 
-               const modeType = modeTypes .get (mode [0]);
+            if (modeType !== undefined)
+               this .modes .push (modeType);
+            else
+               this .modes .push (ModeType .MODULATE);
 
-               if (modeType !== undefined)
-                  this .modes .push (modeType);
-               else
-                  this .modes .push (ModeType .MODULATE);
+            // Alpha
 
-               // Alpha
+            const alphaModeType = modeTypes .get (mode [1]);
 
-               const alphaModeType = modeTypes .get (mode [1]);
-
-               if (alphaModeType !== undefined)
-                  this .alphaModes .push (alphaModeType);
-               else
-                  this .alphaModes .push (ModeType .MODULATE);
-            }
-         };
-      })(),
-      set_source__: (function ()
-      {
-         const sourceTypes = new Map ([
-            ["DIFFUSE",  SourceType .DIFFUSE],
-            ["SPECULAR", SourceType .SPECULAR],
-            ["FACTOR",   SourceType .FACTOR],
-         ]);
-
-         return function ()
-         {
-            this .sources .length = 0;
-
-            for (const source of this ._source)
-            {
-               const sourceType = sourceTypes .get (source);
-
-               if (sourceType !== undefined)
-                  this .sources .push (sourceType);
-               else
-                  this .sources .push (SourceType .DEFAULT);
-            }
-         };
-      })(),
-      set_function__: (function ()
-      {
-         const functionsTypes = new Map ([
-            ["COMPLEMENT",     FunctionType .COMPLEMENT],
-            ["ALPHAREPLICATE", FunctionType .ALPHAREPLICATE],
-         ]);
-
-         return function ()
-         {
-            this .functions .length = 0;
-
-            for (const func of this ._function)
-            {
-               const functionsType = functionsTypes .get (func);
-
-               if (functionsType !== undefined)
-                  this .functions .push (functionsType);
-               else
-                  this .functions .push (FunctionType .DEFAULT);
-            }
-         };
-      })(),
-      set_texture__: function ()
-      {
-         this .textureNodes .length = 0;
-
-         for (const node of this ._texture)
-         {
-            const textureNode = X3DCast (X3DConstants .X3DSingleTextureNode, node);
-
-            if (textureNode)
-               this .textureNodes .push (textureNode);
+            if (alphaModeType !== undefined)
+               this .alphaModes .push (alphaModeType);
+            else
+               this .alphaModes .push (ModeType .MODULATE);
          }
-      },
-      updateTextureBits: function (textureBits)
+      };
+   })(),
+   set_source__: (function ()
+   {
+      const sourceTypes = new Map ([
+         ["DIFFUSE",  SourceType .DIFFUSE],
+         ["SPECULAR", SourceType .SPECULAR],
+         ["FACTOR",   SourceType .FACTOR],
+      ]);
+
+      return function ()
       {
-         const
-            maxTextures  = this .getBrowser () .getMaxTextures (),
-            textureNodes = this .textureNodes,
-            channels     = Math .min (maxTextures, textureNodes .length);
+         this .sources .length = 0;
 
-         for (let i = 0; i < channels; ++ i)
-            textureNodes [i] .updateTextureBits (textureBits, i);
-
-         textureBits .set (maxTextures * 2, 1);
-      },
-      getShaderOptions: function (options)
-      {
-         const
-            textureNodes = this .textureNodes,
-            channels     = Math .min (this .getBrowser () .getMaxTextures (), textureNodes .length);
-
-         for (let i = 0; i < channels; ++ i)
-            textureNodes [i] .getShaderOptions (options, i);
-      },
-      traverse: function (type, renderObject)
-      {
-         for (const textureNode of this .textureNodes)
-            textureNode .traverse (type, renderObject);
-      },
-      setShaderUniforms: function (gl, shaderObject, renderObject)
-      {
-         const
-            textureNodes = this .textureNodes,
-            channels     = Math .min (this .getBrowser () .getMaxTextures (), textureNodes .length);
-
-         gl .uniform4fv (shaderObject .x3d_MultiTextureColor, this .color);
-
-         for (let i = 0; i < channels; ++ i)
+         for (const source of this ._source)
          {
-            textureNodes [i] .setShaderUniforms (gl, shaderObject, renderObject, shaderObject .x3d_Texture [i]);
+            const sourceType = sourceTypes .get (source);
 
-            gl .uniform1i  (shaderObject .x3d_MultiTextureMode [i],      this .getMode (i));
-            gl .uniform1i  (shaderObject .x3d_MultiTextureAlphaMode [i], this .getAlphaMode (i));
-            gl .uniform1i  (shaderObject .x3d_MultiTextureSource [i],    this .getSource (i));
-            gl .uniform1i  (shaderObject .x3d_MultiTextureFunction [i],  this .getFunction (i));
+            if (sourceType !== undefined)
+               this .sources .push (sourceType);
+            else
+               this .sources .push (SourceType .DEFAULT);
          }
-      },
-   });
+      };
+   })(),
+   set_function__: (function ()
+   {
+      const functionsTypes = new Map ([
+         ["COMPLEMENT",     FunctionType .COMPLEMENT],
+         ["ALPHAREPLICATE", FunctionType .ALPHAREPLICATE],
+      ]);
 
-   return MultiTexture;
+      return function ()
+      {
+         this .functions .length = 0;
+
+         for (const func of this ._function)
+         {
+            const functionsType = functionsTypes .get (func);
+
+            if (functionsType !== undefined)
+               this .functions .push (functionsType);
+            else
+               this .functions .push (FunctionType .DEFAULT);
+         }
+      };
+   })(),
+   set_texture__: function ()
+   {
+      this .textureNodes .length = 0;
+
+      for (const node of this ._texture)
+      {
+         const textureNode = X3DCast (X3DConstants .X3DSingleTextureNode, node);
+
+         if (textureNode)
+            this .textureNodes .push (textureNode);
+      }
+   },
+   updateTextureBits: function (textureBits)
+   {
+      const
+         maxTextures  = this .getBrowser () .getMaxTextures (),
+         textureNodes = this .textureNodes,
+         channels     = Math .min (maxTextures, textureNodes .length);
+
+      for (let i = 0; i < channels; ++ i)
+         textureNodes [i] .updateTextureBits (textureBits, i);
+
+      textureBits .set (maxTextures * 2, 1);
+   },
+   getShaderOptions: function (options)
+   {
+      const
+         textureNodes = this .textureNodes,
+         channels     = Math .min (this .getBrowser () .getMaxTextures (), textureNodes .length);
+
+      for (let i = 0; i < channels; ++ i)
+         textureNodes [i] .getShaderOptions (options, i);
+   },
+   traverse: function (type, renderObject)
+   {
+      for (const textureNode of this .textureNodes)
+         textureNode .traverse (type, renderObject);
+   },
+   setShaderUniforms: function (gl, shaderObject, renderObject)
+   {
+      const
+         textureNodes = this .textureNodes,
+         channels     = Math .min (this .getBrowser () .getMaxTextures (), textureNodes .length);
+
+      gl .uniform4fv (shaderObject .x3d_MultiTextureColor, this .color);
+
+      for (let i = 0; i < channels; ++ i)
+      {
+         textureNodes [i] .setShaderUniforms (gl, shaderObject, renderObject, shaderObject .x3d_Texture [i]);
+
+         gl .uniform1i  (shaderObject .x3d_MultiTextureMode [i],      this .getMode (i));
+         gl .uniform1i  (shaderObject .x3d_MultiTextureAlphaMode [i], this .getAlphaMode (i));
+         gl .uniform1i  (shaderObject .x3d_MultiTextureSource [i],    this .getSource (i));
+         gl .uniform1i  (shaderObject .x3d_MultiTextureFunction [i],  this .getFunction (i));
+      }
+   },
 });
+
+export default MultiTexture;

@@ -47,203 +47,192 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Rendering/X3DGeometryNode",
-   "standard/Math/Geometry/ViewVolume",
-   "standard/Math/Geometry/Box3",
-   "standard/Math/Numbers/Vector2",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Matrix4",
-],
-function (X3DGeometryNode,
-          ViewVolume,
-          Box3,
-          Vector2,
-          Vector3,
-          Matrix4)
+import X3DGeometryNode from "./X3DGeometryNode.js";
+import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
+import Box3 from "../../../standard/Math/Geometry/Box3.js";
+import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+function X3DLineGeometryNode (executionContext)
 {
-"use strict";
+   X3DGeometryNode .call (this, executionContext);
 
-   function X3DLineGeometryNode (executionContext)
+   const browser = this .getBrowser ();
+
+   this .setGeometryType (0);
+   this .setPrimitiveMode (browser .getContext () .POINTS);
+   this .setSolid (false);
+   this .setTransparent (true);
+}
+
+X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+{
+   constructor: X3DLineGeometryNode,
+   intersectsLine: (function ()
    {
-      X3DGeometryNode .call (this, executionContext);
+      const
+         bbox                      = new Box3 (),
+         min                       = new Vector3 (0, 0, 0),
+         max                       = new Vector3 (0, 0, 0),
+         screenScale1_             = new Vector3 (0, 0, 0),
+         screenScale2_             = new Vector3 (0, 0, 0),
+         point                     = new Vector3 (0, 0, 0),
+         pointSizePoint            = new Vector3 (0, 0, 0),
+         modelViewProjectionMatrix = new Matrix4 (),
+         projected                 = new Vector2 (0, 0),
+         clipPoint                 = new Vector3 (0, 0, 0);
 
-      const browser = this .getBrowser ();
-
-      this .setGeometryType (0);
-      this .setPrimitiveMode (browser .getContext () .POINTS);
-      this .setSolid (false);
-      this .setTransparent (true);
-   }
-
-   X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
-   {
-      constructor: X3DLineGeometryNode,
-      intersectsLine: (function ()
+      return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
       {
          const
-            bbox                      = new Box3 (),
-            min                       = new Vector3 (0, 0, 0),
-            max                       = new Vector3 (0, 0, 0),
-            screenScale1_             = new Vector3 (0, 0, 0),
-            screenScale2_             = new Vector3 (0, 0, 0),
-            point                     = new Vector3 (0, 0, 0),
-            pointSizePoint            = new Vector3 (0, 0, 0),
-            modelViewProjectionMatrix = new Matrix4 (),
-            projected                 = new Vector2 (0, 0),
-            clipPoint                 = new Vector3 (0, 0, 0);
+            modelViewMatrix     = renderObject .getModelViewMatrix () .get (),
+            viewport            = renderObject .getViewVolume () .getViewport (),
+            extents             = bbox .assign (this .getBBox ()) .multRight (modelViewMatrix) .getExtents (min, max),
+            pointPropertiesNode = appearanceNode .getPointProperties (),
+            pointSize1          = Math .max (1.5, pointPropertiesNode ? pointPropertiesNode .getPointSize (min) / 2 : 1),
+            screenScale1        = renderObject .getViewpoint () .getScreenScale (min, viewport, screenScale1_), // in m/px
+            offsets1            = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (pointSize1)),
+            pointSize2          = Math .max (1.5, pointPropertiesNode ? pointPropertiesNode .getPointSize (max) / 2 : 1),
+            screenScale2        = renderObject .getViewpoint () .getScreenScale (max, viewport, screenScale2_), // in m/px
+            offsets2            = invModelViewMatrix .multDirMatrix (screenScale2 .multiply (pointSize2));
 
-         return function (hitRay, renderObject, invModelViewMatrix, appearanceNode, intersections)
+         if (this .intersectsBBox (hitRay, offsets1 .abs () .max (offsets2 .abs ())))
          {
             const
-               modelViewMatrix     = renderObject .getModelViewMatrix () .get (),
-               viewport            = renderObject .getViewVolume () .getViewport (),
-               extents             = bbox .assign (this .getBBox ()) .multRight (modelViewMatrix) .getExtents (min, max),
-               pointPropertiesNode = appearanceNode .getPointProperties (),
-               pointSize1          = Math .max (1.5, pointPropertiesNode ? pointPropertiesNode .getPointSize (min) / 2 : 1),
-               screenScale1        = renderObject .getViewpoint () .getScreenScale (min, viewport, screenScale1_), // in m/px
-               offsets1            = invModelViewMatrix .multDirMatrix (screenScale1 .multiply (pointSize1)),
-               pointSize2          = Math .max (1.5, pointPropertiesNode ? pointPropertiesNode .getPointSize (max) / 2 : 1),
-               screenScale2        = renderObject .getViewpoint () .getScreenScale (max, viewport, screenScale2_), // in m/px
-               offsets2            = invModelViewMatrix .multDirMatrix (screenScale2 .multiply (pointSize2));
+               pointer          = this .getBrowser () .getPointer (),
+               projectionMatrix = renderObject .getProjectionMatrix () .get (),
+               clipPlanes       = renderObject .getLocalObjects (),
+               vertices         = this .getVertices (),
+               numVertices      = vertices .length;
 
-            if (this .intersectsBBox (hitRay, offsets1 .abs () .max (offsets2 .abs ())))
+            modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
+
+            for (let i = 0; i < numVertices; i += 4)
             {
-               const
-                  pointer          = this .getBrowser () .getPointer (),
-                  projectionMatrix = renderObject .getProjectionMatrix () .get (),
-                  clipPlanes       = renderObject .getLocalObjects (),
-                  vertices         = this .getVertices (),
-                  numVertices      = vertices .length;
+               point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
 
-               modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);
+               ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, projected);
 
-               for (let i = 0; i < numVertices; i += 4)
+               const pointSize1_2 = Math .max (1.5, pointPropertiesNode ? pointPropertiesNode .getPointSize (modelViewMatrix .multVecMatrix (pointSizePoint .assign (point))) / 2 : 1);
+
+               if (projected .distance (pointer) <= pointSize1_2)
                {
-                  point .set (vertices [i + 0], vertices [i + 1], vertices [i + 2]);
-
-                  ViewVolume .projectPointMatrix (point, modelViewProjectionMatrix, viewport, projected);
-
-                  const pointSize1_2 = Math .max (1.5, pointPropertiesNode ? pointPropertiesNode .getPointSize (modelViewMatrix .multVecMatrix (pointSizePoint .assign (point))) / 2 : 1);
-
-                  if (projected .distance (pointer) <= pointSize1_2)
+                  if (clipPlanes .length)
                   {
-                     if (clipPlanes .length)
-                     {
-                        if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                           continue;
-                     }
-
-                     const
-                        texCoord = pointer .copy () .subtract (projected) .divide (pointSize1_2) .add (Vector2 .One) .divide (2),
-                        normal   = modelViewMatrix .submatrix .transpose () .z .copy () .normalize ();
-
-                     intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
+                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
+                        continue;
                   }
+
+                  const
+                     texCoord = pointer .copy () .subtract (projected) .divide (pointSize1_2) .add (Vector2 .One) .divide (2),
+                     normal   = modelViewMatrix .submatrix .transpose () .z .copy () .normalize ();
+
+                  intersections .push ({ texCoord: texCoord, normal: normal, point: point .copy () });
                }
             }
-
-            return intersections .length;
-         };
-      })(),
-      intersectsLineWithGeometry: function ()
-      {
-         return false;
-      },
-      intersectsBox: function (box, clipPlanes, modelViewMatrix)
-      {
-         return false;
-      },
-      buildTexCoords: function ()
-      { },
-      display: function (gl, renderContext)
-      {
-         const
-            appearanceNode = renderContext .appearanceNode,
-            shaderNode     = appearanceNode .getShader (this, renderContext),
-            blendModeNode  = appearanceNode .getBlendMode (),
-            attribNodes    = this .getAttrib (),
-            attribBuffers  = this .getAttribBuffers ();
-
-         if (blendModeNode)
-            blendModeNode .enable (gl);
-
-         // Setup shader.
-
-         shaderNode .enable (gl);
-         shaderNode .setUniforms (gl, this, renderContext);
-
-         // Setup vertex attributes.
-
-         if (this .vertexArrayObject .enable (gl, shaderNode))
-         {
-            for (let i = 0, length = attribNodes .length; i < length; ++ i)
-               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-            if (this .hasFogCoords)
-               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
-
-            if (this .colorMaterial)
-               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
-
-            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
          }
 
-         gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+         return intersections .length;
+      };
+   })(),
+   intersectsLineWithGeometry: function ()
+   {
+      return false;
+   },
+   intersectsBox: function (box, clipPlanes, modelViewMatrix)
+   {
+      return false;
+   },
+   buildTexCoords: function ()
+   { },
+   display: function (gl, renderContext)
+   {
+      const
+         appearanceNode = renderContext .appearanceNode,
+         shaderNode     = appearanceNode .getShader (this, renderContext),
+         blendModeNode  = appearanceNode .getBlendMode (),
+         attribNodes    = this .getAttrib (),
+         attribBuffers  = this .getAttribBuffers ();
 
-         if (blendModeNode)
-            blendModeNode .disable (gl);
-      },
-      displayParticles: function (gl, renderContext, particleSystem)
+      if (blendModeNode)
+         blendModeNode .enable (gl);
+
+      // Setup shader.
+
+      shaderNode .enable (gl);
+      shaderNode .setUniforms (gl, this, renderContext);
+
+      // Setup vertex attributes.
+
+      if (this .vertexArrayObject .enable (gl, shaderNode))
       {
-         const
-            appearanceNode = renderContext .appearanceNode,
-            shaderNode     = appearanceNode .getShader (this, renderContext),
-            blendModeNode  = appearanceNode .getBlendMode (),
-            attribNodes    = this .getAttrib (),
-            attribBuffers  = this .getAttribBuffers ();
+         for (let i = 0, length = attribNodes .length; i < length; ++ i)
+            attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-         if (blendModeNode)
-            blendModeNode .enable (gl);
+         if (this .hasFogCoords)
+            shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
-         // Setup shader.
+         if (this .colorMaterial)
+            shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-         shaderNode .enable (gl);
-         shaderNode .setUniforms (gl, this, renderContext);
+         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+      }
 
-         // Setup vertex attributes.
+      gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
 
-         const outputParticles = particleSystem .outputParticles;
+      if (blendModeNode)
+         blendModeNode .disable (gl);
+   },
+   displayParticles: function (gl, renderContext, particleSystem)
+   {
+      const
+         appearanceNode = renderContext .appearanceNode,
+         shaderNode     = appearanceNode .getShader (this, renderContext),
+         blendModeNode  = appearanceNode .getBlendMode (),
+         attribNodes    = this .getAttrib (),
+         attribBuffers  = this .getAttribBuffers ();
 
-         if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
-         {
-            const particleStride = particleSystem .particleStride;
+      if (blendModeNode)
+         blendModeNode .enable (gl);
 
-            shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
-            shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
+      // Setup shader.
 
-            for (let i = 0, length = attribNodes .length; i < length; ++ i)
-               attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+      shaderNode .enable (gl);
+      shaderNode .setUniforms (gl, this, renderContext);
 
-            if (this .hasFogCoords)
-               shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
+      // Setup vertex attributes.
 
-            if (this .colorMaterial)
-               shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
+      const outputParticles = particleSystem .outputParticles;
 
-            shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+      if (outputParticles .vertexArrayObject .update (this .updateParticles) .enable (gl, shaderNode))
+      {
+         const particleStride = particleSystem .particleStride;
 
-            this .updateParticles = false;
-         }
+         shaderNode .enableParticleAttribute (gl, outputParticles, particleStride, particleSystem .particleOffset, 1);
+         shaderNode .enableParticleMatrixAttribute (gl, outputParticles, particleStride, particleSystem .matrixOffset, 1);
 
-         // Wireframes are always solid so only one drawing call is needed.
+         for (let i = 0, length = attribNodes .length; i < length; ++ i)
+            attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-         gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+         if (this .hasFogCoords)
+            shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer, 0, 0);
 
-         if (blendModeNode)
-            blendModeNode .disable (gl);
-      },
-   });
+         if (this .colorMaterial)
+            shaderNode .enableColorAttribute (gl, this .colorBuffer, 0, 0);
 
-   return X3DLineGeometryNode;
+         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+
+         this .updateParticles = false;
+      }
+
+      // Wireframes are always solid so only one drawing call is needed.
+
+      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, particleSystem .numParticles);
+
+      if (blendModeNode)
+         blendModeNode .disable (gl);
+   },
 });
+
+export default X3DLineGeometryNode;

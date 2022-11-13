@@ -47,76 +47,65 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DTouchSensorNode,
-          X3DConstants,
-          Matrix4)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DTouchSensorNode from "./X3DTouchSensorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+var invModelViewMatrix = new Matrix4 ();
+
+function TouchSensor (executionContext)
 {
-"use strict";
+   X3DTouchSensorNode .call (this, executionContext);
 
-   var invModelViewMatrix = new Matrix4 ();
+   this .addType (X3DConstants .TouchSensor);
 
-   function TouchSensor (executionContext)
+   this ._hitPoint_changed .setUnit ("length");
+}
+
+TouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
+{
+   constructor: TouchSensor,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "description",         new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "hitTexCoord_changed", new Fields .SFVec2f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "hitNormal_changed",   new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "hitPoint_changed",    new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",              new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",            new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "touchTime",           new Fields .SFTime ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DTouchSensorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .TouchSensor);
-
-      this ._hitPoint_changed .setUnit ("length");
-   }
-
-   TouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
+      return "TouchSensor";
+   },
+   getComponentName: function ()
    {
-      constructor: TouchSensor,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "description",         new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "hitTexCoord_changed", new Fields .SFVec2f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "hitNormal_changed",   new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "hitPoint_changed",    new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",              new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",            new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "touchTime",           new Fields .SFTime ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "TouchSensor";
-      },
-      getComponentName: function ()
-      {
-         return "PointingDeviceSensor";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      set_over__: function (over, hit, modelViewMatrix, projectionMatrix, viewport)
-      {
-         X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
+      return "PointingDeviceSensor";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   set_over__: function (over, hit, modelViewMatrix, projectionMatrix, viewport)
+   {
+      X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
 
-         if (this ._isOver .getValue ())
-         {
-            var intersection = hit .intersection;
+      if (this ._isOver .getValue ())
+      {
+         var intersection = hit .intersection;
 
-            invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+         invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-            this ._hitTexCoord_changed = intersection .texCoord;
-            this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
-            this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
-         }
-      },
-   });
-
-   return TouchSensor;
+         this ._hitTexCoord_changed = intersection .texCoord;
+         this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
+         this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
+      }
+   },
 });
+
+export default TouchSensor;

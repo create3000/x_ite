@@ -47,144 +47,130 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Components/NURBS/NurbsPatchSurface",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Geometry/Line3",
-   "standard/Math/Geometry/Triangle2",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DChildNode,
-          NurbsPatchSurface,
-          X3DConstants,
-          Line3,
-          Triangle2,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DChildNode from "../Core/X3DChildNode.js";
+import NurbsPatchSurface from "./NurbsPatchSurface.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Line3 from "../../../standard/Math/Geometry/Line3.js";
+import Triangle2 from "../../../standard/Math/Geometry/Triangle2.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+function NurbsSurfaceInterpolator (executionContext)
 {
-"use strict";
+   X3DChildNode .call (this, executionContext);
 
-   function NurbsSurfaceInterpolator (executionContext)
+   this .addType (X3DConstants .NurbsSurfaceInterpolator);
+
+   this .geometry = new NurbsPatchSurface (executionContext);
+}
+
+NurbsSurfaceInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+{
+   constructor: NurbsSurfaceInterpolator,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_fraction",     new Fields .SFVec2f ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",           new Fields .SFInt32 (3)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",           new Fields .SFInt32 (3)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",       new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",       new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",            new Fields .MFDouble ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",            new Fields .MFDouble ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",           new Fields .MFDouble ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint",     new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "normal_changed",   new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "position_changed", new Fields .SFVec3f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .NurbsSurfaceInterpolator);
-
-      this .geometry = new NurbsPatchSurface (executionContext);
-   }
-
-   NurbsSurfaceInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+      return "NurbsSurfaceInterpolator";
+   },
+   getComponentName: function ()
    {
-      constructor: NurbsSurfaceInterpolator,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_fraction",     new Fields .SFVec2f ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",           new Fields .SFInt32 (3)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",           new Fields .SFInt32 (3)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",       new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",       new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",            new Fields .MFDouble ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",            new Fields .MFDouble ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",           new Fields .MFDouble ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint",     new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "normal_changed",   new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "position_changed", new Fields .SFVec3f ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "NurbsSurfaceInterpolator";
-      },
-      getComponentName: function ()
-      {
-         return "NURBS";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         this ._set_fraction .addInterest ("set_fraction__", this);
+      return "NURBS";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      this ._set_fraction .addInterest ("set_fraction__", this);
 
-         this ._uOrder       .addFieldInterest (this .geometry ._uOrder);
-         this ._vOrder       .addFieldInterest (this .geometry ._vOrder);
-         this ._uDimension   .addFieldInterest (this .geometry ._uDimension);
-         this ._vDimension   .addFieldInterest (this .geometry ._vDimension);
-         this ._uKnot        .addFieldInterest (this .geometry ._uKnot);
-         this ._vKnot        .addFieldInterest (this .geometry ._vKnot);
-         this ._weight       .addFieldInterest (this .geometry ._weight);
-         this ._controlPoint .addFieldInterest (this .geometry ._controlPoint);
+      this ._uOrder       .addFieldInterest (this .geometry ._uOrder);
+      this ._vOrder       .addFieldInterest (this .geometry ._vOrder);
+      this ._uDimension   .addFieldInterest (this .geometry ._uDimension);
+      this ._vDimension   .addFieldInterest (this .geometry ._vDimension);
+      this ._uKnot        .addFieldInterest (this .geometry ._uKnot);
+      this ._vKnot        .addFieldInterest (this .geometry ._vKnot);
+      this ._weight       .addFieldInterest (this .geometry ._weight);
+      this ._controlPoint .addFieldInterest (this .geometry ._controlPoint);
 
-         this .geometry ._uTessellation = 128;
-         this .geometry ._vTessellation = 128;
-         this .geometry ._uOrder        = this ._uOrder;
-         this .geometry ._vOrder        = this ._vOrder;
-         this .geometry ._uDimension    = this ._uDimension;
-         this .geometry ._vDimension    = this ._vDimension;
-         this .geometry ._uKnot         = this ._uKnot;
-         this .geometry ._vKnot         = this ._vKnot;
-         this .geometry ._weight        = this ._weight;
-         this .geometry ._controlPoint  = this ._controlPoint;
+      this .geometry ._uTessellation = 128;
+      this .geometry ._vTessellation = 128;
+      this .geometry ._uOrder        = this ._uOrder;
+      this .geometry ._vOrder        = this ._vOrder;
+      this .geometry ._uDimension    = this ._uDimension;
+      this .geometry ._vDimension    = this ._vDimension;
+      this .geometry ._uKnot         = this ._uKnot;
+      this .geometry ._vKnot         = this ._vKnot;
+      this .geometry ._weight        = this ._weight;
+      this .geometry ._controlPoint  = this ._controlPoint;
 
-         this .geometry .setup ();
-      },
-      set_fraction__: (function ()
+      this .geometry .setup ();
+   },
+   set_fraction__: (function ()
+   {
+      const
+         a     = new Vector3 (0, 0, 0),
+         b     = new Vector3 (0, 0, 0),
+         c     = new Vector3 (0, 0, 0),
+         point = new Vector3 (0, 0, 0),
+         line  = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+         uvt   = { };
+
+      return function ()
       {
          const
-            a     = new Vector3 (0, 0, 0),
-            b     = new Vector3 (0, 0, 0),
-            c     = new Vector3 (0, 0, 0),
-            point = new Vector3 (0, 0, 0),
-            line  = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-            uvt   = { };
+            fraction       = this ._set_fraction .getValue (),
+            texCoordsArray = this .geometry .getTexCoords (),
+            normalArray    = this .geometry .getNormals (),
+            verticesArray  = this .geometry .getVertices ();
 
-         return function ()
+         for (let i4 = 0, i3 = 0, length = texCoordsArray .length; i4 < length; i4 += 12, i3 += 9)
          {
-            const
-               fraction       = this ._set_fraction .getValue (),
-               texCoordsArray = this .geometry .getTexCoords (),
-               normalArray    = this .geometry .getNormals (),
-               verticesArray  = this .geometry .getVertices ();
+            a .set (texCoordsArray [i4 + 0], texCoordsArray [i4 + 1], 0);
+            b .set (texCoordsArray [i4 + 4], texCoordsArray [i4 + 5], 0);
+            c .set (texCoordsArray [i4 + 7], texCoordsArray [i4 + 9], 0);
 
-            for (let i4 = 0, i3 = 0, length = texCoordsArray .length; i4 < length; i4 += 12, i3 += 9)
+            if (Triangle2 .isPointInTriangle (a, b, c, fraction))
             {
-               a .set (texCoordsArray [i4 + 0], texCoordsArray [i4 + 1], 0);
-               b .set (texCoordsArray [i4 + 4], texCoordsArray [i4 + 5], 0);
-               c .set (texCoordsArray [i4 + 7], texCoordsArray [i4 + 9], 0);
+               line .set (point .set (fraction .x, fraction .y, 0), Vector3 .zAxis);
 
-               if (Triangle2 .isPointInTriangle (a, b, c, fraction))
+               if (line .intersectsTriangle (a, b, c, uvt))
                {
-                  line .set (point .set (fraction .x, fraction .y, 0), Vector3 .zAxis);
+                  const
+                     u = uvt .u,
+                     v = uvt .v,
+                     t = uvt .t;
 
-                  if (line .intersectsTriangle (a, b, c, uvt))
-                  {
-                     const
-                        u = uvt .u,
-                        v = uvt .v,
-                        t = uvt .t;
+                  const normal = new Vector3 (t * normalArray [i3 + 0] + u * normalArray [i3 + 3] + v * normalArray [i3 + 6],
+                                              t * normalArray [i3 + 1] + u * normalArray [i3 + 4] + v * normalArray [i3 + 7],
+                                              t * normalArray [i3 + 2] + u * normalArray [i3 + 5] + v * normalArray [i3 + 8]);
 
-                     const normal = new Vector3 (t * normalArray [i3 + 0] + u * normalArray [i3 + 3] + v * normalArray [i3 + 6],
-                                                 t * normalArray [i3 + 1] + u * normalArray [i3 + 4] + v * normalArray [i3 + 7],
-                                                 t * normalArray [i3 + 2] + u * normalArray [i3 + 5] + v * normalArray [i3 + 8]);
+                  const position = new Vector3 (t * verticesArray [i4 + 0] + u * verticesArray [i4 + 4] + v * verticesArray [i4 +  8],
+                                                t * verticesArray [i4 + 1] + u * verticesArray [i4 + 5] + v * verticesArray [i4 +  9],
+                                                t * verticesArray [i4 + 2] + u * verticesArray [i4 + 6] + v * verticesArray [i4 + 10]);
 
-                     const position = new Vector3 (t * verticesArray [i4 + 0] + u * verticesArray [i4 + 4] + v * verticesArray [i4 +  8],
-                                                   t * verticesArray [i4 + 1] + u * verticesArray [i4 + 5] + v * verticesArray [i4 +  9],
-                                                   t * verticesArray [i4 + 2] + u * verticesArray [i4 + 6] + v * verticesArray [i4 + 10]);
-
-                     this ._normal_changed   = normal;
-                     this ._position_changed = position;
-                  }
+                  this ._normal_changed   = normal;
+                  this ._position_changed = position;
                }
             }
-         };
-      })(),
-   });
-
-   return NurbsSurfaceInterpolator;
+         }
+      };
+   })(),
 });
+
+export default NurbsSurfaceInterpolator;

@@ -47,70 +47,64 @@
  ******************************************************************************/
 
 
-define ([
-   "standard/Math/Numbers/Rotation4",
-],
-function (Rotation4)
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+
+const result = new Rotation4 (0, 0, 1, 0);
+
+function SquatInterpolator ()
 {
-"use strict";
+   this .s = [ ];
+}
 
-   const result = new Rotation4 (0, 0, 1, 0);
-
-   function SquatInterpolator ()
+SquatInterpolator .prototype =
+{
+   constructor: SquatInterpolator,
+   generate: function (closed, key, keyValue)
    {
-      this .s = [ ];
-   }
+      const s = this .s;
 
-   SquatInterpolator .prototype =
-   {
-      constructor: SquatInterpolator,
-      generate: function (closed, key, keyValue)
+      s .length = 0;
+
+      if (key .length > 1)
       {
-         const s = this .s;
-
-         s .length = 0;
-
-         if (key .length > 1)
+         if (closed)
          {
-            if (closed)
-            {
-               s .push (Rotation4 .spline (keyValue [key .length - 2] .getValue (),
-                                           keyValue [0] .getValue (),
-                                           keyValue [1] .getValue ()));
-            }
-            else
-            {
-               s .push (keyValue [0] .getValue ());
-            }
-
-            for (let i = 1, length = key .length - 1; i < length; ++ i)
-            {
-               s .push (Rotation4 .spline (keyValue [i - 1] .getValue (),
-                                           keyValue [i]     .getValue (),
-                                           keyValue [i + 1] .getValue ()));
-            }
-
-            if (closed)
-            {
-               s .push (Rotation4 .spline (keyValue [key .length - 2] .getValue (),
-                                           keyValue [key .length - 1] .getValue (),
-                                           keyValue [1] .getValue ()));
-            }
-            else
-            {
-               s .push (keyValue [key .length - 1] .getValue ());
-            }
+            s .push (Rotation4 .spline (keyValue [key .length - 2] .getValue (),
+                                        keyValue [0] .getValue (),
+                                        keyValue [1] .getValue ()));
          }
-         else if (key .length > 0)
-            s .push (keyValue [0] .getValue () .copy ());
-      },
-      interpolate: function (index0, index1, weight, keyValue)
-      {
-         return result .assign (keyValue [index0] .getValue ()) .squad (this .s [index0],
-                                                                        this .s [index1],
-                                                                        keyValue [index1] .getValue (), weight);
-      },
-   };
+         else
+         {
+            s .push (keyValue [0] .getValue ());
+         }
 
-   return SquatInterpolator;
-});
+         for (let i = 1, length = key .length - 1; i < length; ++ i)
+         {
+            s .push (Rotation4 .spline (keyValue [i - 1] .getValue (),
+                                        keyValue [i]     .getValue (),
+                                        keyValue [i + 1] .getValue ()));
+         }
+
+         if (closed)
+         {
+            s .push (Rotation4 .spline (keyValue [key .length - 2] .getValue (),
+                                        keyValue [key .length - 1] .getValue (),
+                                        keyValue [1] .getValue ()));
+         }
+         else
+         {
+            s .push (keyValue [key .length - 1] .getValue ());
+         }
+      }
+      else if (key .length > 0)
+         s .push (keyValue [0] .getValue () .copy ());
+   },
+   interpolate: function (index0, index1, weight, keyValue)
+   {
+      return result .assign (keyValue [index0] .getValue ()) .squad (this .s [index0],
+                                                                     this .s [index1],
+                                                                     keyValue [index1] .getValue (), weight);
+   },
+};
+
+export default SquatInterpolator;

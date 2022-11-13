@@ -47,140 +47,129 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Base/X3DCast",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DNurbsSurfaceGeometryNode,
-          X3DConstants,
-          X3DCast)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNurbsSurfaceGeometryNode from "./X3DNurbsSurfaceGeometryNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast from "../../Base/X3DCast.js";
+
+function NurbsTrimmedSurface (executionContext)
 {
-"use strict";
+   X3DNurbsSurfaceGeometryNode .call (this, executionContext);
 
-   function NurbsTrimmedSurface (executionContext)
+   this .addType (X3DConstants .NurbsTrimmedSurface);
+
+   this .trimmingContourNodes = [ ];
+}
+
+NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
+{
+   constructor: NurbsTrimmedSurface,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",              new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",                 new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "uTessellation",         new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "vTessellation",         new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "uClosed",               new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "vClosed",               new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",                new Fields .SFInt32 (3)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",                new Fields .SFInt32 (3)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",            new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",            new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",                 new Fields .MFDouble ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",                 new Fields .MFDouble ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",                new Fields .MFDouble ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",              new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "addTrimmingContour",    new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeTrimmingContour", new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "trimmingContour",       new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DNurbsSurfaceGeometryNode .call (this, executionContext);
-
-      this .addType (X3DConstants .NurbsTrimmedSurface);
-
-      this .trimmingContourNodes = [ ];
-   }
-
-   NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
+      return "NurbsTrimmedSurface";
+   },
+   getComponentName: function ()
    {
-      constructor: NurbsTrimmedSurface,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",              new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",                 new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "uTessellation",         new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "vTessellation",         new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "uClosed",               new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "vClosed",               new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",                new Fields .SFInt32 (3)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",                new Fields .SFInt32 (3)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",            new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",            new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",                 new Fields .MFDouble ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",                 new Fields .MFDouble ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",                new Fields .MFDouble ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",              new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "addTrimmingContour",    new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeTrimmingContour", new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "trimmingContour",       new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "NurbsTrimmedSurface";
-      },
-      getComponentName: function ()
-      {
-         return "NURBS";
-      },
-      getContainerField: function ()
-      {
-         return "geometry";
-      },
-      initialize: function ()
-      {
-         X3DNurbsSurfaceGeometryNode .prototype .initialize .call (this);
-
-         this ._addTrimmingContour    .addInterest ("set_addTrimmingContour__",    this);
-         this ._removeTrimmingContour .addInterest ("set_removeTrimmingContour__", this);
-         this ._trimmingContour       .addInterest ("set_trimmingContour__",       this);
-
-         this .set_trimmingContour__ ();
-      },
-      set_addTrimmingContour__: function ()
-      {
-         this ._addTrimmingContour .setTainted (true);
-
-         this ._addTrimmingContour .erase (remove (this ._addTrimmingContour, 0, this ._addTrimmingContour .length,
-                                                   this ._trimmingContour,    0, this ._trimmingContour .length),
-                                           this ._addTrimmingContour .length);
-
-         for (const trimmingContour of this ._addTrimmingContour)
-            this ._trimmingContour .push (trimmingContour);
-
-         this ._addTrimmingContour .length = 0;
-         this ._addTrimmingContour .setTainted (false);
-      },
-      set_removeTrimmingContour__: function ()
-      {
-         this ._removeTrimmingContour .setTainted (true);
-
-         this ._trimmingContour .erase (remove (this ._trimmingContour,       0, this ._trimmingContour .length,
-                                                this ._removeTrimmingContour, 0, this ._removeTrimmingContour .length),
-                                        this ._trimmingContour .length);
-
-         this ._removeTrimmingContour .length = 0;
-         this ._removeTrimmingContour .setTainted (false);
-      },
-      set_trimmingContour__: function ()
-      {
-         const trimmingContourNodes = this .trimmingContourNodes;
-
-         trimmingContourNodes .length = 0;
-
-         for (const node of this ._trimmingContour)
-         {
-            const trimmingContourNode = X3DCast (X3DConstants .Contour2D, node);
-
-            if (trimmingContourNode)
-               trimmingContourNodes .push (trimmingContourNode);
-         }
-      },
-      getTrimmingContours: function ()
-      {
-         const
-            trimmingContourNodes = this .trimmingContourNodes,
-            trimmingContours     = [ ];
-
-         for (const trimmingContourNode of trimmingContourNodes)
-            trimmingContourNode .addTrimmingContour (trimmingContours);
-
-         return trimmingContours;
-      },
-   });
-
-   function remove (array, first, last, range, rfirst, rlast)
+      return "NURBS";
+   },
+   getContainerField: function ()
    {
-      const set = new Set ();
+      return "geometry";
+   },
+   initialize: function ()
+   {
+      X3DNurbsSurfaceGeometryNode .prototype .initialize .call (this);
 
-      for (let i = rfirst; i < rlast; ++ i)
-         set .add (range [i]);
+      this ._addTrimmingContour    .addInterest ("set_addTrimmingContour__",    this);
+      this ._removeTrimmingContour .addInterest ("set_removeTrimmingContour__", this);
+      this ._trimmingContour       .addInterest ("set_trimmingContour__",       this);
 
-      function compare (value) { return set .has (value); }
+      this .set_trimmingContour__ ();
+   },
+   set_addTrimmingContour__: function ()
+   {
+      this ._addTrimmingContour .setTainted (true);
 
-      return array .remove (first, last, compare);
-   }
+      this ._addTrimmingContour .erase (remove (this ._addTrimmingContour, 0, this ._addTrimmingContour .length,
+                                                this ._trimmingContour,    0, this ._trimmingContour .length),
+                                        this ._addTrimmingContour .length);
 
-   return NurbsTrimmedSurface;
+      for (const trimmingContour of this ._addTrimmingContour)
+         this ._trimmingContour .push (trimmingContour);
+
+      this ._addTrimmingContour .length = 0;
+      this ._addTrimmingContour .setTainted (false);
+   },
+   set_removeTrimmingContour__: function ()
+   {
+      this ._removeTrimmingContour .setTainted (true);
+
+      this ._trimmingContour .erase (remove (this ._trimmingContour,       0, this ._trimmingContour .length,
+                                             this ._removeTrimmingContour, 0, this ._removeTrimmingContour .length),
+                                     this ._trimmingContour .length);
+
+      this ._removeTrimmingContour .length = 0;
+      this ._removeTrimmingContour .setTainted (false);
+   },
+   set_trimmingContour__: function ()
+   {
+      const trimmingContourNodes = this .trimmingContourNodes;
+
+      trimmingContourNodes .length = 0;
+
+      for (const node of this ._trimmingContour)
+      {
+         const trimmingContourNode = X3DCast (X3DConstants .Contour2D, node);
+
+         if (trimmingContourNode)
+            trimmingContourNodes .push (trimmingContourNode);
+      }
+   },
+   getTrimmingContours: function ()
+   {
+      const
+         trimmingContourNodes = this .trimmingContourNodes,
+         trimmingContours     = [ ];
+
+      for (const trimmingContourNode of trimmingContourNodes)
+         trimmingContourNode .addTrimmingContour (trimmingContours);
+
+      return trimmingContours;
+   },
 });
+
+function remove (array, first, last, range, rfirst, rlast)
+{
+   const set = new Set ();
+
+   for (let i = rfirst; i < rlast; ++ i)
+      set .add (range [i]);
+
+   function compare (value) { return set .has (value); }
+
+   return array .remove (first, last, compare);
+}
+
+export default NurbsTrimmedSurface;

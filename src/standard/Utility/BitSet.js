@@ -47,46 +47,41 @@
  ******************************************************************************/
 
 
-define (function ()
+function BitSet (value = 0)
 {
-"use strict";
+   this .value = value;
+}
 
-   function BitSet (value = 0)
+BitSet .prototype =
+{
+   constructor: BitSet,
+   get: function (index)
    {
-      this .value = value;
-   }
+      const mask = 1 << index;
 
-   BitSet .prototype =
+      return !! (this .value & mask);
+   },
+   set: function (index, value)
    {
-      constructor: BitSet,
-      get: function (index)
-      {
-         const mask = 1 << index;
+      const mask = 1 << index;
 
-         return !! (this .value & mask);
-      },
-      set: function (index, value)
-      {
-         const mask = 1 << index;
+      if (value)
+         this .value |= mask;
+      else
+         this .value &= ~mask;
+   },
+   clear: function ()
+   {
+      this .value = 0;
+   },
+   valueOf: function ()
+   {
+      return this .value;
+   },
+   toString: function (radix)
+   {
+      return this .value .toString (radix);
+   },
+};
 
-         if (value)
-            this .value |= mask;
-         else
-            this .value &= ~mask;
-      },
-      clear: function ()
-      {
-         this .value = 0;
-      },
-      valueOf: function ()
-      {
-         return this .value;
-      },
-      toString: function (radix)
-      {
-         return this .value .toString (radix);
-      },
-   };
-
-   return BitSet;
-});
+export default BitSet;

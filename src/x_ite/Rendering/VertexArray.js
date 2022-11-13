@@ -47,57 +47,52 @@
  ******************************************************************************/
 
 
-define (function ()
+function VertexArray ()
 {
-"use strict";
+   this .vertexArray = null;
+   this .shaderNode  = null;
+   this .tainted     = true;
+}
 
-   function VertexArray ()
+VertexArray .prototype =
+{
+   update: function (value = true)
    {
-      this .vertexArray = null;
-      this .shaderNode  = null;
-      this .tainted     = true;
-   }
+      this .tainted = this .tainted || value;
 
-   VertexArray .prototype =
+      return this;
+   },
+   enable: function (gl, shaderNode)
    {
-      update: function (value = true)
-      {
-         this .tainted = this .tainted || value;
-
-         return this;
-      },
-      enable: function (gl, shaderNode)
-      {
-         if (this .tainted || this .shaderNode !== shaderNode)
-         {
-            gl .deleteVertexArray (this .vertexArray);
-
-            this .vertexArray = gl .createVertexArray ();
-            this .shaderNode  = shaderNode;
-            this .tainted     = false;
-
-            gl .bindVertexArray (this .vertexArray);
-
-            // console .log ("update vao");
-
-            return true;
-         }
-         else
-         {
-            gl .bindVertexArray (this .vertexArray);
-
-            return false;
-         }
-      },
-      disable: function (gl)
-      {
-         gl .bindVertexArray (null);
-      },
-      delete: function (gl)
+      if (this .tainted || this .shaderNode !== shaderNode)
       {
          gl .deleteVertexArray (this .vertexArray);
-      },
-   };
 
-   return VertexArray;
-});
+         this .vertexArray = gl .createVertexArray ();
+         this .shaderNode  = shaderNode;
+         this .tainted     = false;
+
+         gl .bindVertexArray (this .vertexArray);
+
+         // console .log ("update vao");
+
+         return true;
+      }
+      else
+      {
+         gl .bindVertexArray (this .vertexArray);
+
+         return false;
+      }
+   },
+   disable: function (gl)
+   {
+      gl .bindVertexArray (null);
+   },
+   delete: function (gl)
+   {
+      gl .deleteVertexArray (this .vertexArray);
+   },
+};
+
+export default VertexArray;

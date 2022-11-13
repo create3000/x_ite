@@ -47,95 +47,86 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Components/Core/X3DSensorNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DSensorNode,
-          X3DConstants,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DSensorNode from "../Core/X3DSensorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+function X3DEnvironmentalSensorNode (executionContext)
 {
-"use strict";
+   X3DSensorNode .call (this, executionContext);
 
-   function X3DEnvironmentalSensorNode (executionContext)
+   this .addType (X3DConstants .X3DEnvironmentalSensorNode);
+
+   this .addChildObjects ("traversed", new Fields .SFBool (true));
+
+   this ._size   .setUnit ("length");
+   this ._center .setUnit ("length");
+
+   this .zeroTest         = false;
+   this .currentTraversed = true;
+}
+
+X3DEnvironmentalSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+{
+   constructor: X3DEnvironmentalSensorNode,
+   initialize: function ()
    {
-      X3DSensorNode .call (this, executionContext);
+      X3DSensorNode .prototype .initialize .call (this);
 
-      this .addType (X3DConstants .X3DEnvironmentalSensorNode);
+      this .isLive () .addInterest ("set_live__", this);
 
-      this .addChildObjects ("traversed", new Fields .SFBool (true));
+      this ._enabled   .addInterest ("set_live__", this);
+      this ._size      .addInterest ("set_live__", this);
+      this ._traversed .addInterest ("set_live__", this);
 
-      this ._size   .setUnit ("length");
-      this ._center .setUnit ("length");
-
-      this .zeroTest         = false;
-      this .currentTraversed = true;
-   }
-
-   X3DEnvironmentalSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+      this .set_live__ ();
+   },
+   set_live__: function ()
    {
-      constructor: X3DEnvironmentalSensorNode,
-      initialize: function ()
+      if (this ._traversed .getValue () && this .isLive () .getValue () && this ._enabled .getValue () && ! (this .zeroTest && this ._size. getValue () .equals (Vector3 .Zero)))
       {
-         X3DSensorNode .prototype .initialize .call (this);
-
-         this .isLive () .addInterest ("set_live__", this);
-
-         this ._enabled   .addInterest ("set_live__", this);
-         this ._size      .addInterest ("set_live__", this);
-         this ._traversed .addInterest ("set_live__", this);
-
-         this .set_live__ ();
-      },
-      set_live__: function ()
+         this .getBrowser () .sensorEvents () .addInterest ("update", this);
+      }
+      else
       {
-         if (this ._traversed .getValue () && this .isLive () .getValue () && this ._enabled .getValue () && ! (this .zeroTest && this ._size. getValue () .equals (Vector3 .Zero)))
+         this .getBrowser () .sensorEvents () .removeInterest ("update", this);
+
+         if (this ._isActive .getValue ())
          {
-            this .getBrowser () .sensorEvents () .addInterest ("update", this);
+            this ._isActive = false;
+            this ._exitTime = this .getBrowser () .getCurrentTime ();
          }
-         else
-         {
-            this .getBrowser () .sensorEvents () .removeInterest ("update", this);
+      }
+   },
+   setZeroTest: function (value)
+   {
+      this .zeroTest = value;
+   },
+   getZeroTest: function ()
+   {
+      return this .zeroTest;
+   },
+   setTraversed: function (value)
+   {
+      if (value)
+      {
+         if (this ._traversed .getValue () === false)
+            this ._traversed = true;
+      }
+      else
+      {
+         if (this .currentTraversed !== this ._traversed .getValue ())
+            this ._traversed = this .currentTraversed;
+      }
 
-            if (this ._isActive .getValue ())
-            {
-               this ._isActive = false;
-               this ._exitTime = this .getBrowser () .getCurrentTime ();
-            }
-         }
-      },
-      setZeroTest: function (value)
-      {
-         this .zeroTest = value;
-      },
-      getZeroTest: function ()
-      {
-         return this .zeroTest;
-      },
-      setTraversed: function (value)
-      {
-         if (value)
-         {
-            if (this ._traversed .getValue () === false)
-               this ._traversed = true;
-         }
-         else
-         {
-            if (this .currentTraversed !== this ._traversed .getValue ())
-               this ._traversed = this .currentTraversed;
-         }
-
-         this .currentTraversed = value;
-      },
-      getTraversed: function ()
-      {
-         return this .currentTraversed;
-      },
-      update: function () { },
-   });
-
-   return X3DEnvironmentalSensorNode;
+      this .currentTraversed = value;
+   },
+   getTraversed: function ()
+   {
+      return this .currentTraversed;
+   },
+   update: function () { },
 });
+
+export default X3DEnvironmentalSensorNode;

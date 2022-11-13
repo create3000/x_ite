@@ -47,176 +47,48 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DArrayField",
-   "x_ite/InputOutput/Generator",
-   "standard/Math/Algorithm",
-],
-function (X3DArrayField,
-          Generator,
-          Algorithm)
+import X3DArrayField from "./X3DArrayField.js";
+import Generator from "../InputOutput/Generator.js";
+import Algorithm from "../../standard/Math/Algorithm.js";
+
+const
+   _target = Symbol (),
+   _tmp    = Symbol (),
+   _length = Symbol ();
+
+const handler =
 {
-"use strict";
-
-   const
-      _target = Symbol (),
-      _tmp    = Symbol (),
-      _length = Symbol ();
-
-   const handler =
+   get: function (target, key)
    {
-      get: function (target, key)
+      const value = target [key];
+
+      if (value !== undefined)
+         return value;
+
+      if (typeof key === "string")
       {
-         const value = target [key];
+         const index = +key;
 
-         if (value !== undefined)
-            return value;
-
-         if (typeof key === "string")
+         if (Number .isInteger (index))
          {
-            const index = +key;
+            const
+               components = target .getComponents (),
+               valueType  = target .getValueType ();
 
-            if (Number .isInteger (index))
+            let array = target .getValue ();
+
+            if (index >= target [_length])
+               array = target .resize (index + 1);
+
+            if (components === 1)
             {
-               const
-                  components = target .getComponents (),
-                  valueType  = target .getValueType ();
-
-               let array = target .getValue ();
-
-               if (index >= target [_length])
-                  array = target .resize (index + 1);
-
-               if (components === 1)
-               {
-                  // Return native JavaScript value.
-                  return valueType (array [index]);
-               }
-               else
-               {
-                  // Return reference to index.
-
-                  const
-                     value         = new (valueType) (),
-                     internalValue = value .getValue (),
-                     i             = index * components;
-
-                  value .addEvent = addEvent .bind (target, i, internalValue, components);
-                  value .getValue = getValue .bind (target, i, internalValue, components);
-
-                  return value;
-               }
+               // Return native JavaScript value.
+               return valueType (array [index]);
             }
             else
             {
-               return target [key];
-            }
-         }
-      },
-      set: function (target, key, value)
-      {
-         if (key in target)
-         {
-            target [key] = value;
-            return true;
-         }
+               // Return reference to index.
 
-         const components = target .getComponents ();
-
-         let
-            index = +key,
-            array = target .getValue ();
-
-         if (index >= target [_length])
-            array = target .resize (index + 1);
-
-         if (components === 1)
-         {
-            array [index] = value;
-         }
-         else
-         {
-            index *= components;
-
-            for (let c = 0; c < components; ++ c, ++ index)
-               array [index] = value [c];
-         }
-
-         target .addEvent ();
-
-         return true;
-      },
-      has: function (target, key)
-      {
-         if (Number .isInteger (+key))
-            return key < target [_length];
-
-         return key in target;
-      },
-      ownKeys: function (target)
-      {
-         const ownKeys = [ ];
-
-         for (let i = 0, length = target [_length]; i < length; ++ i)
-            ownKeys .push (String (i));
-
-         return ownKeys;
-      },
-      getOwnPropertyDescriptor: function (target, key)
-      {
-         if (typeof key !== "string")
-            return;
-
-         const index = +key;
-
-         if (Number .isInteger (index) && index < target [_length])
-            return Object .getOwnPropertyDescriptor (target .getValue (), key);
-      },
-   };
-
-   function X3DTypedArrayField (value)
-   {
-      X3DArrayField .call (this, new (this .getArrayType ()) (2));
-
-      this [_target] = this;
-      this [_tmp]    = [ ];  // Array with components size.
-
-      if (value [0] instanceof Array)
-         value = value [0];
-
-      X3DTypedArrayField .prototype .push .apply (this, value);
-
-      return new Proxy (this, handler);
-   }
-
-   X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
-   {
-      constructor: X3DTypedArrayField,
-      [_target]: null,
-      [_tmp]: null,
-      [_length]: 0,
-      [Symbol .iterator]: function* ()
-      {
-         const
-            target     = this [_target],
-            array      = target .getValue (),
-            components = target .getComponents (),
-            valueType  = target .getValueType (),
-            length     = target [_length];
-
-         if (components === 1)
-         {
-            // Return native JavaScript value.
-
-            for (let index = 0; index < length; ++ index)
-               yield valueType (array [index]);
-         }
-         else
-         {
-            // Return reference to index.
-
-            for (let index = 0; index < length; ++ index)
-            {
                const
                   value         = new (valueType) (),
                   internalValue = value .getValue (),
@@ -225,640 +97,760 @@ function (X3DArrayField,
                value .addEvent = addEvent .bind (target, i, internalValue, components);
                value .getValue = getValue .bind (target, i, internalValue, components);
 
-               yield value;
+               return value;
             }
          }
-      },
-      getTarget: function ()
-      {
-         return this [_target];
-      },
-      copy: function ()
-      {
-         const
-            target     = this [_target],
-            array      = target .getValue (),
-            copy       = target .create (),
-            copyArray  = new (target .getArrayType ()) (array);
-
-         copy [_length] = target [_length];
-
-         X3DArrayField .prototype .set .call (copy, copyArray, target [_length]);
-
-         copy .setModificationTime (0);
-
-         return copy;
-      },
-      equals: function (other)
-      {
-         if (this === other)
-            return true;
-
-         const
-            target = this [_target],
-            length = target [_length];
-
-         if (length !== other [_length])
-            return false;
-
-         const
-            a = target  .getValue (),
-            b = other .getValue ();
-
-         for (let i = 0, l = length * target .getComponents (); i < l; ++ i)
+         else
          {
-            if (a [i] !== b [i])
-               return false;
+            return target [key];
          }
-
+      }
+   },
+   set: function (target, key, value)
+   {
+      if (key in target)
+      {
+         target [key] = value;
          return true;
-      },
-      assign: function (value)
+      }
+
+      const components = target .getComponents ();
+
+      let
+         index = +key,
+         array = target .getValue ();
+
+      if (index >= target [_length])
+         array = target .resize (index + 1);
+
+      if (components === 1)
       {
-         const target = this [_target];
-
-         target .set (value .getValue (), value .length);
-         target .addEvent ();
-      },
-      set: function (otherArray /* value of field */, l /* length of field */)
+         array [index] = value;
+      }
+      else
       {
-         const
-            target      = this [_target],
-            components  = target .getComponents (),
-            length      = target [_length];
+         index *= components;
 
-         let
-            array       = target .getValue (),
-            otherLength = l !== undefined ? l * components : otherArray .length;
+         for (let c = 0; c < components; ++ c, ++ index)
+            array [index] = value [c];
+      }
 
-         const
-            rest = otherLength % components;
+      target .addEvent ();
+
+      return true;
+   },
+   has: function (target, key)
+   {
+      if (Number .isInteger (+key))
+         return key < target [_length];
+
+      return key in target;
+   },
+   ownKeys: function (target)
+   {
+      const ownKeys = [ ];
+
+      for (let i = 0, length = target [_length]; i < length; ++ i)
+         ownKeys .push (String (i));
+
+      return ownKeys;
+   },
+   getOwnPropertyDescriptor: function (target, key)
+   {
+      if (typeof key !== "string")
+         return;
+
+      const index = +key;
+
+      if (Number .isInteger (index) && index < target [_length])
+         return Object .getOwnPropertyDescriptor (target .getValue (), key);
+   },
+};
+
+function X3DTypedArrayField (value)
+{
+   X3DArrayField .call (this, new (this .getArrayType ()) (2));
+
+   this [_target] = this;
+   this [_tmp]    = [ ];  // Array with components size.
+
+   if (value [0] instanceof Array)
+      value = value [0];
+
+   X3DTypedArrayField .prototype .push .apply (this, value);
+
+   return new Proxy (this, handler);
+}
+
+X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
+{
+   constructor: X3DTypedArrayField,
+   [_target]: null,
+   [_tmp]: null,
+   [_length]: 0,
+   [Symbol .iterator]: function* ()
+   {
+      const
+         target     = this [_target],
+         array      = target .getValue (),
+         components = target .getComponents (),
+         valueType  = target .getValueType (),
+         length     = target [_length];
+
+      if (components === 1)
+      {
+         // Return native JavaScript value.
+
+         for (let index = 0; index < length; ++ index)
+            yield valueType (array [index]);
+      }
+      else
+      {
+         // Return reference to index.
+
+         for (let index = 0; index < length; ++ index)
+         {
+            const
+               value         = new (valueType) (),
+               internalValue = value .getValue (),
+               i             = index * components;
+
+            value .addEvent = addEvent .bind (target, i, internalValue, components);
+            value .getValue = getValue .bind (target, i, internalValue, components);
+
+            yield value;
+         }
+      }
+   },
+   getTarget: function ()
+   {
+      return this [_target];
+   },
+   copy: function ()
+   {
+      const
+         target     = this [_target],
+         array      = target .getValue (),
+         copy       = target .create (),
+         copyArray  = new (target .getArrayType ()) (array);
+
+      copy [_length] = target [_length];
+
+      X3DArrayField .prototype .set .call (copy, copyArray, target [_length]);
+
+      copy .setModificationTime (0);
+
+      return copy;
+   },
+   equals: function (other)
+   {
+      if (this === other)
+         return true;
+
+      const
+         target = this [_target],
+         length = target [_length];
+
+      if (length !== other [_length])
+         return false;
+
+      const
+         a = target  .getValue (),
+         b = other .getValue ();
+
+      for (let i = 0, l = length * target .getComponents (); i < l; ++ i)
+      {
+         if (a [i] !== b [i])
+            return false;
+      }
+
+      return true;
+   },
+   assign: function (value)
+   {
+      const target = this [_target];
+
+      target .set (value .getValue (), value .length);
+      target .addEvent ();
+   },
+   set: function (otherArray /* value of field */, l /* length of field */)
+   {
+      const
+         target      = this [_target],
+         components  = target .getComponents (),
+         length      = target [_length];
+
+      let
+         array       = target .getValue (),
+         otherLength = l !== undefined ? l * components : otherArray .length;
+
+      const
+         rest = otherLength % components;
+
+      if (rest)
+      {
+         otherLength -= rest;
+
+         console .warn ("Array length must be multiple of components size, which is " + components + ".");
+      }
+
+      otherLength /= components;
+
+      if (array .length < otherArray .length)
+      {
+         array = target .grow (otherArray .length);
+
+         array .set (otherArray);
 
          if (rest)
-         {
-            otherLength -= rest;
-
-            console .warn ("Array length must be multiple of components size, which is " + components + ".");
-         }
-
-         otherLength /= components;
-
-         if (array .length < otherArray .length)
-         {
-            array = target .grow (otherArray .length);
-
-            array .set (otherArray);
-
-            if (rest)
-               array .fill (0, otherLength * components, otherLength * components + rest);
-         }
-         else
-         {
-            array .set (otherArray);
-
-            if (otherLength < length)
-               array .fill (0, otherLength * components, length * components);
-         }
-
-         target [_length] = otherLength;
-      },
-      isDefaultValue: function ()
+            array .fill (0, otherLength * components, otherLength * components + rest);
+      }
+      else
       {
-         return this [_length] === 0;
-      },
-      setValue: function (value)
+         array .set (otherArray);
+
+         if (otherLength < length)
+            array .fill (0, otherLength * components, length * components);
+      }
+
+      target [_length] = otherLength;
+   },
+   isDefaultValue: function ()
+   {
+      return this [_length] === 0;
+   },
+   setValue: function (value)
+   {
+      const target = this [_target];
+
+      if (value instanceof target .constructor)
       {
-         const target = this [_target];
-
-         if (value instanceof target .constructor)
-         {
-            target .assign (value);
-         }
-         else
-         {
-            target .set (value);
-            target .addEvent ();
-         }
-      },
-      unshift: function (value)
+         target .assign (value);
+      }
+      else
       {
-         const
-            target          = this [_target],
-            components      = target .getComponents (),
-            length          = target [_length],
-            argumentsLength = arguments .length,
-            array           = target .grow ((length + argumentsLength) * components);
-
-         array .copyWithin (argumentsLength * components, 0, length * components);
-
-         if (components === 1)
-         {
-            array .set (arguments, 0);
-         }
-         else
-         {
-            for (let i = 0, a = 0; a < argumentsLength; ++ a)
-            {
-               const argument = arguments [a];
-
-               for (let c = 0; c < components; ++ c, ++ i)
-               {
-                  array [i] = argument [c];
-               }
-            }
-         }
-
-         target [_length] += argumentsLength;
-
+         target .set (value);
          target .addEvent ();
+      }
+   },
+   unshift: function (value)
+   {
+      const
+         target          = this [_target],
+         components      = target .getComponents (),
+         length          = target [_length],
+         argumentsLength = arguments .length,
+         array           = target .grow ((length + argumentsLength) * components);
 
-         return array .length;
-      },
-      shift: function ()
+      array .copyWithin (argumentsLength * components, 0, length * components);
+
+      if (components === 1)
       {
-         const
-            target = this [_target],
-            length = target [_length];
-
-         if (length)
-         {
-            const
-               array      = target .getValue (),
-               components = target .getComponents (),
-               valueType  = target .getValueType (),
-               newLength  = length - 1;
-
-            if (components === 1)
-            {
-               var value = valueType (array [0]);
-            }
-            else
-            {
-               const tmp = target [_tmp];
-
-               for (let c = 0; c < components; ++ c)
-                  tmp [c] = array [c];
-
-               var value = Object .create (valueType .prototype);
-
-               valueType .apply (value, tmp);
-            }
-
-            array .copyWithin (0, components, length * components);
-            array .fill (0, components * newLength, length * components);
-
-            target [_length] = newLength;
-
-            target .addEvent ();
-            return value;
-         }
-      },
-      push: function (value)
+         array .set (arguments, 0);
+      }
+      else
       {
-         const
-            target          = this [_target],
-            components      = target .getComponents (),
-            length          = target [_length],
-            argumentsLength = arguments .length,
-            array           = target .grow ((length + argumentsLength) * components);
+         for (let i = 0, a = 0; a < argumentsLength; ++ a)
+         {
+            const argument = arguments [a];
 
-         if (components === 1)
-         {
-            array .set (arguments, length);
-         }
-         else
-         {
-            for (let i = length * components, a = 0; a < argumentsLength; ++ a)
+            for (let c = 0; c < components; ++ c, ++ i)
             {
-               const argument = arguments [a];
-
-               for (let c = 0; c < components; ++ c,  ++ i)
-               {
-                  array [i] = argument [c];
-               }
+               array [i] = argument [c];
             }
          }
+      }
 
-         target [_length] += argumentsLength;
+      target [_length] += argumentsLength;
 
-         target .addEvent ();
+      target .addEvent ();
 
-         return target [_length];
-      },
-      pop: function ()
+      return array .length;
+   },
+   shift: function ()
+   {
+      const
+         target = this [_target],
+         length = target [_length];
+
+      if (length)
       {
          const
-            target = this [_target],
-            length = target [_length];
-
-         if (length)
-         {
-            const
-               array      = target .getValue (),
-               components = target .getComponents (),
-               valueType  = target .getValueType (),
-               newLength  = length - 1;
-
-            if (components === 1)
-            {
-               var value = valueType (array [length - 1]); // Don't use at(-1).
-            }
-            else
-            {
-               const tmp = target [_tmp];
-
-               for (let c = 0, a = newLength * components; c < components; ++ c, ++ a)
-                  tmp [c] = array [a];
-
-               var value = Object .create (valueType .prototype);
-
-               valueType .apply (value, tmp);
-            }
-
-            array .fill (0, newLength * components, length * components);
-
-            target [_length] = newLength;
-
-            target .addEvent ();
-
-            return value;
-         }
-      },
-      splice: function (index, deleteCount)
-      {
-         const
-            target = this [_target],
-            length = target [_length];
-
-         if (index > length)
-            index = length;
-
-         if (index + deleteCount > length)
-            deleteCount = length - index;
-
-         const result = target .erase (index, index + deleteCount);
-
-         if (arguments .length > 2)
-            target .spliceInsert (index, Array .prototype .splice .call (arguments, 2));
-
-         target .addEvent ();
-
-         return result;
-      },
-      spliceInsert: function (index, other)
-      {
-         const
-            target      = this [_target],
-            components  = target .getComponents (),
-            length      = target [_length],
-            otherLength = other .length,
-            array       = target .grow ((length + otherLength) * components);
-
-         index *= components;
-
-         array .copyWithin (index + otherLength * components, index, length * components);
-
-         if (components === 1)
-         {
-            array .set (other, index);
-         }
-         else
-         {
-            for (let i = 0, a = index; i < otherLength; ++ i)
-            {
-               const value = other [i];
-
-               for (let c = 0; c < components; ++ c, ++ a)
-                  array [a] = value [c];
-            }
-         }
-
-         target [_length] += otherLength;
-      },
-      insert: function (index, other, first, last)
-      {
-         const
-            target     = this [_target],
-            length     = target [_length],
-            otherArray = other .getValue (),
+            array      = target .getValue (),
             components = target .getComponents (),
-            difference = last - first,
-            array      = target .grow ((length + difference) * components);
+            valueType  = target .getValueType (),
+            newLength  = length - 1;
 
-         index *= components;
-         first *= components;
-         last  *= components;
+         if (components === 1)
+         {
+            var value = valueType (array [0]);
+         }
+         else
+         {
+            const tmp = target [_tmp];
 
-         array .copyWithin (index + difference * components, index, length * components);
+            for (let c = 0; c < components; ++ c)
+               tmp [c] = array [c];
 
-         for (; first < last; ++ index, ++ first)
-            array [index] = otherArray [first];
+            var value = Object .create (valueType .prototype);
 
-         target [_length] += difference;
+            valueType .apply (value, tmp);
+         }
+
+         array .copyWithin (0, components, length * components);
+         array .fill (0, components * newLength, length * components);
+
+         target [_length] = newLength;
 
          target .addEvent ();
-      },
-      erase: function (first, last)
+         return value;
+      }
+   },
+   push: function (value)
+   {
+      const
+         target          = this [_target],
+         components      = target .getComponents (),
+         length          = target [_length],
+         argumentsLength = arguments .length,
+         array           = target .grow ((length + argumentsLength) * components);
+
+      if (components === 1)
+      {
+         array .set (arguments, length);
+      }
+      else
+      {
+         for (let i = length * components, a = 0; a < argumentsLength; ++ a)
+         {
+            const argument = arguments [a];
+
+            for (let c = 0; c < components; ++ c,  ++ i)
+            {
+               array [i] = argument [c];
+            }
+         }
+      }
+
+      target [_length] += argumentsLength;
+
+      target .addEvent ();
+
+      return target [_length];
+   },
+   pop: function ()
+   {
+      const
+         target = this [_target],
+         length = target [_length];
+
+      if (length)
       {
          const
-            target      = this [_target],
-            array       = target .getValue (),
-            components  = target .getComponents (),
-            difference  = last - first,
-            length      = target [_length],
-            newLength   = length - difference,
-            values      = target .create (),
-            valuesArray = values .grow (difference * components);
+            array      = target .getValue (),
+            components = target .getComponents (),
+            valueType  = target .getValueType (),
+            newLength  = length - 1;
 
-         first *= components;
-         last  *= components;
+         if (components === 1)
+         {
+            var value = valueType (array [length - 1]); // Don't use at(-1).
+         }
+         else
+         {
+            const tmp = target [_tmp];
 
-         for (let v = 0, f = first; f < last; ++ v, ++ f)
-            valuesArray [v] = array [f];
+            for (let c = 0, a = newLength * components; c < components; ++ c, ++ a)
+               tmp [c] = array [a];
 
-         array .copyWithin (first, last, length * components);
+            var value = Object .create (valueType .prototype);
+
+            valueType .apply (value, tmp);
+         }
+
          array .fill (0, newLength * components, length * components);
 
          target [_length] = newLength;
-         values [_length] = difference;
 
          target .addEvent ();
 
-         return values .slice ();
-      },
-      resize: function (newLength, value, silent)
+         return value;
+      }
+   },
+   splice: function (index, deleteCount)
+   {
+      const
+         target = this [_target],
+         length = target [_length];
+
+      if (index > length)
+         index = length;
+
+      if (index + deleteCount > length)
+         deleteCount = length - index;
+
+      const result = target .erase (index, index + deleteCount);
+
+      if (arguments .length > 2)
+         target .spliceInsert (index, Array .prototype .splice .call (arguments, 2));
+
+      target .addEvent ();
+
+      return result;
+   },
+   spliceInsert: function (index, other)
+   {
+      const
+         target      = this [_target],
+         components  = target .getComponents (),
+         length      = target [_length],
+         otherLength = other .length,
+         array       = target .grow ((length + otherLength) * components);
+
+      index *= components;
+
+      array .copyWithin (index + otherLength * components, index, length * components);
+
+      if (components === 1)
       {
-         const
-            target     = this [_target],
-            length     = target [_length],
-            components = target .getComponents ();
-
-         let array = target .getValue ();
-
-         if (newLength < length)
+         array .set (other, index);
+      }
+      else
+      {
+         for (let i = 0, a = index; i < otherLength; ++ i)
          {
-            array .fill (0, newLength * components, length * components);
+            const value = other [i];
 
-            if (!silent)
-               target .addEvent ();
+            for (let c = 0; c < components; ++ c, ++ a)
+               array [a] = value [c];
          }
-         else if (newLength > length)
-         {
-            array = target .grow (newLength * components);
+      }
 
-            if (value !== undefined)
+      target [_length] += otherLength;
+   },
+   insert: function (index, other, first, last)
+   {
+      const
+         target     = this [_target],
+         length     = target [_length],
+         otherArray = other .getValue (),
+         components = target .getComponents (),
+         difference = last - first,
+         array      = target .grow ((length + difference) * components);
+
+      index *= components;
+      first *= components;
+      last  *= components;
+
+      array .copyWithin (index + difference * components, index, length * components);
+
+      for (; first < last; ++ index, ++ first)
+         array [index] = otherArray [first];
+
+      target [_length] += difference;
+
+      target .addEvent ();
+   },
+   erase: function (first, last)
+   {
+      const
+         target      = this [_target],
+         array       = target .getValue (),
+         components  = target .getComponents (),
+         difference  = last - first,
+         length      = target [_length],
+         newLength   = length - difference,
+         values      = target .create (),
+         valuesArray = values .grow (difference * components);
+
+      first *= components;
+      last  *= components;
+
+      for (let v = 0, f = first; f < last; ++ v, ++ f)
+         valuesArray [v] = array [f];
+
+      array .copyWithin (first, last, length * components);
+      array .fill (0, newLength * components, length * components);
+
+      target [_length] = newLength;
+      values [_length] = difference;
+
+      target .addEvent ();
+
+      return values .slice ();
+   },
+   resize: function (newLength, value, silent)
+   {
+      const
+         target     = this [_target],
+         length     = target [_length],
+         components = target .getComponents ();
+
+      let array = target .getValue ();
+
+      if (newLength < length)
+      {
+         array .fill (0, newLength * components, length * components);
+
+         if (!silent)
+            target .addEvent ();
+      }
+      else if (newLength > length)
+      {
+         array = target .grow (newLength * components);
+
+         if (value !== undefined)
+         {
+            if (components === 1)
             {
-               if (components === 1)
+               array .fill (value, length * components, newLength * components);
+            }
+            else
+            {
+               for (let i = length * components, il = newLength * components; i < il; )
                {
-                  array .fill (value, length * components, newLength * components);
-               }
-               else
-               {
-                  for (let i = length * components, il = newLength * components; i < il; )
+                  for (let c = 0; c < components; ++ c, ++ i)
                   {
-                     for (let c = 0; c < components; ++ c, ++ i)
-                     {
-                        array [i] = value [c];
-                     }
+                     array [i] = value [c];
                   }
                }
             }
-
-            if (!silent)
-               target .addEvent ();
          }
 
-         target [_length] = newLength;
+         if (!silent)
+            target .addEvent ();
+      }
 
+      target [_length] = newLength;
+
+      return array;
+   },
+   grow: function (length)
+   {
+      const
+         target = this [_target],
+         array  = target .getValue ();
+
+      if (length < array .length)
          return array;
-      },
-      grow: function (length)
+
+      const
+         maxLength = Algorithm .nextPowerOfTwo (length),
+         newArray  = new (target .getArrayType ()) (maxLength);
+
+      newArray .set (array);
+
+      X3DArrayField .prototype .set .call (target, newArray);
+
+      return newArray;
+   },
+   shrinkToFit: function ()
+   {
+      const
+         target = this [_target],
+         array  = target .getValue (),
+         length = target [_length] * target .getComponents ();
+
+      if (array .length == length)
+         return array;
+
+      const newArray = array .subarray (0, length);
+
+      X3DArrayField .prototype .set .call (target, newArray);
+
+      return newArray;
+   },
+   toStream: function (stream)
+   {
+      const
+         target     = this [_target],
+         generator  = Generator .Get (stream),
+         array      = target .getValue (),
+         length     = target [_length],
+         components = target .getComponents (),
+         value      = new (target .getSingleType ()) ();
+
+      switch (length)
       {
-         const
-            target = this [_target],
-            array  = target .getValue ();
-
-         if (length < array .length)
-            return array;
-
-         const
-            maxLength = Algorithm .nextPowerOfTwo (length),
-            newArray  = new (target .getArrayType ()) (maxLength);
-
-         newArray .set (array);
-
-         X3DArrayField .prototype .set .call (target, newArray);
-
-         return newArray;
-      },
-      shrinkToFit: function ()
-      {
-         const
-            target = this [_target],
-            array  = target .getValue (),
-            length = target [_length] * target .getComponents ();
-
-         if (array .length == length)
-            return array;
-
-         const newArray = array .subarray (0, length);
-
-         X3DArrayField .prototype .set .call (target, newArray);
-
-         return newArray;
-      },
-      toStream: function (stream)
-      {
-         const
-            target     = this [_target],
-            generator  = Generator .Get (stream),
-            array      = target .getValue (),
-            length     = target [_length],
-            components = target .getComponents (),
-            value      = new (target .getSingleType ()) ();
-
-         switch (length)
+         case 0:
          {
-            case 0:
-            {
-               stream .string += "[ ]";
-               break;
-            }
-            case 1:
-            {
-               generator .PushUnitCategory (target .getUnit ());
-
-               if (components === 1)
-               {
-                  value .set (array [0]);
-
-                  value .toStream (stream);
-               }
-               else
-               {
-                  for (let c = 0, first = 0; c < components; ++ c, ++ first)
-                     value [c] = array [first];
-
-                  value .toStream (stream);
-               }
-
-               generator .PopUnitCategory ();
-               break;
-            }
-            default:
-            {
-               generator .PushUnitCategory (target .getUnit ());
-
-               stream .string += "[\n";
-               generator .IncIndent ();
-
-               if (components === 1)
-               {
-                  for (let i = 0, n = length - 1; i < n; ++ i)
-                  {
-                     stream .string += generator .Indent ();
-
-                     value .set (array [i * components]);
-                     value .toStream (stream);
-
-                     stream .string += ",\n";
-                  }
-
-                  stream .string += generator .Indent ();
-                  value .set (array [(length - 1) * components]);
-                  value .toStream (stream);
-
-                  stream .string += "\n";
-               }
-               else
-               {
-                  for (let i = 0, n = length - 1; i < n; ++ i)
-                  {
-                     stream .string += generator .Indent ();
-
-                     for (let c = 0, first = i * components; c < components; ++ c, ++ first)
-                        value [c] = array [first];
-
-                     value .toStream (stream);
-
-                     stream .string += ",\n";
-                  }
-
-                  stream .string += generator .Indent ();
-
-                  for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)
-                     value [c] = array [first];
-
-                  value .toStream (stream);
-                  stream .string += "\n";
-               }
-
-               generator .DecIndent ();
-               stream .string += generator .Indent ();
-               stream .string += "]";
-
-               generator .PopUnitCategory ();
-               break;
-            }
+            stream .string += "[ ]";
+            break;
          }
-      },
-      toVRMLStream: function (stream)
-      {
-         this .toStream (stream);
-      },
-      toXMLStream: function (stream)
-      {
-         const
-            target = this [_target],
-            length = target [_length];
-
-         if (length)
+         case 1:
          {
-            const
-               generator  = Generator .Get (stream),
-               array      = target .getValue (),
-               components = target .getComponents (),
-               value      = new (target .getSingleType ()) ();
-
             generator .PushUnitCategory (target .getUnit ());
 
             if (components === 1)
             {
+               value .set (array [0]);
+
+               value .toStream (stream);
+            }
+            else
+            {
+               for (let c = 0, first = 0; c < components; ++ c, ++ first)
+                  value [c] = array [first];
+
+               value .toStream (stream);
+            }
+
+            generator .PopUnitCategory ();
+            break;
+         }
+         default:
+         {
+            generator .PushUnitCategory (target .getUnit ());
+
+            stream .string += "[\n";
+            generator .IncIndent ();
+
+            if (components === 1)
+            {
                for (let i = 0, n = length - 1; i < n; ++ i)
                {
-                  value .set (array [i * components]);
-                  value .toXMLStream (stream);
+                  stream .string += generator .Indent ();
 
-                  stream .string += ", ";
+                  value .set (array [i * components]);
+                  value .toStream (stream);
+
+                  stream .string += ",\n";
                }
 
+               stream .string += generator .Indent ();
                value .set (array [(length - 1) * components]);
+               value .toStream (stream);
 
-               value .toXMLStream (stream);
+               stream .string += "\n";
             }
             else
             {
                for (let i = 0, n = length - 1; i < n; ++ i)
                {
+                  stream .string += generator .Indent ();
+
                   for (let c = 0, first = i * components; c < components; ++ c, ++ first)
                      value [c] = array [first];
 
-                  value .toXMLStream (stream);
+                  value .toStream (stream);
 
-                  stream .string += ", ";
+                  stream .string += ",\n";
                }
+
+               stream .string += generator .Indent ();
 
                for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)
                   value [c] = array [first];
 
-               value .toXMLStream (stream);
+               value .toStream (stream);
+               stream .string += "\n";
             }
 
+            generator .DecIndent ();
+            stream .string += generator .Indent ();
+            stream .string += "]";
+
             generator .PopUnitCategory ();
+            break;
          }
-      },
-      dispose: function ()
-      {
-         X3DArrayField .prototype .dispose .call (this [_target]);
-      },
-   });
-
-   for (const key of Reflect .ownKeys (X3DTypedArrayField .prototype))
-      Object .defineProperty (X3DTypedArrayField .prototype, key, { enumerable: false });
-
-   Object .defineProperty (X3DTypedArrayField .prototype, "length",
+      }
+   },
+   toVRMLStream: function (stream)
    {
-      get: function () { return this [_length]; },
-      set: function (value) { this [_target] .resize (value); },
-      enumerable: false,
-      configurable: false,
-   });
-
-   // Getter/Setter functions to reference a value for a given index.
-
-   function getValue (index, value, components)
+      this .toStream (stream);
+   },
+   toXMLStream: function (stream)
    {
       const
-         array = this .getValue (),
-         tmp   = this [_tmp];
+         target = this [_target],
+         length = target [_length];
 
-      for (let c = 0; c < components; ++ c, ++ index)
-         tmp [c] = array [index];
+      if (length)
+      {
+         const
+            generator  = Generator .Get (stream),
+            array      = target .getValue (),
+            components = target .getComponents (),
+            value      = new (target .getSingleType ()) ();
 
-      value .set .apply (value, tmp);
+         generator .PushUnitCategory (target .getUnit ());
 
-      return value;
-   }
+         if (components === 1)
+         {
+            for (let i = 0, n = length - 1; i < n; ++ i)
+            {
+               value .set (array [i * components]);
+               value .toXMLStream (stream);
 
-   function addEvent (index, value, components)
+               stream .string += ", ";
+            }
+
+            value .set (array [(length - 1) * components]);
+
+            value .toXMLStream (stream);
+         }
+         else
+         {
+            for (let i = 0, n = length - 1; i < n; ++ i)
+            {
+               for (let c = 0, first = i * components; c < components; ++ c, ++ first)
+                  value [c] = array [first];
+
+               value .toXMLStream (stream);
+
+               stream .string += ", ";
+            }
+
+            for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)
+               value [c] = array [first];
+
+            value .toXMLStream (stream);
+         }
+
+         generator .PopUnitCategory ();
+      }
+   },
+   dispose: function ()
    {
-      const array = this .getValue ();
-
-      for (let c = 0; c < components; ++ c, ++ index)
-         array [index] = value [c];
-
-      this .addEvent ();
-   }
-
-   return X3DTypedArrayField;
+      X3DArrayField .prototype .dispose .call (this [_target]);
+   },
 });
+
+for (const key of Reflect .ownKeys (X3DTypedArrayField .prototype))
+   Object .defineProperty (X3DTypedArrayField .prototype, key, { enumerable: false });
+
+Object .defineProperty (X3DTypedArrayField .prototype, "length",
+{
+   get: function () { return this [_length]; },
+   set: function (value) { this [_target] .resize (value); },
+   enumerable: false,
+   configurable: false,
+});
+
+// Getter/Setter functions to reference a value for a given index.
+
+function getValue (index, value, components)
+{
+   const
+      array = this .getValue (),
+      tmp   = this [_tmp];
+
+   for (let c = 0; c < components; ++ c, ++ index)
+      tmp [c] = array [index];
+
+   value .set .apply (value, tmp);
+
+   return value;
+}
+
+function addEvent (index, value, components)
+{
+   const array = this .getValue ();
+
+   for (let c = 0; c < components; ++ c, ++ index)
+      array [index] = value [c];
+
+   this .addEvent ();
+}
+
+export default X3DTypedArrayField;

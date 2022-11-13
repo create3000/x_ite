@@ -47,146 +47,138 @@
  ******************************************************************************/
 
 
- define ([
-   "x_ite/Components/Texturing/X3DTextureNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Base/X3DCast",
-],
-function (X3DTextureNode,
-          X3DConstants,
-          X3DCast)
+import X3DTextureNode from "./X3DTextureNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast from "../../Base/X3DCast.js";
+
+function X3DSingleTextureNode (executionContext)
 {
-"use strict";
+   X3DTextureNode .call (this, executionContext);
 
-   function X3DSingleTextureNode (executionContext)
+   this .addType (X3DConstants .X3DSingleTextureNode);
+}
+
+X3DSingleTextureNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
+{
+   constructor: X3DSingleTextureNode,
+   initialize: function ()
    {
-      X3DTextureNode .call (this, executionContext);
+      X3DTextureNode .prototype .initialize .call (this);
 
-      this .addType (X3DConstants .X3DSingleTextureNode);
-   }
+      this ._textureProperties .addInterest ("set_textureProperties__", this, true);
 
-   X3DSingleTextureNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
+      const gl = this .getBrowser () .getContext ();
+
+      this .texture = gl .createTexture ();
+
+      this .set_textureProperties__ (false);
+   },
+   set_textureProperties__: function (update)
    {
-      constructor: X3DSingleTextureNode,
-      initialize: function ()
+      if (this .texturePropertiesNode)
+         this .texturePropertiesNode .removeInterest ("updateTextureParameters", this);
+
+      this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this ._textureProperties);
+
+      if (! this .texturePropertiesNode)
+         this .texturePropertiesNode = this .getBrowser () .getDefaultTextureProperties ();
+
+      this .texturePropertiesNode .addInterest ("updateTextureParameters", this);
+
+      if (update)
+         this .updateTextureParameters ();
+   },
+   getCount: function ()
+   {
+      return 1;
+   },
+   getTexture: function ()
+   {
+      return this .texture;
+   },
+   updateTextureParameters: (function ()
+   {
+      // Anisotropic Filtering in WebGL is handled by an extension, use one of getExtension depending on browser:
+
+      const ANISOTROPIC_EXT = [
+         "EXT_texture_filter_anisotropic",
+         "MOZ_EXT_texture_filter_anisotropic",
+         "WEBKIT_EXT_texture_filter_anisotropic",
+      ];
+
+      return function (target, haveTextureProperties, textureProperties, width, height, repeatS, repeatT, repeatR)
       {
-         X3DTextureNode .prototype .initialize .call (this);
-
-         this ._textureProperties .addInterest ("set_textureProperties__", this, true);
-
          const gl = this .getBrowser () .getContext ();
 
-         this .texture = gl .createTexture ();
+         gl .bindTexture (target, this .getTexture ());
 
-         this .set_textureProperties__ (false);
-      },
-      set_textureProperties__: function (update)
-      {
-         if (this .texturePropertiesNode)
-            this .texturePropertiesNode .removeInterest ("updateTextureParameters", this);
-
-         this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this ._textureProperties);
-
-         if (! this .texturePropertiesNode)
-            this .texturePropertiesNode = this .getBrowser () .getDefaultTextureProperties ();
-
-         this .texturePropertiesNode .addInterest ("updateTextureParameters", this);
-
-         if (update)
-            this .updateTextureParameters ();
-      },
-      getCount: function ()
-      {
-         return 1;
-      },
-      getTexture: function ()
-      {
-         return this .texture;
-      },
-      updateTextureParameters: (function ()
-      {
-         // Anisotropic Filtering in WebGL is handled by an extension, use one of getExtension depending on browser:
-
-         const ANISOTROPIC_EXT = [
-            "EXT_texture_filter_anisotropic",
-            "MOZ_EXT_texture_filter_anisotropic",
-            "WEBKIT_EXT_texture_filter_anisotropic",
-         ];
-
-         return function (target, haveTextureProperties, textureProperties, width, height, repeatS, repeatT, repeatR)
+         if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! haveTextureProperties)
          {
-            const gl = this .getBrowser () .getContext ();
-
-            gl .bindTexture (target, this .getTexture ());
-
-            if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! haveTextureProperties)
-            {
-               // Dont generate mipmaps.
-               gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
-               gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
-            }
-            else
-            {
-               if (textureProperties ._generateMipMaps .getValue ())
-                  gl .generateMipmap (target);
-
-               gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl [textureProperties .getMinificationFilter ()]);
-               gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl [textureProperties .getMagnificationFilter ()]);
-            }
-
-            if (haveTextureProperties)
-            {
-               gl .texParameteri (target, gl .TEXTURE_WRAP_S, gl [textureProperties .getBoundaryModeS ()]);
-               gl .texParameteri (target, gl .TEXTURE_WRAP_T, gl [textureProperties .getBoundaryModeT ()]);
-
-               if (gl .getVersion () >= 2)
-                  gl .texParameteri (target, gl .TEXTURE_WRAP_R, gl [textureProperties .getBoundaryModeR ()]);
-            }
-            else
-            {
-               gl .texParameteri (target, gl .TEXTURE_WRAP_S, repeatS ? gl .REPEAT : gl .CLAMP_TO_EDGE);
-               gl .texParameteri (target, gl .TEXTURE_WRAP_T, repeatT ? gl .REPEAT : gl .CLAMP_TO_EDGE);
-
-               if (gl .getVersion () >= 2)
-                  gl .texParameteri (target, gl .TEXTURE_WRAP_R, repeatR ? gl .REPEAT : gl .CLAMP_TO_EDGE);
-            }
-
-            //gl .texParameterfv (target, gl .TEXTURE_BORDER_COLOR, textureProperties ._borderColor .getValue ());
-            //gl .texParameterf  (target, gl .TEXTURE_PRIORITY,     textureProperties ._texturePriority .getValue ());
-
-            for (const extension of ANISOTROPIC_EXT)
-            {
-               const ext = gl .getExtension (extension);
-
-               if (ext)
-               {
-                  gl .texParameterf (target, ext .TEXTURE_MAX_ANISOTROPY_EXT, textureProperties ._anisotropicDegree .getValue ());
-                  break;
-               }
-            }
-         };
-      })(),
-      updateTextureBits: function (textureBits, channel = 0)
-      {
-         const textureType = this .getTextureType () - 1;
-
-         textureBits .set (channel * 2 + 0, textureType & 0b01);
-         textureBits .set (channel * 2 + 1, textureType & 0b10);
-      },
-      getShaderOptions: (function ()
-      {
-         const textureTypes = {
-            2: "2D",
-            3: "3D",
-            4: "CUBE"
-         };
-
-         return function (options, channel = 0)
+            // Dont generate mipmaps.
+            gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+            gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+         }
+         else
          {
-            options .push ("X3D_TEXTURE" + channel + "_" + textureTypes [this .getTextureType ()]);
-         };
-      })(),
-   });
+            if (textureProperties ._generateMipMaps .getValue ())
+               gl .generateMipmap (target);
 
-   return X3DSingleTextureNode;
+            gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl [textureProperties .getMinificationFilter ()]);
+            gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl [textureProperties .getMagnificationFilter ()]);
+         }
+
+         if (haveTextureProperties)
+         {
+            gl .texParameteri (target, gl .TEXTURE_WRAP_S, gl [textureProperties .getBoundaryModeS ()]);
+            gl .texParameteri (target, gl .TEXTURE_WRAP_T, gl [textureProperties .getBoundaryModeT ()]);
+
+            if (gl .getVersion () >= 2)
+               gl .texParameteri (target, gl .TEXTURE_WRAP_R, gl [textureProperties .getBoundaryModeR ()]);
+         }
+         else
+         {
+            gl .texParameteri (target, gl .TEXTURE_WRAP_S, repeatS ? gl .REPEAT : gl .CLAMP_TO_EDGE);
+            gl .texParameteri (target, gl .TEXTURE_WRAP_T, repeatT ? gl .REPEAT : gl .CLAMP_TO_EDGE);
+
+            if (gl .getVersion () >= 2)
+               gl .texParameteri (target, gl .TEXTURE_WRAP_R, repeatR ? gl .REPEAT : gl .CLAMP_TO_EDGE);
+         }
+
+         //gl .texParameterfv (target, gl .TEXTURE_BORDER_COLOR, textureProperties ._borderColor .getValue ());
+         //gl .texParameterf  (target, gl .TEXTURE_PRIORITY,     textureProperties ._texturePriority .getValue ());
+
+         for (const extension of ANISOTROPIC_EXT)
+         {
+            const ext = gl .getExtension (extension);
+
+            if (ext)
+            {
+               gl .texParameterf (target, ext .TEXTURE_MAX_ANISOTROPY_EXT, textureProperties ._anisotropicDegree .getValue ());
+               break;
+            }
+         }
+      };
+   })(),
+   updateTextureBits: function (textureBits, channel = 0)
+   {
+      const textureType = this .getTextureType () - 1;
+
+      textureBits .set (channel * 2 + 0, textureType & 0b01);
+      textureBits .set (channel * 2 + 1, textureType & 0b10);
+   },
+   getShaderOptions: (function ()
+   {
+      const textureTypes = {
+         2: "2D",
+         3: "3D",
+         4: "CUBE"
+      };
+
+      return function (options, channel = 0)
+      {
+         options .push ("X3D_TEXTURE" + channel + "_" + textureTypes [this .getTextureType ()]);
+      };
+   })(),
 });
+
+export default X3DSingleTextureNode;

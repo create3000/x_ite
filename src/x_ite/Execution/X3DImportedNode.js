@@ -47,347 +47,338 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3dNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Fields/SFNodeCache",
-   "x_ite/InputOutput/Generator",
-],
-function (X3dNode,
-          X3DConstants,
-          SFNodeCache,
-          Generator)
+import X3dNode from "../Components/Core/X3dNode.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import SFNodeCache from "../Fields/SFNodeCache.js";
+import Generator from "../InputOutput/Generator.js";
+
+const
+   _inlineNode   = Symbol (),
+   _exportedName = Symbol (),
+   _importedName = Symbol (),
+   _routes       = Symbol ();
+
+function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
 {
-"use strict";
+   X3dNode .call (this, executionContext);
 
-   const
-      _inlineNode   = Symbol (),
-      _exportedName = Symbol (),
-      _importedName = Symbol (),
-      _routes       = Symbol ();
+   this [_inlineNode]   = inlineNode;
+   this [_exportedName] = exportedName;
+   this [_importedName] = importedName;
+   this [_routes]       = new Set ();
 
-   function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
+   this [_inlineNode] ._loadState .addInterest ("set_loadState__", this);
+}
+
+X3DImportedNode .prototype = Object .assign (Object .create (X3dNode .prototype),
+{
+   constructor: X3DImportedNode,
+   getInlineNode: function ()
    {
-      X3dNode .call (this, executionContext);
-
-      this [_inlineNode]   = inlineNode;
-      this [_exportedName] = exportedName;
-      this [_importedName] = importedName;
-      this [_routes]       = new Set ();
-
-      this [_inlineNode] ._loadState .addInterest ("set_loadState__", this);
-   }
-
-   X3DImportedNode .prototype = Object .assign (Object .create (X3dNode .prototype),
+      return this [_inlineNode];
+   },
+   getExportedName: function ()
    {
-      constructor: X3DImportedNode,
-      getInlineNode: function ()
-      {
-         return this [_inlineNode];
-      },
-      getExportedName: function ()
-      {
-         return this [_exportedName];
-      },
-      getExportedNode: function ()
-      {
-         return this [_inlineNode] .getInternalScene () .getExportedNode (this [_exportedName]) .getValue ();
-      },
-      getImportedName: function ()
-      {
-         return this [_importedName];
-      },
-      addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
-      {
-         // Add route.
+      return this [_exportedName];
+   },
+   getExportedNode: function ()
+   {
+      return this [_inlineNode] .getInternalScene () .getExportedNode (this [_exportedName]) .getValue ();
+   },
+   getImportedName: function ()
+   {
+      return this [_importedName];
+   },
+   addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
+   {
+      // Add route.
 
-         const route = {
-            sourceNode: sourceNode,
-            sourceField: sourceField,
-            destinationNode: destinationNode,
-            destinationField: destinationField,
-         };
+      const route = {
+         sourceNode: sourceNode,
+         sourceField: sourceField,
+         destinationNode: destinationNode,
+         destinationField: destinationField,
+      };
 
-         this [_routes] .add (route);
+      this [_routes] .add (route);
 
-         // Try to resolve source or destination node routes.
+      // Try to resolve source or destination node routes.
 
-         if (this [_inlineNode] .checkLoadState () === X3DConstants .COMPLETE_STATE)
-            this .resolveRoute (route);
-      },
-      resolveRoute: function (route)
+      if (this [_inlineNode] .checkLoadState () === X3DConstants .COMPLETE_STATE)
+         this .resolveRoute (route);
+   },
+   resolveRoute: function (route)
+   {
+      try
       {
+         const
+            sourceField      = route .sourceField,
+            destinationField = route .destinationField;
+
+         let
+            sourceNode      = route .sourceNode,
+            destinationNode = route .destinationNode;
+
+         if (route .real)
+            route .real .dispose ();
+
+         if (sourceNode instanceof X3DImportedNode)
+            sourceNode = sourceNode .getExportedNode ();
+
+         if (destinationNode instanceof X3DImportedNode)
+            destinationNode = destinationNode .getExportedNode ();
+
+         route .real = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
+      }
+      catch (error)
+      {
+         console .error (error .message);
+      }
+   },
+   deleteRoute: function (real)
+   {
+      for (const route of this [_routes])
+      {
+         if (route .real === real)
+            this [_routes] .delete (route);
+      }
+   },
+   deleteRoutes: function ()
+   {
+      for (const route of this [_routes])
+      {
+         const real = route .real
+
+         if (real)
+         {
+            delete route .real;
+            this .getExecutionContext () .deleteSimpleRoute (real);
+         }
+      }
+   },
+   set_loadState__: function ()
+   {
+      switch (this [_inlineNode] .checkLoadState ())
+      {
+         case X3DConstants .NOT_STARTED_STATE:
+         case X3DConstants .FAILED_STATE:
+         {
+            this .deleteRoutes ();
+            break;
+         }
+         case X3DConstants .COMPLETE_STATE:
+         {
+            this .deleteRoutes ();
+
+            for (const route of this [_routes])
+               this .resolveRoute (route);
+
+            break;
+         }
+      }
+   },
+   toVRMLStream: function (stream)
+   {
+      const generator = Generator .Get (stream);
+
+      if (generator .ExistsNode (this .getInlineNode ()))
+      {
+         stream .string += generator .Indent ();
+         stream .string += "IMPORT";
+         stream .string += " ";
+         stream .string += generator .Name (this .getInlineNode ());
+         stream .string += ".";
+         stream .string += this .getExportedName ();
+
+         if (this .getImportedName () !== this .getExportedName ())
+         {
+            stream .string += " ";
+            stream .string += "AS";
+            stream .string += " ";
+            stream .string += this .getImportedName ();
+         }
+
          try
          {
-            const
-               sourceField      = route .sourceField,
-               destinationField = route .destinationField;
-
-            let
-               sourceNode      = route .sourceNode,
-               destinationNode = route .destinationNode;
-
-            if (route .real)
-               route .real .dispose ();
-
-            if (sourceNode instanceof X3DImportedNode)
-               sourceNode = sourceNode .getExportedNode ();
-
-            if (destinationNode instanceof X3DImportedNode)
-               destinationNode = destinationNode .getExportedNode ();
-
-            route .real = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
+            generator .AddRouteNode (this);
+            generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
          }
          catch (error)
          {
-            console .error (error .message);
-         }
-      },
-      deleteRoute: function (real)
-      {
-         for (const route of this [_routes])
-         {
-            if (route .real === real)
-               this [_routes] .delete (route);
-         }
-      },
-      deleteRoutes: function ()
-      {
-         for (const route of this [_routes])
-         {
-            const real = route .real
+            // Output unresolved routes.
 
-            if (real)
+            for (const route of this [_routes])
             {
-               delete route .real;
-               this .getExecutionContext () .deleteSimpleRoute (real);
-            }
-         }
-      },
-      set_loadState__: function ()
-      {
-         switch (this [_inlineNode] .checkLoadState ())
-         {
-            case X3DConstants .NOT_STARTED_STATE:
-            case X3DConstants .FAILED_STATE:
-            {
-               this .deleteRoutes ();
-               break;
-            }
-            case X3DConstants .COMPLETE_STATE:
-            {
-               this .deleteRoutes ();
+               const
+                  sourceNode       = route .sourceNode,
+                  sourceField      = route .sourceField,
+                  destinationNode  = route .destinationNode,
+                  destinationField = route .destinationField;
 
-               for (const route of this [_routes])
-                  this .resolveRoute (route);
-
-               break;
-            }
-         }
-      },
-      toVRMLStream: function (stream)
-      {
-         const generator = Generator .Get (stream);
-
-         if (generator .ExistsNode (this .getInlineNode ()))
-         {
-            stream .string += generator .Indent ();
-            stream .string += "IMPORT";
-            stream .string += " ";
-            stream .string += generator .Name (this .getInlineNode ());
-            stream .string += ".";
-            stream .string += this .getExportedName ();
-
-            if (this .getImportedName () !== this .getExportedName ())
-            {
-               stream .string += " ";
-               stream .string += "AS";
-               stream .string += " ";
-               stream .string += this .getImportedName ();
-            }
-
-            try
-            {
-               generator .AddRouteNode (this);
-               generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
-            }
-            catch (error)
-            {
-               // Output unresolved routes.
-
-               for (const route of this [_routes])
+               if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
                {
-                  const
-                     sourceNode       = route .sourceNode,
-                     sourceField      = route .sourceField,
-                     destinationNode  = route .destinationNode,
-                     destinationField = route .destinationField;
+                  const sourceNodeName = sourceNode instanceof X3DImportedNode
+                     ? sourceNode .getImportedName ()
+                     : generator .Name (sourceNode);
 
-                  if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
-                  {
-                     const sourceNodeName = sourceNode instanceof X3DImportedNode
-                        ? sourceNode .getImportedName ()
-                        : generator .Name (sourceNode);
+                  const destinationNodeName = destinationNode instanceof X3DImportedNode
+                     ? destinationNode .getImportedName ()
+                     : generator .Name (destinationNode);
 
-                     const destinationNodeName = destinationNode instanceof X3DImportedNode
-                        ? destinationNode .getImportedName ()
-                        : generator .Name (destinationNode);
-
-                     stream .string += "\n";
-                     stream .string += "\n";
-                     stream .string += generator .Indent ();
-                     stream .string += "ROUTE";
-                     stream .string += " ";
-                     stream .string += sourceNodeName;
-                     stream .string += ".";
-                     stream .string += sourceField;
-                     stream .string += " ";
-                     stream .string += "TO";
-                     stream .string += " ";
-                     stream .string += destinationNodeName;
-                     stream .string += ".";
-                     stream .string += destinationField;
-                  }
+                  stream .string += "\n";
+                  stream .string += "\n";
+                  stream .string += generator .Indent ();
+                  stream .string += "ROUTE";
+                  stream .string += " ";
+                  stream .string += sourceNodeName;
+                  stream .string += ".";
+                  stream .string += sourceField;
+                  stream .string += " ";
+                  stream .string += "TO";
+                  stream .string += " ";
+                  stream .string += destinationNodeName;
+                  stream .string += ".";
+                  stream .string += destinationField;
                }
             }
          }
-         else
-            throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
-      },
-      toXMLStream: function (stream)
+      }
+      else
+         throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
+   },
+   toXMLStream: function (stream)
+   {
+      const generator = Generator .Get (stream);
+
+      if (generator .ExistsNode (this .getInlineNode ()))
       {
-         const generator = Generator .Get (stream);
+         stream .string += generator .Indent ();
+         stream .string += "<IMPORT";
+         stream .string += " ";
+         stream .string += "inlineDEF='";
+         stream .string += generator .XMLEncode (generator .Name (this .getInlineNode ()));
+         stream .string += "'";
+         stream .string += " ";
+         stream .string += "importedDEF='";
+         stream .string += generator .XMLEncode (this .getExportedName ());
+         stream .string += "'";
 
-         if (generator .ExistsNode (this .getInlineNode ()))
+         if (this .getImportedName () !== this .getExportedName ())
          {
-            stream .string += generator .Indent ();
-            stream .string += "<IMPORT";
             stream .string += " ";
-            stream .string += "inlineDEF='";
-            stream .string += generator .XMLEncode (generator .Name (this .getInlineNode ()));
+            stream .string += "AS='";
+            stream .string += generator .XMLEncode (this .getImportedName ());
             stream .string += "'";
-            stream .string += " ";
-            stream .string += "importedDEF='";
-            stream .string += generator .XMLEncode (this .getExportedName ());
-            stream .string += "'";
+         }
 
-            if (this .getImportedName () !== this .getExportedName ())
+         stream .string += "/>";
+
+         try
+         {
+            generator .AddRouteNode (this);
+            generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
+         }
+         catch (error)
+         {
+            // Output unresolved routes.
+
+            for (const route of this [_routes])
             {
-               stream .string += " ";
-               stream .string += "AS='";
-               stream .string += generator .XMLEncode (this .getImportedName ());
-               stream .string += "'";
-            }
+               const
+                  sourceNode       = route .sourceNode,
+                  sourceField      = route .sourceField,
+                  destinationNode  = route .destinationNode,
+                  destinationField = route .destinationField;
 
-            stream .string += "/>";
-
-            try
-            {
-               generator .AddRouteNode (this);
-               generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
-            }
-            catch (error)
-            {
-               // Output unresolved routes.
-
-               for (const route of this [_routes])
+               if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
                {
-                  const
-                     sourceNode       = route .sourceNode,
-                     sourceField      = route .sourceField,
-                     destinationNode  = route .destinationNode,
-                     destinationField = route .destinationField;
+                  const sourceNodeName = sourceNode instanceof X3DImportedNode
+                     ? sourceNode .getImportedName ()
+                     : generator .Name (sourceNode);
 
-                  if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
-                  {
-                     const sourceNodeName = sourceNode instanceof X3DImportedNode
-                        ? sourceNode .getImportedName ()
-                        : generator .Name (sourceNode);
+                  const destinationNodeName = destinationNode instanceof X3DImportedNode
+                     ? destinationNode .getImportedName ()
+                     : generator .Name (destinationNode);
 
-                     const destinationNodeName = destinationNode instanceof X3DImportedNode
-                        ? destinationNode .getImportedName ()
-                        : generator .Name (destinationNode);
-
-                     stream .string += "\n";
-                     stream .string += "\n";
-                     stream .string += generator .Indent ();
-                     stream .string += "<ROUTE";
-                     stream .string += " ";
-                     stream .string += "fromNode='";
-                     stream .string += generator .XMLEncode (sourceNodeName);
-                     stream .string += "'";
-                     stream .string += " ";
-                     stream .string += "fromField='";
-                     stream .string += generator .XMLEncode (sourceField);
-                     stream .string += "'";
-                     stream .string += " ";
-                     stream .string += "toNode='";
-                     stream .string += generator .XMLEncode (destinationNodeName);
-                     stream .string += "'";
-                     stream .string += " ";
-                     stream .string += "toField='";
-                     stream .string += generator .XMLEncode (destinationField);
-                     stream .string += "'";
-                     stream .string += "/>";
-                  }
+                  stream .string += "\n";
+                  stream .string += "\n";
+                  stream .string += generator .Indent ();
+                  stream .string += "<ROUTE";
+                  stream .string += " ";
+                  stream .string += "fromNode='";
+                  stream .string += generator .XMLEncode (sourceNodeName);
+                  stream .string += "'";
+                  stream .string += " ";
+                  stream .string += "fromField='";
+                  stream .string += generator .XMLEncode (sourceField);
+                  stream .string += "'";
+                  stream .string += " ";
+                  stream .string += "toNode='";
+                  stream .string += generator .XMLEncode (destinationNodeName);
+                  stream .string += "'";
+                  stream .string += " ";
+                  stream .string += "toField='";
+                  stream .string += generator .XMLEncode (destinationField);
+                  stream .string += "'";
+                  stream .string += "/>";
                }
             }
          }
-         else
-            throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
-      },
-      dispose: function ()
-      {
-         this [_inlineNode] ._loadState .removeInterest ("set_loadState__", this);
-
-         this .deleteRoutes ();
-
-         X3dNode .prototype .dispose .call (this);
-      },
-   });
-
-   for (const key of Reflect .ownKeys (X3DImportedNode .prototype))
-      Object .defineProperty (X3DImportedNode .prototype, key, { enumerable: false });
-
-   Object .defineProperty (X3DImportedNode .prototype, "inlineNode",
+      }
+      else
+         throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
+   },
+   dispose: function ()
    {
-      get: function ()
-      {
-         return SFNodeCache .get (this [_inlineNode]);
-      },
-      enumerable: true,
-      configurable: false
-   });
+      this [_inlineNode] ._loadState .removeInterest ("set_loadState__", this);
 
-   Object .defineProperty (X3DImportedNode .prototype, "exportedName",
-   {
-      get: function ()
-      {
-         return this [_exportedName];
-      },
-      enumerable: true,
-      configurable: false
-   });
+      this .deleteRoutes ();
 
-   Object .defineProperty (X3DImportedNode .prototype, "exportedNode",
-   {
-      get: function ()
-      {
-         return this [_inlineNode] .getInternalScene () .getExportedNode (this [_exportedName]);
-      },
-      enumerable: true,
-      configurable: false
-   });
-
-   Object .defineProperty (X3DImportedNode .prototype, "importedName",
-   {
-      get: function ()
-      {
-         return this [_importedName];
-      },
-      enumerable: true,
-      configurable: false
-   });
-
-   return X3DImportedNode;
+      X3dNode .prototype .dispose .call (this);
+   },
 });
+
+for (const key of Reflect .ownKeys (X3DImportedNode .prototype))
+   Object .defineProperty (X3DImportedNode .prototype, key, { enumerable: false });
+
+Object .defineProperty (X3DImportedNode .prototype, "inlineNode",
+{
+   get: function ()
+   {
+      return SFNodeCache .get (this [_inlineNode]);
+   },
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DImportedNode .prototype, "exportedName",
+{
+   get: function ()
+   {
+      return this [_exportedName];
+   },
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DImportedNode .prototype, "exportedNode",
+{
+   get: function ()
+   {
+      return this [_inlineNode] .getInternalScene () .getExportedNode (this [_exportedName]);
+   },
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DImportedNode .prototype, "importedName",
+{
+   get: function ()
+   {
+      return this [_importedName];
+   },
+   enumerable: true,
+   configurable: false
+});
+
+export default X3DImportedNode;

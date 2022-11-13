@@ -47,55 +47,47 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DNode from "./X3DNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DChildNode (executionContext)
 {
-"use strict";
+   if (this .getExecutionContext ())
+      return;
 
-   function X3DChildNode (executionContext)
+   X3DNode .call (this, executionContext);
+
+   this .addType (X3DConstants .X3DChildNode);
+
+   this .addChildObjects ("isCameraObject",   new Fields .SFBool ());
+   this .addChildObjects ("isPickableObject", new Fields .SFBool ());
+
+   this ._isCameraObject   .setAccessType (X3DConstants .outputOnly);
+   this ._isPickableObject .setAccessType (X3DConstants .outputOnly);
+}
+
+X3DChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+{
+   constructor: X3DChildNode,
+   setCameraObject: function (value)
    {
-      if (this .getExecutionContext ())
-         return;
-
-      X3DNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DChildNode);
-
-      this .addChildObjects ("isCameraObject",   new Fields .SFBool ());
-      this .addChildObjects ("isPickableObject", new Fields .SFBool ());
-
-      this ._isCameraObject   .setAccessType (X3DConstants .outputOnly);
-      this ._isPickableObject .setAccessType (X3DConstants .outputOnly);
-   }
-
-   X3DChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+      if (value !== this ._isCameraObject .getValue ())
+         this ._isCameraObject = value;
+   },
+   getCameraObject: function ()
    {
-      constructor: X3DChildNode,
-      setCameraObject: function (value)
-      {
-         if (value !== this ._isCameraObject .getValue ())
-            this ._isCameraObject = value;
-      },
-      getCameraObject: function ()
-      {
-         return this ._isCameraObject .getValue ();
-      },
-      setPickableObject: function (value)
-      {
-         if (value !== this ._isPickableObject .getValue ())
-            this ._isPickableObject = value;
-      },
-      getPickableObject: function ()
-      {
-         return this ._isPickableObject .getValue ();
-      },
-   });
-
-   return X3DChildNode;
+      return this ._isCameraObject .getValue ();
+   },
+   setPickableObject: function (value)
+   {
+      if (value !== this ._isPickableObject .getValue ())
+         this ._isPickableObject = value;
+   },
+   getPickableObject: function ()
+   {
+      return this ._isPickableObject .getValue ();
+   },
 });
+
+export default X3DChildNode;

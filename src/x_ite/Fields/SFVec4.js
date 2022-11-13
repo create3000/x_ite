@@ -47,131 +47,122 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DField",
-   "x_ite/Fields/SFVecPrototypeTemplate",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector4",
-],
-function (X3DField,
-          SFVecPrototypeTemplate,
-          X3DConstants,
-          Vector4)
+import X3DField from "../Base/X3DField.js";
+import SFVecPrototypeTemplate from "./SFVecPrototypeTemplate.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import Vector4 from "../../standard/Math/Numbers/Vector4.js";
+
+function SFVec4Template (TypeName, Type, double)
 {
-"use strict";
-
-   function SFVec4Template (TypeName, Type, double)
+   function SFVec4 (x, y, z, w)
    {
-      function SFVec4 (x, y, z, w)
+      switch (arguments .length)
       {
-         switch (arguments .length)
-         {
-            case 0:
-               return X3DField .call (this, new Vector4 (0, 0, 0, 0));
+         case 0:
+            return X3DField .call (this, new Vector4 (0, 0, 0, 0));
 
-            case 1:
-               return X3DField .call (this, arguments [0]);
+         case 1:
+            return X3DField .call (this, arguments [0]);
 
-            case 4:
-               return X3DField .call (this, new Vector4 (+x, +y, +z, +w));
-         }
-
-         throw new Error ("Invalid arguments.");
+         case 4:
+            return X3DField .call (this, new Vector4 (+x, +y, +z, +w));
       }
 
-      SFVec4 .prototype = Object .assign (Object .create (X3DField .prototype),
-         SFVecPrototypeTemplate (Vector4, double),
-      {
-         constructor: SFVec4,
-         getTypeName: function ()
-         {
-            return TypeName;
-         },
-         getType: function ()
-         {
-            return Type;
-         },
-      });
-
-      for (const key of Reflect .ownKeys (SFVec4 .prototype))
-         Object .defineProperty (SFVec4 .prototype, key, { enumerable: false });
-
-      const x = {
-         get: function ()
-         {
-            return this .getValue () .x;
-         },
-         set: function (value)
-         {
-            this .getValue () .x = +value;
-            this .addEvent ();
-         },
-         enumerable: true,
-         configurable: false
-      };
-
-      const y = {
-         get: function ()
-         {
-            return this .getValue () .y;
-         },
-         set: function (value)
-         {
-            this .getValue () .y = +value;
-            this .addEvent ();
-         },
-         enumerable: true,
-         configurable: false
-      };
-
-      const z = {
-         get: function ()
-         {
-            return this .getValue () .z;
-         },
-         set: function (value)
-         {
-            this .getValue () .z = +value;
-            this .addEvent ();
-         },
-         enumerable: true,
-         configurable: false
-      };
-
-      const w = {
-         get: function ()
-         {
-            return this .getValue () .w;
-         },
-         set: function (value)
-         {
-            this .getValue () .w = +value;
-            this .addEvent ();
-         },
-         enumerable: true,
-         configurable: false
-      };
-
-      Object .defineProperty (SFVec4 .prototype, "x", x);
-      Object .defineProperty (SFVec4 .prototype, "y", y);
-      Object .defineProperty (SFVec4 .prototype, "z", z);
-      Object .defineProperty (SFVec4 .prototype, "w", w);
-
-      x .enumerable = false;
-      y .enumerable = false;
-      z .enumerable = false;
-      w .enumerable = false;
-
-      Object .defineProperty (SFVec4 .prototype, "0", x);
-      Object .defineProperty (SFVec4 .prototype, "1", y);
-      Object .defineProperty (SFVec4 .prototype, "2", z);
-      Object .defineProperty (SFVec4 .prototype, "3", w);
-
-      return SFVec4;
+      throw new Error ("Invalid arguments.");
    }
 
-   return {
-      SFVec4d: SFVec4Template ("SFVec4d", X3DConstants .SFVec4d, true),
-      SFVec4f: SFVec4Template ("SFVec4f", X3DConstants .SFVec4f, false),
+   SFVec4 .prototype = Object .assign (Object .create (X3DField .prototype),
+      SFVecPrototypeTemplate (Vector4, double),
+   {
+      constructor: SFVec4,
+      getTypeName: function ()
+      {
+         return TypeName;
+      },
+      getType: function ()
+      {
+         return Type;
+      },
+   });
+
+   for (const key of Reflect .ownKeys (SFVec4 .prototype))
+      Object .defineProperty (SFVec4 .prototype, key, { enumerable: false });
+
+   const x = {
+      get: function ()
+      {
+         return this .getValue () .x;
+      },
+      set: function (value)
+      {
+         this .getValue () .x = +value;
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
    };
-});
+
+   const y = {
+      get: function ()
+      {
+         return this .getValue () .y;
+      },
+      set: function (value)
+      {
+         this .getValue () .y = +value;
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
+
+   const z = {
+      get: function ()
+      {
+         return this .getValue () .z;
+      },
+      set: function (value)
+      {
+         this .getValue () .z = +value;
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
+
+   const w = {
+      get: function ()
+      {
+         return this .getValue () .w;
+      },
+      set: function (value)
+      {
+         this .getValue () .w = +value;
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
+
+   Object .defineProperty (SFVec4 .prototype, "x", x);
+   Object .defineProperty (SFVec4 .prototype, "y", y);
+   Object .defineProperty (SFVec4 .prototype, "z", z);
+   Object .defineProperty (SFVec4 .prototype, "w", w);
+
+   x .enumerable = false;
+   y .enumerable = false;
+   z .enumerable = false;
+   w .enumerable = false;
+
+   Object .defineProperty (SFVec4 .prototype, "0", x);
+   Object .defineProperty (SFVec4 .prototype, "1", y);
+   Object .defineProperty (SFVec4 .prototype, "2", z);
+   Object .defineProperty (SFVec4 .prototype, "3", w);
+
+   return SFVec4;
+}
+
+export default {
+   SFVec4d: SFVec4Template ("SFVec4d", X3DConstants .SFVec4d, true),
+   SFVec4f: SFVec4Template ("SFVec4f", X3DConstants .SFVec4f, false),
+};

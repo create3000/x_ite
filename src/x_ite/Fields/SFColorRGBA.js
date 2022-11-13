@@ -47,172 +47,163 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DField",
-   "x_ite/Fields/SFColor",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Color4",
-],
-function (X3DField,
-          SFColor,
-          X3DConstants,
-          Color4)
+import X3DField from "../Base/X3DField.js";
+import SFColor from "./SFColor.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import Color4 from "../../standard/Math/Numbers/Color4.js";
+
+function SFColorRGBA (r, g, b, a)
 {
-"use strict";
-
-   function SFColorRGBA (r, g, b, a)
+   switch (arguments .length)
    {
-      switch (arguments .length)
-      {
-         case 0:
-            return X3DField .call (this, new Color4 ());
+      case 0:
+         return X3DField .call (this, new Color4 ());
 
-         case 1:
-            return X3DField .call (this, arguments [0]);
+      case 1:
+         return X3DField .call (this, arguments [0]);
 
-         case 4:
-            return X3DField .call (this, new Color4 (+r, +g, +b, +a));
-      }
-
-      throw new Error ("Invalid arguments.");
+      case 4:
+         return X3DField .call (this, new Color4 (+r, +g, +b, +a));
    }
 
-   SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
+   throw new Error ("Invalid arguments.");
+}
+
+SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
+{
+   constructor: SFColorRGBA,
+   [Symbol .iterator]: function* ()
    {
-      constructor: SFColorRGBA,
-      [Symbol .iterator]: function* ()
-      {
-         yield* this .getValue ();
-      },
-      copy: function ()
-      {
-         return new SFColorRGBA (this .getValue () .copy ());
-      },
-      getTypeName: function ()
-      {
-         return "SFColorRGBA";
-      },
-      getType: function ()
-      {
-         return X3DConstants .SFColorRGBA;
-      },
-      equals: SFColor .prototype .equals,
-      isDefaultValue: function ()
-      {
-         return (
-            this .getValue () .r === 0 &&
-            this .getValue () .g === 0 &&
-            this .getValue () .b === 0 &&
-            this .getValue () .a === 0);
-      },
-      set: SFColor .prototype .set,
-      getHSVA: function ()
-      {
-         return this .getValue () .getHSVA ([ ]);
-      },
-      setHSVA: function (h, s, v, a)
-      {
-         this .getValue () .setHSVA (h, s, v, a);
-         this .addEvent ();
-      },
-      lerp: (function ()
-      {
-         const
-            s = [ ],
-            d = [ ],
-            r = [ ];
+      yield* this .getValue ();
+   },
+   copy: function ()
+   {
+      return new SFColorRGBA (this .getValue () .copy ());
+   },
+   getTypeName: function ()
+   {
+      return "SFColorRGBA";
+   },
+   getType: function ()
+   {
+      return X3DConstants .SFColorRGBA;
+   },
+   equals: SFColor .prototype .equals,
+   isDefaultValue: function ()
+   {
+      return (
+         this .getValue () .r === 0 &&
+         this .getValue () .g === 0 &&
+         this .getValue () .b === 0 &&
+         this .getValue () .a === 0);
+   },
+   set: SFColor .prototype .set,
+   getHSVA: function ()
+   {
+      return this .getValue () .getHSVA ([ ]);
+   },
+   setHSVA: function (h, s, v, a)
+   {
+      this .getValue () .setHSVA (h, s, v, a);
+      this .addEvent ();
+   },
+   lerp: (function ()
+   {
+      const
+         s = [ ],
+         d = [ ],
+         r = [ ];
 
-         return function (destination, t)
-         {
-            const result = new SFColorRGBA ();
-
-            this .getValue () .getHSVA (s),
-            destination .getValue () .getHSVA (d),
-            Color4 .lerp (s, d, t, r),
-
-            result .setHSVA (r [0], r [1], r [2], r [3]);
-
-            return result;
-         };
-      })(),
-      toStream: SFColor .prototype .toStream,
-      toVRMLStream: SFColor .prototype .toVRMLStream,
-      toXMLStream: SFColor .prototype .toXMLStream,
-   });
-
-   for (const key of Reflect .ownKeys (SFColorRGBA .prototype))
-      Object .defineProperty (SFColorRGBA .prototype, key, { enumerable: false });
-
-   const r = {
-      get: function ()
+      return function (destination, t)
       {
-         return this .getValue () .r;
-      },
-      set: function (value)
-      {
-         this .getValue () .r = +value;
-         this .addEvent ();
-      },
-      enumerable: true,
-      configurable: false
-   };
+         const result = new SFColorRGBA ();
 
-   const g = {
-      get: function ()
-      {
-         return this .getValue () .g;
-      },
-      set: function (value)
-      {
-         this .getValue () .g = +value;
-         this .addEvent ();
-      },
-      enumerable: true,
-      configurable: false
-   };
+         this .getValue () .getHSVA (s),
+         destination .getValue () .getHSVA (d),
+         Color4 .lerp (s, d, t, r),
 
-   const b = {
-      get: function ()
-      {
-         return this .getValue () .b;
-      },
-      set: function (value)
-      {
-         this .getValue () .b = +value;
-         this .addEvent ();
-      },
-      enumerable: true,
-      configurable: false
-   };
+         result .setHSVA (r [0], r [1], r [2], r [3]);
 
-   const a = {
-      get: function ()
-      {
-         return this .getValue () .a;
-      },
-      set: function (value)
-      {
-         this .getValue () .a = +value;
-         this .addEvent ();
-      },
-      enumerable: true,
-      configurable: false
-   };
-
-   Object .defineProperty (SFColorRGBA .prototype, "r", r);
-   Object .defineProperty (SFColorRGBA .prototype, "g", g);
-   Object .defineProperty (SFColorRGBA .prototype, "b", b);
-   Object .defineProperty (SFColorRGBA .prototype, "a", a);
-
-   r .enumerable = false;
-   g .enumerable = false;
-   b .enumerable = false;
-   a .enumerable = false;
-
-   Object .defineProperty (SFColorRGBA .prototype, "0", r);
-   Object .defineProperty (SFColorRGBA .prototype, "1", g);
-   Object .defineProperty (SFColorRGBA .prototype, "2", b);
-   Object .defineProperty (SFColorRGBA .prototype, "3", a);
-
-   return SFColorRGBA;
+         return result;
+      };
+   })(),
+   toStream: SFColor .prototype .toStream,
+   toVRMLStream: SFColor .prototype .toVRMLStream,
+   toXMLStream: SFColor .prototype .toXMLStream,
 });
+
+for (const key of Reflect .ownKeys (SFColorRGBA .prototype))
+   Object .defineProperty (SFColorRGBA .prototype, key, { enumerable: false });
+
+const r = {
+   get: function ()
+   {
+      return this .getValue () .r;
+   },
+   set: function (value)
+   {
+      this .getValue () .r = +value;
+      this .addEvent ();
+   },
+   enumerable: true,
+   configurable: false
+};
+
+const g = {
+   get: function ()
+   {
+      return this .getValue () .g;
+   },
+   set: function (value)
+   {
+      this .getValue () .g = +value;
+      this .addEvent ();
+   },
+   enumerable: true,
+   configurable: false
+};
+
+const b = {
+   get: function ()
+   {
+      return this .getValue () .b;
+   },
+   set: function (value)
+   {
+      this .getValue () .b = +value;
+      this .addEvent ();
+   },
+   enumerable: true,
+   configurable: false
+};
+
+const a = {
+   get: function ()
+   {
+      return this .getValue () .a;
+   },
+   set: function (value)
+   {
+      this .getValue () .a = +value;
+      this .addEvent ();
+   },
+   enumerable: true,
+   configurable: false
+};
+
+Object .defineProperty (SFColorRGBA .prototype, "r", r);
+Object .defineProperty (SFColorRGBA .prototype, "g", g);
+Object .defineProperty (SFColorRGBA .prototype, "b", b);
+Object .defineProperty (SFColorRGBA .prototype, "a", a);
+
+r .enumerable = false;
+g .enumerable = false;
+b .enumerable = false;
+a .enumerable = false;
+
+Object .defineProperty (SFColorRGBA .prototype, "0", r);
+Object .defineProperty (SFColorRGBA .prototype, "1", g);
+Object .defineProperty (SFColorRGBA .prototype, "2", b);
+Object .defineProperty (SFColorRGBA .prototype, "3", a);
+
+export default SFColorRGBA;

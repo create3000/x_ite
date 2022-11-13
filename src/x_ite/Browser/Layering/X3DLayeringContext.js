@@ -47,32 +47,26 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Layering/Viewport",
-],
-function (Viewport)
+import Viewport from "../../Components/Layering/Viewport.js";
+
+const _defaultViewport = Symbol ();
+
+function X3DLayeringContext ()
 {
-"use strict";
+   this [_defaultViewport] = new Viewport (this .getPrivateScene ());
+}
 
-   const _defaultViewport = Symbol ();
-
-   function X3DLayeringContext ()
+X3DLayeringContext .prototype =
+{
+   initialize: function ()
    {
-      this [_defaultViewport] = new Viewport (this .getPrivateScene ());
-   }
-
-   X3DLayeringContext .prototype =
+      this [_defaultViewport] .setPrivate (true);
+      this [_defaultViewport] .setup ();
+   },
+   getDefaultViewport: function ()
    {
-      initialize: function ()
-      {
-         this [_defaultViewport] .setPrivate (true);
-         this [_defaultViewport] .setup ();
-      },
-      getDefaultViewport: function ()
-      {
-         return this [_defaultViewport];
-      },
-   };
+      return this [_defaultViewport];
+   },
+};
 
-   return X3DLayeringContext;
-});
+export default X3DLayeringContext;

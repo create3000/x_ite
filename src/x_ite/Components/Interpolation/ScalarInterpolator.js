@@ -47,72 +47,61 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Algorithm",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode,
-          X3DConstants,
-          Algorithm)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DInterpolatorNode from "./X3DInterpolatorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+function ScalarInterpolator (executionContext)
 {
-"use strict";
+   X3DInterpolatorNode .call (this, executionContext);
 
-   function ScalarInterpolator (executionContext)
+   this .addType (X3DConstants .ScalarInterpolator);
+}
+
+ScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+{
+   constructor: ScalarInterpolator,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFFloat ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFFloat ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DInterpolatorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .ScalarInterpolator);
-   }
-
-   ScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+      return "ScalarInterpolator";
+   },
+   getComponentName: function ()
    {
-      constructor: ScalarInterpolator,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFFloat ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "ScalarInterpolator";
-      },
-      getComponentName: function ()
-      {
-         return "Interpolation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DInterpolatorNode .prototype .initialize .call (this);
+      return "Interpolation";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this ._keyValue .addInterest ("set_keyValue__", this);
-      },
-      set_keyValue__: function ()
-      {
-         const
-            key      = this ._key,
-            keyValue = this ._keyValue;
+      this ._keyValue .addInterest ("set_keyValue__", this);
+   },
+   set_keyValue__: function ()
+   {
+      const
+         key      = this ._key,
+         keyValue = this ._keyValue;
 
-         if (keyValue .length < key .length)
-            keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : 0);
-      },
-      interpolate: function (index0, index1, weight)
-      {
-         this ._value_changed = Algorithm .lerp (this ._keyValue [index0], this ._keyValue [index1], weight);
-      },
-   });
-
-   return ScalarInterpolator;
+      if (keyValue .length < key .length)
+         keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : 0);
+   },
+   interpolate: function (index0, index1, weight)
+   {
+      this ._value_changed = Algorithm .lerp (this ._keyValue [index0], this ._keyValue [index1], weight);
+   },
 });
+
+export default ScalarInterpolator;

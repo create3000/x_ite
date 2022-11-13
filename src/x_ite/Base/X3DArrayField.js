@@ -47,45 +47,39 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DField",
-],
-function (X3DField)
+import X3DField from "./X3DField.js";
+
+function X3DArrayField (value)
 {
-"use strict";
+   X3DField .call (this, value);
+}
 
-   function X3DArrayField (value)
-   {
-      X3DField .call (this, value);
-   }
-
-   X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
-   {
-      constructor: X3DArrayField,
-      at: Array .prototype .at,
-      concat: Array .prototype .concat,
-      //entries: function () { return iterator -> [index, value]; },
-      every: Array .prototype .every,
-      fill: Array .prototype .fill,
-      filter: Array .prototype .filter,
-      find: Array .prototype .find,
-      findIndex: Array .prototype .findIndex,
-      forEach: Array .prototype .forEach,
-      includes: Array .prototype .includes,
-      indexOf: Array .prototype .indexOf,
-      join: Array .prototype .join,
-      keys: function () { return Array (this .length) .keys (); },
-      lastIndexOf: Array .prototype .lastIndexOf,
-      map: Array .prototype .map,
-      reduce: Array .prototype .reduce,
-      reduceRight: Array .prototype .reduceRight,
-      slice: Array .prototype .slice,
-      some: Array .prototype .some,
-      values: function () { return this [Symbol .iterator]; },
-   });
-
-   for (const key of Reflect .ownKeys (X3DArrayField .prototype))
-      Object .defineProperty (X3DArrayField .prototype, key, { enumerable: false });
-
-   return X3DArrayField;
+X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
+{
+   constructor: X3DArrayField,
+   at: Array .prototype .at,
+   concat: Array .prototype .concat,
+   //entries: function () { return iterator -> [index, value]; },
+   every: Array .prototype .every,
+   fill: Array .prototype .fill,
+   filter: Array .prototype .filter,
+   find: Array .prototype .find,
+   findIndex: Array .prototype .findIndex,
+   forEach: Array .prototype .forEach,
+   includes: Array .prototype .includes,
+   indexOf: Array .prototype .indexOf,
+   join: Array .prototype .join,
+   keys: function () { return Array (this .length) .keys (); },
+   lastIndexOf: Array .prototype .lastIndexOf,
+   map: Array .prototype .map,
+   reduce: Array .prototype .reduce,
+   reduceRight: Array .prototype .reduceRight,
+   slice: Array .prototype .slice,
+   some: Array .prototype .some,
+   values: function () { return this [Symbol .iterator]; },
 });
+
+for (const key of Reflect .ownKeys (X3DArrayField .prototype))
+   Object .defineProperty (X3DArrayField .prototype, key, { enumerable: false });
+
+export default X3DArrayField;

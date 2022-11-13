@@ -47,29 +47,23 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DInfoArray",
-],
-function (X3DInfoArray)
+import X3DInfoArray from "../Base/X3DInfoArray.js";
+
+function ExternProtoDeclarationArray (values)
 {
-"use strict";
+   return X3DInfoArray .call (this, values);
+}
 
-   function ExternProtoDeclarationArray (values)
+ExternProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+{
+   constructor: ExternProtoDeclarationArray,
+   getTypeName: function ()
    {
-      return X3DInfoArray .call (this, values);
-   }
-
-   ExternProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-   {
-      constructor: ExternProtoDeclarationArray,
-      getTypeName: function ()
-      {
-         return "ExternProtoDeclarationArray";
-      },
-   });
-
-   for (const key of Reflect .ownKeys (ExternProtoDeclarationArray .prototype))
-      Object .defineProperty (ExternProtoDeclarationArray .prototype, key, { enumerable: false });
-
-   return ExternProtoDeclarationArray;
+      return "ExternProtoDeclarationArray";
+   },
 });
+
+for (const key of Reflect .ownKeys (ExternProtoDeclarationArray .prototype))
+   Object .defineProperty (ExternProtoDeclarationArray .prototype, key, { enumerable: false });
+
+export default ExternProtoDeclarationArray;

@@ -47,84 +47,78 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DObject",
-],
-function (X3DObject)
+import X3DObject from "./X3DObject.js";
+
+const
+   _modificationTime = Symbol (),
+   _tainted          = Symbol (),
+   _parents          = Symbol ();
+
+function X3DChildObject ()
 {
-"use strict";
+   X3DObject .call (this);
+}
 
-   const
-      _modificationTime = Symbol (),
-      _tainted          = Symbol (),
-      _parents          = Symbol ();
-
-   function X3DChildObject ()
+X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
+{
+   constructor: X3DChildObject,
+   [_modificationTime]: 0,
+   [_tainted]: false,
+   [_parents]: new Set (),
+   setModificationTime: function (value)
    {
-      X3DObject .call (this);
-   }
-
-   X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
+      this [_modificationTime] = value;
+   },
+   getModificationTime: function ()
    {
-      constructor: X3DChildObject,
-      [_modificationTime]: 0,
-      [_tainted]: false,
-      [_parents]: new Set (),
-      setModificationTime: function (value)
-      {
-         this [_modificationTime] = value;
-      },
-      getModificationTime: function ()
-      {
-         return this [_modificationTime];
-      },
-      setTainted: function (value)
-      {
-         this [_tainted] = value;
-      },
-      isTainted: function ()
-      {
-         return this [_tainted];
-      },
-      addEvent: function ()
-      {
-         this .setModificationTime (performance .now ());
+      return this [_modificationTime];
+   },
+   setTainted: function (value)
+   {
+      this [_tainted] = value;
+   },
+   isTainted: function ()
+   {
+      return this [_tainted];
+   },
+   addEvent: function ()
+   {
+      this .setModificationTime (performance .now ());
 
-         for (const parent of this [_parents])
-            parent .addEvent (this);
-      },
-      addEventObject: function (field, event)
-      {
-         this .setModificationTime (performance .now ());
+      for (const parent of this [_parents])
+         parent .addEvent (this);
+   },
+   addEventObject: function (field, event)
+   {
+      this .setModificationTime (performance .now ());
 
-         for (const parent of this [_parents])
-            parent .addEventObject (this, event);
-      },
-      addParent: function (parent)
-      {
-         if (this [_parents] === X3DChildObject .prototype [_parents])
-            this [_parents] = new Set ();
+      for (const parent of this [_parents])
+         parent .addEventObject (this, event);
+   },
+   addParent: function (parent)
+   {
+      if (this [_parents] === X3DChildObject .prototype [_parents])
+         this [_parents] = new Set ();
 
-         this [_parents] .add (parent);
-      },
-      removeParent: function (parent)
-      {
-         this [_parents] .delete (parent);
-      },
-      getParents: function ()
-      {
-         return this [_parents];
-      },
-      dispose: function ()
-      {
-         this [_parents] .clear ();
+      this [_parents] .add (parent);
+   },
+   removeParent: function (parent)
+   {
+      this [_parents] .delete (parent);
+   },
+   getParents: function ()
+   {
+      return this [_parents];
+   },
+   dispose: function ()
+   {
+      this [_parents] .clear ();
 
-         X3DObject .prototype .dispose .call (this);
-      },
-   });
-
-   for (const key of Reflect .ownKeys (X3DChildObject .prototype))
-      Object .defineProperty (X3DChildObject .prototype, key, { enumerable: false });
-
-   return X3DChildObject;
+      X3DObject .prototype .dispose .call (this);
+   },
 });
+
+for (const key of Reflect .ownKeys (X3DChildObject .prototype))
+   Object .defineProperty (X3DChildObject .prototype, key, { enumerable: false });
+
+export default X3DChildObject;

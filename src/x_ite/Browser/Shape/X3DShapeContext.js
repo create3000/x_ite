@@ -47,149 +47,139 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Shape/Appearance",
-   "x_ite/Components/Shape/UnlitMaterial",
-   "x_ite/Components/Texturing/ImageTexture",
-   "x_ite/Components/Texturing/TextureProperties",
-   "x_ite/Browser/Networking/urls",
-],
-function (Appearance,
-          UnlitMaterial,
-          ImageTexture,
-          TextureProperties,
-          urls)
+import Appearance from "../../Components/Shape/Appearance.js";
+import UnlitMaterial from "../../Components/Shape/UnlitMaterial.js";
+import ImageTexture from "../../Components/Texturing/ImageTexture.js";
+import TextureProperties from "../../Components/Texturing/TextureProperties.js";
+import urls from "../Networking/urls.js";
+
+const
+   _lineStippleScale          = Symbol (),
+   _linetypeTextures          = Symbol (),
+   _hatchStyleTextures        = Symbol (),
+   _defaultAppearance         = Symbol (),
+   _defaultMaterial           = Symbol (),
+   _lineFillTextureProperties = Symbol (),
+   _lineTransformShaderNode   = Symbol (),
+   _lineTransformFeedback     = Symbol ();
+
+function X3DShapeContext ()
 {
-"use strict";
+   this [_hatchStyleTextures] = [ ];
+   this [_lineStippleScale]   = 1 / (this .getPixelPerPoint () * 32); // 32px
+}
 
-   const
-      _lineStippleScale          = Symbol (),
-      _linetypeTextures          = Symbol (),
-      _hatchStyleTextures        = Symbol (),
-      _defaultAppearance         = Symbol (),
-      _defaultMaterial           = Symbol (),
-      _lineFillTextureProperties = Symbol (),
-      _lineTransformShaderNode   = Symbol (),
-      _lineTransformFeedback     = Symbol ();
-
-   function X3DShapeContext ()
+X3DShapeContext .prototype =
+{
+   initialize: function ()
+   { },
+   getDefaultAppearance: function ()
    {
-      this [_hatchStyleTextures] = [ ];
-      this [_lineStippleScale]   = 1 / (this .getPixelPerPoint () * 32); // 32px
-   }
+      this [_defaultAppearance] = new Appearance (this .getPrivateScene ());
+      this [_defaultAppearance] .setPrivate (true);
+      this [_defaultAppearance] .setup ();
 
-   X3DShapeContext .prototype =
+      this .getDefaultAppearance = function () { return this [_defaultAppearance]; };
+
+      Object .defineProperty (this, "getDefaultAppearance", { enumerable: false });
+
+      return this [_defaultAppearance];
+   },
+   getLineStippleScale: function ()
    {
-      initialize: function ()
-      { },
-      getDefaultAppearance: function ()
-      {
-         this [_defaultAppearance] = new Appearance (this .getPrivateScene ());
-         this [_defaultAppearance] .setPrivate (true);
-         this [_defaultAppearance] .setup ();
+      return this [_lineStippleScale];
+   },
+   getDefaultMaterial: function ()
+   {
+      this [_defaultMaterial] = new UnlitMaterial (this .getPrivateScene ());
+      this [_defaultMaterial] .setPrivate (true);
+      this [_defaultMaterial] .setup ();
 
-         this .getDefaultAppearance = function () { return this [_defaultAppearance]; };
+      this .getDefaultMaterial = function () { return this [_defaultMaterial]; };
 
-         Object .defineProperty (this, "getDefaultAppearance", { enumerable: false });
+      Object .defineProperty (this, "getDefaultMaterial", { enumerable: false });
 
-         return this [_defaultAppearance];
-      },
-      getLineStippleScale: function ()
-      {
-         return this [_lineStippleScale];
-      },
-      getDefaultMaterial: function ()
-      {
-         this [_defaultMaterial] = new UnlitMaterial (this .getPrivateScene ());
-         this [_defaultMaterial] .setPrivate (true);
-         this [_defaultMaterial] .setup ();
+      return this [_defaultMaterial];
+   },
+   getLinetypeTexture: function ()
+   {
+      this [_linetypeTextures] = new ImageTexture (this .getPrivateScene ());
+      this [_linetypeTextures] ._url [0]           = urls .getLinetypeUrl ();
+      this [_linetypeTextures] ._textureProperties = this .getLineFillTextureProperties ();
+      this [_linetypeTextures] .setPrivate (true);
+      this [_linetypeTextures] .setup ();
 
-         this .getDefaultMaterial = function () { return this [_defaultMaterial]; };
+      this .getLinetypeTexture = function () { return this [_linetypeTextures]; };
 
-         Object .defineProperty (this, "getDefaultMaterial", { enumerable: false });
+      Object .defineProperty (this, "getLinetypeTexture", { enumerable: false });
 
-         return this [_defaultMaterial];
-      },
-      getLinetypeTexture: function ()
-      {
-         this [_linetypeTextures] = new ImageTexture (this .getPrivateScene ());
-         this [_linetypeTextures] ._url [0]           = urls .getLinetypeUrl ();
-         this [_linetypeTextures] ._textureProperties = this .getLineFillTextureProperties ();
-         this [_linetypeTextures] .setPrivate (true);
-         this [_linetypeTextures] .setup ();
+      return this [_linetypeTextures];
+   },
+   getHatchStyleTexture: function (index)
+   {
+      let hatchStyleTexture = this [_hatchStyleTextures] [index];
 
-         this .getLinetypeTexture = function () { return this [_linetypeTextures]; };
-
-         Object .defineProperty (this, "getLinetypeTexture", { enumerable: false });
-
-         return this [_linetypeTextures];
-      },
-      getHatchStyleTexture: function (index)
-      {
-         let hatchStyleTexture = this [_hatchStyleTextures] [index];
-
-         if (hatchStyleTexture)
-            return hatchStyleTexture;
-
-         hatchStyleTexture = this [_hatchStyleTextures] [index] = new ImageTexture (this .getPrivateScene ());
-
-         hatchStyleTexture ._url [0]           = urls .getHatchingUrl (index);
-         hatchStyleTexture ._textureProperties = this .getLineFillTextureProperties ();
-         hatchStyleTexture .setPrivate (true);
-         hatchStyleTexture .setup ();
-
+      if (hatchStyleTexture)
          return hatchStyleTexture;
-      },
-      getLineFillTextureProperties: function ()
-      {
-         this [_lineFillTextureProperties] = new TextureProperties (this .getPrivateScene ());
-         this [_lineFillTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
-         this [_lineFillTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
-         this [_lineFillTextureProperties] .setPrivate (true);
-         this [_lineFillTextureProperties] .setup ();
 
-         this .getLineFillTextureProperties = function () { return this [_lineFillTextureProperties]; };
+      hatchStyleTexture = this [_hatchStyleTextures] [index] = new ImageTexture (this .getPrivateScene ());
 
-         Object .defineProperty (this, "getLineFillTextureProperties", { enumerable: false });
+      hatchStyleTexture ._url [0]           = urls .getHatchingUrl (index);
+      hatchStyleTexture ._textureProperties = this .getLineFillTextureProperties ();
+      hatchStyleTexture .setPrivate (true);
+      hatchStyleTexture .setup ();
 
-         return this [_lineFillTextureProperties];
-      },
-      getLineTransformShader: function ()
-      {
-         const uniformNames = [
-            "viewport",
-            "modelViewProjectionMatrix",
-            "invModelViewProjectionMatrix",
-            "scale",
-         ];
+      return hatchStyleTexture;
+   },
+   getLineFillTextureProperties: function ()
+   {
+      this [_lineFillTextureProperties] = new TextureProperties (this .getPrivateScene ());
+      this [_lineFillTextureProperties] ._minificationFilter  = "NEAREST_PIXEL";
+      this [_lineFillTextureProperties] ._magnificationFilter = "NEAREST_PIXEL";
+      this [_lineFillTextureProperties] .setPrivate (true);
+      this [_lineFillTextureProperties] .setup ();
 
-         const transformFeedbackVaryings = [
-            "lineStipple0", "fogDepth0", "color0", "vertex0",
-            "lineStipple1", "fogDepth1", "color1", "vertex1",
-            "lineStipple2", "fogDepth2", "color2", "vertex2",
-         ];
+      this .getLineFillTextureProperties = function () { return this [_lineFillTextureProperties]; };
 
-         this [_lineTransformShaderNode] = this .createShader ("LineTransformShader", "LineTransform", "LineTransform", [ ], uniformNames, transformFeedbackVaryings);
+      Object .defineProperty (this, "getLineFillTextureProperties", { enumerable: false });
 
-         this .getLineTransformShader = function () { return this [_lineTransformShaderNode]; };
+      return this [_lineFillTextureProperties];
+   },
+   getLineTransformShader: function ()
+   {
+      const uniformNames = [
+         "viewport",
+         "modelViewProjectionMatrix",
+         "invModelViewProjectionMatrix",
+         "scale",
+      ];
 
-         Object .defineProperty (this, "getLineTransformShader", { enumerable: false });
+      const transformFeedbackVaryings = [
+         "lineStipple0", "fogDepth0", "color0", "vertex0",
+         "lineStipple1", "fogDepth1", "color1", "vertex1",
+         "lineStipple2", "fogDepth2", "color2", "vertex2",
+      ];
 
-         return this [_lineTransformShaderNode];
-      },
-      getLineTransformFeedback: function ()
-      {
-         const gl = this .getContext ();
+      this [_lineTransformShaderNode] = this .createShader ("LineTransformShader", "LineTransform", "LineTransform", [ ], uniformNames, transformFeedbackVaryings);
 
-         this [_lineTransformFeedback] = gl .createTransformFeedback ();
+      this .getLineTransformShader = function () { return this [_lineTransformShaderNode]; };
 
-         this .getLineTransformFeedback = function () { return this [_lineTransformFeedback]; };
+      Object .defineProperty (this, "getLineTransformShader", { enumerable: false });
 
-         Object .defineProperty (this, "getLineTransformFeedback", { enumerable: false });
+      return this [_lineTransformShaderNode];
+   },
+   getLineTransformFeedback: function ()
+   {
+      const gl = this .getContext ();
 
-         return this [_lineTransformFeedback];
-      },
-   };
+      this [_lineTransformFeedback] = gl .createTransformFeedback ();
 
-   return X3DShapeContext;
-});
+      this .getLineTransformFeedback = function () { return this [_lineTransformFeedback]; };
+
+      Object .defineProperty (this, "getLineTransformFeedback", { enumerable: false });
+
+      return this [_lineTransformFeedback];
+   },
+};
+
+export default X3DShapeContext;

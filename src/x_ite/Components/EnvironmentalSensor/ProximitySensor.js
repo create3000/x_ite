@@ -47,233 +47,219 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
-   "x_ite/Rendering/TraverseType",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DEnvironmentalSensorNode,
-          TraverseType,
-          X3DConstants,
-          Vector3,
-          Rotation4,
-          Matrix4)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DEnvironmentalSensorNode from "./X3DEnvironmentalSensorNode.js";
+import TraverseType from "../../Rendering/TraverseType.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+function ProximitySensor (executionContext)
 {
-"use strict";
+   X3DEnvironmentalSensorNode .call (this, executionContext);
 
-   function ProximitySensor (executionContext)
+   this .addType (X3DConstants .ProximitySensor);
+
+   this .setCameraObject (true);
+
+   this ._centerOfRotation_changed .setUnit ("length");
+   this ._position_changed         .setUnit ("length");
+
+   this .setZeroTest (true);
+
+   this .min           = new Vector3 (0, 0, 0);
+   this .max           = new Vector3 (0, 0, 0);
+   this .viewpointNode = null;
+   this .modelMatrix   = new Matrix4 ();
+   this .inside        = false;
+}
+
+ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
+{
+   constructor: ProximitySensor,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                  new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "size",                     new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "center",                   new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "enterTime",                new Fields .SFTime ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "exitTime",                 new Fields .SFTime ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",                 new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "position_changed",         new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "orientation_changed",      new Fields .SFRotation ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "centerOfRotation_changed", new Fields .SFVec3f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DEnvironmentalSensorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .ProximitySensor);
-
-      this .setCameraObject (true);
-
-      this ._centerOfRotation_changed .setUnit ("length");
-      this ._position_changed         .setUnit ("length");
-
-      this .setZeroTest (true);
-
-      this .min           = new Vector3 (0, 0, 0);
-      this .max           = new Vector3 (0, 0, 0);
-      this .viewpointNode = null;
-      this .modelMatrix   = new Matrix4 ();
-      this .inside        = false;
-   }
-
-   ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
+      return "ProximitySensor";
+   },
+   getComponentName: function ()
    {
-      constructor: ProximitySensor,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                  new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "size",                     new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "center",                   new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "enterTime",                new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "exitTime",                 new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",                 new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "position_changed",         new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "orientation_changed",      new Fields .SFRotation ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "centerOfRotation_changed", new Fields .SFVec3f ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "ProximitySensor";
-      },
-      getComponentName: function ()
-      {
-         return "EnvironmentalSensor";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DEnvironmentalSensorNode .prototype .initialize .call (this);
+      return "EnvironmentalSensor";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
-         this ._enabled .addInterest ("set_enabled__", this);
-         this ._size    .addInterest ("set_extents__", this);
-         this ._center  .addInterest ("set_extents__", this);
+      this ._enabled .addInterest ("set_enabled__", this);
+      this ._size    .addInterest ("set_extents__", this);
+      this ._center  .addInterest ("set_extents__", this);
 
-         this ._traversed .addFieldInterest (this ._isCameraObject);
+      this ._traversed .addFieldInterest (this ._isCameraObject);
 
-         this .set_enabled__ ();
-         this .set_extents__ ();
-      },
-      set_enabled__: function ()
+      this .set_enabled__ ();
+      this .set_extents__ ();
+   },
+   set_enabled__: function ()
+   {
+      this .setCameraObject (this ._enabled .getValue ());
+
+      if (this ._enabled .getValue ())
+         delete this .traverse;
+      else
+         this .traverse = Function .prototype;
+   },
+   set_extents__: function ()
+   {
+      const
+         s  = this ._size .getValue (),
+         c  = this ._center .getValue (),
+         sx = s .x / 2,
+         sy = s .y / 2,
+         sz = s .z / 2,
+         cx = c .x,
+         cy = c .y,
+         cz = c .z;
+
+      this .min .set (cx - sx, cy - sy, cz - sz);
+      this .max .set (cx + sx, cy + sy, cz + sz);
+   },
+   update: (function ()
+   {
+      const
+         invModelMatrix         = new Matrix4 (),
+         centerOfRotationMatrix = new Matrix4 (),
+         position               = new Vector3 (0, 0, 0),
+         orientation            = new Rotation4 (0, 0, 1, 0),
+         centerOfRotation       = new Vector3 (0, 0, 0);
+
+      return function ()
       {
-         this .setCameraObject (this ._enabled .getValue ());
-
-         if (this ._enabled .getValue ())
-            delete this .traverse;
-         else
-            this .traverse = Function .prototype;
-      },
-      set_extents__: function ()
-      {
-         const
-            s  = this ._size .getValue (),
-            c  = this ._center .getValue (),
-            sx = s .x / 2,
-            sy = s .y / 2,
-            sz = s .z / 2,
-            cx = c .x,
-            cy = c .y,
-            cz = c .z;
-
-         this .min .set (cx - sx, cy - sy, cz - sz);
-         this .max .set (cx + sx, cy + sy, cz + sz);
-      },
-      update: (function ()
-      {
-         const
-            invModelMatrix         = new Matrix4 (),
-            centerOfRotationMatrix = new Matrix4 (),
-            position               = new Vector3 (0, 0, 0),
-            orientation            = new Rotation4 (0, 0, 1, 0),
-            centerOfRotation       = new Vector3 (0, 0, 0);
-
-         return function ()
+         if (this .inside && this .getTraversed ())
          {
-            if (this .inside && this .getTraversed ())
+            if (this .viewpointNode)
             {
-               if (this .viewpointNode)
-               {
-                  const modelMatrix = this .modelMatrix;
+               const modelMatrix = this .modelMatrix;
 
-                  centerOfRotationMatrix .assign (this .viewpointNode .getModelMatrix ());
-                  centerOfRotationMatrix .translate (this .viewpointNode .getUserCenterOfRotation ());
-                  centerOfRotationMatrix .multRight (invModelMatrix .assign (modelMatrix) .inverse ());
+               centerOfRotationMatrix .assign (this .viewpointNode .getModelMatrix ());
+               centerOfRotationMatrix .translate (this .viewpointNode .getUserCenterOfRotation ());
+               centerOfRotationMatrix .multRight (invModelMatrix .assign (modelMatrix) .inverse ());
 
-                  modelMatrix .multRight (this .viewpointNode .getViewMatrix ());
-                  modelMatrix .get (null, orientation);
-                  modelMatrix .inverse ();
+               modelMatrix .multRight (this .viewpointNode .getViewMatrix ());
+               modelMatrix .get (null, orientation);
+               modelMatrix .inverse ();
 
-                  position .set (modelMatrix [12], modelMatrix [13], modelMatrix [14]);
+               position .set (modelMatrix [12], modelMatrix [13], modelMatrix [14]);
 
-                  orientation .inverse ();
+               orientation .inverse ();
 
-                  centerOfRotation .set (centerOfRotationMatrix [12], centerOfRotationMatrix [13], centerOfRotationMatrix [14]);
+               centerOfRotation .set (centerOfRotationMatrix [12], centerOfRotationMatrix [13], centerOfRotationMatrix [14]);
 
-                  if (this ._isActive .getValue ())
-                  {
-                     if (! this ._position_changed .getValue () .equals (position))
-                        this ._position_changed = position;
-
-                     if (! this ._orientation_changed .getValue () .equals (orientation))
-                        this ._orientation_changed = orientation;
-
-                     if (! this ._centerOfRotation_changed .getValue () .equals (centerOfRotation))
-                        this ._centerOfRotation_changed = centerOfRotation;
-                  }
-                  else
-                  {
-                     this ._isActive                 = true;
-                     this ._enterTime                = this .getBrowser () .getCurrentTime ();
-                     this ._position_changed         = position;
-                     this ._orientation_changed      = orientation;
-                     this ._centerOfRotation_changed = centerOfRotation;
-                  }
-               }
-            }
-            else
-            {
                if (this ._isActive .getValue ())
                {
-                  this ._isActive = false;
-                  this ._exitTime = this .getBrowser () .getCurrentTime ();
+                  if (! this ._position_changed .getValue () .equals (position))
+                     this ._position_changed = position;
+
+                  if (! this ._orientation_changed .getValue () .equals (orientation))
+                     this ._orientation_changed = orientation;
+
+                  if (! this ._centerOfRotation_changed .getValue () .equals (centerOfRotation))
+                     this ._centerOfRotation_changed = centerOfRotation;
+               }
+               else
+               {
+                  this ._isActive                 = true;
+                  this ._enterTime                = this .getBrowser () .getCurrentTime ();
+                  this ._position_changed         = position;
+                  this ._orientation_changed      = orientation;
+                  this ._centerOfRotation_changed = centerOfRotation;
                }
             }
-
-            this .inside        = false;
-            this .viewpointNode = null;
-
-            this .setTraversed (false);
-         };
-      })(),
-      traverse: (function ()
-      {
-         const
-            invModelViewMatrix = new Matrix4 (),
-            infinity           = new Vector3 (-1, -1, -1);
-
-         return function (type, renderObject)
+         }
+         else
          {
-            switch (type)
+            if (this ._isActive .getValue ())
             {
-               case TraverseType .CAMERA:
-               {
-                  this .viewpointNode = renderObject .getViewpoint ();
-                  this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-                  return;
-               }
-               case TraverseType .DISPLAY:
-               {
-                  this .setTraversed (true);
-
-                  if (this .inside)
-                     return;
-
-                  if (this ._size .getValue () .equals (infinity))
-                  {
-                     this .inside = true;
-                  }
-                  else
-                  {
-                     invModelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .inverse ();
-
-                     this .inside = this .containsPoint (invModelViewMatrix .origin);
-                  }
-
-                  return;
-               }
+               this ._isActive = false;
+               this ._exitTime = this .getBrowser () .getCurrentTime ();
             }
-         };
-      })(),
-      containsPoint: function (point)
+         }
+
+         this .inside        = false;
+         this .viewpointNode = null;
+
+         this .setTraversed (false);
+      };
+   })(),
+   traverse: (function ()
+   {
+      const
+         invModelViewMatrix = new Matrix4 (),
+         infinity           = new Vector3 (-1, -1, -1);
+
+      return function (type, renderObject)
       {
-         const
-            min = this .min,
-            max = this .max;
+         switch (type)
+         {
+            case TraverseType .CAMERA:
+            {
+               this .viewpointNode = renderObject .getViewpoint ();
+               this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+               return;
+            }
+            case TraverseType .DISPLAY:
+            {
+               this .setTraversed (true);
 
-         return min .x <= point .x &&
-                max .x >= point .x &&
-                min .y <= point .y &&
-                max .y >= point .y &&
-                min .z <= point .z &&
-                max .z >= point .z;
-      },
-   });
+               if (this .inside)
+                  return;
 
-   return ProximitySensor;
+               if (this ._size .getValue () .equals (infinity))
+               {
+                  this .inside = true;
+               }
+               else
+               {
+                  invModelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .inverse ();
+
+                  this .inside = this .containsPoint (invModelViewMatrix .origin);
+               }
+
+               return;
+            }
+         }
+      };
+   })(),
+   containsPoint: function (point)
+   {
+      const
+         min = this .min,
+         max = this .max;
+
+      return min .x <= point .x &&
+             max .x >= point .x &&
+             min .y <= point .y &&
+             max .y >= point .y &&
+             min .z <= point .z &&
+             max .z >= point .z;
+   },
 });
+
+export default ProximitySensor;

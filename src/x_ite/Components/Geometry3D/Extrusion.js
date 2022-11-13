@@ -47,672 +47,657 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Geometry/Triangle3",
-   "standard/Math/Numbers/Vector2",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DGeometryNode,
-          X3DConstants,
-          Triangle3,
-          Vector2,
-          Vector3,
-          Rotation4,
-          Matrix4)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DGeometryNode from "../Rendering/X3DGeometryNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Triangle3 from "../../../standard/Math/Geometry/Triangle3.js";
+import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+function Extrusion (executionContext)
 {
-"use strict";
+   X3DGeometryNode .call (this, executionContext);
 
-   function Extrusion (executionContext)
+   this .addType (X3DConstants .Extrusion);
+
+   this ._creaseAngle  .setUnit ("angle");
+   this ._crossSection .setUnit ("length");
+   this ._spine        .setUnit ("length");
+}
+
+Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+{
+   constructor: Extrusion,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_crossSection", new Fields .MFVec2f ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_orientation",  new Fields .MFRotation ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_scale",        new Fields .MFVec2f ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_spine",        new Fields .MFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "beginCap",         new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "endCap",           new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",            new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",              new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "convex",           new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "creaseAngle",      new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "crossSection",     new Fields .MFVec2f (new Vector2 (1, 1), new Vector2 (1, -1), new Vector2 (-1, -1), new Vector2 (-1, 1), new Vector2 (1, 1))),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "orientation",      new Fields .MFRotation (new Rotation4 ())),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "scale",            new Fields .MFVec2f (new Vector2 (1, 1))),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "spine",            new Fields .MFVec3f (new Vector3 (0, 0, 0), new Vector3 (0, 1, 0))),
+   ]),
+   getTypeName: function ()
    {
-      X3DGeometryNode .call (this, executionContext);
-
-      this .addType (X3DConstants .Extrusion);
-
-      this ._creaseAngle  .setUnit ("angle");
-      this ._crossSection .setUnit ("length");
-      this ._spine        .setUnit ("length");
-   }
-
-   Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+      return "Extrusion";
+   },
+   getComponentName: function ()
    {
-      constructor: Extrusion,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_crossSection", new Fields .MFVec2f ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_orientation",  new Fields .MFRotation ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_scale",        new Fields .MFVec2f ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_spine",        new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "beginCap",         new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "endCap",           new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",            new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",              new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "convex",           new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "creaseAngle",      new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "crossSection",     new Fields .MFVec2f (new Vector2 (1, 1), new Vector2 (1, -1), new Vector2 (-1, -1), new Vector2 (-1, 1), new Vector2 (1, 1))),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "orientation",      new Fields .MFRotation (new Rotation4 ())),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "scale",            new Fields .MFVec2f (new Vector2 (1, 1))),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "spine",            new Fields .MFVec3f (new Vector3 (0, 0, 0), new Vector3 (0, 1, 0))),
-      ]),
-      getTypeName: function ()
-      {
-         return "Extrusion";
-      },
-      getComponentName: function ()
-      {
-         return "Geometry3D";
-      },
-      getContainerField: function ()
-      {
-         return "geometry";
-      },
-      initialize: function ()
-      {
-         X3DGeometryNode .prototype .initialize .call (this);
+      return "Geometry3D";
+   },
+   getContainerField: function ()
+   {
+      return "geometry";
+   },
+   initialize: function ()
+   {
+      X3DGeometryNode .prototype .initialize .call (this);
 
-         this ._set_crossSection .addFieldInterest (this ._crossSection);
-         this ._set_orientation  .addFieldInterest (this ._orientation);
-         this ._set_scale        .addFieldInterest (this ._scale);
-         this ._set_spine        .addFieldInterest (this ._spine);
-      },
-      getClosedOrientation: function ()
-      {
-         const orientation = this ._orientation;
+      this ._set_crossSection .addFieldInterest (this ._crossSection);
+      this ._set_orientation  .addFieldInterest (this ._orientation);
+      this ._set_scale        .addFieldInterest (this ._scale);
+      this ._set_spine        .addFieldInterest (this ._spine);
+   },
+   getClosedOrientation: function ()
+   {
+      const orientation = this ._orientation;
 
-         if (orientation .length)
+      if (orientation .length)
+      {
+         const
+            firstOrientation = orientation [0] .getValue (),
+            lastOrientation  = orientation [orientation .length - 1] .getValue ();
+
+         return firstOrientation .equals (lastOrientation);
+      }
+
+      return true;
+   },
+   createPoints: (function ()
+   {
+      const scale3 = new Vector3 (1, 1, 1);
+
+      return function ()
+      {
+         const
+            crossSection = this ._crossSection,
+            orientation  = this ._orientation,
+            scale        = this ._scale,
+            spine        = this ._spine,
+            points       = [ ];
+
+         // calculate SCP rotations
+
+         const rotations = this .createRotations ();
+
+         // calculate vertices.
+
+         for (let i = 0, length = spine .length; i < length; ++ i)
          {
-            const
-               firstOrientation = orientation [0] .getValue (),
-               lastOrientation  = orientation [orientation .length - 1] .getValue ();
+            const matrix = rotations [i];
 
-            return firstOrientation .equals (lastOrientation);
+            if (orientation .length)
+               matrix .rotate (orientation [Math .min (i, orientation .length - 1)] .getValue ());
+
+            if (scale .length)
+            {
+               const s = scale [Math .min (i, scale .length - 1)] .getValue ();
+               matrix .scale (scale3 .set (s .x, 1, s .y));
+            }
+
+            for (let cs = 0, csLength = crossSection .length; cs < csLength; ++ cs)
+            {
+               const vector = crossSection [cs] .getValue ();
+               points .push (matrix .multVecMatrix (new Vector3 (vector .x, 0, vector .y)));
+            }
          }
 
-         return true;
-      },
-      createPoints: (function ()
-      {
-         const scale3 = new Vector3 (1, 1, 1);
+         return points;
+      };
+   })(),
+   createRotations: (function ()
+   {
+      const rotations = [ ];
 
-         return function ()
-         {
-            const
-               crossSection = this ._crossSection,
-               orientation  = this ._orientation,
-               scale        = this ._scale,
-               spine        = this ._spine,
-               points       = [ ];
-
-            // calculate SCP rotations
-
-            const rotations = this .createRotations ();
-
-            // calculate vertices.
-
-            for (let i = 0, length = spine .length; i < length; ++ i)
-            {
-               const matrix = rotations [i];
-
-               if (orientation .length)
-                  matrix .rotate (orientation [Math .min (i, orientation .length - 1)] .getValue ());
-
-               if (scale .length)
-               {
-                  const s = scale [Math .min (i, scale .length - 1)] .getValue ();
-                  matrix .scale (scale3 .set (s .x, 1, s .y));
-               }
-
-               for (let cs = 0, csLength = crossSection .length; cs < csLength; ++ cs)
-               {
-                  const vector = crossSection [cs] .getValue ();
-                  points .push (matrix .multVecMatrix (new Vector3 (vector .x, 0, vector .y)));
-               }
-            }
-
-            return points;
-         };
-      })(),
-      createRotations: (function ()
-      {
-         const rotations = [ ];
+      const
+         SCPxAxis = new Vector3 (0, 0, 0),
+         SCPyAxis = new Vector3 (0, 0, 0),
+         SCPzAxis = new Vector3 (0, 0, 0);
 
          const
-            SCPxAxis = new Vector3 (0, 0, 0),
-            SCPyAxis = new Vector3 (0, 0, 0),
-            SCPzAxis = new Vector3 (0, 0, 0);
+         SCPyAxisPrevious = new Vector3 (0, 0, 0),
+         SCPzAxisPrevious = new Vector3 (0, 0, 0);
 
-            const
-            SCPyAxisPrevious = new Vector3 (0, 0, 0),
-            SCPzAxisPrevious = new Vector3 (0, 0, 0);
+         const
+         vector3  = new Vector3 (0, 0, 0),
+         rotation = new Rotation4 (0, 0, 1, 0);
 
-            const
-            vector3  = new Vector3 (0, 0, 0),
-            rotation = new Rotation4 (0, 0, 1, 0);
+      return function ()
+      {
+         // calculate SCP rotations
 
-         return function ()
+         const
+            spine       = this ._spine,
+            numSpines   = spine .length,
+            firstSpine  = spine [0] .getValue (),
+            lastSpine   = spine [spine .length - 1] .getValue (),
+            closedSpine = firstSpine .equals (lastSpine) && this .getClosedOrientation ();
+
+         // Extend or shrink static rotations array:
+         for (let i = rotations .length; i < numSpines; ++ i)
+            rotations [i] = new Matrix4 ();
+
+         rotations .length = numSpines;
+
+         // SCP axes:
+         SCPxAxis .set (0, 0, 0);
+         SCPyAxis .set (0, 0, 0);
+         SCPzAxis .set (0, 0, 0);
+
+         // SCP for the first point:
+         if (closedSpine)
          {
-            // calculate SCP rotations
+            const s = firstSpine;
 
-            const
-               spine       = this ._spine,
-               numSpines   = spine .length,
-               firstSpine  = spine [0] .getValue (),
-               lastSpine   = spine [spine .length - 1] .getValue (),
-               closedSpine = firstSpine .equals (lastSpine) && this .getClosedOrientation ();
-
-            // Extend or shrink static rotations array:
-            for (let i = rotations .length; i < numSpines; ++ i)
-               rotations [i] = new Matrix4 ();
-
-            rotations .length = numSpines;
-
-            // SCP axes:
-            SCPxAxis .set (0, 0, 0);
-            SCPyAxis .set (0, 0, 0);
-            SCPzAxis .set (0, 0, 0);
-
-            // SCP for the first point:
-            if (closedSpine)
+            // Find first defined Y-axis.
+            for (let i = 1, length = numSpines - 2; i < length; ++ i)
             {
-               const s = firstSpine;
+               SCPyAxis .assign (spine [i] .getValue ()) .subtract (s) .normalize ()
+                  .subtract (vector3 .assign (spine [length] .getValue ()) .subtract (s) .normalize ())
+                  .normalize ();
 
-               // Find first defined Y-axis.
-               for (let i = 1, length = numSpines - 2; i < length; ++ i)
-               {
-                  SCPyAxis .assign (spine [i] .getValue ()) .subtract (s) .normalize ()
-                     .subtract (vector3 .assign (spine [length] .getValue ()) .subtract (s) .normalize ())
+               if (! SCPyAxis .equals (Vector3 .Zero))
+                  break;
+            }
+
+            // Find first defined Z-axis.
+            for (let i = 0, length = numSpines - 2; i < length; ++ i)
+            {
+               SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ())
+                          .cross (vector3 .assign (spine [length] .getValue ()) .subtract (spine [i] .getValue ()))
+                          .normalize ();
+
+               if (! SCPzAxis .equals (Vector3 .Zero))
+                  break;
+            }
+         }
+         else
+         {
+            // Find first defined Y-axis.
+            for (let i = 0, length = numSpines - 1; i < length; ++ i)
+            {
+               SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ()) .normalize ();
+
+               if (! SCPyAxis .equals (Vector3 .Zero))
+                  break;
+            }
+
+            // Find first defined Z-axis.
+            for (let i = 1, length = numSpines - 1; i < length; ++ i)
+            {
+               SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ())
+                        .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (spine [i] .getValue ()))
+                        .normalize ();
+
+               if (! SCPzAxis .equals (Vector3 .Zero))
+                  break;
+            }
+         }
+
+         // The entire spine is coincident:
+         if (SCPyAxis .equals (Vector3 .Zero))
+            SCPyAxis .set (0, 1, 0);
+
+         // The entire spine is collinear:
+         if (SCPzAxis .equals (Vector3 .Zero))
+            rotation .setFromToVec (Vector3 .yAxis, SCPyAxis) .multVecRot (SCPzAxis .assign (Vector3 .zAxis));
+
+         // We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
+         SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
+
+         // Get first spine
+         const s = firstSpine;
+
+         rotations [0] .set (SCPxAxis .x, SCPxAxis .y, SCPxAxis .z, 0,
+                             SCPyAxis .x, SCPyAxis .y, SCPyAxis .z, 0,
+                             SCPzAxis .x, SCPzAxis .y, SCPzAxis .z, 0,
+                             s .x,        s .y,        s .z,        1);
+
+         // For all points other than the first or last:
+
+         SCPyAxisPrevious .assign (SCPyAxis);
+         SCPzAxisPrevious .assign (SCPzAxis);
+
+         for (let i = 1, length = numSpines - 1; i < length; ++ i)
+         {
+            const s = spine [i] .getValue ();
+
+            SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (s) .normalize ()
+                     .subtract (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s) .normalize ())
+                     .normalize ();
+            SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (s)
+                     .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s))
                      .normalize ();
 
-                  if (! SCPyAxis .equals (Vector3 .Zero))
-                     break;
-               }
+            // g.
+            if (SCPzAxisPrevious .dot (SCPzAxis) < 0)
+               SCPzAxis .negate ();
 
-               // Find first defined Z-axis.
-               for (let i = 0, length = numSpines - 2; i < length; ++ i)
-               {
-                  SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ())
-                             .cross (vector3 .assign (spine [length] .getValue ()) .subtract (spine [i] .getValue ()))
-                             .normalize ();
-
-                  if (! SCPzAxis .equals (Vector3 .Zero))
-                     break;
-               }
-            }
-            else
-            {
-               // Find first defined Y-axis.
-               for (let i = 0, length = numSpines - 1; i < length; ++ i)
-               {
-                  SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ()) .normalize ();
-
-                  if (! SCPyAxis .equals (Vector3 .Zero))
-                     break;
-               }
-
-               // Find first defined Z-axis.
-               for (let i = 1, length = numSpines - 1; i < length; ++ i)
-               {
-                  SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ())
-                           .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (spine [i] .getValue ()))
-                           .normalize ();
-
-                  if (! SCPzAxis .equals (Vector3 .Zero))
-                     break;
-               }
-            }
-
-            // The entire spine is coincident:
+            // The two points used in computing the Y-axis are coincident.
             if (SCPyAxis .equals (Vector3 .Zero))
-               SCPyAxis .set (0, 1, 0);
+               SCPyAxis .assign (SCPyAxisPrevious);
+            else
+               SCPyAxisPrevious .assign (SCPyAxis);
 
-            // The entire spine is collinear:
+            // The three points used in computing the Z-axis are collinear.
             if (SCPzAxis .equals (Vector3 .Zero))
-               rotation .setFromToVec (Vector3 .yAxis, SCPyAxis) .multVecRot (SCPzAxis .assign (Vector3 .zAxis));
+               SCPzAxis .assign (SCPzAxisPrevious);
+            else
+               SCPzAxisPrevious .assign (SCPzAxis);
 
             // We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
             SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
 
-            // Get first spine
-            const s = firstSpine;
-
-            rotations [0] .set (SCPxAxis .x, SCPxAxis .y, SCPxAxis .z, 0,
+            rotations [i] .set (SCPxAxis .x, SCPxAxis .y, SCPxAxis .z, 0,
                                 SCPyAxis .x, SCPyAxis .y, SCPyAxis .z, 0,
                                 SCPzAxis .x, SCPzAxis .y, SCPzAxis .z, 0,
                                 s .x,        s .y,        s .z,        1);
+         }
 
-            // For all points other than the first or last:
+         // SCP for the last point
+         if (closedSpine)
+         {
+            // The SCPs for the first and last points are the same.
+            rotations [numSpines - 1] .assign (rotations [0]);
+         }
+         else
+         {
+            const s = lastSpine;
 
-            SCPyAxisPrevious .assign (SCPyAxis);
-            SCPzAxisPrevious .assign (SCPzAxis);
+            SCPyAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ()) .normalize ();
 
-            for (let i = 1, length = numSpines - 1; i < length; ++ i)
+            if (numSpines > 2)
             {
-               const s = spine [i] .getValue ();
-
-               SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (s) .normalize ()
-                        .subtract (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s) .normalize ())
+               SCPzAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ())
+                        .cross (vector3 .assign (spine [numSpines - 3] .getValue ()) .subtract (spine [numSpines - 2] .getValue ()))
                         .normalize ();
-               SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (s)
-                        .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s))
-                        .normalize ();
-
-               // g.
-               if (SCPzAxisPrevious .dot (SCPzAxis) < 0)
-                  SCPzAxis .negate ();
-
-               // The two points used in computing the Y-axis are coincident.
-               if (SCPyAxis .equals (Vector3 .Zero))
-                  SCPyAxis .assign (SCPyAxisPrevious);
-               else
-                  SCPyAxisPrevious .assign (SCPyAxis);
-
-               // The three points used in computing the Z-axis are collinear.
-               if (SCPzAxis .equals (Vector3 .Zero))
-                  SCPzAxis .assign (SCPzAxisPrevious);
-               else
-                  SCPzAxisPrevious .assign (SCPzAxis);
-
-               // We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
-               SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
-
-               rotations [i] .set (SCPxAxis .x, SCPxAxis .y, SCPxAxis .z, 0,
-                                   SCPyAxis .x, SCPyAxis .y, SCPyAxis .z, 0,
-                                   SCPzAxis .x, SCPzAxis .y, SCPzAxis .z, 0,
-                                   s .x,        s .y,        s .z,        1);
             }
 
-            // SCP for the last point
-            if (closedSpine)
-            {
-               // The SCPs for the first and last points are the same.
-               rotations [numSpines - 1] .assign (rotations [0]);
-            }
-            else
-            {
-               const s = lastSpine;
+            // g.
+            if (SCPzAxisPrevious .dot (SCPzAxis) < 0)
+               SCPzAxis .negate ();
 
-               SCPyAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ()) .normalize ();
+            // The two points used in computing the Y-axis are coincident.
+            if (SCPyAxis .equals (Vector3 .Zero))
+               SCPyAxis .assign (SCPyAxisPrevious);
 
-               if (numSpines > 2)
-               {
-                  SCPzAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ())
-                           .cross (vector3 .assign (spine [numSpines - 3] .getValue ()) .subtract (spine [numSpines - 2] .getValue ()))
-                           .normalize ();
-               }
+            // The three points used in computing the Z-axis are collinear.
+            if (SCPzAxis .equals (Vector3 .Zero))
+               SCPzAxis .assign (SCPzAxisPrevious);
 
-               // g.
-               if (SCPzAxisPrevious .dot (SCPzAxis) < 0)
-                  SCPzAxis .negate ();
+            // We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
+            SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
 
-               // The two points used in computing the Y-axis are coincident.
-               if (SCPyAxis .equals (Vector3 .Zero))
-                  SCPyAxis .assign (SCPyAxisPrevious);
+            rotations [numSpines - 1] .set (SCPxAxis .x, SCPxAxis .y, SCPxAxis .z, 0,
+                                            SCPyAxis .x, SCPyAxis .y, SCPyAxis .z, 0,
+                                            SCPzAxis .x, SCPzAxis .y, SCPzAxis .z, 0,
+                                            s .x,        s .y,        s .z,        1);
+         }
 
-               // The three points used in computing the Z-axis are collinear.
-               if (SCPzAxis .equals (Vector3 .Zero))
-                  SCPzAxis .assign (SCPzAxisPrevious);
+         return rotations;
+      };
+   })(),
+   build: (function ()
+   {
+      const
+         min     = new Vector2 (0, 0, 0),
+         max     = new Vector2 (0, 0, 0),
+         vector2 = new Vector2 (0, 0, 0);
 
-               // We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
-               SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
-
-               rotations [numSpines - 1] .set (SCPxAxis .x, SCPxAxis .y, SCPxAxis .z, 0,
-                                               SCPyAxis .x, SCPyAxis .y, SCPyAxis .z, 0,
-                                               SCPzAxis .x, SCPzAxis .y, SCPzAxis .z, 0,
-                                               s .x,        s .y,        s .z,        1);
-            }
-
-            return rotations;
-         };
-      })(),
-      build: (function ()
+      return function ()
       {
          const
-            min     = new Vector2 (0, 0, 0),
-            max     = new Vector2 (0, 0, 0),
-            vector2 = new Vector2 (0, 0, 0);
+            cw            = ! this ._ccw .getValue (),
+            crossSection  = this ._crossSection,
+            spine         = this ._spine,
+            numSpines     = spine .length,
+            texCoordArray = this .getTexCoords ();
 
-         return function ()
+         if (numSpines < 2 || crossSection .length < 2)
+            return;
+
+         this .getMultiTexCoords () .push (texCoordArray);
+
+         const crossSectionSize = crossSection .length; // This one is used only in the INDEX macro.
+
+         function INDEX (n, k) { return n * crossSectionSize + k; }
+
+         const
+            firstSpine  = spine [0] .getValue (),
+            lastSpine   = spine [numSpines - 1] .getValue (),
+            closedSpine = firstSpine .equals (lastSpine) && this .getClosedOrientation ();
+
+         const
+            firstCrossSection  = crossSection [0] .getValue (),
+            lastCrossSection   = crossSection [crossSection .length - 1] .getValue (),
+            closedCrossSection = firstCrossSection .equals (lastCrossSection);
+
+         // For caps calculation
+
+         min .assign (crossSection [0] .getValue ());
+         max .assign (crossSection [0] .getValue ());
+
+         for (let k = 1, length = crossSection .length; k < length; ++ k)
          {
-            const
-               cw            = ! this ._ccw .getValue (),
-               crossSection  = this ._crossSection,
-               spine         = this ._spine,
-               numSpines     = spine .length,
-               texCoordArray = this .getTexCoords ();
+            min .min (crossSection [k] .getValue ());
+            max .max (crossSection [k] .getValue ());
+         }
 
-            if (numSpines < 2 || crossSection .length < 2)
-               return;
+         const
+            capSize      = vector2 .assign (max) .subtract (min),
+            capMax       = Math .max (capSize .x, capSize .y),
+            numCapPoints = closedCrossSection ? crossSection .length - 1 : crossSection .length;
 
-            this .getMultiTexCoords () .push (texCoordArray);
+         // Create
 
-            const crossSectionSize = crossSection .length; // This one is used only in the INDEX macro.
+         const
+            normalIndex = [ ],
+            normals     = [ ],
+            points      = this .createPoints ();
 
-            function INDEX (n, k) { return n * crossSectionSize + k; }
+         for (let p = 0, length = points .length; p < length; ++ p)
+            normalIndex [p] = [ ];
 
-            const
-               firstSpine  = spine [0] .getValue (),
-               lastSpine   = spine [numSpines - 1] .getValue (),
-               closedSpine = firstSpine .equals (lastSpine) && this .getClosedOrientation ();
+         // Build body.
 
-            const
-               firstCrossSection  = crossSection [0] .getValue (),
-               lastCrossSection   = crossSection [crossSection .length - 1] .getValue (),
-               closedCrossSection = firstCrossSection .equals (lastCrossSection);
-
-            // For caps calculation
-
-            min .assign (crossSection [0] .getValue ());
-            max .assign (crossSection [0] .getValue ());
-
-            for (let k = 1, length = crossSection .length; k < length; ++ k)
-            {
-               min .min (crossSection [k] .getValue ());
-               max .max (crossSection [k] .getValue ());
-            }
-
-            const
-               capSize      = vector2 .assign (max) .subtract (min),
-               capMax       = Math .max (capSize .x, capSize .y),
-               numCapPoints = closedCrossSection ? crossSection .length - 1 : crossSection .length;
-
-            // Create
-
-            const
-               normalIndex = [ ],
-               normals     = [ ],
-               points      = this .createPoints ();
-
-            for (let p = 0, length = points .length; p < length; ++ p)
-               normalIndex [p] = [ ];
-
-            // Build body.
-
-            const
-               normalArray = this .getNormals (),
-               vertexArray = this .getVertices ();
-
-            const
-               numCrossSection_1 = crossSection .length - 1,
-               numSpine_1        = numSpines - 1;
-
-            let
-               indexLeft  = INDEX (0, 0),
-               indexRight = INDEX (0, closedCrossSection ? 0 : numCrossSection_1);
-
-            for (let n = 0; n < numSpine_1; ++ n)
-            {
-               for (let k = 0; k < numCrossSection_1; ++ k)
-               {
-                  const
-                     n1 = closedSpine && n === numSpines - 2 ? 0 : n + 1,
-                     k1 = closedCrossSection && k === crossSection .length - 2 ? 0 : k + 1;
-
-                  // k      k+1
-                  //
-                  // p4 ----- p3   n+1
-                  //  |     / |
-                  //  |   /   |
-                  //  | /     |
-                  // p1 ----- p2   n
-
-                  let
-                     i1 = INDEX (n,  k),
-                     i2 = INDEX (n,  k1),
-                     i3 = INDEX (n1, k1),
-                     i4 = INDEX (n1, k),
-                     p1 = points [i1],
-                     p2 = points [i2],
-                     p3 = points [i3],
-                     p4 = points [i4],
-                     l1 = p2 .distance (p3) >= 1e-7,
-                     l2 = p4 .distance (p1) >= 1e-7;
-
-                  if (cw)
-                  {
-                     var
-                        normal1 = Triangle3 .normal (p3, p2, p1, new Vector3 (0, 0, 0)),
-                        normal2 = Triangle3 .normal (p4, p3, p1, new Vector3 (0, 0, 0));
-                  }
-                  else
-                  {
-                     var
-                        normal1 = Triangle3 .normal (p1, p2, p3, new Vector3 (0, 0, 0)),
-                        normal2 = Triangle3 .normal (p1, p3, p4, new Vector3 (0, 0, 0));
-                  }
-
-                  // Merge points on the left and right side if spine is coincident for better normal generation.
-
-                  if (k == 0)
-                  {
-                     if (l2)
-                     {
-                        indexLeft = i1;
-                     }
-                     else
-                     {
-                        i1 = indexLeft;
-                        p1 = points [i1];
-                     }
-                  }
-
-                  if (k == crossSection .length - 2)
-                  {
-                     if (l1)
-                     {
-                        indexRight = i2;
-                     }
-                     else
-                     {
-                        i3 = indexRight;
-                        p3 = points [i3];
-                     }
-                  }
-
-                  // If there are coincident spine points then one length can be zero.
-
-                  // Triangle one
-
-                  if (l1)
-                  {
-                     // p1
-                     if (l2)
-                     {
-                        texCoordArray .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
-                     }
-                     else
-                     {
-                        // Cone case: ((texCoord1 + texCoord4) / 2)
-                        const y = (n / numSpine_1 + (n + 1) / numSpine_1) / 2;
-
-                        texCoordArray .push (k / numCrossSection_1, y, 0, 1);
-                     }
-
-                     normalIndex [i1] .push (normals .length);
-                     normals .push (normal1);
-                     vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
-
-                     // p2
-                     texCoordArray .push ((k + 1) / numCrossSection_1, n / numSpine_1, 0, 1);
-                     normalIndex [i2] .push (normals .length);
-                     normals .push (normal1);
-                     vertexArray .push (p2 .x, p2 .y, p2 .z, 1);
-
-                     // p3
-                     texCoordArray .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
-                     normalIndex [i3] .push (normals .length);
-                     normals .push (normal1);
-                     vertexArray .push (p3 .x, p3 .y, p3 .z, 1);
-                  }
-
-                  // Triangle two
-
-                  if (l2)
-                  {
-                     // p1
-                     texCoordArray .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
-                     normalIndex [i1] .push (normals .length);
-                     normals .push (normal2);
-                     vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
-
-                     // p3
-                     if (l1)
-                     {
-                        texCoordArray .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
-                     }
-                     else
-                     {
-                        // Cone case: ((texCoord3 + texCoord2) / 2)
-                        const y = ((n + 1) / numSpine_1 + n / numSpine_1) / 2;
-
-                        texCoordArray .push ((k + 1) / numCrossSection_1, y, 0, 1);
-                     }
-
-                     normalIndex [i3] .push (normals .length);
-                     normals .push (normal2);
-                     vertexArray .push (p3 .x, p3 .y, p3 .z, 1);
-
-                     // p4
-                     texCoordArray .push (k / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
-                     normalIndex [i4] .push (normals .length);
-                     normals .push (normal2);
-                     vertexArray .push (p4 .x, p4 .y, p4 .z, 1);
-                  }
-               }
-            }
-
-            // Refine body normals and add them.
-
-            const refineNormals = this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
-
-            for (const normal of refineNormals)
-            {
-               normalArray .push (normal .x, normal .y, normal .z);
-            }
-
-            // Build caps
-
-            if (capMax && numCapPoints > 2)
-            {
-               if (this ._beginCap .getValue ())
-               {
-                  const
-                     j         = 0, // spine
-                     polygon   = [ ],
-                     triangles = [ ];
-
-                  for (let k = 0; k < numCapPoints; ++ k)
-                  {
-                     const
-                        index = INDEX (j, numCapPoints - 1 - k),
-                        point = points [index] .copy ();
-
-                     point .index    = index;
-                     point .texCoord = Vector2 .subtract (crossSection [numCapPoints - 1 - k] .getValue (), min) .divide (capMax);
-                     polygon .push (point);
-                  }
-
-                  if (this ._convex .getValue ())
-                     Triangle3 .triangulateConvexPolygon (polygon, triangles);
-
-                  else
-                     Triangle3 .triangulatePolygon (polygon, triangles);
-
-                  if (triangles .length >= 3)
-                  {
-                     const normal = Triangle3 .normal (points [triangles [0] .index],
-                                                       points [triangles [1] .index],
-                                                       points [triangles [2] .index],
-                                                       new Vector3 (0, 0, 0));
-
-                     if (cw)
-                        normal .negate ();
-
-                     this .addCap (texCoordArray, normal, points, triangles);
-                  }
-               }
-
-               if (this ._endCap .getValue ())
-               {
-                  const
-                     j         = numSpines - 1, // spine
-                     polygon   = [ ],
-                     triangles = [ ];
-
-                  for (let k = 0; k < numCapPoints; ++ k)
-                  {
-                     const
-                        index = INDEX (j, k),
-                        point = points [index] .copy ();
-
-                     point .index    = index;
-                     point .texCoord = Vector2 .subtract (crossSection [k] .getValue (), min) .divide (capMax);
-                     polygon .push (point);
-                  }
-
-                  if (this ._convex .getValue ())
-                     Triangle3 .triangulateConvexPolygon (polygon, triangles);
-
-                  else
-                     Triangle3 .triangulatePolygon (polygon, triangles);
-
-                  if (triangles .length >= 3)
-                  {
-                     const normal = Triangle3 .normal (points [triangles [0] .index],
-                                                       points [triangles [1] .index],
-                                                       points [triangles [2] .index],
-                                                       new Vector3 (0, 0, 0));
-
-                     if (cw)
-                        normal .negate ();
-
-                     this .addCap (texCoordArray, normal, points, triangles);
-                  }
-               }
-            }
-
-            this .setSolid (this ._solid .getValue ());
-            this .setCCW (this ._ccw .getValue ());
-         };
-      })(),
-      addCap: function (texCoordArray, normal, vertices, triangles)
-      {
          const
             normalArray = this .getNormals (),
             vertexArray = this .getVertices ();
 
-         for (let i = 0, length = triangles .length; i < length; i += 3)
+         const
+            numCrossSection_1 = crossSection .length - 1,
+            numSpine_1        = numSpines - 1;
+
+         let
+            indexLeft  = INDEX (0, 0),
+            indexRight = INDEX (0, closedCrossSection ? 0 : numCrossSection_1);
+
+         for (let n = 0; n < numSpine_1; ++ n)
          {
-            const
-               p0 = vertices [triangles [i]     .index],
-               p1 = vertices [triangles [i + 1] .index],
-               p2 = vertices [triangles [i + 2] .index],
-               t0 = triangles [i]     .texCoord,
-               t1 = triangles [i + 1] .texCoord,
-               t2 = triangles [i + 2] .texCoord;
+            for (let k = 0; k < numCrossSection_1; ++ k)
+            {
+               const
+                  n1 = closedSpine && n === numSpines - 2 ? 0 : n + 1,
+                  k1 = closedCrossSection && k === crossSection .length - 2 ? 0 : k + 1;
 
-            texCoordArray .push (t0 .x, t0 .y, 0, 1);
-            texCoordArray .push (t1 .x, t1 .y, 0, 1);
-            texCoordArray .push (t2 .x, t2 .y, 0, 1);
+               // k      k+1
+               //
+               // p4 ----- p3   n+1
+               //  |     / |
+               //  |   /   |
+               //  | /     |
+               // p1 ----- p2   n
 
-            normalArray .push (normal .x, normal .y, normal .z,
-                               normal .x, normal .y, normal .z,
-                               normal .x, normal .y, normal .z);
+               let
+                  i1 = INDEX (n,  k),
+                  i2 = INDEX (n,  k1),
+                  i3 = INDEX (n1, k1),
+                  i4 = INDEX (n1, k),
+                  p1 = points [i1],
+                  p2 = points [i2],
+                  p3 = points [i3],
+                  p4 = points [i4],
+                  l1 = p2 .distance (p3) >= 1e-7,
+                  l2 = p4 .distance (p1) >= 1e-7;
 
-            vertexArray .push (p0 .x, p0 .y, p0 .z, 1,
-                               p1 .x, p1 .y, p1 .z, 1,
-                               p2 .x, p2 .y, p2 .z, 1);
+               if (cw)
+               {
+                  var
+                     normal1 = Triangle3 .normal (p3, p2, p1, new Vector3 (0, 0, 0)),
+                     normal2 = Triangle3 .normal (p4, p3, p1, new Vector3 (0, 0, 0));
+               }
+               else
+               {
+                  var
+                     normal1 = Triangle3 .normal (p1, p2, p3, new Vector3 (0, 0, 0)),
+                     normal2 = Triangle3 .normal (p1, p3, p4, new Vector3 (0, 0, 0));
+               }
+
+               // Merge points on the left and right side if spine is coincident for better normal generation.
+
+               if (k == 0)
+               {
+                  if (l2)
+                  {
+                     indexLeft = i1;
+                  }
+                  else
+                  {
+                     i1 = indexLeft;
+                     p1 = points [i1];
+                  }
+               }
+
+               if (k == crossSection .length - 2)
+               {
+                  if (l1)
+                  {
+                     indexRight = i2;
+                  }
+                  else
+                  {
+                     i3 = indexRight;
+                     p3 = points [i3];
+                  }
+               }
+
+               // If there are coincident spine points then one length can be zero.
+
+               // Triangle one
+
+               if (l1)
+               {
+                  // p1
+                  if (l2)
+                  {
+                     texCoordArray .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
+                  }
+                  else
+                  {
+                     // Cone case: ((texCoord1 + texCoord4) / 2)
+                     const y = (n / numSpine_1 + (n + 1) / numSpine_1) / 2;
+
+                     texCoordArray .push (k / numCrossSection_1, y, 0, 1);
+                  }
+
+                  normalIndex [i1] .push (normals .length);
+                  normals .push (normal1);
+                  vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
+
+                  // p2
+                  texCoordArray .push ((k + 1) / numCrossSection_1, n / numSpine_1, 0, 1);
+                  normalIndex [i2] .push (normals .length);
+                  normals .push (normal1);
+                  vertexArray .push (p2 .x, p2 .y, p2 .z, 1);
+
+                  // p3
+                  texCoordArray .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
+                  normalIndex [i3] .push (normals .length);
+                  normals .push (normal1);
+                  vertexArray .push (p3 .x, p3 .y, p3 .z, 1);
+               }
+
+               // Triangle two
+
+               if (l2)
+               {
+                  // p1
+                  texCoordArray .push (k / numCrossSection_1, n / numSpine_1, 0, 1);
+                  normalIndex [i1] .push (normals .length);
+                  normals .push (normal2);
+                  vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
+
+                  // p3
+                  if (l1)
+                  {
+                     texCoordArray .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
+                  }
+                  else
+                  {
+                     // Cone case: ((texCoord3 + texCoord2) / 2)
+                     const y = ((n + 1) / numSpine_1 + n / numSpine_1) / 2;
+
+                     texCoordArray .push ((k + 1) / numCrossSection_1, y, 0, 1);
+                  }
+
+                  normalIndex [i3] .push (normals .length);
+                  normals .push (normal2);
+                  vertexArray .push (p3 .x, p3 .y, p3 .z, 1);
+
+                  // p4
+                  texCoordArray .push (k / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
+                  normalIndex [i4] .push (normals .length);
+                  normals .push (normal2);
+                  vertexArray .push (p4 .x, p4 .y, p4 .z, 1);
+               }
+            }
          }
-      },
-   });
 
-   return Extrusion;
+         // Refine body normals and add them.
+
+         const refineNormals = this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
+
+         for (const normal of refineNormals)
+         {
+            normalArray .push (normal .x, normal .y, normal .z);
+         }
+
+         // Build caps
+
+         if (capMax && numCapPoints > 2)
+         {
+            if (this ._beginCap .getValue ())
+            {
+               const
+                  j         = 0, // spine
+                  polygon   = [ ],
+                  triangles = [ ];
+
+               for (let k = 0; k < numCapPoints; ++ k)
+               {
+                  const
+                     index = INDEX (j, numCapPoints - 1 - k),
+                     point = points [index] .copy ();
+
+                  point .index    = index;
+                  point .texCoord = Vector2 .subtract (crossSection [numCapPoints - 1 - k] .getValue (), min) .divide (capMax);
+                  polygon .push (point);
+               }
+
+               if (this ._convex .getValue ())
+                  Triangle3 .triangulateConvexPolygon (polygon, triangles);
+
+               else
+                  Triangle3 .triangulatePolygon (polygon, triangles);
+
+               if (triangles .length >= 3)
+               {
+                  const normal = Triangle3 .normal (points [triangles [0] .index],
+                                                    points [triangles [1] .index],
+                                                    points [triangles [2] .index],
+                                                    new Vector3 (0, 0, 0));
+
+                  if (cw)
+                     normal .negate ();
+
+                  this .addCap (texCoordArray, normal, points, triangles);
+               }
+            }
+
+            if (this ._endCap .getValue ())
+            {
+               const
+                  j         = numSpines - 1, // spine
+                  polygon   = [ ],
+                  triangles = [ ];
+
+               for (let k = 0; k < numCapPoints; ++ k)
+               {
+                  const
+                     index = INDEX (j, k),
+                     point = points [index] .copy ();
+
+                  point .index    = index;
+                  point .texCoord = Vector2 .subtract (crossSection [k] .getValue (), min) .divide (capMax);
+                  polygon .push (point);
+               }
+
+               if (this ._convex .getValue ())
+                  Triangle3 .triangulateConvexPolygon (polygon, triangles);
+
+               else
+                  Triangle3 .triangulatePolygon (polygon, triangles);
+
+               if (triangles .length >= 3)
+               {
+                  const normal = Triangle3 .normal (points [triangles [0] .index],
+                                                    points [triangles [1] .index],
+                                                    points [triangles [2] .index],
+                                                    new Vector3 (0, 0, 0));
+
+                  if (cw)
+                     normal .negate ();
+
+                  this .addCap (texCoordArray, normal, points, triangles);
+               }
+            }
+         }
+
+         this .setSolid (this ._solid .getValue ());
+         this .setCCW (this ._ccw .getValue ());
+      };
+   })(),
+   addCap: function (texCoordArray, normal, vertices, triangles)
+   {
+      const
+         normalArray = this .getNormals (),
+         vertexArray = this .getVertices ();
+
+      for (let i = 0, length = triangles .length; i < length; i += 3)
+      {
+         const
+            p0 = vertices [triangles [i]     .index],
+            p1 = vertices [triangles [i + 1] .index],
+            p2 = vertices [triangles [i + 2] .index],
+            t0 = triangles [i]     .texCoord,
+            t1 = triangles [i + 1] .texCoord,
+            t2 = triangles [i + 2] .texCoord;
+
+         texCoordArray .push (t0 .x, t0 .y, 0, 1);
+         texCoordArray .push (t1 .x, t1 .y, 0, 1);
+         texCoordArray .push (t2 .x, t2 .y, 0, 1);
+
+         normalArray .push (normal .x, normal .y, normal .z,
+                            normal .x, normal .y, normal .z,
+                            normal .x, normal .y, normal .z);
+
+         vertexArray .push (p0 .x, p0 .y, p0 .z, 1,
+                            p1 .x, p1 .y, p1 .z, 1,
+                            p2 .x, p2 .y, p2 .z, 1);
+      }
+   },
 });
+
+export default Extrusion;

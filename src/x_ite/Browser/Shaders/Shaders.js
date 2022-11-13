@@ -47,191 +47,135 @@
  ******************************************************************************/
 
 
- define ([
-   "text!assets/shaders/webgl1/include/ClipPlanes.glsl",
-   "text!assets/shaders/webgl1/include/Colors.glsl",
-   "text!assets/shaders/webgl1/include/Fog.glsl",
-   "text!assets/shaders/webgl1/include/Fragment.glsl",
-   "text!assets/shaders/webgl1/include/Hatch.glsl",
-   "text!assets/shaders/webgl1/include/Material.glsl",
-   "text!assets/shaders/webgl1/include/Normal.glsl",
-   "text!assets/shaders/webgl1/include/Pack.glsl",
-   "text!assets/shaders/webgl1/include/Perlin.glsl",
-   "text!assets/shaders/webgl1/include/Point.glsl",
-   "text!assets/shaders/webgl1/include/PointSize.glsl",
-   "text!assets/shaders/webgl1/include/Shadow.glsl",
-   "text!assets/shaders/webgl1/include/SpotFactor.glsl",
-   "text!assets/shaders/webgl1/include/Texture.glsl",
-   "text!assets/shaders/webgl1/include/Vertex.glsl",
+/* WebGL 1 */
+import ClipPlanes1 from "../../../assets/shaders/webgl1/include/ClipPlanes.glsl.js";
+import Colors1 from "../../../assets/shaders/webgl1/include/Colors.glsl.js";
+import Fog1 from "../../../assets/shaders/webgl1/include/Fog.glsl.js";
+import Fragment1 from "../../../assets/shaders/webgl1/include/Fragment.glsl.js";
+import Hatch1 from "../../../assets/shaders/webgl1/include/Hatch.glsl.js";
+import Material1 from "../../../assets/shaders/webgl1/include/Material.glsl.js";
+import Normal1 from "../../../assets/shaders/webgl1/include/Normal.glsl.js";
+import Pack1 from "../../../assets/shaders/webgl1/include/Pack.glsl.js";
+import Perlin1 from "../../../assets/shaders/webgl1/include/Perlin.glsl.js";
+import Point1 from "../../../assets/shaders/webgl1/include/Point.glsl.js";
+import PointSize1 from "../../../assets/shaders/webgl1/include/PointSize.glsl.js";
+import Shadow1 from "../../../assets/shaders/webgl1/include/Shadow.glsl.js";
+import SpotFactor1 from "../../../assets/shaders/webgl1/include/SpotFactor.glsl.js";
+import Texture1 from "../../../assets/shaders/webgl1/include/Texture.glsl.js";
+import Vertex1 from "../../../assets/shaders/webgl1/include/Vertex.glsl.js";
 
-   "text!assets/shaders/webgl2/include/ClipPlanes.glsl",
-   "text!assets/shaders/webgl2/include/Colors.glsl",
-   "text!assets/shaders/webgl2/include/Fog.glsl",
-   "text!assets/shaders/webgl2/include/Fragment.glsl",
-   "text!assets/shaders/webgl2/include/Hatch.glsl",
-   "text!assets/shaders/webgl2/include/Line2.glsl",
-   "text!assets/shaders/webgl2/include/Material.glsl",
-   "text!assets/shaders/webgl2/include/Normal.glsl",
-   "text!assets/shaders/webgl2/include/Pack.glsl",
-   "text!assets/shaders/webgl2/include/Particle.glsl",
-   "text!assets/shaders/webgl2/include/Perlin.glsl",
-   "text!assets/shaders/webgl2/include/Point.glsl",
-   "text!assets/shaders/webgl2/include/PointSize.glsl",
-   "text!assets/shaders/webgl2/include/Shadow.glsl",
-   "text!assets/shaders/webgl2/include/Stipple.glsl",
-   "text!assets/shaders/webgl2/include/SpotFactor.glsl",
-   "text!assets/shaders/webgl2/include/Texture.glsl",
-   "text!assets/shaders/webgl2/include/Vertex.glsl",
-   /* WebGL 1 */
-   "text!assets/shaders/webgl1/Default.vs",
-   "text!assets/shaders/webgl1/Depth.vs",
-   "text!assets/shaders/webgl1/Gouraud.vs",
-   "text!assets/shaders/webgl1/Depth.fs",
-   "text!assets/shaders/webgl1/Gouraud.fs",
-   "text!assets/shaders/webgl1/PBR.fs",
-   "text!assets/shaders/webgl1/Phong.fs",
-   "text!assets/shaders/webgl1/Unlit.fs",
-   /* WebGL 2 */
-   "text!assets/shaders/webgl2/Default.vs",
-   "text!assets/shaders/webgl2/Depth.vs",
-   "text!assets/shaders/webgl2/Gouraud.vs",
-   "text!assets/shaders/webgl2/LineTransform.vs",
-   "text!assets/shaders/webgl2/Depth.fs",
-   "text!assets/shaders/webgl2/Gouraud.fs",
-   "text!assets/shaders/webgl2/LineTransform.fs",
-   "text!assets/shaders/webgl2/PBR.fs",
-   "text!assets/shaders/webgl2/Phong.fs",
-   "text!assets/shaders/webgl2/Unlit.fs",
-],
-function (/* WebGL 1 */
-          ClipPlanes1,
-          Colors1,
-          Fog1,
-          Fragment1,
-          Hatch1,
-          Material1,
-          Normal1,
-          Pack1,
-          Perlin1,
-          Point1,
-          PointSize1,
-          Shadow1,
-          SpotFactor1,
-          Texture1,
-          Vertex1,
-          /* WebGL 2 */
-          ClipPlanes2,
-          Colors2,
-          Fog2,
-          Fragment2,
-          Hatch2,
-          Line22,
-          Material2,
-          Normal2,
-          Pack2,
-          Particle2,
-          Perlin2,
-          Point2,
-          PointSize2,
-          Shadow2,
-          Stipple2,
-          SpotFactor2,
-          Texture2,
-          Vertex2,
-          /* WebGL 1 */
-          DefaultVertex1,
-          DepthVertex1,
-          GouraudVertex1,
-          DepthFragment1,
-          GouraudFragment1,
-          PBRFragment1,
-          PhongFragment1,
-          UnlitFragment1,
-          /* WebGL 2 */
-          DefaultVertex2,
-          DepthVertex2,
-          GouraudVertex2,
-          LineTransformVertex2,
-          DepthFragment2,
-          GouraudFragment2,
-          LineTransformFragment2,
-          PBRFragment2,
-          PhongFragment2,
-          UnlitFragment2)
-{
-"use strict";
+/* WebGL 2 */
+import ClipPlanes2 from "../../../assets/shaders/webgl2/include/ClipPlanes.glsl.js";
+import Colors2 from "../../../assets/shaders/webgl2/include/Colors.glsl.js";
+import Fog2 from "../../../assets/shaders/webgl2/include/Fog.glsl.js";
+import Fragment2 from "../../../assets/shaders/webgl2/include/Fragment.glsl.js";
+import Hatch2 from "../../../assets/shaders/webgl2/include/Hatch.glsl.js";
+import Line22 from "../../../assets/shaders/webgl2/include/Line2.glsl.js";
+import Material2 from "../../../assets/shaders/webgl2/include/Material.glsl.js";
+import Normal2 from "../../../assets/shaders/webgl2/include/Normal.glsl.js";
+import Pack2 from "../../../assets/shaders/webgl2/include/Pack.glsl.js";
+import Particle2 from "../../../assets/shaders/webgl2/include/Particle.glsl.js";
+import Perlin2 from "../../../assets/shaders/webgl2/include/Perlin.glsl.js";
+import Point2 from "../../../assets/shaders/webgl2/include/Point.glsl.js";
+import PointSize2 from "../../../assets/shaders/webgl2/include/PointSize.glsl.js";
+import Shadow2 from "../../../assets/shaders/webgl2/include/Shadow.glsl.js";
+import Stipple2 from "../../../assets/shaders/webgl2/include/Stipple.glsl.js";
+import SpotFactor2 from "../../../assets/shaders/webgl2/include/SpotFactor.glsl.js";
+import Texture2 from "../../../assets/shaders/webgl2/include/Texture.glsl.js";
+import Vertex2 from "../../../assets/shaders/webgl2/include/Vertex.glsl.js";
 
-   const Shaders = {
-      includes: {
-         1: {
-            ClipPlanes: ClipPlanes1,
-            Colors: Colors1,
-            Fog: Fog1,
-            Fragment: Fragment1,
-            Hatch: Hatch1,
-            Material: Material1,
-            Normal: Normal1,
-            Pack: Pack1,
-            Perlin: Perlin1,
-            Point: Point1,
-            PointSize: PointSize1,
-            Shadow: Shadow1,
-            SpotFactor: SpotFactor1,
-            Texture: Texture1,
-            Vertex: Vertex1,
-         },
-         2: {
-            ClipPlanes: ClipPlanes2,
-            Colors: Colors2,
-            Fog: Fog2,
-            Fragment: Fragment2,
-            Hatch: Hatch2,
-            Line2: Line22,
-            Material: Material2,
-            Normal: Normal2,
-            Pack: Pack2,
-            Particle: Particle2,
-            Perlin: Perlin2,
-            Point: Point2,
-            PointSize: PointSize2,
-            Shadow: Shadow2,
-            Stipple: Stipple2,
-            SpotFactor: SpotFactor2,
-            Texture: Texture2,
-            Vertex: Vertex2,
-         },
-      },
-      vertex: {
-         1: {
-            Default: DefaultVertex1,
-            Depth: DepthVertex1,
-            Gouraud: GouraudVertex1,
-         },
-         2: {
-            Default: DefaultVertex2,
-            Depth: DepthVertex2,
-            Gouraud: GouraudVertex2,
-            LineTransform: LineTransformVertex2,
-         },
-      },
-      fragment: {
-         1: {
-            Depth: DepthFragment1,
-            Gouraud: GouraudFragment1,
-            PBR: PBRFragment1,
-            Phong: PhongFragment1,
-            Unlit: UnlitFragment1,
-         },
-         2: {
-            Depth: DepthFragment2,
-            Gouraud: GouraudFragment2,
-            LineTransform: LineTransformFragment2,
-            PBR: PBRFragment2,
-            Phong: PhongFragment2,
-            Unlit: UnlitFragment2,
-         },
-      },
-   };
+/* WebGL 1 */
+import DefaultVertex1 from "../../../assets/shaders/webgl1/Default.vs.js";
+import DepthVertex1 from "../../../assets/shaders/webgl1/Depth.vs.js";
+import GouraudVertex1 from "../../../assets/shaders/webgl1/Gouraud.vs.js";
+import DepthFragment1 from "../../../assets/shaders/webgl1/Depth.fs.js";
+import GouraudFragment1 from "../../../assets/shaders/webgl1/Gouraud.fs.js";
+import PBRFragment1 from "../../../assets/shaders/webgl1/PBR.fs.js";
+import PhongFragment1 from "../../../assets/shaders/webgl1/Phong.fs.js";
+import UnlitFragment1 from "../../../assets/shaders/webgl1/Unlit.fs.js";
 
-   return Shaders;
-});
+/* WebGL 2 */
+import DefaultVertex2 from "../../../assets/shaders/webgl2/Default.vs.js";
+import DepthVertex2 from "../../../assets/shaders/webgl2/Depth.vs.js";
+import GouraudVertex2 from "../../../assets/shaders/webgl2/Gouraud.vs.js";
+import LineTransformVertex2 from "../../../assets/shaders/webgl2/LineTransform.vs.js";
+import DepthFragment2 from "../../../assets/shaders/webgl2/Depth.fs.js";
+import GouraudFragment2 from "../../../assets/shaders/webgl2/Gouraud.fs.js";
+import LineTransformFragment2 from "../../../assets/shaders/webgl2/LineTransform.fs.js";
+import PBRFragment2 from "../../../assets/shaders/webgl2/PBR.fs.js";
+import PhongFragment2 from "../../../assets/shaders/webgl2/Phong.fs.js";
+import UnlitFragment2 from "../../../assets/shaders/webgl2/Unlit.fs.js";
+
+const Shaders = {
+   includes: {
+      1: {
+         ClipPlanes: ClipPlanes1,
+         Colors: Colors1,
+         Fog: Fog1,
+         Fragment: Fragment1,
+         Hatch: Hatch1,
+         Material: Material1,
+         Normal: Normal1,
+         Pack: Pack1,
+         Perlin: Perlin1,
+         Point: Point1,
+         PointSize: PointSize1,
+         Shadow: Shadow1,
+         SpotFactor: SpotFactor1,
+         Texture: Texture1,
+         Vertex: Vertex1,
+      },
+      2: {
+         ClipPlanes: ClipPlanes2,
+         Colors: Colors2,
+         Fog: Fog2,
+         Fragment: Fragment2,
+         Hatch: Hatch2,
+         Line2: Line22,
+         Material: Material2,
+         Normal: Normal2,
+         Pack: Pack2,
+         Particle: Particle2,
+         Perlin: Perlin2,
+         Point: Point2,
+         PointSize: PointSize2,
+         Shadow: Shadow2,
+         Stipple: Stipple2,
+         SpotFactor: SpotFactor2,
+         Texture: Texture2,
+         Vertex: Vertex2,
+      },
+   },
+   vertex: {
+      1: {
+         Default: DefaultVertex1,
+         Depth: DepthVertex1,
+         Gouraud: GouraudVertex1,
+      },
+      2: {
+         Default: DefaultVertex2,
+         Depth: DepthVertex2,
+         Gouraud: GouraudVertex2,
+         LineTransform: LineTransformVertex2,
+      },
+   },
+   fragment: {
+      1: {
+         Depth: DepthFragment1,
+         Gouraud: GouraudFragment1,
+         PBR: PBRFragment1,
+         Phong: PhongFragment1,
+         Unlit: UnlitFragment1,
+      },
+      2: {
+         Depth: DepthFragment2,
+         Gouraud: GouraudFragment2,
+         LineTransform: LineTransformFragment2,
+         PBR: PBRFragment2,
+         Phong: PhongFragment2,
+         Unlit: UnlitFragment2,
+      },
+   },
+};
+
+export default Shaders;

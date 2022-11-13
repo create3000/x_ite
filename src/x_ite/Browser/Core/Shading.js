@@ -47,20 +47,15 @@
  ******************************************************************************/
 
 
-define (function ()
+let i = 0;
+
+const Shading =
 {
-"use strict";
+   POINT:     i ++,
+   WIREFRAME: i ++,
+   FLAT:      i ++,
+   GOURAUD:   i ++,
+   PHONG:     i ++,
+};
 
-   let i = 0;
-
-   const Shading =
-   {
-      POINT:     i ++,
-      WIREFRAME: i ++,
-      FLAT:      i ++,
-      GOURAUD:   i ++,
-      PHONG:     i ++,
-   };
-
-   return Shading;
-});
+export default Shading;

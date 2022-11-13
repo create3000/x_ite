@@ -47,265 +47,245 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/PointingDeviceSensor/X3DDragSensorNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Numbers/Vector2",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Vector4",
-   "standard/Math/Numbers/Matrix4",
-   "standard/Math/Geometry/Line2",
-   "standard/Math/Geometry/Line3",
-   "standard/Math/Geometry/Plane3",
-   "standard/Math/Geometry/ViewVolume",
-   "standard/Math/Algorithm",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DDragSensorNode,
-          X3DConstants,
-          Rotation4,
-          Vector2,
-          Vector3,
-          Vector4,
-          Matrix4,
-          Line2,
-          Line3,
-          Plane3,
-          ViewVolume,
-          Algorithm)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DDragSensorNode from "./X3DDragSensorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import Line2 from "../../../standard/Math/Geometry/Line2.js";
+import Line3 from "../../../standard/Math/Geometry/Line3.js";
+import Plane3 from "../../../standard/Math/Geometry/Plane3.js";
+import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+const
+   screenLine     = new Line2 (Vector2 .Zero, Vector2 .Zero),
+   trackPoint1    = new Vector2 (0, 0, 0),
+   trackPointLine = new Line3 (Vector3 .Zero, Vector3 .Zero);
+
+function PlaneSensor (executionContext)
 {
-"use strict";
+   X3DDragSensorNode .call (this, executionContext);
 
-   const
-      screenLine     = new Line2 (Vector2 .Zero, Vector2 .Zero),
-      trackPoint1    = new Vector2 (0, 0, 0),
-      trackPointLine = new Line3 (Vector3 .Zero, Vector3 .Zero);
+   this .addType (X3DConstants .PlaneSensor);
 
-   function PlaneSensor (executionContext)
+   this ._offset              .setUnit ("length");
+   this ._minPosition         .setUnit ("length");
+   this ._maxPosition         .setUnit ("length");
+   this ._translation_changed .setUnit ("length");
+}
+
+PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
+{
+   constructor: PlaneSensor,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "description",         new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "axisRotation",        new Fields .SFRotation ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",          new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "offset",              new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "minPosition",         new Fields .SFVec2f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "maxPosition",         new Fields .SFVec2f (-1, -1)),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "trackPoint_changed",  new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "translation_changed", new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",              new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",            new Fields .SFBool ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DDragSensorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .PlaneSensor);
-
-      this ._offset              .setUnit ("length");
-      this ._minPosition         .setUnit ("length");
-      this ._maxPosition         .setUnit ("length");
-      this ._translation_changed .setUnit ("length");
-   }
-
-   PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
+      return "PlaneSensor";
+   },
+   getComponentName: function ()
    {
-      constructor: PlaneSensor,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "description",         new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "axisRotation",        new Fields .SFRotation ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",          new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "offset",              new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "minPosition",         new Fields .SFVec2f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "maxPosition",         new Fields .SFVec2f (-1, -1)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "trackPoint_changed",  new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "translation_changed", new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",              new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",            new Fields .SFBool ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "PlaneSensor";
-      },
-      getComponentName: function ()
-      {
-         return "PointingDeviceSensor";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DDragSensorNode .prototype .initialize .call (this);
+      return "PointingDeviceSensor";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DDragSensorNode .prototype .initialize .call (this);
 
-         this .modelViewMatrix    = new Matrix4 ();
-         this .invModelViewMatrix = new Matrix4 ();
-         this .projectionMatrix   = new Matrix4 ();
-         this .viewport           = new Vector4 ();
+      this .modelViewMatrix    = new Matrix4 ();
+      this .invModelViewMatrix = new Matrix4 ();
+      this .projectionMatrix   = new Matrix4 ();
+      this .viewport           = new Vector4 ();
 
-         this .planeSensor = true;
-         this .plane       = null;
-         this .line        = null;
-         this .startOffset = new Vector3 (0, 0, 0);
-         this .startPoint  = new Vector3 (0, 0, 0);
-      },
-      getLineTrackPoint: function (hit, line, trackPoint)
+      this .planeSensor = true;
+      this .plane       = null;
+      this .line        = null;
+      this .startOffset = new Vector3 (0, 0, 0);
+      this .startPoint  = new Vector3 (0, 0, 0);
+   },
+   getLineTrackPoint: function (hit, line, trackPoint)
+   {
+      ViewVolume .projectLine (line, this .modelViewMatrix, this .projectionMatrix, this .viewport, screenLine);
+      screenLine .getClosestPointToPoint (hit .pointer, trackPoint1);
+      ViewVolume .unProjectRay (trackPoint1 .x, trackPoint1 .y, this .modelViewMatrix, this .projectionMatrix, this .viewport, trackPointLine);
+
+      return line .getClosestPointToLine (trackPointLine, trackPoint);
+   },
+   set_active__: function (active, hit, modelViewMatrix, projectionMatrix, viewport)
+   {
+      X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
+
+      if (this ._isActive .getValue ())
       {
-         ViewVolume .projectLine (line, this .modelViewMatrix, this .projectionMatrix, this .viewport, screenLine);
-         screenLine .getClosestPointToPoint (hit .pointer, trackPoint1);
-         ViewVolume .unProjectRay (trackPoint1 .x, trackPoint1 .y, this .modelViewMatrix, this .projectionMatrix, this .viewport, trackPointLine);
+         this .modelViewMatrix    .assign (modelViewMatrix);
+         this .projectionMatrix   .assign (projectionMatrix);
+         this .viewport           .assign (viewport);
+         this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-         return line .getClosestPointToLine (trackPointLine, trackPoint);
-      },
-      set_active__: function (active, hit, modelViewMatrix, projectionMatrix, viewport)
-      {
-         X3DDragSensorNode .prototype .set_active__ .call (this, active, hit, modelViewMatrix, projectionMatrix, viewport);
+         var
+            hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+            hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
 
-         if (this ._isActive .getValue ())
+         var axisRotation = this ._axisRotation .getValue ();
+
+         if (this ._minPosition .x === this ._maxPosition .x)
          {
-            this .modelViewMatrix    .assign (modelViewMatrix);
-            this .projectionMatrix   .assign (projectionMatrix);
-            this .viewport           .assign (viewport);
-            this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+            this .planeSensor = false;
 
-            var
-               hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-               hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
+            var direction = axisRotation .multVecRot (new Vector3 (0, Math .abs (this ._maxPosition .y - this ._minPosition .y), 0));
 
-            var axisRotation = this ._axisRotation .getValue ();
+            this .line = new Line3 (hitPoint, direction .normalize ());
+         }
+         else if (this ._minPosition .y === this ._maxPosition .y)
+         {
+            this .planeSensor = false;
 
-            if (this ._minPosition .x === this ._maxPosition .x)
-            {
-               this .planeSensor = false;
+            var direction = axisRotation .multVecRot (new Vector3 (Math .abs (this ._maxPosition .x - this ._minPosition .x), 0, 0));
 
-               var direction = axisRotation .multVecRot (new Vector3 (0, Math .abs (this ._maxPosition .y - this ._minPosition .y), 0));
-
-               this .line = new Line3 (hitPoint, direction .normalize ());
-            }
-            else if (this ._minPosition .y === this ._maxPosition .y)
-            {
-               this .planeSensor = false;
-
-               var direction = axisRotation .multVecRot (new Vector3 (Math .abs (this ._maxPosition .x - this ._minPosition .x), 0, 0));
-
-               this .line = new Line3 (hitPoint, direction .normalize ());
-            }
-            else
-            {
-               this .planeSensor = true;
-               this .plane       = new Plane3 (hitPoint, axisRotation .multVecRot (new Vector3 (0, 0, 1)));
-            }
-
-            if (this .planeSensor)
-            {
-               if (this .plane .intersectsLine (hitRay, this .startPoint))
-               {
-                  this .trackStart (this .startPoint);
-               }
-
-//						new Plane3 (new Vector3 (0, 0, 0), this .plane .normal) .intersectsLine (hitRay, trackPoint);
-            }
-            else
-            {
-               if (this .getLineTrackPoint (hit, this .line, this .startPoint))
-               {
-                  var trackPoint = new Vector3 (0, 0, 0);
-
-                  try
-                  {
-                     this .getLineTrackPoint (hit, new Line3 (this .line .direction, this .line .direction), trackPoint);
-                  }
-                  catch (error)
-                  {
-                     //console .error (error);
-
-                     trackPoint = this .startPoint;
-                  }
-
-                  this .trackStart (trackPoint);
-               }
-            }
+            this .line = new Line3 (hitPoint, direction .normalize ());
          }
          else
          {
-            if (this ._autoOffset .getValue ())
-               this ._offset = this ._translation_changed;
+            this .planeSensor = true;
+            this .plane       = new Plane3 (hitPoint, axisRotation .multVecRot (new Vector3 (0, 0, 1)));
          }
-      },
-      trackStart: function (trackPoint)
-      {
-         this .startOffset .assign (this ._offset .getValue ());
 
-         this ._trackPoint_changed  = trackPoint;
-         this ._translation_changed = this ._offset .getValue ();
-      },
-      set_motion__: function (hit)
-      {
-         try
+         if (this .planeSensor)
          {
-            if (this .planeSensor)
+            if (this .plane .intersectsLine (hitRay, this .startPoint))
             {
-               var
-                  hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
-                  endPoint = new Vector3 (0, 0, 0);
+               this .trackStart (this .startPoint);
+            }
 
-               if (this .plane .intersectsLine (hitRay, endPoint))
+//						new Plane3 (new Vector3 (0, 0, 0), this .plane .normal) .intersectsLine (hitRay, trackPoint);
+         }
+         else
+         {
+            if (this .getLineTrackPoint (hit, this .line, this .startPoint))
+            {
+               var trackPoint = new Vector3 (0, 0, 0);
+
+               try
                {
-                  this .track (endPoint, endPoint .copy ());
+                  this .getLineTrackPoint (hit, new Line3 (this .line .direction, this .line .direction), trackPoint);
                }
-               else
-                  throw new Error ("Plane and line are parallel.");
+               catch (error)
+               {
+                  //console .error (error);
+
+                  trackPoint = this .startPoint;
+               }
+
+               this .trackStart (trackPoint);
+            }
+         }
+      }
+      else
+      {
+         if (this ._autoOffset .getValue ())
+            this ._offset = this ._translation_changed;
+      }
+   },
+   trackStart: function (trackPoint)
+   {
+      this .startOffset .assign (this ._offset .getValue ());
+
+      this ._trackPoint_changed  = trackPoint;
+      this ._translation_changed = this ._offset .getValue ();
+   },
+   set_motion__: function (hit)
+   {
+      try
+      {
+         if (this .planeSensor)
+         {
+            var
+               hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
+               endPoint = new Vector3 (0, 0, 0);
+
+            if (this .plane .intersectsLine (hitRay, endPoint))
+            {
+               this .track (endPoint, endPoint .copy ());
             }
             else
-            {
-               var
-                  endPoint   = new Vector3 (0, 0, 0),
-                  trackPoint = new Vector3 (0, 0, 0);
-
-               if (this .getLineTrackPoint (hit, this .line, endPoint))
-               {
-                  try
-                  {
-                     this .getLineTrackPoint (hit, new Line3 (Vector3 .Zero, this .line .direction), trackPoint);
-                  }
-                  catch (error)
-                  {
-                     trackPoint .assign (endPoint);
-                  }
-
-                  this .track (endPoint, trackPoint);
-               }
-               else
-                  throw new Error ("Lines are parallel.");
-            }
+               throw new Error ("Plane and line are parallel.");
          }
-         catch (error)
+         else
          {
-            //console .error (error);
+            var
+               endPoint   = new Vector3 (0, 0, 0),
+               trackPoint = new Vector3 (0, 0, 0);
 
-            this ._trackPoint_changed  .addEvent ();
-            this ._translation_changed .addEvent ();
+            if (this .getLineTrackPoint (hit, this .line, endPoint))
+            {
+               try
+               {
+                  this .getLineTrackPoint (hit, new Line3 (Vector3 .Zero, this .line .direction), trackPoint);
+               }
+               catch (error)
+               {
+                  trackPoint .assign (endPoint);
+               }
+
+               this .track (endPoint, trackPoint);
+            }
+            else
+               throw new Error ("Lines are parallel.");
          }
-      },
-      track: function (endPoint, trackPoint)
+      }
+      catch (error)
       {
-         var
-            axisRotation = this ._axisRotation .getValue (),
-            translation  = Rotation4 .inverse (axisRotation) .multVecRot (endPoint .add (this .startOffset) .subtract (this .startPoint));
+         //console .error (error);
 
-         // X component
+         this ._trackPoint_changed  .addEvent ();
+         this ._translation_changed .addEvent ();
+      }
+   },
+   track: function (endPoint, trackPoint)
+   {
+      var
+         axisRotation = this ._axisRotation .getValue (),
+         translation  = Rotation4 .inverse (axisRotation) .multVecRot (endPoint .add (this .startOffset) .subtract (this .startPoint));
 
-         if (! (this ._minPosition .x > this ._maxPosition .x))
-            translation .x = Algorithm .clamp (translation .x, this ._minPosition .x, this ._maxPosition .x);
+      // X component
 
-         // Y component
+      if (! (this ._minPosition .x > this ._maxPosition .x))
+         translation .x = Algorithm .clamp (translation .x, this ._minPosition .x, this ._maxPosition .x);
 
-         if (! (this ._minPosition .y > this ._maxPosition .y))
-            translation .y = Algorithm .clamp (translation .y, this ._minPosition .y, this ._maxPosition .y);
+      // Y component
 
-         axisRotation .multVecRot (translation);
+      if (! (this ._minPosition .y > this ._maxPosition .y))
+         translation .y = Algorithm .clamp (translation .y, this ._minPosition .y, this ._maxPosition .y);
 
-         if (! this ._trackPoint_changed .getValue () .equals (trackPoint))
-            this ._trackPoint_changed = trackPoint;
+      axisRotation .multVecRot (translation);
 
-         if (! this ._translation_changed .getValue () .equals (translation))
-            this ._translation_changed = translation;
-      },
-   });
+      if (! this ._trackPoint_changed .getValue () .equals (trackPoint))
+         this ._trackPoint_changed = trackPoint;
 
-   return PlaneSensor;
+      if (! this ._translation_changed .getValue () .equals (translation))
+         this ._translation_changed = translation;
+   },
 });
+
+export default PlaneSensor;

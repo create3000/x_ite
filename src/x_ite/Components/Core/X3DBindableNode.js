@@ -47,36 +47,28 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DChildNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DChildNode from "./X3DChildNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DBindableNode (executionContext)
 {
-"use strict";
+   X3DChildNode .call (this, executionContext);
 
-   function X3DBindableNode (executionContext)
+   this .addType (X3DConstants .X3DBindableNode);
+
+   this .addChildObjects ("transitionActive", new Fields .SFBool ());
+}
+
+X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+{
+   constructor: X3DBindableNode,
+   getCameraObject: function ()
    {
-      X3DChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DBindableNode);
-
-      this .addChildObjects ("transitionActive", new Fields .SFBool ());
-   }
-
-   X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-   {
-      constructor: X3DBindableNode,
-      getCameraObject: function ()
-      {
-         return true;
-      },
-      transitionStart: function ()
-      { },
-   });
-
-   return X3DBindableNode;
+      return true;
+   },
+   transitionStart: function ()
+   { },
 });
+
+export default X3DBindableNode;

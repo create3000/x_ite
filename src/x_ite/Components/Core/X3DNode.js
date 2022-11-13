@@ -47,117 +47,58 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DBaseNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/InputOutput/Generator",
-],
-function (Fields,
-          X3DBaseNode,
-          X3DConstants,
-          Generator)
+import Fields from "../../Fields.js";
+import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Generator from "../../InputOutput/Generator.js";
+
+function X3DNode (executionContext)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
 
-   function X3DNode (executionContext)
+   this .addType (X3DConstants .X3DNode);
+}
+
+X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: X3DNode,
+   copy: function (instance)
    {
-      X3DBaseNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DNode);
-   }
-
-   X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-   {
-      constructor: X3DNode,
-      copy: function (instance)
+      if (!instance || instance .getType () .includes (X3DConstants .X3DExecutionContext))
       {
-         if (!instance || instance .getType () .includes (X3DConstants .X3DExecutionContext))
+         return X3DBaseNode .prototype .copy .call (this, instance);
+      }
+      else
+      {
+         const executionContext = instance .getBody ();
+
+         // First try to get a named node with the node's name.
+
+         if (this .getName () .length)
          {
-            return X3DBaseNode .prototype .copy .call (this, instance);
+            const namedNode = executionContext .getNamedNodes () .get (this .getName ());
+
+            if (namedNode)
+               return namedNode;
          }
-         else
+
+         // Create copy.
+
+         const copy = this .create (executionContext);
+
+         if (this .getNeedsName ())
+            this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (), this);
+
+         if (this .getName () .length)
+            executionContext .updateNamedNode (this .getName (), copy);
+
+         // Default fields
+
+         for (const sourceField of this .getPredefinedFields ())
          {
-            const executionContext = instance .getBody ();
-
-            // First try to get a named node with the node's name.
-
-            if (this .getName () .length)
+            try
             {
-               const namedNode = executionContext .getNamedNodes () .get (this .getName ());
-
-               if (namedNode)
-                  return namedNode;
-            }
-
-            // Create copy.
-
-            const copy = this .create (executionContext);
-
-            if (this .getNeedsName ())
-               this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (), this);
-
-            if (this .getName () .length)
-               executionContext .updateNamedNode (this .getName (), copy);
-
-            // Default fields
-
-            for (const sourceField of this .getPredefinedFields ())
-            {
-               try
-               {
-                  const destinationField = copy .getField (sourceField .getName ());
-
-                  if (sourceField .hasReferences ())
-                  {
-                     // IS relationship
-
-                     for (const originalReference of sourceField .getReferences ())
-                     {
-                        try
-                        {
-                           destinationField .addReference (instance .getField (originalReference .getName ()));
-                        }
-                        catch (error)
-                        {
-                           console .error (error .message);
-                        }
-                     }
-                  }
-                  else
-                  {
-                     if (sourceField .getAccessType () & X3DConstants .initializeOnly)
-                     {
-                        switch (sourceField .getType ())
-                        {
-                           case X3DConstants .SFNode:
-                           case X3DConstants .MFNode:
-                              destinationField .assign (sourceField .copy (instance));
-                              break;
-                           default:
-                              destinationField .assign (sourceField);
-                              break;
-                        }
-                     }
-                  }
-
-                  destinationField .setModificationTime (sourceField .getModificationTime ());
-               }
-               catch (error)
-               {
-                  console .log (error .message);
-               }
-            }
-
-            // User-defined fields
-
-            for (const sourceField of this .getUserDefinedFields ())
-            {
-               const destinationField = sourceField .copy (instance);
-
-               copy .addUserDefinedField (sourceField .getAccessType (),
-                                          sourceField .getName (),
-                                          destinationField);
+               const destinationField = copy .getField (sourceField .getName ());
 
                if (sourceField .hasReferences ())
                {
@@ -171,230 +112,327 @@ function (Fields,
                      }
                      catch (error)
                      {
-                        console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
+                        console .error (error .message);
+                     }
+                  }
+               }
+               else
+               {
+                  if (sourceField .getAccessType () & X3DConstants .initializeOnly)
+                  {
+                     switch (sourceField .getType ())
+                     {
+                        case X3DConstants .SFNode:
+                        case X3DConstants .MFNode:
+                           destinationField .assign (sourceField .copy (instance));
+                           break;
+                        default:
+                           destinationField .assign (sourceField);
+                           break;
                      }
                   }
                }
 
                destinationField .setModificationTime (sourceField .getModificationTime ());
             }
-
-            copy .setup ();
-
-            return copy;
+            catch (error)
+            {
+               console .log (error .message);
+            }
          }
-      },
-      getDisplayName: (function ()
-      {
-         const _TrailingNumber = /_\d+$/;
 
-         return function ()
+         // User-defined fields
+
+         for (const sourceField of this .getUserDefinedFields ())
          {
-            return this .getName () .replace (_TrailingNumber, "");
-         };
-      })(),
-      getNeedsName: function ()
+            const destinationField = sourceField .copy (instance);
+
+            copy .addUserDefinedField (sourceField .getAccessType (),
+                                       sourceField .getName (),
+                                       destinationField);
+
+            if (sourceField .hasReferences ())
+            {
+               // IS relationship
+
+               for (const originalReference of sourceField .getReferences ())
+               {
+                  try
+                  {
+                     destinationField .addReference (instance .getField (originalReference .getName ()));
+                  }
+                  catch (error)
+                  {
+                     console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
+                  }
+               }
+            }
+
+            destinationField .setModificationTime (sourceField .getModificationTime ());
+         }
+
+         copy .setup ();
+
+         return copy;
+      }
+   },
+   getDisplayName: (function ()
+   {
+      const _TrailingNumber = /_\d+$/;
+
+      return function ()
       {
-         if (this .getName () .length)
-            return false;
+         return this .getName () .replace (_TrailingNumber, "");
+      };
+   })(),
+   getNeedsName: function ()
+   {
+      if (this .getName () .length)
+         return false;
 
-         if (this .getCloneCount () > 1)
+      if (this .getCloneCount () > 1)
+         return true;
+
+      if (this .hasRoutes ())
+         return true;
+
+      const executionContext = this .getExecutionContext ()
+
+      for (const importedNode of executionContext .getImportedNodes ())
+      {
+         if (importedNode .getInlineNode () === this)
             return true;
+      }
 
-         if (this .hasRoutes ())
-            return true;
-
-         const executionContext = this .getExecutionContext ()
-
-         for (const importedNode of executionContext .getImportedNodes ())
+      if (executionContext .isScene ())
+      {
+         for (const exportedNode of executionContext .getExportedNodes ())
          {
-            if (importedNode .getInlineNode () === this)
+            if (exportedNode .getLocalNode () === this)
                return true;
          }
+      }
 
-         if (executionContext .isScene ())
-         {
-            for (const exportedNode of executionContext .getExportedNodes ())
-            {
-               if (exportedNode .getLocalNode () === this)
-                  return true;
-            }
-         }
+      return false;
+   },
+   getFieldsAreEnumerable: function ()
+   {
+      return true;
+   },
+   traverse: function () { },
+   toStream: function (stream)
+   {
+      stream .string += this .getTypeName () + " { }";
+   },
+   toVRMLStream: function (stream)
+   {
+      const generator = Generator .Get (stream);
 
-         return false;
-      },
-      getFieldsAreEnumerable: function ()
+      generator .EnterScope ();
+
+      const name = generator .Name (this);
+
+      if (name .length)
       {
-         return true;
-      },
-      traverse: function () { },
-      toStream: function (stream)
-      {
-         stream .string += this .getTypeName () + " { }";
-      },
-      toVRMLStream: function (stream)
-      {
-         const generator = Generator .Get (stream);
-
-         generator .EnterScope ();
-
-         const name = generator .Name (this);
-
-         if (name .length)
+         if (generator .ExistsNode (this))
          {
-            if (generator .ExistsNode (this))
-            {
-               stream .string += "USE";
-               stream .string += " ";
-               stream .string += name;
-
-               generator .LeaveScope ();
-               return;
-            }
-         }
-
-         if (name .length)
-         {
-            generator .AddNode (this);
-
-            stream .string += "DEF";
+            stream .string += "USE";
             stream .string += " ";
             stream .string += name;
-            stream .string += " ";
-         }
 
-         stream .string += this .getTypeName ();
+            generator .LeaveScope ();
+            return;
+         }
+      }
+
+      if (name .length)
+      {
+         generator .AddNode (this);
+
+         stream .string += "DEF";
          stream .string += " ";
-         stream .string += "{";
+         stream .string += name;
+         stream .string += " ";
+      }
 
-         const
-            fields            = this .getChangedFields (),
-            userDefinedFields = this .getUserDefinedFields ();
+      stream .string += this .getTypeName ();
+      stream .string += " ";
+      stream .string += "{";
 
-         let
-            fieldTypeLength  = 0,
-            accessTypeLength = 0;
+      const
+         fields            = this .getChangedFields (),
+         userDefinedFields = this .getUserDefinedFields ();
 
-         if (this .canUserDefinedFields ())
+      let
+         fieldTypeLength  = 0,
+         accessTypeLength = 0;
+
+      if (this .canUserDefinedFields ())
+      {
+         for (const field of userDefinedFields)
          {
-            for (const field of userDefinedFields)
-            {
-               fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
-               accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
-            }
-
-            if (userDefinedFields .length)
-            {
-               stream .string += "\n";
-               generator .IncIndent ();
-
-               for (const field of userDefinedFields)
-               {
-                  this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
-
-                  stream .string += "\n";
-               }
-
-               generator .DecIndent ();
-
-               if (fields .length !== 0)
-                  stream .string += "\n";
-            }
+            fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
+            accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
          }
 
-         if (fields .length === 0)
+         if (userDefinedFields .length)
          {
-            if (userDefinedFields .length)
-               stream .string += generator .Indent ();
-            else
-               stream .string += " ";
-         }
-         else
-         {
-            if (userDefinedFields .length === 0)
-               stream .string += "\n";
-
+            stream .string += "\n";
             generator .IncIndent ();
 
-            fields .forEach (function (field)
+            for (const field of userDefinedFields)
             {
-               this .toVRMLStreamField (stream, field, fieldTypeLength, accessTypeLength);
+               this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
 
                stream .string += "\n";
-            },
-            this);
+            }
 
             generator .DecIndent ();
-            stream .string += generator .Indent ();
-         }
 
-         stream .string += "}";
-
-         generator .LeaveScope ();
-      },
-      toVRMLStreamField: function (stream, field, fieldTypeLength, accessTypeLength)
-      {
-         const
-            generator  = Generator .Get (stream),
-            sharedNode = generator .IsSharedNode (this);
-
-         if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
-         {
-            if (field .isInitializable ())
-            {
-               stream .string += generator .Indent ();
-               stream .string += field .getName ();
-               stream .string += " ";
-
-               field .toVRMLStream (stream);
-            }
-         }
-         else
-         {
-            let
-               index                  = 0,
-               initializableReference = false;
-
-            field .getReferences () .forEach (function (reference)
-            {
-               initializableReference = initializableReference || reference .isInitializable ();
-
-               // Output build in reference field
-
-               stream .string += generator .Indent ();
-               stream .string += field .getName ();
-               stream .string += " ";
-               stream .string += "IS";
-               stream .string += " ";
-               stream .string += reference .getName ();
-
-               ++ index;
-
-               if (index !== field .getReferences () .size)
-                  stream .string += "\n";
-            });
-
-            if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !this .isDefaultValue (field))
-            {
-               // Output build in field
-
+            if (fields .length !== 0)
                stream .string += "\n";
-               stream .string += generator .Indent ();
-               stream .string += field .getName ();
-               stream .string += " ";
-
-               field .toVRMLStream (stream);
-            }
          }
-      },
-      toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
-      {
-         const
-            generator  = Generator .Get (stream),
-            sharedNode = generator .IsSharedNode (this);
+      }
 
-         if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
+      if (fields .length === 0)
+      {
+         if (userDefinedFields .length)
+            stream .string += generator .Indent ();
+         else
+            stream .string += " ";
+      }
+      else
+      {
+         if (userDefinedFields .length === 0)
+            stream .string += "\n";
+
+         generator .IncIndent ();
+
+         fields .forEach (function (field)
          {
+            this .toVRMLStreamField (stream, field, fieldTypeLength, accessTypeLength);
+
+            stream .string += "\n";
+         },
+         this);
+
+         generator .DecIndent ();
+         stream .string += generator .Indent ();
+      }
+
+      stream .string += "}";
+
+      generator .LeaveScope ();
+   },
+   toVRMLStreamField: function (stream, field, fieldTypeLength, accessTypeLength)
+   {
+      const
+         generator  = Generator .Get (stream),
+         sharedNode = generator .IsSharedNode (this);
+
+      if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
+      {
+         if (field .isInitializable ())
+         {
+            stream .string += generator .Indent ();
+            stream .string += field .getName ();
+            stream .string += " ";
+
+            field .toVRMLStream (stream);
+         }
+      }
+      else
+      {
+         let
+            index                  = 0,
+            initializableReference = false;
+
+         field .getReferences () .forEach (function (reference)
+         {
+            initializableReference = initializableReference || reference .isInitializable ();
+
+            // Output build in reference field
+
+            stream .string += generator .Indent ();
+            stream .string += field .getName ();
+            stream .string += " ";
+            stream .string += "IS";
+            stream .string += " ";
+            stream .string += reference .getName ();
+
+            ++ index;
+
+            if (index !== field .getReferences () .size)
+               stream .string += "\n";
+         });
+
+         if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !this .isDefaultValue (field))
+         {
+            // Output build in field
+
+            stream .string += "\n";
+            stream .string += generator .Indent ();
+            stream .string += field .getName ();
+            stream .string += " ";
+
+            field .toVRMLStream (stream);
+         }
+      }
+   },
+   toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
+   {
+      const
+         generator  = Generator .Get (stream),
+         sharedNode = generator .IsSharedNode (this);
+
+      if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
+      {
+         stream .string += generator .Indent ();
+         stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+         stream .string += " ";
+         stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+         stream .string += " ";
+         stream .string += field .getName ();
+
+         if (field .isInitializable ())
+         {
+            stream .string += " ";
+
+            field .toVRMLStream (stream);
+         }
+      }
+      else
+      {
+         let
+            index                  = 0,
+            initializableReference = false;
+
+         field .getReferences () .forEach (function (reference)
+         {
+            initializableReference = initializableReference || reference .isInitializable ();
+
+            // Output user defined reference field
+
+            stream .string += generator .Indent ();
+            stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+            stream .string += " ";
+            stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+            stream .string += " ";
+            stream .string += field .getName ();
+            stream .string += " ";
+            stream .string += "IS";
+            stream .string += " ";
+            stream .string += reference .getName ();
+
+            ++ index;
+
+            if (index !== field .getReferences () .size)
+               stream .string += "\n";
+         });
+
+         if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !field .isDefaultValue ())
+         {
+            stream .string += "\n";
             stream .string += generator .Indent ();
             stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
             stream .string += " ";
@@ -409,148 +447,195 @@ function (Fields,
                field .toVRMLStream (stream);
             }
          }
-         else
-         {
-            let
-               index                  = 0,
-               initializableReference = false;
+      }
+   },
+   toXMLStream: function (stream)
+   {
+      const
+         generator  = Generator .Get (stream),
+         sharedNode = generator .IsSharedNode (this);
 
-            field .getReferences () .forEach (function (reference)
-            {
-               initializableReference = initializableReference || reference .isInitializable ();
+      generator .EnterScope ();
 
-               // Output user defined reference field
+      const name = generator .Name (this);
 
-               stream .string += generator .Indent ();
-               stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-               stream .string += " ";
-               stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-               stream .string += " ";
-               stream .string += field .getName ();
-               stream .string += " ";
-               stream .string += "IS";
-               stream .string += " ";
-               stream .string += reference .getName ();
-
-               ++ index;
-
-               if (index !== field .getReferences () .size)
-                  stream .string += "\n";
-            });
-
-            if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !field .isDefaultValue ())
-            {
-               stream .string += "\n";
-               stream .string += generator .Indent ();
-               stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-               stream .string += " ";
-               stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-               stream .string += " ";
-               stream .string += field .getName ();
-
-               if (field .isInitializable ())
-               {
-                  stream .string += " ";
-
-                  field .toVRMLStream (stream);
-               }
-            }
-         }
-      },
-      toXMLStream: function (stream)
+      if (name .length)
       {
-         const
-            generator  = Generator .Get (stream),
-            sharedNode = generator .IsSharedNode (this);
-
-         generator .EnterScope ();
-
-         const name = generator .Name (this);
-
-         if (name .length)
+         if (generator .ExistsNode (this))
          {
-            if (generator .ExistsNode (this))
-            {
-               stream .string += generator .Indent ();
-               stream .string += "<";
-               stream .string += this .getTypeName ();
-               stream .string += " ";
-               stream .string += "USE='";
-               stream .string += generator .XMLEncode (name);
-               stream .string += "'";
-
-               const containerField = generator .ContainerField ();
-
-               if (containerField)
-               {
-                  if (containerField .getName () !== this .getContainerField ())
-                  {
-                     stream .string += " ";
-                     stream .string += "containerField='";
-                     stream .string += generator .XMLEncode (containerField .getName ());
-                     stream .string += "'";
-                  }
-               }
-
-               stream .string += "/>";
-
-               generator .LeaveScope ();
-               return;
-            }
-         }
-
-         stream .string += generator .Indent ();
-         stream .string += "<";
-         stream .string += this .getTypeName ();
-
-         if (name .length)
-         {
-            generator .AddNode (this);
-
+            stream .string += generator .Indent ();
+            stream .string += "<";
+            stream .string += this .getTypeName ();
             stream .string += " ";
-            stream .string += "DEF='";
+            stream .string += "USE='";
             stream .string += generator .XMLEncode (name);
             stream .string += "'";
-         }
 
-         const containerField = generator .ContainerField ();
+            const containerField = generator .ContainerField ();
 
-         if (containerField)
-         {
-            if (containerField .getName () !== this .getContainerField ())
+            if (containerField)
             {
-               stream .string += " ";
-               stream .string += "containerField='";
-               stream .string += generator .XMLEncode (containerField .getName ());
-               stream .string += "'";
+               if (containerField .getName () !== this .getContainerField ())
+               {
+                  stream .string += " ";
+                  stream .string += "containerField='";
+                  stream .string += generator .XMLEncode (containerField .getName ());
+                  stream .string += "'";
+               }
+            }
+
+            stream .string += "/>";
+
+            generator .LeaveScope ();
+            return;
+         }
+      }
+
+      stream .string += generator .Indent ();
+      stream .string += "<";
+      stream .string += this .getTypeName ();
+
+      if (name .length)
+      {
+         generator .AddNode (this);
+
+         stream .string += " ";
+         stream .string += "DEF='";
+         stream .string += generator .XMLEncode (name);
+         stream .string += "'";
+      }
+
+      const containerField = generator .ContainerField ();
+
+      if (containerField)
+      {
+         if (containerField .getName () !== this .getContainerField ())
+         {
+            stream .string += " ";
+            stream .string += "containerField='";
+            stream .string += generator .XMLEncode (containerField .getName ());
+            stream .string += "'";
+         }
+      }
+
+      const
+         fields            = this .getChangedFields (),
+         userDefinedFields = this .getUserDefinedFields ();
+
+      const
+         references = [ ],
+         childNodes = [ ];
+
+      let cdata = this .getSourceText ();
+
+      if (cdata && cdata .length === 0)
+         cdata = null;
+
+      generator .IncIndent ();
+      generator .IncIndent ();
+
+      for (const field of fields)
+      {
+         // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+         // for this field.
+
+         let mustOutputValue = false;
+
+         if (generator .ExecutionContext ())
+         {
+            if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
+            {
+               let initializableReference = false;
+
+               field .getReferences () .forEach (function (fieldReference)
+               {
+                  initializableReference = initializableReference || fieldReference .isInitializable ();
+               });
+
+               if (!initializableReference)
+                  mustOutputValue = !this .isDefaultValue (field);
             }
          }
 
-         const
-            fields            = this .getChangedFields (),
-            userDefinedFields = this .getUserDefinedFields ();
+         // If we have no execution context we are not in a proto and must not generate IS references the same is true
+         // if the node is a shared node as the node does not belong to the execution context.
 
-         const
-            references = [ ],
-            childNodes = [ ];
-
-         let cdata = this .getSourceText ();
-
-         if (cdata && cdata .length === 0)
-            cdata = null;
-
-         generator .IncIndent ();
-         generator .IncIndent ();
-
-         for (const field of fields)
+         if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode || mustOutputValue)
          {
-            // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
-            // for this field.
+            if (mustOutputValue)
+               references .push (field);
 
-            let mustOutputValue = false;
-
-            if (generator .ExecutionContext ())
+            if (field .isInitializable ())
             {
+               switch (field .getType ())
+               {
+                  case X3DConstants .SFNode:
+                  case X3DConstants .MFNode:
+                  {
+                     childNodes .push (field);
+                     break;
+                  }
+                  default:
+                  {
+                     if (field === cdata)
+                        break;
+
+                     stream .string += "\n";
+                     stream .string += generator .Indent ();
+                     stream .string += field .getName ();
+                     stream .string += "='";
+
+                     field .toXMLStream (stream);
+
+                     stream .string += "'";
+                     break;
+                  }
+               }
+            }
+         }
+         else
+         {
+            references .push (field);
+         }
+      }
+
+      generator .DecIndent ();
+      generator .DecIndent ();
+
+      if ((!this .canUserDefinedFields () || !userDefinedFields .length) && (!references .length || sharedNode) && !childNodes .length && !cdata)
+      {
+         stream .string += "/>";
+      }
+      else
+      {
+         stream .string += ">\n";
+
+         generator .IncIndent ();
+
+         if (this .canUserDefinedFields ())
+         {
+            for (const field of userDefinedFields)
+            {
+               stream .string += generator .Indent ();
+               stream .string += "<field";
+               stream .string += " ";
+               stream .string += "accessType='";
+               stream .string += generator .AccessType (field .getAccessType ());
+               stream .string += "'";
+               stream .string += " ";
+               stream .string += "type='";
+               stream .string += field .getTypeName ();
+               stream .string += "'";
+               stream .string += " ";
+               stream .string += "name='";
+               stream .string += generator .XMLEncode (field .getName ());
+               stream .string += "'";
+
+               // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
+               // for this field.
+
+               let mustOutputValue = false;
+
                if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
                {
                   let initializableReference = false;
@@ -561,297 +646,203 @@ function (Fields,
                   });
 
                   if (!initializableReference)
-                     mustOutputValue = !this .isDefaultValue (field);
+                     mustOutputValue = true;
                }
-            }
 
-            // If we have no execution context we are not in a proto and must not generate IS references the same is true
-            // if the node is a shared node as the node does not belong to the execution context.
-
-            if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode || mustOutputValue)
-            {
-               if (mustOutputValue)
-                  references .push (field);
-
-               if (field .isInitializable ())
+               if ((field .getReferences () .size === 0 || !generator .ExecutionContext ()) || sharedNode || mustOutputValue)
                {
-                  switch (field .getType ())
+                  if (mustOutputValue && generator .ExecutionContext ())
+                     references .push (field);
+
+                  if (!field .isInitializable () || field .isDefaultValue ())
                   {
-                     case X3DConstants .SFNode:
-                     case X3DConstants .MFNode:
-                     {
-                        childNodes .push (field);
-                        break;
-                     }
-                     default:
-                     {
-                        if (field === cdata)
-                           break;
-
-                        stream .string += "\n";
-                        stream .string += generator .Indent ();
-                        stream .string += field .getName ();
-                        stream .string += "='";
-
-                        field .toXMLStream (stream);
-
-                        stream .string += "'";
-                        break;
-                     }
-                  }
-               }
-            }
-            else
-            {
-               references .push (field);
-            }
-         }
-
-         generator .DecIndent ();
-         generator .DecIndent ();
-
-         if ((!this .canUserDefinedFields () || !userDefinedFields .length) && (!references .length || sharedNode) && !childNodes .length && !cdata)
-         {
-            stream .string += "/>";
-         }
-         else
-         {
-            stream .string += ">\n";
-
-            generator .IncIndent ();
-
-            if (this .canUserDefinedFields ())
-            {
-               for (const field of userDefinedFields)
-               {
-                  stream .string += generator .Indent ();
-                  stream .string += "<field";
-                  stream .string += " ";
-                  stream .string += "accessType='";
-                  stream .string += generator .AccessType (field .getAccessType ());
-                  stream .string += "'";
-                  stream .string += " ";
-                  stream .string += "type='";
-                  stream .string += field .getTypeName ();
-                  stream .string += "'";
-                  stream .string += " ";
-                  stream .string += "name='";
-                  stream .string += generator .XMLEncode (field .getName ());
-                  stream .string += "'";
-
-                  // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
-                  // for this field.
-
-                  let mustOutputValue = false;
-
-                  if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
-                  {
-                     let initializableReference = false;
-
-                     field .getReferences () .forEach (function (fieldReference)
-                     {
-                        initializableReference = initializableReference || fieldReference .isInitializable ();
-                     });
-
-                     if (!initializableReference)
-                        mustOutputValue = true;
-                  }
-
-                  if ((field .getReferences () .size === 0 || !generator .ExecutionContext ()) || sharedNode || mustOutputValue)
-                  {
-                     if (mustOutputValue && generator .ExecutionContext ())
-                        references .push (field);
-
-                     if (!field .isInitializable () || field .isDefaultValue ())
-                     {
-                        stream .string += "/>\n";
-                     }
-                     else
-                     {
-                        // Output value
-
-                        switch (field .getType ())
-                        {
-                           case X3DConstants .SFNode:
-                           case X3DConstants .MFNode:
-                           {
-                              generator .PushContainerField (field);
-
-                              stream .string += ">\n";
-
-                              generator .IncIndent ();
-
-                              field .toXMLStream (stream);
-
-                              stream .string += "\n";
-
-                              generator .DecIndent ();
-
-                              stream .string += generator .Indent ();
-                              stream .string += "</field>\n";
-
-                              generator .PopContainerField ();
-                              break;
-                           }
-                           default:
-                           {
-                              stream .string += " ";
-                              stream .string += "value='";
-
-                              field .toXMLStream (stream);
-
-                              stream .string += "'";
-                              stream .string += "/>\n";
-                              break;
-                           }
-                        }
-                     }
+                     stream .string += "/>\n";
                   }
                   else
                   {
-                     if (generator .ExecutionContext ())
-                        references .push (field);
+                     // Output value
 
-                     stream .string += "/>\n";
+                     switch (field .getType ())
+                     {
+                        case X3DConstants .SFNode:
+                        case X3DConstants .MFNode:
+                        {
+                           generator .PushContainerField (field);
+
+                           stream .string += ">\n";
+
+                           generator .IncIndent ();
+
+                           field .toXMLStream (stream);
+
+                           stream .string += "\n";
+
+                           generator .DecIndent ();
+
+                           stream .string += generator .Indent ();
+                           stream .string += "</field>\n";
+
+                           generator .PopContainerField ();
+                           break;
+                        }
+                        default:
+                        {
+                           stream .string += " ";
+                           stream .string += "value='";
+
+                           field .toXMLStream (stream);
+
+                           stream .string += "'";
+                           stream .string += "/>\n";
+                           break;
+                        }
+                     }
                   }
                }
-            }
-
-            if (references .length && !sharedNode)
-            {
-               stream .string += generator .Indent ();
-               stream .string += "<IS>";
-               stream .string += "\n";
-
-               generator .IncIndent ();
-
-               for (const field of references)
+               else
                {
-                  const protoFields = field .getReferences ();
+                  if (generator .ExecutionContext ())
+                     references .push (field);
 
-                  protoFields .forEach (function (protoField)
-                  {
-                     stream .string += generator .Indent ();
-                     stream .string += "<connect";
-                     stream .string += " ";
-                     stream .string += "nodeField='";
-                     stream .string += generator .XMLEncode (field .getName ());
-                     stream .string += "'";
-                     stream .string += " ";
-                     stream .string += "protoField='";
-                     stream .string += generator .XMLEncode (protoField .getName ());
-                     stream .string += "'";
-                     stream .string += "/>\n";
-                  });
+                  stream .string += "/>\n";
                }
-
-               generator .DecIndent ();
-
-               stream .string += generator .Indent ();
-               stream .string += "</IS>\n";
             }
+         }
 
-            for (const field of childNodes)
+         if (references .length && !sharedNode)
+         {
+            stream .string += generator .Indent ();
+            stream .string += "<IS>";
+            stream .string += "\n";
+
+            generator .IncIndent ();
+
+            for (const field of references)
             {
-               generator .PushContainerField (field);
+               const protoFields = field .getReferences ();
 
-               field .toXMLStream (stream);
-
-               stream .string += "\n";
-
-               generator .PopContainerField ();
-            }
-
-            if (cdata)
-            {
-               for (const value of cdata)
+               protoFields .forEach (function (protoField)
                {
-                  stream .string += "<![CDATA[";
-                  stream .string += generator .escapeCDATA (value);
-                  stream .string += "]]>\n";
-               }
+                  stream .string += generator .Indent ();
+                  stream .string += "<connect";
+                  stream .string += " ";
+                  stream .string += "nodeField='";
+                  stream .string += generator .XMLEncode (field .getName ());
+                  stream .string += "'";
+                  stream .string += " ";
+                  stream .string += "protoField='";
+                  stream .string += generator .XMLEncode (protoField .getName ());
+                  stream .string += "'";
+                  stream .string += "/>\n";
+               });
             }
 
             generator .DecIndent ();
 
             stream .string += generator .Indent ();
-            stream .string += "</";
-            stream .string += this .getTypeName ();
-            stream .string += ">";
+            stream .string += "</IS>\n";
          }
 
-         generator .LeaveScope ();
-      },
-      dispose: function ()
+         for (const field of childNodes)
+         {
+            generator .PushContainerField (field);
+
+            field .toXMLStream (stream);
+
+            stream .string += "\n";
+
+            generator .PopContainerField ();
+         }
+
+         if (cdata)
+         {
+            for (const value of cdata)
+            {
+               stream .string += "<![CDATA[";
+               stream .string += generator .escapeCDATA (value);
+               stream .string += "]]>\n";
+            }
+         }
+
+         generator .DecIndent ();
+
+         stream .string += generator .Indent ();
+         stream .string += "</";
+         stream .string += this .getTypeName ();
+         stream .string += ">";
+      }
+
+      generator .LeaveScope ();
+   },
+   dispose: function ()
+   {
+      const executionContext = this .getExecutionContext ();
+
+      // Remove named node if any.
+
+      if (this .getName ())
+         executionContext .removeNamedNode (this .getName ())
+
+      // Remove imported node if any.
+
+      if (!executionContext .isMainScene ())
       {
-         const executionContext = this .getExecutionContext ();
+         const parentContext = executionContext .getExecutionContext ();
 
-         // Remove named node if any.
-
-         if (this .getName ())
-            executionContext .removeNamedNode (this .getName ())
-
-         // Remove imported node if any.
-
-         if (!executionContext .isMainScene ())
+         for (const importedNode of parentContext .getImportedNodes ())
          {
-            const parentContext = executionContext .getExecutionContext ();
-
-            for (const importedNode of parentContext .getImportedNodes ())
+            try
             {
-               try
-               {
-                  if (importedNode .getExportedNode () === this)
-                     parentContext .removeImportedNode (importedNode .getImportedName ());
-               }
-               catch (error)
-               {
-                  //console .error (error);
-               }
+               if (importedNode .getExportedNode () === this)
+                  parentContext .removeImportedNode (importedNode .getImportedName ());
+            }
+            catch (error)
+            {
+               //console .error (error);
             }
          }
+      }
 
-         // Remove exported node if any.
+      // Remove exported node if any.
 
-         if (executionContext .isScene ())
+      if (executionContext .isScene ())
+      {
+         for (const exportedNode of executionContext .getExportedNodes ())
          {
-            for (const exportedNode of executionContext .getExportedNodes ())
-            {
-               if (exportedNode .getLocalNode () === this)
-                  executionContext .removeExportedNode (exportedNode .getExportedName ());
-            }
+            if (exportedNode .getLocalNode () === this)
+               executionContext .removeExportedNode (exportedNode .getExportedName ());
          }
+      }
 
-         // Remove routes from and to node if any, and dispose values of fields.
+      // Remove routes from and to node if any, and dispose values of fields.
 
-         for (const field of this .getFields ())
-            field .dispose ();
+      for (const field of this .getFields ())
+         field .dispose ();
 
-         // Remove node from entire scene graph.
+      // Remove node from entire scene graph.
 
-         for (const firstParent of new Set (this .getParents ()))
+      for (const firstParent of new Set (this .getParents ()))
+      {
+         if (firstParent instanceof Fields .SFNode)
          {
-            if (firstParent instanceof Fields .SFNode)
+            for (const secondParent of new Set (firstParent .getParents ()))
             {
-               for (const secondParent of new Set (firstParent .getParents ()))
+               if (secondParent instanceof Fields .MFNode)
                {
-                  if (secondParent instanceof Fields .MFNode)
-                  {
-                     const length = secondParent .length;
+                  const length = secondParent .length;
 
-                     secondParent .erase (secondParent .remove (0, length, firstParent), length);
-                  }
+                  secondParent .erase (secondParent .remove (0, length, firstParent), length);
                }
-
-               firstParent .setValue (null);
             }
+
+            firstParent .setValue (null);
          }
+      }
 
-         // Call super.dispose, where fields get disposed.
+      // Call super.dispose, where fields get disposed.
 
-         X3DBaseNode .prototype .dispose .call (this);
-      },
-   });
-
-   return X3DNode;
+      X3DBaseNode .prototype .dispose .call (this);
+   },
 });
+
+export default X3DNode;

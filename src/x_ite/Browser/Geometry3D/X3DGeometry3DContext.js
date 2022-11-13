@@ -47,94 +47,84 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Browser/Geometry3D/BoxOptions",
-   "x_ite/Browser/Geometry3D/ConeOptions",
-   "x_ite/Browser/Geometry3D/CylinderOptions",
-   "x_ite/Browser/Geometry3D/QuadSphereOptions",
-   "x_ite/Browser/Core/PrimitiveQuality",
-],
-function (BoxOptions,
-          ConeOptions,
-          CylinderOptions,
-          QuadSphereOptions,
-          PrimitiveQuality)
+import BoxOptions from "./BoxOptions.js";
+import ConeOptions from "./ConeOptions.js";
+import CylinderOptions from "./CylinderOptions.js";
+import QuadSphereOptions from "./QuadSphereOptions.js";
+import PrimitiveQuality from "../Core/PrimitiveQuality.js";
+
+function X3DGeometry3DContext () { }
+
+X3DGeometry3DContext .prototype =
 {
-"use strict";
-
-   function X3DGeometry3DContext () { }
-
-   X3DGeometry3DContext .prototype =
+   initialize: function ()
    {
-      initialize: function ()
-      {
-         this .setPrimitiveQuality3D (this .getBrowserOptions () .getPrimitiveQuality ());
-      },
-      getBoxOptions: function ()
-      {
-         return getOptionNode .call (this, "getBoxOptions", BoxOptions);
-      },
-      getConeOptions: function ()
-      {
-         return getOptionNode .call (this, "getConeOptions", ConeOptions);
-      },
-      getCylinderOptions: function ()
-      {
-         return getOptionNode .call (this, "getCylinderOptions", CylinderOptions);
-      },
-      getSphereOptions: function ()
-      {
-         return getOptionNode .call (this, "getSphereOptions", QuadSphereOptions);
-      },
-      setPrimitiveQuality3D: function (primitiveQuality)
-      {
-         const
-            cone     = this .getConeOptions (),
-            cylinder = this .getCylinderOptions (),
-            sphere   = this .getSphereOptions ();
+      this .setPrimitiveQuality3D (this .getBrowserOptions () .getPrimitiveQuality ());
+   },
+   getBoxOptions: function ()
+   {
+      return getOptionNode .call (this, "getBoxOptions", BoxOptions);
+   },
+   getConeOptions: function ()
+   {
+      return getOptionNode .call (this, "getConeOptions", ConeOptions);
+   },
+   getCylinderOptions: function ()
+   {
+      return getOptionNode .call (this, "getCylinderOptions", CylinderOptions);
+   },
+   getSphereOptions: function ()
+   {
+      return getOptionNode .call (this, "getSphereOptions", QuadSphereOptions);
+   },
+   setPrimitiveQuality3D: function (primitiveQuality)
+   {
+      const
+         cone     = this .getConeOptions (),
+         cylinder = this .getCylinderOptions (),
+         sphere   = this .getSphereOptions ();
 
-         switch (primitiveQuality)
+      switch (primitiveQuality)
+      {
+         case PrimitiveQuality .LOW:
          {
-            case PrimitiveQuality .LOW:
-            {
-               cone     ._xDimension = 16;
-               cylinder ._xDimension = 16;
-               sphere   ._xDimension = 20;
-               sphere   ._yDimension = 9;
-               break;
-            }
-            case PrimitiveQuality .MEDIUM:
-            {
-               cone     ._xDimension = 20;
-               cylinder ._xDimension = 20;
-               sphere   ._xDimension = 32;
-               sphere   ._yDimension = 15;
-               break;
-            }
-            case PrimitiveQuality .HIGH:
-            {
-               cone     ._xDimension = 32;
-               cylinder ._xDimension = 32;
-               sphere   ._xDimension = 64;
-               sphere   ._yDimension = 31;
-               break;
-            }
+            cone     ._xDimension = 16;
+            cylinder ._xDimension = 16;
+            sphere   ._xDimension = 20;
+            sphere   ._yDimension = 9;
+            break;
          }
-      },
-   };
+         case PrimitiveQuality .MEDIUM:
+         {
+            cone     ._xDimension = 20;
+            cylinder ._xDimension = 20;
+            sphere   ._xDimension = 32;
+            sphere   ._yDimension = 15;
+            break;
+         }
+         case PrimitiveQuality .HIGH:
+         {
+            cone     ._xDimension = 32;
+            cylinder ._xDimension = 32;
+            sphere   ._xDimension = 64;
+            sphere   ._yDimension = 31;
+            break;
+         }
+      }
+   },
+};
 
-   function getOptionNode (key, OptionNode)
-   {
-      const optionNode = new OptionNode (this .getPrivateScene ());
+function getOptionNode (key, OptionNode)
+{
+   const optionNode = new OptionNode (this .getPrivateScene ());
 
-      optionNode .setup ();
+   optionNode .setup ();
 
-      this [key] = function () { return optionNode; };
+   this [key] = function () { return optionNode; };
 
-      Object .defineProperty (this, key, { enumerable: false });
+   Object .defineProperty (this, key, { enumerable: false });
 
-      return optionNode;
-   }
+   return optionNode;
+}
 
-   return X3DGeometry3DContext;
-});
+export default X3DGeometry3DContext;

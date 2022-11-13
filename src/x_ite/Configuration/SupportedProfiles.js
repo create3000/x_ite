@@ -47,213 +47,203 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/ProfileInfo",
-   "x_ite/Configuration/ProfileInfoArray",
-   "x_ite/Configuration/ComponentInfoArray",
-   "x_ite/Configuration/SupportedComponents",
-   "x_ite/Browser/Networking/urls",
-],
-function (ProfileInfo,
-          ProfileInfoArray,
-          ComponentInfoArray,
-          SupportedComponents,
-          urls)
-{
-"use strict";
+import ProfileInfo from "./ProfileInfo.js";
+import ProfileInfoArray from "./ProfileInfoArray.js";
+import ComponentInfoArray from "./ComponentInfoArray.js";
+import SupportedComponents from "./SupportedComponents.js";
+import urls from "../Browser/Networking/urls.js";
 
-   const SupportedProfiles = new ProfileInfoArray ();
+const SupportedProfiles = new ProfileInfoArray ();
 
-   SupportedProfiles .addProfile ({
-      title: "Computer-Aided Design (CAD) interchange",
-      name: "CADInterchange",
-      providerUrl: urls .getProviderUrl (),
-      components: [
-         SupportedComponents .get ("CADGeometry"),
-         SupportedComponents .get ("Core"),
-         SupportedComponents .get ("Grouping"),
-         SupportedComponents .get ("Lighting"),
-         SupportedComponents .get ("Navigation"),
-         SupportedComponents .get ("Networking"),
-         SupportedComponents .get ("Rendering"),
-         SupportedComponents .get ("Shaders"),
-         SupportedComponents .get ("Shape"),
-         SupportedComponents .get ("Texturing"),
-      ],
-   });
-
-   SupportedProfiles .addProfile ({
-      title: "Core",
-      name: "Core",
-      providerUrl: urls .getProviderUrl (),
-      components: [
-         SupportedComponents .get ("Core"),
-      ],
-   });
-
-   SupportedProfiles .addProfile ({
-      title: "Full",
-      name: "Full",
-      providerUrl: urls .getProviderUrl (),
-      components: [
-         //SupportedComponents .get ("Annotation"),
-         SupportedComponents .get ("CADGeometry"),
-         SupportedComponents .get ("Core"),
-         SupportedComponents .get ("CubeMapTexturing"),
-         SupportedComponents .get ("DIS"),
-         SupportedComponents .get ("EnvironmentalEffects"),
-         SupportedComponents .get ("EnvironmentalSensor"),
-         SupportedComponents .get ("EventUtilities"),
-         SupportedComponents .get ("Followers"),
-         SupportedComponents .get ("Geometry2D"),
-         SupportedComponents .get ("Geometry3D"),
-         SupportedComponents .get ("Geospatial"),
-         SupportedComponents .get ("Grouping"),
-         SupportedComponents .get ("HAnim"),
-         SupportedComponents .get ("Interpolation"),
-         SupportedComponents .get ("KeyDeviceSensor"),
-         SupportedComponents .get ("Layering"),
-         SupportedComponents .get ("Layout"),
-         SupportedComponents .get ("Lighting"),
-         SupportedComponents .get ("Navigation"),
-         SupportedComponents .get ("Networking"),
-         SupportedComponents .get ("NURBS"),
-         SupportedComponents .get ("ParticleSystems"),
-         SupportedComponents .get ("Picking"),
-         SupportedComponents .get ("PointingDeviceSensor"),
-         SupportedComponents .get ("ProjectiveTextureMapping"),
-         SupportedComponents .get ("Rendering"),
-         SupportedComponents .get ("RigidBodyPhysics"),
-         SupportedComponents .get ("Scripting"),
-         SupportedComponents .get ("Shaders"),
-         SupportedComponents .get ("Shape"),
-         SupportedComponents .get ("Sound"),
-         SupportedComponents .get ("Text"),
-         SupportedComponents .get ("Texturing"),
-         SupportedComponents .get ("Texturing3D"),
-         SupportedComponents .get ("Time"),
-         SupportedComponents .get ("VolumeRendering"),
-      ],
-   });
-
-   SupportedProfiles .addProfile ({
-      title: "Immersive",
-      name: "Immersive",
-      providerUrl: urls .getProviderUrl (),
-      components: [
-         SupportedComponents .get ("Core"),
-         SupportedComponents .get ("EnvironmentalEffects"),
-         SupportedComponents .get ("EnvironmentalSensor"),
-         SupportedComponents .get ("EventUtilities"),
-         SupportedComponents .get ("Geometry2D"),
-         SupportedComponents .get ("Geometry3D"),
-         SupportedComponents .get ("Grouping"),
-         SupportedComponents .get ("Interpolation"),
-         SupportedComponents .get ("KeyDeviceSensor"),
-         SupportedComponents .get ("Lighting"),
-         SupportedComponents .get ("Navigation"),
-         SupportedComponents .get ("Networking"),
-         SupportedComponents .get ("PointingDeviceSensor"),
-         SupportedComponents .get ("Rendering"),
-         SupportedComponents .get ("Scripting"),
-         SupportedComponents .get ("Shape"),
-         SupportedComponents .get ("Sound"),
-         SupportedComponents .get ("Text"),
-         SupportedComponents .get ("Texturing"),
-         SupportedComponents .get ("Time"),
-      ],
-   });
-
-   SupportedProfiles .addProfile ({
-      title: "Interactive",
-      name: "Interactive",
-      providerUrl: urls .getProviderUrl (),
-      components: [
-         SupportedComponents .get ("Core"),
-         SupportedComponents .get ("EnvironmentalEffects"),
-         SupportedComponents .get ("EnvironmentalSensor"),
-         SupportedComponents .get ("EventUtilities"),
-         SupportedComponents .get ("Geometry3D"),
-         SupportedComponents .get ("Grouping"),
-         SupportedComponents .get ("Interpolation"),
-         SupportedComponents .get ("KeyDeviceSensor"),
-         SupportedComponents .get ("Lighting"),
-         SupportedComponents .get ("Navigation"),
-         SupportedComponents .get ("Networking"),
-         SupportedComponents .get ("PointingDeviceSensor"),
-         SupportedComponents .get ("Rendering"),
-         SupportedComponents .get ("Shape"),
-         SupportedComponents .get ("Texturing"),
-         SupportedComponents .get ("Time"),
-      ],
-   });
-
-   SupportedProfiles .addProfile ({
-      title: "Interchange",
-      name: "Interchange",
-      providerUrl: urls .getProviderUrl (),
-      components: [
-         SupportedComponents .get ("Core"),
-         SupportedComponents .get ("EnvironmentalEffects"),
-         SupportedComponents .get ("Geometry3D"),
-         SupportedComponents .get ("Grouping"),
-         SupportedComponents .get ("Interpolation"),
-         SupportedComponents .get ("Lighting"),
-         SupportedComponents .get ("Navigation"),
-         SupportedComponents .get ("Networking"),
-         SupportedComponents .get ("Rendering"),
-         SupportedComponents .get ("Shape"),
-         SupportedComponents .get ("Texturing"),
-         SupportedComponents .get ("Time"),
-      ],
-   });
-
-   SupportedProfiles .addProfile ({
-      title: "Medical interchange",
-      name: "MedicalInterchange",
-      providerUrl: urls .getProviderUrl (),
-      components: [
-         SupportedComponents .get ("Core"),
-         SupportedComponents .get ("EnvironmentalEffects"),
-         SupportedComponents .get ("EventUtilities"),
-         SupportedComponents .get ("Geometry2D"),
-         SupportedComponents .get ("Geometry3D"),
-         SupportedComponents .get ("Grouping"),
-         SupportedComponents .get ("Interpolation"),
-         SupportedComponents .get ("Lighting"),
-         SupportedComponents .get ("Navigation"),
-         SupportedComponents .get ("Networking"),
-         SupportedComponents .get ("Rendering"),
-         SupportedComponents .get ("Shape"),
-         SupportedComponents .get ("Text"),
-         SupportedComponents .get ("Texturing"),
-         SupportedComponents .get ("Texturing3D"),
-         SupportedComponents .get ("Time"),
-         SupportedComponents .get ("VolumeRendering"),
-      ],
-   });
-
-   SupportedProfiles .addProfile ({
-      title: "MPEG-4 interactive",
-      name: "MPEG-4",
-      providerUrl: urls .getProviderUrl (),
-      components: [
-         SupportedComponents .get ("Core"),
-         SupportedComponents .get ("EnvironmentalEffects"),
-         SupportedComponents .get ("EnvironmentalSensor"),
-         SupportedComponents .get ("Geometry3D"),
-         SupportedComponents .get ("Grouping"),
-         SupportedComponents .get ("Interpolation"),
-         SupportedComponents .get ("Lighting"),
-         SupportedComponents .get ("Navigation"),
-         SupportedComponents .get ("Networking"),
-         SupportedComponents .get ("PointingDeviceSensor"),
-         SupportedComponents .get ("Rendering"),
-         SupportedComponents .get ("Shape"),
-         SupportedComponents .get ("Texturing"),
-         SupportedComponents .get ("Time"),
-      ],
-   });
-
-   return SupportedProfiles;
+SupportedProfiles .addProfile ({
+   title: "Computer-Aided Design (CAD) interchange",
+   name: "CADInterchange",
+   providerUrl: urls .getProviderUrl (),
+   components: [
+      SupportedComponents .get ("CADGeometry"),
+      SupportedComponents .get ("Core"),
+      SupportedComponents .get ("Grouping"),
+      SupportedComponents .get ("Lighting"),
+      SupportedComponents .get ("Navigation"),
+      SupportedComponents .get ("Networking"),
+      SupportedComponents .get ("Rendering"),
+      SupportedComponents .get ("Shaders"),
+      SupportedComponents .get ("Shape"),
+      SupportedComponents .get ("Texturing"),
+   ],
 });
+
+SupportedProfiles .addProfile ({
+   title: "Core",
+   name: "Core",
+   providerUrl: urls .getProviderUrl (),
+   components: [
+      SupportedComponents .get ("Core"),
+   ],
+});
+
+SupportedProfiles .addProfile ({
+   title: "Full",
+   name: "Full",
+   providerUrl: urls .getProviderUrl (),
+   components: [
+      //SupportedComponents .get ("Annotation"),
+      SupportedComponents .get ("CADGeometry"),
+      SupportedComponents .get ("Core"),
+      SupportedComponents .get ("CubeMapTexturing"),
+      SupportedComponents .get ("DIS"),
+      SupportedComponents .get ("EnvironmentalEffects"),
+      SupportedComponents .get ("EnvironmentalSensor"),
+      SupportedComponents .get ("EventUtilities"),
+      SupportedComponents .get ("Followers"),
+      SupportedComponents .get ("Geometry2D"),
+      SupportedComponents .get ("Geometry3D"),
+      SupportedComponents .get ("Geospatial"),
+      SupportedComponents .get ("Grouping"),
+      SupportedComponents .get ("HAnim"),
+      SupportedComponents .get ("Interpolation"),
+      SupportedComponents .get ("KeyDeviceSensor"),
+      SupportedComponents .get ("Layering"),
+      SupportedComponents .get ("Layout"),
+      SupportedComponents .get ("Lighting"),
+      SupportedComponents .get ("Navigation"),
+      SupportedComponents .get ("Networking"),
+      SupportedComponents .get ("NURBS"),
+      SupportedComponents .get ("ParticleSystems"),
+      SupportedComponents .get ("Picking"),
+      SupportedComponents .get ("PointingDeviceSensor"),
+      SupportedComponents .get ("ProjectiveTextureMapping"),
+      SupportedComponents .get ("Rendering"),
+      SupportedComponents .get ("RigidBodyPhysics"),
+      SupportedComponents .get ("Scripting"),
+      SupportedComponents .get ("Shaders"),
+      SupportedComponents .get ("Shape"),
+      SupportedComponents .get ("Sound"),
+      SupportedComponents .get ("Text"),
+      SupportedComponents .get ("Texturing"),
+      SupportedComponents .get ("Texturing3D"),
+      SupportedComponents .get ("Time"),
+      SupportedComponents .get ("VolumeRendering"),
+   ],
+});
+
+SupportedProfiles .addProfile ({
+   title: "Immersive",
+   name: "Immersive",
+   providerUrl: urls .getProviderUrl (),
+   components: [
+      SupportedComponents .get ("Core"),
+      SupportedComponents .get ("EnvironmentalEffects"),
+      SupportedComponents .get ("EnvironmentalSensor"),
+      SupportedComponents .get ("EventUtilities"),
+      SupportedComponents .get ("Geometry2D"),
+      SupportedComponents .get ("Geometry3D"),
+      SupportedComponents .get ("Grouping"),
+      SupportedComponents .get ("Interpolation"),
+      SupportedComponents .get ("KeyDeviceSensor"),
+      SupportedComponents .get ("Lighting"),
+      SupportedComponents .get ("Navigation"),
+      SupportedComponents .get ("Networking"),
+      SupportedComponents .get ("PointingDeviceSensor"),
+      SupportedComponents .get ("Rendering"),
+      SupportedComponents .get ("Scripting"),
+      SupportedComponents .get ("Shape"),
+      SupportedComponents .get ("Sound"),
+      SupportedComponents .get ("Text"),
+      SupportedComponents .get ("Texturing"),
+      SupportedComponents .get ("Time"),
+   ],
+});
+
+SupportedProfiles .addProfile ({
+   title: "Interactive",
+   name: "Interactive",
+   providerUrl: urls .getProviderUrl (),
+   components: [
+      SupportedComponents .get ("Core"),
+      SupportedComponents .get ("EnvironmentalEffects"),
+      SupportedComponents .get ("EnvironmentalSensor"),
+      SupportedComponents .get ("EventUtilities"),
+      SupportedComponents .get ("Geometry3D"),
+      SupportedComponents .get ("Grouping"),
+      SupportedComponents .get ("Interpolation"),
+      SupportedComponents .get ("KeyDeviceSensor"),
+      SupportedComponents .get ("Lighting"),
+      SupportedComponents .get ("Navigation"),
+      SupportedComponents .get ("Networking"),
+      SupportedComponents .get ("PointingDeviceSensor"),
+      SupportedComponents .get ("Rendering"),
+      SupportedComponents .get ("Shape"),
+      SupportedComponents .get ("Texturing"),
+      SupportedComponents .get ("Time"),
+   ],
+});
+
+SupportedProfiles .addProfile ({
+   title: "Interchange",
+   name: "Interchange",
+   providerUrl: urls .getProviderUrl (),
+   components: [
+      SupportedComponents .get ("Core"),
+      SupportedComponents .get ("EnvironmentalEffects"),
+      SupportedComponents .get ("Geometry3D"),
+      SupportedComponents .get ("Grouping"),
+      SupportedComponents .get ("Interpolation"),
+      SupportedComponents .get ("Lighting"),
+      SupportedComponents .get ("Navigation"),
+      SupportedComponents .get ("Networking"),
+      SupportedComponents .get ("Rendering"),
+      SupportedComponents .get ("Shape"),
+      SupportedComponents .get ("Texturing"),
+      SupportedComponents .get ("Time"),
+   ],
+});
+
+SupportedProfiles .addProfile ({
+   title: "Medical interchange",
+   name: "MedicalInterchange",
+   providerUrl: urls .getProviderUrl (),
+   components: [
+      SupportedComponents .get ("Core"),
+      SupportedComponents .get ("EnvironmentalEffects"),
+      SupportedComponents .get ("EventUtilities"),
+      SupportedComponents .get ("Geometry2D"),
+      SupportedComponents .get ("Geometry3D"),
+      SupportedComponents .get ("Grouping"),
+      SupportedComponents .get ("Interpolation"),
+      SupportedComponents .get ("Lighting"),
+      SupportedComponents .get ("Navigation"),
+      SupportedComponents .get ("Networking"),
+      SupportedComponents .get ("Rendering"),
+      SupportedComponents .get ("Shape"),
+      SupportedComponents .get ("Text"),
+      SupportedComponents .get ("Texturing"),
+      SupportedComponents .get ("Texturing3D"),
+      SupportedComponents .get ("Time"),
+      SupportedComponents .get ("VolumeRendering"),
+   ],
+});
+
+SupportedProfiles .addProfile ({
+   title: "MPEG-4 interactive",
+   name: "MPEG-4",
+   providerUrl: urls .getProviderUrl (),
+   components: [
+      SupportedComponents .get ("Core"),
+      SupportedComponents .get ("EnvironmentalEffects"),
+      SupportedComponents .get ("EnvironmentalSensor"),
+      SupportedComponents .get ("Geometry3D"),
+      SupportedComponents .get ("Grouping"),
+      SupportedComponents .get ("Interpolation"),
+      SupportedComponents .get ("Lighting"),
+      SupportedComponents .get ("Navigation"),
+      SupportedComponents .get ("Networking"),
+      SupportedComponents .get ("PointingDeviceSensor"),
+      SupportedComponents .get ("Rendering"),
+      SupportedComponents .get ("Shape"),
+      SupportedComponents .get ("Texturing"),
+      SupportedComponents .get ("Time"),
+   ],
+});
+
+export default SupportedProfiles;

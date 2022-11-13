@@ -47,113 +47,103 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DParticleEmitterNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DParticleEmitterNode from "./X3DParticleEmitterNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function ConeEmitter (executionContext)
 {
-"use strict";
+   X3DParticleEmitterNode .call (this, executionContext);
 
-   function ConeEmitter (executionContext)
+   this .addType (X3DConstants .ConeEmitter);
+
+   this ._position .setUnit ("length");
+   this ._angle    .setUnit ("angle");
+
+   this .addUniform ("position",  "uniform vec3  position;");
+   this .addUniform ("direction", "uniform vec3  direction;");
+   this .addUniform ("angle",     "uniform float angle;");
+
+   this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
    {
-      X3DParticleEmitterNode .call (this, executionContext);
-
-      this .addType (X3DConstants .ConeEmitter);
-
-      this ._position .setUnit ("length");
-      this ._angle    .setUnit ("angle");
-
-      this .addUniform ("position",  "uniform vec3  position;");
-      this .addUniform ("direction", "uniform vec3  direction;");
-      this .addUniform ("angle",     "uniform float angle;");
-
-      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      if (direction == vec3 (0.0))
       {
-         if (direction == vec3 (0.0))
-         {
-            return getRandomSphericalVelocity ();
-         }
-         else
-         {
-            vec3  normal = getRandomNormalWithDirectionAndAngle (direction, angle);
-            float speed  = getRandomSpeed ();
-
-            return normal * speed;
-         }
-      }`);
-
-      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+         return getRandomSphericalVelocity ();
+      }
+      else
       {
-         return vec4 (position, 1.0);
-      }`);
-   }
+         vec3  normal = getRandomNormalWithDirectionAndAngle (direction, angle);
+         float speed  = getRandomSpeed ();
 
-   ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+         return normal * speed;
+      }
+   }`);
+
+   this .addFunction (/* glsl */ `vec4 getRandomPosition ()
    {
-      constructor: ConeEmitter,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",   new Fields .SFVec3f (0, 1, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "angle",       new Fields .SFFloat (0.7854)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "ConeEmitter";
-      },
-      getComponentName: function ()
-      {
-         return "ParticleSystems";
-      },
-      getContainerField: function ()
-      {
-         return "emitter";
-      },
-      initialize: function ()
-      {
-         X3DParticleEmitterNode .prototype .initialize .call (this);
+      return vec4 (position, 1.0);
+   }`);
+}
 
-         if (this .getBrowser () .getContext () .getVersion () < 2)
-            return;
+ConeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+{
+   constructor: ConeEmitter,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "direction",   new Fields .SFVec3f (0, 1, 0)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "angle",       new Fields .SFFloat (0.7854)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "ConeEmitter";
+   },
+   getComponentName: function ()
+   {
+      return "ParticleSystems";
+   },
+   getContainerField: function ()
+   {
+      return "emitter";
+   },
+   initialize: function ()
+   {
+      X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this ._position  .addInterest ("set_position__", this);
-         this ._direction .addInterest ("set_direction__", this);
-         this ._angle     .addInterest ("set_angle__", this);
+      if (this .getBrowser () .getContext () .getVersion () < 2)
+         return;
 
-         this .set_position__ ();
-         this .set_direction__ ();
-         this .set_angle__ ();
-      },
-      set_position__: function ()
-      {
-         const position = this ._position .getValue ();
+      this ._position  .addInterest ("set_position__", this);
+      this ._direction .addInterest ("set_direction__", this);
+      this ._angle     .addInterest ("set_angle__", this);
 
-         this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
-      },
-      set_direction__: function ()
-      {
-         const direction = this ._direction .getValue ();
+      this .set_position__ ();
+      this .set_direction__ ();
+      this .set_angle__ ();
+   },
+   set_position__: function ()
+   {
+      const position = this ._position .getValue ();
 
-         this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
-      },
-      set_angle__: function ()
-      {
-         this .setUniform ("uniform1f", "angle", this ._angle .getValue ());
-      },
-   });
+      this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
+   },
+   set_direction__: function ()
+   {
+      const direction = this ._direction .getValue ();
 
-   return ConeEmitter;
+      this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
+   },
+   set_angle__: function ()
+   {
+      this .setUniform ("uniform1f", "angle", this ._angle .getValue ());
+   },
 });
+
+export default ConeEmitter;

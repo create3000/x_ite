@@ -46,66 +46,48 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/SupportedNodes",
-   "x_ite/Components/Core/MetadataBoolean",
-   "x_ite/Components/Core/MetadataDouble",
-   "x_ite/Components/Core/MetadataFloat",
-   "x_ite/Components/Core/MetadataInteger",
-   "x_ite/Components/Core/MetadataSet",
-   "x_ite/Components/Core/MetadataString",
-   "x_ite/Components/Core/WorldInfo",
-   "x_ite/Components/Core/X3DBindableNode",
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Components/Core/X3DInfoNode",
-   "x_ite/Components/Core/X3DMetadataObject",
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Components/Core/X3DPrototypeInstance",
-   "x_ite/Components/Core/X3DSensorNode",
-],
-function (SupportedNodes,
-          MetadataBoolean,
-          MetadataDouble,
-          MetadataFloat,
-          MetadataInteger,
-          MetadataSet,
-          MetadataString,
-          WorldInfo,
-          X3DBindableNode,
-          X3DChildNode,
-          X3DInfoNode,
-          X3DMetadataObject,
-          X3DNode,
-          X3DPrototypeInstance,
-          X3DSensorNode)
+import SupportedNodes from "../Configuration/SupportedNodes.js";
+import MetadataBoolean from "./Core/MetadataBoolean.js";
+import MetadataDouble from "./Core/MetadataDouble.js";
+import MetadataFloat from "./Core/MetadataFloat.js";
+import MetadataInteger from "./Core/MetadataInteger.js";
+import MetadataSet from "./Core/MetadataSet.js";
+import MetadataString from "./Core/MetadataString.js";
+import WorldInfo from "./Core/WorldInfo.js";
+import X3DBindableNode from "./Core/X3DBindableNode.js";
+import X3DChildNode from "./Core/X3DChildNode.js";
+import X3DInfoNode from "./Core/X3DInfoNode.js";
+import X3DMetadataObject from "./Core/X3DMetadataObject.js";
+import X3DNode from "./Core/X3DNode.js";
+import X3DPrototypeInstance from "./Core/X3DPrototypeInstance.js";
+import X3DSensorNode from "./Core/X3DSensorNode.js";
+
+const Types =
 {
-"use strict";
+   MetadataBoolean: MetadataBoolean,
+   MetadataDouble:  MetadataDouble,
+   MetadataFloat:   MetadataFloat,
+   MetadataInteger: MetadataInteger,
+   MetadataSet:     MetadataSet,
+   MetadataString:  MetadataString,
+   WorldInfo:       WorldInfo,
+};
 
-   const Types =
-   {
-      MetadataBoolean: MetadataBoolean,
-      MetadataDouble:  MetadataDouble,
-      MetadataFloat:   MetadataFloat,
-      MetadataInteger: MetadataInteger,
-      MetadataSet:     MetadataSet,
-      MetadataString:  MetadataString,
-      WorldInfo:       WorldInfo,
-   };
+const AbstractTypes =
+{
+   X3DBindableNode:      X3DBindableNode,
+   X3DChildNode:         X3DChildNode,
+   X3DInfoNode:          X3DInfoNode,
+   X3DMetadataObject:    X3DMetadataObject,
+   X3DNode:              X3DNode,
+   X3DPrototypeInstance: X3DPrototypeInstance,
+   X3DSensorNode:        X3DSensorNode,
+};
 
-   const AbstractTypes =
-   {
-      X3DBindableNode:      X3DBindableNode,
-      X3DChildNode:         X3DChildNode,
-      X3DInfoNode:          X3DInfoNode,
-      X3DMetadataObject:    X3DMetadataObject,
-      X3DNode:              X3DNode,
-      X3DPrototypeInstance: X3DPrototypeInstance,
-      X3DSensorNode:        X3DSensorNode,
-   };
+for (const typeName in Types)
+   SupportedNodes .addType (typeName, Types [typeName]);
 
-   for (const typeName in Types)
-      SupportedNodes .addType (typeName, Types [typeName]);
+for (const typeName in AbstractTypes)
+   SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 
-   for (const typeName in AbstractTypes)
-      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
-});
+export default undefined;

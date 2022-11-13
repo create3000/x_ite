@@ -47,326 +47,327 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DEventObject",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Base/FieldArray",
-   "x_ite/Fields",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DEventObject,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          FieldArray,
-          Fields,
-          X3DConstants)
+import X3DEventObject from "./X3DEventObject.js";
+import X3DFieldDefinition from "./X3DFieldDefinition.js";
+import FieldDefinitionArray from "./FieldDefinitionArray.js";
+import FieldArray from "./FieldArray.js";
+import Fields from "../Fields.js";
+import X3DConstants from "./X3DConstants.js";
+
+const
+   _executionContext  = Symbol (),
+   _type              = Symbol (),
+   _fieldDefinitions  = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
+   _fields            = Symbol (),
+   _predefinedFields  = Symbol (),
+   _aliases           = Symbol (),
+   _userDefinedFields = Symbol (),
+   _initialized       = Symbol (),
+   _live              = Symbol (),
+   _set_live__        = Symbol ("X3DBaseNode.set_live__"),
+   _private           = Symbol (),
+   _cloneCount        = Symbol ();
+
+function X3DBaseNode (executionContext)
 {
-"use strict";
+   if (this [_executionContext])
+      return;
 
-   const
-      _executionContext  = Symbol (),
-      _type              = Symbol (),
-      _fieldDefinitions  = Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions"),
-      _fields            = Symbol (),
-      _predefinedFields  = Symbol (),
-      _aliases           = Symbol (),
-      _userDefinedFields = Symbol (),
-      _initialized       = Symbol (),
-      _live              = Symbol (),
-      _set_live__        = Symbol ("X3DBaseNode.set_live__"),
-      _private           = Symbol (),
-      _cloneCount        = Symbol ();
+   X3DEventObject .call (this, executionContext .getBrowser ());
 
-   function X3DBaseNode (executionContext)
+   this [_executionContext]  = executionContext;
+   this [_type]              = [ X3DConstants .X3DBaseNode ];
+   this [_fields]            = new FieldArray ();
+   this [_predefinedFields]  = new FieldArray ();
+   this [_aliases]           = new Map ();
+   this [_userDefinedFields] = new FieldArray ();
+   this [_live]              = true;
+   this [_initialized]       = false;
+   this [_private]           = false;
+   this [_cloneCount]        = 0;
+
+   // Setup fields.
+
+   if (this .canUserDefinedFields ())
+      this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
+
+   for (const fieldDefinition of this [_fieldDefinitions])
+      this .addField (fieldDefinition);
+
+   this .addChildObjects ("name_changed",       new Fields .SFTime (),
+                          "typeName_changed",   new Fields .SFTime (),
+                          "fields_changed",     new Fields .SFTime (),
+                          "cloneCount_changed", new Fields .SFTime ())
+}
+
+X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototype),
+{
+   constructor: X3DBaseNode,
+   [_fieldDefinitions]: new FieldDefinitionArray ([ ]),
+   setName: function (value)
    {
-      if (this [_executionContext])
-         return;
+      X3DEventObject .prototype .setName .call (this, value)
 
-      X3DEventObject .call (this, executionContext .getBrowser ());
-
-      this [_executionContext]  = executionContext;
-      this [_type]              = [ X3DConstants .X3DBaseNode ];
-      this [_fields]            = new FieldArray ();
-      this [_predefinedFields]  = new FieldArray ();
-      this [_aliases]           = new Map ();
-      this [_userDefinedFields] = new FieldArray ();
-      this [_live]              = true;
-      this [_initialized]       = false;
-      this [_private]           = false;
-      this [_cloneCount]        = 0;
-
-      // Setup fields.
-
-      if (this .canUserDefinedFields ())
-         this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
-
-      for (const fieldDefinition of this [_fieldDefinitions])
-         this .addField (fieldDefinition);
-
-      this .addChildObjects ("name_changed",       new Fields .SFTime (),
-                             "typeName_changed",   new Fields .SFTime (),
-                             "fields_changed",     new Fields .SFTime (),
-                             "cloneCount_changed", new Fields .SFTime ())
-   }
-
-   X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototype),
+      if (this [_initialized])
+         this ._name_changed = this .getBrowser () .getCurrentTime ();
+   },
+   getMainScene: function ()
    {
-      constructor: X3DBaseNode,
-      [_fieldDefinitions]: new FieldDefinitionArray ([ ]),
-      setName: function (value)
-      {
-         X3DEventObject .prototype .setName .call (this, value)
+      let scene = this [_executionContext] .getScene ();
 
-         if (this [_initialized])
-            this ._name_changed = this .getBrowser () .getCurrentTime ();
-      },
-      getMainScene: function ()
-      {
-         let scene = this [_executionContext] .getScene ();
+      while (! scene .isMainScene ())
+         scene = scene .getScene ();
 
-         while (! scene .isMainScene ())
-            scene = scene .getScene ();
+      return scene;
+   },
+   getScene: function ()
+   {
+      let executionContext = this [_executionContext];
 
-         return scene;
-      },
-      getScene: function ()
-      {
-         let executionContext = this [_executionContext];
+      while (! executionContext .isScene ())
+         executionContext = executionContext .getExecutionContext ();
 
-         while (! executionContext .isScene ())
-            executionContext = executionContext .getExecutionContext ();
+      return executionContext;
+   },
+   getExecutionContext: function ()
+   {
+      return this [_executionContext];
+   },
+   setExecutionContext: function (value)
+   {
+      // Currently only useful for Scene.
+      this [_executionContext] = value;
+   },
+   addType: function (value)
+   {
+      this [_type] .push (value);
+   },
+   getType: function ()
+   {
+      return this [_type];
+   },
+   getInnerNode: function ()
+   {
+      return this;
+   },
+   isLive: (function ()
+   {
+      function isLive ()
+      {
+         return this ._isLive;
+      }
 
-         return executionContext;
-      },
-      getExecutionContext: function ()
+      return function ()
       {
-         return this [_executionContext];
-      },
-      setExecutionContext: function (value)
-      {
-         // Currently only useful for Scene.
-         this [_executionContext] = value;
-      },
-      addType: function (value)
-      {
-         this [_type] .push (value);
-      },
-      getType: function ()
-      {
-         return this [_type];
-      },
-      getInnerNode: function ()
-      {
-         return this;
-      },
-      isLive: (function ()
-      {
-         function isLive ()
+         ///  Returns the live event of this node.
+
+         // Change function.
+
+         Object .defineProperty (this, "isLive",
          {
-            return this ._isLive;
-         }
+            value: isLive,
+            enumerable: false,
+            configurable: true,
+         });
 
-         return function ()
-         {
-            ///  Returns the live event of this node.
+         // Add isLive event.
 
-            // Change function.
+         this .addChildObjects ("isLive", new Fields .SFBool (this .getLiveState ()));
 
-            Object .defineProperty (this, "isLive",
-            {
-               value: isLive,
-               enumerable: false,
-               configurable: true,
-            });
+         // Event processing is done manually and immediately, so:
+         this ._isLive .removeParent (this);
 
-            // Add isLive event.
-
-            this .addChildObjects ("isLive", new Fields .SFBool (this .getLiveState ()));
-
-            // Event processing is done manually and immediately, so:
-            this ._isLive .removeParent (this);
-
-            // Connect to execution context.
-
-            if (this .getOuterNode && this .getOuterNode ())
-               this .getOuterNode () .isLive () .addInterest (_set_live__, this);
-
-            else if (this [_executionContext] !== this)
-               this [_executionContext] .isLive () .addInterest (_set_live__, this);
-
-            // Return field
-
-            return this .isLive ();
-         };
-      })(),
-      setLive: function (value)
-      {
-         ///  Sets the own live state of this node.  Setting the live state to false
-         ///  temporarily disables this node completely.
-
-         this [_live] = value .valueOf ();
-
-         this [_set_live__] ();
-      },
-      getLive: function ()
-      {
-         ///  Returns the own live state of this node.
-
-         return this [_live];
-      },
-      getLiveState: function ()
-      {
-         ///  Determines the live state of this node.
+         // Connect to execution context.
 
          if (this .getOuterNode && this .getOuterNode ())
-            return this .getLive () && this .getOuterNode () .isLive () .getValue ();
+            this .getOuterNode () .isLive () .addInterest (_set_live__, this);
 
-         else if (this !== this [_executionContext])
-            return this .getLive () && this [_executionContext] .isLive () .getValue ();
+         else if (this [_executionContext] !== this)
+            this [_executionContext] .isLive () .addInterest (_set_live__, this);
 
-         return this .getLive ();
-      },
-      [_set_live__]: function ()
+         // Return field
+
+         return this .isLive ();
+      };
+   })(),
+   setLive: function (value)
+   {
+      ///  Sets the own live state of this node.  Setting the live state to false
+      ///  temporarily disables this node completely.
+
+      this [_live] = value .valueOf ();
+
+      this [_set_live__] ();
+   },
+   getLive: function ()
+   {
+      ///  Returns the own live state of this node.
+
+      return this [_live];
+   },
+   getLiveState: function ()
+   {
+      ///  Determines the live state of this node.
+
+      if (this .getOuterNode && this .getOuterNode ())
+         return this .getLive () && this .getOuterNode () .isLive () .getValue ();
+
+      else if (this !== this [_executionContext])
+         return this .getLive () && this [_executionContext] .isLive () .getValue ();
+
+      return this .getLive ();
+   },
+   [_set_live__]: function ()
+   {
+      const
+         live   = this .getLiveState (),
+         isLive = this .isLive ();
+
+      if (live)
       {
-         const
-            live   = this .getLiveState (),
-            isLive = this .isLive ();
+         if (isLive .getValue ())
+            return;
 
-         if (live)
+         isLive .set (true);
+         isLive .processEvent ();
+      }
+      else
+      {
+         if (isLive .getValue ())
          {
-            if (isLive .getValue ())
-               return;
-
-            isLive .set (true);
+            isLive .set (false);
             isLive .processEvent ();
+         }
+      }
+   },
+   create: function (executionContext)
+   {
+      return new (this .constructor) (executionContext || this [_executionContext]);
+   },
+   setup: (function ()
+   {
+      const attributes = { value: Function .prototype, enumerable: false };
+
+      return function ()
+      {
+         Object .defineProperty (this, "setup", attributes);
+
+         for (const field of this [_fields])
+            field .setTainted (false);
+
+         this .initialize ();
+
+         this [_initialized] = true;
+      };
+   })(),
+   initialize: function ()
+   { },
+   isInitialized: function ()
+   {
+      return this [_initialized];
+   },
+   copy: function (executionContext)
+   {
+      const copy = this .create (executionContext);
+
+      if (this .canUserDefinedFields ())
+      {
+         for (const fieldDefinition of this [_fieldDefinitions])
+         {
+            if (copy .getFields () .has (fieldDefinition .name))
+               continue;
+
+            copy .addUserDefinedField (fieldDefinition .accessType, fieldDefinition .name, fieldDefinition .value .copy ());
+         }
+      }
+
+      for (const field of this [_fields])
+         copy .getFields () .get (field .getName ()) .assign (field);
+
+      copy .setup ();
+
+      return copy;
+   },
+   addChildObjects: function (name, field)
+   {
+      for (let i = 0, length = arguments .length; i < length; i += 2)
+         this .addChildObject (arguments [i], arguments [i + 1]);
+   },
+   addChildObject: function (name, field)
+   {
+      field .addParent (this);
+      field .setName (name);
+
+      Object .defineProperty (this, "_" + name,
+      {
+         get: function () { return field; },
+         set: function (value) { field .setValue (value); },
+         enumerable: false,
+         configurable: false,
+      });
+   },
+   getFieldDefinitions: function ()
+   {
+      return this [_fieldDefinitions];
+   },
+   getFieldsAreEnumerable: function ()
+   {
+      return false;
+   },
+   addField: function (fieldDefinition)
+   {
+      const
+         accessType = fieldDefinition .accessType,
+         name       = fieldDefinition .name,
+         field      = fieldDefinition .value .copy ();
+
+      field .setTainted (!this [_initialized]);
+      field .addParent (this);
+      field .setName (name);
+      field .setAccessType (accessType);
+
+      this [_fields]           .add (name, field);
+      this [_predefinedFields] .add (name, field);
+
+      Object .defineProperty (this, "_" + name,
+      {
+         get: function () { return field; },
+         set: function (value) { field .setValue (value); },
+         enumerable: this .getFieldsAreEnumerable (),
+         configurable: true, // false : non deletable
+      });
+
+      if (!this .isPrivate ())
+         field .addCloneCount (1);
+
+      if (this [_initialized])
+         this ._fields_changed = this .getBrowser () .getCurrentTime ();
+   },
+   getField: (function ()
+   {
+      const
+         set_field     = /^set_(.*?)$/,
+         field_changed = /^(.*?)_changed$/;
+
+      return function (name)
+      {
+         const field = this [_fields] .get (name) || this [_aliases] .get (name);
+
+         if (field)
+            return field;
+
+         const match = name .match (set_field);
+
+         if (match)
+         {
+            const field = this [_fields] .get (match [1]) || this [_aliases] .get (match [1]);
+
+            if (field && field .getAccessType () === X3DConstants .inputOutput)
+               return field;
          }
          else
          {
-            if (isLive .getValue ())
-            {
-               isLive .set (false);
-               isLive .processEvent ();
-            }
-         }
-      },
-      create: function (executionContext)
-      {
-         return new (this .constructor) (executionContext || this [_executionContext]);
-      },
-      setup: (function ()
-      {
-         const attributes = { value: Function .prototype, enumerable: false };
-
-         return function ()
-         {
-            Object .defineProperty (this, "setup", attributes);
-
-            for (const field of this [_fields])
-               field .setTainted (false);
-
-            this .initialize ();
-
-            this [_initialized] = true;
-         };
-      })(),
-      initialize: function ()
-      { },
-      isInitialized: function ()
-      {
-         return this [_initialized];
-      },
-      copy: function (executionContext)
-      {
-         const copy = this .create (executionContext);
-
-         if (this .canUserDefinedFields ())
-         {
-            for (const fieldDefinition of this [_fieldDefinitions])
-            {
-               if (copy .getFields () .has (fieldDefinition .name))
-                  continue;
-
-               copy .addUserDefinedField (fieldDefinition .accessType, fieldDefinition .name, fieldDefinition .value .copy ());
-            }
-         }
-
-         for (const field of this [_fields])
-            copy .getFields () .get (field .getName ()) .assign (field);
-
-         copy .setup ();
-
-         return copy;
-      },
-      addChildObjects: function (name, field)
-      {
-         for (let i = 0, length = arguments .length; i < length; i += 2)
-            this .addChildObject (arguments [i], arguments [i + 1]);
-      },
-      addChildObject: function (name, field)
-      {
-         field .addParent (this);
-         field .setName (name);
-
-         Object .defineProperty (this, "_" + name,
-         {
-            get: function () { return field; },
-            set: function (value) { field .setValue (value); },
-            enumerable: false,
-            configurable: false,
-         });
-      },
-      getFieldDefinitions: function ()
-      {
-         return this [_fieldDefinitions];
-      },
-      getFieldsAreEnumerable: function ()
-      {
-         return false;
-      },
-      addField: function (fieldDefinition)
-      {
-         const
-            accessType = fieldDefinition .accessType,
-            name       = fieldDefinition .name,
-            field      = fieldDefinition .value .copy ();
-
-         field .setTainted (!this [_initialized]);
-         field .addParent (this);
-         field .setName (name);
-         field .setAccessType (accessType);
-
-         this [_fields]           .add (name, field);
-         this [_predefinedFields] .add (name, field);
-
-         Object .defineProperty (this, "_" + name,
-         {
-            get: function () { return field; },
-            set: function (value) { field .setValue (value); },
-            enumerable: this .getFieldsAreEnumerable (),
-            configurable: true, // false : non deletable
-         });
-
-         if (!this .isPrivate ())
-            field .addCloneCount (1);
-
-         if (this [_initialized])
-            this ._fields_changed = this .getBrowser () .getCurrentTime ();
-      },
-      getField: (function ()
-      {
-         const
-            set_field     = /^set_(.*?)$/,
-            field_changed = /^(.*?)_changed$/;
-
-         return function (name)
-         {
-            const field = this [_fields] .get (name) || this [_aliases] .get (name);
-
-            if (field)
-               return field;
-
-            const match = name .match (set_field);
+            const match = name .match (field_changed);
 
             if (match)
             {
@@ -375,240 +376,228 @@ function (X3DEventObject,
                if (field && field .getAccessType () === X3DConstants .inputOutput)
                   return field;
             }
-            else
-            {
-               const match = name .match (field_changed);
-
-               if (match)
-               {
-                  const field = this [_fields] .get (match [1]) || this [_aliases] .get (match [1]);
-
-                  if (field && field .getAccessType () === X3DConstants .inputOutput)
-                     return field;
-               }
-            }
-
-            throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
-         };
-      })(),
-      addAlias: function (alias, field)
-      {
-         this [_aliases] .set (alias, field);
-
-         Object .defineProperty (this, "_" + alias,
-         {
-            get: function () { return field; },
-            set: function (value) { field .setValue (value); },
-            enumerable: true,
-            configurable: false,
-         });
-      },
-      removeField: function (name)
-      {
-         const field = this [_predefinedFields] .get (name);
-
-         if (field)
-         {
-            field .removeParent (this);
-
-            this [_fields]           .remove (name);
-            this [_predefinedFields] .remove (name);
-
-            delete this ["_" + field .getName ()];
-
-            if (!this .isPrivate ())
-               field .removeCloneCount (1);
-
-            if (this [_initialized])
-               this ._fields_changed = this .getBrowser () .getCurrentTime ();
          }
-      },
-      canUserDefinedFields: function ()
-      {
-         return false;
-      },
-      addUserDefinedField: function (accessType, name, field)
-      {
-         if (this [_userDefinedFields] .has (name))
-            this .removeUserDefinedField (name);
 
-         field .setTainted (!this [_initialized]);
-         field .addParent (this);
-         field .setName (name);
-         field .setAccessType (accessType);
+         throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
+      };
+   })(),
+   addAlias: function (alias, field)
+   {
+      this [_aliases] .set (alias, field);
 
-         this [_fieldDefinitions]  .add (name, new X3DFieldDefinition (accessType, name, field));
-         this [_fields]            .add (name, field);
-         this [_userDefinedFields] .add (name, field);
+      Object .defineProperty (this, "_" + alias,
+      {
+         get: function () { return field; },
+         set: function (value) { field .setValue (value); },
+         enumerable: true,
+         configurable: false,
+      });
+   },
+   removeField: function (name)
+   {
+      const field = this [_predefinedFields] .get (name);
+
+      if (field)
+      {
+         field .removeParent (this);
+
+         this [_fields]           .remove (name);
+         this [_predefinedFields] .remove (name);
+
+         delete this ["_" + field .getName ()];
 
          if (!this .isPrivate ())
-            field .addCloneCount (1);
+            field .removeCloneCount (1);
 
          if (this [_initialized])
             this ._fields_changed = this .getBrowser () .getCurrentTime ();
-      },
-      removeUserDefinedField: function (name)
+      }
+   },
+   canUserDefinedFields: function ()
+   {
+      return false;
+   },
+   addUserDefinedField: function (accessType, name, field)
+   {
+      if (this [_userDefinedFields] .has (name))
+         this .removeUserDefinedField (name);
+
+      field .setTainted (!this [_initialized]);
+      field .addParent (this);
+      field .setName (name);
+      field .setAccessType (accessType);
+
+      this [_fieldDefinitions]  .add (name, new X3DFieldDefinition (accessType, name, field));
+      this [_fields]            .add (name, field);
+      this [_userDefinedFields] .add (name, field);
+
+      if (!this .isPrivate ())
+         field .addCloneCount (1);
+
+      if (this [_initialized])
+         this ._fields_changed = this .getBrowser () .getCurrentTime ();
+   },
+   removeUserDefinedField: function (name)
+   {
+      const field = this [_userDefinedFields] .get (name);
+
+      if (field)
       {
-         const field = this [_userDefinedFields] .get (name);
+         field .removeParent (this);
 
-         if (field)
-         {
-            field .removeParent (this);
+         this [_fields]            .remove (name);
+         this [_userDefinedFields] .remove (name);
+         this [_fieldDefinitions]  .remove (name);
 
-            this [_fields]            .remove (name);
-            this [_userDefinedFields] .remove (name);
-            this [_fieldDefinitions]  .remove (name);
+         if (!this .isPrivate ())
+            field .removeCloneCount (1);
 
-            if (!this .isPrivate ())
-               field .removeCloneCount (1);
+         if (this [_initialized])
+            this ._fields_changed = this .getBrowser () .getCurrentTime ();
+      }
+   },
+   getUserDefinedFields: function ()
+   {
+      return this [_userDefinedFields];
+   },
+   getPredefinedFields: function ()
+   {
+      return this [_predefinedFields];
+   },
+   getChangedFields: function (extended)
+   {
+      /* param routes: also return fields with routes */
 
-            if (this [_initialized])
-               this ._fields_changed = this .getBrowser () .getCurrentTime ();
-         }
-      },
-      getUserDefinedFields: function ()
+      const changedFields = [ ];
+
+      if (extended)
       {
-         return this [_userDefinedFields];
-      },
-      getPredefinedFields: function ()
-      {
-         return this [_predefinedFields];
-      },
-      getChangedFields: function (extended)
-      {
-         /* param routes: also return fields with routes */
+         for (const field of this [_userDefinedFields])
+            changedFields .push (field);
+      }
 
-         const changedFields = [ ];
-
+      for (const field of this [_predefinedFields])
+      {
          if (extended)
          {
-            for (const field of this [_userDefinedFields])
+            if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
+            {
                changedFields .push (field);
+               continue;
+            }
          }
 
-         for (const field of this [_predefinedFields])
+         if (field .getReferences () .size === 0)
          {
-            if (extended)
-            {
-               if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
-               {
-                  changedFields .push (field);
-                  continue;
-               }
-            }
+            if (!field .isInitializable ())
+               continue;
 
-            if (field .getReferences () .size === 0)
-            {
-               if (!field .isInitializable ())
-                  continue;
-
-               if (this .isDefaultValue (field))
-                  continue;
-            }
-
-            changedFields .push (field);
+            if (this .isDefaultValue (field))
+               continue;
          }
 
-         return changedFields;
-      },
-      isDefaultValue: function (field)
-      {
-         const fieldDefinition = this .getFieldDefinitions () .get (field .getName ());
+         changedFields .push (field);
+      }
 
-         if (fieldDefinition)
-            return fieldDefinition .value .equals (field);
+      return changedFields;
+   },
+   isDefaultValue: function (field)
+   {
+      const fieldDefinition = this .getFieldDefinitions () .get (field .getName ());
 
-         return !field .getModificationTime ();
-      },
-      getFields: function ()
-      {
-         return this [_fields];
-      },
-      getSourceText: function ()
-      {
-         return null;
-      },
-      hasRoutes: function ()
-      {
-         ///  Returns true if there are any routes from or to fields of this node otherwise false.
+      if (fieldDefinition)
+         return fieldDefinition .value .equals (field);
 
+      return !field .getModificationTime ();
+   },
+   getFields: function ()
+   {
+      return this [_fields];
+   },
+   getSourceText: function ()
+   {
+      return null;
+   },
+   hasRoutes: function ()
+   {
+      ///  Returns true if there are any routes from or to fields of this node otherwise false.
+
+      for (const field of this [_fields])
+      {
+         if (field .getInputRoutes () .size)
+            return true;
+
+         if (field .getOutputRoutes () .size)
+            return true;
+      }
+
+      return false;
+   },
+   isPrivate: function ()
+   {
+      return this [_private];
+   },
+   setPrivate: function (value)
+   {
+      this [_private] = value;
+
+      if (value)
+      {
          for (const field of this [_fields])
-         {
-            if (field .getInputRoutes () .size)
-               return true;
-
-            if (field .getOutputRoutes () .size)
-               return true;
-         }
-
-         return false;
-      },
-      isPrivate: function ()
+            field .removeCloneCount (1);
+      }
+      else
       {
-         return this [_private];
-      },
-      setPrivate: function (value)
-      {
-         this [_private] = value;
+         for (const field of this [_fields])
+            field .addCloneCount (1);
+      }
+   },
+   getCloneCount: function ()
+   {
+      return this [_cloneCount];
+   },
+   addCloneCount: function (count)
+   {
+      if (count === 0)
+         return;
 
-         if (value)
-         {
-            for (const field of this [_fields])
-               field .removeCloneCount (1);
-         }
-         else
-         {
-            for (const field of this [_fields])
-               field .addCloneCount (1);
-         }
-      },
-      getCloneCount: function ()
-      {
-         return this [_cloneCount];
-      },
-      addCloneCount: function (count)
-      {
-         if (count === 0)
-            return;
+      const time = this .getBrowser () .getCurrentTime ();
 
-         const time = this .getBrowser () .getCurrentTime ();
+      this [_cloneCount] += count;
 
-         this [_cloneCount] += count;
+      this [_executionContext] ._sceneGraph_changed = time;
 
-         this [_executionContext] ._sceneGraph_changed = time;
+      if (this [_initialized])
+         this ._cloneCount_changed = time;
+   },
+   removeCloneCount: function (count)
+   {
+      if (count === 0)
+         return;
 
-         if (this [_initialized])
-            this ._cloneCount_changed = time;
-      },
-      removeCloneCount: function (count)
-      {
-         if (count === 0)
-            return;
+      const time = this .getBrowser () .getCurrentTime ();
 
-         const time = this .getBrowser () .getCurrentTime ();
+      this [_cloneCount] -= count;
 
-         this [_cloneCount] -= count;
+      this [_executionContext] ._sceneGraph_changed = time;
 
-         this [_executionContext] ._sceneGraph_changed = time;
+      if (this [_initialized])
+         this ._cloneCount_changed = time;
+   },
+   getEnum: function (object, property, defaultValue)
+   {
+      return object .hasOwnProperty (property) ? object [property] : defaultValue;
+   },
+   dispose: function ()
+   {
+      for (const field of this .getFields ())
+         field .dispose ();
 
-         if (this [_initialized])
-            this ._cloneCount_changed = time;
-      },
-      getEnum: function (object, property, defaultValue)
-      {
-         return object .hasOwnProperty (property) ? object [property] : defaultValue;
-      },
-      dispose: function ()
-      {
-         for (const field of this .getFields ())
-            field .dispose ();
-
-         X3DEventObject .prototype .dispose .call (this);
-      },
-   });
-
-   for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
-      Object .defineProperty (X3DBaseNode .prototype, key, { enumerable: false });
-
-   return X3DBaseNode;
+      X3DEventObject .prototype .dispose .call (this);
+   },
 });
+
+for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
+   Object .defineProperty (X3DBaseNode .prototype, key, { enumerable: false });
+
+export default X3DBaseNode;

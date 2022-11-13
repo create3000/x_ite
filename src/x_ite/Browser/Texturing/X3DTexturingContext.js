@@ -47,298 +47,289 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Texturing/TextureProperties",
-   "x_ite/Components/Texturing/TextureTransform",
-   "x_ite/Components/Texturing/TextureCoordinate",
-   "x_ite/Browser/Core/TextureQuality",
-],
-function (TextureProperties,
-          TextureTransform,
-          TextureCoordinate,
-          TextureQuality)
+import TextureProperties from "../../Components/Texturing/TextureProperties.js";
+import TextureTransform from "../../Components/Texturing/TextureTransform.js";
+import TextureCoordinate from "../../Components/Texturing/TextureCoordinate.js";
+import TextureQuality from "../Core/TextureQuality.js";
+
+const
+   _maxTextures              = Symbol (),
+   _maxTextureSize           = Symbol (),
+   _maxCombinedTextureUnits  = Symbol (),
+   _textureMemory            = Symbol (),
+   _combinedTextureUnits     = Symbol (),
+   _texture2DUnits           = Symbol (),
+   _texture3DUnits           = Symbol (),
+   _textureCubeUnits         = Symbol (),
+   _texture2DUnitIndex       = Symbol (),
+   _texture3DUnitIndex       = Symbol (),
+   _textureCubeUnitIndex     = Symbol (),
+   _defaultTexture2D         = Symbol (),
+   _defaultTexture3D         = Symbol (),
+   _defaultTextureCube       = Symbol (),
+   _defaultTextureProperties = Symbol (),
+   _defaultTextureTransform  = Symbol (),
+   _defaultTextureCoordinate = Symbol ();
+
+function X3DTexturingContext ()
 {
-"use strict";
-
    const
-      _maxTextures              = Symbol (),
-      _maxTextureSize           = Symbol (),
-      _maxCombinedTextureUnits  = Symbol (),
-      _textureMemory            = Symbol (),
-      _combinedTextureUnits     = Symbol (),
-      _texture2DUnits           = Symbol (),
-      _texture3DUnits           = Symbol (),
-      _textureCubeUnits         = Symbol (),
-      _texture2DUnitIndex       = Symbol (),
-      _texture3DUnitIndex       = Symbol (),
-      _textureCubeUnitIndex     = Symbol (),
-      _defaultTexture2D         = Symbol (),
-      _defaultTexture3D         = Symbol (),
-      _defaultTextureCube       = Symbol (),
-      _defaultTextureProperties = Symbol (),
-      _defaultTextureTransform  = Symbol (),
-      _defaultTextureCoordinate = Symbol ();
+      gl                   = this .getContext (),
+      maxTextureImageUnits = gl .getParameter (gl .MAX_TEXTURE_IMAGE_UNITS);
 
-   function X3DTexturingContext ()
+   // console .log (gl .getParameter (gl .MAX_TEXTURE_IMAGE_UNITS))
+   // console .log (gl .getParameter (gl .MAX_ARRAY_TEXTURE_LAYERS))
+
+   this [_maxTextures] = maxTextureImageUnits > 8 ? 2 : 1;
+}
+
+X3DTexturingContext .prototype =
+{
+   initialize: function ()
    {
-      const
-         gl                   = this .getContext (),
-         maxTextureImageUnits = gl .getParameter (gl .MAX_TEXTURE_IMAGE_UNITS);
+      const gl = this .getContext ();
 
-      // console .log (gl .getParameter (gl .MAX_TEXTURE_IMAGE_UNITS))
-      // console .log (gl .getParameter (gl .MAX_ARRAY_TEXTURE_LAYERS))
+      gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
 
-      this [_maxTextures] = maxTextureImageUnits > 8 ? 2 : 1;
-   }
+      this [_maxTextureSize]          = gl .getParameter (gl .MAX_TEXTURE_SIZE);
+      this [_maxCombinedTextureUnits] = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+      this [_textureMemory]           = NaN;
 
-   X3DTexturingContext .prototype =
+      // Get texture Units
+
+      this [_combinedTextureUnits] = [...Array (this [_maxCombinedTextureUnits]) .keys ()];
+      this [_texture2DUnits]       = [this [_combinedTextureUnits] .pop ()];
+      this [_texture3DUnits]       = [this [_combinedTextureUnits] .pop ()];
+      this [_textureCubeUnits]     = [this [_combinedTextureUnits] .pop ()];
+
+      // Default Texture 2D Unit
+
+      const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+
+      this [_defaultTexture2D] = gl .createTexture ();
+
+      gl .activeTexture (gl .TEXTURE0 + this [_texture2DUnits] [0]);
+      gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+
+      // Default Texture 3D Unit
+
+      if (gl .getVersion () >= 2)
+      {
+         this [_defaultTexture3D] = gl .createTexture ();
+
+         gl .activeTexture (gl .TEXTURE0 + this [_texture3DUnits] [0]);
+         gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
+         gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      }
+
+      // Default Texture Cube Unit
+
+      this [_defaultTextureCube] = gl .createTexture ();
+
+      gl .activeTexture (gl .TEXTURE0 + this [_textureCubeUnits] [0]);
+      gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
+      gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+
+      // Init texture units.
+
+      this .resetTextureUnits ();
+
+      // Set texture quality.
+
+      this .setTextureQuality (this .getBrowserOptions () .getTextureQuality ());
+   },
+   getMaxTextures: function ()
    {
-      initialize: function ()
+      return this [_maxTextures];
+   },
+   getMinTextureSize: function ()
+   {
+      return 16;
+   },
+   getMaxTextureSize: function ()
+   {
+      return this [_maxTextureSize];
+   },
+   getMaxCombinedTextureUnits: function ()
+   {
+      return this [_maxCombinedTextureUnits];
+   },
+   popTexture2DUnit: function ()
+   {
+      if (this [_texture2DUnitIndex] > 0)
       {
-         const gl = this .getContext ();
+         -- this [_texture2DUnitIndex];
 
-         gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
-
-         this [_maxTextureSize]          = gl .getParameter (gl .MAX_TEXTURE_SIZE);
-         this [_maxCombinedTextureUnits] = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
-         this [_textureMemory]           = NaN;
-
-         // Get texture Units
-
-         this [_combinedTextureUnits] = [...Array (this [_maxCombinedTextureUnits]) .keys ()];
-         this [_texture2DUnits]       = [this [_combinedTextureUnits] .pop ()];
-         this [_texture3DUnits]       = [this [_combinedTextureUnits] .pop ()];
-         this [_textureCubeUnits]     = [this [_combinedTextureUnits] .pop ()];
-
-         // Default Texture 2D Unit
-
-         const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
-
-         this [_defaultTexture2D] = gl .createTexture ();
-
-         gl .activeTexture (gl .TEXTURE0 + this [_texture2DUnits] [0]);
-         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-
-         // Default Texture 3D Unit
-
-         if (gl .getVersion () >= 2)
-         {
-            this [_defaultTexture3D] = gl .createTexture ();
-
-            gl .activeTexture (gl .TEXTURE0 + this [_texture3DUnits] [0]);
-            gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
-            gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-         }
-
-         // Default Texture Cube Unit
-
-         this [_defaultTextureCube] = gl .createTexture ();
-
-         gl .activeTexture (gl .TEXTURE0 + this [_textureCubeUnits] [0]);
-         gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
-         gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-         gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-         gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-         gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-         gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-         gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-
-         // Init texture units.
-
-         this .resetTextureUnits ();
-
-         // Set texture quality.
-
-         this .setTextureQuality (this .getBrowserOptions () .getTextureQuality ());
-      },
-      getMaxTextures: function ()
+         return this [_texture2DUnits] .pop ();
+      }
+      else
       {
-         return this [_maxTextures];
-      },
-      getMinTextureSize: function ()
-      {
-         return 16;
-      },
-      getMaxTextureSize: function ()
-      {
-         return this [_maxTextureSize];
-      },
-      getMaxCombinedTextureUnits: function ()
-      {
-         return this [_maxCombinedTextureUnits];
-      },
-      popTexture2DUnit: function ()
-      {
-         if (this [_texture2DUnitIndex] > 0)
-         {
-            -- this [_texture2DUnitIndex];
+         return this [_combinedTextureUnits] .pop ();
+      }
+   },
+   pushTexture2DUnit: function (textureUnit)
+   {
+      if (textureUnit === undefined)
+         return;
 
-            return this [_texture2DUnits] .pop ();
-         }
-         else
-         {
-            return this [_combinedTextureUnits] .pop ();
-         }
-      },
-      pushTexture2DUnit: function (textureUnit)
-      {
-         if (textureUnit === undefined)
-            return;
+      ++ this [_texture2DUnitIndex];
 
-         ++ this [_texture2DUnitIndex];
+      this [_texture2DUnits] .push (textureUnit);
+   },
+   getTexture2DUnit: function ()
+   {
+      if (this [_texture2DUnitIndex] > 0)
+         return this [_texture2DUnits] [-- this [_texture2DUnitIndex]];
 
+      const textureUnit = this [_combinedTextureUnits] .pop ();
+
+      if (textureUnit !== undefined)
          this [_texture2DUnits] .push (textureUnit);
-      },
-      getTexture2DUnit: function ()
+
+      return textureUnit;
+   },
+   getTexture3DUnit: function ()
+   {
+      if (this [_texture3DUnitIndex] > 0)
+         return this [_texture3DUnits] [-- this [_texture3DUnitIndex]];
+
+      const textureUnit = this [_combinedTextureUnits] .pop ();
+
+      if (textureUnit !== undefined)
+         this [_texture3DUnits] .push (textureUnit);
+
+      return textureUnit;
+   },
+   getTextureCubeUnit: function ()
+   {
+      if (this [_textureCubeUnitIndex] > 0)
+         return this [_textureCubeUnits] [-- this [_textureCubeUnitIndex]];
+
+      const textureUnit = this [_combinedTextureUnits] .pop ();
+
+      if (textureUnit !== undefined)
+         this [_textureCubeUnits] .push (textureUnit);
+
+      return textureUnit;
+   },
+   getTextureUnit: function (textureType)
+   {
+      switch (textureType)
       {
-         if (this [_texture2DUnitIndex] > 0)
-            return this [_texture2DUnits] [-- this [_texture2DUnitIndex]];
+         case 2: return this .getTexture2DUnit ();
+         case 3: return this .getTexture3DUnit ();
+         case 4: return this .getTextureCubeUnit ();
+      }
+   },
+   resetTextureUnits: function ()
+   {
+      this [_texture2DUnitIndex]   = this [_texture2DUnits]   .length;
+      this [_texture3DUnitIndex]   = this [_texture3DUnits]   .length;
+      this [_textureCubeUnitIndex] = this [_textureCubeUnits] .length;
+   },
+   getDefaultTexture2DUnit: function ()
+   {
+      return this [_texture2DUnits] [0];
+   },
+   getDefaultTexture3DUnit: function ()
+   {
+      return this [_texture3DUnits] [0];
+   },
+   getDefaultTextureCubeUnit: function ()
+   {
+      return this [_textureCubeUnits] [0];
+   },
+   getTextureMemory: function ()
+   {
+      return this [_textureMemory];
+   },
+   getDefaultTextureProperties: function ()
+   {
+      this [_defaultTextureProperties] = new TextureProperties (this .getPrivateScene ());
+      this [_defaultTextureProperties] ._magnificationFilter = "NICEST";
+      this [_defaultTextureProperties] ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
+      this [_defaultTextureProperties] ._textureCompression  = "NICEST";
+      this [_defaultTextureProperties] ._generateMipMaps     = true;
 
-         const textureUnit = this [_combinedTextureUnits] .pop ();
+      this [_defaultTextureProperties] .setup ();
 
-         if (textureUnit !== undefined)
-            this [_texture2DUnits] .push (textureUnit);
+      this .getDefaultTextureProperties = function () { return this [_defaultTextureProperties]; };
 
-         return textureUnit;
-      },
-      getTexture3DUnit: function ()
+      Object .defineProperty (this, "getDefaultTextureProperties", { enumerable: false });
+
+      return this [_defaultTextureProperties];
+   },
+   getDefaultTextureTransform: function ()
+   {
+      this [_defaultTextureTransform] = new TextureTransform (this .getPrivateScene ());
+      this [_defaultTextureTransform] .setPrivate (true);
+      this [_defaultTextureTransform] .setup ();
+
+      this .getDefaultTextureTransform = function () { return this [_defaultTextureTransform]; };
+
+      Object .defineProperty (this, "getDefaultTextureTransform", { enumerable: false });
+
+      return this [_defaultTextureTransform];
+   },
+   getDefaultTextureCoordinate: function ()
+   {
+      this [_defaultTextureCoordinate] = new TextureCoordinate (this .getPrivateScene ());
+      this [_defaultTextureCoordinate] .setPrivate (true);
+      this [_defaultTextureCoordinate] .setup ();
+
+      this .getDefaultTextureCoordinate = function () { return this [_defaultTextureCoordinate]; };
+
+      Object .defineProperty (this, "getDefaultTextureCoordinate", { enumerable: false });
+
+      return this [_defaultTextureCoordinate];
+   },
+   setTextureQuality: function (textureQuality)
+   {
+      const textureProperties = this .getDefaultTextureProperties ();
+
+      switch (textureQuality)
       {
-         if (this [_texture3DUnitIndex] > 0)
-            return this [_texture3DUnits] [-- this [_texture3DUnitIndex]];
-
-         const textureUnit = this [_combinedTextureUnits] .pop ();
-
-         if (textureUnit !== undefined)
-            this [_texture3DUnits] .push (textureUnit);
-
-         return textureUnit;
-      },
-      getTextureCubeUnit: function ()
-      {
-         if (this [_textureCubeUnitIndex] > 0)
-            return this [_textureCubeUnits] [-- this [_textureCubeUnitIndex]];
-
-         const textureUnit = this [_combinedTextureUnits] .pop ();
-
-         if (textureUnit !== undefined)
-            this [_textureCubeUnits] .push (textureUnit);
-
-         return textureUnit;
-      },
-      getTextureUnit: function (textureType)
-      {
-         switch (textureType)
+         case TextureQuality .LOW:
          {
-            case 2: return this .getTexture2DUnit ();
-            case 3: return this .getTexture3DUnit ();
-            case 4: return this .getTextureCubeUnit ();
+            textureProperties ._magnificationFilter = "AVG_PIXEL";
+            textureProperties ._minificationFilter  = "AVG_PIXEL";
+            textureProperties ._textureCompression  = "FASTEST";
+            textureProperties ._generateMipMaps     = true;
+
+            //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
+            //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+            break;
          }
-      },
-      resetTextureUnits: function ()
-      {
-         this [_texture2DUnitIndex]   = this [_texture2DUnits]   .length;
-         this [_texture3DUnitIndex]   = this [_texture3DUnits]   .length;
-         this [_textureCubeUnitIndex] = this [_textureCubeUnits] .length;
-      },
-      getDefaultTexture2DUnit: function ()
-      {
-         return this [_texture2DUnits] [0];
-      },
-      getDefaultTexture3DUnit: function ()
-      {
-         return this [_texture3DUnits] [0];
-      },
-      getDefaultTextureCubeUnit: function ()
-      {
-         return this [_textureCubeUnits] [0];
-      },
-      getTextureMemory: function ()
-      {
-         return this [_textureMemory];
-      },
-      getDefaultTextureProperties: function ()
-      {
-         this [_defaultTextureProperties] = new TextureProperties (this .getPrivateScene ());
-         this [_defaultTextureProperties] ._magnificationFilter = "NICEST";
-         this [_defaultTextureProperties] ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
-         this [_defaultTextureProperties] ._textureCompression  = "NICEST";
-         this [_defaultTextureProperties] ._generateMipMaps     = true;
-
-         this [_defaultTextureProperties] .setup ();
-
-         this .getDefaultTextureProperties = function () { return this [_defaultTextureProperties]; };
-
-         Object .defineProperty (this, "getDefaultTextureProperties", { enumerable: false });
-
-         return this [_defaultTextureProperties];
-      },
-      getDefaultTextureTransform: function ()
-      {
-         this [_defaultTextureTransform] = new TextureTransform (this .getPrivateScene ());
-         this [_defaultTextureTransform] .setPrivate (true);
-         this [_defaultTextureTransform] .setup ();
-
-         this .getDefaultTextureTransform = function () { return this [_defaultTextureTransform]; };
-
-         Object .defineProperty (this, "getDefaultTextureTransform", { enumerable: false });
-
-         return this [_defaultTextureTransform];
-      },
-      getDefaultTextureCoordinate: function ()
-      {
-         this [_defaultTextureCoordinate] = new TextureCoordinate (this .getPrivateScene ());
-         this [_defaultTextureCoordinate] .setPrivate (true);
-         this [_defaultTextureCoordinate] .setup ();
-
-         this .getDefaultTextureCoordinate = function () { return this [_defaultTextureCoordinate]; };
-
-         Object .defineProperty (this, "getDefaultTextureCoordinate", { enumerable: false });
-
-         return this [_defaultTextureCoordinate];
-      },
-      setTextureQuality: function (textureQuality)
-      {
-         const textureProperties = this .getDefaultTextureProperties ();
-
-         switch (textureQuality)
+         case TextureQuality .MEDIUM:
          {
-            case TextureQuality .LOW:
-            {
-               textureProperties ._magnificationFilter = "AVG_PIXEL";
-               textureProperties ._minificationFilter  = "AVG_PIXEL";
-               textureProperties ._textureCompression  = "FASTEST";
-               textureProperties ._generateMipMaps     = true;
+            textureProperties ._magnificationFilter = "NICEST";
+            textureProperties ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
+            textureProperties ._textureCompression  = "NICEST";
+            textureProperties ._generateMipMaps     = true;
 
-               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
-               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-               break;
-            }
-            case TextureQuality .MEDIUM:
-            {
-               textureProperties ._magnificationFilter = "NICEST";
-               textureProperties ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
-               textureProperties ._textureCompression  = "NICEST";
-               textureProperties ._generateMipMaps     = true;
-
-               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
-               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-               break;
-            }
-            case TextureQuality .HIGH:
-            {
-               textureProperties ._magnificationFilter = "NICEST";
-               textureProperties ._minificationFilter  = "NICEST";
-               textureProperties ._textureCompression  = "NICEST";
-               textureProperties ._generateMipMaps     = true;
-
-               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_NICEST);
-               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-               break;
-            }
+            //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
+            //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+            break;
          }
-      },
-   };
+         case TextureQuality .HIGH:
+         {
+            textureProperties ._magnificationFilter = "NICEST";
+            textureProperties ._minificationFilter  = "NICEST";
+            textureProperties ._textureCompression  = "NICEST";
+            textureProperties ._generateMipMaps     = true;
 
-   return X3DTexturingContext;
-});
+            //glHint (GL_GENERATE_MIPMAP_HINT,        GL_NICEST);
+            //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+            break;
+         }
+      }
+   },
+};
+
+export default X3DTexturingContext;

@@ -47,44 +47,38 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Rendering/X3DGeometryNode",
-],
-function (X3DGeometryNode)
+import X3DGeometryNode from "../../Components/Rendering/X3DGeometryNode.js";
+
+function GeometryContext (options = { })
 {
-"use strict";
-
-   function GeometryContext (options = { })
+   Object .assign (this,
    {
-      Object .assign (this,
-      {
-         geometryType: 3,
-         hasFogCoords: false,
-         colorMaterial: false,
-         hasNormals: false,
-         textureNode: false,
-         objectsCount: [0, 0, 0],
-         textureCoordinateMapping: new Map (),
-         textureCoordinateNode: null,
-      },
-      options)
+      geometryType: 3,
+      hasFogCoords: false,
+      colorMaterial: false,
+      hasNormals: false,
+      textureNode: false,
+      objectsCount: [0, 0, 0],
+      textureCoordinateMapping: new Map (),
+      textureCoordinateNode: null,
+   },
+   options)
 
-      this .updateGeometryKey ();
-   }
+   this .updateGeometryKey ();
+}
 
-   GeometryContext .prototype =
+GeometryContext .prototype =
+{
+   constructor: GeometryContext,
+   updateGeometryKey: X3DGeometryNode .prototype .updateGeometryKey,
+   getTextureCoordinateMapping: function ()
    {
-      constructor: GeometryContext,
-      updateGeometryKey: X3DGeometryNode .prototype .updateGeometryKey,
-      getTextureCoordinateMapping: function ()
-      {
-         return this .textureCoordinateMapping;
-      },
-      getTextureCoordinate: function ()
-      {
-         return this .textureCoordinateNode;
-      },
-   };
+      return this .textureCoordinateMapping;
+   },
+   getTextureCoordinate: function ()
+   {
+      return this .textureCoordinateNode;
+   },
+};
 
-   return GeometryContext;
-});
+export default GeometryContext;

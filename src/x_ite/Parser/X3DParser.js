@@ -47,136 +47,131 @@
  ******************************************************************************/
 
 
-define (function ()
+function X3DParser (scene)
 {
-"use strict";
+   this .scene             = scene;
+   this .executionContexts = [ scene ];
+   this .prototypes        = [ ];
+   this .units             = true;
+}
 
-   function X3DParser (scene)
+X3DParser .prototype = {
+   constructor: X3DParser,
+   getScene: function ()
    {
-      this .scene             = scene;
-      this .executionContexts = [ scene ];
-      this .prototypes        = [ ];
-      this .units             = true;
-   }
+      return this .scene;
+   },
+   getBrowser: function ()
+   {
+      return this .scene .getBrowser ();
+   },
+   getExecutionContext: function ()
+   {
+      return this .executionContexts .at (-1);
+   },
+   pushExecutionContext: function (executionContext)
+   {
+      return this .executionContexts .push (executionContext);
+   },
+   popExecutionContext: function ()
+   {
+      this .executionContexts .pop ();
+   },
+   getPrototype: function ()
+   {
+      return this .prototypes .at (-1);
+   },
+   pushPrototype: function (prototype)
+   {
+      return this .prototypes .push (prototype);
+   },
+   popPrototype: function ()
+   {
+      this .prototypes .pop ();
+   },
+   isInsideProtoDefinition: function ()
+   {
+      return Boolean (this .prototypes .length);
+   },
+   addRootNode: function (node)
+   {
+      this .getExecutionContext () .rootNodes .push (node);
+   },
+   getProviderUrls: (function ()
+   {
+      const componentsUrl = /\.js$/;
 
-   X3DParser .prototype = {
-      constructor: X3DParser,
-      getScene: function ()
+      return function ()
       {
-         return this .scene;
-      },
-      getBrowser: function ()
-      {
-         return this .scene .getBrowser ();
-      },
-      getExecutionContext: function ()
-      {
-         return this .executionContexts .at (-1);
-      },
-      pushExecutionContext: function (executionContext)
-      {
-         return this .executionContexts .push (executionContext);
-      },
-      popExecutionContext: function ()
-      {
-         this .executionContexts .pop ();
-      },
-      getPrototype: function ()
-      {
-         return this .prototypes .at (-1);
-      },
-      pushPrototype: function (prototype)
-      {
-         return this .prototypes .push (prototype);
-      },
-      popPrototype: function ()
-      {
-         this .prototypes .pop ();
-      },
-      isInsideProtoDefinition: function ()
-      {
-         return Boolean (this .prototypes .length);
-      },
-      addRootNode: function (node)
-      {
-         this .getExecutionContext () .rootNodes .push (node);
-      },
-      getProviderUrls: (function ()
-      {
-         const componentsUrl = /\.js$/;
+         const
+            scene             = this .getScene (),
+            profile           = scene .getProfile () || scene .getBrowser () .getProfile ("Full"),
+            profileComponents = profile .components,
+            components        = scene .getComponents (),
+            providerUrls      = new Set ();
 
-         return function ()
+         for (const component of profileComponents)
          {
-            const
-               scene             = this .getScene (),
-               profile           = scene .getProfile () ? scene .getProfile () : scene .getBrowser () .getProfile ("Full"),
-               profileComponents = profile .components,
-               components        = scene .getComponents (),
-               providerUrls      = new Set ();
+            const providerUrl = component .providerUrl;
 
-            for (const component of profileComponents)
-            {
-               const providerUrl = component .providerUrl;
+            if (providerUrl .match (componentsUrl))
+               providerUrls .add (providerUrl);
+         }
 
-               if (providerUrl .match (componentsUrl))
-                  providerUrls .add (providerUrl);
-            }
-
-            for (const component of components)
-            {
-               const providerUrl = component .providerUrl;
-
-               if (providerUrl .match (componentsUrl))
-                  providerUrls .add (providerUrl);
-            }
-
-            if (typeof __global_require__ === "function" && typeof __filename === "string")
-            {
-               for (const url of providerUrls)
-                  __global_require__ (__global_require__ ("url") .fileURLToPath (url));
-            }
-
-            return Array .from (providerUrls);
-         };
-      })(),
-      setUnits: function (generator)
-      {
-         if (typeof arguments [0] == "boolean")
+         for (const component of components)
          {
-            this .units = arguments [0];
+            const providerUrl = component .providerUrl;
+
+            if (providerUrl .match (componentsUrl))
+               providerUrls .add (providerUrl);
+         }
+
+         if (typeof __global_require__ === "function" && typeof __filename === "string")
+         {
+            for (const url of providerUrls)
+               __global_require__ (__global_require__ ("url") .fileURLToPath (url));
+         }
+
+         return Array .from (providerUrls);
+      };
+   })(),
+   setUnits: function (generator)
+   {
+      if (typeof arguments [0] == "boolean")
+      {
+         this .units = arguments [0];
+         return;
+      }
+
+      const
+         version = /Titania\s+V(\d+).*/,
+         match   = generator .match (version);
+
+      if (match)
+      {
+         const major = parseInt (match [1]);
+
+         // Before version 4 units are wrongly implemented.
+         if (major < 4)
+         {
+            this .units = false;
             return;
          }
+      }
 
-         const
-            version = /Titania\s+V(\d+).*/,
-            match   = generator .match (version);
+      this .units = true;
+   },
+   getUnits: function ()
+   {
+      return this .units;
+   },
+   fromUnit: function (category, value)
+   {
+      if (this .units)
+         return this .scene .fromUnit (category, value);
 
-         if (match)
-         {
-            const major = parseInt (match [1]);
+      return value;
+   },
+};
 
-            // Before version 4 units are wrongly implemented.
-            if (major < 4)
-            {
-               this .units = false;
-               return;
-            }
-         }
-
-         this .units = true;
-      },
-      getUnits: function ()
-      {
-         return this .units;
-      },
-      fromUnit: function (category, value)
-      {
-         if (this .units)
-            return this .scene .fromUnit (category, value);
-
-         return value;
-      },
-   };
-
-   return X3DParser;
-});
+export default X3DParser;

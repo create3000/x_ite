@@ -47,24 +47,18 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DConstants",
-],
-function (X3DConstants)
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DMetadataObject (executionContext)
 {
-"use strict";
+   this .addType (X3DConstants .X3DMetadataObject);
+}
 
-   function X3DMetadataObject (executionContext)
-   {
-      this .addType (X3DConstants .X3DMetadataObject);
-   }
+X3DMetadataObject .prototype =
+{
+   constructor: X3DMetadataObject,
+   initialize: function () { },
+   dispose: function () { },
+};
 
-   X3DMetadataObject .prototype =
-   {
-      constructor: X3DMetadataObject,
-      initialize: function () { },
-      dispose: function () { },
-   };
-
-   return X3DMetadataObject;
-});
+export default X3DMetadataObject;

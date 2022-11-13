@@ -47,99 +47,88 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Browser/Interpolation/CatmullRomSplineInterpolator3",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode,
-          CatmullRomSplineInterpolator3,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DInterpolatorNode from "./X3DInterpolatorNode.js";
+import CatmullRomSplineInterpolator3 from "../../Browser/Interpolation/CatmullRomSplineInterpolator3.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function SplinePositionInterpolator (executionContext)
 {
-"use strict";
+   X3DInterpolatorNode .call (this, executionContext);
 
-   function SplinePositionInterpolator (executionContext)
+   this .addType (X3DConstants .SplinePositionInterpolator);
+
+   this .spline = new CatmullRomSplineInterpolator3 ();
+}
+
+SplinePositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+{
+   constructor: SplinePositionInterpolator,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",      new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "closed",            new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "key",               new Fields .MFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",          new Fields .MFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "keyVelocity",       new Fields .MFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "normalizeVelocity", new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed",     new Fields .SFVec3f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DInterpolatorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .SplinePositionInterpolator);
-
-      this .spline = new CatmullRomSplineInterpolator3 ();
-   }
-
-   SplinePositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+      return "SplinePositionInterpolator";
+   },
+   getComponentName: function ()
    {
-      constructor: SplinePositionInterpolator,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",      new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "closed",            new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "key",               new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",          new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "keyVelocity",       new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "normalizeVelocity", new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed",     new Fields .SFVec3f ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "SplinePositionInterpolator";
-      },
-      getComponentName: function ()
-      {
-         return "Interpolation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DInterpolatorNode .prototype .initialize .call (this);
+      return "Interpolation";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this ._keyValue          .addInterest ("set_keyValue__",          this);
-         this ._keyVelocity       .addInterest ("set_keyVelocity__",       this);
-         this ._normalizeVelocity .addInterest ("set_normalizeVelocity__", this);
-      },
-      set_keyValue__: function ()
-      {
-         const
-            key      = this ._key,
-            keyValue = this ._keyValue;
+      this ._keyValue          .addInterest ("set_keyValue__",          this);
+      this ._keyVelocity       .addInterest ("set_keyVelocity__",       this);
+      this ._normalizeVelocity .addInterest ("set_normalizeVelocity__", this);
+   },
+   set_keyValue__: function ()
+   {
+      const
+         key      = this ._key,
+         keyValue = this ._keyValue;
 
-         if (keyValue .length < key .length)
-            keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
+      if (keyValue .length < key .length)
+         keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
 
-         this .set_keyVelocity__ ();
-      },
-      set_keyVelocity__: function ()
+      this .set_keyVelocity__ ();
+   },
+   set_keyVelocity__: function ()
+   {
+      if (this ._keyVelocity .length)
       {
-         if (this ._keyVelocity .length)
-         {
-            if (this ._keyVelocity .length < this ._key .length)
-               this ._keyVelocity .resize (this ._key .length, new Fields .SFVec3f ());
-         }
+         if (this ._keyVelocity .length < this ._key .length)
+            this ._keyVelocity .resize (this ._key .length, new Fields .SFVec3f ());
+      }
 
-         this .set_normalizeVelocity__ ();
-      },
-      set_normalizeVelocity__: function ()
-      {
-         this .spline .generate (this ._closed .getValue (),
-                                 this ._key,
-                                 this ._keyValue,
-                                 this ._keyVelocity,
-                                 this ._normalizeVelocity .getValue ());
-      },
-      interpolate: function (index0, index1, weight)
-      {
-         this ._value_changed = this .spline .interpolate (index0, index1, weight, this ._keyValue);
-      },
-   });
-
-   return SplinePositionInterpolator;
+      this .set_normalizeVelocity__ ();
+   },
+   set_normalizeVelocity__: function ()
+   {
+      this .spline .generate (this ._closed .getValue (),
+                              this ._key,
+                              this ._keyValue,
+                              this ._keyVelocity,
+                              this ._normalizeVelocity .getValue ());
+   },
+   interpolate: function (index0, index1, weight)
+   {
+      this ._value_changed = this .spline .interpolate (index0, index1, weight, this ._keyValue);
+   },
 });
+
+export default SplinePositionInterpolator;

@@ -14,7 +14,7 @@ chomp @files;
 open FILE, ">", "src/tests/menu.js";
 
 say FILE <<EOT;
-(async function ()
+function loadTestMenu ()
 {
    const menu = {
       "tests": {
@@ -48,10 +48,8 @@ say FILE <<EOT;
       }
    };
 
-   await X3D ();
-
    X3D .getBrowser () .getContextMenu () .setUserMenu (() => menu);
-})();
+}
 EOT
 
 close FILE;

@@ -47,310 +47,293 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Picking/X3DPickSensorNode",
-   "x_ite/Base/X3DCast",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Browser/Picking/IntersectionType",
-   "x_ite/Browser/Picking/VolumePicker",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Geometry/Box3",
-   require .getComponentUrl ("rigid-body-physics"),
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DPickSensorNode,
-          X3DCast,
-          X3DConstants,
-          IntersectionType,
-          VolumePicker,
-          Vector3,
-          Rotation4,
-          Box3,
-          RigidBodyPhysics)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DPickSensorNode from "./X3DPickSensorNode.js";
+import X3DCast from "../../Base/X3DCast.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import IntersectionType from "../../Browser/Picking/IntersectionType.js";
+import VolumePicker from "../../Browser/Picking/VolumePicker.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+import Box3 from "../../../standard/Math/Geometry/Box3.js";
+import require .getComponentUrl ("rigid-body-physics") from "../../../require .getComponentUrl ("rigid-body-physics").js";
+
+var Ammo = RigidBodyPhysics .Ammo;
+
+function PointPickSensor (executionContext)
 {
-"use strict";
+   X3DPickSensorNode .call (this, executionContext);
 
-   var Ammo = RigidBodyPhysics .Ammo;
+   this .addType (X3DConstants .PointPickSensor);
 
-   function PointPickSensor (executionContext)
+   this .pickingGeometryNode = null;
+   this .picker              = new VolumePicker ();
+   this .compoundShapes      = [ ];
+}
+
+PointPickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
+{
+   constructor: PointPickSensor,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",          new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "objectType",       new Fields .MFString ("ALL")),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "matchCriterion",   new Fields .SFString ("MATCH_ANY")),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "intersectionType", new Fields .SFString ("BOUNDS")),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "sortOrder",        new Fields .SFString ("CLOSEST")),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",         new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedPoint",      new Fields .MFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "pickingGeometry",  new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "pickTarget",       new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedGeometry",   new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DPickSensorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .PointPickSensor);
-
-      this .pickingGeometryNode = null;
-      this .picker              = new VolumePicker ();
-      this .compoundShapes      = [ ];
-   }
-
-   PointPickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
+      return "PointPickSensor";
+   },
+   getComponentName: function ()
    {
-      constructor: PointPickSensor,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",          new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "objectType",       new Fields .MFString ("ALL")),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "matchCriterion",   new Fields .SFString ("MATCH_ANY")),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "intersectionType", new Fields .SFString ("BOUNDS")),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "sortOrder",        new Fields .SFString ("CLOSEST")),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",         new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedPoint",      new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "pickingGeometry",  new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "pickTarget",       new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedGeometry",   new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "PointPickSensor";
-      },
-      getComponentName: function ()
-      {
-         return "Picking";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DPickSensorNode .prototype .initialize .call (this);
+      return "Picking";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DPickSensorNode .prototype .initialize .call (this);
 
-         this ._pickingGeometry .addInterest ("set_pickingGeometry__", this);
+      this ._pickingGeometry .addInterest ("set_pickingGeometry__", this);
 
-         this .set_pickingGeometry__ ();
-      },
-      set_pickingGeometry__: function ()
+      this .set_pickingGeometry__ ();
+   },
+   set_pickingGeometry__: function ()
+   {
+      if (this .pickingGeometryNode)
+         this .pickingGeometryNode ._rebuild .removeInterest ("set_geometry__", this);
+
+      this .pickingGeometryNode = X3DCast (X3DConstants .PointSet, this ._pickingGeometry);
+
+      if (this .pickingGeometryNode)
+         this .pickingGeometryNode ._rebuild .addInterest ("set_geometry__", this);
+
+      this .set_geometry__ ();
+   },
+   set_geometry__: (function ()
+   {
+      var
+         defaultScale = new Ammo .btVector3 (1, 1, 1),
+         o            = new Ammo .btVector3 (),
+         t            = new Ammo .btTransform ();
+
+      return function ()
       {
-         if (this .pickingGeometryNode)
-            this .pickingGeometryNode ._rebuild .removeInterest ("set_geometry__", this);
-
-         this .pickingGeometryNode = X3DCast (X3DConstants .PointSet, this ._pickingGeometry);
+         var compoundShapes = this .compoundShapes;
 
          if (this .pickingGeometryNode)
-            this .pickingGeometryNode ._rebuild .addInterest ("set_geometry__", this);
-
-         this .set_geometry__ ();
-      },
-      set_geometry__: (function ()
-      {
-         var
-            defaultScale = new Ammo .btVector3 (1, 1, 1),
-            o            = new Ammo .btVector3 (),
-            t            = new Ammo .btTransform ();
-
-         return function ()
          {
-            var compoundShapes = this .compoundShapes;
+            var coord = this .pickingGeometryNode .getCoord ();
 
-            if (this .pickingGeometryNode)
+            if (coord)
             {
-               var coord = this .pickingGeometryNode .getCoord ();
-
-               if (coord)
+               for (var i = 0, length = coord .getSize (); i < length; ++ i)
                {
-                  for (var i = 0, length = coord .getSize (); i < length; ++ i)
+                  if (i < compoundShapes .length)
                   {
-                     if (i < compoundShapes .length)
-                     {
-                        var
-                           compoundShape = compoundShapes [i],
-                           point         = coord .get1Point (i, compoundShape .point);
+                     var
+                        compoundShape = compoundShapes [i],
+                        point         = coord .get1Point (i, compoundShape .point);
 
-                        o .setValue (point .x, point .y, point .z);
-                        t .setOrigin (o);
+                     o .setValue (point .x, point .y, point .z);
+                     t .setOrigin (o);
 
-                        compoundShape .setLocalScaling (defaultScale);
-                        compoundShape .updateChildTransform (0, t);
-                     }
-                     else
-                     {
-                        var
-                           compoundShape = new Ammo .btCompoundShape (),
-                           sphereShape   = new Ammo .btSphereShape (0),
-                           point         = coord .get1Point (i, new Vector3 (0, 0, 0));
-
-                        compoundShape .point = point;
-
-                        o .setValue (point .x, point .y, point .z);
-                        t .setOrigin (o);
-
-                        compoundShape .addChildShape (t, sphereShape);
-                        compoundShapes .push (compoundShape);
-                     }
+                     compoundShape .setLocalScaling (defaultScale);
+                     compoundShape .updateChildTransform (0, t);
                   }
+                  else
+                  {
+                     var
+                        compoundShape = new Ammo .btCompoundShape (),
+                        sphereShape   = new Ammo .btSphereShape (0),
+                        point         = coord .get1Point (i, new Vector3 (0, 0, 0));
 
-                  compoundShapes .length = length;
+                     compoundShape .point = point;
+
+                     o .setValue (point .x, point .y, point .z);
+                     t .setOrigin (o);
+
+                     compoundShape .addChildShape (t, sphereShape);
+                     compoundShapes .push (compoundShape);
+                  }
                }
-               else
-               {
-                  compoundShapes .length = 0;
-               }
+
+               compoundShapes .length = length;
             }
             else
             {
                compoundShapes .length = 0;
             }
-         };
-      })(),
-      process: (function ()
-      {
-         var
-            pickingBBox   = new Box3 (),
-            targetBBox    = new Box3 (),
-            pickingCenter = new Vector3 (0, 0, 0),
-            targetCenter  = new Vector3 (0, 0, 0),
-            transform     = new Ammo .btTransform (),
-            localScaling  = new Ammo .btVector3 (),
-            translation   = new Vector3 (0, 0, 0),
-            rotation      = new Rotation4 (0, 0, 1, 0),
-            scale         = new Vector3 (1, 1, 1),
-            pickedPoint   = new Fields .MFVec3f ();
-
-         return function ()
+         }
+         else
          {
-            if (this .pickingGeometryNode)
+            compoundShapes .length = 0;
+         }
+      };
+   })(),
+   process: (function ()
+   {
+      var
+         pickingBBox   = new Box3 (),
+         targetBBox    = new Box3 (),
+         pickingCenter = new Vector3 (0, 0, 0),
+         targetCenter  = new Vector3 (0, 0, 0),
+         transform     = new Ammo .btTransform (),
+         localScaling  = new Ammo .btVector3 (),
+         translation   = new Vector3 (0, 0, 0),
+         rotation      = new Rotation4 (0, 0, 1, 0),
+         scale         = new Vector3 (1, 1, 1),
+         pickedPoint   = new Fields .MFVec3f ();
+
+      return function ()
+      {
+         if (this .pickingGeometryNode)
+         {
+            var
+               modelMatrices = this .getModelMatrices (),
+               targets       = this .getTargets ();
+
+            switch (this .getIntersectionType ())
             {
-               var
-                  modelMatrices = this .getModelMatrices (),
-                  targets       = this .getTargets ();
-
-               switch (this .getIntersectionType ())
+               case IntersectionType .BOUNDS:
                {
-                  case IntersectionType .BOUNDS:
+                  // Intersect bboxes.
+
+                  for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
                   {
-                     // Intersect bboxes.
+                     var modelMatrix = modelMatrices [m];
 
-                     for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                     pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
+
+                     for (var t = 0, tLength = targets .size; t < tLength; ++ t)
                      {
-                        var modelMatrix = modelMatrices [m];
+                        var target = targets [t];
 
-                        pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
+                        targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
+
+                        if (pickingBBox .intersectsBox (targetBBox))
+                        {
+                           pickingCenter .assign (pickingBBox .center);
+                           targetCenter  .assign (targetBBox .center);
+
+                           target .intersected = true;
+                           target .distance    = pickingCenter .distance (targetCenter);
+                        }
+                     }
+                  }
+
+                  // Send events.
+
+                  var
+                     pickedGeometries = this .getPickedGeometries (),
+                     active           = Boolean (pickedGeometries .length);
+
+                  pickedGeometries .remove (0, pickedGeometries .length, null);
+
+                  if (active !== this ._isActive .getValue ())
+                     this ._isActive = active;
+
+                  if (! this ._pickedGeometry .equals (pickedGeometries))
+                     this ._pickedGeometry = pickedGeometries;
+
+                  break;
+               }
+               case IntersectionType .GEOMETRY:
+               {
+                  // Intersect geometry.
+
+                  var
+                     picker         = this .picker,
+                     compoundShapes = this .compoundShapes;
+
+                  for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                  {
+                     var modelMatrix = modelMatrices [m];
+
+                     pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
+
+                     modelMatrix .get (translation, rotation, scale);
+
+                     picker .getTransform (translation, rotation, transform);
+                     localScaling .setValue (scale .x, scale .y, scale .z);
+
+                     for (var c = 0, cLength = compoundShapes .length; c < cLength; ++ c)
+                     {
+                        var compoundShape = compoundShapes [c];
+
+                        picker .setChildShape1Components (transform, localScaling, compoundShape);
 
                         for (var t = 0, tLength = targets .size; t < tLength; ++ t)
                         {
-                           var target = targets [t];
+                           var
+                              target      = targets [t],
+                              targetShape = this .getPickShape (target .geometryNode);
 
                            targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
 
-                           if (pickingBBox .intersectsBox (targetBBox))
+                           picker .setChildShape2 (target .modelMatrix, targetShape .getCompoundShape ());
+
+                           if (picker .contactTest ())
                            {
                               pickingCenter .assign (pickingBBox .center);
                               targetCenter  .assign (targetBBox .center);
 
                               target .intersected = true;
                               target .distance    = pickingCenter .distance (targetCenter);
+                              target .pickedPoint .push (compoundShape .point);
                            }
                         }
                      }
-
-                     // Send events.
-
-                     var
-                        pickedGeometries = this .getPickedGeometries (),
-                        active           = Boolean (pickedGeometries .length);
-
-                     pickedGeometries .remove (0, pickedGeometries .length, null);
-
-                     if (active !== this ._isActive .getValue ())
-                        this ._isActive = active;
-
-                     if (! this ._pickedGeometry .equals (pickedGeometries))
-                        this ._pickedGeometry = pickedGeometries;
-
-                     break;
                   }
-                  case IntersectionType .GEOMETRY:
+
+                  // Send events.
+
+                  var
+                     pickedGeometries = this .getPickedGeometries (),
+                     active           = Boolean (pickedGeometries .length);
+
+                  pickedGeometries .remove (0, pickedGeometries .length, null);
+
+                  if (active !== this ._isActive .getValue ())
+                     this ._isActive = active;
+
+                  if (! this ._pickedGeometry .equals (pickedGeometries))
+                     this ._pickedGeometry = pickedGeometries;
+
+                  var pickedTargets = this .getPickedTargets ();
+
+                  pickedPoint .length = 0;
+
+                  for (var t = 0, tLength = pickedTargets .length; t < tLength; ++ t)
                   {
-                     // Intersect geometry.
+                     var pp = pickedTargets [t] .pickedPoint;
 
-                     var
-                        picker         = this .picker,
-                        compoundShapes = this .compoundShapes;
-
-                     for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
-                     {
-                        var modelMatrix = modelMatrices [m];
-
-                        pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
-
-                        modelMatrix .get (translation, rotation, scale);
-
-                        picker .getTransform (translation, rotation, transform);
-                        localScaling .setValue (scale .x, scale .y, scale .z);
-
-                        for (var c = 0, cLength = compoundShapes .length; c < cLength; ++ c)
-                        {
-                           var compoundShape = compoundShapes [c];
-
-                           picker .setChildShape1Components (transform, localScaling, compoundShape);
-
-                           for (var t = 0, tLength = targets .size; t < tLength; ++ t)
-                           {
-                              var
-                                 target      = targets [t],
-                                 targetShape = this .getPickShape (target .geometryNode);
-
-                              targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
-
-                              picker .setChildShape2 (target .modelMatrix, targetShape .getCompoundShape ());
-
-                              if (picker .contactTest ())
-                              {
-                                 pickingCenter .assign (pickingBBox .center);
-                                 targetCenter  .assign (targetBBox .center);
-
-                                 target .intersected = true;
-                                 target .distance    = pickingCenter .distance (targetCenter);
-                                 target .pickedPoint .push (compoundShape .point);
-                              }
-                           }
-                        }
-                     }
-
-                     // Send events.
-
-                     var
-                        pickedGeometries = this .getPickedGeometries (),
-                        active           = Boolean (pickedGeometries .length);
-
-                     pickedGeometries .remove (0, pickedGeometries .length, null);
-
-                     if (active !== this ._isActive .getValue ())
-                        this ._isActive = active;
-
-                     if (! this ._pickedGeometry .equals (pickedGeometries))
-                        this ._pickedGeometry = pickedGeometries;
-
-                     var pickedTargets = this .getPickedTargets ();
-
-                     pickedPoint .length = 0;
-
-                     for (var t = 0, tLength = pickedTargets .length; t < tLength; ++ t)
-                     {
-                        var pp = pickedTargets [t] .pickedPoint;
-
-                        for (var p = 0, pLength = pp .length; p < pLength; ++ p)
-                           pickedPoint .push (pp [p]);
-                     }
-
-                     if (! this ._pickedPoint .equals (pickedPoint))
-                        this ._pickedPoint = pickedPoint;
-
-                     break;
+                     for (var p = 0, pLength = pp .length; p < pLength; ++ p)
+                        pickedPoint .push (pp [p]);
                   }
+
+                  if (! this ._pickedPoint .equals (pickedPoint))
+                     this ._pickedPoint = pickedPoint;
+
+                  break;
                }
             }
+         }
 
-            X3DPickSensorNode .prototype .process .call (this);
-         };
-      })(),
-   });
-
-   return PointPickSensor;
+         X3DPickSensorNode .prototype .process .call (this);
+      };
+   })(),
 });
+
+export default PointPickSensor;

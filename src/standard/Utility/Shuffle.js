@@ -47,25 +47,20 @@
  ******************************************************************************/
 
 
-define (function ()
+export default function shuffle (array)
 {
-"use strict";
+   let i = array .length;
 
-   return function shuffle (array)
+   while (i > 1)
    {
-      let i = array .length;
+      const
+         a = -- i,
+         b = Math .floor (Math .random () * a),
+         t = array [a];
 
-      while (i > 1)
-      {
-         const
-            a = -- i,
-            b = Math .floor (Math .random () * a),
-            t = array [a];
+      array [a] = array [b];
+      array [b] = t;
+   }
 
-         array [a] = array [b];
-         array [b] = t;
-      }
-
-      return array;
-   };
-});
+   return array;
+};

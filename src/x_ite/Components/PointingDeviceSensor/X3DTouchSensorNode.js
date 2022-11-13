@@ -47,33 +47,26 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DPointingDeviceSensorNode,
-          X3DConstants)
+import X3DPointingDeviceSensorNode from "./X3DPointingDeviceSensorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DTouchSensorNode (executionContext)
 {
-"use strict";
+   X3DPointingDeviceSensorNode .call (this, executionContext);
 
-   function X3DTouchSensorNode (executionContext)
+   this .addType (X3DConstants .X3DTouchSensorNode);
+}
+
+X3DTouchSensorNode .prototype = Object .assign (Object .create (X3DPointingDeviceSensorNode .prototype),
+{
+   constructor: X3DTouchSensorNode,
+   set_active__: function (active, hit)
    {
-      X3DPointingDeviceSensorNode .call (this, executionContext);
+      X3DPointingDeviceSensorNode .prototype .set_active__ .call (this, active, hit);
 
-      this .addType (X3DConstants .X3DTouchSensorNode);
-   }
-
-   X3DTouchSensorNode .prototype = Object .assign (Object .create (X3DPointingDeviceSensorNode .prototype),
-   {
-      constructor: X3DTouchSensorNode,
-      set_active__: function (active, hit)
-      {
-         X3DPointingDeviceSensorNode .prototype .set_active__ .call (this, active, hit);
-
-         if (this ._enabled .getValue () && this ._isOver .getValue () && ! active)
-            this ._touchTime = this .getBrowser () .getCurrentTime ();
-      },
-   });
-
-   return X3DTouchSensorNode;
+      if (this ._enabled .getValue () && this ._isOver .getValue () && ! active)
+         this ._touchTime = this .getBrowser () .getCurrentTime ();
+   },
 });
+
+export default X3DTouchSensorNode;

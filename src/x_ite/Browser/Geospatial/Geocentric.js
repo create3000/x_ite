@@ -47,40 +47,33 @@
  ******************************************************************************/
 
 
-define ([
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Algorithm",
-],
-function (Vector3,
-          Algorithm)
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+function Geocentric () { }
+
+Geocentric .prototype =
 {
-"use strict";
-
-   function Geocentric () { }
-
-   Geocentric .prototype =
+   constructor: Geocentric,
+   convert: function (geocentric, result)
    {
-      constructor: Geocentric,
-      convert: function (geocentric, result)
-      {
-         return result .assign (geocentric);
-      },
-      apply: function (geocentric, result)
-      {
-         return result .assign (geocentric);
-      },
-      slerp: function (source, destination, t)
-      {
-         const
-            sourceLength      = source      .magnitude (),
-            destinationLength = destination .magnitude ();
+      return result .assign (geocentric);
+   },
+   apply: function (geocentric, result)
+   {
+      return result .assign (geocentric);
+   },
+   slerp: function (source, destination, t)
+   {
+      const
+         sourceLength      = source      .magnitude (),
+         destinationLength = destination .magnitude ();
 
-         source      .normalize ();
-         destination .normalize ();
+      source      .normalize ();
+      destination .normalize ();
 
-         return Algorithm .simpleSlerp (source, destination, t) .multiply (Algorithm .lerp (sourceLength, destinationLength, t));
-      },
-   };
+      return Algorithm .simpleSlerp (source, destination, t) .multiply (Algorithm .lerp (sourceLength, destinationLength, t));
+   },
+};
 
-   return Geocentric;
-});
+export default Geocentric;

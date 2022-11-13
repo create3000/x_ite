@@ -47,277 +47,269 @@
  ******************************************************************************/
 
 
-define ([
-   "standard/Math/Algorithm",
-],
-function (Algorithm)
+function Vector2 (x, y)
 {
-"use strict";
+   this .x = x;
+   this .y = y;
+}
 
-   function Vector2 (x, y)
+Vector2 .prototype =
+{
+   constructor: Vector2,
+   length: 2,
+   [Symbol .iterator]: function* ()
+   {
+      yield this .x;
+      yield this .y;
+   },
+   copy: function ()
+   {
+      const copy = Object .create (Vector2 .prototype);
+      copy .x = this .x;
+      copy .y = this .y;
+      return copy;
+   },
+   assign: function (vector)
+   {
+      this .x = vector .x;
+      this .y = vector .y;
+      return this;
+   },
+   set: function (x, y)
    {
       this .x = x;
       this .y = y;
-   }
-
-   Vector2 .prototype =
+      return this;
+   },
+   equals: function (vector)
    {
-      constructor: Vector2,
-      length: 2,
-      [Symbol .iterator]: function* ()
-      {
-         yield this .x;
-         yield this .y;
-      },
-      copy: function ()
-      {
-         const copy = Object .create (Vector2 .prototype);
-         copy .x = this .x;
-         copy .y = this .y;
-         return copy;
-      },
-      assign: function (vector)
-      {
-         this .x = vector .x;
-         this .y = vector .y;
-         return this;
-      },
-      set: function (x, y)
-      {
-         this .x = x;
-         this .y = y;
-         return this;
-      },
-      equals: function (vector)
-      {
-         return this .x === vector .x &&
-                this .y === vector .y;
-      },
-      negate: function ()
-      {
-         this .x = -this .x;
-         this .y = -this .y;
-         return this;
-      },
-      inverse: function ()
-      {
-         this .x = 1 / this .x;
-         this .y = 1 / this .y;
-         return this;
-      },
-      add: function (vector)
-      {
-         this .x += vector .x;
-         this .y += vector .y;
-         return this;
-      },
-      subtract: function (vector)
-      {
-         this .x -= vector .x;
-         this .y -= vector .y;
-         return this;
-      },
-      multiply: function (value)
-      {
-         this .x *= value;
-         this .y *= value;
-         return this;
-      },
-      multVec: function (vector)
-      {
-         this .x *= vector .x;
-         this .y *= vector .y;
-         return this;
-      },
-      divide: function (value)
-      {
-         this .x /= value;
-         this .y /= value;
-         return this;
-      },
-      divVec: function (vector)
-      {
-         this .x /= vector .x;
-         this .y /= vector .y;
-         return this;
-      },
-      normalize: function ()
-      {
-         const length = Math .hypot (this .x, this .y);
+      return this .x === vector .x &&
+             this .y === vector .y;
+   },
+   negate: function ()
+   {
+      this .x = -this .x;
+      this .y = -this .y;
+      return this;
+   },
+   inverse: function ()
+   {
+      this .x = 1 / this .x;
+      this .y = 1 / this .y;
+      return this;
+   },
+   add: function (vector)
+   {
+      this .x += vector .x;
+      this .y += vector .y;
+      return this;
+   },
+   subtract: function (vector)
+   {
+      this .x -= vector .x;
+      this .y -= vector .y;
+      return this;
+   },
+   multiply: function (value)
+   {
+      this .x *= value;
+      this .y *= value;
+      return this;
+   },
+   multVec: function (vector)
+   {
+      this .x *= vector .x;
+      this .y *= vector .y;
+      return this;
+   },
+   divide: function (value)
+   {
+      this .x /= value;
+      this .y /= value;
+      return this;
+   },
+   divVec: function (vector)
+   {
+      this .x /= vector .x;
+      this .y /= vector .y;
+      return this;
+   },
+   normalize: function ()
+   {
+      const length = Math .hypot (this .x, this .y);
 
-         if (length)
-         {
-            this .x /= length;
-            this .y /= length;
-         }
-
-         return this;
-      },
-      dot: function (vector)
+      if (length)
       {
-         return this .x * vector .x +
-                this .y * vector .y;
-      },
-      norm: function ()
-      {
-         const
-            x = this .x,
-            y = this .y;
-
-         return x * x +
-                y * y;
-      },
-      magnitude: function ()
-      {
-         return Math .hypot (this .x, this .y);
-      },
-      distance: function (vector)
-      {
-         return Math .hypot (this .x - vector .x,
-                             this .y - vector .y);
-      },
-      lerp: function (destination, t)
-      {
-         const
-            x = this .x,
-            y = this .y;
-
-         this .x = x + t * (destination .x - x);
-         this .y = y + t * (destination .y - y);
-         return this;
-      },
-      abs: function ()
-      {
-         this .x = Math .abs (this .x);
-         this .y = Math .abs (this .y);
-         return this;
-      },
-      min: function (vector)
-      {
-         let
-            x = this .x,
-            y = this .y;
-
-         for (const vector of arguments)
-         {
-            x = Math .min (x, vector .x);
-            y = Math .min (y, vector .y);
-         }
-
-         this .x = x;
-         this .y = y;
-         return this;
-      },
-      max: function (vector)
-      {
-         let
-            x = this .x,
-            y = this .y;
-
-         for (const vector of arguments)
-         {
-            x = Math .max (x, vector .x);
-            y = Math .max (y, vector .y);
-         }
-
-         this .x = x;
-         this .y = y;
-         return this;
-      },
-      toString: function ()
-      {
-         return this .x + " " +
-                this .y;
+         this .x /= length;
+         this .y /= length;
       }
-   };
 
-   Object .defineProperty (Vector2 .prototype, "0",
+      return this;
+   },
+   dot: function (vector)
    {
-      get: function () { return this .x; },
-      set: function (value) { this .x = value; },
-      enumerable: false,
-      configurable: false
-   });
-
-   Object .defineProperty (Vector2 .prototype, "1",
+      return this .x * vector .x +
+             this .y * vector .y;
+   },
+   norm: function ()
    {
-      get: function () { return this .y; },
-      set: function (value) { this .y = value; },
-      enumerable: false,
-      configurable: false
-   });
+      const
+         x = this .x,
+         y = this .y;
 
-   Object .assign (Vector2,
+      return x * x +
+             y * y;
+   },
+   magnitude: function ()
    {
-      Zero: new Vector2 (0, 0),
-      One: new Vector2 (1, 1),
-      xAxis: new Vector2 (1, 0),
-      yAxis: new Vector2 (0, 1),
-      negate: function (vector)
-      {
-         return vector .copy () .negate ();
-      },
-      inverse: function (vector)
-      {
-         return vector .copy () .inverse ();
-      },
-      add: function (lhs, rhs)
-      {
-         return lhs .copy () .add (rhs);
-      },
-      subtract: function (lhs, rhs)
-      {
-         return lhs .copy () .subtract (rhs);
-      },
-      multiply: function (lhs, rhs)
-      {
-         return lhs .copy () .multiply (rhs);
-      },
-      multVec: function (lhs, rhs)
-      {
-         return lhs .copy () .multVec (rhs);
-      },
-      divide: function (lhs, rhs)
-      {
-         return lhs .copy () .divide (rhs);
-      },
-      divVec: function (lhs, rhs)
-      {
-         return lhs .copy () .divVec (rhs);
-      },
-      normalize: function (vector)
-      {
-         return vector .copy () .normalize ();
-      },
-      dot: function (lhs, rhs)
-      {
-         return lhs .dot (rhs);
-      },
-      magnitude: function (vector)
-      {
-         return vector .magnitude ();
-      },
-      distance: function (lhs, rhs)
-      {
-         return lhs .distance (rhs);
-      },
-      lerp: function (source, destination, t)
-      {
-         return source .copy () .lerp (destination, t);
-      },
-      abs: function (vector)
-      {
-         return vector .copy () .abs ();
-      },
-      min: function (lhs, rhs)
-      {
-         return this .prototype .min .apply (lhs .copy (), arguments);
-      },
-      max: function (lhs, rhs)
-      {
-         return this .prototype .max .apply (lhs .copy (), arguments);
-      },
-   });
+      return Math .hypot (this .x, this .y);
+   },
+   distance: function (vector)
+   {
+      return Math .hypot (this .x - vector .x,
+                          this .y - vector .y);
+   },
+   lerp: function (destination, t)
+   {
+      const
+         x = this .x,
+         y = this .y;
 
-   return Vector2;
+      this .x = x + t * (destination .x - x);
+      this .y = y + t * (destination .y - y);
+      return this;
+   },
+   abs: function ()
+   {
+      this .x = Math .abs (this .x);
+      this .y = Math .abs (this .y);
+      return this;
+   },
+   min: function (vector)
+   {
+      let
+         x = this .x,
+         y = this .y;
+
+      for (const vector of arguments)
+      {
+         x = Math .min (x, vector .x);
+         y = Math .min (y, vector .y);
+      }
+
+      this .x = x;
+      this .y = y;
+      return this;
+   },
+   max: function (vector)
+   {
+      let
+         x = this .x,
+         y = this .y;
+
+      for (const vector of arguments)
+      {
+         x = Math .max (x, vector .x);
+         y = Math .max (y, vector .y);
+      }
+
+      this .x = x;
+      this .y = y;
+      return this;
+   },
+   toString: function ()
+   {
+      return this .x + " " +
+             this .y;
+   }
+};
+
+Object .defineProperty (Vector2 .prototype, "0",
+{
+   get: function () { return this .x; },
+   set: function (value) { this .x = value; },
+   enumerable: false,
+   configurable: false
 });
+
+Object .defineProperty (Vector2 .prototype, "1",
+{
+   get: function () { return this .y; },
+   set: function (value) { this .y = value; },
+   enumerable: false,
+   configurable: false
+});
+
+Object .assign (Vector2,
+{
+   Zero: new Vector2 (0, 0),
+   One: new Vector2 (1, 1),
+   xAxis: new Vector2 (1, 0),
+   yAxis: new Vector2 (0, 1),
+   negate: function (vector)
+   {
+      return vector .copy () .negate ();
+   },
+   inverse: function (vector)
+   {
+      return vector .copy () .inverse ();
+   },
+   add: function (lhs, rhs)
+   {
+      return lhs .copy () .add (rhs);
+   },
+   subtract: function (lhs, rhs)
+   {
+      return lhs .copy () .subtract (rhs);
+   },
+   multiply: function (lhs, rhs)
+   {
+      return lhs .copy () .multiply (rhs);
+   },
+   multVec: function (lhs, rhs)
+   {
+      return lhs .copy () .multVec (rhs);
+   },
+   divide: function (lhs, rhs)
+   {
+      return lhs .copy () .divide (rhs);
+   },
+   divVec: function (lhs, rhs)
+   {
+      return lhs .copy () .divVec (rhs);
+   },
+   normalize: function (vector)
+   {
+      return vector .copy () .normalize ();
+   },
+   dot: function (lhs, rhs)
+   {
+      return lhs .dot (rhs);
+   },
+   magnitude: function (vector)
+   {
+      return vector .magnitude ();
+   },
+   distance: function (lhs, rhs)
+   {
+      return lhs .distance (rhs);
+   },
+   lerp: function (source, destination, t)
+   {
+      return source .copy () .lerp (destination, t);
+   },
+   abs: function (vector)
+   {
+      return vector .copy () .abs ();
+   },
+   min: function (lhs, rhs)
+   {
+      return this .prototype .min .apply (lhs .copy (), arguments);
+   },
+   max: function (lhs, rhs)
+   {
+      return this .prototype .max .apply (lhs .copy (), arguments);
+   },
+});
+
+export default Vector2;

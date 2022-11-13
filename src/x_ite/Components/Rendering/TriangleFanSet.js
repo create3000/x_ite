@@ -47,98 +47,88 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DComposedGeometryNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DComposedGeometryNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DComposedGeometryNode from "./X3DComposedGeometryNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function TriangleFanSet (executionContext)
 {
-"use strict";
+   X3DComposedGeometryNode .call (this, executionContext);
 
-   function TriangleFanSet (executionContext)
+   this .addType (X3DConstants .TriangleFanSet);
+
+   this .triangleIndex = [ ];
+}
+
+TriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+{
+   constructor: TriangleFanSet,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "fanCount",        new Fields .MFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DComposedGeometryNode .call (this, executionContext);
-
-      this .addType (X3DConstants .TriangleFanSet);
-
-      this .triangleIndex = [ ];
-   }
-
-   TriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+      return "TriangleFanSet";
+   },
+   getComponentName: function ()
    {
-      constructor: TriangleFanSet,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "fanCount",        new Fields .MFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
+      return "Rendering";
+   },
+   getContainerField: function ()
+   {
+      return "geometry";
+   },
+   initialize: function ()
+   {
+      X3DComposedGeometryNode .prototype .initialize .call (this);
+
+      this ._fanCount .addInterest ("set_fanCount__", this);
+
+      this .set_fanCount__ ();
+   },
+   set_fanCount__: function ()
+   {
+      // Build coordIndex
+
+      const
+         fanCount      = this ._fanCount,
+         triangleIndex = this .triangleIndex;
+
+      triangleIndex .length = 0;
+
+      let index = 0;
+
+      for (const vertexCount of fanCount)
       {
-         return "TriangleFanSet";
-      },
-      getComponentName: function ()
-      {
-         return "Rendering";
-      },
-      getContainerField: function ()
-      {
-         return "geometry";
-      },
-      initialize: function ()
-      {
-         X3DComposedGeometryNode .prototype .initialize .call (this);
-
-         this ._fanCount .addInterest ("set_fanCount__", this);
-
-         this .set_fanCount__ ();
-      },
-      set_fanCount__: function ()
-      {
-         // Build coordIndex
-
-         const
-            fanCount      = this ._fanCount,
-            triangleIndex = this .triangleIndex;
-
-         triangleIndex .length = 0;
-
-         let index = 0;
-
-         for (const vertexCount of fanCount)
+         for (let i = 1, length = vertexCount - 1; i < length; ++ i)
          {
-            for (let i = 1, length = vertexCount - 1; i < length; ++ i)
-            {
-               triangleIndex .push (index, index + i, index + i + 1);
-            }
-
-            index += vertexCount;
+            triangleIndex .push (index, index + i, index + i + 1);
          }
-      },
-      getPolygonIndex: function (index)
-      {
-         return this .triangleIndex [index];
-      },
-      build: function ()
-      {
-         X3DComposedGeometryNode .prototype .build .call (this, 3, this .triangleIndex .length, 3, this .triangleIndex .length);
-      },
-   });
 
-   return TriangleFanSet;
+         index += vertexCount;
+      }
+   },
+   getPolygonIndex: function (index)
+   {
+      return this .triangleIndex [index];
+   },
+   build: function ()
+   {
+      X3DComposedGeometryNode .prototype .build .call (this, 3, this .triangleIndex .length, 3, this .triangleIndex .length);
+   },
 });
+
+export default TriangleFanSet;

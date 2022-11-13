@@ -47,184 +47,174 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Components/Time/X3DTimeDependentNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Algorithm",
-],
-function (Fields,
-          X3DChildNode,
-          X3DTimeDependentNode,
-          X3DConstants,
-          Algorithm)
+import Fields from "../../Fields.js";
+import X3DChildNode from "../Core/X3DChildNode.js";
+import X3DTimeDependentNode from "../Time/X3DTimeDependentNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+function X3DSoundSourceNode (executionContext)
 {
-"use strict";
+   X3DChildNode         .call (this, executionContext);
+   X3DTimeDependentNode .call (this, executionContext);
 
-   function X3DSoundSourceNode (executionContext)
+   this .addType (X3DConstants .X3DSoundSourceNode);
+
+   this .volume = 0;
+   this .media  = null;
+}
+
+X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   X3DTimeDependentNode .prototype,
+{
+   constructor: X3DSoundSourceNode,
+   initialize: function ()
    {
-      X3DChildNode         .call (this, executionContext);
-      X3DTimeDependentNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DSoundSourceNode);
-
-      this .volume = 0;
-      this .media  = null;
-   }
-
-   X3DSoundSourceNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-      X3DTimeDependentNode .prototype,
+      X3DChildNode         .prototype .initialize .call (this);
+      X3DTimeDependentNode .prototype .initialize .call (this);
+   },
+   set_live__: function ()
    {
-      constructor: X3DSoundSourceNode,
-      initialize: function ()
+      X3DTimeDependentNode .prototype .set_live__ .call (this);
+
+      if (this .getDisabled ())
       {
-         X3DChildNode         .prototype .initialize .call (this);
-         X3DTimeDependentNode .prototype .initialize .call (this);
-      },
-      set_live__: function ()
+         this .getBrowser () ._volume .removeInterest ("set_volume__", this);
+         this .getBrowser () ._mute   .removeInterest ("set_volume__", this);
+      }
+      else
       {
-         X3DTimeDependentNode .prototype .set_live__ .call (this);
+         this .getBrowser () ._volume .addInterest ("set_volume__", this);
+         this .getBrowser () ._mute   .addInterest ("set_volume__", this);
 
-         if (this .getDisabled ())
-         {
-            this .getBrowser () ._volume .removeInterest ("set_volume__", this);
-            this .getBrowser () ._mute   .removeInterest ("set_volume__", this);
-         }
-         else
-         {
-            this .getBrowser () ._volume .addInterest ("set_volume__", this);
-            this .getBrowser () ._mute   .addInterest ("set_volume__", this);
-
-            this .set_volume__ ();
-         }
-      },
-      setMedia: function (value)
+         this .set_volume__ ();
+      }
+   },
+   setMedia: function (value)
+   {
+      if (this .media)
       {
-         if (this .media)
+         const media = this .media [0];
+
+         media .muted = true;
+         media .pause ();
+      }
+
+      this .media = value;
+
+      if (value)
+      {
+         const media = value [0];
+
+         media .muted  = false;
+         media .volume = 0;
+         media .loop   = this ._loop .getValue ();
+
+         this .setVolume (0);
+         this ._duration_changed = media .duration;
+
+         this .resetElapsedTime ();
+
+         if (this ._isActive .getValue ())
          {
-            const media = this .media [0];
-
-            media .muted = true;
-            media .pause ();
-         }
-
-         this .media = value;
-
-         if (value)
-         {
-            const media = value [0];
-
-            media .muted  = false;
-            media .volume = 0;
-            media .loop   = this ._loop .getValue ();
-
-            this .setVolume (0);
-            this ._duration_changed = media .duration;
-
-            this .resetElapsedTime ();
-
-            if (this ._isActive .getValue ())
+            if (this ._isPaused .getValue ())
             {
-               if (this ._isPaused .getValue ())
-               {
-                  this .set_pause ();
-               }
-               else
-               {
-                  if (this .getLiveState ())
-                     this .set_start ();
-                  else
-                     this .set_pause ();
-               }
+               this .set_pause ();
             }
             else
             {
-               this .set_stop ();
+               if (this .getLiveState ())
+                  this .set_start ();
+               else
+                  this .set_pause ();
             }
          }
-      },
-      getMedia: function ()
-      {
-         return this .media;
-      },
-      setVolume: function (volume)
-      {
-         this .volume = Algorithm .clamp (volume, 0, 1);
+         else
+         {
+            this .set_stop ();
+         }
+      }
+   },
+   getMedia: function ()
+   {
+      return this .media;
+   },
+   setVolume: function (volume)
+   {
+      this .volume = Algorithm .clamp (volume, 0, 1);
 
-         this .set_volume__ ();
-      },
-      set_loop: function ()
+      this .set_volume__ ();
+   },
+   set_loop: function ()
+   {
+      if (this .media)
+         this .media [0] .loop = this ._loop .getValue ();
+   },
+   set_volume__: function ()
+   {
+      if (! this .media)
+         return;
+
+      const
+         mute      = this .getBrowser () ._mute .getValue (),
+         intensity = Algorithm .clamp (this .getBrowser () ._volume .getValue (), 0, 1),
+         volume    = (! mute) * intensity * this .volume;
+
+      this .media [0] .volume = volume;
+   },
+   set_speed: function ()
+   { },
+   set_pitch: function ()
+   { },
+   set_start: function ()
+   {
+      if (this .media)
       {
-         if (this .media)
-            this .media [0] .loop = this ._loop .getValue ();
-      },
-      set_volume__: function ()
+         if (this ._speed .getValue ())
+         {
+            this .media [0] .currentTime = 0;
+            this .media [0] .play () .catch (Function .prototype);
+         }
+      }
+   },
+   set_pause: function ()
+   {
+      if (this .media)
+         this .media [0] .pause ();
+   },
+   set_resume: function ()
+   {
+      if (this .media)
       {
-         if (! this .media)
+         if (this ._speed .getValue ())
+            this .media [0] .play () .catch (Function .prototype);
+      }
+   },
+   set_stop: function ()
+   {
+      if (this .media)
+         this .media [0] .pause ();
+   },
+   set_ended: function ()
+   {
+      if (this .media)
+      {
+         const media = this .media [0];
+
+         if (media .currentTime < media .duration)
             return;
 
-         const
-            mute      = this .getBrowser () ._mute .getValue (),
-            intensity = Algorithm .clamp (this .getBrowser () ._volume .getValue (), 0, 1),
-            volume    = (! mute) * intensity * this .volume;
+         if (!this ._loop .getValue ())
+            this .stop ();
+      }
+   },
+   set_time: function ()
+   {
+      if (this .media)
+         this ._elapsedTime = this .getElapsedTime ();
 
-         this .media [0] .volume = volume;
-      },
-      set_speed: function ()
-      { },
-      set_pitch: function ()
-      { },
-      set_start: function ()
-      {
-         if (this .media)
-         {
-            if (this ._speed .getValue ())
-            {
-               this .media [0] .currentTime = 0;
-               this .media [0] .play () .catch (Function .prototype);
-            }
-         }
-      },
-      set_pause: function ()
-      {
-         if (this .media)
-            this .media [0] .pause ();
-      },
-      set_resume: function ()
-      {
-         if (this .media)
-         {
-            if (this ._speed .getValue ())
-               this .media [0] .play () .catch (Function .prototype);
-         }
-      },
-      set_stop: function ()
-      {
-         if (this .media)
-            this .media [0] .pause ();
-      },
-      set_ended: function ()
-      {
-         if (this .media)
-         {
-            const media = this .media [0];
-
-            if (media .currentTime < media .duration)
-               return;
-
-            if (!this ._loop .getValue ())
-               this .stop ();
-         }
-      },
-      set_time: function ()
-      {
-         if (this .media)
-            this ._elapsedTime = this .getElapsedTime ();
-
-         this .set_ended ();
-      },
-   });
-
-   return X3DSoundSourceNode;
+      this .set_ended ();
+   },
 });
+
+export default X3DSoundSourceNode;

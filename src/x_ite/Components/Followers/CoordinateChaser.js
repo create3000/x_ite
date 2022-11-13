@@ -47,66 +47,54 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Followers/X3DChaserNode",
-   "x_ite/Browser/Followers/X3DArrayChaserTemplate",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DChaserNode,
-          X3DArrayChaserTemplate,
-          X3DConstants,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DChaserNode from "./X3DChaserNode.js";
+import X3DArrayChaserTemplate from "../../Browser/Followers/X3DArrayChaserTemplate.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+var X3DArrayChaserObject = X3DArrayChaserTemplate (X3DChaserNode);
+
+function CoordinateChaser (executionContext)
 {
-"use strict";
+   X3DChaserNode        .call (this, executionContext);
+   X3DArrayChaserObject .call (this, executionContext);
 
-   var X3DArrayChaserObject = X3DArrayChaserTemplate (X3DChaserNode);
+   this .addType (X3DConstants .CoordinateChaser);
+}
 
-   function CoordinateChaser (executionContext)
+CoordinateChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
+   X3DArrayChaserObject .prototype,
+{
+   constructor: CoordinateChaser,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .MFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .MFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .MFVec3f (new Vector3 (0, 0, 0))),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .MFVec3f (new Vector3 (0, 0, 0))),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .MFVec3f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DChaserNode        .call (this, executionContext);
-      X3DArrayChaserObject .call (this, executionContext);
-
-      this .addType (X3DConstants .CoordinateChaser);
-   }
-
-   CoordinateChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
-      X3DArrayChaserObject .prototype,
+      return "CoordinateChaser";
+   },
+   getComponentName: function ()
    {
-      constructor: CoordinateChaser,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .MFVec3f (new Vector3 (0, 0, 0))),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .MFVec3f (new Vector3 (0, 0, 0))),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .MFVec3f ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "CoordinateChaser";
-      },
-      getComponentName: function ()
-      {
-         return "Followers";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      getVector: function ()
-      {
-         return new Vector3 (0, 0, 0);
-      },
-   });
-
-   return CoordinateChaser;
+      return "Followers";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   getVector: function ()
+   {
+      return new Vector3 (0, 0, 0);
+   },
 });
+
+export default CoordinateChaser;

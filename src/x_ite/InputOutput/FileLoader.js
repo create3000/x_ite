@@ -47,446 +47,427 @@
  ******************************************************************************/
 
 
-define ([
-   "jquery",
-   "x_ite/Base/X3DObject",
-   "x_ite/Fields",
-   "x_ite/Parser/GoldenGate",
-   "x_ite/Parser/JSONParser",
-   "x_ite/Parser/XMLParser",
-   "x_ite/Execution/X3DWorld",
-   "standard/Networking/BinaryTransport",
-   "pako_inflate",
-   "x_ite/DEBUG",
-],
-function ($,
-          X3DObject,
-          Fields,
-          GoldenGate,
-          JSONParser,
-          XMLParser,
-          X3DWorld,
-          BinaryTransport,
-          pako,
-          DEBUG)
+import X3DObject from "../Base/X3DObject.js";
+import Fields from "../Fields.js";
+import GoldenGate from "../Parser/GoldenGate.js";
+import X3DWorld from "../Execution/X3DWorld.js";
+import BinaryTransport from "../../standard/Networking/BinaryTransport.js";
+import DEBUG from "../DEBUG.js";
+
+BinaryTransport ($);
+
+const _dom = Symbol .for ("X_ITE.dom");
+
+const
+   ECMAScript    = /^\s*(?:vrmlscript|javascript|ecmascript)\:([^]*)$/,
+   dataURL       = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,([^]*)$/,
+   contentTypeRx = /^(?:(.*?);(.*?)$)/;
+
+const foreignExtensions = new RegExp ("\.(?:html|xhtml)$");
+
+const foreign = {
+   "text/html":             true,
+   "application/xhtml+xml": true,
+};
+
+const defaultParameter = new Fields .MFString ();
+
+function FileLoader (node, external)
 {
-"use strict";
+   X3DObject .call (this);
 
-   BinaryTransport ($);
+   this .node             = node;
+   this .browser          = node .getBrowser ();
+   this .external         = external === undefined ? this .browser .isExternal () : external;
+   this .executionContext = this .external ? node .getExecutionContext () : this .browser .currentScene;
+   this .userAgent        = this .browser .getName () + "/" + this .browser .getVersion () + " (X3D Browser; +" + this .browser .getProviderUrl () + ")";
+   this .target           = "";
+   this .url              = [ ];
+   this .URL              = new URL (this .getReferer (), this .getReferer ());
+   this .fileReader       = new FileReader ();
+   this .text             = true;
+}
 
-   const _dom = Symbol .for ("X_ITE.dom");
-
-   const
-      ECMAScript    = /^\s*(?:vrmlscript|javascript|ecmascript)\:([^]*)$/,
-      dataURL       = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,([^]*)$/,
-      contentTypeRx = /^(?:(.*?);(.*?)$)/;
-
-   const foreignExtensions = new RegExp ("\.(?:html|xhtml)$");
-
-   const foreign = {
-      "text/html":             true,
-      "application/xhtml+xml": true,
-   };
-
-   const defaultParameter = new Fields .MFString ();
-
-   function FileLoader (node, external)
+FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
+{
+   constructor: FileLoader,
+   abort: function ()
    {
-      X3DObject .call (this);
-
-      this .node             = node;
-      this .browser          = node .getBrowser ();
-      this .external         = external === undefined ? this .browser .isExternal () : external;
-      this .executionContext = this .external ? node .getExecutionContext () : this .browser .currentScene;
-      this .userAgent        = this .browser .getName () + "/" + this .browser .getVersion () + " (X3D Browser; +" + this .browser .getProviderUrl () + ")";
-      this .target           = "";
-      this .url              = [ ];
-      this .URL              = new URL (this .getReferer (), this .getReferer ());
-      this .fileReader       = new FileReader ();
-      this .text             = true;
-   }
-
-   FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
+      this .callback      = Function .prototype;
+      this .bindViewpoint = Function .prototype;
+      this .foreign       = Function .prototype;
+   },
+   isPrivate: function ()
    {
-      constructor: FileLoader,
-      abort: function ()
+      return true;
+   },
+   getWorldURL: function ()
+   {
+      return this .URL;
+   },
+   createX3DFromString: function (worldURL, string, success, error)
+   {
+      try
       {
-         this .callback      = Function .prototype;
-         this .bindViewpoint = Function .prototype;
-         this .foreign       = Function .prototype;
-      },
-      isPrivate: function ()
-      {
-         return true;
-      },
-      getWorldURL: function ()
-      {
-         return this .URL;
-      },
-      createX3DFromString: function (worldURL, string, success, error)
-      {
-         try
-         {
-            const scene = this .browser .createScene ();
+         const scene = this .browser .createScene ();
 
-            if (this .node instanceof X3DWorld)
-               scene .loader = this;
-            else
-               scene .setExecutionContext (this .executionContext);
-
-            scene .setWorldURL (decodeURI (new URL (worldURL, this .getReferer ()) .href));
-
-            if (success)
-               success = this .setScene .bind (this, scene, success, error);
-
-            new GoldenGate (scene) .parseIntoScene (string, success, error);
-
-            return scene;
-         }
-         catch (exception)
-         {
-            if (error)
-               error (exception);
-            else
-               throw error;
-         }
-      },
-      setScene: function (scene, success, error)
-      {
-         scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, success, error);
-         scene ._initLoadCount .addEvent ();
-      },
-      set_initLoadCount__: function (scene, success, error, field)
-      {
-         if (field .getValue ())
-            return;
-
-         scene ._initLoadCount .removeInterest ("set_initLoadCount__", this);
-
-         delete scene .loader;
-
-         try
-         {
-            success (scene);
-         }
-         catch (exception)
-         {
-            if (error)
-               error (exception);
-            else
-               throw exception;
-         }
-
-         if (DEBUG)
-         {
-            if (this .URL .protocol !== "data:")
-               console .info ("Done loading scene " + decodeURI (this .URL .href));
-         }
-      },
-      createX3DFromURL: function (url, parameter, callback, bindViewpoint, foreign)
-      {
-         this .bindViewpoint = bindViewpoint;
-         this .foreign       = foreign;
-         this .target        = this .getTarget (parameter || defaultParameter);
-
-         if (callback)
-            return this .loadDocument (url, this .createX3DFromURLAsync .bind (this, callback));
-
-         return this .createX3DFromURLSync (url);
-      },
-      createX3DFromURLAsync: function (callback, data)
-      {
-         if (data === null)
-            callback (null, this .URL);
+         if (this .node instanceof X3DWorld)
+            scene .loader = this;
          else
-            this .createX3DFromString (this .URL, data, callback, this .loadDocumentError .bind (this));
-      },
-      createX3DFromURLSync: function (urls)
+            scene .setExecutionContext (this .executionContext);
+
+         scene .setWorldURL (decodeURI (new URL (worldURL, this .getReferer ()) .href));
+
+         if (success)
+            success = this .setScene .bind (this, scene, success, error);
+
+         new GoldenGate (scene) .parseIntoScene (string, success, error);
+
+         return scene;
+      }
+      catch (exception)
       {
-         if (urls .length === 0)
-            throw new Error ("No URL given.");
+         if (error)
+            error (exception);
+         else
+            throw error;
+      }
+   },
+   setScene: function (scene, success, error)
+   {
+      scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, success, error);
+      scene ._initLoadCount .addEvent ();
+   },
+   set_initLoadCount__: function (scene, success, error, field)
+   {
+      if (field .getValue ())
+         return;
 
-         let
-            scene   = null,
-            success = false;
+      scene ._initLoadCount .removeInterest ("set_initLoadCount__", this);
 
-         for (const url of urls)
-         {
-            this .URL = new URL (url, this .getReferer ());
+      delete scene .loader;
 
-            $.ajax ({
-               url: decodeURI (this .URL .href),
-               dataType: "text",
-               async: false,
-               cache: this .browser .getBrowserOptions () .getCache () && this .node .getCache (),
-               //timeout: 15000,
-               global: false,
-               context: this,
-               success: function (data)
-               {
-                  try
-                  {
-                     scene   = this .createX3DFromString (this .URL, data);
-                     success = true;
-                  }
-                  catch (exception)
-                  {
-                     this .error (exception);
-                  }
-               },
-               error: function (jqXHR, textStatus, errorThrown)
-               {
-                  //console .warn ("Couldn't load URL '" + this .URL .href + "': " + errorThrown + ".");
-               },
-            });
-
-            if (success)
-               return scene;
-         }
-
-         throw new Error ("Couldn't load any url of '" + Array .prototype .join .call (urls, ", ") + "'.");
-      },
-      loadScript: function (url, callback)
+      try
       {
-         this .script = true;
-
-         this .loadDocument (url, callback);
-      },
-      loadDocument: function (url, callback)
+         success (scene);
+      }
+      catch (exception)
       {
-         this .url       = url .copy ();
-         this .callback  = callback;
+         if (error)
+            error (exception);
+         else
+            throw exception;
+      }
 
-         if (url .length === 0)
-            return this .loadDocumentError (new Error ("No URL given."));
-
-         this .loadDocumentAsync (this .url .shift ());
-      },
-      loadBinaryDocument: function (url, callback)
+      if (DEBUG)
       {
-         this .url       = url .copy ();
-         this .callback  = callback;
-         this .text      = false;
+         if (this .URL .protocol !== "data:")
+            console .info ("Done loading scene " + decodeURI (this .URL .href));
+      }
+   },
+   createX3DFromURL: function (url, parameter, callback, bindViewpoint, foreign)
+   {
+      this .bindViewpoint = bindViewpoint;
+      this .foreign       = foreign;
+      this .target        = this .getTarget (parameter || defaultParameter);
 
-         if (url .length === 0)
-            return this .loadDocumentError (new Error ("No URL given."));
+      if (callback)
+         return this .loadDocument (url, this .createX3DFromURLAsync .bind (this, callback));
 
-         this .loadDocumentAsync (this .url .shift ());
-      },
-      getTarget: function (parameters)
+      return this .createX3DFromURLSync (url);
+   },
+   createX3DFromURLAsync: function (callback, data)
+   {
+      if (data === null)
+         callback (null, this .URL);
+      else
+         this .createX3DFromString (this .URL, data, callback, this .loadDocumentError .bind (this));
+   },
+   createX3DFromURLSync: function (urls)
+   {
+      if (urls .length === 0)
+         throw new Error ("No URL given.");
+
+      let
+         scene   = null,
+         success = false;
+
+      for (const url of urls)
       {
-         for (const parameter of parameters)
-         {
-            const pair = parameter .split ("=");
+         this .URL = new URL (url, this .getReferer ());
 
-            if (pair .length !== 2)
-               continue;
-
-            if (pair [0] === "target")
-               return pair [1];
-         }
-
-         return "";
-      },
-      loadDocumentAsync: function (url)
-      {
-         try
-         {
-            if (url .length === 0)
+         $.ajax ({
+            url: decodeURI (this .URL .href),
+            dataType: "text",
+            async: false,
+            cache: this .browser .getBrowserOptions () .getCache () && this .node .getCache (),
+            //timeout: 15000,
+            global: false,
+            context: this,
+            success: function (data)
             {
-               this .loadDocumentError (new Error ("URL is empty."));
+               try
+               {
+                  scene   = this .createX3DFromString (this .URL, data);
+                  success = true;
+               }
+               catch (exception)
+               {
+                  this .error (exception);
+               }
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+               //console .warn ("Couldn't load URL '" + this .URL .href + "': " + errorThrown + ".");
+            },
+         });
+
+         if (success)
+            return scene;
+      }
+
+      throw new Error ("Couldn't load any url of '" + Array .prototype .join .call (urls, ", ") + "'.");
+   },
+   loadScript: function (url, callback)
+   {
+      this .script = true;
+
+      this .loadDocument (url, callback);
+   },
+   loadDocument: function (url, callback)
+   {
+      this .url       = url .copy ();
+      this .callback  = callback;
+
+      if (url .length === 0)
+         return this .loadDocumentError (new Error ("No URL given."));
+
+      this .loadDocumentAsync (this .url .shift ());
+   },
+   loadBinaryDocument: function (url, callback)
+   {
+      this .url       = url .copy ();
+      this .callback  = callback;
+      this .text      = false;
+
+      if (url .length === 0)
+         return this .loadDocumentError (new Error ("No URL given."));
+
+      this .loadDocumentAsync (this .url .shift ());
+   },
+   getTarget: function (parameters)
+   {
+      for (const parameter of parameters)
+      {
+         const pair = parameter .split ("=");
+
+         if (pair .length !== 2)
+            continue;
+
+         if (pair [0] === "target")
+            return pair [1];
+      }
+
+      return "";
+   },
+   loadDocumentAsync: function (url)
+   {
+      try
+      {
+         if (url .length === 0)
+         {
+            this .loadDocumentError (new Error ("URL is empty."));
+            return;
+         }
+
+         // Script
+
+         if (this .script)
+         {
+            const result = ECMAScript .exec (url);
+
+            if (result)
+            {
+               this .callback (result [1]);
                return;
             }
+         }
 
-            // Script
+         // Test for data URL here.
 
-            if (this .script)
+         {
+            const result = dataURL .exec (url);
+
+            if (result)
             {
-               const result = ECMAScript .exec (url);
+               //const mimeType = result [1];
 
-               if (result)
+               // ??? If called from loadURL and mime type is text/html do a window.open or window.location=URL and return; ???
+
+               let data = result [4];
+
+               if (result [3] === "base64")
+                  data = atob (data);
+               else
+                  data = unescape (data);
+
+               this .callback (data);
+               return;
+            }
+         }
+
+         this .URL = new URL (url, this .getReferer ());
+
+         if (this .bindViewpoint)
+         {
+            if (this .URL .href .substr (0, this .getReferer () .length) === this .getReferer ())
+            {
+               this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
+               return;
+            }
+         }
+
+         if (this .foreign)
+         {
+            // Handle target
+
+            if (this .target .length && this .target !== "_self")
+               return this .foreign (this .URL .href, this .target);
+
+            // Handle well known foreign content depending on extension or if path looks like directory.
+
+            if (this .URL .href .match (foreignExtensions))
+               return this .foreign (this .URL .href, this .target);
+         }
+
+         // Load URL async
+
+         $.ajax ({
+            url: decodeURI (this .URL .href),
+            dataType: "binary",
+            async: true,
+            cache: this .browser .getBrowserOptions () .getCache () && this .node .getCache (),
+            //timeout: 15000,
+            global: false,
+            context: this,
+            success: function (blob, status, xhr)
+            {
+               if (this .foreign)
                {
-                  this .callback (result [1]);
-                  return;
+                  //console .log (this .getContentType (xhr));
+
+                  if (foreign [this .getContentType (xhr)])
+                     return this .foreign (this .URL .href, this .target);
                }
-            }
 
-            // Test for data URL here.
-
-            {
-               const result = dataURL .exec (url);
-
-               if (result)
+               if (this .text)
                {
-                  //const mimeType = result [1];
+                  this .fileReader .onload = this .readAsArrayBuffer .bind (this, blob);
 
-                  // ??? If called from loadURL and mime type is text/html do a window.open or window.location=URL and return; ???
-
-                  let data = result [4];
-
-                  if (result [3] === "base64")
-                     data = atob (data);
-                  else
-                     data = unescape (data);
-
-                  this .callback (data);
-                  return;
+                  this .fileReader .readAsArrayBuffer (blob);
                }
-            }
-
-            this .URL = new URL (url, this .getReferer ());
-
-            if (this .bindViewpoint)
-            {
-               if (this .URL .href .substr (0, this .getReferer () .length) === this .getReferer ())
+               else
                {
-                  this .bindViewpoint (decodeURIComponent (this .URL .hash .substr (1)));
-                  return;
+                  this .fileReader .onload = this .readAsBinaryString .bind (this);
+
+                  this .fileReader .readAsBinaryString (blob);
                }
-            }
-
-            if (this .foreign)
+            },
+            error: function (xhr, textStatus, exception)
             {
-               // Handle target
-
-               if (this .target .length && this .target !== "_self")
-                  return this .foreign (this .URL .href, this .target);
-
-               // Handle well known foreign content depending on extension or if path looks like directory.
-
-               if (this .URL .href .match (foreignExtensions))
-                  return this .foreign (this .URL .href, this .target);
-            }
-
-            // Load URL async
-
-            $.ajax ({
-               url: decodeURI (this .URL .href),
-               dataType: "binary",
-               async: true,
-               cache: this .browser .getBrowserOptions () .getCache () && this .node .getCache (),
-               //timeout: 15000,
-               global: false,
-               context: this,
-               success: function (blob, status, xhr)
-               {
-                  if (this .foreign)
-                  {
-                     //console .log (this .getContentType (xhr));
-
-                     if (foreign [this .getContentType (xhr)])
-                        return this .foreign (this .URL .href, this .target);
-                  }
-
-                  if (this .text)
-                  {
-                     this .fileReader .onload = this .readAsArrayBuffer .bind (this, blob);
-
-                     this .fileReader .readAsArrayBuffer (blob);
-                  }
-                  else
-                  {
-                     this .fileReader .onload = this .readAsBinaryString .bind (this);
-
-                     this .fileReader .readAsBinaryString (blob);
-                  }
-               },
-               error: function (xhr, textStatus, exception)
-               {
-                  this .loadDocumentError (new Error (exception));
-               },
-            });
-         }
-         catch (exception)
-         {
-            this .loadDocumentError (exception);
-            return;
-         }
-      },
-      readAsArrayBuffer: function (blob)
+               this .loadDocumentError (new Error (exception));
+            },
+         });
+      }
+      catch (exception)
       {
-         try
-         {
-            this .callback (pako .ungzip (this .fileReader .result, { to: "string" }), this .URL);
-         }
-         catch (exception)
-         {
-            this .fileReader .onload = this .readAsText .bind (this, blob);
-
-            this .fileReader .readAsText (blob);
-         }
-      },
-      readAsText: function (blob)
+         this .loadDocumentError (exception);
+         return;
+      }
+   },
+   readAsArrayBuffer: function (blob)
+   {
+      try
       {
-         try
-         {
-            this .callback (this .fileReader .result, this .URL);
-         }
-         catch (exception)
-         {
-            this .loadDocumentError (exception);
-         }
-      },
-      readAsBinaryString: function ()
+         this .callback (pako .ungzip (this .fileReader .result, { to: "string" }), this .URL);
+      }
+      catch (exception)
       {
-         try
-         {
-            this .callback (this .fileReader .result, this .URL);
-         }
-         catch (exception)
-         {
-            this .loadDocumentError (exception);
-         }
-      },
-      loadDocumentError: function (exception)
+         this .fileReader .onload = this .readAsText .bind (this, blob);
+
+         this .fileReader .readAsText (blob);
+      }
+   },
+   readAsText: function (blob)
+   {
+      try
       {
-         // Output exception.
-
-         this .error (exception);
-
-         // Try to load next URL.
-
-         if (this .url .length)
-            this .loadDocumentAsync (this .url .shift ());
-
-         else
-            this .callback (null);
-      },
-      error: function (exception)
+         this .callback (this .fileReader .result, this .URL);
+      }
+      catch (exception)
       {
-         if (this .URL .protocol === "data:")
-            console .warn ("Couldn't load URL 'data':", exception .message);
-         else
-            console .warn ("Couldn't load URL '" + decodeURI (this .URL .href) + "':", exception .message);
-
-         if (DEBUG)
-            console .error (exception);
-      },
-      getReferer: function ()
+         this .loadDocumentError (exception);
+      }
+   },
+   readAsBinaryString: function ()
+   {
+      try
       {
-         if (this .node .getTypeName () === "X3DWorld")
-         {
-            if (this .external)
-               return this .browser .getLocation ();
-         }
-
-         return this .executionContext .getWorldURL ();
-      },
-      getContentType: function (xhr)
+         this .callback (this .fileReader .result, this .URL);
+      }
+      catch (exception)
       {
-         const
-            contentType = xhr .getResponseHeader ("Content-Type"),
-            result      = contentTypeRx .exec (contentType);
+         this .loadDocumentError (exception);
+      }
+   },
+   loadDocumentError: function (exception)
+   {
+      // Output exception.
 
-         if (result)
-            return result [1];
+      this .error (exception);
 
-         return "";
-      },
-   });
+      // Try to load next URL.
 
-   for (const key of Reflect .ownKeys (FileLoader .prototype))
-      Object .defineProperty (FileLoader .prototype, key, { enumerable: false });
+      if (this .url .length)
+         this .loadDocumentAsync (this .url .shift ());
 
-   return FileLoader;
+      else
+         this .callback (null);
+   },
+   error: function (exception)
+   {
+      if (this .URL .protocol === "data:")
+         console .warn ("Couldn't load URL 'data':", exception .message);
+      else
+         console .warn ("Couldn't load URL '" + decodeURI (this .URL .href) + "':", exception .message);
+
+      if (DEBUG)
+         console .error (exception);
+   },
+   getReferer: function ()
+   {
+      if (this .node .getTypeName () === "X3DWorld")
+      {
+         if (this .external)
+            return this .browser .getLocation ();
+      }
+
+      return this .executionContext .getWorldURL ();
+   },
+   getContentType: function (xhr)
+   {
+      const
+         contentType = xhr .getResponseHeader ("Content-Type"),
+         result      = contentTypeRx .exec (contentType);
+
+      if (result)
+         return result [1];
+
+      return "";
+   },
 });
+
+for (const key of Reflect .ownKeys (FileLoader .prototype))
+   Object .defineProperty (FileLoader .prototype, key, { enumerable: false });
+
+export default FileLoader;

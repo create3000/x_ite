@@ -47,93 +47,88 @@
  ******************************************************************************/
 
 
-define (function ()
+let
+   browserEvent = 0,
+   loadState    = 0,
+   fieldType    = 0;
+
+const X3DConstants =
 {
-"use strict";
+   // Browser event
 
-   let
-      browserEvent = 0,
-      loadState    = 0,
-      fieldType    = 0;
+   CONNECTION_ERROR:  browserEvent ++,
+   BROWSER_EVENT:     browserEvent ++,
+   INITIALIZED_EVENT: browserEvent ++,
+   SHUTDOWN_EVENT:    browserEvent ++,
+   INITIALIZED_ERROR: browserEvent ++,
 
-   const X3DConstants =
-   {
-      // Browser event
+   // Load state
 
-      CONNECTION_ERROR:  browserEvent ++,
-      BROWSER_EVENT:     browserEvent ++,
-      INITIALIZED_EVENT: browserEvent ++,
-      SHUTDOWN_EVENT:    browserEvent ++,
-      INITIALIZED_ERROR: browserEvent ++,
+   NOT_STARTED_STATE: loadState ++,
+   IN_PROGRESS_STATE: loadState ++,
+   COMPLETE_STATE:    loadState ++,
+   FAILED_STATE:      loadState ++,
 
-      // Load state
+   // Access type
 
-      NOT_STARTED_STATE: loadState ++,
-      IN_PROGRESS_STATE: loadState ++,
-      COMPLETE_STATE:    loadState ++,
-      FAILED_STATE:      loadState ++,
+   initializeOnly: 0b001,
+   inputOnly:      0b010,
+   outputOnly:     0b100,
+   inputOutput:    0b111,
 
-      // Access type
+   // X3DField
 
-      initializeOnly: 0b001,
-      inputOnly:      0b010,
-      outputOnly:     0b100,
-      inputOutput:    0b111,
+   SFBool:      fieldType ++,
+   SFColor:     fieldType ++,
+   SFColorRGBA: fieldType ++,
+   SFDouble:    fieldType ++,
+   SFFloat:     fieldType ++,
+   SFImage:     fieldType ++,
+   SFInt32:     fieldType ++,
+   SFMatrix3d:  fieldType ++,
+   SFMatrix3f:  fieldType ++,
+   SFMatrix4d:  fieldType ++,
+   SFMatrix4f:  fieldType ++,
+   SFNode:      fieldType ++,
+   SFRotation:  fieldType ++,
+   SFString:    fieldType ++,
+   SFTime:      fieldType ++,
+   SFVec2d:     fieldType ++,
+   SFVec2f:     fieldType ++,
+   SFVec3d:     fieldType ++,
+   SFVec3f:     fieldType ++,
+   SFVec4d:     fieldType ++,
+   SFVec4f:     fieldType ++,
 
-      // X3DField
+   VrmlMatrix:  fieldType ++,
 
-      SFBool:      fieldType ++,
-      SFColor:     fieldType ++,
-      SFColorRGBA: fieldType ++,
-      SFDouble:    fieldType ++,
-      SFFloat:     fieldType ++,
-      SFImage:     fieldType ++,
-      SFInt32:     fieldType ++,
-      SFMatrix3d:  fieldType ++,
-      SFMatrix3f:  fieldType ++,
-      SFMatrix4d:  fieldType ++,
-      SFMatrix4f:  fieldType ++,
-      SFNode:      fieldType ++,
-      SFRotation:  fieldType ++,
-      SFString:    fieldType ++,
-      SFTime:      fieldType ++,
-      SFVec2d:     fieldType ++,
-      SFVec2f:     fieldType ++,
-      SFVec3d:     fieldType ++,
-      SFVec3f:     fieldType ++,
-      SFVec4d:     fieldType ++,
-      SFVec4f:     fieldType ++,
+   // X3DArrayField
 
-      VrmlMatrix:  fieldType ++,
+   MFBool:      fieldType ++,
+   MFColor:     fieldType ++,
+   MFColorRGBA: fieldType ++,
+   MFDouble:    fieldType ++,
+   MFFloat:     fieldType ++,
+   MFImage:     fieldType ++,
+   MFInt32:     fieldType ++,
+   MFMatrix3d:  fieldType ++,
+   MFMatrix3f:  fieldType ++,
+   MFMatrix4d:  fieldType ++,
+   MFMatrix4f:  fieldType ++,
+   MFNode:      fieldType ++,
+   MFRotation:  fieldType ++,
+   MFString:    fieldType ++,
+   MFTime:      fieldType ++,
+   MFVec2d:     fieldType ++,
+   MFVec2f:     fieldType ++,
+   MFVec3d:     fieldType ++,
+   MFVec3f:     fieldType ++,
+   MFVec4d:     fieldType ++,
+   MFVec4f:     fieldType ++,
 
-      // X3DArrayField
+   // Abstract node
 
-      MFBool:      fieldType ++,
-      MFColor:     fieldType ++,
-      MFColorRGBA: fieldType ++,
-      MFDouble:    fieldType ++,
-      MFFloat:     fieldType ++,
-      MFImage:     fieldType ++,
-      MFInt32:     fieldType ++,
-      MFMatrix3d:  fieldType ++,
-      MFMatrix3f:  fieldType ++,
-      MFMatrix4d:  fieldType ++,
-      MFMatrix4f:  fieldType ++,
-      MFNode:      fieldType ++,
-      MFRotation:  fieldType ++,
-      MFString:    fieldType ++,
-      MFTime:      fieldType ++,
-      MFVec2d:     fieldType ++,
-      MFVec2f:     fieldType ++,
-      MFVec3d:     fieldType ++,
-      MFVec3f:     fieldType ++,
-      MFVec4d:     fieldType ++,
-      MFVec4f:     fieldType ++,
+   X3DBaseNode: 0,
+};
 
-      // Abstract node
-
-      X3DBaseNode: 0,
-   };
-
-   return X3DConstants;
-});
+export default X3DConstants;

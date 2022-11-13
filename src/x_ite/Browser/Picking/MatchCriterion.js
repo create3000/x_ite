@@ -47,18 +47,13 @@
  ******************************************************************************/
 
 
-define (function ()
+let i = 0;
+
+const MatchCriterion =
 {
-"use strict";
+   MATCH_ANY:      i ++,
+   MATCH_EVERY:    i ++,
+   MATCH_ONLY_ONE: i ++,
+};
 
-   let i = 0;
-
-   const MatchCriterion =
-   {
-      MATCH_ANY:      i ++,
-      MATCH_EVERY:    i ++,
-      MATCH_ONLY_ONE: i ++,
-   };
-
-   return MatchCriterion;
-});
+export default MatchCriterion;

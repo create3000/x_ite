@@ -47,29 +47,23 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DInfoArray",
-],
-function (X3DInfoArray)
+import X3DInfoArray from "../Base/X3DInfoArray.js";
+
+function ImportedNodesArray (array)
 {
-"use strict";
+   return X3DInfoArray .call (this, array);
+}
 
-   function ImportedNodesArray (array)
+ImportedNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+{
+   constructor: ImportedNodesArray,
+   getTypeName: function ()
    {
-      return X3DInfoArray .call (this, array);
-   }
-
-   ImportedNodesArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-   {
-      constructor: ImportedNodesArray,
-      getTypeName: function ()
-      {
-         return "ImportedNodesArray";
-      },
-   });
-
-   for (const key of Reflect .ownKeys (ImportedNodesArray .prototype))
-      Object .defineProperty (ImportedNodesArray .prototype, key, { enumerable: false });
-
-   return ImportedNodesArray;
+      return "ImportedNodesArray";
+   },
 });
+
+for (const key of Reflect .ownKeys (ImportedNodesArray .prototype))
+   Object .defineProperty (ImportedNodesArray .prototype, key, { enumerable: false });
+
+export default ImportedNodesArray;

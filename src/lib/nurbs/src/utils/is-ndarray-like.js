@@ -1,18 +1,13 @@
 
-define (function ()
+export default function (arr)
 {
-'use strict';
+   if (!arr)
+      return false;
 
-   return function (arr)
-   {
-      if (!arr)
-         return false;
-
-      return (
-         arr .data   !== undefined &&
-         Array .isArray (arr .shape) &&
-         arr .offset !== undefined &&
-         arr .stride !== undefined
-      );
-   };
-});
+   return (
+      arr .data   !== undefined &&
+      Array .isArray (arr .shape) &&
+      arr .offset !== undefined &&
+      arr .stride !== undefined
+   );
+};

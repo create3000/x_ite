@@ -47,108 +47,97 @@
  ******************************************************************************/
 
 
- define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DNode,
-          X3DConstants,
-          Vector4)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode from "../Core/X3DNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
+
+function NurbsTextureCoordinate (executionContext)
 {
-"use strict";
+   X3DNode .call (this, executionContext);
 
-   function NurbsTextureCoordinate (executionContext)
+   this .addType (X3DConstants .NurbsTextureCoordinate);
+
+   this .controlPoints = [ ];
+}
+
+NurbsTextureCoordinate .prototype = Object .assign (Object .create (X3DNode .prototype),
+{
+   constructor: NurbsTextureCoordinate,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",       new Fields .SFInt32 (3)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",       new Fields .SFInt32 (3)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",   new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",   new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",        new Fields .MFDouble ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",        new Fields .MFDouble ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFDouble ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .MFVec2f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DNode .call (this, executionContext);
-
-      this .addType (X3DConstants .NurbsTextureCoordinate);
-
-      this .controlPoints = [ ];
-   }
-
-   NurbsTextureCoordinate .prototype = Object .assign (Object .create (X3DNode .prototype),
+      return "NurbsTextureCoordinate";
+   },
+   getComponentName: function ()
    {
-      constructor: NurbsTextureCoordinate,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",       new Fields .SFInt32 (3)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",       new Fields .SFInt32 (3)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",   new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",   new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",        new Fields .MFDouble ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",        new Fields .MFDouble ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFDouble ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .MFVec2f ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "NurbsTextureCoordinate";
-      },
-      getComponentName: function ()
-      {
-         return "NURBS";
-      },
-      getContainerField: function ()
-      {
-         return "texCoord";
-      },
-      initialize: function ()
-      {
-         X3DNode .prototype .initialize .call (this);
-      },
-      getControlPoints: function (texWeights)
-      {
-         const
-            controlPointArray = this ._controlPoint .getValue (),
-            controlPoints     = this .controlPoints;
+      return "NURBS";
+   },
+   getContainerField: function ()
+   {
+      return "texCoord";
+   },
+   initialize: function ()
+   {
+      X3DNode .prototype .initialize .call (this);
+   },
+   getControlPoints: function (texWeights)
+   {
+      const
+         controlPointArray = this ._controlPoint .getValue (),
+         controlPoints     = this .controlPoints;
 
-         for (let u = 0, uDimension = this ._uDimension .getValue (); u < uDimension; ++ u)
+      for (let u = 0, uDimension = this ._uDimension .getValue (); u < uDimension; ++ u)
+      {
+         let cp = controlPoints [u];
+
+         if (! cp)
+            cp = controlPoints [u] = [ ];
+
+         for (let v = 0, vDimension = this ._vDimension .getValue (); v < vDimension; ++ v)
          {
-            let cp = controlPoints [u];
+            const
+               index = v * uDimension + u,
+               p     = cp [v] || new Vector4 (),
+               i     = index * 2;
 
-            if (! cp)
-               cp = controlPoints [u] = [ ];
-
-            for (let v = 0, vDimension = this ._vDimension .getValue (); v < vDimension; ++ v)
-            {
-               const
-                  index = v * uDimension + u,
-                  p     = cp [v] || new Vector4 (),
-                  i     = index * 2;
-
-               cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, texWeights ? texWeights [index] : 1);
-            }
+            cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, texWeights ? texWeights [index] : 1);
          }
-
-         return controlPoints;
-      },
-      isValid: function ()
-      {
-         if (this ._uOrder .getValue () < 2)
-            return false;
-
-         if (this ._vOrder .getValue () < 2)
-            return false;
-
-         if (this ._uDimension .getValue () < this ._uOrder .getValue ())
-            return false;
-
-         if (this ._vDimension .getValue () < this ._vOrder .getValue ())
-            return false;
-
-         if (this ._controlPoint .length !== this ._uDimension .getValue () * this ._vDimension .getValue ())
-            return false;
-
-         return true;
       }
-   });
 
-   return NurbsTextureCoordinate;
+      return controlPoints;
+   },
+   isValid: function ()
+   {
+      if (this ._uOrder .getValue () < 2)
+         return false;
+
+      if (this ._vOrder .getValue () < 2)
+         return false;
+
+      if (this ._uDimension .getValue () < this ._uOrder .getValue ())
+         return false;
+
+      if (this ._vDimension .getValue () < this ._vOrder .getValue ())
+         return false;
+
+      if (this ._controlPoint .length !== this ._uDimension .getValue () * this ._vDimension .getValue ())
+         return false;
+
+      return true;
+   }
 });
+
+export default NurbsTextureCoordinate;

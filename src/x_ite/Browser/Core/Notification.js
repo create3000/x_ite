@@ -47,81 +47,72 @@
  ******************************************************************************/
 
 
-define ([
-   "jquery",
-   "x_ite/Fields/SFString",
-   "x_ite/Base/X3DBaseNode",
-],
-function ($,
-          SFString,
-          X3DBaseNode)
+import SFString from "../../Fields/SFString.js";
+import X3DBaseNode from "../../Base/X3DBaseNode.js";
+
+$.fn.textWidth = function (string)
 {
-"use strict";
+   const
+      children = $(this) .children (),
+      html     = $(this) .html (),
+      span     = '<span>' + html + '</span>';
+   $(this) .html (span);
+   const width = $(this) .find ('span:first') .width ();
+   $(this) .empty ();
+   $(this) .append (children);
+   return width;
+};
 
-   $.fn.textWidth = function (string)
+function Notification (executionContext)
+{
+   X3DBaseNode .call (this, executionContext);
+
+   this .addChildObjects ("string", new SFString ());
+}
+
+Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: Notification,
+   getTypeName: function ()
    {
-      const
-         children = $(this) .children (),
-         html     = $(this) .html (),
-         span     = '<span>' + html + '</span>';
-      $(this) .html (span);
-      const width = $(this) .find ('span:first') .width ();
-      $(this) .empty ();
-      $(this) .append (children);
-      return width;
-   };
-
-   function Notification (executionContext)
+      return "Notification";
+   },
+   getComponentName: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-
-      this .addChildObjects ("string", new SFString ());
-   }
-
-   Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return "X_ITE";
+   },
+   initialize: function ()
    {
-      constructor: Notification,
-      getTypeName: function ()
-      {
-         return "Notification";
-      },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      initialize: function ()
-      {
-         X3DBaseNode .prototype .initialize .call (this);
+      X3DBaseNode .prototype .initialize .call (this);
 
-         this .element = $("<div></div>")
-            .hide ()
-            .addClass ("x_ite-private-notification")
-            .appendTo (this .getBrowser () .getSurface ())
-            .animate ({ width: 0 });
+      this .element = $("<div></div>")
+         .hide ()
+         .addClass ("x_ite-private-notification")
+         .appendTo (this .getBrowser () .getSurface ())
+         .animate ({ width: 0 });
 
-         $("<span></span>") .appendTo (this .element);
+      $("<span></span>") .appendTo (this .element);
 
-         this ._string .addInterest ("set_string__", this);
-      },
-      set_string__: function ()
-      {
-         if (! this .getBrowser () .getBrowserOptions () .getNotifications ())
-            return;
+      this ._string .addInterest ("set_string__", this);
+   },
+   set_string__: function ()
+   {
+      if (! this .getBrowser () .getBrowserOptions () .getNotifications ())
+         return;
 
-         if (this ._string .length === 0)
-            return;
+      if (this ._string .length === 0)
+         return;
 
-         this .element .children () .text (this ._string .getValue ());
+      this .element .children () .text (this ._string .getValue ());
 
-         this .element
-            .stop (true, true)
-            .fadeIn (0)
-            .animate ({ width: this .element .textWidth () })
-            .animate ({ "delay": 1 }, 5000)
-            .animate ({ width: 0 })
-            .fadeOut (0);
-      },
-   });
-
-   return Notification;
+      this .element
+         .stop (true, true)
+         .fadeIn (0)
+         .animate ({ width: this .element .textWidth () })
+         .animate ({ "delay": 1 }, 5000)
+         .animate ({ width: 0 })
+         .fadeOut (0);
+   },
 });
+
+export default Notification;

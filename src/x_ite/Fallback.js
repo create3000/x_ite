@@ -47,54 +47,47 @@
  ******************************************************************************/
 
 
-define ([
-   "jquery",
-],
-function ($)
+
+// Everything went wrong when the Error function is called.
+
+const Fallback =
 {
-"use strict";
-
-   // Everything went wrong when the Error function is called.
-
-   const Fallback =
+   error: function (error, fallbacks)
    {
-      error: function (error, fallbacks)
+      $(function ()
       {
-         $(function ()
+         const elements = $("x3d-canvas, X3DCanvas");
+
+         this .show (elements, error);
+
+         for (const fallback of fallbacks)
          {
-            const elements = $("x3d-canvas, X3DCanvas");
-
-            this .show (elements, error);
-
-            for (const fallback of fallbacks)
-            {
-               if (typeof fallback === "function")
-                  fallback (elements, error);
-            }
+            if (typeof fallback === "function")
+               fallback (elements, error);
          }
-         .bind (this));
-      },
-      show: function (elements, error)
+      }
+      .bind (this));
+   },
+   show: function (elements, error)
+   {
+      console .error (error);
+
+      const consoleElement = $(".x_ite-console");
+
+      if (consoleElement .length)
+         consoleElement .append (document .createTextNode (error));
+
+      // X3DCanvas
+      elements .children (".x_ite-private-browser") .hide ();
+      elements .children (":not(.x_ite-private-browser)") .show ();
+
+      // x3d-canvas
+      elements .each (function (i, e)
       {
-         console .error (error);
+         if (e .shadowRoot)
+            e .shadowRoot .appendChild (document .createElement ("slot"));
+      });
+   },
+};
 
-         const consoleElement = $(".x_ite-console");
-
-         if (consoleElement .length)
-            consoleElement .append (document .createTextNode (error));
-
-         // X3DCanvas
-         elements .children (".x_ite-private-browser") .hide ();
-         elements .children (":not(.x_ite-private-browser)") .show ();
-
-         // x3d-canvas
-         elements .each (function (i, e)
-         {
-            if (e .shadowRoot)
-               e .shadowRoot .appendChild (document .createElement ("slot"));
-         });
-      },
-   };
-
-   return Fallback;
-});
+export default Fallback;

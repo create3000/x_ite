@@ -47,74 +47,68 @@
  ******************************************************************************/
 
 
-define ([
-   "standard/Math/Numbers/Vector3",
-],
-function (Vector3)
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+const
+   _currentTime      = Symbol (),
+   _currentFrameRate = Symbol (),
+   _currentPosition  = Symbol (),
+   _currentSpeed     = Symbol ();
+
+function X3DTimeContext ()
 {
-"use strict";
+   this [_currentTime]      = 0;
+   this [_currentFrameRate] = 60;
+   this [_currentPosition]  = new Vector3 (0, 0, 0);
+   this [_currentSpeed]     = 0;
+}
 
-   const
-      _currentTime      = Symbol (),
-      _currentFrameRate = Symbol (),
-      _currentPosition  = Symbol (),
-      _currentSpeed     = Symbol ();
-
-   function X3DTimeContext ()
+X3DTimeContext .prototype =
+{
+   initialize: function ()
    {
-      this [_currentTime]      = 0;
-      this [_currentFrameRate] = 60;
-      this [_currentPosition]  = new Vector3 (0, 0, 0);
-      this [_currentSpeed]     = 0;
-   }
-
-   X3DTimeContext .prototype =
+      this .advanceTime (performance .now ());
+   },
+   getCurrentTime: function ()
    {
-      initialize: function ()
-      {
-         this .advanceTime (performance .now ());
-      },
-      getCurrentTime: function ()
-      {
-         return this [_currentTime];
-      },
-      getCurrentFrameRate: function ()
-      {
-         return this [_currentFrameRate];
-      },
-      getCurrentSpeed: function ()
-      {
-         return this [_currentSpeed];
-      },
-      advanceTime: (function ()
-      {
-         const lastPosition = new Vector3 (0, 0, 0);
+      return this [_currentTime];
+   },
+   getCurrentFrameRate: function ()
+   {
+      return this [_currentFrameRate];
+   },
+   getCurrentSpeed: function ()
+   {
+      return this [_currentSpeed];
+   },
+   advanceTime: (function ()
+   {
+      const lastPosition = new Vector3 (0, 0, 0);
 
-         return function (now)
+      return function (now)
+      {
+         const
+            time     = (performance .timeOrigin + now) / 1000,
+            interval = time - this [_currentTime];
+
+         this [_currentTime]      = time;
+         this [_currentFrameRate] = interval ? 1 / interval : 60;
+
+         if (this .getWorld () && this .getActiveLayer ())
          {
-            const
-               time     = (performance .timeOrigin + now) / 1000,
-               interval = time - this [_currentTime];
+            const cameraSpaceMatrix = this .getActiveLayer () .getViewpoint () .getCameraSpaceMatrix ();
 
-            this [_currentTime]      = time;
-            this [_currentFrameRate] = interval ? 1 / interval : 60;
+            lastPosition .assign (this [_currentPosition]);
+            this [_currentPosition] .set (cameraSpaceMatrix [12], cameraSpaceMatrix [13], cameraSpaceMatrix [14]);
 
-            if (this .getWorld () && this .getActiveLayer ())
-            {
-               const cameraSpaceMatrix = this .getActiveLayer () .getViewpoint () .getCameraSpaceMatrix ();
+            this [_currentSpeed] = lastPosition .subtract (this [_currentPosition]) .magnitude () * this [_currentFrameRate];
+         }
+         else
+         {
+            this [_currentSpeed] = 0;
+         }
+      };
+   })(),
+};
 
-               lastPosition .assign (this [_currentPosition]);
-               this [_currentPosition] .set (cameraSpaceMatrix [12], cameraSpaceMatrix [13], cameraSpaceMatrix [14]);
-
-               this [_currentSpeed] = lastPosition .subtract (this [_currentPosition]) .magnitude () * this [_currentFrameRate];
-            }
-            else
-            {
-               this [_currentSpeed] = 0;
-            }
-         };
-      })(),
-   };
-
-   return X3DTimeContext;
-});
+export default X3DTimeContext;

@@ -47,33 +47,23 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Browser/Navigation/X3DViewer",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DConstants,
-          X3DViewer)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DViewer from "./X3DViewer.js";
+
+function NoneViewer (executionContext)
 {
-"use strict";
+   X3DViewer .call (this, executionContext);
+}
 
-   function NoneViewer (executionContext)
-   {
-      X3DViewer .call (this, executionContext);
-   }
-
-   NoneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
-   {
-      constructor: NoneViewer,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-      ]),
-   });
-
-   return NoneViewer;
+NoneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+{
+   constructor: NoneViewer,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+   ]),
 });
+
+export default NoneViewer;

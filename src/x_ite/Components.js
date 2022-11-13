@@ -47,64 +47,56 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/DEBUG",
-   "x_ite/Browser/X3DBrowserContext",
-   "x_ite/Configuration/SupportedNodes",
-   "x_ite/Components/Core",
-   "x_ite/Components/EnvironmentalEffects",
-   "x_ite/Components/EnvironmentalSensor",
-   "x_ite/Components/Followers",
-   "x_ite/Components/Geometry3D",
-   "x_ite/Components/Grouping",
-   "x_ite/Components/Interpolation",
-   "x_ite/Components/Layering",
-   "x_ite/Components/Lighting",
-   "x_ite/Components/Navigation",
-   "x_ite/Components/Networking",
-   "x_ite/Components/PointingDeviceSensor",
-   "x_ite/Components/Rendering",
-   "x_ite/Components/Shaders",
-   "x_ite/Components/Shape",
-   "x_ite/Components/Sound",
-   "x_ite/Components/Text",
-   "x_ite/Components/Texturing",
-   "x_ite/Components/Time",
-],
-function (DEBUG,
-          X3DBrowserContext,
-          SupportedNodes)
+import X3DBrowserContext from "./Browser/X3DBrowserContext.js";
+import SupportedNodes from "./Configuration/SupportedNodes.js";
+import Core from "./Components/Core.js";
+import EnvironmentalEffects from "./Components/EnvironmentalEffects.js";
+import EnvironmentalSensor from "./Components/EnvironmentalSensor.js";
+import Followers from "./Components/Followers.js";
+import Geometry3D from "./Components/Geometry3D.js";
+import Grouping from "./Components/Grouping.js";
+import Interpolation from "./Components/Interpolation.js";
+import Layering from "./Components/Layering.js";
+import Lighting from "./Components/Lighting.js";
+import Navigation from "./Components/Navigation.js";
+import Networking from "./Components/Networking.js";
+import PointingDeviceSensor from "./Components/PointingDeviceSensor.js";
+import Rendering from "./Components/Rendering.js";
+import Shaders from "./Components/Shaders.js";
+import Shape from "./Components/Shape.js";
+import Sound from "./Components/Sound.js";
+import Text from "./Components/Text.js";
+import Texturing from "./Components/Texturing.js";
+import Time from "./Components/Time.js";
+import DEBUG from "./DEBUG.js";
+
+function Components () { }
+
+Components .prototype =
 {
-"use strict";
-
-   function Components () { }
-
-   Components .prototype =
+   addComponent: function (component)
    {
-      addComponent: function (component)
+      if (component .types)
       {
-         if (component .types)
-         {
-            for (const typeName in component .types)
-               SupportedNodes .addType (typeName, component .types [typeName]);
-         }
+         for (const typeName in component .types)
+            SupportedNodes .addType (typeName, component .types [typeName]);
+      }
 
-         if (component .abstractTypes)
-         {
-            for (const typeName in component .abstractTypes)
-               SupportedNodes .addAbstractType (typeName, component .abstractTypes [typeName]);
-         }
+      if (component .abstractTypes)
+      {
+         for (const typeName in component .abstractTypes)
+            SupportedNodes .addAbstractType (typeName, component .abstractTypes [typeName]);
+      }
 
-         if (component .browserContext)
-            X3DBrowserContext .addBrowserContext (component .browserContext);
+      if (component .browserContext)
+         X3DBrowserContext .addBrowserContext (component .browserContext);
 
-         if (component .name)
-         {
-            if (DEBUG)
-               console .info ("Done loading external component '" + component .name + "'.");
-         }
-      },
-   };
+      if (component .name)
+      {
+         if (DEBUG)
+            console .info ("Done loading external component '" + component .name + "'.");
+      }
+   },
+};
 
-   return new Components ();
-});
+export default new Components ();

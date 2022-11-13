@@ -47,18 +47,13 @@
  ******************************************************************************/
 
 
-define (function ()
+let i = 0;
+
+const TextureQuality =
 {
-"use strict";
+   LOW:    i ++,
+   MEDIUM: i ++,
+   HIGH:   i ++,
+};
 
-   let i = 0;
-
-   const TextureQuality =
-   {
-      LOW:    i ++,
-      MEDIUM: i ++,
-      HIGH:   i ++,
-   };
-
-   return TextureQuality;
-});
+export default TextureQuality;

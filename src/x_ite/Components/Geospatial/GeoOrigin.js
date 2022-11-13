@@ -47,70 +47,59 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Browser/Geospatial/Geospatial",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DNode,
-          X3DConstants,
-          Geospatial)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode from "../Core/X3DNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Geospatial from "../../Browser/Geospatial/Geospatial.js";
+
+function GeoOrigin (executionContext)
 {
-"use strict";
+   X3DNode .call (this, executionContext);
 
-   function GeoOrigin (executionContext)
+   this .addType (X3DConstants .GeoOrigin);
+
+   this .radians = false;
+}
+
+GeoOrigin .prototype = Object .assign (Object .create (X3DNode .prototype),
+{
+   constructor: GeoOrigin,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",  new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem", new Fields .MFString ("GD", "WE")),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "geoCoords", new Fields .SFVec3d ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "rotateYUp", new Fields .SFBool ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DNode .call (this, executionContext);
-
-      this .addType (X3DConstants .GeoOrigin);
-
-      this .radians = false;
-   }
-
-   GeoOrigin .prototype = Object .assign (Object .create (X3DNode .prototype),
+      return "GeoOrigin";
+   },
+   getComponentName: function ()
    {
-      constructor: GeoOrigin,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",  new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem", new Fields .MFString ("GD", "WE")),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "geoCoords", new Fields .SFVec3d ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "rotateYUp", new Fields .SFBool ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "GeoOrigin";
-      },
-      getComponentName: function ()
-      {
-         return "Geospatial";
-      },
-      getContainerField: function ()
-      {
-         return "geoOrigin";
-      },
-      initialize: function ()
-      {
-         X3DNode .prototype .initialize .call (this);
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "geoOrigin";
+   },
+   initialize: function ()
+   {
+      X3DNode .prototype .initialize .call (this);
 
-         this ._geoSystem .addInterest ("set_geoSystem__", this);
+      this ._geoSystem .addInterest ("set_geoSystem__", this);
 
-         this .set_geoSystem__ ();
-      },
-      set_geoSystem__: function ()
-      {
-         this .referenceFrame = Geospatial .getReferenceFrame (this ._geoSystem, this .radians);
-      },
-      getOrigin: function (result)
-      {
-         return this .referenceFrame .convert (this ._geoCoords .getValue (), result);
-      },
-   });
-
-   return GeoOrigin;
+      this .set_geoSystem__ ();
+   },
+   set_geoSystem__: function ()
+   {
+      this .referenceFrame = Geospatial .getReferenceFrame (this ._geoSystem, this .radians);
+   },
+   getOrigin: function (result)
+   {
+      return this .referenceFrame .convert (this ._geoCoords .getValue (), result);
+   },
 });
+
+export default GeoOrigin;

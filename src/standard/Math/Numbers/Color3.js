@@ -47,235 +47,229 @@
  ******************************************************************************/
 
 
-define ([
-   "standard/Math/Algorithm",
-],
-function (Algorithm)
+import Algorithm from "../Algorithm.js";
+
+const clamp = Algorithm .clamp;
+
+const
+   _r = Symbol .for ("X_ITE.Color3.r"),
+   _g = Symbol .for ("X_ITE.Color3.g"),
+   _b = Symbol .for ("X_ITE.Color3.b");
+
+function Color3 (r, g, b)
 {
-"use strict";
-
-   const clamp = Algorithm .clamp;
-
-   const
-      _r = Symbol .for ("X_ITE.Color3.r"),
-      _g = Symbol .for ("X_ITE.Color3.g"),
-      _b = Symbol .for ("X_ITE.Color3.b");
-
-   function Color3 (r, g, b)
+   if (arguments .length)
    {
-      if (arguments .length)
+      this [_r] = clamp (r, 0, 1);
+      this [_g] = clamp (g, 0, 1);
+      this [_b] = clamp (b, 0, 1);
+   }
+   else
+   {
+      this [_r] = 0;
+      this [_g] = 0;
+      this [_b] = 0;
+   }
+}
+
+Color3 .prototype =
+{
+   constructor: Color3,
+   length: 3,
+   [Symbol .iterator]: function* ()
+   {
+      yield this [_r];
+      yield this [_g];
+      yield this [_b];
+   },
+   copy: function ()
+   {
+      const copy = Object .create (Color3 .prototype);
+      copy [_r] = this [_r];
+      copy [_g] = this [_g];
+      copy [_b] = this [_b];
+      return copy;
+   },
+   assign: function (color)
+   {
+      this [_r] = color [_r];
+      this [_g] = color [_g];
+      this [_b] = color [_b];
+   },
+   set: function (r, g, b)
+   {
+      this [_r] = clamp (r, 0, 1);
+      this [_g] = clamp (g, 0, 1);
+      this [_b] = clamp (b, 0, 1);
+   },
+   equals: function (color)
+   {
+      return this [_r] === color [_r] &&
+             this [_g] === color [_g] &&
+             this [_b] === color [_b];
+   },
+   getHSV: function (result)
+   {
+      let h, s, v;
+
+      const min = Math .min (this [_r], this [_g], this [_b]);
+      const max = Math .max (this [_r], this [_g], this [_b]);
+      v = max; // value
+
+      const delta = max - min;
+
+      if (max !== 0 && delta !== 0)
       {
-         this [_r] = clamp (r, 0, 1);
-         this [_g] = clamp (g, 0, 1);
-         this [_b] = clamp (b, 0, 1);
+         s = delta / max; // s
+
+         if (this [_r] === max)
+            h =     (this [_g] - this [_b]) / delta;  // between yellow & magenta
+         else if (this [_g] === max)
+            h = 2 + (this [_b] - this [_r]) / delta;  // between cyan & yellow
+         else
+            h = 4 + (this [_r] - this [_g]) / delta;  // between magenta & cyan
+
+         h *= Math .PI / 3;  // radiants
+         if (h < 0)
+            h += Math .PI * 2;
+      }
+      else
+         s = h = 0;         // s = 0, h is undefined
+
+      result [0] = h;
+      result [1] = s;
+      result [2] = v;
+
+      return result;
+   },
+   setHSV: function (h, s, v)
+   {
+      s = clamp (s, 0, 1),
+      v = clamp (v, 0, 1);
+
+      // H is given on [0, 2 * Pi]. S and V are given on [0, 1].
+      // RGB are each returned on [0, 1].
+
+      if (s === 0)
+      {
+         // achromatic (grey)
+         this [_r] = this [_g] = this [_b] = v;
       }
       else
       {
-         this [_r] = 0;
-         this [_g] = 0;
-         this [_b] = 0;
+         const w = Algorithm .degrees (Algorithm .interval (h, 0, Math .PI * 2)) / 60;     // sector 0 to 5
+
+         const i = Math .floor (w);
+         const f = w - i;                      // factorial part of h
+         const p = v * ( 1 - s );
+         const q = v * ( 1 - s * f );
+         const t = v * ( 1 - s * ( 1 - f ) );
+
+         switch (i % 6)
+         {
+            case 0:  this [_r] = v; this [_g] = t; this [_b] = p; break;
+            case 1:  this [_r] = q; this [_g] = v; this [_b] = p; break;
+            case 2:  this [_r] = p; this [_g] = v; this [_b] = t; break;
+            case 3:  this [_r] = p; this [_g] = q; this [_b] = v; break;
+            case 4:  this [_r] = t; this [_g] = p; this [_b] = v; break;
+            default: this [_r] = v; this [_g] = p; this [_b] = q; break;
+         }
       }
-   }
-
-   Color3 .prototype =
+   },
+   toString: function ()
    {
-      constructor: Color3,
-      length: 3,
-      [Symbol .iterator]: function* ()
-      {
-         yield this [_r];
-         yield this [_g];
-         yield this [_b];
-      },
-      copy: function ()
-      {
-         const copy = Object .create (Color3 .prototype);
-         copy [_r] = this [_r];
-         copy [_g] = this [_g];
-         copy [_b] = this [_b];
-         return copy;
-      },
-      assign: function (color)
-      {
-         this [_r] = color [_r];
-         this [_g] = color [_g];
-         this [_b] = color [_b];
-      },
-      set: function (r, g, b)
-      {
-         this [_r] = clamp (r, 0, 1);
-         this [_g] = clamp (g, 0, 1);
-         this [_b] = clamp (b, 0, 1);
-      },
-      equals: function (color)
-      {
-         return this [_r] === color [_r] &&
-                this [_g] === color [_g] &&
-                this [_b] === color [_b];
-      },
-      getHSV: function (result)
-      {
-         let h, s, v;
+      return this [_r] + " " +
+             this [_g] + " " +
+             this [_b];
+   },
+};
 
-         const min = Math .min (this [_r], this [_g], this [_b]);
-         const max = Math .max (this [_r], this [_g], this [_b]);
-         v = max; // value
+const r = {
+   get: function () { return this [_r]; },
+   set: function (value) { this [_r] = clamp (value, 0, 1); },
+   enumerable: true,
+   configurable: false
+};
 
-         const delta = max - min;
+const g = {
+   get: function () { return this [_g]; },
+   set: function (value) { this [_g] = clamp (value, 0, 1); },
+   enumerable: true,
+   configurable: false
+};
 
-         if (max !== 0 && delta !== 0)
-         {
-            s = delta / max; // s
+const b = {
+   get: function () { return this [_b]; },
+   set: function (value) { this [_b] = clamp (value, 0, 1); },
+   enumerable: true,
+   configurable: false
+};
 
-            if (this [_r] === max)
-               h =     (this [_g] - this [_b]) / delta;  // between yellow & magenta
-            else if (this [_g] === max)
-               h = 2 + (this [_b] - this [_r]) / delta;  // between cyan & yellow
-            else
-               h = 4 + (this [_r] - this [_g]) / delta;  // between magenta & cyan
+Object .defineProperty (Color3 .prototype, "r", r);
+Object .defineProperty (Color3 .prototype, "g", g);
+Object .defineProperty (Color3 .prototype, "b", b);
 
-            h *= Math .PI / 3;  // radiants
-            if (h < 0)
-               h += Math .PI * 2;
-         }
-         else
-            s = h = 0;         // s = 0, h is undefined
+r .enumerable = false;
+g .enumerable = false;
+b .enumerable = false;
 
-         result [0] = h;
-         result [1] = s;
-         result [2] = v;
+Object .defineProperty (Color3 .prototype, "0", r);
+Object .defineProperty (Color3 .prototype, "1", g);
+Object .defineProperty (Color3 .prototype, "2", b);
 
-         return result;
-      },
-      setHSV: function (h, s, v)
-      {
-         s = clamp (s, 0, 1),
-         v = clamp (v, 0, 1);
-
-         // H is given on [0, 2 * Pi]. S and V are given on [0, 1].
-         // RGB are each returned on [0, 1].
-
-         if (s === 0)
-         {
-            // achromatic (grey)
-            this [_r] = this [_g] = this [_b] = v;
-         }
-         else
-         {
-            const w = Algorithm .degrees (Algorithm .interval (h, 0, Math .PI * 2)) / 60;     // sector 0 to 5
-
-            const i = Math .floor (w);
-            const f = w - i;                      // factorial part of h
-            const p = v * ( 1 - s );
-            const q = v * ( 1 - s * f );
-            const t = v * ( 1 - s * ( 1 - f ) );
-
-            switch (i % 6)
-            {
-               case 0:  this [_r] = v; this [_g] = t; this [_b] = p; break;
-               case 1:  this [_r] = q; this [_g] = v; this [_b] = p; break;
-               case 2:  this [_r] = p; this [_g] = v; this [_b] = t; break;
-               case 3:  this [_r] = p; this [_g] = q; this [_b] = v; break;
-               case 4:  this [_r] = t; this [_g] = p; this [_b] = v; break;
-               default: this [_r] = v; this [_g] = p; this [_b] = q; break;
-            }
-         }
-      },
-      toString: function ()
-      {
-         return this [_r] + " " +
-                this [_g] + " " +
-                this [_b];
-      },
-   };
-
-   const r = {
-      get: function () { return this [_r]; },
-      set: function (value) { this [_r] = clamp (value, 0, 1); },
-      enumerable: true,
-      configurable: false
-   };
-
-   const g = {
-      get: function () { return this [_g]; },
-      set: function (value) { this [_g] = clamp (value, 0, 1); },
-      enumerable: true,
-      configurable: false
-   };
-
-   const b = {
-      get: function () { return this [_b]; },
-      set: function (value) { this [_b] = clamp (value, 0, 1); },
-      enumerable: true,
-      configurable: false
-   };
-
-   Object .defineProperty (Color3 .prototype, "r", r);
-   Object .defineProperty (Color3 .prototype, "g", g);
-   Object .defineProperty (Color3 .prototype, "b", b);
-
-   r .enumerable = false;
-   g .enumerable = false;
-   b .enumerable = false;
-
-   Object .defineProperty (Color3 .prototype, "0", r);
-   Object .defineProperty (Color3 .prototype, "1", g);
-   Object .defineProperty (Color3 .prototype, "2", b);
-
-   Object .assign (Color3,
+Object .assign (Color3,
+{
+   HSV: function (h, s, v)
    {
-      HSV: function (h, s, v)
+      const color = Object .create (this .prototype);
+      color .setHSV (h, s, v);
+      return color;
+   },
+   lerp: function (a, b, t, r)
+   {
+      // Linearely interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.
+      // Source and destination color must be in HSV space. The resulting HSV color is stored in @a r.
+
+      let
+         ha = a [0], hb = b [0];
+
+      const
+         sa = a [1], sb = b [1],
+         va = a [2], vb = b [2];
+
+      if (sa === 0)
+         ha = hb;
+
+      if (sb === 0)
+         hb = ha;
+
+      const range = Math .abs (hb - ha);
+
+      if (range <= Math .PI)
       {
-         const color = Object .create (this .prototype);
-         color .setHSV (h, s, v);
-         return color;
-      },
-      lerp: function (a, b, t, r)
-      {
-         // Linearely interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.
-         // Source and destination color must be in HSV space. The resulting HSV color is stored in @a r.
-
-         let
-            ha = a [0], hb = b [0];
-
-         const
-            sa = a [1], sb = b [1],
-            va = a [2], vb = b [2];
-
-         if (sa === 0)
-            ha = hb;
-
-         if (sb === 0)
-            hb = ha;
-
-         const range = Math .abs (hb - ha);
-
-         if (range <= Math .PI)
-         {
-            r [0] = ha + t * (hb - ha);
-            r [1] = sa + t * (sb - sa);
-            r [2] = va + t * (vb - va);
-            return r;
-         }
-
-         const
-            PI2  = Math .PI * 2,
-            step = (PI2 - range) * t;
-
-         let h = ha < hb ? ha - step : ha + step;
-
-         if (h < 0)
-            h += PI2;
-
-         else if (h > PI2)
-            h -= PI2;
-
-         r [0] = h;
+         r [0] = ha + t * (hb - ha);
          r [1] = sa + t * (sb - sa);
          r [2] = va + t * (vb - va);
          return r;
-      },
-   });
+      }
 
-   return Color3;
+      const
+         PI2  = Math .PI * 2,
+         step = (PI2 - range) * t;
+
+      let h = ha < hb ? ha - step : ha + step;
+
+      if (h < 0)
+         h += PI2;
+
+      else if (h > PI2)
+         h -= PI2;
+
+      r [0] = h;
+      r [1] = sa + t * (sb - sa);
+      r [2] = va + t * (vb - va);
+      return r;
+   },
 });
+
+export default Color3;

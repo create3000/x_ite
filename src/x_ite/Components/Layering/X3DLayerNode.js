@@ -47,346 +47,326 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Rendering/X3DRenderObject",
-   "x_ite/Components/Layering/X3DViewportNode",
-   "x_ite/Execution/BindableStack",
-   "x_ite/Execution/BindableList",
-   "x_ite/Components/Navigation/NavigationInfo",
-   "x_ite/Components/EnvironmentalEffects/Fog",
-   "x_ite/Components/EnvironmentalEffects/Background",
-   "x_ite/Base/X3DCast",
-   "x_ite/Rendering/TraverseType",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Geometry/Camera",
-   "standard/Math/Geometry/Box3",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Matrix4",
-],
-function (X3DNode,
-          X3DRenderObject,
-          X3DViewportNode,
-          BindableStack,
-          BindableList,
-          NavigationInfo,
-          Fog,
-          Background,
-          X3DCast,
-          TraverseType,
-          X3DConstants,
-          Camera,
-          Box3,
-          Vector3,
-          Matrix4)
+import X3DNode from "../Core/X3DNode.js";
+import X3DRenderObject from "../../Rendering/X3DRenderObject.js";
+import X3DViewportNode from "./X3DViewportNode.js";
+import BindableStack from "../../Execution/BindableStack.js";
+import BindableList from "../../Execution/BindableList.js";
+import NavigationInfo from "../Navigation/NavigationInfo.js";
+import Fog from "../EnvironmentalEffects/Fog.js";
+import Background from "../EnvironmentalEffects/Background.js";
+import X3DCast from "../../Base/X3DCast.js";
+import TraverseType from "../../Rendering/TraverseType.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Camera from "../../../standard/Math/Geometry/Camera.js";
+import Box3 from "../../../standard/Math/Geometry/Box3.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+var projectionMatrix = new Matrix4 ();
+
+function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 {
-"use strict";
+   X3DNode         .call (this, executionContext);
+   X3DRenderObject .call (this, executionContext);
 
-   var projectionMatrix = new Matrix4 ();
+   this .addType (X3DConstants .X3DLayerNode);
 
-   function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
+   this .groupNode       = groupNode;
+   this .currentViewport = null;
+
+   this .defaultNavigationInfo = new NavigationInfo (executionContext);
+   this .defaultViewpoint      = defaultViewpoint;
+   this .defaultBackground     = new Background (executionContext);
+   this .defaultFog            = new Fog (executionContext);
+
+   this .navigationInfoStack = new BindableStack (executionContext, this .defaultNavigationInfo);
+   this .viewpointStack      = new BindableStack (executionContext, this .defaultViewpoint);
+   this .backgroundStack     = new BindableStack (executionContext, this .defaultBackground);
+   this .fogStack            = new BindableStack (executionContext, this .defaultFog);
+
+   this .navigationInfos = new BindableList (executionContext, this .defaultNavigationInfo);
+   this .viewpoints      = new BindableList (executionContext, this .defaultViewpoint);
+   this .backgrounds     = new BindableList (executionContext, this .defaultBackground);
+   this .fogs            = new BindableList (executionContext, this .defaultFog);
+
+   this .defaultBackground .setHidden (true);
+   this .defaultFog        .setHidden (true);
+
+   this .collisionTime = 0;
+}
+
+X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+   X3DRenderObject .prototype,
+{
+   constructor: X3DLayerNode,
+   layer0: false,
+   initialize: function ()
    {
-      X3DNode         .call (this, executionContext);
-      X3DRenderObject .call (this, executionContext);
+      X3DNode         .prototype .initialize .call (this);
+      X3DRenderObject .prototype .initialize .call (this);
 
-      this .addType (X3DConstants .X3DLayerNode);
+      this .defaultNavigationInfo .setup ();
+      this .defaultViewpoint      .setup ();
+      this .defaultBackground     .setup ();
+      this .defaultFog            .setup ();
 
-      this .groupNode       = groupNode;
-      this .currentViewport = null;
+      this .navigationInfoStack .setup ();
+      this .viewpointStack      .setup ();
+      this .backgroundStack     .setup ();
+      this .fogStack            .setup ();
 
-      this .defaultNavigationInfo = new NavigationInfo (executionContext);
-      this .defaultViewpoint      = defaultViewpoint;
-      this .defaultBackground     = new Background (executionContext);
-      this .defaultFog            = new Fog (executionContext);
+      this .navigationInfos .setup ();
+      this .viewpoints      .setup ();
+      this .backgrounds     .setup ();
+      this .fogs            .setup ();
 
-      this .navigationInfoStack = new BindableStack (executionContext, this .defaultNavigationInfo);
-      this .viewpointStack      = new BindableStack (executionContext, this .defaultViewpoint);
-      this .backgroundStack     = new BindableStack (executionContext, this .defaultBackground);
-      this .fogStack            = new BindableStack (executionContext, this .defaultFog);
+      this ._viewport .addInterest ("set_viewport__", this);
 
-      this .navigationInfos = new BindableList (executionContext, this .defaultNavigationInfo);
-      this .viewpoints      = new BindableList (executionContext, this .defaultViewpoint);
-      this .backgrounds     = new BindableList (executionContext, this .defaultBackground);
-      this .fogs            = new BindableList (executionContext, this .defaultFog);
-
-      this .defaultBackground .setHidden (true);
-      this .defaultFog        .setHidden (true);
-
-      this .collisionTime = 0;
-   }
-
-   X3DLayerNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-      X3DRenderObject .prototype,
+      this .set_viewport__ ();
+   },
+   isLayer0: function (value)
    {
-      constructor: X3DLayerNode,
-      layer0: false,
-      initialize: function ()
+      this .layer0 = value;
+      this .defaultBackground .setHidden (! value);
+   },
+   getLayer: function ()
+   {
+      return this;
+   },
+   getGroup: function ()
+   {
+      return this .groupNode;
+   },
+   getViewport: function ()
+   {
+      return this .currentViewport;
+   },
+   getBackground: function ()
+   {
+      return this .backgroundStack .top ();
+   },
+   getFog: function ()
+   {
+      return this .fogStack .top ();
+   },
+   getNavigationInfo: function ()
+   {
+      return this .navigationInfoStack .top ();
+   },
+   getViewpoint: function ()
+   {
+      return this .viewpointStack .top ();
+   },
+   getBackgrounds: function ()
+   {
+      return this .backgrounds;
+   },
+   getFogs: function ()
+   {
+      return this .fogs;
+   },
+   getNavigationInfos: function ()
+   {
+      return this .navigationInfos;
+   },
+   getViewpoints: function ()
+   {
+      return this .viewpoints;
+   },
+   getUserViewpoints: function ()
+   {
+      var userViewpoints = [ ];
+
+      for (var i = 0; i < this .viewpoints .get () .length; ++ i)
       {
-         X3DNode         .prototype .initialize .call (this);
-         X3DRenderObject .prototype .initialize .call (this);
+         var viewpoint = this .viewpoints .get () [i];
 
-         this .defaultNavigationInfo .setup ();
-         this .defaultViewpoint      .setup ();
-         this .defaultBackground     .setup ();
-         this .defaultFog            .setup ();
+         if (viewpoint ._description .length)
+            userViewpoints .push (viewpoint);
+      }
 
-         this .navigationInfoStack .setup ();
-         this .viewpointStack      .setup ();
-         this .backgroundStack     .setup ();
-         this .fogStack            .setup ();
+      return userViewpoints;
+   },
+   getBackgroundStack: function ()
+   {
+      return this .backgroundStack;
+   },
+   getFogStack: function ()
+   {
+      return this .fogStack;
+   },
+   getNavigationInfoStack: function ()
+   {
+      return this .navigationInfoStack;
+   },
+   getViewpointStack: function ()
+   {
+      return this .viewpointStack;
+   },
+   getBBox: function (bbox, shadows)
+   {
+      return this .groupNode .getBBox (bbox, shadows);
+   },
+   lookAt: function (factor, straighten)
+   {
+      this .getViewpoint () .lookAtBBox (this .getBBox (new Box3 ()), factor, straighten);
+   },
+   set_viewport__: function ()
+   {
+      this .currentViewport = X3DCast (X3DConstants .X3DViewportNode, this ._viewport);
 
-         this .navigationInfos .setup ();
-         this .viewpoints      .setup ();
-         this .backgrounds     .setup ();
-         this .fogs            .setup ();
+      if (! this .currentViewport)
+         this .currentViewport = this .getBrowser () .getDefaultViewport ();
+   },
+   bindBindables: function (viewpointName)
+   {
+      this .traverse (TraverseType .CAMERA, this);
 
-         this ._viewport .addInterest ("set_viewport__", this);
+      // Bind first viewpoint in viewpoint list.
 
-         this .set_viewport__ ();
-      },
-      isLayer0: function (value)
+      const
+         navigationInfoNode = this .navigationInfos .getBound (),
+         backgroundNode     = this .backgrounds     .getBound (),
+         fogNode            = this .fogs            .getBound (),
+         viewpointNode      = this .viewpoints      .getBound (viewpointName);
+
+      this .navigationInfoStack .pushOnTop (navigationInfoNode);
+      this .viewpointStack      .pushOnTop (viewpointNode);
+      this .backgroundStack     .pushOnTop (backgroundNode);
+      this .fogStack            .pushOnTop (fogNode);
+
+      viewpointNode .resetUserOffsets ();
+   },
+   traverse: function (type, renderObject)
+   {
+      renderObject = renderObject || this;
+
+      var viewpoint = this .getViewpoint ();
+
+      this .getProjectionMatrix ()  .pushMatrix (viewpoint .getProjectionMatrix (this));
+      this .getCameraSpaceMatrix () .pushMatrix (viewpoint .getCameraSpaceMatrix ());
+      this .getViewMatrix ()        .pushMatrix (viewpoint .getViewMatrix ());
+
+      switch (type)
       {
-         this .layer0 = value;
-         this .defaultBackground .setHidden (! value);
-      },
-      getLayer: function ()
-      {
-         return this;
-      },
-      getGroup: function ()
-      {
-         return this .groupNode;
-      },
-      getViewport: function ()
-      {
-         return this .currentViewport;
-      },
-      getBackground: function ()
-      {
-         return this .backgroundStack .top ();
-      },
-      getFog: function ()
-      {
-         return this .fogStack .top ();
-      },
-      getNavigationInfo: function ()
-      {
-         return this .navigationInfoStack .top ();
-      },
-      getViewpoint: function ()
-      {
-         return this .viewpointStack .top ();
-      },
-      getBackgrounds: function ()
-      {
-         return this .backgrounds;
-      },
-      getFogs: function ()
-      {
-         return this .fogs;
-      },
-      getNavigationInfos: function ()
-      {
-         return this .navigationInfos;
-      },
-      getViewpoints: function ()
-      {
-         return this .viewpoints;
-      },
-      getUserViewpoints: function ()
-      {
-         var userViewpoints = [ ];
+         case TraverseType .POINTER:
+            this .pointer (type, renderObject);
+            break;
+         case TraverseType .CAMERA:
+            this .camera (type, renderObject);
+            break;
+         case TraverseType .PICKING:
+            this .picking (type, renderObject);
+            break;
+         case TraverseType .COLLISION:
+            this .collision (type, renderObject);
+            break;
+         case TraverseType .SHADOW:
+         case TraverseType .DISPLAY:
+            this .display (type, renderObject);
+            break;
+      }
 
-         for (var i = 0; i < this .viewpoints .get () .length; ++ i)
-         {
-            var viewpoint = this .viewpoints .get () [i];
-
-            if (viewpoint ._description .length)
-               userViewpoints .push (viewpoint);
-         }
-
-         return userViewpoints;
-      },
-      getBackgroundStack: function ()
+      this .getViewMatrix ()        .pop ();
+      this .getCameraSpaceMatrix () .pop ();
+      this .getProjectionMatrix ()  .pop ();
+   },
+   pointer: function (type, renderObject)
+   {
+      if (this ._isPickable .getValue ())
       {
-         return this .backgroundStack;
-      },
-      getFogStack: function ()
-      {
-         return this .fogStack;
-      },
-      getNavigationInfoStack: function ()
-      {
-         return this .navigationInfoStack;
-      },
-      getViewpointStack: function ()
-      {
-         return this .viewpointStack;
-      },
-      getBBox: function (bbox, shadows)
-      {
-         return this .groupNode .getBBox (bbox, shadows);
-      },
-      lookAt: function (factor, straighten)
-      {
-         this .getViewpoint () .lookAtBBox (this .getBBox (new Box3 ()), factor, straighten);
-      },
-      set_viewport__: function ()
-      {
-         this .currentViewport = X3DCast (X3DConstants .X3DViewportNode, this ._viewport);
-
-         if (! this .currentViewport)
-            this .currentViewport = this .getBrowser () .getDefaultViewport ();
-      },
-      bindBindables: function (viewpointName)
-      {
-         this .traverse (TraverseType .CAMERA, this);
-
-         // Bind first viewpoint in viewpoint list.
-
-         const
-            navigationInfoNode = this .navigationInfos .getBound (),
-            backgroundNode     = this .backgrounds     .getBound (),
-            fogNode            = this .fogs            .getBound (),
-            viewpointNode      = this .viewpoints      .getBound (viewpointName);
-
-         this .navigationInfoStack .pushOnTop (navigationInfoNode);
-         this .viewpointStack      .pushOnTop (viewpointNode);
-         this .backgroundStack     .pushOnTop (backgroundNode);
-         this .fogStack            .pushOnTop (fogNode);
-
-         viewpointNode .resetUserOffsets ();
-      },
-      traverse: function (type, renderObject)
-      {
-         renderObject = renderObject || this;
-
-         var viewpoint = this .getViewpoint ();
-
-         this .getProjectionMatrix ()  .pushMatrix (viewpoint .getProjectionMatrix (this));
-         this .getCameraSpaceMatrix () .pushMatrix (viewpoint .getCameraSpaceMatrix ());
-         this .getViewMatrix ()        .pushMatrix (viewpoint .getViewMatrix ());
-
-         switch (type)
-         {
-            case TraverseType .POINTER:
-               this .pointer (type, renderObject);
-               break;
-            case TraverseType .CAMERA:
-               this .camera (type, renderObject);
-               break;
-            case TraverseType .PICKING:
-               this .picking (type, renderObject);
-               break;
-            case TraverseType .COLLISION:
-               this .collision (type, renderObject);
-               break;
-            case TraverseType .SHADOW:
-            case TraverseType .DISPLAY:
-               this .display (type, renderObject);
-               break;
-         }
-
-         this .getViewMatrix ()        .pop ();
-         this .getCameraSpaceMatrix () .pop ();
-         this .getProjectionMatrix ()  .pop ();
-      },
-      pointer: function (type, renderObject)
-      {
-         if (this ._isPickable .getValue ())
-         {
-            var
-               browser  = this .getBrowser (),
-               viewport = this .currentViewport .getRectangle (browser);
-
-            if (browser .getSelectedLayer ())
-            {
-               if (browser .getSelectedLayer () !== this)
-                  return;
-            }
-            else
-            {
-               if (! browser .isPointerInRectangle (viewport))
-                  return;
-            }
-
-            browser .setHitRay (this .getProjectionMatrix () .get (), viewport);
-            this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
-
-            this .currentViewport .push (this);
-            this .groupNode .traverse (type, renderObject);
-            this .currentViewport .pop (this);
-
-            this .getModelViewMatrix () .pop ()
-         }
-      },
-      camera: function (type, renderObject)
-      {
-         this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
-
-         this .currentViewport .push (this);
-         this .groupNode .traverse (type, renderObject);
-         this .currentViewport .pop (this);
-
-         this .getModelViewMatrix () .pop ();
-
-         this .navigationInfos .update (this, this .navigationInfoStack);
-         this .viewpoints      .update (this, this .viewpointStack);
-         this .backgrounds     .update (this, this .backgroundStack);
-         this .fogs            .update (this, this .fogStack);
-
-         this .getViewpoint () .update ();
-      },
-      picking: function (type, renderObject)
-      {
-         this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
-
-         this .currentViewport .push (this);
-         this .groupNode .traverse (type, renderObject);
-         this .currentViewport .pop (this);
-
-         this .getModelViewMatrix () .pop ();
-      },
-      collision: function (type, renderObject)
-      {
-         var navigationInfo = this .getNavigationInfo ();
-
-         if (navigationInfo ._transitionActive .getValue ())
-            return;
-
          var
-            collisionRadius = navigationInfo .getCollisionRadius (),
-            avatarHeight    = navigationInfo .getAvatarHeight (),
-            size            = Math .max (collisionRadius * 2, avatarHeight * 2);
+            browser  = this .getBrowser (),
+            viewport = this .currentViewport .getRectangle (browser);
 
-         this .collisionTime = 0;
+         if (browser .getSelectedLayer ())
+         {
+            if (browser .getSelectedLayer () !== this)
+               return;
+         }
+         else
+         {
+            if (! browser .isPointerInRectangle (viewport))
+               return;
+         }
 
-         Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);
-
-         this .getProjectionMatrix () .pushMatrix (projectionMatrix);
-         this .getModelViewMatrix  () .pushMatrix (this .getViewMatrix () .get ());
-
-         // Render
-         this .currentViewport .push (this);
-         renderObject .render (type, this .groupNode .traverse, this .groupNode);
-         this .currentViewport .pop (this);
-
-         this .getModelViewMatrix  () .pop ()
-         this .getProjectionMatrix () .pop ()
-      },
-      display: function (type, renderObject)
-      {
-         this .getNavigationInfo () .enable (type, renderObject);
-
+         browser .setHitRay (this .getProjectionMatrix () .get (), viewport);
          this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
 
          this .currentViewport .push (this);
-         renderObject .render (type, this .groupNode .traverse, this .groupNode);
+         this .groupNode .traverse (type, renderObject);
          this .currentViewport .pop (this);
 
          this .getModelViewMatrix () .pop ()
-      },
-   });
+      }
+   },
+   camera: function (type, renderObject)
+   {
+      this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
 
-   return X3DLayerNode;
+      this .currentViewport .push (this);
+      this .groupNode .traverse (type, renderObject);
+      this .currentViewport .pop (this);
+
+      this .getModelViewMatrix () .pop ();
+
+      this .navigationInfos .update (this, this .navigationInfoStack);
+      this .viewpoints      .update (this, this .viewpointStack);
+      this .backgrounds     .update (this, this .backgroundStack);
+      this .fogs            .update (this, this .fogStack);
+
+      this .getViewpoint () .update ();
+   },
+   picking: function (type, renderObject)
+   {
+      this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
+
+      this .currentViewport .push (this);
+      this .groupNode .traverse (type, renderObject);
+      this .currentViewport .pop (this);
+
+      this .getModelViewMatrix () .pop ();
+   },
+   collision: function (type, renderObject)
+   {
+      var navigationInfo = this .getNavigationInfo ();
+
+      if (navigationInfo ._transitionActive .getValue ())
+         return;
+
+      var
+         collisionRadius = navigationInfo .getCollisionRadius (),
+         avatarHeight    = navigationInfo .getAvatarHeight (),
+         size            = Math .max (collisionRadius * 2, avatarHeight * 2);
+
+      this .collisionTime = 0;
+
+      Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);
+
+      this .getProjectionMatrix () .pushMatrix (projectionMatrix);
+      this .getModelViewMatrix  () .pushMatrix (this .getViewMatrix () .get ());
+
+      // Render
+      this .currentViewport .push (this);
+      renderObject .render (type, this .groupNode .traverse, this .groupNode);
+      this .currentViewport .pop (this);
+
+      this .getModelViewMatrix  () .pop ()
+      this .getProjectionMatrix () .pop ()
+   },
+   display: function (type, renderObject)
+   {
+      this .getNavigationInfo () .enable (type, renderObject);
+
+      this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
+
+      this .currentViewport .push (this);
+      renderObject .render (type, this .groupNode .traverse, this .groupNode);
+      this .currentViewport .pop (this);
+
+      this .getModelViewMatrix () .pop ()
+   },
 });
+
+export default X3DLayerNode;

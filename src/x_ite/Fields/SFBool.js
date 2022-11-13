@@ -47,63 +47,56 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DField",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DField,
-          X3DConstants)
+import X3DField from "../Base/X3DField.js";
+import X3DConstants from "../Base/X3DConstants.js";
+
+function SFBool (value)
 {
-"use strict";
+   return X3DField .call (this, !! value);
+}
 
-   function SFBool (value)
+SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
+{
+   constructor: SFBool,
+   copy: function ()
    {
-      return X3DField .call (this, !! value);
-   }
-
-   SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
+      return new SFBool (this .getValue ());
+   },
+   isDefaultValue: function ()
    {
-      constructor: SFBool,
-      copy: function ()
-      {
-         return new SFBool (this .getValue ());
-      },
-      isDefaultValue: function ()
-      {
-         return this .getValue () === false;
-      },
-      set: function (value)
-      {
-         X3DField .prototype .set .call (this, !! value);
-      },
-      getTypeName: function ()
-      {
-         return "SFBool";
-      },
-      getType: function ()
-      {
-         return X3DConstants .SFBool;
-      },
-      valueOf: function ()
-      {
-         return this .getValue ();
-      },
-      toStream: function (stream)
-      {
-         stream .string += this .getValue () ? "TRUE" : "FALSE";
-      },
-      toVRMLStream: function (stream)
-      {
-         this .toStream (stream);
-      },
-      toXMLStream: function (stream)
-      {
-         stream .string += this .getValue () ? "true" : "false";
-      },
-   });
-
-   for (const key of Reflect .ownKeys (SFBool .prototype))
-      Object .defineProperty (SFBool .prototype, key, { enumerable: false });
-
-   return SFBool;
+      return this .getValue () === false;
+   },
+   set: function (value)
+   {
+      X3DField .prototype .set .call (this, !! value);
+   },
+   getTypeName: function ()
+   {
+      return "SFBool";
+   },
+   getType: function ()
+   {
+      return X3DConstants .SFBool;
+   },
+   valueOf: function ()
+   {
+      return this .getValue ();
+   },
+   toStream: function (stream)
+   {
+      stream .string += this .getValue () ? "TRUE" : "FALSE";
+   },
+   toVRMLStream: function (stream)
+   {
+      this .toStream (stream);
+   },
+   toXMLStream: function (stream)
+   {
+      stream .string += this .getValue () ? "true" : "false";
+   },
 });
+
+for (const key of Reflect .ownKeys (SFBool .prototype))
+   Object .defineProperty (SFBool .prototype, key, { enumerable: false });
+
+export default SFBool;

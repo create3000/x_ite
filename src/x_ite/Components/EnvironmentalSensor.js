@@ -46,36 +46,28 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/SupportedNodes",
-   "x_ite/Components/EnvironmentalSensor/ProximitySensor",
-   "x_ite/Components/EnvironmentalSensor/TransformSensor",
-   "x_ite/Components/EnvironmentalSensor/VisibilitySensor",
-   "x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
-],
-function (SupportedNodes,
-          ProximitySensor,
-          TransformSensor,
-          VisibilitySensor,
-          X3DEnvironmentalSensorNode)
+import SupportedNodes from "../Configuration/SupportedNodes.js";
+import ProximitySensor from "./EnvironmentalSensor/ProximitySensor.js";
+import TransformSensor from "./EnvironmentalSensor/TransformSensor.js";
+import VisibilitySensor from "./EnvironmentalSensor/VisibilitySensor.js";
+import X3DEnvironmentalSensorNode from "./EnvironmentalSensor/X3DEnvironmentalSensorNode.js";
+
+const Types =
 {
-"use strict";
+   ProximitySensor:  ProximitySensor,
+   TransformSensor:  TransformSensor,
+   VisibilitySensor: VisibilitySensor,
+};
 
-   const Types =
-   {
-      ProximitySensor:  ProximitySensor,
-      TransformSensor:  TransformSensor,
-      VisibilitySensor: VisibilitySensor,
-   };
+const AbstractTypes =
+{
+   X3DEnvironmentalSensorNode: X3DEnvironmentalSensorNode,
+};
 
-   const AbstractTypes =
-   {
-      X3DEnvironmentalSensorNode: X3DEnvironmentalSensorNode,
-   };
+for (const typeName in Types)
+   SupportedNodes .addType (typeName, Types [typeName]);
 
-   for (const typeName in Types)
-      SupportedNodes .addType (typeName, Types [typeName]);
+for (const typeName in AbstractTypes)
+   SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 
-   for (const typeName in AbstractTypes)
-      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
-});
+export default undefined;

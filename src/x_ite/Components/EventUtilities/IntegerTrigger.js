@@ -47,60 +47,50 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/EventUtilities/X3DTriggerNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DTriggerNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DTriggerNode from "./X3DTriggerNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function IntegerTrigger (executionContext)
 {
-"use strict";
+   X3DTriggerNode .call (this, executionContext);
 
-   function IntegerTrigger (executionContext)
+   this .addType (X3DConstants .IntegerTrigger);
+}
+
+IntegerTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
+{
+   constructor: IntegerTrigger,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean",  new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "integerKey",   new Fields .SFInt32 (-1)),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerValue", new Fields .SFInt32 ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DTriggerNode .call (this, executionContext);
-
-      this .addType (X3DConstants .IntegerTrigger);
-   }
-
-   IntegerTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
+      return "IntegerTrigger";
+   },
+   getComponentName: function ()
    {
-      constructor: IntegerTrigger,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean",  new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "integerKey",   new Fields .SFInt32 (-1)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerValue", new Fields .SFInt32 ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "IntegerTrigger";
-      },
-      getComponentName: function ()
-      {
-         return "EventUtilities";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DTriggerNode .prototype .initialize .call (this);
+      return "EventUtilities";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DTriggerNode .prototype .initialize .call (this);
 
-         this ._set_boolean .addInterest ("set_boolean__", this);
-      },
-      set_boolean__: function ()
-      {
-         this ._triggerValue = this ._integerKey;
-      },
-   });
-
-   return IntegerTrigger;
+      this ._set_boolean .addInterest ("set_boolean__", this);
+   },
+   set_boolean__: function ()
+   {
+      this ._triggerValue = this ._integerKey;
+   },
 });
+
+export default IntegerTrigger;

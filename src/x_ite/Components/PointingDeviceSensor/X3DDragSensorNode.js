@@ -47,28 +47,21 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DPointingDeviceSensorNode,
-          X3DConstants)
+import X3DPointingDeviceSensorNode from "./X3DPointingDeviceSensorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DDragSensorNode (executionContext)
 {
-"use strict";
+   X3DPointingDeviceSensorNode .call (this, executionContext);
 
-   function X3DDragSensorNode (executionContext)
-   {
-      X3DPointingDeviceSensorNode .call (this, executionContext);
+   this .addType (X3DConstants .X3DDragSensorNode);
 
-      this .addType (X3DConstants .X3DDragSensorNode);
+   this ._trackPoint_changed .setUnit ("length");
+}
 
-      this ._trackPoint_changed .setUnit ("length");
-   }
-
-   X3DDragSensorNode .prototype = Object .assign (Object .create (X3DPointingDeviceSensorNode .prototype),
-   {
-      constructor: X3DDragSensorNode,
-   });
-
-   return X3DDragSensorNode;
+X3DDragSensorNode .prototype = Object .assign (Object .create (X3DPointingDeviceSensorNode .prototype),
+{
+   constructor: X3DDragSensorNode,
 });
+
+export default X3DDragSensorNode;

@@ -47,88 +47,78 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DParticleEmitterNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DParticleEmitterNode from "./X3DParticleEmitterNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function ExplosionEmitter (executionContext)
 {
-"use strict";
+   X3DParticleEmitterNode .call (this, executionContext);
 
-   function ExplosionEmitter (executionContext)
+   this .addType (X3DConstants .ExplosionEmitter);
+
+   this ._position .setUnit ("length");
+
+   this .addUniform ("position", "uniform vec3 position;");
+
+   this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
    {
-      X3DParticleEmitterNode .call (this, executionContext);
+      return getRandomSphericalVelocity ();
+   }`);
 
-      this .addType (X3DConstants .ExplosionEmitter);
-
-      this ._position .setUnit ("length");
-
-      this .addUniform ("position", "uniform vec3 position;");
-
-      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
-      {
-         return getRandomSphericalVelocity ();
-      }`);
-
-      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
-      {
-         return vec4 (position, 1.0);
-      }`);
-   }
-
-   ExplosionEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+   this .addFunction (/* glsl */ `vec4 getRandomPosition ()
    {
-      constructor: ExplosionEmitter,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "ExplosionEmitter";
-      },
-      getComponentName: function ()
-      {
-         return "ParticleSystems";
-      },
-      getContainerField: function ()
-      {
-         return "emitter";
-      },
-      initialize: function ()
-      {
-         X3DParticleEmitterNode .prototype .initialize .call (this);
+      return vec4 (position, 1.0);
+   }`);
+}
 
-         if (this .getBrowser () .getContext () .getVersion () < 2)
-            return;
+ExplosionEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+{
+   constructor: ExplosionEmitter,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "ExplosionEmitter";
+   },
+   getComponentName: function ()
+   {
+      return "ParticleSystems";
+   },
+   getContainerField: function ()
+   {
+      return "emitter";
+   },
+   initialize: function ()
+   {
+      X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this ._position .addInterest ("set_position__", this);
+      if (this .getBrowser () .getContext () .getVersion () < 2)
+         return;
 
-         this .set_position__ ();
-      },
-      isExplosive: function ()
-      {
-         return true;
-      },
-      set_position__: function ()
-      {
-         const position = this ._position .getValue ();
+      this ._position .addInterest ("set_position__", this);
 
-         this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
-      },
-   });
+      this .set_position__ ();
+   },
+   isExplosive: function ()
+   {
+      return true;
+   },
+   set_position__: function ()
+   {
+      const position = this ._position .getValue ();
 
-   return ExplosionEmitter;
+      this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
+   },
 });
+
+export default ExplosionEmitter;

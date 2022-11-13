@@ -47,243 +47,235 @@
  ******************************************************************************/
 
 
-define ([
-   "jquery",
-   "x_ite/Base/X3DBaseNode",
-],
-function ($,
-          X3DBaseNode)
+import X3DBaseNode from "../../Base/X3DBaseNode.js";
+
+const CONTEXT_MENU_TIME = 1200;
+
+function PointingDevice (executionContext)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
 
-   const CONTEXT_MENU_TIME = 1200;
+   this .cursor     = "DEFAULT";
+   this .isOver     = false;
+   this .motionTime = 0;
+}
 
-   function PointingDevice (executionContext)
+PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: PointingDevice,
+   getTypeName: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-
-      this .cursor     = "DEFAULT";
-      this .isOver     = false;
-      this .motionTime = 0;
-   }
-
-   PointingDevice .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return "PointingDevice";
+   },
+   initialize: function ()
    {
-      constructor: PointingDevice,
-      getTypeName: function ()
+      const element = this .getBrowser () .getSurface ();
+
+      //element .on ("mousewheel.PointingDevice", this .mousewheel .bind (this));
+      element .on ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
+      element .on ("mouseup.PointingDevice"   + this .getId (), this .mouseup    .bind (this));
+      element .on ("dblclick.PointingDevice"  + this .getId (), this .dblclick   .bind (this));
+      element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove  .bind (this));
+      element .on ("mouseout.PointingDevice"  + this .getId (), this .onmouseout .bind (this));
+
+      element .on ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
+      element .on ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
+   },
+   mousewheel: function (event)
+   {
+      // event .preventDefault () must be done in the several viewers.
+   },
+   mousedown: function (event)
+   {
+      const browser = this .getBrowser ();
+
+      browser .getElement () .focus ();
+
+      if (browser .getShiftKey () && browser .getControlKey ())
+         return;
+
+      if (event .button === 0)
       {
-         return "PointingDevice";
-      },
-      initialize: function ()
-      {
-         const element = this .getBrowser () .getSurface ();
-
-         //element .on ("mousewheel.PointingDevice", this .mousewheel .bind (this));
-         element .on ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
-         element .on ("mouseup.PointingDevice"   + this .getId (), this .mouseup    .bind (this));
-         element .on ("dblclick.PointingDevice"  + this .getId (), this .dblclick   .bind (this));
-         element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove  .bind (this));
-         element .on ("mouseout.PointingDevice"  + this .getId (), this .onmouseout .bind (this));
-
-         element .on ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
-         element .on ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
-      },
-      mousewheel: function (event)
-      {
-         // event .preventDefault () must be done in the several viewers.
-      },
-      mousedown: function (event)
-      {
-         const browser = this .getBrowser ();
-
-         browser .getElement () .focus ();
-
-         if (browser .getShiftKey () && browser .getControlKey ())
-            return;
-
-         if (event .button === 0)
-         {
-            const
-               element = browser .getSurface (),
-               offset  = element .offset (),
-               x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
-               y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
-
-            element .off ("mousemove.PointingDevice" + this .getId ());
-
-            $(document) .on ("mouseup.PointingDevice"   + this .getId (), this .mouseup   .bind (this));
-            $(document) .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
-            $(document) .on ("touchend.PointingDevice"  + this .getId (), this .touchend  .bind (this));
-            $(document) .on ("touchmove.PointingDevice" + this .getId (), this .touchmove .bind (this));
-
-            if (browser .buttonPressEvent (x, y))
-            {
-               event .preventDefault ();
-               event .stopImmediatePropagation (); // Keeps the rest of the handlers from being executed
-
-               browser .setCursor ("HAND");
-               browser .finished () .addInterest ("onverifymotion", this, x, y);
-            }
-         }
-      },
-      mouseup: function (event)
-      {
-         event .preventDefault ();
-
-         if (event .button === 0)
-         {
-            const
-               browser = this .getBrowser (),
-               element = browser .getSurface (),
-               offset  = element .offset (),
-               x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
-               y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
-
-            $(document) .off (".PointingDevice" + this .getId ());
-            element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
-
-            browser .buttonReleaseEvent ();
-            browser .setCursor (this .isOver ? "HAND" : "DEFAULT");
-            browser .finished () .addInterest ("onverifymotion", this, x, y);
-            browser .addBrowserEvent ();
-
-            this .cursor = "DEFAULT";
-         }
-      },
-      dblclick: function (event)
-      {
-         if (this .isOver)
-            event .stopImmediatePropagation ();
-      },
-      mousemove: function (event)
-      {
-         event .preventDefault ();
-
-         const browser = this .getBrowser ();
-
-         if (this .motionTime === browser .getCurrentTime ())
-            return;
-
-         this .motionTime = browser .getCurrentTime ();
-
          const
             element = browser .getSurface (),
             offset  = element .offset (),
             x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
             y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
-         this .onmotion (x, y);
-      },
-      touchstart: function (event)
-      {
-         const touches = event .originalEvent .touches;
+         element .off ("mousemove.PointingDevice" + this .getId ());
 
-         switch (touches .length)
+         $(document) .on ("mouseup.PointingDevice"   + this .getId (), this .mouseup   .bind (this));
+         $(document) .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
+         $(document) .on ("touchend.PointingDevice"  + this .getId (), this .touchend  .bind (this));
+         $(document) .on ("touchmove.PointingDevice" + this .getId (), this .touchmove .bind (this));
+
+         if (browser .buttonPressEvent (x, y))
          {
-            case 1:
-            {
-               // button 0.
+            event .preventDefault ();
+            event .stopImmediatePropagation (); // Keeps the rest of the handlers from being executed
 
-               event .button = 0;
-               event .pageX  = touches [0] .pageX;
-               event .pageY  = touches [0] .pageY;
-
-               this .mousedown (event);
-
-               // Show context menu on long tab.
-
-               const nearestHit = this .getBrowser () .getNearestHit ();
-
-               if (! nearestHit || nearestHit .sensors .size === 0)
-               {
-                  this .touchX       = event .pageX;
-                  this .touchY       = event .pageY;
-                  this .touchTimeout = setTimeout (this .showContextMenu .bind (this, event), CONTEXT_MENU_TIME);
-               }
-
-               break;
-            }
-            case 2:
-            {
-               this .touchend (event);
-               break;
-            }
+            browser .setCursor ("HAND");
+            browser .finished () .addInterest ("onverifymotion", this, x, y);
          }
-      },
-      touchend: function (event)
+      }
+   },
+   mouseup: function (event)
+   {
+      event .preventDefault ();
+
+      if (event .button === 0)
       {
-         event .button = 0;
+         const
+            browser = this .getBrowser (),
+            element = browser .getSurface (),
+            offset  = element .offset (),
+            x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
+            y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
-         this .mouseup (event);
+         $(document) .off (".PointingDevice" + this .getId ());
+         element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
-         clearTimeout (this .touchTimeout);
-      },
-      touchmove: function (event)
+         browser .buttonReleaseEvent ();
+         browser .setCursor (this .isOver ? "HAND" : "DEFAULT");
+         browser .finished () .addInterest ("onverifymotion", this, x, y);
+         browser .addBrowserEvent ();
+
+         this .cursor = "DEFAULT";
+      }
+   },
+   dblclick: function (event)
+   {
+      if (this .isOver)
+         event .stopImmediatePropagation ();
+   },
+   mousemove: function (event)
+   {
+      event .preventDefault ();
+
+      const browser = this .getBrowser ();
+
+      if (this .motionTime === browser .getCurrentTime ())
+         return;
+
+      this .motionTime = browser .getCurrentTime ();
+
+      const
+         element = browser .getSurface (),
+         offset  = element .offset (),
+         x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
+         y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
+
+      this .onmotion (x, y);
+   },
+   touchstart: function (event)
+   {
+      const touches = event .originalEvent .touches;
+
+      switch (touches .length)
       {
-         const touches = event .originalEvent .touches;
-
-         switch (touches .length)
+         case 1:
          {
-            case 1:
+            // button 0.
+
+            event .button = 0;
+            event .pageX  = touches [0] .pageX;
+            event .pageY  = touches [0] .pageY;
+
+            this .mousedown (event);
+
+            // Show context menu on long tab.
+
+            const nearestHit = this .getBrowser () .getNearestHit ();
+
+            if (! nearestHit || nearestHit .sensors .size === 0)
             {
-               // button 0.
-
-               event .button = 0;
-               event .pageX  = touches [0] .pageX;
-               event .pageY  = touches [0] .pageY;
-
-               this .mousemove (event);
-
-               if (Math .hypot (this .touchX - event .pageX, this .touchY - event .pageY) > 7)
-                  clearTimeout (this .touchTimeout);
-
-               break;
+               this .touchX       = event .pageX;
+               this .touchY       = event .pageY;
+               this .touchTimeout = setTimeout (this .showContextMenu .bind (this, event), CONTEXT_MENU_TIME);
             }
-         }
-      },
-      onmotion: function (x, y)
-      {
-         const browser = this .getBrowser ();
 
-         if (browser .motionNotifyEvent (x, y))
+            break;
+         }
+         case 2:
          {
-            if (!this .isOver)
-            {
-               this .isOver = true;
-               this .cursor = browser .getCursor ();
-
-               browser .setCursor ("HAND");
-            }
+            this .touchend (event);
+            break;
          }
-         else
+      }
+   },
+   touchend: function (event)
+   {
+      event .button = 0;
+
+      this .mouseup (event);
+
+      clearTimeout (this .touchTimeout);
+   },
+   touchmove: function (event)
+   {
+      const touches = event .originalEvent .touches;
+
+      switch (touches .length)
+      {
+         case 1:
          {
-            if (this .isOver)
-            {
-               this .isOver = false;
+            // button 0.
 
-               browser .setCursor (this .cursor);
-            }
+            event .button = 0;
+            event .pageX  = touches [0] .pageX;
+            event .pageY  = touches [0] .pageY;
+
+            this .mousemove (event);
+
+            if (Math .hypot (this .touchX - event .pageX, this .touchY - event .pageY) > 7)
+               clearTimeout (this .touchTimeout);
+
+            break;
          }
-      },
-      onmouseout: function (event)
-      {
-         this .getBrowser () .leaveNotifyEvent ();
-      },
-      onverifymotion: function (x, y)
-      {
-         // Verify isOver state. This is necessary if an Switch changes on buttonReleaseEvent
-         // and the new child has a sensor node inside. This sensor node must be update to
-         // reflect the correct isOver state.
+      }
+   },
+   onmotion: function (x, y)
+   {
+      const browser = this .getBrowser ();
 
-         this .getBrowser () .finished () .removeInterest ("onverifymotion", this);
-
-         this .onmotion (x, y);
-      },
-      showContextMenu: function (event)
+      if (browser .motionNotifyEvent (x, y))
       {
-         this .getBrowser () .getContextMenu () .show (event);
-      },
-   });
+         if (!this .isOver)
+         {
+            this .isOver = true;
+            this .cursor = browser .getCursor ();
 
-   return PointingDevice;
+            browser .setCursor ("HAND");
+         }
+      }
+      else
+      {
+         if (this .isOver)
+         {
+            this .isOver = false;
+
+            browser .setCursor (this .cursor);
+         }
+      }
+   },
+   onmouseout: function (event)
+   {
+      this .getBrowser () .leaveNotifyEvent ();
+   },
+   onverifymotion: function (x, y)
+   {
+      // Verify isOver state. This is necessary if an Switch changes on buttonReleaseEvent
+      // and the new child has a sensor node inside. This sensor node must be update to
+      // reflect the correct isOver state.
+
+      this .getBrowser () .finished () .removeInterest ("onverifymotion", this);
+
+      this .onmotion (x, y);
+   },
+   showContextMenu: function (event)
+   {
+      this .getBrowser () .getContextMenu () .show (event);
+   },
 });
+
+export default PointingDevice;

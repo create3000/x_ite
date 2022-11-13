@@ -47,92 +47,84 @@
  ******************************************************************************/
 
 
- define ([
-   "x_ite/Components/Shape/UnlitMaterial",
-   "text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
-   "text!x_ite/Browser/VolumeRendering/VolumeStyle.fs",
-],
-function (UnlitMaterial,
-          vs,
-          fs)
+import UnlitMaterial from "../../Components/Shape/UnlitMaterial.js";
+import vs from "./VolumeStyle.vs.js";
+import fs from "./VolumeStyle.fs.js";
+
+function VolumeMaterial (executionContext, volumeDataNode)
 {
-"use strict";
+   UnlitMaterial .call (this, executionContext);
 
-   function VolumeMaterial (executionContext, volumeDataNode)
+   this .volumeDataNode    = volumeDataNode;
+   this .volumeShaderNodes = new Map ();
+}
+
+VolumeMaterial .prototype = Object .assign (Object .create (UnlitMaterial .prototype),
+{
+   constructor: VolumeMaterial,
+   getTypeName: function ()
    {
-      UnlitMaterial .call (this, executionContext);
-
-      this .volumeDataNode    = volumeDataNode;
-      this .volumeShaderNodes = new Map ();
-   }
-
-   VolumeMaterial .prototype = Object .assign (Object .create (UnlitMaterial .prototype),
+      return "VolumeMaterial";
+   },
+   getComponentName: function ()
    {
-      constructor: VolumeMaterial,
-      getTypeName: function ()
+      return "Shape";
+   },
+   getContainerField: function ()
+   {
+      return "material";
+   },
+   getVolumeShaders: function ()
+   {
+      return this .volumeShaderNodes;
+   },
+   getShader: function (geometryContext, renderContext)
+   {
+      const { fogNode, objectsCount } = renderContext;
+
+      let key = "";
+
+      key += fogNode ? fogNode .getFogKey () : "0";
+      key += ".";
+      key += objectsCount [0]; // Clip planes
+      key += ".";
+      key += objectsCount [1]; // Lights
+
+      return this .volumeShaderNodes .get (key) || this .createShader (key, geometryContext, renderContext);
+   },
+   createShader: function (key, geometryContext, renderContext)
+   {
+      const
+         browser = this .getBrowser (),
+         options = [ ];
+
+      const { fogNode, objectsCount } = renderContext;
+
+      if (fogNode)
+         options .push ("X3D_FOG");
+
+      if (objectsCount [0])
       {
-         return "VolumeMaterial";
-      },
-      getComponentName: function ()
+         options .push ("X3D_CLIP_PLANES")
+         options .push ("X3D_NUM_CLIP_PLANES " + Math .min (objectsCount [0], browser .getMaxClipPlanes ()));
+      }
+
+      if (objectsCount [1])
       {
-         return "Shape";
-      },
-      getContainerField: function ()
-      {
-         return "material";
-      },
-      getVolumeShaders: function ()
-      {
-         return this .volumeShaderNodes;
-      },
-      getShader: function (geometryContext, renderContext)
-      {
-         const { fogNode, objectsCount } = renderContext;
+         options .push ("X3D_LIGHTING")
+         options .push ("X3D_NUM_LIGHTS " + Math .min (objectsCount [1], browser .getMaxLights ()));
+      }
 
-         let key = "";
+      const shaderNode = this .volumeDataNode .createShader (options, vs, fs);
 
-         key += fogNode ? fogNode .getFogKey () : "0";
-         key += ".";
-         key += objectsCount [0]; // Clip planes
-         key += ".";
-         key += objectsCount [1]; // Lights
+      this .volumeShaderNodes .set (key, shaderNode);
 
-         return this .volumeShaderNodes .get (key) || this .createShader (key, geometryContext, renderContext);
-      },
-      createShader: function (key, geometryContext, renderContext)
-      {
-         const
-            browser = this .getBrowser (),
-            options = [ ];
-
-         const { fogNode, objectsCount } = renderContext;
-
-         if (fogNode)
-            options .push ("X3D_FOG");
-
-         if (objectsCount [0])
-         {
-            options .push ("X3D_CLIP_PLANES")
-            options .push ("X3D_NUM_CLIP_PLANES " + Math .min (objectsCount [0], browser .getMaxClipPlanes ()));
-         }
-
-         if (objectsCount [1])
-         {
-            options .push ("X3D_LIGHTING")
-            options .push ("X3D_NUM_LIGHTS " + Math .min (objectsCount [1], browser .getMaxLights ()));
-         }
-
-         const shaderNode = this .volumeDataNode .createShader (options, vs, fs);
-
-         this .volumeShaderNodes .set (key, shaderNode);
-
-         return shaderNode;
-      },
-      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
-      {
-         this .volumeDataNode .setShaderUniforms (gl, shaderObject);
-      },
-   });
-
-   return VolumeMaterial;
+      return shaderNode;
+   },
+   setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+      this .volumeDataNode .setShaderUniforms (gl, shaderObject);
+   },
 });
+
+export default VolumeMaterial;

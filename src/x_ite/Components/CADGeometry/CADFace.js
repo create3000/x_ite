@@ -47,233 +47,221 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/CADGeometry/X3DProductStructureChildNode",
-   "x_ite/Components/Grouping/X3DBoundedObject",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Rendering/TraverseType",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DProductStructureChildNode,
-          X3DBoundedObject,
-          X3DConstants,
-          TraverseType)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DProductStructureChildNode from "./X3DProductStructureChildNode.js";
+import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import TraverseType from "../../Rendering/TraverseType.js";
+
+function CADFace (executionContext)
 {
-"use strict";
+   X3DProductStructureChildNode .call (this, executionContext);
+   X3DBoundedObject             .call (this, executionContext);
 
-   function CADFace (executionContext)
+   this .addType (X3DConstants .CADFace);
+
+   this .childNode     = null;
+   this .visibleNode   = null;
+   this .boundedObject = null;
+}
+
+CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNode .prototype),
+   X3DBoundedObject .prototype,
+{
+   constructor: CADFace,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "name",        new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "shape",       new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DProductStructureChildNode .call (this, executionContext);
-      X3DBoundedObject             .call (this, executionContext);
-
-      this .addType (X3DConstants .CADFace);
-
-      this .childNode     = null;
-      this .visibleNode   = null;
-      this .boundedObject = null;
-   }
-
-   CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNode .prototype),
-      X3DBoundedObject .prototype,
+      return "CADFace";
+   },
+   getComponentName: function ()
    {
-      constructor: CADFace,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "name",        new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shape",       new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "CADFace";
-      },
-      getComponentName: function ()
-      {
-         return "CADGeometry";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DProductStructureChildNode .prototype .initialize .call (this);
-         X3DBoundedObject             .prototype .initialize .call (this);
+      return "CADGeometry";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DProductStructureChildNode .prototype .initialize .call (this);
+      X3DBoundedObject             .prototype .initialize .call (this);
 
-         this ._shape .addInterest ("set_shape__", this);
+      this ._shape .addInterest ("set_shape__", this);
 
-         this .set_shape__ ();
-      },
-      getBBox: function (bbox, shadows)
+      this .set_shape__ ();
+   },
+   getBBox: function (bbox, shadows)
+   {
+      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
       {
-         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+         const boundedObject = this .visibleNode;
+
+         if (boundedObject)
+            return boundedObject .getBBox (bbox, shadows);
+
+         return bbox .set ();
+      }
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+   },
+   set_shape__: function ()
+   {
+      if (this .childNode)
+      {
+         this .childNode ._isCameraObject   .removeInterest ("set_cameraObject__",     this);
+         this .childNode ._isPickableObject .removeInterest ("set_transformSensors__", this);
+
+         this .childNode ._visible     .removeInterest ("set_visible__",     this);
+         this .childNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
+      }
+
+      this .childNode = null;
+
+      try
+      {
+         const
+            node = this ._shape .getValue () .getInnerNode (),
+            type = node .getType ();
+
+         for (let t = type .length - 1; t >= 0; -- t)
          {
-            const boundedObject = this .visibleNode;
+            switch (type [t])
+            {
+               case X3DConstants .LOD:
+               case X3DConstants .Transform:
+               case X3DConstants .X3DShapeNode:
+               {
+                  node ._isCameraObject   .addInterest ("set_cameraObject__",     this);
+                  node ._isPickableObject .addInterest ("set_transformSensors__", this);
 
-            if (boundedObject)
-               return boundedObject .getBBox (bbox, shadows);
+                  node ._visible     .addInterest ("set_visible__",     this);
+                  node ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
 
-            return bbox .set ();
+                  this .childNode = node;
+                  break;
+               }
+               default:
+                  continue;
+            }
+
+            break;
          }
+      }
+      catch (error)
+      { }
 
-         return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-      },
-      set_shape__: function ()
+      if (this .childNode)
       {
-         if (this .childNode)
+         delete this .traverse;
+      }
+      else
+      {
+         this .traverse = Function .prototype;
+      }
+
+      this .set_transformSensors__ ();
+      this .set_visible__ ();
+      this .set_bboxDisplay__ ();
+   },
+   set_cameraObject__: function ()
+   {
+      if (this .childNode && this .childNode .getCameraObject ())
+      {
+         this .setCameraObject (this .childNode ._visible .getValue ());
+      }
+      else
+      {
+         this .setCameraObject (false);
+      }
+   },
+   set_transformSensors__: function ()
+   {
+      this .setPickableObject (Boolean (this .childNode && this .childNode .getPickableObject ()));
+   },
+   set_visible__: function ()
+   {
+      if (this .childNode)
+      {
+         this .visibleNode = this .childNode ._visible .getValue () ? this .childNode : null;
+      }
+      else
+      {
+         this .visibleNode = null;
+      }
+
+      this .set_cameraObject__ ();
+   },
+   set_bboxDisplay__: function ()
+   {
+      if (this .childNode)
+      {
+         this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
+      }
+      else
+      {
+         this .boundedObject = null;
+      }
+   },
+   traverse: function (type, renderObject)
+   {
+      switch (type)
+      {
+         case TraverseType .POINTER:
+         case TraverseType .CAMERA:
+         case TraverseType .SHADOW:
          {
-            this .childNode ._isCameraObject   .removeInterest ("set_cameraObject__",     this);
-            this .childNode ._isPickableObject .removeInterest ("set_transformSensors__", this);
+            const visibleNode = this .visibleNode;
 
-            this .childNode ._visible     .removeInterest ("set_visible__",     this);
-            this .childNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
+            if (visibleNode)
+               visibleNode .traverse (type, renderObject);
+
+            return;
          }
-
-         this .childNode = null;
-
-         try
+         case TraverseType .PICKING:
          {
             const
-               node = this ._shape .getValue () .getInnerNode (),
-               type = node .getType ();
+               browser          = this .getBrowser (),
+               pickingHierarchy = browser .getPickingHierarchy ();
 
-            for (let t = type .length - 1; t >= 0; -- t)
-            {
-               switch (type [t])
-               {
-                  case X3DConstants .LOD:
-                  case X3DConstants .Transform:
-                  case X3DConstants .X3DShapeNode:
-                  {
-                     node ._isCameraObject   .addInterest ("set_cameraObject__",     this);
-                     node ._isPickableObject .addInterest ("set_transformSensors__", this);
+            pickingHierarchy .push (this);
 
-                     node ._visible     .addInterest ("set_visible__",     this);
-                     node ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
+            this .childNode .traverse (type, renderObject);
 
-                     this .childNode = node;
-                     break;
-                  }
-                  default:
-                     continue;
-               }
-
-               break;
-            }
+            pickingHierarchy .pop ();
+            return;
          }
-         catch (error)
-         { }
-
-         if (this .childNode)
+         case TraverseType .COLLISION:
          {
-            delete this .traverse;
+            this .childNode .traverse (type, renderObject);
+            return;
          }
-         else
+         case TraverseType .DISPLAY:
          {
-            this .traverse = Function .prototype;
+            const visibleNode = this .visibleNode;
+
+            if (visibleNode)
+               visibleNode .traverse (type, renderObject);
+
+            const boundedObject = this .boundedObject;
+
+            if (boundedObject)
+               boundedObject .displayBBox (type, renderObject);
+
+            return;
          }
-
-         this .set_transformSensors__ ();
-         this .set_visible__ ();
-         this .set_bboxDisplay__ ();
-      },
-      set_cameraObject__: function ()
-      {
-         if (this .childNode && this .childNode .getCameraObject ())
-         {
-            this .setCameraObject (this .childNode ._visible .getValue ());
-         }
-         else
-         {
-            this .setCameraObject (false);
-         }
-      },
-      set_transformSensors__: function ()
-      {
-         this .setPickableObject (Boolean (this .childNode && this .childNode .getPickableObject ()));
-      },
-      set_visible__: function ()
-      {
-         if (this .childNode)
-         {
-            this .visibleNode = this .childNode ._visible .getValue () ? this .childNode : null;
-         }
-         else
-         {
-            this .visibleNode = null;
-         }
-
-         this .set_cameraObject__ ();
-      },
-      set_bboxDisplay__: function ()
-      {
-         if (this .childNode)
-         {
-            this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
-         }
-         else
-         {
-            this .boundedObject = null;
-         }
-      },
-      traverse: function (type, renderObject)
-      {
-         switch (type)
-         {
-            case TraverseType .POINTER:
-            case TraverseType .CAMERA:
-            case TraverseType .SHADOW:
-            {
-               const visibleNode = this .visibleNode;
-
-               if (visibleNode)
-                  visibleNode .traverse (type, renderObject);
-
-               return;
-            }
-            case TraverseType .PICKING:
-            {
-               const
-                  browser          = this .getBrowser (),
-                  pickingHierarchy = browser .getPickingHierarchy ();
-
-               pickingHierarchy .push (this);
-
-               this .childNode .traverse (type, renderObject);
-
-               pickingHierarchy .pop ();
-               return;
-            }
-            case TraverseType .COLLISION:
-            {
-               this .childNode .traverse (type, renderObject);
-               return;
-            }
-            case TraverseType .DISPLAY:
-            {
-               const visibleNode = this .visibleNode;
-
-               if (visibleNode)
-                  visibleNode .traverse (type, renderObject);
-
-               const boundedObject = this .boundedObject;
-
-               if (boundedObject)
-                  boundedObject .displayBBox (type, renderObject);
-
-               return;
-            }
-         }
-      },
-   });
-
-   return CADFace;
+      }
+   },
 });
+
+export default CADFace;

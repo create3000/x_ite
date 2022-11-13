@@ -47,39 +47,32 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DBaseNode",
-],
-function (Fields,
-          X3DBaseNode)
+import Fields from "../../Fields.js";
+import X3DBaseNode from "../../Base/X3DBaseNode.js";
+
+function CylinderOptions (executionContext)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
 
-   function CylinderOptions (executionContext)
+   this .addChildObjects ("xDimension", new Fields .SFInt32 (20),
+                          "yDimension", new Fields .SFInt32 (1))
+}
+
+CylinderOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: CylinderOptions,
+   getTypeName: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-
-      this .addChildObjects ("xDimension", new Fields .SFInt32 (20),
-                             "yDimension", new Fields .SFInt32 (1))
-   }
-
-   CylinderOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return "CylinderOptions";
+   },
+   getComponentName: function ()
    {
-      constructor: CylinderOptions,
-      getTypeName: function ()
-      {
-         return "CylinderOptions";
-      },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "cylinderOptions";
-      },
-   });
-
-   return CylinderOptions;
+      return "X_ITE";
+   },
+   getContainerField: function ()
+   {
+      return "cylinderOptions";
+   },
 });
+
+export default CylinderOptions;

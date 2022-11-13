@@ -47,66 +47,55 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Components/Annotation/X3DAnnotationNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DGroupingNode,
-          X3DAnnotationNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DGroupingNode from "../Grouping/X3DGroupingNode.js";
+import X3DAnnotationNode from "./X3DAnnotationNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function GroupAnnotation (executionContext)
 {
-"use strict";
+   X3DGroupingNode   .call (this, executionContext);
+   X3DAnnotationNode .call (this, executionContext);
 
-   function GroupAnnotation (executionContext)
+   this .addType (X3DConstants .GroupAnnotation);
+}
+
+GroupAnnotation .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+   X3DAnnotationNode .prototype,
+{
+   constructor: GroupAnnotation,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",           new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "annotationGroupID", new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "displayPolicy",     new Fields .SFString ("NEVER")),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",       new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",        new Fields .SFVec3f (0, 0, 0)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",          new Fields .SFVec3f (-1, -1, -1)),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",       new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",    new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",          new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DGroupingNode   .call (this, executionContext);
-      X3DAnnotationNode .call (this, executionContext);
-
-      this .addType (X3DConstants .GroupAnnotation);
-   }
-
-   GroupAnnotation .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
-      X3DAnnotationNode .prototype,
+      return "GroupAnnotation";
+   },
+   getComponentName: function ()
    {
-      constructor: GroupAnnotation,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",           new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "annotationGroupID", new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "displayPolicy",     new Fields .SFString ("NEVER")),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",       new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",        new Fields .SFVec3f (0, 0, 0)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",          new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",       new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",    new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",          new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "GroupAnnotation";
-      },
-      getComponentName: function ()
-      {
-         return "Annotation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DGroupingNode   .prototype .initialize .call (this);
-         X3DAnnotationNode .prototype .initialize .call (this);
-      },
-   });
-
-   return GroupAnnotation;
+      return "Annotation";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DGroupingNode   .prototype .initialize .call (this);
+      X3DAnnotationNode .prototype .initialize .call (this);
+   },
 });
+
+export default GroupAnnotation;

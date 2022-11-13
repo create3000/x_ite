@@ -47,91 +47,79 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Rendering/TraverseType",
-   "standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DGroupingNode,
-          X3DConstants,
-          TraverseType,
-          Matrix4,)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DGroupingNode from "../Grouping/X3DGroupingNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import TraverseType from "../../Rendering/TraverseType.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+function ScreenGroup (executionContext)
 {
-"use strict";
+   X3DGroupingNode .call (this, executionContext);
 
-   function ScreenGroup (executionContext)
+   this .addType (X3DConstants .ScreenGroup);
+
+   this .matrix = new Matrix4 ();
+}
+
+ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+{
+   constructor: ScreenGroup,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DGroupingNode .call (this, executionContext);
-
-      this .addType (X3DConstants .ScreenGroup);
-
-      this .matrix = new Matrix4 ();
-   }
-
-   ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+      return "ScreenGroup";
+   },
+   getComponentName: function ()
    {
-      constructor: ScreenGroup,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
+      return "Layout";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   getBBox: function (bbox, shadows)
+   {
+      return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
+   },
+   getMatrix: function ()
+   {
+      return this .matrix;
+   },
+   traverse: function (type, renderObject)
+   {
+      switch (type)
       {
-         return "ScreenGroup";
-      },
-      getComponentName: function ()
-      {
-         return "Layout";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      getBBox: function (bbox, shadows)
-      {
-         return this .getSubBBox (bbox, shadows) .multRight (this .matrix);
-      },
-      getMatrix: function ()
-      {
-         return this .matrix;
-      },
-      traverse: function (type, renderObject)
-      {
-         switch (type)
-         {
-            case TraverseType .CAMERA:
-            case TraverseType .PICKING:
-            case TraverseType .SHADOW: // ???
-               // No clone support for shadows, generated cube map texture and bbox
-               break;
-            default:
-               this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix);
-               break;
-         }
+         case TraverseType .CAMERA:
+         case TraverseType .PICKING:
+         case TraverseType .SHADOW: // ???
+            // No clone support for shadows, generated cube map texture and bbox
+            break;
+         default:
+            this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix);
+            break;
+      }
 
-         const modelViewMatrix = renderObject .getModelViewMatrix ();
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-         modelViewMatrix .push ();
-         modelViewMatrix .multLeft (this .matrix);
+      modelViewMatrix .push ();
+      modelViewMatrix .multLeft (this .matrix);
 
-         X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+      X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-         modelViewMatrix .pop ();
-      },
-   });
-
-   return ScreenGroup;
+      modelViewMatrix .pop ();
+   },
 });
+
+export default ScreenGroup;

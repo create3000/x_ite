@@ -47,101 +47,90 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Browser/Geometry2D/Arc2DOptions",
-   "x_ite/Browser/Geometry2D/ArcClose2DOptions",
-   "x_ite/Browser/Geometry2D/Circle2DOptions",
-   "x_ite/Browser/Geometry2D/Disk2DOptions",
-   "x_ite/Browser/Geometry2D/Rectangle2DOptions",
-   "x_ite/Browser/Core/PrimitiveQuality",
-],
-function (Arc2DOptions,
-          ArcClose2DOptions,
-          Circle2DOptions,
-          Disk2DOptions,
-          Rectangle2DOptions,
-          PrimitiveQuality)
+import Arc2DOptions from "./Arc2DOptions.js";
+import ArcClose2DOptions from "./ArcClose2DOptions.js";
+import Circle2DOptions from "./Circle2DOptions.js";
+import Disk2DOptions from "./Disk2DOptions.js";
+import Rectangle2DOptions from "./Rectangle2DOptions.js";
+import PrimitiveQuality from "../Core/PrimitiveQuality.js";
+
+function X3DGeometry2DContext () { }
+
+X3DGeometry2DContext .prototype =
 {
-"use strict";
-
-   function X3DGeometry2DContext () { }
-
-   X3DGeometry2DContext .prototype =
+   initialize: function ()
    {
-      initialize: function ()
-      {
-         this .setPrimitiveQuality2D (this .getBrowserOptions () .getPrimitiveQuality ());
-      },
-      getArc2DOptions: function ()
-      {
-         return getOptionNode .call (this, "getArc2DOptions", Arc2DOptions);
-      },
-      getArcClose2DOptions: function ()
-      {
-         return getOptionNode .call (this, "getArcClose2DOptions", ArcClose2DOptions);
-      },
-      getCircle2DOptions: function ()
-      {
-         return getOptionNode .call (this, "getCircle2DOptions", Circle2DOptions);
-      },
-      getDisk2DOptions: function ()
-      {
-         return getOptionNode .call (this, "getDisk2DOptions", Disk2DOptions);
-      },
-      getRectangle2DOptions: function ()
-      {
-         return getOptionNode .call (this, "getRectangle2DOptions", Rectangle2DOptions);
-      },
-      setPrimitiveQuality2D: function (primitiveQuality)
-      {
-         const
-            arc      = this .getArc2DOptions (),
-            arcClose = this .getArcClose2DOptions (),
-            circle   = this .getCircle2DOptions (),
-            disk     = this .getDisk2DOptions ();
+      this .setPrimitiveQuality2D (this .getBrowserOptions () .getPrimitiveQuality ());
+   },
+   getArc2DOptions: function ()
+   {
+      return getOptionNode .call (this, "getArc2DOptions", Arc2DOptions);
+   },
+   getArcClose2DOptions: function ()
+   {
+      return getOptionNode .call (this, "getArcClose2DOptions", ArcClose2DOptions);
+   },
+   getCircle2DOptions: function ()
+   {
+      return getOptionNode .call (this, "getCircle2DOptions", Circle2DOptions);
+   },
+   getDisk2DOptions: function ()
+   {
+      return getOptionNode .call (this, "getDisk2DOptions", Disk2DOptions);
+   },
+   getRectangle2DOptions: function ()
+   {
+      return getOptionNode .call (this, "getRectangle2DOptions", Rectangle2DOptions);
+   },
+   setPrimitiveQuality2D: function (primitiveQuality)
+   {
+      const
+         arc      = this .getArc2DOptions (),
+         arcClose = this .getArcClose2DOptions (),
+         circle   = this .getCircle2DOptions (),
+         disk     = this .getDisk2DOptions ();
 
-         switch (primitiveQuality)
+      switch (primitiveQuality)
+      {
+         case PrimitiveQuality .LOW:
          {
-            case PrimitiveQuality .LOW:
-            {
-               arc      ._dimension = 20;
-               arcClose ._dimension = 20;
-               circle   ._dimension = 20;
-               disk     ._dimension = 20;
-               break;
-            }
-            case PrimitiveQuality .MEDIUM:
-            {
-               arc      ._dimension = 40;
-               arcClose ._dimension = 40;
-               circle   ._dimension = 40;
-               disk     ._dimension = 40;
-               break;
-            }
-            case PrimitiveQuality .HIGH:
-            {
-               arc      ._dimension = 80;
-               arcClose ._dimension = 80;
-               circle   ._dimension = 80;
-               disk     ._dimension = 80;
-               break;
-            }
+            arc      ._dimension = 20;
+            arcClose ._dimension = 20;
+            circle   ._dimension = 20;
+            disk     ._dimension = 20;
+            break;
          }
-      },
-   };
+         case PrimitiveQuality .MEDIUM:
+         {
+            arc      ._dimension = 40;
+            arcClose ._dimension = 40;
+            circle   ._dimension = 40;
+            disk     ._dimension = 40;
+            break;
+         }
+         case PrimitiveQuality .HIGH:
+         {
+            arc      ._dimension = 80;
+            arcClose ._dimension = 80;
+            circle   ._dimension = 80;
+            disk     ._dimension = 80;
+            break;
+         }
+      }
+   },
+};
 
-   function getOptionNode (key, OptionNode)
-   {
-      const optionNode = new OptionNode (this .getPrivateScene ());
+function getOptionNode (key, OptionNode)
+{
+   const optionNode = new OptionNode (this .getPrivateScene ());
 
-      optionNode .setup ();
+   optionNode .setup ();
 
-      this [key] = function () { return optionNode; };
+   this [key] = function () { return optionNode; };
 
-      Object .defineProperty (this, key, { enumerable: false });
+   Object .defineProperty (this, key, { enumerable: false });
 
-      return optionNode;
-   }
+   return optionNode;
+}
 
-   return X3DGeometry2DContext;
-});
+export default X3DGeometry2DContext;

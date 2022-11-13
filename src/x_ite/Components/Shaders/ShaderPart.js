@@ -47,193 +47,179 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Browser/Shaders/ShaderSource",
-   "x_ite/Browser/Shaders/ShaderCompiler",
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/InputOutput/FileLoader",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          ShaderSource,
-          ShaderCompiler,
-          X3DNode,
-          X3DUrlObject,
-          FileLoader,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import ShaderSource from "../../Browser/Shaders/ShaderSource.js";
+import ShaderCompiler from "../../Browser/Shaders/ShaderCompiler.js";
+import X3DNode from "../Core/X3DNode.js";
+import X3DUrlObject from "../Networking/X3DUrlObject.js";
+import FileLoader from "../../InputOutput/FileLoader.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+const customOptions = [
+   "X3D_GEOMETRY_0D",
+   "X3D_GEOMETRY_1D",
+   "X3D_GEOMETRY_2D",
+   "X3D_GEOMETRY_3D",
+   "X3D_FOG",
+   "X3D_STYLE_PROPERTIES",
+   "X3D_UNLIT_MATERIAL",
+   "X3D_MATERIAL",
+   "X3D_LIGHTING",
+   "X3D_TEXTURE",
+   "X3D_MULTI_TEXTURING",
+];
+
+function ShaderPart (executionContext)
 {
-"use strict";
+   X3DNode      .call (this, executionContext);
+   X3DUrlObject .call (this, executionContext);
 
-   const customOptions = [
-      "X3D_GEOMETRY_0D",
-      "X3D_GEOMETRY_1D",
-      "X3D_GEOMETRY_2D",
-      "X3D_GEOMETRY_3D",
-      "X3D_FOG",
-      "X3D_STYLE_PROPERTIES",
-      "X3D_UNLIT_MATERIAL",
-      "X3D_MATERIAL",
-      "X3D_LIGHTING",
-      "X3D_TEXTURE",
-      "X3D_MULTI_TEXTURING",
-   ];
+   this .addType (X3DConstants .ShaderPart);
 
-   function ShaderPart (executionContext)
+   this .options = [ ];
+}
+
+ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
+   X3DUrlObject .prototype,
+{
+   constructor: ShaderPart,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+   ]),
+   getTypeName: function ()
    {
-      X3DNode      .call (this, executionContext);
-      X3DUrlObject .call (this, executionContext);
-
-      this .addType (X3DConstants .ShaderPart);
-
-      this .options = [ ];
-   }
-
-   ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
-      X3DUrlObject .prototype,
+      return "ShaderPart";
+   },
+   getComponentName: function ()
    {
-      constructor: ShaderPart,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      ]),
-      getTypeName: function ()
-      {
-         return "ShaderPart";
-      },
-      getComponentName: function ()
-      {
-         return "Shaders";
-      },
-      getContainerField: function ()
-      {
-         return "parts";
-      },
-      initialize: function ()
-      {
-         X3DNode      .prototype .initialize .call (this);
-         X3DUrlObject .prototype .initialize .call (this);
+      return "Shaders";
+   },
+   getContainerField: function ()
+   {
+      return "parts";
+   },
+   initialize: function ()
+   {
+      X3DNode      .prototype .initialize .call (this);
+      X3DUrlObject .prototype .initialize .call (this);
 
-         if (! this .isPrivate ())
-            this .options = customOptions .slice ();
+      if (! this .isPrivate ())
+         this .options = customOptions .slice ();
 
-         this ._type .addInterest ("set_type__", this);
+      this ._type .addInterest ("set_type__", this);
 
-         this .requestImmediateLoad ();
-      },
-      set_type__: function ()
-      {
-         this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+      this .requestImmediateLoad ();
+   },
+   set_type__: function ()
+   {
+      this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
-         this .requestImmediateLoad ();
-      },
-      getSourceText: function ()
-      {
-         return this ._url;
-      },
-      getOptions: function ()
-      {
-         return this .options;
-      },
-      setOptions: function (value)
-      {
-         this .options = value;
-      },
-      getShader: function ()
-      {
-         return this .shader;
-      },
-      getShaderType: (function ()
-      {
-         const shaderTypes = new Map ([
-            ["VERTEX",          "VERTEX_SHADER"],
-            ["TESS_CONTROL",    "TESS_CONTROL_SHADER"],
-            ["TESS_EVALUATION", "TESS_EVALUATION_SHADER"],
-            ["GEOMETRY",        "GEOMETRY_SHADER"],
-            ["FRAGMENT",        "FRAGMENT_SHADER"],
-            ["COMPUTE",         "COMPUTE_SHADER"],
-         ]);
+      this .requestImmediateLoad ();
+   },
+   getSourceText: function ()
+   {
+      return this ._url;
+   },
+   getOptions: function ()
+   {
+      return this .options;
+   },
+   setOptions: function (value)
+   {
+      this .options = value;
+   },
+   getShader: function ()
+   {
+      return this .shader;
+   },
+   getShaderType: (function ()
+   {
+      const shaderTypes = new Map ([
+         ["VERTEX",          "VERTEX_SHADER"],
+         ["TESS_CONTROL",    "TESS_CONTROL_SHADER"],
+         ["TESS_EVALUATION", "TESS_EVALUATION_SHADER"],
+         ["GEOMETRY",        "GEOMETRY_SHADER"],
+         ["FRAGMENT",        "FRAGMENT_SHADER"],
+         ["COMPUTE",         "COMPUTE_SHADER"],
+      ]);
 
-         return function ()
+      return function ()
+      {
+         return shaderTypes .get (this ._type .getValue ()) || "VERTEX_SHADER";
+      };
+   })(),
+   unLoadNow: function ()
+   {
+      this .valid = false;
+   },
+   loadNow: function ()
+   {
+      new FileLoader (this) .loadDocument (this ._url,
+      function (data, url)
+      {
+         if (data === null)
          {
-            return shaderTypes .get (this ._type .getValue ()) || "VERTEX_SHADER";
-         };
-      })(),
-      unLoadNow: function ()
-      {
-         this .valid = false;
-      },
-      loadNow: function ()
-      {
-         new FileLoader (this) .loadDocument (this ._url,
-         function (data, url)
+            // No URL could be loaded.
+            this .setLoadState (X3DConstants .FAILED_STATE);
+         }
+         else
          {
-            if (data === null)
-            {
-               // No URL could be loaded.
-               this .setLoadState (X3DConstants .FAILED_STATE);
-            }
-            else
+            const
+               browser        = this .getBrowser (),
+               gl             = browser .getContext (),
+               type           = this .getShaderType (),
+               options        = ["X3D_" + type] .concat (this .options),
+               shaderCompiler = new ShaderCompiler (gl),
+               source         = ShaderSource .getSource (gl, browser, shaderCompiler .process (data), options),
+               shader         = gl .createShader (gl [type]);
+
+            gl .deleteShader (this .shader);
+
+            this .shader = shader;
+
+            gl .shaderSource (shader, source);
+            gl .compileShader (shader);
+
+            if (! gl .getShaderParameter (shader, gl .COMPILE_STATUS))
             {
                const
-                  browser        = this .getBrowser (),
-                  gl             = browser .getContext (),
-                  type           = this .getShaderType (),
-                  options        = ["X3D_" + type] .concat (this .options),
-                  shaderCompiler = new ShaderCompiler (gl),
-                  source         = ShaderSource .getSource (gl, browser, shaderCompiler .process (data), options),
-                  shader         = gl .createShader (gl [type]);
+                  typeName = this .getTypeName (),
+                  name     = this .getName (),
+                  log      = gl .getShaderInfoLog (shader),
+                  match    = log .match (/(\d+):(\d+)/);
 
-               gl .deleteShader (this .shader);
-
-               this .shader = shader;
-
-               gl .shaderSource (shader, source);
-               gl .compileShader (shader);
-
-               if (! gl .getShaderParameter (shader, gl .COMPILE_STATUS))
+               if (match)
                {
-                  const
-                     typeName = this .getTypeName (),
-                     name     = this .getName (),
-                     log      = gl .getShaderInfoLog (shader),
-                     match    = log .match (/(\d+):(\d+)/);
+                  const fileName = shaderCompiler .getSourceFileName (match [1]) || url || this .getExecutionContext () .getWorldURL ();
 
-                  if (match)
-                  {
-                     const fileName = shaderCompiler .getSourceFileName (match [1]) || url || this .getExecutionContext () .getWorldURL ();
-
-                     throw new Error ("Error in " + typeName + " '" + name + "' in URL '" + fileName + "', line " + match [2] + ", " + log);
-                  }
-                  else
-                  {
-                     const fileName = url || this .getExecutionContext () .getWorldURL ();
-
-                     throw new Error ("Error in " + typeName + " '" + name + "' in URL '" + fileName + "', " + log);
-                  }
+                  throw new Error ("Error in " + typeName + " '" + name + "' in URL '" + fileName + "', line " + match [2] + ", " + log);
                }
+               else
+               {
+                  const fileName = url || this .getExecutionContext () .getWorldURL ();
 
-               this .setLoadState (X3DConstants .COMPLETE_STATE);
+                  throw new Error ("Error in " + typeName + " '" + name + "' in URL '" + fileName + "', " + log);
+               }
             }
+
+            this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
-         .bind (this));
-      },
-      dispose: function ()
-      {
-         this .getBrowser () .getContext () .deleteShader (this .shader);
+      }
+      .bind (this));
+   },
+   dispose: function ()
+   {
+      this .getBrowser () .getContext () .deleteShader (this .shader);
 
-         X3DNode .prototype .dispose .call (this);
-      },
-   });
-
-   return ShaderPart;
+      X3DNode .prototype .dispose .call (this);
+   },
 });
+
+export default ShaderPart;

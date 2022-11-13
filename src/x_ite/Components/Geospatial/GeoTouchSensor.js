@@ -47,93 +47,80 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode",
-   "x_ite/Components/Geospatial/X3DGeospatialObject",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DTouchSensorNode,
-          X3DGeospatialObject,
-          X3DConstants,
-          Vector3,
-          Matrix4)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DTouchSensorNode from "../PointingDeviceSensor/X3DTouchSensorNode.js";
+import X3DGeospatialObject from "./X3DGeospatialObject.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+var
+   invModelViewMatrix = new Matrix4 (),
+   geoCoords          = new Vector3 (0, 0, 0);
+
+function GeoTouchSensor (executionContext)
 {
-"use strict";
+   X3DTouchSensorNode  .call (this, executionContext);
+   X3DGeospatialObject .call (this, executionContext);
 
-   var
-      invModelViewMatrix = new Matrix4 (),
-      geoCoords          = new Vector3 (0, 0, 0);
+   this .addType (X3DConstants .GeoTouchSensor);
 
-   function GeoTouchSensor (executionContext)
+   this ._hitPoint_changed .setUnit ("length");
+}
+
+GeoTouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
+   X3DGeospatialObject .prototype,
+{
+   constructor: GeoTouchSensor,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",            new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",         new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",           new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",           new Fields .MFString ("GD", "WE")),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",             new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "hitTexCoord_changed", new Fields .SFVec2f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "hitNormal_changed",   new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "hitPoint_changed",    new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "hitGeoCoord_changed", new Fields .SFVec3d ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "isOver",              new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",            new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "touchTime",           new Fields .SFTime ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DTouchSensorNode  .call (this, executionContext);
-      X3DGeospatialObject .call (this, executionContext);
-
-      this .addType (X3DConstants .GeoTouchSensor);
-
-      this ._hitPoint_changed .setUnit ("length");
-   }
-
-   GeoTouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
-      X3DGeospatialObject .prototype,
+      return "GeoTouchSensor";
+   },
+   getComponentName: function ()
    {
-      constructor: GeoTouchSensor,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",            new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",         new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",           new Fields .MFString ("GD", "WE")),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",             new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "hitTexCoord_changed", new Fields .SFVec2f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "hitNormal_changed",   new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "hitPoint_changed",    new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "hitGeoCoord_changed", new Fields .SFVec3d ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "isOver",              new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",            new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "touchTime",           new Fields .SFTime ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "GeoTouchSensor";
-      },
-      getComponentName: function ()
-      {
-         return "Geospatial";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DTouchSensorNode  .prototype .initialize .call (this);
-         X3DGeospatialObject .prototype .initialize .call (this);
-      },
-      set_over__: function (over, hit, modelViewMatrix, projectionMatrix, viewport)
-      {
-         X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DTouchSensorNode  .prototype .initialize .call (this);
+      X3DGeospatialObject .prototype .initialize .call (this);
+   },
+   set_over__: function (over, hit, modelViewMatrix, projectionMatrix, viewport)
+   {
+      X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
 
-         if (this ._isOver .getValue ())
-         {
-            var intersection = hit .intersection;
+      if (this ._isOver .getValue ())
+      {
+         var intersection = hit .intersection;
 
-            invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+         invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-            this ._hitTexCoord_changed = intersection .texCoord;
-            this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
-            this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
-            this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
-         }
-      },
-   });
-
-   return GeoTouchSensor;
+         this ._hitTexCoord_changed = intersection .texCoord;
+         this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
+         this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
+         this ._hitGeoCoord_changed = this .getGeoCoord (this ._hitPoint_changed .getValue (), geoCoords);
+      }
+   },
 });
+
+export default GeoTouchSensor;

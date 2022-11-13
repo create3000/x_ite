@@ -47,93 +47,88 @@
  ******************************************************************************/
 
 
-define (function ()
+const
+   storages   = new WeakMap (),
+   namespaces = new WeakMap (),
+   defaults   = new WeakMap ();
+
+const handler =
 {
-"use strict";
-
-   const
-      storages   = new WeakMap (),
-      namespaces = new WeakMap (),
-      defaults   = new WeakMap ();
-
-   const handler =
+   get: function (target, key)
    {
-      get: function (target, key)
-      {
-         const property = target [key];
+      const property = target [key];
 
-         if (property !== undefined)
-            return property;
+      if (property !== undefined)
+         return property;
 
-         const string = target .getStorage () [target .getNameSpace () + key];
+      const string = target .getStorage () [target .getNameSpace () + key];
 
-         if (string === undefined || string === "undefined" || string === null)
-            return target .getDefaultValue (key);
+      if (string === undefined || string === "undefined" || string === null)
+         return target .getDefaultValue (key);
 
-         const value = JSON .parse (string);
+      const value = JSON .parse (string);
 
-         return value;
-      },
-      set: function (target, key, value)
-      {
-         if (value === undefined)
-            target .getStorage () .removeItem (target .getNameSpace () + key);
-
-         else
-            target .getStorage () [target .getNameSpace () + key] = JSON .stringify (value);
-
-         return true;
-      },
-   };
-
-   function DataStorage (storage, namespace)
+      return value;
+   },
+   set: function (target, key, value)
    {
-      this .target  = this;
+      if (value === undefined)
+         target .getStorage () .removeItem (target .getNameSpace () + key);
 
-      storages   .set (this, storage);
-      namespaces .set (this, namespace);
-      defaults   .set (this, { });
+      else
+         target .getStorage () [target .getNameSpace () + key] = JSON .stringify (value);
 
-      return new Proxy (this, handler);
-   }
+      return true;
+   },
+};
 
-   DataStorage .prototype = {
-      constructor: DataStorage,
-      getStorage: function ()
-      {
-         return storages .get (this .target);
-      },
-      getNameSpace: function ()
-      {
-         return namespaces .get (this .target);
-      },
-      addNameSpace: function (namespace)
-      {
-         return new DataStorage (this .getStorage (), this .getNameSpace () + namespace);
-      },
-      addDefaultValues: function (object)
-      {
-         Object .assign (defaults .get (this .target), object);
-      },
-      getDefaultValue (key)
-      {
-         const value = defaults .get (this .target) [key];
+function DataStorage (storage, namespace)
+{
+   this .target  = this;
 
-         return value === undefined ? undefined : JSON .parse (JSON .stringify (value));
-      },
-      clear: function ()
+   storages   .set (this, storage);
+   namespaces .set (this, namespace);
+   defaults   .set (this, { });
+
+   return new Proxy (this, handler);
+}
+
+DataStorage .prototype = {
+   constructor: DataStorage,
+   getStorage: function ()
+   {
+      return storages .get (this .target);
+   },
+   getNameSpace: function ()
+   {
+      return namespaces .get (this .target);
+   },
+   addNameSpace: function (namespace)
+   {
+      return new DataStorage (this .getStorage (), this .getNameSpace () + namespace);
+   },
+   addDefaultValues: function (object)
+   {
+      Object .assign (defaults .get (this .target), object);
+   },
+   getDefaultValue (key)
+   {
+      const value = defaults .get (this .target) [key];
+
+      return value === undefined ? undefined : JSON .parse (JSON .stringify (value));
+   },
+   clear: function ()
+   {
+      const
+         storage   = this .getStorage (),
+         namespace = this .getNameSpace ();
+
+      for (const key of Object .keys (storage))
       {
-         const
-            storage   = this .getStorage (),
-            namespace = this .getNameSpace ();
+         if (key .startsWith (namespace))
+            storage .removeItem (key)
+      }
+   },
+}
 
-         for (const key of Object .keys (storage))
-         {
-            if (key .startsWith (namespace))
-               storage .removeItem (key)
-         }
-      },
-   }
-
-   return DataStorage;
-});
+export default DataStorage;

@@ -47,51 +47,46 @@
  ******************************************************************************/
 
 
-define (function ()
+const shrinkFactor = 1 - Math .exp (-Math .PHI); // 0.801711847137793
+
+function PartialSort (array, compare)
 {
-"use strict";
+   this .array = array;
 
-   const shrinkFactor = 1 - Math .exp (-Math .PHI); // 0.801711847137793
+   if (compare)
+      this .compare = compare;
+}
 
-   function PartialSort (array, compare)
+PartialSort .prototype =
+{
+   compare: function (lhs, rhs)
    {
-      this .array = array;
-
-      if (compare)
-         this .compare = compare;
-   }
-
-   PartialSort .prototype =
+      return lhs < rhs;
+   },
+   sort: function (first, last)
    {
-      compare: function (lhs, rhs)
-      {
-         return lhs < rhs;
-      },
-      sort: function (first, last)
-      {
-         if (last - first > 1)
-            this .partialsort (first, last);
-      },
-      partialsort: function (lo, hi)
-      {
-         let gap = this .last, i, last;
+      if (last - first > 1)
+         this .partialsort (first, last);
+   },
+   partialsort: function (lo, hi)
+   {
+      let gap = this .last, i, last;
 
-         if (gap > 1)
-            gap = Math .floor (gap * shrinkFactor);
+      if (gap > 1)
+         gap = Math .floor (gap * shrinkFactor);
 
-         for (i = 0, last = this .last - gap; i < last; ++ i)
+      for (i = 0, last = this .last - gap; i < last; ++ i)
+      {
+         const j = i + gap;
+
+         if (this .compare (this .array [j], this .array [i]))
          {
-            const j = i + gap;
-
-            if (this .compare (this .array [j], this .array [i]))
-            {
-               const t = array [i];
-               array [i] = array [j];
-               array [j] = t;
-            }
+            const t = array [i];
+            array [i] = array [j];
+            array [j] = t;
          }
-      },
-   };
+      }
+   },
+};
 
-   return PartialSort;
-});
+export default PartialSort;

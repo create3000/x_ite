@@ -47,306 +47,284 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Lighting/X3DLightNode",
-   "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Rendering/TraverseType",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Geometry/Camera",
-   "standard/Math/Geometry/ViewVolume",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Vector4",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Numbers/Matrix3",
-   "standard/Math/Numbers/Matrix4",
-   "standard/Math/Utility/MatrixStack",
-   "standard/Math/Algorithm",
-   "standard/Utility/ObjectCache",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DLightNode,
-          X3DGroupingNode,
-          TraverseType,
-          X3DConstants,
-          Camera,
-          ViewVolume,
-          Vector3,
-          Vector4,
-          Rotation4,
-          Matrix3,
-          Matrix4,
-          MatrixStack,
-          Algorithm,
-          ObjectCache)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DLightNode from "./X3DLightNode.js";
+import X3DGroupingNode from "../Grouping/X3DGroupingNode.js";
+import TraverseType from "../../Rendering/TraverseType.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Camera from "../../../standard/Math/Geometry/Camera.js";
+import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix3 from "../../../standard/Math/Numbers/Matrix3.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import MatrixStack from "../../../standard/Math/Utility/MatrixStack.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+import ObjectCache from "../../../standard/Utility/ObjectCache.js";
+
+// Shadow map layout
+// Compact layout:
+//
+// xzXZ		Char: Axis
+// yyYY		Case: Sign
+
+const orientationMatrices = [
+   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 1,  0,  0), Vector3 .zAxis)), // left
+   new Matrix4 () .setRotation (new Rotation4 (new Vector3 (-1,  0,  0), Vector3 .zAxis)), // right
+   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  0, -1), Vector3 .zAxis)), // front
+   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  0,  1), Vector3 .zAxis)), // back
+   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  1,  0), Vector3 .zAxis)), // bottom
+   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0, -1,  0), Vector3 .zAxis)), // top
+];
+
+const viewports = [
+   new Vector4 (0,    0.5, 0.25, 0.5), // left
+   new Vector4 (0.5,  0.5, 0.25, 0.5), // right
+   new Vector4 (0.75, 0.5, 0.25, 0.5), // front
+   new Vector4 (0.25, 0.5, 0.25, 0.5), // back
+   new Vector4 (0.0,  0,   0.5,  0.5), // bottom
+   new Vector4 (0.5,  0,   0.5,  0.5), // top
+];
+
+const PointLights = ObjectCache (PointLightContainer);
+
+function PointLightContainer ()
 {
-"use strict";
+   this .location                      = new Vector3 (0, 0, 0);
+   this .matrixArray                   = new Float32Array (9);
+   this .shadowBuffer                  = null;
+   this .viewVolume                    = new ViewVolume ();
+   this .viewport                      = new Vector4 (0, 0, 0, 0);
+   this .projectionMatrix              = new Matrix4 ();
+   this .modelViewMatrix               = new MatrixStack (Matrix4);
+   this .modelMatrix                   = new Matrix4 ();
+   this .invLightSpaceMatrix           = new Matrix4 ();
+   this .invLightSpaceProjectionMatrix = new Matrix4 ();
+   this .shadowMatrix                  = new Matrix4 ();
+   this .shadowMatrixArray             = new Float32Array (16);
+   this .rotation                      = new Rotation4 ();
+   this .rotationMatrix                = new Matrix4 ();
+   this .textureUnit                   = undefined;
+}
 
-   // Shadow map layout
-   // Compact layout:
-   //
-   // xzXZ		Char: Axis
-   // yyYY		Case: Sign
-
-   const orientationMatrices = [
-      new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 1,  0,  0), Vector3 .zAxis)), // left
-      new Matrix4 () .setRotation (new Rotation4 (new Vector3 (-1,  0,  0), Vector3 .zAxis)), // right
-      new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  0, -1), Vector3 .zAxis)), // front
-      new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  0,  1), Vector3 .zAxis)), // back
-      new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  1,  0), Vector3 .zAxis)), // bottom
-      new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0, -1,  0), Vector3 .zAxis)), // top
-   ];
-
-   const viewports = [
-      new Vector4 (0,    0.5, 0.25, 0.5), // left
-      new Vector4 (0.5,  0.5, 0.25, 0.5), // right
-      new Vector4 (0.75, 0.5, 0.25, 0.5), // front
-      new Vector4 (0.25, 0.5, 0.25, 0.5), // back
-      new Vector4 (0.0,  0,   0.5,  0.5), // bottom
-      new Vector4 (0.5,  0,   0.5,  0.5), // top
-   ];
-
-   const PointLights = ObjectCache (PointLightContainer);
-
-   function PointLightContainer ()
+PointLightContainer .prototype =
+{
+   constructor: PointLightContainer,
+   getModelViewMatrix: function ()
    {
-      this .location                      = new Vector3 (0, 0, 0);
-      this .matrixArray                   = new Float32Array (9);
-      this .shadowBuffer                  = null;
-      this .viewVolume                    = new ViewVolume ();
-      this .viewport                      = new Vector4 (0, 0, 0, 0);
-      this .projectionMatrix              = new Matrix4 ();
-      this .modelViewMatrix               = new MatrixStack (Matrix4);
-      this .modelMatrix                   = new Matrix4 ();
-      this .invLightSpaceMatrix           = new Matrix4 ();
-      this .invLightSpaceProjectionMatrix = new Matrix4 ();
-      this .shadowMatrix                  = new Matrix4 ();
-      this .shadowMatrixArray             = new Float32Array (16);
-      this .rotation                      = new Rotation4 ();
-      this .rotationMatrix                = new Matrix4 ();
-      this .textureUnit                   = undefined;
-   }
-
-   PointLightContainer .prototype =
+      return this .modelViewMatrix;
+   },
+   set: function (lightNode, groupNode, modelViewMatrix)
    {
-      constructor: PointLightContainer,
-      getModelViewMatrix: function ()
+      const shadowMapSize = lightNode .getShadowMapSize ();
+
+      this .browser   = lightNode .getBrowser ();
+      this .lightNode = lightNode;
+      this .groupNode = groupNode;
+
+      this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
+
+      this .modelViewMatrix .pushMatrix (modelViewMatrix);
+
+      // Get shadow buffer from browser.
+
+      if (lightNode .getShadowIntensity () > 0 && shadowMapSize > 0)
       {
-         return this .modelViewMatrix;
-      },
-      set: function (lightNode, groupNode, modelViewMatrix)
+         this .shadowBuffer = this .browser .popShadowBuffer (shadowMapSize);
+
+         if (!this .shadowBuffer)
+            console .warn ("Couldn't create shadow buffer.");
+      }
+   },
+   renderShadowMap: function (renderObject)
+   {
+      if (! this .shadowBuffer)
+         return;
+
+      const
+         lightNode           = this .lightNode,
+         cameraSpaceMatrix   = renderObject .getCameraSpaceMatrix () .get (),
+         modelMatrix         = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+         invLightSpaceMatrix = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+
+      invLightSpaceMatrix .translate (lightNode .getLocation ());
+      invLightSpaceMatrix .inverse ();
+
+      const shadowMapSize  = lightNode .getShadowMapSize ();
+
+      this .shadowBuffer .bind ();
+
+      for (let i = 0; i < 6; ++ i)
       {
-         const shadowMapSize = lightNode .getShadowMapSize ();
-
-         this .browser   = lightNode .getBrowser ();
-         this .lightNode = lightNode;
-         this .groupNode = groupNode;
-
-         this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
-
-         this .modelViewMatrix .pushMatrix (modelViewMatrix);
-
-         // Get shadow buffer from browser.
-
-         if (lightNode .getShadowIntensity () > 0 && shadowMapSize > 0)
-         {
-            this .shadowBuffer = this .browser .popShadowBuffer (shadowMapSize);
-
-            if (!this .shadowBuffer)
-               console .warn ("Couldn't create shadow buffer.");
-         }
-      },
-      renderShadowMap: function (renderObject)
-      {
-         if (! this .shadowBuffer)
-            return;
-
          const
-            lightNode           = this .lightNode,
-            cameraSpaceMatrix   = renderObject .getCameraSpaceMatrix () .get (),
-            modelMatrix         = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-            invLightSpaceMatrix = this .invLightSpaceMatrix .assign (lightNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+            v                = viewports [i],
+            viewport         = this .viewport .set (v [0] * shadowMapSize, v [1] * shadowMapSize, v [2] * shadowMapSize, v [3] * shadowMapSize),
+            projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
 
-         invLightSpaceMatrix .translate (lightNode .getLocation ());
-         invLightSpaceMatrix .inverse ();
+         renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+         renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
+         renderObject .getModelViewMatrix  () .pushMatrix (orientationMatrices [i]);
+         renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
 
-         const shadowMapSize  = lightNode .getShadowMapSize ();
+         renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
 
-         this .shadowBuffer .bind ();
+         renderObject .getModelViewMatrix  () .pop ();
+         renderObject .getProjectionMatrix () .pop ();
+         renderObject .getViewVolumes () .pop ();
+      }
 
-         for (let i = 0; i < 6; ++ i)
-         {
-            const
-               v                = viewports [i],
-               viewport         = this .viewport .set (v [0] * shadowMapSize, v [1] * shadowMapSize, v [2] * shadowMapSize, v [3] * shadowMapSize),
-               projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
+      this .shadowBuffer .unbind ();
 
-            renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
-            renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
-            renderObject .getModelViewMatrix  () .pushMatrix (orientationMatrices [i]);
-            renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
+      if (! lightNode .getGlobal ())
+         invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
-            renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
+      this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix);
+   },
+   setGlobalVariables: function (renderObject)
+   {
+      this .modelViewMatrix .get () .multVecMatrix (this .location .assign (this .lightNode ._location .getValue ()));
 
-            renderObject .getModelViewMatrix  () .pop ();
-            renderObject .getProjectionMatrix () .pop ();
-            renderObject .getViewVolumes () .pop ();
-         }
+      if (! this .shadowBuffer)
+         return;
+         
+      this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
+      this .shadowMatrixArray .set (this .shadowMatrix);
+   },
+   setShaderUniforms: function (gl, shaderObject)
+   {
+      const i = shaderObject .numLights ++;
 
-         this .shadowBuffer .unbind ();
-
-         if (! lightNode .getGlobal ())
-            invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
-
-         this .invLightSpaceProjectionMatrix .assign (invLightSpaceMatrix);
-      },
-      setGlobalVariables: function (renderObject)
+      if (this .shadowBuffer)
       {
-         this .modelViewMatrix .get () .multVecMatrix (this .location .assign (this .lightNode ._location .getValue ()));
+         const textureUnit = this .lightNode .getGlobal ()
+            ? (this .textureUnit = this .textureUnit !== undefined
+               ? this .textureUnit
+               : this .browser .popTexture2DUnit ())
+            : this .browser .getTexture2DUnit ();
 
-         if (! this .shadowBuffer)
-            return;
-            
-         this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
-         this .shadowMatrixArray .set (this .shadowMatrix);
-      },
-      setShaderUniforms: function (gl, shaderObject)
-      {
-         const i = shaderObject .numLights ++;
-
-         if (this .shadowBuffer)
+         if (textureUnit !== undefined)
          {
-            const textureUnit = this .lightNode .getGlobal ()
-               ? (this .textureUnit = this .textureUnit !== undefined
-                  ? this .textureUnit
-                  : this .browser .popTexture2DUnit ())
-               : this .browser .getTexture2DUnit ();
+            gl .activeTexture (gl .TEXTURE0 + textureUnit);
 
-            if (textureUnit !== undefined)
-            {
-               gl .activeTexture (gl .TEXTURE0 + textureUnit);
-
-               if (gl .HAS_FEATURE_DEPTH_TEXTURE)
-                  gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
-               else
-                  gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
-
-               gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
-            }
+            if (gl .HAS_FEATURE_DEPTH_TEXTURE)
+               gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
             else
-            {
-               console .warn ("Not enough combined texture units for shadow map available.");
-            }
+               gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getColorTexture ());
+
+            gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
          }
-
-         if (shaderObject .hasLight (i, this))
-            return;
-
-         const
-            lightNode   = this .lightNode,
-            color       = lightNode .getColor (),
-            attenuation = lightNode .getAttenuation (),
-            location    = this .location;
-
-         gl .uniform1i        (shaderObject .x3d_LightType [i],             2);
-         gl .uniform3f        (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
-         gl .uniform1f        (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
-         gl .uniform1f        (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
-         gl .uniform3f        (shaderObject .x3d_LightAttenuation [i],      Math .max (0, attenuation .x), Math .max (0, attenuation .y), Math .max (0, attenuation .z));
-         gl .uniform3f        (shaderObject .x3d_LightLocation [i],         location .x, location .y, location .z);
-         gl .uniform1f        (shaderObject .x3d_LightRadius [i],           lightNode .getRadius ());
-         gl .uniformMatrix3fv (shaderObject .x3d_LightMatrix [i], false,    this .matrixArray);
-
-         if (this .shadowBuffer)
+         else
          {
-            const shadowColor = lightNode .getShadowColor ();
-
-            gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
-            gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
-            gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
-            gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
-            gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
+            console .warn ("Not enough combined texture units for shadow map available.");
          }
-      },
-      dispose: function ()
+      }
+
+      if (shaderObject .hasLight (i, this))
+         return;
+
+      const
+         lightNode   = this .lightNode,
+         color       = lightNode .getColor (),
+         attenuation = lightNode .getAttenuation (),
+         location    = this .location;
+
+      gl .uniform1i        (shaderObject .x3d_LightType [i],             2);
+      gl .uniform3f        (shaderObject .x3d_LightColor [i],            color .r, color .g, color .b);
+      gl .uniform1f        (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
+      gl .uniform1f        (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
+      gl .uniform3f        (shaderObject .x3d_LightAttenuation [i],      Math .max (0, attenuation .x), Math .max (0, attenuation .y), Math .max (0, attenuation .z));
+      gl .uniform3f        (shaderObject .x3d_LightLocation [i],         location .x, location .y, location .z);
+      gl .uniform1f        (shaderObject .x3d_LightRadius [i],           lightNode .getRadius ());
+      gl .uniformMatrix3fv (shaderObject .x3d_LightMatrix [i], false,    this .matrixArray);
+
+      if (this .shadowBuffer)
       {
-         this .browser .pushShadowBuffer (this .shadowBuffer);
-         this .browser .pushTexture2DUnit (this .textureUnit);
+         const shadowColor = lightNode .getShadowColor ();
 
-         this .modelViewMatrix .clear ();
-
-         this .shadowBuffer = null;
-         this .textureUnit  = undefined;
-
-         // Return container
-
-         PointLights .push (this);
-      },
-   };
-
-   function PointLight (executionContext)
+         gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         shadowColor .r, shadowColor .g, shadowColor .b);
+         gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
+         gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
+         gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
+         gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
+      }
+   },
+   dispose: function ()
    {
-      X3DLightNode .call (this, executionContext);
+      this .browser .pushShadowBuffer (this .shadowBuffer);
+      this .browser .pushTexture2DUnit (this .textureUnit);
 
-      this .addType (X3DConstants .PointLight);
+      this .modelViewMatrix .clear ();
 
-      this ._location .setUnit ("length");
-      this ._radius   .setUnit ("length");
-   }
+      this .shadowBuffer = null;
+      this .textureUnit  = undefined;
 
-   PointLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
+      // Return container
+
+      PointLights .push (this);
+   },
+};
+
+function PointLight (executionContext)
+{
+   X3DLightNode .call (this, executionContext);
+
+   this .addType (X3DConstants .PointLight);
+
+   this ._location .setUnit ("length");
+   this ._radius   .setUnit ("length");
+}
+
+PointLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
+{
+   constructor: PointLight,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "global",           new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "on",               new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "color",            new Fields .SFColor (1, 1, 1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",        new Fields .SFFloat (1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "ambientIntensity", new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "attenuation",      new Fields .SFVec3f (1, 0, 0)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "radius",           new Fields .SFFloat (100)),
+
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new  Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadows.
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat (1)),        // Intensity of shadow color in the range (0, 1).
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
+   ]),
+   getTypeName: function ()
    {
-      constructor: PointLight,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "global",           new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "on",               new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",            new Fields .SFColor (1, 1, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",        new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "ambientIntensity", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "attenuation",      new Fields .SFVec3f (1, 0, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "radius",           new Fields .SFFloat (100)),
-
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new  Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadows.
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat (1)),        // Intensity of shadow color in the range (0, 1).
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
-      ]),
-      getTypeName: function ()
-      {
-         return "PointLight";
-      },
-      getComponentName: function ()
-      {
-         return "Lighting";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      getAttenuation: function ()
-      {
-         return this ._attenuation .getValue ();
-      },
-      getLocation: function ()
-      {
-         return this ._location .getValue ();
-      },
-      getRadius: function ()
-      {
-         return Math .max (0, this ._radius .getValue ());
-      },
-      getLights: function ()
-      {
-         return PointLights;
-      },
-   });
-
-   return PointLight;
+      return "PointLight";
+   },
+   getComponentName: function ()
+   {
+      return "Lighting";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   getAttenuation: function ()
+   {
+      return this ._attenuation .getValue ();
+   },
+   getLocation: function ()
+   {
+      return this ._location .getValue ();
+   },
+   getRadius: function ()
+   {
+      return Math .max (0, this ._radius .getValue ());
+   },
+   getLights: function ()
+   {
+      return PointLights;
+   },
 });
+
+export default PointLight;

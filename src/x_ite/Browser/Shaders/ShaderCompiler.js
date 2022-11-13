@@ -47,59 +47,53 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Browser/Shaders/Shaders"
-],
-function (Shaders)
+import Shaders from "./Shaders.js";
+
+const include = /^\s*#pragma\s+X3D\s+include\s+".*?([^\/]+)\.glsl"\s*$/;
+
+function ShaderCompiler (gl)
 {
-"use strict";
+   this .includes          = Shaders .includes [gl .getVersion ()];
+   this .sourceFileNumbers = { };
 
-   const include = /^\s*#pragma\s+X3D\s+include\s+".*?([^\/]+)\.glsl"\s*$/;
+   for (const [i, name] of Object .getOwnPropertyNames (this .includes) .entries ())
+      this .sourceFileNumbers [name] = i + 1;
+}
 
-   function ShaderCompiler (gl)
+ShaderCompiler .prototype =
+{
+   getSourceFileName: function (sourceFileNumber)
    {
-      this .includes          = Shaders .includes [gl .getVersion ()];
-      this .sourceFileNumbers = { };
-
-      for (const [i, name] of Object .getOwnPropertyNames (this .includes) .entries ())
-         this .sourceFileNumbers [name] = i + 1;
-   }
-
-   ShaderCompiler .prototype =
+      return Object .getOwnPropertyNames (this .includes) [sourceFileNumber - 1];
+   },
+   process: function (source, parent = 0)
    {
-      getSourceFileName: function (sourceFileNumber)
-      {
-         return Object .getOwnPropertyNames (this .includes) [sourceFileNumber - 1];
-      },
-      process: function (source, parent = 0)
-      {
-         const lines = source .split ("\n");
+      const lines = source .split ("\n");
 
-         source = "";
+      source = "";
 
-         for (let i = 0, length = lines .length; i < length; ++ i)
+      for (let i = 0, length = lines .length; i < length; ++ i)
+      {
+         const
+            line  = lines [i],
+            match = line .match (include);
+
+         if (match)
          {
-            const
-               line  = lines [i],
-               match = line .match (include);
-
-            if (match)
-            {
-               source += "#line 1 " + this .sourceFileNumbers [match [1]] + "\n";
-               source += this .process (this .includes [match [1]], this .sourceFileNumbers [match [1]]);
-               source += "\n";
-               source += "#line " + (i + 2) + " " + parent + "\n";
-            }
-            else
-            {
-               source += line;
-               source += "\n";
-            }
+            source += "#line 1 " + this .sourceFileNumbers [match [1]] + "\n";
+            source += this .process (this .includes [match [1]], this .sourceFileNumbers [match [1]]);
+            source += "\n";
+            source += "#line " + (i + 2) + " " + parent + "\n";
          }
+         else
+         {
+            source += line;
+            source += "\n";
+         }
+      }
 
-         return source;
-      },
-   };
+      return source;
+   },
+};
 
-   return ShaderCompiler;
-});
+export default ShaderCompiler;

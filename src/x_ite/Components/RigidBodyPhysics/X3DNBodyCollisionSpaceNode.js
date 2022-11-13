@@ -47,30 +47,22 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Components/Grouping/X3DBoundedObject",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DNode,
-          X3DBoundedObject,
-          X3DConstants)
+import X3DNode from "../Core/X3DNode.js";
+import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DNBodyCollisionSpaceNode (executionContext)
 {
-"use strict";
+   X3DNode          .call (this, executionContext);
+   X3DBoundedObject .call (this, executionContext);
 
-   function X3DNBodyCollisionSpaceNode (executionContext)
-   {
-      X3DNode          .call (this, executionContext);
-      X3DBoundedObject .call (this, executionContext);
+   this .addType (X3DConstants .X3DNBodyCollisionSpaceNode);
+}
 
-      this .addType (X3DConstants .X3DNBodyCollisionSpaceNode);
-   }
-
-   X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-      X3DBoundedObject .prototype,
-   {
-      constructor: X3DNBodyCollisionSpaceNode,
-   });
-
-   return X3DNBodyCollisionSpaceNode;
+X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+   X3DBoundedObject .prototype,
+{
+   constructor: X3DNBodyCollisionSpaceNode,
 });
+
+export default X3DNBodyCollisionSpaceNode;

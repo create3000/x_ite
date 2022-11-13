@@ -47,28 +47,21 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DNode,
-          X3DConstants)
+import X3DNode from "../Core/X3DNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DParticlePhysicsModelNode (executionContext)
 {
-"use strict";
+   X3DNode .call (this, executionContext);
 
-   function X3DParticlePhysicsModelNode (executionContext)
-   {
-      X3DNode .call (this, executionContext);
+   this .addType (X3DConstants .X3DParticlePhysicsModelNode);
+}
 
-      this .addType (X3DConstants .X3DParticlePhysicsModelNode);
-   }
-
-   X3DParticlePhysicsModelNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-   {
-      constructor: X3DParticlePhysicsModelNode,
-      addForce: function ()
-      { },
-   });
-
-   return X3DParticlePhysicsModelNode;
+X3DParticlePhysicsModelNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+{
+   constructor: X3DParticlePhysicsModelNode,
+   addForce: function ()
+   { },
 });
+
+export default X3DParticlePhysicsModelNode;

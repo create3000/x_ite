@@ -49,424 +49,417 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Parser/XMLParser",
-   "x_ite/Parser/X3DParser",
-],
-function (XMLParser,
-          X3DParser)
+import XMLParser from "./XMLParser.js";
+import X3DParser from "./X3DParser.js";
+
+function JSONParser (scene)
 {
-"use strict";
+   X3DParser .call (this, scene);
 
-   function JSONParser (scene)
+   this .x3djsonNS = "http://www.web3d.org/specifications/x3d-namespace";
+}
+
+JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
+{
+   constructor: JSONParser,
+   isValid: function ()
    {
-      X3DParser .call (this, scene);
-
-      this .x3djsonNS = "http://www.web3d.org/specifications/x3d-namespace";
-   }
-
-   JSONParser .prototype = Object .assign (Object .create (X3DParser .prototype),
+      return this .input instanceof Object;
+   },
+   getInput: function ()
    {
-      constructor: JSONParser,
-      isValid: function ()
+      return this .input;
+   },
+   setInput: function (json)
+   {
+      try
       {
-         return this .input instanceof Object;
-      },
-      getInput: function ()
-      {
-         return this .input;
-      },
-      setInput: function (json)
-      {
-         try
-         {
-            if (typeof json === "string")
-               json = JSON .parse (json)
+         if (typeof json === "string")
+            json = JSON .parse (json)
 
-            this .input = json;
+         this .input = json;
+      }
+      catch (error)
+      {
+         this .input = undefined;
+      }
+   },
+   parseIntoScene: function (success, error)
+   {
+      /**
+       * Load X3D JSON into an element.
+       * json - the JavaScript object to convert to DOM.
+       */
+
+      const child = this .createElement ("X3D");
+
+      this .convertToDOM (this .input, "", child);
+
+      // Call the DOM parser.
+
+      const parser = new XMLParser (this .getScene ());
+
+      parser .setInput (child);
+      parser .parseIntoScene (success, error);
+
+      return child;
+   },
+   elementSetAttribute: function (element, key, value)
+   {
+      /**
+       * Yet another way to set an attribute on an element.  does not allow you to
+       * set JSON schema or encoding.
+       */
+
+      switch (key)
+      {
+         case "SON schema":
+         {
+            // JSON Schema
+            break;
          }
-         catch (error)
+         case "ncoding":
          {
-            this .input = undefined;
+            // encoding, UTF-8, UTF-16 or UTF-32
+            break;
          }
-      },
-      parseIntoScene: function (success, error)
-      {
-         /**
-          * Load X3D JSON into an element.
-          * json - the JavaScript object to convert to DOM.
-          */
-
-         const child = this .createElement ("X3D");
-
-         this .convertToDOM (this .input, "", child);
-
-         // Call the DOM parser.
-
-         const parser = new XMLParser (this .getScene ());
-
-         parser .setInput (child);
-         parser .parseIntoScene (success, error);
-
-         return child;
-      },
-      elementSetAttribute: function (element, key, value)
-      {
-         /**
-          * Yet another way to set an attribute on an element.  does not allow you to
-          * set JSON schema or encoding.
-          */
-
-         switch (key)
+         default:
          {
-            case "SON schema":
-            {
-               // JSON Schema
-               break;
-            }
-            case "ncoding":
-            {
-               // encoding, UTF-8, UTF-16 or UTF-32
-               break;
-            }
-            default:
-            {
-               if (typeof element .setAttribute === "function")
-                  element .setAttribute (key, value);
+            if (typeof element .setAttribute === "function")
+               element .setAttribute (key, value);
 
-               break;
+            break;
+         }
+      }
+   },
+   convertChildren: function (parentkey, object, element)
+   {
+      /**
+       * converts children of object to DOM.
+       */
+
+      for (const key in object)
+      {
+         if (typeof object [key] === "object")
+         {
+            if (isNaN (parseInt (key)))
+               this .convertObject (key, object, element, parentkey .substr (1));
+
+            else
+               this .convertToDOM (object[ key], key, element, parentkey .substr (1));
+         }
+      }
+   },
+   createElement: function (key, containerField)
+   {
+      /**
+       * a method to create and element with tagnam key to DOM in a namespace.  If
+       * containerField is set, then the containerField is set in the elemetn.
+       */
+
+      if (typeof this .x3djsonNS === "undefined")
+      {
+         var child = document .createElement (key);
+      }
+      else
+      {
+         var child = document .createElementNS (this .x3djsonNS, key);
+
+         if (child === null || typeof child === "undefined")
+         {
+            console .error ("Trouble creating element for", key);
+
+            child = document .createElement(key);
+         }
+      }
+
+      if (typeof containerField !== "undefined")
+         this .elementSetAttribute (child, "containerField", containerField);
+
+      return child;
+   },
+   createCDATA: function (document, element, str)
+   {
+      /**
+       * a way to create a CDATA function or script in HTML, by using a DOM parser.
+       */
+
+      let y = str .trim ()
+         .replace (/\\"/g, "\\\"")
+         .replace (/&lt;/g, "<")
+         .replace (/&gt;/g, ">")
+         .replace (/&amp;/g, "&");
+
+      do
+      {
+         str = y;
+         y   = str .replace (/'([^'\r\n]*)\n([^']*)'/g, "'$1\\n$2'");
+
+         if (str !== y)
+            console .log ("CDATA Replacing", str, "with", y);
+      }
+      while (y !== str);
+
+      const
+         domParser = new DOMParser(),
+         cdataStr  = "<script> <![CDATA[ " + y + " ]]> </script>", // has to be wrapped into an element
+         scriptDoc = domParser .parseFromString (cdataStr, "application/xml"),
+         cdata     = scriptDoc .children [0] .childNodes [1]; // space after script is childNode[0]
+
+      element .appendChild (cdata);
+   },
+   convertObject: function (key, object, element, containerField)
+   {
+      /**
+       * convert the object at object[key] to DOM.
+       */
+
+      if (object !== null && typeof object [key] === "object")
+      {
+         if (key .substr (0, 1) === "@")
+         {
+            this .convertToDOM (object [key], key, element);
+         }
+         else if (key .substr (0, 1) === "-")
+         {
+            this .convertChildren (key, object [key], element);
+         }
+         else if (key === "#comment")
+         {
+            for (const c in object [key])
+            {
+               const child = document .createComment (this .commentStringToXML (object [key] [c]));
+
+               element .appendChild (child);
             }
          }
-      },
-      convertChildren: function (parentkey, object, element)
-      {
-         /**
-          * converts children of object to DOM.
-          */
-
-         for (const key in object)
+         else if (key === "#sourceCode" || key === "@sourceCode" || key === "#sourceText")
          {
-            if (typeof object [key] === "object")
-            {
-               if (isNaN (parseInt (key)))
-                  this .convertObject (key, object, element, parentkey .substr (1));
-
-               else
-                  this .convertToDOM (object[ key], key, element, parentkey .substr (1));
-            }
-         }
-      },
-      createElement: function (key, containerField)
-      {
-         /**
-          * a method to create and element with tagnam key to DOM in a namespace.  If
-          * containerField is set, then the containerField is set in the elemetn.
-          */
-
-         if (typeof this .x3djsonNS === "undefined")
-         {
-            var child = document .createElement (key);
+            this .createCDATA (document, element, object [key] .join ("\r\n") + "\r\n");
          }
          else
          {
-            var child = document .createElementNS (this .x3djsonNS, key);
-
-            if (child === null || typeof child === "undefined")
+            if (key === "connect" || key === "fieldValue" || key === "field" || key === "meta" || key === "component")
             {
-               console .error ("Trouble creating element for", key);
-
-               child = document .createElement(key);
-            }
-         }
-
-         if (typeof containerField !== "undefined")
-            this .elementSetAttribute (child, "containerField", containerField);
-
-         return child;
-      },
-      createCDATA: function (document, element, str)
-      {
-         /**
-          * a way to create a CDATA function or script in HTML, by using a DOM parser.
-          */
-
-         let y = str .trim ()
-            .replace (/\\"/g, "\\\"")
-            .replace (/&lt;/g, "<")
-            .replace (/&gt;/g, ">")
-            .replace (/&amp;/g, "&");
-
-         do
-         {
-            str = y;
-            y   = str .replace (/'([^'\r\n]*)\n([^']*)'/g, "'$1\\n$2'");
-
-            if (str !== y)
-               console .log ("CDATA Replacing", str, "with", y);
-         }
-         while (y !== str);
-
-         const
-            domParser = new DOMParser(),
-            cdataStr  = "<script> <![CDATA[ " + y + " ]]> </script>", // has to be wrapped into an element
-            scriptDoc = domParser .parseFromString (cdataStr, "application/xml"),
-            cdata     = scriptDoc .children [0] .childNodes [1]; // space after script is childNode[0]
-
-         element .appendChild (cdata);
-      },
-      convertObject: function (key, object, element, containerField)
-      {
-         /**
-          * convert the object at object[key] to DOM.
-          */
-
-         if (object !== null && typeof object [key] === "object")
-         {
-            if (key .substr (0, 1) === "@")
-            {
-               this .convertToDOM (object [key], key, element);
-            }
-            else if (key .substr (0, 1) === "-")
-            {
-               this .convertChildren (key, object [key], element);
-            }
-            else if (key === "#comment")
-            {
-               for (const c in object [key])
+               for (const childkey in object [key])
                {
-                  const child = document .createComment (this .commentStringToXML (object [key] [c]));
-
-                  element .appendChild (child);
-               }
-            }
-            else if (key === "#sourceCode" || key === "@sourceCode" || key === "#sourceText")
-            {
-               this .createCDATA (document, element, object [key] .join ("\r\n") + "\r\n");
-            }
-            else
-            {
-               if (key === "connect" || key === "fieldValue" || key === "field" || key === "meta" || key === "component")
-               {
-                  for (const childkey in object [key])
+                  // for each field
+                  if (typeof object [key] [childkey] === "object")
                   {
-                     // for each field
-                     if (typeof object [key] [childkey] === "object")
-                     {
-                        const child = this .createElement (key, containerField);
+                     const child = this .createElement (key, containerField);
 
-                        this .convertToDOM (object [key] [childkey], childkey, child);
+                     this .convertToDOM (object [key] [childkey], childkey, child);
 
-                        element .appendChild (child);
-                        element .appendChild (document .createTextNode ("\n"));
-                     }
-                  }
-               }
-               else
-               {
-                  const child = this .createElement (key, containerField);
-
-                  this .convertToDOM (object [key], key, child);
-
-                  element .appendChild (child);
-                  element .appendChild (document .createTextNode ("\n"));
-               }
-            }
-         }
-      },
-      commentStringToXML: function (str)
-      {
-         /**
-          * convert a comment string in JavaScript to XML.  Pass the string
-          */
-
-         let y = str;
-
-         str = str .replace (/\\\\/g, "\\");
-
-         if (y !== str)
-            console .log ("X3DJSONLD <!-> replacing", y, "with", str);
-
-         return str;
-      },
-      SFStringToXML: function (str)
-      {
-         /**
-          * convert an SFString to XML.
-          */
-
-         const y = str;
-
-         /*
-         str = (""+str).replace(/\\\\/g, "\\\\");
-         str = str.replace(/\\\\\\\\/g, "\\\\");
-         str = str.replace(/(\\+)"/g, "\\"");
-         */
-
-         str = str .replace (/\\/g, "\\\\");
-         str = str .replace (/"/g, "\\\"");
-
-         if (y !== str)
-            console .log ("X3DJSONLD [] replacing", y, "with", str);
-
-         return str;
-      },
-      JSONStringToXML: function (str)
-      {
-         /**
-          * convert a JSON String to XML.
-          */
-
-         const y = str;
-
-         str = str .replace (/\\/g, "\\\\");
-         str = str .replace (/\n/g, "\\n");
-
-         if (y !== str)
-            console .log ("X3DJSONLD replacing", y, "with", str);
-
-         return str;
-      },
-      convertToDOM: function(object, parentkey, element, containerField)
-      {
-         /**
-          * main routine for converting a JavaScript object to DOM.
-          * object is the object to convert.
-          * parentkey is the key of the object in the parent.
-          * element is the parent element.
-          * containerField is a possible containerField.
-          */
-
-         let
-            isArray        = false,
-            localArray     = [ ],
-            arrayOfStrings = false;
-
-         for (const key in object)
-         {
-            isArray = !isNaN (parseInt (key));
-
-            if (isArray)
-            {
-               switch (typeof object [key])
-               {
-                  case "number":
-                  {
-                     localArray .push (object [key]);
-                     break;
-                  }
-                  case "string":
-                  {
-                     localArray .push (object [key]);
-
-                     arrayOfStrings = true;
-                     break;
-                  }
-                  case "boolean":
-                  {
-                     localArray .push (object [key]);
-                     break;
-                  }
-                  case "object":
-                  {
-                     /*
-                     if (object[key] != null && typeof object[key].join === "function") {
-                        localArray.push(object[key].join(" "));
-                     }
-                     */
-                     this .convertToDOM (object [key], key, element);
-                     break;
-                  }
-                  case "undefined":
-                  {
-                     break;
-                  }
-                  default:
-                  {
-                     console .error ("Unknown type found in array " + typeof object [key]);
+                     element .appendChild (child);
+                     element .appendChild (document .createTextNode ("\n"));
                   }
                }
             }
             else
             {
-               switch (typeof object [key])
-               {
-                  case "object":
-                  {
-                     // This is where the whole thing starts
+               const child = this .createElement (key, containerField);
 
-                     if (key === "X3D")
-                        this .convertToDOM (object [key], key, element);
+               this .convertToDOM (object [key], key, child);
 
-                     else
-                        this .convertObject (key, object, element, containerField);
-
-                     break;
-                  }
-                  case "number":
-                  {
-                     this .elementSetAttribute (element, key .substr (1), object [key]);
-                     break;
-                  }
-                  case "string":
-                  {
-                     if (key !== "#comment")
-                     {
-                        // ordinary string attributes
-                        this .elementSetAttribute (element, key .substr (1), this .JSONStringToXML (object [key]));
-                     }
-                     else
-                     {
-                        const child = document .createComment (this .commentStringToXML (object [key]));
-
-                        element .appendChild (child);
-                     }
-
-                     break;
-                  }
-                  case "boolean":
-                  {
-                     this .elementSetAttribute (element, key .substr (1), object [key]);
-                     break;
-                  }
-                  case "undefined":
-                  {
-                     break;
-                  }
-                  default:
-                  {
-                     console .error ("Unknown type found in object " + typeof object [key]);
-                     console .error (object);
-                  }
-               }
+               element .appendChild (child);
+               element .appendChild (document .createTextNode ("\n"));
             }
          }
+      }
+   },
+   commentStringToXML: function (str)
+   {
+      /**
+       * convert a comment string in JavaScript to XML.  Pass the string
+       */
+
+      let y = str;
+
+      str = str .replace (/\\\\/g, "\\");
+
+      if (y !== str)
+         console .log ("X3DJSONLD <!-> replacing", y, "with", str);
+
+      return str;
+   },
+   SFStringToXML: function (str)
+   {
+      /**
+       * convert an SFString to XML.
+       */
+
+      const y = str;
+
+      /*
+      str = (""+str).replace(/\\\\/g, "\\\\");
+      str = str.replace(/\\\\\\\\/g, "\\\\");
+      str = str.replace(/(\\+)"/g, "\\"");
+      */
+
+      str = str .replace (/\\/g, "\\\\");
+      str = str .replace (/"/g, "\\\"");
+
+      if (y !== str)
+         console .log ("X3DJSONLD [] replacing", y, "with", str);
+
+      return str;
+   },
+   JSONStringToXML: function (str)
+   {
+      /**
+       * convert a JSON String to XML.
+       */
+
+      const y = str;
+
+      str = str .replace (/\\/g, "\\\\");
+      str = str .replace (/\n/g, "\\n");
+
+      if (y !== str)
+         console .log ("X3DJSONLD replacing", y, "with", str);
+
+      return str;
+   },
+   convertToDOM: function(object, parentkey, element, containerField)
+   {
+      /**
+       * main routine for converting a JavaScript object to DOM.
+       * object is the object to convert.
+       * parentkey is the key of the object in the parent.
+       * element is the parent element.
+       * containerField is a possible containerField.
+       */
+
+      let
+         isArray        = false,
+         localArray     = [ ],
+         arrayOfStrings = false;
+
+      for (const key in object)
+      {
+         isArray = !isNaN (parseInt (key));
 
          if (isArray)
          {
-            if (parentkey .substr (0,1) === "@")
+            switch (typeof object [key])
             {
-               if (arrayOfStrings)
+               case "number":
                {
-                  arrayOfStrings = false;
-
-                  for (const str in localArray)
-                     localArray [str] = this .SFStringToXML (localArray [str]);
-
-                  this .elementSetAttribute (element, parentkey .substr (1), '"' + localArray .join ('" "') + '"');
+                  localArray .push (object [key]);
+                  break;
                }
-               else
+               case "string":
                {
-                  // if non string array
-                  this .elementSetAttribute (element, parentkey .substr (1), localArray .join (" "));
+                  localArray .push (object [key]);
+
+                  arrayOfStrings = true;
+                  break;
+               }
+               case "boolean":
+               {
+                  localArray .push (object [key]);
+                  break;
+               }
+               case "object":
+               {
+                  /*
+                  if (object[key] != null && typeof object[key].join === "function") {
+                     localArray.push(object[key].join(" "));
+                  }
+                  */
+                  this .convertToDOM (object [key], key, element);
+                  break;
+               }
+               case "undefined":
+               {
+                  break;
+               }
+               default:
+               {
+                  console .error ("Unknown type found in array " + typeof object [key]);
                }
             }
+         }
+         else
+         {
+            switch (typeof object [key])
+            {
+               case "object":
+               {
+                  // This is where the whole thing starts
 
-            isArray = false;
+                  if (key === "X3D")
+                     this .convertToDOM (object [key], key, element);
+
+                  else
+                     this .convertObject (key, object, element, containerField);
+
+                  break;
+               }
+               case "number":
+               {
+                  this .elementSetAttribute (element, key .substr (1), object [key]);
+                  break;
+               }
+               case "string":
+               {
+                  if (key !== "#comment")
+                  {
+                     // ordinary string attributes
+                     this .elementSetAttribute (element, key .substr (1), this .JSONStringToXML (object [key]));
+                  }
+                  else
+                  {
+                     const child = document .createComment (this .commentStringToXML (object [key]));
+
+                     element .appendChild (child);
+                  }
+
+                  break;
+               }
+               case "boolean":
+               {
+                  this .elementSetAttribute (element, key .substr (1), object [key]);
+                  break;
+               }
+               case "undefined":
+               {
+                  break;
+               }
+               default:
+               {
+                  console .error ("Unknown type found in object " + typeof object [key]);
+                  console .error (object);
+               }
+            }
+         }
+      }
+
+      if (isArray)
+      {
+         if (parentkey .substr (0,1) === "@")
+         {
+            if (arrayOfStrings)
+            {
+               arrayOfStrings = false;
+
+               for (const str in localArray)
+                  localArray [str] = this .SFStringToXML (localArray [str]);
+
+               this .elementSetAttribute (element, parentkey .substr (1), '"' + localArray .join ('" "') + '"');
+            }
+            else
+            {
+               // if non string array
+               this .elementSetAttribute (element, parentkey .substr (1), localArray .join (" "));
+            }
          }
 
-         return element;
-      },
-   });
+         isArray = false;
+      }
 
-   return JSONParser;
+      return element;
+   },
 });
+
+export default JSONParser;

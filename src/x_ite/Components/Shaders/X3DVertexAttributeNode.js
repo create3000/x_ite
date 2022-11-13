@@ -47,40 +47,32 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Components/Rendering/X3DGeometricPropertyNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DGeometricPropertyNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DGeometricPropertyNode from "../Rendering/X3DGeometricPropertyNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DVertexAttributeNode (executionContext)
 {
-"use strict";
+   X3DGeometricPropertyNode .call (this, executionContext);
 
-   function X3DVertexAttributeNode (executionContext)
+   this .addType (X3DConstants .X3DVertexAttributeNode);
+
+   this .addChildObjects ("attribute_changed", new Fields .SFTime ());
+}
+
+X3DVertexAttributeNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+{
+   constructor: X3DVertexAttributeNode,
+   initialize: function ()
    {
-      X3DGeometricPropertyNode .call (this, executionContext);
+      X3DGeometricPropertyNode .prototype .initialize .call (this);
 
-      this .addType (X3DConstants .X3DVertexAttributeNode);
-
-      this .addChildObjects ("attribute_changed", new Fields .SFTime ());
-   }
-
-   X3DVertexAttributeNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+      this ._name .addInterest ("set_attribute__", this);
+   },
+   set_attribute__: function ()
    {
-      constructor: X3DVertexAttributeNode,
-      initialize: function ()
-      {
-         X3DGeometricPropertyNode .prototype .initialize .call (this);
-
-         this ._name .addInterest ("set_attribute__", this);
-      },
-      set_attribute__: function ()
-      {
-         this ._attribute_changed = this .getBrowser () .getCurrentTime ();
-      },
-   });
-
-   return X3DVertexAttributeNode;
+      this ._attribute_changed = this .getBrowser () .getCurrentTime ();
+   },
 });
+
+export default X3DVertexAttributeNode;

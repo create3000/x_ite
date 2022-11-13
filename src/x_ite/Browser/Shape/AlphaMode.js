@@ -47,19 +47,14 @@
  ******************************************************************************/
 
 
-define (function ()
+let i = 0;
+
+const AlphaMode =
 {
-"use strict";
+   AUTO:   i ++,
+   OPAQUE: i ++,
+   MASK:   i ++,
+   BLEND:  i ++,
+};
 
-   let i = 0;
-
-   const AlphaMode =
-   {
-      AUTO:   i ++,
-      OPAQUE: i ++,
-      MASK:   i ++,
-      BLEND:  i ++,
-   };
-
-   return AlphaMode;
-});
+export default AlphaMode;

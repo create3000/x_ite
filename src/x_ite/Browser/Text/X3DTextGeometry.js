@@ -47,582 +47,572 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Browser/Text/TextAlignment",
-   "standard/Math/Geometry/Box2",
-   "standard/Math/Geometry/Box3",
-   "standard/Math/Numbers/Vector2",
-   "standard/Math/Numbers/Vector3",
-],
-function (TextAlignment,
-          Box2,
-          Box3,
-          Vector2,
-          Vector3)
+import TextAlignment from "./TextAlignment.js";
+import Box2 from "../../../standard/Math/Geometry/Box2.js";
+import Box3 from "../../../standard/Math/Geometry/Box3.js";
+import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+var
+   bbox        = new Box2 (),
+   lineBBox    = new Box2 (),
+   min         = new Vector2 (0, 0),
+   max         = new Vector2 (0, 0),
+   glyphMin    = new Vector2 (0, 0),
+   glyphMax    = new Vector2 (0, 0),
+   min3        = new Vector3 (0, 0, 0),
+   max3        = new Vector3 (0, 0, 0),
+   size        = new Vector2 (0, 0),
+   center      = new Vector2 (0, 0),
+   size1_2     = new Vector2 (0, 0),
+   translation = new Vector2 (0, 0),
+   lineBound   = new Vector2 (0, 0),
+   origin      = new Vector3 (0, 0, 0),
+   vector      = new Vector2 (0, 0),
+   box2        = new Box2 (),
+   zero2       = new Vector2 (0, 0),
+   zero3       = new Vector3 (0, 0, 0);
+
+function X3DTextGeometry (text, fontStyle)
 {
-"use strict";
+   this .browser        = text .getBrowser ();
+   this .text           = text;
+   this .fontStyle      = fontStyle;
+   this .glyphs         = [ ];
+   this .minorAlignment = new Vector2 (0, 0);
+   this .translations   = [ ];
+   this .charSpacings   = [ ];
+   this .bearing        = new Vector2 (0, 0);
+   this .yPad           = [ ];
+   this .bbox           = new Box3 ();
+}
 
-   var
-      bbox        = new Box2 (),
-      lineBBox    = new Box2 (),
-      min         = new Vector2 (0, 0),
-      max         = new Vector2 (0, 0),
-      glyphMin    = new Vector2 (0, 0),
-      glyphMax    = new Vector2 (0, 0),
-      min3        = new Vector3 (0, 0, 0),
-      max3        = new Vector3 (0, 0, 0),
-      size        = new Vector2 (0, 0),
-      center      = new Vector2 (0, 0),
-      size1_2     = new Vector2 (0, 0),
-      translation = new Vector2 (0, 0),
-      lineBound   = new Vector2 (0, 0),
-      origin      = new Vector3 (0, 0, 0),
-      vector      = new Vector2 (0, 0),
-      box2        = new Box2 (),
-      zero2       = new Vector2 (0, 0),
-      zero3       = new Vector3 (0, 0, 0);
-
-   function X3DTextGeometry (text, fontStyle)
+X3DTextGeometry .prototype =
+{
+   constructor: X3DTextGeometry,
+   getBrowser: function ()
    {
-      this .browser        = text .getBrowser ();
-      this .text           = text;
-      this .fontStyle      = fontStyle;
-      this .glyphs         = [ ];
-      this .minorAlignment = new Vector2 (0, 0);
-      this .translations   = [ ];
-      this .charSpacings   = [ ];
-      this .bearing        = new Vector2 (0, 0);
-      this .yPad           = [ ];
-      this .bbox           = new Box3 ();
-   }
-
-   X3DTextGeometry .prototype =
+      return this .browser;
+   },
+   getText: function ()
    {
-      constructor: X3DTextGeometry,
-      getBrowser: function ()
-      {
-         return this .browser;
-      },
-      getText: function ()
-      {
-         return this .text;
-      },
-      getFontStyle: function ()
-      {
-         return this .fontStyle;
-      },
-      getGlyphs: function ()
-      {
-         return this .glyphs;
-      },
-      getMinorAlignment: function ()
-      {
-         return this .minorAlignment;
-      },
-      getTranslations: function ()
-      {
-         return this .translations;
-      },
-      getCharSpacings: function ()
-      {
-         return this .charSpacings;
-      },
-      getBearing: function ()
-      {
-         return this .bearing;
-      },
-      getBBox: function ()
-      {
-         return this .bbox;
-      },
-      update: function ()
-      {
-         var
-            text      = this .text,
-            fontStyle = this .fontStyle,
-            numLines  = text ._string .length;
+      return this .text;
+   },
+   getFontStyle: function ()
+   {
+      return this .fontStyle;
+   },
+   getGlyphs: function ()
+   {
+      return this .glyphs;
+   },
+   getMinorAlignment: function ()
+   {
+      return this .minorAlignment;
+   },
+   getTranslations: function ()
+   {
+      return this .translations;
+   },
+   getCharSpacings: function ()
+   {
+      return this .charSpacings;
+   },
+   getBearing: function ()
+   {
+      return this .bearing;
+   },
+   getBBox: function ()
+   {
+      return this .bbox;
+   },
+   update: function ()
+   {
+      var
+         text      = this .text,
+         fontStyle = this .fontStyle,
+         numLines  = text ._string .length;
 
-         text ._lineBounds .length = numLines;
-         this .glyphs      .length = 0;
+      text ._lineBounds .length = numLines;
+      this .glyphs      .length = 0;
 
-         if (numLines === 0 || ! fontStyle .getFont ())
-         {
-            text ._origin     .setValue (zero3);
-            text ._textBounds .setValue (zero2);
-
-            this .bbox .set ();
-            return;
-         }
-
-         if (fontStyle ._horizontal .getValue ())
-         {
-            this .resizeArray (this .translations, numLines);
-            this .resizeArray (this .charSpacings, numLines);
-
-            this .horizontal (text, fontStyle);
-         }
-         else
-         {
-            var
-               string   = text ._string,
-               numChars = 0;
-
-            for (var i = 0, length = string .length; i < length; ++ i)
-               numChars += string [i] .length;
-
-            this .resizeArray (this .translations, numChars);
-            this .resizeArray (this .charSpacings, numChars);
-
-            this .vertical (text, fontStyle);
-         }
-      },
-      resizeArray: function (array, size)
+      if (numLines === 0 || ! fontStyle .getFont ())
       {
-         // Resize array in grow only fashion.
+         text ._origin     .setValue (zero3);
+         text ._textBounds .setValue (zero2);
 
-         for (var i = array .length; i < size; ++ i)
-            array .push (new Vector2 (0, 0));
+         this .bbox .set ();
+         return;
+      }
 
-         array .length = size;
-      },
-      horizontal: function (text, fontStyle)
+      if (fontStyle ._horizontal .getValue ())
+      {
+         this .resizeArray (this .translations, numLines);
+         this .resizeArray (this .charSpacings, numLines);
+
+         this .horizontal (text, fontStyle);
+      }
+      else
       {
          var
-            font        = fontStyle .getFont (),
-            string      = text ._string,
-            numLines    = string .length,
-            maxExtent   = Math .max (0, text ._maxExtent .getValue ()),
-            topToBottom = fontStyle ._topToBottom .getValue (),
-            scale       = fontStyle .getScale (),
-            spacing     = fontStyle ._spacing .getValue ();
+            string   = text ._string,
+            numChars = 0;
 
-         bbox .set ();
+         for (var i = 0, length = string .length; i < length; ++ i)
+            numChars += string [i] .length;
 
-         // Calculate bboxes.
+         this .resizeArray (this .translations, numChars);
+         this .resizeArray (this .charSpacings, numChars);
 
-         var
-            first = topToBottom ? 0 : numLines - 1,
-            last  = topToBottom ? numLines : -1,
-            step  = topToBottom ? 1 : -1;
+         this .vertical (text, fontStyle);
+      }
+   },
+   resizeArray: function (array, size)
+   {
+      // Resize array in grow only fashion.
 
-         for (var l = first, ll = 0; l !== last; l += step, ++ ll)
-         {
-            var line = string [l];
+      for (var i = array .length; i < size; ++ i)
+         array .push (new Vector2 (0, 0));
 
-            // Get line extents.
+      array .length = size;
+   },
+   horizontal: function (text, fontStyle)
+   {
+      var
+         font        = fontStyle .getFont (),
+         string      = text ._string,
+         numLines    = string .length,
+         maxExtent   = Math .max (0, text ._maxExtent .getValue ()),
+         topToBottom = fontStyle ._topToBottom .getValue (),
+         scale       = fontStyle .getScale (),
+         spacing     = fontStyle ._spacing .getValue ();
 
-            var glyphs = this .getHorizontalLineExtents (fontStyle, line, min, max, ll);
+      bbox .set ();
 
-            size .assign (max) .subtract (min);
+      // Calculate bboxes.
 
-            // Calculate charSpacing and lineBounds.
+      var
+         first = topToBottom ? 0 : numLines - 1,
+         last  = topToBottom ? numLines : -1,
+         step  = topToBottom ? 1 : -1;
 
-            var
-               charSpacing = 0,
-               length      = text .getLength (l);
+      for (var l = first, ll = 0; l !== last; l += step, ++ ll)
+      {
+         var line = string [l];
 
-            lineBound .set (size .x * scale, ll == 0 ? max .y - font .descender / font .unitsPerEm * scale : spacing);
+         // Get line extents.
 
-            if (maxExtent)
-            {
-               if (length)
-                  length = Math .min (maxExtent, length);
-
-               else
-                  length = Math .min (maxExtent, size .x * scale);
-            }
-
-            if (length)
-            {
-               charSpacing  = (length - lineBound .x) / (glyphs .length - 1);
-               lineBound .x = length;
-               size .x      = length / scale;
-            }
-
-            this .charSpacings [ll] = charSpacing;
-            text ._lineBounds [l]   = lineBound;
-
-            // Calculate line translation.
-
-            switch (fontStyle .getMajorAlignment ())
-            {
-               case TextAlignment .BEGIN:
-               case TextAlignment .FIRST:
-                  this .translations [ll] .set (0, -ll * spacing);
-                  break;
-               case TextAlignment .MIDDLE:
-                  this .translations [ll] .set (-min .x - size .x / 2, -ll * spacing);
-                  break;
-               case TextAlignment .END:
-                  this .translations [ll] .set (-min .x - size .x, -ll * spacing);
-                  break;
-            }
-
-            this .translations [ll] .multiply (scale);
-
-            // Calculate center.
-
-            center .assign (min) .add (size1_2 .assign (size) .divide (2));
-
-            // Add bbox.
-
-            bbox .add (box2 .set (size .multiply (scale), center .multiply (scale) .add (this .translations [ll])));
-         }
-
-         //console .log ("size", bbox .size, "center", bbox .center);
-
-         // Get text extents.
-
-         bbox .getExtents (min, max);
+         var glyphs = this .getHorizontalLineExtents (fontStyle, line, min, max, ll);
 
          size .assign (max) .subtract (min);
 
-         // Calculate text position
+         // Calculate charSpacing and lineBounds.
 
-         text ._textBounds = size;
-         this .bearing .set (0, -max .y);
+         var
+            charSpacing = 0,
+            length      = text .getLength (l);
 
-         switch (fontStyle .getMinorAlignment ())
+         lineBound .set (size .x * scale, ll == 0 ? max .y - font .descender / font .unitsPerEm * scale : spacing);
+
+         if (maxExtent)
+         {
+            if (length)
+               length = Math .min (maxExtent, length);
+
+            else
+               length = Math .min (maxExtent, size .x * scale);
+         }
+
+         if (length)
+         {
+            charSpacing  = (length - lineBound .x) / (glyphs .length - 1);
+            lineBound .x = length;
+            size .x      = length / scale;
+         }
+
+         this .charSpacings [ll] = charSpacing;
+         text ._lineBounds [l]   = lineBound;
+
+         // Calculate line translation.
+
+         switch (fontStyle .getMajorAlignment ())
          {
             case TextAlignment .BEGIN:
-               this .minorAlignment .assign (this .bearing);
-               break;
             case TextAlignment .FIRST:
-               this .minorAlignment .set (0, 0);
+               this .translations [ll] .set (0, -ll * spacing);
                break;
             case TextAlignment .MIDDLE:
-               this .minorAlignment .set (0, size .y / 2 - max .y);
+               this .translations [ll] .set (-min .x - size .x / 2, -ll * spacing);
                break;
             case TextAlignment .END:
-               this .minorAlignment .set (0, (numLines - 1) * spacing * scale);
+               this .translations [ll] .set (-min .x - size .x, -ll * spacing);
                break;
          }
 
-         // Translate bbox by minorAlignment.
+         this .translations [ll] .multiply (scale);
 
-         min .add (this .minorAlignment);
-         max .add (this .minorAlignment);
+         // Calculate center.
 
-         // The value of the origin field represents the upper left corner of the textBounds.
+         center .assign (min) .add (size1_2 .assign (size) .divide (2));
 
-         text ._origin .setValue (origin .set (min .x, max .y, 0));
+         // Add bbox.
 
-         this .bbox .setExtents (min3 .set (min .x, min .y, 0),
-                                 max3 .set (max .x, max .y, 0));
-      },
-      vertical: function (text, fontStyle)
+         bbox .add (box2 .set (size .multiply (scale), center .multiply (scale) .add (this .translations [ll])));
+      }
+
+      //console .log ("size", bbox .size, "center", bbox .center);
+
+      // Get text extents.
+
+      bbox .getExtents (min, max);
+
+      size .assign (max) .subtract (min);
+
+      // Calculate text position
+
+      text ._textBounds = size;
+      this .bearing .set (0, -max .y);
+
+      switch (fontStyle .getMinorAlignment ())
       {
+         case TextAlignment .BEGIN:
+            this .minorAlignment .assign (this .bearing);
+            break;
+         case TextAlignment .FIRST:
+            this .minorAlignment .set (0, 0);
+            break;
+         case TextAlignment .MIDDLE:
+            this .minorAlignment .set (0, size .y / 2 - max .y);
+            break;
+         case TextAlignment .END:
+            this .minorAlignment .set (0, (numLines - 1) * spacing * scale);
+            break;
+      }
+
+      // Translate bbox by minorAlignment.
+
+      min .add (this .minorAlignment);
+      max .add (this .minorAlignment);
+
+      // The value of the origin field represents the upper left corner of the textBounds.
+
+      text ._origin .setValue (origin .set (min .x, max .y, 0));
+
+      this .bbox .setExtents (min3 .set (min .x, min .y, 0),
+                              max3 .set (max .x, max .y, 0));
+   },
+   vertical: function (text, fontStyle)
+   {
+      var
+         font             = fontStyle .getFont (),
+         string           = text ._string,
+         numLines         = string .length,
+         maxExtent        = Math .max (0, text ._maxExtent .getValue ()),
+         leftToRight      = fontStyle ._leftToRight .getValue (),
+         topToBottom      = fontStyle ._topToBottom .getValue (),
+         scale            = fontStyle .getScale (),
+         spacing          = fontStyle ._spacing .getValue (),
+         yPad             = this .yPad,
+         primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality ();
+
+      bbox .set ();
+
+      // Calculate bboxes.
+
+      var
+         firstL = leftToRight ? 0 : numLines - 1,
+         lastL  = leftToRight ? numLines : -1,
+         stepL  = leftToRight ? 1 : -1,
+         t      = 0; // Translation index
+
+      for (var l = firstL; l !== lastL; l += stepL)
+      {
+         var glyphs = this .stringToGlyphs (font, string [l], true, l);
+
          var
-            font             = fontStyle .getFont (),
-            string           = text ._string,
-            numLines         = string .length,
-            maxExtent        = Math .max (0, text ._maxExtent .getValue ()),
-            leftToRight      = fontStyle ._leftToRight .getValue (),
-            topToBottom      = fontStyle ._topToBottom .getValue (),
-            scale            = fontStyle .getScale (),
-            spacing          = fontStyle ._spacing .getValue (),
-            yPad             = this .yPad,
-            primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality ();
+            t0       = t,
+            numChars = glyphs .length;
 
-         bbox .set ();
+         // Calculate line bbox
 
-         // Calculate bboxes.
+         lineBBox .set ();
 
          var
-            firstL = leftToRight ? 0 : numLines - 1,
-            lastL  = leftToRight ? numLines : -1,
-            stepL  = leftToRight ? 1 : -1,
-            t      = 0; // Translation index
+            firstG = topToBottom ? 0 : numChars - 1,
+            lastG  = topToBottom ? numChars : -1,
+            stepG  = topToBottom ? 1 : -1;
 
-         for (var l = firstL; l !== lastL; l += stepL)
+         for (var g = firstG; g !== lastG; g += stepG, ++ t)
          {
-            var glyphs = this .stringToGlyphs (font, string [l], true, l);
+            var glyph = glyphs [g];
 
-            var
-               t0       = t,
-               numChars = glyphs .length;
+            // Get glyph extents.
 
-            // Calculate line bbox
-
-            lineBBox .set ();
-
-            var
-               firstG = topToBottom ? 0 : numChars - 1,
-               lastG  = topToBottom ? numChars : -1,
-               stepG  = topToBottom ? 1 : -1;
-
-            for (var g = firstG; g !== lastG; g += stepG, ++ t)
-            {
-               var glyph = glyphs [g];
-
-               // Get glyph extents.
-
-               this .getGlyphExtents (font, glyph, primitiveQuality, min, max);
-
-               size .assign (max) .subtract (min);
-
-               // Calculate glyph translation
-
-               var glyphNumber = topToBottom ? g : numChars - g - 1;
-
-               this .translations [t] .set ((spacing - size .x - min .x) / 2, -glyphNumber);
-
-               // Calculate center.
-
-               center .assign (min) .add (size1_2 .assign (size) .divide (2)) .add (this .translations [t]);
-
-               // Add bbox.
-
-               lineBBox .add (box2 .set (size, center));
-            }
-
-            // Get line extents.
-
-            lineBBox .getExtents (min, max);
+            this .getGlyphExtents (font, glyph, primitiveQuality, min, max);
 
             size .assign (max) .subtract (min);
-
-            // Calculate charSpacing and lineBounds.
-
-            var
-               lineNumber  = leftToRight ? l : numLines - l - 1,
-               padding     = (spacing - size .x) / 2,
-               charSpacing = 0,
-               length      = text .getLength (l);
-
-            lineBound .set (l === 0 ? spacing - padding: spacing, numChars ? size .y : 0) .multiply (scale);
-
-            if (maxExtent)
-            {
-               if (length)
-                  length = Math .min (maxExtent, length);
-
-               else
-                  length = Math .min (maxExtent, size .y * scale);
-            }
-
-            if (length)
-            {
-               charSpacing  = (length - lineBound .y) / (glyphs .length - 1) / scale;
-               lineBound .y = length;
-               size .y      = length / scale;
-               min .y       = max .y  - size .y;
-            }
-
-            text ._lineBounds [l] = lineBound;
-
-            // Calculate line translation.
-
-            switch (fontStyle .getMajorAlignment ())
-            {
-               case TextAlignment .BEGIN:
-               case TextAlignment .FIRST:
-                  translation .set (lineNumber * spacing, -1);
-                  break;
-               case TextAlignment .MIDDLE:
-                  translation .set (lineNumber * spacing, (size .y / 2 - max .y));
-                  break;
-               case TextAlignment .END:
-               {
-                  // This is needed to make maxExtend and charSpacing work.
-                  if (numChars)
-                     this .getGlyphExtents (font, glyphs [topToBottom ? numChars - 1 : 0], primitiveQuality, glyphMin .assign (Vector2 .Zero), vector);
-
-                  translation .set (lineNumber * spacing, (size .y - max .y + glyphMin .y));
-                  break;
-               }
-            }
 
             // Calculate glyph translation
 
-            var space = 0;
+            var glyphNumber = topToBottom ? g : numChars - g - 1;
 
-            for (var tt = t0; tt < t; ++ tt)
-            {
-               this .translations [tt] .add (translation);
-
-               this .translations [tt] .y -= space;
-
-               this .translations [tt] .multiply (scale);
-
-               space += charSpacing;
-            }
-
-            // Calculate ypad to extend line bounds.
-
-            switch (fontStyle .getMajorAlignment ())
-            {
-               case TextAlignment .BEGIN:
-               case TextAlignment .FIRST:
-                  yPad [l] = max .y + translation .y;
-                  break;
-               case TextAlignment .MIDDLE:
-                  yPad [l] = 0;
-                  break;
-               case TextAlignment .END:
-                  yPad [l] = min .y + translation .y;
-                  break;
-            }
+            this .translations [t] .set ((spacing - size .x - min .x) / 2, -glyphNumber);
 
             // Calculate center.
 
-            center .assign (min) .add (size1_2 .assign (size) .divide (2));
+            center .assign (min) .add (size1_2 .assign (size) .divide (2)) .add (this .translations [t]);
 
             // Add bbox.
 
-            bbox .add (box2 .set (size .multiply (scale), center .add (translation) .multiply (scale)));
+            lineBBox .add (box2 .set (size, center));
          }
 
-         // Get text extents.
+         // Get line extents.
 
-         bbox .getExtents (min, max);
+         lineBBox .getExtents (min, max);
 
          size .assign (max) .subtract (min);
 
-         // Extend lineBounds.
-
-         switch (fontStyle .getMajorAlignment ())
-         {
-            case TextAlignment .BEGIN:
-            case TextAlignment .FIRST:
-            {
-               var lineBounds = text ._lineBounds;
-
-               for (var i = 0, length = lineBounds .length; i < length; ++ i)
-                  lineBounds [i] .y += max .y - yPad [i] * scale;
-
-               break;
-            }
-            case TextAlignment .MIDDLE:
-               break;
-            case TextAlignment .END:
-            {
-               var lineBounds = text ._lineBounds;
-
-               for (var i = 0, length = lineBounds .length; i < length; ++ i)
-                  lineBounds [i] .y += yPad [i] * scale - min .y;
-
-               break;
-            }
-         }
-
-         // Calculate text position
-
-         text ._textBounds = size;
-
-         switch (fontStyle .getMajorAlignment ())
-         {
-            case TextAlignment .BEGIN:
-            case TextAlignment .FIRST:
-               this .bearing .set (-min .x, max .y);
-               break;
-            case TextAlignment .MIDDLE:
-               this .bearing .set (-min .x, 0);
-               break;
-            case TextAlignment .END:
-               this .bearing .set (-min .x, min .y);
-               break;
-         }
-
-         switch (fontStyle .getMinorAlignment ())
-         {
-            case TextAlignment .BEGIN:
-            case TextAlignment .FIRST:
-               this .minorAlignment .set (-min .x, 0);
-               break;
-            case TextAlignment .MIDDLE:
-               this .minorAlignment .set (-min .x - size .x / 2, 0);
-               break;
-            case TextAlignment .END:
-               this .minorAlignment .set (-min .x - size .x, 0);
-               break;
-         }
-
-         // Translate bbox by minorAlignment.
-
-         min .add (this .minorAlignment);
-         max .add (this .minorAlignment);
-
-         // The value of the origin field represents the upper left corner of the textBounds.
-
-         text ._origin .setValue (origin .set (min .x, max .y, 0));
-
-         this .bbox .set (min3 .set (min .x, min .y, 0),
-                          max3 .set (max .x, max .y, 0),
-                          true);
-      },
-      stringToGlyphs: function (font, line, normal, lineNumber)
-      {
-         var glypes = this .glyphs [lineNumber];
-
-         if (! glypes)
-            glypes = this .glyphs [lineNumber] = [ ];
-
-         glypes .length = line .length;
+         // Calculate charSpacing and lineBounds.
 
          var
-            first = normal ? 0 : line .length - 1,
-            last  = normal ? line .length : -1,
-            step  = normal ? 1 : -1;
+            lineNumber  = leftToRight ? l : numLines - l - 1,
+            padding     = (spacing - size .x) / 2,
+            charSpacing = 0,
+            length      = text .getLength (l);
 
-         for (var c = first, g = 0; c !== last; c += step, ++ g)
-            glypes [g] = font .charToGlyph (line [c]);
+         lineBound .set (l === 0 ? spacing - padding: spacing, numChars ? size .y : 0) .multiply (scale);
 
-         return glypes;
-      },
-      getHorizontalLineExtents: function (fontStyle, line, min, max, lineNumber)
-      {
-         var
-            font             = fontStyle .getFont (),
-            normal           = fontStyle ._horizontal .getValue () ? fontStyle ._leftToRight .getValue () : fontStyle ._topToBottom .getValue (),
-            glyphs           = this .stringToGlyphs (font, line, normal, lineNumber),
-            primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
-            xMin             = 0,
-            xMax             = 0,
-            yMin             = Number .POSITIVE_INFINITY,
-            yMax             = Number .NEGATIVE_INFINITY;
-
-         for (var g = 0, length = glyphs .length; g < length; ++ g)
+         if (maxExtent)
          {
-            var
-               glyph   = glyphs [g],
-               kerning = g + 1 < length ? font .getKerningValue (glyph, glyphs [g + 1]) : 0;
+            if (length)
+               length = Math .min (maxExtent, length);
 
-            this .getGlyphExtents (font, glyph, primitiveQuality, glyphMin, glyphMax);
-
-            xMax += glyph .advanceWidth + kerning;
-            yMin  = Math .min (yMin, glyphMin .y);
-            yMax  = Math .max (yMax, glyphMax .y);
+            else
+               length = Math .min (maxExtent, size .y * scale);
          }
 
-         if (glyphs .length)
+         if (length)
          {
-            this .getGlyphExtents (font, glyphs [0], primitiveQuality, glyphMin, glyphMax);
-
-            xMin  = glyphMin .x;
-         }
-         else
-         {
-            yMin = 0;
-            yMax = 0;
+            charSpacing  = (length - lineBound .y) / (glyphs .length - 1) / scale;
+            lineBound .y = length;
+            size .y      = length / scale;
+            min .y       = max .y  - size .y;
          }
 
-         min .set (xMin, yMin);
-         max .set (xMax / font .unitsPerEm, yMax);
+         text ._lineBounds [l] = lineBound;
+
+         // Calculate line translation.
 
          switch (fontStyle .getMajorAlignment ())
          {
             case TextAlignment .BEGIN:
             case TextAlignment .FIRST:
-               min .x = 0;
+               translation .set (lineNumber * spacing, -1);
+               break;
+            case TextAlignment .MIDDLE:
+               translation .set (lineNumber * spacing, (size .y / 2 - max .y));
+               break;
+            case TextAlignment .END:
+            {
+               // This is needed to make maxExtend and charSpacing work.
+               if (numChars)
+                  this .getGlyphExtents (font, glyphs [topToBottom ? numChars - 1 : 0], primitiveQuality, glyphMin .assign (Vector2 .Zero), vector);
+
+               translation .set (lineNumber * spacing, (size .y - max .y + glyphMin .y));
+               break;
+            }
+         }
+
+         // Calculate glyph translation
+
+         var space = 0;
+
+         for (var tt = t0; tt < t; ++ tt)
+         {
+            this .translations [tt] .add (translation);
+
+            this .translations [tt] .y -= space;
+
+            this .translations [tt] .multiply (scale);
+
+            space += charSpacing;
+         }
+
+         // Calculate ypad to extend line bounds.
+
+         switch (fontStyle .getMajorAlignment ())
+         {
+            case TextAlignment .BEGIN:
+            case TextAlignment .FIRST:
+               yPad [l] = max .y + translation .y;
+               break;
+            case TextAlignment .MIDDLE:
+               yPad [l] = 0;
+               break;
+            case TextAlignment .END:
+               yPad [l] = min .y + translation .y;
                break;
          }
 
-         return glyphs;
-      },
-      traverse: function (type, renderObject)
-      { },
-   };
+         // Calculate center.
 
-   return X3DTextGeometry;
-});
+         center .assign (min) .add (size1_2 .assign (size) .divide (2));
+
+         // Add bbox.
+
+         bbox .add (box2 .set (size .multiply (scale), center .add (translation) .multiply (scale)));
+      }
+
+      // Get text extents.
+
+      bbox .getExtents (min, max);
+
+      size .assign (max) .subtract (min);
+
+      // Extend lineBounds.
+
+      switch (fontStyle .getMajorAlignment ())
+      {
+         case TextAlignment .BEGIN:
+         case TextAlignment .FIRST:
+         {
+            var lineBounds = text ._lineBounds;
+
+            for (var i = 0, length = lineBounds .length; i < length; ++ i)
+               lineBounds [i] .y += max .y - yPad [i] * scale;
+
+            break;
+         }
+         case TextAlignment .MIDDLE:
+            break;
+         case TextAlignment .END:
+         {
+            var lineBounds = text ._lineBounds;
+
+            for (var i = 0, length = lineBounds .length; i < length; ++ i)
+               lineBounds [i] .y += yPad [i] * scale - min .y;
+
+            break;
+         }
+      }
+
+      // Calculate text position
+
+      text ._textBounds = size;
+
+      switch (fontStyle .getMajorAlignment ())
+      {
+         case TextAlignment .BEGIN:
+         case TextAlignment .FIRST:
+            this .bearing .set (-min .x, max .y);
+            break;
+         case TextAlignment .MIDDLE:
+            this .bearing .set (-min .x, 0);
+            break;
+         case TextAlignment .END:
+            this .bearing .set (-min .x, min .y);
+            break;
+      }
+
+      switch (fontStyle .getMinorAlignment ())
+      {
+         case TextAlignment .BEGIN:
+         case TextAlignment .FIRST:
+            this .minorAlignment .set (-min .x, 0);
+            break;
+         case TextAlignment .MIDDLE:
+            this .minorAlignment .set (-min .x - size .x / 2, 0);
+            break;
+         case TextAlignment .END:
+            this .minorAlignment .set (-min .x - size .x, 0);
+            break;
+      }
+
+      // Translate bbox by minorAlignment.
+
+      min .add (this .minorAlignment);
+      max .add (this .minorAlignment);
+
+      // The value of the origin field represents the upper left corner of the textBounds.
+
+      text ._origin .setValue (origin .set (min .x, max .y, 0));
+
+      this .bbox .set (min3 .set (min .x, min .y, 0),
+                       max3 .set (max .x, max .y, 0),
+                       true);
+   },
+   stringToGlyphs: function (font, line, normal, lineNumber)
+   {
+      var glypes = this .glyphs [lineNumber];
+
+      if (! glypes)
+         glypes = this .glyphs [lineNumber] = [ ];
+
+      glypes .length = line .length;
+
+      var
+         first = normal ? 0 : line .length - 1,
+         last  = normal ? line .length : -1,
+         step  = normal ? 1 : -1;
+
+      for (var c = first, g = 0; c !== last; c += step, ++ g)
+         glypes [g] = font .charToGlyph (line [c]);
+
+      return glypes;
+   },
+   getHorizontalLineExtents: function (fontStyle, line, min, max, lineNumber)
+   {
+      var
+         font             = fontStyle .getFont (),
+         normal           = fontStyle ._horizontal .getValue () ? fontStyle ._leftToRight .getValue () : fontStyle ._topToBottom .getValue (),
+         glyphs           = this .stringToGlyphs (font, line, normal, lineNumber),
+         primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
+         xMin             = 0,
+         xMax             = 0,
+         yMin             = Number .POSITIVE_INFINITY,
+         yMax             = Number .NEGATIVE_INFINITY;
+
+      for (var g = 0, length = glyphs .length; g < length; ++ g)
+      {
+         var
+            glyph   = glyphs [g],
+            kerning = g + 1 < length ? font .getKerningValue (glyph, glyphs [g + 1]) : 0;
+
+         this .getGlyphExtents (font, glyph, primitiveQuality, glyphMin, glyphMax);
+
+         xMax += glyph .advanceWidth + kerning;
+         yMin  = Math .min (yMin, glyphMin .y);
+         yMax  = Math .max (yMax, glyphMax .y);
+      }
+
+      if (glyphs .length)
+      {
+         this .getGlyphExtents (font, glyphs [0], primitiveQuality, glyphMin, glyphMax);
+
+         xMin  = glyphMin .x;
+      }
+      else
+      {
+         yMin = 0;
+         yMax = 0;
+      }
+
+      min .set (xMin, yMin);
+      max .set (xMax / font .unitsPerEm, yMax);
+
+      switch (fontStyle .getMajorAlignment ())
+      {
+         case TextAlignment .BEGIN:
+         case TextAlignment .FIRST:
+            min .x = 0;
+            break;
+      }
+
+      return glyphs;
+   },
+   traverse: function (type, renderObject)
+   { },
+};
+
+export default X3DTextGeometry;

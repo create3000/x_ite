@@ -47,66 +47,55 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Text/X3DFontStyleNode",
-   "x_ite/Browser/Layout/ScreenText",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DFontStyleNode,
-          ScreenText,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DFontStyleNode from "../Text/X3DFontStyleNode.js";
+import ScreenText from "../../Browser/Layout/ScreenText.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function ScreenFontStyle (executionContext)
 {
-"use strict";
+   X3DFontStyleNode .call (this, executionContext);
 
-   function ScreenFontStyle (executionContext)
+   this .addType (X3DConstants .ScreenFontStyle);
+}
+
+ScreenFontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
+{
+   constructor: ScreenFontStyle,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "language",    new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "family",      new Fields .MFString ("SERIF")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "style",       new Fields .SFString ("PLAIN")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "pointSize",   new Fields .SFFloat (12)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "spacing",     new Fields .SFFloat (1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "horizontal",  new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "leftToRight", new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "topToBottom", new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "justify",     new Fields .MFString ("BEGIN")),
+   ]),
+   getTypeName: function ()
    {
-      X3DFontStyleNode .call (this, executionContext);
-
-      this .addType (X3DConstants .ScreenFontStyle);
-   }
-
-   ScreenFontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
+      return "ScreenFontStyle";
+   },
+   getComponentName: function ()
    {
-      constructor: ScreenFontStyle,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "language",    new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "family",      new Fields .MFString ("SERIF")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "style",       new Fields .SFString ("PLAIN")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "pointSize",   new Fields .SFFloat (12)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "spacing",     new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "horizontal",  new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "leftToRight", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "topToBottom", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "justify",     new Fields .MFString ("BEGIN")),
-      ]),
-      getTypeName: function ()
-      {
-         return "ScreenFontStyle";
-      },
-      getComponentName: function ()
-      {
-         return "Layout";
-      },
-      getContainerField: function ()
-      {
-         return "fontStyle";
-      },
-      getTextGeometry: function (text)
-      {
-         return new ScreenText (text, this);
-      },
-      getScale: function ()
-      {
-         return this ._pointSize .getValue () * this .getBrowser () .getPixelPerPoint ();
-      },
-   });
-
-   return ScreenFontStyle;
+      return "Layout";
+   },
+   getContainerField: function ()
+   {
+      return "fontStyle";
+   },
+   getTextGeometry: function (text)
+   {
+      return new ScreenText (text, this);
+   },
+   getScale: function ()
+   {
+      return this ._pointSize .getValue () * this .getBrowser () .getPixelPerPoint ();
+   },
 });
+
+export default ScreenFontStyle;

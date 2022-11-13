@@ -47,70 +47,59 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DInfoNode",
-   "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInfoNode,
-          X3DUrlObject,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DInfoNode from "../Core/X3DInfoNode.js";
+import X3DUrlObject from "../Networking/X3DUrlObject.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function GeoMetadata (executionContext)
 {
-"use strict";
+   X3DInfoNode  .call (this, executionContext);
+   X3DUrlObject .call (this, executionContext);
 
-   function GeoMetadata (executionContext)
+   this .addType (X3DConstants .GeoMetadata);
+}
+
+GeoMetadata .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
+   X3DUrlObject .prototype,
+{
+   constructor: GeoMetadata,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "summary",              new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "data",                 new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DInfoNode  .call (this, executionContext);
-      X3DUrlObject .call (this, executionContext);
-
-      this .addType (X3DConstants .GeoMetadata);
-   }
-
-   GeoMetadata .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
-      X3DUrlObject .prototype,
+      return "GeoMetadata";
+   },
+   getComponentName: function ()
    {
-      constructor: GeoMetadata,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "summary",              new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "data",                 new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "GeoMetadata";
-      },
-      getComponentName: function ()
-      {
-         return "Geospatial";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DInfoNode  .prototype .initialize .call (this);
-         X3DUrlObject .prototype .initialize .call (this);
-      },
-      requestImmediateLoad: function (cache = true)
-      { },
-      requestUnload: function ()
-      { },
-      set_load__: function ()
-      { },
-      set_url__: function ()
-      { },
-   });
-
-   return GeoMetadata;
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DInfoNode  .prototype .initialize .call (this);
+      X3DUrlObject .prototype .initialize .call (this);
+   },
+   requestImmediateLoad: function (cache = true)
+   { },
+   requestUnload: function ()
+   { },
+   set_load__: function ()
+   { },
+   set_url__: function ()
+   { },
 });
+
+export default GeoMetadata;

@@ -47,30 +47,23 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DChildNode,
-          X3DConstants)
+import X3DChildNode from "../Core/X3DChildNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DAnnotationNode (executionContext)
 {
-"use strict";
+   X3DChildNode .call (this, executionContext);
 
-   function X3DAnnotationNode (executionContext)
+   this .addType (X3DConstants .X3DAnnotationNode);
+}
+
+X3DAnnotationNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+{
+   constructor: X3DAnnotationNode,
+   initialize: function ()
    {
-      X3DChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DAnnotationNode);
-   }
-
-   X3DAnnotationNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-   {
-      constructor: X3DAnnotationNode,
-      initialize: function ()
-      {
-         X3DChildNode .prototype .initialize .call (this);
-      },
-   });
-
-   return X3DAnnotationNode;
+      X3DChildNode .prototype .initialize .call (this);
+   },
 });
+
+export default X3DAnnotationNode;

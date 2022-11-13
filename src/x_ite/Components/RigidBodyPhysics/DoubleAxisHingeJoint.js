@@ -47,250 +47,234 @@
  ******************************************************************************/
 
 
-define ([
-   "jquery",
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Numbers/Matrix4",
-   "lib/ammojs/AmmoJS",
-],
-function ($,
-          Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DRigidJointNode,
-          X3DConstants,
-          Vector3,
-          Rotation4,
-          Matrix4,
-          Ammo)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DRigidJointNode from "./X3DRigidJointNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import Ammo from "../../../lib/ammojs/AmmoClass.js";
+
+function DoubleAxisHingeJoint (executionContext)
 {
-"use strict";
+   X3DRigidJointNode .call (this, executionContext);
 
-   function DoubleAxisHingeJoint (executionContext)
+   this .addType (X3DConstants .DoubleAxisHingeJoint);
+
+   this ._anchorPoint             .setUnit ("length");
+   this ._minAngle1               .setUnit ("angle");
+   this ._maxAngle1               .setUnit ("angle");
+   this ._desiredAngularVelocity1 .setUnit ("angularRate");
+   this ._desiredAngularVelocity2 .setUnit ("angularRate");
+   this ._stopConstantForceMix1   .setUnit ("force");
+   this ._suspensionForce         .setUnit ("force");
+
+   this .joint             = null;
+   this .outputs           = { };
+   this .localAnchorPoint1 = new Vector3 (0, 0, 0);
+   this .localAnchorPoint2 = new Vector3 (0, 0, 0);
+   this .localAxis1        = new Vector3 (0, 0, 0);
+   this .localAxis2        = new Vector3 (0, 0, 0);
+}
+
+DoubleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+{
+   constructor: DoubleAxisHingeJoint,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                  new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",               new Fields .MFString ("NONE")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",               new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "axis1",                     new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "axis2",                     new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle1",                 new Fields .SFFloat (-3.14159)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle1",                 new Fields .SFFloat (3.14159)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity1",   new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity2",   new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque1",                new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque2",                new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce1",               new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "stopConstantForceMix1",     new Fields .SFFloat (0.001)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "stopErrorCorrection1",      new Fields .SFFloat (0.8)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionForce",           new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionErrorCorrection", new Fields .SFFloat (0.8)),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint",          new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint",          new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "body1Axis",                 new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "body2Axis",                 new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge1Angle",               new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge2Angle",               new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge1AngleRate",           new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge2AngleRate",           new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                     new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                     new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DRigidJointNode .call (this, executionContext);
-
-      this .addType (X3DConstants .DoubleAxisHingeJoint);
-
-      this ._anchorPoint             .setUnit ("length");
-      this ._minAngle1               .setUnit ("angle");
-      this ._maxAngle1               .setUnit ("angle");
-      this ._desiredAngularVelocity1 .setUnit ("angularRate");
-      this ._desiredAngularVelocity2 .setUnit ("angularRate");
-      this ._stopConstantForceMix1   .setUnit ("force");
-      this ._suspensionForce         .setUnit ("force");
-
-      this .joint             = null;
-      this .outputs           = { };
-      this .localAnchorPoint1 = new Vector3 (0, 0, 0);
-      this .localAnchorPoint2 = new Vector3 (0, 0, 0);
-      this .localAxis1        = new Vector3 (0, 0, 0);
-      this .localAxis2        = new Vector3 (0, 0, 0);
-   }
-
-   DoubleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+      return "DoubleAxisHingeJoint";
+   },
+   getComponentName: function ()
    {
-      constructor: DoubleAxisHingeJoint,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                  new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",               new Fields .MFString ("NONE")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",               new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "axis1",                     new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "axis2",                     new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle1",                 new Fields .SFFloat (-3.14159)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle1",                 new Fields .SFFloat (3.14159)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity1",   new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity2",   new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque1",                new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque2",                new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce1",               new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "stopConstantForceMix1",     new Fields .SFFloat (0.001)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "stopErrorCorrection1",      new Fields .SFFloat (0.8)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionForce",           new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionErrorCorrection", new Fields .SFFloat (0.8)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint",          new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint",          new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "body1Axis",                 new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "body2Axis",                 new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge1Angle",               new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge2Angle",               new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge1AngleRate",           new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge2AngleRate",           new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                     new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                     new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
+      return "RigidBodyPhysics";
+   },
+   getContainerField: function ()
+   {
+      return "joints";
+   },
+   initialize: function ()
+   {
+      X3DRigidJointNode .prototype .initialize .call (this);
+
+      this ._anchorPoint .addInterest ("set_joint__", this);
+      this ._axis1       .addInterest ("set_joint__", this);
+      this ._axis2       .addInterest ("set_joint__", this);
+   },
+   addJoint: (function ()
+   {
+      var
+         localAnchorPoint1 = new Vector3 (0, 0, 0),
+         localAnchorPoint2 = new Vector3 (0, 0, 0),
+         localAxis1        = new Vector3 (0, 0, 0),
+         localAxis2        = new Vector3 (0, 0, 0);
+
+      return function ()
       {
-         return "DoubleAxisHingeJoint";
-      },
-      getComponentName: function ()
-      {
-         return "RigidBodyPhysics";
-      },
-      getContainerField: function ()
-      {
-         return "joints";
-      },
-      initialize: function ()
-      {
-         X3DRigidJointNode .prototype .initialize .call (this);
-
-         this ._anchorPoint .addInterest ("set_joint__", this);
-         this ._axis1       .addInterest ("set_joint__", this);
-         this ._axis2       .addInterest ("set_joint__", this);
-      },
-      addJoint: (function ()
-      {
-         var
-            localAnchorPoint1 = new Vector3 (0, 0, 0),
-            localAnchorPoint2 = new Vector3 (0, 0, 0),
-            localAxis1        = new Vector3 (0, 0, 0),
-            localAxis2        = new Vector3 (0, 0, 0);
-
-         return function ()
-         {
-            if (! this .getCollection ())
-               return;
-
-            if (! this .getBody1 ())
-               return;
-
-            if (! this .getBody2 ())
-               return;
-
-            if (this .getBody1 () .getCollection () !== this .getCollection ())
-               return;
-
-            if (this .getBody2 () .getCollection () !== this .getCollection ())
-               return;
-
-            localAnchorPoint1 .assign (this ._anchorPoint .getValue ());
-            localAnchorPoint2 .assign (this ._anchorPoint .getValue ());
-            localAxis1        .assign (this ._axis1 .getValue ());
-            localAxis2        .assign (this ._axis2 .getValue ());
-
-            this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1);
-            this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2);
-            this .getInitialInverseMatrix1 () .multDirMatrix (localAxis1) .normalize ();
-            this .getInitialInverseMatrix2 () .multDirMatrix (localAxis2) .normalize ();
-
-            this .joint = new Ammo .btHingeConstraint (this .getBody1 () .getRigidBody (),
-                                                       this .getBody2 () .getRigidBody (),
-                                                       new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
-                                                       new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
-                                                       new Ammo .btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
-                                                       new Ammo .btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
-                                                       false);
-
-            this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
-         };
-      })(),
-      removeJoint: function ()
-      {
-         if (! this .joint)
+         if (! this .getCollection ())
             return;
 
-         if (this .getCollection ())
-            this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+         if (! this .getBody1 ())
+            return;
 
-         Ammo .destroy (this .joint);
-         this .joint = null;
-      },
-      set_forceOutput__: function ()
+         if (! this .getBody2 ())
+            return;
+
+         if (this .getBody1 () .getCollection () !== this .getCollection ())
+            return;
+
+         if (this .getBody2 () .getCollection () !== this .getCollection ())
+            return;
+
+         localAnchorPoint1 .assign (this ._anchorPoint .getValue ());
+         localAnchorPoint2 .assign (this ._anchorPoint .getValue ());
+         localAxis1        .assign (this ._axis1 .getValue ());
+         localAxis2        .assign (this ._axis2 .getValue ());
+
+         this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1);
+         this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2);
+         this .getInitialInverseMatrix1 () .multDirMatrix (localAxis1) .normalize ();
+         this .getInitialInverseMatrix2 () .multDirMatrix (localAxis2) .normalize ();
+
+         this .joint = new Ammo .btHingeConstraint (this .getBody1 () .getRigidBody (),
+                                                    this .getBody2 () .getRigidBody (),
+                                                    new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
+                                                    new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
+                                                    new Ammo .btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
+                                                    new Ammo .btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
+                                                    false);
+
+         this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
+      };
+   })(),
+   removeJoint: function ()
+   {
+      if (! this .joint)
+         return;
+
+      if (this .getCollection ())
+         this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+
+      Ammo .destroy (this .joint);
+      this .joint = null;
+   },
+   set_forceOutput__: function ()
+   {
+      for (var key in this .outputs)
+         delete this .outputs [key];
+
+      for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
       {
-         for (var key in this .outputs)
-            delete this .outputs [key];
+         var value = this ._forceOutput [i];
 
-         for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
+         if (value == "ALL")
          {
-            var value = this ._forceOutput [i];
-
-            if (value == "ALL")
-            {
-               this .outputs .body1AnchorPoint = true;
-               this .outputs .body2AnchorPoint = true;
-               this .outputs .body1Axis        = true;
-               this .outputs .body2Axis        = true;
-               this .outputs .hinge1Angle      = true;
-               this .outputs .hinge2Angle      = true;
-               this .outputs .hinge1AngleRate  = true;
-               this .outputs .hinge2AngleRate  = true;
-            }
-            else
-            {
-               this .outputs [value] = true;
-            }
+            this .outputs .body1AnchorPoint = true;
+            this .outputs .body2AnchorPoint = true;
+            this .outputs .body1Axis        = true;
+            this .outputs .body2Axis        = true;
+            this .outputs .hinge1Angle      = true;
+            this .outputs .hinge2Angle      = true;
+            this .outputs .hinge1AngleRate  = true;
+            this .outputs .hinge2AngleRate  = true;
          }
-
-         this .setOutput (! $.isEmptyObject (this .outputs));
-      },
-      update1: (function ()
-      {
-         var
-            localAnchorPoint1 = new Vector3 (0, 0, 0),
-            localAxis1        = new Vector3 (0, 0, 0),
-            difference        = new Matrix4 (),
-            rotation          = new Rotation4 (0, 0, 1, 0);
-
-         return function ()
+         else
          {
-            if (this .outputs .body1AnchorPoint)
-               this ._body1AnchorPoint = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
+            this .outputs [value] = true;
+         }
+      }
 
-            if (this .outputs .body1Axis)
-               this ._body1Axis = this .getInitialInverseMatrix1 () .multDirMatrix (this .getBody1 () .getMatrix () .multDirMatrix (localAxis1 .assign (this .localAxis1))) .normalize ();
+      this .setOutput (! $.isEmptyObject (this .outputs));
+   },
+   update1: (function ()
+   {
+      var
+         localAnchorPoint1 = new Vector3 (0, 0, 0),
+         localAxis1        = new Vector3 (0, 0, 0),
+         difference        = new Matrix4 (),
+         rotation          = new Rotation4 (0, 0, 1, 0);
 
-            if (this .outputs .hinge1Angle)
-            {
-               var lastAngle  = this ._hinge1Angle .getValue ();
-
-               difference .assign (this .getInitialInverseMatrix1 ()) .multRight (this .getBody1 () .getMatrix ());
-               difference .get (null, rotation);
-
-               this ._hinge1Angle = rotation .angle;
-
-               if (this .outputs .angleRate)
-                  this ._hinge1AngleRate = (this ._hinge1Angle .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
-            }
-         };
-      })(),
-      update2: (function ()
+      return function ()
       {
-         var
-            localAnchorPoint2 = new Vector3 (0, 0, 0),
-            localAxis2        = new Vector3 (0, 0, 0),
-            difference        = new Matrix4 (),
-            rotation          = new Rotation4 (0, 0, 1, 0);
+         if (this .outputs .body1AnchorPoint)
+            this ._body1AnchorPoint = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
 
-         return function ()
+         if (this .outputs .body1Axis)
+            this ._body1Axis = this .getInitialInverseMatrix1 () .multDirMatrix (this .getBody1 () .getMatrix () .multDirMatrix (localAxis1 .assign (this .localAxis1))) .normalize ();
+
+         if (this .outputs .hinge1Angle)
          {
-            if (this .outputs .body2AnchorPoint)
-               this ._body2AnchorPoint = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
+            var lastAngle  = this ._hinge1Angle .getValue ();
 
-            if (this .outputs .body2Axis)
-               this ._body2Axis = this .getInitialInverseMatrix2 () .multDirMatrix (this .getBody2 () .getMatrix () .multDirMatrix (localAxis2 .assign (this .localAxis2))) .normalize ();
+            difference .assign (this .getInitialInverseMatrix1 ()) .multRight (this .getBody1 () .getMatrix ());
+            difference .get (null, rotation);
 
-            if (this .outputs .hinge2Angle)
-            {
-               var lastAngle  = this ._hinge2Angle .getValue ();
+            this ._hinge1Angle = rotation .angle;
 
-               difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
-               difference .get (null, rotation);
+            if (this .outputs .angleRate)
+               this ._hinge1AngleRate = (this ._hinge1Angle .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
+         }
+      };
+   })(),
+   update2: (function ()
+   {
+      var
+         localAnchorPoint2 = new Vector3 (0, 0, 0),
+         localAxis2        = new Vector3 (0, 0, 0),
+         difference        = new Matrix4 (),
+         rotation          = new Rotation4 (0, 0, 1, 0);
 
-               this ._hinge2Angle = rotation .angle;
+      return function ()
+      {
+         if (this .outputs .body2AnchorPoint)
+            this ._body2AnchorPoint = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
 
-               if (this .outputs .angleRate)
-                  this ._hinge2AngleRate = (this ._hinge2Angle .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
-            }
-         };
-      })(),
-   });
+         if (this .outputs .body2Axis)
+            this ._body2Axis = this .getInitialInverseMatrix2 () .multDirMatrix (this .getBody2 () .getMatrix () .multDirMatrix (localAxis2 .assign (this .localAxis2))) .normalize ();
 
-   return DoubleAxisHingeJoint;
+         if (this .outputs .hinge2Angle)
+         {
+            var lastAngle  = this ._hinge2Angle .getValue ();
+
+            difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
+            difference .get (null, rotation);
+
+            this ._hinge2Angle = rotation .angle;
+
+            if (this .outputs .angleRate)
+               this ._hinge2AngleRate = (this ._hinge2Angle .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
+         }
+      };
+   })(),
 });
+
+export default DoubleAxisHingeJoint;

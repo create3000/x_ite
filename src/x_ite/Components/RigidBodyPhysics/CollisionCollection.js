@@ -47,167 +47,155 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Base/X3DCast",
-   "x_ite/Browser/RigidBodyPhysics/AppliedParametersType",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DChildNode,
-          X3DConstants,
-          X3DCast,
-          AppliedParametersType)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DChildNode from "../Core/X3DChildNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast from "../../Base/X3DCast.js";
+import AppliedParametersType from "../../Browser/RigidBodyPhysics/AppliedParametersType.js";
+
+function CollisionCollection (executionContext)
 {
-"use strict";
+   X3DChildNode .call (this, executionContext);
 
-   function CollisionCollection (executionContext)
+   this .addType (X3DConstants .CollisionCollection);
+
+   this ._minBounceSpeed           .setUnit ("speed");
+   this ._surfaceSpeed             .setUnit ("speed");
+   this ._softnessConstantForceMix .setUnit ("force");
+
+   this .appliedParameters   = new Set ();
+   this .collidableNodes     = [ ];
+   this .collisionSpaceNodes = [ ];
+}
+
+CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+{
+   constructor: CollisionCollection,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                  new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "appliedParameters",        new Fields .MFString ("BOUNCE")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "bounce",                   new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "minBounceSpeed",           new Fields .SFFloat (0.1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "frictionCoefficients",     new Fields .SFVec2f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceSpeed",             new Fields .SFVec2f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "slipFactors",              new Fields .SFVec2f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "softnessConstantForceMix", new Fields .SFFloat (0.0001)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "softnessErrorCorrection",  new Fields .SFFloat (0.8)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "collidables",              new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .CollisionCollection);
-
-      this ._minBounceSpeed           .setUnit ("speed");
-      this ._surfaceSpeed             .setUnit ("speed");
-      this ._softnessConstantForceMix .setUnit ("force");
-
-      this .appliedParameters   = new Set ();
-      this .collidableNodes     = [ ];
-      this .collisionSpaceNodes = [ ];
-   }
-
-   CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+      return "CollisionCollection";
+   },
+   getComponentName: function ()
    {
-      constructor: CollisionCollection,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                  new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "appliedParameters",        new Fields .MFString ("BOUNCE")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "bounce",                   new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "minBounceSpeed",           new Fields .SFFloat (0.1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "frictionCoefficients",     new Fields .SFVec2f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceSpeed",             new Fields .SFVec2f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "slipFactors",              new Fields .SFVec2f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "softnessConstantForceMix", new Fields .SFFloat (0.0001)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "softnessErrorCorrection",  new Fields .SFFloat (0.8)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "collidables",              new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "CollisionCollection";
-      },
-      getComponentName: function ()
-      {
-         return "RigidBodyPhysics";
-      },
-      getContainerField: function ()
-      {
-         return "collider";
-      },
-      initialize: function ()
-      {
-         X3DChildNode .prototype .initialize .call (this);
+      return "RigidBodyPhysics";
+   },
+   getContainerField: function ()
+   {
+      return "collider";
+   },
+   initialize: function ()
+   {
+      X3DChildNode .prototype .initialize .call (this);
 
-         this ._appliedParameters .addInterest ("set_appliedParameters__", this);
-         this ._collidables       .addInterest ("set_collidables__",       this);
+      this ._appliedParameters .addInterest ("set_appliedParameters__", this);
+      this ._collidables       .addInterest ("set_collidables__",       this);
 
-         this .set_appliedParameters__ ();
-         this .set_collidables__ ();
-      },
-      getAppliedParameters: function ()
-      {
-         return this .appliedParameters;
-      },
-      getCollidables: function ()
-      {
-         return this .collidableNodes;
-      },
-      set_appliedParameters__: (function ()
-      {
-         var appliedParametersIndex = new Map ([
-            ["BOUNCE",                 AppliedParametersType .BOUNCE],
-            ["USER_FRICTION",          AppliedParametersType .USER_FRICTION],
-            ["FRICTION_COEFFICIENT-2", AppliedParametersType .FRICTION_COEFFICIENT_2],
-            ["ERROR_REDUCTION",        AppliedParametersType .ERROR_REDUCTION],
-            ["CONSTANT_FORCE",         AppliedParametersType .CONSTANT_FORCE],
-            ["SPEED-1",                AppliedParametersType .SPEED_1],
-            ["SPEED-2",                AppliedParametersType .SPEED_2],
-            ["SLIP-1",                 AppliedParametersType .SLIP_1],
-            ["SLIP-2",                 AppliedParametersType .SLIP_2],
-         ]);
+      this .set_appliedParameters__ ();
+      this .set_collidables__ ();
+   },
+   getAppliedParameters: function ()
+   {
+      return this .appliedParameters;
+   },
+   getCollidables: function ()
+   {
+      return this .collidableNodes;
+   },
+   set_appliedParameters__: (function ()
+   {
+      var appliedParametersIndex = new Map ([
+         ["BOUNCE",                 AppliedParametersType .BOUNCE],
+         ["USER_FRICTION",          AppliedParametersType .USER_FRICTION],
+         ["FRICTION_COEFFICIENT-2", AppliedParametersType .FRICTION_COEFFICIENT_2],
+         ["ERROR_REDUCTION",        AppliedParametersType .ERROR_REDUCTION],
+         ["CONSTANT_FORCE",         AppliedParametersType .CONSTANT_FORCE],
+         ["SPEED-1",                AppliedParametersType .SPEED_1],
+         ["SPEED-2",                AppliedParametersType .SPEED_2],
+         ["SLIP-1",                 AppliedParametersType .SLIP_1],
+         ["SLIP-2",                 AppliedParametersType .SLIP_2],
+      ]);
 
-         return function ()
+      return function ()
+      {
+         this .appliedParameters .clear ();
+
+         for (var i = 0, length = this ._appliedParameters .length; i < length; ++ i)
          {
-            this .appliedParameters .clear ();
+            var appliedParameter = appliedParametersIndex .get (this ._appliedParameters [i]);
 
-            for (var i = 0, length = this ._appliedParameters .length; i < length; ++ i)
-            {
-               var appliedParameter = appliedParametersIndex .get (this ._appliedParameters [i]);
+            if (appliedParameter !== undefined)
+               this .appliedParameters .add (appliedParameter);
+         }
+      };
+   })(),
+   set_collidables__: function ()
+   {
+      var collisionSpaceNodes = this .collisionSpaceNodes;
 
-               if (appliedParameter !== undefined)
-                  this .appliedParameters .add (appliedParameter);
-            }
-         };
-      })(),
-      set_collidables__: function ()
+      for (var i = 0, length = collisionSpaceNodes .length; i < length; ++ i)
+         collisionSpaceNodes [i] .removeInterest ("collect", this);
+
+      collisionSpaceNodes .length = 0;
+
+      for (var i = 0, length = this ._collidables .length; i < length; ++ i)
       {
-         var collisionSpaceNodes = this .collisionSpaceNodes;
+         var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this ._collidables [i]);
 
-         for (var i = 0, length = collisionSpaceNodes .length; i < length; ++ i)
-            collisionSpaceNodes [i] .removeInterest ("collect", this);
-
-         collisionSpaceNodes .length = 0;
-
-         for (var i = 0, length = this ._collidables .length; i < length; ++ i)
+         if (collisionSpaceNode)
          {
-            var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this ._collidables [i]);
+            collisionSpaceNode .addInterest ("collect", this);
 
-            if (collisionSpaceNode)
-            {
-               collisionSpaceNode .addInterest ("collect", this);
+            collisionSpaceNodes .push (collisionSpaceNode);
+         }
+      }
 
-               collisionSpaceNodes .push (collisionSpaceNode);
-            }
+      this .collect ();
+   },
+   collect: function ()
+   {
+      var
+         collidableNodes     = this .collidableNodes,
+         collisionSpaceNodes = this .collisionSpaceNodes;
+
+      collidableNodes     .length = 0;
+      collisionSpaceNodes .length = 0;
+
+      for (var i = 0, length = this ._collidables .length; i < length; ++ i)
+      {
+         var collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this ._collidables [i]);
+
+         if (collidableNode)
+         {
+            collidableNodes .push (collidableNode);
+            continue;
          }
 
-         this .collect ();
-      },
-      collect: function ()
-      {
-         var
-            collidableNodes     = this .collidableNodes,
-            collisionSpaceNodes = this .collisionSpaceNodes;
+         var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this ._collidables [i]);
 
-         collidableNodes     .length = 0;
-         collisionSpaceNodes .length = 0;
-
-         for (var i = 0, length = this ._collidables .length; i < length; ++ i)
+         if (collisionSpaceNode)
          {
-            var collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this ._collidables [i]);
-
-            if (collidableNode)
-            {
-               collidableNodes .push (collidableNode);
-               continue;
-            }
-
-            var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this ._collidables [i]);
-
-            if (collisionSpaceNode)
-            {
-               Array .prototype .push .apply (collidableNodes, collisionSpaceNode .getCollidables ());
-               continue;
-            }
+            Array .prototype .push .apply (collidableNodes, collisionSpaceNode .getCollidables ());
+            continue;
          }
+      }
 
-         this .addNodeEvent ();
-      },
-   });
-
-   return CollisionCollection;
+      this .addNodeEvent ();
+   },
 });
+
+export default CollisionCollection;

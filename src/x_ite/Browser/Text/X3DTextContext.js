@@ -47,86 +47,76 @@
  ******************************************************************************/
 
 
-define ([
-   "jquery",
-   "x_ite/Components/Text/FontStyle",
-   "opentype",
-],
-function ($,
-          FontStyle,
-          opentype)
+import FontStyle from "../../Components/Text/FontStyle.js";
+
+const
+   _defaultFontStyle = Symbol (),
+   _fontCache        = Symbol (),
+   _glyphCache       = Symbol ();
+
+function X3DTextContext ()
 {
-"use strict";
+   this [_fontCache]  = new Map ();
+   this [_glyphCache] = new Map (); // [font] [primitiveQuality] [glyphIndex]
+}
 
-   const
-      _defaultFontStyle = Symbol (),
-      _fontCache        = Symbol (),
-      _glyphCache       = Symbol ();
-
-   function X3DTextContext ()
+X3DTextContext .prototype =
+{
+   initialize: function ()
+   { },
+   getDefaultFontStyle: function ()
    {
-      this [_fontCache]  = new Map ();
-      this [_glyphCache] = new Map (); // [font] [primitiveQuality] [glyphIndex]
-   }
+      this [_defaultFontStyle] = new FontStyle (this .getPrivateScene ());
+      this [_defaultFontStyle] .setPrivate (true);
+      this [_defaultFontStyle] .setup ();
 
-   X3DTextContext .prototype =
+      this .getDefaultFontStyle = function () { return this [_defaultFontStyle]; };
+
+      Object .defineProperty (this, "getDefaultFontStyle", { enumerable: false });
+
+      return this [_defaultFontStyle];
+   },
+   getFont: function (url)
    {
-      initialize: function ()
-      { },
-      getDefaultFontStyle: function ()
+      url = url .toString ();
+
+      let deferred = this [_fontCache] .get (url);
+
+      if (deferred === undefined)
       {
-         this [_defaultFontStyle] = new FontStyle (this .getPrivateScene ());
-         this [_defaultFontStyle] .setPrivate (true);
-         this [_defaultFontStyle] .setup ();
+         this [_fontCache] .set (url, deferred = $.Deferred ());
 
-         this .getDefaultFontStyle = function () { return this [_defaultFontStyle]; };
+         opentype .load (url, this .setFont .bind (this, deferred));
+      }
 
-         Object .defineProperty (this, "getDefaultFontStyle", { enumerable: false });
+      return deferred;
+   },
+   setFont: function (deferred, error, font)
+   {
+      if (error)
+         deferred .reject (error);
+      else
+         deferred .resolve (font);
+   },
+   getGlyph: function (font, primitiveQuality, glyphIndex)
+   {
+      let cachedFont = this [_glyphCache] .get (font);
 
-         return this [_defaultFontStyle];
-      },
-      getFont: function (url)
-      {
-         url = url .toString ();
+      if (!cachedFont)
+         this [_glyphCache] .set (font, cachedFont = [ ]);
 
-         let deferred = this [_fontCache] .get (url);
+      let cachedQuality = cachedFont [primitiveQuality];
 
-         if (deferred === undefined)
-         {
-            this [_fontCache] .set (url, deferred = $.Deferred ());
+      if (!cachedQuality)
+         cachedQuality = cachedFont [primitiveQuality] = [ ];
 
-            opentype .load (url, this .setFont .bind (this, deferred));
-         }
+      let cachedGlyph = cachedQuality [glyphIndex];
 
-         return deferred;
-      },
-      setFont: function (deferred, error, font)
-      {
-         if (error)
-            deferred .reject (error);
-         else
-            deferred .resolve (font);
-      },
-      getGlyph: function (font, primitiveQuality, glyphIndex)
-      {
-         let cachedFont = this [_glyphCache] .get (font);
+      if (!cachedGlyph)
+         cachedGlyph = cachedQuality [glyphIndex] = { };
 
-         if (!cachedFont)
-            this [_glyphCache] .set (font, cachedFont = [ ]);
+      return cachedGlyph;
+   },
+};
 
-         let cachedQuality = cachedFont [primitiveQuality];
-
-         if (!cachedQuality)
-            cachedQuality = cachedFont [primitiveQuality] = [ ];
-
-         let cachedGlyph = cachedQuality [glyphIndex];
-
-         if (!cachedGlyph)
-            cachedGlyph = cachedQuality [glyphIndex] = { };
-
-         return cachedGlyph;
-      },
-   };
-
-   return X3DTextContext;
-});
+export default X3DTextContext;

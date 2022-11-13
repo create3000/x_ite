@@ -47,71 +47,49 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields/SFBool",
-   "x_ite/Fields/SFColor",
-   "x_ite/Fields/SFColorRGBA",
-   "x_ite/Fields/SFDouble",
-   "x_ite/Fields/SFFloat",
-   "x_ite/Fields/SFImage",
-   "x_ite/Fields/SFInt32",
-   "x_ite/Fields/SFMatrix3",
-   "x_ite/Fields/SFMatrix4",
-   "x_ite/Fields/SFNode",
-   "x_ite/Fields/SFRotation",
-   "x_ite/Fields/SFString",
-   "x_ite/Fields/SFTime",
-   "x_ite/Fields/SFVec2",
-   "x_ite/Fields/SFVec3",
-   "x_ite/Fields/SFVec4",
-   "x_ite/Fields/ArrayFields",
-],
-function (SFBool,
-          SFColor,
-          SFColorRGBA,
-          SFDouble,
-          SFFloat,
-          SFImage,
-          SFInt32,
-          SFMatrix3,
-          SFMatrix4,
-          SFNode,
-          SFRotation,
-          SFString,
-          SFTime,
-          SFVec2,
-          SFVec3,
-          SFVec4,
-          ArrayFields)
+import SFBool from "./Fields/SFBool.js";
+import SFColor from "./Fields/SFColor.js";
+import SFColorRGBA from "./Fields/SFColorRGBA.js";
+import SFDouble from "./Fields/SFDouble.js";
+import SFFloat from "./Fields/SFFloat.js";
+import SFImage from "./Fields/SFImage.js";
+import SFInt32 from "./Fields/SFInt32.js";
+import SFMatrix3 from "./Fields/SFMatrix3.js";
+import SFMatrix4 from "./Fields/SFMatrix4.js";
+import SFNode from "./Fields/SFNode.js";
+import SFRotation from "./Fields/SFRotation.js";
+import SFString from "./Fields/SFString.js";
+import SFTime from "./Fields/SFTime.js";
+import SFVec2 from "./Fields/SFVec2.js";
+import SFVec3 from "./Fields/SFVec3.js";
+import SFVec4 from "./Fields/SFVec4.js";
+import ArrayFields from "./Fields/ArrayFields.js";
+
+const Fields = Object .assign (
 {
-"use strict";
+   SFBool:      SFBool,
+   SFColor:     SFColor,
+   SFColorRGBA: SFColorRGBA,
+   SFDouble:    SFDouble,
+   SFFloat:     SFFloat,
+   SFImage:     SFImage,
+   SFInt32:     SFInt32,
+   SFMatrix3d:  SFMatrix3 .SFMatrix3d,
+   SFMatrix3f:  SFMatrix3 .SFMatrix3f,
+   SFMatrix4d:  SFMatrix4 .SFMatrix4d,
+   SFMatrix4f:  SFMatrix4 .SFMatrix4f,
+   SFNode:      SFNode,
+   SFRotation:  SFRotation,
+   SFString:    SFString,
+   SFTime:      SFTime,
+   SFVec2d:     SFVec2 .SFVec2d,
+   SFVec2f:     SFVec2 .SFVec2f,
+   SFVec3d:     SFVec3 .SFVec3d,
+   SFVec3f:     SFVec3 .SFVec3f,
+   SFVec4d:     SFVec4 .SFVec4d,
+   SFVec4f:     SFVec4 .SFVec4f,
+   VrmlMatrix:  SFMatrix4 .VrmlMatrix,
+},
+ArrayFields);
 
-   const Fields = Object .assign (
-   {
-      SFBool:      SFBool,
-      SFColor:     SFColor,
-      SFColorRGBA: SFColorRGBA,
-      SFDouble:    SFDouble,
-      SFFloat:     SFFloat,
-      SFImage:     SFImage,
-      SFInt32:     SFInt32,
-      SFMatrix3d:  SFMatrix3 .SFMatrix3d,
-      SFMatrix3f:  SFMatrix3 .SFMatrix3f,
-      SFMatrix4d:  SFMatrix4 .SFMatrix4d,
-      SFMatrix4f:  SFMatrix4 .SFMatrix4f,
-      SFNode:      SFNode,
-      SFRotation:  SFRotation,
-      SFString:    SFString,
-      SFTime:      SFTime,
-      SFVec2d:     SFVec2 .SFVec2d,
-      SFVec2f:     SFVec2 .SFVec2f,
-      SFVec3d:     SFVec3 .SFVec3d,
-      SFVec3f:     SFVec3 .SFVec3f,
-      SFVec4d:     SFVec4 .SFVec4d,
-      SFVec4f:     SFVec4 .SFVec4f,
-      VrmlMatrix:  SFMatrix4 .VrmlMatrix,
-   },
-   ArrayFields);
-
-   return Fields;
-});
+export default Fields;

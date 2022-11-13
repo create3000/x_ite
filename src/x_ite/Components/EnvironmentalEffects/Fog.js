@@ -47,81 +47,68 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DBindableNode",
-   "x_ite/Components/EnvironmentalEffects/X3DFogObject",
-   "x_ite/Rendering/TraverseType",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DBindableNode,
-          X3DFogObject,
-          TraverseType,
-          X3DConstants,
-          Matrix4)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DBindableNode from "../Core/X3DBindableNode.js";
+import X3DFogObject from "./X3DFogObject.js";
+import TraverseType from "../../Rendering/TraverseType.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+function Fog (executionContext)
 {
-"use strict";
+   X3DBindableNode .call (this, executionContext);
+   X3DFogObject    .call (this, executionContext);
 
-   function Fog (executionContext)
+   this .addType (X3DConstants .Fog);
+
+   this .modelMatrix = new Matrix4 ();
+}
+
+Fog .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
+   X3DFogObject .prototype,
+{
+   constructor: Fog,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",        new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "fogType",         new Fields .SFString ("LINEAR")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "color",           new Fields .SFColor (1, 1, 1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "visibilityRange", new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",         new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",        new Fields .SFTime ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DBindableNode .call (this, executionContext);
-      X3DFogObject    .call (this, executionContext);
-
-      this .addType (X3DConstants .Fog);
-
-      this .modelMatrix = new Matrix4 ();
-   }
-
-   Fog .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
-      X3DFogObject .prototype,
+      return "Fog";
+   },
+   getComponentName: function ()
    {
-      constructor: Fog,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",        new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "fogType",         new Fields .SFString ("LINEAR")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "color",           new Fields .SFColor (1, 1, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "visibilityRange", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",         new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",        new Fields .SFTime ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "Fog";
-      },
-      getComponentName: function ()
-      {
-         return "EnvironmentalEffects";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DBindableNode .prototype .initialize .call (this);
-         X3DFogObject    .prototype .initialize .call (this);
-      },
-      getModelMatrix: function ()
-      {
-         return this .modelMatrix;
-      },
-      traverse: function (type, renderObject)
-      {
-         if (type !== TraverseType .CAMERA)
-            return;
+      return "EnvironmentalEffects";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DBindableNode .prototype .initialize .call (this);
+      X3DFogObject    .prototype .initialize .call (this);
+   },
+   getModelMatrix: function ()
+   {
+      return this .modelMatrix;
+   },
+   traverse: function (type, renderObject)
+   {
+      if (type !== TraverseType .CAMERA)
+         return;
 
-         renderObject .getLayer () .getFogs () .push (this);
+      renderObject .getLayer () .getFogs () .push (this);
 
-         this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-      },
-   });
-
-   return Fog;
+      this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+   },
 });
+
+export default Fog;

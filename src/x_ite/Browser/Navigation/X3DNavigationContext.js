@@ -47,204 +47,190 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Browser/Navigation/ExamineViewer",
-   "x_ite/Browser/Navigation/WalkViewer",
-   "x_ite/Browser/Navigation/FlyViewer",
-   "x_ite/Browser/Navigation/PlaneViewer",
-   "x_ite/Browser/Navigation/NoneViewer",
-   "x_ite/Browser/Navigation/LookAtViewer",
-   "x_ite/Components/Lighting/DirectionalLight",
-   "standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          ExamineViewer,
-          WalkViewer,
-          FlyViewer,
-          PlaneViewer,
-          NoneViewer,
-          LookAtViewer,
-          DirectionalLight,
-          Matrix4)
+import Fields from "../../Fields.js";
+import ExamineViewer from "./ExamineViewer.js";
+import WalkViewer from "./WalkViewer.js";
+import FlyViewer from "./FlyViewer.js";
+import PlaneViewer from "./PlaneViewer.js";
+import NoneViewer from "./NoneViewer.js";
+import LookAtViewer from "./LookAtViewer.js";
+import DirectionalLight from "../../Components/Lighting/DirectionalLight.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+const
+   _activeCollisions   = Symbol (),
+   _viewerNode         = Symbol (),
+   _headlightContainer = Symbol ();
+
+function getHeadlight (browser)
 {
-"use strict";
+   const headlight = new DirectionalLight (browser .getPrivateScene ());
 
-   const
-      _activeCollisions   = Symbol (),
-      _viewerNode         = Symbol (),
-      _headlightContainer = Symbol ();
+   headlight .setup ();
 
-   function getHeadlight (browser)
+   const headlightContainer = headlight .getLights () .pop ();
+
+   headlightContainer .set (headlight, null, Matrix4 .Identity);
+   headlightContainer .dispose = Function .prototype;
+
+   return headlightContainer;
+};
+
+function X3DNavigationContext ()
+{
+   this .addChildObjects ("activeLayer",          new Fields .SFNode (),
+                          "activeNavigationInfo", new Fields .SFNode (),
+                          "activeViewpoint",      new Fields .SFNode (),
+                          "availableViewers",     new Fields .MFString (),
+                          "viewer",               new Fields .SFString ("EXAMINE"));
+
+   this [_activeCollisions] = new Set ();
+   this [_viewerNode]       = new NoneViewer (this);
+}
+
+X3DNavigationContext .prototype =
+{
+   initialize: function ()
    {
-      const headlight = new DirectionalLight (browser .getPrivateScene ());
+      this ._viewer .addInterest ("set_viewer__", this);
 
-      headlight .setup ();
+      this .initialized () .addInterest ("set_world__",    this);
+      this .shutdown ()    .addInterest ("remove_world__", this);
 
-      const headlightContainer = headlight .getLights () .pop ();
-
-      headlightContainer .set (headlight, null, Matrix4 .Identity);
-      headlightContainer .dispose = Function .prototype;
-
-      return headlightContainer;
-   };
-
-   function X3DNavigationContext ()
+      this [_headlightContainer] = getHeadlight (this);
+      this [_viewerNode] .setup ();
+   },
+   getHeadlight: function ()
    {
-      this .addChildObjects ("activeLayer",          new Fields .SFNode (),
-                             "activeNavigationInfo", new Fields .SFNode (),
-                             "activeViewpoint",      new Fields .SFNode (),
-                             "availableViewers",     new Fields .MFString (),
-                             "viewer",               new Fields .SFString ("EXAMINE"));
-
-      this [_activeCollisions] = new Set ();
-      this [_viewerNode]       = new NoneViewer (this);
-   }
-
-   X3DNavigationContext .prototype =
+      return this [_headlightContainer];
+   },
+   getActiveLayer: function ()
    {
-      initialize: function ()
-      {
-         this ._viewer .addInterest ("set_viewer__", this);
+      return this ._activeLayer .getValue ();
+   },
+   getActiveNavigationInfo: function ()
+   {
+      return this ._activeNavigationInfo .getValue ();
+   },
+   getActiveViewpoint: function ()
+   {
+      return this ._activeViewpoint .getValue ();
+   },
+   getCurrentViewer: function ()
+   {
+      return this ._viewer .getValue ();
+   },
+   getViewer: function ()
+   {
+      return this [_viewerNode];
+   },
+   addCollision: function (object)
+   {
+      this [_activeCollisions] .add (object);
+   },
+   removeCollision: function (object)
+   {
+      this [_activeCollisions] .delete (object);
+   },
+   getCollisionCount: function ()
+   {
+      return this [_activeCollisions] .size;
+   },
+   remove_world__: function ()
+   {
+      this .getWorld () ._activeLayer .removeInterest ("set_activeLayer__", this);
+   },
+   set_world__: function ()
+   {
+      this .getWorld () ._activeLayer .addInterest ("set_activeLayer__", this);
 
-         this .initialized () .addInterest ("set_world__",    this);
-         this .shutdown ()    .addInterest ("remove_world__", this);
+      this .set_activeLayer__ ();
+   },
+   set_activeLayer__: function ()
+   {
+      if (this ._activeLayer .getValue ())
+      {
+         this ._activeLayer .getValue () .getNavigationInfoStack () .removeInterest ("set_activeNavigationInfo__", this);
+         this ._activeLayer .getValue () .getViewpointStack ()      .removeInterest ("set_activeViewpoint__",      this);
+      }
 
-         this [_headlightContainer] = getHeadlight (this);
-         this [_viewerNode] .setup ();
-      },
-      getHeadlight: function ()
-      {
-         return this [_headlightContainer];
-      },
-      getActiveLayer: function ()
-      {
-         return this ._activeLayer .getValue ();
-      },
-      getActiveNavigationInfo: function ()
-      {
-         return this ._activeNavigationInfo .getValue ();
-      },
-      getActiveViewpoint: function ()
-      {
-         return this ._activeViewpoint .getValue ();
-      },
-      getCurrentViewer: function ()
-      {
-         return this ._viewer .getValue ();
-      },
-      getViewer: function ()
-      {
-         return this [_viewerNode];
-      },
-      addCollision: function (object)
-      {
-         this [_activeCollisions] .add (object);
-      },
-      removeCollision: function (object)
-      {
-         this [_activeCollisions] .delete (object);
-      },
-      getCollisionCount: function ()
-      {
-         return this [_activeCollisions] .size;
-      },
-      remove_world__: function ()
-      {
-         this .getWorld () ._activeLayer .removeInterest ("set_activeLayer__", this);
-      },
-      set_world__: function ()
-      {
-         this .getWorld () ._activeLayer .addInterest ("set_activeLayer__", this);
+      this ._activeLayer = this .getWorld () .getActiveLayer ();
 
-         this .set_activeLayer__ ();
-      },
-      set_activeLayer__: function ()
+      if (this ._activeLayer .getValue ())
       {
-         if (this ._activeLayer .getValue ())
-         {
-            this ._activeLayer .getValue () .getNavigationInfoStack () .removeInterest ("set_activeNavigationInfo__", this);
-            this ._activeLayer .getValue () .getViewpointStack ()      .removeInterest ("set_activeViewpoint__",      this);
-         }
+         this ._activeLayer .getValue () .getNavigationInfoStack () .addInterest ("set_activeNavigationInfo__", this);
+         this ._activeLayer .getValue () .getViewpointStack ()      .addInterest ("set_activeViewpoint__",      this);
+      }
 
-         this ._activeLayer = this .getWorld () .getActiveLayer ();
+      this .set_activeNavigationInfo__ ();
+      this .set_activeViewpoint__ ();
+   },
+   set_activeNavigationInfo__: function ()
+   {
+      if (this ._activeNavigationInfo .getValue ())
+         this ._activeNavigationInfo .getValue () ._viewer .removeFieldInterest (this ._viewer);
 
-         if (this ._activeLayer .getValue ())
-         {
-            this ._activeLayer .getValue () .getNavigationInfoStack () .addInterest ("set_activeNavigationInfo__", this);
-            this ._activeLayer .getValue () .getViewpointStack ()      .addInterest ("set_activeViewpoint__",      this);
-         }
-
-         this .set_activeNavigationInfo__ ();
-         this .set_activeViewpoint__ ();
-      },
-      set_activeNavigationInfo__: function ()
+      if (this ._activeLayer .getValue ())
       {
-         if (this ._activeNavigationInfo .getValue ())
-            this ._activeNavigationInfo .getValue () ._viewer .removeFieldInterest (this ._viewer);
+         this ._activeNavigationInfo = this ._activeLayer .getValue () .getNavigationInfo ();
 
-         if (this ._activeLayer .getValue ())
-         {
-            this ._activeNavigationInfo = this ._activeLayer .getValue () .getNavigationInfo ();
+         this ._activeNavigationInfo .getValue () ._viewer .addFieldInterest (this ._viewer);
 
-            this ._activeNavigationInfo .getValue () ._viewer .addFieldInterest (this ._viewer);
-
-            this ._viewer = this ._activeNavigationInfo .getValue () ._viewer;
-         }
-         else
-         {
-            this ._activeNavigationInfo = null;
-            this ._viewer               = "NONE";
-         }
-      },
-      set_activeViewpoint__: function ()
+         this ._viewer = this ._activeNavigationInfo .getValue () ._viewer;
+      }
+      else
       {
-         if (this ._activeLayer .getValue ())
-            this ._activeViewpoint = this ._activeLayer .getValue () .getViewpoint ();
-         else
-            this ._activeViewpoint = null;
-      },
-      set_viewer__: function (viewer)
+         this ._activeNavigationInfo = null;
+         this ._viewer               = "NONE";
+      }
+   },
+   set_activeViewpoint__: function ()
+   {
+      if (this ._activeLayer .getValue ())
+         this ._activeViewpoint = this ._activeLayer .getValue () .getViewpoint ();
+      else
+         this ._activeViewpoint = null;
+   },
+   set_viewer__: function (viewer)
+   {
+      if (this ._activeNavigationInfo .getValue ())
+         this ._availableViewers = this ._activeNavigationInfo .getValue () ._availableViewers;
+      else
+         this ._availableViewers .length = 0;
+
+      // Create viewer node.
+
+      if (this [_viewerNode])
+         this [_viewerNode] .dispose ();
+
+      switch (viewer .getValue ())
       {
-         if (this ._activeNavigationInfo .getValue ())
-            this ._availableViewers = this ._activeNavigationInfo .getValue () ._availableViewers;
-         else
-            this ._availableViewers .length = 0;
+         case "EXAMINE":
+            this [_viewerNode] = new ExamineViewer (this);
+            break;
+         case "WALK":
+            this [_viewerNode] = new WalkViewer (this);
+            break;
+         case "FLY":
+            this [_viewerNode] = new FlyViewer (this);
+            break;
+         case "PLANE":
+         case "PLANE_create3000.de":
+            this [_viewerNode] = new PlaneViewer (this);
+            break;
+         case "NONE":
+            this [_viewerNode] = new NoneViewer (this);
+            break;
+         case "LOOKAT":
+            this [_viewerNode] = new LookAtViewer (this);
+            break;
+         default:
+            this [_viewerNode] = new ExamineViewer (this);
+            break;
+      }
 
-         // Create viewer node.
+      this [_viewerNode] .setup ();
+   },
+};
 
-         if (this [_viewerNode])
-            this [_viewerNode] .dispose ();
-
-         switch (viewer .getValue ())
-         {
-            case "EXAMINE":
-               this [_viewerNode] = new ExamineViewer (this);
-               break;
-            case "WALK":
-               this [_viewerNode] = new WalkViewer (this);
-               break;
-            case "FLY":
-               this [_viewerNode] = new FlyViewer (this);
-               break;
-            case "PLANE":
-            case "PLANE_create3000.de":
-               this [_viewerNode] = new PlaneViewer (this);
-               break;
-            case "NONE":
-               this [_viewerNode] = new NoneViewer (this);
-               break;
-            case "LOOKAT":
-               this [_viewerNode] = new LookAtViewer (this);
-               break;
-            default:
-               this [_viewerNode] = new ExamineViewer (this);
-               break;
-         }
-
-         this [_viewerNode] .setup ();
-      },
-   };
-
-   return X3DNavigationContext;
-});
+export default X3DNavigationContext;

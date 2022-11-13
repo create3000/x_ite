@@ -47,38 +47,31 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DBaseNode",
-   "x_ite/Fields",
-],
-function (X3DBaseNode,
-          Fields)
+import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import Fields from "../../Fields.js";
+
+function ArcClose2DOptions (executionContext)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
 
-   function ArcClose2DOptions (executionContext)
+   this .addChildObjects ("dimension", new Fields .SFInt32 (40))
+}
+
+ArcClose2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: ArcClose2DOptions,
+   getTypeName: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-
-      this .addChildObjects ("dimension", new Fields .SFInt32 (40))
-   }
-
-   ArcClose2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return "ArcClose2DOptions";
+   },
+   getComponentName: function ()
    {
-      constructor: ArcClose2DOptions,
-      getTypeName: function ()
-      {
-         return "ArcClose2DOptions";
-      },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "arcClose2DOptions";
-      },
-   });
-
-   return ArcClose2DOptions;
+      return "X_ITE";
+   },
+   getContainerField: function ()
+   {
+      return "arcClose2DOptions";
+   },
 });
+
+export default ArcClose2DOptions;

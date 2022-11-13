@@ -47,43 +47,37 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DConstants",
-],
-function (X3DConstants)
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DPickableObject (executionContext)
 {
-"use strict";
+   this .addType (X3DConstants .X3DPickableObject);
 
-   function X3DPickableObject (executionContext)
+   this .objectType = new Set ();
+}
+
+X3DPickableObject .prototype =
+{
+   constructor: X3DPickableObject,
+   initialize: function ()
    {
-      this .addType (X3DConstants .X3DPickableObject);
+      this ._objectType .addInterest ("set_objectType__", this);
 
-      this .objectType = new Set ();
-   }
-
-   X3DPickableObject .prototype =
+      this .set_objectType__ ();
+   },
+   getObjectType: function ()
    {
-      constructor: X3DPickableObject,
-      initialize: function ()
-      {
-         this ._objectType .addInterest ("set_objectType__", this);
+      return this .objectType;
+   },
+   set_objectType__: function ()
+   {
+      this .objectType .clear ();
 
-         this .set_objectType__ ();
-      },
-      getObjectType: function ()
+      for (var i = 0, length = this ._objectType .length; i < length; ++ i)
       {
-         return this .objectType;
-      },
-      set_objectType__: function ()
-      {
-         this .objectType .clear ();
+         this .objectType .add (this ._objectType [i]);
+      }
+   },
+};
 
-         for (var i = 0, length = this ._objectType .length; i < length; ++ i)
-         {
-            this .objectType .add (this ._objectType [i]);
-         }
-      },
-   };
-
-   return X3DPickableObject;
-});
+export default X3DPickableObject;

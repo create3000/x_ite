@@ -47,84 +47,73 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Base/X3DCast",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DParticlePhysicsModelNode,
-          X3DConstants,
-          X3DCast)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DParticlePhysicsModelNode from "./X3DParticlePhysicsModelNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast from "../../Base/X3DCast.js";
+
+function BoundedPhysicsModel (executionContext)
 {
-"use strict";
+   X3DParticlePhysicsModelNode .call (this, executionContext);
 
-   function BoundedPhysicsModel (executionContext)
+   this .addType (X3DConstants .BoundedPhysicsModel);
+}
+
+BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
+{
+   constructor: BoundedPhysicsModel,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "geometry", new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DParticlePhysicsModelNode .call (this, executionContext);
-
-      this .addType (X3DConstants .BoundedPhysicsModel);
-   }
-
-   BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
+      return "BoundedPhysicsModel";
+   },
+   getComponentName: function ()
    {
-      constructor: BoundedPhysicsModel,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "geometry", new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
+      return "ParticleSystems";
+   },
+   getContainerField: function ()
+   {
+      return "physics";
+   },
+   initialize: function ()
+   {
+      X3DParticlePhysicsModelNode .prototype .initialize .call (this);
+
+      this ._geometry .addInterest ("set_geometry__", this);
+
+      this .set_geometry__ ();
+   },
+   set_geometry__: function ()
+   {
+      if (this .geometryNode)
+         this .geometryNode ._rebuild .removeInterest ("addNodeEvent", this);
+
+      this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this ._geometry);
+
+      if (this .geometryNode)
+         this .geometryNode ._rebuild .addInterest ("addNodeEvent", this);
+   },
+   addGeometry: function (boundedNormals, boundedVertices)
+   {
+      if (this .geometryNode && this ._enabled .getValue ())
       {
-         return "BoundedPhysicsModel";
-      },
-      getComponentName: function ()
-      {
-         return "ParticleSystems";
-      },
-      getContainerField: function ()
-      {
-         return "physics";
-      },
-      initialize: function ()
-      {
-         X3DParticlePhysicsModelNode .prototype .initialize .call (this);
+         const
+            normals  = this .geometryNode .getNormals ()  .getValue (),
+            vertices = this .geometryNode .getVertices () .getValue ();
 
-         this ._geometry .addInterest ("set_geometry__", this);
+         for (const value of normals)
+            boundedNormals .push (value);
 
-         this .set_geometry__ ();
-      },
-      set_geometry__: function ()
-      {
-         if (this .geometryNode)
-            this .geometryNode ._rebuild .removeInterest ("addNodeEvent", this);
-
-         this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this ._geometry);
-
-         if (this .geometryNode)
-            this .geometryNode ._rebuild .addInterest ("addNodeEvent", this);
-      },
-      addGeometry: function (boundedNormals, boundedVertices)
-      {
-         if (this .geometryNode && this ._enabled .getValue ())
-         {
-            const
-               normals  = this .geometryNode .getNormals ()  .getValue (),
-               vertices = this .geometryNode .getVertices () .getValue ();
-
-            for (const value of normals)
-               boundedNormals .push (value);
-
-            for (const value of vertices)
-               boundedVertices .push (value);
-         }
-      },
-   });
-
-   return BoundedPhysicsModel;
+         for (const value of vertices)
+            boundedVertices .push (value);
+      }
+   },
 });
+
+export default BoundedPhysicsModel;

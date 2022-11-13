@@ -47,93 +47,83 @@
  ******************************************************************************/
 
 
- define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Shape/X3DOneSidedMaterialNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DOneSidedMaterialNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DOneSidedMaterialNode from "./X3DOneSidedMaterialNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function UnlitMaterial (executionContext)
 {
-"use strict";
+   X3DOneSidedMaterialNode .call (this, executionContext);
 
-   function UnlitMaterial (executionContext)
+   this .addType (X3DConstants .UnlitMaterial);
+}
+
+UnlitMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
+{
+   constructor: UnlitMaterial,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",               new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",          new Fields .SFColor (1, 1, 1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping", new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "normalScale",            new Fields .SFFloat (1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",   new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",           new Fields .SFFloat ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DOneSidedMaterialNode .call (this, executionContext);
-
-      this .addType (X3DConstants .UnlitMaterial);
-   }
-
-   UnlitMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
+      return "UnlitMaterial";
+   },
+   getComponentName: function ()
    {
-      constructor: UnlitMaterial,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",               new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",          new Fields .SFColor (1, 1, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping", new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "normalScale",            new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",   new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",           new Fields .SFFloat ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "UnlitMaterial";
-      },
-      getComponentName: function ()
-      {
-         return "Shape";
-      },
-      getContainerField: function ()
-      {
-         return "material";
-      },
-      initialize: function ()
-      {
-         X3DOneSidedMaterialNode .prototype .initialize .call (this);
+      return "Shape";
+   },
+   getContainerField: function ()
+   {
+      return "material";
+   },
+   initialize: function ()
+   {
+      X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
-         this .set_transparent__ ();
-      },
-      set_emissiveTexture__: function ()
-      {
-         if (this .getEmissiveTexture ())
-            this .getEmissiveTexture () ._transparent .removeInterest ("set_transparent__", this);
+      this .set_transparent__ ();
+   },
+   set_emissiveTexture__: function ()
+   {
+      if (this .getEmissiveTexture ())
+         this .getEmissiveTexture () ._transparent .removeInterest ("set_transparent__", this);
 
-         X3DOneSidedMaterialNode .prototype .set_emissiveTexture__ .call (this);
+      X3DOneSidedMaterialNode .prototype .set_emissiveTexture__ .call (this);
 
-         if (this .getEmissiveTexture ())
-            this .getEmissiveTexture () ._transparent .addInterest ("set_transparent__", this);
-      },
-      set_transparent__: function ()
-      {
-         this .setTransparent (Boolean (this .getTransparency () ||
-                               (this .getEmissiveTexture () && this .getEmissiveTexture () .getTransparent ())));
-      },
-      getMaterialKey: function ()
-      {
-         return "0";
-      },
-      createShader: function (key, geometryContext, renderContext)
-      {
-         const
-            browser = this .getBrowser (),
-            options = this .getShaderOptions (geometryContext, renderContext);
+      if (this .getEmissiveTexture ())
+         this .getEmissiveTexture () ._transparent .addInterest ("set_transparent__", this);
+   },
+   set_transparent__: function ()
+   {
+      this .setTransparent (Boolean (this .getTransparency () ||
+                            (this .getEmissiveTexture () && this .getEmissiveTexture () .getTransparent ())));
+   },
+   getMaterialKey: function ()
+   {
+      return "0";
+   },
+   createShader: function (key, geometryContext, renderContext)
+   {
+      const
+         browser = this .getBrowser (),
+         options = this .getShaderOptions (geometryContext, renderContext);
 
-         options .push ("X3D_UNLIT_MATERIAL");
+      options .push ("X3D_UNLIT_MATERIAL");
 
-         const shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
+      const shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
 
-         browser .getShaders () .set (key, shaderNode);
+      browser .getShaders () .set (key, shaderNode);
 
-         return shaderNode;
-      },
-   });
-
-   return UnlitMaterial;
+      return shaderNode;
+   },
 });
+
+export default UnlitMaterial;

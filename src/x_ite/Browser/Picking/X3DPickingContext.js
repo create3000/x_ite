@@ -47,95 +47,89 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Rendering/TraverseType",
-],
-function (TraverseType)
+import TraverseType from "../../Rendering/TraverseType.js";
+
+const
+   _transformSensorNodes = Symbol (),
+   _pickSensorNodes      = Symbol (),
+   _pickingHierarchy     = Symbol (),
+   _pickable             = Symbol (),
+   _pickingTime          = Symbol ();
+
+function X3DPickingContext ()
 {
-"use strict";
+   this [_transformSensorNodes] = new Set ();
+   this [_pickSensorNodes]      = [ new Set () ];
+   this [_pickingHierarchy]     = [ ];
+   this [_pickable]             = [ false ];
+   this [_pickingTime]          = 0;
+}
 
-   const
-      _transformSensorNodes = Symbol (),
-      _pickSensorNodes      = Symbol (),
-      _pickingHierarchy     = Symbol (),
-      _pickable             = Symbol (),
-      _pickingTime          = Symbol ();
-
-   function X3DPickingContext ()
+X3DPickingContext .prototype =
+{
+   initialize: function ()
+   { },
+   addTransformSensor: function (transformSensorNode)
    {
-      this [_transformSensorNodes] = new Set ();
-      this [_pickSensorNodes]      = [ new Set () ];
-      this [_pickingHierarchy]     = [ ];
-      this [_pickable]             = [ false ];
-      this [_pickingTime]          = 0;
-   }
-
-   X3DPickingContext .prototype =
+      this [_transformSensorNodes] .add (transformSensorNode);
+      this .enablePicking ();
+   },
+   removeTransformSensor: function (transformSensorNode)
    {
-      initialize: function ()
-      { },
-      addTransformSensor: function (transformSensorNode)
-      {
-         this [_transformSensorNodes] .add (transformSensorNode);
-         this .enablePicking ();
-      },
-      removeTransformSensor: function (transformSensorNode)
-      {
-         this [_transformSensorNodes] .delete (transformSensorNode);
-         this .enablePicking ();
-      },
-      addPickSensor: function (pickSensorNode)
-      {
-         this [_pickSensorNodes] [0] .add (pickSensorNode);
-         this .enablePicking ();
-      },
-      removePickSensor: function (pickSensorNode)
-      {
-         this [_pickSensorNodes] [0] .delete (pickSensorNode);
-         this .enablePicking ();
-      },
-      getPickSensors: function ()
-      {
-         return this [_pickSensorNodes];
-      },
-      getPickingHierarchy: function ()
-      {
-         return this [_pickingHierarchy];
-      },
-      getPickable: function ()
-      {
-         return this [_pickable];
-      },
-      enablePicking: function ()
-      {
-         if (this [_transformSensorNodes] .size || this [_pickSensorNodes] [0] .size)
-            this ._sensorEvents .addInterest ("picking", this);
-         else
-            this ._sensorEvents .removeInterest ("picking", this);
-      },
-      picking: function ()
-      {
-         const t0 = performance .now ();
+      this [_transformSensorNodes] .delete (transformSensorNode);
+      this .enablePicking ();
+   },
+   addPickSensor: function (pickSensorNode)
+   {
+      this [_pickSensorNodes] [0] .add (pickSensorNode);
+      this .enablePicking ();
+   },
+   removePickSensor: function (pickSensorNode)
+   {
+      this [_pickSensorNodes] [0] .delete (pickSensorNode);
+      this .enablePicking ();
+   },
+   getPickSensors: function ()
+   {
+      return this [_pickSensorNodes];
+   },
+   getPickingHierarchy: function ()
+   {
+      return this [_pickingHierarchy];
+   },
+   getPickable: function ()
+   {
+      return this [_pickable];
+   },
+   enablePicking: function ()
+   {
+      if (this [_transformSensorNodes] .size || this [_pickSensorNodes] [0] .size)
+         this ._sensorEvents .addInterest ("picking", this);
+      else
+         this ._sensorEvents .removeInterest ("picking", this);
+   },
+   picking: function ()
+   {
+      const t0 = performance .now ();
 
-         this .getWorld () .traverse (TraverseType .PICKING, null);
+      this .getWorld () .traverse (TraverseType .PICKING, null);
 
-         for (const transformSensorNode of this [_transformSensorNodes])
-         {
-            transformSensorNode .process ();
-         }
-
-         for (const pickSensorNode of this [_pickSensorNodes] [0])
-         {
-            pickSensorNode .process ();
-         }
-
-         this [_pickingTime] = performance .now () - t0;
-      },
-      getPickingTime: function ()
+      for (const transformSensorNode of this [_transformSensorNodes])
       {
-         return this [_pickingTime];
-      },
-   };
+         transformSensorNode .process ();
+      }
 
-   return X3DPickingContext;
-});
+      for (const pickSensorNode of this [_pickSensorNodes] [0])
+      {
+         pickSensorNode .process ();
+      }
+
+      this [_pickingTime] = performance .now () - t0;
+   },
+   getPickingTime: function ()
+   {
+      return this [_pickingTime];
+   },
+};
+
+export default X3DPickingContext;

@@ -47,21 +47,16 @@
  ******************************************************************************/
 
 
-define (function ()
+let i = 0;
+
+const TraverseType =
 {
-"use strict";
+   POINTER:   i ++,
+   CAMERA:    i ++,
+   PICKING:   i ++,
+   COLLISION: i ++,
+   SHADOW:    i ++,
+   DISPLAY:   i ++,
+};
 
-   let i = 0;
-
-   const TraverseType =
-   {
-      POINTER:   i ++,
-      CAMERA:    i ++,
-      PICKING:   i ++,
-      COLLISION: i ++,
-      SHADOW:    i ++,
-      DISPLAY:   i ++,
-   };
-
-   return TraverseType;
-});
+export default TraverseType;

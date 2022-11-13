@@ -47,106 +47,98 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DObject",
-   "x_ite/Fields/SFNodeCache",
-   "x_ite/InputOutput/Generator",
-],
-function (X3DObject,
-          SFNodeCache,
-          Generator)
+import X3DObject from "../Base/X3DObject.js";
+import SFNodeCache from "../Fields/SFNodeCache.js";
+import Generator from "../InputOutput/Generator.js";
+
+const
+   _exportedName = Symbol (),
+   _localNode    = Symbol ();
+
+function X3DExportedNode (exportedName, localNode)
 {
-"use strict";
+   X3DObject .call (this);
 
-   const
-      _exportedName = Symbol (),
-      _localNode    = Symbol ();
+   this [_exportedName] = exportedName;
+   this [_localNode]    = localNode;
+}
 
-   function X3DExportedNode (exportedName, localNode)
+X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
+{
+   constructor: X3DExportedNode,
+   getExportedName: function ()
    {
-      X3DObject .call (this);
-
-      this [_exportedName] = exportedName;
-      this [_localNode]    = localNode;
-   }
-
-   X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
+      return this [_exportedName];
+   },
+   getLocalNode: function ()
    {
-      constructor: X3DExportedNode,
-      getExportedName: function ()
-      {
-         return this [_exportedName];
-      },
-      getLocalNode: function ()
-      {
-         return this [_localNode];
-      },
-      toVRMLStream: function (stream)
-      {
-         const
-            generator = Generator .Get (stream),
-            localName = generator .LocalName (this [_localNode]);
+      return this [_localNode];
+   },
+   toVRMLStream: function (stream)
+   {
+      const
+         generator = Generator .Get (stream),
+         localName = generator .LocalName (this [_localNode]);
 
-         stream .string += generator .Indent ();
-         stream .string += "EXPORT";
+      stream .string += generator .Indent ();
+      stream .string += "EXPORT";
+      stream .string += " ";
+      stream .string += localName;
+
+      if (this [_exportedName] !== localName)
+      {
          stream .string += " ";
-         stream .string += localName;
-
-         if (this [_exportedName] !== localName)
-         {
-            stream .string += " ";
-            stream .string += "AS";
-            stream .string += " ";
-            stream .string += this [_exportedName];
-         }
-      },
-      toXMLStream: function (stream)
-      {
-         const
-            generator = Generator .Get (stream),
-            localName = generator .LocalName (this [_localNode]);
-
-         stream .string += generator .Indent ();
-         stream .string += "<EXPORT";
+         stream .string += "AS";
          stream .string += " ";
-         stream .string += "localDEF='";
-         stream .string += generator .XMLEncode (localName);
+         stream .string += this [_exportedName];
+      }
+   },
+   toXMLStream: function (stream)
+   {
+      const
+         generator = Generator .Get (stream),
+         localName = generator .LocalName (this [_localNode]);
+
+      stream .string += generator .Indent ();
+      stream .string += "<EXPORT";
+      stream .string += " ";
+      stream .string += "localDEF='";
+      stream .string += generator .XMLEncode (localName);
+      stream .string += "'";
+
+      if (this [_exportedName] !== localName)
+      {
+         stream .string += " ";
+         stream .string += "AS='";
+         stream .string += generator .XMLEncode (this [_exportedName]);
          stream .string += "'";
+      }
 
-         if (this [_exportedName] !== localName)
-         {
-            stream .string += " ";
-            stream .string += "AS='";
-            stream .string += generator .XMLEncode (this [_exportedName]);
-            stream .string += "'";
-         }
-
-         stream .string += "/>";
-      },
-   });
-
-   for (const key of Reflect .ownKeys (X3DExportedNode .prototype))
-      Object .defineProperty (X3DExportedNode .prototype, key, { enumerable: false });
-
-   Object .defineProperty (X3DExportedNode .prototype, "exportedName",
-   {
-      get: function ()
-      {
-         return SFNodeCache .get (this [_exportedName]);
-      },
-      enumerable: true,
-      configurable: false
-   });
-
-   Object .defineProperty (X3DExportedNode .prototype, "localNode",
-   {
-      get: function ()
-      {
-         return SFNodeCache .get (this [_localNode]);
-      },
-      enumerable: true,
-      configurable: false
-   });
-
-   return X3DExportedNode;
+      stream .string += "/>";
+   },
 });
+
+for (const key of Reflect .ownKeys (X3DExportedNode .prototype))
+   Object .defineProperty (X3DExportedNode .prototype, key, { enumerable: false });
+
+Object .defineProperty (X3DExportedNode .prototype, "exportedName",
+{
+   get: function ()
+   {
+      return SFNodeCache .get (this [_exportedName]);
+   },
+   enumerable: true,
+   configurable: false
+});
+
+Object .defineProperty (X3DExportedNode .prototype, "localNode",
+{
+   get: function ()
+   {
+      return SFNodeCache .get (this [_localNode]);
+   },
+   enumerable: true,
+   configurable: false
+});
+
+export default X3DExportedNode;

@@ -47,38 +47,32 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Texturing/TextureProperties",
-],
-function (TextureProperties)
+import TextureProperties from "../../Components/Texturing/TextureProperties.js";
+
+const _backgroundTextureProperties = Symbol ();
+
+function X3DEnvironmentalEffectsContext () { }
+
+X3DEnvironmentalEffectsContext .prototype =
 {
-"use strict";
-
-   const _backgroundTextureProperties = Symbol ();
-
-   function X3DEnvironmentalEffectsContext () { }
-
-   X3DEnvironmentalEffectsContext .prototype =
+   initialize: function () { },
+   getBackgroundTextureProperties: function ()
    {
-      initialize: function () { },
-      getBackgroundTextureProperties: function ()
-      {
-         this [_backgroundTextureProperties] = new TextureProperties (this .getPrivateScene ());
+      this [_backgroundTextureProperties] = new TextureProperties (this .getPrivateScene ());
 
-         this [_backgroundTextureProperties] ._boundaryModeS       = "CLAMP_TO_EDGE";
-         this [_backgroundTextureProperties] ._boundaryModeT       = "CLAMP_TO_EDGE";
-         this [_backgroundTextureProperties] ._boundaryModeR       = "CLAMP_TO_EDGE";
-         this [_backgroundTextureProperties] ._minificationFilter  = "NICEST";
-         this [_backgroundTextureProperties] ._magnificationFilter = "NICEST";
-         this [_backgroundTextureProperties] .setup ();
+      this [_backgroundTextureProperties] ._boundaryModeS       = "CLAMP_TO_EDGE";
+      this [_backgroundTextureProperties] ._boundaryModeT       = "CLAMP_TO_EDGE";
+      this [_backgroundTextureProperties] ._boundaryModeR       = "CLAMP_TO_EDGE";
+      this [_backgroundTextureProperties] ._minificationFilter  = "NICEST";
+      this [_backgroundTextureProperties] ._magnificationFilter = "NICEST";
+      this [_backgroundTextureProperties] .setup ();
 
-         this .getBackgroundTextureProperties = function () { return this [_backgroundTextureProperties]; };
+      this .getBackgroundTextureProperties = function () { return this [_backgroundTextureProperties]; };
 
-         Object .defineProperty (this, "getBackgroundTextureProperties", { enumerable: false });
+      Object .defineProperty (this, "getBackgroundTextureProperties", { enumerable: false });
 
-         return this [_backgroundTextureProperties];
-      },
-   };
+      return this [_backgroundTextureProperties];
+   },
+};
 
-   return X3DEnvironmentalEffectsContext;
-});
+export default X3DEnvironmentalEffectsContext;

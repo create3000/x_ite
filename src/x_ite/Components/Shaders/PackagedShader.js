@@ -47,71 +47,59 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Shaders/X3DShaderNode",
-   "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Components/Shaders/X3DProgrammableShaderObject",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DShaderNode,
-          X3DUrlObject,
-          X3DProgrammableShaderObject,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DShaderNode from "./X3DShaderNode.js";
+import X3DUrlObject from "../Networking/X3DUrlObject.js";
+import X3DProgrammableShaderObject from "./X3DProgrammableShaderObject.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function PackagedShader (executionContext)
 {
-"use strict";
+   X3DShaderNode               .call (this, executionContext);
+   X3DUrlObject                .call (this, executionContext);
+   X3DProgrammableShaderObject .call (this, executionContext);
 
-   function PackagedShader (executionContext)
+   this .addType (X3DConstants .PackagedShader);
+}
+
+PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
+   X3DUrlObject .prototype,
+   X3DProgrammableShaderObject .prototype,
+{
+   constructor: PackagedShader,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",             new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected",           new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "isValid",              new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "language",             new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+   ]),
+   getTypeName: function ()
    {
-      X3DShaderNode               .call (this, executionContext);
-      X3DUrlObject                .call (this, executionContext);
-      X3DProgrammableShaderObject .call (this, executionContext);
-
-      this .addType (X3DConstants .PackagedShader);
-   }
-
-   PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
-      X3DUrlObject .prototype,
-      X3DProgrammableShaderObject .prototype,
+      return "PackagedShader";
+   },
+   getComponentName: function ()
    {
-      constructor: PackagedShader,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",             new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected",           new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "isValid",              new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "language",             new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-      ]),
-      getTypeName: function ()
-      {
-         return "PackagedShader";
-      },
-      getComponentName: function ()
-      {
-         return "Shaders";
-      },
-      getContainerField: function ()
-      {
-         return "shaders";
-      },
-      getSourceText: function ()
-      {
-         return this ._url;
-      },
-      requestImmediateLoad: function (cache = true)
-      { },
-      requestUnload: function ()
-      { },
-   });
-
-   return PackagedShader;
+      return "Shaders";
+   },
+   getContainerField: function ()
+   {
+      return "shaders";
+   },
+   getSourceText: function ()
+   {
+      return this ._url;
+   },
+   requestImmediateLoad: function (cache = true)
+   { },
+   requestUnload: function ()
+   { },
 });
+
+export default PackagedShader;

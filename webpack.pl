@@ -68,5 +68,6 @@ sub convert {
    print $file if $filename =~ /Bezier|Matrix4|DEBUG/;
 }
 
-convert $_ foreach `find src/standard -type f -name "*.js"`;
-convert $_ foreach `find src/x_ite    -type f -name "*.js"`;
+#convert $_ foreach `find src/standard -type f -name "*.js"`;
+#convert $_ foreach `find src/x_ite    -type f -name "*.js"`;
+convert $_ foreach `find src/lib/nurbs    -type f -name "*.js"`;

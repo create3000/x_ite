@@ -47,35 +47,29 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-],
-function (Fields)
-{
-"use strict";
+import Fields from "../Fields.js";
 
-   return function (type, node, innerNode = true)
+export default function (type, node, innerNode = true)
+{
+   try
    {
-      try
+      if (node)
       {
+         if (node instanceof Fields .SFNode)
+            node = node .getValue ();
+
          if (node)
          {
-            if (node instanceof Fields .SFNode)
-               node = node .getValue ();
+            if (innerNode)
+               node = node .getInnerNode ();
 
-            if (node)
-            {
-               if (innerNode)
-                  node = node .getInnerNode ();
-
-               if (node .getType () .includes (type))
-                  return node;
-            }
+            if (node .getType () .includes (type))
+               return node;
          }
       }
-      catch (error)
-      { }
+   }
+   catch (error)
+   { }
 
-      return null;
-   };
-});
+   return null;
+};

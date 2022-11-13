@@ -47,18 +47,13 @@
  ******************************************************************************/
 
 
-define (function ()
+export default function (globalObject, sourceText)
 {
-"use strict";
-
-   return function (globalObject, sourceText)
+   return Function (/* js */ `with (arguments [0])
    {
-      return Function (/* js */ `with (arguments [0])
-      {
-         delete arguments [0];
-         arguments .length = 0;
-         ${sourceText}
-      }`)
-      (globalObject);
-   };
-});
+      delete arguments [0];
+      arguments .length = 0;
+      ${sourceText}
+   }`)
+   (globalObject);
+};

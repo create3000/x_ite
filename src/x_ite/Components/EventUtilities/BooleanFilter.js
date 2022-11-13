@@ -47,69 +47,59 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DChildNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DChildNode from "../Core/X3DChildNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function BooleanFilter (executionContext)
 {
-"use strict";
+   X3DChildNode .call (this, executionContext);
 
-   function BooleanFilter (executionContext)
+   this .addType (X3DConstants .BooleanFilter);
+}
+
+BooleanFilter .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+{
+   constructor: BooleanFilter,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "inputTrue",   new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "inputFalse",  new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "inputNegate", new Fields .SFBool ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .BooleanFilter);
-   }
-
-   BooleanFilter .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+      return "BooleanFilter";
+   },
+   getComponentName: function ()
    {
-      constructor: BooleanFilter,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "inputTrue",   new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "inputFalse",  new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "inputNegate", new Fields .SFBool ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "BooleanFilter";
-      },
-      getComponentName: function ()
-      {
-         return "EventUtilities";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DChildNode .prototype .initialize .call (this);
+      return "EventUtilities";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DChildNode .prototype .initialize .call (this);
 
-         this ._set_boolean .addInterest ("set_boolean__", this);
-      },
-      set_boolean__: function ()
-      {
-         const value = this ._set_boolean .getValue ();
+      this ._set_boolean .addInterest ("set_boolean__", this);
+   },
+   set_boolean__: function ()
+   {
+      const value = this ._set_boolean .getValue ();
 
-         if (value)
-            this ._inputTrue = true;
+      if (value)
+         this ._inputTrue = true;
 
-         else
-            this ._inputFalse = false;
+      else
+         this ._inputFalse = false;
 
-         this ._inputNegate = ! value;
-      },
-   });
-
-   return BooleanFilter;
+      this ._inputNegate = ! value;
+   },
 });
+
+export default BooleanFilter;

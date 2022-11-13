@@ -47,304 +47,254 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields/SFBool",
-   "x_ite/Fields/SFColor",
-   "x_ite/Fields/SFColorRGBA",
-   "x_ite/Fields/SFDouble",
-   "x_ite/Fields/SFFloat",
-   "x_ite/Fields/SFImage",
-   "x_ite/Fields/SFInt32",
-   "x_ite/Fields/SFMatrix3",
-   "x_ite/Fields/SFMatrix4",
-   "x_ite/Fields/SFNode",
-   "x_ite/Fields/SFRotation",
-   "x_ite/Fields/SFString",
-   "x_ite/Fields/SFTime",
-   "x_ite/Fields/SFVec2",
-   "x_ite/Fields/SFVec3",
-   "x_ite/Fields/SFVec4",
-   "x_ite/Base/X3DObjectArrayField",
-   "x_ite/Base/X3DTypedArrayField",
-   "x_ite/Base/X3DConstants",
-   "x_ite/InputOutput/Generator",
-],
-function (SFBool,
-          SFColor,
-          SFColorRGBA,
-          SFDouble,
-          SFFloat,
-          SFImage,
-          SFInt32,
-          SFMatrix3,
-          SFMatrix4,
-          SFNode,
-          SFRotation,
-          SFString,
-          SFTime,
-          SFVec2,
-          SFVec3,
-          SFVec4,
-          X3DObjectArrayField,
-          X3DTypedArrayField,
-          X3DConstants,
-          Generator)
+import SFBool from "./SFBool.js";
+import SFColor from "./SFColor.js";
+import SFColorRGBA from "./SFColorRGBA.js";
+import SFDouble from "./SFDouble.js";
+import SFFloat from "./SFFloat.js";
+import SFImage from "./SFImage.js";
+import SFInt32 from "./SFInt32.js";
+import SFMatrix3 from "./SFMatrix3.js";
+import SFMatrix4 from "./SFMatrix4.js";
+import SFNode from "./SFNode.js";
+import SFRotation from "./SFRotation.js";
+import SFString from "./SFString.js";
+import SFTime from "./SFTime.js";
+import SFVec2 from "./SFVec2.js";
+import SFVec3 from "./SFVec3.js";
+import SFVec4 from "./SFVec4.js";
+import X3DObjectArrayField from "../Base/X3DObjectArrayField.js";
+import X3DTypedArrayField from "../Base/X3DTypedArrayField.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import Generator from "../InputOutput/Generator.js";
+
+const
+   SFMatrix3d = SFMatrix3 .SFMatrix3d,
+   SFMatrix3f = SFMatrix3 .SFMatrix3f,
+   SFMatrix4d = SFMatrix4 .SFMatrix4d,
+   SFMatrix4f = SFMatrix4 .SFMatrix4f,
+   SFVec2d    = SFVec2 .SFVec2d,
+   SFVec2f    = SFVec2 .SFVec2f,
+   SFVec3d    = SFVec3 .SFVec3d,
+   SFVec3f    = SFVec3 .SFVec3f,
+   SFVec4d    = SFVec4 .SFVec4d,
+   SFVec4f    = SFVec4 .SFVec4f;
+
+/*
+ *  MFNode
+ */
+
+const _cloneCount = Symbol ();
+
+function MFNode (value)
 {
-"use strict";
+   return X3DObjectArrayField .call (this, arguments);
+}
 
-   const
-      SFMatrix3d = SFMatrix3 .SFMatrix3d,
-      SFMatrix3f = SFMatrix3 .SFMatrix3f,
-      SFMatrix4d = SFMatrix4 .SFMatrix4d,
-      SFMatrix4f = SFMatrix4 .SFMatrix4f,
-      SFVec2d    = SFVec2 .SFVec2d,
-      SFVec2f    = SFVec2 .SFVec2f,
-      SFVec3d    = SFVec3 .SFVec3d,
-      SFVec3f    = SFVec3 .SFVec3f,
-      SFVec4d    = SFVec4 .SFVec4d,
-      SFVec4f    = SFVec4 .SFVec4f;
-
-   /*
-    *  MFNode
-    */
-
-   const _cloneCount = Symbol ();
-
-   function MFNode (value)
+MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
+{
+   constructor: MFNode,
+   [_cloneCount]: 0,
+   getSingleType: function ()
    {
-      return X3DObjectArrayField .call (this, arguments);
-   }
-
-   MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
+      return SFNode;
+   },
+   getValueType: function ()
    {
-      constructor: MFNode,
-      [_cloneCount]: 0,
-      getSingleType: function ()
+      return SFNode;
+   },
+   getArrayType: function ()
+   {
+      return Array;
+   },
+   getComponents: function ()
+   {
+      return 1;
+   },
+   getTypeName: function ()
+   {
+      return "MFNode";
+   },
+   getType: function ()
+   {
+      return X3DConstants .MFNode;
+   },
+   copy: function (instance)
+   {
+      if (instance)
       {
-         return SFNode;
-      },
-      getValueType: function ()
+         const copy = new MFNode ();
+
+         for (const node of this .getValue ())
+            copy .push (node .copy (instance));
+
+         copy .setModificationTime (0);
+
+         return copy;
+      }
+      else
       {
-         return SFNode;
-      },
-      getArrayType: function ()
+         return X3DObjectArrayField .prototype .copy .call (this);
+      }
+   },
+   addCloneCount: function (count)
+   {
+      this [_cloneCount] += count;
+
+      for (const element of this .getValue ())
+         element .addCloneCount (count);
+   },
+   removeCloneCount: function (count)
+   {
+      this [_cloneCount] -= count;
+
+      for (const element of this .getValue ())
+         element .removeCloneCount (count);
+   },
+   addChildObject: function (value)
+   {
+      X3DObjectArrayField .prototype .addChildObject .call (this, value);
+
+      value .addCloneCount (this [_cloneCount]);
+   },
+   removeChildObject: function (value)
+   {
+      X3DObjectArrayField .prototype .removeChildObject .call (this, value);
+
+      value .removeCloneCount (this [_cloneCount]);
+   },
+   toStream: function (stream)
+   {
+      const
+         target    = this .getTarget (),
+         array     = target .getValue (),
+         generator = Generator .Get (stream);
+
+      switch (array .length)
       {
-         return Array;
-      },
-      getComponents: function ()
-      {
-         return 1;
-      },
-      getTypeName: function ()
-      {
-         return "MFNode";
-      },
-      getType: function ()
-      {
-         return X3DConstants .MFNode;
-      },
-      copy: function (instance)
-      {
-         if (instance)
+         case 0:
          {
-            const copy = new MFNode ();
-
-            for (const node of this .getValue ())
-               copy .push (node .copy (instance));
-
-            copy .setModificationTime (0);
-
-            return copy;
+            stream .string += "[ ]";
+            break;
          }
-         else
+         case 1:
          {
-            return X3DObjectArrayField .prototype .copy .call (this);
+            generator .PushUnitCategory (target .getUnit ());
+
+            array [0] .toStream (stream);
+
+            generator .PopUnitCategory ();
+            break;
          }
-      },
-      addCloneCount: function (count)
-      {
-         this [_cloneCount] += count;
-
-         for (const element of this .getValue ())
-            element .addCloneCount (count);
-      },
-      removeCloneCount: function (count)
-      {
-         this [_cloneCount] -= count;
-
-         for (const element of this .getValue ())
-            element .removeCloneCount (count);
-      },
-      addChildObject: function (value)
-      {
-         X3DObjectArrayField .prototype .addChildObject .call (this, value);
-
-         value .addCloneCount (this [_cloneCount]);
-      },
-      removeChildObject: function (value)
-      {
-         X3DObjectArrayField .prototype .removeChildObject .call (this, value);
-
-         value .removeCloneCount (this [_cloneCount]);
-      },
-      toStream: function (stream)
-      {
-         const
-            target    = this .getTarget (),
-            array     = target .getValue (),
-            generator = Generator .Get (stream);
-
-         switch (array .length)
+         default:
          {
-            case 0:
+            generator .PushUnitCategory (target .getUnit ());
+
+            stream .string += "[\n";
+            generator .IncIndent ();
+
+            for (let i = 0, length = array .length; i < length; ++ i)
             {
-               stream .string += "[ ]";
-               break;
-            }
-            case 1:
-            {
-               generator .PushUnitCategory (target .getUnit ());
-
-               array [0] .toStream (stream);
-
-               generator .PopUnitCategory ();
-               break;
-            }
-            default:
-            {
-               generator .PushUnitCategory (target .getUnit ());
-
-               stream .string += "[\n";
-               generator .IncIndent ();
-
-               for (let i = 0, length = array .length; i < length; ++ i)
-               {
-                  stream .string += generator .Indent ();
-                  array [i] .toStream (stream);
-                  stream .string += "\n";
-               }
-
-               generator .DecIndent ();
                stream .string += generator .Indent ();
-               stream .string += "]";
-
-               generator .PopUnitCategory ();
-               break;
+               array [i] .toStream (stream);
+               stream .string += "\n";
             }
+
+            generator .DecIndent ();
+            stream .string += generator .Indent ();
+            stream .string += "]";
+
+            generator .PopUnitCategory ();
+            break;
          }
-      },
-      toVRMLString: function ()
+      }
+   },
+   toVRMLString: function ()
+   {
+      this .addCloneCount (1);
+
+      const string = X3DObjectArrayField .prototype .toVRMLString .call (this);
+
+      this .removeCloneCount (1);
+
+      return string;
+   },
+   toVRMLStream: function (stream)
+   {
+      const
+         target    = this .getTarget (),
+         array     = target .getValue (),
+         generator = Generator .Get (stream);
+
+      switch (array .length)
       {
-         this .addCloneCount (1);
-
-         const string = X3DObjectArrayField .prototype .toVRMLString .call (this);
-
-         this .removeCloneCount (1);
-
-         return string;
-      },
-      toVRMLStream: function (stream)
-      {
-         const
-            target    = this .getTarget (),
-            array     = target .getValue (),
-            generator = Generator .Get (stream);
-
-         switch (array .length)
+         case 0:
          {
-            case 0:
-            {
-               stream .string += "[ ]";
-               break;
-            }
-            case 1:
-            {
-               generator .EnterScope ();
-
-               array [0] .toVRMLStream (stream);
-
-               generator .LeaveScope ();
-               break;
-            }
-            default:
-            {
-               generator .EnterScope ();
-
-               stream .string += "[\n";
-               generator .IncIndent ();
-
-               for (const element of array)
-               {
-                  stream .string += generator .Indent ();
-                  element .toVRMLStream (stream);
-                  stream .string += "\n";
-               }
-
-               generator .DecIndent ();
-               stream .string += generator .Indent ();
-               stream .string += "]";
-
-               generator .LeaveScope ();
-               break;
-            }
+            stream .string += "[ ]";
+            break;
          }
-      },
-      toXMLString: function ()
-      {
-         this .addCloneCount (1);
-
-         const string = X3DObjectArrayField .prototype .toXMLString .call (this);
-
-         this .removeCloneCount (1);
-
-         return string;
-      },
-      toXMLStream: function (stream)
-      {
-         const
-            generator = Generator .Get (stream),
-            length    = this .length;
-
-         if (length)
+         case 1:
          {
             generator .EnterScope ();
 
-            const array = this .getValue ();
+            array [0] .toVRMLStream (stream);
 
-            for (let i = 0, n = length - 1; i < n; ++ i)
+            generator .LeaveScope ();
+            break;
+         }
+         default:
+         {
+            generator .EnterScope ();
+
+            stream .string += "[\n";
+            generator .IncIndent ();
+
+            for (const element of array)
             {
-               const node = array [i] .getValue ();
-
-               if (node)
-               {
-                  node .toXMLStream (stream);
-                  stream .string += "\n";
-               }
-               else
-               {
-                  stream .string += generator .Indent ();
-                  stream .string += "<";
-                  stream .string += "NULL";
-
-                  const containerField = generator .ContainerField ();
-
-                  if (containerField)
-                  {
-                     stream .string += " ";
-                     stream .string += "containerField='";
-                     stream .string += generator .XMLEncode (containerField .getName ());
-                     stream .string += "'";
-                  }
-
-                  stream .string += "/>";
-               }
+               stream .string += generator .Indent ();
+               element .toVRMLStream (stream);
+               stream .string += "\n";
             }
 
-            const node = array .at (-1) .getValue ();
+            generator .DecIndent ();
+            stream .string += generator .Indent ();
+            stream .string += "]";
+
+            generator .LeaveScope ();
+            break;
+         }
+      }
+   },
+   toXMLString: function ()
+   {
+      this .addCloneCount (1);
+
+      const string = X3DObjectArrayField .prototype .toXMLString .call (this);
+
+      this .removeCloneCount (1);
+
+      return string;
+   },
+   toXMLStream: function (stream)
+   {
+      const
+         generator = Generator .Get (stream),
+         length    = this .length;
+
+      if (length)
+      {
+         generator .EnterScope ();
+
+         const array = this .getValue ();
+
+         for (let i = 0, n = length - 1; i < n; ++ i)
+         {
+            const node = array [i] .getValue ();
 
             if (node)
             {
                node .toXMLStream (stream);
+               stream .string += "\n";
             }
             else
             {
@@ -361,190 +311,215 @@ function (SFBool,
                   stream .string += generator .XMLEncode (containerField .getName ());
                   stream .string += "'";
                }
+
+               stream .string += "/>";
             }
-
-            generator .LeaveScope ();
          }
-      },
-      dispose: function ()
+
+         const node = array .at (-1) .getValue ();
+
+         if (node)
+         {
+            node .toXMLStream (stream);
+         }
+         else
+         {
+            stream .string += generator .Indent ();
+            stream .string += "<";
+            stream .string += "NULL";
+
+            const containerField = generator .ContainerField ();
+
+            if (containerField)
+            {
+               stream .string += " ";
+               stream .string += "containerField='";
+               stream .string += generator .XMLEncode (containerField .getName ());
+               stream .string += "'";
+            }
+         }
+
+         generator .LeaveScope ();
+      }
+   },
+   dispose: function ()
+   {
+      this .resize (0);
+
+      X3DObjectArrayField .prototype .dispose .call (this);
+   },
+});
+
+for (const key of Reflect .ownKeys (MFNode .prototype))
+   Object .defineProperty (MFNode .prototype, key, { enumerable: false });
+
+function MFString (value)
+{
+   return X3DObjectArrayField .call (this, arguments);
+}
+
+MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
+{
+   constructor: MFString,
+   getValueType: function ()
+   {
+      return String;
+   },
+   getSingleType: function ()
+   {
+      return SFString;
+   },
+   getArrayType: function ()
+   {
+      return Array;
+   },
+   getComponents: function ()
+   {
+      return 1;
+   },
+   getTypeName: function ()
+   {
+      return "MFString";
+   },
+   getType: function ()
+   {
+      return X3DConstants .MFString;
+   },
+   toXMLStream: function (stream)
+   {
+      const length = this .length;
+
+      if (length)
       {
-         this .resize (0);
+         const value = this .getValue ();
 
-         X3DObjectArrayField .prototype .dispose .call (this);
-      },
-   });
+         for (let i = 0, n = length - 1; i < n; ++ i)
+         {
+            stream .string += "\"";
+            value [i] .toXMLStream (stream);
+            stream .string += "\"";
+            stream .string += ", ";
+         }
 
-   for (const key of Reflect .ownKeys (MFNode .prototype))
-      Object .defineProperty (MFNode .prototype, key, { enumerable: false });
+         stream .string += "\"";
+         value .at (-1) .toXMLStream (stream);
+         stream .string += "\"";
+      }
+   },
+});
 
-   function MFString (value)
+for (const key of Reflect .ownKeys (MFString .prototype))
+   Object .defineProperty (MFString .prototype, key, { enumerable: false });
+
+function MFImageTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
+{
+   function ArrayField (value)
    {
       return X3DObjectArrayField .call (this, arguments);
    }
 
-   MFString .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
+   ArrayField .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
    {
-      constructor: MFString,
-      getValueType: function ()
-      {
-         return String;
-      },
+      constructor: ArrayField,
       getSingleType: function ()
       {
-         return SFString;
+         return SFImage;
+      },
+      getValueType: function ()
+      {
+         return SFImage;
       },
       getArrayType: function ()
       {
-         return Array;
+         return ArrayType;
       },
       getComponents: function ()
       {
-         return 1;
+         return Components;
       },
       getTypeName: function ()
       {
-         return "MFString";
+         return TypeName;
       },
       getType: function ()
       {
-         return X3DConstants .MFString;
-      },
-      toXMLStream: function (stream)
-      {
-         const length = this .length;
-
-         if (length)
-         {
-            const value = this .getValue ();
-
-            for (let i = 0, n = length - 1; i < n; ++ i)
-            {
-               stream .string += "\"";
-               value [i] .toXMLStream (stream);
-               stream .string += "\"";
-               stream .string += ", ";
-            }
-
-            stream .string += "\"";
-            value .at (-1) .toXMLStream (stream);
-            stream .string += "\"";
-         }
+         return Type;
       },
    });
 
-   for (const key of Reflect .ownKeys (MFString .prototype))
-      Object .defineProperty (MFString .prototype, key, { enumerable: false });
+   for (const key of Reflect .ownKeys (ArrayField .prototype))
+      Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
 
-   function ArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
+   return ArrayField;
+}
+
+function TypedArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
+{
+   function ArrayField (value)
    {
-      function ArrayField (value)
-      {
-         return X3DObjectArrayField .call (this, arguments);
-      }
-
-      ArrayField .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
-      {
-         constructor: ArrayField,
-         getSingleType: function ()
-         {
-            return SingleType;
-         },
-         getValueType: function ()
-         {
-            return ValueType;
-         },
-         getArrayType: function ()
-         {
-            return ArrayType;
-         },
-         getComponents: function ()
-         {
-            return Components;
-         },
-         getTypeName: function ()
-         {
-            return TypeName;
-         },
-         getType: function ()
-         {
-            return Type;
-         },
-      });
-
-      for (const key of Reflect .ownKeys (ArrayField .prototype))
-         Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
-
-      return ArrayField;
+      return X3DTypedArrayField .call (this, arguments);
    }
 
-   function TypedArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
+   ArrayField .prototype = Object .assign (Object .create (X3DTypedArrayField .prototype),
    {
-      function ArrayField (value)
+      constructor: ArrayField,
+      getSingleType: function ()
       {
-         return X3DTypedArrayField .call (this, arguments);
-      }
-
-      ArrayField .prototype = Object .assign (Object .create (X3DTypedArrayField .prototype),
+         return SingleType;
+      },
+      getValueType: function ()
       {
-         constructor: ArrayField,
-         getSingleType: function ()
-         {
-            return SingleType;
-         },
-         getValueType: function ()
-         {
-            return ValueType;
-         },
-         getArrayType: function ()
-         {
-            return ArrayType;
-         },
-         getComponents: function ()
-         {
-            return Components;
-         },
-         getTypeName: function ()
-         {
-            return TypeName;
-         },
-         getType: function ()
-         {
-            return Type;
-         },
-      });
+         return ValueType;
+      },
+      getArrayType: function ()
+      {
+         return ArrayType;
+      },
+      getComponents: function ()
+      {
+         return Components;
+      },
+      getTypeName: function ()
+      {
+         return TypeName;
+      },
+      getType: function ()
+      {
+         return Type;
+      },
+   });
 
-      for (const key of Reflect .ownKeys (ArrayField .prototype))
-         Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
+   for (const key of Reflect .ownKeys (ArrayField .prototype))
+      Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
 
-      return ArrayField;
-   }
+   return ArrayField;
+}
 
-   function Value (value) { return value; }
+function Value (value) { return value; }
 
-   const ArrayFields =
-   {
-      MFBool:      TypedArrayTemplate ("MFBool",      X3DConstants .MFBool,      SFBool,      Boolean,     Uint8Array,   1),
-      MFColor:     TypedArrayTemplate ("MFColor",     X3DConstants .MFColor,     SFColor,     SFColor,     Float32Array, 3),
-      MFColorRGBA: TypedArrayTemplate ("MFColorRGBA", X3DConstants .MFColorRGBA, SFColorRGBA, SFColorRGBA, Float32Array, 4),
-      MFDouble:    TypedArrayTemplate ("MFDouble",    X3DConstants .MFDouble,    SFDouble,    Value,       Float64Array, 1),
-      MFFloat:     TypedArrayTemplate ("MFFloat",     X3DConstants .MFFloat,     SFFloat,     Value,       Float32Array, 1),
-      MFImage:     ArrayTemplate      ("MFImage",     X3DConstants .MFImage,     SFImage,     SFImage,     Array,        1),
-      MFInt32:     TypedArrayTemplate ("MFInt32",     X3DConstants .MFInt32,     SFInt32,     Value,       Int32Array,   1),
-      MFMatrix3d:  TypedArrayTemplate ("MFMatrix3d",  X3DConstants .MFMatrix3d,  SFMatrix3d,  SFMatrix3d,  Float64Array, 9),
-      MFMatrix3f:  TypedArrayTemplate ("MFMatrix3f",  X3DConstants .MFMatrix3f,  SFMatrix3f,  SFMatrix3f,  Float32Array, 9),
-      MFMatrix4d:  TypedArrayTemplate ("MFMatrix4d",  X3DConstants .MFMatrix4d,  SFMatrix4d,  SFMatrix4d,  Float64Array, 16),
-      MFMatrix4f:  TypedArrayTemplate ("MFMatrix4f",  X3DConstants .MFMatrix4f,  SFMatrix4f,  SFMatrix4f,  Float32Array, 16),
-      MFNode:      MFNode,
-      MFRotation:  TypedArrayTemplate ("MFRotation",  X3DConstants .MFRotation,  SFRotation,  SFRotation,  Float64Array, 4),
-      MFString:    MFString,
-      MFTime:      TypedArrayTemplate ("MFTime",      X3DConstants .MFTime,      SFTime,      Value,       Float64Array, 1),
-      MFVec2d:     TypedArrayTemplate ("MFVec2d",     X3DConstants .MFVec2d,     SFVec2d,     SFVec2d,     Float64Array, 2),
-      MFVec2f:     TypedArrayTemplate ("MFVec2f",     X3DConstants .MFVec2f,     SFVec2f,     SFVec2f,     Float32Array, 2),
-      MFVec3d:     TypedArrayTemplate ("MFVec3d",     X3DConstants .MFVec3d,     SFVec3d,     SFVec3d,     Float64Array, 3),
-      MFVec3f:     TypedArrayTemplate ("MFVec3f",     X3DConstants .MFVec3f,     SFVec3f,     SFVec3f,     Float32Array, 3),
-      MFVec4d:     TypedArrayTemplate ("MFVec4d",     X3DConstants .MFVec4d,     SFVec4d,     SFVec4d,     Float64Array, 4),
-      MFVec4f:     TypedArrayTemplate ("MFVec4f",     X3DConstants .MFVec4f,     SFVec4f,     SFVec4f,     Float32Array, 4),
-   };
+const ArrayFields =
+{
+   MFBool:      TypedArrayTemplate ("MFBool",      X3DConstants .MFBool,      SFBool,      Boolean,     Uint8Array,   1),
+   MFColor:     TypedArrayTemplate ("MFColor",     X3DConstants .MFColor,     SFColor,     SFColor,     Float32Array, 3),
+   MFColorRGBA: TypedArrayTemplate ("MFColorRGBA", X3DConstants .MFColorRGBA, SFColorRGBA, SFColorRGBA, Float32Array, 4),
+   MFDouble:    TypedArrayTemplate ("MFDouble",    X3DConstants .MFDouble,    SFDouble,    Value,       Float64Array, 1),
+   MFFloat:     TypedArrayTemplate ("MFFloat",     X3DConstants .MFFloat,     SFFloat,     Value,       Float32Array, 1),
+   MFImage:     MFImageTemplate    ("MFImage",     X3DConstants .MFImage,     undefined,   undefined,   Array,        1),
+   MFInt32:     TypedArrayTemplate ("MFInt32",     X3DConstants .MFInt32,     SFInt32,     Value,       Int32Array,   1),
+   MFMatrix3d:  TypedArrayTemplate ("MFMatrix3d",  X3DConstants .MFMatrix3d,  SFMatrix3d,  SFMatrix3d,  Float64Array, 9),
+   MFMatrix3f:  TypedArrayTemplate ("MFMatrix3f",  X3DConstants .MFMatrix3f,  SFMatrix3f,  SFMatrix3f,  Float32Array, 9),
+   MFMatrix4d:  TypedArrayTemplate ("MFMatrix4d",  X3DConstants .MFMatrix4d,  SFMatrix4d,  SFMatrix4d,  Float64Array, 16),
+   MFMatrix4f:  TypedArrayTemplate ("MFMatrix4f",  X3DConstants .MFMatrix4f,  SFMatrix4f,  SFMatrix4f,  Float32Array, 16),
+   MFNode:      MFNode,
+   MFRotation:  TypedArrayTemplate ("MFRotation",  X3DConstants .MFRotation,  SFRotation,  SFRotation,  Float64Array, 4),
+   MFString:    MFString,
+   MFTime:      TypedArrayTemplate ("MFTime",      X3DConstants .MFTime,      SFTime,      Value,       Float64Array, 1),
+   MFVec2d:     TypedArrayTemplate ("MFVec2d",     X3DConstants .MFVec2d,     SFVec2d,     SFVec2d,     Float64Array, 2),
+   MFVec2f:     TypedArrayTemplate ("MFVec2f",     X3DConstants .MFVec2f,     SFVec2f,     SFVec2f,     Float32Array, 2),
+   MFVec3d:     TypedArrayTemplate ("MFVec3d",     X3DConstants .MFVec3d,     SFVec3d,     SFVec3d,     Float64Array, 3),
+   MFVec3f:     TypedArrayTemplate ("MFVec3f",     X3DConstants .MFVec3f,     SFVec3f,     SFVec3f,     Float32Array, 3),
+   MFVec4d:     TypedArrayTemplate ("MFVec4d",     X3DConstants .MFVec4d,     SFVec4d,     SFVec4d,     Float64Array, 4),
+   MFVec4f:     TypedArrayTemplate ("MFVec4f",     X3DConstants .MFVec4f,     SFVec4f,     SFVec4f,     Float32Array, 4),
+};
 
-   return ArrayFields;
-});
+export default ArrayFields;

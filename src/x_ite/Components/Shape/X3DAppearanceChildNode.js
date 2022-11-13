@@ -47,26 +47,19 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DNode,
-          X3DConstants)
+import X3DNode from "../Core/X3DNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DAppearanceChildNode (executionContext)
 {
-"use strict";
+   X3DNode .call (this, executionContext);
 
-   function X3DAppearanceChildNode (executionContext)
-   {
-      X3DNode .call (this, executionContext);
+   this .addType (X3DConstants .X3DAppearanceChildNode);
+}
 
-      this .addType (X3DConstants .X3DAppearanceChildNode);
-   }
-
-   X3DAppearanceChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-   {
-      constructor: X3DAppearanceChildNode,
-   });
-
-   return X3DAppearanceChildNode;
+X3DAppearanceChildNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+{
+   constructor: X3DAppearanceChildNode,
 });
+
+export default X3DAppearanceChildNode;

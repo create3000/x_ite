@@ -47,19 +47,14 @@
  ******************************************************************************/
 
 
-define (function ()
+let i = 0;
+
+const TextAlignment =
 {
-"use strict";
+   BEGIN:  ++ i,
+   FIRST:  ++ i,
+   MIDDLE: ++ i,
+   END:    ++ i,
+};
 
-   let i = 0;
-
-   const TextAlignment =
-   {
-      BEGIN:  ++ i,
-      FIRST:  ++ i,
-      MIDDLE: ++ i,
-      END:    ++ i,
-   };
-
-   return TextAlignment;
-});
+export default TextAlignment;

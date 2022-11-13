@@ -47,140 +47,129 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Texturing3D/X3DTexture3DNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Base/X3DCast",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DTexture3DNode,
-          X3DConstants,
-          X3DCast)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DTexture3DNode from "./X3DTexture3DNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast from "../../Base/X3DCast.js";
+
+function ComposedTexture3D (executionContext)
 {
-"use strict";
+   X3DTexture3DNode .call (this, executionContext);
 
-   function ComposedTexture3D (executionContext)
+   this .addType (X3DConstants .ComposedTexture3D);
+
+   this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+
+   this .textureNodes = [ ];
+}
+
+ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+{
+   constructor: ComposedTexture3D,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "texture",           new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DTexture3DNode .call (this, executionContext);
-
-      this .addType (X3DConstants .ComposedTexture3D);
-
-      this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
-
-      this .textureNodes = [ ];
-   }
-
-   ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+      return "ComposedTexture3D";
+   },
+   getComponentName: function ()
    {
-      constructor: ComposedTexture3D,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "texture",           new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
+      return "Texturing3D";
+   },
+   getContainerField: function ()
+   {
+      return "texture";
+   },
+   initialize: function ()
+   {
+      X3DTexture3DNode .prototype .initialize .call (this);
+
+      this ._texture .addInterest ("set_texture__", this);
+
+      this .set_texture__ ();
+   },
+   checkLoadState: function ()
+   {
+      return this ._loadState .getValue ();
+   },
+   set_texture__: function ()
+   {
+      const textureNodes = this .textureNodes;
+
+      for (const textureNode of textureNodes)
+         textureNode .removeInterest ("update", this);
+
+      textureNodes .length = 0;
+
+      for (const node of this ._texture)
       {
-         return "ComposedTexture3D";
-      },
-      getComponentName: function ()
+         const textureNode = X3DCast (X3DConstants .X3DTexture2DNode, node);
+
+         if (textureNode)
+            textureNodes .push (textureNode);
+      }
+
+      for (const textureNode of textureNodes)
+         textureNode .addInterest ("update", this);
+
+      this .update ();
+   },
+   update: function ()
+   {
+      const
+         textureNodes = this .textureNodes,
+         complete     = textureNodes .every (function (textureNode) { return textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE; });
+
+      if (textureNodes .length === 0 || !complete)
       {
-         return "Texturing3D";
-      },
-      getContainerField: function ()
-      {
-         return "texture";
-      },
-      initialize: function ()
-      {
-         X3DTexture3DNode .prototype .initialize .call (this);
+         this .clearTexture ();
 
-         this ._texture .addInterest ("set_texture__", this);
-
-         this .set_texture__ ();
-      },
-      checkLoadState: function ()
-      {
-         return this ._loadState .getValue ();
-      },
-      set_texture__: function ()
-      {
-         const textureNodes = this .textureNodes;
-
-         for (const textureNode of textureNodes)
-            textureNode .removeInterest ("update", this);
-
-         textureNodes .length = 0;
-
-         for (const node of this ._texture)
-         {
-            const textureNode = X3DCast (X3DConstants .X3DTexture2DNode, node);
-
-            if (textureNode)
-               textureNodes .push (textureNode);
-         }
-
-         for (const textureNode of textureNodes)
-            textureNode .addInterest ("update", this);
-
-         this .update ();
-      },
-      update: function ()
+         this ._loadState = X3DConstants .FAILED_STATE;
+      }
+      else
       {
          const
-            textureNodes = this .textureNodes,
-            complete     = textureNodes .every (function (textureNode) { return textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE; });
+            gl           = this .getBrowser () .getContext (),
+            textureNode0 = textureNodes [0],
+            width        = textureNode0 .getWidth (),
+            height       = textureNode0 .getHeight (),
+            depth        = textureNodes .length,
+            size         = width * height * 4,
+            data         = new Uint8Array (size * depth);
 
-         if (textureNodes .length === 0 || !complete)
-         {
-            this .clearTexture ();
+         let transparent = 0;
 
-            this ._loadState = X3DConstants .FAILED_STATE;
-         }
-         else
+         for (let i = 0, d = 0; i < depth; ++ i, d += size)
          {
             const
-               gl           = this .getBrowser () .getContext (),
-               textureNode0 = textureNodes [0],
-               width        = textureNode0 .getWidth (),
-               height       = textureNode0 .getHeight (),
-               depth        = textureNodes .length,
-               size         = width * height * 4,
-               data         = new Uint8Array (size * depth);
+               textureNode = this .textureNodes [i],
+               tData       = textureNode .getData ();
 
-            let transparent = 0;
-
-            for (let i = 0, d = 0; i < depth; ++ i, d += size)
+            if (textureNode .getWidth () === width && textureNode .getHeight () === height)
             {
-               const
-                  textureNode = this .textureNodes [i],
-                  tData       = textureNode .getData ();
+               transparent += textureNode .getTransparent ();
 
-               if (textureNode .getWidth () === width && textureNode .getHeight () === height)
-               {
-                  transparent += textureNode .getTransparent ();
-
-                  data .set (tData, d);
-               }
-               else
-               {
-                  console .log ("ComposedTexture3D: all textures must have same size.");
-               }
+               data .set (tData, d);
             }
-
-            this .setTexture (width, height, depth, !!transparent, gl .RGBA, data);
-            this ._loadState = X3DConstants .COMPLETE_STATE;
+            else
+            {
+               console .log ("ComposedTexture3D: all textures must have same size.");
+            }
          }
-      },
-   });
 
-   return ComposedTexture3D;
+         this .setTexture (width, height, depth, !!transparent, gl .RGBA, data);
+         this ._loadState = X3DConstants .COMPLETE_STATE;
+      }
+   },
 });
+
+export default ComposedTexture3D;

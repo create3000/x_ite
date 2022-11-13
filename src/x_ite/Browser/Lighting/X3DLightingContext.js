@@ -47,69 +47,63 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Rendering/TextureBuffer",
-],
-function (TextureBuffer)
+import TextureBuffer from "../../Rendering/TextureBuffer.js";
+
+const
+   _maxLights     = Symbol (),
+   _shadowBuffers = Symbol ();
+
+function X3DLightingContext ()
 {
-"use strict";
-
    const
-      _maxLights     = Symbol (),
-      _shadowBuffers = Symbol ();
+      gl                   = this .getContext (),
+      maxTextureImageUnits = gl .getParameter (gl .MAX_TEXTURE_IMAGE_UNITS);
 
-   function X3DLightingContext ()
+   if (maxTextureImageUnits > 8)
+      this [_maxLights] = 8;
+   else
+      this [_maxLights] = 2;
+
+   this [_shadowBuffers] = [ ]; // Shadow buffer cache
+}
+
+X3DLightingContext .prototype =
+{
+   initialize: function ()
+   { },
+   getMaxLights: function ()
    {
-      const
-         gl                   = this .getContext (),
-         maxTextureImageUnits = gl .getParameter (gl .MAX_TEXTURE_IMAGE_UNITS);
-
-      if (maxTextureImageUnits > 8)
-         this [_maxLights] = 8;
-      else
-         this [_maxLights] = 2;
-
-      this [_shadowBuffers] = [ ]; // Shadow buffer cache
-   }
-
-   X3DLightingContext .prototype =
+      return this [_maxLights];
+   },
+   popShadowBuffer: function (shadowMapSize)
    {
-      initialize: function ()
-      { },
-      getMaxLights: function ()
+      try
       {
-         return this [_maxLights];
-      },
-      popShadowBuffer: function (shadowMapSize)
-      {
-         try
+         const shadowBuffers = this [_shadowBuffers] [shadowMapSize];
+
+         if (shadowBuffers)
          {
-            const shadowBuffers = this [_shadowBuffers] [shadowMapSize];
-
-            if (shadowBuffers)
-            {
-               if (shadowBuffers .length)
-                  return shadowBuffers .pop ();
-            }
-            else
-               this [_shadowBuffers] [shadowMapSize] = [ ];
-
-            return new TextureBuffer (this, shadowMapSize, shadowMapSize);
+            if (shadowBuffers .length)
+               return shadowBuffers .pop ();
          }
-         catch (error)
-         {
-            // Couldn't create texture buffer.
-            console .error (error);
+         else
+            this [_shadowBuffers] [shadowMapSize] = [ ];
 
-            return null;
-         }
-      },
-      pushShadowBuffer: function (buffer)
+         return new TextureBuffer (this, shadowMapSize, shadowMapSize);
+      }
+      catch (error)
       {
-         if (buffer)
-            this [_shadowBuffers] [buffer .getWidth ()] .push (buffer);
-      },
-   };
+         // Couldn't create texture buffer.
+         console .error (error);
 
-   return X3DLightingContext;
-});
+         return null;
+      }
+   },
+   pushShadowBuffer: function (buffer)
+   {
+      if (buffer)
+         this [_shadowBuffers] [buffer .getWidth ()] .push (buffer);
+   },
+};
+
+export default X3DLightingContext;

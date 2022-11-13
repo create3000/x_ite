@@ -47,86 +47,75 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Rotation4"
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode,
-          X3DConstants,
-          Rotation4)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DInterpolatorNode from "./X3DInterpolatorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+
+function OrientationInterpolator (executionContext)
 {
-"use strict";
+   X3DInterpolatorNode .call (this, executionContext);
 
-   function OrientationInterpolator (executionContext)
+   this .addType (X3DConstants .OrientationInterpolator);
+
+   this ._keyValue      .setUnit ("angle");
+   this ._value_changed .setUnit ("angle");
+}
+
+OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+{
+   constructor: OrientationInterpolator,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFRotation ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DInterpolatorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .OrientationInterpolator);
-
-      this ._keyValue      .setUnit ("angle");
-      this ._value_changed .setUnit ("angle");
-   }
-
-   OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+      return "OrientationInterpolator";
+   },
+   getComponentName: function ()
    {
-      constructor: OrientationInterpolator,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFRotation ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "OrientationInterpolator";
-      },
-      getComponentName: function ()
-      {
-         return "Interpolation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DInterpolatorNode .prototype .initialize .call (this);
+      return "Interpolation";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this ._keyValue .addInterest ("set_keyValue__", this);
-      },
-      set_keyValue__: function ()
+      this ._keyValue .addInterest ("set_keyValue__", this);
+   },
+   set_keyValue__: function ()
+   {
+      const
+         key      = this ._key,
+         keyValue = this ._keyValue;
+
+      if (keyValue .length < key .length)
+         keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
+   },
+   interpolate: (function ()
+   {
+      const
+         keyValue0 = new Rotation4 (0, 0, 1, 0),
+         keyValue1 = new Rotation4 (0, 0, 1, 0);
+
+      return function (index0, index1, weight)
       {
-         const
-            key      = this ._key,
-            keyValue = this ._keyValue;
+         // Both values can change in slerp.
+         keyValue0 .assign (this ._keyValue [index0] .getValue ());
+         keyValue1 .assign (this ._keyValue [index1] .getValue ());
 
-         if (keyValue .length < key .length)
-            keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFRotation ());
-      },
-      interpolate: (function ()
-      {
-         const
-            keyValue0 = new Rotation4 (0, 0, 1, 0),
-            keyValue1 = new Rotation4 (0, 0, 1, 0);
-
-         return function (index0, index1, weight)
-         {
-            // Both values can change in slerp.
-            keyValue0 .assign (this ._keyValue [index0] .getValue ());
-            keyValue1 .assign (this ._keyValue [index1] .getValue ());
-
-            this ._value_changed = keyValue0 .slerp (keyValue1, weight);
-         };
-      }) (),
-   });
-
-   return OrientationInterpolator;
+         this ._value_changed = keyValue0 .slerp (keyValue1, weight);
+      };
+   }) (),
 });
+
+export default OrientationInterpolator;

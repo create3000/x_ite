@@ -47,105 +47,94 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DParticleEmitterNode,
-          X3DConstants,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DParticleEmitterNode from "./X3DParticleEmitterNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+function PointEmitter (executionContext)
 {
-"use strict";
+   X3DParticleEmitterNode .call (this, executionContext);
 
-   function PointEmitter (executionContext)
+   this .addType (X3DConstants .PointEmitter);
+
+   this ._position .setUnit ("length");
+
+   this .addUniform ("position",  "uniform vec3 position;");
+   this .addUniform ("direction", "uniform vec3 direction;");
+
+   this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
    {
-      X3DParticleEmitterNode .call (this, executionContext);
+      if (direction == vec3 (0.0))
+         return getRandomSphericalVelocity ();
 
-      this .addType (X3DConstants .PointEmitter);
+      else
+         return direction * getRandomSpeed ();
+   }`);
 
-      this ._position .setUnit ("length");
-
-      this .addUniform ("position",  "uniform vec3 position;");
-      this .addUniform ("direction", "uniform vec3 direction;");
-
-      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
-      {
-         if (direction == vec3 (0.0))
-            return getRandomSphericalVelocity ();
-
-         else
-            return direction * getRandomSpeed ();
-      }`);
-
-      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
-      {
-         return vec4 (position, 1.0);
-      }`);
-   }
-
-   PointEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+   this .addFunction (/* glsl */ `vec4 getRandomPosition ()
    {
-      constructor: PointEmitter,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",   new Fields .SFVec3f (0, 1, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
-      ]),
-      getTypeName: function ()
+      return vec4 (position, 1.0);
+   }`);
+}
+
+PointEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+{
+   constructor: PointEmitter,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "direction",   new Fields .SFVec3f (0, 1, 0)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "PointEmitter";
+   },
+   getComponentName: function ()
+   {
+      return "ParticleSystems";
+   },
+   getContainerField: function ()
+   {
+      return "emitter";
+   },
+   initialize: function ()
+   {
+      X3DParticleEmitterNode .prototype .initialize .call (this);
+
+      if (this .getBrowser () .getContext () .getVersion () < 2)
+         return;
+
+      this ._position  .addInterest ("set_position__",  this);
+      this ._direction .addInterest ("set_direction__", this);
+
+      this .set_position__ ();
+      this .set_direction__ ();
+   },
+   set_position__: function ()
+   {
+      const position = this ._position .getValue ();
+
+      this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
+   },
+   set_direction__: (function ()
+   {
+      const direction = new Vector3 (0, 0, 0);
+
+      return function ()
       {
-         return "PointEmitter";
-      },
-      getComponentName: function ()
-      {
-         return "ParticleSystems";
-      },
-      getContainerField: function ()
-      {
-         return "emitter";
-      },
-      initialize: function ()
-      {
-         X3DParticleEmitterNode .prototype .initialize .call (this);
+         direction .assign (this ._direction .getValue ()) .normalize ();
 
-         if (this .getBrowser () .getContext () .getVersion () < 2)
-            return;
-
-         this ._position  .addInterest ("set_position__",  this);
-         this ._direction .addInterest ("set_direction__", this);
-
-         this .set_position__ ();
-         this .set_direction__ ();
-      },
-      set_position__: function ()
-      {
-         const position = this ._position .getValue ();
-
-         this .setUniform ("uniform3f", "position", position .x, position .y, position .z);
-      },
-      set_direction__: (function ()
-      {
-         const direction = new Vector3 (0, 0, 0);
-
-         return function ()
-         {
-            direction .assign (this ._direction .getValue ()) .normalize ();
-
-            this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
-         };
-      })(),
-   });
-
-   return PointEmitter;
+         this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
+      };
+   })(),
 });
+
+export default PointEmitter;

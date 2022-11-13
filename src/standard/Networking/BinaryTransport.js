@@ -47,75 +47,70 @@
  ******************************************************************************/
 
 
-define (function ()
+export default function ($)
 {
-"use strict";
-
-   return function ($)
+   // Use this transport for "binary" data type
+   $.ajaxTransport ("+binary", function (options, originalOptions, jqXHR)
    {
-      // Use this transport for "binary" data type
-      $.ajaxTransport ("+binary", function (options, originalOptions, jqXHR)
+      // Check for conditions and support for blob / arraybuffer response type
+      if (options .dataType && options .dataType == 'binary')
       {
-         // Check for conditions and support for blob / arraybuffer response type
-         if (options .dataType && options .dataType == 'binary')
-         {
-            return {
-               send: function (headers, callback)
+         return {
+            send: function (headers, callback)
+            {
+               // Setup all variables
+               const xhr = options .xhr ();
+
+               xhr .open (options .type, options .url, options .async, options .username, options .password);
+
+               // Apply custom fields if provided
+               if (options .xhrFields)
                {
-                  // Setup all variables
-                  const xhr = options .xhr ();
+                  for (const i in options .xhrFields)
+                     xhr [i] = options .xhrFields [i];
+               }
 
-                  xhr .open (options .type, options .url, options .async, options .username, options .password);
+               // Override mime type if needed
+               if (options .mimeType && xhr .overrideMimeType)
+                  xhr .overrideMimeType (options .mimeType);
 
-                  // Apply custom fields if provided
-                  if (options .xhrFields)
-                  {
-                     for (const i in options .xhrFields)
-                        xhr [i] = options .xhrFields [i];
-                  }
+               // Setup custom headers
+               for (const i in headers)
+                  xhr .setRequestHeader (i, headers [i]);
 
-                  // Override mime type if needed
-                  if (options .mimeType && xhr .overrideMimeType)
-                     xhr .overrideMimeType (options .mimeType);
-
-                  // Setup custom headers
-                  for (const i in headers)
-                     xhr .setRequestHeader (i, headers [i]);
-
-                  // Setup onload callback
-                  xhr .onload = function ()
-                  {
-                     xhr .onload = xhr .onerror = null;
-
-                     const data = { };
-
-                     data [options .dataType] = xhr .response;
-
-                     callback (xhr .status || 200, xhr .statusText, data, xhr .getAllResponseHeaders ());
-                  };
-
-                  // Setup onerror callback
-                  xhr .onerror = function ()
-                  {
-                     xhr .onload = xhr .onerror = null;
-
-                     callback (xhr .status || 404, xhr .statusText);
-                  };
-
-                  // Send data
-                  xhr .responseType = options .responseType || "blob";
-                  xhr .send (options .hasContent && options .data || null);
-               },
-               abort: function ()
+               // Setup onload callback
+               xhr .onload = function ()
                {
-                  const xhr = options .xhr ();
-
                   xhr .onload = xhr .onerror = null;
 
-                  xhr .abort ();
-               }
-            };
-         }
-      });
-   };
-});
+                  const data = { };
+
+                  data [options .dataType] = xhr .response;
+
+                  callback (xhr .status || 200, xhr .statusText, data, xhr .getAllResponseHeaders ());
+               };
+
+               // Setup onerror callback
+               xhr .onerror = function ()
+               {
+                  xhr .onload = xhr .onerror = null;
+
+                  callback (xhr .status || 404, xhr .statusText);
+               };
+
+               // Send data
+               xhr .responseType = options .responseType || "blob";
+               xhr .send (options .hasContent && options .data || null);
+            },
+            abort: function ()
+            {
+               const xhr = options .xhr ();
+
+               xhr .onload = xhr .onerror = null;
+
+               xhr .abort ();
+            }
+         };
+      }
+   });
+};

@@ -47,101 +47,95 @@
  ******************************************************************************/
 
 
-define ([
-   "standard/Math/Algorithm",
-],
-function (Algorithm)
+import Algorithm from "../Algorithm.js";
+
+const lerp = Algorithm .lerp;
+
+function Bezier (x0, y0, x1, y1, x2, y2, x3, y3)
 {
-   "use strict";
+   this .x0 = x0;
+   this .y0 = y0;
+   this .x1 = x1;
+   this .y1 = y1;
+   this .x2 = x2;
+   this .y2 = y2;
+   this .x3 = x3;
+   this .y3 = y3;
 
-   const lerp = Algorithm .lerp;
+   this .order = arguments .length / 2 - 1;
+}
 
-   function Bezier (x0, y0, x1, y1, x2, y2, x3, y3)
+Bezier .prototype =
+{
+   getLUT: function (dimension)
    {
-      this .x0 = x0;
-      this .y0 = y0;
-      this .x1 = x1;
-      this .y1 = y1;
-      this .x2 = x2;
-      this .y2 = y2;
-      this .x3 = x3;
-      this .y3 = y3;
+      const
+         x0  = this .x0,
+         y0  = this .y0,
+         x1  = this .x1,
+         y1  = this .y1,
+         x2  = this .x2,
+         y2  = this .y2,
+         x3  = this .x3,
+         y3  = this .y3,
+         lut = [ ];
 
-      this .order = arguments .length / 2 - 1;
-   }
-
-   Bezier .prototype =
-   {
-      getLUT: function (dimension)
+      switch (this .order)
       {
-         const
-            x0  = this .x0,
-            y0  = this .y0,
-            x1  = this .x1,
-            y1  = this .y1,
-            x2  = this .x2,
-            y2  = this .y2,
-            x3  = this .x3,
-            y3  = this .y3,
-            lut = [ ];
-
-         switch (this .order)
+         case 2:
          {
-            case 2:
+            for (let i = 0, d = dimension - 1; i < dimension; ++ i)
             {
-               for (let i = 0, d = dimension - 1; i < dimension; ++ i)
-               {
-                  lut .push (quadric (x0, y0, x1, y1, x2, y2, i / d));
-               }
-
-               break;
+               lut .push (quadric (x0, y0, x1, y1, x2, y2, i / d));
             }
-            case 3:
-            {
-               for (let i = 0, d = dimension - 1; i < dimension; ++ i)
-               {
-                  lut .push (cubic (x0, y0, x1, y1, x2, y2, x3, y3, i / d));
-               }
 
-               break;
-            }
+            break;
          }
+         case 3:
+         {
+            for (let i = 0, d = dimension - 1; i < dimension; ++ i)
+            {
+               lut .push (cubic (x0, y0, x1, y1, x2, y2, x3, y3, i / d));
+            }
 
-         return lut;
+            break;
+         }
       }
-   };
 
-   function quadric (x0, y0, x1, y1, x2, y2, t)
-   {
-      const
-         ax0 = lerp (x0, x1, t),
-         ay0 = lerp (y0, y1, t),
-         ax1 = lerp (x1, x2, t),
-         ay1 = lerp (y1, y2, t),
-         bx0 = lerp (ax0, ax1, t),
-         by0 = lerp (ay0, ay1, t);
-
-      return {x: bx0, y: by0};
+      return lut;
    }
+};
 
-   function cubic (x0, y0, x1, y1, x2, y2, x3, y3, t)
-   {
-      const
-         ax0 = lerp (x0, x1, t),
-         ay0 = lerp (y0, y1, t),
-         ax1 = lerp (x1, x2, t),
-         ay1 = lerp (y1, y2, t),
-         ax2 = lerp (x2, x3, t),
-         ay2 = lerp (y2, y3, t),
-         bx0 = lerp (ax0, ax1, t),
-         by0 = lerp (ay0, ay1, t),
-         bx1 = lerp (ax1, ax2, t),
-         by1 = lerp (ay1, ay2, t),
-         cx0 = lerp (bx0, bx1, t),
-         cy0 = lerp (by0, by1, t);
+function quadric (x0, y0, x1, y1, x2, y2, t)
+{
+   const
+      ax0 = lerp (x0, x1, t),
+      ay0 = lerp (y0, y1, t),
+      ax1 = lerp (x1, x2, t),
+      ay1 = lerp (y1, y2, t),
+      bx0 = lerp (ax0, ax1, t),
+      by0 = lerp (ay0, ay1, t);
 
-      return {x: cx0, y: cy0};
-   }
+   return {x: bx0, y: by0};
+}
 
-   return Bezier;
-});
+function cubic (x0, y0, x1, y1, x2, y2, x3, y3, t)
+{
+   const
+      ax0 = lerp (x0, x1, t),
+      ay0 = lerp (y0, y1, t),
+      ax1 = lerp (x1, x2, t),
+      ay1 = lerp (y1, y2, t),
+      ax2 = lerp (x2, x3, t),
+      ay2 = lerp (y2, y3, t),
+      bx0 = lerp (ax0, ax1, t),
+      by0 = lerp (ay0, ay1, t),
+      bx1 = lerp (ax1, ax2, t),
+      by1 = lerp (ay1, ay2, t),
+      cx0 = lerp (bx0, bx1, t),
+      cy0 = lerp (by0, by1, t);
+
+   return {x: cx0, y: cy0};
+}
+
+export default Bezier;

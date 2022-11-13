@@ -1,6 +1,6 @@
 
   // This is ammo.js, a port of Bullet Physics to JavaScript. zlib licensed.
-  
+
 var Ammo = (function() {
   var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
   return (
@@ -31,10 +31,5 @@ var ga=[oI,Un,ZF,rz,IF,OF,lD,Fp,Ep,Fp,oI,oI,oI,oI,oI,oI];var ha=[QH,Uv];var ia=[
 }
 );
 })();
-if (typeof exports === 'object' && typeof module === 'object')
-      module.exports = Ammo;
-    else if (typeof define === 'function' && define['amd'])
-      define([], function() { return Ammo; });
-    else if (typeof exports === 'object')
-      exports["Ammo"] = Ammo;
-    
+
+export default Ammo;

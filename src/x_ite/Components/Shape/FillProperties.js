@@ -47,126 +47,116 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DAppearanceChildNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DAppearanceChildNode from "./X3DAppearanceChildNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function FillProperties (executionContext)
 {
-"use strict";
+   X3DAppearanceChildNode .call (this, executionContext);
 
-   function FillProperties (executionContext)
+   this .addType (X3DConstants .FillProperties);
+
+   this .addChildObjects ("transparent", new Fields .SFBool ());
+
+   this ._transparent .setAccessType (X3DConstants .outputOnly);
+
+   this .hatchColor = new Float32Array (3);
+}
+
+FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+{
+   constructor: FillProperties,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "filled",     new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "hatched",    new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "hatchColor", new Fields .SFColor (1, 1, 1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "hatchStyle", new Fields .SFInt32 (1)),
+   ]),
+   getTypeName: function ()
    {
-      X3DAppearanceChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .FillProperties);
-
-      this .addChildObjects ("transparent", new Fields .SFBool ());
-
-      this ._transparent .setAccessType (X3DConstants .outputOnly);
-
-      this .hatchColor = new Float32Array (3);
-   }
-
-   FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+      return "FillProperties";
+   },
+   getComponentName: function ()
    {
-      constructor: FillProperties,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "filled",     new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "hatched",    new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "hatchColor", new Fields .SFColor (1, 1, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "hatchStyle", new Fields .SFInt32 (1)),
-      ]),
-      getTypeName: function ()
-      {
-         return "FillProperties";
-      },
-      getComponentName: function ()
-      {
-         return "Shape";
-      },
-      getContainerField: function ()
-      {
-         return "fillProperties";
-      },
-      initialize: function ()
-      {
-         X3DAppearanceChildNode .prototype .initialize .call (this);
+      return "Shape";
+   },
+   getContainerField: function ()
+   {
+      return "fillProperties";
+   },
+   initialize: function ()
+   {
+      X3DAppearanceChildNode .prototype .initialize .call (this);
 
-         this ._filled     .addInterest ("set_filled__",     this);
-         this ._hatched    .addInterest ("set_hatched__",    this);
-         this ._hatchColor .addInterest ("set_hatchColor__", this);
-         this ._hatchStyle .addInterest ("set_hatchStyle__", this);
+      this ._filled     .addInterest ("set_filled__",     this);
+      this ._hatched    .addInterest ("set_hatched__",    this);
+      this ._hatchColor .addInterest ("set_hatchColor__", this);
+      this ._hatchStyle .addInterest ("set_hatchStyle__", this);
 
-         this .set_filled__ ();
-         this .set_hatched__ ();
-         this .set_hatchColor__ ();
-         this .set_hatchStyle__ ();
-      },
-      set_filled__: function ()
+      this .set_filled__ ();
+      this .set_hatched__ ();
+      this .set_hatchColor__ ();
+      this .set_hatchStyle__ ();
+   },
+   set_filled__: function ()
+   {
+      this .filled = this ._filled .getValue ();
+
+      this .setTransparent (! this .filled);
+   },
+   set_hatched__: function ()
+   {
+      this .hatched = this ._hatched .getValue ();
+   },
+   set_hatchColor__: function ()
+   {
+      this .hatchColor [0] = this ._hatchColor [0];
+      this .hatchColor [1] = this ._hatchColor [1];
+      this .hatchColor [2] = this ._hatchColor [2];
+   },
+   set_hatchStyle__: function ()
+   {
+      let hatchStyle = this ._hatchStyle .getValue ();
+
+      if (hatchStyle < 1 || hatchStyle > 19)
+         hatchStyle = 1;
+
+      this .hatchStyle = hatchStyle;
+   },
+   setTransparent: function (value)
+   {
+      if (value !== this ._transparent .getValue ())
+         this ._transparent = value;
+   },
+   getTransparent: function ()
+   {
+      return this ._transparent .getValue ();
+   },
+   setShaderUniforms: function (gl, shaderObject)
+   {
+      const hatched = this .hatched;
+
+      gl .uniform1i (shaderObject .x3d_FillPropertiesFilled,  this .filled);
+      gl .uniform1i (shaderObject .x3d_FillPropertiesHatched, hatched);
+
+      if (hatched)
       {
-         this .filled = this ._filled .getValue ();
+         const
+            browser     = this .getBrowser (),
+            texture     = browser .getHatchStyleTexture (this .hatchStyle),
+            textureUnit = browser .getTexture2DUnit ();
 
-         this .setTransparent (! this .filled);
-      },
-      set_hatched__: function ()
-      {
-         this .hatched = this ._hatched .getValue ();
-      },
-      set_hatchColor__: function ()
-      {
-         this .hatchColor [0] = this ._hatchColor [0];
-         this .hatchColor [1] = this ._hatchColor [1];
-         this .hatchColor [2] = this ._hatchColor [2];
-      },
-      set_hatchStyle__: function ()
-      {
-         let hatchStyle = this ._hatchStyle .getValue ();
+         gl .uniform3fv (shaderObject .x3d_FillPropertiesHatchColor, this .hatchColor);
 
-         if (hatchStyle < 1 || hatchStyle > 19)
-            hatchStyle = 1;
-
-         this .hatchStyle = hatchStyle;
-      },
-      setTransparent: function (value)
-      {
-         if (value !== this ._transparent .getValue ())
-            this ._transparent = value;
-      },
-      getTransparent: function ()
-      {
-         return this ._transparent .getValue ();
-      },
-      setShaderUniforms: function (gl, shaderObject)
-      {
-         const hatched = this .hatched;
-
-         gl .uniform1i (shaderObject .x3d_FillPropertiesFilled,  this .filled);
-         gl .uniform1i (shaderObject .x3d_FillPropertiesHatched, hatched);
-
-         if (hatched)
-         {
-            const
-               browser     = this .getBrowser (),
-               texture     = browser .getHatchStyleTexture (this .hatchStyle),
-               textureUnit = browser .getTexture2DUnit ();
-
-            gl .uniform3fv (shaderObject .x3d_FillPropertiesHatchColor, this .hatchColor);
-
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
-            gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
-            gl .uniform1i (shaderObject .x3d_FillPropertiesTexture, textureUnit);
-         }
-      },
-   });
-
-   return FillProperties;
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
+         gl .uniform1i (shaderObject .x3d_FillPropertiesTexture, textureUnit);
+      }
+   },
 });
+
+export default FillProperties;

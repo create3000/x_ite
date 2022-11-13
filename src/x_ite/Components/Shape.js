@@ -46,69 +46,50 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/SupportedNodes",
-   "x_ite/Components/Shape/AcousticProperties",
-   "x_ite/Components/Shape/Appearance",
-   "x_ite/Components/Shape/FillProperties",
-   "x_ite/Components/Shape/LineProperties",
-   "x_ite/Components/Shape/Material",
-   "x_ite/Components/Shape/PhysicalMaterial",
-   "x_ite/Components/Shape/PointProperties",
-   "x_ite/Components/Shape/Shape",
-   "x_ite/Components/Shape/TwoSidedMaterial",
-   "x_ite/Components/Shape/UnlitMaterial",
-   "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Components/Shape/X3DAppearanceNode",
-   "x_ite/Components/Shape/X3DMaterialNode",
-   "x_ite/Components/Shape/X3DOneSidedMaterialNode",
-   "x_ite/Components/Shape/X3DShapeNode",
-],
-function (SupportedNodes,
-          AcousticProperties,
-          Appearance,
-          FillProperties,
-          LineProperties,
-          Material,
-          PhysicalMaterial,
-          PointProperties,
-          Shape,
-          TwoSidedMaterial,
-          UnlitMaterial,
-          X3DAppearanceChildNode,
-          X3DAppearanceNode,
-          X3DMaterialNode,
-          X3DOneSidedMaterialNode,
-          X3DShapeNode)
+import SupportedNodes from "../Configuration/SupportedNodes.js";
+import AcousticProperties from "./Shape/AcousticProperties.js";
+import Appearance from "./Shape/Appearance.js";
+import FillProperties from "./Shape/FillProperties.js";
+import LineProperties from "./Shape/LineProperties.js";
+import Material from "./Shape/Material.js";
+import PhysicalMaterial from "./Shape/PhysicalMaterial.js";
+import PointProperties from "./Shape/PointProperties.js";
+import Shape from "./Shape/Shape.js";
+import TwoSidedMaterial from "./Shape/TwoSidedMaterial.js";
+import UnlitMaterial from "./Shape/UnlitMaterial.js";
+import X3DAppearanceChildNode from "./Shape/X3DAppearanceChildNode.js";
+import X3DAppearanceNode from "./Shape/X3DAppearanceNode.js";
+import X3DMaterialNode from "./Shape/X3DMaterialNode.js";
+import X3DOneSidedMaterialNode from "./Shape/X3DOneSidedMaterialNode.js";
+import X3DShapeNode from "./Shape/X3DShapeNode.js";
+
+const Types =
 {
-"use strict";
+   AcousticProperties: AcousticProperties,
+   Appearance:         Appearance,
+   FillProperties:     FillProperties,
+   LineProperties:     LineProperties,
+   Material:           Material,
+   PhysicalMaterial:   PhysicalMaterial,
+   PointProperties:    PointProperties,
+   Shape:              Shape,
+   TwoSidedMaterial:   TwoSidedMaterial,
+   UnlitMaterial:      UnlitMaterial,
+};
 
-   const Types =
-   {
-      AcousticProperties: AcousticProperties,
-      Appearance:         Appearance,
-      FillProperties:     FillProperties,
-      LineProperties:     LineProperties,
-      Material:           Material,
-      PhysicalMaterial:   PhysicalMaterial,
-      PointProperties:    PointProperties,
-      Shape:              Shape,
-      TwoSidedMaterial:   TwoSidedMaterial,
-      UnlitMaterial:      UnlitMaterial,
-   };
+const AbstractTypes =
+{
+   X3DAppearanceChildNode:  X3DAppearanceChildNode,
+   X3DAppearanceNode:       X3DAppearanceNode,
+   X3DMaterialNode:         X3DMaterialNode,
+   X3DOneSidedMaterialNode: X3DOneSidedMaterialNode,
+   X3DShapeNode:            X3DShapeNode,
+};
 
-   const AbstractTypes =
-   {
-      X3DAppearanceChildNode:  X3DAppearanceChildNode,
-      X3DAppearanceNode:       X3DAppearanceNode,
-      X3DMaterialNode:         X3DMaterialNode,
-      X3DOneSidedMaterialNode: X3DOneSidedMaterialNode,
-      X3DShapeNode:            X3DShapeNode,
-   };
+for (const typeName in Types)
+   SupportedNodes .addType (typeName, Types [typeName]);
 
-   for (const typeName in Types)
-      SupportedNodes .addType (typeName, Types [typeName]);
+for (const typeName in AbstractTypes)
+   SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 
-   for (const typeName in AbstractTypes)
-      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
-});
+export default undefined;

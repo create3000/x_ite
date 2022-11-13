@@ -47,130 +47,122 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Matrix3",
-   "standard/Utility/ObjectCache",
-],
-function (X3DConstants,
-          Matrix3,
-          ObjectCache)
+import X3DConstants from "../../Base/X3DConstants.js";
+import Matrix3 from "../../../standard/Math/Numbers/Matrix3.js";
+import ObjectCache from "../../../standard/Utility/ObjectCache.js";
+
+const Fogs = ObjectCache (FogContainer);
+
+function FogContainer ()
 {
-"use strict";
+   this .fogMatrix = new Float32Array (9);
+}
 
-   const Fogs = ObjectCache (FogContainer);
-
-   function FogContainer ()
+FogContainer .prototype =
+{
+   constructor: FogContainer,
+   set: function (fogNode, modelViewMatrix)
    {
-      this .fogMatrix = new Float32Array (9);
-   }
+      this .fogNode = fogNode;
+      this .fogKey  = String (fogNode .getFogType ());
 
-   FogContainer .prototype =
+      this .fogMatrix .set (modelViewMatrix .submatrix .inverse ());
+   },
+   getFogKey: function ()
    {
-      constructor: FogContainer,
-      set: function (fogNode, modelViewMatrix)
-      {
-         this .fogNode = fogNode;
-         this .fogKey  = String (fogNode .getFogType ());
-
-         this .fogMatrix .set (modelViewMatrix .submatrix .inverse ());
-      },
-      getFogKey: function ()
-      {
-         return this .fogKey;
-      },
-      setShaderUniforms: function (gl, shaderObject)
-      {
-         if (shaderObject .hasFog (this))
-            return;
-
-         const fogNode = this .fogNode;
-
-         gl .uniform3fv       (shaderObject .x3d_FogColor,           fogNode .colorArray);
-         gl .uniform1f        (shaderObject .x3d_FogVisibilityRange, fogNode .visibilityRange);
-         gl .uniformMatrix3fv (shaderObject .x3d_FogMatrix, false,   this .fogMatrix);
-      },
-      dispose: function ()
-      {
-         Fogs .push (this);
-      },
-   };
-
-   function X3DFogObject (executionContext)
+      return this .fogKey;
+   },
+   setShaderUniforms: function (gl, shaderObject)
    {
-      this .addType (X3DConstants .X3DFogObject);
+      if (shaderObject .hasFog (this))
+         return;
 
-      this ._visibilityRange .setUnit ("length");
+      const fogNode = this .fogNode;
 
-      this .hidden     = false;
-      this .colorArray = new Float32Array (3);
-   }
-
-   X3DFogObject .prototype =
+      gl .uniform3fv       (shaderObject .x3d_FogColor,           fogNode .colorArray);
+      gl .uniform1f        (shaderObject .x3d_FogVisibilityRange, fogNode .visibilityRange);
+      gl .uniformMatrix3fv (shaderObject .x3d_FogMatrix, false,   this .fogMatrix);
+   },
+   dispose: function ()
    {
-      constructor: X3DFogObject,
-      initialize: function ()
-      {
-         this ._fogType         .addInterest ("set_fogType__",         this);
-         this ._color           .addInterest ("set_color__",           this);
-         this ._visibilityRange .addInterest ("set_visibilityRange__", this);
+      Fogs .push (this);
+   },
+};
 
-         this .set_color__ ();
-         this .set_visibilityRange__ ();
-      },
-      setHidden: function (value)
-      {
-         this .hidden = value;
+function X3DFogObject (executionContext)
+{
+   this .addType (X3DConstants .X3DFogObject);
 
-         this .set_fogType__ ();
+   this ._visibilityRange .setUnit ("length");
 
-         this .getBrowser () .addBrowserEvent ();
-      },
-      getHidden: function ()
-      {
-         return this .hidden;
-      },
-      getFogType: function ()
-      {
-         return this .fogType;
-      },
-      getFogs: function ()
-      {
-         return Fogs;
-      },
-      set_fogType__: (function ()
-      {
-         const fogTypes = new Map ([
-            ["LINEAR",      1],
-            ["EXPONENTIAL", 2],
-         ]);
+   this .hidden     = false;
+   this .colorArray = new Float32Array (3);
+}
 
-         return function ()
-         {
-            if (this .hidden || this .visibilityRange === 0)
-               this .fogType = 0;
-            else
-               this .fogType = fogTypes .get (this ._fogType .getValue ()) || 1;
-         };
-      })(),
-      set_color__: function ()
+X3DFogObject .prototype =
+{
+   constructor: X3DFogObject,
+   initialize: function ()
+   {
+      this ._fogType         .addInterest ("set_fogType__",         this);
+      this ._color           .addInterest ("set_color__",           this);
+      this ._visibilityRange .addInterest ("set_visibilityRange__", this);
+
+      this .set_color__ ();
+      this .set_visibilityRange__ ();
+   },
+   setHidden: function (value)
+   {
+      this .hidden = value;
+
+      this .set_fogType__ ();
+
+      this .getBrowser () .addBrowserEvent ();
+   },
+   getHidden: function ()
+   {
+      return this .hidden;
+   },
+   getFogType: function ()
+   {
+      return this .fogType;
+   },
+   getFogs: function ()
+   {
+      return Fogs;
+   },
+   set_fogType__: (function ()
+   {
+      const fogTypes = new Map ([
+         ["LINEAR",      1],
+         ["EXPONENTIAL", 2],
+      ]);
+
+      return function ()
       {
-         const
-            color      = this ._color .getValue (),
-            colorArray = this .colorArray;
+         if (this .hidden || this .visibilityRange === 0)
+            this .fogType = 0;
+         else
+            this .fogType = fogTypes .get (this ._fogType .getValue ()) || 1;
+      };
+   })(),
+   set_color__: function ()
+   {
+      const
+         color      = this ._color .getValue (),
+         colorArray = this .colorArray;
 
-         colorArray [0] = color .r;
-         colorArray [1] = color .g;
-         colorArray [2] = color .b;
-      },
-      set_visibilityRange__: function ()
-      {
-         this .visibilityRange = Math .max (0, this ._visibilityRange .getValue ());
+      colorArray [0] = color .r;
+      colorArray [1] = color .g;
+      colorArray [2] = color .b;
+   },
+   set_visibilityRange__: function ()
+   {
+      this .visibilityRange = Math .max (0, this ._visibilityRange .getValue ());
 
-         this .set_fogType__ ();
-      },
-      dispose: function () { },
-   };
+      this .set_fogType__ ();
+   },
+   dispose: function () { },
+};
 
-   return X3DFogObject;
-});
+export default X3DFogObject;

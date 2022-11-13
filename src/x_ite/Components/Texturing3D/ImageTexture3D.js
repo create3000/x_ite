@@ -47,133 +47,119 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Texturing3D/X3DTexture3DNode",
-   "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Browser/Texturing3D/NRRDParser",
-   "x_ite/Browser/Texturing3D/DICOMParser",
-   "x_ite/InputOutput/FileLoader",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DTexture3DNode,
-          X3DUrlObject,
-          X3DConstants,
-          NRRDParser,
-          DICOMParser,
-          FileLoader)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DTexture3DNode from "./X3DTexture3DNode.js";
+import X3DUrlObject from "../Networking/X3DUrlObject.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import NRRDParser from "../../Browser/Texturing3D/NRRDParser.js";
+import DICOMParser from "../../Browser/Texturing3D/DICOMParser.js";
+import FileLoader from "../../InputOutput/FileLoader.js";
+
+function ImageTexture3D (executionContext)
 {
-"use strict";
+   X3DTexture3DNode .call (this, executionContext);
+   X3DUrlObject     .call (this, executionContext);
 
-   function ImageTexture3D (executionContext)
+   this .addType (X3DConstants .ImageTexture3D);
+}
+
+ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+   X3DUrlObject .prototype,
+{
+   constructor: ImageTexture3D,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",              new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DTexture3DNode .call (this, executionContext);
-      X3DUrlObject     .call (this, executionContext);
-
-      this .addType (X3DConstants .ImageTexture3D);
-   }
-
-   ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
-      X3DUrlObject .prototype,
+      return "ImageTexture3D";
+   },
+   getComponentName: function ()
    {
-      constructor: ImageTexture3D,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",              new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "ImageTexture3D";
-      },
-      getComponentName: function ()
-      {
-         return "Texturing3D";
-      },
-      getContainerField: function ()
-      {
-         return "texture";
-      },
-      initialize: function ()
-      {
-         X3DTexture3DNode .prototype .initialize .call (this);
-         X3DUrlObject     .prototype .initialize .call (this);
+      return "Texturing3D";
+   },
+   getContainerField: function ()
+   {
+      return "texture";
+   },
+   initialize: function ()
+   {
+      X3DTexture3DNode .prototype .initialize .call (this);
+      X3DUrlObject     .prototype .initialize .call (this);
 
-         this .requestImmediateLoad ();
-      },
-      getInternalType: function (components)
-      {
-         const gl = this .getBrowser () .getContext ();
+      this .requestImmediateLoad ();
+   },
+   getInternalType: function (components)
+   {
+      const gl = this .getBrowser () .getContext ();
 
-         switch (components)
+      switch (components)
+      {
+         case 1:
+            return gl .LUMINANCE;
+         case 2:
+            return gl .LUMINANCE_ALPHA;
+         case 3:
+            return gl .RGB;
+         case 4:
+            return gl .RGBA;
+      }
+   },
+   unLoadNow: function ()
+   {
+      this .clearTexture ();
+   },
+   loadNow: function ()
+   {
+      new FileLoader (this) .loadBinaryDocument (this ._url,
+      function (data)
+      {
+         if (data === null)
          {
-            case 1:
-               return gl .LUMINANCE;
-            case 2:
-               return gl .LUMINANCE_ALPHA;
-            case 3:
-               return gl .RGB;
-            case 4:
-               return gl .RGBA;
+            // No URL could be loaded.
+            this .setLoadState (X3DConstants .FAILED_STATE);
+            this .clearTexture ();
          }
-      },
-      unLoadNow: function ()
-      {
-         this .clearTexture ();
-      },
-      loadNow: function ()
-      {
-         new FileLoader (this) .loadBinaryDocument (this ._url,
-         function (data)
+         else
          {
-            if (data === null)
+            const nrrd = new NRRDParser () .parse (data);
+
+            if (nrrd .nrrd)
             {
-               // No URL could be loaded.
-               this .setLoadState (X3DConstants .FAILED_STATE);
-               this .clearTexture ();
+               const internalType = this .getInternalType (nrrd .components);
+
+               this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
+               this .setLoadState (X3DConstants .COMPLETE_STATE);
+               return;
             }
-            else
+
+            const dicom = new DICOMParser () .parse (data);
+
+            if (dicom .dicom)
             {
-               const nrrd = new NRRDParser () .parse (data);
+               const internalType = this .getInternalType (dicom .components);
 
-               if (nrrd .nrrd)
-               {
-                  const internalType = this .getInternalType (nrrd .components);
-
-                  this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
-                  this .setLoadState (X3DConstants .COMPLETE_STATE);
-                  return;
-               }
-
-               const dicom = new DICOMParser () .parse (data);
-
-               if (dicom .dicom)
-               {
-                  const internalType = this .getInternalType (dicom .components);
-
-                  this .setTexture (dicom .width, dicom .height, dicom .depth, false, internalType, dicom .data);
-                  this .setLoadState (X3DConstants .COMPLETE_STATE);
-                  return;
-               }
-
-               throw new Error ("ImageTexture3D: no appropriate file type handler found.");
+               this .setTexture (dicom .width, dicom .height, dicom .depth, false, internalType, dicom .data);
+               this .setLoadState (X3DConstants .COMPLETE_STATE);
+               return;
             }
+
+            throw new Error ("ImageTexture3D: no appropriate file type handler found.");
          }
-         .bind (this));
-      },
-   });
-
-   return ImageTexture3D;
+      }
+      .bind (this));
+   },
 });
+
+export default ImageTexture3D;

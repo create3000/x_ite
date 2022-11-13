@@ -47,71 +47,64 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DConstants",
-   "x_ite/Parser/HTMLSupport",
-],
-function (X3DConstants,
-          HTMLSupport)
+import X3DConstants from "../Base/X3DConstants.js";
+import HTMLSupport from "../Parser/HTMLSupport.js";
+
+const
+   types         = new Map (),
+   abstractTypes = new Map ();
+
+let nodeType = X3DConstants .X3DBaseNode;
+
+function SupportedNodes () { }
+
+SupportedNodes .prototype =
 {
-"use strict";
-
-   const
-      types         = new Map (),
-      abstractTypes = new Map ();
-
-   let nodeType = X3DConstants .X3DBaseNode;
-
-   function SupportedNodes () { }
-
-   SupportedNodes .prototype =
+   addType: function (typeName, Type)
    {
-      addType: function (typeName, Type)
+      X3DConstants [typeName] = ++ nodeType; // Start with 1, as X3DBaseNode is 0.
+
+      types .set (typeName, Type);
+
+      HTMLSupport .addNodeTypeName (typeName);
+
+      // HTMLSupport
+
+      for (const fieldDefinition of Type .prototype [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")])
       {
-         X3DConstants [typeName] = ++ nodeType; // Start with 1, as X3DBaseNode is 0.
+         const
+            name       = fieldDefinition .name,
+            accessType = fieldDefinition .accessType;
 
-         types .set (typeName, Type);
+         if (accessType & X3DConstants .initializeOnly)
+            HTMLSupport .addFieldName (name)
+      }
+   },
+   getType: function (typeName)
+   {
+      return types .get (typeName);
+   },
+   getTypes ()
+   {
+      return Array .from (types .values ());
+   },
+   addAbstractType: function (typeName, Type)
+   {
+      X3DConstants [typeName] = ++ nodeType;
 
-         HTMLSupport .addNodeTypeName (typeName);
+      abstractTypes .set (typeName, Type);
+   },
+   getAbstractType: function (typeName)
+   {
+      return abstractTypes .get (typeName);
+   },
+   getAbstractTypes ()
+   {
+      return Array .from (abstractTypes .values ());
+   },
+};
 
-         // HTMLSupport
+for (const key of Reflect .ownKeys (SupportedNodes .prototype))
+   Object .defineProperty (SupportedNodes .prototype, key, { enumerable: false });
 
-         for (const fieldDefinition of Type .prototype [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")])
-         {
-            const
-               name       = fieldDefinition .name,
-               accessType = fieldDefinition .accessType;
-
-            if (accessType & X3DConstants .initializeOnly)
-               HTMLSupport .addFieldName (name)
-         }
-      },
-      getType: function (typeName)
-      {
-         return types .get (typeName);
-      },
-      getTypes ()
-      {
-         return Array .from (types .values ());
-      },
-      addAbstractType: function (typeName, Type)
-      {
-         X3DConstants [typeName] = ++ nodeType;
-
-         abstractTypes .set (typeName, Type);
-      },
-      getAbstractType: function (typeName)
-      {
-         return abstractTypes .get (typeName);
-      },
-      getAbstractTypes ()
-      {
-         return Array .from (abstractTypes .values ());
-      },
-   };
-
-   for (const key of Reflect .ownKeys (SupportedNodes .prototype))
-      Object .defineProperty (SupportedNodes .prototype, key, { enumerable: false });
-
-   return new SupportedNodes ();
-});
+export default new SupportedNodes ();

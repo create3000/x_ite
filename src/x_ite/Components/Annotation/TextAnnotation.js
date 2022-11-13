@@ -47,56 +47,46 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Annotation/X3DAnnotationNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DAnnotationNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DAnnotationNode from "./X3DAnnotationNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function TextAnnotation (executionContext)
 {
-"use strict";
+   X3DAnnotationNode .call (this, executionContext);
 
-   function TextAnnotation (executionContext)
+   this .addType (X3DConstants .TextAnnotation);
+}
+
+TextAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .prototype),
+{
+   constructor: TextAnnotation,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",           new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "annotationGroupID", new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "displayPolicy",     new Fields .SFString ("NEVER")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "contentType",       new Fields .SFString ("text/plain")),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "text",              new Fields .SFString ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DAnnotationNode .call (this, executionContext);
-
-      this .addType (X3DConstants .TextAnnotation);
-   }
-
-   TextAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .prototype),
+      return "TextAnnotation";
+   },
+   getComponentName: function ()
    {
-      constructor: TextAnnotation,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",           new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "annotationGroupID", new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "displayPolicy",     new Fields .SFString ("NEVER")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "contentType",       new Fields .SFString ("text/plain")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "text",              new Fields .SFString ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "TextAnnotation";
-      },
-      getComponentName: function ()
-      {
-         return "Annotation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DAnnotationNode .prototype .initialize .call (this);
-      },
-   });
-
-   return TextAnnotation;
+      return "Annotation";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DAnnotationNode .prototype .initialize .call (this);
+   },
 });
+
+export default TextAnnotation;

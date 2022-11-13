@@ -47,242 +47,228 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
-   "x_ite/Components/Geometry3D/IndexedFaceSet",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Geometry/Triangle3",
-   "standard/Math/Utility/BVH",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DParticleEmitterNode,
-          IndexedFaceSet,
-          X3DConstants,
-          Vector3,
-          Triangle3,
-          BVH)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DParticleEmitterNode from "./X3DParticleEmitterNode.js";
+import IndexedFaceSet from "../Geometry3D/IndexedFaceSet.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Triangle3 from "../../../standard/Math/Geometry/Triangle3.js";
+import BVH from "../../../standard/Math/Utility/BVH.js";
+
+function VolumeEmitter (executionContext)
 {
-"use strict";
+   X3DParticleEmitterNode .call (this, executionContext);
 
-   function VolumeEmitter (executionContext)
+   this .addType (X3DConstants .VolumeEmitter);
+
+   this .volumeNode  = new IndexedFaceSet (executionContext);
+   this .volumeArray = new Float32Array ();
+
+   this .addSampler ("volume");
+
+   this .addUniform ("direction",      "uniform vec3 direction;");
+   this .addUniform ("verticesIndex",  "uniform int verticesIndex;");
+   this .addUniform ("normalsIndex",   "uniform int normalsIndex;");
+   this .addUniform ("hierarchyIndex", "uniform int hierarchyIndex;");
+   this .addUniform ("hierarchyRoot",  "uniform int hierarchyRoot;");
+   this .addUniform ("volume",         "uniform sampler2D volume;");
+
+   this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
    {
-      X3DParticleEmitterNode .call (this, executionContext);
-
-      this .addType (X3DConstants .VolumeEmitter);
-
-      this .volumeNode  = new IndexedFaceSet (executionContext);
-      this .volumeArray = new Float32Array ();
-
-      this .addSampler ("volume");
-
-      this .addUniform ("direction",      "uniform vec3 direction;");
-      this .addUniform ("verticesIndex",  "uniform int verticesIndex;");
-      this .addUniform ("normalsIndex",   "uniform int normalsIndex;");
-      this .addUniform ("hierarchyIndex", "uniform int hierarchyIndex;");
-      this .addUniform ("hierarchyRoot",  "uniform int hierarchyRoot;");
-      this .addUniform ("volume",         "uniform sampler2D volume;");
-
-      this .addFunction (/* glsl */ `vec3 getRandomVelocity ()
+      if (hierarchyRoot < 0)
       {
-         if (hierarchyRoot < 0)
-         {
-            return vec3 (0.0);
-         }
-         else
-         {
-            if (direction == vec3 (0.0))
-               return getRandomSphericalVelocity ();
-
-            else
-               return direction * getRandomSpeed ();
-         }
-      }`);
-
-      this .addFunction (/* glsl */ `vec4 getRandomPosition ()
+         return vec3 (0.0);
+      }
+      else
       {
-         if (hierarchyRoot < 0)
-         {
-            return vec4 (NaN);
-         }
+         if (direction == vec3 (0.0))
+            return getRandomSphericalVelocity ();
+
          else
-         {
-            vec4 point;
-            vec3 normal;
+            return direction * getRandomSpeed ();
+      }
+   }`);
 
-            getRandomPointOnSurface (volume, verticesIndex, normalsIndex, point, normal);
-
-            Line3 line = Line3 (point .xyz, getRandomSurfaceNormal (normal));
-
-            vec4 points [ARRAY_SIZE];
-
-            int numIntersections = getIntersections (volume, verticesIndex, hierarchyIndex, hierarchyRoot, line, points);
-
-            numIntersections -= numIntersections % 2; // We need an even count of intersections.
-
-            switch (numIntersections)
-            {
-               case 0:
-                  return vec4 (0.0);
-               case 2:
-                  break;
-               default:
-                  sort (points, numIntersections, plane3 (line .point, line .direction));
-                  break;
-            }
-
-            int index = int (fract (random ()) * float (numIntersections / 2)) * 2; // Select random intersection.
-
-            return mix (points [index], points [index + 1], random ());
-         }
-      }`);
-   }
-
-   VolumeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+   this .addFunction (/* glsl */ `vec4 getRandomPosition ()
    {
-      constructor: VolumeEmitter,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "internal",    new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",   new Fields .SFVec3f (0, 1, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",  new Fields .MFInt32 (-1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "coord",       new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
+      if (hierarchyRoot < 0)
       {
-         return "VolumeEmitter";
-      },
-      getComponentName: function ()
+         return vec4 (NaN);
+      }
+      else
       {
-         return "ParticleSystems";
-      },
-      getContainerField: function ()
-      {
-         return "emitter";
-      },
-      initialize: function ()
-      {
-         X3DParticleEmitterNode .prototype .initialize .call (this);
+         vec4 point;
+         vec3 normal;
 
-         const browser = this .getBrowser ();
+         getRandomPointOnSurface (volume, verticesIndex, normalsIndex, point, normal);
 
-         if (browser .getContext () .getVersion () < 2)
-            return;
+         Line3 line = Line3 (point .xyz, getRandomSurfaceNormal (normal));
 
-         // Create GL stuff.
+         vec4 points [ARRAY_SIZE];
 
-         this .volumeTexture = this .createTexture ();
+         int numIntersections = getIntersections (volume, verticesIndex, hierarchyIndex, hierarchyRoot, line, points);
 
-         // Initialize fields.
+         numIntersections -= numIntersections % 2; // We need an even count of intersections.
 
-         this ._direction .addInterest ("set_direction__", this);
-
-         this ._coordIndex .addFieldInterest (this .volumeNode ._coordIndex);
-         this ._coord      .addFieldInterest (this .volumeNode ._coord);
-
-         this .volumeNode ._creaseAngle = Math .PI;
-         this .volumeNode ._convex      = false;
-         this .volumeNode ._coordIndex  = this ._coordIndex;
-         this .volumeNode ._coord       = this ._coord;
-
-         this .volumeNode ._rebuild .addInterest ("set_geometry__", this);
-         this .volumeNode .setPrivate (true);
-         this .volumeNode .setup ();
-
-         this .set_direction__ ();
-         this .set_geometry__ ();
-      },
-      set_direction__: (function ()
-      {
-         const direction = new Vector3 (0, 0, 0);
-
-         return function ()
+         switch (numIntersections)
          {
-            direction .assign (this ._direction .getValue ()) .normalize ();
+            case 0:
+               return vec4 (0.0);
+            case 2:
+               break;
+            default:
+               sort (points, numIntersections, plane3 (line .point, line .direction));
+               break;
+         }
 
-            this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
-         };
-      })(),
-      set_geometry__: (function ()
+         int index = int (fract (random ()) * float (numIntersections / 2)) * 2; // Select random intersection.
+
+         return mix (points [index], points [index + 1], random ());
+      }
+   }`);
+}
+
+VolumeEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+{
+   constructor: VolumeEmitter,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "on",          new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "internal",    new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "direction",   new Fields .SFVec3f (0, 1, 0)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "speed",       new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "variation",   new Fields .SFFloat (0.25)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "mass",        new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceArea", new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",  new Fields .MFInt32 (-1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "coord",       new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "VolumeEmitter";
+   },
+   getComponentName: function ()
+   {
+      return "ParticleSystems";
+   },
+   getContainerField: function ()
+   {
+      return "emitter";
+   },
+   initialize: function ()
+   {
+      X3DParticleEmitterNode .prototype .initialize .call (this);
+
+      const browser = this .getBrowser ();
+
+      if (browser .getContext () .getVersion () < 2)
+         return;
+
+      // Create GL stuff.
+
+      this .volumeTexture = this .createTexture ();
+
+      // Initialize fields.
+
+      this ._direction .addInterest ("set_direction__", this);
+
+      this ._coordIndex .addFieldInterest (this .volumeNode ._coordIndex);
+      this ._coord      .addFieldInterest (this .volumeNode ._coord);
+
+      this .volumeNode ._creaseAngle = Math .PI;
+      this .volumeNode ._convex      = false;
+      this .volumeNode ._coordIndex  = this ._coordIndex;
+      this .volumeNode ._coord       = this ._coord;
+
+      this .volumeNode ._rebuild .addInterest ("set_geometry__", this);
+      this .volumeNode .setPrivate (true);
+      this .volumeNode .setup ();
+
+      this .set_direction__ ();
+      this .set_geometry__ ();
+   },
+   set_direction__: (function ()
+   {
+      const direction = new Vector3 (0, 0, 0);
+
+      return function ()
+      {
+         direction .assign (this ._direction .getValue ()) .normalize ();
+
+         this .setUniform ("uniform3f", "direction", direction .x, direction .y, direction .z);
+      };
+   })(),
+   set_geometry__: (function ()
+   {
+      const
+         vertex1 = new Vector3 (0, 0, 0),
+         vertex2 = new Vector3 (0, 0, 0),
+         vertex3 = new Vector3 (0, 0, 0);
+
+      return function ()
       {
          const
-            vertex1 = new Vector3 (0, 0, 0),
-            vertex2 = new Vector3 (0, 0, 0),
-            vertex3 = new Vector3 (0, 0, 0);
+            gl              = this .getBrowser () .getContext (),
+            vertices        = this .volumeNode .getVertices () .getValue (),
+            normals         = this .volumeNode .getNormals () .getValue (),
+            hierarchy       = new BVH (vertices, normals) .toArray ([ ]),
+            numVertices     = vertices .length / 4,
+            numNormals      = normals .length / 3,
+            numAreaSoFar    = numVertices / 3 + 1,
+            hierarchyLength = hierarchy .length / 4,
+            volumeArraySize = Math .ceil (Math .sqrt (numAreaSoFar + numVertices + numVertices + hierarchyLength));
 
-         return function ()
+         const
+            verticesIndex  = numAreaSoFar,
+            normalsIndex   = verticesIndex + numVertices,
+            hierarchyIndex = normalsIndex + numNormals;
+
+         let volumeArray = this .volumeArray;
+
+         if (volumeArray .length < volumeArraySize * volumeArraySize * 4)
+            volumeArray = this .volumeArray = new Float32Array (volumeArraySize * volumeArraySize * 4);
+
+         let areaSoFar = 0;
+
+         for (let i = 0, length = vertices .length; i < length; i += 12)
          {
-            const
-               gl              = this .getBrowser () .getContext (),
-               vertices        = this .volumeNode .getVertices () .getValue (),
-               normals         = this .volumeNode .getNormals () .getValue (),
-               hierarchy       = new BVH (vertices, normals) .toArray ([ ]),
-               numVertices     = vertices .length / 4,
-               numNormals      = normals .length / 3,
-               numAreaSoFar    = numVertices / 3 + 1,
-               hierarchyLength = hierarchy .length / 4,
-               volumeArraySize = Math .ceil (Math .sqrt (numAreaSoFar + numVertices + numVertices + hierarchyLength));
+            vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
+            vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+            vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
 
-            const
-               verticesIndex  = numAreaSoFar,
-               normalsIndex   = verticesIndex + numVertices,
-               hierarchyIndex = normalsIndex + numNormals;
+            volumeArray [i / 3 + 4] = areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
+         }
 
-            let volumeArray = this .volumeArray;
+         volumeArray .set (vertices, verticesIndex * 4);
 
-            if (volumeArray .length < volumeArraySize * volumeArraySize * 4)
-               volumeArray = this .volumeArray = new Float32Array (volumeArraySize * volumeArraySize * 4);
+         for (let s = normalsIndex * 4, n = 0, l = normals .length; n < l; s += 4, n += 3)
+         {
+            volumeArray [s + 0] = normals [n + 0];
+            volumeArray [s + 1] = normals [n + 1];
+            volumeArray [s + 2] = normals [n + 2];
+         }
 
-            let areaSoFar = 0;
+         volumeArray .set (hierarchy, hierarchyIndex * 4);
 
-            for (let i = 0, length = vertices .length; i < length; i += 12)
-            {
-               vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
-               vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
-               vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
+         this .setUniform ("uniform1i", "verticesIndex",  verticesIndex);
+         this .setUniform ("uniform1i", "normalsIndex",   normalsIndex);
+         this .setUniform ("uniform1i", "hierarchyIndex", hierarchyIndex);
+         this .setUniform ("uniform1i", "hierarchyRoot",  hierarchyIndex + hierarchyLength - 1);
 
-               volumeArray [i / 3 + 4] = areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
-            }
-
-            volumeArray .set (vertices, verticesIndex * 4);
-
-            for (let s = normalsIndex * 4, n = 0, l = normals .length; n < l; s += 4, n += 3)
-            {
-               volumeArray [s + 0] = normals [n + 0];
-               volumeArray [s + 1] = normals [n + 1];
-               volumeArray [s + 2] = normals [n + 2];
-            }
-
-            volumeArray .set (hierarchy, hierarchyIndex * 4);
-
-            this .setUniform ("uniform1i", "verticesIndex",  verticesIndex);
-            this .setUniform ("uniform1i", "normalsIndex",   normalsIndex);
-            this .setUniform ("uniform1i", "hierarchyIndex", hierarchyIndex);
-            this .setUniform ("uniform1i", "hierarchyRoot",  hierarchyIndex + hierarchyLength - 1);
-
-            if (volumeArraySize)
-            {
-               gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
-               gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, volumeArraySize, volumeArraySize, 0, gl .RGBA, gl .FLOAT, volumeArray);
-            }
-         };
-      })(),
-      activateTextures: function (gl, program)
-      {
-         gl .activeTexture (gl .TEXTURE0 + program .volumeTextureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
-      },
-   });
-
-   return VolumeEmitter;
+         if (volumeArraySize)
+         {
+            gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
+            gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, volumeArraySize, volumeArraySize, 0, gl .RGBA, gl .FLOAT, volumeArray);
+         }
+      };
+   })(),
+   activateTextures: function (gl, program)
+   {
+      gl .activeTexture (gl .TEXTURE0 + program .volumeTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .volumeTexture);
+   },
 });
+
+export default VolumeEmitter;

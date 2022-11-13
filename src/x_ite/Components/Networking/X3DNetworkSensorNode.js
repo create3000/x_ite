@@ -47,26 +47,19 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3DSensorNode",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DSensorNode,
-          X3DConstants)
+import X3DSensorNode from "../Core/X3DSensorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DNetworkSensorNode (executionContext)
 {
-"use strict";
+   X3DSensorNode .call (this, executionContext);
 
-   function X3DNetworkSensorNode (executionContext)
-   {
-      X3DSensorNode .call (this, executionContext);
+   this .addType (X3DConstants .X3DNetworkSensorNode);
+}
 
-      this .addType (X3DConstants .X3DNetworkSensorNode);
-   }
-
-   X3DNetworkSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
-   {
-      constructor: X3DNetworkSensorNode,
-   });
-
-   return X3DNetworkSensorNode;
+X3DNetworkSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+{
+   constructor: X3DNetworkSensorNode,
 });
+
+export default X3DNetworkSensorNode;

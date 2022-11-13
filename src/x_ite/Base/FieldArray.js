@@ -47,29 +47,23 @@
  ******************************************************************************/
 
 
- define ([
-   "x_ite/Base/X3DInfoArray",
-],
-function (X3DInfoArray)
+import X3DInfoArray from "./X3DInfoArray.js";
+
+function FieldArray ()
 {
-"use strict";
+   return X3DInfoArray .call (this);
+}
 
-   function FieldArray ()
+FieldArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+{
+   constructor: FieldArray,
+   getTypeName: function ()
    {
-      return X3DInfoArray .call (this);
-   }
-
-   FieldArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-   {
-      constructor: FieldArray,
-      getTypeName: function ()
-      {
-         return "FieldArray";
-      },
-   });
-
-   for (const key of Reflect .ownKeys (FieldArray .prototype))
-      Object .defineProperty (FieldArray .prototype, key, { enumerable: false });
-
-   return FieldArray;
+      return "FieldArray";
+   },
 });
+
+for (const key of Reflect .ownKeys (FieldArray .prototype))
+   Object .defineProperty (FieldArray .prototype, key, { enumerable: false });
+
+export default FieldArray;

@@ -47,116 +47,104 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Texturing/X3DTextureTransformNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Base/X3DCast",
-   "standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DTextureTransformNode,
-          X3DConstants,
-          X3DCast,
-          Matrix4)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DTextureTransformNode from "./X3DTextureTransformNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast from "../../Base/X3DCast.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+function MultiTextureTransform (executionContext)
 {
-"use strict";
+   X3DTextureTransformNode .call (this, executionContext);
 
-   function MultiTextureTransform (executionContext)
+   this .addType (X3DConstants .MultiTextureTransform);
+
+   this .textureTransformNodes = [ ];
+}
+
+MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
+{
+   constructor: MultiTextureTransform,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DTextureTransformNode .call (this, executionContext);
-
-      this .addType (X3DConstants .MultiTextureTransform);
-
-      this .textureTransformNodes = [ ];
-   }
-
-   MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
+      return "MultiTextureTransform";
+   },
+   getComponentName: function ()
    {
-      constructor: MultiTextureTransform,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "MultiTextureTransform";
-      },
-      getComponentName: function ()
-      {
-         return "Texturing";
-      },
-      getContainerField: function ()
-      {
-         return "textureTransform";
-      },
-      initialize: function ()
-      {
-         X3DTextureTransformNode .prototype .initialize .call (this);
+      return "Texturing";
+   },
+   getContainerField: function ()
+   {
+      return "textureTransform";
+   },
+   initialize: function ()
+   {
+      X3DTextureTransformNode .prototype .initialize .call (this);
 
-         this ._textureTransform .addInterest ("set_textureTransform__", this);
+      this ._textureTransform .addInterest ("set_textureTransform__", this);
 
-         this .set_textureTransform__ ();
-      },
-      set_textureTransform__: function ()
+      this .set_textureTransform__ ();
+   },
+   set_textureTransform__: function ()
+   {
+      const textureTransformNodes = this .textureTransformNodes;
+
+      textureTransformNodes .length = 0;
+
+      for (const node of this ._textureTransform)
       {
-         const textureTransformNodes = this .textureTransformNodes;
+         const textureTransformNode = X3DCast (X3DConstants .X3DSingleTextureTransformNode, node);
 
-         textureTransformNodes .length = 0;
+         if (textureTransformNode)
+            textureTransformNodes .push (textureTransformNode);
+      }
+   },
+   getCount: function ()
+   {
+      return Math .min (this .getBrowser () .getMaxTextures (), this .textureTransformNodes .length);
+   },
+   getTextureTransformMapping: function (textureTransformMapping)
+   {
+      const
+         textureTransformNodes = this .textureTransformNodes,
+         length                = Math .min (this .getBrowser () .getMaxTextures (), textureTransformNodes .length);
 
-         for (const node of this ._textureTransform)
-         {
-            const textureTransformNode = X3DCast (X3DConstants .X3DSingleTextureTransformNode, node);
+      for (let i = 0; i < length; ++ i)
+         textureTransformNodes [i] .getTextureTransformMapping (textureTransformMapping, i);
+   },
+   setShaderUniforms: (function ()
+   {
+      const matrixArray = new Float32Array (Matrix4 .Identity);
 
-            if (textureTransformNode)
-               textureTransformNodes .push (textureTransformNode);
-         }
-      },
-      getCount: function ()
-      {
-         return Math .min (this .getBrowser () .getMaxTextures (), this .textureTransformNodes .length);
-      },
-      getTextureTransformMapping: function (textureTransformMapping)
+      return function (gl, shaderObject)
       {
          const
             textureTransformNodes = this .textureTransformNodes,
-            length                = Math .min (this .getBrowser () .getMaxTextures (), textureTransformNodes .length);
+            length                = Math .min (shaderObject .x3d_MaxTextures, textureTransformNodes .length);
 
          for (let i = 0; i < length; ++ i)
-            textureTransformNodes [i] .getTextureTransformMapping (textureTransformMapping, i);
-      },
-      setShaderUniforms: (function ()
-      {
-         const matrixArray = new Float32Array (Matrix4 .Identity);
+            textureTransformNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
 
-         return function (gl, shaderObject)
+         if (length)
          {
-            const
-               textureTransformNodes = this .textureTransformNodes,
-               length                = Math .min (shaderObject .x3d_MaxTextures, textureTransformNodes .length);
+            const last = textureTransformNodes .at (-1);
 
-            for (let i = 0; i < length; ++ i)
-               textureTransformNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
-
-            if (length)
-            {
-               const last = textureTransformNodes .at (-1);
-
-               for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
-                  last .setShaderUniformsToChannel (gl, shaderObject, i);
-            }
-            else
-            {
-               for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
-                  gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [i], false, matrixArray);
-            }
-         };
-      })(),
-   });
-
-   return MultiTextureTransform;
+            for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
+               last .setShaderUniformsToChannel (gl, shaderObject, i);
+         }
+         else
+         {
+            for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
+               gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [i], false, matrixArray);
+         }
+      };
+   })(),
 });
+
+export default MultiTextureTransform;

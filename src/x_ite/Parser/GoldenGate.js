@@ -47,68 +47,59 @@
  ******************************************************************************/
 
 
- define ([
-   "x_ite/Parser/X3DParser",
-   "x_ite/Parser/JSONParser",
-   "x_ite/Parser/VRMLParser",
-   "x_ite/Parser/XMLParser",
-],
-function (X3DParser,
-          JSONParser,
-          VRMLParser,
-          XMLParser)
+import X3DParser from "./X3DParser.js";
+import JSONParser from "./JSONParser.js";
+import VRMLParser from "./VRMLParser.js";
+import XMLParser from "./XMLParser.js";
+
+function GoldenGate (scene)
 {
-"use strict";
+   X3DParser .call (this, scene);
+}
 
-   function GoldenGate (scene)
+GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
+{
+   constructor: GoldenGate,
+   parseIntoScene: function (x3dSyntax, success, error)
    {
-      X3DParser .call (this, scene);
-   }
-
-   GoldenGate .prototype = Object .assign (Object .create (X3DParser .prototype),
-   {
-      constructor: GoldenGate,
-      parseIntoScene: function (x3dSyntax, success, error)
+      for (const Parser of GoldenGate .Parser)
       {
-         for (const Parser of GoldenGate .Parser)
+         try
          {
-            try
+            const parser = new Parser (this .getScene ());
+
+            parser .setInput (x3dSyntax);
+
+            if (parser .isValid ())
             {
-               const parser = new Parser (this .getScene ());
-
-               parser .setInput (x3dSyntax);
-
-               if (parser .isValid ())
-               {
-                  parser .pushExecutionContext (this .getExecutionContext ());
-                  parser .parseIntoScene (success, error);
-                  parser .popExecutionContext ();
-                  return
-               }
-            }
-            catch (exception)
-            {
-               if (error)
-                  error (exception);
-               else
-                  throw exception;
-
-               return;
+               parser .pushExecutionContext (this .getExecutionContext ());
+               parser .parseIntoScene (success, error);
+               parser .popExecutionContext ();
+               return
             }
          }
+         catch (exception)
+         {
+            if (error)
+               error (exception);
+            else
+               throw exception;
 
-         if (this .getScene () .worldURL .startsWith ("data:"))
-            throw new Error ("Couldn't parse X3D. No suitable file handler found for 'data:' URL.");
-         else
-            throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + this .getScene () .worldURL + "'.");
-      },
-   });
+            return;
+         }
+      }
 
-   GoldenGate .Parser = [
-      XMLParser,
-      JSONParser,
-      VRMLParser,
-   ];
-
-   return GoldenGate;
+      if (this .getScene () .worldURL .startsWith ("data:"))
+         throw new Error ("Couldn't parse X3D. No suitable file handler found for 'data:' URL.");
+      else
+         throw new Error ("Couldn't parse X3D. No suitable file handler found for '" + this .getScene () .worldURL + "'.");
+   },
 });
+
+GoldenGate .Parser = [
+   XMLParser,
+   JSONParser,
+   VRMLParser,
+];
+
+export default GoldenGate;

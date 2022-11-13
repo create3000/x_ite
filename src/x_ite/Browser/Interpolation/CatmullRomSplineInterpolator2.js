@@ -47,14 +47,7 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate",
-   "standard/Math/Numbers/Vector2",
-],
-function (CatmullRomSplineInterpolatorTemplate,
-          Vector2)
-{
-"use strict";
+import CatmullRomSplineInterpolatorTemplate from "./CatmullRomSplineInterpolatorTemplate.js";
+import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
 
-   return CatmullRomSplineInterpolatorTemplate (Vector2);
-});
+export default CatmullRomSplineInterpolatorTemplate (Vector2);

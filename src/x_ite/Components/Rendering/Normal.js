@@ -47,115 +47,104 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DNormalNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DNormalNode,
-          X3DConstants,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNormalNode from "./X3DNormalNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+function Normal (executionContext)
 {
-"use strict";
+   X3DNormalNode .call (this, executionContext);
 
-   function Normal (executionContext)
+   this .addType (X3DConstants .Normal);
+}
+
+Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
+{
+   constructor: Normal,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "vector",   new Fields .MFVec3f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DNormalNode .call (this, executionContext);
-
-      this .addType (X3DConstants .Normal);
-   }
-
-   Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
+      return "Normal";
+   },
+   getComponentName: function ()
    {
-      constructor: Normal,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "vector",   new Fields .MFVec3f ()),
-      ]),
-      getTypeName: function ()
+      return "Rendering";
+   },
+   getContainerField: function ()
+   {
+      return "normal";
+   },
+   initialize: function ()
+   {
+      X3DNormalNode .prototype .initialize .call (this);
+
+      this ._vector .addInterest ("set_vector__", this);
+
+      this .set_vector__ ();
+   },
+   set_vector__: function ()
+   {
+      this .vector = this ._vector .getValue ();
+      this .length = this ._vector .length;
+   },
+   set1Vector: function (index, vector)
+   {
+      this ._vector [index] = vector;
+   },
+   get1Vector: function (index, result)
+   {
+      if (index >= 0 && index < this .length)
       {
-         return "Normal";
-      },
-      getComponentName: function ()
+         const vector = this .vector;
+
+         index *= 3;
+
+         return result .set (vector [index], vector [index + 1], vector [index + 2]);
+      }
+      else if (index >= 0 && this .length)
       {
-         return "Rendering";
-      },
-      getContainerField: function ()
+         const vector = this .vector;
+
+         index %= this .length;
+         index *= 3;
+
+         return result .set (vector [index], vector [index + 1], vector [index + 2]);
+      }
+      else
       {
-         return "normal";
-      },
-      initialize: function ()
+         return result .set (0, 0, 0);
+      }
+   },
+   addVector: function (index, array)
+   {
+      if (index >= 0 && index < this .length)
       {
-         X3DNormalNode .prototype .initialize .call (this);
+         const vector = this .vector;
 
-         this ._vector .addInterest ("set_vector__", this);
+         index *= 3;
 
-         this .set_vector__ ();
-      },
-      set_vector__: function ()
+         array .push (vector [index], vector [index + 1], vector [index + 2]);
+      }
+      else if (index >= 0 && this .length)
       {
-         this .vector = this ._vector .getValue ();
-         this .length = this ._vector .length;
-      },
-      set1Vector: function (index, vector)
+         const vector = this .vector;
+
+         index %= this .length;
+         index *= 3;
+
+         array .push (vector [index], vector [index + 1], vector [index + 2]);
+      }
+      else
       {
-         this ._vector [index] = vector;
-      },
-      get1Vector: function (index, result)
-      {
-         if (index >= 0 && index < this .length)
-         {
-            const vector = this .vector;
-
-            index *= 3;
-
-            return result .set (vector [index], vector [index + 1], vector [index + 2]);
-         }
-         else if (index >= 0 && this .length)
-         {
-            const vector = this .vector;
-
-            index %= this .length;
-            index *= 3;
-
-            return result .set (vector [index], vector [index + 1], vector [index + 2]);
-         }
-         else
-         {
-            return result .set (0, 0, 0);
-         }
-      },
-      addVector: function (index, array)
-      {
-         if (index >= 0 && index < this .length)
-         {
-            const vector = this .vector;
-
-            index *= 3;
-
-            array .push (vector [index], vector [index + 1], vector [index + 2]);
-         }
-         else if (index >= 0 && this .length)
-         {
-            const vector = this .vector;
-
-            index %= this .length;
-            index *= 3;
-
-            array .push (vector [index], vector [index + 1], vector [index + 2]);
-         }
-         else
-         {
-            return array .push (0, 0, 0);
-         }
-      },
-   });
-
-   return Normal;
+         return array .push (0, 0, 0);
+      }
+   },
 });
+
+export default Normal;

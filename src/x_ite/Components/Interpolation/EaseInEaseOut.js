@@ -47,100 +47,90 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DInterpolatorNode from "./X3DInterpolatorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function EaseInEaseOut (executionContext)
 {
-"use strict";
+   X3DInterpolatorNode .call (this, executionContext);
 
-   function EaseInEaseOut (executionContext)
+   this .addType (X3DConstants .EaseInEaseOut);
+}
+
+EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+{
+   constructor: EaseInEaseOut,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",             new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "key",                      new Fields .MFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "easeInEaseOut",            new Fields .MFVec2f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "modifiedFraction_changed", new Fields .SFFloat ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DInterpolatorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .EaseInEaseOut);
-   }
-
-   EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+      return "EaseInEaseOut";
+   },
+   getComponentName: function ()
    {
-      constructor: EaseInEaseOut,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",             new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "key",                      new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "easeInEaseOut",            new Fields .MFVec2f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "modifiedFraction_changed", new Fields .SFFloat ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "EaseInEaseOut";
-      },
-      getComponentName: function ()
-      {
-         return "Interpolation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DInterpolatorNode .prototype .initialize .call (this);
+      return "Interpolation";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this ._easeInEaseOut .addInterest ("set_keyValue__", this);
-      },
-      set_keyValue__: function ()
-      {
-         if (this ._easeInEaseOut .length < this ._key .length)
-            this ._easeInEaseOut .resize (this ._key .length, this ._easeInEaseOut .length ? this ._easeInEaseOut [this ._easeInEaseOut .length - 1] : new Fields .SFVec2f ());
-      },
-      interpolate: function (index0, index1, weight)
-      {
-         let
-            easeOut = this ._easeInEaseOut [index0] .y,
-            easeIn  = this ._easeInEaseOut [index1] .x;
-         
-         const sum = easeOut + easeIn;
+      this ._easeInEaseOut .addInterest ("set_keyValue__", this);
+   },
+   set_keyValue__: function ()
+   {
+      if (this ._easeInEaseOut .length < this ._key .length)
+         this ._easeInEaseOut .resize (this ._key .length, this ._easeInEaseOut .length ? this ._easeInEaseOut [this ._easeInEaseOut .length - 1] : new Fields .SFVec2f ());
+   },
+   interpolate: function (index0, index1, weight)
+   {
+      let
+         easeOut = this ._easeInEaseOut [index0] .y,
+         easeIn  = this ._easeInEaseOut [index1] .x;
+      
+      const sum = easeOut + easeIn;
 
-         if (sum < 0)
+      if (sum < 0)
+      {
+         this ._modifiedFraction_changed = weight;
+      }
+      else
+      {
+         if (sum > 1)
          {
-            this ._modifiedFraction_changed = weight;
+            easeIn  /= sum;
+            easeOut /= sum;
+         }
+
+         const t = 1 / (2 - easeOut - easeIn);
+
+         if (weight < easeOut)
+         {
+            this ._modifiedFraction_changed = (t / easeOut) * weight * weight;
+         }
+         else if (weight <= 1 - easeIn) // Spec says (weight < 1 - easeIn), but then we get a NaN below if easeIn == 0.
+         {
+            this ._modifiedFraction_changed = t * (2 * weight - easeOut);
          }
          else
          {
-            if (sum > 1)
-            {
-               easeIn  /= sum;
-               easeOut /= sum;
-            }
+            const w = 1 - weight;
 
-            const t = 1 / (2 - easeOut - easeIn);
-
-            if (weight < easeOut)
-            {
-               this ._modifiedFraction_changed = (t / easeOut) * weight * weight;
-            }
-            else if (weight <= 1 - easeIn) // Spec says (weight < 1 - easeIn), but then we get a NaN below if easeIn == 0.
-            {
-               this ._modifiedFraction_changed = t * (2 * weight - easeOut);
-            }
-            else
-            {
-               const w = 1 - weight;
-
-               this ._modifiedFraction_changed = 1 - ((t * w * w) / easeIn);
-            }
+            this ._modifiedFraction_changed = 1 - ((t * w * w) / easeIn);
          }
-      },
-   });
-
-   return EaseInEaseOut;
+      }
+   },
 });
+
+export default EaseInEaseOut;

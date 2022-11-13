@@ -47,252 +47,240 @@
  ******************************************************************************/
 
 
- define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Shape/X3DOneSidedMaterialNode",
-   "x_ite/Base/X3DCast",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Algorithm",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DOneSidedMaterialNode,
-          X3DCast,
-          X3DConstants,
-          Algorithm)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DOneSidedMaterialNode from "./X3DOneSidedMaterialNode.js";
+import X3DCast from "../../Base/X3DCast.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+function PhysicalMaterial (executionContext)
 {
-"use strict";
+   X3DOneSidedMaterialNode .call (this, executionContext);
 
-   function PhysicalMaterial (executionContext)
+   this .addType (X3DConstants .PhysicalMaterial);
+
+   this .baseColor = new Float32Array (3);
+}
+
+PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
+{
+   constructor: PhysicalMaterial,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "baseColor",                       new Fields .SFColor (1, 1, 1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "baseTexture",                     new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "baseTextureMapping",              new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",                   new Fields .SFColor (0, 0, 0)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",                 new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping",          new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metallic",                        new Fields .SFFloat (1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "roughness",                       new Fields .SFFloat (1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metallicRoughnessTexture",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metallicRoughnessTextureMapping", new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionStrength",               new Fields .SFFloat (1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTexture",                new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTextureMapping",         new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "normalScale",                     new Fields .SFFloat (1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",                   new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",            new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",                    new Fields .SFFloat ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DOneSidedMaterialNode .call (this, executionContext);
-
-      this .addType (X3DConstants .PhysicalMaterial);
-
-      this .baseColor = new Float32Array (3);
-   }
-
-   PhysicalMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
+      return "PhysicalMaterial";
+   },
+   getComponentName: function ()
    {
-      constructor: PhysicalMaterial,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "baseColor",                       new Fields .SFColor (1, 1, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "baseTexture",                     new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "baseTextureMapping",              new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",                   new Fields .SFColor (0, 0, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",                 new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping",          new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metallic",                        new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "roughness",                       new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metallicRoughnessTexture",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metallicRoughnessTextureMapping", new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionStrength",               new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTexture",                new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTextureMapping",         new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "normalScale",                     new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",                   new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",            new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",                    new Fields .SFFloat ()),
-      ]),
-      getTypeName: function ()
+      return "Shape";
+   },
+   getContainerField: function ()
+   {
+      return "material";
+   },
+   initialize: function ()
+   {
+      X3DOneSidedMaterialNode .prototype .initialize .call (this);
+
+      this ._baseColor                .addInterest ("set_baseColor__",                this);
+      this ._baseTexture              .addInterest ("set_baseTexture__",              this);
+      this ._metallic                 .addInterest ("set_metallic__",                 this);
+      this ._roughness                .addInterest ("set_roughness__",                this);
+      this ._metallicRoughnessTexture .addInterest ("set_metallicRoughnessTexture__", this);
+      this ._occlusionStrength        .addInterest ("set_occlusionStrength__",        this);
+      this ._occlusionTexture         .addInterest ("set_occlusionTexture__",         this);
+
+      this .set_baseColor__ ();
+      this .set_baseTexture__ ();
+      this .set_metallic__ ();
+      this .set_roughness__ ();
+      this .set_metallicRoughnessTexture__ ();
+      this .set_occlusionStrength__ ();
+      this .set_occlusionTexture__ ();
+      this .set_transparent__ ();
+   },
+   set_baseColor__: function ()
+   {
+      //We cannot use this in Windows Edge:
+      //this .baseColor .set (this ._baseColor .getValue ());
+
+      const
+         baseColor  = this .baseColor,
+         baseColor_ = this ._baseColor .getValue ();
+
+      baseColor [0] = baseColor_ .r;
+      baseColor [1] = baseColor_ .g;
+      baseColor [2] = baseColor_ .b;
+   },
+   set_baseTexture__: function ()
+   {
+      if (this .baseTextureNode)
+         this .baseTextureNode ._transparent .removeInterest ("set_transparent__", this);
+
+      this .baseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._baseTexture);
+
+      this .setTexture (this .getTextureIndices () .BASE_TEXTURE, this .baseTextureNode);
+
+      if (this .baseTextureNode)
+         this .baseTextureNode ._transparent .addInterest ("set_transparent__", this);
+   },
+   set_metallic__: function ()
+   {
+      this .metallic = Algorithm .clamp (this ._metallic .getValue (), 0, 1);
+   },
+   set_roughness__: function ()
+   {
+      this .roughness = Algorithm .clamp (this ._roughness .getValue (), 0, 1);
+   },
+   set_metallicRoughnessTexture__: function ()
+   {
+      this .metallicRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._metallicRoughnessTexture);
+
+      this .setTexture (this .getTextureIndices () .METALLIC_ROUGHNESS_TEXTURE, this .metallicRoughnessTextureNode);
+   },
+   set_occlusionStrength__: function ()
+   {
+      this .occlusionStrength = Algorithm .clamp (this ._occlusionStrength .getValue (), 0, 1);
+   },
+   set_occlusionTexture__: function ()
+   {
+      this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
+
+      this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
+   },
+   set_transparent__: function ()
+   {
+      this .setTransparent (Boolean (this .getTransparency () ||
+                            (this .baseTextureNode && this .baseTextureNode .getTransparent ())));
+   },
+   getTextureIndices: (function ()
+   {
+      let i = 0;
+
+      const textureIndices = {
+         EMISSIVE_TEXTURE: i ++,
+         NORMAL_TEXTURE:  i ++,
+         BASE_TEXTURE: i ++,
+         METALLIC_ROUGHNESS_TEXTURE: i ++,
+         OCCLUSION_TEXTURE:  i ++,
+      };
+
+      return function ()
       {
-         return "PhysicalMaterial";
-      },
-      getComponentName: function ()
+         return textureIndices;
+      };
+   })(),
+   getMaterialKey: function ()
+   {
+      return "3";
+   },
+   createShader: function (key, geometryContext, renderContext)
+   {
+      const
+         browser = this .getBrowser (),
+         options = this .getShaderOptions (geometryContext, renderContext);
+
+      if (geometryContext .hasNormals)
       {
-         return "Shape";
-      },
-      getContainerField: function ()
-      {
-         return "material";
-      },
-      initialize: function ()
-      {
-         X3DOneSidedMaterialNode .prototype .initialize .call (this);
-
-         this ._baseColor                .addInterest ("set_baseColor__",                this);
-         this ._baseTexture              .addInterest ("set_baseTexture__",              this);
-         this ._metallic                 .addInterest ("set_metallic__",                 this);
-         this ._roughness                .addInterest ("set_roughness__",                this);
-         this ._metallicRoughnessTexture .addInterest ("set_metallicRoughnessTexture__", this);
-         this ._occlusionStrength        .addInterest ("set_occlusionStrength__",        this);
-         this ._occlusionTexture         .addInterest ("set_occlusionTexture__",         this);
-
-         this .set_baseColor__ ();
-         this .set_baseTexture__ ();
-         this .set_metallic__ ();
-         this .set_roughness__ ();
-         this .set_metallicRoughnessTexture__ ();
-         this .set_occlusionStrength__ ();
-         this .set_occlusionTexture__ ();
-         this .set_transparent__ ();
-      },
-      set_baseColor__: function ()
-      {
-         //We cannot use this in Windows Edge:
-         //this .baseColor .set (this ._baseColor .getValue ());
-
-         const
-            baseColor  = this .baseColor,
-            baseColor_ = this ._baseColor .getValue ();
-
-         baseColor [0] = baseColor_ .r;
-         baseColor [1] = baseColor_ .g;
-         baseColor [2] = baseColor_ .b;
-      },
-      set_baseTexture__: function ()
-      {
-         if (this .baseTextureNode)
-            this .baseTextureNode ._transparent .removeInterest ("set_transparent__", this);
-
-         this .baseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._baseTexture);
-
-         this .setTexture (this .getTextureIndices () .BASE_TEXTURE, this .baseTextureNode);
-
-         if (this .baseTextureNode)
-            this .baseTextureNode ._transparent .addInterest ("set_transparent__", this);
-      },
-      set_metallic__: function ()
-      {
-         this .metallic = Algorithm .clamp (this ._metallic .getValue (), 0, 1);
-      },
-      set_roughness__: function ()
-      {
-         this .roughness = Algorithm .clamp (this ._roughness .getValue (), 0, 1);
-      },
-      set_metallicRoughnessTexture__: function ()
-      {
-         this .metallicRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._metallicRoughnessTexture);
-
-         this .setTexture (this .getTextureIndices () .METALLIC_ROUGHNESS_TEXTURE, this .metallicRoughnessTextureNode);
-      },
-      set_occlusionStrength__: function ()
-      {
-         this .occlusionStrength = Algorithm .clamp (this ._occlusionStrength .getValue (), 0, 1);
-      },
-      set_occlusionTexture__: function ()
-      {
-         this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
-
-         this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
-      },
-      set_transparent__: function ()
-      {
-         this .setTransparent (Boolean (this .getTransparency () ||
-                               (this .baseTextureNode && this .baseTextureNode .getTransparent ())));
-      },
-      getTextureIndices: (function ()
-      {
-         let i = 0;
-
-         const textureIndices = {
-            EMISSIVE_TEXTURE: i ++,
-            NORMAL_TEXTURE:  i ++,
-            BASE_TEXTURE: i ++,
-            METALLIC_ROUGHNESS_TEXTURE: i ++,
-            OCCLUSION_TEXTURE:  i ++,
-         };
-
-         return function ()
-         {
-            return textureIndices;
-         };
-      })(),
-      getMaterialKey: function ()
-      {
-         return "3";
-      },
-      createShader: function (key, geometryContext, renderContext)
-      {
-         const
-            browser = this .getBrowser (),
-            options = this .getShaderOptions (geometryContext, renderContext);
-
-         if (geometryContext .hasNormals)
-         {
-            options .push ("X3D_PHYSICAL_MATERIAL");
-
-            if (+this .getTextureBits ())
-            {
-               if (this .baseTextureNode)
-                  options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
-
-               if (this .metallicRoughnessTextureNode)
-                  options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", "X3D_METALLIC_ROUGHNESS_TEXTURE_" + this .metallicRoughnessTextureNode .getTextureTypeString ());
-
-               if (this .occlusionTextureNode)
-                  options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
-            }
-
-            var shaderNode = browser .createShader ("PhysicalMaterialShader", "Default", "PBR", options);
-         }
-         else
-         {
-            options .push ("X3D_UNLIT_MATERIAL");
-
-            var shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
-
-            browser .getShaders () .set (key .replace (/^(\d{1,2})\d*/, "$1") .replace (/\d$/, "0"), shaderNode);
-         }
-
-         browser .getShaders () .set (key, shaderNode);
-
-         return shaderNode;
-      },
-      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
-      {
-         X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
-
-         gl .uniform3fv (shaderObject .x3d_BaseColor, this .baseColor);
-         gl .uniform1f  (shaderObject .x3d_Metallic,  this .metallic);
-         gl .uniform1f  (shaderObject .x3d_Roughness, this .roughness);
+         options .push ("X3D_PHYSICAL_MATERIAL");
 
          if (+this .getTextureBits ())
          {
-            // Base parameters
-
             if (this .baseTextureNode)
-            {
-               const baseTexture = shaderObject .x3d_BaseTexture;
-
-               this .baseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, baseTexture);
-
-               gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._baseTextureMapping .getValue ()) || 0);
-               gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._baseTextureMapping .getValue ()) || 0);
-            }
-
-            // Metallic roughness parameters
+               options .push ("X3D_BASE_TEXTURE", "X3D_BASE_TEXTURE_" + this .baseTextureNode .getTextureTypeString ());
 
             if (this .metallicRoughnessTextureNode)
-            {
-               const metallicRoughnessTexture = shaderObject .x3d_MetallicRoughnessTexture;
-
-               this .metallicRoughnessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, metallicRoughnessTexture);
-
-               gl .uniform1i (metallicRoughnessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
-               gl .uniform1i (metallicRoughnessTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
-            }
-
-            // Occlusion parameters
+               options .push ("X3D_METALLIC_ROUGHNESS_TEXTURE", "X3D_METALLIC_ROUGHNESS_TEXTURE_" + this .metallicRoughnessTextureNode .getTextureTypeString ());
 
             if (this .occlusionTextureNode)
-            {
-               const occlusionTexture = shaderObject .x3d_OcclusionTexture;
-
-               gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
-
-               this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, occlusionTexture);
-
-               gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
-               gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._occlusionTextureMapping .getValue ()) || 0);
-            }
+               options .push ("X3D_OCCLUSION_TEXTURE", "X3D_OCCLUSION_TEXTURE_" + this .occlusionTextureNode .getTextureTypeString ());
          }
-      },
-   });
 
-   return PhysicalMaterial;
+         var shaderNode = browser .createShader ("PhysicalMaterialShader", "Default", "PBR", options);
+      }
+      else
+      {
+         options .push ("X3D_UNLIT_MATERIAL");
+
+         var shaderNode = browser .createShader ("UnlitShader", "Default", "Unlit", options);
+
+         browser .getShaders () .set (key .replace (/^(\d{1,2})\d*/, "$1") .replace (/\d$/, "0"), shaderNode);
+      }
+
+      browser .getShaders () .set (key, shaderNode);
+
+      return shaderNode;
+   },
+   setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+      X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
+
+      gl .uniform3fv (shaderObject .x3d_BaseColor, this .baseColor);
+      gl .uniform1f  (shaderObject .x3d_Metallic,  this .metallic);
+      gl .uniform1f  (shaderObject .x3d_Roughness, this .roughness);
+
+      if (+this .getTextureBits ())
+      {
+         // Base parameters
+
+         if (this .baseTextureNode)
+         {
+            const baseTexture = shaderObject .x3d_BaseTexture;
+
+            this .baseTextureNode .setShaderUniforms (gl, shaderObject, renderObject, baseTexture);
+
+            gl .uniform1i (baseTexture .textureTransformMapping,  textureTransformMapping  .get (this ._baseTextureMapping .getValue ()) || 0);
+            gl .uniform1i (baseTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._baseTextureMapping .getValue ()) || 0);
+         }
+
+         // Metallic roughness parameters
+
+         if (this .metallicRoughnessTextureNode)
+         {
+            const metallicRoughnessTexture = shaderObject .x3d_MetallicRoughnessTexture;
+
+            this .metallicRoughnessTextureNode .setShaderUniforms (gl, shaderObject, renderObject, metallicRoughnessTexture);
+
+            gl .uniform1i (metallicRoughnessTexture .textureTransformMapping,  textureTransformMapping  .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
+            gl .uniform1i (metallicRoughnessTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._metallicRoughnessTextureMapping .getValue ()) || 0);
+         }
+
+         // Occlusion parameters
+
+         if (this .occlusionTextureNode)
+         {
+            const occlusionTexture = shaderObject .x3d_OcclusionTexture;
+
+            gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
+
+            this .occlusionTextureNode .setShaderUniforms (gl, shaderObject, renderObject, occlusionTexture);
+
+            gl .uniform1i (occlusionTexture .textureTransformMapping,  textureTransformMapping  .get (this ._occlusionTextureMapping .getValue ()) || 0);
+            gl .uniform1i (occlusionTexture .textureCoordinateMapping, textureCoordinateMapping .get (this ._occlusionTextureMapping .getValue ()) || 0);
+         }
+      }
+   },
 });
+
+export default PhysicalMaterial;

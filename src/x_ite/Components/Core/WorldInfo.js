@@ -47,61 +47,51 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DInfoNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInfoNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DInfoNode from "./X3DInfoNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function WorldInfo (executionContext)
 {
-"use strict";
+   X3DInfoNode .call (this, executionContext);
 
-   function WorldInfo (executionContext)
+   this .addType (X3DConstants .WorldInfo);
+}
+
+WorldInfo .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
+{
+   constructor: WorldInfo,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "title",    new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "info",     new Fields .MFString ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DInfoNode .call (this, executionContext);
-
-      this .addType (X3DConstants .WorldInfo);
-   }
-
-   WorldInfo .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
+      return "WorldInfo";
+   },
+   getComponentName: function ()
    {
-      constructor: WorldInfo,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "title",    new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "info",     new Fields .MFString ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "WorldInfo";
-      },
-      getComponentName: function ()
-      {
-         return "Core";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DInfoNode .prototype .initialize .call (this);
+      return "Core";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DInfoNode .prototype .initialize .call (this);
 
-         this .getExecutionContext () .addWorldInfo (this);
-      },
-      dispose: function ()
-      {
-         this .getExecutionContext () .removeWorldInfo (this);
+      this .getExecutionContext () .addWorldInfo (this);
+   },
+   dispose: function ()
+   {
+      this .getExecutionContext () .removeWorldInfo (this);
 
-         X3DInfoNode .prototype .dispose .call (this);
-      },
-   });
-
-   return WorldInfo;
+      X3DInfoNode .prototype .dispose .call (this);
+   },
 });
+
+export default WorldInfo;

@@ -46,144 +46,92 @@
  *
  ******************************************************************************/
 
-require .config ({
-   "waitSeconds": 0, //The number of seconds to wait before giving up on loading a script. Setting it to 0 disables the timeout. The default is 7 seconds.
-});
+import X3D  from "./x_ite/X3D.js";
+import urls from "./x_ite/Browser/Networking/urls.js";
 
-define .show = function ()
+/**
+ *
+ * @param {function?} callback
+ * @param {function?} fallback
+ * @returns {Promise<void>} Promise
+ */
+function X_ITE (callback, fallback)
 {
-   this   .define = window .define;
-   window .define = this;
-};
-
-define .hide = function ()
-{
-   if (this .define === undefined)
-      delete window .define;
-   else
-      window .define = this .define;
-
-   delete this .define;
-};
-
-const getScriptURL = (function ()
-{
-   if (document .currentScript)
-      var src = document .currentScript .src;
-   else if (typeof __global_require__ === "function" && typeof __filename === "string")
-      var src = __global_require__ ("url") .pathToFileURL (__filename) .href;
-
-   return function ()
+   return new Promise (function (resolve, reject)
    {
-      return src;
-   };
-})();
-
-(function ()
-{
-"use strict";
-
-   /**
-    *
-    * @param {function?} callback
-    * @param {function?} fallback
-    * @returns {Promise<void>} Promise
-    */
-   function X_ITE (callback, fallback)
-   {
-      return new Promise (function (resolve, reject)
-      {
-         require (["x_ite/X3D"], function (X3D)
-         {
-            X3D (callback, fallback);
-            X3D (resolve, reject);
-         },
-         function (error)
-         {
-            if (typeof fallback === "function")
-               fallback (error);
-
-            reject (error);
-         });
-      });
-   }
-
-   function noConflict ()
-   {
-      if (window .X3D === X_ITE)
-      {
-         if (X3D_ === undefined)
-            delete window .X3D;
-         else
-            window .X3D = X3D_;
-      }
-
-      return X_ITE;
-   }
-
-   X_ITE .noConflict = noConflict;
-   X_ITE .require    = require;
-   X_ITE .define     = define;
-
-   // Save existing X3D object.
-   const X3D_ = window .X3D;
-
-   // Now assign our X3D.
-   window .X3D                        = X_ITE;
-   window [Symbol .for ("X_ITE.X3D")] = X_ITE;
-
-   if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
-      __global_module__ .exports = X_ITE;
-
-   // Define custom element.
-
-   // IE fix.
-   document .createElement ("X3DCanvas");
-
-   class X3DCanvas extends HTMLElement
-   {
-      constructor ()
-      {
-         super ();
-
-         const
-            shadow = this .attachShadow ({ mode: "open" }),
-            link   = document .createElement ("link");
-
-         shadow .loaded = new Promise (function (resolve, reject)
-         {
-            link .onload  = resolve;
-            link .onerror = reject;
-         });
-
-         link .setAttribute ("rel", "stylesheet");
-         link .setAttribute ("type", "text/css");
-         link .setAttribute ("href", new URL ("x_ite.css", getScriptURL ()) .href);
-
-         shadow .appendChild (link);
-
-         require (["x_ite/X3D"], function (X3D)
-         {
-            X3D .createBrowserFromElement (this);
-         }
-         .bind (this));
-      }
-   }
-
-   customElements .define ("x3d-canvas", X3DCanvas);
-
-   // Assign functions to X_ITE and init.
-
-   require (["x_ite/X3D"], function (X3D)
-   {
-      Object .assign (X_ITE, X3D);
-
-      for (const key of X3D .hidden)
-         delete X_ITE [key];
-
-      X3D ();
+      X3D (callback, fallback);
+      X3D (resolve, reject);
    });
-})();
+}
+
+function noConflict ()
+{
+   if (window .X3D === X_ITE)
+   {
+      if (X3D_ === undefined)
+         delete window .X3D;
+      else
+         window .X3D = X3D_;
+   }
+
+   return X_ITE;
+}
+
+X_ITE .noConflict = noConflict;
+
+// Save existing X3D object.
+const X3D_ = window .X3D;
+
+// Now assign our X3D.
+window .X3D                        = X_ITE;
+window [Symbol .for ("X_ITE.X3D")] = X_ITE;
+
+if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
+   __global_module__ .exports = X_ITE;
+
+// Define custom element.
+
+// IE fix.
+document .createElement ("X3DCanvas");
+
+class X3DCanvas extends HTMLElement
+{
+   constructor ()
+   {
+      super ();
+
+      const
+         shadow = this .attachShadow ({ mode: "open" }),
+         link   = document .createElement ("link");
+
+      shadow .loaded = new Promise (function (resolve, reject)
+      {
+         link .onload  = resolve;
+         link .onerror = reject;
+      });
+
+      link .setAttribute ("rel", "stylesheet");
+      link .setAttribute ("type", "text/css");
+      link .setAttribute ("href", new URL ("x_ite.css", urls .getScriptURL ()) .href);
+
+      shadow .appendChild (link);
+
+      X3D .createBrowserFromElement (this);
+   }
+}
+
+customElements .define ("x3d-canvas", X3DCanvas);
+
+// Assign functions to X_ITE and init.
+
+Object .assign (X_ITE, X3D);
+
+for (const key of X3D .hidden)
+   delete X_ITE [key];
+
+X3D ();
+
+//$ .noConflict (true);
 
 (function ()
 {

@@ -47,165 +47,154 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DBaseNode",
-   "x_ite/Components/Navigation/OrthoViewpoint",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Matrix4",
-   "standard/Math/Geometry/Box3",
-   "standard/Math/Geometry/ViewVolume",
-],
-function (X3DBaseNode,
-          OrthoViewpoint,
-          Vector3,
-          Matrix4,
-          Box3,
-          ViewVolume)
+import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import OrthoViewpoint from "../../Components/Navigation/OrthoViewpoint.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import Box3 from "../../../standard/Math/Geometry/Box3.js";
+import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
+
+function X3DViewer (executionContext)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
+}
 
-   function X3DViewer (executionContext)
+X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: X3DViewer,
+   getTypeName: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-   }
-
-   X3DViewer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return "X3DViewer";
+   },
+   initialize: function ()
+   { },
+   getActiveLayer: function ()
    {
-      constructor: X3DViewer,
-      getTypeName: function ()
+      return this .getBrowser () .getActiveLayer ();
+   },
+   getViewport: function ()
+   {
+      return this .getBrowser () .getActiveLayer () .getViewport ();
+   },
+   getNavigationInfo: function ()
+   {
+      return this .getBrowser () .getActiveLayer () .getNavigationInfo ();
+   },
+   getActiveViewpoint: function ()
+   {
+      return this .getBrowser () .getActiveLayer () .getViewpoint ();
+   },
+   getStraightenHorizon: function ()
+   {
+      return this .getBrowser () .getBrowserOption ("StraightenHorizon");
+   },
+   getButton: function (button)
+   {
+      // If Alt key is pressed and button 0, then emulate button 1 (middle).
+      if (button === 0)
       {
-         return "X3DViewer";
-      },
-      initialize: function ()
-      { },
-      getActiveLayer: function ()
-      {
-         return this .getBrowser () .getActiveLayer ();
-      },
-      getViewport: function ()
-      {
-         return this .getBrowser () .getActiveLayer () .getViewport ();
-      },
-      getNavigationInfo: function ()
-      {
-         return this .getBrowser () .getActiveLayer () .getNavigationInfo ();
-      },
-      getActiveViewpoint: function ()
-      {
-         return this .getBrowser () .getActiveLayer () .getViewpoint ();
-      },
-      getStraightenHorizon: function ()
-      {
-         return this .getBrowser () .getBrowserOption ("StraightenHorizon");
-      },
-      getButton: function (button)
-      {
-         // If Alt key is pressed and button 0, then emulate button 1 (middle).
-         if (button === 0)
+         if (this .getBrowser () .getAltKey ())
          {
-            if (this .getBrowser () .getAltKey ())
-            {
-               return 1;
-            }
+            return 1;
          }
+      }
 
-         return button;
-      },
-      getPointOnCenterPlane: (function ()
+      return button;
+   },
+   getPointOnCenterPlane: (function ()
+   {
+      const
+         axis     = new Vector3 (0, 0, -1),
+         distance = new Vector3 (0, 0, 0),
+         far      = new Vector3 (0, 0, 0);
+
+      return function (x, y, result)
       {
          const
-            axis     = new Vector3 (0, 0, -1),
-            distance = new Vector3 (0, 0, 0),
-            far      = new Vector3 (0, 0, 0);
+            navigationInfo   = this .getNavigationInfo (),
+            viewpoint        = this .getActiveViewpoint (),
+            viewport         = this .getViewport () .getRectangle (this .getBrowser ()),
+            projectionMatrix = viewpoint .getProjectionMatrixWithLimits (navigationInfo .getNearValue (), navigationInfo .getFarValue (viewpoint), viewport);
 
-         return function (x, y, result)
-         {
-            const
-               navigationInfo   = this .getNavigationInfo (),
-               viewpoint        = this .getActiveViewpoint (),
-               viewport         = this .getViewport () .getRectangle (this .getBrowser ()),
-               projectionMatrix = viewpoint .getProjectionMatrixWithLimits (navigationInfo .getNearValue (), navigationInfo .getFarValue (viewpoint), viewport);
+         // Far plane point
+         ViewVolume .unProjectPoint (x, this .getBrowser () .getViewport () [3] - y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
 
-            // Far plane point
-            ViewVolume .unProjectPoint (x, this .getBrowser () .getViewport () [3] - y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
+         if (viewpoint instanceof OrthoViewpoint)
+            return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .magnitude ());
 
-            if (viewpoint instanceof OrthoViewpoint)
-               return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .magnitude ());
+         const direction = far .normalize ();
 
-            const direction = far .normalize ();
+         return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .magnitude () / direction .dot (axis));
+      };
+   })(),
+   getDistanceToCenter: function (distance, positionOffset)
+   {
+      const viewpoint = this .getActiveViewpoint ();
 
-            return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .magnitude () / direction .dot (axis));
-         };
-      })(),
-      getDistanceToCenter: function (distance, positionOffset)
-      {
-         const viewpoint = this .getActiveViewpoint ();
+      return (distance
+         .assign (viewpoint .getPosition ())
+         .add (positionOffset || viewpoint ._positionOffset .getValue ())
+         .subtract (viewpoint .getUserCenterOfRotation ()));
+   },
+   trackballProjectToSphere: function (x, y, vector)
+   {
+      const viewport = this .getViewport () .getRectangle (this .getBrowser ());
 
-         return (distance
-            .assign (viewpoint .getPosition ())
-            .add (positionOffset || viewpoint ._positionOffset .getValue ())
-            .subtract (viewpoint .getUserCenterOfRotation ()));
-      },
-      trackballProjectToSphere: function (x, y, vector)
-      {
-         const viewport = this .getViewport () .getRectangle (this .getBrowser ());
+      y = this .getBrowser () .getViewport () [3] - y;
 
-         y = this .getBrowser () .getViewport () [3] - y;
+      x = (x - viewport [0]) / viewport [2] - 0.5;
+      y = (y - viewport [1]) / viewport [3] - 0.5;
 
-         x = (x - viewport [0]) / viewport [2] - 0.5;
-         y = (y - viewport [1]) / viewport [3] - 0.5;
+      return vector .set (x, y, tbProjectToSphere (0.5, x, y));
+   },
+   lookAtPoint: function (x, y, straightenHorizon)
+   {
+      if (! this .touch (x, y))
+         return;
 
-         return vector .set (x, y, tbProjectToSphere (0.5, x, y));
-      },
-      lookAtPoint: function (x, y, straightenHorizon)
+      const hit = this .getBrowser () .getNearestHit ();
+
+      this .getActiveViewpoint () .lookAtPoint (this .getActiveLayer (), hit .intersection .point, 2 - 1.618034, straightenHorizon);
+   },
+   lookAtBBox: (function ()
+   {
+      const bbox = new Box3 ();
+
+      return function (x, y, straightenHorizon)
       {
          if (! this .touch (x, y))
             return;
 
          const hit = this .getBrowser () .getNearestHit ();
 
-         this .getActiveViewpoint () .lookAtPoint (this .getActiveLayer (), hit .intersection .point, 2 - 1.618034, straightenHorizon);
-      },
-      lookAtBBox: (function ()
-      {
-         const bbox = new Box3 ();
+         hit .shape .getBBox (bbox) .multRight (hit .modelViewMatrix);
 
-         return function (x, y, straightenHorizon)
-         {
-            if (! this .touch (x, y))
-               return;
-
-            const hit = this .getBrowser () .getNearestHit ();
-
-            hit .shape .getBBox (bbox) .multRight (hit .modelViewMatrix);
-
-            this .getActiveViewpoint () .lookAtBBox (this .getActiveLayer (), bbox, 2 - 1.618034, straightenHorizon);
-         };
-      })(),
-      touch: function (x, y)
-      {
-         this .getBrowser () .touch (x, y, false);
-
-         return this .getBrowser () .getHits () .length;
-      },
-      dispose: function () { },
-   });
-
-   function tbProjectToSphere (r, x, y)
+         this .getActiveViewpoint () .lookAtBBox (this .getActiveLayer (), bbox, 2 - 1.618034, straightenHorizon);
+      };
+   })(),
+   touch: function (x, y)
    {
-      const d = Math .hypot (x, y);
+      this .getBrowser () .touch (x, y, false);
 
-      if (d < r * Math .sqrt (0.5)) // Inside sphere
-      {
-         return Math .sqrt (r * r - d * d);
-      }
+      return this .getBrowser () .getHits () .length;
+   },
+   dispose: function () { },
+});
 
-      // On hyperbola
+function tbProjectToSphere (r, x, y)
+{
+   const d = Math .hypot (x, y);
 
-      const t = r / Math .sqrt (2);
-
-      return t * t / d;
+   if (d < r * Math .sqrt (0.5)) // Inside sphere
+   {
+      return Math .sqrt (r * r - d * d);
    }
 
-   return X3DViewer;
-});
+   // On hyperbola
+
+   const t = r / Math .sqrt (2);
+
+   return t * t / d;
+}
+
+export default X3DViewer;

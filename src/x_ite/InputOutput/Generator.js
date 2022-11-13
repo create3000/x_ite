@@ -47,389 +47,383 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DConstants",
-],
-function (X3DConstants)
+import X3DConstants from "../Base/X3DConstants.js";
+
+function Generator ()
 {
-"use strict";
+   this .indent              = "";
+   this .indentChar          = "  ";
+   this .precision           = 6;
+   this .doublePrecision     = 14;
+   this .removeTrailingZeros = /\.?0*(?=$|[eE])/;
 
-   function Generator ()
+   this .executionContextStack = [ null ];
+   this .importedNodesIndex    = new Map ();
+   this .exportedNodesIndex    = new Map ();
+   this .nodes                 = new Set ();
+   this .names                 = new Map ();
+   this .namesByNode           = new Map ();
+   this .importedNames         = new Map ();
+   this .routeNodes            = new Set ();
+   this .level                 = 0;
+   this .newName               = 0;
+   this .containerFields       = [ ];
+   this .units                 = true;
+   this .unitCategories        = [ ];
+
+   this .names .set (null, new Map ());
+}
+
+Generator .prototype =
+{
+   constructor: Generator,
+   Indent: function ()
    {
-      this .indent              = "";
-      this .indentChar          = "  ";
-      this .precision           = 6;
-      this .doublePrecision     = 14;
-      this .removeTrailingZeros = /\.?0*(?=$|[eE])/;
-
-      this .executionContextStack = [ null ];
-      this .importedNodesIndex    = new Map ();
-      this .exportedNodesIndex    = new Map ();
-      this .nodes                 = new Set ();
-      this .names                 = new Map ();
-      this .namesByNode           = new Map ();
-      this .importedNames         = new Map ();
-      this .routeNodes            = new Set ();
-      this .level                 = 0;
-      this .newName               = 0;
-      this .containerFields       = [ ];
-      this .units                 = true;
-      this .unitCategories        = [ ];
-
-      this .names .set (null, new Map ());
-   }
-
-   Generator .prototype =
+      return this .indent;
+   },
+   IncIndent: function ()
    {
-      constructor: Generator,
-      Indent: function ()
-      {
-         return this .indent;
-      },
-      IncIndent: function ()
-      {
-         this .indent += this .indentChar;
-      },
-      DecIndent: function ()
-      {
-         this .indent = this .indent .substr (0, this .indent .length - this .indentChar .length);
-      },
-      PadRight: function (string, pad)
-      {
-         for (let i = 0, length = pad - string .length; i < length; ++ i)
-            string += " ";
+      this .indent += this .indentChar;
+   },
+   DecIndent: function ()
+   {
+      this .indent = this .indent .substr (0, this .indent .length - this .indentChar .length);
+   },
+   PadRight: function (string, pad)
+   {
+      for (let i = 0, length = pad - string .length; i < length; ++ i)
+         string += " ";
 
-         return string;
-      },
-      Precision: function (value)
-      {
-         return Math .fround (value) .toPrecision (this .precision) .replace (this .removeTrailingZeros, "");
-      },
-      DoublePrecision: function (value)
-      {
-         return value .toPrecision (this .doublePrecision) .replace (this .removeTrailingZeros, "");
-      },
-      PushExecutionContext: function (executionContext)
-      {
-         this .executionContextStack .push (executionContext);
+      return string;
+   },
+   Precision: function (value)
+   {
+      return Math .fround (value) .toPrecision (this .precision) .replace (this .removeTrailingZeros, "");
+   },
+   DoublePrecision: function (value)
+   {
+      return value .toPrecision (this .doublePrecision) .replace (this .removeTrailingZeros, "");
+   },
+   PushExecutionContext: function (executionContext)
+   {
+      this .executionContextStack .push (executionContext);
 
-         if (! this .names .has (executionContext))
-            this .names .set (executionContext, new Map ());
+      if (! this .names .has (executionContext))
+         this .names .set (executionContext, new Map ());
 
-         if (! this .importedNodesIndex .has (executionContext))
-            this .importedNodesIndex .set (executionContext, new Set ());
+      if (! this .importedNodesIndex .has (executionContext))
+         this .importedNodesIndex .set (executionContext, new Set ());
 
-         if (! this .exportedNodesIndex .has (executionContext))
-            this .exportedNodesIndex .set (executionContext, new Set ());
-      },
-      PopExecutionContext: function ()
+      if (! this .exportedNodesIndex .has (executionContext))
+         this .exportedNodesIndex .set (executionContext, new Set ());
+   },
+   PopExecutionContext: function ()
+   {
+      this .executionContextStack .pop ();
+
+      if (this .ExecutionContext ())
+         return;
+
+      this .importedNodesIndex .clear ();
+      this .exportedNodesIndex .clear ();
+   },
+   ExecutionContext: function ()
+   {
+      return this .executionContextStack .at (-1);
+   },
+   EnterScope: function ()
+   {
+      if (this .level === 0)
+         this .newName = 0;
+
+      ++ this .level;
+   },
+   LeaveScope: function ()
+   {
+      -- this .level;
+
+      if (this .level === 0)
       {
-         this .executionContextStack .pop ();
+         this .nodes         .clear ();
+         this .namesByNode   .clear ();
+         this .importedNames .clear ();
+      }
+   },
+   ExportedNodes: function (exportedNodes)
+   {
+      const index = this .exportedNodesIndex .get (this .ExecutionContext ());
 
-         if (this .ExecutionContext ())
-            return;
-
-         this .importedNodesIndex .clear ();
-         this .exportedNodesIndex .clear ();
-      },
-      ExecutionContext: function ()
+      exportedNodes .forEach (function (exportedNode)
       {
-         return this .executionContextStack .at (-1);
-      },
-      EnterScope: function ()
-      {
-         if (this .level === 0)
-            this .newName = 0;
-
-         ++ this .level;
-      },
-      LeaveScope: function ()
-      {
-         -- this .level;
-
-         if (this .level === 0)
+         try
          {
-            this .nodes         .clear ();
-            this .namesByNode   .clear ();
-            this .importedNames .clear ();
+            index .add (exportedNode .getLocalNode ())
          }
-      },
-      ExportedNodes: function (exportedNodes)
-      {
-         const index = this .exportedNodesIndex .get (this .ExecutionContext ());
+         catch (error)
+         { }
+      });
+   },
+   ImportedNodes: function (importedNodes)
+   {
+      const index = this .importedNodesIndex .get (this .ExecutionContext ());
 
-         exportedNodes .forEach (function (exportedNode)
+      importedNodes .forEach (function (importedNode)
+      {
+         try
          {
-            try
+            index .add (importedNode .getInlineNode ());
+         }
+         catch (error)
+         { }
+      });
+   },
+   AddImportedNode: function (exportedNode, importedName)
+   {
+      this .importedNames .set (exportedNode, importedName);
+   },
+   AddRouteNode: function (routeNode)
+   {
+      this .routeNodes .add (routeNode);
+   },
+   ExistsRouteNode: function (routeNode)
+   {
+      return this .routeNodes .has (routeNode);
+   },
+   IsSharedNode: function (baseNode)
+   {
+      return this .ExecutionContext () !== baseNode .getExecutionContext ();
+   },
+   AddNode: function (baseNode)
+   {
+      this .nodes .add (baseNode);
+
+      this .AddRouteNode (baseNode);
+   },
+   ExistsNode: function (baseNode)
+   {
+      return this .nodes .has (baseNode);
+   },
+   Name: (function ()
+   {
+      const _TrailingNumbers = /_\d+$/;
+
+      return function (baseNode)
+      {
+         // Is the node already in index
+
+         const name = this .namesByNode .get (baseNode);
+
+         if (name !== undefined)
+         {
+            return name;
+         }
+         else
+         {
+            const names = this .names .get (this .ExecutionContext ());
+
+            // The node has no name
+
+            if (baseNode .getName () .length === 0)
             {
-               index .add (exportedNode .getLocalNode ())
+               if (this .NeedsName (baseNode))
+               {
+                  const name = this .UniqueName ();
+
+                  names .set (name, baseNode);
+                  this .namesByNode .set (baseNode, name);
+
+                  return name;
+               }
+
+               // The node doesn't need a name
+
+               return baseNode .getName ();
             }
-            catch (error)
-            { }
-         });
-      },
-      ImportedNodes: function (importedNodes)
-      {
-         const index = this .importedNodesIndex .get (this .ExecutionContext ());
 
-         importedNodes .forEach (function (importedNode)
-         {
-            try
+            // The node has a name
+
+            let   name      = baseNode .getName ();
+            const hasNumber = name .match (_TrailingNumbers) !== null;
+
+            name = name .replace (_TrailingNumbers, "");
+
+            if (name .length === 0)
             {
-               index .add (importedNode .getInlineNode ());
-            }
-            catch (error)
-            { }
-         });
-      },
-      AddImportedNode: function (exportedNode, importedName)
-      {
-         this .importedNames .set (exportedNode, importedName);
-      },
-      AddRouteNode: function (routeNode)
-      {
-         this .routeNodes .add (routeNode);
-      },
-      ExistsRouteNode: function (routeNode)
-      {
-         return this .routeNodes .has (routeNode);
-      },
-      IsSharedNode: function (baseNode)
-      {
-         return this .ExecutionContext () !== baseNode .getExecutionContext ();
-      },
-      AddNode: function (baseNode)
-      {
-         this .nodes .add (baseNode);
+               if (this .NeedsName (baseNode))
+                  name = this .UniqueName ();
 
-         this .AddRouteNode (baseNode);
-      },
-      ExistsNode: function (baseNode)
-      {
-         return this .nodes .has (baseNode);
-      },
-      Name: (function ()
-      {
-         const _TrailingNumbers = /_\d+$/;
-
-         return function (baseNode)
-         {
-            // Is the node already in index
-
-            const name = this .namesByNode .get (baseNode);
-
-            if (name !== undefined)
-            {
-               return name;
+               else
+                  return "";
             }
             else
             {
-               const names = this .names .get (this .ExecutionContext ());
+               let
+                  i       = 0,
+                  newName = hasNumber ? name + '_' + (++ i) : name;
 
-               // The node has no name
-
-               if (baseNode .getName () .length === 0)
+               while (names .has (newName))
                {
-                  if (this .NeedsName (baseNode))
-                  {
-                     const name = this .UniqueName ();
-
-                     names .set (name, baseNode);
-                     this .namesByNode .set (baseNode, name);
-
-                     return name;
-                  }
-
-                  // The node doesn't need a name
-
-                  return baseNode .getName ();
+                  newName = name + '_' + (++ i);
                }
 
-               // The node has a name
-
-               let   name      = baseNode .getName ();
-               const hasNumber = name .match (_TrailingNumbers) !== null;
-
-               name = name .replace (_TrailingNumbers, "");
-
-               if (name .length === 0)
-               {
-                  if (this .NeedsName (baseNode))
-                     name = this .UniqueName ();
-
-                  else
-                     return "";
-               }
-               else
-               {
-                  let
-                     i       = 0,
-                     newName = hasNumber ? name + '_' + (++ i) : name;
-
-                  while (names .has (newName))
-                  {
-                     newName = name + '_' + (++ i);
-                  }
-
-                  name = newName;
-               }
-
-               names .set (name, baseNode);
-               this .namesByNode .set (baseNode, name);
-
-               return name;
+               name = newName;
             }
-         };
-      })(),
-      NeedsName: function (baseNode)
+
+            names .set (name, baseNode);
+            this .namesByNode .set (baseNode, name);
+
+            return name;
+         }
+      };
+   })(),
+   NeedsName: function (baseNode)
+   {
+      if (baseNode .getCloneCount () > 1)
+         return true;
+
+      if (baseNode .hasRoutes ())
+         return true;
+
+      const
+         executionContext = baseNode .getExecutionContext (),
+         index            = this .importedNodesIndex .get (executionContext);
+
+      if (index)
       {
-         if (baseNode .getCloneCount () > 1)
+         if (index .has (baseNode))
             return true;
-
-         if (baseNode .hasRoutes ())
-            return true;
-
-         const
-            executionContext = baseNode .getExecutionContext (),
-            index            = this .importedNodesIndex .get (executionContext);
+      }
+      else
+      {
+         const index = this .exportedNodesIndex .get (executionContext);
 
          if (index)
          {
             if (index .has (baseNode))
                return true;
          }
-         else
-         {
-            const index = this .exportedNodesIndex .get (executionContext);
 
-            if (index)
-            {
-               if (index .has (baseNode))
-                  return true;
-            }
-
-            return false;
-         }
-      },
-      UniqueName: function ()
-      {
-         const names = this .names .get (this .ExecutionContext ());
-
-         for (; ;)
-         {
-            const name = '_' + (++ this .newName);
-
-            if (names .has (name))
-               continue;
-
-            return name;
-         }
-      },
-      LocalName: function (baseNode)
-      {
-         const importedName = this .importedNames .get (baseNode);
-
-         if (importedName !== undefined)
-            return importedName;
-
-         if (this .ExistsNode (baseNode))
-            return this .Name (baseNode);
-
-         throw new Error ("Couldn't get local name for node '" + baseNode .getTypeName () + "'.");
-      },
-      PushContainerField: function (field)
-      {
-         this .containerFields .push (field);
-      },
-      PopContainerField: function ()
-      {
-         this .containerFields .pop ();
-      },
-      ContainerField: function ()
-      {
-         if (this .containerFields .length)
-            return this .containerFields [this .containerFields .length - 1];
-
-         return null;
-      },
-      AccessType: function (accessType)
-      {
-         switch (accessType)
-         {
-            case X3DConstants .initializeOnly:
-               return "initializeOnly";
-            case X3DConstants .inputOnly:
-               return "inputOnly";
-            case X3DConstants .outputOnly:
-               return "outputOnly";
-            case X3DConstants .inputOutput:
-               return "inputOutput";
-         }
-      },
-      SetUnits: function (value)
-      {
-         this .units = value;
-      },
-      GetUnits: function ()
-      {
-         return this .units;
-      },
-      PushUnitCategory: function (category)
-      {
-         this .unitCategories .push (category);
-      },
-      PopUnitCategory: function ()
-      {
-         this .unitCategories .pop ();
-      },
-      Unit: function (category)
-      {
-         if (this .unitCategories .length == 0)
-            return category;
-
-         return this .unitCategories .at (-1);
-      },
-      ToUnit: function (category, value)
-      {
-         if (this .units)
-         {
-            const executionContext = this .ExecutionContext ();
-
-            if (executionContext)
-               return executionContext .toUnit (category, value);
-         }
-
-         return value;
-      },
-      XMLEncode: function (string)
-      {
-         return string
-            .replace (/&/g, "&amp;")
-            .replace (/\\/g, "&#92;")
-            .replace (/\t/g, "&#x9;")
-            .replace (/\n/g, "&#xA;")
-            .replace (/\r/g, "&#xD;")
-            .replace (/</g, "&lt;")
-            .replace (/>/g, "&gt;")
-            .replace (/'/g, "&apos;")
-            .replace (/"/g, "\\\"");
-      },
-      escapeCDATA: function (string)
-      {
-         return string .replace (/\]\]\>/g, "\\]\\]\\>");
-      },
-   };
-
-   for (const key of Reflect .ownKeys (Generator .prototype))
-      Object .defineProperty (Generator .prototype, key, { enumerable: false });
-
-   Generator .Get = function (stream)
+         return false;
+      }
+   },
+   UniqueName: function ()
    {
-      if (! stream .generator)
-         stream .generator = new Generator ();
+      const names = this .names .get (this .ExecutionContext ());
 
-      return stream .generator;
-   };
+      for (; ;)
+      {
+         const name = '_' + (++ this .newName);
 
-   return Generator;
-});
+         if (names .has (name))
+            continue;
+
+         return name;
+      }
+   },
+   LocalName: function (baseNode)
+   {
+      const importedName = this .importedNames .get (baseNode);
+
+      if (importedName !== undefined)
+         return importedName;
+
+      if (this .ExistsNode (baseNode))
+         return this .Name (baseNode);
+
+      throw new Error ("Couldn't get local name for node '" + baseNode .getTypeName () + "'.");
+   },
+   PushContainerField: function (field)
+   {
+      this .containerFields .push (field);
+   },
+   PopContainerField: function ()
+   {
+      this .containerFields .pop ();
+   },
+   ContainerField: function ()
+   {
+      if (this .containerFields .length)
+         return this .containerFields [this .containerFields .length - 1];
+
+      return null;
+   },
+   AccessType: function (accessType)
+   {
+      switch (accessType)
+      {
+         case X3DConstants .initializeOnly:
+            return "initializeOnly";
+         case X3DConstants .inputOnly:
+            return "inputOnly";
+         case X3DConstants .outputOnly:
+            return "outputOnly";
+         case X3DConstants .inputOutput:
+            return "inputOutput";
+      }
+   },
+   SetUnits: function (value)
+   {
+      this .units = value;
+   },
+   GetUnits: function ()
+   {
+      return this .units;
+   },
+   PushUnitCategory: function (category)
+   {
+      this .unitCategories .push (category);
+   },
+   PopUnitCategory: function ()
+   {
+      this .unitCategories .pop ();
+   },
+   Unit: function (category)
+   {
+      if (this .unitCategories .length == 0)
+         return category;
+
+      return this .unitCategories .at (-1);
+   },
+   ToUnit: function (category, value)
+   {
+      if (this .units)
+      {
+         const executionContext = this .ExecutionContext ();
+
+         if (executionContext)
+            return executionContext .toUnit (category, value);
+      }
+
+      return value;
+   },
+   XMLEncode: function (string)
+   {
+      return string
+         .replace (/&/g, "&amp;")
+         .replace (/\\/g, "&#92;")
+         .replace (/\t/g, "&#x9;")
+         .replace (/\n/g, "&#xA;")
+         .replace (/\r/g, "&#xD;")
+         .replace (/</g, "&lt;")
+         .replace (/>/g, "&gt;")
+         .replace (/'/g, "&apos;")
+         .replace (/"/g, "\\\"");
+   },
+   escapeCDATA: function (string)
+   {
+      return string .replace (/\]\]\>/g, "\\]\\]\\>");
+   },
+};
+
+for (const key of Reflect .ownKeys (Generator .prototype))
+   Object .defineProperty (Generator .prototype, key, { enumerable: false });
+
+Generator .Get = function (stream)
+{
+   if (! stream .generator)
+      stream .generator = new Generator ();
+
+   return stream .generator;
+};
+
+export default Generator;

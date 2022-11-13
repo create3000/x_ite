@@ -47,68 +47,58 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DComposedGeometryNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DComposedGeometryNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DComposedGeometryNode from "./X3DComposedGeometryNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function TriangleSet (executionContext)
 {
-"use strict";
+   X3DComposedGeometryNode .call (this, executionContext);
 
-   function TriangleSet (executionContext)
+   this .addType (X3DConstants .TriangleSet);
+}
+
+TriangleSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+{
+   constructor: TriangleSet,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DComposedGeometryNode .call (this, executionContext);
-
-      this .addType (X3DConstants .TriangleSet);
-   }
-
-   TriangleSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+      return "TriangleSet";
+   },
+   getComponentName: function ()
    {
-      constructor: TriangleSet,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "TriangleSet";
-      },
-      getComponentName: function ()
-      {
-         return "Rendering";
-      },
-      getContainerField: function ()
-      {
-         return "geometry";
-      },
-      build: function ()
-      {
-         if (! this .getCoord ())
-            return;
+      return "Rendering";
+   },
+   getContainerField: function ()
+   {
+      return "geometry";
+   },
+   build: function ()
+   {
+      if (! this .getCoord ())
+         return;
 
-         X3DComposedGeometryNode .prototype .build .call (this, 3, this .getCoord () .getSize (), 3, this .getCoord () .getSize ());
-      },
-      createNormals: function (verticesPerPolygon, polygonsSize)
-      {
-         return this .createFaceNormals (verticesPerPolygon, polygonsSize);
-      },
-   });
-
-   return TriangleSet;
+      X3DComposedGeometryNode .prototype .build .call (this, 3, this .getCoord () .getSize (), 3, this .getCoord () .getSize ());
+   },
+   createNormals: function (verticesPerPolygon, polygonsSize)
+   {
+      return this .createFaceNormals (verticesPerPolygon, polygonsSize);
+   },
 });
+
+export default TriangleSet;

@@ -47,102 +47,90 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector2",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DGeometryNode,
-          X3DConstants,
-          Vector2,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DGeometryNode from "../Rendering/X3DGeometryNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+function Rectangle2D (executionContext)
 {
-"use strict";
+   X3DGeometryNode .call (this, executionContext);
 
-   function Rectangle2D (executionContext)
+   this .addType (X3DConstants .Rectangle2D);
+
+   this .setGeometryType (2);
+
+   this ._size .setUnit ("length");
+}
+
+Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+{
+   constructor: Rectangle2D,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "size",     new Fields .SFVec2f (2, 2)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DGeometryNode .call (this, executionContext);
-
-      this .addType (X3DConstants .Rectangle2D);
-
-      this .setGeometryType (2);
-
-      this ._size .setUnit ("length");
-   }
-
-   Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+      return "Rectangle2D";
+   },
+   getComponentName: function ()
    {
-      constructor: Rectangle2D,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "size",     new Fields .SFVec2f (2, 2)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "Rectangle2D";
-      },
-      getComponentName: function ()
-      {
-         return "Geometry2D";
-      },
-      getContainerField: function ()
-      {
-         return "geometry";
-      },
-      build: (function ()
-      {
-         const defaultSize = new Vector2 (2, 2);
+      return "Geometry2D";
+   },
+   getContainerField: function ()
+   {
+      return "geometry";
+   },
+   build: (function ()
+   {
+      const defaultSize = new Vector2 (2, 2);
 
-         return function ()
+      return function ()
+      {
+         const
+            options  = this .getBrowser () .getRectangle2DOptions (),
+            geometry = options .getGeometry (),
+            size     = this ._size .getValue ();
+
+         this .setMultiTexCoords (geometry .getMultiTexCoords ());
+         this .setNormals        (geometry .getNormals ());
+
+         if (size .equals (defaultSize))
+         {
+            this .setVertices (geometry .getVertices ());
+
+            this .getMin () .assign (geometry .getMin ());
+            this .getMax () .assign (geometry .getMax ());
+         }
+         else
          {
             const
-               options  = this .getBrowser () .getRectangle2DOptions (),
-               geometry = options .getGeometry (),
-               size     = this ._size .getValue ();
+               scale           = Vector3 .divide (size, 2),
+               x               = scale .x,
+               y               = scale .y,
+               defaultVertices = geometry .getVertices () .getValue (),
+               vertexArray     = this .getVertices ();
 
-            this .setMultiTexCoords (geometry .getMultiTexCoords ());
-            this .setNormals        (geometry .getNormals ());
-
-            if (size .equals (defaultSize))
+            for (let i = 0; i < defaultVertices .length; i += 4)
             {
-               this .setVertices (geometry .getVertices ());
-
-               this .getMin () .assign (geometry .getMin ());
-               this .getMax () .assign (geometry .getMax ());
-            }
-            else
-            {
-               const
-                  scale           = Vector3 .divide (size, 2),
-                  x               = scale .x,
-                  y               = scale .y,
-                  defaultVertices = geometry .getVertices () .getValue (),
-                  vertexArray     = this .getVertices ();
-
-               for (let i = 0; i < defaultVertices .length; i += 4)
-               {
-                  vertexArray .push (x * defaultVertices [i],
-                                     y * defaultVertices [i + 1],
-                                     0,
-                                     1);
-               }
-
-               this .getMin () .set (-x, -y, 0);
-               this .getMax () .set ( x,  y, 0);
+               vertexArray .push (x * defaultVertices [i],
+                                  y * defaultVertices [i + 1],
+                                  0,
+                                  1);
             }
 
-            this .setSolid (this ._solid .getValue ());
-         };
-      })(),
-   });
+            this .getMin () .set (-x, -y, 0);
+            this .getMax () .set ( x,  y, 0);
+         }
 
-   return Rectangle2D;
+         this .setSolid (this ._solid .getValue ());
+      };
+   })(),
 });
+
+export default Rectangle2D;

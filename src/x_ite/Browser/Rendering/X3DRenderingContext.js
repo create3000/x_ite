@@ -47,180 +47,169 @@
  ******************************************************************************/
 
 
-//https://github.com/sdecima/javascript-detect-element-resize
+const
+   _viewport     = Symbol (),
+   _localObjects = Symbol (),
+   _depthShaders = Symbol (),
+   _resizer      = Symbol ();
 
-define ([
-   "jquery",
-   "ResizeSensor",
-],
-function ($,
-          ResizeSensor)
+function X3DRenderingContext ()
 {
-"use strict";
+   this [_viewport]     = [0, 0, 300, 150];
+   this [_localObjects] = [ ]; // shader objects dumpster
+   this [_depthShaders] = new Map ();
+}
 
-   const
-      _viewport     = Symbol (),
-      _localObjects = Symbol (),
-      _depthShaders = Symbol (),
-      _resizer      = Symbol ();
-
-   function X3DRenderingContext ()
+X3DRenderingContext .prototype =
+{
+   initialize: function ()
    {
-      this [_viewport]     = [0, 0, 300, 150];
-      this [_localObjects] = [ ]; // shader objects dumpster
-      this [_depthShaders] = new Map ();
-   }
+      // Configure context.
 
-   X3DRenderingContext .prototype =
-   {
-      initialize: function ()
-      {
-         // Configure context.
+      const gl = this .getContext ();
 
-         const gl = this .getContext ();
+      gl .enable (gl .SCISSOR_TEST);
+      gl .depthFunc (gl .LEQUAL);
+      gl .clearDepth (1);
 
-         gl .enable (gl .SCISSOR_TEST);
-         gl .depthFunc (gl .LEQUAL);
-         gl .clearDepth (1);
+      gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+      gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
 
-         gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
-         gl .blendEquationSeparate (gl .FUNC_ADD, gl .FUNC_ADD);
+      // Configure viewport.
 
-         // Configure viewport.
+      $(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
 
-         $(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
-
-         this [_resizer] = new ResizeSensor (this .getSurface (), this .reshape .bind (this));
+      //https://github.com/sdecima/javascript-detect-element-resize
+      this [_resizer] = new ResizeSensor (this .getSurface (), this .reshape .bind (this));
 
 			this .getSurface () .css ("position", ""); // Reset position, set from ResizeSensor.
 
-         this .reshape ();
-      },
-      getRenderer: function ()
+      this .reshape ();
+   },
+   getRenderer: function ()
+   {
+      const gl = this .getContext ();
+
+      if (! navigator .userAgent .match (/Firefox/))
       {
-         const gl = this .getContext ();
+         const dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
 
-         if (! navigator .userAgent .match (/Firefox/))
-         {
-            const dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
+         if (dbgRenderInfo)
+            return gl .getParameter (dbgRenderInfo .UNMASKED_RENDERER_WEBGL);
+      }
 
-            if (dbgRenderInfo)
-               return gl .getParameter (dbgRenderInfo .UNMASKED_RENDERER_WEBGL);
-         }
+      return gl .getParameter (gl .RENDERER);
+   },
+   getVendor: function ()
+   {
+      const gl = this .getContext ();
 
-         return gl .getParameter (gl .RENDERER);
-      },
-      getVendor: function ()
+      if (! navigator .userAgent .match (/Firefox/))
       {
-         const gl = this .getContext ();
+         const dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
 
-         if (! navigator .userAgent .match (/Firefox/))
-         {
-            const dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
+         if (dbgRenderInfo)
+            return gl .getParameter (dbgRenderInfo .UNMASKED_VENDOR_WEBGL);
+      }
 
-            if (dbgRenderInfo)
-               return gl .getParameter (dbgRenderInfo .UNMASKED_VENDOR_WEBGL);
-         }
+      return gl .getParameter (gl .VENDOR);
+   },
+   getWebGLVersion: function ()
+   {
+      const gl = this .getContext ();
 
-         return gl .getParameter (gl .VENDOR);
-      },
-      getWebGLVersion: function ()
+      return gl .getParameter (gl .VERSION);
+   },
+   getAntialiased: function ()
+   {
+      const gl = this .getContext ();
+
+      return gl .getParameter (gl .SAMPLES) > 0;
+   },
+   getMaxClipPlanes: function ()
+   {
+      return 6;
+   },
+   getDepthSize: function ()
+   {
+      const gl = this .getContext ();
+
+      return gl .getParameter (gl .DEPTH_BITS);
+   },
+   getColorDepth: function ()
+   {
+      const gl = this .getContext ();
+
+      return (gl .getParameter (gl .RED_BITS) +
+              gl .getParameter (gl .BLUE_BITS) +
+              gl .getParameter (gl .GREEN_BITS) +
+              gl .getParameter (gl .ALPHA_BITS));
+   },
+   getViewport: function ()
+   {
+      return this [_viewport];
+   },
+   getLocalObjects: function ()
+   {
+      return this [_localObjects];
+   },
+   getDepthShader: function (numClipPlanes, particles)
+   {
+      let key = "";
+
+      key += numClipPlanes;
+      key += particles ? "1" : "0";
+
+      return this [_depthShaders] .get (key) || this .createDepthShader (key, numClipPlanes, particles);
+   },
+   createDepthShader: function (key, numClipPlanes, particles)
+   {
+      const options = [ ];
+
+      if (numClipPlanes)
       {
-         const gl = this .getContext ();
+         options .push ("X3D_CLIP_PLANES");
+         options .push ("X3D_NUM_CLIP_PLANES " + numClipPlanes);
+      }
 
-         return gl .getParameter (gl .VERSION);
-      },
-      getAntialiased: function ()
-      {
-         const gl = this .getContext ();
+      if (particles)
+         options .push ("X3D_PARTICLE_SYSTEM");
 
-         return gl .getParameter (gl .SAMPLES) > 0;
-      },
-      getMaxClipPlanes: function ()
-      {
-         return 6;
-      },
-      getDepthSize: function ()
-      {
-         const gl = this .getContext ();
+      const shaderNode = this .createShader ("DepthShader", "Depth", "Depth", options);
 
-         return gl .getParameter (gl .DEPTH_BITS);
-      },
-      getColorDepth: function ()
-      {
-         const gl = this .getContext ();
+      this [_depthShaders] .set (key, shaderNode);
 
-         return (gl .getParameter (gl .RED_BITS) +
-                 gl .getParameter (gl .BLUE_BITS) +
-                 gl .getParameter (gl .GREEN_BITS) +
-                 gl .getParameter (gl .ALPHA_BITS));
-      },
-      getViewport: function ()
-      {
-         return this [_viewport];
-      },
-      getLocalObjects: function ()
-      {
-         return this [_localObjects];
-      },
-      getDepthShader: function (numClipPlanes, particles)
-      {
-         let key = "";
+      return shaderNode;
+   },
+   reshape: function ()
+   {
+      const
+         gl      = this .getContext (),
+         jCanvas = this .getCanvas (),
+         width   = jCanvas .width (),
+         height  = jCanvas .height (),
+         canvas  = jCanvas [0];
 
-         key += numClipPlanes;
-         key += particles ? "1" : "0";
+      canvas .width  = width;
+      canvas .height = height;
 
-         return this [_depthShaders] .get (key) || this .createDepthShader (key, numClipPlanes, particles);
-      },
-      createDepthShader: function (key, numClipPlanes, particles)
-      {
-         const options = [ ];
+      this [_viewport] [2] = width;
+      this [_viewport] [3] = height;
 
-         if (numClipPlanes)
-         {
-            options .push ("X3D_CLIP_PLANES");
-            options .push ("X3D_NUM_CLIP_PLANES " + numClipPlanes);
-         }
+      gl .viewport (0, 0, width, height);
+      gl .scissor  (0, 0, width, height);
 
-         if (particles)
-            options .push ("X3D_PARTICLE_SYSTEM");
+      this .addBrowserEvent ();
+   },
+   onfullscreen: function ()
+   {
+      const element = this .getElement ();
 
-         const shaderNode = this .createShader ("DepthShader", "Depth", "Depth", options);
+      if (element .fullScreen ())
+         element .addClass ("x_ite-fullscreen");
+      else
+         element .removeClass ("x_ite-fullscreen");
+   },
+};
 
-         this [_depthShaders] .set (key, shaderNode);
-
-         return shaderNode;
-      },
-      reshape: function ()
-      {
-         const
-            gl      = this .getContext (),
-            jCanvas = this .getCanvas (),
-            width   = jCanvas .width (),
-            height  = jCanvas .height (),
-            canvas  = jCanvas [0];
-
-         canvas .width  = width;
-         canvas .height = height;
-
-         this [_viewport] [2] = width;
-         this [_viewport] [3] = height;
-
-         gl .viewport (0, 0, width, height);
-         gl .scissor  (0, 0, width, height);
-
-         this .addBrowserEvent ();
-      },
-      onfullscreen: function ()
-      {
-         const element = this .getElement ();
-
-         if (element .fullScreen ())
-            element .addClass ("x_ite-fullscreen");
-         else
-            element .removeClass ("x_ite-fullscreen");
-      },
-   };
-
-   return X3DRenderingContext;
-});
+export default X3DRenderingContext;

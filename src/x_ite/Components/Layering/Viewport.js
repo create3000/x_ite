@@ -47,136 +47,122 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Layering/X3DViewportNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Rendering/TraverseType",
-   "standard/Utility/ObjectCache",
-   "standard/Math/Geometry/ViewVolume",
-   "standard/Math/Numbers/Vector4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DViewportNode,
-          X3DConstants,
-          TraverseType,
-          ObjectCache,
-          ViewVolume,
-          Vector4)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DViewportNode from "./X3DViewportNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import TraverseType from "../../Rendering/TraverseType.js";
+import ObjectCache from "../../../standard/Utility/ObjectCache.js";
+import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
+import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
+
+const ViewVolumes = ObjectCache (ViewVolume);
+
+function Viewport (executionContext)
 {
-"use strict";
+   X3DViewportNode .call (this, executionContext);
 
-   const ViewVolumes = ObjectCache (ViewVolume);
+   this .addType (X3DConstants .Viewport);
 
-   function Viewport (executionContext)
+   this .rectangle = new Vector4 (0, 0, 0, 0);
+}
+
+Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype),
+{
+   constructor: Viewport,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "clipBoundary",   new Fields .MFFloat (0, 1, 0, 1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DViewportNode .call (this, executionContext);
-
-      this .addType (X3DConstants .Viewport);
-
-      this .rectangle = new Vector4 (0, 0, 0, 0);
-   }
-
-   Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype),
+      return "Viewport";
+   },
+   getComponentName: function ()
    {
-      constructor: Viewport,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "clipBoundary",   new Fields .MFFloat (0, 1, 0, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "Viewport";
-      },
-      getComponentName: function ()
-      {
-         return "Layering";
-      },
-      getContainerField: function ()
-      {
-         return "viewport";
-      },
-      getRectangle: function (browser)
-      {
-         const viewport = browser .getViewport ();
+      return "Layering";
+   },
+   getContainerField: function ()
+   {
+      return "viewport";
+   },
+   getRectangle: function (browser)
+   {
+      const viewport = browser .getViewport ();
 
-         const
-            left   = Math .floor (viewport [2] * this .getLeft ()),
-            right  = Math .floor (viewport [2] * this .getRight ()),
-            bottom = Math .floor (viewport [3] * this .getBottom ()),
-            top    = Math .floor (viewport [3] * this .getTop ());
+      const
+         left   = Math .floor (viewport [2] * this .getLeft ()),
+         right  = Math .floor (viewport [2] * this .getRight ()),
+         bottom = Math .floor (viewport [3] * this .getBottom ()),
+         top    = Math .floor (viewport [3] * this .getTop ());
 
-         this .rectangle .set (left,
-                               bottom,
-                               Math .max (0, right - left),
-                               Math .max (0, top - bottom));
+      this .rectangle .set (left,
+                            bottom,
+                            Math .max (0, right - left),
+                            Math .max (0, top - bottom));
 
-         return this .rectangle;
-      },
-      getLeft: function ()
-      {
-         return this ._clipBoundary .length > 0 ? this ._clipBoundary [0] : 0;
-      },
-      getRight: function ()
-      {
-         return this ._clipBoundary .length > 1 ? this ._clipBoundary [1] : 1;
-      },
-      getBottom: function ()
-      {
-         return this ._clipBoundary .length > 2 ? this ._clipBoundary [2] : 0;
-      },
-      getTop: function ()
-      {
-         return this ._clipBoundary .length > 3 ? this ._clipBoundary [3] : 1;
-      },
-      traverse: function (type, renderObject)
-      {
-         this .push (renderObject);
+      return this .rectangle;
+   },
+   getLeft: function ()
+   {
+      return this ._clipBoundary .length > 0 ? this ._clipBoundary [0] : 0;
+   },
+   getRight: function ()
+   {
+      return this ._clipBoundary .length > 1 ? this ._clipBoundary [1] : 1;
+   },
+   getBottom: function ()
+   {
+      return this ._clipBoundary .length > 2 ? this ._clipBoundary [2] : 0;
+   },
+   getTop: function ()
+   {
+      return this ._clipBoundary .length > 3 ? this ._clipBoundary [3] : 1;
+   },
+   traverse: function (type, renderObject)
+   {
+      this .push (renderObject);
 
-         switch (type)
+      switch (type)
+      {
+         case TraverseType .POINTER:
          {
-            case TraverseType .POINTER:
-            {
-               if (this .getBrowser () .isPointerInRectangle (this .rectangle))
-                  X3DViewportNode .prototype .traverse .call (this, type, renderObject);
-
-               break;
-            }
-            default:
+            if (this .getBrowser () .isPointerInRectangle (this .rectangle))
                X3DViewportNode .prototype .traverse .call (this, type, renderObject);
-               break;
+
+            break;
          }
+         default:
+            X3DViewportNode .prototype .traverse .call (this, type, renderObject);
+            break;
+      }
 
-         this .pop (renderObject);
-      },
-      push: function (renderObject)
-      {
-         const
-            viewVolumes = renderObject .getViewVolumes (),
-            rectangle   = this .getRectangle (this .getBrowser ()),
-            viewport    = viewVolumes .length ? viewVolumes .at (-1) .getViewport () : rectangle,
-            viewVolume  = ViewVolumes .pop ();
+      this .pop (renderObject);
+   },
+   push: function (renderObject)
+   {
+      const
+         viewVolumes = renderObject .getViewVolumes (),
+         rectangle   = this .getRectangle (this .getBrowser ()),
+         viewport    = viewVolumes .length ? viewVolumes .at (-1) .getViewport () : rectangle,
+         viewVolume  = ViewVolumes .pop ();
 
-         viewVolume .set (renderObject .getProjectionMatrix () .get (), viewport, rectangle);
+      viewVolume .set (renderObject .getProjectionMatrix () .get (), viewport, rectangle);
 
-         viewVolumes .push (viewVolume);
-      },
-      pop: function (renderObject)
-      {
-         ViewVolumes .push (renderObject .getViewVolumes () .pop ());
-      },
-   });
-
-   return Viewport;
+      viewVolumes .push (viewVolume);
+   },
+   pop: function (renderObject)
+   {
+      ViewVolumes .push (renderObject .getViewVolumes () .pop ());
+   },
 });
+
+export default Viewport;

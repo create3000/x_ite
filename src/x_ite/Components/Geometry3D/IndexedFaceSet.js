@@ -47,454 +47,441 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DComposedGeometryNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Matrix4",
-   "standard/Math/Geometry/Triangle3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DComposedGeometryNode,
-          X3DConstants,
-          Vector3,
-          Matrix4,
-          Triangle3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DComposedGeometryNode from "../Rendering/X3DComposedGeometryNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import Triangle3 from "../../../standard/Math/Geometry/Triangle3.js";
+
+function IndexedFaceSet (executionContext)
 {
-"use strict";
+   X3DComposedGeometryNode .call (this, executionContext);
 
-   function IndexedFaceSet (executionContext)
+   this .addType (X3DConstants .IndexedFaceSet);
+
+   this ._creaseAngle .setUnit ("angle");
+}
+
+IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+{
+   constructor: IndexedFaceSet,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_colorIndex",    new Fields .MFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_texCoordIndex", new Fields .MFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_normalIndex",   new Fields .MFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_coordIndex",    new Fields .MFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",             new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",               new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "convex",            new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "creaseAngle",       new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",    new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex",   new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "colorIndex",        new Fields .MFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoordIndex",     new Fields .MFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "normalIndex",       new Fields .MFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "coordIndex",        new Fields .MFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",            new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "color",             new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",            new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",             new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DComposedGeometryNode .call (this, executionContext);
-
-      this .addType (X3DConstants .IndexedFaceSet);
-
-      this ._creaseAngle .setUnit ("angle");
-   }
-
-   IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+      return "IndexedFaceSet";
+   },
+   getComponentName: function ()
    {
-      constructor: IndexedFaceSet,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_colorIndex",    new Fields .MFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_texCoordIndex", new Fields .MFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_normalIndex",   new Fields .MFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_coordIndex",    new Fields .MFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",             new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",               new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "convex",            new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "creaseAngle",       new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",    new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex",   new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorIndex",        new Fields .MFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoordIndex",     new Fields .MFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "normalIndex",       new Fields .MFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "coordIndex",        new Fields .MFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",            new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",            new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",             new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "IndexedFaceSet";
-      },
-      getComponentName: function ()
-      {
-         return "Geometry3D";
-      },
-      getContainerField: function ()
-      {
-         return "geometry";
-      },
-      initialize: function ()
-      {
-         X3DComposedGeometryNode .prototype .initialize .call (this);
+      return "Geometry3D";
+   },
+   getContainerField: function ()
+   {
+      return "geometry";
+   },
+   initialize: function ()
+   {
+      X3DComposedGeometryNode .prototype .initialize .call (this);
 
-         this ._set_colorIndex    .addFieldInterest (this ._colorIndex);
-         this ._set_texCoordIndex .addFieldInterest (this ._texCoordIndex);
-         this ._set_normalIndex   .addFieldInterest (this ._normalIndex);
-         this ._set_coordIndex    .addFieldInterest (this ._coordIndex);
-      },
-      getTexCoordPerVertexIndex: function (index)
-      {
-         if (index < this ._texCoordIndex .length)
-            return this ._texCoordIndex [index];
+      this ._set_colorIndex    .addFieldInterest (this ._colorIndex);
+      this ._set_texCoordIndex .addFieldInterest (this ._texCoordIndex);
+      this ._set_normalIndex   .addFieldInterest (this ._normalIndex);
+      this ._set_coordIndex    .addFieldInterest (this ._coordIndex);
+   },
+   getTexCoordPerVertexIndex: function (index)
+   {
+      if (index < this ._texCoordIndex .length)
+         return this ._texCoordIndex [index];
 
-         return this ._coordIndex [index];
-      },
-      getColorPerVertexIndex: function (index)
-      {
-         if (index < this ._colorIndex .length)
-            return this ._colorIndex [index];
+      return this ._coordIndex [index];
+   },
+   getColorPerVertexIndex: function (index)
+   {
+      if (index < this ._colorIndex .length)
+         return this ._colorIndex [index];
 
-         return this ._coordIndex [index];
-      },
-      getColorIndex: function (index)
-      {
-         if (index < this ._colorIndex .length)
-            return this ._colorIndex [index];
+      return this ._coordIndex [index];
+   },
+   getColorIndex: function (index)
+   {
+      if (index < this ._colorIndex .length)
+         return this ._colorIndex [index];
 
-         return index;
-      },
-      getNormalPerVertexIndex: function (index)
-      {
-         if (index < this ._normalIndex .length)
-            return this ._normalIndex [index];
+      return index;
+   },
+   getNormalPerVertexIndex: function (index)
+   {
+      if (index < this ._normalIndex .length)
+         return this ._normalIndex [index];
 
-         return this ._coordIndex [index];
-      },
-      getNormalIndex: function (index)
-      {
-         if (index < this ._normalIndex .length)
-            return this ._normalIndex [index];
+      return this ._coordIndex [index];
+   },
+   getNormalIndex: function (index)
+   {
+      if (index < this ._normalIndex .length)
+         return this ._normalIndex [index];
 
-         return index;
-      },
-      build: function ()
-      {
-         // Triangulate
+      return index;
+   },
+   build: function ()
+   {
+      // Triangulate
 
-         const polygons = this .triangulate ();
+      const polygons = this .triangulate ();
 
-         // Build arrays
+      // Build arrays
 
-         if (polygons .length === 0)
-            return;
+      if (polygons .length === 0)
+         return;
 
-         // Fill GeometryNode
+      // Fill GeometryNode
 
-         const
-            colorPerVertex     = this ._colorPerVertex .getValue (),
-            normalPerVertex    = this ._normalPerVertex .getValue (),
-            coordIndex         = this ._coordIndex .getValue (),
-            attribNodes        = this .getAttrib (),
-            numAttribNodes     = attribNodes .length,
-            attribArrays       = this .getAttribs (),
-            fogCoordNode       = this .getFogCoord (),
-            colorNode          = this .getColor (),
-            texCoordNode       = this .getTexCoord (),
-            normalNode         = this .getNormal (),
-            coordNode          = this .getCoord (),
-            fogDepthArray      = this .getFogDepths (),
-            colorArray         = this .getColors (),
-            multiTexCoordArray = this .getMultiTexCoords (),
-            normalArray        = this .getNormals (),
-            vertexArray        = this .getVertices ();
+      const
+         colorPerVertex     = this ._colorPerVertex .getValue (),
+         normalPerVertex    = this ._normalPerVertex .getValue (),
+         coordIndex         = this ._coordIndex .getValue (),
+         attribNodes        = this .getAttrib (),
+         numAttribNodes     = attribNodes .length,
+         attribArrays       = this .getAttribs (),
+         fogCoordNode       = this .getFogCoord (),
+         colorNode          = this .getColor (),
+         texCoordNode       = this .getTexCoord (),
+         normalNode         = this .getNormal (),
+         coordNode          = this .getCoord (),
+         fogDepthArray      = this .getFogDepths (),
+         colorArray         = this .getColors (),
+         multiTexCoordArray = this .getMultiTexCoords (),
+         normalArray        = this .getNormals (),
+         vertexArray        = this .getVertices ();
 
-         if (texCoordNode)
-            texCoordNode .init (multiTexCoordArray);
+      if (texCoordNode)
+         texCoordNode .init (multiTexCoordArray);
 
-         for (const polygon of polygons)
-         {
-            const
-               triangles = polygon .triangles,
-               face      = polygon .face;
-
-            for (const i of triangles)
-            {
-               const index = coordIndex [i];
-
-               for (let a = 0; a < numAttribNodes; ++ a)
-                  attribNodes [a] .addValue (index, attribArrays [a]);
-
-               if (fogCoordNode)
-                  fogCoordNode .addDepth (index, fogDepthArray);
-
-               if (colorNode)
-               {
-                  if (colorPerVertex)
-                     colorNode .addColor (this .getColorPerVertexIndex (i), colorArray);
-                  else
-                     colorNode .addColor (this .getColorIndex (face), colorArray);
-               }
-
-               if (texCoordNode)
-                  texCoordNode .addTexCoord (this .getTexCoordPerVertexIndex (i), multiTexCoordArray);
-
-               if (normalNode)
-               {
-                  if (normalPerVertex)
-                     normalNode .addVector (this .getNormalPerVertexIndex (i), normalArray);
-
-                  else
-                     normalNode .addVector (this .getNormalIndex (face), normalArray);
-               }
-
-               coordNode .addPoint (index, vertexArray);
-            }
-         }
-
-         // Autogenerate normal if not specified.
-
-         if (!this .getNormal ())
-            this .buildNormals (polygons);
-
-         this .setSolid (this ._solid .getValue ());
-         this .setCCW (this ._ccw .getValue ());
-      },
-      triangulate: function ()
+      for (const polygon of polygons)
       {
          const
-            convex      = this ._convex .getValue (),
-            coordLength = this ._coordIndex .length,
-            polygons    = [ ];
+            triangles = polygon .triangles,
+            face      = polygon .face;
 
-         if (!this .getCoord ())
-            return polygons;
-
-         // Add -1 (polygon end marker) to coordIndex if not present.
-         if (coordLength && this ._coordIndex [coordLength - 1] > -1)
-            this ._coordIndex .push (-1);
-
-         if (coordLength)
+         for (const i of triangles)
          {
-            const
-               coordIndex  = this ._coordIndex .getValue (),
-               coordLength = this ._coordIndex .length;
+            const index = coordIndex [i];
 
-            // Construct triangle array and determine the number of used points.
+            for (let a = 0; a < numAttribNodes; ++ a)
+               attribNodes [a] .addValue (index, attribArrays [a]);
 
-            let vertices = [ ];
+            if (fogCoordNode)
+               fogCoordNode .addDepth (index, fogDepthArray);
 
-            for (let i = 0, face = 0; i < coordLength; ++ i)
+            if (colorNode)
             {
-               const index = coordIndex [i];
-
-               if (index > -1)
-               {
-                  // Add vertex index.
-                  vertices .push (i);
-               }
+               if (colorPerVertex)
+                  colorNode .addColor (this .getColorPerVertexIndex (i), colorArray);
                else
+                  colorNode .addColor (this .getColorIndex (face), colorArray);
+            }
+
+            if (texCoordNode)
+               texCoordNode .addTexCoord (this .getTexCoordPerVertexIndex (i), multiTexCoordArray);
+
+            if (normalNode)
+            {
+               if (normalPerVertex)
+                  normalNode .addVector (this .getNormalPerVertexIndex (i), normalArray);
+
+               else
+                  normalNode .addVector (this .getNormalIndex (face), normalArray);
+            }
+
+            coordNode .addPoint (index, vertexArray);
+         }
+      }
+
+      // Autogenerate normal if not specified.
+
+      if (!this .getNormal ())
+         this .buildNormals (polygons);
+
+      this .setSolid (this ._solid .getValue ());
+      this .setCCW (this ._ccw .getValue ());
+   },
+   triangulate: function ()
+   {
+      const
+         convex      = this ._convex .getValue (),
+         coordLength = this ._coordIndex .length,
+         polygons    = [ ];
+
+      if (!this .getCoord ())
+         return polygons;
+
+      // Add -1 (polygon end marker) to coordIndex if not present.
+      if (coordLength && this ._coordIndex [coordLength - 1] > -1)
+         this ._coordIndex .push (-1);
+
+      if (coordLength)
+      {
+         const
+            coordIndex  = this ._coordIndex .getValue (),
+            coordLength = this ._coordIndex .length;
+
+         // Construct triangle array and determine the number of used points.
+
+         let vertices = [ ];
+
+         for (let i = 0, face = 0; i < coordLength; ++ i)
+         {
+            const index = coordIndex [i];
+
+            if (index > -1)
+            {
+               // Add vertex index.
+               vertices .push (i);
+            }
+            else
+            {
+               // Negativ index.
+
+               if (vertices .length)
                {
-                  // Negativ index.
+                  // Closed polygon.
+                  //if (coordIndex [vertices [0]] === coordIndex [vertices [vertices .length - 1]])
+                  //	vertices .pop ();
 
-                  if (vertices .length)
+                  switch (vertices .length)
                   {
-                     // Closed polygon.
-                     //if (coordIndex [vertices [0]] === coordIndex [vertices [vertices .length - 1]])
-                     //	vertices .pop ();
-
-                     switch (vertices .length)
+                     case 0:
+                     case 1:
+                     case 2:
                      {
-                        case 0:
-                        case 1:
-                        case 2:
+                        vertices .length = 0;
+                        break;
+                     }
+                     case 3:
+                     {
+                        // Add polygon with one triangle.
+                        polygons .push ({ vertices: vertices, triangles: vertices, face: face });
+                        vertices = [ ];
+                        break;
+                     }
+                     default:
+                     {
+                        // Triangulate polygons.
+                        const
+                           triangles = [ ],
+                           polygon   = { vertices: vertices, triangles: triangles, face: face };
+
+                        if (convex)
+                           this .triangulateConvexPolygon (vertices, triangles);
+                        else
+                           this .triangulatePolygon (vertices, triangles);
+
+                        if (triangles .length < 3)
                         {
                            vertices .length = 0;
-                           break;
                         }
-                        case 3:
+                        else
                         {
-                           // Add polygon with one triangle.
-                           polygons .push ({ vertices: vertices, triangles: vertices, face: face });
+                           polygons .push (polygon);
                            vertices = [ ];
-                           break;
                         }
-                        default:
-                        {
-                           // Triangulate polygons.
-                           const
-                              triangles = [ ],
-                              polygon   = { vertices: vertices, triangles: triangles, face: face };
 
-                           if (convex)
-                              this .triangulateConvexPolygon (vertices, triangles);
-                           else
-                              this .triangulatePolygon (vertices, triangles);
-
-                           if (triangles .length < 3)
-                           {
-                              vertices .length = 0;
-                           }
-                           else
-                           {
-                              polygons .push (polygon);
-                              vertices = [ ];
-                           }
-
-                           break;
-                        }
+                        break;
                      }
                   }
-
-                  ++ face;
                }
+
+               ++ face;
             }
          }
+      }
 
-         return polygons;
-      },
-      triangulatePolygon: (function ()
-      {
-         const polygon = [ ];
+      return polygons;
+   },
+   triangulatePolygon: (function ()
+   {
+      const polygon = [ ];
 
-         return function (vertices, triangles)
-         {
-            const
-               coordIndex = this ._coordIndex .getValue (),
-               coord      = this .getCoord (),
-               length     = vertices .length;
-
-            for (let v = 0; v < length; ++ v)
-            {
-               const i = vertices [v];
-
-               let vertex = polygon [v];
-
-               if (!vertex)
-                  vertex = polygon [v] = new Vector3 (0, 0, 0);
-
-               vertex .index = i;
-
-               coord .get1Point (coordIndex [i], vertex);
-            }
-
-            polygon .length = length;
-
-            Triangle3 .triangulatePolygon (polygon, triangles);
-
-            for (let i = 0, length = triangles .length; i < length; ++ i)
-               triangles [i] = triangles [i] .index;
-         };
-      })(),
-      triangulateConvexPolygon: function (vertices, triangles)
-      {
-         // Fallback: Very simple triangulation for convex polygons.
-         for (let i = 1, length = vertices .length - 1; i < length; ++ i)
-            triangles .push (vertices [0], vertices [i], vertices [i + 1]);
-      },
-      buildNormals: function (polygons)
+      return function (vertices, triangles)
       {
          const
-            normals     = this .createNormals (polygons),
-            normalArray = this .getNormals ();
+            coordIndex = this ._coordIndex .getValue (),
+            coord      = this .getCoord (),
+            length     = vertices .length;
+
+         for (let v = 0; v < length; ++ v)
+         {
+            const i = vertices [v];
+
+            let vertex = polygon [v];
+
+            if (!vertex)
+               vertex = polygon [v] = new Vector3 (0, 0, 0);
+
+            vertex .index = i;
+
+            coord .get1Point (coordIndex [i], vertex);
+         }
+
+         polygon .length = length;
+
+         Triangle3 .triangulatePolygon (polygon, triangles);
+
+         for (let i = 0, length = triangles .length; i < length; ++ i)
+            triangles [i] = triangles [i] .index;
+      };
+   })(),
+   triangulateConvexPolygon: function (vertices, triangles)
+   {
+      // Fallback: Very simple triangulation for convex polygons.
+      for (let i = 1, length = vertices .length - 1; i < length; ++ i)
+         triangles .push (vertices [0], vertices [i], vertices [i + 1]);
+   },
+   buildNormals: function (polygons)
+   {
+      const
+         normals     = this .createNormals (polygons),
+         normalArray = this .getNormals ();
+
+      for (const polygon of polygons)
+      {
+         for (const triangle of polygon .triangles)
+         {
+            const normal = normals [triangle];
+
+            normalArray .push (normal .x, normal .y, normal .z);
+         }
+      }
+   },
+   createNormals: (function ()
+   {
+      const
+         normals     = [ ],
+         normalIndex = [ ];
+
+      return function (polygons)
+      {
+         const
+            cw          = ! this ._ccw .getValue (),
+            coordIndex  = this ._coordIndex .getValue (),
+            coord       = this .getCoord ();
+
+         normals     .length = 0;
+         normalIndex .length = 0;
 
          for (const polygon of polygons)
          {
-            for (const triangle of polygon .triangles)
-            {
-               const normal = normals [triangle];
-
-               normalArray .push (normal .x, normal .y, normal .z);
-            }
-         }
-      },
-      createNormals: (function ()
-      {
-         const
-            normals     = [ ],
-            normalIndex = [ ];
-
-         return function (polygons)
-         {
             const
-               cw          = ! this ._ccw .getValue (),
-               coordIndex  = this ._coordIndex .getValue (),
-               coord       = this .getCoord ();
+               vertices = polygon .vertices,
+               length   = vertices .length;
 
-            normals     .length = 0;
-            normalIndex .length = 0;
+            switch (length)
+            {
+               case 3:
+               {
+                  var normal = coord .getNormal (coordIndex [vertices [0]],
+                                                 coordIndex [vertices [1]],
+                                                 coordIndex [vertices [2]]);
+                  break;
+               }
+               case 4:
+               {
+                  var normal = coord .getQuadNormal (coordIndex [vertices [0]],
+                                                     coordIndex [vertices [1]],
+                                                     coordIndex [vertices [2]],
+                                                     coordIndex [vertices [3]]);
+                  break;
+               }
+               default:
+               {
+                  var normal = this .getPolygonNormal (vertices, coordIndex, coord);
+                  break;
+               }
+            }
 
-            for (const polygon of polygons)
+            // Add a normal index for each point.
+
+            for (let i = 0; i < length; ++ i)
             {
                const
-                  vertices = polygon .vertices,
-                  length   = vertices .length;
+                  index = vertices [i],
+                  point = coordIndex [index];
 
-               switch (length)
-               {
-                  case 3:
-                  {
-                     var normal = coord .getNormal (coordIndex [vertices [0]],
-                                                    coordIndex [vertices [1]],
-                                                    coordIndex [vertices [2]]);
-                     break;
-                  }
-                  case 4:
-                  {
-                     var normal = coord .getQuadNormal (coordIndex [vertices [0]],
-                                                        coordIndex [vertices [1]],
-                                                        coordIndex [vertices [2]],
-                                                        coordIndex [vertices [3]]);
-                     break;
-                  }
-                  default:
-                  {
-                     var normal = this .getPolygonNormal (vertices, coordIndex, coord);
-                     break;
-                  }
-               }
+               let pointNormals = normalIndex [point];
 
-               // Add a normal index for each point.
+               if (!pointNormals)
+                  pointNormals = normalIndex [point] = [ ];
 
-               for (let i = 0; i < length; ++ i)
-               {
-                  const
-                     index = vertices [i],
-                     point = coordIndex [index];
-
-                  let pointNormals = normalIndex [point];
-
-                  if (!pointNormals)
-                     pointNormals = normalIndex [point] = [ ];
-
-                  pointNormals .push (index);
-               }
-
-               if (cw)
-                  normal .negate ();
-
-               // Add this normal for each vertex.
-
-               for (let i = 0; i < length; ++ i)
-                  normals [vertices [i]] = normal;
+               pointNormals .push (index);
             }
 
-            return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
-         };
-      })(),
-      getPolygonNormal: (function ()
+            if (cw)
+               normal .negate ();
+
+            // Add this normal for each vertex.
+
+            for (let i = 0; i < length; ++ i)
+               normals [vertices [i]] = normal;
+         }
+
+         return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
+      };
+   })(),
+   getPolygonNormal: (function ()
+   {
+      let
+         current = new Vector3 (0, 0, 0),
+         next    = new Vector3 (0, 0, 0);
+
+      return function (vertices, coordIndex, coord)
       {
-         let
-            current = new Vector3 (0, 0, 0),
-            next    = new Vector3 (0, 0, 0);
+         // Determine polygon normal.
+         // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-         return function (vertices, coordIndex, coord)
+         const normal = new Vector3 (0, 0, 0);
+
+         coord .get1Point (coordIndex [vertices [0]], next);
+
+         for (let i = 0, length = vertices .length; i < length; ++ i)
          {
-            // Determine polygon normal.
-            // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
+            const tmp = current;
+            current = next;
+            next    = tmp;
 
-            const normal = new Vector3 (0, 0, 0);
+            coord .get1Point (coordIndex [vertices [(i + 1) % length]], next);
 
-            coord .get1Point (coordIndex [vertices [0]], next);
+            normal .x += (current .y - next .y) * (current .z + next .z);
+            normal .y += (current .z - next .z) * (current .x + next .x);
+            normal .z += (current .x - next .x) * (current .y + next .y);
+         }
 
-            for (let i = 0, length = vertices .length; i < length; ++ i)
-            {
-               const tmp = current;
-               current = next;
-               next    = tmp;
-
-               coord .get1Point (coordIndex [vertices [(i + 1) % length]], next);
-
-               normal .x += (current .y - next .y) * (current .z + next .z);
-               normal .y += (current .z - next .z) * (current .x + next .x);
-               normal .z += (current .x - next .x) * (current .y + next .y);
-            }
-
-            return normal .normalize ();
-         };
-      })(),
-   });
-
-   return IndexedFaceSet;
+         return normal .normalize ();
+      };
+   })(),
 });
+
+export default IndexedFaceSet;

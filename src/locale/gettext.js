@@ -46,83 +46,76 @@
  *
  ******************************************************************************/
 
+import de from "./de.po.js";
+import fr from "./fr.po.js";
 
-define ([
-   "text!locale/de.po",
-   "text!locale/fr.po",
-],
-function (de, fr)
+function execAll (regex, string)
 {
-"use strict";
+   const matches = [ ];
 
-   function execAll (regex, string)
+   let match = null;
+
+   while (match = regex .exec (string))
+      matches .push (match);
+
+   return matches;
+}
+
+function getLanguage ()
+{
+   for (const la of navigator .languages)
    {
-      var
-         match   = null,
-         matches = [ ];
+      const language = la .split ("-") [0];
 
-      while (match = regex .exec (string))
-         matches .push (match);
-
-      return matches;
-   }
-
-   function getLanguage ()
-   {
-      for (var i = 0; i < navigator .languages; ++ i)
-      {
-         var language = navigator .languages [i] .split ("-") [0];
-
-         if (locales [language])
-            return language;
-      }
-
-      return (navigator .language || navigator .userLanguage) .split ("-") [0];
-   }
-
-   function setLocale (language)
-   {
       if (locales [language])
-      {
-         var
-            matches = execAll (msg, locales [language]),
-            locale  = locales [language] = { };
+         return language;
+   }
 
-         for (var i = 0, length = matches .length; i < length; ++ i)
-         {
-            if (matches [i] [2] .length)
-               locale [matches [i] [1]] = matches [i] [2];
-         }
+   return (navigator .language || navigator .userLanguage) .split ("-") [0];
+}
+
+function setLocale (language)
+{
+   if (locales [language])
+   {
+      const
+         matches = execAll (msg, locales [language]),
+         locale  = locales [language] = { };
+
+      for (var i = 0, length = matches .length; i < length; ++ i)
+      {
+         if (matches [i] [2] .length)
+            locale [matches [i] [1]] = matches [i] [2];
       }
    }
+}
 
-   var locales =
-   {
-      en: "C",
-      de: de,
-      fr: fr,
-   };
+const locales =
+{
+   en: "C",
+   de: de,
+   fr: fr,
+};
 
-   var
-      msg      = /msgid\s+"(.*?)"\nmsgstr\s+"(.*?)"\n/g,
-      language = getLanguage ();
+const
+   msg      = /msgid\s+"(.*?)"\nmsgstr\s+"(.*?)"\n/g,
+   language = getLanguage ();
 
-   setLocale (language);
+setLocale (language);
 
-   function gettext (string)
-   {
-      var locale = locales [language];
+function gettext (string)
+{
+   const locale = locales [language];
 
-      if (locale === undefined)
-         return string;
+   if (locale === undefined)
+      return string;
 
-      var translation = locale [string];
+   const translation = locale [string];
 
-      if (translation === undefined)
-         return string;
+   if (translation === undefined)
+      return string;
 
-      return translation;
-   }
+   return translation;
+}
 
-   return gettext;
-});
+export default gettext;

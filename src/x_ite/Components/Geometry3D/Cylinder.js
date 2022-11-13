@@ -47,263 +47,250 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Complex",
-   "standard/Math/Numbers/Vector2",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DGeometryNode,
-          X3DConstants,
-          Complex,
-          Vector2,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DGeometryNode from "../Rendering/X3DGeometryNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Complex from "../../../standard/Math/Numbers/Complex.js";
+import Vector2 from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+function Cylinder (executionContext)
 {
-"use strict";
+   X3DGeometryNode .call (this, executionContext);
 
-   function Cylinder (executionContext)
+   this .addType (X3DConstants .Cylinder);
+
+   this ._height .setUnit ("length");
+   this ._radius .setUnit ("length");
+}
+
+Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+{
+   constructor: Cylinder,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "top",      new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "side",     new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bottom",   new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "height",   new Fields .SFFloat (2)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
+   ]),
+   getTypeName: function ()
    {
-      X3DGeometryNode .call (this, executionContext);
-
-      this .addType (X3DConstants .Cylinder);
-
-      this ._height .setUnit ("length");
-      this ._radius .setUnit ("length");
-   }
-
-   Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+      return "Cylinder";
+   },
+   getComponentName: function ()
    {
-      constructor: Cylinder,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "top",      new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "side",     new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bottom",   new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "height",   new Fields .SFFloat (2)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
-      ]),
-      getTypeName: function ()
-      {
-         return "Cylinder";
-      },
-      getComponentName: function ()
-      {
-         return "Geometry3D";
-      },
-      getContainerField: function ()
-      {
-         return "geometry";
-      },
-      set_live__: function ()
-      {
-         X3DGeometryNode .prototype .set_live__ .call (this);
+      return "Geometry3D";
+   },
+   getContainerField: function ()
+   {
+      return "geometry";
+   },
+   set_live__: function ()
+   {
+      X3DGeometryNode .prototype .set_live__ .call (this);
 
-         if (this .isLive () .getValue ())
-            this .getBrowser () .getCylinderOptions () .addInterest ("requestRebuild", this);
-         else
-            this .getBrowser () .getCylinderOptions () .removeInterest ("requestRebuild", this);
-      },
-      build: function ()
+      if (this .isLive () .getValue ())
+         this .getBrowser () .getCylinderOptions () .addInterest ("requestRebuild", this);
+      else
+         this .getBrowser () .getCylinderOptions () .removeInterest ("requestRebuild", this);
+   },
+   build: function ()
+   {
+      const
+         options       = this .getBrowser () .getCylinderOptions (),
+         xDimension    = options ._xDimension .getValue (),
+         texCoordArray = this .getTexCoords (),
+         normalArray   = this .getNormals (),
+         vertexArray   = this .getVertices ();
+
+      this .getMultiTexCoords () .push (texCoordArray);
+
+      const
+         radius = this ._radius .getValue (),
+         y1     = this ._height .getValue () / 2,
+         y2     = -y1;
+
+      if (this ._side .getValue ())
+      {
+         for (let i = 0; i < xDimension; ++ i)
+         {
+            const
+               u1     = i / xDimension,
+               theta1 = 2 * Math .PI * u1,
+               n1     = Complex .Polar (-1, theta1),
+               p1     = Complex .multiply (n1, radius);
+
+            const
+               u2     = (i + 1) / xDimension,
+               theta2 = 2 * Math .PI * u2,
+               n2     = Complex .Polar (-1, theta2),
+               p2     = Complex .multiply (n2, radius);
+
+            // p1 - p4
+            //  | \ |
+            // p2 - p3
+
+            // Triangle one
+
+            // p1
+            texCoordArray .push (u1, 1, 0, 1);
+            normalArray   .push (n1 .imag,  0, n1 .real);
+            vertexArray   .push (p1 .imag, y1, p1 .real, 1);
+
+            // p2
+            texCoordArray .push (u1, 0, 0, 1);
+            normalArray   .push (n1 .imag,  0, n1 .real);
+            vertexArray   .push (p1 .imag, y2, p1 .real, 1);
+
+            // p3
+            texCoordArray .push (u2, 0, 0, 1);
+            normalArray   .push (n2 .imag,  0, n2 .real);
+            vertexArray   .push (p2 .imag, y2, p2 .real, 1);
+
+            // Triangle two
+
+            // p1
+            texCoordArray .push (u1, 1, 0, 1);
+            normalArray   .push (n1 .imag,  0, n1 .real);
+            vertexArray   .push (p1 .imag, y1, p1 .real, 1);
+
+            // p3
+            texCoordArray .push (u2, 0, 0, 1);
+            normalArray   .push (n2 .imag,  0, n2 .real);
+            vertexArray   .push (p2 .imag, y2, p2 .real, 1);
+
+            // p4
+            texCoordArray .push (u2, 1, 0, 1);
+            normalArray   .push (n2 .imag,  0, n2 .real);
+            vertexArray   .push (p2 .imag, y1, p2 .real, 1);
+         }
+      }
+
+      if (this ._top .getValue ())
       {
          const
-            options       = this .getBrowser () .getCylinderOptions (),
-            xDimension    = options ._xDimension .getValue (),
-            texCoordArray = this .getTexCoords (),
-            normalArray   = this .getNormals (),
-            vertexArray   = this .getVertices ();
+            texCoord = [ ],
+            points   = [ ];
 
-         this .getMultiTexCoords () .push (texCoordArray);
+         for (let i = 0; i < xDimension; ++ i)
+         {
+            const
+               u     = i / xDimension,
+               theta = 2 * Math .PI * u,
+               t     = Complex .Polar (-1, theta);
+
+            texCoord .push (new Vector2 ((t .imag + 1) / 2, -(t .real - 1) / 2));
+            points   .push (new Vector3 (t .imag * radius, y1, t .real * radius));
+         }
 
          const
-            radius = this ._radius .getValue (),
-            y1     = this ._height .getValue () / 2,
-            y2     = -y1;
+            t0 = texCoord [0],
+            p0 = points [0];
 
-         if (this ._side .getValue ())
-         {
-            for (let i = 0; i < xDimension; ++ i)
-            {
-               const
-                  u1     = i / xDimension,
-                  theta1 = 2 * Math .PI * u1,
-                  n1     = Complex .Polar (-1, theta1),
-                  p1     = Complex .multiply (n1, radius);
-
-               const
-                  u2     = (i + 1) / xDimension,
-                  theta2 = 2 * Math .PI * u2,
-                  n2     = Complex .Polar (-1, theta2),
-                  p2     = Complex .multiply (n2, radius);
-
-               // p1 - p4
-               //  | \ |
-               // p2 - p3
-
-               // Triangle one
-
-               // p1
-               texCoordArray .push (u1, 1, 0, 1);
-               normalArray   .push (n1 .imag,  0, n1 .real);
-               vertexArray   .push (p1 .imag, y1, p1 .real, 1);
-
-               // p2
-               texCoordArray .push (u1, 0, 0, 1);
-               normalArray   .push (n1 .imag,  0, n1 .real);
-               vertexArray   .push (p1 .imag, y2, p1 .real, 1);
-
-               // p3
-               texCoordArray .push (u2, 0, 0, 1);
-               normalArray   .push (n2 .imag,  0, n2 .real);
-               vertexArray   .push (p2 .imag, y2, p2 .real, 1);
-
-               // Triangle two
-
-               // p1
-               texCoordArray .push (u1, 1, 0, 1);
-               normalArray   .push (n1 .imag,  0, n1 .real);
-               vertexArray   .push (p1 .imag, y1, p1 .real, 1);
-
-               // p3
-               texCoordArray .push (u2, 0, 0, 1);
-               normalArray   .push (n2 .imag,  0, n2 .real);
-               vertexArray   .push (p2 .imag, y2, p2 .real, 1);
-
-               // p4
-               texCoordArray .push (u2, 1, 0, 1);
-               normalArray   .push (n2 .imag,  0, n2 .real);
-               vertexArray   .push (p2 .imag, y1, p2 .real, 1);
-            }
-         }
-
-         if (this ._top .getValue ())
+         for (let i = 1, length = points .length - 1; i < length; ++ i)
          {
             const
-               texCoord = [ ],
-               points   = [ ];
+               t1 = texCoord [i],
+               t2 = texCoord [i + 1],
+               p1 = points [i],
+               p2 = points [i + 1];
 
-            for (let i = 0; i < xDimension; ++ i)
-            {
-               const
-                  u     = i / xDimension,
-                  theta = 2 * Math .PI * u,
-                  t     = Complex .Polar (-1, theta);
+            texCoordArray .push (t0 .x, t0 .y, 0, 1);
+            normalArray   .push (0, 1, 0);
+            vertexArray   .push (p0 .x, p0 .y, p0 .z, 1);
 
-               texCoord .push (new Vector2 ((t .imag + 1) / 2, -(t .real - 1) / 2));
-               points   .push (new Vector3 (t .imag * radius, y1, t .real * radius));
-            }
+            texCoordArray .push (t1 .x, t1 .y, 0, 1);
+            normalArray   .push (0, 1, 0);
+            vertexArray   .push (p1 .x, p1 .y, p1 .z, 1);
 
-            const
-               t0 = texCoord [0],
-               p0 = points [0];
-
-            for (let i = 1, length = points .length - 1; i < length; ++ i)
-            {
-               const
-                  t1 = texCoord [i],
-                  t2 = texCoord [i + 1],
-                  p1 = points [i],
-                  p2 = points [i + 1];
-
-               texCoordArray .push (t0 .x, t0 .y, 0, 1);
-               normalArray   .push (0, 1, 0);
-               vertexArray   .push (p0 .x, p0 .y, p0 .z, 1);
-
-               texCoordArray .push (t1 .x, t1 .y, 0, 1);
-               normalArray   .push (0, 1, 0);
-               vertexArray   .push (p1 .x, p1 .y, p1 .z, 1);
-
-               texCoordArray .push (t2 .x, t2 .y, 0, 1);
-               normalArray   .push (0, 1, 0);
-               vertexArray   .push (p2 .x, p2 .y, p2 .z, 1);
-            }
+            texCoordArray .push (t2 .x, t2 .y, 0, 1);
+            normalArray   .push (0, 1, 0);
+            vertexArray   .push (p2 .x, p2 .y, p2 .z, 1);
          }
+      }
 
-         if (this ._bottom .getValue ())
-         {
-            const
-               texCoord = [ ],
-               points   = [ ];
-
-            for (let i = xDimension - 1; i > -1; -- i)
-            {
-               const
-                  u     = i / xDimension,
-                  theta = 2 * Math .PI * u,
-                  t     = Complex .Polar (-1, theta);
-
-               texCoord .push (new Vector2 ((t .imag + 1) / 2, (t .real + 1) / 2));
-               points   .push (new Vector3 (t .imag * radius, y2, t .real * radius));
-            }
-
-            const
-               t0 = texCoord [0],
-               p0 = points [0];
-
-            for (let i = 1, length = points .length - 1; i < length; ++ i)
-            {
-               const
-                  t1 = texCoord [i],
-                  t2 = texCoord [i + 1],
-                  p1 = points [i],
-                  p2 = points [i + 1];
-
-               texCoordArray .push (t0 .x, t0 .y, 0, 1);
-               normalArray   .push (0, -1, 0);
-               vertexArray   .push (p0 .x, p0 .y, p0 .z, 1);
-
-               texCoordArray .push (t1 .x, t1 .y, 0, 1);
-               normalArray   .push (0, -1, 0);
-               vertexArray   .push (p1 .x, p1 .y, p1 .z, 1);
-
-               texCoordArray .push (t2 .x, t2 .y, 0, 1);
-               normalArray   .push (0, -1, 0);
-               vertexArray   .push (p2 .x, p2 .y, p2 .z, 1);
-            }
-         }
-
-         this .setSolid (this ._solid .getValue ());
-         this .setExtents ();
-      },
-      setExtents: function ()
+      if (this ._bottom .getValue ())
       {
          const
-            radius = this ._radius .getValue (),
-            y1     = this ._height .getValue () / 2,
-            y2     = -y1;
+            texCoord = [ ],
+            points   = [ ];
 
-         if (! this ._top .getValue () && ! this ._side .getValue () && ! this ._bottom .getValue ())
+         for (let i = xDimension - 1; i > -1; -- i)
          {
-            this .getMin () .set (0, 0, 0);
-            this .getMax () .set (0, 0, 0);
+            const
+               u     = i / xDimension,
+               theta = 2 * Math .PI * u,
+               t     = Complex .Polar (-1, theta);
+
+            texCoord .push (new Vector2 ((t .imag + 1) / 2, (t .real + 1) / 2));
+            points   .push (new Vector3 (t .imag * radius, y2, t .real * radius));
          }
 
-         else if (! this ._top .getValue () && ! this ._side .getValue ())
-         {
-            this .getMin () .set (-radius, y2, -radius);
-            this .getMax () .set ( radius, y2,  radius);
-         }
+         const
+            t0 = texCoord [0],
+            p0 = points [0];
 
-         else if (! this ._bottom .getValue () && ! this ._side .getValue ())
+         for (let i = 1, length = points .length - 1; i < length; ++ i)
          {
-            this .getMin () .set (-radius, y1, -radius);
-            this .getMax () .set ( radius, y1,  radius);
-         }
+            const
+               t1 = texCoord [i],
+               t2 = texCoord [i + 1],
+               p1 = points [i],
+               p2 = points [i + 1];
 
-         else
-         {
-            this .getMin () .set (-radius, y2, -radius);
-            this .getMax () .set ( radius, y1,  radius);
-         }
-      },
-   });
+            texCoordArray .push (t0 .x, t0 .y, 0, 1);
+            normalArray   .push (0, -1, 0);
+            vertexArray   .push (p0 .x, p0 .y, p0 .z, 1);
 
-   return Cylinder;
+            texCoordArray .push (t1 .x, t1 .y, 0, 1);
+            normalArray   .push (0, -1, 0);
+            vertexArray   .push (p1 .x, p1 .y, p1 .z, 1);
+
+            texCoordArray .push (t2 .x, t2 .y, 0, 1);
+            normalArray   .push (0, -1, 0);
+            vertexArray   .push (p2 .x, p2 .y, p2 .z, 1);
+         }
+      }
+
+      this .setSolid (this ._solid .getValue ());
+      this .setExtents ();
+   },
+   setExtents: function ()
+   {
+      const
+         radius = this ._radius .getValue (),
+         y1     = this ._height .getValue () / 2,
+         y2     = -y1;
+
+      if (! this ._top .getValue () && ! this ._side .getValue () && ! this ._bottom .getValue ())
+      {
+         this .getMin () .set (0, 0, 0);
+         this .getMax () .set (0, 0, 0);
+      }
+
+      else if (! this ._top .getValue () && ! this ._side .getValue ())
+      {
+         this .getMin () .set (-radius, y2, -radius);
+         this .getMax () .set ( radius, y2,  radius);
+      }
+
+      else if (! this ._bottom .getValue () && ! this ._side .getValue ())
+      {
+         this .getMin () .set (-radius, y1, -radius);
+         this .getMax () .set ( radius, y1,  radius);
+      }
+
+      else
+      {
+         this .getMin () .set (-radius, y2, -radius);
+         this .getMax () .set ( radius, y1,  radius);
+      }
+   },
 });
+
+export default Cylinder;

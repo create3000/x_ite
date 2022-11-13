@@ -47,30 +47,22 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DChildNode,
-          X3DUrlObject,
-          X3DConstants)
+import X3DChildNode from "../Core/X3DChildNode.js";
+import X3DUrlObject from "../Networking/X3DUrlObject.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DScriptNode (executionContext)
 {
-"use strict";
+   X3DChildNode .call (this, executionContext);
+   X3DUrlObject .call (this, executionContext);
 
-   function X3DScriptNode (executionContext)
-   {
-      X3DChildNode .call (this, executionContext);
-      X3DUrlObject .call (this, executionContext);
+   this .addType (X3DConstants .X3DScriptNode);
+}
 
-      this .addType (X3DConstants .X3DScriptNode);
-   }
-
-   X3DScriptNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-      X3DUrlObject .prototype,
-   {
-      constructor: X3DScriptNode,
-   });
-
-   return X3DScriptNode;
+X3DScriptNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   X3DUrlObject .prototype,
+{
+   constructor: X3DScriptNode,
 });
+
+export default X3DScriptNode;

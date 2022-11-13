@@ -47,105 +47,92 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Texturing/X3DSingleTextureTransformNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DSingleTextureTransformNode,
-          X3DConstants,
-          Vector3,
-          Rotation4,
-          Matrix4)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DSingleTextureTransformNode from "../Texturing/X3DSingleTextureTransformNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+function TextureTransform3D (executionContext)
 {
-"use strict";
+   X3DSingleTextureTransformNode .call (this, executionContext);
 
-   function TextureTransform3D (executionContext)
+   this .addType (X3DConstants .TextureTransform3D);
+
+   this .matrix = new Matrix4 ();
+}
+
+TextureTransform3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
+{
+   constructor: TextureTransform3D,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",     new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "translation", new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "rotation",    new Fields .SFRotation ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "scale",       new Fields .SFVec3f (1, 1, 1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "center",      new Fields .SFVec3f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DSingleTextureTransformNode .call (this, executionContext);
-
-      this .addType (X3DConstants .TextureTransform3D);
-
-      this .matrix = new Matrix4 ();
-   }
-
-   TextureTransform3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
+      return "TextureTransform3D";
+   },
+   getComponentName: function ()
    {
-      constructor: TextureTransform3D,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",     new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "translation", new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "rotation",    new Fields .SFRotation ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "scale",       new Fields .SFVec3f (1, 1, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "center",      new Fields .SFVec3f ()),
-      ]),
-      getTypeName: function ()
+      return "Texturing3D";
+   },
+   getContainerField: function ()
+   {
+      return "textureTransform";
+   },
+   initialize: function ()
+   {
+      X3DSingleTextureTransformNode .prototype .initialize .call (this);
+
+      this .addInterest ("eventsProcessed", this);
+
+      this .eventsProcessed ();
+   },
+   getMatrix: function ()
+   {
+      return this .matrix;
+   },
+   eventsProcessed: (function ()
+   {
+      const vector = new Vector3 (0, 0, 0);
+
+      return function ()
       {
-         return "TextureTransform3D";
-      },
-      getComponentName: function ()
-      {
-         return "Texturing3D";
-      },
-      getContainerField: function ()
-      {
-         return "textureTransform";
-      },
-      initialize: function ()
-      {
-         X3DSingleTextureTransformNode .prototype .initialize .call (this);
+         const
+            translation = this ._translation .getValue (),
+            rotation    = this ._rotation .getValue (),
+            scale       = this ._scale .getValue (),
+            center      = this ._center .getValue (),
+            matrix4     = this .matrix;
 
-         this .addInterest ("eventsProcessed", this);
+         matrix4 .identity ();
 
-         this .eventsProcessed ();
-      },
-      getMatrix: function ()
-      {
-         return this .matrix;
-      },
-      eventsProcessed: (function ()
-      {
-         const vector = new Vector3 (0, 0, 0);
+         if (! center .equals (Vector3 .Zero))
+            matrix4 .translate (vector .assign (center) .negate ());
 
-         return function ()
-         {
-            const
-               translation = this ._translation .getValue (),
-               rotation    = this ._rotation .getValue (),
-               scale       = this ._scale .getValue (),
-               center      = this ._center .getValue (),
-               matrix4     = this .matrix;
+         if (! scale .equals (Vector3 .One))
+            matrix4 .scale (scale);
 
-            matrix4 .identity ();
+         if (! rotation .equals (Rotation4 .Identity))
+            matrix4 .rotate (rotation);
 
-            if (! center .equals (Vector3 .Zero))
-               matrix4 .translate (vector .assign (center) .negate ());
+         if (! center .equals (Vector3 .Zero))
+            matrix4 .translate (center);
 
-            if (! scale .equals (Vector3 .One))
-               matrix4 .scale (scale);
+         if (! translation .equals (Vector3 .Zero))
+            matrix4 .translate (translation);
 
-            if (! rotation .equals (Rotation4 .Identity))
-               matrix4 .rotate (rotation);
-
-            if (! center .equals (Vector3 .Zero))
-               matrix4 .translate (center);
-
-            if (! translation .equals (Vector3 .Zero))
-               matrix4 .translate (translation);
-
-            this .setMatrix (matrix4);
-         };
-      })(),
-   });
-
-   return TextureTransform3D;
+         this .setMatrix (matrix4);
+      };
+   })(),
 });
+
+export default TextureTransform3D;

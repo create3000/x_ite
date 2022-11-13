@@ -47,245 +47,240 @@
  ******************************************************************************/
 
 
-define (function ()
+const
+   _array = Symbol (),
+   _index = Symbol ();
+
+const handler =
 {
-"use strict";
-
-   const
-      _array = Symbol (),
-      _index = Symbol ();
-
-   const handler =
+   get: function (target, key)
    {
-      get: function (target, key)
+      const value = target [key];
+
+      if (value !== undefined)
+         return value;
+
+      if (typeof key === "string")
       {
-         const value = target [key];
-
-         if (value !== undefined)
-            return value;
-
-         if (typeof key === "string")
-         {
-            const index = +key;
-
-            if (Number .isInteger (index))
-               return target [_array] [index];
-
-            return;
-         }
-      },
-      set: function (target, key, value)
-      {
-         if (target [key] === undefined)
-            return false;
-
-         target [key] = value;
-         return true;
-      },
-      has: function (target, key)
-      {
-         if (Number .isInteger (+key))
-            return key < target [_array] .length;
-
-         return key in target;
-      },
-      ownKeys: function (target)
-      {
-         return Object .keys (target [_array]);
-      },
-      getOwnPropertyDescriptor: function (target, key)
-      {
-         if (typeof key !== "string")
-            return;
-
          const index = +key;
 
-         if (Number .isInteger (index) && index < target [_array] .length)
-         {
-            const propertyDescriptor = Object .getOwnPropertyDescriptor (target [_array], key);
+         if (Number .isInteger (index))
+            return target [_array] [index];
 
-            if (propertyDescriptor)
-               propertyDescriptor .writable = false;
-
-            return propertyDescriptor;
-         }
-      },
-   };
-
-   function X3DInfoArray (values)
-   {
-      this [_array]           = [ ];
-      this [_index]           = new Map ();
-      this [Symbol .iterator] = this [_array] [Symbol .iterator];
-
-      if (values)
-      {
-         for (const value of values)
-            this .add (value .name, value);
+         return;
       }
+   },
+   set: function (target, key, value)
+   {
+      if (target [key] === undefined)
+         return false;
 
-      return new Proxy (this, handler);
+      target [key] = value;
+      return true;
+   },
+   has: function (target, key)
+   {
+      if (Number .isInteger (+key))
+         return key < target [_array] .length;
+
+      return key in target;
+   },
+   ownKeys: function (target)
+   {
+      return Object .keys (target [_array]);
+   },
+   getOwnPropertyDescriptor: function (target, key)
+   {
+      if (typeof key !== "string")
+         return;
+
+      const index = +key;
+
+      if (Number .isInteger (index) && index < target [_array] .length)
+      {
+         const propertyDescriptor = Object .getOwnPropertyDescriptor (target [_array], key);
+
+         if (propertyDescriptor)
+            propertyDescriptor .writable = false;
+
+         return propertyDescriptor;
+      }
+   },
+};
+
+function X3DInfoArray (values)
+{
+   this [_array]           = [ ];
+   this [_index]           = new Map ();
+   this [Symbol .iterator] = this [_array] [Symbol .iterator];
+
+   if (values)
+   {
+      for (const value of values)
+         this .add (value .name, value);
    }
 
-   X3DInfoArray .prototype = {
-      constructor: X3DInfoArray,
-      equals: function (array)
-      {
-         const
-            a      = this [_array],
-            b      = array [_array] || array,
-            length = a .length;
+   return new Proxy (this, handler);
+}
 
-         if (a === b)
-            return true;
+X3DInfoArray .prototype = {
+   constructor: X3DInfoArray,
+   equals: function (array)
+   {
+      const
+         a      = this [_array],
+         b      = array [_array] || array,
+         length = a .length;
 
-         if (length !== b .length)
-            return false;
-
-         for (let i = 0; i < length; ++ i)
-         {
-            if (a [i] !== b [i])
-               return false;
-         }
-
+      if (a === b)
          return true;
-      },
-      has: function (key)
+
+      if (length !== b .length)
+         return false;
+
+      for (let i = 0; i < length; ++ i)
       {
-         return this [_index] .has (key);
-      },
-      get: function (key)
+         if (a [i] !== b [i])
+            return false;
+      }
+
+      return true;
+   },
+   has: function (key)
+   {
+      return this [_index] .has (key);
+   },
+   get: function (key)
+   {
+      return this [_index] .get (key);
+   },
+   add: function (key, value)
+   {
+      this [_array] .push (value);
+      this [_index] .set (key, value);
+   },
+   addAlias: function (alias, key)
+   {
+      this [_index] .set (alias, this [_index] .get (key));
+   },
+   update: function (oldKey, newKey, value)
+   {
+      const oldValue = this [_index] .get (oldKey);
+
+      if (oldKey !== newKey)
+         this .remove (newKey);
+
+      this [_index] .delete (oldKey);
+      this [_index] .set (newKey, value);
+
+      if (oldValue !== undefined)
       {
-         return this [_index] .get (key);
-      },
-      add: function (key, value)
-      {
-         this [_array] .push (value);
-         this [_index] .set (key, value);
-      },
-      addAlias: function (alias, key)
-      {
-         this [_index] .set (alias, this [_index] .get (key));
-      },
-      update: function (oldKey, newKey, value)
-      {
-         const oldValue = this [_index] .get (oldKey);
-
-         if (oldKey !== newKey)
-            this .remove (newKey);
-
-         this [_index] .delete (oldKey);
-         this [_index] .set (newKey, value);
-
-         if (oldValue !== undefined)
-         {
-            const index = this [_array] .indexOf (oldValue);
-
-            if (index > -1)
-               this [_array] [index] = value;
-         }
-         else
-         {
-            this [_array] .push (value);
-         }
-      },
-      remove: function (key)
-      {
-         const value = this [_index] .get (key);
-
-         if (value === undefined)
-            return;
-
-         const index = this [_array] .indexOf (value);
-
-         this [_index] .delete (key);
+         const index = this [_array] .indexOf (oldValue);
 
          if (index > -1)
-            this [_array] .splice (index, 1);
-      },
-      at: Array .prototype .at,
-      concat: Array .prototype .concat,
-      //entries: function () { return iterator -> [index, value]; },
-      every: Array .prototype .every,
-      fill: Array .prototype .fill,
-      filter: Array .prototype .filter,
-      find: Array .prototype .find,
-      findIndex: Array .prototype .findIndex,
-      forEach: Array .prototype .forEach,
-      includes: Array .prototype .includes,
-      indexOf: Array .prototype .indexOf,
-      join: Array .prototype .join,
-      keys: function () { return Array (this .length) .keys (); },
-      lastIndexOf: Array .prototype .lastIndexOf,
-      map: Array .prototype .map,
-      reduce: Array .prototype .reduce,
-      reduceRight: Array .prototype .reduceRight,
-      slice: Array .prototype .slice,
-      some: Array .prototype .some,
-      values: function () { return this [Symbol .iterator]; },
-      toString: function (scene)
+            this [_array] [index] = value;
+      }
+      else
       {
-         const stream = { string: "" };
-
-         if (scene)
-            Generator .Get (stream) .PushExecutionContext (scene);
-
-         this .toStream (stream);
-
-         return stream .string;
-      },
-      toVRMLStream: function (stream)
-      {
-         const X3DBaseNode = require ("x_ite/Base/X3DBaseNode");
-
-         for (const value of this [_array])
-         {
-            try
-            {
-               value .toVRMLStream (stream);
-
-               stream .string += "\n";
-
-               if (value instanceof X3DBaseNode)
-                  stream .string += "\n";
-            }
-            catch (error)
-            {
-               console .error (error);
-            }
-         }
-      },
-      toXMLStream: function (stream)
-      {
-         for (const value of this [_array])
-         {
-            try
-            {
-               value .toXMLStream (stream);
-
-               stream .string += "\n";
-            }
-            catch (error)
-            {
-               console .error (error);
-            }
-         }
-      },
-      toStream: function (stream)
-      {
-         stream .string = "[object " + this .getTypeName () + "]";
-      },
-   };
-
-   for (const key of Reflect .ownKeys (X3DInfoArray .prototype))
-      Object .defineProperty (X3DInfoArray .prototype, key, { enumerable: false });
-
-   Object .defineProperty (X3DInfoArray .prototype, "length",
+         this [_array] .push (value);
+      }
+   },
+   remove: function (key)
    {
-      get: function () { return this [_array] .length; },
-      enumerable: false,
-      configurable: false,
-   });
+      const value = this [_index] .get (key);
 
-   return X3DInfoArray;
+      if (value === undefined)
+         return;
+
+      const index = this [_array] .indexOf (value);
+
+      this [_index] .delete (key);
+
+      if (index > -1)
+         this [_array] .splice (index, 1);
+   },
+   at: Array .prototype .at,
+   concat: Array .prototype .concat,
+   //entries: function () { return iterator -> [index, value]; },
+   every: Array .prototype .every,
+   fill: Array .prototype .fill,
+   filter: Array .prototype .filter,
+   find: Array .prototype .find,
+   findIndex: Array .prototype .findIndex,
+   forEach: Array .prototype .forEach,
+   includes: Array .prototype .includes,
+   indexOf: Array .prototype .indexOf,
+   join: Array .prototype .join,
+   keys: function () { return Array (this .length) .keys (); },
+   lastIndexOf: Array .prototype .lastIndexOf,
+   map: Array .prototype .map,
+   reduce: Array .prototype .reduce,
+   reduceRight: Array .prototype .reduceRight,
+   slice: Array .prototype .slice,
+   some: Array .prototype .some,
+   values: function () { return this [Symbol .iterator]; },
+   toString: function (scene)
+   {
+      const stream = { string: "" };
+
+      if (scene)
+         Generator .Get (stream) .PushExecutionContext (scene);
+
+      this .toStream (stream);
+
+      return stream .string;
+   },
+   toVRMLStream: function (stream)
+   {
+      const X3DBaseNode = require ("x_ite/Base/X3DBaseNode");
+
+      for (const value of this [_array])
+      {
+         try
+         {
+            value .toVRMLStream (stream);
+
+            stream .string += "\n";
+
+            if (value instanceof X3DBaseNode)
+               stream .string += "\n";
+         }
+         catch (error)
+         {
+            console .error (error);
+         }
+      }
+   },
+   toXMLStream: function (stream)
+   {
+      for (const value of this [_array])
+      {
+         try
+         {
+            value .toXMLStream (stream);
+
+            stream .string += "\n";
+         }
+         catch (error)
+         {
+            console .error (error);
+         }
+      }
+   },
+   toStream: function (stream)
+   {
+      stream .string = "[object " + this .getTypeName () + "]";
+   },
+};
+
+for (const key of Reflect .ownKeys (X3DInfoArray .prototype))
+   Object .defineProperty (X3DInfoArray .prototype, key, { enumerable: false });
+
+Object .defineProperty (X3DInfoArray .prototype, "length",
+{
+   get: function () { return this [_array] .length; },
+   enumerable: false,
+   configurable: false,
 });
+
+export default X3DInfoArray;

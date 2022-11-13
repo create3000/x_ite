@@ -47,72 +47,67 @@
  ******************************************************************************/
 
 
-define (function ()
+const _stack = Symbol ();
+
+function Events ()
 {
-"use strict";
+   this [_stack] = [ ];
+}
 
-   const _stack = Symbol ();
-
-   function Events ()
+Events .prototype =
+{
+   create: function (field)
    {
-      this [_stack] = [ ];
-   }
-
-   Events .prototype =
-   {
-      create: function (field)
+      if (this [_stack] .length)
       {
-         if (this [_stack] .length)
-         {
-            const event = this [_stack] .pop ();
-
-            event .field = field;
-            event .clear ();
-
-            return event;
-         }
-
-         const event = new Set ();
+         const event = this [_stack] .pop ();
 
          event .field = field;
+         event .clear ();
 
          return event;
-      },
-      copy: function (event)
+      }
+
+      const event = new Set ();
+
+      event .field = field;
+
+      return event;
+   },
+   copy: function (event)
+   {
+      if (this [_stack] .length)
       {
-         if (this [_stack] .length)
-         {
-            const copy = this [_stack] .pop ();
-
-            copy .field = event .field;
-            copy .clear ();
-
-            for (const source of event)
-            {
-               copy .add (source);
-            }
-
-            return copy;
-         }
-
-         const copy = new Set (event);
+         const copy = this [_stack] .pop ();
 
          copy .field = event .field;
+         copy .clear ();
+
+         for (const source of event)
+         {
+            copy .add (source);
+         }
 
          return copy;
-      },
-      push: function (event)
-      {
-         this [_stack] .push (event);
-      },
-      clear: function ()
-      {
-         this [_stack] .length = 0;
-      },
-   };
+      }
 
-   for (const key of Reflect .ownKeys (Events .prototype))
-      Object .defineProperty (Events .prototype, key, { enumerable: false });
+      const copy = new Set (event);
 
-   return new Events ();
-});
+      copy .field = event .field;
+
+      return copy;
+   },
+   push: function (event)
+   {
+      this [_stack] .push (event);
+   },
+   clear: function ()
+   {
+      this [_stack] .length = 0;
+   },
+};
+
+for (const key of Reflect .ownKeys (Events .prototype))
+   Object .defineProperty (Events .prototype, key, { enumerable: false });
+
+export default new Events ();

@@ -47,176 +47,167 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Matrix4",
-   "standard/Math/Algorithm",
-],
-function (X3DChildNode,
-          X3DConstants,
-          Matrix4,
-          Algorithm)
+import X3DChildNode from "../Core/X3DChildNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+function X3DLightNode (executionContext)
 {
-"use strict";
+   X3DChildNode .call (this, executionContext);
 
-   function X3DLightNode (executionContext)
+   this .addType (X3DConstants .X3DLightNode);
+}
+
+X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+{
+   constructor: X3DLightNode,
+   initialize: function ()
    {
-      X3DChildNode .call (this, executionContext);
+      X3DChildNode .prototype .initialize .call (this);
 
-      this .addType (X3DConstants .X3DLightNode);
-   }
+      this ._on        .addInterest ("set_on__", this);
+      this ._intensity .addInterest ("set_on__", this);
 
-   X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+      this .set_on__ ();
+   },
+   set_on__: function ()
    {
-      constructor: X3DLightNode,
-      initialize: function ()
+      if (this ._on .getValue () && this .getIntensity () > 0)
       {
-         X3DChildNode .prototype .initialize .call (this);
-
-         this ._on        .addInterest ("set_on__", this);
-         this ._intensity .addInterest ("set_on__", this);
-
-         this .set_on__ ();
-      },
-      set_on__: function ()
+         delete this .push;
+         delete this .pop;
+      }
+      else
       {
-         if (this ._on .getValue () && this .getIntensity () > 0)
-         {
-            delete this .push;
-            delete this .pop;
-         }
-         else
-         {
-            this .push = Function .prototype;
-            this .pop  = Function .prototype;
-         }
-      },
-      getGlobal: function ()
-      {
-         return this ._global .getValue ();
-      },
-      getColor: function ()
-      {
-         return this ._color .getValue ();
-      },
-      getIntensity: function ()
-      {
-         return Math .max (this ._intensity .getValue (), 0);
-      },
-      getAmbientIntensity: function ()
-      {
-         return Algorithm .clamp (this ._ambientIntensity .getValue (), 0, 1);
-      },
-      getDirection: function ()
-      {
-         return this ._direction .getValue ();
-      },
-      getShadows: function ()
-      {
-         return this ._shadows .getValue ();
-      },
-      getShadowColor: function ()
-      {
-         return this ._shadowColor .getValue ();
-      },
-      getShadowIntensity: function ()
-      {
-         return this .getShadows () ? Algorithm .clamp (this ._shadowIntensity .getValue (), 0, 1) : 0;
-      },
-      getShadowBias: function ()
-      {
-         return Algorithm .clamp (this ._shadowBias .getValue (), 0, 1);
-      },
-      getShadowMapSize: function ()
-      {
-         return Math .min (this ._shadowMapSize .getValue (), this .getBrowser () .getMaxTextureSize ());
-      },
-      getBiasMatrix: (function ()
-      {
-         // Transforms normalized coords from range (-1, 1) to (0, 1).
-         const biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
-                                         0.0, 0.5, 0.0, 0.0,
-                                         0.0, 0.0, 0.5, 0.0,
-                                         0.5, 0.5, 0.5, 1.0);
+         this .push = Function .prototype;
+         this .pop  = Function .prototype;
+      }
+   },
+   getGlobal: function ()
+   {
+      return this ._global .getValue ();
+   },
+   getColor: function ()
+   {
+      return this ._color .getValue ();
+   },
+   getIntensity: function ()
+   {
+      return Math .max (this ._intensity .getValue (), 0);
+   },
+   getAmbientIntensity: function ()
+   {
+      return Algorithm .clamp (this ._ambientIntensity .getValue (), 0, 1);
+   },
+   getDirection: function ()
+   {
+      return this ._direction .getValue ();
+   },
+   getShadows: function ()
+   {
+      return this ._shadows .getValue ();
+   },
+   getShadowColor: function ()
+   {
+      return this ._shadowColor .getValue ();
+   },
+   getShadowIntensity: function ()
+   {
+      return this .getShadows () ? Algorithm .clamp (this ._shadowIntensity .getValue (), 0, 1) : 0;
+   },
+   getShadowBias: function ()
+   {
+      return Algorithm .clamp (this ._shadowBias .getValue (), 0, 1);
+   },
+   getShadowMapSize: function ()
+   {
+      return Math .min (this ._shadowMapSize .getValue (), this .getBrowser () .getMaxTextureSize ());
+   },
+   getBiasMatrix: (function ()
+   {
+      // Transforms normalized coords from range (-1, 1) to (0, 1).
+      const biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
+                                      0.0, 0.5, 0.0, 0.0,
+                                      0.0, 0.0, 0.5, 0.0,
+                                      0.5, 0.5, 0.5, 1.0);
 
-         return function ()
-         {
-            return biasMatrix;
-         };
-      })(),
-      push: function (renderObject, group)
+      return function ()
       {
-         if (renderObject .isIndependent ())
-         {
-            const lightContainer = this .getLights () .pop ();
-
-            if (this ._global .getValue ())
-            {
-               lightContainer .set (this,
-                                    renderObject .getLayer () .getGroup (),
-                                    renderObject .getModelViewMatrix () .get ());
-
-               renderObject .getGlobalObjects () .push (lightContainer);
-               renderObject .getLights ()        .push (lightContainer);
-
-               renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
-            }
-            else
-            {
-               lightContainer .set (this,
-                                    group,
-                                    renderObject .getModelViewMatrix () .get ());
-
-               renderObject .getLocalObjects () .push (lightContainer);
-               renderObject .getLights ()       .push (lightContainer);
-
-               renderObject .pushLocalShadows (!! this .getShadowIntensity ());
-
-               ++ renderObject .getLocalObjectsCount () [1];
-            }
-         }
-         else
-         {
-            const lightContainer = renderObject .getLightContainer ();
-
-            if (this ._global .getValue ())
-            {
-               lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
-
-               renderObject .getGlobalObjects () .push (lightContainer);
-               renderObject .getLights ()        .push (lightContainer);
-
-               renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
-            }
-            else
-            {
-               lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
-
-               renderObject .getLocalObjects () .push (lightContainer);
-               renderObject .getLights ()       .push (lightContainer);
-
-               renderObject .pushLocalShadows (!! this .getShadowIntensity ());
-
-               ++ renderObject .getLocalObjectsCount () [1];
-            }
-         }
-      },
-      pop: function (renderObject)
+         return biasMatrix;
+      };
+   })(),
+   push: function (renderObject, group)
+   {
+      if (renderObject .isIndependent ())
       {
+         const lightContainer = this .getLights () .pop ();
+
          if (this ._global .getValue ())
-            return;
+         {
+            lightContainer .set (this,
+                                 renderObject .getLayer () .getGroup (),
+                                 renderObject .getModelViewMatrix () .get ());
 
-         if (renderObject .isIndependent ())
-            this .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
+            renderObject .getGlobalObjects () .push (lightContainer);
+            renderObject .getLights ()        .push (lightContainer);
+
+            renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
+         }
          else
-            renderObject .getLocalObjects () .pop ();
+         {
+            lightContainer .set (this,
+                                 group,
+                                 renderObject .getModelViewMatrix () .get ());
 
-         renderObject .popLocalShadows ();
+            renderObject .getLocalObjects () .push (lightContainer);
+            renderObject .getLights ()       .push (lightContainer);
 
-         -- renderObject .getLocalObjectsCount () [1];
-      },
-   });
+            renderObject .pushLocalShadows (!! this .getShadowIntensity ());
 
-   return X3DLightNode;
+            ++ renderObject .getLocalObjectsCount () [1];
+         }
+      }
+      else
+      {
+         const lightContainer = renderObject .getLightContainer ();
+
+         if (this ._global .getValue ())
+         {
+            lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
+
+            renderObject .getGlobalObjects () .push (lightContainer);
+            renderObject .getLights ()        .push (lightContainer);
+
+            renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
+         }
+         else
+         {
+            lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
+
+            renderObject .getLocalObjects () .push (lightContainer);
+            renderObject .getLights ()       .push (lightContainer);
+
+            renderObject .pushLocalShadows (!! this .getShadowIntensity ());
+
+            ++ renderObject .getLocalObjectsCount () [1];
+         }
+      }
+   },
+   pop: function (renderObject)
+   {
+      if (this ._global .getValue ())
+         return;
+
+      if (renderObject .isIndependent ())
+         this .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
+      else
+         renderObject .getLocalObjects () .pop ();
+
+      renderObject .popLocalShadows ();
+
+      -- renderObject .getLocalObjectsCount () [1];
+   },
 });
+
+export default X3DLightNode;

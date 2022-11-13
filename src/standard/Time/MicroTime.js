@@ -47,35 +47,32 @@
  ******************************************************************************/
 
 
-define (function ()
+// Return a pseudo accurate timestamp.
+
+performance .now = (function ()
 {
-"use strict";
+   const now = performance .now;
 
-   // Return a pseudo accurate timestamp.
+   let
+      offset = 0,
+      last   = 0;
 
-   performance .now = (function ()
+   return function ()
    {
-      const now = performance .now;
+      const current = now .call (this);
 
-      let
-         offset = 0,
-         last   = 0;
-
-      return function ()
+      if (current > last)
       {
-         const current = now .call (this);
+         offset = 0;
+         last   = current;
 
-         if (current > last)
-         {
-            offset = 0;
-            last   = current;
+         return current;
+      }
+      else
+      {
+         return last = current + (++ offset / 1000);
+      }
+   };
+})();
 
-            return current;
-         }
-         else
-         {
-            return last = current + (++ offset / 1000);
-         }
-      };
-   })();
-});
+export default undefined;

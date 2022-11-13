@@ -46,48 +46,36 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/SupportedNodes",
-   "x_ite/Components/Navigation/Billboard",
-   "x_ite/Components/Navigation/Collision",
-   "x_ite/Components/Navigation/LOD",
-   "x_ite/Components/Navigation/NavigationInfo",
-   "x_ite/Components/Navigation/OrthoViewpoint",
-   "x_ite/Components/Navigation/Viewpoint",
-   "x_ite/Components/Navigation/ViewpointGroup",
-   "x_ite/Components/Navigation/X3DViewpointNode",
-],
-function (SupportedNodes,
-          Billboard,
-          Collision,
-          LOD,
-          NavigationInfo,
-          OrthoViewpoint,
-          Viewpoint,
-          ViewpointGroup,
-          X3DViewpointNode)
+import SupportedNodes from "../Configuration/SupportedNodes.js";
+import Billboard from "./Navigation/Billboard.js";
+import Collision from "./Navigation/Collision.js";
+import LOD from "./Navigation/LOD.js";
+import NavigationInfo from "./Navigation/NavigationInfo.js";
+import OrthoViewpoint from "./Navigation/OrthoViewpoint.js";
+import Viewpoint from "./Navigation/Viewpoint.js";
+import ViewpointGroup from "./Navigation/ViewpointGroup.js";
+import X3DViewpointNode from "./Navigation/X3DViewpointNode.js";
+
+const Types =
 {
-"use strict";
+   Billboard:      Billboard,
+   Collision:      Collision,
+   LOD:            LOD,
+   NavigationInfo: NavigationInfo,
+   OrthoViewpoint: OrthoViewpoint,
+   Viewpoint:      Viewpoint,
+   ViewpointGroup: ViewpointGroup,
+};
 
-   const Types =
-   {
-      Billboard:      Billboard,
-      Collision:      Collision,
-      LOD:            LOD,
-      NavigationInfo: NavigationInfo,
-      OrthoViewpoint: OrthoViewpoint,
-      Viewpoint:      Viewpoint,
-      ViewpointGroup: ViewpointGroup,
-   };
+const AbstractTypes =
+{
+   X3DViewpointNode: X3DViewpointNode,
+};
 
-   const AbstractTypes =
-   {
-      X3DViewpointNode: X3DViewpointNode,
-   };
+for (const typeName in Types)
+   SupportedNodes .addType (typeName, Types [typeName]);
 
-   for (const typeName in Types)
-      SupportedNodes .addType (typeName, Types [typeName]);
+for (const typeName in AbstractTypes)
+   SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 
-   for (const typeName in AbstractTypes)
-      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
-});
+export default undefined;

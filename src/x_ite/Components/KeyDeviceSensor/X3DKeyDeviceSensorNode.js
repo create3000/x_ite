@@ -47,70 +47,63 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3DSensorNode",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DSensorNode,
-          X3DConstants)
+import X3DSensorNode from "../Core/X3DSensorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DKeyDeviceSensorNode (executionContext)
 {
-"use strict";
+   X3DSensorNode .call (this, executionContext);
 
-   function X3DKeyDeviceSensorNode (executionContext)
+   this .addType (X3DConstants .X3DKeyDeviceSensorNode);
+}
+
+X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+{
+   constructor: X3DKeyDeviceSensorNode,
+   initialize: function ()
    {
-      X3DSensorNode .call (this, executionContext);
+      X3DSensorNode .prototype .initialize .call (this);
 
-      this .addType (X3DConstants .X3DKeyDeviceSensorNode);
-   }
+      this .isLive () .addInterest ("set_live__", this);
 
-   X3DKeyDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+      this .set_live__ ();
+   },
+   set_live__: function ()
    {
-      constructor: X3DKeyDeviceSensorNode,
-      initialize: function ()
+      if (this .isLive () .getValue ())
       {
-         X3DSensorNode .prototype .initialize .call (this);
+         this ._enabled .addInterest ("set_enabled__", this);
 
-         this .isLive () .addInterest ("set_live__", this);
-
-         this .set_live__ ();
-      },
-      set_live__: function ()
-      {
-         if (this .isLive () .getValue ())
-         {
-            this ._enabled .addInterest ("set_enabled__", this);
-
-            if (this ._enabled .getValue ())
-               this .enable ();
-         }
-         else
-         {
-            this ._enabled .removeInterest ("set_enabled__", this);
-
-            this .disable ();
-         }
-      },
-      set_enabled__: function ()
-      {
          if (this ._enabled .getValue ())
             this .enable ();
-         else
-            this .disable ();
-      },
-      enable: function ()
+      }
+      else
       {
-         this .getBrowser () .addKeyDeviceSensorNode (this);
-      },
-      disable: function ()
-      {
-         this .getBrowser () .removeKeyDeviceSensorNode (this);
+         this ._enabled .removeInterest ("set_enabled__", this);
 
-         this .release ();
-      },
-      keydown: function () { },
-      keyup: function () { },
-      release: function () { },
-   });
+         this .disable ();
+      }
+   },
+   set_enabled__: function ()
+   {
+      if (this ._enabled .getValue ())
+         this .enable ();
+      else
+         this .disable ();
+   },
+   enable: function ()
+   {
+      this .getBrowser () .addKeyDeviceSensorNode (this);
+   },
+   disable: function ()
+   {
+      this .getBrowser () .removeKeyDeviceSensorNode (this);
 
-   return X3DKeyDeviceSensorNode;
+      this .release ();
+   },
+   keydown: function () { },
+   keyup: function () { },
+   release: function () { },
 });
+
+export default X3DKeyDeviceSensorNode;

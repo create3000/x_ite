@@ -47,626 +47,609 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3DBindableNode",
-   "x_ite/Browser/Rendering/GeometryContext",
-   "x_ite/Rendering/VertexArray",
-   "x_ite/Rendering/TraverseType",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Geometry/ViewVolume",
-   "standard/Math/Numbers/Complex",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Numbers/Matrix4",
-   "standard/Math/Algorithm",
-   "standard/Utility/BitSet",
-],
-function (X3DBindableNode,
-          GeometryContext,
-          VertexArray,
-          TraverseType,
-          X3DConstants,
-          ViewVolume,
-          Complex,
-          Vector3,
-          Rotation4,
-          Matrix4,
-          Algorithm,
-          BitSet)
+import X3DBindableNode from "../Core/X3DBindableNode.js";
+import GeometryContext from "../../Browser/Rendering/GeometryContext.js";
+import VertexArray from "../../Rendering/VertexArray.js";
+import TraverseType from "../../Rendering/TraverseType.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import ViewVolume from "../../../standard/Math/Geometry/ViewVolume.js";
+import Complex from "../../../standard/Math/Numbers/Complex.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+import BitSet from "../../../standard/Utility/BitSet.js";
+
+const
+   RADIUS = 1,
+   SIZE   = Math .SQRT2 / 2;
+
+function X3DBackgroundNode (executionContext)
 {
-"use strict";
+   X3DBindableNode .call (this, executionContext);
 
-   const
-      RADIUS = 1,
-      SIZE   = Math .SQRT2 / 2;
+   this .addType (X3DConstants .X3DBackgroundNode);
 
-   function X3DBackgroundNode (executionContext)
+   this ._skyAngle    .setUnit ("angle");
+   this ._groundAngle .setUnit ("angle");
+
+   const browser = this .getBrowser ();
+
+   this .hidden                = false;
+   this .projectionMatrixArray = new Float32Array (16);
+   this .modelMatrix           = new Matrix4 ();
+   this .modelViewMatrixArray  = new Float32Array (16);
+   this .clipPlanes            = [ ];
+   this .colors                = [ ];
+   this .sphere                = [ ];
+   this .textureBits           = new BitSet ();
+   this .sphereContext         = new GeometryContext ({ colorMaterial: true });
+   this .texturesContext       = new GeometryContext ({ textureNode: true });
+}
+
+X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
+{
+   constructor: X3DBackgroundNode,
+   initialize: function ()
    {
-      X3DBindableNode .call (this, executionContext);
+      X3DBindableNode .prototype .initialize .call (this);
 
-      this .addType (X3DConstants .X3DBackgroundNode);
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
 
-      this ._skyAngle    .setUnit ("angle");
-      this ._groundAngle .setUnit ("angle");
+      this .colorBuffer       = gl .createBuffer ();
+      this .sphereBuffer      = gl .createBuffer ();
+      this .texCoordBuffers   = new Array (browser .getMaxTextures ()) .fill (gl .createBuffer ());
+      this .frontBuffer       = gl .createBuffer ();
+      this .backBuffer        = gl .createBuffer ();
+      this .leftBuffer        = gl .createBuffer ();
+      this .rightBuffer       = gl .createBuffer ();
+      this .topBuffer         = gl .createBuffer ();
+      this .bottomBuffer      = gl .createBuffer ();
+      this .sphereArrayObject = new VertexArray ();
+      this .frontArrayObject  = new VertexArray ();
+      this .backArrayObject   = new VertexArray ();
+      this .leftArrayObject   = new VertexArray ();
+      this .rightArrayObject  = new VertexArray ();
+      this .topArrayObject    = new VertexArray ();
+      this .bottomArrayObject = new VertexArray ();
 
-      const browser = this .getBrowser ();
+      this ._groundAngle  .addInterest ("build", this);
+      this ._groundColor  .addInterest ("build", this);
+      this ._skyAngle     .addInterest ("build", this);
+      this ._skyColor     .addInterest ("build", this);
 
-      this .hidden                = false;
-      this .projectionMatrixArray = new Float32Array (16);
-      this .modelMatrix           = new Matrix4 ();
-      this .modelViewMatrixArray  = new Float32Array (16);
-      this .clipPlanes            = [ ];
-      this .colors                = [ ];
-      this .sphere                = [ ];
-      this .textureBits           = new BitSet ();
-      this .sphereContext         = new GeometryContext ({ colorMaterial: true });
-      this .texturesContext       = new GeometryContext ({ textureNode: true });
-   }
-
-   X3DBackgroundNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
+      this .build ();
+      this .transferRectangle ();
+   },
+   set_frontTexture__: function (value)
    {
-      constructor: X3DBackgroundNode,
-      initialize: function ()
-      {
-         X3DBindableNode .prototype .initialize .call (this);
+      this .updateTexture ("frontTexture", value, 0);
+   },
+   set_backTexture__: function (value)
+   {
+      this .updateTexture ("backTexture", value, 1);
+   },
+   set_leftTexture__: function (value)
+   {
+      this .updateTexture ("leftTexture", value, 2);
+   },
+   set_rightTexture__: function (value)
+   {
+      this .updateTexture ("rightTexture", value, 3);
+   },
+   set_topTexture__: function (value)
+   {
+      this .updateTexture ("topTexture", value, 4);
+   },
+   set_bottomTexture__: function (value)
+   {
+      this .updateTexture ("bottomTexture", value, 5);
+   },
+   updateTexture: function (name, texture, index)
+   {
+      if (this [name])
+         this [name] ._loadState .removeInterest ("setTextureBit", this);
 
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
+      this [name] = texture;
 
-         this .colorBuffer       = gl .createBuffer ();
-         this .sphereBuffer      = gl .createBuffer ();
-         this .texCoordBuffers   = new Array (browser .getMaxTextures ()) .fill (gl .createBuffer ());
-         this .frontBuffer       = gl .createBuffer ();
-         this .backBuffer        = gl .createBuffer ();
-         this .leftBuffer        = gl .createBuffer ();
-         this .rightBuffer       = gl .createBuffer ();
-         this .topBuffer         = gl .createBuffer ();
-         this .bottomBuffer      = gl .createBuffer ();
-         this .sphereArrayObject = new VertexArray ();
-         this .frontArrayObject  = new VertexArray ();
-         this .backArrayObject   = new VertexArray ();
-         this .leftArrayObject   = new VertexArray ();
-         this .rightArrayObject  = new VertexArray ();
-         this .topArrayObject    = new VertexArray ();
-         this .bottomArrayObject = new VertexArray ();
+      if (texture)
+      {
+         texture ._loadState .addInterest ("setTextureBit", this, index, texture);
 
-         this ._groundAngle  .addInterest ("build", this);
-         this ._groundColor  .addInterest ("build", this);
-         this ._skyAngle     .addInterest ("build", this);
-         this ._skyColor     .addInterest ("build", this);
+         this .setTextureBit (index, texture, texture ._loadState);
+      }
+      else
+      {
+         this .textureBits .set (index, false);
+      }
+   },
+   setTextureBit: function (bit, texture, loadState)
+   {
+      this .textureBits .set (bit, loadState .getValue () === X3DConstants .COMPLETE_STATE || (texture && texture .getData ()));
+   },
+   setHidden: function (value)
+   {
+      this .hidden = value;
 
-         this .build ();
-         this .transferRectangle ();
-      },
-      set_frontTexture__: function (value)
-      {
-         this .updateTexture ("frontTexture", value, 0);
-      },
-      set_backTexture__: function (value)
-      {
-         this .updateTexture ("backTexture", value, 1);
-      },
-      set_leftTexture__: function (value)
-      {
-         this .updateTexture ("leftTexture", value, 2);
-      },
-      set_rightTexture__: function (value)
-      {
-         this .updateTexture ("rightTexture", value, 3);
-      },
-      set_topTexture__: function (value)
-      {
-         this .updateTexture ("topTexture", value, 4);
-      },
-      set_bottomTexture__: function (value)
-      {
-         this .updateTexture ("bottomTexture", value, 5);
-      },
-      updateTexture: function (name, texture, index)
-      {
-         if (this [name])
-            this [name] ._loadState .removeInterest ("setTextureBit", this);
+      this .getBrowser () .addBrowserEvent ();
+   },
+   getHidden: function ()
+   {
+      return this .hidden;
+   },
+   getTransparent: function ()
+   {
+      if (this .hidden)
+         return true;
 
-         this [name] = texture;
+      if (this ._transparency .getValue () === 0)
+         return false;
 
-         if (texture)
-         {
-            texture ._loadState .addInterest ("setTextureBit", this, index, texture);
-
-            this .setTextureBit (index, texture, texture ._loadState);
-         }
-         else
-         {
-            this .textureBits .set (index, false);
-         }
-      },
-      setTextureBit: function (bit, texture, loadState)
-      {
-         this .textureBits .set (bit, loadState .getValue () === X3DConstants .COMPLETE_STATE || (texture && texture .getData ()));
-      },
-      setHidden: function (value)
-      {
-         this .hidden = value;
-
-         this .getBrowser () .addBrowserEvent ();
-      },
-      getHidden: function ()
-      {
-         return this .hidden;
-      },
-      getTransparent: function ()
-      {
-         if (this .hidden)
+      if (! this .frontTexture  || this .frontTexture  ._transparent .getValue ())
             return true;
 
-         if (this ._transparency .getValue () === 0)
-            return false;
+      if (! this .backTexture   || this .backTexture   ._transparent .getValue ())
+            return true;
 
-         if (! this .frontTexture  || this .frontTexture  ._transparent .getValue ())
-               return true;
+      if (! this .leftTexture   || this .leftTexture   ._transparent .getValue ())
+            return true;
 
-         if (! this .backTexture   || this .backTexture   ._transparent .getValue ())
-               return true;
+      if (! this .rightTexture  || this .rightTexture  ._transparent .getValue ())
+            return true;
 
-         if (! this .leftTexture   || this .leftTexture   ._transparent .getValue ())
-               return true;
+      if (! this .topTexture    || this .topTexture    ._transparent .getValue ())
+            return true;
 
-         if (! this .rightTexture  || this .rightTexture  ._transparent .getValue ())
-               return true;
+      if (! this .bottomTexture || this .bottomTexture ._transparent .getValue ())
+            return true;
 
-         if (! this .topTexture    || this .topTexture    ._transparent .getValue ())
-               return true;
+      return false;
+   },
+   getColor: function (theta, color, angle)
+   {
+      const index = Algorithm .upperBound (angle, 0, angle .length, theta);
 
-         if (! this .bottomTexture || this .bottomTexture ._transparent .getValue ())
-               return true;
+      return color [index];
+   },
+   build: function ()
+   {
+      const s = SIZE;
 
-         return false;
-      },
-      getColor: function (theta, color, angle)
+      this .colors .length = 0;
+      this .sphere .length = 0;
+
+      if (this ._groundColor .length === 0 && this ._skyColor .length == 1)
       {
-         const index = Algorithm .upperBound (angle, 0, angle .length, theta);
+         // Build cube
 
-         return color [index];
-      },
-      build: function ()
+         this .sphere .vertices = 36;
+
+         this .sphere .push ( s,  s, -s, 1, -s,  s, -s, 1, -s, -s, -s, 1, // Back
+                              s,  s, -s, 1, -s, -s, -s, 1,  s, -s, -s, 1,
+                             -s,  s,  s, 1,  s,  s,  s, 1, -s, -s,  s, 1, // Front
+                             -s, -s,  s, 1,  s,  s,  s, 1,  s, -s,  s, 1,
+                             -s,  s, -s, 1, -s,  s,  s, 1, -s, -s,  s, 1, // Left
+                             -s,  s, -s, 1, -s, -s,  s, 1, -s, -s, -s, 1,
+                              s,  s,  s, 1,  s,  s, -s, 1,  s, -s,  s, 1, // Right
+                              s, -s,  s, 1,  s,  s, -s, 1,  s, -s, -s, 1,
+                              s,  s,  s, 1, -s,  s,  s, 1, -s,  s, -s, 1, // Top
+                              s,  s,  s, 1, -s,  s, -s, 1,  s,  s, -s, 1,
+                             -s, -s,  s, 1,  s, -s,  s, 1, -s, -s, -s, 1, // Bottom
+                             -s, -s, -s, 1,  s, -s,  s, 1,  s, -s, -s, 1);
+
+         const c = this ._skyColor [0];
+
+         for (let i = 0, vertices = this .sphere .vertices; i < vertices; ++ i)
+            this .colors .push (c .r, c .g, c .b, 1);
+      }
+      else
       {
-         const s = SIZE;
+         // Build sphere
 
-         this .colors .length = 0;
-         this .sphere .length = 0;
-
-         if (this ._groundColor .length === 0 && this ._skyColor .length == 1)
+         if (this ._skyColor .length > this ._skyAngle .length)
          {
-            // Build cube
+            const vAngle = this ._skyAngle .slice ();
 
-            this .sphere .vertices = 36;
+            if (vAngle .length === 0 || vAngle [0] > 0)
+               vAngle .unshift (0);
 
-            this .sphere .push ( s,  s, -s, 1, -s,  s, -s, 1, -s, -s, -s, 1, // Back
-                                 s,  s, -s, 1, -s, -s, -s, 1,  s, -s, -s, 1,
-                                -s,  s,  s, 1,  s,  s,  s, 1, -s, -s,  s, 1, // Front
-                                -s, -s,  s, 1,  s,  s,  s, 1,  s, -s,  s, 1,
-                                -s,  s, -s, 1, -s,  s,  s, 1, -s, -s,  s, 1, // Left
-                                -s,  s, -s, 1, -s, -s,  s, 1, -s, -s, -s, 1,
-                                 s,  s,  s, 1,  s,  s, -s, 1,  s, -s,  s, 1, // Right
-                                 s, -s,  s, 1,  s,  s, -s, 1,  s, -s, -s, 1,
-                                 s,  s,  s, 1, -s,  s,  s, 1, -s,  s, -s, 1, // Top
-                                 s,  s,  s, 1, -s,  s, -s, 1,  s,  s, -s, 1,
-                                -s, -s,  s, 1,  s, -s,  s, 1, -s, -s, -s, 1, // Bottom
-                                -s, -s, -s, 1,  s, -s,  s, 1,  s, -s, -s, 1);
+            if (vAngle .at (-1) < Math .PI)
+               vAngle .push (Math .PI);
 
-            const c = this ._skyColor [0];
-
-            for (let i = 0, vertices = this .sphere .vertices; i < vertices; ++ i)
-               this .colors .push (c .r, c .g, c .b, 1);
-         }
-         else
-         {
-            // Build sphere
-
-            if (this ._skyColor .length > this ._skyAngle .length)
-            {
-               const vAngle = this ._skyAngle .slice ();
-
-               if (vAngle .length === 0 || vAngle [0] > 0)
-                  vAngle .unshift (0);
-
-               if (vAngle .at (-1) < Math .PI)
-                  vAngle .push (Math .PI);
-
-               if (vAngle .length === 2)
+            if (vAngle .length === 2)
 						vAngle .splice (1, 0, (vAngle [0] + vAngle [1]) / 2)
 
-               this .buildSphere (RADIUS, vAngle, this ._skyAngle, this ._skyColor, false);
-            }
-
-            if (this ._groundColor .length > this ._groundAngle .length)
-            {
-               const vAngle = this ._groundAngle .slice () .reverse ();
-
-               if (vAngle .length === 0 || vAngle [0] < Math .PI / 2)
-                  vAngle .unshift (Math .PI / 2);
-
-               if (vAngle .at (-1) > 0)
-                  vAngle .push (0);
-
-               this .buildSphere (RADIUS, vAngle, this ._groundAngle, this ._groundColor, true);
-            }
+            this .buildSphere (RADIUS, vAngle, this ._skyAngle, this ._skyColor, false);
          }
 
-         this .transferSphere ();
-      },
-      buildSphere: (function ()
-      {
-         const U_DIMENSION = 20;
-
-         const
-            z1 = new Complex (0, 0),
-            z2 = new Complex (0, 0),
-            y1 = new Complex (0, 0),
-            y2 = new Complex (0, 0),
-            y3 = new Complex (0, 0),
-            y4 = new Complex (0, 0);
-
-         return function (radius, vAngle, angle, color, bottom)
+         if (this ._groundColor .length > this ._groundAngle .length)
          {
-            const
-               vAngleMax   = bottom ? Math .PI / 2 : Math .PI,
-               V_DIMENSION = vAngle .length - 1;
+            const vAngle = this ._groundAngle .slice () .reverse ();
 
-            for (let v = 0; v < V_DIMENSION; ++ v)
+            if (vAngle .length === 0 || vAngle [0] < Math .PI / 2)
+               vAngle .unshift (Math .PI / 2);
+
+            if (vAngle .at (-1) > 0)
+               vAngle .push (0);
+
+            this .buildSphere (RADIUS, vAngle, this ._groundAngle, this ._groundColor, true);
+         }
+      }
+
+      this .transferSphere ();
+   },
+   buildSphere: (function ()
+   {
+      const U_DIMENSION = 20;
+
+      const
+         z1 = new Complex (0, 0),
+         z2 = new Complex (0, 0),
+         y1 = new Complex (0, 0),
+         y2 = new Complex (0, 0),
+         y3 = new Complex (0, 0),
+         y4 = new Complex (0, 0);
+
+      return function (radius, vAngle, angle, color, bottom)
+      {
+         const
+            vAngleMax   = bottom ? Math .PI / 2 : Math .PI,
+            V_DIMENSION = vAngle .length - 1;
+
+         for (let v = 0; v < V_DIMENSION; ++ v)
+         {
+            let
+               theta1 = Algorithm .clamp (vAngle [v],     0, vAngleMax),
+               theta2 = Algorithm .clamp (vAngle [v + 1], 0, vAngleMax);
+
+            if (bottom)
             {
-               let
-                  theta1 = Algorithm .clamp (vAngle [v],     0, vAngleMax),
-                  theta2 = Algorithm .clamp (vAngle [v + 1], 0, vAngleMax);
-
-               if (bottom)
-               {
-                  theta1 = Math .PI - theta1;
-                  theta2 = Math .PI - theta2;
-               }
-
-               z1 .setPolar (radius, theta1);
-               z2 .setPolar (radius, theta2);
-
-               const
-                  c1 = this .getColor (vAngle [v],     color, angle),
-                  c2 = this .getColor (vAngle [v + 1], color, angle);
-
-               for (let u = 0; u < U_DIMENSION; ++ u)
-               {
-                  // p4 --- p1
-                  //  |   / |
-                  //  | /   |
-                  // p3 --- p2
-
-                  // The last point is the first one.
-                  const u1 = u < U_DIMENSION - 1 ? u + 1 : 0;
-
-                  // p1, p2
-                  let phi = 2 * Math .PI * (u / U_DIMENSION);
-                  y1 .setPolar (-z1 .imag, phi);
-                  y2 .setPolar (-z2 .imag, phi);
-
-                  // p3, p4
-                  phi = 2 * Math .PI * (u1 / U_DIMENSION);
-                  y3 .setPolar (-z2 .imag, phi);
-                  y4 .setPolar (-z1 .imag, phi);
-
-                  // Triangle 1 and 2
-
-                  this .colors .push (c1 .r, c1 .g, c1 .b, 1,
-                                      c2 .r, c2 .g, c2 .b, 1,
-                                      c2 .r, c2 .g, c2 .b, 1,
-                                      // Triangle 2
-                                      c1 .r, c1 .g, c1 .b, 1,
-                                      c1 .r, c1 .g, c1 .b, 1,
-                                      c2 .r, c2 .g, c2 .b, 1);
-
-                  this .sphere .push (y1 .imag, z1 .real, y1 .real, 1,
-                                      y3 .imag, z2 .real, y3 .real, 1,
-                                      y2 .imag, z2 .real, y2 .real, 1,
-                                      // Triangle 2
-                                      y1 .imag, z1 .real, y1 .real, 1,
-                                      y4 .imag, z1 .real, y4 .real, 1,
-                                      y3 .imag, z2 .real, y3 .real, 1);
-               }
+               theta1 = Math .PI - theta1;
+               theta2 = Math .PI - theta2;
             }
-         };
-      })(),
-      transferSphere: function ()
+
+            z1 .setPolar (radius, theta1);
+            z2 .setPolar (radius, theta2);
+
+            const
+               c1 = this .getColor (vAngle [v],     color, angle),
+               c2 = this .getColor (vAngle [v + 1], color, angle);
+
+            for (let u = 0; u < U_DIMENSION; ++ u)
+            {
+               // p4 --- p1
+               //  |   / |
+               //  | /   |
+               // p3 --- p2
+
+               // The last point is the first one.
+               const u1 = u < U_DIMENSION - 1 ? u + 1 : 0;
+
+               // p1, p2
+               let phi = 2 * Math .PI * (u / U_DIMENSION);
+               y1 .setPolar (-z1 .imag, phi);
+               y2 .setPolar (-z2 .imag, phi);
+
+               // p3, p4
+               phi = 2 * Math .PI * (u1 / U_DIMENSION);
+               y3 .setPolar (-z2 .imag, phi);
+               y4 .setPolar (-z1 .imag, phi);
+
+               // Triangle 1 and 2
+
+               this .colors .push (c1 .r, c1 .g, c1 .b, 1,
+                                   c2 .r, c2 .g, c2 .b, 1,
+                                   c2 .r, c2 .g, c2 .b, 1,
+                                   // Triangle 2
+                                   c1 .r, c1 .g, c1 .b, 1,
+                                   c1 .r, c1 .g, c1 .b, 1,
+                                   c2 .r, c2 .g, c2 .b, 1);
+
+               this .sphere .push (y1 .imag, z1 .real, y1 .real, 1,
+                                   y3 .imag, z2 .real, y3 .real, 1,
+                                   y2 .imag, z2 .real, y2 .real, 1,
+                                   // Triangle 2
+                                   y1 .imag, z1 .real, y1 .real, 1,
+                                   y4 .imag, z1 .real, y4 .real, 1,
+                                   y3 .imag, z2 .real, y3 .real, 1);
+            }
+         }
+      };
+   })(),
+   transferSphere: function ()
+   {
+      const gl = this .getBrowser () .getContext ();
+
+      // Transfer colors.
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
+      gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (this .colors), gl .DYNAMIC_DRAW);
+
+      // Transfer sphere.
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .sphereBuffer);
+      gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (this .sphere), gl .DYNAMIC_DRAW);
+
+      this .sphereCount = this .sphere .length / 4;
+   },
+   transferRectangle: (function ()
+   {
+      const s = SIZE;
+
+      const texCoords = [
+         1, 1, 0, 1,
+         0, 1, 0, 1,
+         0, 0, 0, 1,
+         1, 1, 0, 1,
+         0, 0, 0, 1,
+         1, 0, 0, 1,
+      ];
+
+      const frontVertices = [
+         s,  s, -s, 1,
+        -s,  s, -s, 1,
+        -s, -s, -s, 1,
+         s,  s, -s, 1,
+        -s, -s, -s, 1,
+         s, -s, -s, 1,
+      ];
+
+      const backVertices = [
+         -s,  s,  s, 1,
+          s,  s,  s, 1,
+          s, -s,  s, 1,
+         -s,  s,  s, 1,
+          s, -s,  s, 1,
+         -s, -s,  s, 1,
+      ];
+
+      const leftVertices = [
+         -s,  s, -s, 1,
+         -s,  s,  s, 1,
+         -s, -s,  s, 1,
+         -s,  s, -s, 1,
+         -s, -s,  s, 1,
+         -s, -s, -s, 1,
+      ];
+
+      const rightVertices = [
+         s,  s,  s, 1,
+         s,  s, -s, 1,
+         s, -s, -s, 1,
+         s,  s,  s, 1,
+         s, -s, -s, 1,
+         s, -s,  s, 1,
+      ];
+
+      const topVertices = [
+          s, s,  s, 1,
+         -s, s,  s, 1,
+         -s, s, -s, 1,
+          s, s,  s, 1,
+         -s, s, -s, 1,
+          s, s, -s, 1,
+      ];
+
+      const bottomVertices = [
+          s, -s, -s, 1,
+         -s, -s, -s, 1,
+         -s, -s,  s, 1,
+          s, -s, -s, 1,
+         -s, -s,  s, 1,
+          s, -s,  s, 1,
+      ];
+
+      return function ()
       {
          const gl = this .getBrowser () .getContext ();
 
-         // Transfer colors.
+         // Transfer texCoords.
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .colorBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (this .colors), gl .DYNAMIC_DRAW);
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (texCoords), gl .DYNAMIC_DRAW);
 
-         // Transfer sphere.
+         // Transfer rectangle.
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .sphereBuffer);
-         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (this .sphere), gl .DYNAMIC_DRAW);
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .frontBuffer);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (frontVertices), gl .DYNAMIC_DRAW);
 
-         this .sphereCount = this .sphere .length / 4;
-      },
-      transferRectangle: (function ()
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .backBuffer);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (backVertices), gl .DYNAMIC_DRAW);
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .leftBuffer);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (leftVertices), gl .DYNAMIC_DRAW);
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .rightBuffer);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (rightVertices), gl .DYNAMIC_DRAW);
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .topBuffer);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (topVertices), gl .DYNAMIC_DRAW);
+
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .bottomBuffer);
+         gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (bottomVertices), gl .DYNAMIC_DRAW);
+      };
+   })(),
+   traverse: function (type, renderObject)
+   {
+      switch (type)
       {
-         const s = SIZE;
-
-         const texCoords = [
-            1, 1, 0, 1,
-            0, 1, 0, 1,
-            0, 0, 0, 1,
-            1, 1, 0, 1,
-            0, 0, 0, 1,
-            1, 0, 0, 1,
-         ];
-
-         const frontVertices = [
-            s,  s, -s, 1,
-           -s,  s, -s, 1,
-           -s, -s, -s, 1,
-            s,  s, -s, 1,
-           -s, -s, -s, 1,
-            s, -s, -s, 1,
-         ];
-
-         const backVertices = [
-            -s,  s,  s, 1,
-             s,  s,  s, 1,
-             s, -s,  s, 1,
-            -s,  s,  s, 1,
-             s, -s,  s, 1,
-            -s, -s,  s, 1,
-         ];
-
-         const leftVertices = [
-            -s,  s, -s, 1,
-            -s,  s,  s, 1,
-            -s, -s,  s, 1,
-            -s,  s, -s, 1,
-            -s, -s,  s, 1,
-            -s, -s, -s, 1,
-         ];
-
-         const rightVertices = [
-            s,  s,  s, 1,
-            s,  s, -s, 1,
-            s, -s, -s, 1,
-            s,  s,  s, 1,
-            s, -s, -s, 1,
-            s, -s,  s, 1,
-         ];
-
-         const topVertices = [
-             s, s,  s, 1,
-            -s, s,  s, 1,
-            -s, s, -s, 1,
-             s, s,  s, 1,
-            -s, s, -s, 1,
-             s, s, -s, 1,
-         ];
-
-         const bottomVertices = [
-             s, -s, -s, 1,
-            -s, -s, -s, 1,
-            -s, -s,  s, 1,
-             s, -s, -s, 1,
-            -s, -s,  s, 1,
-             s, -s,  s, 1,
-         ];
-
-         return function ()
+         case TraverseType .CAMERA:
          {
-            const gl = this .getBrowser () .getContext ();
+            renderObject .getLayer () .getBackgrounds () .push (this);
 
-            // Transfer texCoords.
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (texCoords), gl .DYNAMIC_DRAW);
-
-            // Transfer rectangle.
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .frontBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (frontVertices), gl .DYNAMIC_DRAW);
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .backBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (backVertices), gl .DYNAMIC_DRAW);
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .leftBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (leftVertices), gl .DYNAMIC_DRAW);
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .rightBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (rightVertices), gl .DYNAMIC_DRAW);
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .topBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (topVertices), gl .DYNAMIC_DRAW);
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .bottomBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (bottomVertices), gl .DYNAMIC_DRAW);
-         };
-      })(),
-      traverse: function (type, renderObject)
-      {
-         switch (type)
-         {
-            case TraverseType .CAMERA:
-            {
-               renderObject .getLayer () .getBackgrounds () .push (this);
-
-               this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-               return;
-            }
-            case TraverseType .DISPLAY:
-            {
-               const
-                  sourceObjects = renderObject .getLocalObjects (),
-                  destObjects   = this .clipPlanes;
-
-               let d = 0;
-
-               for (let s = 0, length = sourceObjects .length; s < length; ++ s)
-               {
-                  if (sourceObjects [s] .isClipped)
-                     destObjects [d ++] = sourceObjects [s];
-               }
-
-               destObjects .length = d;
-
-               this .sphereContext   .objectsCount [0] = destObjects .length;
-               this .texturesContext .objectsCount [0] = destObjects .length;
-               return;
-            }
+            this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+            return;
          }
-      },
-      display: (function ()
-      {
-         const
-            invProjectionMatrix = new Matrix4 (),
-            modelViewMatrix     = new Matrix4 (),
-            rotation            = new Rotation4 (),
-            scale               = new Vector3 (0, 0, 0),
-            farVector           = new Vector3 (0, 0, 0);
-
-         return function (gl, renderObject, viewport)
+         case TraverseType .DISPLAY:
          {
-            if (this .hidden)
-               return;
+            const
+               sourceObjects = renderObject .getLocalObjects (),
+               destObjects   = this .clipPlanes;
 
-            // Setup context.
+            let d = 0;
 
-            gl .depthMask (false);
-            gl .disable (gl .DEPTH_TEST);
-            gl .enable (gl .CULL_FACE);
-            gl .frontFace (gl .CCW);
+            for (let s = 0, length = sourceObjects .length; s < length; ++ s)
+            {
+               if (sourceObjects [s] .isClipped)
+                  destObjects [d ++] = sourceObjects [s];
+            }
 
-            // Get background scale.
+            destObjects .length = d;
 
-            const farValue = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
+            this .sphereContext   .objectsCount [0] = destObjects .length;
+            this .texturesContext .objectsCount [0] = destObjects .length;
+            return;
+         }
+      }
+   },
+   display: (function ()
+   {
+      const
+         invProjectionMatrix = new Matrix4 (),
+         modelViewMatrix     = new Matrix4 (),
+         rotation            = new Rotation4 (),
+         scale               = new Vector3 (0, 0, 0),
+         farVector           = new Vector3 (0, 0, 0);
 
-            // Get projection matrix.
-
-            this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());
-
-            // Rotate and scale background.
-
-            modelViewMatrix .assign (this .modelMatrix);
-            modelViewMatrix .multRight (renderObject .getViewMatrix () .get ());
-            modelViewMatrix .get (null, rotation);
-            modelViewMatrix .identity ();
-            modelViewMatrix .rotate (rotation);
-            modelViewMatrix .scale (scale .set (farValue, farValue, farValue));
-
-            this .modelViewMatrixArray .set (modelViewMatrix);
-
-            // Draw background sphere and texture cube.
-
-            this .drawSphere (renderObject);
-
-            if (+this .textureBits)
-               this .drawCube (renderObject);
-         };
-      })(),
-      drawSphere: function (renderObject)
+      return function (gl, renderObject, viewport)
       {
-         const transparency = this ._transparency .getValue ();
-
-         if (transparency >= 1)
+         if (this .hidden)
             return;
 
+         // Setup context.
+
+         gl .depthMask (false);
+         gl .disable (gl .DEPTH_TEST);
+         gl .enable (gl .CULL_FACE);
+         gl .frontFace (gl .CCW);
+
+         // Get background scale.
+
+         const farValue = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
+
+         // Get projection matrix.
+
+         this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());
+
+         // Rotate and scale background.
+
+         modelViewMatrix .assign (this .modelMatrix);
+         modelViewMatrix .multRight (renderObject .getViewMatrix () .get ());
+         modelViewMatrix .get (null, rotation);
+         modelViewMatrix .identity ();
+         modelViewMatrix .rotate (rotation);
+         modelViewMatrix .scale (scale .set (farValue, farValue, farValue));
+
+         this .modelViewMatrixArray .set (modelViewMatrix);
+
+         // Draw background sphere and texture cube.
+
+         this .drawSphere (renderObject);
+
+         if (+this .textureBits)
+            this .drawCube (renderObject);
+      };
+   })(),
+   drawSphere: function (renderObject)
+   {
+      const transparency = this ._transparency .getValue ();
+
+      if (transparency >= 1)
+         return;
+
+      const
+         browser    = this .getBrowser (),
+         gl         = browser .getContext (),
+         shaderNode = browser .getDefaultMaterial () .getShader (this .sphereContext);
+
+      shaderNode .enable (gl);
+      shaderNode .setClipPlanes (gl, this .clipPlanes);
+
+      // Uniforms
+
+      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
+      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
+
+      gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
+      gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
+
+      // Enable vertex attribute arrays.
+
+      if (this .sphereArrayObject .enable (gl, shaderNode))
+      {
+         shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
+         shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
+      }
+
+      // Draw.
+
+      if (transparency)
+         gl .enable (gl .BLEND);
+      else
+         gl .disable (gl .BLEND);
+
+      gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
+   },
+   drawCube: (function ()
+   {
+      const textureMatrixArray = new Float32Array (Matrix4 .Identity);
+
+      return function (renderObject)
+      {
          const
             browser    = this .getBrowser (),
             gl         = browser .getContext (),
-            shaderNode = browser .getDefaultMaterial () .getShader (this .sphereContext);
+            shaderNode = browser .getDefaultMaterial () .getShader (this .texturesContext);
 
          shaderNode .enable (gl);
          shaderNode .setClipPlanes (gl, this .clipPlanes);
 
-         // Uniforms
+         // Set uniforms.
 
-         gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
-         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
+         gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
+         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
+         gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
 
-         gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
+         gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1);
+         gl .uniform1f (shaderNode .x3d_Transparency,                       0);
          gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
 
-         // Enable vertex attribute arrays.
+         // Draw all textures.
 
-         if (this .sphereArrayObject .enable (gl, shaderNode))
+         this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer,  this .frontArrayObject);
+         this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer,   this .backArrayObject);
+         this .drawRectangle (gl, browser, shaderNode, renderObject, this .leftTexture,   this .leftBuffer,   this .leftArrayObject);
+         this .drawRectangle (gl, browser, shaderNode, renderObject, this .rightTexture,  this .rightBuffer,  this .rightArrayObject);
+         this .drawRectangle (gl, browser, shaderNode, renderObject, this .topTexture,    this .topBuffer,    this .topArrayObject);
+         this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer, this .bottomArrayObject);
+      };
+   })(),
+   drawRectangle: function (gl, browser, shaderNode, renderObject, texture, buffer, vertexArray)
+   {
+      if (texture && (texture .checkLoadState () === X3DConstants .COMPLETE_STATE || texture .getData ()))
+      {
+         texture .setShaderUniforms (gl, shaderNode, renderObject);
+
+         if (vertexArray .enable (gl, shaderNode))
          {
-            shaderNode .enableColorAttribute  (gl, this .colorBuffer,  0, 0);
-            shaderNode .enableVertexAttribute (gl, this .sphereBuffer, 0, 0);
+            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+            shaderNode .enableVertexAttribute (gl, buffer, 0, 0);
          }
 
          // Draw.
 
-         if (transparency)
+         if (texture ._transparent .getValue ())
             gl .enable (gl .BLEND);
          else
             gl .disable (gl .BLEND);
 
-         gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
-      },
-      drawCube: (function ()
-      {
-         const textureMatrixArray = new Float32Array (Matrix4 .Identity);
+         gl .drawArrays (gl .TRIANGLES, 0, 6);
 
-         return function (renderObject)
-         {
-            const
-               browser    = this .getBrowser (),
-               gl         = browser .getContext (),
-               shaderNode = browser .getDefaultMaterial () .getShader (this .texturesContext);
-
-            shaderNode .enable (gl);
-            shaderNode .setClipPlanes (gl, this .clipPlanes);
-
-            // Set uniforms.
-
-            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
-            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
-            gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
-
-            gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1);
-            gl .uniform1f (shaderNode .x3d_Transparency,                       0);
-            gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-
-            // Draw all textures.
-
-            this .drawRectangle (gl, browser, shaderNode, renderObject, this .frontTexture,  this .frontBuffer,  this .frontArrayObject);
-            this .drawRectangle (gl, browser, shaderNode, renderObject, this .backTexture,   this .backBuffer,   this .backArrayObject);
-            this .drawRectangle (gl, browser, shaderNode, renderObject, this .leftTexture,   this .leftBuffer,   this .leftArrayObject);
-            this .drawRectangle (gl, browser, shaderNode, renderObject, this .rightTexture,  this .rightBuffer,  this .rightArrayObject);
-            this .drawRectangle (gl, browser, shaderNode, renderObject, this .topTexture,    this .topBuffer,    this .topArrayObject);
-            this .drawRectangle (gl, browser, shaderNode, renderObject, this .bottomTexture, this .bottomBuffer, this .bottomArrayObject);
-         };
-      })(),
-      drawRectangle: function (gl, browser, shaderNode, renderObject, texture, buffer, vertexArray)
-      {
-         if (texture && (texture .checkLoadState () === X3DConstants .COMPLETE_STATE || texture .getData ()))
-         {
-            texture .setShaderUniforms (gl, shaderNode, renderObject);
-
-            if (vertexArray .enable (gl, shaderNode))
-            {
-               shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
-               shaderNode .enableVertexAttribute (gl, buffer, 0, 0);
-            }
-
-            // Draw.
-
-            if (texture ._transparent .getValue ())
-               gl .enable (gl .BLEND);
-            else
-               gl .disable (gl .BLEND);
-
-            gl .drawArrays (gl .TRIANGLES, 0, 6);
-
-            browser .resetTextureUnits ();
-         }
-      },
-   });
-
-   return X3DBackgroundNode;
+         browser .resetTextureUnits ();
+      }
+   },
 });
+
+export default X3DBackgroundNode;

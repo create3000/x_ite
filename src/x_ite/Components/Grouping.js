@@ -46,48 +46,36 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/SupportedNodes",
-   "x_ite/Components/Grouping/Group",
-   "x_ite/Components/Grouping/StaticGroup",
-   "x_ite/Components/Grouping/Switch",
-   "x_ite/Components/Grouping/Transform",
-   "x_ite/Components/Grouping/X3DBoundedObject",
-   "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Components/Grouping/X3DTransformMatrix3DNode",
-   "x_ite/Components/Grouping/X3DTransformNode",
-],
-function (SupportedNodes,
-          Group,
-          StaticGroup,
-          Switch,
-          Transform,
-          X3DBoundedObject,
-          X3DGroupingNode,
-          X3DTransformMatrix3DNode,
-          X3DTransformNode)
+import SupportedNodes from "../Configuration/SupportedNodes.js";
+import Group from "./Grouping/Group.js";
+import StaticGroup from "./Grouping/StaticGroup.js";
+import Switch from "./Grouping/Switch.js";
+import Transform from "./Grouping/Transform.js";
+import X3DBoundedObject from "./Grouping/X3DBoundedObject.js";
+import X3DGroupingNode from "./Grouping/X3DGroupingNode.js";
+import X3DTransformMatrix3DNode from "./Grouping/X3DTransformMatrix3DNode.js";
+import X3DTransformNode from "./Grouping/X3DTransformNode.js";
+
+const Types =
 {
-"use strict";
+   Group:       Group,
+   StaticGroup: StaticGroup,
+   Switch:      Switch,
+   Transform:   Transform,
+};
 
-   const Types =
-   {
-      Group:       Group,
-      StaticGroup: StaticGroup,
-      Switch:      Switch,
-      Transform:   Transform,
-   };
+const AbstractTypes =
+{
+   X3DBoundedObject:         X3DBoundedObject,
+   X3DGroupingNode:          X3DGroupingNode,
+   X3DTransformMatrix3DNode: X3DTransformMatrix3DNode,
+   X3DTransformNode:         X3DTransformNode,
+};
 
-   const AbstractTypes =
-   {
-      X3DBoundedObject:         X3DBoundedObject,
-      X3DGroupingNode:          X3DGroupingNode,
-      X3DTransformMatrix3DNode: X3DTransformMatrix3DNode,
-      X3DTransformNode:         X3DTransformNode,
-   };
+for (const typeName in Types)
+   SupportedNodes .addType (typeName, Types [typeName]);
 
-   for (const typeName in Types)
-      SupportedNodes .addType (typeName, Types [typeName]);
+for (const typeName in AbstractTypes)
+   SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 
-   for (const typeName in AbstractTypes)
-      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
-});
+export default undefined;

@@ -1,28 +1,22 @@
-
-define (function ()
+export default function bisect (x, t, imin, imax)
 {
-'use strict';
+   var
+      lo = imin === undefined ? 0 : imin,
+      hi = imax === undefined ? x .length - 1 : imax;
 
-   return function bisect (x, t, imin, imax)
+   while (hi - 1 > lo)
    {
-      var
-         lo = imin === undefined ? 0 : imin,
-         hi = imax === undefined ? x .length - 1 : imax;
+      var m = Math .floor (0.5 * (hi + lo));
 
-      while (hi - 1 > lo)
-      {
-         var m = Math .floor (0.5 * (hi + lo));
+      if (x [m] > t)
+         hi = m;
+      else
+         lo = m;
 
-         if (x [m] > t)
-            hi = m;
-         else
-            lo = m;
+   }
 
-      }
+   while (lo < imax && x [lo] === x[ lo + 1])
+      ++ lo;
 
-      while (lo < imax && x [lo] === x[ lo + 1])
-         ++ lo;
-
-      return lo;
-   };
-});
+   return lo;
+};

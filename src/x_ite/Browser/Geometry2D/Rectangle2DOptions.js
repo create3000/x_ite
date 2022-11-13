@@ -47,82 +47,72 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DBaseNode",
-   "x_ite/Components/Geometry3D/IndexedFaceSet",
-   "x_ite/Components/Rendering/Coordinate",
-   "x_ite/Components/Texturing/TextureCoordinate",
-],
-function (Fields,
-          X3DBaseNode,
-          IndexedFaceSet,
-          Coordinate,
-          TextureCoordinate)
+import Fields from "../../Fields.js";
+import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import IndexedFaceSet from "../../Components/Geometry3D/IndexedFaceSet.js";
+import Coordinate from "../../Components/Rendering/Coordinate.js";
+import TextureCoordinate from "../../Components/Texturing/TextureCoordinate.js";
+
+function Rectangle2DOptions (executionContext)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
+}
 
-   function Rectangle2DOptions (executionContext)
+Rectangle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: Rectangle2DOptions,
+   getTypeName: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-   }
-
-   Rectangle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return "Rectangle2DOptions";
+   },
+   getComponentName: function ()
    {
-      constructor: Rectangle2DOptions,
-      getTypeName: function ()
-      {
-         return "Rectangle2DOptions";
-      },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "rectangle2DOptions";
-      },
-      initialize: function ()
-      {
-         X3DBaseNode .prototype .initialize .call (this);
-      },
-      getGeometry: function ()
-      {
-         if (this .geometry)
-            return this .geometry;
-
-         this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
-         this .geometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
-         this .geometry ._coord    = new Coordinate (this .getExecutionContext ());
-
-         const
-            geometry = this .geometry,
-            texCoord = this .geometry ._texCoord .getValue (),
-            coord    = this .geometry ._coord .getValue ();
-
-         geometry ._texCoordIndex = new Fields .MFInt32 (
-            0, 1, 2, 3, -1
-         );
-
-         geometry ._coordIndex = new Fields .MFInt32 (
-            0, 1, 2, 3, -1
-         );
-
-         texCoord ._point = new Fields .MFVec2f (
-            new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0)
-         );
-
-         coord ._point = new Fields .MFVec3f (
-            new Fields .SFVec3f (1, 1, 0), new Fields .SFVec3f (-1, 1, 0), new Fields .SFVec3f (-1, -1, 0), new Fields .SFVec3f (1, -1, 0)
-         );
-
-         texCoord .setup ();
-         coord    .setup ();
-         geometry .setup ();
-
+      return "X_ITE";
+   },
+   getContainerField: function ()
+   {
+      return "rectangle2DOptions";
+   },
+   initialize: function ()
+   {
+      X3DBaseNode .prototype .initialize .call (this);
+   },
+   getGeometry: function ()
+   {
+      if (this .geometry)
          return this .geometry;
-      },
-   });
 
-   return Rectangle2DOptions;
+      this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
+      this .geometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
+      this .geometry ._coord    = new Coordinate (this .getExecutionContext ());
+
+      const
+         geometry = this .geometry,
+         texCoord = this .geometry ._texCoord .getValue (),
+         coord    = this .geometry ._coord .getValue ();
+
+      geometry ._texCoordIndex = new Fields .MFInt32 (
+         0, 1, 2, 3, -1
+      );
+
+      geometry ._coordIndex = new Fields .MFInt32 (
+         0, 1, 2, 3, -1
+      );
+
+      texCoord ._point = new Fields .MFVec2f (
+         new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0)
+      );
+
+      coord ._point = new Fields .MFVec3f (
+         new Fields .SFVec3f (1, 1, 0), new Fields .SFVec3f (-1, 1, 0), new Fields .SFVec3f (-1, -1, 0), new Fields .SFVec3f (1, -1, 0)
+      );
+
+      texCoord .setup ();
+      coord    .setup ();
+      geometry .setup ();
+
+      return this .geometry;
+   },
 });
+
+export default Rectangle2DOptions;

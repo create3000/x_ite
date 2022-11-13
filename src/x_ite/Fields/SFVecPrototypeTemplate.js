@@ -47,127 +47,120 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DField",
-   "x_ite/InputOutput/Generator",
-],
-function (X3DField,
-          Generator)
+import X3DField from "../Base/X3DField.js";
+import Generator from "../InputOutput/Generator.js";
+
+export default function (Type, double)
 {
-"use strict";
-
-   return function (Type, double)
+   return Object .assign (Object .create (X3DField .prototype),
    {
-      return Object .assign (Object .create (X3DField .prototype),
+      [Symbol .iterator]: function* ()
       {
-         [Symbol .iterator]: function* ()
-         {
-            yield* this .getValue ();
-         },
-         copy: function ()
-         {
-            return new (this .constructor) (this .getValue () .copy ());
-         },
-         equals: function (vector)
-         {
-            return this .getValue () .equals (vector .getValue ());
-         },
-         isDefaultValue: function ()
-         {
-            return this .getValue () .equals (Type .Zero);
-         },
-         set: function (value)
-         {
-            this .getValue () .assign (value);
-         },
-         abs: function ()
-         {
-            return new (this .constructor) (Type .abs (this .getValue ()));
-         },
-         add: function (vector)
-         {
-            return new (this .constructor) (Type .add (this .getValue (), vector .getValue ()));
-         },
-         distance: function (vector)
-         {
-            return this .getValue () .distance (vector .getValue ());
-         },
-         divide: function (value)
-         {
-            return new (this .constructor) (Type .divide (this .getValue (), value));
-         },
-         divVec: function (vector)
-         {
-            return new (this .constructor) (Type .divVec (this .getValue (), vector .getValue ()));
-         },
-         dot: function (vector)
-         {
-            return this .getValue () .dot (vector .getValue ());
-         },
-         inverse: function ()
-         {
-            return new (this .constructor) (Type .inverse (this .getValue ()));
-         },
-         length: function ()
-         {
-            return this .getValue () .magnitude ();
-         },
-         lerp: function (destination, t)
-         {
-            return new (this .constructor) (Type .lerp (this .getValue (), destination, t));
-         },
-         max: function (vector)
-         {
-            return new (this .constructor) (Type .max (this .getValue (), vector .getValue ()));
-         },
-         min: function (vector)
-         {
-            return new (this .constructor) (Type .min (this .getValue (), vector .getValue ()));
-         },
-         multiply: function (value)
-         {
-            return new (this .constructor) (Type .multiply (this .getValue (), value));
-         },
-         multVec: function (vector)
-         {
-            return new (this .constructor) (Type .multVec (this .getValue (), vector .getValue ()));
-         },
-         negate: function ()
-         {
-            return new (this .constructor) (Type .negate (this .getValue ()));
-         },
-         normalize: function (vector)
-         {
-            return new (this .constructor) (Type .normalize (this .getValue ()));
-         },
-         subtract: function (vector)
-         {
-            return new (this .constructor) (Type .subtract (this .getValue (), vector .getValue ()));
-         },
-         toStream: function (stream)
-         {
-            const
-               generator = Generator .Get (stream),
-               value     = this .getValue (),
-               category  = generator .Unit (this .getUnit ()),
-               last      = value .length - 1;
+         yield* this .getValue ();
+      },
+      copy: function ()
+      {
+         return new (this .constructor) (this .getValue () .copy ());
+      },
+      equals: function (vector)
+      {
+         return this .getValue () .equals (vector .getValue ());
+      },
+      isDefaultValue: function ()
+      {
+         return this .getValue () .equals (Type .Zero);
+      },
+      set: function (value)
+      {
+         this .getValue () .assign (value);
+      },
+      abs: function ()
+      {
+         return new (this .constructor) (Type .abs (this .getValue ()));
+      },
+      add: function (vector)
+      {
+         return new (this .constructor) (Type .add (this .getValue (), vector .getValue ()));
+      },
+      distance: function (vector)
+      {
+         return this .getValue () .distance (vector .getValue ());
+      },
+      divide: function (value)
+      {
+         return new (this .constructor) (Type .divide (this .getValue (), value));
+      },
+      divVec: function (vector)
+      {
+         return new (this .constructor) (Type .divVec (this .getValue (), vector .getValue ()));
+      },
+      dot: function (vector)
+      {
+         return this .getValue () .dot (vector .getValue ());
+      },
+      inverse: function ()
+      {
+         return new (this .constructor) (Type .inverse (this .getValue ()));
+      },
+      length: function ()
+      {
+         return this .getValue () .magnitude ();
+      },
+      lerp: function (destination, t)
+      {
+         return new (this .constructor) (Type .lerp (this .getValue (), destination, t));
+      },
+      max: function (vector)
+      {
+         return new (this .constructor) (Type .max (this .getValue (), vector .getValue ()));
+      },
+      min: function (vector)
+      {
+         return new (this .constructor) (Type .min (this .getValue (), vector .getValue ()));
+      },
+      multiply: function (value)
+      {
+         return new (this .constructor) (Type .multiply (this .getValue (), value));
+      },
+      multVec: function (vector)
+      {
+         return new (this .constructor) (Type .multVec (this .getValue (), vector .getValue ()));
+      },
+      negate: function ()
+      {
+         return new (this .constructor) (Type .negate (this .getValue ()));
+      },
+      normalize: function (vector)
+      {
+         return new (this .constructor) (Type .normalize (this .getValue ()));
+      },
+      subtract: function (vector)
+      {
+         return new (this .constructor) (Type .subtract (this .getValue (), vector .getValue ()));
+      },
+      toStream: function (stream)
+      {
+         const
+            generator = Generator .Get (stream),
+            value     = this .getValue (),
+            category  = generator .Unit (this .getUnit ()),
+            last      = value .length - 1;
 
-            for (let i = 0; i < last; ++ i)
-            {
-               stream .string += double ? generator .DoublePrecision (generator .ToUnit (category, value [i])) : generator .Precision (generator .ToUnit (category, value [i]));
-               stream .string += " ";
-            }
+         for (let i = 0; i < last; ++ i)
+         {
+            stream .string += double ? generator .DoublePrecision (generator .ToUnit (category, value [i])) : generator .Precision (generator .ToUnit (category, value [i]));
+            stream .string += " ";
+         }
 
-            stream .string += double ? generator .DoublePrecision (generator .ToUnit (category, value [last])) : generator .Precision (generator .ToUnit (category, value [last]));
-         },
-         toVRMLStream: function (stream)
-         {
-            this .toStream (stream);
-         },
-         toXMLStream: function (stream)
-         {
-            this .toStream (stream);
-         },
-      });
-   };
-});
+         stream .string += double ? generator .DoublePrecision (generator .ToUnit (category, value [last])) : generator .Precision (generator .ToUnit (category, value [last]));
+      },
+      toVRMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+      toXMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+   });
+};

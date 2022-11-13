@@ -47,117 +47,105 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Components/Grouping/X3DBoundedObject",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Matrix4",
-   "lib/ammojs/AmmoJS",
-],
-function (Fields,
-          X3DChildNode,
-          X3DBoundedObject,
-          X3DConstants,
-          Vector3,
-          Matrix4,
-          Ammo)
+import Fields from "../../Fields.js";
+import X3DChildNode from "../Core/X3DChildNode.js";
+import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import Ammo from "../../../lib/ammojs/AmmoClass.js";
+
+function X3DNBodyCollidableNode (executionContext)
 {
-"use strict";
+   X3DChildNode     .call (this, executionContext);
+   X3DBoundedObject .call (this, executionContext);
 
-   function X3DNBodyCollidableNode (executionContext)
+   this .addType (X3DConstants .X3DNBodyCollidableNode);
+
+   this .addChildObjects ("body",                  new Fields .SFNode (),
+                          "compoundShape_changed", new Fields .SFTime ());
+
+   // Units
+
+   this ._translation .setUnit ("length");
+
+   // Members
+
+   this .compoundShape  = new Ammo .btCompoundShape ()
+   this .offset         = new Vector3 (0, 0, 0);
+   this .matrix         = new Matrix4 ();
+}
+
+X3DNBodyCollidableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   X3DBoundedObject .prototype,
+{
+   constructor: X3DNBodyCollidableNode,
+   initialize: function ()
    {
-      X3DChildNode     .call (this, executionContext);
-      X3DBoundedObject .call (this, executionContext);
+      X3DChildNode     .prototype .initialize .call (this);
+      X3DBoundedObject .prototype .initialize .call (this);
 
-      this .addType (X3DConstants .X3DNBodyCollidableNode);
+      this .addInterest ("eventsProcessed", this);
 
-      this .addChildObjects ("body",                  new Fields .SFNode (),
-                             "compoundShape_changed", new Fields .SFTime ());
-
-      // Units
-
-      this ._translation .setUnit ("length");
-
-      // Members
-
-      this .compoundShape  = new Ammo .btCompoundShape ()
-      this .offset         = new Vector3 (0, 0, 0);
-      this .matrix         = new Matrix4 ();
-   }
-
-   X3DNBodyCollidableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-      X3DBoundedObject .prototype,
+      this .eventsProcessed ();
+   },
+   getLocalTransform: (function ()
    {
-      constructor: X3DNBodyCollidableNode,
-      initialize: function ()
+      var
+         m = new Matrix4 (),
+         o = new Ammo .btVector3 (0, 0, 0),
+         l = new Ammo .btTransform ();
+
+      return function ()
       {
-         X3DChildNode     .prototype .initialize .call (this);
-         X3DBoundedObject .prototype .initialize .call (this);
+         m .assign (this .getMatrix ());
+         m .translate (this .offset);
 
-         this .addInterest ("eventsProcessed", this);
+         //this .localTransform .setFromOpenGLMatrix (m);
 
-         this .eventsProcessed ();
-      },
-      getLocalTransform: (function ()
-      {
-         var
-            m = new Matrix4 (),
-            o = new Ammo .btVector3 (0, 0, 0),
-            l = new Ammo .btTransform ();
+         o .setValue (m [12], m [13], m [14]);
 
-         return function ()
-         {
-            m .assign (this .getMatrix ());
-            m .translate (this .offset);
+         l .getBasis () .setValue (m [0], m [4], m [8],
+                                   m [1], m [5], m [9],
+                                   m [2], m [6], m [10]);
 
-            //this .localTransform .setFromOpenGLMatrix (m);
+         l .setOrigin (o);
 
-            o .setValue (m [12], m [13], m [14]);
+         return l;
+      };
+   })(),
+   setBody: function (value)
+   {
+      this ._body = value;
+   },
+   getBody: function ()
+   {
+      return this ._body .getValue ();
+   },
+   getCompoundShape: function ()
+   {
+      return this .compoundShape;
+   },
+   setOffset: function (x, y, z)
+   {
+      this .offset .set (x, y, z);
+   },
+   getOffset: function ()
+   {
+      return this .offset;
+   },
+   getMatrix: function ()
+   {
+      return this .matrix;
+   },
+   eventsProcessed: function ()
+   {
+      this .matrix .set (this ._translation .getValue (),
+                         this ._rotation    .getValue ());
 
-            l .getBasis () .setValue (m [0], m [4], m [8],
-                                      m [1], m [5], m [9],
-                                      m [2], m [6], m [10]);
-
-            l .setOrigin (o);
-
-            return l;
-         };
-      })(),
-      setBody: function (value)
-      {
-         this ._body = value;
-      },
-      getBody: function ()
-      {
-         return this ._body .getValue ();
-      },
-      getCompoundShape: function ()
-      {
-         return this .compoundShape;
-      },
-      setOffset: function (x, y, z)
-      {
-         this .offset .set (x, y, z);
-      },
-      getOffset: function ()
-      {
-         return this .offset;
-      },
-      getMatrix: function ()
-      {
-         return this .matrix;
-      },
-      eventsProcessed: function ()
-      {
-         this .matrix .set (this ._translation .getValue (),
-                            this ._rotation    .getValue ());
-
-         if (this .compoundShape .getNumChildShapes ())
-            this .compoundShape .updateChildTransform (0, this .getLocalTransform (), true);
-      },
-   });
-
-   return X3DNBodyCollidableNode;
+      if (this .compoundShape .getNumChildShapes ())
+         this .compoundShape .updateChildTransform (0, this .getLocalTransform (), true);
+   },
 });
+
+export default X3DNBodyCollidableNode;

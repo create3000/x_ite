@@ -47,43 +47,38 @@
  ******************************************************************************/
 
 
-define (function ($)
-{
-"use strict";
-
-   const MapUtilities = {
-      assign: (function ()
+const MapUtilities = {
+   assign: (function ()
+   {
+      function callback (value, key)
       {
-         function callback (value, key)
-         {
-            this .set (key, value);
-         }
+         this .set (key, value);
+      }
 
-         return function (m1, m2)
-         {
-            m1 .clear ();
-            m2 .forEach (callback, m1);
-
-            return m1;
-         };
-      })(),
-      values: (function ()
+      return function (m1, m2)
       {
-         function callback (value)
-         {
-            this .push (value);
-         }
+         m1 .clear ();
+         m2 .forEach (callback, m1);
 
-         return function (a, m)
-         {
-            a .length = 0;
+         return m1;
+      };
+   })(),
+   values: (function ()
+   {
+      function callback (value)
+      {
+         this .push (value);
+      }
 
-            m .forEach (callback, a);
+      return function (a, m)
+      {
+         a .length = 0;
 
-            return a;
-         };
-      })(),
-   };
+         m .forEach (callback, a);
 
-   return MapUtilities;
-});
+         return a;
+      };
+   })(),
+};
+
+export default MapUtilities;

@@ -47,211 +47,198 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Components/EnvironmentalSensor/ProximitySensor",
-   "x_ite/Rendering/TraverseType",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DChildNode,
-          ProximitySensor,
-          TraverseType,
-          X3DConstants,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DChildNode from "../Core/X3DChildNode.js";
+import ProximitySensor from "../EnvironmentalSensor/ProximitySensor.js";
+import TraverseType from "../../Rendering/TraverseType.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+function ViewpointGroup (executionContext)
 {
-"use strict";
+   X3DChildNode .call (this, executionContext);
 
-   function ViewpointGroup (executionContext)
+   this .addType (X3DConstants .ViewpointGroup);
+
+   this ._size   .setUnit ("length");
+   this ._center .setUnit ("length");
+
+   this .proximitySensor  = new ProximitySensor (executionContext);
+   this .cameraObjects    = [ ];
+   this .viewpointGroups  = [ ];
+}
+
+ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+{
+   constructor: ViewpointGroup,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "displayed",         new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "size",              new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "center",            new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "children",          new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .ViewpointGroup);
-
-      this ._size   .setUnit ("length");
-      this ._center .setUnit ("length");
-
-      this .proximitySensor  = new ProximitySensor (executionContext);
-      this .cameraObjects    = [ ];
-      this .viewpointGroups  = [ ];
-   }
-
-   ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+      return "ViewpointGroup";
+   },
+   getComponentName: function ()
    {
-      constructor: ViewpointGroup,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "displayed",         new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "size",              new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "center",            new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "children",          new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
+      return "Navigation";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DChildNode .prototype .initialize .call (this);
+
+      this .proximitySensor .setup ();
+
+      this ._size   .addFieldInterest (this .proximitySensor ._size);
+      this ._center .addFieldInterest (this .proximitySensor ._center);
+
+      this .proximitySensor ._size   = this ._size;
+      this .proximitySensor ._center = this ._center;
+
+      this ._displayed .addInterest ("set_displayed__", this);
+      this ._size      .addInterest ("set_displayed__", this);
+      this ._children  .addInterest ("set_children__", this);
+
+      this .set_displayed__ ();
+      this .set_children__ ();
+   },
+   isActive: function ()
+   {
+      return this .proximitySensor ._isActive .getValue ();
+   },
+   set_displayed__: function ()
+   {
+      var
+         proxy     = ! this ._size .getValue () .equals (Vector3 .Zero),
+         displayed = this ._displayed .getValue ();
+
+      this .proximitySensor ._enabled = displayed && proxy;
+
+      if (displayed && proxy)
       {
-         return "ViewpointGroup";
-      },
-      getComponentName: function ()
+         this .proximitySensor ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+         this .proximitySensor ._isPickableObject .addFieldInterest (this ._isPickableObject);
+
+         this .setCameraObject   (this .proximitySensor .getCameraObject ());
+         this .setPickableObject (this .proximitySensor .getPickableObject ());
+
+         this .traverse = traverseWithProximitySensor;
+      }
+      else
       {
-         return "Navigation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DChildNode .prototype .initialize .call (this);
+         this .proximitySensor ._isCameraObject    .removeFieldInterest (this ._isCameraObject);
+         this .proximitySensor ._isPickableObject .removeFieldInterest (this ._isPickableObject);
 
-         this .proximitySensor .setup ();
+         this .setCameraObject   (displayed);
+         this .setPickableObject (false);
 
-         this ._size   .addFieldInterest (this .proximitySensor ._size);
-         this ._center .addFieldInterest (this .proximitySensor ._center);
-
-         this .proximitySensor ._size   = this ._size;
-         this .proximitySensor ._center = this ._center;
-
-         this ._displayed .addInterest ("set_displayed__", this);
-         this ._size      .addInterest ("set_displayed__", this);
-         this ._children  .addInterest ("set_children__", this);
-
-         this .set_displayed__ ();
-         this .set_children__ ();
-      },
-      isActive: function ()
-      {
-         return this .proximitySensor ._isActive .getValue ();
-      },
-      set_displayed__: function ()
-      {
-         var
-            proxy     = ! this ._size .getValue () .equals (Vector3 .Zero),
-            displayed = this ._displayed .getValue ();
-
-         this .proximitySensor ._enabled = displayed && proxy;
-
-         if (displayed && proxy)
-         {
-            this .proximitySensor ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-            this .proximitySensor ._isPickableObject .addFieldInterest (this ._isPickableObject);
-
-            this .setCameraObject   (this .proximitySensor .getCameraObject ());
-            this .setPickableObject (this .proximitySensor .getPickableObject ());
-
-            this .traverse = traverseWithProximitySensor;
-         }
+         if (displayed)
+            this .traverse = traverse;
          else
-         {
-            this .proximitySensor ._isCameraObject    .removeFieldInterest (this ._isCameraObject);
-            this .proximitySensor ._isPickableObject .removeFieldInterest (this ._isPickableObject);
+            delete this .traverse;
+      }
+   },
+   set_children__: function ()
+   {
+      this .cameraObjects   .length = 0;
+      this .viewpointGroups .length = 0;
 
-            this .setCameraObject   (displayed);
-            this .setPickableObject (false);
+      var children = this ._children;
 
-            if (displayed)
-               this .traverse = traverse;
-            else
-               delete this .traverse;
-         }
-      },
-      set_children__: function ()
+      for (var i = 0, length = children .length; i < length; ++ i)
       {
-         this .cameraObjects   .length = 0;
-         this .viewpointGroups .length = 0;
-
-         var children = this ._children;
-
-         for (var i = 0, length = children .length; i < length; ++ i)
+         try
          {
-            try
-            {
-               var
-                  innerNode = children [i] .getValue () .getInnerNode (),
-                  type      = innerNode .getType ();
+            var
+               innerNode = children [i] .getValue () .getInnerNode (),
+               type      = innerNode .getType ();
 
-               for (var t = type .length - 1; t >= 0; -- t)
+            for (var t = type .length - 1; t >= 0; -- t)
+            {
+               switch (type [t])
                {
-                  switch (type [t])
+                  case X3DConstants .X3DViewpointNode:
                   {
-                     case X3DConstants .X3DViewpointNode:
-                     {
-                        this .cameraObjects .push (innerNode);
-                        break;
-                     }
-                     case X3DConstants .ViewpointGroup:
-                     {
-                        this .cameraObjects   .push (innerNode);
-                        this .viewpointGroups .push (innerNode);
-                        break;
-                     }
+                     this .cameraObjects .push (innerNode);
+                     break;
+                  }
+                  case X3DConstants .ViewpointGroup:
+                  {
+                     this .cameraObjects   .push (innerNode);
+                     this .viewpointGroups .push (innerNode);
+                     break;
                   }
                }
             }
-            catch (error)
-            { }
          }
-      },
-      traverse: function () { },
-   });
-
-   function traverseWithProximitySensor (type, renderObject)
-   {
-      switch (type)
-      {
-         case TraverseType .CAMERA:
-         {
-            this .proximitySensor .traverse (type, renderObject);
-
-            if (this .proximitySensor ._isActive .getValue ())
-            {
-               for (var i = 0, length = this .cameraObjects .length; i < length; ++ i)
-                  this .cameraObjects [i] .traverse (type, renderObject);
-            }
-
-            return;
-         }
-         case TraverseType .DISPLAY:
-         {
-            this .proximitySensor .traverse (type, renderObject);
-
-            if (this .proximitySensor ._isActive .getValue ())
-            {
-               for (var i = 0, length = this .viewpointGroups .length; i < length; ++ i)
-                  this .viewpointGroups [i] .traverse (type, renderObject);
-            }
-
-            return;
-         }
+         catch (error)
+         { }
       }
-   }
+   },
+   traverse: function () { },
+});
 
-   function traverse (type, renderObject)
+function traverseWithProximitySensor (type, renderObject)
+{
+   switch (type)
    {
-      switch (type)
+      case TraverseType .CAMERA:
       {
-         case TraverseType .CAMERA:
+         this .proximitySensor .traverse (type, renderObject);
+
+         if (this .proximitySensor ._isActive .getValue ())
          {
             for (var i = 0, length = this .cameraObjects .length; i < length; ++ i)
                this .cameraObjects [i] .traverse (type, renderObject);
-
-            return;
          }
-         case TraverseType .DISPLAY:
+
+         return;
+      }
+      case TraverseType .DISPLAY:
+      {
+         this .proximitySensor .traverse (type, renderObject);
+
+         if (this .proximitySensor ._isActive .getValue ())
          {
             for (var i = 0, length = this .viewpointGroups .length; i < length; ++ i)
                this .viewpointGroups [i] .traverse (type, renderObject);
-
-            return;
          }
+
+         return;
       }
    }
+}
 
-   return ViewpointGroup;
-});
+function traverse (type, renderObject)
+{
+   switch (type)
+   {
+      case TraverseType .CAMERA:
+      {
+         for (var i = 0, length = this .cameraObjects .length; i < length; ++ i)
+            this .cameraObjects [i] .traverse (type, renderObject);
+
+         return;
+      }
+      case TraverseType .DISPLAY:
+      {
+         for (var i = 0, length = this .viewpointGroups .length; i < length; ++ i)
+            this .viewpointGroups [i] .traverse (type, renderObject);
+
+         return;
+      }
+   }
+}
+
+export default ViewpointGroup;

@@ -47,26 +47,19 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Base/X3DConstants",
-],
-function (X3DChildNode,
-          X3DConstants)
+import X3DChildNode from "./X3DChildNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DSensorNode (executionContext)
 {
-"use strict";
+   X3DChildNode .call (this, executionContext);
 
-   function X3DSensorNode (executionContext)
-   {
-      X3DChildNode .call (this, executionContext);
+   this .addType (X3DConstants .X3DSensorNode);
+}
 
-      this .addType (X3DConstants .X3DSensorNode);
-   }
-
-   X3DSensorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-   {
-      constructor: X3DSensorNode,
-   });
-
-   return X3DSensorNode;
+X3DSensorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+{
+   constructor: X3DSensorNode,
 });
+
+export default X3DSensorNode;

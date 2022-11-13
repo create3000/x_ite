@@ -47,229 +47,214 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/ProjectiveTextureMapping/X3DTextureProjectorNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Geometry/Camera",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Numbers/Matrix4",
-   "standard/Utility/ObjectCache",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DTextureProjectorNode,
-          X3DConstants,
-          Camera,
-          Vector3,
-          Rotation4,
-          Matrix4,
-          ObjectCache)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DTextureProjectorNode from "./X3DTextureProjectorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Camera from "../../../standard/Math/Geometry/Camera.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+import ObjectCache from "../../../standard/Utility/ObjectCache.js";
+
+var TextureProjectorParallelCache = ObjectCache (TextureProjectorParallelContainer);
+
+function TextureProjectorParallelContainer ()
 {
-"use strict";
+   this .projectionMatrix                = new Matrix4 ();
+   this .modelViewMatrix                 = new Matrix4 ();
+   this .modelMatrix                     = new Matrix4 ();
+   this .invTextureSpaceMatrix           = new Matrix4 ();
+   this .location                        = new Vector3 (0, 0, 0);
+   this .locationArray                   = new Float32Array (3);
+   this .invTextureSpaceProjectionMatrix = new Matrix4 ();
+   this .direction                       = new Vector3 (0, 0, 0);
+   this .rotation                        = new Rotation4 ();
+   this .projectiveTextureMatrix         = new Matrix4 ();
+   this .projectiveTextureMatrixArray    = new Float32Array (16);
+}
 
-   var TextureProjectorParallelCache = ObjectCache (TextureProjectorParallelContainer);
-
-   function TextureProjectorParallelContainer ()
+TextureProjectorParallelContainer .prototype =
+{
+   constructor: TextureProjectorParallelContainer,
+   set: function (textureProjectorNode, modelViewMatrix)
    {
-      this .projectionMatrix                = new Matrix4 ();
-      this .modelViewMatrix                 = new Matrix4 ();
-      this .modelMatrix                     = new Matrix4 ();
-      this .invTextureSpaceMatrix           = new Matrix4 ();
-      this .location                        = new Vector3 (0, 0, 0);
-      this .locationArray                   = new Float32Array (3);
-      this .invTextureSpaceProjectionMatrix = new Matrix4 ();
-      this .direction                       = new Vector3 (0, 0, 0);
-      this .rotation                        = new Rotation4 ();
-      this .projectiveTextureMatrix         = new Matrix4 ();
-      this .projectiveTextureMatrixArray    = new Float32Array (16);
-   }
+      this .browser              = textureProjectorNode .getBrowser ();
+      this .textureProjectorNode = textureProjectorNode;
 
-   TextureProjectorParallelContainer .prototype =
+      this .modelViewMatrix .assign (modelViewMatrix);
+   },
+   getModelViewMatrix: function ()
    {
-      constructor: TextureProjectorParallelContainer,
-      set: function (textureProjectorNode, modelViewMatrix)
-      {
-         this .browser              = textureProjectorNode .getBrowser ();
-         this .textureProjectorNode = textureProjectorNode;
+      return this .modelViewMatrix;
+   },
+   setGlobalVariables: function (renderObject)
+   {
+      var
+         textureProjectorNode  = this .textureProjectorNode,
+         cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
+         modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
+         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (textureProjectorNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
-         this .modelViewMatrix .assign (modelViewMatrix);
-      },
-      getModelViewMatrix: function ()
-      {
-         return this .modelViewMatrix;
-      },
-      setGlobalVariables: function (renderObject)
+      this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (textureProjectorNode .getDirection ()) .negate ());
+      textureProjectorNode .straightenHorizon (this .rotation);
+
+      invTextureSpaceMatrix .translate (textureProjectorNode .getLocation ());
+      invTextureSpaceMatrix .rotate (this .rotation);
+      invTextureSpaceMatrix .inverse ();
+
+      var
+         width        = textureProjectorNode .getTexture () .getWidth (),
+         height       = textureProjectorNode .getTexture () .getHeight (),
+         aspect       = width / height,
+         minimumX     = textureProjectorNode .getMinimumX (),
+         maximumX     = textureProjectorNode .getMaximumX (),
+         minimumY     = textureProjectorNode .getMinimumY (),
+         maximumY     = textureProjectorNode .getMaximumY (),
+         sizeX        = textureProjectorNode .getSizeX (),
+         sizeY        = textureProjectorNode .getSizeY (),
+         nearDistance = textureProjectorNode .getNearDistance (),
+         farDistance  = textureProjectorNode .getFarDistance ();
+
+      if (aspect > sizeX / sizeY)
       {
          var
-            textureProjectorNode  = this .textureProjectorNode,
-            cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
-            modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
-            invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (textureProjectorNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+            center  = (minimumX + maximumX) / 2,
+            size1_2 = (sizeY * aspect) / 2;
 
-         this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (textureProjectorNode .getDirection ()) .negate ());
-         textureProjectorNode .straightenHorizon (this .rotation);
-
-         invTextureSpaceMatrix .translate (textureProjectorNode .getLocation ());
-         invTextureSpaceMatrix .rotate (this .rotation);
-         invTextureSpaceMatrix .inverse ();
-
+         Camera .ortho (center - size1_2, center + size1_2, minimumY, maximumY, nearDistance, farDistance, this .projectionMatrix);
+      }
+      else
+      {
          var
-            width        = textureProjectorNode .getTexture () .getWidth (),
-            height       = textureProjectorNode .getTexture () .getHeight (),
-            aspect       = width / height,
-            minimumX     = textureProjectorNode .getMinimumX (),
-            maximumX     = textureProjectorNode .getMaximumX (),
-            minimumY     = textureProjectorNode .getMinimumY (),
-            maximumY     = textureProjectorNode .getMaximumY (),
-            sizeX        = textureProjectorNode .getSizeX (),
-            sizeY        = textureProjectorNode .getSizeY (),
-            nearDistance = textureProjectorNode .getNearDistance (),
-            farDistance  = textureProjectorNode .getFarDistance ();
+            center  = (minimumY + maximumY) / 2,
+            size1_2 = (sizeX / aspect) / 2;
 
-         if (aspect > sizeX / sizeY)
-         {
-            var
-               center  = (minimumX + maximumX) / 2,
-               size1_2 = (sizeY * aspect) / 2;
+         Camera .ortho (minimumX, maximumX, center - size1_2, center + size1_2, nearDistance, farDistance, this .projectionMatrix);
+      }
 
-            Camera .ortho (center - size1_2, center + size1_2, minimumY, maximumY, nearDistance, farDistance, this .projectionMatrix);
-         }
-         else
-         {
-            var
-               center  = (minimumY + maximumY) / 2,
-               size1_2 = (sizeX / aspect) / 2;
+      if (! textureProjectorNode .getGlobal ())
+         invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
 
-            Camera .ortho (minimumX, maximumX, center - size1_2, center + size1_2, nearDistance, farDistance, this .projectionMatrix);
-         }
+      this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (textureProjectorNode .getBiasMatrix ());
 
-         if (! textureProjectorNode .getGlobal ())
-            invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
+      this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
+      this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
-         this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (textureProjectorNode .getBiasMatrix ());
-
-         this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
-         this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
-
-         this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode ._location .getValue ()));
-         this .locationArray .set (this .location);
-      },
-      setShaderUniforms: function (gl, shaderObject, renderObject)
-      {
-         const i = shaderObject .numProjectiveTextures ++;
-
-         if (shaderObject .hasTextureProjector (i, this))
-            return;
-
-         const
-            texture     = this .textureProjectorNode .getTexture (),
-            textureUnit = this .browser .getTexture2DUnit ();
-
-         gl .activeTexture (gl .TEXTURE0 + textureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
-         gl .uniform1i (shaderObject .x3d_ProjectiveTexture [i], textureUnit);
-
-         gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
-         gl .uniform3fv (shaderObject .x3d_ProjectiveTextureLocation [i], this .locationArray);
-      },
-      dispose: function ()
-      {
-         TextureProjectorParallelCache .push (this);
-      },
-   };
-
-   function TextureProjectorParallel (executionContext)
+      this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode ._location .getValue ()));
+      this .locationArray .set (this .location);
+   },
+   setShaderUniforms: function (gl, shaderObject, renderObject)
    {
-      X3DTextureProjectorNode .call (this, executionContext);
+      const i = shaderObject .numProjectiveTextures ++;
 
-      this .addType (X3DConstants .TextureProjectorParallel);
+      if (shaderObject .hasTextureProjector (i, this))
+         return;
 
-      this ._fieldOfView .setUnit ("length");
-   }
+      const
+         texture     = this .textureProjectorNode .getTexture (),
+         textureUnit = this .browser .getTexture2DUnit ();
 
-   TextureProjectorParallel .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
+      gl .activeTexture (gl .TEXTURE0 + textureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
+      gl .uniform1i (shaderObject .x3d_ProjectiveTexture [i], textureUnit);
+
+      gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
+      gl .uniform3fv (shaderObject .x3d_ProjectiveTextureLocation [i], this .locationArray);
+   },
+   dispose: function ()
    {
-      constructor: TextureProjectorParallel,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "description",  new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "on",           new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "global",       new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "location",     new Fields .SFVec3f (0, 0, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "direction",    new Fields .SFVec3f (0, 0, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "upVector",     new Fields .SFVec3f (0, 1, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView" , new Fields .MFFloat (-1, -1, 1, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "nearDistance", new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "farDistance",  new Fields .SFFloat (10)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "aspectRatio",  new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "texture",      new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "TextureProjectorParallel";
-      },
-      getComponentName: function ()
-      {
-         return "ProjectiveTextureMapping";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DTextureProjectorNode .prototype .initialize .call (this);
+      TextureProjectorParallelCache .push (this);
+   },
+};
 
-         this ._fieldOfView .addInterest ("set_fieldOfView___", this);
+function TextureProjectorParallel (executionContext)
+{
+   X3DTextureProjectorNode .call (this, executionContext);
 
-         this .set_fieldOfView___ ();
-      },
-      getMinimumX: function ()
-      {
-         return this .minimumX;
-      },
-      getMinimumY: function ()
-      {
-         return this .minimumY;
-      },
-      getMaximumX: function ()
-      {
-         return this .maximumX;
-      },
-      getMaximumY: function ()
-      {
-         return this .maximumY;
-      },
-      getSizeX: function ()
-      {
-         return this .sizeX;
-      },
-      getSizeY: function ()
-      {
-         return this .sizeY;
-      },
-      getTextureProjectors: function ()
-      {
-         return TextureProjectorParallelCache;
-      },
-      set_fieldOfView___: function ()
-      {
-         var length = this ._fieldOfView .length;
+   this .addType (X3DConstants .TextureProjectorParallel);
 
-         this .minimumX = (length > 0 ? this ._fieldOfView [0] : -1);
-         this .minimumY = (length > 1 ? this ._fieldOfView [1] : -1);
-         this .maximumX = (length > 2 ? this ._fieldOfView [2] :  1);
-         this .maximumY = (length > 3 ? this ._fieldOfView [3] :  1);
+   this ._fieldOfView .setUnit ("length");
+}
 
-         this .sizeX = this .maximumX - this .minimumX;
-         this .sizeY = this .maximumY - this .minimumY;
-      },
-   });
+TextureProjectorParallel .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
+{
+   constructor: TextureProjectorParallel,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "description",  new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "on",           new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "global",       new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "location",     new Fields .SFVec3f (0, 0, 1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "direction",    new Fields .SFVec3f (0, 0, 1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "upVector",     new Fields .SFVec3f (0, 1, 0)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView" , new Fields .MFFloat (-1, -1, 1, 1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "nearDistance", new Fields .SFFloat (1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "farDistance",  new Fields .SFFloat (10)),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "aspectRatio",  new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "texture",      new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
+   {
+      return "TextureProjectorParallel";
+   },
+   getComponentName: function ()
+   {
+      return "ProjectiveTextureMapping";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DTextureProjectorNode .prototype .initialize .call (this);
 
-   return TextureProjectorParallel;
+      this ._fieldOfView .addInterest ("set_fieldOfView___", this);
+
+      this .set_fieldOfView___ ();
+   },
+   getMinimumX: function ()
+   {
+      return this .minimumX;
+   },
+   getMinimumY: function ()
+   {
+      return this .minimumY;
+   },
+   getMaximumX: function ()
+   {
+      return this .maximumX;
+   },
+   getMaximumY: function ()
+   {
+      return this .maximumY;
+   },
+   getSizeX: function ()
+   {
+      return this .sizeX;
+   },
+   getSizeY: function ()
+   {
+      return this .sizeY;
+   },
+   getTextureProjectors: function ()
+   {
+      return TextureProjectorParallelCache;
+   },
+   set_fieldOfView___: function ()
+   {
+      var length = this ._fieldOfView .length;
+
+      this .minimumX = (length > 0 ? this ._fieldOfView [0] : -1);
+      this .minimumY = (length > 1 ? this ._fieldOfView [1] : -1);
+      this .maximumX = (length > 2 ? this ._fieldOfView [2] :  1);
+      this .maximumY = (length > 3 ? this ._fieldOfView [3] :  1);
+
+      this .sizeX = this .maximumX - this .minimumX;
+      this .sizeY = this .maximumY - this .minimumY;
+   },
 });
+
+export default TextureProjectorParallel;

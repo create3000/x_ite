@@ -46,87 +46,62 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Configuration/SupportedNodes",
-   "x_ite/Components/Rendering/ClipPlane",
-   "x_ite/Components/Rendering/Color",
-   "x_ite/Components/Rendering/ColorRGBA",
-   "x_ite/Components/Rendering/Coordinate",
-   "x_ite/Components/Rendering/IndexedLineSet",
-   "x_ite/Components/Rendering/IndexedTriangleFanSet",
-   "x_ite/Components/Rendering/IndexedTriangleSet",
-   "x_ite/Components/Rendering/IndexedTriangleStripSet",
-   "x_ite/Components/Rendering/LineSet",
-   "x_ite/Components/Rendering/Normal",
-   "x_ite/Components/Rendering/PointSet",
-   "x_ite/Components/Rendering/TriangleFanSet",
-   "x_ite/Components/Rendering/TriangleSet",
-   "x_ite/Components/Rendering/TriangleStripSet",
-   "x_ite/Components/Rendering/X3DColorNode",
-   "x_ite/Components/Rendering/X3DComposedGeometryNode",
-   "x_ite/Components/Rendering/X3DCoordinateNode",
-   "x_ite/Components/Rendering/X3DGeometricPropertyNode",
-   "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Components/Rendering/X3DLineGeometryNode",
-   "x_ite/Components/Rendering/X3DNormalNode",
-],
-function (SupportedNodes,
-          ClipPlane,
-          Color,
-          ColorRGBA,
-          Coordinate,
-          IndexedLineSet,
-          IndexedTriangleFanSet,
-          IndexedTriangleSet,
-          IndexedTriangleStripSet,
-          LineSet,
-          Normal,
-          PointSet,
-          TriangleFanSet,
-          TriangleSet,
-          TriangleStripSet,
-          X3DColorNode,
-          X3DComposedGeometryNode,
-          X3DCoordinateNode,
-          X3DGeometricPropertyNode,
-          X3DGeometryNode,
-          X3DLineGeometryNode,
-          X3DNormalNode)
+import SupportedNodes from "../Configuration/SupportedNodes.js";
+import ClipPlane from "./Rendering/ClipPlane.js";
+import Color from "./Rendering/Color.js";
+import ColorRGBA from "./Rendering/ColorRGBA.js";
+import Coordinate from "./Rendering/Coordinate.js";
+import IndexedLineSet from "./Rendering/IndexedLineSet.js";
+import IndexedTriangleFanSet from "./Rendering/IndexedTriangleFanSet.js";
+import IndexedTriangleSet from "./Rendering/IndexedTriangleSet.js";
+import IndexedTriangleStripSet from "./Rendering/IndexedTriangleStripSet.js";
+import LineSet from "./Rendering/LineSet.js";
+import Normal from "./Rendering/Normal.js";
+import PointSet from "./Rendering/PointSet.js";
+import TriangleFanSet from "./Rendering/TriangleFanSet.js";
+import TriangleSet from "./Rendering/TriangleSet.js";
+import TriangleStripSet from "./Rendering/TriangleStripSet.js";
+import X3DColorNode from "./Rendering/X3DColorNode.js";
+import X3DComposedGeometryNode from "./Rendering/X3DComposedGeometryNode.js";
+import X3DCoordinateNode from "./Rendering/X3DCoordinateNode.js";
+import X3DGeometricPropertyNode from "./Rendering/X3DGeometricPropertyNode.js";
+import X3DGeometryNode from "./Rendering/X3DGeometryNode.js";
+import X3DLineGeometryNode from "./Rendering/X3DLineGeometryNode.js";
+import X3DNormalNode from "./Rendering/X3DNormalNode.js";
+
+const Types =
 {
-"use strict";
+   ClipPlane:               ClipPlane,
+   Color:                   Color,
+   ColorRGBA:               ColorRGBA,
+   Coordinate:              Coordinate,
+   IndexedLineSet:          IndexedLineSet,
+   IndexedTriangleFanSet:   IndexedTriangleFanSet,
+   IndexedTriangleSet:      IndexedTriangleSet,
+   IndexedTriangleStripSet: IndexedTriangleStripSet,
+   LineSet:                 LineSet,
+   Normal:                  Normal,
+   PointSet:                PointSet,
+   TriangleFanSet:          TriangleFanSet,
+   TriangleSet:             TriangleSet,
+   TriangleStripSet:        TriangleStripSet,
+};
 
-   const Types =
-   {
-      ClipPlane:               ClipPlane,
-      Color:                   Color,
-      ColorRGBA:               ColorRGBA,
-      Coordinate:              Coordinate,
-      IndexedLineSet:          IndexedLineSet,
-      IndexedTriangleFanSet:   IndexedTriangleFanSet,
-      IndexedTriangleSet:      IndexedTriangleSet,
-      IndexedTriangleStripSet: IndexedTriangleStripSet,
-      LineSet:                 LineSet,
-      Normal:                  Normal,
-      PointSet:                PointSet,
-      TriangleFanSet:          TriangleFanSet,
-      TriangleSet:             TriangleSet,
-      TriangleStripSet:        TriangleStripSet,
-   };
+const AbstractTypes =
+{
+   X3DColorNode:             X3DColorNode,
+   X3DComposedGeometryNode:  X3DComposedGeometryNode,
+   X3DCoordinateNode:        X3DCoordinateNode,
+   X3DGeometricPropertyNode: X3DGeometricPropertyNode,
+   X3DGeometryNode:          X3DGeometryNode,
+   X3DLineGeometryNode:      X3DLineGeometryNode,
+   X3DNormalNode:            X3DNormalNode,
+};
 
-   const AbstractTypes =
-   {
-      X3DColorNode:             X3DColorNode,
-      X3DComposedGeometryNode:  X3DComposedGeometryNode,
-      X3DCoordinateNode:        X3DCoordinateNode,
-      X3DGeometricPropertyNode: X3DGeometricPropertyNode,
-      X3DGeometryNode:          X3DGeometryNode,
-      X3DLineGeometryNode:      X3DLineGeometryNode,
-      X3DNormalNode:            X3DNormalNode,
-   };
+for (const typeName in Types)
+   SupportedNodes .addType (typeName, Types [typeName]);
 
-   for (const typeName in Types)
-      SupportedNodes .addType (typeName, Types [typeName]);
+for (const typeName in AbstractTypes)
+   SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 
-   for (const typeName in AbstractTypes)
-      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
-});
+export default undefined;

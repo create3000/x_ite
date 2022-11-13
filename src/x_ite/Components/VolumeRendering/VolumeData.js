@@ -47,167 +47,154 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/VolumeRendering/X3DVolumeDataNode",
-   "x_ite/Components/Shaders/ComposedShader",
-   "x_ite/Components/Shaders/ShaderPart",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Base/X3DCast",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DVolumeDataNode,
-          ComposedShader,
-          ShaderPart,
-          X3DConstants,
-          X3DCast)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DVolumeDataNode from "./X3DVolumeDataNode.js";
+import ComposedShader from "../Shaders/ComposedShader.js";
+import ShaderPart from "../Shaders/ShaderPart.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast from "../../Base/X3DCast.js";
+
+function VolumeData (executionContext)
 {
-"use strict";
+   X3DVolumeDataNode .call (this, executionContext);
 
-   function VolumeData (executionContext)
-   {
-      X3DVolumeDataNode .call (this, executionContext);
+   this .addType (X3DConstants .VolumeData);
 
-      this .addType (X3DConstants .VolumeData);
-
-      this .renderStyleNode = null;
+   this .renderStyleNode = null;
   }
 
-   VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
+VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
+{
+   constructor: VolumeData,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",  new Fields .SFVec3f (1, 1, 1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f (0, 0, 0)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "renderStyle", new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "voxels",      new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      constructor: VolumeData,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",  new Fields .SFVec3f (1, 1, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f (0, 0, 0)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "renderStyle", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "voxels",      new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
+      return "VolumeData";
+   },
+   getComponentName: function ()
+   {
+      return "VolumeRendering";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DVolumeDataNode .prototype .initialize .call (this);
+
+      const gl = this .getBrowser () .getContext ();
+
+      if (gl .getVersion () < 2)
+         return;
+
+      this ._renderStyle .addInterest ("set_renderStyle__", this);
+      this ._voxels      .addInterest ("set_voxels__",      this);
+
+      this ._renderStyle .addInterest ("updateShader", this);
+
+      this .getAppearance () ._texture   = this ._voxels;
+
+      this .set_renderStyle__ ();
+      this .set_voxels__ ();
+
+      this .updateShader ();
+   },
+   set_renderStyle__: function ()
+   {
+      if (this .renderStyleNode)
       {
-         return "VolumeData";
-      },
-      getComponentName: function ()
+         this .renderStyleNode .removeInterest ("updateShader", this);
+         this .renderStyleNode .removeVolumeData (this);
+      }
+
+      this .renderStyleNode = X3DCast (X3DConstants .X3DVolumeRenderStyleNode, this ._renderStyle);
+
+      if (this .renderStyleNode)
       {
-         return "VolumeRendering";
-      },
-      getContainerField: function ()
+         this .renderStyleNode .addInterest ("updateShader", this);
+         this .renderStyleNode .addVolumeData (this);
+      }
+   },
+   set_voxels__: function ()
+   {
+      this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
+
+      if (this .voxelsNode)
+         this .getAppearance () ._texture = this ._voxels;
+      else
+         this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
+   },
+   createShader: function (options, vs, fs)
+   {
+      // if (DEBUG)
+      //    console .log ("Creating VolumeData Shader ...");
+
+      const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
+
+      let
+         styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
+         styleFunctions = opacityMapVolumeStyle .getFunctionsText ();
+
+      if (this .renderStyleNode)
       {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DVolumeDataNode .prototype .initialize .call (this);
+         styleUniforms  += this .renderStyleNode .getUniformsText (),
+         styleFunctions += this .renderStyleNode .getFunctionsText ();
+      }
 
-         const gl = this .getBrowser () .getContext ();
+      fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
+      fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
 
-         if (gl .getVersion () < 2)
-            return;
+      // if (DEBUG)
+      //    this .getBrowser () .print (fs);
 
-         this ._renderStyle .addInterest ("set_renderStyle__", this);
-         this ._voxels      .addInterest ("set_voxels__",      this);
+      const vertexShader = new ShaderPart (this .getExecutionContext ());
+      vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
+      vertexShader .setPrivate (true);
+      vertexShader .setName ("VolumeDataVertexShader");
+      vertexShader .setOptions (options);
+      vertexShader .setup ();
 
-         this ._renderStyle .addInterest ("updateShader", this);
+      const fragmentShader = new ShaderPart (this .getExecutionContext ());
+      fragmentShader ._type = "FRAGMENT";
+      fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
+      fragmentShader .setPrivate (true);
+      fragmentShader .setName ("VolumeDataFragmentShader");
+      fragmentShader .setOptions (options);
+      fragmentShader .setup ();
 
-         this .getAppearance () ._texture   = this ._voxels;
+      const shaderNode = new ComposedShader (this .getExecutionContext ());
+      shaderNode ._language = "GLSL";
+      shaderNode ._parts .push (vertexShader);
+      shaderNode ._parts .push (fragmentShader);
+      shaderNode .setPrivate (true);
+      shaderNode .setName ("VolumeDataShader");
 
-         this .set_renderStyle__ ();
-         this .set_voxels__ ();
+      opacityMapVolumeStyle .addShaderFields (shaderNode);
 
-         this .updateShader ();
-      },
-      set_renderStyle__: function ()
-      {
-         if (this .renderStyleNode)
-         {
-            this .renderStyleNode .removeInterest ("updateShader", this);
-            this .renderStyleNode .removeVolumeData (this);
-         }
+      if (this .renderStyleNode)
+         this .renderStyleNode .addShaderFields (shaderNode);
 
-         this .renderStyleNode = X3DCast (X3DConstants .X3DVolumeRenderStyleNode, this ._renderStyle);
+      const uniformNames = [ ];
 
-         if (this .renderStyleNode)
-         {
-            this .renderStyleNode .addInterest ("updateShader", this);
-            this .renderStyleNode .addVolumeData (this);
-         }
-      },
-      set_voxels__: function ()
-      {
-         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
+      this .addShaderUniformNames (uniformNames);
 
-         if (this .voxelsNode)
-            this .getAppearance () ._texture = this ._voxels;
-         else
-            this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
-      },
-      createShader: function (options, vs, fs)
-      {
-         // if (DEBUG)
-         //    console .log ("Creating VolumeData Shader ...");
+      shaderNode .setUniformNames (uniformNames);
+      shaderNode .setup ();
 
-         const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
-
-         let
-            styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
-            styleFunctions = opacityMapVolumeStyle .getFunctionsText ();
-
-         if (this .renderStyleNode)
-         {
-            styleUniforms  += this .renderStyleNode .getUniformsText (),
-            styleFunctions += this .renderStyleNode .getFunctionsText ();
-         }
-
-         fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
-         fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
-
-         // if (DEBUG)
-         //    this .getBrowser () .print (fs);
-
-         const vertexShader = new ShaderPart (this .getExecutionContext ());
-         vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
-         vertexShader .setPrivate (true);
-         vertexShader .setName ("VolumeDataVertexShader");
-         vertexShader .setOptions (options);
-         vertexShader .setup ();
-
-         const fragmentShader = new ShaderPart (this .getExecutionContext ());
-         fragmentShader ._type = "FRAGMENT";
-         fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
-         fragmentShader .setPrivate (true);
-         fragmentShader .setName ("VolumeDataFragmentShader");
-         fragmentShader .setOptions (options);
-         fragmentShader .setup ();
-
-         const shaderNode = new ComposedShader (this .getExecutionContext ());
-         shaderNode ._language = "GLSL";
-         shaderNode ._parts .push (vertexShader);
-         shaderNode ._parts .push (fragmentShader);
-         shaderNode .setPrivate (true);
-         shaderNode .setName ("VolumeDataShader");
-
-         opacityMapVolumeStyle .addShaderFields (shaderNode);
-
-         if (this .renderStyleNode)
-            this .renderStyleNode .addShaderFields (shaderNode);
-
-         const uniformNames = [ ];
-
-         this .addShaderUniformNames (uniformNames);
-
-         shaderNode .setUniformNames (uniformNames);
-         shaderNode .setup ();
-
-         return shaderNode;
-      },
-   });
-
-   return VolumeData;
+      return shaderNode;
+   },
 });
+
+export default VolumeData;

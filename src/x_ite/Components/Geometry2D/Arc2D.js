@@ -47,115 +47,103 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DLineGeometryNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Complex",
-   "standard/Math/Algorithm",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DLineGeometryNode,
-          X3DConstants,
-          Complex,
-          Algorithm)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DLineGeometryNode from "../Rendering/X3DLineGeometryNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Complex from "../../../standard/Math/Numbers/Complex.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+function Arc2D (executionContext)
 {
-"use strict";
+   X3DLineGeometryNode .call (this, executionContext);
 
-   function Arc2D (executionContext)
+   this .addType (X3DConstants .Arc2D);
+
+   this ._startAngle .setUnit ("angle");
+   this ._endAngle   .setUnit ("angle");
+   this ._radius     .setUnit ("length");
+}
+
+Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+{
+   constructor: Arc2D,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "startAngle", new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "endAngle",   new Fields .SFFloat (1.5708)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",     new Fields .SFFloat (1)),
+   ]),
+   getTypeName: function ()
    {
-      X3DLineGeometryNode .call (this, executionContext);
-
-      this .addType (X3DConstants .Arc2D);
-
-      this ._startAngle .setUnit ("angle");
-      this ._endAngle   .setUnit ("angle");
-      this ._radius     .setUnit ("length");
-   }
-
-   Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+      return "Arc2D";
+   },
+   getComponentName: function ()
    {
-      constructor: Arc2D,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "startAngle", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "endAngle",   new Fields .SFFloat (1.5708)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",     new Fields .SFFloat (1)),
-      ]),
-      getTypeName: function ()
-      {
-         return "Arc2D";
-      },
-      getComponentName: function ()
-      {
-         return "Geometry2D";
-      },
-      getContainerField: function ()
-      {
-         return "geometry";
-      },
-      set_live__: function ()
-      {
-         X3DLineGeometryNode .prototype .set_live__ .call (this);
+      return "Geometry2D";
+   },
+   getContainerField: function ()
+   {
+      return "geometry";
+   },
+   set_live__: function ()
+   {
+      X3DLineGeometryNode .prototype .set_live__ .call (this);
 
-         if (this .isLive () .getValue ())
-            this .getBrowser () .getArc2DOptions () .addInterest ("requestRebuild", this);
-         else
-            this .getBrowser () .getArc2DOptions () .removeInterest ("requestRebuild", this);
-      },
-      getSweepAngle: function ()
+      if (this .isLive () .getValue ())
+         this .getBrowser () .getArc2DOptions () .addInterest ("requestRebuild", this);
+      else
+         this .getBrowser () .getArc2DOptions () .removeInterest ("requestRebuild", this);
+   },
+   getSweepAngle: function ()
+   {
+      const
+         start = Algorithm .interval (this ._startAngle .getValue (), 0, Math .PI * 2),
+         end   = Algorithm .interval (this ._endAngle   .getValue (), 0, Math .PI * 2);
+
+      if (start === end)
+         return Math .PI * 2;
+
+      const sweepAngle = Math .abs (end - start);
+
+      if (start > end)
+         return (Math .PI * 2) - sweepAngle;
+
+      if (! isNaN (sweepAngle))
+         return sweepAngle;
+
+      // We must test for NAN, as NAN to int is undefined.
+      return 0;
+   },
+   build: function ()
+   {
+      const
+         options     = this .getBrowser () .getArc2DOptions (),
+         dimension   = options ._dimension .getValue (),
+         startAngle  = this ._startAngle .getValue  (),
+         radius      = Math .abs (this ._radius .getValue ()),
+         sweepAngle  = this .getSweepAngle (),
+         steps       = Math .max (3, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
+         vertexArray = this .getVertices ();
+
+      for (let n = 0; n < steps; ++ n)
       {
          const
-            start = Algorithm .interval (this ._startAngle .getValue (), 0, Math .PI * 2),
-            end   = Algorithm .interval (this ._endAngle   .getValue (), 0, Math .PI * 2);
+            t1     = n / steps,
+            theta1 = startAngle + (sweepAngle * t1),
+            point1 = Complex .Polar (radius, theta1),
+            t2     = (n + 1) / steps,
+            theta2 = startAngle + (sweepAngle * t2),
+            point2 = Complex .Polar (radius, theta2);
 
-         if (start === end)
-            return Math .PI * 2;
+         vertexArray .push (point1 .real, point1 .imag, 0, 1);
+         vertexArray .push (point2 .real, point2 .imag, 0, 1);
+      }
 
-         const sweepAngle = Math .abs (end - start);
-
-         if (start > end)
-            return (Math .PI * 2) - sweepAngle;
-
-         if (! isNaN (sweepAngle))
-            return sweepAngle;
-
-         // We must test for NAN, as NAN to int is undefined.
-         return 0;
-      },
-      build: function ()
-      {
-         const
-            options     = this .getBrowser () .getArc2DOptions (),
-            dimension   = options ._dimension .getValue (),
-            startAngle  = this ._startAngle .getValue  (),
-            radius      = Math .abs (this ._radius .getValue ()),
-            sweepAngle  = this .getSweepAngle (),
-            steps       = Math .max (3, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
-            vertexArray = this .getVertices ();
-
-         for (let n = 0; n < steps; ++ n)
-         {
-            const
-               t1     = n / steps,
-               theta1 = startAngle + (sweepAngle * t1),
-               point1 = Complex .Polar (radius, theta1),
-               t2     = (n + 1) / steps,
-               theta2 = startAngle + (sweepAngle * t2),
-               point2 = Complex .Polar (radius, theta2);
-
-            vertexArray .push (point1 .real, point1 .imag, 0, 1);
-            vertexArray .push (point2 .real, point2 .imag, 0, 1);
-         }
-
-         this .getMin () .set (-radius, -radius, 0);
-         this .getMax () .set ( radius,  radius, 0);
-      },
-   });
-
-   return Arc2D;
+      this .getMin () .set (-radius, -radius, 0);
+      this .getMax () .set ( radius,  radius, 0);
+   },
 });
+
+export default Arc2D;

@@ -47,135 +47,130 @@
  ******************************************************************************/
 
 
-define (function ()
+export default function (Type)
 {
-"use strict";
-
-   return function (Type)
+   function X3DArrayFollowerObject ()
    {
-      function X3DArrayFollowerObject ()
+      this .array = this .getArray ();
+      this .zero  = this .getVector ();
+   }
+
+   X3DArrayFollowerObject .prototype =
+   {
+      getArray: function ()
       {
-         this .array = this .getArray ();
-         this .zero  = this .getVector ();
-      }
+         const array = [ ];
 
-      X3DArrayFollowerObject .prototype =
-      {
-         getArray: function ()
-         {
-            const array = [ ];
-
-            array .assign = function (value)
-            {
-               if (Array .isArray (value))
-               {
-                  for (var i = 0, length = Math .min (this .length, value .length); i < length; ++ i)
-                     this [i] .assign (value [i]);
-
-                  for (var i = length, length = value .length; i < length; ++ i)
-                     this [i] = value [i] .copy ();
-
-                  this .length = length;
-               }
-               else
-               {
-                  for (var i = 0, length = Math .min (this .length, value .length); i < length; ++ i)
-                     this [i] .assign (value [i] .getValue ());
-
-                  for (var i = length, length = value .length; i < length; ++ i)
-                     this [i] = value [i] .getValue () .copy ();
-
-                  this .length = length;
-               }
-            };
-
-            return array;
-         },
-         getValue: function ()
-         {
-            return this ._set_value;
-         },
-         getDestination: function ()
-         {
-            return this ._set_destination;
-         },
-         getInitialValue: function ()
-         {
-            return this ._initialValue;
-         },
-         getInitialDestination: function ()
-         {
-            return this ._initialDestination;
-         },
-         setValue: function (value)
+         array .assign = function (value)
          {
             if (Array .isArray (value))
             {
-               const value_changed = this ._value_changed;
+               for (var i = 0, length = Math .min (this .length, value .length); i < length; ++ i)
+                  this [i] .assign (value [i]);
 
-               for (var i = 0, length = value .length; i < length; ++ i)
-                  value_changed [i] = value [i];
+               for (var i = length, length = value .length; i < length; ++ i)
+                  this [i] = value [i] .copy ();
 
-               value_changed .length = length;
+               this .length = length;
             }
             else
             {
-               this ._value_changed = value;
+               for (var i = 0, length = Math .min (this .length, value .length); i < length; ++ i)
+                  this [i] .assign (value [i] .getValue ());
+
+               for (var i = length, length = value .length; i < length; ++ i)
+                  this [i] = value [i] .getValue () .copy ();
+
+               this .length = length;
             }
-         },
-         duplicate: function (value)
+         };
+
+         return array;
+      },
+      getValue: function ()
+      {
+         return this ._set_value;
+      },
+      getDestination: function ()
+      {
+         return this ._set_destination;
+      },
+      getInitialValue: function ()
+      {
+         return this ._initialValue;
+      },
+      getInitialDestination: function ()
+      {
+         return this ._initialDestination;
+      },
+      setValue: function (value)
+      {
+         if (Array .isArray (value))
          {
-            const array = this .getArray ();
+            const value_changed = this ._value_changed;
 
-            array .assign (value);
+            for (var i = 0, length = value .length; i < length; ++ i)
+               value_changed [i] = value [i];
 
-            return array;
-         },
-         equals: function (lhs, rhs, tolerance)
+            value_changed .length = length;
+         }
+         else
          {
-            if (lhs .length !== rhs .length)
-               return false;
+            this ._value_changed = value;
+         }
+      },
+      duplicate: function (value)
+      {
+         const array = this .getArray ();
 
-            const a = this .a;
+         array .assign (value);
 
-            let distance = 0;
+         return array;
+      },
+      equals: function (lhs, rhs, tolerance)
+      {
+         if (lhs .length !== rhs .length)
+            return false;
 
-            for (let i = 0, length = lhs .length; i < length; ++ i)
-              distance = Math .max (a .assign (lhs [i]) .subtract (rhs [i]) .magnitude ());
+         const a = this .a;
 
-            return distance < tolerance;
-         },
-         interpolate: function (source, destination, weight)
+         let distance = 0;
+
+         for (let i = 0, length = lhs .length; i < length; ++ i)
+           distance = Math .max (a .assign (lhs [i]) .subtract (rhs [i]) .magnitude ());
+
+         return distance < tolerance;
+      },
+      interpolate: function (source, destination, weight)
+      {
+         const array = this .array;
+
+         array .assign (source);
+
+         for (let i = 0, length = array .length; i < length; ++ i)
+            array [i] .lerp (destination [i] || this .zero, weight);
+
+         return array;
+      },
+      set_destination__: function ()
+      {
+         const
+            buffers = this .getBuffer (),
+            l       = this ._set_destination .length;
+
+         for (let i = 0, length = buffers .length; i < length; ++ i)
          {
-            const array = this .array;
+            const buffer = buffers [i];
 
-            array .assign (source);
+            for (let b = buffer .length; b < l; ++ b)
+               buffer [b] = this .getVector ();
 
-            for (let i = 0, length = array .length; i < length; ++ i)
-               array [i] .lerp (destination [i] || this .zero, weight);
+            buffer .length = l;
+         }
 
-            return array;
-         },
-         set_destination__: function ()
-         {
-            const
-               buffers = this .getBuffer (),
-               l       = this ._set_destination .length;
-
-            for (let i = 0, length = buffers .length; i < length; ++ i)
-            {
-               const buffer = buffers [i];
-
-               for (let b = buffer .length; b < l; ++ b)
-                  buffer [b] = this .getVector ();
-
-               buffer .length = l;
-            }
-
-            Type .prototype .set_destination__ .call (this);
-         },
-      };
-
-      return X3DArrayFollowerObject;
+         Type .prototype .set_destination__ .call (this);
+      },
    };
-});
+
+   return X3DArrayFollowerObject;
+};

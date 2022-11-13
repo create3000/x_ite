@@ -47,62 +47,52 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DLineGeometryNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DLineGeometryNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DLineGeometryNode from "../Rendering/X3DLineGeometryNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function Polyline2D (executionContext)
 {
-"use strict";
+   X3DLineGeometryNode .call (this, executionContext);
 
-   function Polyline2D (executionContext)
+   this .addType (X3DConstants .Polyline2D);
+
+   this ._lineSegments .setUnit ("length");
+}
+
+Polyline2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+{
+   constructor: Polyline2D,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "lineSegments", new Fields .MFVec2f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DLineGeometryNode .call (this, executionContext);
-
-      this .addType (X3DConstants .Polyline2D);
-
-      this ._lineSegments .setUnit ("length");
-   }
-
-   Polyline2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+      return "Polyline2D";
+   },
+   getComponentName: function ()
    {
-      constructor: Polyline2D,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "lineSegments", new Fields .MFVec2f ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "Polyline2D";
-      },
-      getComponentName: function ()
-      {
-         return "Geometry2D";
-      },
-      getContainerField: function ()
-      {
-         return "geometry";
-      },
-      build: function ()
-      {
-         const
-            lineSegments = this ._lineSegments .getValue (),
-            vertexArray  = this .getVertices ();
+      return "Geometry2D";
+   },
+   getContainerField: function ()
+   {
+      return "geometry";
+   },
+   build: function ()
+   {
+      const
+         lineSegments = this ._lineSegments .getValue (),
+         vertexArray  = this .getVertices ();
 
-         for (let i = 0, length = (this ._lineSegments .length - 1) * 2; i < length; i += 2)
-         {
-            vertexArray .push (lineSegments [i + 0], lineSegments [i + 1], 0, 1);
-            vertexArray .push (lineSegments [i + 2], lineSegments [i + 3], 0, 1);
-         }
-      },
-   });
-
-   return Polyline2D;
+      for (let i = 0, length = (this ._lineSegments .length - 1) * 2; i < length; i += 2)
+      {
+         vertexArray .push (lineSegments [i + 0], lineSegments [i + 1], 0, 1);
+         vertexArray .push (lineSegments [i + 2], lineSegments [i + 3], 0, 1);
+      }
+   },
 });
+
+export default Polyline2D;

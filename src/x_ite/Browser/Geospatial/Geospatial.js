@@ -47,170 +47,161 @@
  ******************************************************************************/
 
 
-define ([
-   "standard/Geospatial/ReferenceEllipsoids",
-   "standard/Geospatial/Geodetic",
-   "standard/Geospatial/UniversalTransverseMercator",
-   "x_ite/Browser/Geospatial/Geocentric",
-],
-function (ReferenceEllipsoids,
-          Geodetic,
-          UniversalTransverseMercator,
-          Geocentric)
+import ReferenceEllipsoids from "../../../standard/Geospatial/ReferenceEllipsoids.js";
+import Geodetic from "../../../standard/Geospatial/Geodetic.js";
+import UniversalTransverseMercator from "../../../standard/Geospatial/UniversalTransverseMercator.js";
+import Geocentric from "./Geocentric.js";
+
+let i = 0;
+
+const
+   GD  = i ++,
+   UTM = i ++,
+   GC  = i ++;
+
+const CoordinateSystems = {
+   GD:  GD,
+   GDC: GD,
+   UTM: UTM,
+   GC:  GC,
+   GCC: GC,
+   GS:  GC,
+};
+
+const Zone = /^Z(\d+)$/;
+
+const Geospatial =
 {
-"use strict";
-
-   let i = 0;
-
-   const
-      GD  = i ++,
-      UTM = i ++,
-      GC  = i ++;
-
-   const CoordinateSystems = {
-      GD:  GD,
-      GDC: GD,
-      UTM: UTM,
-      GC:  GC,
-      GCC: GC,
-      GS:  GC,
-   };
-
-   const Zone = /^Z(\d+)$/;
-
-   const Geospatial =
+   GD: GD,
+   UTM: UTM,
+   GC: GC,
+   getReferenceFrame: function (geoSystem, radians)
    {
-      GD: GD,
-      UTM: UTM,
-      GC: GC,
-      getReferenceFrame: function (geoSystem, radians)
+      switch (this .getCoordinateSystem (geoSystem))
       {
-         switch (this .getCoordinateSystem (geoSystem))
+         case GD:
          {
-            case GD:
-            {
-               return new Geodetic (this .getEllipsoid (geoSystem),
-                                    this .getLatitudeFirst (geoSystem),
-                                    radians);
-            }
-            case UTM:
-            {
-               return new UniversalTransverseMercator (this .getEllipsoid (geoSystem),
-                                                       this .getZone (geoSystem),
-                                                       this .getNorthernHemisphere (geoSystem),
-                                                       this .getNorthingFirst (geoSystem));
-            }
-            case GC:
-            {
-               return new Geocentric ();
-            }
+            return new Geodetic (this .getEllipsoid (geoSystem),
+                                 this .getLatitudeFirst (geoSystem),
+                                 radians);
          }
-
-         return new Geodetic (ReferenceEllipsoids .WE, true, radians);
-      },
-      getElevationFrame: function (geoSystem, radians)
-      {
-         return new Geodetic (this .getEllipsoid (geoSystem), true, radians);
-      },
-      getCoordinateSystem: function (geoSystem)
-      {
-         for (const gs of geoSystem)
+         case UTM:
          {
-            const coordinateSystem = CoordinateSystems [gs];
-
-            if (coordinateSystem !== undefined)
-               return coordinateSystem;
+            return new UniversalTransverseMercator (this .getEllipsoid (geoSystem),
+                                                    this .getZone (geoSystem),
+                                                    this .getNorthernHemisphere (geoSystem),
+                                                    this .getNorthingFirst (geoSystem));
          }
-
-         return GD;
-      },
-      getEllipsoid: function (geoSystem)
-      {
-         for (const gs of geoSystem)
+         case GC:
          {
-            const ellipsoid = ReferenceEllipsoids [gs];
-
-            if (ellipsoid !== undefined)
-               return ellipsoid;
+            return new Geocentric ();
          }
+      }
 
-         return ReferenceEllipsoids .WE;
-      },
-      getEllipsoidString: function (geoSystem)
+      return new Geodetic (ReferenceEllipsoids .WE, true, radians);
+   },
+   getElevationFrame: function (geoSystem, radians)
+   {
+      return new Geodetic (this .getEllipsoid (geoSystem), true, radians);
+   },
+   getCoordinateSystem: function (geoSystem)
+   {
+      for (const gs of geoSystem)
       {
-         for (const gs of geoSystem)
-         {
-            const ellipsoid = ReferenceEllipsoids [gs];
+         const coordinateSystem = CoordinateSystems [gs];
 
-            if (ellipsoid !== undefined)
-               return gs;
-         }
+         if (coordinateSystem !== undefined)
+            return coordinateSystem;
+      }
 
-         return "WE";
-      },
-      isStandardOrder: function (geoSystem)
+      return GD;
+   },
+   getEllipsoid: function (geoSystem)
+   {
+      for (const gs of geoSystem)
       {
-         switch (this .getCoordinateSystem (geoSystem))
-         {
-            case GD:
-            {
-               return this .getLatitudeFirst (geoSystem);
-            }
-            case UTM:
-            {
-               return this .getNorthingFirst (geoSystem);
-            }
-            case GC:
-            {
-               return true;
-            }
-         }
+         const ellipsoid = ReferenceEllipsoids [gs];
 
-         return this .getLatitudeFirst (geoSystem);
-      },
-      getLatitudeFirst: function (geoSystem)
+         if (ellipsoid !== undefined)
+            return ellipsoid;
+      }
+
+      return ReferenceEllipsoids .WE;
+   },
+   getEllipsoidString: function (geoSystem)
+   {
+      for (const gs of geoSystem)
       {
-         for (const gs of geoSystem)
-         {
-            if (gs === "longitude_first")
-               return false;
-         }
+         const ellipsoid = ReferenceEllipsoids [gs];
 
-         return true;
-      },
-      getNorthingFirst: function (geoSystem)
+         if (ellipsoid !== undefined)
+            return gs;
+      }
+
+      return "WE";
+   },
+   isStandardOrder: function (geoSystem)
+   {
+      switch (this .getCoordinateSystem (geoSystem))
       {
-         for (const gs of geoSystem)
+         case GD:
          {
-            if (gs === "easting_first")
-               return false;
+            return this .getLatitudeFirst (geoSystem);
          }
+         case UTM:
+         {
+            return this .getNorthingFirst (geoSystem);
+         }
+         case GC:
+         {
+            return true;
+         }
+      }
 
-         return true;
-      },
-      getZone: function (geoSystem)
+      return this .getLatitudeFirst (geoSystem);
+   },
+   getLatitudeFirst: function (geoSystem)
+   {
+      for (const gs of geoSystem)
       {
-         for (const gs of geoSystem)
-         {
-            const match = gs .match (Zone);
+         if (gs === "longitude_first")
+            return false;
+      }
 
-            if (match)
-               return parseInt (match [1]);
-         }
-
-         return 1;
-      },
-      getNorthernHemisphere: function (geoSystem)
+      return true;
+   },
+   getNorthingFirst: function (geoSystem)
+   {
+      for (const gs of geoSystem)
       {
-         for (const gs of geoSystem)
-         {
-            if (gs === "S")
-               return false;
-         }
+         if (gs === "easting_first")
+            return false;
+      }
 
-         return true;
-      },
-   };
+      return true;
+   },
+   getZone: function (geoSystem)
+   {
+      for (const gs of geoSystem)
+      {
+         const match = gs .match (Zone);
 
-   return Geospatial;
-});
+         if (match)
+            return parseInt (match [1]);
+      }
+
+      return 1;
+   },
+   getNorthernHemisphere: function (geoSystem)
+   {
+      for (const gs of geoSystem)
+      {
+         if (gs === "S")
+            return false;
+      }
+
+      return true;
+   },
+};
+
+export default Geospatial;

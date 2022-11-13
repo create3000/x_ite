@@ -47,85 +47,74 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DBaseNode",
-   "x_ite/Components/Geometry3D/IndexedFaceSet",
-   "x_ite/Components/Rendering/Coordinate",
-   "x_ite/Components/Texturing/TextureCoordinate",
-   "x_ite/Browser/Geometry3D/IcoSphere",
-],
-function (Fields,
-          X3DBaseNode,
-          IndexedFaceSet,
-          Coordinate,
-          TextureCoordinate,
-          IcoSphere)
+import Fields from "../../Fields.js";
+import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import IndexedFaceSet from "../../Components/Geometry3D/IndexedFaceSet.js";
+import Coordinate from "../../Components/Rendering/Coordinate.js";
+import TextureCoordinate from "../../Components/Texturing/TextureCoordinate.js";
+import IcoSphere from "./IcoSphere.js";
+
+function IcoSphereOptions (executionContext)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
 
-   function IcoSphereOptions (executionContext)
+   this .addChildObjects ("type",  new Fields .SFString ("ICOSAHEDRON"),
+                          "order", new Fields .SFInt32 (2))
+}
+
+IcoSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: IcoSphereOptions,
+   getTypeName: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-
-      this .addChildObjects ("type",  new Fields .SFString ("ICOSAHEDRON"),
-                             "order", new Fields .SFInt32 (2))
-   }
-
-   IcoSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return "IcoSphereOptions";
+   },
+   getComponentName: function ()
    {
-      constructor: IcoSphereOptions,
-      getTypeName: function ()
-      {
-         return "IcoSphereOptions";
-      },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "quadSphereOptions";
-      },
-      initialize: function ()
-      {
-         X3DBaseNode .prototype .initialize .call (this);
+      return "X_ITE";
+   },
+   getContainerField: function ()
+   {
+      return "quadSphereOptions";
+   },
+   initialize: function ()
+   {
+      X3DBaseNode .prototype .initialize .call (this);
 
-         this .addInterest ("eventsProcessed", this);
-      },
-      getGeometry: function ()
-      {
-         if (! this .geometry)
-            this .eventsProcessed ();
+      this .addInterest ("eventsProcessed", this);
+   },
+   getGeometry: function ()
+   {
+      if (! this .geometry)
+         this .eventsProcessed ();
 
-         return this .geometry;
-      },
-      eventsProcessed: function ()
-      {
-         this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
-         this .geometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
-         this .geometry ._coord    = new Coordinate (this .getExecutionContext ());
+      return this .geometry;
+   },
+   eventsProcessed: function ()
+   {
+      this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
+      this .geometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
+      this .geometry ._coord    = new Coordinate (this .getExecutionContext ());
 
-         const
-            geometry = this .geometry,
-            texCoord = this .geometry ._texCoord .getValue (),
-            coord    = this .geometry ._coord .getValue ();
+      const
+         geometry = this .geometry,
+         texCoord = this .geometry ._texCoord .getValue (),
+         coord    = this .geometry ._coord .getValue ();
 
-            const icoSphere = new IcoSphere (this ._type .getValue (), this ._order .getValue (), 1);
+         const icoSphere = new IcoSphere (this ._type .getValue (), this ._order .getValue (), 1);
 
-         geometry ._creaseAngle = Math .PI;
+      geometry ._creaseAngle = Math .PI;
 
-         texCoord ._point = icoSphere .getTexPoint ();
-         coord ._point    = icoSphere .getPoint ();
+      texCoord ._point = icoSphere .getTexPoint ();
+      coord ._point    = icoSphere .getPoint ();
 
-         geometry ._texCoordIndex = icoSphere .getTexCoordIndex ();
-         geometry ._coordIndex    = icoSphere .getCoordIndex ();
+      geometry ._texCoordIndex = icoSphere .getTexCoordIndex ();
+      geometry ._coordIndex    = icoSphere .getCoordIndex ();
 
-         texCoord .setup ();
-         coord    .setup ();
-         geometry .setup ();
-      },
-   });
-
-   return IcoSphereOptions;
+      texCoord .setup ();
+      coord    .setup ();
+      geometry .setup ();
+   },
 });
+
+export default IcoSphereOptions;

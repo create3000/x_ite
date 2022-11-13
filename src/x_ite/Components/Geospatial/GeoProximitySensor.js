@@ -47,112 +47,99 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
-   "x_ite/Components/Geospatial/X3DGeospatialObject",
-   "x_ite/Components/EnvironmentalSensor/ProximitySensor",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DEnvironmentalSensorNode,
-          X3DGeospatialObject,
-          ProximitySensor,
-          X3DConstants,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DEnvironmentalSensorNode from "../EnvironmentalSensor/X3DEnvironmentalSensorNode.js";
+import X3DGeospatialObject from "./X3DGeospatialObject.js";
+import ProximitySensor from "../EnvironmentalSensor/ProximitySensor.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+var geoCoord = new Vector3 (0, 0, 0);
+
+function GeoProximitySensor (executionContext)
 {
-"use strict";
+   X3DEnvironmentalSensorNode .call (this, executionContext);
+   X3DGeospatialObject        .call (this, executionContext);
 
-   var geoCoord = new Vector3 (0, 0, 0);
+   this .addType (X3DConstants .GeoProximitySensor);
 
-   function GeoProximitySensor (executionContext)
+   this ._position_changed         .setUnit ("length");
+   this ._centerOfRotation_changed .setUnit ("length");
+
+   this .proximitySensor = new ProximitySensor (executionContext);
+
+   this .setCameraObject   (this .proximitySensor .getCameraObject ());
+   this .setPickableObject (this .proximitySensor .getPickableObject ());
+}
+
+GeoProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
+   X3DGeospatialObject .prototype,
+{
+   constructor: GeoProximitySensor,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                 new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",                new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",                new Fields .MFString ("GD", "WE")),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                  new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "size",                     new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "center",                   new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",                 new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "enterTime",                new Fields .SFTime ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "exitTime",                 new Fields .SFTime ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "geoCoord_changed",         new Fields .SFVec3d ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "position_changed",         new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "orientation_changed",      new Fields .SFRotation ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "centerOfRotation_changed", new Fields .SFVec3f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DEnvironmentalSensorNode .call (this, executionContext);
-      X3DGeospatialObject        .call (this, executionContext);
-
-      this .addType (X3DConstants .GeoProximitySensor);
-
-      this ._position_changed         .setUnit ("length");
-      this ._centerOfRotation_changed .setUnit ("length");
-
-      this .proximitySensor = new ProximitySensor (executionContext);
-
-      this .setCameraObject   (this .proximitySensor .getCameraObject ());
-      this .setPickableObject (this .proximitySensor .getPickableObject ());
-   }
-
-   GeoProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
-      X3DGeospatialObject .prototype,
+      return "GeoProximitySensor";
+   },
+   getComponentName: function ()
    {
-      constructor: GeoProximitySensor,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                 new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",                new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",                new Fields .MFString ("GD", "WE")),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                  new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "size",                     new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "center",                   new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",                 new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "enterTime",                new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "exitTime",                 new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "geoCoord_changed",         new Fields .SFVec3d ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "position_changed",         new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "orientation_changed",      new Fields .SFRotation ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "centerOfRotation_changed", new Fields .SFVec3f ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "GeoProximitySensor";
-      },
-      getComponentName: function ()
-      {
-         return "Geospatial";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DEnvironmentalSensorNode .prototype .initialize .call (this);
-         X3DGeospatialObject        .prototype .initialize .call (this);
+      return "Geospatial";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DEnvironmentalSensorNode .prototype .initialize .call (this);
+      X3DGeospatialObject        .prototype .initialize .call (this);
 
-         this ._enabled .addFieldInterest (this .proximitySensor ._enabled);
-         this ._size    .addFieldInterest (this .proximitySensor ._size);
-         this ._center  .addFieldInterest (this .proximitySensor ._center);
+      this ._enabled .addFieldInterest (this .proximitySensor ._enabled);
+      this ._size    .addFieldInterest (this .proximitySensor ._size);
+      this ._center  .addFieldInterest (this .proximitySensor ._center);
 
-         this .proximitySensor ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-         this .proximitySensor ._isPickableObject .addFieldInterest (this ._isPickableObject);
+      this .proximitySensor ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+      this .proximitySensor ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
-         this .proximitySensor ._isActive                 .addFieldInterest (this ._isActive);
-         this .proximitySensor ._enterTime                .addFieldInterest (this ._enterTime);
-         this .proximitySensor ._exitTime                 .addFieldInterest (this ._exitTime);
-         this .proximitySensor ._position_changed         .addFieldInterest (this ._position_changed);
-         this .proximitySensor ._orientation_changed      .addFieldInterest (this ._orientation_changed);
-         this .proximitySensor ._centerOfRotation_changed .addFieldInterest (this ._centerOfRotation_changed);
+      this .proximitySensor ._isActive                 .addFieldInterest (this ._isActive);
+      this .proximitySensor ._enterTime                .addFieldInterest (this ._enterTime);
+      this .proximitySensor ._exitTime                 .addFieldInterest (this ._exitTime);
+      this .proximitySensor ._position_changed         .addFieldInterest (this ._position_changed);
+      this .proximitySensor ._orientation_changed      .addFieldInterest (this ._orientation_changed);
+      this .proximitySensor ._centerOfRotation_changed .addFieldInterest (this ._centerOfRotation_changed);
 
-         this .proximitySensor ._position_changed .addInterest ("set_position__", this);
+      this .proximitySensor ._position_changed .addInterest ("set_position__", this);
 
-         this .proximitySensor ._enabled = this ._enabled;
-         this .proximitySensor ._size    = this ._size;
-         this .proximitySensor ._center  = this ._center;
+      this .proximitySensor ._enabled = this ._enabled;
+      this .proximitySensor ._size    = this ._size;
+      this .proximitySensor ._center  = this ._center;
 
-         this .proximitySensor .setup ();
-      },
-      set_position__: function (position)
-      {
-         this ._geoCoord_changed = this .getGeoCoord (this .proximitySensor ._position_changed .getValue (), geoCoord);
-      },
-      traverse: function (type, renderObject)
-      {
-         this .proximitySensor .traverse (type, renderObject);
-      },
-   });
-
-   return GeoProximitySensor;
+      this .proximitySensor .setup ();
+   },
+   set_position__: function (position)
+   {
+      this ._geoCoord_changed = this .getGeoCoord (this .proximitySensor ._position_changed .getValue (), geoCoord);
+   },
+   traverse: function (type, renderObject)
+   {
+      this .proximitySensor .traverse (type, renderObject);
+   },
 });
+
+export default GeoProximitySensor;

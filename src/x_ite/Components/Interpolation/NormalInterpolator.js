@@ -47,111 +47,99 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Algorithm",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DInterpolatorNode,
-          X3DConstants,
-          Vector3,
-          Algorithm)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DInterpolatorNode from "./X3DInterpolatorNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+function NormalInterpolator (executionContext)
 {
-"use strict";
+   X3DInterpolatorNode .call (this, executionContext);
 
-   function NormalInterpolator (executionContext)
+   this .addType (X3DConstants .NormalInterpolator);
+}
+
+NormalInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+{
+   constructor: NormalInterpolator,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .MFVec3f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DInterpolatorNode .call (this, executionContext);
-
-      this .addType (X3DConstants .NormalInterpolator);
-   }
-
-   NormalInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+      return "NormalInterpolator";
+   },
+   getComponentName: function ()
    {
-      constructor: NormalInterpolator,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .MFVec3f ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "NormalInterpolator";
-      },
-      getComponentName: function ()
-      {
-         return "Interpolation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DInterpolatorNode .prototype .initialize .call (this);
+      return "Interpolation";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this ._keyValue .addInterest ("set_keyValue__", this);
-      },
-      set_keyValue__: function () { },
-      interpolate: (function ()
-      {
-         const
-            keyValue0 = new Vector3 (0, 0, 0),
-            keyValue1 = new Vector3 (0, 0, 0);
+      this ._keyValue .addInterest ("set_keyValue__", this);
+   },
+   set_keyValue__: function () { },
+   interpolate: (function ()
+   {
+      const
+         keyValue0 = new Vector3 (0, 0, 0),
+         keyValue1 = new Vector3 (0, 0, 0);
 
-         return function (index0, index1, weight)
+      return function (index0, index1, weight)
+      {
+         const keyValue = this ._keyValue .getValue ();
+
+         let size = this ._key .length > 1 ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
+
+         this ._value_changed .length = size;
+
+         const value_changed = this ._value_changed .getValue ();
+
+         index0 *= size;
+         index1  = index0 + size;
+
+         index0 *= 3;
+         index1 *= 3;
+         size   *= 3;
+
+         for (let i0 = 0; i0 < size; i0 += 3)
          {
-            const keyValue = this ._keyValue .getValue ();
-
-            let size = this ._key .length > 1 ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
-
-            this ._value_changed .length = size;
-
-            const value_changed = this ._value_changed .getValue ();
-
-            index0 *= size;
-            index1  = index0 + size;
-
-            index0 *= 3;
-            index1 *= 3;
-            size   *= 3;
-
-            for (let i0 = 0; i0 < size; i0 += 3)
+            try
             {
-               try
-               {
-                  const
-                     i1 = i0 + 1,
-                     i2 = i0 + 2;
+               const
+                  i1 = i0 + 1,
+                  i2 = i0 + 2;
 
-                  keyValue0 .set (keyValue [index0 + i0], keyValue [index0 + i1], keyValue [index0 + i2]);
-                  keyValue1 .set (keyValue [index1 + i0], keyValue [index1 + i1], keyValue [index1 + i2]);
+               keyValue0 .set (keyValue [index0 + i0], keyValue [index0 + i1], keyValue [index0 + i2]);
+               keyValue1 .set (keyValue [index1 + i0], keyValue [index1 + i1], keyValue [index1 + i2]);
 
-                  const value = Algorithm .simpleSlerp (keyValue0, keyValue1, weight);
+               const value = Algorithm .simpleSlerp (keyValue0, keyValue1, weight);
 
-                  value_changed [i0] = value [0];
-                  value_changed [i1] = value [1];
-                  value_changed [i2] = value [2];
-               }
-               catch (error)
-               {
-                  //console .log (error);
-               }
+               value_changed [i0] = value [0];
+               value_changed [i1] = value [1];
+               value_changed [i2] = value [2];
             }
+            catch (error)
+            {
+               //console .log (error);
+            }
+         }
 
-            this ._value_changed .addEvent ();
-         };
-      })(),
-   });
-
-   return NormalInterpolator;
+         this ._value_changed .addEvent ();
+      };
+   })(),
 });
+
+export default NormalInterpolator;

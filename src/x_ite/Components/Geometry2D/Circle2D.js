@@ -47,81 +47,71 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DLineGeometryNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DLineGeometryNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DLineGeometryNode from "../Rendering/X3DLineGeometryNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function Circle2D (executionContext)
 {
-"use strict";
+   X3DLineGeometryNode .call (this, executionContext);
 
-   function Circle2D (executionContext)
+   this .addType (X3DConstants .Circle2D);
+
+   this ._radius .setUnit ("length");
+}
+
+Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+{
+   constructor: Circle2D,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
+   ]),
+   getTypeName: function ()
    {
-      X3DLineGeometryNode .call (this, executionContext);
-
-      this .addType (X3DConstants .Circle2D);
-
-      this ._radius .setUnit ("length");
-   }
-
-   Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+      return "Circle2D";
+   },
+   getComponentName: function ()
    {
-      constructor: Circle2D,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
-      ]),
-      getTypeName: function ()
-      {
-         return "Circle2D";
-      },
-      getComponentName: function ()
-      {
-         return "Geometry2D";
-      },
-      getContainerField: function ()
-      {
-         return "geometry";
-      },
-      set_live__: function ()
-      {
-         X3DLineGeometryNode .prototype .set_live__ .call (this);
+      return "Geometry2D";
+   },
+   getContainerField: function ()
+   {
+      return "geometry";
+   },
+   set_live__: function ()
+   {
+      X3DLineGeometryNode .prototype .set_live__ .call (this);
 
-         if (this .isLive () .getValue ())
-            this .getBrowser () .getCircle2DOptions () .addInterest ("requestRebuild", this);
-         else
-            this .getBrowser () .getCircle2DOptions () .removeInterest ("requestRebuild", this);
-      },
-      build: function ()
+      if (this .isLive () .getValue ())
+         this .getBrowser () .getCircle2DOptions () .addInterest ("requestRebuild", this);
+      else
+         this .getBrowser () .getCircle2DOptions () .removeInterest ("requestRebuild", this);
+   },
+   build: function ()
+   {
+      const
+         options     = this .getBrowser () .getCircle2DOptions (),
+         vertexArray = this .getVertices (),
+         radius      = this ._radius .getValue ();
+
+      if (radius === 1)
       {
-         const
-            options     = this .getBrowser () .getCircle2DOptions (),
-            vertexArray = this .getVertices (),
-            radius      = this ._radius .getValue ();
+         this .setVertices (options .getVertices ());
+      }
+      else
+      {
+         const defaultVertices = options .getVertices () .getValue ();
 
-         if (radius === 1)
-         {
-            this .setVertices (options .getVertices ());
-         }
-         else
-         {
-            const defaultVertices = options .getVertices () .getValue ();
+         for (let i = 0, length = defaultVertices .length; i < length; i += 4)
+            vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
+      }
 
-            for (let i = 0, length = defaultVertices .length; i < length; i += 4)
-               vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
-         }
-
-         this .getMin () .set (-radius, -radius, 0);
-         this .getMax () .set ( radius,  radius, 0);
-      },
-   });
-
-   return Circle2D;
+      this .getMin () .set (-radius, -radius, 0);
+      this .getMax () .set ( radius,  radius, 0);
+   },
 });
+
+export default Circle2D;

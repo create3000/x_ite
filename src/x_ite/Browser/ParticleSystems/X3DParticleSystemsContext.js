@@ -47,34 +47,28 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/ParticleSystems/PointEmitter",
-],
-function (PointEmitter)
+import PointEmitter from "../../Components/ParticleSystems/PointEmitter.js";
+
+const
+   _defaultEmitter = Symbol (),
+   _depthShader    = Symbol ();
+
+function X3DParticleSystemsContext () { }
+
+X3DParticleSystemsContext .prototype =
 {
-"use strict";
-
-   const
-      _defaultEmitter = Symbol (),
-      _depthShader    = Symbol ();
-
-   function X3DParticleSystemsContext () { }
-
-   X3DParticleSystemsContext .prototype =
+   getDefaultEmitter: function ()
    {
-      getDefaultEmitter: function ()
-      {
-         this [_defaultEmitter] = new PointEmitter (this .getPrivateScene ());
-         this [_defaultEmitter] .setPrivate (true);
-         this [_defaultEmitter] .setup ();
+      this [_defaultEmitter] = new PointEmitter (this .getPrivateScene ());
+      this [_defaultEmitter] .setPrivate (true);
+      this [_defaultEmitter] .setup ();
 
-         this .getDefaultEmitter = function () { return this [_defaultEmitter]; };
+      this .getDefaultEmitter = function () { return this [_defaultEmitter]; };
 
-         Object .defineProperty (this, "getDefaultEmitter", { enumerable: false });
+      Object .defineProperty (this, "getDefaultEmitter", { enumerable: false });
 
-         return this [_defaultEmitter];
-      },
-   };
+      return this [_defaultEmitter];
+   },
+};
 
-   return X3DParticleSystemsContext;
-});
+export default X3DParticleSystemsContext;

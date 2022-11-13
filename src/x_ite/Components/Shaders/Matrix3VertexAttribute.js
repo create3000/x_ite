@@ -47,94 +47,83 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Shaders/X3DVertexAttributeNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Matrix3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DVertexAttributeNode,
-          X3DConstants,
-          Matrix3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DVertexAttributeNode from "./X3DVertexAttributeNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Matrix3 from "../../../standard/Math/Numbers/Matrix3.js";
+
+function Matrix3VertexAttribute (executionContext)
 {
-"use strict";
+   X3DVertexAttributeNode .call (this, executionContext);
 
-   function Matrix3VertexAttribute (executionContext)
+   this .addType (X3DConstants .Matrix3VertexAttribute);
+}
+
+Matrix3VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
+{
+   constructor: Matrix3VertexAttribute,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "name",     new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "value",    new Fields .MFMatrix3f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DVertexAttributeNode .call (this, executionContext);
-
-      this .addType (X3DConstants .Matrix3VertexAttribute);
-   }
-
-   Matrix3VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
+      return "Matrix3VertexAttribute";
+   },
+   getComponentName: function ()
    {
-      constructor: Matrix3VertexAttribute,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "name",     new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "value",    new Fields .MFMatrix3f ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "Matrix3VertexAttribute";
-      },
-      getComponentName: function ()
-      {
-         return "Shaders";
-      },
-      getContainerField: function ()
-      {
-         return "attrib";
-      },
-      initialize: function ()
-      {
-         X3DVertexAttributeNode .prototype .initialize .call (this);
+      return "Shaders";
+   },
+   getContainerField: function ()
+   {
+      return "attrib";
+   },
+   initialize: function ()
+   {
+      X3DVertexAttributeNode .prototype .initialize .call (this);
 
-         this ._value .addInterest ("set_value__", this);
+      this ._value .addInterest ("set_value__", this);
 
-         this .set_value__ ();
-      },
-      set_value__: function ()
+      this .set_value__ ();
+   },
+   set_value__: function ()
+   {
+      this .value  = this ._value .getValue ();
+      this .length = this ._value .length;
+   },
+   addValue: function (index, array)
+   {
+      if (index < this .length)
       {
-         this .value  = this ._value .getValue ();
-         this .length = this ._value .length;
-      },
-      addValue: function (index, array)
+         const value = this .value;
+
+         for (let i = index * 9, l = i + 9; i < l; ++ i)
+            array .push (value [i]);
+      }
+      else if (this .length)
       {
-         if (index < this .length)
-         {
-            const value = this .value;
+         const value = this .value;
 
-            for (let i = index * 9, l = i + 9; i < l; ++ i)
-               array .push (value [i]);
-         }
-         else if (this .length)
-         {
-            const value = this .value;
+         index = this .length - 1;
 
-            index = this .length - 1;
-
-            for (let i = index * 9, l = i + 9; i < l; ++ i)
-               array .push (value [i]);
-         }
-         else
-         {
-            const value = Matrix3 .Identity;
-
-            for (let i = 0; i < 9; ++ i)
-               array .push (value [i]);
-         }
-      },
-      enable: function (gl, shaderNode, buffer)
+         for (let i = index * 9, l = i + 9; i < l; ++ i)
+            array .push (value [i]);
+      }
+      else
       {
-         shaderNode .enableMatrix3Attrib (gl, this ._name .getValue (), buffer, 0, 0);
-      },
-   });
+         const value = Matrix3 .Identity;
 
-   return Matrix3VertexAttribute;
+         for (let i = 0; i < 9; ++ i)
+            array .push (value [i]);
+      }
+   },
+   enable: function (gl, shaderNode, buffer)
+   {
+      shaderNode .enableMatrix3Attrib (gl, this ._name .getValue (), buffer, 0, 0);
+   },
 });
+
+export default Matrix3VertexAttribute;

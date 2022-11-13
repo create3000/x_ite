@@ -47,172 +47,162 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Texturing3D/X3DTexture3DNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DTexture3DNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DTexture3DNode from "./X3DTexture3DNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function PixelTexture3D (executionContext)
 {
-"use strict";
+   X3DTexture3DNode .call (this, executionContext);
 
-   function PixelTexture3D (executionContext)
+   this .addType (X3DConstants .PixelTexture3D);
+
+   this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+}
+
+PixelTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+{
+   constructor: PixelTexture3D,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .MFInt32 (0, 0, 0, 0)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DTexture3DNode .call (this, executionContext);
-
-      this .addType (X3DConstants .PixelTexture3D);
-
-      this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
-   }
-
-   PixelTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+      return "PixelTexture3D";
+   },
+   getComponentName: function ()
    {
-      constructor: PixelTexture3D,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .MFInt32 (0, 0, 0, 0)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "PixelTexture3D";
-      },
-      getComponentName: function ()
-      {
-         return "Texturing3D";
-      },
-      getContainerField: function ()
-      {
-         return "texture";
-      },
-      initialize: function ()
-      {
-         X3DTexture3DNode .prototype .initialize .call (this);
+      return "Texturing3D";
+   },
+   getContainerField: function ()
+   {
+      return "texture";
+   },
+   initialize: function ()
+   {
+      X3DTexture3DNode .prototype .initialize .call (this);
 
-         this ._image .addInterest ("set_image__", this);
+      this ._image .addInterest ("set_image__", this);
 
-         this .set_image__ ();
-      },
-      checkLoadState: function ()
-      {
-         return this ._loadState .getValue ();
-      },
-      set_image__: (function ()
-      {
-         const
-            OFFSET     = 4,
-            COMPONENTS = 0,
-            WIDTH      = 1,
-            HEIGHT     = 2,
-            DEPTH      = 3;
+      this .set_image__ ();
+   },
+   checkLoadState: function ()
+   {
+      return this ._loadState .getValue ();
+   },
+   set_image__: (function ()
+   {
+      const
+         OFFSET     = 4,
+         COMPONENTS = 0,
+         WIDTH      = 1,
+         HEIGHT     = 2,
+         DEPTH      = 3;
 
-         return function ()
+      return function ()
+      {
+         const image = this ._image;
+
+         if (image .length < OFFSET)
          {
-            const image = this ._image;
+            this .clearTexture ();
+            this ._loadState = X3DConstants .FAILED_STATE;
+            return;
+         }
 
-            if (image .length < OFFSET)
+         const
+            gl          = this .getBrowser () .getContext (),
+            components  = image [COMPONENTS],
+            width       = image [WIDTH],
+            height      = image [HEIGHT],
+            depth       = image [DEPTH],
+            transparent = ! (components & 1),
+            size3D      = width * height * depth;
+
+         let data, format;
+
+         switch (components)
+         {
+            case 1:
+            {
+               data   = new Uint8Array (size3D);
+               format = gl .LUMINANCE;
+
+               for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+               {
+                  data [d ++] = image [i];
+               }
+
+               break;
+            }
+            case 2:
+            {
+               data   = new Uint8Array (size3D * 2);
+               format = gl .LUMINANCE_ALPHA;
+
+               for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+               {
+                  const p = image [i];
+
+                  data [d ++ ] = (p >>> 8) & 0xff;
+                  data [d ++ ] = p & 0xff;
+               }
+
+               break;
+            }
+            case 3:
+            {
+               data   = new Uint8Array (size3D * 3);
+               format = gl .RGB;
+
+               for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+               {
+                  const p = image [i];
+
+                  data [d ++ ] = (p >>> 16) & 0xff;
+                  data [d ++ ] = (p >>> 8)  & 0xff;
+                  data [d ++ ] = p & 0xff;
+               }
+
+               break;
+            }
+            case 4:
+            {
+               data   = new Uint8Array (size3D * 4);
+               format = gl .RGBA;
+
+               for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+               {
+                  const p = image [i];
+
+                  data [d ++ ] = (p >>> 24) & 0xff;
+                  data [d ++ ] = (p >>> 16) & 0xff;
+                  data [d ++ ] = (p >>> 8)  & 0xff;
+                  data [d ++ ] = p & 0xff;
+               }
+
+               break;
+            }
+            default:
             {
                this .clearTexture ();
                this ._loadState = X3DConstants .FAILED_STATE;
                return;
             }
+         }
 
-            const
-               gl          = this .getBrowser () .getContext (),
-               components  = image [COMPONENTS],
-               width       = image [WIDTH],
-               height      = image [HEIGHT],
-               depth       = image [DEPTH],
-               transparent = ! (components & 1),
-               size3D      = width * height * depth;
-
-            let data, format;
-
-            switch (components)
-            {
-               case 1:
-               {
-                  data   = new Uint8Array (size3D);
-                  format = gl .LUMINANCE;
-
-                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-                  {
-                     data [d ++] = image [i];
-                  }
-
-                  break;
-               }
-               case 2:
-               {
-                  data   = new Uint8Array (size3D * 2);
-                  format = gl .LUMINANCE_ALPHA;
-
-                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-                  {
-                     const p = image [i];
-
-                     data [d ++ ] = (p >>> 8) & 0xff;
-                     data [d ++ ] = p & 0xff;
-                  }
-
-                  break;
-               }
-               case 3:
-               {
-                  data   = new Uint8Array (size3D * 3);
-                  format = gl .RGB;
-
-                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-                  {
-                     const p = image [i];
-
-                     data [d ++ ] = (p >>> 16) & 0xff;
-                     data [d ++ ] = (p >>> 8)  & 0xff;
-                     data [d ++ ] = p & 0xff;
-                  }
-
-                  break;
-               }
-               case 4:
-               {
-                  data   = new Uint8Array (size3D * 4);
-                  format = gl .RGBA;
-
-                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-                  {
-                     const p = image [i];
-
-                     data [d ++ ] = (p >>> 24) & 0xff;
-                     data [d ++ ] = (p >>> 16) & 0xff;
-                     data [d ++ ] = (p >>> 8)  & 0xff;
-                     data [d ++ ] = p & 0xff;
-                  }
-
-                  break;
-               }
-               default:
-               {
-                  this .clearTexture ();
-                  this ._loadState = X3DConstants .FAILED_STATE;
-                  return;
-               }
-            }
-
-            this .setTexture (width, height, depth, transparent, format, data);
-            this ._loadState = X3DConstants .COMPLETE_STATE;
-         };
-      })(),
-   });
-
-   return PixelTexture3D;
+         this .setTexture (width, height, depth, transparent, format, data);
+         this ._loadState = X3DConstants .COMPLETE_STATE;
+      };
+   })(),
 });
+
+export default PixelTexture3D;

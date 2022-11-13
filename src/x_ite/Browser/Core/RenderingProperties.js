@@ -47,66 +47,56 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Base/X3DBaseNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DBaseNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DBaseNode from "../../Base/X3DBaseNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function RenderingProperties (executionContext)
 {
-"use strict";
+   X3DBaseNode .call (this, executionContext);
 
-   function RenderingProperties (executionContext)
+   this .addAlias ("AntiAliased", this ._Antialiased);
+}
+
+RenderingProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+{
+   constructor: RenderingProperties,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .outputOnly, "Shading",                new Fields .SFString ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly, "MaxTextureSize",         new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly, "TextureUnits",           new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly, "MaxLights",              new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly, "Antialiased",            new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .outputOnly, "ColorDepth",             new Fields .SFInt32 ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly, "TextureMemory",          new Fields .SFDouble ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
+   ]),
+   getTypeName: function ()
    {
-      X3DBaseNode .call (this, executionContext);
-
-      this .addAlias ("AntiAliased", this ._Antialiased);
-   }
-
-   RenderingProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      return "RenderingProperties";
+   },
+   getComponentName: function ()
    {
-      constructor: RenderingProperties,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .outputOnly, "Shading",                new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly, "MaxTextureSize",         new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly, "TextureUnits",           new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly, "MaxLights",              new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly, "Antialiased",            new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .outputOnly, "ColorDepth",             new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly, "TextureMemory",          new Fields .SFDouble ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
-      ]),
-      getTypeName: function ()
-      {
-         return "RenderingProperties";
-      },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "renderingProperties";
-      },
-      initialize: function ()
-      {
-         X3DBaseNode .prototype .initialize .call (this);
+      return "X_ITE";
+   },
+   getContainerField: function ()
+   {
+      return "renderingProperties";
+   },
+   initialize: function ()
+   {
+      X3DBaseNode .prototype .initialize .call (this);
 
-         const browser = this .getBrowser ();
+      const browser = this .getBrowser ();
 
-         this ._MaxTextureSize = browser .getMaxTextureSize ();
-         this ._TextureUnits   = browser .getMaxCombinedTextureUnits ();
-         this ._MaxLights      = browser .getMaxLights ();
-         this ._ColorDepth     = browser .getColorDepth ();
-         this ._TextureMemory  = browser .getTextureMemory ();
-      },
-   });
-
-   return RenderingProperties;
+      this ._MaxTextureSize = browser .getMaxTextureSize ();
+      this ._TextureUnits   = browser .getMaxCombinedTextureUnits ();
+      this ._MaxLights      = browser .getMaxLights ();
+      this ._ColorDepth     = browser .getColorDepth ();
+      this ._TextureMemory  = browser .getTextureMemory ();
+   },
 });
+
+export default RenderingProperties;

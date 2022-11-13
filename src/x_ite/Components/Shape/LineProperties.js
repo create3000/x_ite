@@ -47,122 +47,112 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DAppearanceChildNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DAppearanceChildNode from "./X3DAppearanceChildNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function LineProperties (executionContext)
 {
-"use strict";
+   X3DAppearanceChildNode .call (this, executionContext);
 
-   function LineProperties (executionContext)
+   this .addType (X3DConstants .LineProperties);
+}
+
+LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+{
+   constructor: LineProperties,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "applied",              new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "linetype",             new Fields .SFInt32 (1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "linewidthScaleFactor", new Fields .SFFloat ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DAppearanceChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .LineProperties);
-   }
-
-   LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+      return "LineProperties";
+   },
+   getComponentName: function ()
    {
-      constructor: LineProperties,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "applied",              new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "linetype",             new Fields .SFInt32 (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "linewidthScaleFactor", new Fields .SFFloat ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "LineProperties";
-      },
-      getComponentName: function ()
-      {
-         return "Shape";
-      },
-      getContainerField: function ()
-      {
-         return "lineProperties";
-      },
-      initialize: function ()
-      {
-         X3DAppearanceChildNode .prototype .initialize .call (this);
+      return "Shape";
+   },
+   getContainerField: function ()
+   {
+      return "lineProperties";
+   },
+   initialize: function ()
+   {
+      X3DAppearanceChildNode .prototype .initialize .call (this);
 
-         this ._applied              .addInterest ("set_applied__",              this);
-         this ._linetype             .addInterest ("set_linetype__",             this);
-         this ._linewidthScaleFactor .addInterest ("set_linewidthScaleFactor__", this);
+      this ._applied              .addInterest ("set_applied__",              this);
+      this ._linetype             .addInterest ("set_linetype__",             this);
+      this ._linewidthScaleFactor .addInterest ("set_linewidthScaleFactor__", this);
 
-         this .set_applied__ ();
-         this .set_linetype__ ();
-         this .set_linewidthScaleFactor__ ();
-      },
-      getApplied: function ()
-      {
-         return this .applied;
-      },
-      getLinetype: function ()
-      {
-         return this .linetype;
-      },
-      getLinewidthScaleFactor: function ()
-      {
-         return this .linewidthScaleFactor;
-      },
-      getTransformLines: function ()
-      {
-         return this .transformLines;
-      },
-      set_applied__: function ()
-      {
-         this .applied = this ._applied .getValue ();
-      },
-      set_linetype__: function ()
-      {
-         let linetype = this ._linetype .getValue ();
+      this .set_applied__ ();
+      this .set_linetype__ ();
+      this .set_linewidthScaleFactor__ ();
+   },
+   getApplied: function ()
+   {
+      return this .applied;
+   },
+   getLinetype: function ()
+   {
+      return this .linetype;
+   },
+   getLinewidthScaleFactor: function ()
+   {
+      return this .linewidthScaleFactor;
+   },
+   getTransformLines: function ()
+   {
+      return this .transformLines;
+   },
+   set_applied__: function ()
+   {
+      this .applied = this ._applied .getValue ();
+   },
+   set_linetype__: function ()
+   {
+      let linetype = this ._linetype .getValue ();
 
-         if (linetype < 1 || linetype > 16)
-            linetype = 1;
+      if (linetype < 1 || linetype > 16)
+         linetype = 1;
 
-         this .linetype = linetype;
-      },
-      set_linewidthScaleFactor__: function ()
+      this .linetype = linetype;
+   },
+   set_linewidthScaleFactor__: function ()
+   {
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ());
+      this .transformLines       = gl .HAS_FEATURE_TRANSFORMED_LINES && this .linewidthScaleFactor > 1;
+   },
+   setShaderUniforms: function (gl, shaderObject)
+   {
+      if (this .applied)
       {
          const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
+            browser     = this .getBrowser (),
+            textureUnit = browser .getTexture2DUnit ();
 
-         this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ());
-         this .transformLines       = gl .HAS_FEATURE_TRANSFORMED_LINES && this .linewidthScaleFactor > 1;
-      },
-      setShaderUniforms: function (gl, shaderObject)
+         gl .lineWidth (this .linewidthScaleFactor);
+         gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,  true);
+         gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, this .linetype);
+
+         gl .activeTexture (gl .TEXTURE0 + textureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, browser .getLinetypeTexture () .getTexture ());
+         gl .uniform1i (shaderObject .x3d_LinePropertiesTexture, textureUnit);
+      }
+      else
       {
-         if (this .applied)
-         {
-            const
-               browser     = this .getBrowser (),
-               textureUnit = browser .getTexture2DUnit ();
-
-            gl .lineWidth (this .linewidthScaleFactor);
-            gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,  true);
-            gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, this .linetype);
-
-            gl .activeTexture (gl .TEXTURE0 + textureUnit);
-            gl .bindTexture (gl .TEXTURE_2D, browser .getLinetypeTexture () .getTexture ());
-            gl .uniform1i (shaderObject .x3d_LinePropertiesTexture, textureUnit);
-         }
-         else
-         {
-            gl .lineWidth (1);
-            gl .uniform1i (shaderObject .x3d_LinePropertiesApplied, false);
-         }
-      },
-   });
-
-   return LineProperties;
+         gl .lineWidth (1);
+         gl .uniform1i (shaderObject .x3d_LinePropertiesApplied, false);
+      }
+   },
 });
+
+export default LineProperties;

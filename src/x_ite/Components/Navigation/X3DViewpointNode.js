@@ -47,441 +47,425 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Components/Core/X3DBindableNode",
-   "x_ite/Components/Time/TimeSensor",
-   "x_ite/Components/Interpolation/EaseInEaseOut",
-   "x_ite/Components/Interpolation/PositionInterpolator",
-   "x_ite/Components/Interpolation/OrientationInterpolator",
-   "x_ite/Rendering/TraverseType",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DBindableNode,
-          TimeSensor,
-          EaseInEaseOut,
-          PositionInterpolator,
-          OrientationInterpolator,
-          TraverseType,
-          X3DConstants,
-          Vector3,
-          Rotation4,
-          Matrix4)
+import Fields from "../../Fields.js";
+import X3DBindableNode from "../Core/X3DBindableNode.js";
+import TimeSensor from "../Time/TimeSensor.js";
+import EaseInEaseOut from "../Interpolation/EaseInEaseOut.js";
+import PositionInterpolator from "../Interpolation/PositionInterpolator.js";
+import OrientationInterpolator from "../Interpolation/OrientationInterpolator.js";
+import TraverseType from "../../Rendering/TraverseType.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+function X3DViewpointNode (executionContext)
 {
-"use strict";
+   X3DBindableNode .call (this, executionContext);
 
-   function X3DViewpointNode (executionContext)
+   this .addType (X3DConstants .X3DViewpointNode);
+
+   this .addChildObjects ("positionOffset",         new Fields .SFVec3f (),
+                          "orientationOffset",      new Fields .SFRotation (),
+                          "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
+                          "scaleOrientationOffset", new Fields .SFRotation (),
+                          "centerOfRotationOffset", new Fields .SFVec3f (),
+                          "fieldOfViewScale",       new Fields .SFFloat (1));
+
+   this .userPosition         = new Vector3 (0, 1, 0);
+   this .userOrientation      = new Rotation4 (0, 0, 1, 0);
+   this .userCenterOfRotation = new Vector3 (0, 0, 0);
+   this .modelMatrix          = new Matrix4 ();
+   this .cameraSpaceMatrix    = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
+   this .viewMatrix           = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
+
+   const browser = this .getBrowser ();
+
+   this .timeSensor                   = new TimeSensor              (browser .getPrivateScene ());
+   this .easeInEaseOut                = new EaseInEaseOut           (browser .getPrivateScene ());
+   this .positionInterpolator         = new PositionInterpolator    (browser .getPrivateScene ());
+   this .orientationInterpolator      = new OrientationInterpolator (browser .getPrivateScene ());
+   this .scaleInterpolator            = new PositionInterpolator    (browser .getPrivateScene ());
+   this .scaleOrientationInterpolator = new OrientationInterpolator (browser .getPrivateScene ());
+}
+
+X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
+{
+   constructor: X3DViewpointNode,
+   initialize: function ()
    {
-      X3DBindableNode .call (this, executionContext);
+      X3DBindableNode .prototype .initialize .call (this);
 
-      this .addType (X3DConstants .X3DViewpointNode);
+      this .timeSensor ._stopTime = 1;
+      this .timeSensor .setup ();
 
-      this .addChildObjects ("positionOffset",         new Fields .SFVec3f (),
-                             "orientationOffset",      new Fields .SFRotation (),
-                             "scaleOffset",            new Fields .SFVec3f (1, 1, 1),
-                             "scaleOrientationOffset", new Fields .SFRotation (),
-                             "centerOfRotationOffset", new Fields .SFVec3f (),
-                             "fieldOfViewScale",       new Fields .SFFloat (1));
+      this .easeInEaseOut ._key           = new Fields .MFFloat (0, 1);
+      this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+      this .easeInEaseOut .setup ();
 
-      this .userPosition         = new Vector3 (0, 1, 0);
-      this .userOrientation      = new Rotation4 (0, 0, 1, 0);
-      this .userCenterOfRotation = new Vector3 (0, 0, 0);
-      this .modelMatrix          = new Matrix4 ();
-      this .cameraSpaceMatrix    = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
-      this .viewMatrix           = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
+      this .positionInterpolator         ._key = new Fields .MFFloat (0, 1);
+      this .orientationInterpolator      ._key = new Fields .MFFloat (0, 1);
+      this .scaleInterpolator            ._key = new Fields .MFFloat (0, 1);
+      this .scaleOrientationInterpolator ._key = new Fields .MFFloat (0, 1);
 
-      const browser = this .getBrowser ();
+      this .positionInterpolator         .setup ();
+      this .orientationInterpolator      .setup ();
+      this .scaleInterpolator            .setup ();
+      this .scaleOrientationInterpolator .setup ();
 
-      this .timeSensor                   = new TimeSensor              (browser .getPrivateScene ());
-      this .easeInEaseOut                = new EaseInEaseOut           (browser .getPrivateScene ());
-      this .positionInterpolator         = new PositionInterpolator    (browser .getPrivateScene ());
-      this .orientationInterpolator      = new OrientationInterpolator (browser .getPrivateScene ());
-      this .scaleInterpolator            = new PositionInterpolator    (browser .getPrivateScene ());
-      this .scaleOrientationInterpolator = new OrientationInterpolator (browser .getPrivateScene ());
-   }
+      this .timeSensor ._isActive         .addFieldInterest (this ._transitionActive);
+      this .timeSensor ._fraction_changed .addFieldInterest (this .easeInEaseOut ._set_fraction);
 
-   X3DViewpointNode .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .positionInterpolator         ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .orientationInterpolator      ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleInterpolator            ._set_fraction);
+      this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleOrientationInterpolator ._set_fraction);
+
+      this .positionInterpolator         ._value_changed .addFieldInterest (this ._positionOffset);
+      this .orientationInterpolator      ._value_changed .addFieldInterest (this ._orientationOffset);
+      this .scaleInterpolator            ._value_changed .addFieldInterest (this ._scaleOffset);
+      this .scaleOrientationInterpolator ._value_changed .addFieldInterest (this ._scaleOrientationOffset);
+
+      this ._isBound .addInterest ("set_bound__", this);
+   },
+   getEaseInEaseOut: function ()
    {
-      constructor: X3DViewpointNode,
-      initialize: function ()
-      {
-         X3DBindableNode .prototype .initialize .call (this);
+      return this .easeInEaseOut;
+   },
+   setInterpolators: function () { },
+   getPosition: function ()
+   {
+      return this ._position .getValue ();
+   },
+   getUserPosition: function ()
+   {
+      return this .userPosition .assign (this .getPosition ()) .add (this ._positionOffset .getValue ());
+   },
+   getOrientation: function ()
+   {
+      return this ._orientation .getValue ();
+   },
+   getUserOrientation: function ()
+   {
+      return this .userOrientation .assign (this .getOrientation ()) .multRight (this ._orientationOffset .getValue ());
+   },
+   getCenterOfRotation: function ()
+   {
+      return this ._centerOfRotation .getValue ();
+   },
+   getUserCenterOfRotation: function ()
+   {
+      return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this ._centerOfRotationOffset .getValue ());
+   },
+   getProjectionMatrix: function (renderObject)
+   {
+      const navigationInfo = renderObject .getNavigationInfo ();
 
-         this .timeSensor ._stopTime = 1;
-         this .timeSensor .setup ();
+      return this .getProjectionMatrixWithLimits (navigationInfo .getNearValue (),
+                                                  navigationInfo .getFarValue (this),
+                                                  renderObject .getLayer () .getViewport () .getRectangle (this .getBrowser ()));
+   },
+   getCameraSpaceMatrix: function ()
+   {
+      return this .cameraSpaceMatrix;
+   },
+   getViewMatrix: function ()
+   {
+      return this .viewMatrix;
+   },
+   getModelMatrix: function ()
+   {
+      return this .modelMatrix;
+   },
+   getMaxFarValue: function ()
+   {
+      return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e5;
+   },
+   getUpVector: function ()
+   {
+      // Local y-axis,
+      // see http://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
+      return Vector3 .yAxis;
+   },
+   getSpeedFactor: function ()
+   {
+      return 1;
+   },
+   setVRMLTransition: function (value)
+   {
+      // VRML behaviour support.
+      this .VRMLTransition = value;
+   },
+   getVRMLTransition: function ()
+   {
+      // VRML behaviour support.
+      return this .VRMLTransition;
+   },
+   transitionStart: (function ()
+   {
+      const
+         relativePosition         = new Vector3 (0, 0, 0),
+         relativeOrientation      = new Rotation4 (0, 0, 1, 0),
+         relativeScale            = new Vector3 (0, 0, 0),
+         relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
 
-         this .easeInEaseOut ._key           = new Fields .MFFloat (0, 1);
-         this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
-         this .easeInEaseOut .setup ();
+      return function (layerNode, fromViewpointNode, toViewpointNode)
+      {
+         this .to = toViewpointNode;
 
-         this .positionInterpolator         ._key = new Fields .MFFloat (0, 1);
-         this .orientationInterpolator      ._key = new Fields .MFFloat (0, 1);
-         this .scaleInterpolator            ._key = new Fields .MFFloat (0, 1);
-         this .scaleOrientationInterpolator ._key = new Fields .MFFloat (0, 1);
-
-         this .positionInterpolator         .setup ();
-         this .orientationInterpolator      .setup ();
-         this .scaleInterpolator            .setup ();
-         this .scaleOrientationInterpolator .setup ();
-
-         this .timeSensor ._isActive         .addFieldInterest (this ._transitionActive);
-         this .timeSensor ._fraction_changed .addFieldInterest (this .easeInEaseOut ._set_fraction);
-
-         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .positionInterpolator         ._set_fraction);
-         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .orientationInterpolator      ._set_fraction);
-         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleInterpolator            ._set_fraction);
-         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleOrientationInterpolator ._set_fraction);
-
-         this .positionInterpolator         ._value_changed .addFieldInterest (this ._positionOffset);
-         this .orientationInterpolator      ._value_changed .addFieldInterest (this ._orientationOffset);
-         this .scaleInterpolator            ._value_changed .addFieldInterest (this ._scaleOffset);
-         this .scaleOrientationInterpolator ._value_changed .addFieldInterest (this ._scaleOrientationOffset);
-
-         this ._isBound .addInterest ("set_bound__", this);
-      },
-      getEaseInEaseOut: function ()
-      {
-         return this .easeInEaseOut;
-      },
-      setInterpolators: function () { },
-      getPosition: function ()
-      {
-         return this ._position .getValue ();
-      },
-      getUserPosition: function ()
-      {
-         return this .userPosition .assign (this .getPosition ()) .add (this ._positionOffset .getValue ());
-      },
-      getOrientation: function ()
-      {
-         return this ._orientation .getValue ();
-      },
-      getUserOrientation: function ()
-      {
-         return this .userOrientation .assign (this .getOrientation ()) .multRight (this ._orientationOffset .getValue ());
-      },
-      getCenterOfRotation: function ()
-      {
-         return this ._centerOfRotation .getValue ();
-      },
-      getUserCenterOfRotation: function ()
-      {
-         return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this ._centerOfRotationOffset .getValue ());
-      },
-      getProjectionMatrix: function (renderObject)
-      {
-         const navigationInfo = renderObject .getNavigationInfo ();
-
-         return this .getProjectionMatrixWithLimits (navigationInfo .getNearValue (),
-                                                     navigationInfo .getFarValue (this),
-                                                     renderObject .getLayer () .getViewport () .getRectangle (this .getBrowser ()));
-      },
-      getCameraSpaceMatrix: function ()
-      {
-         return this .cameraSpaceMatrix;
-      },
-      getViewMatrix: function ()
-      {
-         return this .viewMatrix;
-      },
-      getModelMatrix: function ()
-      {
-         return this .modelMatrix;
-      },
-      getMaxFarValue: function ()
-      {
-         return this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer") ? 1e10 : 1e5;
-      },
-      getUpVector: function ()
-      {
-         // Local y-axis,
-         // see http://www.web3d.org/documents/specifications/19775-1/V3.3/index.html#NavigationInfo.
-         return Vector3 .yAxis;
-      },
-      getSpeedFactor: function ()
-      {
-         return 1;
-      },
-      setVRMLTransition: function (value)
-      {
-         // VRML behaviour support.
-         this .VRMLTransition = value;
-      },
-      getVRMLTransition: function ()
-      {
-         // VRML behaviour support.
-         return this .VRMLTransition;
-      },
-      transitionStart: (function ()
-      {
-         const
-            relativePosition         = new Vector3 (0, 0, 0),
-            relativeOrientation      = new Rotation4 (0, 0, 1, 0),
-            relativeScale            = new Vector3 (0, 0, 0),
-            relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
-
-         return function (layerNode, fromViewpointNode, toViewpointNode)
+         if (toViewpointNode ._jump .getValue ())
          {
-            this .to = toViewpointNode;
+            if (! toViewpointNode ._retainUserOffsets .getValue ())
+               toViewpointNode .resetUserOffsets ();
 
-            if (toViewpointNode ._jump .getValue ())
+            // Copy from toViewpointNode all fields.
+
+            if (this !== toViewpointNode)
             {
-               if (! toViewpointNode ._retainUserOffsets .getValue ())
-                  toViewpointNode .resetUserOffsets ();
+               for (const field of toViewpointNode .getFields ())
+                  this .getField (field .getName ()) .assign (field);
+            }
 
-               // Copy from toViewpointNode all fields.
+            // Respect NavigationInfo.
 
-               if (this !== toViewpointNode)
-               {
-                  for (const field of toViewpointNode .getFields ())
-                     this .getField (field .getName ()) .assign (field);
-               }
+            const
+               navigationInfoNode = layerNode .getNavigationInfo (),
+               transitionTime     = navigationInfoNode ._transitionTime .getValue ();
 
-               // Respect NavigationInfo.
+            let transitionType = navigationInfoNode .getTransitionType ();
 
-               const
-                  navigationInfoNode = layerNode .getNavigationInfo (),
-                  transitionTime     = navigationInfoNode ._transitionTime .getValue ();
+            // VRML behavior
 
-               let transitionType = navigationInfoNode .getTransitionType ();
-
-               // VRML behavior
-
-               if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
-               {
-                  if (toViewpointNode .getVRMLTransition ())
-                     transitionType = "LINEAR";
-                  else
-                     transitionType = "TELEPORT";
-               }
-
-               toViewpointNode .setVRMLTransition (false);
-
-               // End VRML behavior
-
-               if (transitionTime <= 0)
+            if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
+            {
+               if (toViewpointNode .getVRMLTransition ())
+                  transitionType = "LINEAR";
+               else
                   transitionType = "TELEPORT";
-
-               switch (transitionType)
-               {
-                  case "TELEPORT":
-                  {
-                     navigationInfoNode ._transitionComplete = true;
-                     return;
-                  }
-                  case "ANIMATE":
-                  {
-                     this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-                     break;
-                  }
-                  default:
-                  {
-                     // LINEAR
-                     this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
-                     break;
-                  }
-               }
-
-               this .timeSensor ._cycleInterval = transitionTime;
-               this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-               this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
-
-               this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
-
-               toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-               this .positionInterpolator         ._keyValue = new Fields .MFVec3f    (relativePosition,         toViewpointNode ._positionOffset);
-               this .orientationInterpolator      ._keyValue = new Fields .MFRotation (relativeOrientation,      toViewpointNode ._orientationOffset);
-               this .scaleInterpolator            ._keyValue = new Fields .MFVec3f    (relativeScale,            toViewpointNode ._scaleOffset);
-               this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (relativeScaleOrientation, toViewpointNode ._scaleOrientationOffset);
-
-               this ._positionOffset         = relativePosition;
-               this ._orientationOffset      = relativeOrientation;
-               this ._scaleOffset            = relativeScale;
-               this ._scaleOrientationOffset = relativeScaleOrientation;
-
-               this .setInterpolators (fromViewpointNode, toViewpointNode);
-
-               this ._transitionActive = true;
             }
-            else
+
+            toViewpointNode .setVRMLTransition (false);
+
+            // End VRML behavior
+
+            if (transitionTime <= 0)
+               transitionType = "TELEPORT";
+
+            switch (transitionType)
             {
-               toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-
-               toViewpointNode ._positionOffset         = relativePosition;
-               toViewpointNode ._orientationOffset      = relativeOrientation;
-               toViewpointNode ._scaleOffset            = relativeScale;
-               toViewpointNode ._scaleOrientationOffset = relativeScaleOrientation;
-
-               toViewpointNode .setInterpolators (fromViewpointNode, toViewpointNode);
+               case "TELEPORT":
+               {
+                  navigationInfoNode ._transitionComplete = true;
+                  return;
+               }
+               case "ANIMATE":
+               {
+                  this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+                  break;
+               }
+               default:
+               {
+                  // LINEAR
+                  this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+                  break;
+               }
             }
-         };
-      })(),
-      transitionStop: function ()
-      {
-         this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
-         this .timeSensor ._isActive .removeInterest ("set_active__", this);
-      },
-      resetUserOffsets: function ()
-      {
-         this ._positionOffset         = Vector3   .Zero;
-         this ._orientationOffset      = Rotation4 .Identity;
-         this ._scaleOffset            = Vector3   .One;
-         this ._scaleOrientationOffset = Rotation4 .Identity;
-         this ._centerOfRotationOffset = Vector3   .Zero;
-         this ._fieldOfViewScale       = 1;
-      },
-      getRelativeTransformation: function (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
-      {
-         const differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpointNode .getViewMatrix ()) .inverse ();
 
-         differenceMatrix .get (relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+            this .timeSensor ._cycleInterval = transitionTime;
+            this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+            this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
-         relativePosition .subtract (this .getPosition ());
-         relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
-      },
-      lookAtPoint: function (layerNode, point, factor, straighten)
-      {
-         this .getCameraSpaceMatrix () .multVecMatrix (point);
+            this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
 
-         Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
+            toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
 
-         const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+            this .positionInterpolator         ._keyValue = new Fields .MFVec3f    (relativePosition,         toViewpointNode ._positionOffset);
+            this .orientationInterpolator      ._keyValue = new Fields .MFRotation (relativeOrientation,      toViewpointNode ._orientationOffset);
+            this .scaleInterpolator            ._keyValue = new Fields .MFVec3f    (relativeScale,            toViewpointNode ._scaleOffset);
+            this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (relativeScaleOrientation, toViewpointNode ._scaleOrientationOffset);
 
-         this .lookAt (layerNode, point, minDistance, factor, straighten);
-      },
-      lookAtBBox: function (layerNode, bbox, factor, straighten)
-      {
-         bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
+            this ._positionOffset         = relativePosition;
+            this ._orientationOffset      = relativeOrientation;
+            this ._scaleOffset            = relativeScale;
+            this ._scaleOrientationOffset = relativeScaleOrientation;
 
-         const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+            this .setInterpolators (fromViewpointNode, toViewpointNode);
 
-         this .lookAt (layerNode, bbox .center, minDistance, factor, straighten);
-      },
-      lookAt: function (layerNode, point, distance, factor, straighten)
-      {
-         const
-            offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
-
-         layerNode .getNavigationInfo () ._transitionStart = true;
-
-         this .timeSensor ._cycleInterval = 0.2;
-         this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
-
-         this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
-
-         this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-
-         const
-            translation = Vector3 .lerp (this ._positionOffset .getValue (), offset, factor),
-            direction   = Vector3 .add (this .getPosition (), translation) .subtract (point);
-
-         let rotation = Rotation4 .multRight (this ._orientationOffset .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
-
-         if (straighten)
-         {
-            rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
+            this ._transitionActive = true;
          }
-
-         this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, translation);
-         this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
-         this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
-         this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
-
-         this .setInterpolators (this, this);
-
-         this ._centerOfRotationOffset = Vector3 .subtract (point, this .getCenterOfRotation ());
-         this ._set_bind               = true;
-      },
-      straighten: function (layerNode, horizon)
-      {
-         layerNode .getNavigationInfo () ._transitionStart = true;
-
-         this .timeSensor ._cycleInterval = 0.4;
-         this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
-         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
-
-         this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
-
-         this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-
-         const rotation = Rotation4 .multRight (Rotation4 .inverse (this .getOrientation ()), this .straightenHorizon (this .getUserOrientation ()));
-
-         this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, this ._positionOffset);
-         this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
-         this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
-         this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
-
-         this .setInterpolators (this, this);
-
-         this ._set_bind = true;
-      },
-      straightenHorizon: (function ()
-      {
-         const
-            localXAxis  = new Vector3 (0, 0, 0),
-            localZAxis  = new Vector3 (0, 0, 0),
-            rotation    = new Rotation4 (0, 0, 1, 0);
-
-         return function (orientation, upVector = this .getUpVector ())
-         {
-            orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
-            orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
-
-            const vector = localZAxis .cross (upVector);
-
-            // If viewer looks along the up vector.
-            if (Math .abs (localZAxis .dot (upVector)) >= 1)
-               return orientation;
-
-            if (Math .abs (vector .dot (localXAxis)) >= 1)
-               return orientation;
-
-            rotation .setFromToVec (localXAxis, vector);
-
-            return orientation .multRight (rotation);
-         };
-      })(),
-      set_active__: function (navigationInfoNode, active)
-      {
-         if (this ._isBound .getValue () && ! active .getValue () && this .timeSensor ._fraction_changed .getValue () === 1)
-         {
-            navigationInfoNode ._transitionComplete = true;
-         }
-      },
-      set_bound__: function ()
-      {
-         if (this ._isBound .getValue ())
-            this .getBrowser () .getNotification () ._string = this ._description;
          else
-            this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
-      },
-      traverse: function (type, renderObject)
+         {
+            toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+
+            toViewpointNode ._positionOffset         = relativePosition;
+            toViewpointNode ._orientationOffset      = relativeOrientation;
+            toViewpointNode ._scaleOffset            = relativeScale;
+            toViewpointNode ._scaleOrientationOffset = relativeScaleOrientation;
+
+            toViewpointNode .setInterpolators (fromViewpointNode, toViewpointNode);
+         }
+      };
+   })(),
+   transitionStop: function ()
+   {
+      this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
+      this .timeSensor ._isActive .removeInterest ("set_active__", this);
+   },
+   resetUserOffsets: function ()
+   {
+      this ._positionOffset         = Vector3   .Zero;
+      this ._orientationOffset      = Rotation4 .Identity;
+      this ._scaleOffset            = Vector3   .One;
+      this ._scaleOrientationOffset = Rotation4 .Identity;
+      this ._centerOfRotationOffset = Vector3   .Zero;
+      this ._fieldOfViewScale       = 1;
+   },
+   getRelativeTransformation: function (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
+   {
+      const differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpointNode .getViewMatrix ()) .inverse ();
+
+      differenceMatrix .get (relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+
+      relativePosition .subtract (this .getPosition ());
+      relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
+   },
+   lookAtPoint: function (layerNode, point, factor, straighten)
+   {
+      this .getCameraSpaceMatrix () .multVecMatrix (point);
+
+      Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
+
+      const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+
+      this .lookAt (layerNode, point, minDistance, factor, straighten);
+   },
+   lookAtBBox: function (layerNode, bbox, factor, straighten)
+   {
+      bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
+
+      const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+
+      this .lookAt (layerNode, bbox .center, minDistance, factor, straighten);
+   },
+   lookAt: function (layerNode, point, distance, factor, straighten)
+   {
+      const
+         offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
+
+      layerNode .getNavigationInfo () ._transitionStart = true;
+
+      this .timeSensor ._cycleInterval = 0.2;
+      this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+      this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
+
+      this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+
+      const
+         translation = Vector3 .lerp (this ._positionOffset .getValue (), offset, factor),
+         direction   = Vector3 .add (this .getPosition (), translation) .subtract (point);
+
+      let rotation = Rotation4 .multRight (this ._orientationOffset .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
+
+      if (straighten)
       {
-         if (type !== TraverseType .CAMERA)
-            return;
-
-         renderObject .getLayer () .getViewpoints () .push (this);
-
-         this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-      },
-      update: function ()
-      {
-         this .cameraSpaceMatrix .set (this .getUserPosition (),
-                                       this .getUserOrientation (),
-                                       this ._scaleOffset .getValue (),
-                                       this ._scaleOrientationOffset .getValue ());
-
-         this .cameraSpaceMatrix .multRight ((this .to || this) .modelMatrix);
-
-         this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
+         rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
       }
-   });
 
-   return X3DViewpointNode;
+      this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, translation);
+      this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
+      this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
+      this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
+
+      this .setInterpolators (this, this);
+
+      this ._centerOfRotationOffset = Vector3 .subtract (point, this .getCenterOfRotation ());
+      this ._set_bind               = true;
+   },
+   straighten: function (layerNode, horizon)
+   {
+      layerNode .getNavigationInfo () ._transitionStart = true;
+
+      this .timeSensor ._cycleInterval = 0.4;
+      this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+      this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
+
+      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
+
+      this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+
+      const rotation = Rotation4 .multRight (Rotation4 .inverse (this .getOrientation ()), this .straightenHorizon (this .getUserOrientation ()));
+
+      this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, this ._positionOffset);
+      this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
+      this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
+      this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
+
+      this .setInterpolators (this, this);
+
+      this ._set_bind = true;
+   },
+   straightenHorizon: (function ()
+   {
+      const
+         localXAxis  = new Vector3 (0, 0, 0),
+         localZAxis  = new Vector3 (0, 0, 0),
+         rotation    = new Rotation4 (0, 0, 1, 0);
+
+      return function (orientation, upVector = this .getUpVector ())
+      {
+         orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
+         orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
+
+         const vector = localZAxis .cross (upVector);
+
+         // If viewer looks along the up vector.
+         if (Math .abs (localZAxis .dot (upVector)) >= 1)
+            return orientation;
+
+         if (Math .abs (vector .dot (localXAxis)) >= 1)
+            return orientation;
+
+         rotation .setFromToVec (localXAxis, vector);
+
+         return orientation .multRight (rotation);
+      };
+   })(),
+   set_active__: function (navigationInfoNode, active)
+   {
+      if (this ._isBound .getValue () && ! active .getValue () && this .timeSensor ._fraction_changed .getValue () === 1)
+      {
+         navigationInfoNode ._transitionComplete = true;
+      }
+   },
+   set_bound__: function ()
+   {
+      if (this ._isBound .getValue ())
+         this .getBrowser () .getNotification () ._string = this ._description;
+      else
+         this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
+   },
+   traverse: function (type, renderObject)
+   {
+      if (type !== TraverseType .CAMERA)
+         return;
+
+      renderObject .getLayer () .getViewpoints () .push (this);
+
+      this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+   },
+   update: function ()
+   {
+      this .cameraSpaceMatrix .set (this .getUserPosition (),
+                                    this .getUserOrientation (),
+                                    this ._scaleOffset .getValue (),
+                                    this ._scaleOrientationOffset .getValue ());
+
+      this .cameraSpaceMatrix .multRight ((this .to || this) .modelMatrix);
+
+      this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
+   }
 });
+
+export default X3DViewpointNode;

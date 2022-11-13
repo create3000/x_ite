@@ -47,56 +47,48 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DAppearanceChildNode,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DAppearanceChildNode from "../Shape/X3DAppearanceChildNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function X3DShaderNode (executionContext)
 {
-"use strict";
+   X3DAppearanceChildNode .call (this, executionContext);
 
-   function X3DShaderNode (executionContext)
+   this .addType (X3DConstants .X3DShaderNode);
+
+   this .valid    = false;
+   this .selected = 0;
+}
+
+X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+{
+   constructor: X3DShaderNode,
+   setValid: function (value)
    {
-      X3DAppearanceChildNode .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DShaderNode);
-
-      this .valid    = false;
-      this .selected = 0;
-   }
-
-   X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+      this ._isValid = this .valid = value;
+   },
+   isValid: function ()
    {
-      constructor: X3DShaderNode,
-      setValid: function (value)
-      {
-         this ._isValid = this .valid = value;
-      },
-      isValid: function ()
-      {
-         return this .valid;
-      },
-      select: function ()
-      {
-         ++ this .selected;
+      return this .valid;
+   },
+   select: function ()
+   {
+      ++ this .selected;
 
-         if (! this ._isSelected .getValue ())
-            this ._isSelected = true;
-      },
-      deselect: function ()
+      if (! this ._isSelected .getValue ())
+         this ._isSelected = true;
+   },
+   deselect: function ()
+   {
+      -- this .selected;
+
+      if (this .selected === 0)
       {
-         -- this .selected;
-
-         if (this .selected === 0)
-         {
-            if (this ._isSelected .getValue ())
-               this ._isSelected = false;
-         }
-      },
-   });
-
-   return X3DShaderNode;
+         if (this ._isSelected .getValue ())
+            this ._isSelected = false;
+      }
+   },
 });
+
+export default X3DShaderNode;

@@ -47,117 +47,111 @@
  ******************************************************************************/
 
 
-define ([
-   "standard/Math/Numbers/Vector2",
-],
-function (Vector2)
+import Vector2 from "../Numbers/Vector2.js";
+
+function Line2 (point, direction)
 {
-"use strict";
+   this .point     = point     .copy ();
+   this .direction = direction .copy ();
+}
 
-   function Line2 (point, direction)
+Line2 .prototype =
+{
+   constructor: Line2,
+   copy: function ()
    {
-      this .point     = point     .copy ();
-      this .direction = direction .copy ();
-   }
+      const copy = Object .create (Line2 .prototype);
+      copy .point     = this .point .copy ();
+      copy .direction = this .direction .copy ();
+      return copy;
+   },
+   assign: function (line)
+   {
+      this .point     .assign (line .point);
+      this .direction .assign (line .direction);
+      return this;
+   },
+   set: function (point, direction)
+   {
+      this .point     .assign (point);
+      this .direction .assign (direction);
+      return this;
+   },
+   setPoints: function (point1, point2)
+   {
+      this .point .assign (point1);
+      this .direction .assign (point2) .subtract (point1) .normalize ();
+      return this;
+   },
+   multMatrixLine: function (matrix)
+   {
+      matrix .multMatrixVec (this .point);
+      matrix .multMatrixDir (this .direction) .normalize ();
+      return this;
+   },
+   multLineMatrix: function (matrix)
+   {
+      matrix .multVecMatrix (this .point);
+      matrix .multDirMatrix (this .direction) .normalize ();
+      return this;
+   },
+   getClosestPointToPoint: function (point, result)
+   {
+      const
+         r = result .assign (point) .subtract (this .point),
+         d = r .dot (this .direction);
 
-   Line2 .prototype =
+      return result .assign (this .direction) .multiply (d) .add (this .point);
+   },
+   getPerpendicularVectorToPoint: (function ()
    {
-      constructor: Line2,
-      copy: function ()
+      const t = new Vector2 (0, 0);
+
+      return function (point, result)
       {
-         const copy = Object .create (Line2 .prototype);
-         copy .point     = this .point .copy ();
-         copy .direction = this .direction .copy ();
-         return copy;
-      },
-      assign: function (line)
-      {
-         this .point     .assign (line .point);
-         this .direction .assign (line .direction);
-         return this;
-      },
-      set: function (point, direction)
-      {
-         this .point     .assign (point);
-         this .direction .assign (direction);
-         return this;
-      },
-      setPoints: function (point1, point2)
-      {
-         this .point .assign (point1);
-         this .direction .assign (point2) .subtract (point1) .normalize ();
-         return this;
-      },
-      multMatrixLine: function (matrix)
-      {
-         matrix .multMatrixVec (this .point);
-         matrix .multMatrixDir (this .direction) .normalize ();
-         return this;
-      },
-      multLineMatrix: function (matrix)
-      {
-         matrix .multVecMatrix (this .point);
-         matrix .multDirMatrix (this .direction) .normalize ();
-         return this;
-      },
-      getClosestPointToPoint: function (point, result)
+         result .assign (this .point) .subtract (point);
+
+         return result .subtract (t .assign (this .direction) .multiply (result .dot (this .direction)));
+      };
+   })(),
+   intersectsLine: (function ()
+   {
+      const u = new Vector2 (0, 0);
+
+      return function (line, point)
       {
          const
-            r = result .assign (point) .subtract (this .point),
-            d = r .dot (this .direction);
+            p1 = this .point,
+            p2 = line .point,
+            d1 = this .direction,
+            d2 = line .direction;
 
-         return result .assign (this .direction) .multiply (d) .add (this .point);
-      },
-      getPerpendicularVectorToPoint: (function ()
-      {
-         const t = new Vector2 (0, 0);
+         const theta = d1 .dot (d2); // angle between both lines
 
-         return function (point, result)
-         {
-            result .assign (this .point) .subtract (point);
+         if (Math .abs (theta) >= 1)
+            return false; // lines are parallel
 
-            return result .subtract (t .assign (this .direction) .multiply (result .dot (this .direction)));
-         };
-      })(),
-      intersectsLine: (function ()
-      {
-         const u = new Vector2 (0, 0);
+         u .assign (p2) .subtract (p1);
 
-         return function (line, point)
-         {
-            const
-               p1 = this .point,
-               p2 = line .point,
-               d1 = this .direction,
-               d2 = line .direction;
+         const t = (u .dot (d1) - theta * u .dot (d2)) / (1 - theta * theta);
 
-            const theta = d1 .dot (d2); // angle between both lines
+         point .assign (d1) .multiply (t) .add (p1);
 
-            if (Math .abs (theta) >= 1)
-               return false; // lines are parallel
-
-            u .assign (p2) .subtract (p1);
-
-            const t = (u .dot (d1) - theta * u .dot (d2)) / (1 - theta * theta);
-
-            point .assign (d1) .multiply (t) .add (p1);
-
-            return true;
-         };
-      })(),
-      toString: function ()
-      {
-         return this .point + ", " + this .direction;
-      },
-   };
-
-   Line2 .Points = function (point1, point2)
+         return true;
+      };
+   })(),
+   toString: function ()
    {
-      const line = Object .create (Line2 .prototype);
-      line .point     = point1 .copy ();
-      line .direction = Vector2 .subtract (point2, point1) .normalize ();
-      return line;
-   };
+      return this .point + ", " + this .direction;
+   },
+};
 
-   return Line2;
-});
+Line2 .Points = function (point1, point2)
+{
+   const line = Object .create (Line2 .prototype);
+   line .point     = point1 .copy ();
+   line .direction = Vector2 .subtract (point2, point1) .normalize ();
+   return line;
+};
+
+export default Line2;

@@ -47,104 +47,96 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Algorithm",
-],
-function (X3DChildNode,
-          X3DConstants,
-          Algorithm)
+import X3DChildNode from "../Core/X3DChildNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Algorithm from "../../../standard/Math/Algorithm.js";
+
+function X3DSequencerNode (executionContext)
 {
-"use strict";
+   X3DChildNode .call (this, executionContext);
 
-   function X3DSequencerNode (executionContext)
+   this .addType (X3DConstants .X3DSequencerNode);
+
+   this .index = -1;
+}
+
+X3DSequencerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+{
+   constructor: X3DSequencerNode,
+   initialize: function ()
    {
-      X3DChildNode .call (this, executionContext);
+      X3DChildNode .prototype .initialize .call (this);
 
-      this .addType (X3DConstants .X3DSequencerNode);
-
-      this .index = -1;
-   }
-
-   X3DSequencerNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+      this ._set_fraction .addInterest ("set_fraction__", this);
+      this ._previous     .addInterest ("set_previous__", this);
+      this ._next         .addInterest ("set_next__", this);
+      this ._key          .addInterest ("set_index__", this);
+   },
+   set_fraction__: function ()
    {
-      constructor: X3DSequencerNode,
-      initialize: function ()
+      const
+         fraction = this ._set_fraction .getValue (),
+         key      = this ._key,
+         length   = key .length;
+
+      if (length === 0)
+         return;
+
+      let i = 0;
+
+      if (length === 1 || fraction <= key [0])
+         i = 0;
+
+      else if (fraction >= key [length - 1])
+         i = this .getSize () - 1;
+
+      else
       {
-         X3DChildNode .prototype .initialize .call (this);
+         const index = Algorithm .upperBound (key, 0, length, fraction);
 
-         this ._set_fraction .addInterest ("set_fraction__", this);
-         this ._previous     .addInterest ("set_previous__", this);
-         this ._next         .addInterest ("set_next__", this);
-         this ._key          .addInterest ("set_index__", this);
-      },
-      set_fraction__: function ()
+         i = index - 1;
+      }
+
+      if (i !== this .index)
       {
-         const
-            fraction = this ._set_fraction .getValue (),
-            key      = this ._key,
-            length   = key .length;
-
-         if (length === 0)
-            return;
-
-         let i = 0;
-
-         if (length === 1 || fraction <= key [0])
-            i = 0;
-
-         else if (fraction >= key [length - 1])
-            i = this .getSize () - 1;
+         if (i < this .getSize ())
+         {
+            this .sequence (this .index = i);
+         }
+      }
+   },
+   set_previous__: function ()
+   {
+      if (this ._previous .getValue ())
+      {
+         if (this .index <= 0)
+            this .index = this .getSize () - 1;
 
          else
-         {
-            const index = Algorithm .upperBound (key, 0, length, fraction);
+            -- this .index;
 
-            i = index - 1;
-         }
-
-         if (i !== this .index)
-         {
-            if (i < this .getSize ())
-            {
-               this .sequence (this .index = i);
-            }
-         }
-      },
-      set_previous__: function ()
+         if (this .index < this .getSize ())
+            this .sequence (this .index);
+      }
+   },
+   set_next__: function ()
+   {
+      if (this ._next .getValue ())
       {
-         if (this ._previous .getValue ())
-         {
-            if (this .index <= 0)
-               this .index = this .getSize () - 1;
+         if (this .index >= this .getSize () - 1)
+            this .index = 0;
 
-            else
-               -- this .index;
+         else
+            ++ this .index;
 
-            if (this .index < this .getSize ())
-               this .sequence (this .index);
-         }
-      },
-      set_next__: function ()
-      {
-         if (this ._next .getValue ())
-         {
-            if (this .index >= this .getSize () - 1)
-               this .index = 0;
-
-            else
-               ++ this .index;
-
-            if (this .index < this .getSize ())
-               this .sequence (this .index);
-         }
-      },
-      set_index__: function ()
-      {
-         this .index = -1;
-      },
-   });
-
-   return X3DSequencerNode;
+         if (this .index < this .getSize ())
+            this .sequence (this .index);
+      }
+   },
+   set_index__: function ()
+   {
+      this .index = -1;
+   },
 });
+
+export default X3DSequencerNode;

@@ -47,29 +47,23 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DInfoArray",
-],
-function (X3DInfoArray)
+import X3DInfoArray from "../Base/X3DInfoArray.js";
+
+function RouteArray ()
 {
-"use strict";
+   return X3DInfoArray .call (this);
+}
 
-   function RouteArray ()
+RouteArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+{
+   constructor: RouteArray,
+   getTypeName: function ()
    {
-      return X3DInfoArray .call (this);
-   }
-
-   RouteArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-   {
-      constructor: RouteArray,
-      getTypeName: function ()
-      {
-         return "RouteArray";
-      },
-   });
-
-   for (const key of Reflect .ownKeys (RouteArray .prototype))
-      Object .defineProperty (RouteArray .prototype, key, { enumerable: false });
-
-   return RouteArray;
+      return "RouteArray";
+   },
 });
+
+for (const key of Reflect .ownKeys (RouteArray .prototype))
+   Object .defineProperty (RouteArray .prototype, key, { enumerable: false });
+
+export default RouteArray;

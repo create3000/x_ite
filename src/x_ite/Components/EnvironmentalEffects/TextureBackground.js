@@ -47,105 +47,94 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/EnvironmentalEffects/X3DBackgroundNode",
-   "x_ite/Base/X3DCast",
-   "x_ite/Base/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DBackgroundNode,
-          X3DCast,
-          X3DConstants)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DBackgroundNode from "./X3DBackgroundNode.js";
+import X3DCast from "../../Base/X3DCast.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+
+function TextureBackground (executionContext)
 {
-"use strict";
+   X3DBackgroundNode .call (this, executionContext);
 
-   function TextureBackground (executionContext)
+   this .addType (X3DConstants .TextureBackground);
+}
+
+TextureBackground .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
+{
+   constructor: TextureBackground,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",      new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "skyAngle",      new Fields .MFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "skyColor",      new Fields .MFColor (new Fields .SFColor ())),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "groundAngle",   new Fields .MFFloat ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "groundColor",   new Fields .MFColor ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",  new Fields .SFFloat ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",       new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",      new Fields .SFTime ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "frontTexture",  new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "backTexture",   new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "leftTexture",   new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "rightTexture",  new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "topTexture",    new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput, "bottomTexture", new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DBackgroundNode .call (this, executionContext);
-
-      this .addType (X3DConstants .TextureBackground);
-   }
-
-   TextureBackground .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
+      return "TextureBackground";
+   },
+   getComponentName: function ()
    {
-      constructor: TextureBackground,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",      new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "skyAngle",      new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "skyColor",      new Fields .MFColor (new Fields .SFColor ())),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "groundAngle",   new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "groundColor",   new Fields .MFColor ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",  new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",       new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",      new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "frontTexture",  new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "backTexture",   new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "leftTexture",   new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "rightTexture",  new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "topTexture",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "bottomTexture", new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "TextureBackground";
-      },
-      getComponentName: function ()
-      {
-         return "EnvironmentalEffects";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DBackgroundNode .prototype .initialize .call (this);
+      return "EnvironmentalEffects";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DBackgroundNode .prototype .initialize .call (this);
 
-         this ._frontTexture  .addInterest ("set_frontTexture__", this);
-         this ._backTexture   .addInterest ("set_backTexture__", this);
-         this ._leftTexture   .addInterest ("set_leftTexture__", this);
-         this ._rightTexture  .addInterest ("set_rightTexture__", this);
-         this ._topTexture    .addInterest ("set_topTexture__", this);
-         this ._bottomTexture .addInterest ("set_bottomTexture__", this);
+      this ._frontTexture  .addInterest ("set_frontTexture__", this);
+      this ._backTexture   .addInterest ("set_backTexture__", this);
+      this ._leftTexture   .addInterest ("set_leftTexture__", this);
+      this ._rightTexture  .addInterest ("set_rightTexture__", this);
+      this ._topTexture    .addInterest ("set_topTexture__", this);
+      this ._bottomTexture .addInterest ("set_bottomTexture__", this);
 
-         this .set_frontTexture__  (this ._frontTexture);
-         this .set_backTexture__   (this ._backTexture);
-         this .set_leftTexture__   (this ._leftTexture);
-         this .set_rightTexture__  (this ._rightTexture);
-         this .set_topTexture__    (this ._topTexture);
-         this .set_bottomTexture__ (this ._bottomTexture);
-      },
-      set_frontTexture__: function ()
-      {
-         X3DBackgroundNode .prototype .set_frontTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._frontTexture));
-      },
-      set_backTexture__: function ()
-      {
-         X3DBackgroundNode .prototype .set_backTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._backTexture));
-      },
-      set_leftTexture__: function ()
-      {
-         X3DBackgroundNode .prototype .set_leftTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._leftTexture));
-      },
-      set_rightTexture__: function ()
-      {
-         X3DBackgroundNode .prototype .set_rightTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._rightTexture));
-      },
-      set_topTexture__: function ()
-      {
-         X3DBackgroundNode .prototype .set_topTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._topTexture));
-      },
-      set_bottomTexture__: function ()
-      {
-         X3DBackgroundNode .prototype .set_bottomTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._bottomTexture));
-      },
-   });
-
-   return TextureBackground;
+      this .set_frontTexture__  (this ._frontTexture);
+      this .set_backTexture__   (this ._backTexture);
+      this .set_leftTexture__   (this ._leftTexture);
+      this .set_rightTexture__  (this ._rightTexture);
+      this .set_topTexture__    (this ._topTexture);
+      this .set_bottomTexture__ (this ._bottomTexture);
+   },
+   set_frontTexture__: function ()
+   {
+      X3DBackgroundNode .prototype .set_frontTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._frontTexture));
+   },
+   set_backTexture__: function ()
+   {
+      X3DBackgroundNode .prototype .set_backTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._backTexture));
+   },
+   set_leftTexture__: function ()
+   {
+      X3DBackgroundNode .prototype .set_leftTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._leftTexture));
+   },
+   set_rightTexture__: function ()
+   {
+      X3DBackgroundNode .prototype .set_rightTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._rightTexture));
+   },
+   set_topTexture__: function ()
+   {
+      X3DBackgroundNode .prototype .set_topTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._topTexture));
+   },
+   set_bottomTexture__: function ()
+   {
+      X3DBackgroundNode .prototype .set_bottomTexture__ .call (this, X3DCast (X3DConstants .X3DTextureNode, this ._bottomTexture));
+   },
 });
+
+export default TextureBackground;

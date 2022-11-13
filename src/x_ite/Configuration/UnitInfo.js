@@ -47,74 +47,67 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DObject",
-   "x_ite/InputOutput/Generator",
-],
-function (X3DObject,
-          Generator)
+import X3DObject from "../Base/X3DObject.js";
+import Generator from "../InputOutput/Generator.js";
+
+function UnitInfo (category, name, conversionFactor)
 {
-"use strict";
-
-   function UnitInfo (category, name, conversionFactor)
-   {
-      Object .defineProperty (this, "category", {
-          value: category,
-          writable: false,
-      });
-
-      this .name             = name;
-      this .conversionFactor = conversionFactor;
-   }
-
-   UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
-   {
-      constructor: UnitInfo,
-      getTypeName: function ()
-      {
-         return "UnitInfo";
-      },
-      toVRMLStream: function (stream)
-      {
-         stream .string += "UNIT";
-         stream .string += " ";
-         stream .string += this .category;
-         stream .string += " ";
-         stream .string += this .name;
-         stream .string += " ";
-         stream .string += this .conversionFactor;
-      },
-      toXMLStream: function (stream)
-      {
-         const generator = Generator .Get (stream);
-
-         stream .string += generator .Indent ();
-         stream .string += "<unit";
-         stream .string += " ";
-         stream .string += "category='";
-         stream .string += this .category;
-         stream .string += "'";
-         stream .string += " ";
-         stream .string += "name='";
-         stream .string += generator .XMLEncode (this .name);
-         stream .string += "'";
-         stream .string += " ";
-         stream .string += "conversionFactor='";
-         stream .string += this .conversionFactor;
-         stream .string += "'";
-         stream .string += "/>";
-      },
+   Object .defineProperty (this, "category", {
+       value: category,
+       writable: false,
    });
 
-   for (const key of Reflect .ownKeys (UnitInfo .prototype))
-      Object .defineProperty (UnitInfo .prototype, key, { enumerable: false });
+   this .name             = name;
+   this .conversionFactor = conversionFactor;
+}
 
-   Object .defineProperty (UnitInfo .prototype, "conversion_factor",
+UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
+{
+   constructor: UnitInfo,
+   getTypeName: function ()
    {
-      get: function () { return this .conversionFactor; },
-      enumerable: false,
-      configurable: false
-   });
+      return "UnitInfo";
+   },
+   toVRMLStream: function (stream)
+   {
+      stream .string += "UNIT";
+      stream .string += " ";
+      stream .string += this .category;
+      stream .string += " ";
+      stream .string += this .name;
+      stream .string += " ";
+      stream .string += this .conversionFactor;
+   },
+   toXMLStream: function (stream)
+   {
+      const generator = Generator .Get (stream);
 
-   return UnitInfo;
+      stream .string += generator .Indent ();
+      stream .string += "<unit";
+      stream .string += " ";
+      stream .string += "category='";
+      stream .string += this .category;
+      stream .string += "'";
+      stream .string += " ";
+      stream .string += "name='";
+      stream .string += generator .XMLEncode (this .name);
+      stream .string += "'";
+      stream .string += " ";
+      stream .string += "conversionFactor='";
+      stream .string += this .conversionFactor;
+      stream .string += "'";
+      stream .string += "/>";
+   },
 });
+
+for (const key of Reflect .ownKeys (UnitInfo .prototype))
+   Object .defineProperty (UnitInfo .prototype, key, { enumerable: false });
+
+Object .defineProperty (UnitInfo .prototype, "conversion_factor",
+{
+   get: function () { return this .conversionFactor; },
+   enumerable: false,
+   configurable: false
+});
+
+export default UnitInfo;

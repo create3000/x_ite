@@ -47,143 +47,129 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Rendering/TraverseType",
-   "standard/Math/Numbers/Vector3",
-   "standard/Math/Numbers/Rotation4",
-   "standard/Math/Numbers/Matrix4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DGroupingNode,
-          X3DConstants,
-          TraverseType,
-          Vector3,
-          Rotation4,
-          Matrix4)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DGroupingNode from "../Grouping/X3DGroupingNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import TraverseType from "../../Rendering/TraverseType.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4 from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+function Billboard (executionContext)
 {
-"use strict";
+   X3DGroupingNode .call (this, executionContext);
 
-   function Billboard (executionContext)
+   this .addType (X3DConstants .Billboard);
+
+   this .matrix = new Matrix4 ();
+}
+
+Billboard .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+{
+   constructor: Billboard,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "axisOfRotation", new Fields .SFVec3f (0, 1, 0)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DGroupingNode .call (this, executionContext);
-
-      this .addType (X3DConstants .Billboard);
-
-      this .matrix = new Matrix4 ();
-   }
-
-   Billboard .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+      return "Billboard";
+   },
+   getComponentName: function ()
    {
-      constructor: Billboard,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "axisOfRotation", new Fields .SFVec3f (0, 1, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "Billboard";
-      },
-      getComponentName: function ()
-      {
-         return "Navigation";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      getBBox: function (bbox, shadows)
-      {
-         return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .matrix);
-      },
-      getMatrix: function ()
-      {
-         return this .matrix;
-      },
-      rotate: (function ()
-      {
-         const
-            inverseModelViewMatrix = new Matrix4 (),
-            viewerYAxis            = new Vector3 (0, 0, 0),
-            y                      = new Vector3 (0, 0, 0),
-            N1                     = new Vector3 (0, 0, 0),
-            N2                     = new Vector3 (0, 0, 0),
-            rotation               = new Rotation4 (0, 0, 1, 0);
+      return "Navigation";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   getBBox: function (bbox, shadows)
+   {
+      return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadows) .multRight (this .matrix);
+   },
+   getMatrix: function ()
+   {
+      return this .matrix;
+   },
+   rotate: (function ()
+   {
+      const
+         inverseModelViewMatrix = new Matrix4 (),
+         viewerYAxis            = new Vector3 (0, 0, 0),
+         y                      = new Vector3 (0, 0, 0),
+         N1                     = new Vector3 (0, 0, 0),
+         N2                     = new Vector3 (0, 0, 0),
+         rotation               = new Rotation4 (0, 0, 1, 0);
 
-         return function (modelViewMatrix)
+      return function (modelViewMatrix)
+      {
+         // throws domain error
+
+         inverseModelViewMatrix .assign (modelViewMatrix) .inverse ();
+
+         const billboardToViewer = inverseModelViewMatrix .origin .normalize (); // Normalized to get work with Geo
+
+         if (this ._axisOfRotation .getValue () .equals (Vector3 .Zero))
          {
-            // throws domain error
+            inverseModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .yAxis)) .normalize (); // Normalized to get work with Geo
 
-            inverseModelViewMatrix .assign (modelViewMatrix) .inverse ();
+            const x = viewerYAxis .cross (billboardToViewer);
+            y .assign (billboardToViewer) .cross (x);
+            const z = billboardToViewer;
 
-            const billboardToViewer = inverseModelViewMatrix .origin .normalize (); // Normalized to get work with Geo
+            // Compose rotation
 
-            if (this ._axisOfRotation .getValue () .equals (Vector3 .Zero))
-            {
-               inverseModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .yAxis)) .normalize (); // Normalized to get work with Geo
+            x .normalize ();
+            y .normalize ();
 
-               const x = viewerYAxis .cross (billboardToViewer);
-               y .assign (billboardToViewer) .cross (x);
-               const z = billboardToViewer;
-
-               // Compose rotation
-
-               x .normalize ();
-               y .normalize ();
-
-               this .matrix .set (x .x, x .y, x .z, 0,
-                                  y .x, y .y, y .z, 0,
-                                  z .x, z .y, z .z, 0,
-                                  0,    0,    0,    1);
-            }
-            else
-            {
-               N1 .assign (this ._axisOfRotation .getValue ()) .cross (billboardToViewer); // Normal vector of plane as in specification
-               N2 .assign (this ._axisOfRotation .getValue ()) .cross (Vector3 .zAxis);    // Normal vector of plane between axisOfRotation and zAxis
-
-               this .matrix .setRotation (rotation .setFromToVec (N2, N1));                // Rotate zAxis in plane
-            }
-
-            return this .matrix;
-         };
-      })(),
-      traverse: function (type, renderObject)
-      {
-         const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-         modelViewMatrix .push ();
-
-         switch (type)
+            this .matrix .set (x .x, x .y, x .z, 0,
+                               y .x, y .y, y .z, 0,
+                               z .x, z .y, z .z, 0,
+                               0,    0,    0,    1);
+         }
+         else
          {
-            case TraverseType .CAMERA:
-            case TraverseType .PICKING:
-            case TraverseType .SHADOW:
-               // No clone support for shadows, generated cube map texture, and bbox
-               modelViewMatrix .multLeft (this .matrix);
-               break;
-            default:
-               modelViewMatrix .multLeft (this .rotate (modelViewMatrix .get ()));
-               break;
+            N1 .assign (this ._axisOfRotation .getValue ()) .cross (billboardToViewer); // Normal vector of plane as in specification
+            N2 .assign (this ._axisOfRotation .getValue ()) .cross (Vector3 .zAxis);    // Normal vector of plane between axisOfRotation and zAxis
+
+            this .matrix .setRotation (rotation .setFromToVec (N2, N1));                // Rotate zAxis in plane
          }
 
-         X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+         return this .matrix;
+      };
+   })(),
+   traverse: function (type, renderObject)
+   {
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-         modelViewMatrix .pop ();
-      },
-   });
+      modelViewMatrix .push ();
 
-   return Billboard;
+      switch (type)
+      {
+         case TraverseType .CAMERA:
+         case TraverseType .PICKING:
+         case TraverseType .SHADOW:
+            // No clone support for shadows, generated cube map texture, and bbox
+            modelViewMatrix .multLeft (this .matrix);
+            break;
+         default:
+            modelViewMatrix .multLeft (this .rotate (modelViewMatrix .get ()));
+            break;
+      }
+
+      X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+
+      modelViewMatrix .pop ();
+   },
 });
+
+export default Billboard;

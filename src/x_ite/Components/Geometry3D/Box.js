@@ -47,105 +47,94 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DGeometryNode,
-          X3DConstants,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DGeometryNode from "../Rendering/X3DGeometryNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+function Box (executionContext)
 {
-"use strict";
+   X3DGeometryNode .call (this, executionContext);
 
-   function Box (executionContext)
+   this .addType (X3DConstants .Box);
+
+   this ._size .setUnit ("length");
+}
+
+Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+{
+   constructor: Box,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "size",     new Fields .SFVec3f (2, 2, 2)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
+   ]),
+   getTypeName: function ()
    {
-      X3DGeometryNode .call (this, executionContext);
-
-      this .addType (X3DConstants .Box);
-
-      this ._size .setUnit ("length");
-   }
-
-   Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+      return "Box";
+   },
+   getComponentName: function ()
    {
-      constructor: Box,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "size",     new Fields .SFVec3f (2, 2, 2)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
-      ]),
-      getTypeName: function ()
-      {
-         return "Box";
-      },
-      getComponentName: function ()
-      {
-         return "Geometry3D";
-      },
-      getContainerField: function ()
-      {
-         return "geometry";
-      },
-      build: (function ()
-      {
-         const defaultSize = new Vector3 (2, 2, 2);
+      return "Geometry3D";
+   },
+   getContainerField: function ()
+   {
+      return "geometry";
+   },
+   build: (function ()
+   {
+      const defaultSize = new Vector3 (2, 2, 2);
 
-         return function ()
+      return function ()
+      {
+         const
+            options  = this .getBrowser () .getBoxOptions (),
+            geometry = options .getGeometry (),
+            size     = this ._size .getValue ();
+
+         this .setMultiTexCoords (geometry .getMultiTexCoords ());
+         this .setNormals        (geometry .getNormals ());
+
+         if (size .equals (defaultSize))
+         {
+            this .setVertices (geometry .getVertices ());
+
+            this .getMin () .assign (geometry .getMin ());
+            this .getMax () .assign (geometry .getMax ());
+         }
+         else
          {
             const
-               options  = this .getBrowser () .getBoxOptions (),
-               geometry = options .getGeometry (),
-               size     = this ._size .getValue ();
+               scale           = Vector3 .divide (size, 2),
+               defaultVertices = geometry .getVertices () .getValue (),
+               vertexArray     = this .getVertices ();
 
-            this .setMultiTexCoords (geometry .getMultiTexCoords ());
-            this .setNormals        (geometry .getNormals ());
+            let
+               x = scale .x,
+               y = scale .y,
+               z = scale .z;
 
-            if (size .equals (defaultSize))
+            for (let i = 0, length = defaultVertices .length; i < length; i += 4)
             {
-               this .setVertices (geometry .getVertices ());
-
-               this .getMin () .assign (geometry .getMin ());
-               this .getMax () .assign (geometry .getMax ());
-            }
-            else
-            {
-               const
-                  scale           = Vector3 .divide (size, 2),
-                  defaultVertices = geometry .getVertices () .getValue (),
-                  vertexArray     = this .getVertices ();
-
-               let
-                  x = scale .x,
-                  y = scale .y,
-                  z = scale .z;
-
-               for (let i = 0, length = defaultVertices .length; i < length; i += 4)
-               {
-                  vertexArray .push (x * defaultVertices [i],
-                                     y * defaultVertices [i + 1],
-                                     z * defaultVertices [i + 2],
-                                     1);
-               }
-
-               x = Math .abs (x);
-               y = Math .abs (y);
-               z = Math .abs (z);
-
-               this .getMin () .set (-x, -y, -z);
-               this .getMax () .set ( x,  y,  z);
+               vertexArray .push (x * defaultVertices [i],
+                                  y * defaultVertices [i + 1],
+                                  z * defaultVertices [i + 2],
+                                  1);
             }
 
-            this .setSolid (this ._solid .getValue ());
-         };
-      })(),
-   });
+            x = Math .abs (x);
+            y = Math .abs (y);
+            z = Math .abs (z);
 
-   return Box;
+            this .getMin () .set (-x, -y, -z);
+            this .getMax () .set ( x,  y,  z);
+         }
+
+         this .setSolid (this ._solid .getValue ());
+      };
+   })(),
 });
+
+export default Box;

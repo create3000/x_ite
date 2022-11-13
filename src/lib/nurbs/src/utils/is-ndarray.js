@@ -1,21 +1,16 @@
 
-define (function ()
+// Source: https://github.com/scijs/isndarray
+// By Kyle Robinson Young, MIT Licensed.
+
+export default function (arr)
 {
-'use strict';
+   if (! arr)
+      return false;
 
-   // Source: https://github.com/scijs/isndarray
-   // By Kyle Robinson Young, MIT Licensed.
+   if (! arr .dtype)
+      return false;
 
-   return function (arr)
-   {
-      if (! arr)
-         return false;
+   var re = new RegExp ("function View[0-9]+d(:?" + arr .dtype + ")+");
 
-      if (! arr .dtype)
-         return false;
-
-      var re = new RegExp ('function View[0-9]+d(:?' + arr .dtype + ')+');
-
-      return re .test (String (arr .constructor));
-   };
-});
+   return re .test (String (arr .constructor));
+};

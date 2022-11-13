@@ -47,175 +47,160 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Components/Grouping/X3DBoundedObject",
-   "x_ite/Components/Grouping/Group",
-   "x_ite/Rendering/TraverseType",
-   "x_ite/Base/X3DConstants",
-   "x_ite/InputOutput/FileLoader",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DChildNode,
-          X3DUrlObject,
-          X3DBoundedObject,
-          Group,
-          TraverseType,
-          X3DConstants,
-          FileLoader)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DChildNode from "../Core/X3DChildNode.js";
+import X3DUrlObject from "./X3DUrlObject.js";
+import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
+import Group from "../Grouping/Group.js";
+import TraverseType from "../../Rendering/TraverseType.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import FileLoader from "../../InputOutput/FileLoader.js";
+
+function Inline (executionContext)
 {
-"use strict";
+   X3DChildNode     .call (this, executionContext);
+   X3DUrlObject     .call (this, executionContext);
+   X3DBoundedObject .call (this, executionContext);
 
-   function Inline (executionContext)
+   this .addType (X3DConstants .Inline);
+
+   this .scene = this .getBrowser () .getDefaultScene ();
+   this .group = new Group (executionContext);
+
+   this .group .addParent (this);
+}
+
+Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   X3DUrlObject .prototype,
+   X3DBoundedObject .prototype,
+{
+   constructor: Inline,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",              new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",          new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",             new Fields .SFVec3f (-1, -1, -1)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",           new Fields .SFVec3f ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DChildNode     .call (this, executionContext);
-      X3DUrlObject     .call (this, executionContext);
-      X3DBoundedObject .call (this, executionContext);
-
-      this .addType (X3DConstants .Inline);
-
-      this .scene = this .getBrowser () .getDefaultScene ();
-      this .group = new Group (executionContext);
-
-      this .group .addParent (this);
-   }
-
-   Inline .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-      X3DUrlObject .prototype,
-      X3DBoundedObject .prototype,
+      return "Inline";
+   },
+   getComponentName: function ()
    {
-      constructor: Inline,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",              new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",          new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",             new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",           new Fields .SFVec3f ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "Inline";
-      },
-      getComponentName: function ()
-      {
-         return "Networking";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DChildNode     .prototype .initialize .call (this);
-         X3DUrlObject     .prototype .initialize .call (this);
-         X3DBoundedObject .prototype .initialize .call (this);
+      return "Networking";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DChildNode     .prototype .initialize .call (this);
+      X3DUrlObject     .prototype .initialize .call (this);
+      X3DBoundedObject .prototype .initialize .call (this);
 
-         this .group .setPrivate (true);
-         this .group .setup ();
+      this .group .setPrivate (true);
+      this .group .setup ();
 
-         this .group ._isCameraObject   .addFieldInterest (this ._isCameraObject);
-         this .group ._isPickableObject .addFieldInterest (this ._isPickableObject);
+      this .group ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+      this .group ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
-         this .requestImmediateLoad ();
-      },
-      getBBox: function (bbox, shadows)
+      this .requestImmediateLoad ();
+   },
+   getBBox: function (bbox, shadows)
+   {
+      if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
+         return this .group .getBBox (bbox, shadows);
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+   },
+   set_live__: function ()
+   {
+      X3DUrlObject .prototype .set_live__ .call (this);
+
+      if (this .isPrivate ())
+         return
+
+      this .scene .setLive (this .isLive () .getValue ());
+   },
+   unLoadNow: function ()
+   {
+      this .setInternalScene (this .getBrowser () .getDefaultScene ());
+   },
+   loadNow: function ()
+   {
+      new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalSceneAsync .bind (this));
+   },
+   setInternalSceneAsync: function (scene)
+   {
+      if (scene)
       {
-         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
-            return this .group .getBBox (bbox, shadows);
-
-         return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-      },
-      set_live__: function ()
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
+         this .setInternalScene (scene);
+      }
+      else
       {
-         X3DUrlObject .prototype .set_live__ .call (this);
-
-         if (this .isPrivate ())
-            return
-
-         this .scene .setLive (this .isLive () .getValue ());
-      },
-      unLoadNow: function ()
-      {
+         this .setLoadState (X3DConstants .FAILED_STATE);
          this .setInternalScene (this .getBrowser () .getDefaultScene ());
-      },
-      loadNow: function ()
+      }
+   },
+   setInternalScene: function (scene)
+   {
+      this .scene .setLive (false);
+      this .scene .rootNodes .removeFieldInterest (this .group ._children);
+
+      // Set new scene.
+
+      this .scene = scene;
+      this .scene .setExecutionContext (this .getExecutionContext ());
+      this .scene .setPrivate (this .getExecutionContext () .isPrivate ());
+
+      this .scene .rootNodes .addFieldInterest (this .group ._children);
+      this .group ._children = this .scene .rootNodes;
+
+      this .set_live__ ();
+
+      this .getBrowser () .addBrowserEvent ();
+   },
+   getInternalScene: function ()
+   {
+      ///  Returns the internal X3DScene of this inline, that is loaded from the url given.
+      ///  If the load field was false an empty scene is returned.  This empty scene is the same for all Inline
+      ///  nodes (due to performance reasons).
+
+      return this .scene;
+   },
+   traverse: function (type, renderObject)
+   {
+      switch (type)
       {
-         new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalSceneAsync .bind (this));
-      },
-      setInternalSceneAsync: function (scene)
-      {
-         if (scene)
+         case TraverseType .PICKING:
          {
-            this .setLoadState (X3DConstants .COMPLETE_STATE);
-            this .setInternalScene (scene);
+            const
+               browser          = this .getBrowser (),
+               pickingHierarchy = browser .getPickingHierarchy ();
+
+            pickingHierarchy .push (this);
+
+            this .group .traverse (type, renderObject);
+
+            pickingHierarchy .pop ();
+            return;
          }
-         else
+         default:
          {
-            this .setLoadState (X3DConstants .FAILED_STATE);
-            this .setInternalScene (this .getBrowser () .getDefaultScene ());
+            this .group .traverse (type, renderObject);
+            return;
          }
-      },
-      setInternalScene: function (scene)
-      {
-         this .scene .setLive (false);
-         this .scene .rootNodes .removeFieldInterest (this .group ._children);
-
-         // Set new scene.
-
-         this .scene = scene;
-         this .scene .setExecutionContext (this .getExecutionContext ());
-         this .scene .setPrivate (this .getExecutionContext () .isPrivate ());
-
-         this .scene .rootNodes .addFieldInterest (this .group ._children);
-         this .group ._children = this .scene .rootNodes;
-
-         this .set_live__ ();
-
-         this .getBrowser () .addBrowserEvent ();
-      },
-      getInternalScene: function ()
-      {
-         ///  Returns the internal X3DScene of this inline, that is loaded from the url given.
-         ///  If the load field was false an empty scene is returned.  This empty scene is the same for all Inline
-         ///  nodes (due to performance reasons).
-
-         return this .scene;
-      },
-      traverse: function (type, renderObject)
-      {
-         switch (type)
-         {
-            case TraverseType .PICKING:
-            {
-               const
-                  browser          = this .getBrowser (),
-                  pickingHierarchy = browser .getPickingHierarchy ();
-
-               pickingHierarchy .push (this);
-
-               this .group .traverse (type, renderObject);
-
-               pickingHierarchy .pop ();
-               return;
-            }
-            default:
-            {
-               this .group .traverse (type, renderObject);
-               return;
-            }
-         }
-      },
-   });
-
-   return Inline;
+      }
+   },
 });
+
+export default Inline;

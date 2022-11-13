@@ -47,57 +47,47 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Components/Shape/Shape",
-   "x_ite/Components/Rendering/IndexedLineSet",
-   "x_ite/Components/Rendering/Color",
-   "x_ite/Components/Rendering/Coordinate",
-],
-function (Fields,
-          Shape,
-          IndexedLineSet,
-          Color,
-          Coordinate)
+import Fields from "../../Fields.js";
+import Shape from "../../Components/Shape/Shape.js";
+import IndexedLineSet from "../../Components/Rendering/IndexedLineSet.js";
+import Color from "../../Components/Rendering/Color.js";
+import Coordinate from "../../Components/Rendering/Coordinate.js";
+
+const _bboxNode = Symbol ();
+
+function X3DGroupingContext () { }
+
+X3DGroupingContext .prototype =
 {
-"use strict";
-
-   const _bboxNode = Symbol ();
-
-   function X3DGroupingContext () { }
-
-   X3DGroupingContext .prototype =
+   initialize: function () { },
+   getBBoxNode: function ()
    {
-      initialize: function () { },
-      getBBoxNode: function ()
-      {
-         const
-            bboxNode       = new Shape (this .getPrivateScene ()),
-            bboxGeometry   = new IndexedLineSet (this .getPrivateScene ()),
-            bboxColor      = new Color (this .getPrivateScene ()),
-            bboxCoordinate = new Coordinate (this .getPrivateScene ());
+      const
+         bboxNode       = new Shape (this .getPrivateScene ()),
+         bboxGeometry   = new IndexedLineSet (this .getPrivateScene ()),
+         bboxColor      = new Color (this .getPrivateScene ()),
+         bboxCoordinate = new Coordinate (this .getPrivateScene ());
 
-         bboxNode ._geometry       = bboxGeometry;
-         bboxGeometry ._coordIndex = new Fields .MFFloat (0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 1, 5, -1, 2, 6, -1, 3, 7, -1);
-         bboxGeometry ._color      = bboxColor;
-         bboxGeometry ._coord      = bboxCoordinate;
-         bboxColor ._color         = new Fields .MFColor (new Fields .SFColor (1, 1, 1));
-         bboxCoordinate ._point    = new Fields .MFVec3f (new Fields .SFVec3f (0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, -0.5, -0.5), new Fields .SFVec3f (0.5, -0.5, -0.5));
+      bboxNode ._geometry       = bboxGeometry;
+      bboxGeometry ._coordIndex = new Fields .MFFloat (0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 1, 5, -1, 2, 6, -1, 3, 7, -1);
+      bboxGeometry ._color      = bboxColor;
+      bboxGeometry ._coord      = bboxCoordinate;
+      bboxColor ._color         = new Fields .MFColor (new Fields .SFColor (1, 1, 1));
+      bboxCoordinate ._point    = new Fields .MFVec3f (new Fields .SFVec3f (0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, -0.5, -0.5), new Fields .SFVec3f (0.5, -0.5, -0.5));
 
-         bboxCoordinate .setup ();
-         bboxColor      .setup ();
-         bboxGeometry   .setup ();
-         bboxNode       .setup ();
+      bboxCoordinate .setup ();
+      bboxColor      .setup ();
+      bboxGeometry   .setup ();
+      bboxNode       .setup ();
 
-         this [_bboxNode] = bboxNode;
+      this [_bboxNode] = bboxNode;
 
-         this .getBBoxNode = function () { return this [_bboxNode]; };
+      this .getBBoxNode = function () { return this [_bboxNode]; };
 
-         Object .defineProperty (this, "getBBoxNode", { enumerable: false });
+      Object .defineProperty (this, "getBBoxNode", { enumerable: false });
 
-         return bboxNode;
-      }
-   };
+      return bboxNode;
+   }
+};
 
-   return X3DGroupingContext;
-});
+export default X3DGroupingContext;

@@ -47,118 +47,109 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Base/X3DField",
-   "x_ite/Fields/SFVecPrototypeTemplate",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Vector3",
-],
-function (X3DField,
-          SFVecPrototypeTemplate,
-          X3DConstants,
-          Vector3)
+import X3DField from "../Base/X3DField.js";
+import SFVecPrototypeTemplate from "./SFVecPrototypeTemplate.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import Vector3 from "../../standard/Math/Numbers/Vector3.js";
+
+function SFVec3Template (TypeName, Type, double)
 {
-"use strict";
-
-   function SFVec3Template (TypeName, Type, double)
+   function SFVec3 (x, y, z)
    {
-      function SFVec3 (x, y, z)
+      switch (arguments .length)
       {
-         switch (arguments .length)
-         {
-            case 0:
-               return X3DField .call (this, new Vector3 (0, 0, 0));
+         case 0:
+            return X3DField .call (this, new Vector3 (0, 0, 0));
 
-            case 1:
-               return X3DField .call (this, arguments [0]);
+         case 1:
+            return X3DField .call (this, arguments [0]);
 
-            case 3:
-               return X3DField .call (this, new Vector3 (+x, +y, +z));
-         }
-
-         throw new Error ("Invalid arguments.");
+         case 3:
+            return X3DField .call (this, new Vector3 (+x, +y, +z));
       }
 
-      SFVec3 .prototype = Object .assign (Object .create (X3DField .prototype),
-         SFVecPrototypeTemplate (Vector3, double),
-      {
-         constructor: SFVec3,
-         getTypeName: function ()
-         {
-            return TypeName;
-         },
-         getType: function ()
-         {
-            return Type;
-         },
-         cross: function (vector)
-         {
-            return new (this .constructor) (Vector3 .cross (this .getValue (), vector .getValue ()));
-         },
-      });
-
-      for (const key of Reflect .ownKeys (SFVec3 .prototype))
-         Object .defineProperty (SFVec3 .prototype, key, { enumerable: false });
-
-      const x = {
-         get: function ()
-         {
-            return this .getValue () .x;
-         },
-         set: function (value)
-         {
-            this .getValue () .x = +value;
-            this .addEvent ();
-         },
-         enumerable: true,
-         configurable: false
-      };
-
-      const y = {
-         get: function ()
-         {
-            return this .getValue () .y;
-         },
-         set: function (value)
-         {
-            this .getValue () .y = +value;
-            this .addEvent ();
-         },
-         enumerable: true,
-         configurable: false
-      };
-
-      const z = {
-         get: function ()
-         {
-            return this .getValue () .z;
-         },
-         set: function (value)
-         {
-            this .getValue () .z = +value;
-            this .addEvent ();
-         },
-         enumerable: true,
-         configurable: false
-      };
-
-      Object .defineProperty (SFVec3 .prototype, "x", x);
-      Object .defineProperty (SFVec3 .prototype, "y", y);
-      Object .defineProperty (SFVec3 .prototype, "z", z);
-
-      x .enumerable = false;
-      y .enumerable = false;
-      z .enumerable = false;
-
-      Object .defineProperty (SFVec3 .prototype, "0", x);
-      Object .defineProperty (SFVec3 .prototype, "1", y);
-      Object .defineProperty (SFVec3 .prototype, "2", z);
-
-      return SFVec3;
+      throw new Error ("Invalid arguments.");
    }
 
-   return {
-      SFVec3d: SFVec3Template ("SFVec3d", X3DConstants .SFVec3d, true),
-      SFVec3f: SFVec3Template ("SFVec3f", X3DConstants .SFVec3f, false),
+   SFVec3 .prototype = Object .assign (Object .create (X3DField .prototype),
+      SFVecPrototypeTemplate (Vector3, double),
+   {
+      constructor: SFVec3,
+      getTypeName: function ()
+      {
+         return TypeName;
+      },
+      getType: function ()
+      {
+         return Type;
+      },
+      cross: function (vector)
+      {
+         return new (this .constructor) (Vector3 .cross (this .getValue (), vector .getValue ()));
+      },
+   });
+
+   for (const key of Reflect .ownKeys (SFVec3 .prototype))
+      Object .defineProperty (SFVec3 .prototype, key, { enumerable: false });
+
+   const x = {
+      get: function ()
+      {
+         return this .getValue () .x;
+      },
+      set: function (value)
+      {
+         this .getValue () .x = +value;
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
    };
-});
+
+   const y = {
+      get: function ()
+      {
+         return this .getValue () .y;
+      },
+      set: function (value)
+      {
+         this .getValue () .y = +value;
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
+
+   const z = {
+      get: function ()
+      {
+         return this .getValue () .z;
+      },
+      set: function (value)
+      {
+         this .getValue () .z = +value;
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
+
+   Object .defineProperty (SFVec3 .prototype, "x", x);
+   Object .defineProperty (SFVec3 .prototype, "y", y);
+   Object .defineProperty (SFVec3 .prototype, "z", z);
+
+   x .enumerable = false;
+   y .enumerable = false;
+   z .enumerable = false;
+
+   Object .defineProperty (SFVec3 .prototype, "0", x);
+   Object .defineProperty (SFVec3 .prototype, "1", y);
+   Object .defineProperty (SFVec3 .prototype, "2", z);
+
+   return SFVec3;
+}
+
+export default {
+   SFVec3d: SFVec3Template ("SFVec3d", X3DConstants .SFVec3d, true),
+   SFVec3f: SFVec3Template ("SFVec3f", X3DConstants .SFVec3f, false),
+};

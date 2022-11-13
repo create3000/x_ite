@@ -47,233 +47,220 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/VolumeRendering/X3DVolumeDataNode",
-   "x_ite/Components/Shaders/ComposedShader",
-   "x_ite/Components/Shaders/ShaderPart",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Base/X3DCast",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DVolumeDataNode,
-          ComposedShader,
-          ShaderPart,
-          X3DConstants,
-          X3DCast)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DVolumeDataNode from "./X3DVolumeDataNode.js";
+import ComposedShader from "../Shaders/ComposedShader.js";
+import ShaderPart from "../Shaders/ShaderPart.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast from "../../Base/X3DCast.js";
+
+function SegmentedVolumeData (executionContext)
 {
-"use strict";
+   X3DVolumeDataNode .call (this, executionContext);
 
-   function SegmentedVolumeData (executionContext)
+   this .addType (X3DConstants .SegmentedVolumeData);
+
+   this .segmentIdentifiersNode = null;
+   this .renderStyleNodes       = [ ];
+}
+
+SegmentedVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
+{
+   constructor: SegmentedVolumeData,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",         new Fields .SFVec3f (1, 1, 1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "segmentEnabled",     new Fields .MFBool ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",            new Fields .SFBool (true)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",        new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",         new Fields .SFVec3f (0, 0, 0)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",           new Fields .SFVec3f (-1, -1, -1)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "segmentIdentifiers", new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "renderStyle",        new Fields .MFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "voxels",             new Fields .SFNode ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DVolumeDataNode .call (this, executionContext);
-
-      this .addType (X3DConstants .SegmentedVolumeData);
-
-      this .segmentIdentifiersNode = null;
-      this .renderStyleNodes       = [ ];
-   }
-
-   SegmentedVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
+      return "SegmentedVolumeData";
+   },
+   getComponentName: function ()
    {
-      constructor: SegmentedVolumeData,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",         new Fields .SFVec3f (1, 1, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "segmentEnabled",     new Fields .MFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",            new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",        new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",         new Fields .SFVec3f (0, 0, 0)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",           new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "segmentIdentifiers", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "renderStyle",        new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "voxels",             new Fields .SFNode ()),
-      ]),
-      getTypeName: function ()
+      return "VolumeRendering";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   initialize: function ()
+   {
+      X3DVolumeDataNode .prototype .initialize .call (this);
+
+      const gl = this .getBrowser () .getContext ();
+
+      if (gl .getVersion () < 2)
+         return;
+
+      this ._segmentIdentifiers .addInterest ("set_segmentIdentifiers__", this);
+      this ._renderStyle        .addInterest ("set_renderStyle__",        this);
+
+      this ._segmentEnabled     .addInterest ("updateShader", this);
+      this ._segmentIdentifiers .addInterest ("updateShader", this);
+      this ._renderStyle        .addInterest ("updateShader", this);
+
+      this .getAppearance () ._texture = this ._voxels;
+
+      this .set_segmentIdentifiers__ ();
+      this .set_renderStyle__ ();
+      this .set_voxels__ ();
+
+      this .updateShader ();
+   },
+   getSegmentEnabled: function (index)
+   {
+      return index < this ._segmentEnabled .length ? this ._segmentEnabled [index] : true;
+   },
+   set_segmentIdentifiers__: function ()
+   {
+      this .segmentIdentifiersNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._segmentIdentifiers);
+   },
+   set_renderStyle__: function ()
+   {
+      const renderStyleNodes = this .renderStyleNodes;
+
+      for (const renderStyleNode of renderStyleNodes)
       {
-         return "SegmentedVolumeData";
-      },
-      getComponentName: function ()
+         renderStyleNode .removeInterest ("updateShader", this);
+         renderStyleNode .removeVolumeData (this);
+      }
+
+      renderStyleNodes .length = 0;
+
+      for (const node of this ._renderStyle)
       {
-         return "VolumeRendering";
-      },
-      getContainerField: function ()
+         const renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, node);
+
+         if (renderStyleNode)
+            renderStyleNodes .push (renderStyleNode);
+      }
+
+      for (const renderStyleNode of renderStyleNodes)
       {
-         return "children";
-      },
-      initialize: function ()
-      {
-         X3DVolumeDataNode .prototype .initialize .call (this);
+         renderStyleNode .addInterest ("updateShader", this);
+         renderStyleNode .addVolumeData (this);
+      }
+   },
+   set_voxels__: function ()
+   {
+      this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
-         const gl = this .getBrowser () .getContext ();
-
-         if (gl .getVersion () < 2)
-            return;
-
-         this ._segmentIdentifiers .addInterest ("set_segmentIdentifiers__", this);
-         this ._renderStyle        .addInterest ("set_renderStyle__",        this);
-
-         this ._segmentEnabled     .addInterest ("updateShader", this);
-         this ._segmentIdentifiers .addInterest ("updateShader", this);
-         this ._renderStyle        .addInterest ("updateShader", this);
-
+      if (this .voxelsNode)
          this .getAppearance () ._texture = this ._voxels;
+      else
+         this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
+   },
+   createShader: function (options, vs, fs)
+   {
+      // if (DEBUG)
+      //    console .log ("Creating SegmentedVolumeData Shader ...");
 
-         this .set_segmentIdentifiers__ ();
-         this .set_renderStyle__ ();
-         this .set_voxels__ ();
+      const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
 
-         this .updateShader ();
-      },
-      getSegmentEnabled: function (index)
+      let
+         styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
+         styleFunctions = opacityMapVolumeStyle .getFunctionsText ();
+
+      if (this .segmentIdentifiersNode)
       {
-         return index < this ._segmentEnabled .length ? this ._segmentEnabled [index] : true;
-      },
-      set_segmentIdentifiers__: function ()
+         styleUniforms += "\n";
+         styleUniforms += "uniform sampler3D segmentIdentifiers;\n";
+         styleUniforms += "\n";
+
+         styleFunctions += "\n";
+         styleFunctions += "   int segment = int (texture (segmentIdentifiers, texCoord) .r * 255.0);\n";
+      }
+      else
       {
-         this .segmentIdentifiersNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._segmentIdentifiers);
-      },
-      set_renderStyle__: function ()
+         styleFunctions += "   int segment = 0;\n";
+      }
+
+      if (this .renderStyleNodes .length)
       {
-         const renderStyleNodes = this .renderStyleNodes;
-
-         for (const renderStyleNode of renderStyleNodes)
-         {
-            renderStyleNode .removeInterest ("updateShader", this);
-            renderStyleNode .removeVolumeData (this);
-         }
-
-         renderStyleNodes .length = 0;
-
-         for (const node of this ._renderStyle)
-         {
-            const renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, node);
-
-            if (renderStyleNode)
-               renderStyleNodes .push (renderStyleNode);
-         }
-
-         for (const renderStyleNode of renderStyleNodes)
-         {
-            renderStyleNode .addInterest ("updateShader", this);
-            renderStyleNode .addVolumeData (this);
-         }
-      },
-      set_voxels__: function ()
-      {
-         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
-
-         if (this .voxelsNode)
-            this .getAppearance () ._texture = this ._voxels;
-         else
-            this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
-      },
-      createShader: function (options, vs, fs)
-      {
-         // if (DEBUG)
-         //    console .log ("Creating SegmentedVolumeData Shader ...");
-
-         const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
-
-         let
-            styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
-            styleFunctions = opacityMapVolumeStyle .getFunctionsText ();
-
-         if (this .segmentIdentifiersNode)
-         {
-            styleUniforms += "\n";
-            styleUniforms += "uniform sampler3D segmentIdentifiers;\n";
-            styleUniforms += "\n";
-
-            styleFunctions += "\n";
-            styleFunctions += "   int segment = int (texture (segmentIdentifiers, texCoord) .r * 255.0);\n";
-         }
-         else
-         {
-            styleFunctions += "   int segment = 0;\n";
-         }
-
-         if (this .renderStyleNodes .length)
-         {
-            styleFunctions += "\n";
-            styleFunctions += "   switch (segment)\n";
-            styleFunctions += "   {\n";
-
-            for (const [i, renderStyleNode] of this .renderStyleNodes .entries ())
-            {
-               styleFunctions += "      case " + i + ":\n";
-               styleFunctions += "      {\n";
-
-               if (this .getSegmentEnabled (i))
-               {
-                  styleUniforms  += renderStyleNode .getUniformsText (),
-                  styleFunctions += renderStyleNode .getFunctionsText ();
-                  styleFunctions += "         break;\n";
-               }
-               else
-               {
-                  styleFunctions += "         discard;\n";
-               }
-
-               styleFunctions += "      }\n";
-            }
-
-            styleFunctions += "   }\n";
-         }
-
-         fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
-         fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
-
-         // if (DEBUG)
-         //    this .getBrowser () .print (fs);
-
-         const vertexShader = new ShaderPart (this .getExecutionContext ());
-         vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
-         vertexShader .setPrivate (true);
-         vertexShader .setName ("SegmentedVolumeDataVertexShader");
-         vertexShader .setOptions (options);
-         vertexShader .setup ();
-
-         const fragmentShader = new ShaderPart (this .getExecutionContext ());
-         fragmentShader ._type = "FRAGMENT";
-         fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
-         fragmentShader .setPrivate (true);
-         fragmentShader .setName ("SegmentedVolumeDataFragmentShader");
-         fragmentShader .setOptions (options);
-         fragmentShader .setup ();
-
-         const shaderNode = new ComposedShader (this .getExecutionContext ());
-         shaderNode ._language = "GLSL";
-         shaderNode ._parts .push (vertexShader);
-         shaderNode ._parts .push (fragmentShader);
-         shaderNode .setPrivate (true);
-         shaderNode .setName ("SegmentedVolumeDataShader");
-
-         if (this .segmentIdentifiersNode)
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "segmentIdentifiers", new Fields .SFNode (this .segmentIdentifiersNode));
-
-         opacityMapVolumeStyle .addShaderFields (shaderNode);
+         styleFunctions += "\n";
+         styleFunctions += "   switch (segment)\n";
+         styleFunctions += "   {\n";
 
          for (const [i, renderStyleNode] of this .renderStyleNodes .entries ())
          {
+            styleFunctions += "      case " + i + ":\n";
+            styleFunctions += "      {\n";
+
             if (this .getSegmentEnabled (i))
-               renderStyleNode .addShaderFields (shaderNode);
+            {
+               styleUniforms  += renderStyleNode .getUniformsText (),
+               styleFunctions += renderStyleNode .getFunctionsText ();
+               styleFunctions += "         break;\n";
+            }
+            else
+            {
+               styleFunctions += "         discard;\n";
+            }
+
+            styleFunctions += "      }\n";
          }
 
-         const uniformNames = [ ];
+         styleFunctions += "   }\n";
+      }
 
-         this .addShaderUniformNames (uniformNames);
+      fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
+      fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
 
-         shaderNode .setUniformNames (uniformNames);
-         shaderNode .setup ();
+      // if (DEBUG)
+      //    this .getBrowser () .print (fs);
 
-         return shaderNode;
-      },
-   });
+      const vertexShader = new ShaderPart (this .getExecutionContext ());
+      vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
+      vertexShader .setPrivate (true);
+      vertexShader .setName ("SegmentedVolumeDataVertexShader");
+      vertexShader .setOptions (options);
+      vertexShader .setup ();
 
-   return SegmentedVolumeData;
+      const fragmentShader = new ShaderPart (this .getExecutionContext ());
+      fragmentShader ._type = "FRAGMENT";
+      fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
+      fragmentShader .setPrivate (true);
+      fragmentShader .setName ("SegmentedVolumeDataFragmentShader");
+      fragmentShader .setOptions (options);
+      fragmentShader .setup ();
+
+      const shaderNode = new ComposedShader (this .getExecutionContext ());
+      shaderNode ._language = "GLSL";
+      shaderNode ._parts .push (vertexShader);
+      shaderNode ._parts .push (fragmentShader);
+      shaderNode .setPrivate (true);
+      shaderNode .setName ("SegmentedVolumeDataShader");
+
+      if (this .segmentIdentifiersNode)
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "segmentIdentifiers", new Fields .SFNode (this .segmentIdentifiersNode));
+
+      opacityMapVolumeStyle .addShaderFields (shaderNode);
+
+      for (const [i, renderStyleNode] of this .renderStyleNodes .entries ())
+      {
+         if (this .getSegmentEnabled (i))
+            renderStyleNode .addShaderFields (shaderNode);
+      }
+
+      const uniformNames = [ ];
+
+      this .addShaderUniformNames (uniformNames);
+
+      shaderNode .setUniformNames (uniformNames);
+      shaderNode .setup ();
+
+      return shaderNode;
+   },
 });
+
+export default SegmentedVolumeData;

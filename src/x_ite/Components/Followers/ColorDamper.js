@@ -47,98 +47,86 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Base/X3DFieldDefinition",
-   "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Components/Followers/X3DDamperNode",
-   "x_ite/Base/X3DConstants",
-   "standard/Math/Numbers/Color3",
-   "standard/Math/Numbers/Vector3",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DDamperNode,
-          X3DConstants,
-          Color3,
-          Vector3)
+import Fields from "../../Fields.js";
+import X3DFieldDefinition from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DDamperNode from "./X3DDamperNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import Color3 from "../../../standard/Math/Numbers/Color3.js";
+import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
+
+var
+   a                  = new Vector3 (0, 0, 0),
+   initialValue       = new Vector3 (0, 0, 0),
+   initialDestination = new Vector3 (0, 0, 0),
+   vector             = new Vector3 (0, 0, 0);
+
+function ColorDamper (executionContext)
 {
-"use strict";
+   X3DDamperNode .call (this, executionContext);
 
-   var
-      a                  = new Vector3 (0, 0, 0),
-      initialValue       = new Vector3 (0, 0, 0),
-      initialDestination = new Vector3 (0, 0, 0),
-      vector             = new Vector3 (0, 0, 0);
+   this .addType (X3DConstants .ColorDamper);
+}
 
-   function ColorDamper (executionContext)
+ColorDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
+{
+   constructor: ColorDamper,
+   [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFColor ()),
+      new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFColor ()),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFColor (0.8, 0.8, 0.8)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFColor (0.8, 0.8, 0.8)),
+      new X3DFieldDefinition (X3DConstants .initializeOnly, "order",              new Fields .SFInt32 (3)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "tau",                new Fields .SFTime (0.3)),
+      new X3DFieldDefinition (X3DConstants .inputOutput,    "tolerance",          new Fields .SFFloat (-1)),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
+      new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFColor ()),
+   ]),
+   getTypeName: function ()
    {
-      X3DDamperNode .call (this, executionContext);
-
-      this .addType (X3DConstants .ColorDamper);
-   }
-
-   ColorDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
+      return "ColorDamper";
+   },
+   getComponentName: function ()
    {
-      constructor: ColorDamper,
-      [Symbol .for ("X_ITE.X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFColor ()),
-         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFColor ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFColor (0.8, 0.8, 0.8)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFColor (0.8, 0.8, 0.8)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "order",              new Fields .SFInt32 (3)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "tau",                new Fields .SFTime (0.3)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "tolerance",          new Fields .SFFloat (-1)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFColor ()),
-      ]),
-      getTypeName: function ()
-      {
-         return "ColorDamper";
-      },
-      getComponentName: function ()
-      {
-         return "Followers";
-      },
-      getContainerField: function ()
-      {
-         return "children";
-      },
-      getVector: function ()
-      {
-         return new Vector3 (0, 0, 0);
-      },
-      getValue: function ()
-      {
-         return this ._set_value .getValue () .getHSV (vector);
-      },
-      getDestination: function ()
-      {
-         return this ._set_destination .getValue () .getHSV (vector);
-      },
-      getInitialValue: function ()
-      {
-         return this ._initialValue .getValue () .getHSV (initialValue);
-      },
-      getInitialDestination: function ()
-      {
-         return this ._initialDestination .getValue () .getHSV (initialDestination);
-      },
-      setValue: function (value)
-      {
-         this ._value_changed .setHSV (value .x, value .y, value .z);
-      },
-      equals: function (lhs, rhs, tolerance)
-      {
-         return a .assign (lhs) .subtract (rhs) .magnitude () < tolerance;
-      },
-      interpolate: function (source, destination, weight)
-      {
-         return Color3 .lerp (source, destination, weight, vector);
-      },
-   });
-
-   return ColorDamper;
+      return "Followers";
+   },
+   getContainerField: function ()
+   {
+      return "children";
+   },
+   getVector: function ()
+   {
+      return new Vector3 (0, 0, 0);
+   },
+   getValue: function ()
+   {
+      return this ._set_value .getValue () .getHSV (vector);
+   },
+   getDestination: function ()
+   {
+      return this ._set_destination .getValue () .getHSV (vector);
+   },
+   getInitialValue: function ()
+   {
+      return this ._initialValue .getValue () .getHSV (initialValue);
+   },
+   getInitialDestination: function ()
+   {
+      return this ._initialDestination .getValue () .getHSV (initialDestination);
+   },
+   setValue: function (value)
+   {
+      this ._value_changed .setHSV (value .x, value .y, value .z);
+   },
+   equals: function (lhs, rhs, tolerance)
+   {
+      return a .assign (lhs) .subtract (rhs) .magnitude () < tolerance;
+   },
+   interpolate: function (source, destination, weight)
+   {
+      return Color3 .lerp (source, destination, weight, vector);
+   },
 });
+
+export default ColorDamper;

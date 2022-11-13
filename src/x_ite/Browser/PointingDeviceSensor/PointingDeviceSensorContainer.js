@@ -47,48 +47,41 @@
  ******************************************************************************/
 
 
-define ([
-   "standard/Math/Numbers/Vector4",
-   "standard/Math/Numbers/Matrix4",
-],
-function (Vector4,
-          Matrix4)
+import Vector4 from "../../../standard/Math/Numbers/Vector4.js";
+import Matrix4 from "../../../standard/Math/Numbers/Matrix4.js";
+
+function PointingDeviceSensorContainer (node, modelViewMatrix, projectionMatrix, viewport)
 {
-"use strict";
+   this .node             = null;
+   this .modelViewMatrix  = new Matrix4 ();
+   this .projectionMatrix = new Matrix4 ();
+   this .viewport         = new Vector4 (0, 0, 0, 0);
 
-   function PointingDeviceSensorContainer (node, modelViewMatrix, projectionMatrix, viewport)
+   this .set (node, modelViewMatrix, projectionMatrix, viewport);
+}
+
+PointingDeviceSensorContainer .prototype =
+{
+   set: function (node, modelViewMatrix, projectionMatrix, viewport)
    {
-      this .node             = null;
-      this .modelViewMatrix  = new Matrix4 ();
-      this .projectionMatrix = new Matrix4 ();
-      this .viewport         = new Vector4 (0, 0, 0, 0);
+      this .node = node;
 
-      this .set (node, modelViewMatrix, projectionMatrix, viewport);
-   }
-
-   PointingDeviceSensorContainer .prototype =
+      this .modelViewMatrix  .assign (modelViewMatrix);
+      this .projectionMatrix .assign (projectionMatrix);
+      this .viewport         .assign (viewport);
+   },
+   set_over__: function (over, hit)
    {
-      set: function (node, modelViewMatrix, projectionMatrix, viewport)
-      {
-         this .node = node;
+      this .node .set_over__ (over, hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
+   },
+   set_active__: function (active, hit)
+   {
+      this .node .set_active__ (active, hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
+   },
+   set_motion__: function (hit)
+   {
+      this .node .set_motion__ (hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
+   },
+};
 
-         this .modelViewMatrix  .assign (modelViewMatrix);
-         this .projectionMatrix .assign (projectionMatrix);
-         this .viewport         .assign (viewport);
-      },
-      set_over__: function (over, hit)
-      {
-         this .node .set_over__ (over, hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
-      },
-      set_active__: function (active, hit)
-      {
-         this .node .set_active__ (active, hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
-      },
-      set_motion__: function (hit)
-      {
-         this .node .set_motion__ (hit, this .modelViewMatrix, this .projectionMatrix, this .viewport);
-      },
-   };
-
-   return PointingDeviceSensorContainer;
-});
+export default PointingDeviceSensorContainer;

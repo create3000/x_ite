@@ -47,38 +47,32 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Browser/Followers/X3DArrayFollowerTemplate",
-],
-function (X3DArrayFollowerTemplate)
+import X3DArrayFollowerTemplate from "./X3DArrayFollowerTemplate.js";
+
+export default function (Type)
 {
-"use strict";
+   const X3DArrayFollower = X3DArrayFollowerTemplate (Type);
 
-   return function (Type)
+   function X3DArrayChaserObject ()
    {
-      const X3DArrayFollower = X3DArrayFollowerTemplate (Type);
+      X3DArrayFollower .call (this);
 
-      function X3DArrayChaserObject ()
+      this .array = this .getArray ();
+   }
+
+   Object .assign (X3DArrayChaserObject .prototype,
+      X3DArrayFollower .prototype,
+   {
+      step: function (value1, value2, t)
       {
-         X3DArrayFollower .call (this);
+         const
+            output   = this .output,
+            deltaOut = this .deltaOut;
 
-         this .array = this .getArray ();
-      }
+         for (let i = 0, length = output .length; i < length; ++ i)
+            output [i] .add (deltaOut .assign (value1 [i] || this .zero) .subtract (value2 [i] || this .zero) .multiply (t));
+      },
+   });
 
-      Object .assign (X3DArrayChaserObject .prototype,
-         X3DArrayFollower .prototype,
-      {
-         step: function (value1, value2, t)
-         {
-            const
-               output   = this .output,
-               deltaOut = this .deltaOut;
-
-            for (let i = 0, length = output .length; i < length; ++ i)
-               output [i] .add (deltaOut .assign (value1 [i] || this .zero) .subtract (value2 [i] || this .zero) .multiply (t));
-         },
-      });
-
-      return X3DArrayChaserObject;
-   };
-});
+   return X3DArrayChaserObject;
+};

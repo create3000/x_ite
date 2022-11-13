@@ -47,223 +47,211 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Fields",
-   "x_ite/Components/Core/X3DNode",
-   "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Browser/Text/TextAlignment",
-   "x_ite/InputOutput/FileLoader",
-   "x_ite/Base/X3DConstants",
-   "x_ite/Browser/Networking/urls",
-],
-function (Fields,
-          X3DNode,
-          X3DUrlObject,
-          TextAlignment,
-          FileLoader,
-          X3DConstants,
-          urls)
+import Fields from "../../Fields.js";
+import X3DNode from "../Core/X3DNode.js";
+import X3DUrlObject from "../Networking/X3DUrlObject.js";
+import TextAlignment from "../../Browser/Text/TextAlignment.js";
+import FileLoader from "../../InputOutput/FileLoader.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import urls from "../../Browser/Networking/urls.js";
+
+/*
+ * Font paths for default SERIF, SANS and TYPWRITER families.
+ */
+
+const Fonts =
 {
-"use strict";
+   SERIF: {
+      PLAIN:      urls .getFontsUrl ("DroidSerif-Regular.ttf"),
+      ITALIC:     urls .getFontsUrl ("DroidSerif-Italic.ttf"),
+      BOLD:       urls .getFontsUrl ("DroidSerif-Bold.ttf"),
+      BOLDITALIC: urls .getFontsUrl ("DroidSerif-BoldItalic.ttf"),
+   },
+   SANS: {
+      PLAIN:      urls .getFontsUrl ("Ubuntu-R.ttf"),
+      ITALIC:     urls .getFontsUrl ("Ubuntu-RI.ttf"),
+      BOLD:       urls .getFontsUrl ("Ubuntu-B.ttf"),
+      BOLDITALIC: urls .getFontsUrl ("Ubuntu-BI.ttf"),
+   },
+   TYPEWRITER: {
+      PLAIN:      urls .getFontsUrl ("UbuntuMono-R.ttf"),
+      ITALIC:     urls .getFontsUrl ("UbuntuMono-RI.ttf"),
+      BOLD:       urls .getFontsUrl ("UbuntuMono-B.ttf"),
+      BOLDITALIC: urls .getFontsUrl ("UbuntuMono-BI.ttf"),
+   },
+};
 
-   /*
-    * Font paths for default SERIF, SANS and TYPWRITER families.
-    */
+function X3DFontStyleNode (executionContext)
+{
+   X3DNode      .call (this, executionContext);
+   X3DUrlObject .call (this, executionContext);
 
-   const Fonts =
+   this .addType (X3DConstants .X3DFontStyleNode);
+
+   this .addChildObjects ("load",                 new Fields .SFBool (true),
+                          "autoRefresh",          new Fields .SFTime (),
+                          "autoRefreshTimeLimit", new Fields .SFTime (3600));
+
+   this .addAlias ("url", this ._family);
+
+   this .familyStack = [ ];
+   this .alignments  = [ ];
+   this .loader      = new FileLoader (this);
+}
+
+X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+   X3DUrlObject .prototype,
+{
+   constructor: X3DFontStyleNode,
+   initialize: function ()
    {
-      SERIF: {
-         PLAIN:      urls .getFontsUrl ("DroidSerif-Regular.ttf"),
-         ITALIC:     urls .getFontsUrl ("DroidSerif-Italic.ttf"),
-         BOLD:       urls .getFontsUrl ("DroidSerif-Bold.ttf"),
-         BOLDITALIC: urls .getFontsUrl ("DroidSerif-BoldItalic.ttf"),
-      },
-      SANS: {
-         PLAIN:      urls .getFontsUrl ("Ubuntu-R.ttf"),
-         ITALIC:     urls .getFontsUrl ("Ubuntu-RI.ttf"),
-         BOLD:       urls .getFontsUrl ("Ubuntu-B.ttf"),
-         BOLDITALIC: urls .getFontsUrl ("Ubuntu-BI.ttf"),
-      },
-      TYPEWRITER: {
-         PLAIN:      urls .getFontsUrl ("UbuntuMono-R.ttf"),
-         ITALIC:     urls .getFontsUrl ("UbuntuMono-RI.ttf"),
-         BOLD:       urls .getFontsUrl ("UbuntuMono-B.ttf"),
-         BOLDITALIC: urls .getFontsUrl ("UbuntuMono-BI.ttf"),
-      },
-   };
+      X3DNode      .prototype .initialize .call (this);
+      X3DUrlObject .prototype .initialize .call (this);
 
-   function X3DFontStyleNode (executionContext)
+      this ._style   .addInterest ("set_style__",   this);
+      this ._justify .addInterest ("set_justify__", this);
+
+      this .font        = null;
+      this .familyIndex = 0;
+
+      this .set_justify__ ();
+      this .set_style__ ();
+
+      this .requestImmediateLoad ();
+   },
+   set_style__: function ()
    {
-      X3DNode      .call (this, executionContext);
-      X3DUrlObject .call (this, executionContext);
-
-      this .addType (X3DConstants .X3DFontStyleNode);
-
-      this .addChildObjects ("load",                 new Fields .SFBool (true),
-                             "autoRefresh",          new Fields .SFTime (),
-                             "autoRefreshTimeLimit", new Fields .SFTime (3600));
-
-      this .addAlias ("url", this ._family);
-
-      this .familyStack = [ ];
-      this .alignments  = [ ];
-      this .loader      = new FileLoader (this);
-   }
-
-   X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-      X3DUrlObject .prototype,
-   {
-      constructor: X3DFontStyleNode,
-      initialize: function ()
-      {
-         X3DNode      .prototype .initialize .call (this);
-         X3DUrlObject .prototype .initialize .call (this);
-
-         this ._style   .addInterest ("set_style__",   this);
-         this ._justify .addInterest ("set_justify__", this);
-
-         this .font        = null;
-         this .familyIndex = 0;
-
-         this .set_justify__ ();
-         this .set_style__ ();
-
-         this .requestImmediateLoad ();
-      },
-      set_style__: function ()
-      {
-         if (!this ._load .getValue ())
-            return;
-
-         this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
-         this .requestImmediateLoad ();
-      },
-      set_justify__: function ()
-      {
-         const majorNormal = this ._horizontal .getValue () ? this ._leftToRight .getValue () : this ._topToBottom .getValue ();
-
-         this .alignments [0] = this ._justify .length > 0
-                                ? this .getAlignment (0, majorNormal)
-                                : majorNormal ? TextAlignment .BEGIN : TextAlignment .END;
-
-         const minorNormal = this ._horizontal .getValue () ? this ._topToBottom .getValue () : this ._leftToRight .getValue ();
-
-         this .alignments [1] = this ._justify .length > 1
-                                ? this .getAlignment (1, minorNormal)
-                                : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
-      },
-      getMajorAlignment: function ()
-      {
-         return this .alignments [0];
-      },
-      getMinorAlignment: function ()
-      {
-         return this .alignments [1];
-      },
-      getAlignment: function (index, normal)
-      {
-         if (normal)
-         {
-            // Return for west-european normal alignment.
-
-            switch (this ._justify [index])
-            {
-               case "FIRST":  return TextAlignment .FIRST;
-               case "BEGIN":  return TextAlignment .BEGIN;
-               case "MIDDLE": return TextAlignment .MIDDLE;
-               case "END":    return TextAlignment .END;
-            }
-         }
-         else
-         {
-            // Return appropriate alignment if topToBottom or leftToRight are FALSE.
-
-            switch (this ._justify [index])
-            {
-               case "FIRST":  return TextAlignment .END;
-               case "BEGIN":  return TextAlignment .END;
-               case "MIDDLE": return TextAlignment .MIDDLE;
-               case "END":    return TextAlignment .BEGIN;
-            }
-         }
-
-         return index ? TextAlignment .FIRST : TextAlignment .BEGIN;
-      },
-      getDefaultFont: function (familyName)
-      {
-         const family = Fonts [familyName];
-
-         if (family)
-            return family [this ._style .getValue ()] || family .PLAIN;
-
+      if (!this ._load .getValue ())
          return;
-      },
-      loadNow: function ()
+
+      this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+
+      this .requestImmediateLoad ();
+   },
+   set_justify__: function ()
+   {
+      const majorNormal = this ._horizontal .getValue () ? this ._leftToRight .getValue () : this ._topToBottom .getValue ();
+
+      this .alignments [0] = this ._justify .length > 0
+                             ? this .getAlignment (0, majorNormal)
+                             : majorNormal ? TextAlignment .BEGIN : TextAlignment .END;
+
+      const minorNormal = this ._horizontal .getValue () ? this ._topToBottom .getValue () : this ._leftToRight .getValue ();
+
+      this .alignments [1] = this ._justify .length > 1
+                             ? this .getAlignment (1, minorNormal)
+                             : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
+   },
+   getMajorAlignment: function ()
+   {
+      return this .alignments [0];
+   },
+   getMinorAlignment: function ()
+   {
+      return this .alignments [1];
+   },
+   getAlignment: function (index, normal)
+   {
+      if (normal)
       {
-         // Add default font to family array.
+         // Return for west-european normal alignment.
 
-         const family = this ._url .copy ();
-
-         family .push ("SERIF");
-
-         // Build family stack.
-
-         this .familyStack .length = 0;
-
-         for (const familyName of family)
-            this .familyStack .push (this .getDefaultFont (familyName) || familyName);
-
-         this .loadNext ();
-      },
-      loadNext: function ()
-      {
-         try
+         switch (this ._justify [index])
          {
-            if (this .familyStack .length === 0)
-            {
-               this .setLoadState (X3DConstants .FAILED_STATE);
-               this .font = null;
-               return;
-            }
-
-            this .family = this .familyStack .shift ();
-            this .URL    = new URL (this .family, this .loader .getReferer ());
-
-            if (this .URL .protocol !== "data:")
-            {
-               if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
-                  this .URL .searchParams .set ("_", Date .now ());
-            }
-
-            this .getBrowser () .getFont (this .URL)
-               .done (this .setFont .bind (this))
-               .fail (this .setError .bind (this));
+            case "FIRST":  return TextAlignment .FIRST;
+            case "BEGIN":  return TextAlignment .BEGIN;
+            case "MIDDLE": return TextAlignment .MIDDLE;
+            case "END":    return TextAlignment .END;
          }
-         catch (error)
-         {
-            this .setError (error .message);
-         }
-      },
-      setError: function (error)
+      }
+      else
       {
+         // Return appropriate alignment if topToBottom or leftToRight are FALSE.
+
+         switch (this ._justify [index])
+         {
+            case "FIRST":  return TextAlignment .END;
+            case "BEGIN":  return TextAlignment .END;
+            case "MIDDLE": return TextAlignment .MIDDLE;
+            case "END":    return TextAlignment .BEGIN;
+         }
+      }
+
+      return index ? TextAlignment .FIRST : TextAlignment .BEGIN;
+   },
+   getDefaultFont: function (familyName)
+   {
+      const family = Fonts [familyName];
+
+      if (family)
+         return family [this ._style .getValue ()] || family .PLAIN;
+
+      return;
+   },
+   loadNow: function ()
+   {
+      // Add default font to family array.
+
+      const family = this ._url .copy ();
+
+      family .push ("SERIF");
+
+      // Build family stack.
+
+      this .familyStack .length = 0;
+
+      for (const familyName of family)
+         this .familyStack .push (this .getDefaultFont (familyName) || familyName);
+
+      this .loadNext ();
+   },
+   loadNext: function ()
+   {
+      try
+      {
+         if (this .familyStack .length === 0)
+         {
+            this .setLoadState (X3DConstants .FAILED_STATE);
+            this .font = null;
+            return;
+         }
+
+         this .family = this .familyStack .shift ();
+         this .URL    = new URL (this .family, this .loader .getReferer ());
+
          if (this .URL .protocol !== "data:")
-            console .warn ("Error loading font '" + decodeURI (this .URL .href) + "':", error);
+         {
+            if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
+               this .URL .searchParams .set ("_", Date .now ());
+         }
 
-         this .loadNext ();
-      },
-      setFont: function (font)
+         this .getBrowser () .getFont (this .URL)
+            .done (this .setFont .bind (this))
+            .fail (this .setError .bind (this));
+      }
+      catch (error)
       {
-         this .font = font;
+         this .setError (error .message);
+      }
+   },
+   setError: function (error)
+   {
+      if (this .URL .protocol !== "data:")
+         console .warn ("Error loading font '" + decodeURI (this .URL .href) + "':", error);
 
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
-         this .addNodeEvent ();
-      },
-      getFont: function ()
-      {
-         return this .font;
-      },
-   });
+      this .loadNext ();
+   },
+   setFont: function (font)
+   {
+      this .font = font;
 
-   return X3DFontStyleNode;
+      this .setLoadState (X3DConstants .COMPLETE_STATE);
+      this .addNodeEvent ();
+   },
+   getFont: function ()
+   {
+      return this .font;
+   },
 });
+
+export default X3DFontStyleNode;

@@ -47,171 +47,166 @@
  ******************************************************************************/
 
 
-define (function ()
+function Complex (real, imag)
 {
-"use strict";
+   this .real = real;
+   this .imag = imag;
+}
 
-   function Complex (real, imag)
+Complex .prototype =
+{
+   constructor: Complex,
+   [Symbol .iterator]: function* ()
    {
-      this .real = real;
-      this .imag = imag;
-   }
-
-   Complex .prototype =
+      yield this .real;
+      yield this .imag;
+   },
+   copy: function ()
    {
-      constructor: Complex,
-      [Symbol .iterator]: function* ()
-      {
-         yield this .real;
-         yield this .imag;
-      },
-      copy: function ()
-      {
-         const copy = Object .create (Complex .prototype);
-         copy .real = this .real;
-         copy .imag = this .imag;
-         return copy;
-      },
-      assign: function (complex)
-      {
-         this .real = complex .real;
-         this .imag = complex .imag;
-         return this;
-      },
-      equals: function (complex)
-      {
-         return this .real === complex .real &&
-                this .imag === complex .imag;
-      },
-      setPolar: function (magnitude, angle)
-      {
-         this .real = magnitude * Math .cos (angle);
-         this .imag = magnitude * Math .sin (angle);
-         return this;
-      },
-      conjugate: function ()
-      {
-         this .imag = -this .imag;
-         return this;
-      },
-      negate: function ()
-      {
-         this .real = -this .real;
-         this .imag = -this .imag;
-         return this;
-      },
-      inverse: function ()
-      {
-         const d = this .real * this .real + this .imag * this .imag;
+      const copy = Object .create (Complex .prototype);
+      copy .real = this .real;
+      copy .imag = this .imag;
+      return copy;
+   },
+   assign: function (complex)
+   {
+      this .real = complex .real;
+      this .imag = complex .imag;
+      return this;
+   },
+   equals: function (complex)
+   {
+      return this .real === complex .real &&
+             this .imag === complex .imag;
+   },
+   setPolar: function (magnitude, angle)
+   {
+      this .real = magnitude * Math .cos (angle);
+      this .imag = magnitude * Math .sin (angle);
+      return this;
+   },
+   conjugate: function ()
+   {
+      this .imag = -this .imag;
+      return this;
+   },
+   negate: function ()
+   {
+      this .real = -this .real;
+      this .imag = -this .imag;
+      return this;
+   },
+   inverse: function ()
+   {
+      const d = this .real * this .real + this .imag * this .imag;
 
-         this .real /=  d;
-         this .imag /= -d;
-         return this;
-      },
-      add: function (value)
-      {
-         this .real += value .real;
-         this .imag += value .imag;
-         return this;
-      },
-      subtract: function (value)
-      {
-         this .real -= value .real;
-         this .imag -= value .imag;
-         return this;
-      },
-      multiply: function (value)
-      {
-         this .real *= value;
-         this .imag *= value;
-         return this;
-      },
-      multComp: function ()
-      {
-         const
-            real = this .real,
-            imag = this .imag;
+      this .real /=  d;
+      this .imag /= -d;
+      return this;
+   },
+   add: function (value)
+   {
+      this .real += value .real;
+      this .imag += value .imag;
+      return this;
+   },
+   subtract: function (value)
+   {
+      this .real -= value .real;
+      this .imag -= value .imag;
+      return this;
+   },
+   multiply: function (value)
+   {
+      this .real *= value;
+      this .imag *= value;
+      return this;
+   },
+   multComp: function ()
+   {
+      const
+         real = this .real,
+         imag = this .imag;
 
-         this .real = real * value .real - imag * value .imag;
-         this .imag = real * value .imag + imag * value .real;
-         return this;
-      },
-      //divide: function (value)
-      //{
-      //	return this;
-      //},
-      divComp: function (value)
-      {
-         const
-            ar = this .real, ai = this .imag,
-            br = value .real, bi = value .imag;
+      this .real = real * value .real - imag * value .imag;
+      this .imag = real * value .imag + imag * value .real;
+      return this;
+   },
+   //divide: function (value)
+   //{
+   //	return this;
+   //},
+   divComp: function (value)
+   {
+      const
+         ar = this .real, ai = this .imag,
+         br = value .real, bi = value .imag;
 
-         const d = br * br + bi * bi;
+      const d = br * br + bi * bi;
 
-         this .real = (ar * br + ai * bi) / d;
-         this .imag = (ai * br - ar * bi) / d;
-         return this;
-      },
-      toString: function ()
+      this .real = (ar * br + ai * bi) / d;
+      this .imag = (ai * br - ar * bi) / d;
+      return this;
+   },
+   toString: function ()
+   {
+      if (this .imag)
+         return this .real + " " + this .imag + "i";
+
+      return String (this .real);
+   },
+};
+
+Object .defineProperty (Complex .prototype, "magnitude",
+{
+   get: function ()
+   {
+      if (this .real)
       {
          if (this .imag)
-            return this .real + " " + this .imag + "i";
+            return Math .hypot (this .real, this .imag);
 
-         return String (this .real);
-      },
-   };
+         return Math .abs (this .real);
+      }
 
-   Object .defineProperty (Complex .prototype, "magnitude",
+      return Math .abs (this .imag);
+   },
+   set: function (magnitude)
    {
-      get: function ()
-      {
-         if (this .real)
-         {
-            if (this .imag)
-               return Math .hypot (this .real, this .imag);
-
-            return Math .abs (this .real);
-         }
-
-         return Math .abs (this .imag);
-      },
-      set: function (magnitude)
-      {
-         this .setPolar (magnitude, this .angle);
-      },
-      enumerable: false,
-      configurable: false
-   });
-
-   Object .defineProperty (Complex .prototype, "angle",
-   {
-      get: function ()
-      {
-         return Math .atan2 (this .imag, this .real);
-      },
-      set: function (angle)
-      {
-         this .setPolar (this .magnitude, angle);
-      },
-      enumerable: false,
-      configurable: false
-   });
-
-   Object .assign (Complex,
-   {
-      Polar: function (magnitude, angle)
-      {
-         return Object .create (Complex .prototype) .setPolar (magnitude, angle);
-      },
-      multiply: function (lhs, rhs)
-      {
-         return lhs .copy () .multiply (rhs);
-      },
-      multComp: function (lhs, rhs)
-      {
-         return lhs .copy () .multComp (rhs);
-      },
-   });
-
-   return Complex;
+      this .setPolar (magnitude, this .angle);
+   },
+   enumerable: false,
+   configurable: false
 });
+
+Object .defineProperty (Complex .prototype, "angle",
+{
+   get: function ()
+   {
+      return Math .atan2 (this .imag, this .real);
+   },
+   set: function (angle)
+   {
+      this .setPolar (this .magnitude, angle);
+   },
+   enumerable: false,
+   configurable: false
+});
+
+Object .assign (Complex,
+{
+   Polar: function (magnitude, angle)
+   {
+      return Object .create (Complex .prototype) .setPolar (magnitude, angle);
+   },
+   multiply: function (lhs, rhs)
+   {
+      return lhs .copy () .multiply (rhs);
+   },
+   multComp: function (lhs, rhs)
+   {
+      return lhs .copy () .multComp (rhs);
+   },
+});
+
+export default Complex;
