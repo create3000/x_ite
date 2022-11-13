@@ -53,21 +53,6 @@ import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js
 import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
 import X3DConstants              from "../Base/X3DConstants.js";
 
-function accessTypeToString (accessType)
-{
-   switch (accessType)
-   {
-      case X3DConstants .inializeOnly:
-         return "initializeOnly";
-      case X3DConstants .inputOnly:
-         return "inputOnly";
-      case X3DConstants .outputOnly:
-         return "outputOnly";
-      case X3DConstants .inputOutput:
-         return "inputOutput";
-   }
-}
-
 /*
  *  Grammar
  */
@@ -1600,7 +1585,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             throw new Error ("Couldn't read value for field '" + fieldId + "'.");
          }
 
-         throw new Error ("Couldn't assign value to " + accessTypeToString (field .getAccessType ()) + " field '" + fieldId + "'.");
+         throw new Error ("Couldn't assign value to " + this .accessTypeToString (field .getAccessType ()) + " field '" + fieldId + "'.");
       }
 
       return false;
@@ -2903,6 +2888,20 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          field .push (this .SFVec4f);
       }
    },
+   accessTypeToString: function (accessType)
+   {
+      switch (accessType)
+      {
+         case X3DConstants .initializeOnly:
+            return "initializeOnly";
+         case X3DConstants .inputOnly:
+            return "inputOnly";
+         case X3DConstants .outputOnly:
+            return "outputOnly";
+         case X3DConstants .inputOutput:
+            return "inputOutput";
+      }
+   },
 });
 
 VRMLParser .prototype .fieldTypes = [ ];
@@ -2949,5 +2948,18 @@ VRMLParser .prototype .fieldTypes [X3DConstants .MFVec3d]     = VRMLParser .prot
 VRMLParser .prototype .fieldTypes [X3DConstants .MFVec3f]     = VRMLParser .prototype .mfvec3fValue;
 VRMLParser .prototype .fieldTypes [X3DConstants .MFVec4d]     = VRMLParser .prototype .mfvec4dValue;
 VRMLParser .prototype .fieldTypes [X3DConstants .MFVec4f]     = VRMLParser .prototype .mfvec4fValue;
+
+VRMLParser .fromString = function (field, string, scene)
+{
+   const parser = new this (scene);
+
+   parser .setUnits (!!scene);
+   parser .setInput (string);
+
+   if (parser .fieldValue (field))
+      return;
+
+   throw new Error ("Couldn't read value for field '" + field .getName () + "'.");
+};
 
 export default VRMLParser;

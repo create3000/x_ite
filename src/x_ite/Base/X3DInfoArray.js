@@ -47,6 +47,8 @@
  ******************************************************************************/
 
 
+import X3DBaseNode from "../Base/X3DBaseNode.js";
+
 const
    _array = Symbol (),
    _index = Symbol ();
@@ -232,8 +234,6 @@ X3DInfoArray .prototype = {
    },
    toVRMLStream: function (stream)
    {
-      const X3DBaseNode = require ("x_ite/Base/X3DBaseNode");
-
       for (const value of this [_array])
       {
          try

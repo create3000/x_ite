@@ -340,11 +340,9 @@ Object .assign (X3DBrowserContext,
          });
       }
 
-      const X3D = require ("x_ite/X3D");
-
       $("x3d-canvas, X3DCanvas") .each (function (i, canvas)
       {
-         const browser = X3D .getBrowser (canvas);
+         const browser = $(canvas) .data ("browser");
 
          browserContext .call (browser);
 

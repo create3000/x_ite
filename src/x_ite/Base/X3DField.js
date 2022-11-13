@@ -409,20 +409,6 @@ X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype)
    {
       return this;
    },
-   fromString: function (string, scene)
-   {
-      const
-         VRMLParser = require ("x_ite/Parser/VRMLParser"),
-         parser     = new VRMLParser (scene);
-
-      parser .setUnits (!!scene);
-      parser .setInput (string);
-
-      if (parser .fieldValue (this))
-         return;
-
-      throw new Error ("Couldn't read value for field '" + this .getName () + "'.");
-   },
    dispose: function ()
    {
       for (const route of new Set (this [_inputRoutes]))

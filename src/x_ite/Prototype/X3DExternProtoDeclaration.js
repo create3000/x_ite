@@ -54,6 +54,7 @@ import FieldDefinitionArray    from "../Base/FieldDefinitionArray.js";
 import X3DUrlObject            from "../Components/Networking/X3DUrlObject.js";
 import X3DProtoDeclarationNode from "./X3DProtoDeclarationNode.js";
 import X3DConstants            from "../Base/X3DConstants.js";
+import FileLoader              from "../InputOutput/FileLoader.js";
 import Generator               from "../InputOutput/Generator.js";
 
 SupportedNodes .addAbstractType ("X3DExternProtoDeclaration", X3DExternProtoDeclaration);
@@ -128,8 +129,6 @@ X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoD
       // 7.73 — ExternProtoDeclaration function
 
       this .getScene () .addInitLoadCount (this);
-
-      const FileLoader = require ("x_ite/InputOutput/FileLoader");
 
       new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalSceneAsync .bind (this));
    },
