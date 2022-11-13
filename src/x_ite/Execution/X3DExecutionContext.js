@@ -424,9 +424,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       name = String (name);
 
-      const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
-
-      if (!(proto instanceof X3DProtoDeclaration))
+      if (! proto || ! proto .getType () .includes (X3DConstants .X3DProtoDeclaration))
          throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
 
       if (this [_protos] .get (name))
@@ -446,9 +444,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       name = String (name);
 
-      const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
-
-      if (!(proto instanceof X3DProtoDeclaration))
+      if (! proto || ! proto .getType () .includes (X3DConstants .X3DProtoDeclaration))
          throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
 
       name = String (name);
@@ -492,9 +488,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       name = String (name);
 
-      const X3DExternProtoDeclaration = require ("x_ite/Prototype/X3DExternProtoDeclaration");
-
-      if (!(externproto instanceof X3DExternProtoDeclaration))
+      if (! externproto || ! externproto .getType () .includes (X3DConstants .X3DExternProtoDeclaration))
          throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
 
       if (this [_externprotos] .get (name))
@@ -514,9 +508,7 @@ X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .pr
    {
       name = String (name);
 
-      const X3DExternProtoDeclaration = require ("x_ite/Prototype/X3DExternProtoDeclaration");
-
-      if (!(externproto instanceof X3DExternProtoDeclaration))
+      if (! externproto || ! externproto .getType () .includes (X3DConstants .X3DExternProtoDeclaration))
          throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
 
       name = String (name);
