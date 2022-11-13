@@ -135,7 +135,7 @@ sub zip {
 
 	system "cp", "-r", "dist", $ZIP_DIR;
 
-	system "zip", "-x", "*.mdproj", "-x", "*.zip", "-r", "$ZIP_DIR.zip", $ZIP_DIR;
+	system "zip", "-x", "*.zip", "-r", "$ZIP_DIR.zip", $ZIP_DIR;
 	system "mv", "-v", "$ZIP_DIR.zip", "dist/x_ite.zip";
 
 	system "rm", "-v", "-r", $ZIP_DIR;
