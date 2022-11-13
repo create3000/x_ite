@@ -143,5 +143,5 @@ function (Algorithm)
       return {x: cx0, y: cy0};
    }
 
-    return Bezier;
+   return Bezier;
 });
