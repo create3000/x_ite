@@ -76,13 +76,13 @@ sub tidy {
 
    my $file = read_text ($filename);
 
-   my @matches = ($file =~ /import\s+([^\s]+)/sg);
+   my @matches = ($file =~ /import\s+([^\s]+)\s*/sg);
 
    return unless @matches;
 
    my $l = reduce { $a > $b ? $a : $b } map { length } @matches;
 
-   $file =~ s/import\s+([^\s]+)/"import " . $1 . " " x ($l - length ($1))/sge;
+   $file =~ s/import\s+([^\s]+)/"import " . $1 . " " x ($l - length ($1) + 1)/sge;
 
    open FILE, ">", $filename;
    print FILE $file;
