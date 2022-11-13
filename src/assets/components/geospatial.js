@@ -46,56 +46,40 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components",
-   "x_ite/Components/Geospatial/GeoCoordinate",
-   "x_ite/Components/Geospatial/GeoElevationGrid",
-   "x_ite/Components/Geospatial/GeoLOD",
-   "x_ite/Components/Geospatial/GeoLocation",
-   "x_ite/Components/Geospatial/GeoMetadata",
-   "x_ite/Components/Geospatial/GeoOrigin",
-   "x_ite/Components/Geospatial/GeoPositionInterpolator",
-   "x_ite/Components/Geospatial/GeoProximitySensor",
-   "x_ite/Components/Geospatial/GeoTouchSensor",
-   "x_ite/Components/Geospatial/GeoTransform",
-   "x_ite/Components/Geospatial/GeoViewpoint",
-   "x_ite/Components/Geospatial/X3DGeospatialObject",
-],
-function (Components,
-          GeoCoordinate,
-          GeoElevationGrid,
-          GeoLOD,
-          GeoLocation,
-          GeoMetadata,
-          GeoOrigin,
-          GeoPositionInterpolator,
-          GeoProximitySensor,
-          GeoTouchSensor,
-          GeoTransform,
-          GeoViewpoint,
-          X3DGeospatialObject)
-{
-"use strict";
+import Components              from "../../x_ite/Components.js";
+import GeoCoordinate           from "../../x_ite/Components/Geospatial/GeoCoordinate.js";
+import GeoElevationGrid        from "../../x_ite/Components/Geospatial/GeoElevationGrid.js";
+import GeoLOD                  from "../../x_ite/Components/Geospatial/GeoLOD.js";
+import GeoLocation             from "../../x_ite/Components/Geospatial/GeoLocation.js";
+import GeoMetadata             from "../../x_ite/Components/Geospatial/GeoMetadata.js";
+import GeoOrigin               from "../../x_ite/Components/Geospatial/GeoOrigin.js";
+import GeoPositionInterpolator from "../../x_ite/Components/Geospatial/GeoPositionInterpolator.js";
+import GeoProximitySensor      from "../../x_ite/Components/Geospatial/GeoProximitySensor.js";
+import GeoTouchSensor          from "../../x_ite/Components/Geospatial/GeoTouchSensor.js";
+import GeoTransform            from "../../x_ite/Components/Geospatial/GeoTransform.js";
+import GeoViewpoint            from "../../x_ite/Components/Geospatial/GeoViewpoint.js";
+import X3DGeospatialObject     from "../../x_ite/Components/Geospatial/X3DGeospatialObject.js";
 
-   Components .addComponent ({
-      name: "Geospatial",
-      types:
-      {
-         GeoCoordinate:           GeoCoordinate,
-         GeoElevationGrid:        GeoElevationGrid,
-         GeoLOD:                  GeoLOD,
-         GeoLocation:             GeoLocation,
-         GeoMetadata:             GeoMetadata,
-         GeoOrigin:               GeoOrigin,
-         GeoPositionInterpolator: GeoPositionInterpolator,
-         GeoProximitySensor:      GeoProximitySensor,
-         GeoTouchSensor:          GeoTouchSensor,
-         GeoTransform:            GeoTransform,
-         GeoViewpoint:            GeoViewpoint,
-      },
-      abstractTypes:
-      {
-         X3DGeospatialObject: X3DGeospatialObject,
-      },
-   });
+Components .addComponent ({
+   name: "Geospatial",
+   types:
+   {
+      GeoCoordinate:           GeoCoordinate,
+      GeoElevationGrid:        GeoElevationGrid,
+      GeoLOD:                  GeoLOD,
+      GeoLocation:             GeoLocation,
+      GeoMetadata:             GeoMetadata,
+      GeoOrigin:               GeoOrigin,
+      GeoPositionInterpolator: GeoPositionInterpolator,
+      GeoProximitySensor:      GeoProximitySensor,
+      GeoTouchSensor:          GeoTouchSensor,
+      GeoTransform:            GeoTransform,
+      GeoViewpoint:            GeoViewpoint,
+   },
+   abstractTypes:
+   {
+      X3DGeospatialObject: X3DGeospatialObject,
+   },
 });
+
+export default undefined;

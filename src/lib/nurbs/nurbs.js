@@ -73,7 +73,7 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
                      return this.points.shape.slice(0, this.points.shape.length - 1);
                   },
                   set: function () {
-                     throw new Error("Cannot assign to read only property "size"");
+                     throw new Error("Cannot assign to read only property 'size'");
                   },
                   configurable: true
                }

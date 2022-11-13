@@ -66,5 +66,5 @@ export default function createTransform (cacheKey, nurbs, accessors, debug) {
    if (debug) console.log(code.join("\n"));
 
    transformerCache[cacheKey] = transform;
-   ⤴  transform.bind(nurbs);
+   return transform.bind(nurbs);
 };

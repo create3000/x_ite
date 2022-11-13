@@ -46,38 +46,28 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components",
-   "x_ite/Components/DIS/DISEntityManager",
-   "x_ite/Components/DIS/DISEntityTypeMapping",
-   "x_ite/Components/DIS/EspduTransform",
-   "x_ite/Components/DIS/ReceiverPdu",
-   "x_ite/Components/DIS/SignalPdu",
-   "x_ite/Components/DIS/TransmitterPdu",
-],
-function (Components,
-          DISEntityManager,
-          DISEntityTypeMapping,
-          EspduTransform,
-          ReceiverPdu,
-          SignalPdu,
-          TransmitterPdu)
-{
-"use strict";
+import Components           from "../../x_ite/Components.js";
+import DISEntityManager     from "../../x_ite/Components/DIS/DISEntityManager.js";
+import DISEntityTypeMapping from "../../x_ite/Components/DIS/DISEntityTypeMapping.js";
+import EspduTransform       from "../../x_ite/Components/DIS/EspduTransform.js";
+import ReceiverPdu          from "../../x_ite/Components/DIS/ReceiverPdu.js";
+import SignalPdu            from "../../x_ite/Components/DIS/SignalPdu.js";
+import TransmitterPdu       from "../../x_ite/Components/DIS/TransmitterPdu.js";
 
-   Components .addComponent ({
-      name: "DIS",
-      types:
-      {
-         DISEntityManager:     DISEntityManager,
-         DISEntityTypeMapping: DISEntityTypeMapping,
-         EspduTransform:       EspduTransform,
-         ReceiverPdu:          ReceiverPdu,
-         SignalPdu:            SignalPdu,
-         TransmitterPdu:       TransmitterPdu,
-      },
-      abstractTypes:
-      {
-      },
-   });
+Components .addComponent ({
+   name: "DIS",
+   types:
+   {
+      DISEntityManager:     DISEntityManager,
+      DISEntityTypeMapping: DISEntityTypeMapping,
+      EspduTransform:       EspduTransform,
+      ReceiverPdu:          ReceiverPdu,
+      SignalPdu:            SignalPdu,
+      TransmitterPdu:       TransmitterPdu,
+   },
+   abstractTypes:
+   {
+   },
 });
+
+export default undefined;

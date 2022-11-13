@@ -46,47 +46,34 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components",
-   "x_ite/Browser/Geometry2D/X3DGeometry2DContext",
-   "x_ite/Components/Geometry2D/Arc2D",
-   "x_ite/Components/Geometry2D/ArcClose2D",
-   "x_ite/Components/Geometry2D/Circle2D",
-   "x_ite/Components/Geometry2D/Disk2D",
-   "x_ite/Components/Geometry2D/Polyline2D",
-   "x_ite/Components/Geometry2D/Polypoint2D",
-   "x_ite/Components/Geometry2D/Rectangle2D",
-   "x_ite/Components/Geometry2D/TriangleSet2D",
-],
-function (Components,
-          X3DGeometry2DContext,
-          Arc2D,
-          ArcClose2D,
-          Circle2D,
-          Disk2D,
-          Polyline2D,
-          Polypoint2D,
-          Rectangle2D,
-          TriangleSet2D)
-{
-"use strict";
+import Components           from "../../x_ite/Components.js";
+import X3DGeometry2DContext from "../../x_ite/Browser/Geometry2D/X3DGeometry2DContext.js";
+import Arc2D                from "../../x_ite/Components/Geometry2D/Arc2D.js";
+import ArcClose2D           from "../../x_ite/Components/Geometry2D/ArcClose2D.js";
+import Circle2D             from "../../x_ite/Components/Geometry2D/Circle2D.js";
+import Disk2D               from "../../x_ite/Components/Geometry2D/Disk2D.js";
+import Polyline2D           from "../../x_ite/Components/Geometry2D/Polyline2D.js";
+import Polypoint2D          from "../../x_ite/Components/Geometry2D/Polypoint2D.js";
+import Rectangle2D          from "../../x_ite/Components/Geometry2D/Rectangle2D.js";
+import TriangleSet2D        from "../../x_ite/Components/Geometry2D/TriangleSet2D.js";
 
-   Components .addComponent ({
-      name: "Geometry2D",
-      types:
-      {
-         Arc2D:         Arc2D,
-         ArcClose2D:    ArcClose2D,
-         Circle2D:      Circle2D,
-         Disk2D:        Disk2D,
-         Polyline2D:    Polyline2D,
-         Polypoint2D:   Polypoint2D,
-         Rectangle2D:   Rectangle2D,
-         TriangleSet2D: TriangleSet2D,
-      },
-      abstractTypes:
-      {
-      },
-      browserContext: X3DGeometry2DContext,
-   });
+Components .addComponent ({
+   name: "Geometry2D",
+   types:
+   {
+      Arc2D:         Arc2D,
+      ArcClose2D:    ArcClose2D,
+      Circle2D:      Circle2D,
+      Disk2D:        Disk2D,
+      Polyline2D:    Polyline2D,
+      Polypoint2D:   Polypoint2D,
+      Rectangle2D:   Rectangle2D,
+      TriangleSet2D: TriangleSet2D,
+   },
+   abstractTypes:
+   {
+   },
+   browserContext: X3DGeometry2DContext,
 });
+
+export default undefined;

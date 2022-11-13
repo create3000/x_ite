@@ -155,7 +155,8 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                if (this .success)
                {
-                  Promise .all (this .getProviderUrls () .map (url => import (url)))                   .then (function ()
+                  Promise .all (this .getProviderUrls () .map (url => import (url)))
+                  .then (function ()
                   {
                      this .childrenElements (xmlElement);
                      this .success (this .getScene ());
@@ -186,7 +187,8 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             if (this .success)
             {
-               Promise .all (this .getProviderUrls () .map (url => import (url)))                   .then (function ()
+               Promise .all (this .getProviderUrls () .map (url => import (url)))
+               .then (function ()
                {
                   this .sceneElement (xmlElement);
                   this .success (this .getScene ());
@@ -210,7 +212,8 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             if (this .success)
             {
-               Promise .all (this .getProviderUrls () .map (url => import (url)))                   .then (function ()
+               Promise .all (this .getProviderUrls () .map (url => import (url)))
+               .then (function ()
                {
                   this .childrenElements (xmlElement);
                   this .success (this .getScene ());
@@ -265,7 +268,8 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (this .success)
       {
-         Promise .all (this .getProviderUrls () .map (url => import (url)))                   .then (function ()
+         Promise .all (this .getProviderUrls () .map (url => import (url)))
+         .then (function ()
          {
             for (var i = 0; i < childNodes .length; ++ i)
                this .x3dElementChildScene (childNodes [i])

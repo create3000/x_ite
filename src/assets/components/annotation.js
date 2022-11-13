@@ -47,41 +47,30 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components",
-   "x_ite/Components/Annotation/AnnotationLayer",
-   "x_ite/Components/Annotation/AnnotationTarget",
-   "x_ite/Components/Annotation/GroupAnnotation",
-   "x_ite/Components/Annotation/IconAnnotation",
-   "x_ite/Components/Annotation/TextAnnotation",
-   "x_ite/Components/Annotation/URLAnnotation",
-   "x_ite/Components/Annotation/X3DAnnotationNode",
-],
-function (Components,
-          AnnotationLayer,
-          AnnotationTarget,
-          GroupAnnotation,
-          IconAnnotation,
-          TextAnnotation,
-          URLAnnotation,
-          X3DAnnotationNode)
-{
-"use strict";
+import Components        from "../../x_ite/Components.js";
+import AnnotationLayer   from "../../x_ite/Components/Annotation/AnnotationLayer.js";
+import AnnotationTarget  from "../../x_ite/Components/Annotation/AnnotationTarget.js";
+import GroupAnnotation   from "../../x_ite/Components/Annotation/GroupAnnotation.js";
+import IconAnnotation    from "../../x_ite/Components/Annotation/IconAnnotation.js";
+import TextAnnotation    from "../../x_ite/Components/Annotation/TextAnnotation.js";
+import URLAnnotation     from "../../x_ite/Components/Annotation/URLAnnotation.js";
+import X3DAnnotationNode from "../../x_ite/Components/Annotation/X3DAnnotationNode.js";
 
-   Components .addComponent ({
-      name: "Annotation",
-      types:
-      {
-         AnnotationLayer:  AnnotationLayer,
-         AnnotationTarget: AnnotationTarget,
-         GroupAnnotation:  GroupAnnotation,
-         IconAnnotation:   IconAnnotation,
-         TextAnnotation:   TextAnnotation,
-         URLAnnotation:    URLAnnotation,
-      },
-      abstractTypes:
-      {
-         X3DAnnotationNode: X3DAnnotationNode,
-      },
-   });
+Components .addComponent ({
+   name: "Annotation",
+   types:
+   {
+      AnnotationLayer:  AnnotationLayer,
+      AnnotationTarget: AnnotationTarget,
+      GroupAnnotation:  GroupAnnotation,
+      IconAnnotation:   IconAnnotation,
+      TextAnnotation:   TextAnnotation,
+      URLAnnotation:    URLAnnotation,
+   },
+   abstractTypes:
+   {
+      X3DAnnotationNode: X3DAnnotationNode,
+   },
 });
+
+export default undefined;

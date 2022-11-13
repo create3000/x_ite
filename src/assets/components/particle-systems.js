@@ -46,59 +46,42 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components",
-   "x_ite/Browser/ParticleSystems/X3DParticleSystemsContext",
-   "x_ite/Components/ParticleSystems/BoundedPhysicsModel",
-   "x_ite/Components/ParticleSystems/ConeEmitter",
-   "x_ite/Components/ParticleSystems/ExplosionEmitter",
-   "x_ite/Components/ParticleSystems/ForcePhysicsModel",
-   "x_ite/Components/ParticleSystems/ParticleSystem",
-   "x_ite/Components/ParticleSystems/PointEmitter",
-   "x_ite/Components/ParticleSystems/PolylineEmitter",
-   "x_ite/Components/ParticleSystems/SurfaceEmitter",
-   "x_ite/Components/ParticleSystems/VolumeEmitter",
-   "x_ite/Components/ParticleSystems/WindPhysicsModel",
-   "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
-   "x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
-],
-function (Components,
-          X3DParticleSystemsContext,
-          BoundedPhysicsModel,
-          ConeEmitter,
-          ExplosionEmitter,
-          ForcePhysicsModel,
-          ParticleSystem,
-          PointEmitter,
-          PolylineEmitter,
-          SurfaceEmitter,
-          VolumeEmitter,
-          WindPhysicsModel,
-          X3DParticleEmitterNode,
-          X3DParticlePhysicsModelNode)
-{
-"use strict";
+import Components                  from "../../x_ite/Components.js";
+import X3DParticleSystemsContext   from "../../x_ite/Browser/ParticleSystems/X3DParticleSystemsContext.js";
+import BoundedPhysicsModel         from "../../x_ite/Components/ParticleSystems/BoundedPhysicsModel.js";
+import ConeEmitter                 from "../../x_ite/Components/ParticleSystems/ConeEmitter.js";
+import ExplosionEmitter            from "../../x_ite/Components/ParticleSystems/ExplosionEmitter.js";
+import ForcePhysicsModel           from "../../x_ite/Components/ParticleSystems/ForcePhysicsModel.js";
+import ParticleSystem              from "../../x_ite/Components/ParticleSystems/ParticleSystem.js";
+import PointEmitter                from "../../x_ite/Components/ParticleSystems/PointEmitter.js";
+import PolylineEmitter             from "../../x_ite/Components/ParticleSystems/PolylineEmitter.js";
+import SurfaceEmitter              from "../../x_ite/Components/ParticleSystems/SurfaceEmitter.js";
+import VolumeEmitter               from "../../x_ite/Components/ParticleSystems/VolumeEmitter.js";
+import WindPhysicsModel            from "../../x_ite/Components/ParticleSystems/WindPhysicsModel.js";
+import X3DParticleEmitterNode      from "../../x_ite/Components/ParticleSystems/X3DParticleEmitterNode.js";
+import X3DParticlePhysicsModelNode from "../../x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode.js";
 
-   Components .addComponent ({
-      name: "ParticleSystems",
-      types:
-      {
-         BoundedPhysicsModel: BoundedPhysicsModel,
-         ConeEmitter:         ConeEmitter,
-         ExplosionEmitter:    ExplosionEmitter,
-         ForcePhysicsModel:   ForcePhysicsModel,
-         ParticleSystem:      ParticleSystem,
-         PointEmitter:        PointEmitter,
-         PolylineEmitter:     PolylineEmitter,
-         SurfaceEmitter:      SurfaceEmitter,
-         VolumeEmitter:       VolumeEmitter,
-         WindPhysicsModel:    WindPhysicsModel,
-      },
-      abstractTypes:
-      {
-         X3DParticleEmitterNode:      X3DParticleEmitterNode,
-         X3DParticlePhysicsModelNode: X3DParticlePhysicsModelNode,
-      },
-      browserContext: X3DParticleSystemsContext,
-   });
+Components .addComponent ({
+   name: "ParticleSystems",
+   types:
+   {
+      BoundedPhysicsModel: BoundedPhysicsModel,
+      ConeEmitter:         ConeEmitter,
+      ExplosionEmitter:    ExplosionEmitter,
+      ForcePhysicsModel:   ForcePhysicsModel,
+      ParticleSystem:      ParticleSystem,
+      PointEmitter:        PointEmitter,
+      PolylineEmitter:     PolylineEmitter,
+      SurfaceEmitter:      SurfaceEmitter,
+      VolumeEmitter:       VolumeEmitter,
+      WindPhysicsModel:    WindPhysicsModel,
+   },
+   abstractTypes:
+   {
+      X3DParticleEmitterNode:      X3DParticleEmitterNode,
+      X3DParticlePhysicsModelNode: X3DParticlePhysicsModelNode,
+   },
+   browserContext: X3DParticleSystemsContext,
 });
+
+export default undefined;

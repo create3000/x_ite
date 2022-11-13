@@ -47,23 +47,17 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components",
-   "x_ite/Components/X_ITE/BlendMode",
-],
-function (Components,
-          BlendMode)
-{
-"use strict";
+import Components from "../../x_ite/Components.js";
+import BlendMode  from "../../x_ite/Components/X_ITE/BlendMode.js";
 
-   Components .addComponent ({
-      name: "X_ITE",
-      types:
-      {
-         BlendMode: BlendMode,
-      },
-      abstractTypes:
-      {
-      },
-   });
+Components .addComponent ({
+   name: "X_ITE",
+   types:
+   {
+      BlendMode: BlendMode,
+   },
+   abstractTypes:
+   { },
 });
+
+export default undefined;

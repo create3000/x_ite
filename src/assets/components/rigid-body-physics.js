@@ -47,77 +47,53 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components",
-   "x_ite/Components/RigidBodyPhysics/BallJoint",
-   "x_ite/Components/RigidBodyPhysics/CollidableOffset",
-   "x_ite/Components/RigidBodyPhysics/CollidableShape",
-   "x_ite/Components/RigidBodyPhysics/CollisionCollection",
-   "x_ite/Components/RigidBodyPhysics/CollisionSensor",
-   "x_ite/Components/RigidBodyPhysics/CollisionSpace",
-   "x_ite/Components/RigidBodyPhysics/Contact",
-   "x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint",
-   "x_ite/Components/RigidBodyPhysics/MotorJoint",
-   "x_ite/Components/RigidBodyPhysics/RigidBody",
-   "x_ite/Components/RigidBodyPhysics/RigidBodyCollection",
-   "x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint",
-   "x_ite/Components/RigidBodyPhysics/SliderJoint",
-   "x_ite/Components/RigidBodyPhysics/UniversalJoint",
-   "x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
-   "x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode",
-   "x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
-   "lib/ammojs/AmmoJS",
-],
-function (Components,
-          BallJoint,
-          CollidableOffset,
-          CollidableShape,
-          CollisionCollection,
-          CollisionSensor,
-          CollisionSpace,
-          Contact,
-          DoubleAxisHingeJoint,
-          MotorJoint,
-          RigidBody,
-          RigidBodyCollection,
-          SingleAxisHingeJoint,
-          SliderJoint,
-          UniversalJoint,
-          X3DNBodyCollidableNode,
-          X3DNBodyCollisionSpaceNode,
-          X3DRigidJointNode,
-          Ammo)
-{
-"use strict";
+import Components                 from "../../x_ite/Components.js";
+import BallJoint                  from "../../x_ite/Components/RigidBodyPhysics/BallJoint.js";
+import CollidableOffset           from "../../x_ite/Components/RigidBodyPhysics/CollidableOffset.js";
+import CollidableShape            from "../../x_ite/Components/RigidBodyPhysics/CollidableShape.js";
+import CollisionCollection        from "../../x_ite/Components/RigidBodyPhysics/CollisionCollection.js";
+import CollisionSensor            from "../../x_ite/Components/RigidBodyPhysics/CollisionSensor.js";
+import CollisionSpace             from "../../x_ite/Components/RigidBodyPhysics/CollisionSpace.js";
+import Contact                    from "../../x_ite/Components/RigidBodyPhysics/Contact.js";
+import DoubleAxisHingeJoint       from "../../x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint.js";
+import MotorJoint                 from "../../x_ite/Components/RigidBodyPhysics/MotorJoint.js";
+import RigidBody                  from "../../x_ite/Components/RigidBodyPhysics/RigidBody.js";
+import RigidBodyCollection        from "../../x_ite/Components/RigidBodyPhysics/RigidBodyCollection.js";
+import SingleAxisHingeJoint       from "../../x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint.js";
+import SliderJoint                from "../../x_ite/Components/RigidBodyPhysics/SliderJoint.js";
+import UniversalJoint             from "../../x_ite/Components/RigidBodyPhysics/UniversalJoint.js";
+import X3DNBodyCollidableNode     from "../../x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode.js";
+import X3DNBodyCollisionSpaceNode from "../../x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode.js";
+import X3DRigidJointNode          from "../../x_ite/Components/RigidBodyPhysics/X3DRigidJointNode.js";
+import Ammo                       from "../../lib/ammojs/AmmoClass.js";
 
-   Components .addComponent ({
-      name: "RigidBodyPhysics",
-      types:
-      {
-         BallJoint:            BallJoint,
-         CollidableOffset:     CollidableOffset,
-         CollidableShape:      CollidableShape,
-         CollisionCollection:  CollisionCollection,
-         CollisionSensor:      CollisionSensor,
-         CollisionSpace:       CollisionSpace,
-         Contact:              Contact,
-         DoubleAxisHingeJoint: DoubleAxisHingeJoint,
-         MotorJoint:           MotorJoint,
-         RigidBody:            RigidBody,
-         RigidBodyCollection:  RigidBodyCollection,
-         SingleAxisHingeJoint: SingleAxisHingeJoint,
-         SliderJoint:          SliderJoint,
-         UniversalJoint:       UniversalJoint,
-      },
-      abstractTypes:
-      {
-         X3DNBodyCollidableNode:     X3DNBodyCollidableNode,
-         X3DNBodyCollisionSpaceNode: X3DNBodyCollisionSpaceNode,
-         X3DRigidJointNode:          X3DRigidJointNode,
-      },
-   });
-
-   return {
-      Ammo: Ammo,
-   };
+Components .addComponent ({
+   name: "RigidBodyPhysics",
+   types:
+   {
+      BallJoint:            BallJoint,
+      CollidableOffset:     CollidableOffset,
+      CollidableShape:      CollidableShape,
+      CollisionCollection:  CollisionCollection,
+      CollisionSensor:      CollisionSensor,
+      CollisionSpace:       CollisionSpace,
+      Contact:              Contact,
+      DoubleAxisHingeJoint: DoubleAxisHingeJoint,
+      MotorJoint:           MotorJoint,
+      RigidBody:            RigidBody,
+      RigidBodyCollection:  RigidBodyCollection,
+      SingleAxisHingeJoint: SingleAxisHingeJoint,
+      SliderJoint:          SliderJoint,
+      UniversalJoint:       UniversalJoint,
+   },
+   abstractTypes:
+   {
+      X3DNBodyCollidableNode:     X3DNBodyCollidableNode,
+      X3DNBodyCollisionSpaceNode: X3DNBodyCollisionSpaceNode,
+      X3DRigidJointNode:          X3DRigidJointNode,
+   },
 });
+
+export default {
+   Ammo: Ammo,
+};

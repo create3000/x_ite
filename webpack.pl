@@ -94,5 +94,6 @@ sub tidy {
 #convert $_ foreach `find src/standard -type f -name "*.js"`;
 #convert $_ foreach `find src/x_ite    -type f -name "*.js"`;
 #convert $_ foreach `find src/lib/nurbs    -type f -name "*.js"`;
+convert $_ foreach `find src/assets/components    -type f -name "*.js"`;
 
 tidy $_ foreach `find src -type f -name "*.js"`;

@@ -47,41 +47,30 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components",
-   "x_ite/Components/CADGeometry/CADAssembly",
-   "x_ite/Components/CADGeometry/CADFace",
-   "x_ite/Components/CADGeometry/CADLayer",
-   "x_ite/Components/CADGeometry/CADPart",
-   "x_ite/Components/CADGeometry/IndexedQuadSet",
-   "x_ite/Components/CADGeometry/QuadSet",
-   "x_ite/Components/CADGeometry/X3DProductStructureChildNode",
-],
-function (Components,
-          CADAssembly,
-          CADFace,
-          CADLayer,
-          CADPart,
-          IndexedQuadSet,
-          QuadSet,
-          X3DProductStructureChildNode)
-{
-"use strict";
+import Components                   from "../../x_ite/Components.js";
+import CADAssembly                  from "../../x_ite/Components/CADGeometry/CADAssembly.js";
+import CADFace                      from "../../x_ite/Components/CADGeometry/CADFace.js";
+import CADLayer                     from "../../x_ite/Components/CADGeometry/CADLayer.js";
+import CADPart                      from "../../x_ite/Components/CADGeometry/CADPart.js";
+import IndexedQuadSet               from "../../x_ite/Components/CADGeometry/IndexedQuadSet.js";
+import QuadSet                      from "../../x_ite/Components/CADGeometry/QuadSet.js";
+import X3DProductStructureChildNode from "../../x_ite/Components/CADGeometry/X3DProductStructureChildNode.js";
 
-   Components .addComponent ({
-      name: "CADGeometry",
-      types:
-      {
-         CADAssembly:    CADAssembly,
-         CADFace:        CADFace,
-         CADLayer:       CADLayer,
-         CADPart:        CADPart,
-         IndexedQuadSet: IndexedQuadSet,
-         QuadSet:        QuadSet,
-      },
-      abstractTypes:
-      {
-         X3DProductStructureChildNode: X3DProductStructureChildNode,
-      },
-   });
+Components .addComponent ({
+   name: "CADGeometry",
+   types:
+   {
+      CADAssembly:    CADAssembly,
+      CADFace:        CADFace,
+      CADLayer:       CADLayer,
+      CADPart:        CADPart,
+      IndexedQuadSet: IndexedQuadSet,
+      QuadSet:        QuadSet,
+   },
+   abstractTypes:
+   {
+      X3DProductStructureChildNode: X3DProductStructureChildNode,
+   },
 });
+
+export default undefined;

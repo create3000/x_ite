@@ -46,26 +46,20 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components",
-   "x_ite/Components/Scripting/Script",
-   "x_ite/Components/Scripting/X3DScriptNode",
-],
-function (Components,
-          Script,
-          X3DScriptNode)
-{
-"use strict";
+import Components    from "../../x_ite/Components.js";
+import Script        from "../../x_ite/Components/Scripting/Script.js";
+import X3DScriptNode from "../../x_ite/Components/Scripting/X3DScriptNode.js";
 
-   Components .addComponent ({
-      name: "Scripting",
-      types:
-      {
-         Script: Script,
-      },
-      abstractTypes:
-      {
-         X3DScriptNode: X3DScriptNode,
-      },
-   });
+Components .addComponent ({
+   name: "Scripting",
+   types:
+   {
+      Script: Script,
+   },
+   abstractTypes:
+   {
+      X3DScriptNode: X3DScriptNode,
+   },
 });
+
+export default undefined;

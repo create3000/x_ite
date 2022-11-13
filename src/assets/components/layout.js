@@ -46,41 +46,30 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components",
-   "x_ite/Browser/Layout/X3DLayoutContext",
-   "x_ite/Components/Layout/Layout",
-   "x_ite/Components/Layout/LayoutGroup",
-   "x_ite/Components/Layout/LayoutLayer",
-   "x_ite/Components/Layout/ScreenFontStyle",
-   "x_ite/Components/Layout/ScreenGroup",
-   "x_ite/Components/Layout/X3DLayoutNode",
-],
-function (Components,
-          X3DLayoutContext,
-          Layout,
-          LayoutGroup,
-          LayoutLayer,
-          ScreenFontStyle,
-          ScreenGroup,
-          X3DLayoutNode)
-{
-"use strict";
+import Components       from "../../x_ite/Components.js";
+import X3DLayoutContext from "../../x_ite/Browser/Layout/X3DLayoutContext.js";
+import Layout           from "../../x_ite/Components/Layout/Layout.js";
+import LayoutGroup      from "../../x_ite/Components/Layout/LayoutGroup.js";
+import LayoutLayer      from "../../x_ite/Components/Layout/LayoutLayer.js";
+import ScreenFontStyle  from "../../x_ite/Components/Layout/ScreenFontStyle.js";
+import ScreenGroup      from "../../x_ite/Components/Layout/ScreenGroup.js";
+import X3DLayoutNode    from "../../x_ite/Components/Layout/X3DLayoutNode.js";
 
-   Components .addComponent ({
-      name: "Layout",
-      types:
-      {
-         Layout:          Layout,
-         LayoutGroup:     LayoutGroup,
-         LayoutLayer:     LayoutLayer,
-         ScreenFontStyle: ScreenFontStyle,
-         ScreenGroup:     ScreenGroup,
-      },
-      abstractTypes:
-      {
-         X3DLayoutNode: X3DLayoutNode,
-      },
-      browserContext: X3DLayoutContext,
-   });
+Components .addComponent ({
+   name: "Layout",
+   types:
+   {
+      Layout:          Layout,
+      LayoutGroup:     LayoutGroup,
+      LayoutLayer:     LayoutLayer,
+      ScreenFontStyle: ScreenFontStyle,
+      ScreenGroup:     ScreenGroup,
+   },
+   abstractTypes:
+   {
+      X3DLayoutNode: X3DLayoutNode,
+   },
+   browserContext: X3DLayoutContext,
 });
+
+export default undefined;

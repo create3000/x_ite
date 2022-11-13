@@ -46,32 +46,24 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components",
-   "x_ite/Components/CubeMapTexturing/ComposedCubeMapTexture",
-   "x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture",
-   "x_ite/Components/CubeMapTexturing/ImageCubeMapTexture",
-   "x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
-],
-function (Components,
-          ComposedCubeMapTexture,
-          GeneratedCubeMapTexture,
-          ImageCubeMapTexture,
-          X3DEnvironmentTextureNode)
-{
-"use strict";
+import Components                from "../../x_ite/Components.js";
+import ComposedCubeMapTexture    from "../../x_ite/Components/CubeMapTexturing/ComposedCubeMapTexture.js";
+import GeneratedCubeMapTexture   from "../../x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture.js";
+import ImageCubeMapTexture       from "../../x_ite/Components/CubeMapTexturing/ImageCubeMapTexture.js";
+import X3DEnvironmentTextureNode from "../../x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode.js";
 
-   Components .addComponent ({
-      name: "CubeMapTexturing",
-      types:
-      {
-         ComposedCubeMapTexture:  ComposedCubeMapTexture,
-         GeneratedCubeMapTexture: GeneratedCubeMapTexture,
-         ImageCubeMapTexture:     ImageCubeMapTexture,
-      },
-      abstractTypes:
-      {
-         X3DEnvironmentTextureNode: X3DEnvironmentTextureNode,
-      },
-   });
+Components .addComponent ({
+   name: "CubeMapTexturing",
+   types:
+   {
+      ComposedCubeMapTexture:  ComposedCubeMapTexture,
+      GeneratedCubeMapTexture: GeneratedCubeMapTexture,
+      ImageCubeMapTexture:     ImageCubeMapTexture,
+   },
+   abstractTypes:
+   {
+      X3DEnvironmentTextureNode: X3DEnvironmentTextureNode,
+   },
 });
+
+export default undefined;

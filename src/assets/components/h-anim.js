@@ -46,38 +46,28 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components",
-   "x_ite/Components/HAnim/HAnimDisplacer",
-   "x_ite/Components/HAnim/HAnimHumanoid",
-   "x_ite/Components/HAnim/HAnimJoint",
-   "x_ite/Components/HAnim/HAnimMotion",
-   "x_ite/Components/HAnim/HAnimSegment",
-   "x_ite/Components/HAnim/HAnimSite",
-],
-function (Components,
-          HAnimDisplacer,
-          HAnimHumanoid,
-          HAnimJoint,
-          HAnimMotion,
-          HAnimSegment,
-          HAnimSite)
-{
-"use strict";
+import Components     from "../../x_ite/Components.js";
+import HAnimDisplacer from "../../x_ite/Components/HAnim/HAnimDisplacer.js";
+import HAnimHumanoid  from "../../x_ite/Components/HAnim/HAnimHumanoid.js";
+import HAnimJoint     from "../../x_ite/Components/HAnim/HAnimJoint.js";
+import HAnimMotion    from "../../x_ite/Components/HAnim/HAnimMotion.js";
+import HAnimSegment   from "../../x_ite/Components/HAnim/HAnimSegment.js";
+import HAnimSite      from "../../x_ite/Components/HAnim/HAnimSite.js";
 
-   Components .addComponent ({
-      name: "HAnim",
-      types:
-      {
-         HAnimDisplacer: HAnimDisplacer,
-         HAnimHumanoid:  HAnimHumanoid,
-         HAnimJoint:     HAnimJoint,
-         HAnimMotion:    HAnimMotion,
-         HAnimSegment:   HAnimSegment,
-         HAnimSite:      HAnimSite,
-      },
-      abstractTypes:
-      {
-      },
-   });
+Components .addComponent ({
+   name: "HAnim",
+   types:
+   {
+      HAnimDisplacer: HAnimDisplacer,
+      HAnimHumanoid:  HAnimHumanoid,
+      HAnimJoint:     HAnimJoint,
+      HAnimMotion:    HAnimMotion,
+      HAnimSegment:   HAnimSegment,
+      HAnimSite:      HAnimSite,
+   },
+   abstractTypes:
+   {
+   },
 });
+
+export default undefined;

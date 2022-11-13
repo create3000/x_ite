@@ -46,32 +46,24 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components",
-   "x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext",
-   "x_ite/Components/KeyDeviceSensor/KeySensor",
-   "x_ite/Components/KeyDeviceSensor/StringSensor",
-   "x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
-],
-function (Components,
-          X3DKeyDeviceSensorContext,
-          KeySensor,
-          StringSensor,
-          X3DKeyDeviceSensorNode)
-{
-"use strict";
+import Components                from "../../x_ite/Components.js";
+import X3DKeyDeviceSensorContext from "../../x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext.js";
+import KeySensor                 from "../../x_ite/Components/KeyDeviceSensor/KeySensor.js";
+import StringSensor              from "../../x_ite/Components/KeyDeviceSensor/StringSensor.js";
+import X3DKeyDeviceSensorNode    from "../../x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode.js";
 
-   Components .addComponent ({
-      name: "KeyDeviceSensor",
-      types:
-      {
-         KeySensor:    KeySensor,
-         StringSensor: StringSensor,
-      },
-      abstractTypes:
-      {
-         X3DKeyDeviceSensorNode: X3DKeyDeviceSensorNode,
-      },
-      browserContext: X3DKeyDeviceSensorContext,
-   });
+Components .addComponent ({
+   name: "KeyDeviceSensor",
+   types:
+   {
+      KeySensor:    KeySensor,
+      StringSensor: StringSensor,
+   },
+   abstractTypes:
+   {
+      X3DKeyDeviceSensorNode: X3DKeyDeviceSensorNode,
+   },
+   browserContext: X3DKeyDeviceSensorContext,
 });
+
+export default undefined;

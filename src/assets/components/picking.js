@@ -46,42 +46,31 @@
  ******************************************************************************/
 
 
-define ([
-   "x_ite/Components",
-   "x_ite/Components/Picking/LinePickSensor",
-   "x_ite/Components/Picking/PickableGroup",
-   "x_ite/Components/Picking/PointPickSensor",
-   "x_ite/Components/Picking/PrimitivePickSensor",
-   "x_ite/Components/Picking/VolumePickSensor",
-   "x_ite/Components/Picking/X3DPickSensorNode",
-   "x_ite/Components/Picking/X3DPickableObject",
-   require .getComponentUrl ("rigid-body-physics"),
-],
-function (Components,
-          LinePickSensor,
-          PickableGroup,
-          PointPickSensor,
-          PrimitivePickSensor,
-          VolumePickSensor,
-          X3DPickSensorNode,
-          X3DPickableObject)
-{
-"use strict";
+import Components          from "../../x_ite/Components.js";
+import LinePickSensor      from "../../x_ite/Components/Picking/LinePickSensor.js";
+import PickableGroup       from "../../x_ite/Components/Picking/PickableGroup.js";
+import PointPickSensor     from "../../x_ite/Components/Picking/PointPickSensor.js";
+import PrimitivePickSensor from "../../x_ite/Components/Picking/PrimitivePickSensor.js";
+import VolumePickSensor    from "../../x_ite/Components/Picking/VolumePickSensor.js";
+import X3DPickSensorNode   from "../../x_ite/Components/Picking/X3DPickSensorNode.js";
+import X3DPickableObject   from "../../x_ite/Components/Picking/X3DPickableObject.js";
+import RigidBodyPhysics    from "./rigid-body-physics.js";
 
-   Components .addComponent ({
-      name: "Picking",
-      types:
-      {
-         LinePickSensor:      LinePickSensor,
-         PickableGroup:       PickableGroup,
-         PointPickSensor:     PointPickSensor,
-         PrimitivePickSensor: PrimitivePickSensor,
-         VolumePickSensor:    VolumePickSensor,
-      },
-      abstractTypes:
-      {
-         X3DPickSensorNode: X3DPickSensorNode,
-         X3DPickableObject: X3DPickableObject,
-      },
-   });
+Components .addComponent ({
+   name: "Picking",
+   types:
+   {
+      LinePickSensor:      LinePickSensor,
+      PickableGroup:       PickableGroup,
+      PointPickSensor:     PointPickSensor,
+      PrimitivePickSensor: PrimitivePickSensor,
+      VolumePickSensor:    VolumePickSensor,
+   },
+   abstractTypes:
+   {
+      X3DPickSensorNode: X3DPickSensorNode,
+      X3DPickableObject: X3DPickableObject,
+   },
 });
+
+export default undefined;
