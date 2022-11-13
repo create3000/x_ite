@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 
-import X3dNode      from "../Components/Core/X3dNode.js";
+import X3DNode      from "../Components/Core/X3DNode.js";
 import X3DConstants from "../Base/X3DConstants.js";
 import SFNodeCache  from "../Fields/SFNodeCache.js";
 import Generator    from "../InputOutput/Generator.js";
@@ -60,7 +60,7 @@ const
 
 function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
 {
-   X3dNode .call (this, executionContext);
+   X3DNode .call (this, executionContext);
 
    this [_inlineNode]   = inlineNode;
    this [_exportedName] = exportedName;
@@ -70,7 +70,7 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
    this [_inlineNode] ._loadState .addInterest ("set_loadState__", this);
 }
 
-X3DImportedNode .prototype = Object .assign (Object .create (X3dNode .prototype),
+X3DImportedNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 {
    constructor: X3DImportedNode,
    getInlineNode: function ()
@@ -334,7 +334,7 @@ X3DImportedNode .prototype = Object .assign (Object .create (X3dNode .prototype)
 
       this .deleteRoutes ();
 
-      X3dNode .prototype .dispose .call (this);
+      X3DNode .prototype .dispose .call (this);
    },
 });
 

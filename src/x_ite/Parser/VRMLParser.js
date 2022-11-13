@@ -445,7 +445,7 @@ VRMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (this .success)
       {
-         Promise .all (this .getProviderUrls () .map (url => import (url)))                   .then (function ()
+         Promise .all (this .getProviderUrls () .map (url => import (/* webpackIgnore: true */ url)))                   .then (function ()
          {
             try
             {

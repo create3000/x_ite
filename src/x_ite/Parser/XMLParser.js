@@ -155,7 +155,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
             {
                if (this .success)
                {
-                  Promise .all (this .getProviderUrls () .map (url => import (url)))
+                  Promise .all (this .getProviderUrls () .map (url => import (/* webpackIgnore: true */ url)))
                   .then (function ()
                   {
                      this .childrenElements (xmlElement);
@@ -187,7 +187,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             if (this .success)
             {
-               Promise .all (this .getProviderUrls () .map (url => import (url)))
+               Promise .all (this .getProviderUrls () .map (url => import (/* webpackIgnore: true */ url)))
                .then (function ()
                {
                   this .sceneElement (xmlElement);
@@ -212,7 +212,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
          {
             if (this .success)
             {
-               Promise .all (this .getProviderUrls () .map (url => import (url)))
+               Promise .all (this .getProviderUrls () .map (url => import (/* webpackIgnore: true */ url)))
                .then (function ()
                {
                   this .childrenElements (xmlElement);
@@ -268,7 +268,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
 
       if (this .success)
       {
-         Promise .all (this .getProviderUrls () .map (url => import (url)))
+         Promise .all (this .getProviderUrls () .map (url => import (/* webpackIgnore: true */ url)))
          .then (function ()
          {
             for (var i = 0; i < childNodes .length; ++ i)

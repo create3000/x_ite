@@ -399,55 +399,40 @@ ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype)
             className: "context-menu-icon x_ite-private-icon-world-info",
             callback: function ()
             {
-               define .show ();
+               const
+                  priv      = browser .getShadow () .find (".x_ite-private-browser"),
+                  overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
+                  div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
+                  worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
+                  title     = worldInfo .title,
+                  info      = worldInfo .info;
 
-               require (["https://cdn.jsdelivr.net/gh/showdownjs/showdown@1.9.1/dist/showdown.min.js"], function (showdown)
+               browser .getShadow () .find (".x_ite-private-world-info") .remove ();
+
+               $("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
+
+               if (title .length)
                {
-                  define .hide ();
+                  $("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
+               }
 
-                  browser .getShadow () .find (".x_ite-private-world-info") .remove ();
+               for (const line of info)
+               {
+                  $("<div></div>") .addClass ("x_ite-private-world-info-info") .text (line) .appendTo (div);
+               }
 
-                  const
-                     converter = new showdown .Converter (),
-                     priv      = browser .getShadow () .find (".x_ite-private-browser"),
-                     overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
-                     div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
-                     worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
-                     title     = worldInfo .title,
-                     info      = worldInfo .info;
+               div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
 
-                  converter .setOption ("omitExtraWLInCodeBlocks",            true);
-                  converter .setOption ("simplifiedAutoLink",                 true);
-                  converter .setOption ("excludeTrailingPunctuationFromURLs", true);
-                  converter .setOption ("literalMidWordUnderscores",          true);
-                  converter .setOption ("strikethrough",                      true);
-                  converter .setOption ("openLinksInNewWindow",               false);
+               // Open external link in new tab.
+               div .find ("a[href^=http]") .each (function ()
+               {
+                  if (this .href .indexOf (location .hostname) !== -1)
+                     return;
 
-                  $("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
+                  $(this) .attr ("target", "_blank");
+               });
 
-                  if (title .length)
-                  {
-                     $("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
-                  }
-
-                  for (const line of info)
-                  {
-                     $("<div></div>") .addClass ("x_ite-private-world-info-info") .html (converter .makeHtml (line)) .appendTo (div);
-                  }
-
-                  div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
-
-                  // Open external link in new tab.
-                  div .find ("a[href^=http]") .each (function ()
-                  {
-                     if (this .href .indexOf (location .hostname) !== -1)
-                        return;
-
-                     $(this) .attr ("target", "_blank");
-                  });
-
-                  overlay .on ("click", function () { overlay .remove (); });
-               })
+               overlay .on ("click", function () { overlay .remove (); });
             },
          },
          "about": {
