@@ -55,14 +55,14 @@ import X3DImportedNode             from "./X3DImportedNode.js";
 import ImportedNodesArray          from "./ImportedNodesArray.js";
 import ExternProtoDeclarationArray from "../Prototype/ExternProtoDeclarationArray.js";
 import ProtoDeclarationArray       from "../Prototype/ProtoDeclarationArray.js";
+import X3DProtoDeclaration         from "../Prototype/X3DProtoDeclaration.js";
+import X3DExternProtoDeclaration   from "../Prototype/X3DExternProtoDeclaration.js";
 import RouteArray                  from "../Routing/RouteArray.js";
 import X3DRoute                    from "../Routing/X3DRoute.js";
 import X3DCast                     from "../Base/X3DCast.js";
 import X3DConstants                from "../Base/X3DConstants.js";
 import Generator                   from "../InputOutput/Generator.js";
 import SFNodeCache                 from "../Fields/SFNodeCache.js";
-import X3DProtoDeclaration         from "../Prototype/X3DProtoDeclaration.js";
-import X3DExternProtoDeclaration   from "../Prototype/X3DExternProtoDeclaration.js";
 import Algorithm                   from "../../standard/Math/Algorithm.js";
 
  const
