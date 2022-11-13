@@ -19,7 +19,7 @@ module .exports =
    plugins: [
       new webpack .ProvidePlugin ({
          $: "jquery",
-         pako: "pako",
+         pako: "pako/dist/pako_inflate.js",
       }),
    ],
    performance: {
