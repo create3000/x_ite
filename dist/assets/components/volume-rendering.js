@@ -4,7 +4,7 @@
 var module = { }, exports, process;
 
 const
-	X3D     = window [Symbol .for ("X_ITE.X3D-6.1.0")],
+	X3D     = window [Symbol .for ("X_ITE.X3D-7.0.0")],
 	define  = X3D .define,
 	require = X3D .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -12,7 +12,7 @@ const
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -101,7 +101,7 @@ function (X3DNode,
       },
       getNormalText: function (surfaceNormalsNode)
       {
-         var string = "";
+         let string = "";
 
          if (surfaceNormalsNode)
          {
@@ -111,9 +111,9 @@ function (X3DNode,
             string += "vec4\n";
             string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
             string += "{\n";
-            string += "	vec3 n = texture (surfaceNormals_" + this .getId () + ", texCoord) .xyz * 2.0 - 1.0;\n";
+            string += "   vec3 n = texture (surfaceNormals_" + this .getId () + ", texCoord) .xyz * 2.0 - 1.0;\n";
             string += "\n";
-            string += "	return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
+            string += "   return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
             string += "}\n";
          }
          else
@@ -122,16 +122,16 @@ function (X3DNode,
             string += "vec4\n";
             string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
             string += "{\n";
-            string += "	vec4  offset = vec4 (1.0 / x3d_TextureSize, 0.0);\n";
-            string += "	float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
-            string += "	float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
-            string += "	float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
-            string += "	float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
-            string += "	float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
-            string += "	float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
-            string += "	vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
+            string += "   vec4  offset = vec4 (1.0 / vec3 (textureSize (x3d_Texture3D [0], 0)), 0.0);\n";
+            string += "   float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
+            string += "   float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
+            string += "   float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
+            string += "   float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
+            string += "   float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
+            string += "   float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
+            string += "   vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
             string += "\n";
-            string += "	return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
+            string += "   return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
             string += "}\n";
          }
 
@@ -147,7 +147,7 @@ function (X3DNode,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -220,7 +220,7 @@ function (X3DVolumeRenderStyleNode,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -312,7 +312,7 @@ function (Fields,
       {
          X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -343,7 +343,7 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "// OpacityMapVolumeStyle\n";
@@ -357,7 +357,7 @@ function (Fields,
             string += "vec4\n";
             string += "getOpacityMapStyle_" + this .getId () + " (in vec4 originalColor)\n";
             string += "{\n";
-            string += "	return texture (transferFunction_" + this .getId () + ", originalColor .rg);\n";
+            string += "   return texture (transferFunction_" + this .getId () + ", originalColor .rg);\n";
             string += "}\n";
          }
          else
@@ -368,7 +368,7 @@ function (Fields,
             string += "vec4\n";
             string += "getOpacityMapStyle_" + this .getId () + " (in vec4 originalColor)\n";
             string += "{\n";
-            string += "	return texture (transferFunction_" + this .getId () + ", originalColor .rgb);\n";
+            string += "   return texture (transferFunction_" + this .getId () + ", originalColor .rgb);\n";
             string += "}\n";
          }
 
@@ -379,12 +379,12 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
-         string += "	// OpacityMapVolumeStyle\n";
+         string += "   // OpacityMapVolumeStyle\n";
          string += "\n";
-         string += "	textureColor = getOpacityMapStyle_" + this .getId () + " (textureColor);\n";
+         string += "   textureColor = getOpacityMapStyle_" + this .getId () + " (textureColor);\n";
 
          return string;
       },
@@ -537,7 +537,7 @@ function (PixelTexture,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -638,7 +638,7 @@ function (Fields,
       {
          X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -681,11 +681,8 @@ function (Fields,
          {
             this .renderStyleNode .removeInterest ("addNodeEvent", this);
 
-            this .getVolumeData () .forEach (function (volumeDataNode)
-            {
+            for (const volumeDataNode of this .getVolumeData ())
                this .renderStyleNode .removeVolumeData (volumeDataNode);
-            }
-            .bind (this));
          }
 
          this .renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this ._renderStyle);
@@ -694,46 +691,13 @@ function (Fields,
          {
             this .renderStyleNode .addInterest ("addNodeEvent", this);
 
-            this .getVolumeData () .forEach (function (volumeDataNode)
-            {
+            for (const volumeDataNode of this .getVolumeData ())
                this .renderStyleNode .addVolumeData (volumeDataNode);
-            }
-            .bind (this));
          }
       },
       set_voxels__: function ()
       {
-         if (this .voxelsNode)
-            this .voxelsNode .removeInterest ("set_textureSize__", this);
-
          this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
-
-         if (this .voxelsNode)
-         {
-            this .voxelsNode .addInterest ("set_textureSize__", this);
-
-            this .set_textureSize__ ();
-         }
-      },
-      set_textureSize__: function ()
-      {
-         this .getVolumeData () .forEach (function (volumeDataNode)
-         {
-            try
-            {
-               var textureSize = volumeDataNode .getShader () .getField ("textureSize_" + this .getId ());
-
-               textureSize .x = this .voxelsNode .getWidth ();
-               textureSize .y = this .voxelsNode .getHeight ();
-               textureSize .z = this .voxelsNode .getDepth ();
-            }
-            catch (error)
-            {
-               if (DEBUG)
-                  console .error (error);
-            }
-         }
-         .bind (this));
       },
       addShaderFields: function (shaderNode)
       {
@@ -751,14 +715,7 @@ function (Fields,
 
          if (this .voxelsNode)
          {
-            var textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
-
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "voxels_"      + this .getId (), new Fields .SFNode (this .voxelsNode));
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "textureSize_" + this .getId (), textureSize);
-         }
-         else
-         {
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "textureSize_" + this .getId (), new Fields .SFVec3f ());
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "voxels_" + this .getId (), new Fields .SFNode (this .voxelsNode));
          }
 
          this .getBrowser () .getDefaultBlendedVolumeStyle () .addShaderFields (shaderNode);
@@ -774,7 +731,7 @@ function (Fields,
          if (! this .voxelsNode)
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "// BlendedVolumeStyle\n";
@@ -788,16 +745,14 @@ function (Fields,
          if (this .weightTransferFunction2Node)
             string += "uniform sampler2D weightTransferFunction2_" + this .getId () + ";\n";
 
-         string += "uniform sampler3D voxels_"      + this .getId () + ";\n";
-         string += "uniform vec3      textureSize_" + this .getId () + ";\n";
+         string += "uniform sampler3D voxels_" + this .getId () + ";\n";
 
-         var uniformsText = this .getBrowser () .getDefaultBlendedVolumeStyle () .getUniformsText ();
+         let uniformsText = this .getBrowser () .getDefaultBlendedVolumeStyle () .getUniformsText ();
 
          if (this .renderStyleNode)
             uniformsText += this .renderStyleNode .getUniformsText ();
 
-         uniformsText = uniformsText .replace (/x3d_Texture3D \[0\]/g, "voxels_"      + this .getId ());
-         uniformsText = uniformsText .replace (/x3d_TextureSize/g,     "textureSize_" + this .getId ());
+         uniformsText = uniformsText .replace (/x3d_Texture3D\s*\[0\]/g, "voxels_" + this .getId ());
 
          string += "\n";
          string += uniformsText;
@@ -807,9 +762,9 @@ function (Fields,
          string += "getBlendedStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
          string += "{\n";
 
-         string += "	vec4 blendColor_" + this .getId () + " = texture (voxels_" + this .getId () + ", texCoord);";
+         string += "   vec4 blendColor_" + this .getId () + " = texture (voxels_" + this .getId () + ", texCoord);";
 
-         var functionsText = this .getBrowser () .getDefaultBlendedVolumeStyle () .getFunctionsText ();
+         let functionsText = this .getBrowser () .getDefaultBlendedVolumeStyle () .getFunctionsText ();
 
          if (this .renderStyleNode)
             functionsText += this .renderStyleNode .getFunctionsText ();
@@ -823,39 +778,39 @@ function (Fields,
          {
             default: // CONSTANT
             {
-               string += "	float w1_" + this .getId () + " = weightConstant1_" + this .getId () + ";\n";
+               string += "   float w1_" + this .getId () + " = weightConstant1_" + this .getId () + ";\n";
                break;
             }
             case "ALPHA0":
             {
-               string += "	float w1_" + this .getId () + " = originalColor .a;\n";
+               string += "   float w1_" + this .getId () + " = originalColor .a;\n";
                break;
             }
             case "ALPHA1":
             {
-               string += "	float w1_" + this .getId () + " = blendColor_ " + this .getId () + " .a;\n";
+               string += "   float w1_" + this .getId () + " = blendColor_ " + this .getId () + " .a;\n";
                break;
             }
             case "ONE_MINUS_ALPHA0":
             {
-               string += "	float w1_" + this .getId () + " = 1.0 - originalColor .a;\n";
+               string += "   float w1_" + this .getId () + " = 1.0 - originalColor .a;\n";
                break;
             }
             case "ONE_MINUS_ALPHA1":
             {
-               string += "	float w1_" + this .getId () + " = 1.0 - blendColor_ " + this .getId () + " .a;\n";
+               string += "   float w1_" + this .getId () + " = 1.0 - blendColor_ " + this .getId () + " .a;\n";
                break;
             }
             case "TABLE":
             {
                if (this .weightTransferFunction1Node)
                {
-                  string += "	float w1_" + this .getId () + " = texture (weightTransferFunction1_" + this .getId () + ", vec2 (originalColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
+                  string += "   float w1_" + this .getId () + " = texture (weightTransferFunction1_" + this .getId () + ", vec2 (originalColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
                }
                else
                {
                   // Use default CONSTANT value.
-                  string += "	float w1_" + this .getId () + " = weightConstant1_" + this .getId () + ";\n";
+                  string += "   float w1_" + this .getId () + " = weightConstant1_" + this .getId () + ";\n";
                }
 
                break;
@@ -866,39 +821,39 @@ function (Fields,
          {
             default: // CONSTANT
             {
-               string += "	float w2_" + this .getId () + " = weightConstant2_" + this .getId () + ";\n";
+               string += "   float w2_" + this .getId () + " = weightConstant2_" + this .getId () + ";\n";
                break;
             }
             case "ALPHA0":
             {
-               string += "	float w2_" + this .getId () + " = originalColor .a;\n";
+               string += "   float w2_" + this .getId () + " = originalColor .a;\n";
                break;
             }
             case "ALPHA1":
             {
-               string += "	float w2_" + this .getId () + " = blendColor_ " + this .getId () + " .a;\n";
+               string += "   float w2_" + this .getId () + " = blendColor_ " + this .getId () + " .a;\n";
                break;
             }
             case "ONE_MINUS_ALPHA0":
             {
-               string += "	float w2_" + this .getId () + " = 1.0 - originalColor .a;\n";
+               string += "   float w2_" + this .getId () + " = 1.0 - originalColor .a;\n";
                break;
             }
             case "ONE_MINUS_ALPHA1":
             {
-               string += "	float w2_" + this .getId () + " = 1.0 - blendColor_ " + this .getId () + " .a;\n";
+               string += "   float w2_" + this .getId () + " = 1.0 - blendColor_ " + this .getId () + " .a;\n";
                break;
             }
             case "TABLE":
             {
                if (this .weightTransferFunction2Node)
                {
-                  string += "	float w2_" + this .getId () + " = texture (weightTransferFunction2_" + this .getId () + ", vec2 (originalColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
+                  string += "   float w2_" + this .getId () + " = texture (weightTransferFunction2_" + this .getId () + ", vec2 (originalColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
                }
                else
                {
                   // Use default CONSTANT value.
-                  string += "	float w2_" + this .getId () + " = weightConstant2_" + this .getId () + ";\n";
+                  string += "   float w2_" + this .getId () + " = weightConstant2_" + this .getId () + ";\n";
                }
 
                break;
@@ -906,7 +861,7 @@ function (Fields,
          }
 
          string += "\n";
-         string += "	return clamp (originalColor * w1_" + this .getId () + " + blendColor_" + this .getId () + " * w2_" + this .getId () + ", 0.0, 1.0);\n";
+         string += "   return clamp (originalColor * w1_" + this .getId () + " + blendColor_" + this .getId () + " * w2_" + this .getId () + ", 0.0, 1.0);\n";
          string += "}\n";
 
          return string;
@@ -919,12 +874,12 @@ function (Fields,
          if (! this .voxelsNode)
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
-         string += "	// BlendedVolumeStyle\n";
+         string += "   // BlendedVolumeStyle\n";
          string += "\n";
-         string += "	textureColor = getBlendedStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "   textureColor = getBlendedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
          return string;
       },
@@ -938,7 +893,7 @@ function (Fields,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1040,7 +995,7 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "// BoundaryEnhancementVolumeStyle\n";
@@ -1053,15 +1008,15 @@ function (Fields,
          string += "vec4\n";
          string += "getBoundaryEnhancementStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
          string += "{\n";
-         string += "	float f0 = texture (x3d_Texture3D [0], texCoord) .r;\n";
-         string += "	float f1 = texture (x3d_Texture3D [0], texCoord + vec3 (0.0, 0.0, 1.0 / x3d_TextureSize .z)) .r;\n";
-         string += "	float f  = abs (f0 - f1);\n";
+         string += "   float f0 = texture (x3d_Texture3D [0], texCoord) .r;\n";
+         string += "   float f1 = texture (x3d_Texture3D [0], texCoord + vec3 (0.0, 0.0, 1.0 / float (textureSize (x3d_Texture3D [0], 0) .z))) .r;\n";
+         string += "   float f  = abs (f0 - f1);\n";
          string += "\n";
-         string += "	float retainedOpacity = retainedOpacity_" + this .getId () + ";\n";
-         string += "	float boundaryOpacity = boundaryOpacity_" + this .getId () + ";\n";
-         string += "	float opacityFactor   = opacityFactor_" + this .getId () + ";\n";
+         string += "   float retainedOpacity = retainedOpacity_" + this .getId () + ";\n";
+         string += "   float boundaryOpacity = boundaryOpacity_" + this .getId () + ";\n";
+         string += "   float opacityFactor   = opacityFactor_" + this .getId () + ";\n";
          string += "\n";
-         string += "	return vec4 (originalColor .rgb, originalColor .a * (retainedOpacity + boundaryOpacity * pow (f, opacityFactor)));\n";
+         string += "   return vec4 (originalColor .rgb, originalColor .a * (retainedOpacity + boundaryOpacity * pow (f, opacityFactor)));\n";
          string += "}\n";
 
          return string;
@@ -1071,12 +1026,12 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
-         string += "	// BoundaryEnhancementVolumeStyle\n";
+         string += "   // BoundaryEnhancementVolumeStyle\n";
          string += "\n";
-         string += "	textureColor = getBoundaryEnhancementStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "   textureColor = getBoundaryEnhancementStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
          return string;
       },
@@ -1090,7 +1045,7 @@ function (Fields,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1185,7 +1140,7 @@ function (Fields,
       {
          X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -1215,7 +1170,7 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "// CartoonVolumeStyle\n";
@@ -1230,148 +1185,148 @@ function (Fields,
          string += "vec3\n";
          string += "rgb2hsv_" + this .getId () + " (in vec3 color)\n";
          string += "{\n";
-         string += "	float h = 0.0;\n";
-         string += "	float s = 0.0;\n";
-         string += "	float v = 0.0;\n";
+         string += "   float h = 0.0;\n";
+         string += "   float s = 0.0;\n";
+         string += "   float v = 0.0;\n";
          string += "\n";
-         string += "	float min = min (min (color .r, color .g), color .b);\n";
-         string += "	float max = max (max (color .r, color .g), color .b);\n";
-         string += "	v = max; // value\n";
+         string += "   float min = min (min (color .r, color .g), color .b);\n";
+         string += "   float max = max (max (color .r, color .g), color .b);\n";
+         string += "   v = max; // value\n";
          string += "\n";
-         string += "	float delta = max - min;\n";
+         string += "   float delta = max - min;\n";
          string += "\n";
-         string += "	if (max != 0.0 && delta != 0.0)\n";
-         string += "	{\n";
-         string += "		s = delta / max; // s\n";
+         string += "   if (max != 0.0 && delta != 0.0)\n";
+         string += "   {\n";
+         string += "      s = delta / max; // s\n";
          string += "\n";
-         string += "		if (color .r == max)\n";
-         string += "			h =     (color .g - color .b) / delta;  // between yellow & magenta\n";
-         string += "		else if (color .g == max)\n";
-         string += "			h = 2.0 + (color .b - color .r) / delta;  // between cyan & yellow\n";
-         string += "		else\n";
-         string += "			h = 4.0 + (color .r - color .g) / delta;  // between magenta & cyan\n";
+         string += "      if (color .r == max)\n";
+         string += "         h =     (color .g - color .b) / delta;  // between yellow & magenta\n";
+         string += "      else if (color .g == max)\n";
+         string += "         h = 2.0 + (color .b - color .r) / delta;  // between cyan & yellow\n";
+         string += "      else\n";
+         string += "         h = 4.0 + (color .r - color .g) / delta;  // between magenta & cyan\n";
          string += "\n";
-         string += "		h *= M_PI / 3.0;  // radiants\n";
-         string += "		if (h < 0.0)\n";
-         string += "			h += M_PI * 2.0;\n";
-         string += "	}\n";
-         string += "	else\n";
-         string += "		s = h = 0.0;         // s = 0, h is undefined\n";
+         string += "      h *= M_PI / 3.0;  // radiants\n";
+         string += "      if (h < 0.0)\n";
+         string += "         h += M_PI * 2.0;\n";
+         string += "   }\n";
+         string += "   else\n";
+         string += "      s = h = 0.0;         // s = 0, h is undefined\n";
          string += "\n";
-         string += "	return vec3 (h, s, v);\n";
+         string += "   return vec3 (h, s, v);\n";
          string += "}\n";
 
          string += "\n";
          string += "vec3\n";
          string += "hsv2rgb_" + this .getId () + " (in vec3 hsv)\n";
          string += "{\n";
-         string += "	float h = hsv [0];\n";
-         string += "	float s = clamp (hsv [1], 0.0, 1.0);\n";
-         string += "	float v = clamp (hsv [2], 0.0, 1.0);\n";
+         string += "   float h = hsv [0];\n";
+         string += "   float s = clamp (hsv [1], 0.0, 1.0);\n";
+         string += "   float v = clamp (hsv [2], 0.0, 1.0);\n";
          string += "\n";
-         string += "	// H is given on [0, 2 * Pi]. S and V are given on [0, 1].\n";
-         string += "	// RGB are each returned on [0, 1].\n";
+         string += "   // H is given on [0, 2 * Pi]. S and V are given on [0, 1].\n";
+         string += "   // RGB are each returned on [0, 1].\n";
          string += "\n";
-         string += "	if (s == 0.0)\n";
-         string += "	{\n";
-         string += "		// achromatic (grey)\n";
-         string += "		return vec3 (v, v, v);\n";
-         string += "	}\n";
-         string += "	else\n";
-         string += "	{\n";
-         string += "		float w = (h * (180.0 / M_PI)) / 60.0;     // sector 0 to 5\n";
+         string += "   if (s == 0.0)\n";
+         string += "   {\n";
+         string += "      // achromatic (grey)\n";
+         string += "      return vec3 (v, v, v);\n";
+         string += "   }\n";
+         string += "   else\n";
+         string += "   {\n";
+         string += "      float w = (h * (180.0 / M_PI)) / 60.0;     // sector 0 to 5\n";
          string += "\n";
-         string += "		float i = floor (w);\n";
-         string += "		float f = w - i;                      // factorial part of h\n";
-         string += "		float p = v * ( 1.0 - s );\n";
-         string += "		float q = v * ( 1.0 - s * f );\n";
-         string += "		float t = v * ( 1.0 - s * ( 1.0 - f ) );\n";
+         string += "      float i = floor (w);\n";
+         string += "      float f = w - i;                      // factorial part of h\n";
+         string += "      float p = v * ( 1.0 - s );\n";
+         string += "      float q = v * ( 1.0 - s * f );\n";
+         string += "      float t = v * ( 1.0 - s * ( 1.0 - f ) );\n";
          string += "\n";
-         string += "		switch (int (i) % 6)\n";
-         string += "		{\n";
-         string += "			case 0:  return vec3 (v, t, p);\n";
-         string += "			case 1:  return vec3 (q, v, p);\n";
-         string += "			case 2:  return vec3 (p, v, t);\n";
-         string += "			case 3:  return vec3 (p, q, v);\n";
-         string += "			case 4:  return vec3 (t, p, v);\n";
-         string += "			default: return vec3 (v, p, q);\n";
-         string += "		}\n";
-         string += "	}\n";
+         string += "      switch (int (i) % 6)\n";
+         string += "      {\n";
+         string += "         case 0:  return vec3 (v, t, p);\n";
+         string += "         case 1:  return vec3 (q, v, p);\n";
+         string += "         case 2:  return vec3 (p, v, t);\n";
+         string += "         case 3:  return vec3 (p, q, v);\n";
+         string += "         case 4:  return vec3 (t, p, v);\n";
+         string += "         default: return vec3 (v, p, q);\n";
+         string += "      }\n";
+         string += "   }\n";
          string += "\n";
-         string += "	return vec3 (0.0);\n";
+         string += "   return vec3 (0.0);\n";
          string += "}\n";
 
          string += "\n";
          string += "vec3\n";
          string += "mix_hsv_" + this .getId () + " (in vec3 a, in vec3 b, in float t)\n";
          string += "{\n";
-         string += "	// Linearely interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.\n";
-         string += "	// Source and destination color must be in HSV space.\n";
+         string += "   // Linearely interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.\n";
+         string += "   // Source and destination color must be in HSV space.\n";
          string += "\n";
-         string += "	float ha = a [0];\n";
-         string += "	float sa = a [1];\n";
-         string += "	float va = a [2];\n";
+         string += "   float ha = a [0];\n";
+         string += "   float sa = a [1];\n";
+         string += "   float va = a [2];\n";
          string += "\n";
-         string += "	float hb = b [0];\n";
-         string += "	float sb = b [1];\n";
-         string += "	float vb = b [2];\n";
+         string += "   float hb = b [0];\n";
+         string += "   float sb = b [1];\n";
+         string += "   float vb = b [2];\n";
          string += "\n";
-         string += "	if (sa == 0.0)\n";
-         string += "		ha = hb;\n";
+         string += "   if (sa == 0.0)\n";
+         string += "      ha = hb;\n";
          string += "\n";
-         string += "	if (sb == 0.0)\n";
-         string += "		hb = ha;\n";
+         string += "   if (sb == 0.0)\n";
+         string += "      hb = ha;\n";
          string += "\n";
-         string += "	float range = abs (hb - ha);\n";
+         string += "   float range = abs (hb - ha);\n";
          string += "\n";
-         string += "	if (range <= M_PI)\n";
-         string += "	{\n";
-         string += "		float h = ha + t * (hb - ha);\n";
-         string += "		float s = sa + t * (sb - sa);\n";
-         string += "		float v = va + t * (vb - va);\n";
-         string += "		return vec3 (h, s, v);\n";
-         string += "	}\n";
+         string += "   if (range <= M_PI)\n";
+         string += "   {\n";
+         string += "      float h = ha + t * (hb - ha);\n";
+         string += "      float s = sa + t * (sb - sa);\n";
+         string += "      float v = va + t * (vb - va);\n";
+         string += "      return vec3 (h, s, v);\n";
+         string += "   }\n";
          string += "\n";
-         string += "	float PI2  = M_PI * 2.0;\n";
-         string += "	float step = (PI2 - range) * t;\n";
-         string += "	float h    = ha < hb ? ha - step : ha + step;\n";
+         string += "   float PI2  = M_PI * 2.0;\n";
+         string += "   float step = (PI2 - range) * t;\n";
+         string += "   float h    = ha < hb ? ha - step : ha + step;\n";
          string += "\n";
-         string += "	if (h < 0.0)\n";
-         string += "		h += PI2;\n";
+         string += "   if (h < 0.0)\n";
+         string += "      h += PI2;\n";
          string += "\n";
-         string += "	else if (h > PI2)\n";
-         string += "		h -= PI2;\n";
+         string += "   else if (h > PI2)\n";
+         string += "      h -= PI2;\n";
          string += "\n";
-         string += "	float s = sa + t * (sb - sa);\n";
-         string += "	float v = va + t * (vb - va);\n";
-         string += "	return vec3 (h, s, v);\n";
+         string += "   float s = sa + t * (sb - sa);\n";
+         string += "   float v = va + t * (vb - va);\n";
+         string += "   return vec3 (h, s, v);\n";
          string += "}\n";
 
          string += "\n";
          string += "vec4\n";
          string += "getCartoonStyle_" + this .getId () + " (in vec4 originalColor, vec3 texCoord)\n";
          string += "{\n";
-         string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+         string += "   vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
          string += "\n";
-         string += "	if (surfaceNormal .w == 0.0)\n";
-         string += "		return vec4 (0.0);\n";
+         string += "   if (surfaceNormal .w == 0.0)\n";
+         string += "      return vec4 (0.0);\n";
          string += "\n";
-         string += "	vec4 orthogonalColor = orthogonalColor_" + this .getId () + ";\n";
-         string += "	vec4 parallelColor   = parallelColor_" + this .getId () + ";\n";
-         string += "	int  colorSteps      = colorSteps_" + this .getId () + ";\n";
+         string += "   vec4 orthogonalColor = orthogonalColor_" + this .getId () + ";\n";
+         string += "   vec4 parallelColor   = parallelColor_" + this .getId () + ";\n";
+         string += "   int  colorSteps      = colorSteps_" + this .getId () + ";\n";
          string += "\n";
-         string += "	float steps    = clamp (float (colorSteps), 1.0, 64.0);\n";
-         string += "	float step     = M_PI / 2.0 / steps;\n";
-         string += "	float cosTheta = min (dot (surfaceNormal .xyz, normalize (vertex)), 1.0);\n";
+         string += "   float steps    = clamp (float (colorSteps), 1.0, 64.0);\n";
+         string += "   float step     = M_PI / 2.0 / steps;\n";
+         string += "   float cosTheta = min (dot (surfaceNormal .xyz, normalize (vertex)), 1.0);\n";
          string += "\n";
-         string += "	if (cosTheta < 0.0)\n";
-         string += "		return vec4 (0.0);\n";
+         string += "   if (cosTheta < 0.0)\n";
+         string += "      return vec4 (0.0);\n";
          string += "\n";
-         string += "	float t             = cos (min (floor (acos (cosTheta) / step) * (steps > 1.0 ? steps / (steps - 1.0) : 1.0), steps) * step);\n";
-         string += "	vec3  orthogonalHSV = rgb2hsv_" + this .getId () + " (orthogonalColor .rgb);\n";
-         string += "	vec3  parallelHSV   = rgb2hsv_" + this .getId () + " (parallelColor .rgb);\n";
+         string += "   float t             = cos (min (floor (acos (cosTheta) / step) * (steps > 1.0 ? steps / (steps - 1.0) : 1.0), steps) * step);\n";
+         string += "   vec3  orthogonalHSV = rgb2hsv_" + this .getId () + " (orthogonalColor .rgb);\n";
+         string += "   vec3  parallelHSV   = rgb2hsv_" + this .getId () + " (parallelColor .rgb);\n";
          string += "\n";
-         string += "	return vec4 (hsv2rgb_" + this .getId () + " (mix_hsv_" + this .getId () + " (orthogonalHSV, parallelHSV, t)), originalColor .a);\n";
+         string += "   return vec4 (hsv2rgb_" + this .getId () + " (mix_hsv_" + this .getId () + " (orthogonalHSV, parallelHSV, t)), originalColor .a);\n";
          string += "}\n";
 
          return string;
@@ -1381,12 +1336,12 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
-         string += "	// CartoonVolumeStyle\n";
+         string += "   // CartoonVolumeStyle\n";
          string += "\n";
-         string += "	textureColor = getCartoonStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "   textureColor = getCartoonStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
          return string;
       },
@@ -1400,7 +1355,7 @@ function (Fields,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1494,7 +1449,7 @@ function (Fields,
       {
          X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -1507,62 +1462,44 @@ function (Fields,
       {
          X3DComposableVolumeRenderStyleNode .prototype .addVolumeData .call (this, volumeDataNode);
 
-         var renderStyleNodes = this .renderStyleNodes;
-
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
-         {
-            var renderStyleNode = renderStyleNodes [i];
-
+         for (const renderStyleNode of this .renderStyleNodes)
             renderStyleNode .addVolumeData (volumeDataNode);
-         }
       },
       removeVolumeData: function (volumeDataNode)
       {
          X3DComposableVolumeRenderStyleNode .prototype .removeVolumeData .call (this, volumeDataNode);
 
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
-         {
-            var renderStyleNode = renderStyleNodes [i];
-
+         for (const renderStyleNode of this .renderStyleNodes)
             renderStyleNode .removeVolumeData (volumeDataNode);
-         }
       },
       set_renderStyle__: function ()
       {
-         var renderStyleNodes = this .renderStyleNodes;
+         const renderStyleNodes = this .renderStyleNodes;
 
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
+         for (const renderStyleNode of renderStyleNodes)
          {
-            var renderStyleNode = renderStyleNodes [i];
-
             renderStyleNode .removeInterest ("addNodeEvent", this);
 
-            this .getVolumeData () .forEach (function (volumeDataNode)
-            {
+            for (const volumeDataNode of this .getVolumeData ())
                renderStyleNode .removeVolumeData (volumeDataNode);
-            });
          }
 
          renderStyleNodes .length = 0;
 
-         for (var i = 0, length = this ._renderStyle .length; i < length; ++ i)
+         for (const node of this ._renderStyle)
          {
-            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this ._renderStyle [i]);
+            const renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, node);
 
             if (renderStyleNode)
                renderStyleNodes .push (renderStyleNode);
          }
 
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
+         for (const renderStyleNode of renderStyleNodes)
          {
-            var renderStyleNode = renderStyleNodes [i];
-
             renderStyleNode .addInterest ("addNodeEvent", this);
 
-            this .getVolumeData () .forEach (function (volumeDataNode)
-            {
+            for (const volumeDataNode of this .getVolumeData ())
                renderStyleNode .addVolumeData (volumeDataNode);
-            });
          }
       },
       addShaderFields: function (shaderNode)
@@ -1570,33 +1507,29 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return;
 
-         var renderStyleNodes = this .renderStyleNodes;
-
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
-            renderStyleNodes [i] .addShaderFields (shaderNode);
+         for (const renderStyleNode of this .renderStyleNodes)
+            renderStyleNode .addShaderFields (shaderNode);
       },
       getUniformsText: function ()
       {
          if (! this ._enabled .getValue ())
             return "";
 
-         var
-            renderStyleNodes = this .renderStyleNodes,
-            string           = "";
+         let string = "";
 
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
-            string += renderStyleNodes [i] .getUniformsText ();
+         for (const renderStyleNode of this .renderStyleNodes)
+            string += renderStyleNode .getUniformsText ();
 
          string += "\n";
          string += "vec4\n";
          string += "getComposedStyle_" + this .getId () + " (in vec4 textureColor, in vec3 texCoord)\n";
          string += "{\n";
 
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
-            string += renderStyleNodes [i] .getFunctionsText ();
+         for (const renderStyleNode of this .renderStyleNodes)
+            string += renderStyleNode .getFunctionsText ();
 
          string += "\n";
-         string += "	return textureColor;\n";
+         string += "   return textureColor;\n";
          string += "}\n";
 
          return string;
@@ -1606,12 +1539,12 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
-         string += "	// ComposedVolumeStyle\n";
+         string += "   // ComposedVolumeStyle\n";
          string += "\n";
-         string += "	textureColor = getComposedStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "   textureColor = getComposedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
          return string;
       }
@@ -1625,7 +1558,7 @@ function (Fields,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1719,7 +1652,7 @@ function (Fields,
       {
          X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -1748,7 +1681,7 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "// EdgeEnhancementVolumeStyle\n";
@@ -1762,20 +1695,20 @@ function (Fields,
          string += "vec4\n";
          string += "getEdgeEnhacementStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
          string += "{\n";
-         string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+         string += "   vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
          string += "\n";
-         string += "	if (surfaceNormal .w == 0.0)\n";
-         string += "		return vec4 (0.0);\n";
+         string += "   if (surfaceNormal .w == 0.0)\n";
+         string += "      return vec4 (0.0);\n";
          string += "\n";
-         string += "	vec4  edgeColor         = edgeColor_" + this .getId () + ";\n";
-         string += "	float gradientThreshold = gradientThreshold_" + this .getId () + ";\n";
+         string += "   vec4  edgeColor         = edgeColor_" + this .getId () + ";\n";
+         string += "   float gradientThreshold = gradientThreshold_" + this .getId () + ";\n";
          string += "\n";
-         string += "	float angle = abs (dot (surfaceNormal .xyz, normalize (vertex)));\n";
+         string += "   float angle = abs (dot (surfaceNormal .xyz, normalize (vertex)));\n";
          string += "\n";
-         string += "	if (angle >= cos (gradientThreshold))\n";
-         string += "		return originalColor;\n";
-         string += "	else\n";
-         string += "		return vec4 (mix (edgeColor .rgb, originalColor.rgb, angle), originalColor .a);\n";
+         string += "   if (angle >= cos (gradientThreshold))\n";
+         string += "      return originalColor;\n";
+         string += "   else\n";
+         string += "      return vec4 (mix (edgeColor .rgb, originalColor.rgb, angle), originalColor .a);\n";
          string += "}\n";
 
          return string;
@@ -1785,12 +1718,12 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
-         string += "	// EdgeEnhancementVolumeStyle\n";
+         string += "   // EdgeEnhancementVolumeStyle\n";
          string += "\n";
-         string += "	textureColor = getEdgeEnhacementStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "   textureColor = getEdgeEnhacementStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
          return string;
       },
@@ -1799,12 +1732,157 @@ function (Fields,
    return EdgeEnhancementVolumeStyle;
 });
 
+
+define('text!x_ite/Browser/VolumeRendering/VolumeStyle.vs',[],function () { return '#version 300 es\n\nprecision highp float;\nprecision highp int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\nuniform mat4 x3d_TextureMatrix [1];\n\nin vec4  x3d_TexCoord0;\nin vec4  x3d_Vertex;\n\nout vec3 vertex;\nout vec4 texCoord;\n\nvoid\nmain ()\n{\n   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;\n\n   vertex   = position .xyz;\n   texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;\n\n   gl_Position = x3d_ProjectionMatrix * position;\n}\n';});
+
+
+define('text!x_ite/Browser/VolumeRendering/VolumeStyle.fs',[],function () { return '#version 300 es\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler3D;\n\nin vec3 vertex;\nin vec4 texCoord;\n\nuniform sampler3D x3d_Texture3D [1];\nuniform mat3 x3d_TextureNormalMatrix;\n\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nconst float M_PI = 3.14159265359;\n\n#pragma X3D include "includes/ClipPlanes.glsl"\n#pragma X3D include "includes/Fog.glsl"\n\n// VOLUME_STYLES_UNIFORMS\n\nout vec4 x3d_FragColor;\n\nvec4\ngetTextureColor (in vec3 texCoord)\n{\n   if (texCoord .s < 0.0 || texCoord .s > 1.0)\n      discard;\n\n   if (texCoord .t < 0.0 || texCoord .t > 1.0)\n      discard;\n\n   if (texCoord .p < 0.0 || texCoord .p > 1.0)\n      discard;\n\n   vec4 textureColor = texture (x3d_Texture3D [0], texCoord);\n\n   // Apply volume styles.\n\n// VOLUME_STYLES_FUNCTIONS\n\n   return textureColor;\n}\n\nvoid\nmain ()\n{\n   #if defined (X3D_CLIP_PLANES)\n      clip ();\n   #endif\n\n   vec4 finalColor = getTextureColor (texCoord .stp / texCoord .q);\n\n   #if defined (X3D_FOG)\n      finalColor .rgb = getFogColor (finalColor .rgb);\n   #endif\n\n   x3d_FragColor = finalColor;\n}\n';});
+
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+ define ('x_ite/Browser/VolumeRendering/VolumeMaterial',[
+   "x_ite/Components/Shape/UnlitMaterial",
+   "text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
+   "text!x_ite/Browser/VolumeRendering/VolumeStyle.fs",
+],
+function (UnlitMaterial,
+          vs,
+          fs)
+{
+"use strict";
+
+   function VolumeMaterial (executionContext, volumeDataNode)
+   {
+      UnlitMaterial .call (this, executionContext);
+
+      this .volumeDataNode    = volumeDataNode;
+      this .volumeShaderNodes = new Map ();
+   }
+
+   VolumeMaterial .prototype = Object .assign (Object .create (UnlitMaterial .prototype),
+   {
+      constructor: VolumeMaterial,
+      getTypeName: function ()
+      {
+         return "VolumeMaterial";
+      },
+      getComponentName: function ()
+      {
+         return "Shape";
+      },
+      getContainerField: function ()
+      {
+         return "material";
+      },
+      getVolumeShaders: function ()
+      {
+         return this .volumeShaderNodes;
+      },
+      getShader: function (geometryContext, renderContext)
+      {
+         const { fogNode, objectsCount } = renderContext;
+
+         let key = "";
+
+         key += fogNode ? fogNode .getFogKey () : "0";
+         key += ".";
+         key += objectsCount [0]; // Clip planes
+         key += ".";
+         key += objectsCount [1]; // Lights
+
+         return this .volumeShaderNodes .get (key) || this .createShader (key, geometryContext, renderContext);
+      },
+      createShader: function (key, geometryContext, renderContext)
+      {
+         const
+            browser = this .getBrowser (),
+            options = [ ];
+
+         const { fogNode, objectsCount } = renderContext;
+
+         if (fogNode)
+            options .push ("X3D_FOG");
+
+         if (objectsCount [0])
+         {
+            options .push ("X3D_CLIP_PLANES")
+            options .push ("X3D_NUM_CLIP_PLANES " + Math .min (objectsCount [0], browser .getMaxClipPlanes ()));
+         }
+
+         if (objectsCount [1])
+         {
+            options .push ("X3D_LIGHTING")
+            options .push ("X3D_NUM_LIGHTS " + Math .min (objectsCount [1], browser .getMaxLights ()));
+         }
+
+         const shaderNode = this .volumeDataNode .createShader (options, vs, fs);
+
+         this .volumeShaderNodes .set (key, shaderNode);
+
+         return shaderNode;
+      },
+      setShaderUniforms: function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+      {
+         this .volumeDataNode .setShaderUniforms (gl, shaderObject);
+      },
+   });
+
+   return VolumeMaterial;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -1854,6 +1932,7 @@ define ('x_ite/Components/VolumeRendering/X3DVolumeDataNode',[
    "x_ite/Components/Grouping/X3DBoundedObject",
    "x_ite/Base/X3DConstants",
    "x_ite/Browser/Core/TextureQuality",
+   "x_ite/Browser/VolumeRendering/VolumeMaterial",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
@@ -1861,6 +1940,7 @@ function (Fields,
           X3DBoundedObject,
           X3DConstants,
           TextureQuality,
+          VolumeMaterial,
           Vector3)
 {
 "use strict";
@@ -1872,14 +1952,16 @@ function (Fields,
 
       this .addType (X3DConstants .X3DVolumeDataNode);
 
-      this .proximitySensorNode   = executionContext .createNode ("ProximitySensor",     false);
-      this .transformNode         = executionContext .createNode ("Transform",           false);
-      this .shapeNode             = executionContext .createNode ("Shape",               false);
-      this .appearanceNode        = executionContext .createNode ("Appearance",          false);
-      this .textureTransformNode  = executionContext .createNode ("TextureTransform3D",  false);
-      this .geometryNode          = executionContext .createNode ("QuadSet",             false);
-      this .textureCoordinateNode = executionContext .createNode ("TextureCoordinate3D", false);
-      this .coordinateNode        = executionContext .createNode ("Coordinate",          false);
+      this .proximitySensorNode      = executionContext .createNode ("ProximitySensor",     false);
+      this .transformNode            = executionContext .createNode ("Transform",           false);
+      this .shapeNode                = executionContext .createNode ("Shape",               false);
+      this .appearanceNode           = executionContext .createNode ("Appearance",          false);
+      this .textureTransformNode     = executionContext .createNode ("TextureTransform3D",  false);
+      this .geometryNode             = executionContext .createNode ("QuadSet",             false);
+      this .textureCoordinateNode    = executionContext .createNode ("TextureCoordinate3D", false);
+      this .coordinateNode           = executionContext .createNode ("Coordinate",          false);
+      this .volumeMaterialNode       = new VolumeMaterial (executionContext, this);
+      this .textureNormalMatrixArray = new Float32Array (9);
 
       this .setCameraObject (true);
    }
@@ -1893,7 +1975,7 @@ function (Fields,
          X3DChildNode     .prototype .initialize .call (this);
          X3DBoundedObject .prototype .initialize .call (this);
 
-         var
+         const
             browser = this .getBrowser (),
             gl      = browser .getContext ();
 
@@ -1906,23 +1988,36 @@ function (Fields,
             this .set_dimensions__ ();
          }
 
-         this .appearanceNode .setPrivate (true);
+         this ._visible     .addFieldInterest (this .transformNode ._visible);
+         this ._bboxDisplay .addFieldInterest (this .transformNode ._bboxDisplay);
 
          this .proximitySensorNode ._size         = new Fields .SFVec3f (-1, -1, -1);
          this .transformNode ._children           = new Fields .MFNode (this .shapeNode);
          this .shapeNode ._appearance             = this .appearanceNode;
          this .shapeNode ._geometry               = this .geometryNode;
          this .appearanceNode ._alphaMode         = "BLEND";
+         this .appearanceNode ._material          = this .volumeMaterialNode;
          this .appearanceNode ._textureTransform  = this .textureTransformNode;
          this .textureTransformNode ._translation = new Fields .SFVec3f (0.5, 0.5, 0.5);
          this .textureTransformNode ._center      = new Fields .SFVec3f (-0.5, -0.5, -0.5);
          this .geometryNode ._texCoord            = this .textureCoordinateNode;
          this .geometryNode ._coord               = this .coordinateNode;
 
+         this .coordinateNode        .setPrivate (true);
+         this .textureCoordinateNode .setPrivate (true);
+         this .geometryNode          .setPrivate (true);
+         this .textureTransformNode  .setPrivate (true);
+         this .volumeMaterialNode    .setPrivate (true);
+         this .appearanceNode        .setPrivate (true);
+         this .shapeNode             .setPrivate (true);
+         this .transformNode         .setPrivate (true);
+         this .proximitySensorNode   .setPrivate (true);
+
          this .coordinateNode        .setup ();
          this .textureCoordinateNode .setup ();
          this .geometryNode          .setup ();
          this .textureTransformNode  .setup ();
+         this .volumeMaterialNode    .setup ();
          this .appearanceNode        .setup ();
          this .shapeNode             .setup ();
          this .transformNode         .setup ();
@@ -1932,6 +2027,8 @@ function (Fields,
          this .proximitySensorNode ._orientation_changed .addFieldInterest (this .textureTransformNode ._rotation);
 
          this .textureTransformNode .addInterest ("set_textureTransform__", this);
+
+         this .set_textureTransform__ ();
       },
       getBBox: function (bbox, shadows)
       {
@@ -1944,23 +2041,13 @@ function (Fields,
       {
          return this .appearanceNode;
       },
-      setShader: function (shaderNode)
+      updateShader: function ()
       {
-         this .getAppearance () ._shaders [0] = shaderNode;
-
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureNormalMatrix" , new Fields .SFMatrix3f ());
-         shaderNode .setup ();
-
-         this .set_textureTransform__ ();
+         this .volumeMaterialNode .getVolumeShaders () .clear ();
       },
-      getShader: function ()
+      addShaderUniformNames: function (uniformNames)
       {
-         var node = this .appearanceNode ._shaders [0];
-
-         if (node)
-            return node .getValue ();
-
-         return null;
+         uniformNames .push ("x3d_TextureNormalMatrix");
       },
       getNumPlanes: function ()
       {
@@ -1984,7 +2071,7 @@ function (Fields,
       },
       set_dimensions__: function ()
       {
-         var
+         const
             NUM_PLANES = this .getNumPlanes (),
             size       = this ._dimensions .getValue () .magnitude (),
             size1_2    = size / 2,
@@ -1992,9 +2079,9 @@ function (Fields,
 
          this .coordinateNode ._point .length = 0;
 
-         for (var i = 0; i < NUM_PLANES; ++ i)
+         for (let i = 0; i < NUM_PLANES; ++ i)
          {
-            var z = i / (NUM_PLANES - 1) - 0.5;
+            const z = i / (NUM_PLANES - 1) - 0.5;
 
             points .push ( size1_2,  size1_2, size * z,
                           -size1_2,  size1_2, size * z,
@@ -2004,42 +2091,34 @@ function (Fields,
 
          this .coordinateNode ._point        = points;
          this .textureCoordinateNode ._point = points;
-
-         this .textureTransformNode ._scale = new Fields .SFVec3f (1 / this ._dimensions .x, 1 / this ._dimensions .y, 1 / this ._dimensions .z);
+         this .textureTransformNode ._scale  = new Fields .SFVec3f (1 / this ._dimensions .x,
+                                                                    1 / this ._dimensions .y,
+                                                                    1 / this ._dimensions .z);
       },
       set_textureTransform__: function ()
       {
-         var shaderNode = this .getShader ();
-
-         if (shaderNode)
-         {
-            var invTextureMatrix = shaderNode .getField ("x3d_TextureNormalMatrix");
-
-            invTextureMatrix .setValue (this .textureTransformNode .getMatrix () .submatrix .inverse () .transpose ());
-         }
+         this .textureNormalMatrixArray .set (this .textureTransformNode .getMatrix () .submatrix .inverse ());
       },
       traverse: function (type, renderObject)
       {
          this .proximitySensorNode .traverse (type, renderObject);
          this .transformNode       .traverse (type, renderObject);
-      }
+      },
+      setShaderUniforms (gl, shaderObject)
+      {
+         gl .uniformMatrix3fv (shaderObject .x3d_TextureNormalMatrix, true, this .textureNormalMatrixArray);
+      },
    });
 
    return X3DVolumeDataNode;
 });
-
-
-define('text!x_ite/Browser/VolumeRendering/VolumeStyle.vs',[],function () { return '#version 300 es\n\nprecision highp float;\nprecision highp int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\nuniform mat4 x3d_TextureMatrix [1];\n\nin float x3d_FogDepth;\nin vec4  x3d_TexCoord0;\nin vec4  x3d_Vertex;\n\nout float fogDepth;\nout vec3 vertex;\nout vec4 texCoord;\n\nvoid\nmain ()\n{\n   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;\n\n   fogDepth = x3d_FogDepth;\n   vertex   = position .xyz;\n   texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;\n\n   gl_Position = x3d_ProjectionMatrix * position;\n}\n';});
-
-
-define('text!x_ite/Browser/VolumeRendering/VolumeStyle.fs',[],function () { return '#version 300 es\n\nprecision highp float;\nprecision highp int;\nprecision highp sampler3D;\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nuniform sampler3D x3d_Texture3D [1];\nuniform vec3      x3d_TextureSize;\n\nuniform mat3 x3d_TextureNormalMatrix;\n\nconst float M_PI = 3.14159265359;\n\nin float fogDepth;\nin vec3  vertex;\nin vec4  texCoord;\n\n\nuniform x3d_FogParameters x3d_Fog;\n\nfloat\ngetFogInterpolant ()\n{\n   // Returns 0.0 for fog color and 1.0 for material color.\n\n   float visibilityRange = x3d_Fog .visibilityRange;\n   float dV              = length (x3d_Fog .matrix * vertex);\n\n   switch (x3d_Fog .type)\n   {\n      case x3d_LinearFog:\n      {\n         return max (0.0, visibilityRange - dV) / visibilityRange;\n      }\n      case x3d_ExponentialFog:\n      {\n         return exp (-dV / max (0.001, visibilityRange - dV));\n      }\n      default:\n      {\n         return 1.0;\n      }\n   }\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n   return mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\n// VOLUME_STYLES_UNIFORMS\n\nout vec4 x3d_FragColor;\n\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvoid\nclip ()\n{\n   for (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n   {\n      if (i == x3d_NumClipPlanes)\n         break;\n\n      if (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n         discard;\n   }\n}\n\nvec4\ngetTextureColor (in vec3 texCoord)\n{\n   if (texCoord .s < 0.0 || texCoord .s > 1.0)\n      discard;\n\n   if (texCoord .t < 0.0 || texCoord .t > 1.0)\n      discard;\n\n   if (texCoord .p < 0.0 || texCoord .p > 1.0)\n      discard;\n\n   vec4 textureColor = texture (x3d_Texture3D [0], texCoord);\n\n   // Apply volume styles.\n\n// VOLUME_STYLES_FUNCTIONS\n\n   return textureColor;\n}\n\nvoid\nmain ()\n{\n   clip ();\n\n   x3d_FragColor = getTextureColor (texCoord .stp / texCoord .q);\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -2092,9 +2171,6 @@ define ('x_ite/Components/VolumeRendering/IsoSurfaceVolumeData',[
    "x_ite/Components/Shaders/ShaderPart",
    "x_ite/Base/X3DConstants",
    "x_ite/Base/X3DCast",
-   "text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
-   "text!x_ite/Browser/VolumeRendering/VolumeStyle.fs",
-   "x_ite/DEBUG",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -2103,10 +2179,7 @@ function (Fields,
           ComposedShader,
           ShaderPart,
           X3DConstants,
-          X3DCast,
-          vs,
-          fs,
-          DEBUG)
+          X3DCast)
 {
 "use strict";
 
@@ -2152,7 +2225,7 @@ function (Fields,
       {
          X3DVolumeDataNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -2160,10 +2233,10 @@ function (Fields,
          this ._gradients          .addInterest ("set_gradients__",   this);
          this ._renderStyle        .addInterest ("set_renderStyle__", this);
 
-         this ._contourStepSize    .addInterest ("update", this);
-         this ._surfaceValues      .addInterest ("update", this);
-         this ._surfaceTolerance   .addInterest ("update", this);
-         this ._renderStyle        .addInterest ("update", this);
+         this ._contourStepSize    .addInterest ("updateShader", this);
+         this ._surfaceValues      .addInterest ("updateShader", this);
+         this ._surfaceTolerance   .addInterest ("updateShader", this);
+         this ._renderStyle        .addInterest ("updateShader", this);
 
          this .getAppearance () ._texture = this ._voxels;
 
@@ -2171,7 +2244,7 @@ function (Fields,
          this .set_renderStyle__ ();
          this .set_voxels__ ();
 
-         this .update ();
+         this .updateShader ();
       },
       set_gradients__: function ()
       {
@@ -2179,93 +2252,59 @@ function (Fields,
       },
       set_renderStyle__: function ()
       {
-         var renderStyleNodes = this .renderStyleNodes;
+         const renderStyleNodes = this .renderStyleNodes;
 
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
+         for (const renderStyleNode of renderStyleNodes)
          {
-            var renderStyleNode = renderStyleNodes [i];
-
-            renderStyleNode .removeInterest ("update", this);
+            renderStyleNode .removeInterest ("updateShader", this);
             renderStyleNode .removeVolumeData (this);
          }
 
          renderStyleNodes .length = 0;
 
-         for (var i = 0, length = this ._renderStyle .length; i < length; ++ i)
+         for (const node of this ._renderStyle)
          {
-            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this ._renderStyle [i]);
+            const renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, node);
 
             if (renderStyleNode)
                renderStyleNodes .push (renderStyleNode);
          }
 
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
+         for (const renderStyleNode of renderStyleNodes)
          {
-            var renderStyleNode = renderStyleNodes [i];
-
-            renderStyleNode .addInterest ("update", this);
+            renderStyleNode .addInterest ("updateShader", this);
             renderStyleNode .addVolumeData (this);
          }
       },
       set_voxels__: function ()
       {
-         if (this .voxelsNode)
-            this .voxelsNode .removeInterest ("set_textureSize__", this);
-
          this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
          if (this .voxelsNode)
-         {
-            this .voxelsNode .addInterest ("set_textureSize__", this);
-
             this .getAppearance () ._texture = this ._voxels;
-
-            this .set_textureSize__ ();
-         }
          else
-         {
             this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
-         }
       },
-      set_textureSize__: function ()
-      {
-         try
-         {
-            var textureSize = this .getShader () .getField ("x3d_TextureSize");
-
-            textureSize .x = this .voxelsNode .getWidth ();
-            textureSize .y = this .voxelsNode .getHeight ();
-            textureSize .z = this .voxelsNode .getDepth ();
-         }
-         catch (error)
-         {
-            if (DEBUG)
-               console .log (error .message);
-         }
-      },
-      update: function ()
-      {
-         this .setShader (this .createShader (vs, fs));
-      },
-      createShader: function (vs, fs)
+      createShader: function (options, vs, fs)
       {
          // if (DEBUG)
-         // 	console .log ("Creating VolumeData Shader ...");
+         //    console .log ("Creating VolumeData Shader ...");
 
-         var
-            opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
-            styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
-            styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
+         const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
+
+         let
+            styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
+            styleFunctions = opacityMapVolumeStyle .getFunctionsText ();
 
          styleUniforms  += "\n";
          styleUniforms  += "uniform float surfaceValues [" + this ._surfaceValues .length + "];\n";
          styleUniforms  += "uniform float surfaceTolerance;\n";
 
-         for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
-            styleUniforms  += this .renderStyleNodes [i] .getUniformsText ();
+         for (const renderStyleNode of this .renderStyleNodes)
+            styleUniforms  += renderStyleNode .getUniformsText ();
 
          styleFunctions += "\n";
-         styleFunctions += "	// IsoSurfaceVolumeData\n";
+         styleFunctions += "   // IsoSurfaceVolumeData\n";
          styleFunctions += "\n";
 
          if (this .gradientsNode)
@@ -2273,8 +2312,8 @@ function (Fields,
             styleUniforms += "\n";
             styleUniforms += "uniform sampler3D gradients;\n";
 
-            styleFunctions += "	if (length (texture (gradients, texCoord) .xyz * 2.0 - 1.0) < surfaceTolerance)\n";
-            styleFunctions += "		discard;\n";
+            styleFunctions += "   if (length (texture (gradients, texCoord) .xyz * 2.0 - 1.0) < surfaceTolerance)\n";
+            styleFunctions += "      discard;\n";
          }
          else
          {
@@ -2282,109 +2321,109 @@ function (Fields,
             styleUniforms += "vec4\n";
             styleUniforms += "getNormal (in vec3 texCoord)\n";
             styleUniforms += "{\n";
-            styleUniforms += "	vec4  offset = vec4 (1.0 / x3d_TextureSize, 0.0);\n";
-            styleUniforms += "	float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
-            styleUniforms += "	float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
-            styleUniforms += "	float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
-            styleUniforms += "	float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
-            styleUniforms += "	float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
-            styleUniforms += "	float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
-            styleUniforms += "	vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
+            styleUniforms += "   vec4  offset = vec4 (1.0 / vec3 (textureSize (x3d_Texture3D [0], 0)), 0.0);\n";
+            styleUniforms += "   float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
+            styleUniforms += "   float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
+            styleUniforms += "   float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
+            styleUniforms += "   float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
+            styleUniforms += "   float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
+            styleUniforms += "   float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
+            styleUniforms += "   vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
             styleUniforms += "\n";
-            styleUniforms += "	return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
+            styleUniforms += "   return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
             styleUniforms += "}\n";
 
-            styleFunctions += "	if (getNormal (texCoord) .w < surfaceTolerance)\n";
-            styleFunctions += "		discard;\n";
+            styleFunctions += "   if (getNormal (texCoord) .w < surfaceTolerance)\n";
+            styleFunctions += "      discard;\n";
          }
 
          styleFunctions += "\n";
-         styleFunctions += "	float intensity = textureColor .r;\n";
+         styleFunctions += "   float intensity = textureColor .r;\n";
          styleFunctions += "\n";
 
          if (this ._surfaceValues .length === 1)
          {
-            var contourStepSize = Math .abs (this ._contourStepSize .getValue ());
+            const contourStepSize = Math .abs (this ._contourStepSize .getValue ());
 
             if (contourStepSize === 0)
             {
-               styleFunctions += "	if (intensity > surfaceValues [0])\n";
-               styleFunctions += "	{\n";
-               styleFunctions += "		textureColor = vec4 (vec3 (surfaceValues [0]), 1.0);\n";
+               styleFunctions += "   if (intensity > surfaceValues [0])\n";
+               styleFunctions += "   {\n";
+               styleFunctions += "      textureColor = vec4 (vec3 (surfaceValues [0]), 1.0);\n";
 
                if (this .renderStyleNodes .length)
                {
                   styleFunctions += this .renderStyleNodes [0] .getFunctionsText ();
                }
 
-               styleFunctions += "	}\n";
-               styleFunctions += "	else\n";
-               styleFunctions += "	{\n";
-               styleFunctions += "		discard;\n";
-               styleFunctions += "	}\n";
+               styleFunctions += "   }\n";
+               styleFunctions += "   else\n";
+               styleFunctions += "   {\n";
+               styleFunctions += "      discard;\n";
+               styleFunctions += "   }\n";
                styleFunctions += "\n";
             }
             else
             {
-               var surfaceValues = [ ];
+               const surfaceValues = [ ];
 
-               for (var v = this ._surfaceValues [0] - contourStepSize; v > 0; v -= contourStepSize)
+               for (let v = this ._surfaceValues [0] - contourStepSize; v > 0; v -= contourStepSize)
                   surfaceValues .unshift (v);
 
                surfaceValues .push (this ._surfaceValues [0]);
 
-               for (var v = this ._surfaceValues [0] + contourStepSize; v < 1; v += contourStepSize)
+               for (let v = this ._surfaceValues [0] + contourStepSize; v < 1; v += contourStepSize)
                   surfaceValues .push (v);
 
-               styleFunctions += "	if (false)\n";
-               styleFunctions += "	{ }\n";
+               styleFunctions += "   if (false)\n";
+               styleFunctions += "   { }\n";
 
-               for (var i = surfaceValues_ .length - 1; i >= 0; -- i)
+               for (let i = this ._surfaceValues .length - 1; i >= 0; -- i)
                {
-                  styleFunctions += "	else if (intensity > " + surfaceValues [i] + ")\n";
-                  styleFunctions += "	{\n";
-                  styleFunctions += "		textureColor = vec4 (vec3 (" + surfaceValues [i] + "), 1.0);\n";
+                  styleFunctions += "   else if (intensity > " + surfaceValues [i] + ")\n";
+                  styleFunctions += "   {\n";
+                  styleFunctions += "      textureColor = vec4 (vec3 (" + surfaceValues [i] + "), 1.0);\n";
 
                   if (this .renderStyleNodes .length)
                   {
                      styleFunctions += this .renderStyleNodes [0] .getFunctionsText ();
                   }
 
-                  styleFunctions += "	}\n";
+                  styleFunctions += "   }\n";
                }
 
-               styleFunctions += "	else\n";
-               styleFunctions += "	{\n";
-               styleFunctions += "		discard;\n";
-               styleFunctions += "	}\n";
+               styleFunctions += "   else\n";
+               styleFunctions += "   {\n";
+               styleFunctions += "      discard;\n";
+               styleFunctions += "   }\n";
                styleFunctions += "\n";
             }
          }
          else
          {
-            styleFunctions += "	if (false)\n";
-            styleFunctions += "	{ }\n";
+            styleFunctions += "   if (false)\n";
+            styleFunctions += "   { }\n";
 
-            for (var i = this ._surfaceValues .length - 1; i >= 0; -- i)
+            for (let i = this ._surfaceValues .length - 1; i >= 0; -- i)
             {
-               styleFunctions += "	else if (intensity > surfaceValues [" + i + "])\n";
-               styleFunctions += "	{\n";
-               styleFunctions += "		textureColor = vec4 (vec3 (surfaceValues [" + i + "]), 1.0);\n";
+               styleFunctions += "   else if (intensity > surfaceValues [" + i + "])\n";
+               styleFunctions += "   {\n";
+               styleFunctions += "      textureColor = vec4 (vec3 (surfaceValues [" + i + "]), 1.0);\n";
 
                if (this .renderStyleNodes .length)
                {
-                  var r = Math .min (i, this .renderStyleNodes .length - 1);
+                  const r = Math .min (i, this .renderStyleNodes .length - 1);
 
                   styleFunctions += this .renderStyleNodes [r] .getFunctionsText ();
                }
 
-               styleFunctions += "	}\n";
+               styleFunctions += "   }\n";
             }
 
-            styleFunctions += "	else\n";
-            styleFunctions += "	{\n";
-            styleFunctions += "		discard;\n";
-            styleFunctions += "	}\n";
+            styleFunctions += "   else\n";
+            styleFunctions += "   {\n";
+            styleFunctions += "      discard;\n";
+            styleFunctions += "   }\n";
             styleFunctions += "\n";
          }
 
@@ -2392,46 +2431,47 @@ function (Fields,
          fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
 
          // if (DEBUG)
-         // 	this .getBrowser () .print (fs);
+         //    this .getBrowser () .print (fs);
 
-         var vertexShader = new ShaderPart (this .getExecutionContext ());
-         vertexShader .setName ("VolumeDataVertexShader");
+         const vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
+         vertexShader .setPrivate (true);
+         vertexShader .setName ("VolumeDataVertexShader");
+         vertexShader .setOptions (options);
          vertexShader .setup ();
 
-         var fragmentShader = new ShaderPart (this .getExecutionContext ());
-         fragmentShader .setName ("VolumeDataFragmentShader");
+         const fragmentShader = new ShaderPart (this .getExecutionContext ());
          fragmentShader ._type = "FRAGMENT";
          fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
+         fragmentShader .setPrivate (true);
+         fragmentShader .setName ("VolumeDataFragmentShader");
+         fragmentShader .setOptions (options);
          fragmentShader .setup ();
 
-         var shaderNode = new ComposedShader (this .getExecutionContext ());
-         shaderNode .setName ("VolumeDataShader");
+         const shaderNode = new ComposedShader (this .getExecutionContext ());
          shaderNode ._language = "GLSL";
          shaderNode ._parts .push (vertexShader);
          shaderNode ._parts .push (fragmentShader);
+         shaderNode .setPrivate (true);
+         shaderNode .setName ("VolumeDataShader");
 
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceValues",    this ._surfaceValues    .copy ());
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", this ._surfaceTolerance .copy ());
 
          if (this .gradientsNode)
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "grandients", new Fields .SFNode (this .gradientsNode));
-
-         if (this .voxelsNode)
-         {
-            var textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
-
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", textureSize);
-         }
-         else
-         {
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", new Fields .SFVec3f ());
-         }
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "gradients", new Fields .SFNode (this .gradientsNode));
 
          opacityMapVolumeStyle .addShaderFields (shaderNode);
 
-         for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
-            this .renderStyleNodes [i] .addShaderFields (shaderNode);
+         for (const renderStyleNode of this .renderStyleNodes)
+            renderStyleNode .addShaderFields (shaderNode);
+
+         const uniformNames = [ ];
+
+         this .addShaderUniformNames (uniformNames);
+
+         shaderNode .setUniformNames (uniformNames);
+         shaderNode .setup ();
 
          return shaderNode;
       },
@@ -2445,7 +2485,7 @@ function (Fields,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -2544,7 +2584,7 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "// ProjectionVolumeStyle\n";
@@ -2560,38 +2600,38 @@ function (Fields,
             default:
             case "MAX":
             {
-               string += "	float projectionColor = 0.0;\n";
+               string += "   float projectionColor = 0.0;\n";
                break;
             }
             case "MIN":
             {
-               string += "	float projectionColor = 1.0;\n";
+               string += "   float projectionColor = 1.0;\n";
                break;
             }
             case "AVERAGE":
             {
-               string += "	float projectionColor = 0.0;\n";
+               string += "   float projectionColor = 0.0;\n";
                break;
             }
          }
 
-         string += "	const int samples     = 32;\n";
-         string += "	vec3  step            = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0)) / float (samples);\n";
-         string += "	vec3  ray             = texCoord - step * float (samples) * 0.5;\n";
-         string += "	bool  first           = false;\n";
+         string += "   const int samples     = 32;\n";
+         string += "   vec3  step            = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0)) / float (samples);\n";
+         string += "   vec3  ray             = texCoord - step * float (samples) * 0.5;\n";
+         string += "   bool  first           = false;\n";
          string += "\n";
-         string += "	for (int i = 0; i < samples; ++ i, ray += step)\n";
-         string += "	{\n";
-         string += "		if (ray .s < 0.0 || ray .s > 1.0)\n";
-         string += "			continue;\n";
+         string += "   for (int i = 0; i < samples; ++ i, ray += step)\n";
+         string += "   {\n";
+         string += "      if (ray .s < 0.0 || ray .s > 1.0)\n";
+         string += "         continue;\n";
          string += "\n";
-         string += "		if (ray .t < 0.0 || ray .t > 1.0)\n";
-         string += "			continue;\n";
+         string += "      if (ray .t < 0.0 || ray .t > 1.0)\n";
+         string += "         continue;\n";
          string += "\n";
-         string += "		if (ray .p < 0.0 || ray .p > 1.0)\n";
-         string += "			continue;\n";
+         string += "      if (ray .p < 0.0 || ray .p > 1.0)\n";
+         string += "         continue;\n";
          string += "\n";
-         string += "		float intensity = texture (x3d_Texture3D [0], ray) .r;\n";
+         string += "      float intensity = texture (x3d_Texture3D [0], ray) .r;\n";
          string += "\n";
 
          switch (this ._type .getValue ())
@@ -2599,52 +2639,52 @@ function (Fields,
             default:
             case "MAX":
             {
-               string += "		if (intensity < intensityThreshold_" + this .getId () + ")\n";
-               string += "			continue;\n";
+               string += "      if (intensity < intensityThreshold_" + this .getId () + ")\n";
+               string += "         continue;\n";
                string += "\n";
-               string += "		if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
-               string += "			break;\n";
+               string += "      if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
+               string += "         break;\n";
                string += "\n";
-               string += "		if (intensity <= projectionColor)\n";
-               string += "		{\n";
-               string += "			first = true;\n";
-               string += "			continue;\n";
-               string += "		}\n";
+               string += "      if (intensity <= projectionColor)\n";
+               string += "      {\n";
+               string += "         first = true;\n";
+               string += "         continue;\n";
+               string += "      }\n";
                string += "\n";
-               string += "		projectionColor = intensity;\n";
+               string += "      projectionColor = intensity;\n";
                break;
             }
             case "MIN":
             {
-               string += "		if (intensity < intensityThreshold_" + this .getId () + ")\n";
-               string += "			continue;\n";
+               string += "      if (intensity < intensityThreshold_" + this .getId () + ")\n";
+               string += "         continue;\n";
                string += "\n";
-               string += "		if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
-               string += "			break;\n";
+               string += "      if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
+               string += "         break;\n";
                string += "\n";
-               string += "		if (intensity >= projectionColor)\n";
-               string += "		{\n";
-               string += "			first = true;\n";
-               string += "			continue;\n";
-               string += "		}\n";
+               string += "      if (intensity >= projectionColor)\n";
+               string += "      {\n";
+               string += "         first = true;\n";
+               string += "         continue;\n";
+               string += "      }\n";
                string += "\n";
-               string += "		projectionColor = intensity;\n";
+               string += "      projectionColor = intensity;\n";
                break;
             }
             case "AVERAGE":
             {
-               string += "		projectionColor += intensity;\n";
+               string += "      projectionColor += intensity;\n";
                break;
             }
          }
 
-         string += "	}\n";
+         string += "   }\n";
          string += "\n";
 
          if (this ._type .getValue () === "AVERAGE")
-            string += "	projectionColor /= float (samples);\n";
+            string += "   projectionColor /= float (samples);\n";
 
-         string += "	return vec4 (vec3 (projectionColor), originalColor .a);\n";
+         string += "   return vec4 (vec3 (projectionColor), originalColor .a);\n";
          string += "}\n";
 
          return string;
@@ -2654,12 +2694,12 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
-         string += "	// ProjectionVolumeStyle\n";
+         string += "   // ProjectionVolumeStyle\n";
          string += "\n";
-         string += "	textureColor = getProjectionStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "   textureColor = getProjectionStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
          return string;
       },
@@ -2673,7 +2713,7 @@ function (Fields,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -2726,9 +2766,6 @@ define ('x_ite/Components/VolumeRendering/SegmentedVolumeData',[
    "x_ite/Components/Shaders/ShaderPart",
    "x_ite/Base/X3DConstants",
    "x_ite/Base/X3DCast",
-   "text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
-   "text!x_ite/Browser/VolumeRendering/VolumeStyle.fs",
-   "x_ite/DEBUG",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -2737,10 +2774,7 @@ function (Fields,
           ComposedShader,
           ShaderPart,
           X3DConstants,
-          X3DCast,
-          vs,
-          fs,
-          DEBUG)
+          X3DCast)
 {
 "use strict";
 
@@ -2785,7 +2819,7 @@ function (Fields,
       {
          X3DVolumeDataNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -2793,9 +2827,9 @@ function (Fields,
          this ._segmentIdentifiers .addInterest ("set_segmentIdentifiers__", this);
          this ._renderStyle        .addInterest ("set_renderStyle__",        this);
 
-         this ._segmentEnabled     .addInterest ("update", this);
-         this ._segmentIdentifiers .addInterest ("update", this);
-         this ._renderStyle        .addInterest ("update", this);
+         this ._segmentEnabled     .addInterest ("updateShader", this);
+         this ._segmentIdentifiers .addInterest ("updateShader", this);
+         this ._renderStyle        .addInterest ("updateShader", this);
 
          this .getAppearance () ._texture = this ._voxels;
 
@@ -2803,7 +2837,7 @@ function (Fields,
          this .set_renderStyle__ ();
          this .set_voxels__ ();
 
-         this .update ();
+         this .updateShader ();
       },
       getSegmentEnabled: function (index)
       {
@@ -2815,170 +2849,137 @@ function (Fields,
       },
       set_renderStyle__: function ()
       {
-         var renderStyleNodes = this .renderStyleNodes;
+         const renderStyleNodes = this .renderStyleNodes;
 
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
+         for (const renderStyleNode of renderStyleNodes)
          {
-            var renderStyleNode = renderStyleNodes [i];
-
-            renderStyleNode .removeInterest ("update", this);
+            renderStyleNode .removeInterest ("updateShader", this);
             renderStyleNode .removeVolumeData (this);
          }
 
          renderStyleNodes .length = 0;
 
-         for (var i = 0, length = this ._renderStyle .length; i < length; ++ i)
+         for (const node of this ._renderStyle)
          {
-            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this ._renderStyle [i]);
+            const renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, node);
 
             if (renderStyleNode)
                renderStyleNodes .push (renderStyleNode);
          }
 
-         for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
+         for (const renderStyleNode of renderStyleNodes)
          {
-            var renderStyleNode = renderStyleNodes [i];
-
-            renderStyleNode .addInterest ("update", this);
+            renderStyleNode .addInterest ("updateShader", this);
             renderStyleNode .addVolumeData (this);
          }
       },
       set_voxels__: function ()
       {
-         if (this .voxelsNode)
-            this .voxelsNode .removeInterest ("set_textureSize__", this);
-
          this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
          if (this .voxelsNode)
-         {
-            this .voxelsNode .addInterest ("set_textureSize__", this);
-
             this .getAppearance () ._texture = this ._voxels;
-
-            this .set_textureSize__ ();
-         }
          else
-         {
             this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
-         }
       },
-      set_textureSize__: function ()
-      {
-         try
-         {
-            var textureSize = this .getShader () .getField ("x3d_TextureSize");
-
-            textureSize .x = this .voxelsNode .getWidth ();
-            textureSize .y = this .voxelsNode .getHeight ();
-            textureSize .z = this .voxelsNode .getDepth ();
-         }
-         catch (error)
-         {
-            if (DEBUG)
-               console .log (error .message);
-         }
-      },
-      update: function ()
-      {
-         this .setShader (this .createShader (vs, fs));
-      },
-      createShader: function (vs, fs)
+      createShader: function (options, vs, fs)
       {
          // if (DEBUG)
-         // 	console .log ("Creating SegmentedVolumeData Shader ...");
+         //    console .log ("Creating SegmentedVolumeData Shader ...");
 
-         var
-            opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
-            styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
-            styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
+         const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
+
+         let
+            styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
+            styleFunctions = opacityMapVolumeStyle .getFunctionsText ();
 
          if (this .segmentIdentifiersNode)
          {
-            styleUniforms  += "\n";
-            styleUniforms  += "uniform sampler3D segmentIdentifiers;\n";
-            styleFunctions += "\n";
+            styleUniforms += "\n";
+            styleUniforms += "uniform sampler3D segmentIdentifiers;\n";
+            styleUniforms += "\n";
 
             styleFunctions += "\n";
-            styleFunctions += "	int segment = int (texture (segmentIdentifiers, texCoord) .r * 255.0);\n";
+            styleFunctions += "   int segment = int (texture (segmentIdentifiers, texCoord) .r * 255.0);\n";
          }
          else
          {
-            styleFunctions += "	int segment = 0;\n";
+            styleFunctions += "   int segment = 0;\n";
          }
 
          if (this .renderStyleNodes .length)
          {
             styleFunctions += "\n";
-            styleFunctions += "	switch (segment)\n";
-            styleFunctions += "	{\n";
+            styleFunctions += "   switch (segment)\n";
+            styleFunctions += "   {\n";
 
-            for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
+            for (const [i, renderStyleNode] of this .renderStyleNodes .entries ())
             {
-               styleFunctions += "		case " + i + ":\n";
-               styleFunctions += "		{\n";
+               styleFunctions += "      case " + i + ":\n";
+               styleFunctions += "      {\n";
 
                if (this .getSegmentEnabled (i))
                {
-                  styleUniforms  += this .renderStyleNodes [i] .getUniformsText (),
-                  styleFunctions += this .renderStyleNodes [i] .getFunctionsText ();
-                  styleFunctions += "			break;\n";
+                  styleUniforms  += renderStyleNode .getUniformsText (),
+                  styleFunctions += renderStyleNode .getFunctionsText ();
+                  styleFunctions += "         break;\n";
                }
                else
                {
-                  styleFunctions += "			discard;\n";
+                  styleFunctions += "         discard;\n";
                }
 
-               styleFunctions += "		}\n";
+               styleFunctions += "      }\n";
             }
 
-            styleFunctions += "	}\n";
+            styleFunctions += "   }\n";
          }
 
          fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
          fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
 
          // if (DEBUG)
-         // 	this .getBrowser () .print (fs);
+         //    this .getBrowser () .print (fs);
 
-         var vertexShader = new ShaderPart (this .getExecutionContext ());
-         vertexShader .setName ("SegmentedVolumeDataVertexShader");
+         const vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
+         vertexShader .setPrivate (true);
+         vertexShader .setName ("SegmentedVolumeDataVertexShader");
+         vertexShader .setOptions (options);
          vertexShader .setup ();
 
-         var fragmentShader = new ShaderPart (this .getExecutionContext ());
-         fragmentShader .setName ("SegmentedVolumeDataFragmentShader");
+         const fragmentShader = new ShaderPart (this .getExecutionContext ());
          fragmentShader ._type = "FRAGMENT";
          fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
+         fragmentShader .setPrivate (true);
+         fragmentShader .setName ("SegmentedVolumeDataFragmentShader");
+         fragmentShader .setOptions (options);
          fragmentShader .setup ();
 
-         var shaderNode = new ComposedShader (this .getExecutionContext ());
-         shaderNode .setName ("SegmentedVolumeDataShader");
+         const shaderNode = new ComposedShader (this .getExecutionContext ());
          shaderNode ._language = "GLSL";
          shaderNode ._parts .push (vertexShader);
          shaderNode ._parts .push (fragmentShader);
-
-         if (this .voxelsNode)
-         {
-            var textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
-
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", textureSize);
-         }
-         else
-         {
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", new Fields .SFVec3f ());
-         }
+         shaderNode .setPrivate (true);
+         shaderNode .setName ("SegmentedVolumeDataShader");
 
          if (this .segmentIdentifiersNode)
             shaderNode .addUserDefinedField (X3DConstants .inputOutput, "segmentIdentifiers", new Fields .SFNode (this .segmentIdentifiersNode));
 
          opacityMapVolumeStyle .addShaderFields (shaderNode);
 
-         for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
+         for (const [i, renderStyleNode] of this .renderStyleNodes .entries ())
          {
             if (this .getSegmentEnabled (i))
-               this .renderStyleNodes [i] .addShaderFields (shaderNode);
+               renderStyleNode .addShaderFields (shaderNode);
          }
+
+         const uniformNames = [ ];
+
+         this .addShaderUniformNames (uniformNames);
+
+         shaderNode .setUniformNames (uniformNames);
+         shaderNode .setup ();
 
          return shaderNode;
       },
@@ -2992,7 +2993,7 @@ function (Fields,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -3088,7 +3089,7 @@ function (Fields,
       {
          X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -3136,7 +3137,7 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "// ShadedVolumeStyle\n";
@@ -3154,99 +3155,95 @@ function (Fields,
          string += "float\n";
          string += "getSpotFactor_" + this .getId () + " (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)\n";
          string += "{\n";
-         string += "	float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n";
+         string += "   float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));\n";
          string += "\n";
-         string += "	if (spotAngle >= cutOffAngle)\n";
-         string += "		return 0.0;\n";
-         string += "	else if (spotAngle <= beamWidth)\n";
-         string += "		return 1.0;\n";
+         string += "   if (spotAngle >= cutOffAngle)\n";
+         string += "      return 0.0;\n";
+         string += "   else if (spotAngle <= beamWidth)\n";
+         string += "      return 1.0;\n";
          string += "\n";
-         string += "	return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n";
+         string += "   return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n";
          string += "}\n";
 
          string += "\n";
          string += "vec4\n";
          string += "getShadedStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
          string += "{\n";
-         string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+         string += "   vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
          string += "\n";
-         string += "	if (surfaceNormal .w == 0.0)\n";
-         string += "		return vec4 (0.0);\n";
+         string += "   if (surfaceNormal .w == 0.0)\n";
+         string += "      return vec4 (0.0);\n";
          string += "\n";
-         string += "	vec4 shadedColor   = vec4 (0.0);\n";
+         string += "   vec4 shadedColor   = vec4 (0.0);\n";
 
          if (this ._lighting .getValue ())
          {
             if (this .materialNode)
             {
-               string += "	vec3 diffuseFactor = diffuseColor_" + this .getId () + ";\n";
-               string += "	vec3 ambientTerm   = diffuseFactor * ambientIntensity_" + this .getId () + ";\n";
+               string += "   vec3 diffuseFactor = diffuseColor_" + this .getId () + ";\n";
+               string += "   vec3 ambientTerm   = diffuseFactor * ambientIntensity_" + this .getId () + ";\n";
                string += "\n";
-               string += "	shadedColor .a = originalColor .a * (1.0 - transparency_" + this .getId () + ");\n";
+               string += "   shadedColor .a = originalColor .a * (1.0 - transparency_" + this .getId () + ");\n";
             }
             else
             {
-               string += "	vec3 diffuseFactor = originalColor .rgb;\n";
-               string += "	vec3 ambientTerm   = vec3 (0.0);\n";
+               string += "   vec3 diffuseFactor = originalColor .rgb;\n";
+               string += "   vec3 ambientTerm   = vec3 (0.0);\n";
                string += "\n";
-               string += "	shadedColor .a = originalColor .a;\n";
+               string += "   shadedColor .a = originalColor .a;\n";
             }
 
             string += "\n";
-            string += "	vec3 N = surfaceNormal .xyz;\n";
-            string += "	vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position\n";
+            string += "   vec3 N = surfaceNormal .xyz;\n";
+            string += "   vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position\n";
             string += "\n";
-            string += "	for (int i = 0; i < x3d_MaxLights; ++ i)\n";
-            string += "	{\n";
-            string += "		if (i == x3d_NumLights)\n";
-            string += "			break;\n";
+            string += "   for (int i = 0; i < X3D_NUM_LIGHTS; ++ i)\n";
+            string += "   {\n";
+            string += "      x3d_LightSourceParameters light = x3d_LightSource [i];\n";
             string += "\n";
-            string += "		x3d_LightSourceParameters light = x3d_LightSource [i];\n";
+            string += "      vec3  vL = light .location - vertex; // Light to fragment\n";
+            string += "      float dL = length (light .matrix * vL);\n";
+            string += "      bool  di = light .type == x3d_DirectionalLight;\n";
             string += "\n";
-            string += "		vec3  vL = light .location - vertex; // Light to fragment\n";
-            string += "		float dL = length (light .matrix * vL);\n";
-            string += "		bool  di = light .type == x3d_DirectionalLight;\n";
+            string += "      if (di || dL <= light .radius)\n";
+            string += "      {\n";
+            string += "         vec3 d = light .direction;\n";
+            string += "         vec3 c = light .attenuation;\n";
+            string += "         vec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n";
+            string += "         vec3 H = normalize (L + V);             // Specular term\n";
             string += "\n";
-            string += "		if (di || dL <= light .radius)\n";
-            string += "		{\n";
-            string += "			vec3 d = light .direction;\n";
-            string += "			vec3 c = light .attenuation;\n";
-            string += "			vec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n";
-            string += "			vec3 H = normalize (L + V);             // Specular term\n";
+            string += "         float lightAngle     = max (dot (N, L), 0.0);      // Angle between normal and light ray.\n";
+            string += "         vec3  diffuseTerm    = diffuseFactor * lightAngle;\n";
+            string += "         float specularFactor = shininess_" + this .getId () + " > 0.0 ? pow (max (dot (N, H), 0.0), shininess_" + this .getId () + " * 128.0) : 1.0;\n";
+            string += "         vec3  specularTerm   = light .intensity * specularColor_" + this .getId () + " * specularFactor;\n";
             string += "\n";
-            string += "			float lightAngle     = max (dot (N, L), 0.0);      // Angle between normal and light ray.\n";
-            string += "			vec3  diffuseTerm    = diffuseFactor * lightAngle;\n";
-            string += "			float specularFactor = shininess_" + this .getId () + " > 0.0 ? pow (max (dot (N, H), 0.0), shininess_" + this .getId () + " * 128.0) : 1.0;\n";
-            string += "			vec3  specularTerm   = light .intensity * specularColor_" + this .getId () + " * specularFactor;\n";
+            string += "         float attenuationFactor     = di ? 1.0 : 1.0 / max (dot (c, vec3 (1.0, dL, dL * dL)), 1.0);\n";
+            string += "         float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor_" + this .getId () + " (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n";
+            string += "         float attenuationSpotFactor = attenuationFactor * spotFactor;\n";
+            string += "         vec3  ambientColor          = light .ambientIntensity * ambientTerm;\n";
+            string += "         vec3  diffuseSpecularColor  = light .intensity * (diffuseTerm + specularTerm);\n";
             string += "\n";
-            string += "			float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n";
-            string += "			float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor_" + this .getId () + " (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n";
-            string += "			float attenuationSpotFactor = attenuationFactor * spotFactor;\n";
-            string += "			vec3  ambientColor          = light .ambientIntensity * ambientTerm;\n";
-            string += "			vec3  diffuseSpecularColor  = light .intensity * (diffuseTerm + specularTerm);\n";
+            string += "         shadedColor .rgb += attenuationSpotFactor * light .color * (ambientColor + diffuseSpecularColor);\n";
+            string += "      }\n";
             string += "\n";
-            string += "			shadedColor .rgb += attenuationSpotFactor * light .color * (ambientColor + diffuseSpecularColor);\n";
-            string += "		}\n";
-            string += "\n";
-            string += "		shadedColor .rgb += emissiveColor_" + this .getId () + ";\n";
-            string += "		shadedColor .rgb  = getFogColor (shadedColor .rgb);\n";
-            string += "	}\n";
+            string += "      shadedColor .rgb += emissiveColor_" + this .getId () + ";\n";
+            string += "   }\n";
          }
          else
          {
             if (this .materialNode)
             {
-               string += "	shadedColor .rgb = diffuseColor_" + this .getId () + ";\n";
-               string += "	shadedColor .a   = originalColor .a * (1.0 - transparency_" + this .getId () + ");\n";
+               string += "   shadedColor .rgb = diffuseColor_" + this .getId () + ";\n";
+               string += "   shadedColor .a   = originalColor .a * (1.0 - transparency_" + this .getId () + ");\n";
             }
             else
             {
-               string += "	shadedColor = originalColor;\n";
+               string += "   shadedColor = originalColor;\n";
             }
          }
 
          string += "\n";
-         string += "	return shadedColor;\n";
+         string += "   return shadedColor;\n";
          string += "}\n";
 
          return string;
@@ -3256,12 +3253,12 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
-         string += "	// ShadedVolumeStyle\n";
+         string += "   // ShadedVolumeStyle\n";
          string += "\n";
-         string += "	textureColor = getShadedStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "   textureColor = getShadedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
          return string;
       },
@@ -3275,7 +3272,7 @@ function (Fields,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -3370,7 +3367,7 @@ function (Fields,
       {
          X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -3400,7 +3397,7 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "// SilhouetteEnhancementVolumeStyle\n";
@@ -3415,16 +3412,16 @@ function (Fields,
          string += "vec4\n";
          string += "getSilhouetteEnhancementStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
          string += "{\n";
-         string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+         string += "   vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
          string += "\n";
-         string += "	if (surfaceNormal .w == 0.0)\n";
-         string += "		return vec4 (0.0);\n";
-         string += "	\n";
-         string += "	float silhouetteRetainedOpacity = silhouetteRetainedOpacity_" + this .getId () + ";\n";
-         string += "	float silhouetteBoundaryOpacity = silhouetteBoundaryOpacity_" + this .getId () + ";\n";
-         string += "	float silhouetteSharpness       = silhouetteSharpness_" + this .getId () + ";\n";
+         string += "   if (surfaceNormal .w == 0.0)\n";
+         string += "      return vec4 (0.0);\n";
+         string += "   \n";
+         string += "   float silhouetteRetainedOpacity = silhouetteRetainedOpacity_" + this .getId () + ";\n";
+         string += "   float silhouetteBoundaryOpacity = silhouetteBoundaryOpacity_" + this .getId () + ";\n";
+         string += "   float silhouetteSharpness       = silhouetteSharpness_" + this .getId () + ";\n";
          string += "\n";
-         string += "	return vec4 (originalColor .rgb, originalColor .a * (silhouetteRetainedOpacity + silhouetteBoundaryOpacity * pow (1.0 - abs (dot (surfaceNormal .xyz, normalize (vertex))), silhouetteSharpness)));\n";
+         string += "   return vec4 (originalColor .rgb, originalColor .a * (silhouetteRetainedOpacity + silhouetteBoundaryOpacity * pow (1.0 - abs (dot (surfaceNormal .xyz, normalize (vertex))), silhouetteSharpness)));\n";
          string += "}\n";
 
          return string;
@@ -3434,12 +3431,12 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
-         string += "	// SilhouetteEnhancementVolumeStyle\n";
+         string += "   // SilhouetteEnhancementVolumeStyle\n";
          string += "\n";
-         string += "	textureColor = getSilhouetteEnhancementStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "   textureColor = getSilhouetteEnhancementStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
          return string;
       },
@@ -3453,7 +3450,7 @@ function (Fields,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -3547,7 +3544,7 @@ function (Fields,
       {
          X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -3576,7 +3573,7 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
          string += "// ToneMappedVolumeStyle\n";
@@ -3590,29 +3587,26 @@ function (Fields,
          string += "vec4\n";
          string += "getToneMappedStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
          string += "{\n";
-         string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+         string += "   vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
          string += "\n";
-         string += "	if (surfaceNormal .w == 0.0)\n";
-         string += "		return vec4 (0.0);\n";
+         string += "   if (surfaceNormal .w == 0.0)\n";
+         string += "      return vec4 (0.0);\n";
          string += "\n";
-         string += "	vec3 toneColor = vec3 (0.0);\n";
-         string += "	vec3 coolColor = coolColor_" + this .getId () + " .rgb;\n";
-         string += "	vec3 warmColor = warmColor_" + this .getId () + " .rgb;\n";
+         string += "   vec3 toneColor = vec3 (0.0);\n";
+         string += "   vec3 coolColor = coolColor_" + this .getId () + " .rgb;\n";
+         string += "   vec3 warmColor = warmColor_" + this .getId () + " .rgb;\n";
          string += "\n";
-         string += "	for (int i = 0; i < x3d_MaxLights; ++ i)\n";
-         string += "	{\n";
-         string += "		if (i == x3d_NumLights)\n";
-         string += "			break;\n";
+         string += "   for (int i = 0; i < X3D_NUM_LIGHTS; ++ i)\n";
+         string += "   {\n";
+         string += "      x3d_LightSourceParameters light = x3d_LightSource [i];\n";
          string += "\n";
-         string += "		x3d_LightSourceParameters light = x3d_LightSource [i];\n";
+         string += "      vec3  L           = light .type == x3d_DirectionalLight ? -light .direction : normalize (light .location - vertex);\n";
+         string += "      float colorFactor = dot (L, surfaceNormal .xyz) * 0.5 + 0.5;\n";
          string += "\n";
-         string += "		vec3  L           = light .type == x3d_DirectionalLight ? -light .direction : normalize (light .location - vertex);\n";
-         string += "		float colorFactor = (1.0 + dot (L, surfaceNormal .xyz)) * 0.5;\n";
+         string += "      toneColor += mix (warmColor .rgb, coolColor .rgb, colorFactor);\n";
+         string += "   }\n";
          string += "\n";
-         string += "		toneColor += mix (warmColor .rgb, coolColor .rgb, colorFactor);\n";
-         string += "	}\n";
-         string += "\n";
-         string += "	return vec4 (toneColor, originalColor .a);\n";
+         string += "   return vec4 (toneColor, originalColor .a);\n";
          string += "}\n";
 
          return string;
@@ -3622,12 +3616,12 @@ function (Fields,
          if (! this ._enabled .getValue ())
             return "";
 
-         var string = "";
+         let string = "";
 
          string += "\n";
-         string += "	// ToneMappedVolumeStyle\n";
+         string += "   // ToneMappedVolumeStyle\n";
          string += "\n";
-         string += "	textureColor = getToneMappedStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "   textureColor = getToneMappedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
          return string;
       },
@@ -3641,7 +3635,7 @@ function (Fields,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -3694,9 +3688,6 @@ define ('x_ite/Components/VolumeRendering/VolumeData',[
    "x_ite/Components/Shaders/ShaderPart",
    "x_ite/Base/X3DConstants",
    "x_ite/Base/X3DCast",
-   "text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
-   "text!x_ite/Browser/VolumeRendering/VolumeStyle.fs",
-   "x_ite/DEBUG",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -3705,10 +3696,7 @@ function (Fields,
           ComposedShader,
           ShaderPart,
           X3DConstants,
-          X3DCast,
-          vs,
-          fs,
-          DEBUG)
+          X3DCast)
 {
 "use strict";
 
@@ -3750,7 +3738,7 @@ function (Fields,
       {
          X3DVolumeDataNode .prototype .initialize .call (this);
 
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          if (gl .getVersion () < 2)
             return;
@@ -3758,20 +3746,20 @@ function (Fields,
          this ._renderStyle .addInterest ("set_renderStyle__", this);
          this ._voxels      .addInterest ("set_voxels__",      this);
 
-         this ._renderStyle .addInterest ("update", this);
+         this ._renderStyle .addInterest ("updateShader", this);
 
          this .getAppearance () ._texture   = this ._voxels;
 
          this .set_renderStyle__ ();
          this .set_voxels__ ();
 
-         this .update ();
+         this .updateShader ();
       },
       set_renderStyle__: function ()
       {
          if (this .renderStyleNode)
          {
-            this .renderStyleNode .removeInterest ("update", this);
+            this .renderStyleNode .removeInterest ("updateShader", this);
             this .renderStyleNode .removeVolumeData (this);
          }
 
@@ -3779,59 +3767,29 @@ function (Fields,
 
          if (this .renderStyleNode)
          {
-            this .renderStyleNode .addInterest ("update", this);
+            this .renderStyleNode .addInterest ("updateShader", this);
             this .renderStyleNode .addVolumeData (this);
          }
       },
       set_voxels__: function ()
       {
-         if (this .voxelsNode)
-            this .voxelsNode .removeInterest ("set_textureSize__", this);
-
          this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
          if (this .voxelsNode)
-         {
-            this .voxelsNode .addInterest ("set_textureSize__", this);
-
             this .getAppearance () ._texture = this ._voxels;
-
-            this .set_textureSize__ ();
-         }
          else
-         {
             this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels (this .getExecutionContext ());
-         }
       },
-      set_textureSize__: function ()
-      {
-         try
-         {
-            var textureSize = this .getShader () .getField ("x3d_TextureSize");
-
-            textureSize .x = this .voxelsNode .getWidth ();
-            textureSize .y = this .voxelsNode .getHeight ();
-            textureSize .z = this .voxelsNode .getDepth ();
-         }
-         catch (error)
-         {
-            if (DEBUG)
-               console .log (error .message);
-         }
-      },
-      update: function ()
-      {
-         this .setShader (this .createShader (vs, fs));
-      },
-      createShader: function (vs, fs)
+      createShader: function (options, vs, fs)
       {
          // if (DEBUG)
-         // 	console .log ("Creating VolumeData Shader ...");
+         //    console .log ("Creating VolumeData Shader ...");
 
-         var
-            opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
-            styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
-            styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
+         const opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle ();
+
+         let
+            styleUniforms  = opacityMapVolumeStyle .getUniformsText (),
+            styleFunctions = opacityMapVolumeStyle .getFunctionsText ();
 
          if (this .renderStyleNode)
          {
@@ -3843,40 +3801,41 @@ function (Fields,
          fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
 
          // if (DEBUG)
-         // 	this .getBrowser () .print (fs);
+         //    this .getBrowser () .print (fs);
 
-         var vertexShader = new ShaderPart (this .getExecutionContext ());
-         vertexShader .setName ("VolumeDataVertexShader");
+         const vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
+         vertexShader .setPrivate (true);
+         vertexShader .setName ("VolumeDataVertexShader");
+         vertexShader .setOptions (options);
          vertexShader .setup ();
 
-         var fragmentShader = new ShaderPart (this .getExecutionContext ());
-         fragmentShader .setName ("VolumeDataFragmentShader");
+         const fragmentShader = new ShaderPart (this .getExecutionContext ());
          fragmentShader ._type = "FRAGMENT";
          fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
+         fragmentShader .setPrivate (true);
+         fragmentShader .setName ("VolumeDataFragmentShader");
+         fragmentShader .setOptions (options);
          fragmentShader .setup ();
 
-         var shaderNode = new ComposedShader (this .getExecutionContext ());
-         shaderNode .setName ("VolumeDataShader");
+         const shaderNode = new ComposedShader (this .getExecutionContext ());
          shaderNode ._language = "GLSL";
          shaderNode ._parts .push (vertexShader);
          shaderNode ._parts .push (fragmentShader);
-
-         if (this .voxelsNode)
-         {
-            var textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
-
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", textureSize);
-         }
-         else
-         {
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", new Fields .SFVec3f ());
-         }
+         shaderNode .setPrivate (true);
+         shaderNode .setName ("VolumeDataShader");
 
          opacityMapVolumeStyle .addShaderFields (shaderNode);
 
          if (this .renderStyleNode)
             this .renderStyleNode .addShaderFields (shaderNode);
+
+         const uniformNames = [ ];
+
+         this .addShaderUniformNames (uniformNames);
+
+         shaderNode .setUniformNames (uniformNames);
+         shaderNode .setup ();
 
          return shaderNode;
       },

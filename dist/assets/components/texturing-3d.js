@@ -4,7 +4,7 @@
 var module = { }, exports, process;
 
 const
-	X3D     = window [Symbol .for ("X_ITE.X3D-6.1.0")],
+	X3D     = window [Symbol .for ("X_ITE.X3D-7.0.0")],
 	define  = X3D .define,
 	require = X3D .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -1076,7 +1076,7 @@ define('zlib', ['zlib/dummy'], function (main) { return main; });
 
 define("zlib/dummy", function(){});
 
-/*! dicom-parser - 1.8.12 - 2022-02-07 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
+/*! dicom-parser - 1.8.12 - 2022-10-11 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("zlib"));
@@ -1152,7 +1152,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "55a69ee645a02abc7461";
+/******/ 	var hotCurrentHash = "d34dce7ccca0d83d8277";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -3619,10 +3619,9 @@ __webpack_require__.r(__webpack_exports__);
  * Internal helper functions for for parsing DICOM elements
  */
 
-var isSequence = function isSequence(element, byteStream, vrCallback) {
-  // if a data dictionary callback was provided, use that to verify that the element is a sequence.
-  if (typeof vrCallback !== 'undefined') {
-    return vrCallback(element.tag) === 'SQ';
+var isSequence = function isSequence(element, byteStream) {
+  if (element.vr !== undefined) {
+    return element.vr === 'SQ';
   }
 
   if (byteStream.position + 4 <= byteStream.byteArray.length) {
@@ -3644,8 +3643,10 @@ function readDicomElementImplicit(byteStream, untilTag, vrCallback) {
     throw 'dicomParser.readDicomElementImplicit: missing required parameter \'byteStream\'';
   }
 
+  var tag = Object(_readTag_js__WEBPACK_IMPORTED_MODULE_2__["default"])(byteStream);
   var element = {
-    tag: Object(_readTag_js__WEBPACK_IMPORTED_MODULE_2__["default"])(byteStream),
+    tag: tag,
+    vr: vrCallback !== undefined ? vrCallback(tag) : undefined,
     length: byteStream.readUint32(),
     dataOffset: byteStream.position
   };
@@ -3656,11 +3657,17 @@ function readDicomElementImplicit(byteStream, untilTag, vrCallback) {
 
   if (element.tag === untilTag) {
     return element;
-  }
+  } // always parse sequences with undefined lengths, since there's no other way to know how long they are.
 
-  if (isSequence(element, byteStream, vrCallback) && !Object(_util_util_js__WEBPACK_IMPORTED_MODULE_3__["isPrivateTag"])(element.tag)) {
+
+  if (isSequence(element, byteStream) && (!Object(_util_util_js__WEBPACK_IMPORTED_MODULE_3__["isPrivateTag"])(element.tag) || element.hadUndefinedLength)) {
     // parse the sequence
-    Object(_readSequenceElementImplicit_js__WEBPACK_IMPORTED_MODULE_1__["default"])(byteStream, element);
+    Object(_readSequenceElementImplicit_js__WEBPACK_IMPORTED_MODULE_1__["default"])(byteStream, element, vrCallback);
+
+    if (Object(_util_util_js__WEBPACK_IMPORTED_MODULE_3__["isPrivateTag"])(element.tag)) {
+      element.items = undefined;
+    }
+
     return element;
   } // if element is not a sequence and has undefined length, we have to
   // scan the data for a magic number to figure out when it ends.
@@ -4956,11 +4963,17 @@ var isStringVr = function isStringVr(vr) {
  * Tests to see if a given tag in the format xggggeeee is a private tag or not
  * @param tag
  * @returns {boolean}
+ * @throws error if fourth character cannot be parsed
  */
 
 
 var isPrivateTag = function isPrivateTag(tag) {
-  var lastGroupDigit = parseInt(tag[4], 10);
+  var lastGroupDigit = parseInt(tag[4], 16);
+
+  if (isNaN(lastGroupDigit)) {
+    throw 'dicomParser.isPrivateTag: cannot parse last character of group';
+  }
+
   var groupIsOdd = lastGroupDigit % 2 === 1;
   return groupIsOdd;
 };
@@ -9124,7 +9137,7 @@ function (Fields,
                return gl .RGBA;
          }
       },
-      unloadNow: function ()
+      unLoadNow: function ()
       {
          this .clearTexture ();
       },

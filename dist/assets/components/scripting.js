@@ -4,7 +4,7 @@
 var module = { }, exports, process;
 
 const
-	X3D     = window [Symbol .for ("X_ITE.X3D-6.1.0")],
+	X3D     = window [Symbol .for ("X_ITE.X3D-7.0.0")],
 	define  = X3D .define,
 	require = X3D .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -325,7 +325,7 @@ function ($,
       {
          return this ._url;
       },
-      unloadNow: function ()
+      unLoadNow: function ()
       {
          this .initialize__ ("");
       },
@@ -539,7 +539,7 @@ function ($,
                {
                   const callback = this .context [field .getName ()];
 
-                  if ($.isFunction (callback))
+                  if (typeof callback === "function")
                      this .set_field__ (callback, field);
 
                   break;
@@ -548,7 +548,7 @@ function ($,
                {
                   const callback = this .context ["set_" + field .getName ()];
 
-                  if ($.isFunction (callback))
+                  if (typeof callback === "function")
                      this .set_field__ (callback, field);
 
                   break;
@@ -577,7 +577,7 @@ function ($,
 
                // Call initialize function.
 
-               if ($.isFunction (this .context .initialize))
+               if (typeof this .context .initialize === "function")
                {
                   const browser = this .getBrowser ();
 
@@ -595,14 +595,14 @@ function ($,
                   browser .getScriptStack () .pop ();
                }
 
-               if ($.isFunction (this .context .shutdown))
+               if (typeof this .context .shutdown === "function")
                   $(window) .on ("unload", this .shutdown__ .bind (this));
             }
 
-            if ($.isFunction (this .context .prepareEvents))
+            if (typeof this .context .prepareEvents === "function")
                this .getBrowser () .prepareEvents () .addInterest ("prepareEvents__", this);
 
-            if ($.isFunction (this .context .eventsProcessed))
+            if (typeof this .context .eventsProcessed === "function")
                this .addInterest ("eventsProcessed__", this);
 
             for (const field of this .getUserDefinedFields ())
@@ -613,7 +613,7 @@ function ($,
                   {
                      const callback = this .context [field .getName ()];
 
-                     if ($.isFunction (callback))
+                     if (typeof callback === "function")
                         field .addInterest ("set_field__", this, callback);
 
                      break;
@@ -622,7 +622,7 @@ function ($,
                   {
                      const callback = this .context ["set_" + field .getName ()];
 
-                     if ($.isFunction (callback))
+                     if (typeof callback === "function")
                         field .addInterest ("set_field__", this, callback);
 
                      break;

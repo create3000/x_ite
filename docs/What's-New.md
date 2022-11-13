@@ -8,13 +8,13 @@ layout: single
 
 ## X\_ITE v7.0.0 Released
 
-*Leipzig, 13th November 2022*: We finally released the new version 7.0.0. This version comes with a brand new shader system. The default shaders are now highly specialized and therefor very fast. First tests reveal that the shaders are now 2 up to 3 times faster. But this also mean that custom shaders may be broken now, because all x3d_Num* variables are now removed. X3D Authors must now hardcode these values into their shaders, or develop an own system.
+*Leipzig, 13th November 2022*: We finally released the new version 7.0.0. This version comes with a brand new shader system. The default shaders are now highly specialized and therefor very fast. First tests reveal that the shaders are now 2 up to 3 times faster. But this also means that custom shaders may be broken now, because all x3d_Num* variables are now removed. X3D Authors must now hardcode these values into their shaders, or develop an own system.
 
 {% capture notice-text %}
 #### New Features
 
 - New shader system.
-- X3DVolumeData node supports now visible and bboxDisplay field.
+- X3DVolumeData node now supports visible and bboxDisplay field.
 - GeoViewpoint automatically forces logarithmic depth buffer.
 - GeoViewpoint can now handle browser option 'StraightenHorizon'.
 

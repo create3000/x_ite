@@ -4,7 +4,7 @@
 var module = { }, exports, process;
 
 const
-	X3D     = window [Symbol .for ("X_ITE.X3D-6.1.0")],
+	X3D     = window [Symbol .for ("X_ITE.X3D-7.0.0")],
 	define  = X3D .define,
 	require = X3D .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -989,7 +989,7 @@ function ($,
 
          this .requestImmediateLoad ();
       },
-      unloadNow: function ()
+      unLoadNow: function ()
       {
          this .clearTexture ();
       },
