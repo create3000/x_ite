@@ -4,18 +4,18 @@ const
 
 module .exports =
 {
-   entry: "./src/main.js",
+   entry: "./src/x_ite.js",
    output: {
       path: path .resolve (__dirname, "dist"),
-      filename: "bundle.js",
+      filename: "x_ite.js",
    },
    mode: "production",
    optimization: {
       minimize: false,
    },
-   dependencies: [
-      path .resolve (__dirname, "node_modules"),
-   ],
+   // dependencies: [
+   //    path .resolve (__dirname, "node_modules"),
+   // ],
    plugins: [
       new webpack .ProvidePlugin ({
          $: "jquery",
