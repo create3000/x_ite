@@ -265,11 +265,10 @@ X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .proto
 
       protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
 
-      if (this .getExecutionContext () .getOuterNode () &&
-          this .getExecutionContext () .getOuterNode () .getType () .includes (X3DConstants .X3DProtoDeclaration))
-      {
+      const outerNode = this .getExecutionContext () .getOuterNode ();
+
+      if (outerNode && outerNode .getType () .includes (X3DConstants .X3DProtoDeclaration))
          return;
-      }
 
       if (protoNode .isExternProto)
       {
