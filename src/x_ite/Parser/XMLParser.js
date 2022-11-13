@@ -1008,7 +1008,7 @@ XMLParser .prototype = Object .assign (Object .create (X3DParser .prototype),
    },
    addNode: function (xmlElement, node)
    {
-      if (this .parents .length === 0 || this .getParent () .getType () .includes (X3DConstants .X3DProtoDeclaration))
+      if (this .parents .length === 0 || this .getParent () instanceof X3DProtoDeclaration)
       {
          this .getExecutionContext () .rootNodes .push (node);
          return;
