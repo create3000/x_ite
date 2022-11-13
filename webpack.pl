@@ -8,6 +8,7 @@ use open qw/:std :utf8/;
 use File::Basename qw (dirname basename);
 use File::Slurper qw (read_text);
 use File::Spec;
+use List::Util qw (reduce);
 
 my $CWD = `pwd`;
 chomp $CWD;
@@ -68,6 +69,30 @@ sub convert {
    print $file if $filename =~ /Bezier|Matrix4|DEBUG/;
 }
 
+sub tidy {
+   my $filename = shift;
+   chomp $filename;
+   #say $filename;
+
+   my $file = read_text ($filename);
+
+   my @matches = ($file =~ /import\s+([^\s]+)/sg);
+
+   return unless @matches;
+
+   my $l = reduce { $a > $b ? $a : $b } map { length } @matches;
+
+   $file =~ s/import\s+([^\s]+)/"import " . $1 . " " x ($l - length ($1))/sge;
+
+   open FILE, ">", $filename;
+   print FILE $file;
+   close FILE;
+
+   say $file if $filename =~ /Bezier|Matrix4|DEBUG/;
+}
+
 #convert $_ foreach `find src/standard -type f -name "*.js"`;
 #convert $_ foreach `find src/x_ite    -type f -name "*.js"`;
-convert $_ foreach `find src/lib/nurbs    -type f -name "*.js"`;
+#convert $_ foreach `find src/lib/nurbs    -type f -name "*.js"`;
+
+tidy $_ foreach `find src -type f -name "*.js"`;
