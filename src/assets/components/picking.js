@@ -54,7 +54,7 @@ import PrimitivePickSensor from "../../x_ite/Components/Picking/PrimitivePickSen
 import VolumePickSensor    from "../../x_ite/Components/Picking/VolumePickSensor.js";
 import X3DPickSensorNode   from "../../x_ite/Components/Picking/X3DPickSensorNode.js";
 import X3DPickableObject   from "../../x_ite/Components/Picking/X3DPickableObject.js";
-import RigidBodyPhysics    from "./rigid-body-physics.js";
+import RigidBodyPhysics    from "./RigidBodyPhysics.js";
 
 Components .addComponent ({
    name: "Picking",

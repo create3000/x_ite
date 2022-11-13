@@ -58,7 +58,7 @@ import VolumePicker         from "../../Browser/Picking/VolumePicker.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Box3                 from "../../../standard/Math/Geometry/Box3.js";
-import RigidBodyPhysics     from "../../../assets/components/rigid-body-physics.js";
+import RigidBodyPhysics     from "../../../assets/components/RigidBodyPhysics.js";
 
 const Ammo = RigidBodyPhysics .Ammo;
 

@@ -57,7 +57,7 @@ SupportedComponents .addComponent (
    title:      "Annotation",
    name:       "Annotation",
    level:       2,
-   providerUrl: urls .getProviderUrl ("annotation"),
+   providerUrl: urls .getProviderUrl ("Annotation"),
 });
 
 SupportedComponents .addComponent (
@@ -65,7 +65,7 @@ SupportedComponents .addComponent (
    title:      "Computer-Aided Design (CAD) model geometry",
    name:       "CADGeometry",
    level:       2,
-   providerUrl: urls .getProviderUrl ("cad-geometry"),
+   providerUrl: urls .getProviderUrl ("CADGeometry"),
 });
 
 SupportedComponents .addComponent (
@@ -81,7 +81,7 @@ SupportedComponents .addComponent (
    title:      "Cube map environmental texturing",
    name:       "CubeMapTexturing",
    level:       3,
-   providerUrl: urls .getProviderUrl ("cube-map-texturing"),
+   providerUrl: urls .getProviderUrl ("CubeMapTexturing"),
 });
 
 SupportedComponents .addComponent (
@@ -89,7 +89,7 @@ SupportedComponents .addComponent (
    title:      "Distributed interactive simulation (DIS)",
    name:       "DIS",
    level:       2,
-   providerUrl: urls .getProviderUrl ("dis"),
+   providerUrl: urls .getProviderUrl ("DIS"),
 });
 
 SupportedComponents .addComponent (
@@ -113,7 +113,7 @@ SupportedComponents .addComponent (
    title:      "Event utilities",
    name:       "EventUtilities",
    level:       4,
-   providerUrl: urls .getProviderUrl ("event-utilities"),
+   providerUrl: urls .getProviderUrl ("EventUtilities"),
 });
 
 SupportedComponents .addComponent (
@@ -129,7 +129,7 @@ SupportedComponents .addComponent (
    title:      "Geometry2D",
    name:       "Geometry2D",
    level:       2,
-   providerUrl: urls .getProviderUrl ("geometry2d"),
+   providerUrl: urls .getProviderUrl ("Geometry2D"),
 });
 
 SupportedComponents .addComponent (
@@ -145,7 +145,7 @@ SupportedComponents .addComponent (
    title:      "Geospatial",
    name:       "Geospatial",
    level:       2,
-   providerUrl: urls .getProviderUrl ("geospatial"),
+   providerUrl: urls .getProviderUrl ("Geospatial"),
 });
 
 SupportedComponents .addComponent (
@@ -161,7 +161,7 @@ SupportedComponents .addComponent (
    title:      "Humanoid animation (HAnim)",
    name:       "HAnim",
    level:       3,
-   providerUrl: urls .getProviderUrl ("h-anim"),
+   providerUrl: urls .getProviderUrl ("HAnim"),
 });
 
 SupportedComponents .addAlias ("H-Anim", "HAnim");
@@ -179,7 +179,7 @@ SupportedComponents .addComponent (
    title:      "Key device sensor",
    name:       "KeyDeviceSensor",
    level:       2,
-   providerUrl: urls .getProviderUrl ("key-device-sensor"),
+   providerUrl: urls .getProviderUrl ("KeyDeviceSensor"),
 });
 
 SupportedComponents .addComponent (
@@ -195,7 +195,7 @@ SupportedComponents .addComponent (
    title:      "Layout",
    name:       "Layout",
    level:       2,
-   providerUrl: urls .getProviderUrl ("layout"),
+   providerUrl: urls .getProviderUrl ("Layout"),
 });
 
 SupportedComponents .addComponent (
@@ -227,7 +227,7 @@ SupportedComponents .addComponent (
    title:      "Non-uniform Rational B-Spline (NURBS)",
    name:       "NURBS",
    level:       4,
-   providerUrl: urls .getProviderUrl ("nurbs"),
+   providerUrl: urls .getProviderUrl ("NURBS"),
 });
 
 SupportedComponents .addComponent (
@@ -235,7 +235,7 @@ SupportedComponents .addComponent (
    title:      "Particle systems",
    name:       "ParticleSystems",
    level:       3,
-   providerUrl: urls .getProviderUrl ("particle-systems"),
+   providerUrl: urls .getProviderUrl ("ParticleSystems"),
 });
 
 SupportedComponents .addComponent (
@@ -243,7 +243,7 @@ SupportedComponents .addComponent (
    title:      "Picking sensor",
    name:       "Picking",
    level:       3,
-   providerUrl: urls .getProviderUrl ("picking"),
+   providerUrl: urls .getProviderUrl ("Picking"),
 });
 
 SupportedComponents .addComponent (
@@ -259,7 +259,7 @@ SupportedComponents .addComponent (
    title:      "Projective Texture Mapping",
    name:       "ProjectiveTextureMapping",
    level:       2,
-   providerUrl: urls .getProviderUrl ("projective-texture-mapping"),
+   providerUrl: urls .getProviderUrl ("ProjectiveTextureMapping"),
 });
 
 SupportedComponents .addComponent (
@@ -283,7 +283,7 @@ SupportedComponents .addComponent (
    title:      "Rigid body physics",
    name:       "RigidBodyPhysics",
    level:       5,
-   providerUrl: urls .getProviderUrl ("rigid-body-physics"),
+   providerUrl: urls .getProviderUrl ("RigidBodyPhysics"),
 });
 
 SupportedComponents .addComponent (
@@ -291,7 +291,7 @@ SupportedComponents .addComponent (
    title:      "Scripting",
    name:       "Scripting",
    level:       1,
-   providerUrl: urls .getProviderUrl ("scripting"),
+   providerUrl: urls .getProviderUrl ("Scripting"),
 });
 
 SupportedComponents .addComponent (
@@ -331,7 +331,7 @@ SupportedComponents .addComponent (
    title:      "Texturing3D",
    name:       "Texturing3D",
    level:       3,
-   providerUrl: urls .getProviderUrl ("texturing-3d"),
+   providerUrl: urls .getProviderUrl ("Texturing3D"),
 });
 
 SupportedComponents .addComponent (
@@ -347,7 +347,7 @@ SupportedComponents .addComponent (
    title:      "Volume rendering",
    name:       "VolumeRendering",
    level:       2,
-   providerUrl: urls .getProviderUrl ("volume-rendering"),
+   providerUrl: urls .getProviderUrl ("VolumeRendering"),
 });
 
 SupportedComponents .addComponent (
@@ -355,7 +355,7 @@ SupportedComponents .addComponent (
    title:      "X_ITE",
    name:       "X_ITE",
    level:       1,
-   providerUrl: urls .getProviderUrl ("x_ite"),
+   providerUrl: urls .getProviderUrl ("X_ITE"),
 });
 
 export default SupportedComponents;
