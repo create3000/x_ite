@@ -47,37 +47,40 @@
  ******************************************************************************/
 
 
-(function ()
+// BEGIN NAMESPACE
+
+import VRMLParser from "./Parser/VRMLParser.js";
+
+const namespace = new Map ();
+
+namespace .set ("VRMLParser", VRMLParser);
+
+// END NAMESPACE
+
+function require ()
 {
-   // Added at February 2022
-   // https://github.com/tc39/proposal-relative-indexing-method#polyfill
-
-   function at (n)
+   switch (arguments .length)
    {
-      // ToInteger() abstract op
-      n = Math.trunc(n) || 0;
-      // Allow negative indexing from the end
-      if (n < 0) n += this.length;
-      // OOB access is guaranteed to return undefined
-      if (n < 0 || n >= this.length) return undefined;
-      // Otherwise, this is just normal property access
-      return this[n];
-   }
-
-   const TypedArray = Reflect .getPrototypeOf (Int8Array);
-   for (const C of [Array, String, TypedArray])
-   {
-      if (C .prototype .at === undefined)
+      case 0:
       {
-         Object .defineProperty (C .prototype, "at",
-         {
-            value: at,
-            writable: true,
-            enumerable: false,
-            configurable: true,
-         });
+         return;
+      }
+      case 1:
+      {
+         return namespace .get (String (arguments [0]) .replace (/^.*\//, ""));
+      }
+      default:
+      {
+         if (! Array .isArray (arguments [0]))
+            return;
+
+         if (typeof arguments [1] !== "function")
+            return;
+
+         arguments [1] .apply (null, arguments [0] .map (file => require (file)));
+         break;
       }
    }
-})();
+}
 
-export default undefined;
+export default require;

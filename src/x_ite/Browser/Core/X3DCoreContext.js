@@ -281,7 +281,7 @@ X3DCoreContext .prototype =
    {
       const url = new Fields .MFString ();
 
-      VRMLParser .fromString (url, urlCharacters, this .getExecutionContext ());
+      url .fromString (urlCharacters, this .getExecutionContext ());
 
       return url;
    },

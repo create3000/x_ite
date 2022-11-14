@@ -72,6 +72,7 @@ import X3DProtoDeclarationNode     from "./Prototype/X3DProtoDeclarationNode.js"
 import RouteArray                  from "./Routing/RouteArray.js";
 import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
+import require                     from "./Namespace.js";
 import Fallback                    from "./Fallback.js";
 import MicroTime                   from "../standard/Time/MicroTime.js";
 
@@ -124,6 +125,8 @@ function X3D (callback, fallback)
 Object .assign (X3D,
 {
    noConflict:                  noConflict,
+
+   require:                     require,
 
    getBrowser:                  getBrowser,
    createBrowser:               createBrowser,
