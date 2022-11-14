@@ -71,7 +71,6 @@ class X3DCanvas extends HTMLElement
 
       shadow .appendChild (link);
 
-
       X3D .createBrowserFromElement (this);
    }
 }
