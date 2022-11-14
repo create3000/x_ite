@@ -46,38 +46,39 @@
  *
  ******************************************************************************/
 
- import X3D  from "./X3D.js";
- import URLs from "./Browser/Networking/URLs.js";
+import X3D  from "./X3D.js";
+import URLs from "./Browser/Networking/URLs.js";
 
- class X3DCanvas extends HTMLElement
- {
-    constructor ()
-    {
-       super ();
+class X3DCanvas extends HTMLElement
+{
+   constructor ()
+   {
+      super ();
 
-       const
-          shadow = this .attachShadow ({ mode: "open" }),
-          link   = document .createElement ("link");
+      const
+         shadow = this .attachShadow ({ mode: "open", delegatesFocus: true }),
+         link   = document .createElement ("link");
 
-       shadow .loaded = new Promise (function (resolve, reject)
-       {
-          link .onload  = resolve;
-          link .onerror = reject;
-       });
+      shadow .loaded = new Promise (function (resolve, reject)
+      {
+         link .onload  = resolve;
+         link .onerror = reject;
+      });
 
-       link .setAttribute ("rel", "stylesheet");
-       link .setAttribute ("type", "text/css");
-       link .setAttribute ("href", new URL ("x_ite.css", URLs .getScriptUrl ()) .href);
+      link .setAttribute ("rel", "stylesheet");
+      link .setAttribute ("type", "text/css");
+      link .setAttribute ("href", new URL ("x_ite.css", URLs .getScriptUrl ()) .href);
 
-       shadow .appendChild (link);
+      shadow .appendChild (link);
 
-       X3D .createBrowserFromElement (this);
-    }
- }
 
- customElements .define ("x3d-canvas", X3DCanvas);
+      X3D .createBrowserFromElement (this);
+   }
+}
 
- // IE fix.
- document .createElement ("X3DCanvas");
+customElements .define ("x3d-canvas", X3DCanvas);
 
- export default X3DCanvas
+// IE fix.
+document .createElement ("X3DCanvas");
+
+export default X3DCanvas
