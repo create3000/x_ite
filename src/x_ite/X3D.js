@@ -72,7 +72,7 @@ import X3DProtoDeclarationNode     from "./Prototype/X3DProtoDeclarationNode.js"
 import RouteArray                  from "./Routing/RouteArray.js";
 import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
-import require                     from "./Namespace.js";
+import Namespace                   from "./Namespace.js";
 import Fallback                    from "./Fallback.js";
 import MicroTime                   from "../standard/Time/MicroTime.js";
 
@@ -114,7 +114,7 @@ function X3D (callback, fallback)
          {
             console .warn ("Use of <X3DCanvas> element is depreciated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
 
-            $.map (elements, createBrowserFromElement);
+            $.map (elements, X3D .createBrowserFromElement);
          }
 
          callbacks .resolve ();
@@ -124,14 +124,86 @@ function X3D (callback, fallback)
 
 Object .assign (X3D,
 {
-   noConflict:                  noConflict,
+   require: function ()
+   {
+      switch (arguments .length)
+      {
+         case 0:
+         {
+            return;
+         }
+         case 1:
+         {
+            return Namespace .get (String (arguments [0]) .replace (/^.*\//, ""));
+         }
+         default:
+         {
+            if (! Array .isArray (arguments [0]))
+               return;
 
-   require:                     require,
+            if (typeof arguments [1] !== "function")
+               return;
 
-   getBrowser:                  getBrowser,
-   createBrowser:               createBrowser,
-   createBrowserFromElement:    createBrowserFromElement,
+            arguments [1] .apply (null, arguments [0] .map (file => require (file)));
+            break;
+         }
+      }
+   },
+   noConflict: (function ()
+   {
+      const X3D_ = window .X3D;
 
+      return function ()
+      {
+         if (window .X3D === X3D)
+         {
+            if (X3D_ === undefined)
+               delete window .X3D;
+            else
+               window .X3D = X3D_;
+         }
+
+         return X3D;
+      };
+   })(),
+   getBrowser: function (element)
+   {
+      return $(element || "x3d-canvas, X3DCanvas") .data ("browser");
+   },
+   createBrowser: function (url, parameter)
+   {
+      const element = $("<x3d-canvas></x3d-canvas>");
+
+      if (url instanceof Fields .MFString)
+         element .attr ("url", url .toString ())
+
+      return element .get (0);
+   },
+   createBrowserFromElement: function (element)
+   {
+      try
+      {
+         element = $(element);
+
+         if (element .find (".x_ite-private-browser") .length)
+            return;
+
+         const browser = new X3DBrowser (element);
+
+         element .data ("browser", browser);
+
+         browser .setup ();
+      }
+      catch (error)
+      {
+         Fallback .show ($("x3d-canvas, X3DCanvas"), error);
+         fallbacks .resolve (error);
+      }
+   },
+});
+
+Object .assign (X3D,
+{
    X3DConstants:                X3DConstants,
    X3DBrowser:                  X3DBrowser,
    X3DExecutionContext:         X3DExecutionContext,
@@ -200,57 +272,5 @@ Object .assign (X3D,
    MFVec4d:                     Fields .MFVec4d,
    MFVec4f:                     Fields .MFVec4f,
 });
-
-const X3D_ = window .X3D;
-
-function noConflict ()
-{
-   if (window .X3D === X3D)
-   {
-      if (X3D_ === undefined)
-         delete window .X3D;
-      else
-         window .X3D = X3D_;
-   }
-
-   return X3D;
-}
-
-function getBrowser (element)
-{
-   return $(element || "x3d-canvas, X3DCanvas") .data ("browser");
-}
-
-function createBrowser (url, parameter)
-{
-   const element = $("<x3d-canvas></x3d-canvas>");
-
-   if (url instanceof Fields .MFString)
-       element .attr ("url", url .toString ())
-
-   return element .get (0);
-}
-
-function createBrowserFromElement (element)
-{
-   try
-   {
-      element = $(element);
-
-      if (element .find (".x_ite-private-browser") .length)
-         return;
-
-      const browser = new X3DBrowser (element);
-
-      element .data ("browser", browser);
-
-      browser .setup ();
-   }
-   catch (error)
-   {
-      Fallback .show ($("x3d-canvas, X3DCanvas"), error);
-      fallbacks .resolve (error);
-   }
-}
 
 export default X3D;

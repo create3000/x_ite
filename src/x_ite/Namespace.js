@@ -47,40 +47,12 @@
  ******************************************************************************/
 
 
-// BEGIN NAMESPACE
-
 import VRMLParser from "./Parser/VRMLParser.js";
+import X3DField   from "./Base/X3DField.js";
 
-const namespace = new Map ();
+const namespace = new Map ([
+   ["VRMLParser", VRMLParser],
+   ["X3DField",   X3DField],
+]);
 
-namespace .set ("VRMLParser", VRMLParser);
-
-// END NAMESPACE
-
-function require ()
-{
-   switch (arguments .length)
-   {
-      case 0:
-      {
-         return;
-      }
-      case 1:
-      {
-         return namespace .get (String (arguments [0]) .replace (/^.*\//, ""));
-      }
-      default:
-      {
-         if (! Array .isArray (arguments [0]))
-            return;
-
-         if (typeof arguments [1] !== "function")
-            return;
-
-         arguments [1] .apply (null, arguments [0] .map (file => require (file)));
-         break;
-      }
-   }
-}
-
-export default require;
+export default namespace;
