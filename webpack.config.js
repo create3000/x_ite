@@ -35,7 +35,16 @@ const config = [{
    },
 }]
 
-for (const component of fs .readdirSync ("./src/assets/components/"))
+const plugins = {
+   "RigidBodyPhysics.js": {
+
+   },
+   "Texturing3D.js": {
+
+   },
+}
+
+for (const component of ["Geometry2D.js"] || fs .readdirSync ("./src/assets/components/"))
 {
    config .push ({
       entry: "./src/assets/components/" + component,
@@ -48,7 +57,7 @@ for (const component of fs .readdirSync ("./src/assets/components/"))
          minimize: false,
       },
       plugins: [
-         new webpack .ProvidePlugin ({ }),
+         new webpack .ProvidePlugin (plugins [component] || { }),
       ],
       resolve: {
          fallback: { "path": false, "fs": false },
