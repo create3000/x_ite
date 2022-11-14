@@ -1,9 +1,9 @@
 const
    webpack = require ("webpack"),
-   path    = require ("path");
+   path    = require ("path"),
+   fs      = require ("fs")
 
-module .exports =
-{
+const config = [{
    entry: "./src/x_ite.js",
    output: {
       path: path .resolve (__dirname, "dist"),
@@ -33,4 +33,35 @@ module .exports =
       maxEntrypointSize: 10_000_000,
       maxAssetSize: 10_000_000,
    },
-};
+}]
+
+for (const component of fs .readdirSync ("./src/assets/components/"))
+{
+   config .push ({
+      entry: "./src/assets/components/" + component,
+      output: {
+         path: path .resolve (__dirname, "dist/assets/components"),
+         filename: component,
+      },
+      mode: "production",
+      optimization: {
+         minimize: false,
+      },
+      plugins: [
+         new webpack .ProvidePlugin ({ }),
+      ],
+      resolve: {
+         fallback: { "path": false, "fs": false },
+      },
+      stats: "minimal",
+      performance: {
+         hints: "warning",
+         maxEntrypointSize: 10_000_000,
+         maxAssetSize: 10_000_000,
+      },
+   })
+}
+
+config .parallelism = 4
+
+module.exports = config
