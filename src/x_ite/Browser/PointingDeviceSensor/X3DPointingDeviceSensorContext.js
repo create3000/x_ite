@@ -95,7 +95,8 @@ X3DPointingDeviceSensorContext .prototype =
    initialize: function ()
    {
       // Make element focusable.
-      this .getElement () .attr ("tabindex", this .getElement () .attr ("tabindex") || 0);
+      setTimeout (() => this .getElement () .attr ("tabindex", this .getElement () .attr ("tabindex") || 0));
+
       this .setCursor ("DEFAULT");
 
       this [_pointingDevice] .setup ();
