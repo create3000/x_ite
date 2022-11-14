@@ -49,10 +49,12 @@
 
 import VRMLParser from "./Parser/VRMLParser.js";
 import X3DField   from "./Base/X3DField.js";
+import XMLParser  from "./Parser/XMLParser";
 
-const namespace = new Map ([
+const Namespace = new Map ([
    ["VRMLParser", VRMLParser],
    ["X3DField",   X3DField],
+   ["XMLParser",  XMLParser],
 ]);
 
-export default namespace;
+export default Namespace;

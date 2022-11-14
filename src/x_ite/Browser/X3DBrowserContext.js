@@ -340,9 +340,11 @@ Object .assign (X3DBrowserContext,
          });
       }
 
-      $("x3d-canvas, X3DCanvas") .each (function (i, canvas)
+      $("x3d-canvas, X3DCanvas") .each (function (_, canvas)
       {
-         const browser = $(canvas) .data ("browser");
+         const
+            X3D     = window [Symbol .for ("X_ITE.X3D")],
+            browser = X3D .getBrowser (canvas);
 
          browserContext .call (browser);
 
