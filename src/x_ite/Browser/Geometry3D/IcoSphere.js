@@ -288,7 +288,7 @@ IcoSphere .prototype .sphericalMapping = function (coordIndex, point)
 
    for (let i = 0; i < length; i += 4)
    {
-      const i0 = -1, i1, i2;
+      let i0 = -1, i1, i2;
 
       // Find north pole
 

@@ -4,8 +4,11 @@ all: dist
 configure:
 	sudo npm install
 
+namespace:
+	perl build/bin/namespace.pl
+
 .PHONY: dist
-dist:
+dist: namespace
 	npx webpack
 
 # $(eval X_ITE_VERSION=$(shell perl build/bin/version-number.pl))
