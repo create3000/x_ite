@@ -9,18 +9,17 @@ namespace:
 
 .PHONY: dist
 dist: namespace
+
+
+	$(eval X_ITE_VERSION=$(shell perl build/bin/version-number.pl))
+	echo "Making Version:" $(X_ITE_VERSION)
+
+	perl -pi -e 's/export default (?:true|false);/export default false;/sg' src/x_ite/DEBUG.js
+
 	npx webpack
-
-# $(eval X_ITE_VERSION=$(shell perl build/bin/version-number.pl))
-# echo "Making Version:" $(X_ITE_VERSION)
-
-# perl -pi -e 's/return (?:true|false);/return false;/sg' src/x_ite/DEBUG.js
-
-# node_modules/requirejs/bin/r.js -o build/x_ite.build.js
-# perl -pi -e 's|text/text!|text!|sg' dist/x_ite.js
-# perl -pi -e "s|\"X_ITE.X3D\"|\"X_ITE.X3D-"$(X_ITE_VERSION)"\"|" dist/x_ite.js
-# node_modules/terser/bin/terser --mangle --compress -- dist/x_ite.js > dist/x_ite.min.js
-# node_modules/requirejs/bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css
+	perl -pi -e "s|\"X_ITE.X3D\"|\"X_ITE.X3D-"$(X_ITE_VERSION)"\"|" dist/x_ite.js
+	npx terser --mangle --compress -- dist/x_ite.js > dist/x_ite.min.js
+	npx node-sass src/x_ite.css --output-style compact -o dist
 
 # $(call generate_component,annotation,$(X_ITE_VERSION),--compress)
 # $(call generate_component,cad-geometry,$(X_ITE_VERSION),--compress)
@@ -42,27 +41,27 @@ dist: namespace
 # $(call generate_component,volume-rendering,$(X_ITE_VERSION),--compress)
 # $(call generate_component,x_ite,$(X_ITE_VERSION),--compress)
 
-# cp src/x_ite.html x_ite.min.html
-# perl -pi -e 's|\s*<script type="text/javascript" src="\.\./node_modules/requirejs/require.js"></script>\n||sg' x_ite.min.html
-# perl -pi -e 's|\s*<script type="text/javascript" src=".*?.config.js"></script>\n||sg'                          x_ite.min.html
+	cp src/x_ite.html x_ite.min.html
+	perl -p0i -e 's|<!-- X_ITE START.*?X_ITE END -->|<script type="text/javascript" src="dist/x_ite.js"></script>\n   <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>|sg' x_ite.min.html
+	perl -p0i -e 's| *await import \("./x_ite.js"\);\n||sg' x_ite.min.html
 
-# perl -pi -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'        x_ite.min.html
-# perl -pi -e 's|\.\./x_ite.min.html|src/x_ite.html|sg'    x_ite.min.html
-# perl -pi -e 's|class="links"|class="links min-links"|sg' x_ite.min.html
-# perl -pi -e 's|\>x_ite.min.html|>src/x_ite.html|sg'      x_ite.min.html
-# perl -pi -e 's|\.\./dist/|dist/|sg'                      x_ite.min.html
-# perl -pi -e 's|"bookmarks.js"|"src/bookmarks.js"|sg'     x_ite.min.html
-# perl -pi -e 's|"examples.js"|"src/examples.js"|sg'       x_ite.min.html
-# perl -pi -e 's|"tests.js"|"src/tests.js"|sg'             x_ite.min.html
-# perl -pi -e 's|"tests/menu.js"|"src/tests/menu.js"|sg'   x_ite.min.html
+	perl -pi -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'        x_ite.min.html
+	perl -pi -e 's|\.\./x_ite.min.html|src/x_ite.html|sg'    x_ite.min.html
+	perl -pi -e 's|class="links"|class="links min-links"|sg' x_ite.min.html
+	perl -pi -e 's|\>x_ite.min.html|>src/x_ite.html|sg'      x_ite.min.html
+	perl -pi -e 's|\.\./dist/|dist/|sg'                      x_ite.min.html
+	perl -pi -e 's|"bookmarks.js"|"src/bookmarks.js"|sg'     x_ite.min.html
+	perl -pi -e 's|"examples.js"|"src/examples.js"|sg'       x_ite.min.html
+	perl -pi -e 's|"tests.js"|"src/tests.js"|sg'             x_ite.min.html
+	perl -pi -e 's|"tests/menu.js"|"src/tests/menu.js"|sg'   x_ite.min.html
 
-# perl build/bin/dist.pl
+	perl build/bin/dist.pl
 
-# echo
-# ls -la dist/x_ite.min.js
-# echo
+	echo
+	ls -la dist/x_ite.min.js
+	echo
 
-# perl -pi -e 's/return (?:true|false);/return true;/sg' src/x_ite/DEBUG.js
+	perl -pi -e 's/export default (?:true|false);/export default true;/sg' src/x_ite/DEBUG.js
 
 define generate_component
 	node_modules/requirejs/bin/r.js -o build/components/$(1).build.js

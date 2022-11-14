@@ -19,6 +19,7 @@ module .exports =
    plugins: [
       new webpack .ProvidePlugin ({
          $: "jquery",
+         jQuery: "jquery",
          jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
          libtess: "libtess/libtess.cat.js",
          opentype: "opentype.js/dist/opentype.js",
@@ -26,6 +27,7 @@ module .exports =
          ResizeSensor: "css-element-queries/src/ResizeSensor.js",
       }),
    ],
+   stats: "minimal",
    performance: {
       hints: "warning",
       maxEntrypointSize: 10_000_000,

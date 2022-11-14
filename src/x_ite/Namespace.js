@@ -106,6 +106,8 @@ import PointingDeviceSensorContainer1        from "./Browser/PointingDeviceSenso
 import X3DPointingDeviceSensorContext1       from "./Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext.js";
 import GeometryContext1                      from "./Browser/Rendering/GeometryContext.js";
 import X3DRenderingContext1                  from "./Browser/Rendering/X3DRenderingContext.js";
+import X3DScriptingContext1                  from "./Browser/Scripting/X3DScriptingContext.js";
+import evaluate1                             from "./Browser/Scripting/evaluate.js";
 import ShaderCompiler1                       from "./Browser/Shaders/ShaderCompiler.js";
 import ShaderSource1                         from "./Browser/Shaders/ShaderSource.js";
 import Shaders1                              from "./Browser/Shaders/Shaders.js";
@@ -262,6 +264,8 @@ import X3DGeometryNode1                      from "./Components/Rendering/X3DGeo
 import X3DLineGeometryNode1                  from "./Components/Rendering/X3DLineGeometryNode.js";
 import X3DNormalNode1                        from "./Components/Rendering/X3DNormalNode.js";
 import X3DPointGeometryNode1                 from "./Components/Rendering/X3DPointGeometryNode.js";
+import Script1                               from "./Components/Scripting/Script.js";
+import X3DScriptNode1                        from "./Components/Scripting/X3DScriptNode.js";
 import Shaders2                              from "./Components/Shaders.js";
 import ComposedShader1                       from "./Components/Shaders/ComposedShader.js";
 import FloatVertexAttribute1                 from "./Components/Shaders/FloatVertexAttribute.js";
@@ -445,6 +449,8 @@ const Namespace = new Map ([
    ["x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext", X3DPointingDeviceSensorContext1],
    ["x_ite/Browser/Rendering/GeometryContext",                           GeometryContext1],
    ["x_ite/Browser/Rendering/X3DRenderingContext",                       X3DRenderingContext1],
+   ["x_ite/Browser/Scripting/X3DScriptingContext",                       X3DScriptingContext1],
+   ["x_ite/Browser/Scripting/evaluate",                                  evaluate1],
    ["x_ite/Browser/Shaders/ShaderCompiler",                              ShaderCompiler1],
    ["x_ite/Browser/Shaders/ShaderSource",                                ShaderSource1],
    ["x_ite/Browser/Shaders/Shaders",                                     Shaders1],
@@ -601,6 +607,8 @@ const Namespace = new Map ([
    ["x_ite/Components/Rendering/X3DLineGeometryNode",                    X3DLineGeometryNode1],
    ["x_ite/Components/Rendering/X3DNormalNode",                          X3DNormalNode1],
    ["x_ite/Components/Rendering/X3DPointGeometryNode",                   X3DPointGeometryNode1],
+   ["x_ite/Components/Scripting/Script",                                 Script1],
+   ["x_ite/Components/Scripting/X3DScriptNode",                          X3DScriptNode1],
    ["x_ite/Components/Shaders",                                          Shaders2],
    ["x_ite/Components/Shaders/ComposedShader",                           ComposedShader1],
    ["x_ite/Components/Shaders/FloatVertexAttribute",                     FloatVertexAttribute1],

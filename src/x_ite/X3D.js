@@ -134,17 +134,17 @@ Object .assign (X3D,
          }
          case 1:
          {
-            return Namespace .get (String (arguments [0]) .replace (/^.*\//, ""));
+            return Namespace .get (arguments [0]);
          }
          default:
          {
             if (! Array .isArray (arguments [0]))
-               return;
+               throw new Error ("Invalid argument");
 
             if (typeof arguments [1] !== "function")
-               return;
+               throw new Error ("Invalid argument");
 
-            arguments [1] .apply (null, arguments [0] .map (file => require (file)));
+            arguments [1] .apply (null, arguments [0] .map (file => this .require (file)));
             break;
          }
       }
