@@ -49,7 +49,7 @@
 
 import VRMLParser from "./Parser/VRMLParser.js";
 import X3DField   from "./Base/X3DField.js";
-import XMLParser  from "./Parser/XMLParser";
+import XMLParser  from "./Parser/XMLParser.js";
 
 const Namespace = new Map ([
    ["VRMLParser", VRMLParser],

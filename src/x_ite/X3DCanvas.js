@@ -46,16 +46,38 @@
  *
  ******************************************************************************/
 
-import X3D        from "./x_ite/X3D.js";
-import X3DCanvas  from "./x_ite/X3DCanvas.js";
-import shim       from "./shim.js";
+ import X3D  from "./X3D.js";
+ import URLs from "./Browser/Networking/URLs.js";
 
-// Assign X3D to global namespace.
+ class X3DCanvas extends HTMLElement
+ {
+    constructor ()
+    {
+       super ();
 
-window .X3D                        = X3D;
-window [Symbol .for ("X_ITE.X3D")] = X3D;
+       const
+          shadow = this .attachShadow ({ mode: "open" }),
+          link   = document .createElement ("link");
 
-if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
-   __global_module__ .exports = X3D;
+       shadow .loaded = new Promise (function (resolve, reject)
+       {
+          link .onload  = resolve;
+          link .onerror = reject;
+       });
 
-X3D ();
+       link .setAttribute ("rel", "stylesheet");
+       link .setAttribute ("type", "text/css");
+       link .setAttribute ("href", new URL ("x_ite.css", URLs .getScriptUrl ()) .href);
+
+       shadow .appendChild (link);
+
+       X3D .createBrowserFromElement (this);
+    }
+ }
+
+ customElements .define ("x3d-canvas", X3DCanvas);
+
+ // IE fix.
+ document .createElement ("X3DCanvas");
+
+ export default X3DCanvas
