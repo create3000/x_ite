@@ -36,25 +36,23 @@ require .config ({
          "location": "../node_modules/opentype.js",
          "main": "dist/opentype.js"
       },
+
+
+
+
       {
          "name": "nurbs",
          "location": "lib/nurbs",
          "main": "nurbs.js"
       },
+
+
+
       {
-         "name": "ammojs",
-         "location": "../node_modules/ammojs",
-         "main": "ammo.js"
-      },
-      {
+         "dicomParser",
          "name": "dicom-parser",
          "location": "../node_modules/dicom-parser",
          "main": "dist/dicomParser.js"
-      },
-      {
-         "name": "jpeg",
-         "location": "../node_modules/jpeg-js",
-         "main": "lib/decoder.js"
       },
       {
          "name": "jpegLossless",
@@ -62,20 +60,17 @@ require .config ({
          "main": "release/current/lossless.js"
       },
       {
+         "charLS",
          "name": "CharLS",
          "location": "../node_modules/CharLS.js",
          "main": "build/charLS-FixedMemory-browser.js"
       },
       {
+         "openJPEG",
          "name": "OpenJPEG",
          "location": "../node_modules/OpenJPEG.js",
          "main": "build/openJPEG-FixedMemory-browser.js"
       },
-      {
-         "name": "zlib",
-         "location": "../src",
-         "main": "dummy.js"
-      }
    ],
    "shim": { },
 });

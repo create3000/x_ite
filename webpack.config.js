@@ -19,7 +19,11 @@ module .exports =
    plugins: [
       new webpack .ProvidePlugin ({
          $: "jquery",
+         jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
+         libtess: "libtess/libtess.cat.js",
+         opentype: "opentype.js/dist/opentype.js",
          pako: "pako/dist/pako_inflate.js",
+         ResizeSensor: "css-element-queries/src/ResizeSensor.js",
       }),
    ],
    performance: {
