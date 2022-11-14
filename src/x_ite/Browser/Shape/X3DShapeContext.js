@@ -51,7 +51,7 @@ import Appearance        from "../../Components/Shape/Appearance.js";
 import UnlitMaterial     from "../../Components/Shape/UnlitMaterial.js";
 import ImageTexture      from "../../Components/Texturing/ImageTexture.js";
 import TextureProperties from "../../Components/Texturing/TextureProperties.js";
-import urls              from "../Networking/urls.js";
+import URLs              from "../Networking/URLs.js";
 
 const
    _lineStippleScale          = Symbol (),
@@ -104,7 +104,7 @@ X3DShapeContext .prototype =
    getLinetypeTexture: function ()
    {
       this [_linetypeTextures] = new ImageTexture (this .getPrivateScene ());
-      this [_linetypeTextures] ._url [0]           = urls .getLinetypeUrl ();
+      this [_linetypeTextures] ._url [0]           = URLs .getLinetypeUrl ();
       this [_linetypeTextures] ._textureProperties = this .getLineFillTextureProperties ();
       this [_linetypeTextures] .setPrivate (true);
       this [_linetypeTextures] .setup ();
@@ -124,7 +124,7 @@ X3DShapeContext .prototype =
 
       hatchStyleTexture = this [_hatchStyleTextures] [index] = new ImageTexture (this .getPrivateScene ());
 
-      hatchStyleTexture ._url [0]           = urls .getHatchingUrl (index);
+      hatchStyleTexture ._url [0]           = URLs .getHatchingUrl (index);
       hatchStyleTexture ._textureProperties = this .getLineFillTextureProperties ();
       hatchStyleTexture .setPrivate (true);
       hatchStyleTexture .setup ();

@@ -47,47 +47,16 @@
  ******************************************************************************/
 
 import X3D  from "./x_ite/X3D.js";
-import urls from "./x_ite/Browser/Networking/urls.js";
+import URLs from "./x_ite/Browser/Networking/URLs.js";
+import shim from "./shim.js";
 
-/**
- *
- * @param {function?} callback
- * @param {function?} fallback
- * @returns {Promise<void>} Promise
- */
-function X_ITE (callback, fallback)
-{
-   return new Promise (function (resolve, reject)
-   {
-      X3D (callback, fallback);
-      X3D (resolve, reject);
-   });
-}
+// Assign to global namespace.
 
-function noConflict ()
-{
-   if (window .X3D === X_ITE)
-   {
-      if (X3D_ === undefined)
-         delete window .X3D;
-      else
-         window .X3D = X3D_;
-   }
-
-   return X_ITE;
-}
-
-X_ITE .noConflict = noConflict;
-
-// Save existing X3D object.
-const X3D_ = window .X3D;
-
-// Now assign our X3D.
-window .X3D                        = X_ITE;
-window [Symbol .for ("X_ITE.X3D")] = X_ITE;
+window .X3D                        = X3D;
+window [Symbol .for ("X_ITE.X3D")] = X3D;
 
 if (typeof __global_module__ === "object" && typeof __global_module__ .exports === "object")
-   __global_module__ .exports = X_ITE;
+   __global_module__ .exports = X3D;
 
 // Define custom element.
 
@@ -112,7 +81,7 @@ class X3DCanvas extends HTMLElement
 
       link .setAttribute ("rel", "stylesheet");
       link .setAttribute ("type", "text/css");
-      link .setAttribute ("href", new URL ("x_ite.css", urls .getScriptURL ()) .href);
+      link .setAttribute ("href", new URL ("x_ite.css", URLs .getScriptUrl ()) .href);
 
       shadow .appendChild (link);
 
@@ -122,46 +91,4 @@ class X3DCanvas extends HTMLElement
 
 customElements .define ("x3d-canvas", X3DCanvas);
 
-// Assign functions to X_ITE and init.
-
-Object .assign (X_ITE, X3D);
-
-for (const key of X3D .hidden)
-   delete X_ITE [key];
-
 X3D ();
-
-//$ .noConflict (true);
-
-(function ()
-{
-   // Added at February 2022
-   // https://github.com/tc39/proposal-relative-indexing-method#polyfill
-
-   function at (n)
-   {
-      // ToInteger() abstract op
-      n = Math.trunc(n) || 0;
-      // Allow negative indexing from the end
-      if (n < 0) n += this.length;
-      // OOB access is guaranteed to return undefined
-      if (n < 0 || n >= this.length) return undefined;
-      // Otherwise, this is just normal property access
-      return this[n];
-   }
-
-   const TypedArray = Reflect .getPrototypeOf (Int8Array);
-   for (const C of [Array, String, TypedArray])
-   {
-      if (C .prototype .at === undefined)
-      {
-         Object .defineProperty (C .prototype, "at",
-         {
-            value: at,
-            writable: true,
-            enumerable: false,
-            configurable: true,
-         });
-      }
-   }
-})();

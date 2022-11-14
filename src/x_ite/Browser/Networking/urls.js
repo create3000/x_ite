@@ -50,7 +50,7 @@ function URLs () { }
 
 URLs .prototype =
 {
-   getScriptURL: (function ()
+   getScriptUrl: (function ()
    {
       if (document .currentScript)
          var src = document .currentScript .src;
@@ -68,25 +68,34 @@ URLs .prototype =
    {
       if (file)
       {
-         if (this .getScriptURL () .match (/\.min\.js$/))
+         if (this .getScriptUrl () .match (/\.min\.js$/))
             file += ".min";
 
-         return new URL ("assets/components/" + file + ".js", this .getScriptURL ()) .href;
+         return new URL ("assets/components/" + file + ".js", this .getScriptUrl ()) .href;
       }
 
       return "https://create3000.github.io/x_ite/";
    },
+   // getComponentUrl: function  (name)
+   // {
+   //    const url = urls .getProviderUrl (name);
+
+   //    if (typeof __global_require__ === "function" && typeof __filename === "string")
+   //       __global_require__ (__global_require__ ("url") .fileURLToPath (url));
+
+   //    return url;
+   // },
    getFontsUrl: function (file)
    {
-      return new URL ("assets/fonts/" + file, this .getScriptURL ()) .href;
+      return new URL ("assets/fonts/" + file, this .getScriptUrl ()) .href;
    },
    getLinetypeUrl: function ()
    {
-      return new URL ("assets/linetype/linetypes.png", this .getScriptURL ()) .href;
+      return new URL ("assets/linetype/linetypes.png", this .getScriptUrl ()) .href;
    },
    getHatchingUrl: function (index)
    {
-      return new URL ("assets/hatching/" + index + ".png", this .getScriptURL ()) .href;
+      return new URL ("assets/hatching/" + index + ".png", this .getScriptUrl ()) .href;
    },
 };
 

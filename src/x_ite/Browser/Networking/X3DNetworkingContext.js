@@ -48,7 +48,7 @@
 
 
 import Fields from "../../Fields.js";
-import urls   from "./urls.js";
+import URLs   from "./URLs.js";
 import _      from "../../../locale/gettext.js";
 
 const
@@ -93,7 +93,7 @@ X3DNetworkingContext .prototype =
    { },
    getProviderUrl: function ()
    {
-      return urls .getProviderUrl ();
+      return URLs .getProviderUrl ();
    },
    getLocation: function ()
    {

@@ -53,7 +53,7 @@ import X3DUrlObject  from "../Networking/X3DUrlObject.js";
 import TextAlignment from "../../Browser/Text/TextAlignment.js";
 import FileLoader    from "../../InputOutput/FileLoader.js";
 import X3DConstants  from "../../Base/X3DConstants.js";
-import urls          from "../../Browser/Networking/urls.js";
+import URLs          from "../../Browser/Networking/URLs.js";
 
 /*
  * Font paths for default SERIF, SANS and TYPWRITER families.
@@ -62,22 +62,22 @@ import urls          from "../../Browser/Networking/urls.js";
 const Fonts =
 {
    SERIF: {
-      PLAIN:      urls .getFontsUrl ("DroidSerif-Regular.ttf"),
-      ITALIC:     urls .getFontsUrl ("DroidSerif-Italic.ttf"),
-      BOLD:       urls .getFontsUrl ("DroidSerif-Bold.ttf"),
-      BOLDITALIC: urls .getFontsUrl ("DroidSerif-BoldItalic.ttf"),
+      PLAIN:      URLs .getFontsUrl ("DroidSerif-Regular.ttf"),
+      ITALIC:     URLs .getFontsUrl ("DroidSerif-Italic.ttf"),
+      BOLD:       URLs .getFontsUrl ("DroidSerif-Bold.ttf"),
+      BOLDITALIC: URLs .getFontsUrl ("DroidSerif-BoldItalic.ttf"),
    },
    SANS: {
-      PLAIN:      urls .getFontsUrl ("Ubuntu-R.ttf"),
-      ITALIC:     urls .getFontsUrl ("Ubuntu-RI.ttf"),
-      BOLD:       urls .getFontsUrl ("Ubuntu-B.ttf"),
-      BOLDITALIC: urls .getFontsUrl ("Ubuntu-BI.ttf"),
+      PLAIN:      URLs .getFontsUrl ("Ubuntu-R.ttf"),
+      ITALIC:     URLs .getFontsUrl ("Ubuntu-RI.ttf"),
+      BOLD:       URLs .getFontsUrl ("Ubuntu-B.ttf"),
+      BOLDITALIC: URLs .getFontsUrl ("Ubuntu-BI.ttf"),
    },
    TYPEWRITER: {
-      PLAIN:      urls .getFontsUrl ("UbuntuMono-R.ttf"),
-      ITALIC:     urls .getFontsUrl ("UbuntuMono-RI.ttf"),
-      BOLD:       urls .getFontsUrl ("UbuntuMono-B.ttf"),
-      BOLDITALIC: urls .getFontsUrl ("UbuntuMono-BI.ttf"),
+      PLAIN:      URLs .getFontsUrl ("UbuntuMono-R.ttf"),
+      ITALIC:     URLs .getFontsUrl ("UbuntuMono-RI.ttf"),
+      BOLD:       URLs .getFontsUrl ("UbuntuMono-B.ttf"),
+      BOLDITALIC: URLs .getFontsUrl ("UbuntuMono-BI.ttf"),
    },
 };
 
