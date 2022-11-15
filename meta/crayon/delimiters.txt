@@ -1,6 +1,0 @@
-php <\?(?:php)?.*?\?\>
-xjs <script\b[^\>]*>.*?</script>
-js <script\b(?:[^\>]*?type="text/javascript")[^\>]*>.*?</script>|\<!\[CDATA\[ecmascript:.*?\]\]>|(?<=(?<!\\)"ecmascript:).*?(?=(?<!\\)")
-css <style\b[^\>]*>.*?</style>
-ruby (<%.*?%>)|(^%.*?[\r\n])
-swift \\\(.*?\)

@@ -34,8 +34,8 @@ Create an HTML or XHTML page and save it, additionally the »x\_ite\_dom.js« sc
     <title>XHTML DOM access for X_ITE</title>
     <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="https://create3000.github.io/code/x_ite/latest/dist/x_ite.css"/>
-    <script type="text/javascript" src="https://create3000.github.io/code/x_ite/latest/dist/x_ite.min.js"></script>
-    <script type="text/javascript" src="https://raw.githack.com/andreasplesch/x_ite_dom/master/release/x_ite_dom.1.3.js"></script>
+    <script src="https://create3000.github.io/code/x_ite/latest/dist/x_ite.min.js"></script>
+    <script src="https://raw.githack.com/andreasplesch/x_ite_dom/master/release/x_ite_dom.1.3.js"></script>
     <style>
 X3DCanvas {
    width: 768px;
@@ -62,7 +62,7 @@ X3DCanvas {
     <!-- /* Define a button that will call the »moveHouse« function on click. */ -->
     <button onclick="moveHouse ()">HTML Button to Move House</button>
 
-    <script type="text/javascript">
+    <script>
 function moveHouse ()
 {
   // Constants

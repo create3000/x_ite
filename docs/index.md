@@ -837,7 +837,7 @@ GitCDN serves raw files directly from GitHub with proper Content-Type headers an
 If you are a developer or you always wanna be up to date:
 
 ```html
-<script type="text/javascript" src="https://create3000.github.io/code/x_ite/latest/dist/x_ite.min.js"></script>
+<script src="https://create3000.github.io/code/x_ite/latest/dist/x_ite.min.js"></script>
 ```
 
 #### Snipped
@@ -845,7 +845,7 @@ If you are a developer or you always wanna be up to date:
 If you are on production and everything works fine, then use a numbered version.
 
 ```html
-<script type="text/javascript" src="https://create3000.github.io/code/x_ite/7.0.0/dist/x_ite.min.js"></script>
+<script src="https://create3000.github.io/code/x_ite/7.0.0/dist/x_ite.min.js"></script>
 ```
 
 ### jsDelivr CDN
@@ -855,7 +855,7 @@ Open Source CDN, free, fast, and reliable.
 #### Snipped
 
 ```html
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/create3000/x_ite@latest/dist/x_ite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/create3000/x_ite@latest/dist/x_ite.min.js"></script>
 ```
 
 ## Embedding X\_ITE within a Web Page
@@ -869,7 +869,7 @@ The HTML5 page is quite easy to create, the HTML5 code below shows you the minim
 <html>
   <head>
     <meta charset="utf-8"/>
-    <script type="text/javascript" src="https://create3000.github.io/code/x_ite/latest/dist/x_ite.min.js"></script>
+    <script src="https://create3000.github.io/code/x_ite/latest/dist/x_ite.min.js"></script>
     <style type="text/css">
 x3d-canvas {
   width: 768px;

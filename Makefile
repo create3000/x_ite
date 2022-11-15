@@ -10,6 +10,7 @@ namespace:
 compile:
 	npx webpack
 
+.SILENT:html
 html:
 	cp src/x_ite.html x_ite.min.html
 	perl -p0i -e 's|<!-- X_ITE START.*?X_ITE END -->|<script src="dist/x_ite.js"></script>\n   <script src="https://code.jquery.com/jquery-3.6.1.js"></script>|sg' x_ite.min.html
@@ -24,9 +25,15 @@ html:
 	perl -pi -e 's|"tests.js"|"src/tests.js"|sg'             x_ite.min.html
 	perl -pi -e 's|"tests/menu.js"|"src/tests/menu.js"|sg'   x_ite.min.html
 
-xdist:
-	perl build/bin/dist.pl
+.SILENT:copy-files
+copy-files:
+	rsync -q -r -x -c -v -t --progress --delete src/assets/fonts    dist/assets/
+	rsync -q -r -x -c -v -t --progress --delete src/assets/hatching dist/assets/
+	rsync -q -r -x -c -v -t --progress --delete src/assets/images   dist/assets/
+	rsync -q -r -x -c -v -t --progress --delete src/assets/linetype dist/assets/
+	cp src/example.html dist/
 
+.SILENT:zip
 zip:
 	cp -r dist zip-tmp
 	zip -q -x "*.zip" -r zip-tmp.zip zip-tmp
@@ -34,7 +41,8 @@ zip:
 	rm -r zip-tmp
 
 .PHONY: dist
-dist: namespace compile xdist zip
+.SILENT:dist
+dist: namespace compile copy-files zip
 	du -h dist/x_ite.min.js
 
 checkout-dist:

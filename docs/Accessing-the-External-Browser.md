@@ -30,7 +30,7 @@ function errorCallback (error)
 The external browser can be accessed by calling the `X3D .getBrowser (selector)` function, *selector* can be any CSS selector, if you have only one &lt;x3d-canvas&gt; element on your page, you can omit the selector argument:
 
 ```html
-<script type="text/javascript">
+<script>
 
 X3D (function ()
 {
@@ -48,7 +48,7 @@ X3D (function ()
 If something went wrong, the error callback is called:
 
 ```html
-<script type="text/javascript">
+<script>
 
 X3D (function ()
 {
@@ -212,7 +212,7 @@ Adding HTML controls to your scene is no rocket science. We have added some HTML
 ### The JavaScript
 
 ```js
-<script type="text/javascript">
+<script>
 function init ()
 {
   const

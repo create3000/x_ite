@@ -1,5 +1,0 @@
-initializeOnly
-inputOnly
-outputOnly
-inputOutput
-

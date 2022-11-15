@@ -1168,9 +1168,9 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 
 ```html
 <link rel="stylesheet" type="text/css" href="http://code.create3000.de/x_ite/4.1.6/dist/x_ite.css"/>
-<script type="text/javascript" src="http://code.create3000.de/x_ite/4.1.6/dist/x_ite.min.js"></script>
+<script src="http://code.create3000.de/x_ite/4.1.6/dist/x_ite.min.js"></script>
 <!-- Include the following plug-ins if you wish support for this component -->
-<script type="text/javascript" src="http://code.create3000.de/x_ite/4.1.6/dist/rigid-body-physics.min.js"></script>
+<script src="http://code.create3000.de/x_ite/4.1.6/dist/rigid-body-physics.min.js"></script>
 ```
 
 {% capture notice-text %}
@@ -1267,7 +1267,7 @@ X\_ITE is now available from our own server at code.create3000.de. Just include 
 
 ```html
 <link rel="stylesheet" type="text/css" href="http://code.create3000.de/x_ite/4.0.7/dist/x_ite.css"/>
-<script type="text/javascript" src="http://code.create3000.de/x_ite/4.0.7/dist/x_ite.min.js"></script>
+<script src="http://code.create3000.de/x_ite/4.0.7/dist/x_ite.min.js"></script>
 ```
 
 Additionally X\_ITE is now available via GitHub CDN and jsDelivr CDN.
@@ -1302,7 +1302,7 @@ There are new URL's for cobweb.min.js and cobweb.css. Use the following location
 
 ```html
 <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/create3000/cobweb/3.3/dist/cobweb.css"/>
-<script type="text/javascript" src="https://cdn.rawgit.com/create3000/cobweb/3.3/dist/cobweb.min.js"></script>
+<script src="https://cdn.rawgit.com/create3000/cobweb/3.3/dist/cobweb.min.js"></script>
 ```
 
 ### Important

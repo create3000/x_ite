@@ -59,9 +59,11 @@ const config = [{
          },
          onBuildEnd: {
             scripts: [
+               `perl -p0i -e 's/export default (?:true|false);/export default true;/sg' src/x_ite/DEBUG.js`,
                `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.js`,
                `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.min.js`,
-               `perl -p0i -e 's/export default (?:true|false);/export default true;/sg' src/x_ite/DEBUG.js`,
+               `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.js`,
+               `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.min.js`,
             ],
             blocking: false,
             parallel: true,
@@ -123,6 +125,8 @@ for (const component of ["Geometry2D.js"] || fs .readdirSync ("./src/assets/comp
                scripts: [
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}.js`,
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}.min.js`,
+                  `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/assets/components/${name}.js`,
+                  `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/assets/components/${name}.min.js`,
                ],
                blocking: false,
                parallel: true,
@@ -183,9 +187,21 @@ config .push ({
          }),
       ],
    },
-   plugins: [new MiniCssExtractPlugin ({
-      filename: "[name].css",
-   })],
+   plugins: [
+      new MiniCssExtractPlugin ({
+         filename: "[name].css",
+      }),
+      new WebpackShellPluginNext ({
+         onBuildEnd: {
+            scripts: [
+               `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.css`,
+            ],
+            blocking: false,
+            parallel: true,
+         }
+      }),
+   ],
+   stats: "errors-only",
 })
 
 config .parallelism = 4
