@@ -4,9 +4,10 @@ const
    fs      = require ("fs")
 
 const
-   TerserPlugin         = require ("terser-webpack-plugin"),
-   MiniCssExtractPlugin = require ("mini-css-extract-plugin"),
-   CssMinimizerPlugin   = require ("css-minimizer-webpack-plugin")
+   TerserPlugin           = require ("terser-webpack-plugin"),
+   WebpackShellPluginNext = require ("webpack-shell-plugin-next"),
+   MiniCssExtractPlugin   = require ("mini-css-extract-plugin"),
+   CssMinimizerPlugin     = require ("css-minimizer-webpack-plugin")
 
 const config = [{
    entry: {
@@ -48,6 +49,24 @@ const config = [{
          pako: "pako/dist/pako_inflate.js",
          ResizeSensor: "css-element-queries/src/ResizeSensor.js",
       }),
+      new WebpackShellPluginNext ({
+         onBuildStart: {
+            scripts: [
+               `perl -p0i -e 's/export default (?:true|false);/export default false;/sg' src/x_ite/DEBUG.js`,
+            ],
+            blocking: false,
+            parallel: true,
+         },
+         onBuildEnd: {
+            scripts: [
+               `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.js`,
+               `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.min.js`,
+               `perl -p0i -e 's/export default (?:true|false);/export default true;/sg' src/x_ite/DEBUG.js`,
+            ],
+            blocking: false,
+            parallel: true,
+         }
+     }),
    ],
    stats: "minimal",
    performance: {
@@ -99,6 +118,16 @@ for (const component of ["Geometry2D.js"] || fs .readdirSync ("./src/assets/comp
       },
       plugins: [
          new webpack .ProvidePlugin (plugins [component] || { }),
+         new WebpackShellPluginNext ({
+            onBuildEnd: {
+               scripts: [
+                  `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}.js`,
+                  `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}.min.js`,
+               ],
+               blocking: false,
+               parallel: true,
+            }
+         }),
       ],
       resolve: {
          fallback: { "path": false, "fs": false },

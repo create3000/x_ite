@@ -128,17 +128,6 @@ sub licenses {
 	close LICENSE;
 }
 
-sub zip {
-	my $ZIP_DIR = "x_ite-$VERSION";
-
-	system "cp", "-r", "dist", $ZIP_DIR;
-
-	system "zip", "-x", "*.zip", "-r", "$ZIP_DIR.zip", $ZIP_DIR;
-	system "mv", "-v", "$ZIP_DIR.zip", "dist/x_ite.zip";
-
-	system "rm", "-v", "-r", $ZIP_DIR;
-}
-
 check_version;
 
 say "Making version '$VERSION' now.";
@@ -146,4 +135,3 @@ say "Making version '$VERSION' now.";
 #shaders;
 licenses;
 dist;
-zip;
