@@ -5,7 +5,7 @@ configure:
 	sudo npm install
 
 namespace:
-	perl build/bin/namespace.pl
+	node build/bin/namespace.mjs
 
 .PHONY: dist
 dist: namespace
