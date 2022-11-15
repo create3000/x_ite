@@ -37,19 +37,19 @@ copy-files:
 zip:
 	$(eval VERSION=$(shell node -e 'console .log (require ("./package.json") .version)'))
 	cp -r dist x_ite-$(VERSION)
-	find x_ite-$(VERSION) -type f | sort | TZ=UTC zip -qX -x "*.zip" -r x_ite-$(VERSION).zip -@
+	zip -q -x "*.zip" -r x_ite-$(VERSION).zip x_ite-$(VERSION)
 	mv x_ite-$(VERSION).zip dist/x_ite.zip
 	rm -r x_ite-$(VERSION)
 
 .PHONY: dist
 .SILENT:dist
-dist: namespace compile copy-files zip
+dist: namespace compile copy-files
 	du -h dist/x_ite.min.js
 
 checkout-dist:
 	git checkout -- dist
 
-version: dist
+version: dist zip
 	perl build/bin/version.pl
 
 .PHONY: docs
