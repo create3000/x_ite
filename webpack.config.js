@@ -59,7 +59,7 @@ const config = [{
                `perl -p0i -e 's/export default (?:true|false);/export default true;/sg' src/x_ite/DEBUG.js`,
                `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.js`,
                `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.min.js`,
-               `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version'-'\`git rev-list --all --count\`' */|sg' dist/x_ite.js`,
+               `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version'-'\`git rev-list --all --count\`' */|sg' dist/x_ite.js`,
                `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version'-'\`git rev-list --all --count\`' */|sg' dist/x_ite.min.js`,
                // LICENSES
                `cp LICENSE.md dist/LICENSE.md`,
@@ -124,8 +124,8 @@ for (const filename of ["Geometry2D.js"] || fs .readdirSync ("./src/assets/compo
                scripts: [
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}.js`,
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}.min.js`,
-                  `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version-'-'\`git rev-list --all --count\`' */|sg' dist/assets/components/${name}.js`,
-                  `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version'-'\`git rev-list --all --count\`' */|sg' dist/assets/components/${name}.min.js`,
+                  `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version'-'\`git rev-list --all --count\`' */|sg' dist/assets/components/${name}.js`,
+                  `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version'-'\`git rev-list --all --count\`' */|sg' dist/assets/components/${name}.min.js`,
                ],
                blocking: false,
                parallel: false,
