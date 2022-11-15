@@ -203,7 +203,10 @@ module .exports = async () =>
             ],
          },
          plugins: [
-            new webpack .ProvidePlugin (plugins [name] || { }),
+            new webpack .ProvidePlugin (Object .assign (plugins [name] || { },
+            {
+               $: path .resolve (__dirname, "src/lib/jquery.js"),
+            })),
             new WebpackShellPluginNext ({
                logging: false,
                onBuildStart: {

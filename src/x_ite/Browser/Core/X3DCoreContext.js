@@ -124,9 +124,7 @@ function X3DCoreContext (element)
    this [_notification]        = new Notification        (this .getPrivateScene ());
    this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
 
-   const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo ($("body"));
-   this [_pixelPerPoint] = inches .height () / 720 || 1 / 72;
-   inches .remove ();
+   this [_pixelPerPoint] = 1 / 72;
 
    $(".x_ite-console") .empty ();
 
@@ -148,12 +146,6 @@ X3DCoreContext .prototype =
       this [_renderingProperties] .setup ();
       this [_notification]        .setup ();
       this [_contextMenu]         .setup ();
-
-      // Observe Element's attributes.
-
-      this [_observer] = new MutationObserver (this .processMutations .bind (this));
-
-      this [_observer] .observe (this [_element] [0], { attributes: true, childList: false, characterData: false, subtree: false });
 
       // Define src and url property.
 
@@ -277,37 +269,15 @@ X3DCoreContext .prototype =
 
       return this [_privateScene];
    },
-   parseUrlAttribute: function (urlCharacters)
+   connectedCallback: function ()
    {
-      const url = new Fields .MFString ();
-
-      url .fromString (urlCharacters, this .getExecutionContext ());
-
-      return url;
+      const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo (this [_shadow]);
+      this [_pixelPerPoint] = inches .height () / 720 || 1 / 72;
+      inches .remove ();
    },
-   processMutations: function (mutations)
+   attributeChangedCallback: function (name, oldValue, newValue)
    {
-      for (const mutation of mutations)
-         this .processMutation (mutation);
-   },
-   processMutation: function (mutation)
-   {
-      const element = mutation .target;
-
-      switch (mutation .type)
-      {
-         case "attributes":
-         {
-            this .processAttribute (mutation, element);
-            break;
-         }
-      }
-   },
-   processAttribute: function (mutation, element)
-   {
-      const attributeName = mutation .attributeName;
-
-      switch (attributeName .toLowerCase ())
+      switch (name .toLowerCase ())
       {
          case "splashscreen":
          {
@@ -316,19 +286,23 @@ X3DCoreContext .prototype =
          }
          case "src":
          {
-            const urlCharacters = this .getElement () .attr ("src");
-
-            this .loadURL (new Fields .MFString (urlCharacters), new Fields .MFString ());
+            this .loadURL (new Fields .MFString (newValue), new Fields .MFString ());
             break;
          }
          case "url":
          {
-            const urlCharacters = this .getElement () .attr ("url");
-
-            this .loadURL (this .parseUrlAttribute (urlCharacters), new Fields .MFString ());
+            this .loadURL (this .parseUrlAttribute (newValue), new Fields .MFString ());
             break;
          }
       }
+   },
+   parseUrlAttribute: function (urlCharacters)
+   {
+      const url = new Fields .MFString ();
+
+      url .fromString (urlCharacters, this .getExecutionContext ());
+
+      return url;
    },
    callBrowserEventHandler: function (events)
    {

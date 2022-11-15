@@ -74,6 +74,7 @@ import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
 import Namespace                   from "./Namespace.js";
 import Fallback                    from "./Fallback.js";
+import jQuery                      from "../lib/jquery.js";
 import MicroTime                   from "../standard/Time/MicroTime.js";
 
 Namespace .set ("x_ite/X3D", X3D);

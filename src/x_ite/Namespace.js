@@ -47,6 +47,7 @@
  ******************************************************************************/
 
 
+import jquery1                                from "../lib/jquery.js";
 import gettext1                               from "../locale/gettext.js";
 import shim1                                  from "../shim.js";
 import Algorithm1                             from "../standard/Math/Algorithm.js";
@@ -424,6 +425,7 @@ import X3DRoute1                              from "../x_ite/Routing/X3DRoute.js
 import X3DRoutingContext1                     from "../x_ite/Routing/X3DRoutingContext.js";
 
 const Namespace = new Map ([
+   ["lib/jquery",                                                        jquery1],
    ["locale/gettext",                                                    gettext1],
    ["shim",                                                              shim1],
    ["standard/Math/Algorithm",                                           Algorithm1],

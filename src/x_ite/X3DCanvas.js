@@ -74,6 +74,25 @@ class X3DCanvas extends HTMLElement
 
       X3D .createBrowserFromElement (this);
    }
+
+   connectedCallback ()
+   {
+      X3D .getBrowser (this) .connectedCallback ();
+   }
+
+   attributeChangedCallback (name, oldValue, newValue)
+   {
+      X3D .getBrowser (this) .attributeChangedCallback (name, oldValue, newValue);
+   }
+
+   static get observedAttributes ()
+   {
+      return [
+         "splashscreen",
+         "src",
+         "url",
+      ];
+   }
 }
 
 customElements .define ("x3d-canvas", X3DCanvas);

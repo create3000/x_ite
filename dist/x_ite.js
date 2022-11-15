@@ -72963,9 +72963,7 @@ function X3DCoreContext (element)
    this [_notification]        = new Core_Notification        (this .getPrivateScene ());
    this [_contextMenu]         = new Core_ContextMenu         (this .getPrivateScene ());
 
-   const inches = X3DCoreContext_$("<div></div>") .hide () .css ("height", "10in") .appendTo (X3DCoreContext_$("body"));
-   this [_pixelPerPoint] = inches .height () / 720 || 1 / 72;
-   inches .remove ();
+   this [_pixelPerPoint] = 1 / 72;
 
    X3DCoreContext_$(".x_ite-console") .empty ();
 
@@ -72987,12 +72985,6 @@ X3DCoreContext .prototype =
       this [_renderingProperties] .setup ();
       this [_notification]        .setup ();
       this [_contextMenu]         .setup ();
-
-      // Observe Element's attributes.
-
-      this [_observer] = new MutationObserver (this .processMutations .bind (this));
-
-      this [_observer] .observe (this [_element] [0], { attributes: true, childList: false, characterData: false, subtree: false });
 
       // Define src and url property.
 
@@ -73116,37 +73108,15 @@ X3DCoreContext .prototype =
 
       return this [_privateScene];
    },
-   parseUrlAttribute: function (urlCharacters)
+   connectedCallback: function ()
    {
-      const url = new x_ite_Fields.MFString ();
-
-      url .fromString (urlCharacters, this .getExecutionContext ());
-
-      return url;
+      const inches = X3DCoreContext_$("<div></div>") .hide () .css ("height", "10in") .appendTo (this [_shadow]);
+      this [_pixelPerPoint] = inches .height () / 720 || 1 / 72;
+      inches .remove ();
    },
-   processMutations: function (mutations)
+   attributeChangedCallback: function (name, oldValue, newValue)
    {
-      for (const mutation of mutations)
-         this .processMutation (mutation);
-   },
-   processMutation: function (mutation)
-   {
-      const element = mutation .target;
-
-      switch (mutation .type)
-      {
-         case "attributes":
-         {
-            this .processAttribute (mutation, element);
-            break;
-         }
-      }
-   },
-   processAttribute: function (mutation, element)
-   {
-      const attributeName = mutation .attributeName;
-
-      switch (attributeName .toLowerCase ())
+      switch (name .toLowerCase ())
       {
          case "splashscreen":
          {
@@ -73155,19 +73125,23 @@ X3DCoreContext .prototype =
          }
          case "src":
          {
-            const urlCharacters = this .getElement () .attr ("src");
-
-            this .loadURL (new x_ite_Fields.MFString (urlCharacters), new x_ite_Fields.MFString ());
+            this .loadURL (new x_ite_Fields.MFString (newValue), new x_ite_Fields.MFString ());
             break;
          }
          case "url":
          {
-            const urlCharacters = this .getElement () .attr ("url");
-
-            this .loadURL (this .parseUrlAttribute (urlCharacters), new x_ite_Fields.MFString ());
+            this .loadURL (this .parseUrlAttribute (newValue), new x_ite_Fields.MFString ());
             break;
          }
       }
+   },
+   parseUrlAttribute: function (urlCharacters)
+   {
+      const url = new x_ite_Fields.MFString ();
+
+      url .fromString (urlCharacters, this .getExecutionContext ());
+
+      return url;
    },
    callBrowserEventHandler: function (events)
    {
@@ -119291,6 +119265,10 @@ Object .defineProperty (X3DBrowser .prototype, "supportedComponents",
 
 /* harmony default export */ const Browser_X3DBrowser = (X3DBrowser);
 
+;// CONCATENATED MODULE: ./src/lib/jquery.js
+/* provided dependency */ var jquery_$ = __webpack_require__(755);
+/* harmony default export */ const jquery = (jquery_$);
+
 ;// CONCATENATED MODULE: ./src/shim.js
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -120115,7 +120093,9 @@ for (const key of Reflect .ownKeys (DependentRenderer .prototype))
 
 
 
+
 const Namespace = new Map ([
+   ["lib/jquery",                                                        jquery],
    ["locale/gettext",                                                    locale_gettext],
    ["shim",                                                              shim],
    ["standard/Math/Algorithm",                                           Math_Algorithm],
@@ -120577,6 +120557,7 @@ Namespace .set ("x_ite/Namespace", Namespace);
 
 
 
+
 x_ite_Namespace.set ("x_ite/X3D", X3D);
 
 const
@@ -120854,6 +120835,25 @@ class X3DCanvas extends HTMLElement
       shadow .appendChild (link);
 
       x_ite_X3D.createBrowserFromElement (this);
+   }
+
+   connectedCallback ()
+   {
+      x_ite_X3D.getBrowser (this) .connectedCallback ();
+   }
+
+   attributeChangedCallback (name, oldValue, newValue)
+   {
+      x_ite_X3D.getBrowser (this) .attributeChangedCallback (name, oldValue, newValue);
+   }
+
+   static get observedAttributes ()
+   {
+      return [
+         "splashscreen",
+         "src",
+         "url",
+      ];
    }
 }
 

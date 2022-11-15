@@ -1,6 +1,14 @@
 /* X_ITE v7.0.0 */ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 355:
+/***/ ((module) => {
+
+"use strict";
+module.exports = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("lib/jquery");
+
+/***/ }),
+
 /***/ 573:
 /***/ (() => {
 
@@ -410,6 +418,7 @@ var ga=[oI,Un,ZF,rz,IF,OF,lD,Fp,Ep,Fp,oI,oI,oI,oI,oI,oI];var ha=[QH,Uv];var ia=[
 /* harmony default export */ const AmmoClass = (new ammo ());
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/BallJoint.js
+/* provided dependency */ var $ = __webpack_require__(355);
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -2469,6 +2478,7 @@ Contact .prototype = Object .assign (Object .create ((X3DNode_default()).prototy
 const Rotation4_namespaceObject = window [Symbol .for ("X_ITE.X3D-7.0.0")] .require ("standard/Math/Numbers/Rotation4");
 var Rotation4_default = /*#__PURE__*/__webpack_require__.n(Rotation4_namespaceObject);
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint.js
+/* provided dependency */ var DoubleAxisHingeJoint_$ = __webpack_require__(355);
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -2684,7 +2694,7 @@ DoubleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
          }
       }
 
-      this .setOutput (! $.isEmptyObject (this .outputs));
+      this .setOutput (! DoubleAxisHingeJoint_$.isEmptyObject (this .outputs));
    },
    update1: (function ()
    {
@@ -3757,6 +3767,7 @@ RigidBodyCollection .prototype = Object .assign (Object .create ((X3DChildNode_d
 /* harmony default export */ const RigidBodyPhysics_RigidBodyCollection = (RigidBodyCollection);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint.js
+/* provided dependency */ var SingleAxisHingeJoint_$ = __webpack_require__(355);
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -3955,7 +3966,7 @@ SingleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
          }
       }
 
-      this .setOutput (! $.isEmptyObject (this .outputs));
+      this .setOutput (! SingleAxisHingeJoint_$.isEmptyObject (this .outputs));
    },
    update1: (function ()
    {
@@ -3998,6 +4009,7 @@ SingleAxisHingeJoint .prototype = Object .assign (Object .create (RigidBodyPhysi
 /* harmony default export */ const RigidBodyPhysics_SingleAxisHingeJoint = (SingleAxisHingeJoint);
 
 ;// CONCATENATED MODULE: ./src/x_ite/Components/RigidBodyPhysics/SliderJoint.js
+/* provided dependency */ var SliderJoint_$ = __webpack_require__(355);
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -4203,7 +4215,7 @@ SliderJoint .prototype = Object .assign (Object .create (RigidBodyPhysics_X3DRig
          }
       }
 
-      this .setOutput (! $.isEmptyObject (this .outputs));
+      this .setOutput (! SliderJoint_$.isEmptyObject (this .outputs));
    },
    set_separation__: function ()
    {
