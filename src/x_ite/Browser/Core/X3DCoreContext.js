@@ -124,7 +124,7 @@ function X3DCoreContext (element)
    this [_notification]        = new Notification        (this .getPrivateScene ());
    this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
 
-   this [_pixelPerPoint] = 1 / 72;
+   this [_pixelPerPoint] = 1; // default 72 dpi
 
    $(".x_ite-console") .empty ();
 
