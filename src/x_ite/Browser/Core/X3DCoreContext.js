@@ -272,7 +272,7 @@ X3DCoreContext .prototype =
    connectedCallback: function ()
    {
       const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo (this [_shadow]);
-      this [_pixelPerPoint] = inches .height () / 720 || 1 / 72;
+      this [_pixelPerPoint] = inches .height () / 720 || 1;
       inches .remove ();
    },
    attributeChangedCallback: function (name, oldValue, newValue)
