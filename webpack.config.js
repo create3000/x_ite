@@ -141,6 +141,7 @@ module .exports = async () =>
             onBuildEnd: {
                scripts: [
                   `perl -p0i -e 's/export default (?:true|false);/export default true;/sg' src/x_ite/DEBUG.js`,
+                  `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/x_ite.js`,
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.js`,
                   `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.min.js`,
                   `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.js`,

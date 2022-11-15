@@ -30551,7 +30551,7 @@ if (true) {
 	Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//# sourceMappingURL=opentype.js.map
+//# 
 
 
 /***/ }),
@@ -72963,8 +72963,8 @@ function X3DCoreContext (element)
    this [_notification]        = new Core_Notification        (this .getPrivateScene ());
    this [_contextMenu]         = new Core_ContextMenu         (this .getPrivateScene ());
 
-   const inches = X3DCoreContext_$("<div></div>") .hide () .css ("height", "10in") .appendTo (this [_shadow]);
-   this [_pixelPerPoint] = inches .height () / 720;
+   const inches = X3DCoreContext_$("<div></div>") .hide () .css ("height", "10in") .appendTo (X3DCoreContext_$("body"));
+   this [_pixelPerPoint] = inches .height () / 720 || 1 / 72;
    inches .remove ();
 
    X3DCoreContext_$(".x_ite-console") .empty ();

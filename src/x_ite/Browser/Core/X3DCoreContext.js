@@ -124,8 +124,8 @@ function X3DCoreContext (element)
    this [_notification]        = new Notification        (this .getPrivateScene ());
    this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
 
-   const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo (this [_shadow]);
-   this [_pixelPerPoint] = inches .height () / 720;
+   const inches = $("<div></div>") .hide () .css ("height", "10in") .appendTo ($("body"));
+   this [_pixelPerPoint] = inches .height () / 720 || 1 / 72;
    inches .remove ();
 
    $(".x_ite-console") .empty ();
