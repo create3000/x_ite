@@ -82,22 +82,18 @@ const config = [{
 }]
 
 const plugins = {
-   "RigidBodyPhysics.js": {
-
-   },
-   "Texturing3D.js": {
-
-   },
+   RigidBodyPhysics: { },
+   Texturing3D: { },
 }
 
-for (const component of ["Geometry2D.js"] || fs .readdirSync ("./src/assets/components/"))
+for (const filename of ["Geometry2D.js"] || fs .readdirSync ("./src/assets/components/"))
 {
-   const name = path .parse (component) .name
+   const name = path .parse (filename) .name
 
    config .push ({
       entry: {
-         [name]: "./src/assets/components/" + component,
-         [name + ".min"]: "./src/assets/components/" + component,
+         [name]: "./src/assets/components/" + filename,
+         [name + ".min"]: "./src/assets/components/" + filename,
       },
       output: {
          path: path .resolve (__dirname, "dist/assets/components"),
@@ -122,7 +118,7 @@ for (const component of ["Geometry2D.js"] || fs .readdirSync ("./src/assets/comp
          ],
       },
       plugins: [
-         new webpack .ProvidePlugin (plugins [component] || { }),
+         new webpack .ProvidePlugin (plugins [name] || { }),
          new WebpackShellPluginNext ({
             onBuildEnd: {
                scripts: [
