@@ -69,6 +69,8 @@ const Namespace = new Map ([
    ${values},
 ]);
 
+Namespace .set ("x_ite/X3D/Namespace", Namespace);
+
 export default Namespace;
 `
 

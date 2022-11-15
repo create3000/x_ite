@@ -76,6 +76,8 @@ import Namespace                   from "./Namespace.js";
 import Fallback                    from "./Fallback.js";
 import MicroTime                   from "../standard/Time/MicroTime.js";
 
+Namespace .set ("x_ite/X3D", X3D);
+
 const
    callbacks = $.Deferred (),
    fallbacks = $.Deferred ();

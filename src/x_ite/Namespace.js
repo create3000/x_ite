@@ -801,4 +801,6 @@ const Namespace = new Map ([
    ["x_ite/Routing/X3DRoutingContext",                                   X3DRoutingContext1],
 ]);
 
+Namespace .set ("x_ite/X3D/Namespace", Namespace);
+
 export default Namespace;
