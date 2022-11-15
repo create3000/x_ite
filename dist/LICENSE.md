@@ -625,3 +625,63 @@ copy of the Program in return for a fee.
 
 END OF TERMS AND CONDITIONS
 --------------------------------------
+```
+/*!
+ * Sizzle CSS Selector Engine v2.3.6
+ * https://sizzlejs.com/
+ *
+ * Copyright JS Foundation and other contributors
+ * Released under the MIT license
+ * https://js.foundation/
+ *
+ * Date: 2021-02-16
+ */
+
+/*!
+ * jQuery JavaScript Library v3.6.1
+ * https://jquery.com/
+ *
+ * Includes Sizzle.js
+ * https://sizzlejs.com/
+ *
+ * Copyright OpenJS Foundation and other contributors
+ * Released under the MIT license
+ * https://jquery.org/license
+ *
+ * Date: 2022-08-26T17:52Z
+ */
+
+/*! https://mths.be/codepointat v0.2.0 by @mathias */
+
+/*! pako 2.1.0 https://github.com/nodeca/pako @license (MIT AND Zlib) */
+
+/**
+ * @license
+ * Copyright 2000, Silicon Graphics, Inc. All Rights Reserved.
+ * Copyright 2015, Google Inc. All Rights Reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice including the dates of first publication and
+ * either this permission notice or a reference to http://oss.sgi.com/projects/FreeB/
+ * shall be included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * SILICON GRAPHICS, INC. BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR
+ * IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * Original Code. The Original Code is: OpenGL Sample Implementation,
+ * Version 1.2.1, released January 26, 2000, developed by Silicon Graphics,
+ * Inc. The Original Code is Copyright (c) 1991-2000 Silicon Graphics, Inc.
+ * Copyright in any portions created by third parties is as indicated
+ * elsewhere herein. All Rights Reserved.
+ */
+```

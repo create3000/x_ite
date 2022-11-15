@@ -25,7 +25,7 @@ const config = [{
          new TerserPlugin ({
             include: /\.min\.js$/,
             parallel: true,
-            extractComments: false,
+            extractComments: true,
             terserOptions: {
                compress: true,
                mangle: true,
@@ -36,9 +36,6 @@ const config = [{
          }),
       ],
    },
-   // dependencies: [
-   //    path .resolve (__dirname, "node_modules"),
-   // ],
    plugins: [
       new webpack .ProvidePlugin ({
          $: "jquery",
@@ -63,7 +60,13 @@ const config = [{
                `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.js`,
                `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.min.js`,
                `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.js`,
-               `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.min.js`,
+               `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.min.js`,
+               // LICENSE
+               `cp LICENSE.md dist/LICENSE.md`,
+               `echo '\`\`\`' >> dist/LICENSE.md`,
+               `cat dist/x_ite.min.js.LICENSE.txt >> dist/LICENSE.md`,
+               `rm dist/x_ite.min.js.LICENSE.txt`,
+               `echo '\`\`\`' >> dist/LICENSE.md`,
             ],
             blocking: false,
             parallel: false,
