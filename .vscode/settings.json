@@ -11,19 +11,27 @@
    "files.trimTrailingWhitespace": true,
    "files.eol": "\n",
    "cSpell.words": [
+      "ammojs",
       "bbox",
       "Catmull",
+      "dicom",
       "fract",
+      "fullscreen",
       "glsl",
       "highp",
+      "libtess",
+      "mousewheel",
       "mult",
       "oninitialized",
       "onshutdown",
+      "opentype",
+      "pako",
       "polylines",
       "srand",
       "Struct",
       "tessellator",
       "Wireframe",
-      "Wireframes"
+      "Wireframes",
+      "xite"
    ]
 }
