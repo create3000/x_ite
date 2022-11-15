@@ -36,7 +36,7 @@ copy-files:
 .SILENT:zip
 zip:
 	cp -r dist zip-tmp
-	zip -q -x "*.zip" -r zip-tmp.zip zip-tmp
+	zip -q -X -x "*.zip" -r zip-tmp.zip zip-tmp
 	mv zip-tmp.zip dist/x_ite.zip
 	rm -r zip-tmp
 

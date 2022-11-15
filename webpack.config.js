@@ -132,6 +132,7 @@ module .exports = async () =>
             logging: false,
             onBuildStart: {
                scripts: [
+                  `echo 'Bundling x_ite ...'`,
                   `perl -p0i -e 's/export default (?:true|false);/export default false;/sg' src/x_ite/DEBUG.js`,
                ],
                blocking: false,
@@ -156,7 +157,7 @@ module .exports = async () =>
             },
         }),
       ],
-      stats: "minimal",
+      stats: "errors-warnings",
       performance: {
          hints: "warning",
          maxEntrypointSize: 10_000_000,
@@ -204,6 +205,13 @@ module .exports = async () =>
             new webpack .ProvidePlugin (plugins [name] || { }),
             new WebpackShellPluginNext ({
                logging: false,
+               onBuildStart: {
+                  scripts: [
+                     `echo 'Bundling ${name} ...'`,
+                  ],
+                  blocking: false,
+                  parallel: false,
+               },
                onBuildEnd: {
                   scripts: [
                      `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}.js`,
@@ -237,7 +245,7 @@ module .exports = async () =>
                fs: false,
             },
          },
-         stats: "minimal",
+         stats: "errors-warnings",
          performance: {
             hints: "warning",
             maxEntrypointSize: 10_000_000,
