@@ -202,11 +202,6 @@ module .exports = async () =>
          },
          plugins: [
             new webpack .ProvidePlugin (plugins [name] || { }),
-            // new webpack .IgnorePlugin ({
-            //    checkResource (resource, context) {
-            //       return x_ite_deps .has (path .resolve (context, resource));
-            //    },
-            // }),
             new WebpackShellPluginNext ({
                logging: false,
                onBuildEnd: {
