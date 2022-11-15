@@ -55,7 +55,7 @@ const config = [{
                `perl -p0i -e 's/export default (?:true|false);/export default false;/sg' src/x_ite/DEBUG.js`,
             ],
             blocking: false,
-            parallel: true,
+            parallel: false,
          },
          onBuildEnd: {
             scripts: [
@@ -66,7 +66,7 @@ const config = [{
                `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.min.js`,
             ],
             blocking: false,
-            parallel: true,
+            parallel: false,
          }
      }),
    ],
@@ -129,7 +129,7 @@ for (const component of ["Geometry2D.js"] || fs .readdirSync ("./src/assets/comp
                   `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/assets/components/${name}.min.js`,
                ],
                blocking: false,
-               parallel: true,
+               parallel: false,
             }
          }),
       ],
@@ -197,7 +197,7 @@ config .push ({
                `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.css`,
             ],
             blocking: false,
-            parallel: true,
+            parallel: false,
          }
       }),
    ],
