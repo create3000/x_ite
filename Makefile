@@ -35,10 +35,11 @@ copy-files:
 
 .SILENT:zip
 zip:
-	cp -r dist zip-tmp
-	zip -q -X -D -x "*.zip" -r zip-tmp.zip zip-tmp
-	mv zip-tmp.zip dist/x_ite.zip
-	rm -r zip-tmp
+	$(eval VERSION=$(shell node -e 'console .log (require ("./package.json") .version)'))
+	cp -r dist x_ite-$(VERSION)
+	find x_ite-$(VERSION) -type f | sort | TZ=UTC zip -qX -x "*.zip" -r x_ite-$(VERSION).zip -@
+	mv x_ite-$(VERSION).zip dist/x_ite.zip
+	rm -r x_ite-$(VERSION)
 
 .PHONY: dist
 .SILENT:dist
