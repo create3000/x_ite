@@ -5,17 +5,22 @@ import fs     from "fs"
 
 // Dependencies
 
-const
-   graph = await madge ("./src/x_ite.js"),
-   set   = new Set ()
-
-for (const files of Object .values (graph .obj ()))
+async function deps (path)
 {
-   for (const file of files)
-   set .add (file)
+   const
+      graph = await madge (path),
+      deps  = new Set ()
+
+   for (const files of Object .values (graph .obj ()))
+   {
+      for (const file of files)
+         deps .add (file)
+   }
+
+   return deps
 }
 
-const dependencies = [... set] .sort ()
+const dependencies = [... await deps ("./src/x_ite.js")] .sort ()
    .filter (f => path .basename (f) .match (/^[^.]+\.js$/))
    .filter (f => ! f .match (/(Namespace|X3D|X3DCanvas)\.js$/))
 

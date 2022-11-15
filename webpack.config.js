@@ -1,5 +1,6 @@
 const
    webpack = require ("webpack"),
+   madge   = require ("madge"),
    path    = require ("path"),
    fs      = require ("fs")
 
@@ -9,94 +10,32 @@ const
    MiniCssExtractPlugin   = require ("mini-css-extract-plugin"),
    CssMinimizerPlugin     = require ("css-minimizer-webpack-plugin")
 
-const config = [{
-   entry: {
-      "x_ite": "./src/x_ite.js",
-      "x_ite.min": "./src/x_ite.js",
-   },
-   output: {
-      path: path .resolve (__dirname, "dist"),
-      filename: "[name].js",
-   },
-   mode: "production",
-   optimization: {
-      minimize: true,
-      minimizer: [
-         new TerserPlugin ({
-            include: /\.min\.js$/,
-            parallel: true,
-            extractComments: true,
-            terserOptions: {
-               compress: true,
-               mangle: true,
-               format: {
-                  comments: false,
-               },
-            },
-         }),
-      ],
-   },
-   plugins: [
-      new webpack .ProvidePlugin ({
-         $: "jquery",
-         jQuery: "jquery",
-         jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
-         libtess: "libtess/libtess.cat.js",
-         opentype: "opentype.js/dist/opentype.js",
-         pako: "pako/dist/pako_inflate.js",
-         ResizeSensor: "css-element-queries/src/ResizeSensor.js",
-      }),
-      new WebpackShellPluginNext ({
-         onBuildStart: {
-            scripts: [
-               `perl -p0i -e 's/export default (?:true|false);/export default false;/sg' src/x_ite/DEBUG.js`,
-            ],
-            blocking: false,
-            parallel: false,
-         },
-         onBuildEnd: {
-            scripts: [
-               `perl -p0i -e 's/export default (?:true|false);/export default true;/sg' src/x_ite/DEBUG.js`,
-               `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.js`,
-               `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.min.js`,
-               `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version'-'\`git rev-list --all --count\`' */|sg' dist/x_ite.js`,
-               `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version'-'\`git rev-list --all --count\`' */|sg' dist/x_ite.min.js`,
-               // LICENSES
-               `cp LICENSE.md dist/LICENSE.md`,
-               `echo '\`\`\`' >> dist/LICENSE.md`,
-               `cat dist/x_ite.min.js.LICENSE.txt >> dist/LICENSE.md`,
-               `rm dist/x_ite.min.js.LICENSE.txt`,
-               `echo '\`\`\`' >> dist/LICENSE.md`,
-            ],
-            blocking: false,
-            parallel: false,
-         }
-     }),
-   ],
-   stats: "minimal",
-   performance: {
-      hints: "warning",
-      maxEntrypointSize: 10_000_000,
-      maxAssetSize: 10_000_000,
-   },
-}]
-
-const plugins = {
-   RigidBodyPhysics: { },
-   Texturing3D: { },
-}
-
-for (const filename of ["Geometry2D.js"] || fs .readdirSync ("./src/assets/components/"))
+module .exports = async () =>
 {
-   const name = path .parse (filename) .name
+   async function deps (filename)
+   {
+      const
+         graph = await madge (filename),
+         deps  = new Set ()
 
-   config .push ({
+      for (const files of Object .values (graph .obj ()))
+      {
+         for (const file of files)
+            deps .add (path .resolve (__dirname, "src", file))
+      }
+
+      return deps
+   }
+
+   const x_ite_deps = await deps ("./src/x_ite.js")
+
+   const config = [{
       entry: {
-         [name]: "./src/assets/components/" + filename,
-         [name + ".min"]: "./src/assets/components/" + filename,
+         "x_ite": "./src/x_ite.js",
+         "x_ite.min": "./src/x_ite.js",
       },
       output: {
-         path: path .resolve (__dirname, "dist/assets/components"),
+         path: path .resolve (__dirname, "dist"),
          filename: "[name].js",
       },
       mode: "production",
@@ -106,7 +45,7 @@ for (const filename of ["Geometry2D.js"] || fs .readdirSync ("./src/assets/compo
             new TerserPlugin ({
                include: /\.min\.js$/,
                parallel: true,
-               extractComments: false,
+               extractComments: true,
                terserOptions: {
                   compress: true,
                   mangle: true,
@@ -118,94 +57,181 @@ for (const filename of ["Geometry2D.js"] || fs .readdirSync ("./src/assets/compo
          ],
       },
       plugins: [
-         new webpack .ProvidePlugin (plugins [name] || { }),
+         new webpack .ProvidePlugin ({
+            $: "jquery",
+            jQuery: "jquery",
+            jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
+            libtess: "libtess/libtess.cat.js",
+            opentype: "opentype.js/dist/opentype.js",
+            pako: "pako/dist/pako_inflate.js",
+            ResizeSensor: "css-element-queries/src/ResizeSensor.js",
+         }),
          new WebpackShellPluginNext ({
+            onBuildStart: {
+               scripts: [
+                  `perl -p0i -e 's/export default (?:true|false);/export default false;/sg' src/x_ite/DEBUG.js`,
+               ],
+               blocking: false,
+               parallel: false,
+            },
             onBuildEnd: {
                scripts: [
-                  `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}.js`,
-                  `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}.min.js`,
-                  `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version'-'\`git rev-list --all --count\`' */|sg' dist/assets/components/${name}.js`,
-                  `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version'-'\`git rev-list --all --count\`' */|sg' dist/assets/components/${name}.min.js`,
+                  `perl -p0i -e 's/export default (?:true|false);/export default true;/sg' src/x_ite/DEBUG.js`,
+                  `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.js`,
+                  `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite.min.js`,
+                  `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version'-'\`git rev-list --all --count\`' */|sg' dist/x_ite.js`,
+                  `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version'-'\`git rev-list --all --count\`' */|sg' dist/x_ite.min.js`,
+                  // LICENSES
+                  `cp LICENSE.md dist/LICENSE.md`,
+                  `echo '\`\`\`' >> dist/LICENSE.md`,
+                  `cat dist/x_ite.min.js.LICENSE.txt >> dist/LICENSE.md`,
+                  `rm dist/x_ite.min.js.LICENSE.txt`,
+                  `echo '\`\`\`' >> dist/LICENSE.md`,
                ],
                blocking: false,
                parallel: false,
             }
-         }),
+        }),
       ],
-      resolve: {
-         fallback: {
-            path: false,
-            fs: false,
-         },
-      },
       stats: "minimal",
       performance: {
          hints: "warning",
          maxEntrypointSize: 10_000_000,
          maxAssetSize: 10_000_000,
       },
-   })
-}
+   }]
 
-config .push ({
-   entry: {
-      "x_ite": "./src/x_ite.css",
-   },
-   output: {
-      path: path .resolve (__dirname, "dist"),
-   },
-   mode: "production",
-   module: {
-      rules: [
-         {
-            test: /.css$/,
-            use: [
-               MiniCssExtractPlugin.loader,
-               {
-                  loader: "css-loader",
-                  options: {
-                     url: false
-                  },
-               },
-             ]
+   const plugins = {
+      RigidBodyPhysics: { },
+      Texturing3D: { },
+   }
+
+   for (const filename of ["Geometry2D.js"] || fs .readdirSync ("./src/assets/components/"))
+   {
+      const name = path .parse (filename) .name
+
+      config .push ({
+         entry: {
+            [name]: "./src/assets/components/" + filename,
+            [name + ".min"]: "./src/assets/components/" + filename,
          },
-      ],
-   },
-   optimization: {
-      minimize: true,
-      minimizer: [
-         new CssMinimizerPlugin ({
-            parallel: true,
-            minify: CssMinimizerPlugin .cssoMinify,
-            exclude: /\.png$/,
-            minimizerOptions: {
-               preset: [
-                  "default",
-                  {
-                     discardComments: { removeAll: true },
+         output: {
+            path: path .resolve (__dirname, "dist/assets/components"),
+            filename: "[name].js",
+         },
+         mode: "production",
+         optimization: {
+            minimize: true,
+            minimizer: [
+               new TerserPlugin ({
+                  include: /\.min\.js$/,
+                  parallel: true,
+                  extractComments: false,
+                  terserOptions: {
+                     compress: true,
+                     mangle: true,
+                     format: {
+                        comments: false,
+                     },
                   },
-               ],
+               }),
+            ],
+         },
+         plugins: [
+            new webpack .ProvidePlugin (plugins [name] || { }),
+            new webpack .IgnorePlugin ({
+               checkResource (resource, context) {
+                  return x_ite_deps .has (path .resolve (context, resource));
+               },
+            }),
+            new WebpackShellPluginNext ({
+               onBuildEnd: {
+                  scripts: [
+                     `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}.js`,
+                     `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}.min.js`,
+                     `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version'-'\`git rev-list --all --count\`' */|sg' dist/assets/components/${name}.js`,
+                     `perl -p0i -e 's|^/\\*.*?\\*/|/* X_ITE v'$npm_package_version'-'\`git rev-list --all --count\`' */|sg' dist/assets/components/${name}.min.js`,
+                  ],
+                  blocking: false,
+                  parallel: false,
+               }
+            }),
+         ],
+         resolve: {
+            fallback: {
+               path: false,
+               fs: false,
             },
+         },
+         stats: "minimal",
+         performance: {
+            hints: "warning",
+            maxEntrypointSize: 10_000_000,
+            maxAssetSize: 10_000_000,
+         },
+      })
+   }
+
+   config .push ({
+      entry: {
+         "x_ite": "./src/x_ite.css",
+      },
+      output: {
+         path: path .resolve (__dirname, "dist"),
+      },
+      mode: "production",
+      module: {
+         rules: [
+            {
+               test: /.css$/,
+               use: [
+                  MiniCssExtractPlugin.loader,
+                  {
+                     loader: "css-loader",
+                     options: {
+                        url: false
+                     },
+                  },
+                ]
+            },
+         ],
+      },
+      optimization: {
+         minimize: true,
+         minimizer: [
+            new CssMinimizerPlugin ({
+               parallel: true,
+               minify: CssMinimizerPlugin .cssoMinify,
+               exclude: /\.png$/,
+               minimizerOptions: {
+                  preset: [
+                     "default",
+                     {
+                        discardComments: { removeAll: true },
+                     },
+                  ],
+               },
+            }),
+         ],
+      },
+      plugins: [
+         new MiniCssExtractPlugin ({
+            filename: "[name].css",
+         }),
+         new WebpackShellPluginNext ({
+            onBuildEnd: {
+               scripts: [
+                  `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.css`,
+               ],
+               blocking: false,
+               parallel: false,
+            }
          }),
       ],
-   },
-   plugins: [
-      new MiniCssExtractPlugin ({
-         filename: "[name].css",
-      }),
-      new WebpackShellPluginNext ({
-         onBuildEnd: {
-            scripts: [
-               `perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' dist/x_ite.css`,
-            ],
-            blocking: false,
-            parallel: false,
-         }
-      }),
-   ],
-   stats: "errors-only",
-})
+      stats: "errors-only",
+   })
 
-config .parallelism = 4
+   config .parallelism = 4
 
-module.exports = config
+   return config
+}
