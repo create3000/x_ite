@@ -3,15 +3,37 @@ const
    path    = require ("path"),
    fs      = require ("fs")
 
+const
+   TerserPlugin         = require ("terser-webpack-plugin"),
+   MiniCssExtractPlugin = require ("mini-css-extract-plugin"),
+   CssMinimizerPlugin   = require ("css-minimizer-webpack-plugin")
+
 const config = [{
-   entry: "./src/x_ite.js",
+   entry: {
+      "x_ite": "./src/x_ite.js",
+      "x_ite.min": "./src/x_ite.js",
+   },
    output: {
       path: path .resolve (__dirname, "dist"),
-      filename: "x_ite.js",
+      filename: "[name].js",
    },
    mode: "production",
    optimization: {
-      minimize: false,
+      minimize: true,
+      minimizer: [
+         new TerserPlugin ({
+            include: /\.min\.js$/,
+            parallel: true,
+            extractComments: false,
+            terserOptions: {
+               compress: true,
+               mangle: true,
+               format: {
+                  comments: false,
+               },
+            },
+         }),
+      ],
    },
    // dependencies: [
    //    path .resolve (__dirname, "node_modules"),
@@ -46,15 +68,34 @@ const plugins = {
 
 for (const component of ["Geometry2D.js"] || fs .readdirSync ("./src/assets/components/"))
 {
+   const name = path .parse (component) .name
+
    config .push ({
-      entry: "./src/assets/components/" + component,
+      entry: {
+         [name]: "./src/assets/components/" + component,
+         [name + ".min"]: "./src/assets/components/" + component,
+      },
       output: {
          path: path .resolve (__dirname, "dist/assets/components"),
-         filename: component,
+         filename: "[name].js",
       },
       mode: "production",
       optimization: {
-         minimize: false,
+         minimize: true,
+         minimizer: [
+            new TerserPlugin ({
+               include: /\.min\.js$/,
+               parallel: true,
+               extractComments: false,
+               terserOptions: {
+                  compress: true,
+                  mangle: true,
+                  format: {
+                     comments: false,
+                  },
+               },
+            }),
+         ],
       },
       plugins: [
          new webpack .ProvidePlugin (plugins [component] || { }),
@@ -70,6 +111,53 @@ for (const component of ["Geometry2D.js"] || fs .readdirSync ("./src/assets/comp
       },
    })
 }
+
+config .push ({
+   entry: {
+      "x_ite": "./src/x_ite.css",
+   },
+   output: {
+      path: path .resolve (__dirname, "dist"),
+   },
+   mode: "production",
+   module: {
+      rules: [
+         {
+            test: /.css$/,
+            use: [
+               MiniCssExtractPlugin.loader,
+               {
+                  loader: "css-loader",
+                  options: {
+                     url: false
+                  },
+               },
+             ]
+         },
+      ],
+   },
+   optimization: {
+      minimize: true,
+      minimizer: [
+         new CssMinimizerPlugin ({
+            parallel: true,
+            minify: CssMinimizerPlugin .cssoMinify,
+            exclude: /\.png$/,
+            minimizerOptions: {
+               preset: [
+                  "default",
+                  {
+                     discardComments: { removeAll: true },
+                  },
+               ],
+            },
+         }),
+      ],
+   },
+   plugins: [new MiniCssExtractPlugin ({
+      filename: "[name].css",
+   })],
+})
 
 config .parallelism = 4
 

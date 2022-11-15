@@ -18,8 +18,6 @@ dist: namespace
 
 	npx webpack
 	perl -pi -e "s|\"X_ITE.X3D\"|\"X_ITE.X3D-"$(X_ITE_VERSION)"\"|" dist/x_ite.js
-	npx terser --mangle --compress -- dist/x_ite.js > dist/x_ite.min.js
-	npx node-sass src/x_ite.css --output-style compact -o dist
 
 # $(call generate_component,annotation,$(X_ITE_VERSION),--compress)
 # $(call generate_component,cad-geometry,$(X_ITE_VERSION),--compress)
